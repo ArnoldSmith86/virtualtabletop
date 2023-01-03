@@ -28,13 +28,15 @@ class Pile extends Widget {
 
   applyChildAdd(child) {
     super.applyChildAdd(child);
-    ++this.childCount;
+    if (child.get('countInPiles'))
+      ++this.childCount;
     this.updateText();
   }
 
   applyChildRemove(child) {
     super.applyChildRemove(child);
-    --this.childCount;
+    if (child.get('countInPiles'))
+      --this.childCount;
     this.updateText();
   }
 

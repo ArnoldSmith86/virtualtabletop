@@ -46,6 +46,7 @@ export class Widget extends StateManaged {
       typeClasses: 'widget',
       classes: '',
       css: '',
+      countInPiles: true,
       movable: true,
       movableInEdit: true,
       clickable: true,
@@ -1768,6 +1769,7 @@ export class Widget extends StateManaged {
         this.dropShadowWidget = (await shadowWidget.clone({
             'classes': (shadowWidget.state.classes || '') + ' shadow',
             'movable': false,
+            'countInPiles': false,
             'parent': null}, true)).get('id');
       }
       this.disablePileUpdateAfterParentChange = true;
