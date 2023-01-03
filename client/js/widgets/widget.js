@@ -357,6 +357,33 @@ export class Widget extends StateManaged {
     }
   }
 
+  async clone(overrideProperties, recursive = false, problems = null) {
+    const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
+    const parent = clone.parent;
+    clone.clonedFrom = this.get('id');
+    if(widgets.has(clone.id)) {
+      delete clone.id;
+      if(problems && overrideProperties.id !== undefined)
+        problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
+    }
+    delete clone.parent;
+    const cWidget = widgets.get(await addWidgetLocal(clone));
+
+    if(parent) {
+      // use moveToHolder so that CLONE triggers onEnter and similar features
+      cWidget.movedByButton = problems != null;
+      await cWidget.moveToHolder(widgets.get(parent));
+      delete cWidget.movedByButton;
+    }
+
+    if (recursive) {
+      for (const w of this.children()) {
+        w.clone({parent: cWidget.get('id')}, true, problems);
+      }
+    }
+    return cWidget;
+  }
+
   coordGlobalFromCoordLocal(coord) {
     return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coord));
   }
@@ -870,26 +897,10 @@ export class Widget extends StateManaged {
           var c=[];
           for(const w of collections[source]) {
             for(let i=1; i<=a.count; ++i) {
-              const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
-              const parent = clone.parent;
-              clone.clonedFrom = w.get('id');
-
-              if(widgets.has(clone.id)) {
-                delete clone.id;
-                if(a.properties.id !== undefined)
-                  problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
-              }
-              delete clone.parent;
-              const cWidget = widgets.get(await addWidgetLocal(clone));
-
-              if(parent) {
-                // use moveToHolder so that CLONE triggers onEnter and similar features
-                cWidget.movedByButton = true;
-                await cWidget.moveToHolder(widgets.get(parent));
-                delete cWidget.movedByButton;
-              }
+              const cWidget = await w.clone(a.properties, false, problems);
 
               // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
+              const parent = cWidget.get('parent') ? widgets.get(cWidget.get('parent')) : null;
               if(!parent || !widgets.get(parent).get('alignChildren')) {
                 await cWidget.set('x', (a.properties.x !== undefined ? a.properties.x : w.get('x')) + a.xOffset * i);
                 await cWidget.set('y', (a.properties.y !== undefined ? a.properties.y : w.get('y')) + a.yOffset * i);
@@ -1746,13 +1757,18 @@ export class Widget extends StateManaged {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('parent'));
       this.hoverTarget = null;
-      if (this.get('dropShadow')) {
-        const clone = Object.assign(JSON.parse(JSON.stringify(this.state)),
-            {"movable": false});
-        clone.classes = (clone.classes || '') + ' shadow';
-        delete clone.id;
-        delete clone.parent;
-        this.dropShadowWidget = widgets.get(await addWidgetLocal(clone));
+      let shadowWidget = this.get('dropShadow') ? this : null;
+      if (this.get('type') == 'pile') {
+        shadowWidget = null;
+        let topChild = this.children().slice(-1)[0];
+        if (topChild && topChild.get('dropShadow'))
+          shadowWidget = topChild;
+      }
+      if (shadowWidget) {
+        this.dropShadowWidget = (await shadowWidget.clone({
+            'classes': (shadowWidget.state.classes || '') + ' shadow',
+            'movable': false,
+            'parent': null}, true)).get('id');
       }
       this.disablePileUpdateAfterParentChange = true;
       await this.set('parent', null);
@@ -1820,14 +1836,15 @@ export class Widget extends StateManaged {
         if(this.hoverTarget != this.currentParent)
           await this.checkParent(true);
       }
-      if (this.dropShadowWidget) {
-        this.dropShadowWidget.currentParent = widgets.get(this.dropShadowWidget.get('parent'));
-        await this.dropShadowWidget.set('parent', null);
-        this.dropShadowWidget.setPosition(this.get('x'), this.get('y'), this.get('z') - 1);
-        if (this.hoverTarget != this.dropShadowWidget.currentParent)
-          await this.dropShadowWidget.checkParent(true);
+      if (this.dropShadowWidget && widgets.has(this.dropShadowWidget)) {
+        const shadowWidget = widgets.get(this.dropShadowWidget);
+        shadowWidget.currentParent = widgets.get(shadowWidget.get('parent'));
+        await shadowWidget.set('parent', null);
+        shadowWidget.setPosition(this.get('x'), this.get('y'), this.get('z') - 1);
+        if (this.hoverTarget != shadowWidget.currentParent)
+          await shadowWidget.checkParent(true);
         if (this.hoverTarget)
-          await this.dropShadowWidget.moveToHolder(this.hoverTarget);
+          await shadowWidget.moveToHolder(this.hoverTarget);
       }
     }
   }
@@ -1837,7 +1854,8 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
     if (this.dropShadowWidget) {
-      await removeWidgetLocal(this.dropShadowWidget.get('id'));
+      if (widgets.has(this.dropShadowWidget))
+        await removeWidgetLocal(this.dropShadowWidget);
       this.dropShadowWidget = null;
     }
 
