@@ -1,9 +1,10 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
-import { playerName, playerColor, activePlayers, mouseCoords } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
+import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo } from '../geometry.js';
 
 const readOnlyProperties = new Set([
@@ -643,6 +644,7 @@ export class Widget extends StateManaged {
     let collections = initialCollections;
     if(!byReference) {
       variables = Object.assign({
+        activeColors,
         mouseCoords
       }, initialVariables, {
         playerName,
@@ -1608,9 +1610,10 @@ export class Widget extends StateManaged {
 
     batchEnd();
 
-    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string' && variables.playerColor.match(/^#[0-9a-fA-F]{6}$/)) {
-      toServer('playerColor', { player: playerName, color: variables.playerColor });
-      playerColor = variables.playerColor;
+    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string') {
+      const hexColor = toHex(variables.playerColor);
+      toServer('playerColor', { player: playerName, color: hexColor });
+      playerColor = hexColor;
     }
     if(variables.playerName != playerName && typeof variables.playerName == 'string') {
       toServer('rename', { oldName: playerName, newName: variables.playerName });
