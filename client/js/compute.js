@@ -691,6 +691,48 @@ const compute_ops = [
     sample: 'var a = randRange ${x} ${y} ${z}',
     call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) },
     hash: '4758cba8f404cfe3ef0a300cebf3938a'
+  },
+  {
+    name: 'colorContrast',
+    desc: 'converts x color in any format that the browser can interpret to another color in the same hue but with different luminance, with optional y direction and intensity (-1 to 1, defaults to 1)',
+    sample: 'var a = colorContrast ${x} ${y}',
+    call: function(v, x, y) { return v = contrastAnyColor(x, y); }, 
+    hash: '83181e89c7f0245a49644ce864625481'
+  },
+  {
+    name: 'colorToHex',
+    desc: 'converts x color in any format that the browser can interpret to hex',
+    sample: 'var a = colorToHex ${x}',
+    call: function(v, x) { return v = toHex(x); },
+    hash: '2eff46ec1af852a29fa4c14dcf685c00'
+  },
+  {
+    name: 'colorToRGB',
+    desc: 'converts x color in any format that the browser can interpret to RGB in format rgb(0,9,210)',
+    sample: 'var a = colorToRGB ${x}',
+    call: function(v, x) { return v = toRGBString(x); },
+    hash: 'faa247cc277b7e9ad645e55a51e47195'
+  },
+  {
+    name: 'colorContrastRatio',
+    desc: 'compares x and y colors in any format that the broswer can interpret to obtain the contrast ratio in range 1-21',
+    sample: 'var a = colorContrastRatio ${x} ${y}',
+    call: function(v, x, y) { return v = calcContrast(x, y); },
+    hash: 'f0c87b733f49b7af419698cdf6ed1137'
+  },
+  {
+    name: 'colorLuminance',
+    desc: 'accepts x color in any format the browser can interpret and returns the luminance value in range 0 to 1',
+    sample: 'var a = colorLuminance ${x}',
+    call: function(v, x) { return v = calcLuminance(x); },
+    hash: 'f4284956510e3fe59c2babed665b544d'
+  },
+  {
+    name: 'colorCreateHue',
+    desc: 'returns a semi-random hex color using linear interpolation which will be as visually distinct as possible from active player colors, or optionally from [x] array of colors',
+    sample: 'var a = colorCreateHue',
+    call: function(v, x) { return v = randomHue(x); },
+    hash: '52422d76f0dbb89af543f4b7972711f0'
   }
 ];
 
