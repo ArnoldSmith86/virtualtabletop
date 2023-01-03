@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 8,
     "info": {
       "name": "Enlarge",
       "image": "/assets/-1439185659_4027",
@@ -9,12 +9,21 @@
       "year": "2022",
       "mode": "Tutorial",
       "time": "",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Basic",
       "attribution": "The pawn used in this variant is a VTT asset released to the public domain under CC0.",
+      "lastUpdate": 1672720696186,
+      "id": "gqt3",
       "showName": false,
-      "lastUpdate": 1654391055000
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "vzvp": {
@@ -29,7 +38,6 @@
     "color": "#23ca5b",
     "width": 73.5,
     "height": 73.5,
-    "x": 1000,
     "y": 485,
     "z": 10068,
     "id": "vzvp",
@@ -40,7 +48,8 @@
         "left": "calc(var(--scale)*-200px)"
       }
     },
-    "enlarge": 2
+    "enlarge": 2,
+    "x": 730
   },
   "vzvp1": {
     "faces": [
@@ -54,7 +63,7 @@
     "color": "#e84242",
     "width": 73.5,
     "height": 73.5,
-    "x": 600,
+    "x": 425,
     "y": 485,
     "z": 10069,
     "id": "vzvp1",
@@ -93,7 +102,7 @@
   },
   "pin": {
     "id": "pin",
-    "x": 263,
+    "x": 163,
     "y": 442,
     "width": 35.85,
     "height": 43.83,
@@ -128,11 +137,11 @@
     "z": 10018,
     "movable": false,
     "text": "The pin above has an `enlarge` value of 2 set. The spinner is a child of the pin. Move your mouse over either widget and you see both widgets in the enlarged overlay. If you drag the pin back and forth between the left and right side of the screen, the overlay will swap positions.  Moving top to bottom has no effect. This is the default way in which `enlarge` works.",
-    "x": 100
+    "x": 20
   },
   "bm5j": {
     "id": "bm5j",
-    "x": 500,
+    "x": 325,
     "y": 600,
     "width": 270,
     "z": 10059,
@@ -141,12 +150,12 @@
   },
   "bm6j": {
     "id": "bm6j",
-    "x": 900,
     "y": 600,
     "width": 270,
     "z": 9732,
     "movable": false,
-    "text": "The green checker above uses a similar technique as the red checker. However, by adding `position:relative`, the overlay now follows the cursor. This time, using negative values in `top` and `left`, the overlay appears above and to the left of the cursor."
+    "text": "The green checker above uses a similar technique as the red checker. However, by adding `position:relative`, the overlay now follows the cursor. This time, using negative values in `top` and `left`, the overlay appears above and to the left of the cursor.",
+    "x": 650
   },
   "bm7j": {
     "id": "bm7j",
@@ -175,5 +184,40 @@
       }
     },
     "enlarge": 4
+  },
+  "0kil": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 1030,
+    "y": 485,
+    "z": 10074,
+    "id": "0kil",
+    "css": {
+      "#enlarged": {
+        "left": "calc(var(--roomLeft) + (${PROPERTY x}px + ${PROPERTY width}px / 2 * (1 - ${PROPERTY enlarge})) * var(--scale))",
+        "top": "calc(var(--roomTop) + (${PROPERTY y}px + ${PROPERTY height}px / 2 * (1 - ${PROPERTY enlarge})) * var(--scale))",
+        "right": "unset",
+        "transform-origin": "top left"
+      }
+    },
+    "enlarge": 2
+  },
+  "bm8j": {
+    "id": "bm8j",
+    "y": 600,
+    "width": 270,
+    "z": 9732,
+    "movable": false,
+    "text": "The blue checker refines the concept even further my making the enlarged view appear directly over the widget. There is no shifting as the mouse is moved around. And the enlarged view tracks exactly with the widget when being dragged.",
+    "x": 950
   }
 }
