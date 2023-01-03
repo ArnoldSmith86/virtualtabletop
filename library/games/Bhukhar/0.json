@@ -4325,7 +4325,7 @@
       {
         "func": "GET",
         "property": "text",
-        "variable": "playerName"
+        "variable": "playerNameText"
       },
       {
         "func": "COMPUTE",
@@ -4356,7 +4356,7 @@
         "applyVariables": [
           {
             "parameter": "value",
-            "variable": "playerName"
+            "variable": "playerNameText"
           }
         ]
       },
@@ -11598,7 +11598,7 @@
       "similarName": "Bhukhar",
       "description": "Team game in Rummy family.  Cards played in sets or sequences earn points according to card value.  Team with most points wins.",
       "showName": true,
-      "lastUpdate": 1617211568000
+      "lastUpdate": 1672499411000
     }
   },
   "shieldDiscard": {
