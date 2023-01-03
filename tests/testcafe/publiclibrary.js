@@ -49,7 +49,7 @@ function publicLibraryButtons(game, variant, md5, tests) {
 publicLibraryButtons('Blue',               0, 'c0b6df4181e1e14db376c87cef71a1c3', ["player1Seat","player2Seat","player3Seat","player4Seat",
   'Deal_button', 'e36b',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
-  'reset_button', '#buttonInputGo', 'visibility_button', '9n2q'
+  'reset_button', '#buttonInputGo', 'visibility_button'
 ]);
 publicLibraryButtons('Bhukhar',            0, '2748e96293b8646894700440508dd280', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
 publicLibraryButtons('Dice',               0, 'a68d28c20b624d6ddf87149bae230598', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
