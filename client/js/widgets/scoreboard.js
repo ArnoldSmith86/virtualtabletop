@@ -24,7 +24,8 @@ class Scoreboard extends Widget {
       sortAscending: true,
       currentRound: null,
       autosizeColumns: true,
-      borderRadius: 8
+      borderRadius: 8,
+      editPaneTitle: 'Set score'
     });
   }
 
@@ -46,58 +47,6 @@ class Scoreboard extends Widget {
     const p = super.classesProperties();
     p.push('autosizeColumns');
     return p;
-  }
-
-  async click(mode='respect') {
-    if(!await super.click(mode)) {
-      const scoreProperty = this.get('scoreProperty');
-      const seats = this.getIncludedSeats();
-      let players = [];
-      if(Array.isArray(seats))
-        players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') }; })
-      else { // Teams
-        for (const team in seats)
-          players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player')} (${team})` } }))
-      }
-
-      const rounds = this.getRounds(seats, scoreProperty, 1).map(function(r, i) { return { text: r, value: i+1 }; });
-
-      if(!players.length || !rounds.length)
-        return;
-
-      try {
-        const result = await this.showInputOverlay({
-          header: 'Set score',
-          fields: [
-            {
-              type: 'select',
-              label: 'Player',
-              options: players,
-              variable: 'player'
-            },
-            {
-              type: 'select',
-              label: this.get('roundLabel'),
-              options: rounds,
-              variable: 'round'
-            },
-            {
-              type: 'number',
-              label: 'Value',
-              variable: 'score'
-            }
-          ]
-        });
-        const seat = widgets.get(result.player);
-        let scores = seat.get(scoreProperty);
-        if(Array.isArray(scores)) {
-          scores = [...scores];
-          scores[result.round-1] = +result.score;
-        } else
-          scores = +result.score;
-        await seat.set(scoreProperty, scores);
-      } catch(e) {}
-    }
   }
 
   get(property) {
@@ -151,7 +100,7 @@ class Scoreboard extends Widget {
       if(sortField == 'total' && !showTotals) // Use default sort if no totals
         sortField = 'index';
       if(sortField == 'total')
-        seatList.sort((a,b) => getTotal(a.get(scoreProperty)) - getTotal(b.get(scoreProperty)))
+        seatList.sort((a,b) => this.getTotal(a.get(scoreProperty)) - this.getTotal(b.get(scoreProperty)))
       else
         seatList.sort((a,b) => {
           const pa = a.get(sortField);
@@ -167,7 +116,7 @@ class Scoreboard extends Widget {
         teamList[team] = [... widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && asArray(seats[team]).includes(w.get('id')))];
         teamList[team].sort((a,b) => a.get('index') - b.get('index'));
         if (!this.get('sortAscending'))
-            teamList[team].reverse()
+          teamList[team].reverse()
       }
       return teamList;
     } else // 'seats' property is not array or object, return null to do nothing further
@@ -178,15 +127,18 @@ class Scoreboard extends Widget {
   getRounds(seats, scoreProperty, addEmptyRounds=0) {
     let rounds = this.get('rounds'); // User-supplied round names
     let numRounds=0;
+    this.totalsOnly = true;
     const arrayOfSeats = Array.isArray(seats) ? seats : Object.keys(seats).reduce((union,key) => union.concat(seats[key]), []);
     for (let i=0; i < arrayOfSeats.length; i++) {
       const score = arrayOfSeats[i].get(scoreProperty);
       if(Array.isArray(score) && score.length > numRounds)
         numRounds = score.length;
+      if(Array.isArray(score))
+        this.totalsOnly = false;
     }
     if(this.get('showAllRounds') && Array.isArray(rounds))
       numRounds = Math.max(rounds.length, numRounds);
-    else
+    else if (!this.totalsOnly)
       numRounds += addEmptyRounds;
 
     if(Array.isArray(rounds))
@@ -248,7 +200,7 @@ class Scoreboard extends Widget {
       this.tableDOM.innerHTML = '';
     }
 
-    // Deal with cases where we just need to clear the table; invalid set of seats.
+    // Just return if no seats were specified.
     // We choose here to regard a result of [] or {} as a valid set of seats/teams with no entries.
     if(seats===null)
       return
@@ -268,12 +220,12 @@ class Scoreboard extends Widget {
     // (or last score if showTotals is false)
     let pScores = [];
     if(Array.isArray(seats)) { // Show individual seats
-      // Fill player score array, totals array
+      // Fill player score array, totals array. This will work properly for totals-only.
       for (let i=0; i < seats.length; i++) {
         const score = seats[i].get(scoreProperty);
         pScores[i] = Array.isArray(score) ? [...score] : [];
         pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
-        // Add totals if requested and (temporarily) seat id instead of team name for sorting.
+        // Add totals if requested, and player name.
         if(showTotals)
           pScores[i].push(this.getTotal(score)); // Use 'score' instead of 'pScores[i]' here b/c of scalars.
         pScores[i].unshift(seats[i].get('player') || '-');
@@ -282,17 +234,21 @@ class Scoreboard extends Widget {
     } else if(typeof seats == 'object') { // Display team scores
       let i = 0;
       for (const team in seats) {
-        // Get array of (arrays of) seat scores.
-        const seatScores = seats[team].map(w =>  asArray(w.get(scoreProperty)));
+        if (this.totalsOnly) {
+          pScores[i] = [this.getTotal(seats[team].map(w => w.get(scoreProperty)))];
+        } else {
+          // Get array of (arrays of) seat scores.
+          const seatScores = seats[team].map(w =>  asArray(w.get(scoreProperty)));
 
-        // Make all score arrays for this team the same length, then add them element-by-element
-        const n = seatScores.reduce((max, xs) => Math.max(max, xs.length), 0);
-        pScores[i] = Array(n).fill(0).map((_,i) => this.getTotal(seatScores.map(xs => xs[i])));
-        pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
+          // Make all score arrays for this team the same length, then add them element-by-element
+          const n = seatScores.reduce((max, xs) => Math.max(max, xs.length), 0);
+          pScores[i] = Array(n).fill(0).map((_,i) => this.getTotal(seatScores.map(xs => xs[i])));
+          pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
 
-        // Add totals and team name
-        if(showTotals)
-          pScores[i].push(this.getTotal(pScores[i].slice(0,n)));
+          // Add totals and team name
+          if(showTotals)
+            pScores[i].push(this.getTotal(pScores[i].slice(0,n)));
+        }
         pScores[i].unshift(team || '-');
         i++
       }
@@ -367,5 +323,59 @@ class Scoreboard extends Widget {
     this.domElement.style.setProperty('--firstColWidth', '50px');
     this.domElement.style.setProperty('--columns', numCols);
   }
-}
 
+async click(mode='respect') {
+    if(!await super.click(mode)) {
+      const scoreProperty = this.get('scoreProperty');
+      const seats = this.getIncludedSeats();
+      let players = [];
+      if(Array.isArray(seats))
+        players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') || '-' }; });
+      else { // Teams
+        for (const team in seats) 
+          players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player') || '-'} (${team})` } }))
+      }
+
+      let rounds = this.getRounds(seats, scoreProperty, 1).map(function(r, i) { return { text: r, value: i+1 }; });
+
+      if(this.totalsOnly)
+        rounds = [{text: 'total', value: 0}];
+      
+      if(!players.length || !rounds.length)
+        return;
+
+      try {
+        const result = await this.showInputOverlay({
+          header: this.get('editPaneTitle'),
+          fields: [
+            {
+              type: 'select',
+              label: 'Player',
+              options: players,
+              variable: 'player'
+            },
+            {
+              type: 'select',
+              label: this.get('roundLabel'),
+              options: rounds,
+              variable: 'round'
+            },
+            {
+              type: 'number',
+              label: 'Value',
+              variable: 'score'
+            }
+          ]
+        });
+        const seat = widgets.get(result.player);
+        let scores = seat.get(scoreProperty);
+        if(!this.totalsOnly) {
+          scores = [...scores];
+          scores[result.round-1] = +result.score;
+        } else
+          scores = +result.score;
+        await seat.set(scoreProperty, scores);
+      } catch(e) {}
+    }
+  }
+}
