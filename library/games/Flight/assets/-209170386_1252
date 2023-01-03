@@ -1,0 +1,25 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79 88" width="79" height="88">
+	<title>Automa Cube-svg</title>
+	<style>
+		.s0 { fill: #0000ff;stroke: #00000b;stroke-linecap: round;stroke-linejoin: round;stroke-width: NaN } 
+		.s1 { opacity: .5;mix-blend-mode: multiply;fill: #000000 } 
+		.s2 { opacity: .2;mix-blend-mode: multiply;fill: #000000 } 
+		.s3 { opacity: 0;mix-blend-mode: multiply;fill: #000000 } 
+		.s4 { fill: none;stroke: #ffffff;stroke-linecap: round;stroke-linejoin: round;stroke-width: .3 } 
+		.s5 { fill: #ff0000 } 
+	</style>
+	<g id="Layer">
+		<g id="Layer_2">
+			<g id="Layer_1-2">
+				<path id="Layer" class="s0" d="m76 22.8l0.2 42.4-36.9 21.3-36.7-21.3-0.1-42.4 36.9-21.3z"/>
+				<path id="Layer" class="s1" d="m2.5 22.8l36.7 21.3 0.1 42.4-36.7-21.3z"/>
+				<path id="Layer" class="s2" d="m39.2 44.1l36.8-21.3 0.2 42.4-36.9 21.3z"/>
+				<path id="Layer" class="s3" d="m2.5 22.8l36.9-21.3 36.6 21.3-36.8 21.3z"/>
+				<path id="Layer" class="s4" d="m75.5 23.1l-36.3 21-35.9-20.8"/>
+				<path id="Layer" class="s4" d="m39.2 85.8v-41.7"/>
+			</g>
+		</g>
+		<path id="Layer 1" class="s5" d="m-0.4 2.9l3.8-3.3 75.7 85.5-3.7 3.3z"/>
+		<path id="Shape 1" class="s5" d="m75.1-0.2l3.8 3.3-74.3 83.8-3.7-3.3z"/>
+	</g>
+</svg>
