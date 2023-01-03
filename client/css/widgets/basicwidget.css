@@ -11,5 +11,5 @@ body.edit .widget.basic.hasImage {
 
 .shadow {
   filter: brightness(0);
-  opacity: 0.5;
+  opacity: 0.3;
 }
