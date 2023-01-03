@@ -5,6 +5,10 @@ export function toHex(inputColor) {
   if (hexPattern.test(inputColor)) {    
     return inputColor;
   }
+  // server doesn't have document
+  if (document == undefined) {
+    return '#000000';
+  }
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = inputColor;
