@@ -918,6 +918,8 @@ function jeAddCommands() {
 
   jeAddGridCommand('x', 0);
   jeAddGridCommand('y', 0);
+  jeAddGridCommand('maxX', 0);
+  jeAddGridCommand('maxY', 0);
   jeAddGridCommand('minX', 0);
   jeAddGridCommand('minY', 0);
   jeAddGridCommand('offsetX', 0);
@@ -2328,6 +2330,7 @@ function jeToggle() {
   jeRoutineLogging = jeEnabled;
   jeLoggingHTML = '';
   if(jeEnabled) {
+    $('#activeGameButton').click();
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
       jeEmpty();

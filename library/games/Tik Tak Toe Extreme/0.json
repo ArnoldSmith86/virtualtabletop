@@ -1,0 +1,557 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Tik Tak Toe Extreme",
+      "image": "/assets/-1480950087_772866",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/681/quarto",
+      "year": "1991",
+      "mode": "vs",
+      "time": "20",
+      "players": "2",
+      "language": "",
+      "variant": "",
+      "attribution": "The room design, library image, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n",
+      "similarName": "Quarto",
+      "description": "A 3-D twist on the classic game of X's and O's. Use a 4x4 grid board with 16 different pieces with one of two attributes in each of these categories: color, height, shape, and hollowness. Opponent chooses the piece the other player places on board. First to get 4 in a row with at least one attribute in common wins.",
+      "showName": true,
+      "lastUpdate": 1659650063000
+    }
+  },
+  "table": {
+    "id": "table",
+    "image": "/assets/-2000921333_378618",
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -9,
+    "width": 1600,
+    "height": 1000
+  },
+  "rh_A": {
+    "id": "rh_A",
+    "y": 4,
+    "height": 195.5,
+    "type": "piece",
+    "z": 5,
+    "image": "/assets/-44775677_15673",
+    "svgReplaces": {
+      "#0000ff": "pieceA_color_body",
+      "#ff0000": "pieceA_color_hole",
+      "#000000": "pieceA_color_edges"
+    },
+    "pieceA_color_body": "#533d87",
+    "pieceA_color_edges": "#230d57",
+    "pieceA_color_hole": "#230d57",
+    "x": 404,
+    "pieceNum": 5,
+    "parent": "pieces"
+  },
+  "sh_A": {
+    "type": "piece",
+    "id": "sh_A",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "image": "/assets/1550306738_15669",
+    "inheritFrom": {
+      "rh_A": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 1,
+    "parent": "pieces"
+  },
+  "shh_A": {
+    "type": "piece",
+    "id": "shh_A",
+    "x": 204,
+    "y": 4,
+    "z": 3,
+    "image": "/assets/-996006337_15674",
+    "inheritFrom": {
+      "rh_A": [
+        "!parent"
+      ]
+    },
+    "activeFace": 0,
+    "pieceNum": 3,
+    "parent": "pieces"
+  },
+  "rhh_A": {
+    "type": "piece",
+    "id": "rhh_A",
+    "x": 604,
+    "y": 4,
+    "z": 7,
+    "image": "/assets/709824498_15675",
+    "inheritFrom": {
+      "rh_A": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 7,
+    "parent": "pieces"
+  },
+  "rl_A": {
+    "type": "piece",
+    "id": "rl_A",
+    "x": 504,
+    "y": 4,
+    "width": 100,
+    "height": 195.5,
+    "z": 6,
+    "image": "/assets/2056620072_15730",
+    "inheritFrom": {
+      "rh_A": [
+        "!parent"
+      ]
+    },
+    "activeFace": 0,
+    "pieceNum": 6,
+    "parent": "pieces"
+  },
+  "rl_A1": {
+    "type": "piece",
+    "id": "rl_A1",
+    "x": 304,
+    "y": 4,
+    "z": 4,
+    "image": "/assets/1729152938_15777",
+    "inheritFrom": {
+      "rl_A": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 4,
+    "parent": "pieces"
+  },
+  "sl_A": {
+    "type": "piece",
+    "id": "sl_A",
+    "x": 104,
+    "y": 4,
+    "z": 2,
+    "activeFace": 0,
+    "image": "/assets/384449143_15739",
+    "inheritFrom": {
+      "rl_A": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 2,
+    "parent": "pieces"
+  },
+  "rlh_A": {
+    "type": "piece",
+    "id": "rlh_A",
+    "x": 704,
+    "y": 4,
+    "z": 8,
+    "image": "/assets/1816916376_15756",
+    "inheritFrom": {
+      "rl_A": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 8,
+    "parent": "pieces"
+  },
+  "tile1": {
+    "type": "holder",
+    "id": "tile1",
+    "x": 420,
+    "width": 112,
+    "height": 56,
+    "borderRadius": "50%",
+    "z": 27,
+    "dropOffsetY": -145,
+    "dropTarget": {
+      "type": "piece"
+    },
+    "parent": "tiles",
+    "layer": 1,
+    "css": "border:4px solid  #fcc200;background: #cba135;  ",
+    "dropLimit": 1
+  },
+  "tile2": {
+    "inheritFrom": "tile1",
+    "id": "tile2",
+    "type": "holder",
+    "x": 280,
+    "y": 82,
+    "z": 28,
+    "layer": 2,
+    "parent": "tiles"
+  },
+  "tile3": {
+    "inheritFrom": "tile2",
+    "id": "tile3",
+    "type": "holder",
+    "x": 560,
+    "z": 25,
+    "parent": "tiles"
+  },
+  "tile4": {
+    "inheritFrom": "tile1",
+    "id": "tile4",
+    "type": "holder",
+    "x": 140,
+    "y": 168,
+    "z": 24,
+    "parent": "tiles",
+    "layer": 3
+  },
+  "tile5": {
+    "inheritFrom": "tile4",
+    "id": "tile5",
+    "type": "holder",
+    "x": 420,
+    "z": 23,
+    "parent": "tiles"
+  },
+  "tile6": {
+    "inheritFrom": "tile4",
+    "id": "tile6",
+    "type": "holder",
+    "x": 700,
+    "z": 22,
+    "parent": "tiles"
+  },
+  "tile7": {
+    "inheritFrom": "tile1",
+    "id": "tile7",
+    "type": "holder",
+    "x": 0,
+    "y": 252,
+    "z": 21,
+    "parent": "tiles",
+    "layer": 4
+  },
+  "tile8": {
+    "inheritFrom": "tile7",
+    "id": "tile8",
+    "type": "holder",
+    "x": 280,
+    "z": 20,
+    "parent": "tiles"
+  },
+  "tile9": {
+    "inheritFrom": "tile7",
+    "id": "tile9",
+    "type": "holder",
+    "x": 560,
+    "z": 19,
+    "parent": "tiles"
+  },
+  "tile10": {
+    "inheritFrom": "tile7",
+    "id": "tile10",
+    "type": "holder",
+    "x": 840,
+    "z": 18,
+    "parent": "tiles"
+  },
+  "tile11": {
+    "inheritFrom": "tile1",
+    "id": "tile11",
+    "type": "holder",
+    "x": 140,
+    "y": 336,
+    "z": 17,
+    "parent": "tiles",
+    "layer": 5
+  },
+  "tile12": {
+    "inheritFrom": "tile11",
+    "id": "tile12",
+    "type": "holder",
+    "x": 420,
+    "z": 13,
+    "parent": "tiles"
+  },
+  "tile13": {
+    "inheritFrom": "tile11",
+    "id": "tile13",
+    "type": "holder",
+    "x": 700,
+    "z": 12,
+    "parent": "tiles"
+  },
+  "tile14": {
+    "inheritFrom": "tile1",
+    "id": "tile14",
+    "type": "holder",
+    "x": 280,
+    "y": 420,
+    "z": 10,
+    "parent": "tiles",
+    "layer": 6
+  },
+  "tile15": {
+    "inheritFrom": "tile14",
+    "id": "tile15",
+    "type": "holder",
+    "x": 560,
+    "z": 11,
+    "parent": "tiles"
+  },
+  "tile16": {
+    "inheritFrom": "tile1",
+    "id": "tile16",
+    "type": "holder",
+    "x": 420,
+    "y": 504,
+    "z": 6,
+    "parent": "tiles",
+    "layer": 7
+  },
+  "tiles": {
+    "id": "tiles",
+    "z": 267,
+    "x": 324,
+    "y": 150,
+    "css": "background: #ffffff00;",
+    "width": 952,
+    "height": 560,
+    "movable": false,
+    "movableInEdit": false,
+    "borderRadius": "50%",
+    "layer": 0
+  },
+  "tile17": {
+    "id": "tile17",
+    "type": "holder",
+    "dropTarget": {
+      "type": "piece"
+    },
+    "width": 112,
+    "height": 56,
+    "borderRadius": "50%",
+    "layer": 1,
+    "z": 274,
+    "dropOffsetX": 6,
+    "dropOffsetY": -145,
+    "x": 106,
+    "y": 402,
+    "movableInEdit": false,
+    "css": "background: grey; border-color: #333333; "
+  },
+  "tile18": {
+    "inheritFrom": "tile17",
+    "id": "tile18",
+    "type": "holder",
+    "x": 1382
+  },
+  "decoRing": {
+    "id": "decoRing",
+    "x": 321.5,
+    "y": 147.5,
+    "width": 952,
+    "height": 560,
+    "borderRadius": "50%",
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background: #ffffff00;border: 5px solid #fcc200; ",
+    "scale": 1.1,
+    "layer": 0
+  },
+  "rh_B": {
+    "type": "piece",
+    "id": "rh_B",
+    "x": 1204,
+    "y": 4,
+    "svgReplaces": {
+      "#0000ff": "pieceA_color_body",
+      "#ff0000": "pieceA_color_hole",
+      "#000000": "pieceA_color_edges"
+    },
+    "z": 13,
+    "height": 195.5,
+    "image": "/assets/-44775677_15673",
+    "pieceA_color_body": "#9f2727",
+    "pieceA_color_edges": "#590000",
+    "pieceA_color_hole": "#590000",
+    "pieceNum": 13,
+    "parent": "pieces"
+  },
+  "rhh_B": {
+    "type": "piece",
+    "id": "rhh_B",
+    "x": 1404,
+    "y": 4,
+    "z": 15,
+    "image": "/assets/709824498_15675",
+    "inheritFrom": {
+      "rh_B": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 15,
+    "parent": "pieces"
+  },
+  "shh_B": {
+    "type": "piece",
+    "id": "shh_B",
+    "x": 1004,
+    "y": 4,
+    "z": 11,
+    "image": "/assets/-996006337_15674",
+    "inheritFrom": {
+      "rh_B": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 11,
+    "parent": "pieces"
+  },
+  "sh_B": {
+    "type": "piece",
+    "id": "sh_B",
+    "x": 804,
+    "y": 4,
+    "z": 9,
+    "image": "/assets/1550306738_15669",
+    "inheritFrom": {
+      "rh_B": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 9,
+    "parent": "pieces"
+  },
+  "rlh_B": {
+    "type": "piece",
+    "id": "rlh_B",
+    "x": 1504,
+    "y": 4,
+    "z": 16,
+    "image": "/assets/1816916376_15756",
+    "inheritFrom": {
+      "rh_B": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 16,
+    "parent": "pieces"
+  },
+  "slh_B": {
+    "type": "piece",
+    "id": "slh_B",
+    "x": 1104,
+    "y": 4,
+    "z": 12,
+    "image": "/assets/1729152938_15777",
+    "inheritFrom": {
+      "rh_B": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 12,
+    "parent": "pieces"
+  },
+  "sl_B": {
+    "type": "piece",
+    "id": "sl_B",
+    "x": 904,
+    "y": 4,
+    "z": 10,
+    "image": "/assets/384449143_15739",
+    "inheritFrom": {
+      "rh_B": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 10,
+    "parent": "pieces"
+  },
+  "rl_B": {
+    "type": "piece",
+    "id": "rl_B",
+    "x": 1304,
+    "y": 4,
+    "z": 14,
+    "image": "/assets/2056620072_15730",
+    "inheritFrom": {
+      "rh_B": [
+        "!parent"
+      ]
+    },
+    "pieceNum": 14,
+    "activeFace": 0,
+    "parent": "pieces"
+  },
+  "rh_B3": {
+    "z": 1,
+    "x": 0,
+    "parent": "pieces"
+  },
+  "rhh_B3": {
+    "z": 2,
+    "x": 100,
+    "parent": "pieces"
+  },
+  "pieces": {
+    "type": "holder",
+    "id": "pieces",
+    "y": 800,
+    "width": 1600,
+    "height": 200,
+    "z": 3,
+    "css": "background: #00000000;border-color: #00000000!important;  ",
+    "dropTarget": {
+      "type": "piece"
+    },
+    "stackOffsetX": 100,
+    "count": 16,
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${thisID}",
+        "key": "pieceNum"
+      },
+      {
+        "func": "COUNT",
+        "holder": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "count",
+        "value": "${COUNT}"
+      }
+    ]
+  },
+  "dx95": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "piece",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "pieces"
+      }
+    ],
+    "x": 1540,
+    "z": 3,
+    "id": "dx95",
+    "width": 50,
+    "height": 50,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "restart",
+    "css": "font-size: 30px; ",
+    "y": 10
+  }
+}

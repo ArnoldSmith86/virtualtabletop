@@ -1,6 +1,6 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
-import { playerName, playerColor, activePlayers } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
@@ -629,7 +629,9 @@ export class Widget extends StateManaged {
     let variables = initialVariables;
     let collections = initialCollections;
     if(!byReference) {
-      variables = Object.assign({}, initialVariables, {
+      variables = Object.assign({
+        mouseCoords
+      }, initialVariables, {
         playerName,
         playerColor,
         activePlayers,
@@ -1977,6 +1979,7 @@ export class Widget extends StateManaged {
   }
 
   async showInputOverlay(o, widgets, variables, problems) {
+    $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
     return new Promise((resolve, reject) => {
       const maxRandomRotate = o.randomRotation || 0;
       const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
@@ -2016,11 +2019,13 @@ export class Widget extends StateManaged {
         this.evaluateInputOverlay(o, resolve, reject, true)
         $('#buttonInputGo').removeEventListener('click', goHandler);
         $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+        delete $('#activeGameButton').dataset.overlay;
       };
       const cancelHandler = e=>{
         this.evaluateInputOverlay(o, resolve, reject, false)
         $('#buttonInputGo').removeEventListener('click', goHandler);
         $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+        delete $('#activeGameButton').dataset.overlay;
       };
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);

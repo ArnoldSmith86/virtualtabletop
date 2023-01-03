@@ -1,0 +1,66 @@
+<svg width="499.00000000000006" height="514" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="imagebot_35">
+   <stop stop-color="#b0b0b0" offset="0" id="imagebot_37"/>
+   <stop stop-color="#e8e8e9" offset="1" id="imagebot_36"/>
+  </linearGradient>
+  <linearGradient x1="-0.03849" y1="0.93847" x2="0.19222" xlink:href="#imagebot_35" y2="0.14359" id="imagebot_15"/>
+  <linearGradient x1="0.99996" y1="0.90256" x2="0.07686" xlink:href="#imagebot_35" y2="0.28718" id="imagebot_31"/>
+  <linearGradient y2="1" x2="1" y1="0" x1="0" id="imagebot_47">
+   <stop offset="0" stop-opacity="0.99609" stop-color="#999999"/>
+   <stop offset="1" stop-opacity="0.99609" stop-color="#333333"/>
+  </linearGradient>
+  <linearGradient y2="1" x2="1" y1="0" x1="0" id="imagebot_48">
+   <stop offset="0" stop-opacity="0.99609" stop-color="#b2b2b2"/>
+   <stop offset="1" stop-opacity="0.99609" stop-color="#333333"/>
+  </linearGradient>
+  <linearGradient y2="1" x2="1" y1="0" x1="0" id="imagebot_49">
+   <stop offset="0" stop-opacity="0.99609" stop-color="#cccccc"/>
+   <stop offset="1" stop-opacity="0.99609" stop-color="#333333"/>
+  </linearGradient>
+  <linearGradient x2="1" y1="0" x1="0" y2="0" id="imagebot_50">
+   <stop stop-opacity="0.99609" stop-color="#cccccc" offset="0" id="imagebot_37"/>
+   <stop stop-opacity="0.99609" stop-color="#333333" offset="1" id="imagebot_36"/>
+  </linearGradient>
+  <linearGradient x2="1" y1="0" x1="0" y2="0" id="imagebot_51">
+   <stop stop-opacity="0.99609" stop-color="#cccccc" offset="0" id="imagebot_37"/>
+   <stop stop-opacity="0.99609" stop-color="#333333" offset="1" id="imagebot_36"/>
+  </linearGradient>
+  <linearGradient x2="1" y1="0" x1="0" y2="0" id="imagebot_52">
+   <stop stop-opacity="0.99609" stop-color="#b2b2b2" offset="0" id="imagebot_37"/>
+   <stop stop-opacity="0.99609" stop-color="#333333" offset="1" id="imagebot_36"/>
+  </linearGradient>
+ </defs>
+ <g id="imagebot_3">
+  <path transform="translate(4.13594 28.926) matrix(1.021 0.79644 -0.86356 0.94162 229.96 -178.17)" fill-rule="evenodd" stroke="#000000" stroke-width=".78085pt" fill="#000000" d="M 185.21 64.144 L 196.43 348.214 L 250.6 347.154 L 261.36 57.674 L 222.31 1.84299 L 185.21 64.148 L 185.21 64.144 Z" id="imagebot_32"/>
+  <path transform="translate(4.13594 28.926) matrix(1.021 0.79644 -0.86356 0.94162 229.96 -178.17)" fill-rule="evenodd" fill="url(#imagebot_31)" d="M 186.82 62.143 L 198.61 345.803 L 224.45 345.803 L 223.32 4.393 L 186.82 62.146 L 186.82 62.143 Z" id="imagebot_30"/>
+  <path transform="translate(4.13594 28.926) matrix(1.021 0.79644 -0.86356 0.94162 229.96 -178.17)" fill-rule="evenodd" stroke="#000000" stroke-width=".78085pt" fill="#000000" d="M 194.13 463.61 L 201.12 486.6 L 245.74 486.14 L 251.34 464.86 L 194.13 463.61 Z" id="imagebot_29"/>
+  <path fill-rule="evenodd" fill="url(#imagebot_52)" d="M 31.8068 444.129 L 22.8791 467.71 L 64.5565 501.06 L 88.2989 489.036 L 31.8068 444.129 Z" id="imagebot_27"/>
+  <path transform="translate(4.13594 28.926) matrix(1.021 0.79644 -0.86356 0.94162 229.96 -178.17)" fill-rule="evenodd" stroke="#000000" stroke-width=".95992pt" fill="#000000" d="M 197.7 347.22 L 199.19 374.25 L 197.59 377.25 L 197.2 381.64 L 199.7 383.58 L 200.05 390.75 L 197.93 393.97 L 198.03 398.26 L 200.3 400.33 L 201.06 407.91 L 201.03 407.91 L 198.43 410.52 L 198.62 415.07 L 201.37 417.07 L 201.18 423.85 L 198.87 427.32 L 198.78 431 L 201.53 433 L 202.15 439.35 L 199.56 442.05 L 199.36 446.82 L 202.4 448.53 L 202.5 448.5 L 202.53 449.53 L 218.5 449.82 L 203.43 455.69 L 201.03 458.88 L 201.03 462.85 L 203.78 464.85 L 241.53 450.25 L 245.12 450.32 L 245.18 448.69 L 247.84 446.11 L 247.75 441.75 L 246.07 439.53 L 245.78 431.25 L 248.57 428.72 L 248.09 424.63 L 246.38 422.47 L 246.34 415.57 L 249.4 412.67 L 249.79 408.51 L 246.9 405.91 L 247.38 399.51 L 249.81 395.97 L 249.81 392.2 L 247.4 389.6 L 247.91 382.07 L 250.15 378.85 L 250.15 374.88 L 248.32 372.57 L 248.12 364.88 L 250.84 361.72 L 250.84 357.75 L 248.46 355.41 L 248.75 347.13 L 197.7 347.22 Z" id="imagebot_26"/>
+  <path transform="translate(4.13594 28.926) matrix(1.021 0.79644 -0.86356 0.94162 229.96 -178.17)" fill-rule="evenodd" fill="#b2b2b2" d="M 198.84 346.6 L 202.46 449.8 L 245.08 450.6 L 248.71 347.4 L 198.84 346.6 Z" id="imagebot_25"/>
+  <path fill-rule="evenodd" stroke="#000000" stroke-width=".78085pt" fill="#191919" d="M 107.417 371.386 L 171.991 392.183 L 177.545 391.379 L 180.982 387.631 L 180.596 383.469 L 114.971 362.5 L 109.764 363.575 L 106.327 367.322 L 107.417 371.386 Z" id="imagebot_24"/>
+  <path fill-rule="evenodd" stroke="#000000" stroke-width=".78085pt" fill="#191919" d="M 40.4539 450.972 L 96.2976 468.818 L 101.86 468.005 L 105.297 464.257 L 104.9 460.087 L 47.9981 442.077 L 42.8016 443.16 L 39.3646 446.908 L 40.4539 450.972 Z" id="imagebot_23"/>
+  <path transform="translate(4.13594 28.926) matrix(1.021 0.79644 -0.86356 0.94162 229.96 -178.17)" fill-rule="evenodd" stroke="#000000" stroke-width=".78085pt" fill="#000000" d="M 170.79 446.96 L 175.45 473.01 L 270.36 472.24 L 273.27 448.38 L 170.79 446.96 Z" id="imagebot_22"/>
+  <path fill-rule="evenodd" stroke="#000000" stroke-width=".78085pt" fill="#191919" d="M 53.1382 434.505 L 111.429 452.968 L 116.983 452.164 L 120.42 448.417 L 120.033 444.255 L 60.7013 425.609 L 55.4859 426.694 L 52.0489 430.441 L 53.1382 434.505 Z" id="imagebot_21"/>
+  <path fill-rule="evenodd" stroke="#000000" stroke-width=".78085pt" fill="#191919" d="M 65.6712 419.197 L 126.758 438.565 L 132.32 437.751 L 135.757 434.004 L 135.36 429.834 L 73.2256 410.31 L 68.0189 411.385 L 64.5819 415.133 L 65.6712 419.197 Z" id="imagebot_20"/>
+  <path fill-rule="evenodd" stroke="#000000" stroke-width=".78085pt" fill="#191919" d="M 79.2455 404.071 L 141.372 423.604 L 146.934 422.79 L 150.371 419.043 L 149.985 414.881 L 86.7999 395.184 L 81.5932 396.259 L 78.1562 400.007 L 79.2455 404.071 Z" id="imagebot_19"/>
+  <path fill-rule="evenodd" stroke="#000000" stroke-width=".78085pt" fill="#191919" d="M 93.3252 387.401 L 156.513 407.762 L 162.076 406.949 L 165.513 403.201 L 165.107 399.04 L 100.88 378.514 L 95.6729 379.589 L 92.2359 383.337 L 93.3252 387.401 Z" id="imagebot_18"/>
+  <path fill-rule="evenodd" fill="url(#imagebot_51)" d="M 124.574 490.617 L 101.818 508.498 L 53.7804 472.706 L 70.846 450.66 L 124.574 490.617 Z" id="imagebot_16"/>
+  <path transform="translate(4.13594 28.926) matrix(1.021 0.79644 -0.86356 0.94162 229.96 -178.17)" fill-rule="evenodd" fill="url(#imagebot_15)" d="M 260.27 62.143 L 248.49 345.803 L 222.64 345.803 L 223.77 4.393 L 260.27 62.146 L 260.27 62.143 Z" id="imagebot_14"/>
+  <path fill-opacity="0" fill-rule="evenodd" fill="url(#imagebot_49)" d="M 457.737 32.0058 L 370.573 57.3435 L 137.662 333.824 L 188.579 373.543 L 445.565 115.842 L 458.198 32.3623 L 398.993 96.4796 L 457.738 32.0039 L 457.737 32.0058 Z" id="imagebot_12"/>
+  <path transform="translate(4.13594 28.926) matrix(1.021 0.79644 -0.86356 0.94162 229.96 -178.17)" fill-rule="evenodd" stroke="#000000" stroke-width=".78085pt" fill="#000000" d="M 158.28 346.13 L 159.81 378.14 L 221.96 365.32 L 284.88 375.85 L 285.47 344.78 L 222.41 346.86 L 158.28 346.13 Z" id="imagebot_11"/>
+  <path fill-rule="evenodd" fill="url(#imagebot_47)" d="M 225.067 403.977 L 200.564 428.976 L 146.877 371.042 L 161.317 354.685 L 225.067 403.977 Z" id="imagebot_9"/>
+  <path fill-rule="evenodd" fill="url(#imagebot_48)" d="M 97.3108 305.596 L 74.6561 332.037 L 147.288 371.395 L 161.652 354.931 L 97.3108 305.596 Z" id="imagebot_7"/>
+  <path fill-rule="evenodd" fill="url(#imagebot_50)" d="M 23.1874 410.673 L 7.83331 434.329 L 54.4622 473.319 L 71.4555 451.104 L 23.1874 410.673 Z" id="imagebot_5"/>
+  <path transform="translate(4.13594 28.926) matrix(1.021 0.79644 -0.86356 0.94162 229.96 -178.17)" fill-rule="evenodd" fill="#000000" d="M 223 6.375 L 221.44 345.995 L 225.19 345.995 L 223.62 6.67499 L 223 6.36499 L 223 6.375 Z" id="imagebot_4"/>
+  <title>imagebot_3</title>
+  <circle r="0.5" cy="122.5" cx="386.37499" id="imagebot_38" fill-opacity="null" stroke-opacity="null" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#000000"/>
+  <circle r="0.5" cy="122.5" cx="610.12498" id="imagebot_39" fill-opacity="null" stroke-opacity="null" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#000000"/>
+  <circle r="0.5" cy="120" cx="557.62498" id="imagebot_40" fill-opacity="null" stroke-opacity="null" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#000000"/>
+  <circle r="0.5" cy="414.99999" cx="121.37499" id="imagebot_41" fill-opacity="null" stroke-opacity="null" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#000000"/>
+  <circle r="0.5" cy="387.49999" cx="135.12499" id="imagebot_42" fill-opacity="null" stroke-opacity="null" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#000000"/>
+  <circle r="0.5" cy="387.49999" cx="118.87499" id="imagebot_43" fill-opacity="null" stroke-opacity="null" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#000000"/>
+  <circle r="0.5" cy="387.49999" cx="118.87499" id="imagebot_44" fill-opacity="null" stroke-opacity="null" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#000000"/>
+ </g>
+ <metadata id="imagebot_2">image/svg+xmlOpenclipart</metadata>
+</svg>
