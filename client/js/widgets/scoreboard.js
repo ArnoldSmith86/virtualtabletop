@@ -161,11 +161,6 @@ class Scoreboard extends Widget {
     return tr;
   }
 
-  // Compute desired text color from luminance of background
-  getFgColor(bgColor) {    
-    return contrastAnyColor(bgColor, 1);
-}
-
   updateTable() {
     /* This routine creates the HTML table for display in the scoreboard. It is
      * complicated by the fact that the `seats` property can be either an array of
@@ -272,7 +267,7 @@ class Scoreboard extends Widget {
         for (let c=0; c<pScores.length; c++ ) {
           const bgColor = pScores[c][0]=='-' ? defaultColor : seats.filter(x=> x.get('player') == pScores[c][0])[0].get('color');
           tr.cells[c+1].style.backgroundColor = bgColor;
-          tr.cells[c+1].style.color = this.getFgColor(bgColor);
+          tr.cells[c+1].style.color = contrastAnyColor(bgColor, 1);
         }
       // Add remaining rows
       for( let r=1; r < numRows; r++ ) {
@@ -300,7 +295,7 @@ class Scoreboard extends Widget {
         if(showPlayerColors) {
           const bgColor = pScores[r][0]=='-' ? defaultColor : seats.filter(x=> x.get('player') == pScores[r][0])[0].get('color');
           tr.cells[0].style.backgroundColor = bgColor;
-          tr.cells[0].style.color = this.getFgColor(bgColor);
+          tr.cells[0].style.color = contrastAnyColor(bgColor, 1);
         }
       }
       for(let r=1; r < numRows; r++) {
