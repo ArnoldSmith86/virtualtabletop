@@ -15,26 +15,24 @@
         ]
       },
       {
-        "func": "SELECT",
-        "property": "id",
-        "value": "result3"
-      },
-      {
         "func": "SET",
-        "value": "${newArray}",
-        "property": "text"
+        "collection": [
+          "range"
+        ],
+        "property": "text",
+        "value": "${myResult}"
       }
     ],
     "z": 189,
     "y": 196,
     "text": "Multiplies each value in array",
-    "x": 690.5,
+    "x": 590.5,
     "width": 113
   },
   "9ikd": {
     "type": "label",
     "text": "Array:",
-    "x": 654,
+    "x": 554,
     "y": 298,
     "z": 150,
     "id": "9ikd",
@@ -43,7 +41,7 @@
   "8jh6": {
     "type": "label",
     "text": "Amount:",
-    "x": 654,
+    "x": 554,
     "y": 327,
     "z": 154,
     "id": "8jh6",
@@ -52,7 +50,7 @@
   "gmnl": {
     "type": "label",
     "text": "Result:\n(brackets won't show in label)",
-    "x": 614,
+    "x": 514,
     "y": 356,
     "z": 155,
     "id": "gmnl",
@@ -62,7 +60,7 @@
   "array1": {
     "type": "label",
     "id": "array1",
-    "x": 718,
+    "x": 618,
     "y": 298,
     "z": 151,
     "text": [
@@ -75,9 +73,9 @@
   "amount1": {
     "type": "label",
     "id": "amount1",
-    "x": 718,
-    "y": 327,
-    "z": 152,
+    "x": 616,
+    "y": 336,
+    "z": 26417,
     "editable": true,
     "text": 4,
     "width": 200
@@ -94,7 +92,7 @@
   "x5ny": {
     "type": "button",
     "id": "x5ny",
-    "y": 219,
+    "y": 196,
     "text": "changeroutine adds all x values for every widget (move button to see)",
     "z": 186,
     "changeRoutine": [
@@ -133,14 +131,15 @@
     ],
     "movable": true,
     "width": 192,
-    "x": 1225.5
+    "x": 925.5
   },
   "result2": {
     "type": "label",
     "id": "result2",
-    "x": 1275,
-    "y": 322,
-    "z": 26411
+    "x": 1000,
+    "y": 298,
+    "z": 26411,
+    "text": 32150
   },
   "r4wq": {
     "type": "button",
@@ -812,7 +811,7 @@
   },
   "82nw": {
     "type": "label",
-    "x": 693,
+    "x": 593,
     "y": 144,
     "z": 26413,
     "id": "82nw",
@@ -822,7 +821,7 @@
   },
   "do0z": {
     "type": "label",
-    "x": 1220,
+    "x": 920,
     "y": 144,
     "z": 26412,
     "id": "do0z",
@@ -865,7 +864,7 @@
     "width": 400
   },
   "_meta": {
-    "version": 6,
+    "version": 8,
     "info": {
       "name": "Functions - FOREACH",
       "image": "/assets/1547784624_7497",
@@ -874,21 +873,161 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
+      "attribution": "",
+      "lastUpdate": 1672720105428,
+      "id": "b309",
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
       "players": "1",
       "language": "en-US",
       "variant": "",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1652065010000
+      "variantImage": ""
     }
   },
   "936y": {
     "type": "label",
-    "x": 1195,
-    "y": 323,
+    "x": 950,
+    "y": 298,
     "z": 26415,
     "id": "936y",
     "text": "Results",
     "width": 60
+  },
+  "p6tt": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "range"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      "var start = 0",
+      "var end = 8",
+      "var increment = 5",
+      {
+        "func": "FOREACH",
+        "range": [
+          "${start}",
+          "${end}",
+          "${increment}"
+        ],
+        "loopRoutine": [
+          "var increment = 'hello' + ${value}"
+        ]
+      },
+      "var newResult = ${variableName} + 1"
+    ],
+    "x": 1338,
+    "y": 196,
+    "z": 196,
+    "id": "p6tt",
+    "width": 180
+  },
+  "do1z": {
+    "type": "label",
+    "x": 1320,
+    "y": 144,
+    "z": 26412,
+    "id": "do1z",
+    "css": "font-size: 30px; ",
+    "height": 40,
+    "width": 200,
+    "text": "Range"
+  },
+  "lxgw1": {
+    "type": "label",
+    "x": 1312,
+    "y": 305,
+    "z": 159,
+    "id": "lxgw1",
+    "width": 60,
+    "text": "Start 0"
+  },
+  "43jn": {
+    "type": "label",
+    "x": 1312,
+    "y": 336,
+    "z": 160,
+    "id": "43jn",
+    "width": 60,
+    "text": "End 5"
+  },
+  "937y": {
+    "type": "label",
+    "x": 1312,
+    "y": 368,
+    "z": 161,
+    "id": "937y",
+    "width": 60,
+    "text": "Step 1"
+  },
+  "range": {
+    "type": "label",
+    "id": "range",
+    "x": 1400,
+    "y": 336,
+    "width": 200,
+    "z": 163,
+    "editable": true
+  },
+  "p7tt": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "range"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          0,
+          5,
+          1
+        ],
+        "loopRoutine": [
+          "var newProduct = ${PROPERTY text OF amount3} * ${value}",
+          "var newOutput = ${PROPERTY text OF range} + ', '",
+          "var newOutput = ${newOutput} + ${newProduct}",
+          {
+            "func": "SET",
+            "collection": [
+              "range"
+            ],
+            "property": "text",
+            "value": "${newOutput}"
+          }
+        ]
+      }
+    ],
+    "x": 1328,
+    "y": 196,
+    "z": 197,
+    "id": "p7tt",
+    "width": 200,
+    "text": "Multiplies each value in the range 0-5 by the number in the label"
+  },
+  "amount3": {
+    "type": "label",
+    "id": "amount3",
+    "x": 1398,
+    "y": 303,
+    "z": 26419,
+    "editable": true,
+    "text": 4,
+    "width": 200
   }
 }
