@@ -9,3 +9,7 @@ body.edit .widget.basic.hasImage {
   opacity: 0.45;
 }
 
+.shadow {
+  filter: brightness(0);
+  opacity: 0.5;
+}

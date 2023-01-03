@@ -25,6 +25,7 @@ export class Widget extends StateManaged {
     super();
     this.id = id;
     this.domElement = div;
+    this.dropShadowWidget = null;
     this.childArray = [];
     this.propertiesUsedInCSS = [];
 
@@ -62,6 +63,7 @@ export class Widget extends StateManaged {
       dragging: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
+      dropShadow: false,
       inheritChildZ: false,
       hoverTarget: null,
 
@@ -1744,7 +1746,14 @@ export class Widget extends StateManaged {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('parent'));
       this.hoverTarget = null;
-
+      if (this.get('dropShadow')) {
+        const clone = Object.assign(JSON.parse(JSON.stringify(this.state)),
+            {"movable": false});
+        clone.classes = (clone.classes || '') + ' shadow';
+        delete clone.id;
+        delete clone.parent;
+        this.dropShadowWidget = widgets.get(await addWidgetLocal(clone));
+      }
       this.disablePileUpdateAfterParentChange = true;
       await this.set('parent', null);
       delete this.disablePileUpdateAfterParentChange;
@@ -1811,12 +1820,26 @@ export class Widget extends StateManaged {
         if(this.hoverTarget != this.currentParent)
           await this.checkParent(true);
       }
+      if (this.dropShadowWidget) {
+        this.dropShadowWidget.currentParent = widgets.get(this.dropShadowWidget.get('parent'));
+        await this.dropShadowWidget.set('parent', null);
+        this.dropShadowWidget.setPosition(this.get('x'), this.get('y'), this.get('z') - 1);
+        if (this.hoverTarget != this.dropShadowWidget.currentParent)
+          await this.dropShadowWidget.checkParent(true);
+        if (this.hoverTarget)
+          await this.dropShadowWidget.moveToHolder(this.hoverTarget);
+      }
     }
   }
 
   async moveEnd(coord, localAnchor) {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
+
+    if (this.dropShadowWidget) {
+      await removeWidgetLocal(this.dropShadowWidget.get('id'));
+      this.dropShadowWidget = null;
+    }
 
     await this.set('dragging', null);
     await this.set('hoverTarget', null);
