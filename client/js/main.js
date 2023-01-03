@@ -159,7 +159,7 @@ function checkURLproperties(connected) {
   } else {
 
     if(urlProperties.color)
-      toServer('playerColor', { player: playerName, color: urlProperties.color });
+      toServer('playerColor', { player: playerName, color: toHex(urlProperties.color) });
 
   }
 }

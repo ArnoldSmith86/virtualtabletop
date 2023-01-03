@@ -64,6 +64,7 @@ export default function minifyRoom() {
           'client/js/mousehandling.js',
           'client/js/tracing.js',
           'client/js/statemanaged.js',
+          'client/js/color.js',
 
           'client/js/overlays/players.js',
           'client/js/overlays/states.js',
