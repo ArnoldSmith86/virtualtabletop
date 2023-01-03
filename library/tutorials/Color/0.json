@@ -1,0 +1,399 @@
+{
+  "_meta": {
+    "version": 8,
+    "info": {
+      "name": "Color",
+      "image": "/assets/803671191_3068",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1672775282507,
+      "id": "4fea",
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    }
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Color Functions: Basic",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 290,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "string": {
+    "id": "string",
+    "x": 279,
+    "y": 84,
+    "width": 1000,
+    "z": 373,
+    "text": "These functions can be used to reformat, compare, or change colors dynamically in a room. Each of the functions accept most input formats including things like red, rgb(13,0,202), hsl(53,70%,25%), #ffe, and #fe12ab. Change the values in the text boxes and press the buttons to see the results.",
+    "css": {
+      "font-size": "20px"
+    }
+  },
+  "compare1": {
+    "type": "label",
+    "id": "compare1",
+    "y": 217,
+    "height": 40,
+    "z": 26451,
+    "editable": true,
+    "css": {
+      "background-color": "${PROPERTY cBack}",
+      "color": "${PROPERTY cText}",
+      "border": "solid black"
+    },
+    "cText": "#000000",
+    "cBack": "#ffffff",
+    "text": "red",
+    "width": 150,
+    "x": 570,
+    "cBackChangeRoutine": [
+      "var validCBack = colorToHex ${PROPERTY cBack}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cBack",
+        "value": "${validCBack}"
+      }
+    ]
+  },
+  "compare2": {
+    "type": "label",
+    "id": "compare2",
+    "y": 217,
+    "height": 40,
+    "z": 26450,
+    "css": {
+      "background-color": "${PROPERTY cBack}",
+      "color": "${PROPERTY cText}",
+      "border": "solid black"
+    },
+    "editable": true,
+    "cBack": "#ffffff",
+    "cText": "#000000",
+    "text": "blue",
+    "width": 150,
+    "x": 875,
+    "cBackChangeRoutine": [
+      "var validCBack = colorToHex ${PROPERTY cBack}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cBack",
+        "value": "${validCBack}"
+      }
+    ]
+  },
+  "result1": {
+    "id": "result1",
+    "y": 314,
+    "height": 20,
+    "z": 17,
+    "movable": false,
+    "text": "rgb(255,0,0)",
+    "css": {
+      "text-align": "center"
+    },
+    "x": 100
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "y": 350,
+    "width": 100,
+    "height": 60,
+    "z": 305,
+    "css": {
+      "font-size": "16px"
+    },
+    "text": "colorToRGB",
+    "clickRoutine": [
+      "var output = colorToRGB ${PROPERTY text OF compare1}",
+      {
+        "func": "LABEL",
+        "label": "result1",
+        "value": "${output}"
+      }
+    ],
+    "x": 100
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 400,
+    "y": 350,
+    "width": 100,
+    "height": 60,
+    "z": 289,
+    "css": {
+      "font-size": "16px"
+    },
+    "text": "colorToHex",
+    "clickRoutine": [
+      "var output = colorToHex ${PROPERTY text OF compare1}",
+      {
+        "func": "LABEL",
+        "label": "result2",
+        "value": "${output}"
+      }
+    ]
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 1000,
+    "y": 350,
+    "width": 100,
+    "height": 60,
+    "z": 289,
+    "css": {
+      "font-size": "15px"
+    },
+    "text": "colorContrast\nRatio",
+    "clickRoutine": [
+      "var output = colorContrastRatio ${PROPERTY text OF compare1} ${PROPERTY text OF compare2}",
+      "var output = ${output} toFixed 2",
+      {
+        "func": "LABEL",
+        "label": "result3",
+        "value": "${output}"
+      }
+    ]
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1300,
+    "y": 350,
+    "width": 100,
+    "height": 60,
+    "z": 292,
+    "css": {
+      "font-size": "15px"
+    },
+    "text": "colorContrast",
+    "clickRoutine": [
+      "var baseColor1 = ${PROPERTY text OF compare1}",
+      "var newColor1 = colorContrast ${baseColor1}",
+      {
+        "func": "SET",
+        "collection": [
+          "compare1"
+        ],
+        "property": "cBack",
+        "value": "${baseColor1}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "compare1"
+        ],
+        "property": "cText",
+        "value": "${newColor1}"
+      },
+      "var baseColor2 = ${PROPERTY text OF compare2}",
+      "var newColor2 = colorContrast ${baseColor2}",
+      {
+        "func": "SET",
+        "collection": [
+          "compare2"
+        ],
+        "property": "cBack",
+        "value": "${baseColor2}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "compare2"
+        ],
+        "property": "cText",
+        "value": "${newColor2}"
+      }
+    ]
+  },
+  "result2": {
+    "id": "result2",
+    "x": 400,
+    "y": 314,
+    "height": 20,
+    "z": 17,
+    "movable": false,
+    "text": "#ff0000",
+    "css": {
+      "text-align": "center"
+    }
+  },
+  "result3": {
+    "id": "result3",
+    "y": 314,
+    "height": 20,
+    "z": 17,
+    "movable": false,
+    "text": 2.15,
+    "css": {
+      "text-align": "center"
+    },
+    "width": 150,
+    "x": 975
+  },
+  "notes1": {
+    "id": "notes1",
+    "y": 424,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This button will convert the color in the first box above to rgb and post the result above the button.",
+    "x": 30
+  },
+  "notes2": {
+    "id": "notes2",
+    "y": 425,
+    "width": 250,
+    "z": 22,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This button will convert the color in the first box above to hex and post the result above the button.",
+    "x": 323
+  },
+  "notes3": {
+    "id": "notes3",
+    "x": 908,
+    "y": 425,
+    "width": 250,
+    "z": 22,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This button will compare the background colors in the boxes above and calculate a contrast ratio between 1 and 21. Guidelines suggest a contrast of at least 4.5 for text less than 18 point font."
+  },
+  "notes4": {
+    "id": "notes4",
+    "x": 1200,
+    "y": 425,
+    "width": 350,
+    "z": 22,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This button will make the background of both squares above the value of their text entries. Then it will make the text either black or white to create the best contrast. Additional settings for this function are demonstrated by the sliders and the seats."
+  },
+  "button6": {
+    "type": "button",
+    "id": "button6",
+    "x": 700,
+    "y": 350,
+    "width": 105,
+    "height": 60,
+    "z": 289,
+    "css": {
+      "font-size": "14px"
+    },
+    "text": "colorLuminance",
+    "clickRoutine": [
+      "var output = colorLuminance ${PROPERTY text OF compare1}",
+      "var output = ${output} toFixed 2",
+      {
+        "func": "LABEL",
+        "label": "result4",
+        "value": "${output}"
+      }
+    ]
+  },
+  "notes9": {
+    "id": "notes9",
+    "y": 425,
+    "width": 250,
+    "z": 22,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This button will display the luminance value of the first box above and post the result above the button.",
+    "x": 615
+  },
+  "result4": {
+    "id": "result4",
+    "y": 314,
+    "height": 20,
+    "z": 17,
+    "movable": false,
+    "css": {
+      "text-align": "center"
+    },
+    "x": 700,
+    "text": 0.21
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "y": 650,
+    "width": 100,
+    "height": 60,
+    "z": 305,
+    "css": {
+      "background": "${PROPERTY bColor}",
+      "color": "${PROPERTY tColor}"
+    },
+    "clickRoutine": [
+      "var newBack = colorCreateHue ${PROPERTY colorArray}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "bColor",
+        "value": "${newBack}"
+      },
+      "var newText = colorContrast ${newBack}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "tColor",
+        "value": "${newText}"
+      }
+    ],
+    "x": 100,
+    "colorArray": [
+      "red",
+      "green",
+      "orange"
+    ],
+    "tColor": "#ffffff",
+    "text": "colorCreate\nHue"
+  },
+  "notes5": {
+    "id": "notes5",
+    "y": 724,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This button will find the best random color as far apart visually as possible from an array of other colors and make this button that color. The array is in the button. If operand1 is not used, then the function will use the active players' colors.",
+    "x": 30
+  }
+}
