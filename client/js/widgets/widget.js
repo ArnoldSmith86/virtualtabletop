@@ -64,6 +64,7 @@ export class Widget extends StateManaged {
       dropOffsetX: 0,
       dropOffsetY: 0,
       dropShadow: false,
+      dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
 
@@ -1764,13 +1765,13 @@ export class Widget extends StateManaged {
         if (topChild && topChild.get('dropShadow'))
           shadowWidget = topChild;
       }
-      if (shadowWidget) {
-        this.dropShadowWidget = (await shadowWidget.clone({
+      if (shadowWidget && !this.get('dropShadowWidget')) {
+        await this.set('dropShadowWidget', (await shadowWidget.clone({
             'classes': (shadowWidget.state.classes || '') + ' shadow',
             'movable': false,
             // A bit of a hack to prevent shadows from being part of any piles.
             'onPileCreation': { 'random': Math.random() },
-            'parent': null}, true)).get('id');
+            'parent': null}, true)).get('id'));
       }
       this.disablePileUpdateAfterParentChange = true;
       await this.set('parent', null);
@@ -1838,8 +1839,8 @@ export class Widget extends StateManaged {
         if(this.hoverTarget != this.currentParent)
           await this.checkParent(true);
       }
-      if (this.dropShadowWidget && widgets.has(this.dropShadowWidget)) {
-        const shadowWidget = widgets.get(this.dropShadowWidget);
+      if (this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
+        const shadowWidget = widgets.get(this.get('dropShadowWidget'));
         shadowWidget.currentParent = widgets.get(shadowWidget.get('parent'));
         await shadowWidget.set('parent', null);
         shadowWidget.setPosition(this.get('x'), this.get('y'), this.get('z') - 1);
@@ -1855,10 +1856,10 @@ export class Widget extends StateManaged {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
-    if (this.dropShadowWidget) {
-      if (widgets.has(this.dropShadowWidget))
-        await removeWidgetLocal(this.dropShadowWidget);
-      this.dropShadowWidget = null;
+    if (this.get('dropShadowWidget')) {
+      if (widgets.has(this.get('dropShadowWidget')))
+        await removeWidgetLocal(this.get('dropShadowWidget'));
+      await this.set('dropShadowWidget', null);
     }
 
     await this.set('dragging', null);
