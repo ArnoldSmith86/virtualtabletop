@@ -49,6 +49,61 @@ class Scoreboard extends Widget {
     return p;
   }
 
+  async click(mode='respect') {
+    if(!await super.click(mode)) {
+      const scoreProperty = this.get('scoreProperty');
+      const seats = this.getIncludedSeats();
+      let players = [];
+      if(Array.isArray(seats))
+        players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') || '-' }; });
+      else { // Teams
+        for (const team in seats) 
+          players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player') || '-'} (${team})` } }))
+      }
+
+      let rounds = this.getRounds(seats, scoreProperty, 1).map(function(r, i) { return { text: r, value: i+1 }; });
+
+      if(this.totalsOnly)
+        rounds = [{text: 'total', value: 0}];
+      
+      if(!players.length || !rounds.length)
+        return;
+
+      try {
+        const result = await this.showInputOverlay({
+          header: this.get('editPaneTitle'),
+          fields: [
+            {
+              type: 'select',
+              label: 'Player',
+              options: players,
+              variable: 'player'
+            },
+            {
+              type: 'select',
+              label: this.get('roundLabel'),
+              options: rounds,
+              variable: 'round'
+            },
+            {
+              type: 'number',
+              label: 'Value',
+              variable: 'score'
+            }
+          ]
+        });
+        const seat = widgets.get(result.player);
+        let scores = seat.get(scoreProperty);
+        if(!this.totalsOnly) {
+          scores = [...scores];
+          scores[result.round-1] = +result.score;
+        } else
+          scores = +result.score;
+        await seat.set(scoreProperty, scores);
+      } catch(e) {}
+    }
+  }
+
   get(property) {
     if(property != '_totals')
       return super.get(property)
@@ -307,60 +362,5 @@ class Scoreboard extends Widget {
     }
     this.domElement.style.setProperty('--firstColWidth', '50px');
     this.domElement.style.setProperty('--columns', numCols);
-  }
-
-async click(mode='respect') {
-    if(!await super.click(mode)) {
-      const scoreProperty = this.get('scoreProperty');
-      const seats = this.getIncludedSeats();
-      let players = [];
-      if(Array.isArray(seats))
-        players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') || '-' }; });
-      else { // Teams
-        for (const team in seats) 
-          players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player') || '-'} (${team})` } }))
-      }
-
-      let rounds = this.getRounds(seats, scoreProperty, 1).map(function(r, i) { return { text: r, value: i+1 }; });
-
-      if(this.totalsOnly)
-        rounds = [{text: 'total', value: 0}];
-      
-      if(!players.length || !rounds.length)
-        return;
-
-      try {
-        const result = await this.showInputOverlay({
-          header: this.get('editPaneTitle'),
-          fields: [
-            {
-              type: 'select',
-              label: 'Player',
-              options: players,
-              variable: 'player'
-            },
-            {
-              type: 'select',
-              label: this.get('roundLabel'),
-              options: rounds,
-              variable: 'round'
-            },
-            {
-              type: 'number',
-              label: 'Value',
-              variable: 'score'
-            }
-          ]
-        });
-        const seat = widgets.get(result.player);
-        let scores = seat.get(scoreProperty);
-        if(!this.totalsOnly) {
-          scores = [...scores];
-          scores[result.round-1] = +result.score;
-        } else
-          scores = +result.score;
-        await seat.set(scoreProperty, scores);
-      } catch(e) {}
-    }
   }
 }
