@@ -950,6 +950,8 @@ export default class Room {
       delete state._meta.info.publicLibrary;
       delete state._meta.info.publicLibraryCategory;
 
+      state._meta.info.lastUpdate = +new Date();
+
       fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
     }
 
@@ -976,6 +978,8 @@ export default class Room {
     delete copy._meta.info.timePlayed;
     delete copy._meta.info.link;
     delete copy._meta.info.variants;
+
+    copy._meta.info.lastUpdate = +new Date();
 
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
     this.writePublicLibraryAssetsToFilesystem(stateID);
