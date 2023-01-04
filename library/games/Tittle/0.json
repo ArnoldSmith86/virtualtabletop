@@ -1216,226 +1216,6 @@
     "movableInEdit": false,
     "image": "/assets/-753447363_159340"
   },
-  "p2ScoreMinus": {
-    "type": "button",
-    "id": "p2ScoreMinus",
-    "x": 4,
-    "y": -2,
-    "width": 36,
-    "height": 36,
-    "layer": 15,
-    "movableInEdit": false,
-    "backgroundColor": "#00a2e8",
-    "backgroundColorOH": "#96BFE1",
-    "borderColor": "black",
-    "borderColorOH": "white",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "p1Score",
-        "mode": "inc",
-        "value": -1
-      }
-    ],
-    "text": "-",
-    "parent": "p1Score"
-  },
-  "p2ScorePlus": {
-    "type": "button",
-    "id": "p2ScorePlus",
-    "x": 100,
-    "y": -2,
-    "width": 36,
-    "height": 36,
-    "layer": 15,
-    "movableInEdit": false,
-    "backgroundColor": "#00a2e8",
-    "backgroundColorOH": "#96BFE1",
-    "borderColor": "black",
-    "borderColorOH": "white",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "p1Score",
-        "mode": "inc",
-        "value": 1
-      }
-    ],
-    "text": "+",
-    "parent": "p1Score"
-  },
-  "p1ScoreMinus": {
-    "type": "button",
-    "id": "p1ScoreMinus",
-    "x": 4,
-    "y": -2,
-    "width": 36,
-    "height": 36,
-    "layer": 15,
-    "movableInEdit": false,
-    "backgroundColor": "#ed1c24",
-    "backgroundColorOH": "#F7C8C8",
-    "borderColor": "black",
-    "borderColorOH": "white",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "p2Score",
-        "mode": "inc",
-        "value": -1
-      }
-    ],
-    "text": "-",
-    "parent": "p2Score"
-  },
-  "p1ScorePlus": {
-    "type": "button",
-    "id": "p1ScorePlus",
-    "x": 100,
-    "y": -2,
-    "width": 36,
-    "height": 36,
-    "layer": 15,
-    "movableInEdit": false,
-    "backgroundColor": "#ed1c24",
-    "backgroundColorOH": "#F7C8C8",
-    "borderColor": "black",
-    "borderColorOH": "white",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "p2Score",
-        "mode": "inc",
-        "value": 1
-      }
-    ],
-    "text": "+",
-    "parent": "p2Score"
-  },
-  "p3Score": {
-    "type": "label",
-    "id": "p3Score",
-    "x": 10,
-    "y": 950,
-    "width": 140,
-    "height": 44,
-    "layer": 15,
-    "z": 2481,
-    "css": "font-size: 30px",
-    "editable": true,
-    "text": 0,
-    "linkedToSeat": "seat4"
-  },
-  "p3ScoreMinus": {
-    "type": "button",
-    "id": "p3ScoreMinus",
-    "parent": "p3Score",
-    "x": 4,
-    "y": -2,
-    "width": 36,
-    "height": 36,
-    "layer": 15,
-    "movableInEdit": false,
-    "backgroundColor": "#22b14c",
-    "backgroundColorOH": "#CEFBD8",
-    "borderColor": "black",
-    "borderColorOH": "white",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "p3Score",
-        "mode": "inc",
-        "value": -1
-      }
-    ],
-    "text": "-"
-  },
-  "p3ScorePlus": {
-    "type": "button",
-    "id": "p3ScorePlus",
-    "parent": "p3Score",
-    "x": 100,
-    "y": -2,
-    "width": 36,
-    "height": 36,
-    "layer": 15,
-    "movableInEdit": false,
-    "backgroundColor": "#22b14c",
-    "backgroundColorOH": "#CEFBD8",
-    "borderColor": "black",
-    "borderColorOH": "white",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "p3Score",
-        "mode": "inc",
-        "value": 1
-      }
-    ],
-    "text": "+"
-  },
-  "p4Score": {
-    "type": "label",
-    "id": "p4Score",
-    "x": 10,
-    "y": 815,
-    "width": 140,
-    "height": 44,
-    "layer": 15,
-    "z": 2494,
-    "css": "font-size: 30px",
-    "editable": true,
-    "text": 0,
-    "linkedToSeat": "seat3"
-  },
-  "p4ScoreMinus": {
-    "type": "button",
-    "id": "p4ScoreMinus",
-    "parent": "p4Score",
-    "x": 4,
-    "y": -2,
-    "width": 36,
-    "height": 36,
-    "layer": 15,
-    "movableInEdit": false,
-    "backgroundColor": "#ffc90e",
-    "backgroundColorOH": "#FBFBCE",
-    "borderColor": "black",
-    "borderColorOH": "white",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "p4Score",
-        "mode": "inc",
-        "value": -1
-      }
-    ],
-    "text": "-"
-  },
-  "p4ScorePlus": {
-    "type": "button",
-    "id": "p4ScorePlus",
-    "parent": "p4Score",
-    "x": 100,
-    "y": -2,
-    "width": 36,
-    "height": 36,
-    "layer": 15,
-    "movableInEdit": false,
-    "backgroundColor": "#ffc90e",
-    "backgroundColorOH": "#FBFBCE",
-    "borderColor": "black",
-    "borderColorOH": "white",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "p4Score",
-        "mode": "inc",
-        "value": 1
-      }
-    ],
-    "text": "+"
-  },
   "l2jq": {
     "type": "label",
     "z": 1,
@@ -1520,22 +1300,6 @@
       },
       {
         "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "relation": "in",
-        "value": [
-          "p1Score",
-          "p2Score",
-          "p3Score",
-          "p4Score"
-        ]
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": 0
       }
     ],
     "color": "white",
@@ -1576,7 +1340,7 @@
     ]
   },
   "_meta": {
-    "version": 6,
+    "version": 9,
     "info": {
       "name": "Tittle",
       "image": "/assets/371528430_9397",
@@ -1585,15 +1349,21 @@
       "year": "2012",
       "mode": "vs",
       "time": "30",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The game layout and images (including the library image) were done by LawDawg and are released to the Public Domain under CC0.\n\nThe background picture is by Dawn Hudson (cropped and colors modified) and released to the public domain under the CC0 license at https://publicdomainpictures.net/en/view-image.php?image=71643&picture=colourful-flame-background.",
-      "similarName": "IOTA",
-      "description": "Place cards in tile pattern on board matching 4 shapes and 4 colors.  Player with most points wins.",
+      "attribution": "The game layout and images (including the library image) were done by LawDawg and are released to the Public Domain under CC0.\n\nThe background picture is by Dawn Hudson (cropped and colors modified) and released to the public domain under the CC0 license at https://publicdomainpictures.net/en/view-image.php?image=71643&amp;picture=colourful-flame-background.",
+      "lastUpdate": 1672794002688,
+      "id": "z7eg",
       "showName": true,
-      "helpText": "Players take seats. Move 4 cards to hand on right of screen using +4 button. Play cards and keep score manually. Replace cards using +1 button. The black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere.",
-      "lastUpdate": 1659321088000
+      "skill": "",
+      "description": "Place cards in tile pattern on board matching 4 shapes and 4 colors. Player with most points wins.",
+      "variant": "LawDawg",
+      "language": "",
+      "players": "",
+      "similarImage": "",
+      "similarName": "IOTA",
+      "similarAwards": "2012/Fall Parents' Choice Recommended\n2012 Mensa Select Winner",
+      "ruleText": "",
+      "helpText": "Players take seats. Move 4 cards to hand on right of screen using +4 button. Play cards and keep score by clicking on the scoreboard and entering score. Replace cards using +1 button. The black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere."
+
     }
   },
   "plus7": {
@@ -1842,12 +1612,14 @@
         "collection": "thisButton",
         "mode": "ignoreClickRoutine"
       }
+    ],
+    "score": [
+      0
     ]
   },
   "seat2": {
     "type": "seat",
     "id": "seat2",
-    "y": 140,
     "z": 2083,
     "movableInEdit": false,
     "hideWhenUnused": true,
@@ -1864,12 +1636,15 @@
         "collection": "thisButton",
         "mode": "ignoreClickRoutine"
       }
+    ],
+    "y": 75,
+    "score": [
+      0
     ]
   },
   "seat3": {
     "type": "seat",
     "id": "seat3",
-    "y": 750,
     "z": 2083,
     "movableInEdit": false,
     "hideWhenUnused": true,
@@ -1885,12 +1660,15 @@
         "collection": "thisButton",
         "mode": "ignoreClickRoutine"
       }
+    ],
+    "y": 150,
+    "score": [
+      0
     ]
   },
   "seat4": {
     "type": "seat",
     "id": "seat4",
-    "y": 890,
     "z": 2083,
     "movableInEdit": false,
     "index": 4,
@@ -1906,35 +1684,11 @@
         "collection": "thisButton",
         "mode": "ignoreClickRoutine"
       }
+    ],
+    "y": 225,
+    "score": [
+      0
     ]
-  },
-  "p2Score": {
-    "type": "label",
-    "id": "p2Score",
-    "x": 10,
-    "y": 200,
-    "width": 140,
-    "height": 44,
-    "layer": 15,
-    "z": 10365,
-    "css": "font-size: 30px",
-    "editable": true,
-    "text": 0,
-    "linkedToSeat": "seat2"
-  },
-  "p1Score": {
-    "type": "label",
-    "id": "p1Score",
-    "x": 10,
-    "y": 65,
-    "width": 140,
-    "height": 44,
-    "layer": 15,
-    "z": 2474,
-    "css": "font-size: 30px",
-    "editable": true,
-    "text": 0,
-    "linkedToSeat": "seat1"
   },
   "next": {
     "type": "button",
@@ -1950,5 +1704,17 @@
     ],
     "text": "Next Player",
     "movableInEdit": false
+  },
+  "scoreboard": {
+    "type": "scoreboard",
+    "id": "scoreboard",
+    "y": 800,
+    "z": 2101,
+    "css": {
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "10px"
+      }
+    },
+    "sortField": "player"
   }
 }
