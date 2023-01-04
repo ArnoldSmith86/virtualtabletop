@@ -1313,6 +1313,10 @@
         "value": [
           0
         ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
       }
     ],
     "color": "white",
@@ -1350,6 +1354,34 @@
           }
         ]
       }
+    ],
+    "scoreGlobalUpdateRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "TURN"
+      }
     ]
   },
   "_meta": {
@@ -1368,15 +1400,14 @@
       "showName": true,
       "skill": "",
       "description": "Place cards in tile pattern on board matching 4 shapes and 4 colors. Player with most points wins.",
-      "variant": "LawDawg",
-      "language": "",
-      "players": "",
       "similarImage": "",
       "similarName": "IOTA",
       "similarAwards": "2012/Fall Parents' Choice Recommended\n2012 Mensa Select Winner",
       "ruleText": "",
-      "helpText": "Players take seats. Move 4 cards to hand on right of screen using +4 button. Play cards and keep score by clicking on the scoreboard and entering score. Replace cards using +1 button. The black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere."
-
+      "helpText": "Players take seats. Move 4 cards to hand on right of screen using +4 button. Play cards and keep score by clicking on the scoreboard and entering score. Replace cards using +1 button. The black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere.",
+      "players": "",
+      "language": "",
+      "variant": "Test"
     }
   },
   "plus7": {
