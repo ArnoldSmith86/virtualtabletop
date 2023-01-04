@@ -921,7 +921,6 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'COUNT') {
-        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
         setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT', owner: null });
         let collection;
         let theItem;
