@@ -786,6 +786,8 @@ function populateAddWidgetOverlay() {
     x: 1000,
     y: 600
   });
+
+  /* Note that the button to add a scoreboard is in room.html */
 }
 // end of JSON generators
 
@@ -1194,6 +1196,15 @@ onLoad(function() {
     showOverlay();
   });
 
+  on('#addScoreboard', 'click', async function() {
+    await addWidgetLocal({
+      type: 'scoreboard',
+      x: 1000,
+      y:660
+    });
+    showOverlay();
+  });
+  
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 
