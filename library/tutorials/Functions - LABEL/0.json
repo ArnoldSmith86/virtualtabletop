@@ -1,0 +1,198 @@
+{
+  "_meta": {
+    "version": 5,
+    "info": {
+      "name": "Functions - LABEL",
+      "image": "/assets/-282998185_6535",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1639024855000
+    }
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: LABEL",
+    "x": 400
+  },
+  "406b": {
+    "id": "406b",
+    "x": 108,
+    "y": 112,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 125,
+    "css": "font-size: 25px; ",
+    "text": "LABEL is a way to change the text property of widgets. It works on any widget with a text property such as basic widgets, labels, buttons, and piles.  The composed counter widget you see below is a good example. The plus and minus buttons use the 'inc' and 'dec' modes, respectively, to increase and decrease the value of the counter by one. The amount of increase and decrease can be set to any number, including decimals."
+  },
+  "bm4j": {
+    "text": "The button above uses the 'set' mode to change the text property of the basic widget above it. The button uses the value of the label in the counter above.",
+    "id": "bm4j",
+    "x": 97,
+    "z": 193,
+    "width": 500,
+    "movable": false,
+    "css": "font-size: 25px; ",
+    "y": 600
+  },
+  "bm5j": {
+    "text": "The button above uses the 'append' mode to change the text property of the widget above it. The button generates a random number between 0 and 9 and appends it on to the end of the existing value.",
+    "id": "bm5j",
+    "x": 900,
+    "y": 600,
+    "z": 186,
+    "width": 500,
+    "movable": false,
+    "css": "font-size: 25px; "
+  },
+  "jkmt": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "label2",
+        "mode": "set",
+        "value": "${PROPERTY text OF label1}"
+      }
+    ],
+    "x": 274,
+    "y": 450,
+    "z": 10,
+    "id": "jkmt",
+    "text": "Label"
+  },
+  "jkmt1": {
+    "type": "button",
+    "clickRoutine": [
+      "var random = randInt 0 9",
+      {
+        "func": "LABEL",
+        "mode": "append",
+        "value": "${random}",
+        "collection": "thisButton"
+      }
+    ],
+    "x": 1100,
+    "y": 450,
+    "z": 9,
+    "id": "jkmt1",
+    "text": "Label"
+  },
+  "ipl0D": {
+    "id": "ipl0D",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "label1"
+  },
+  "ipl0U": {
+    "id": "ipl0U",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "label1"
+  },
+  "label2": {
+    "id": "label2",
+    "x": 297,
+    "y": 367,
+    "z": 191,
+    "text": "??",
+    "css": "font-size: 30px; text-align:center",
+    "width": 40,
+    "height": 40
+  },
+  "label1": {
+    "type": "label",
+    "id": "label1",
+    "x": 726.5,
+    "y": 286,
+    "width": 65,
+    "height": 40,
+    "z": 2,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "defaultHeading": {
+    "type": "label",
+    "id": "defaultHeading",
+    "x": 1245,
+    "y": 919,
+    "width": 200,
+    "height": 42,
+    "z": 13,
+    "css": "font-size: 30px",
+    "text": "Heading",
+    "editable": true
+  },
+  "defaultLabel": {
+    "type": "label",
+    "id": "defaultLabel",
+    "x": 1293,
+    "y": 848,
+    "z": 12,
+    "text": "Label",
+    "editable": true
+  },
+  "bm6j": {
+    "text": "Note, the LABEL function should not be confused with the label type of widget. There are 2 default types available in the add widget menu, both of which are shown to the right. They are the same except for size and font-size. Label widgets are 'textareas', which is now seen mostly as a disadvantage. The only advantage labels have over other widget types is the 'editable' property, which if set to true, allows a player to change the text without using a JSON editor.  ",
+    "id": "bm6j",
+    "x": 93,
+    "z": 202,
+    "width": 1100,
+    "movable": false,
+    "css": "font-size: 25px; ",
+    "y": 834
+  },
+  "9mbv": {
+    "id": "9mbv",
+    "z": 204,
+    "y": 800,
+    "layer": -4,
+    "width": 1600,
+    "height": 200,
+    "css": "background: lightgrey; "
+  }
+}

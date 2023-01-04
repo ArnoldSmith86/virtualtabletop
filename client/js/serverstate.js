@@ -161,7 +161,7 @@ function receiveStateFromServer(args) {
   }
 
   if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-    showOverlay('statesOverlay');
+    $('#statesButton').click();
     overlayShownForEmptyRoom = true;
   }
   toServer('confirm');
