@@ -1300,6 +1300,19 @@
       },
       {
         "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "property": "score",
+        "value": [
+          0
+        ]
       }
     ],
     "color": "white",
