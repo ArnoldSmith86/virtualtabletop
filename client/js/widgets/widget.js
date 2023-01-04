@@ -1767,7 +1767,7 @@ export class Widget extends StateManaged {
       }
       if (shadowWidget && !this.get('dropShadowWidget')) {
         await this.set('dropShadowWidget', (await shadowWidget.clone({
-            'classes': (shadowWidget.state.classes || '') + ' shadow',
+            'classes': (shadowWidget.state.classes || '') + ' dragging-shadow',
             'movable': false,
             // A bit of a hack to prevent shadows from being part of any piles.
             'onPileCreation': { 'random': Math.random() },
