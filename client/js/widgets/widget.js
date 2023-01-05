@@ -63,7 +63,6 @@ export class Widget extends StateManaged {
       dragging: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
-      dropShadow: false,
       dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
@@ -414,6 +413,19 @@ export class Widget extends StateManaged {
   coordParentFromCoordLocal(coord) {
     const transform = getElementTransform(this.domElement);
     return dehomogenize(transform.transformPoint(new DOMPoint(coord.x, coord.y)));
+  }
+
+  async createShadowWidget() {
+    // Use the top child if this is a pile widget.
+    let shadowWidget = this.get('type') == 'pile' ? shadowWidget = this.children().slice(-1)[0] : this;
+    if (!shadowWidget)
+      return null;
+    await this.set('dropShadowWidget', (await shadowWidget.clone({
+        'classes': (shadowWidget.state.classes || '') + ' dragging-shadow',
+        'movable': false,
+        // A bit of a hack to prevent shadows from being part of any piles.
+        'onPileCreation': { 'random': Math.random() },
+        'parent': null}, true)).get('id'));
   }
 
   css() {
@@ -1758,21 +1770,6 @@ export class Widget extends StateManaged {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('parent'));
       this.hoverTarget = null;
-      let shadowWidget = this.get('dropShadow') ? this : null;
-      if (this.get('type') == 'pile') {
-        shadowWidget = null;
-        let topChild = this.children().slice(-1)[0];
-        if (topChild && topChild.get('dropShadow'))
-          shadowWidget = topChild;
-      }
-      if (shadowWidget && !this.get('dropShadowWidget')) {
-        await this.set('dropShadowWidget', (await shadowWidget.clone({
-            'classes': (shadowWidget.state.classes || '') + ' dragging-shadow',
-            'movable': false,
-            // A bit of a hack to prevent shadows from being part of any piles.
-            'onPileCreation': { 'random': Math.random() },
-            'parent': null}, true)).get('id'));
-      }
       this.disablePileUpdateAfterParentChange = true;
       await this.set('parent', null);
       delete this.disablePileUpdateAfterParentChange;
@@ -1838,7 +1835,15 @@ export class Widget extends StateManaged {
         await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
         if(this.hoverTarget != this.currentParent)
           await this.checkParent(true);
+
+        // When the hover target changes we may need to create or remove the shadow widget.
+        if (this.hoverTarget && this.hoverTarget.get('dropShadow'))
+          await this.createShadowWidget();
+        else
+          await this.hideShadowWidget();
       }
+
+      // If we currently have a shadow widget, position it and place it in the holder.
       if (this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
         const shadowWidget = widgets.get(this.get('dropShadowWidget'));
         shadowWidget.currentParent = widgets.get(shadowWidget.get('parent'));
@@ -1856,12 +1861,7 @@ export class Widget extends StateManaged {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
-    if (this.get('dropShadowWidget')) {
-      if (widgets.has(this.get('dropShadowWidget')))
-        await removeWidgetLocal(this.get('dropShadowWidget'));
-      await this.set('dropShadowWidget', null);
-    }
-
+    await this.hideShadowWidget();
     await this.set('dragging', null);
     await this.set('hoverTarget', null);
 
@@ -1887,6 +1887,19 @@ export class Widget extends StateManaged {
       this.domElement.classList.remove('longtouch');
 
     await this.updatePiles();
+  }
+
+  async hideShadowWidget() {
+    if (!this.get('dropShadowWidget'))
+      return;
+    if (widgets.has(this.get('dropShadowWidget'))) {
+      const shadowWidget = widgets.get(this.get('dropShadowWidget'));
+      shadowWidget.currentParent = widgets.get(shadowWidget.get('parent'));
+      await shadowWidget.set('parent', null);
+      await shadowWidget.checkParent(true);
+      await removeWidgetLocal(shadowWidget.get('id'));
+    }
+    await this.set('dropShadowWidget', null);
   }
 
   async onChildAdd(child, oldParentID) {
