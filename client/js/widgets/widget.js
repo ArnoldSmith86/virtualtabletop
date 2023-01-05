@@ -420,7 +420,7 @@ export class Widget extends StateManaged {
       return;
 
     // Use the top child if this is a pile widget.
-    let shadowWidget = this.get('type') == 'pile' ? shadowWidget = this.children().slice(-1)[0] : this;
+    const shadowWidget = this.get('type') == 'pile' ? this.children().slice(-1)[0] : this;
     if (!shadowWidget)
       return null;
     await this.set('dropShadowWidget', (await shadowWidget.clone({
