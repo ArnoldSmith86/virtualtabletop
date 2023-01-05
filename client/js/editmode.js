@@ -721,8 +721,8 @@ function populateAddWidgetOverlay() {
   // Note that the Add Canvas and Add Seat buttons are in room.html.
 
   // First the various spinners
-  y = 180;
-  for(const sides of [ 2, 6, 10, 20 ]) {
+  y = 300;
+  for(const sides of [ 2, 6, 10 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
       type: 'spinner',
       value: sides,
@@ -733,7 +733,7 @@ function populateAddWidgetOverlay() {
     y += 120;
   }
 
-  y = 180;
+  y = 300;
   for(const sides of [ 4, 8, 12 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
       type: 'spinner',
