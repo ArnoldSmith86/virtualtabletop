@@ -916,7 +916,7 @@ export class Widget extends StateManaged {
               const cWidget = await w.clone(a.properties, false, problems);
 
               // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
-              const parent = cWidget.get('parent') ? widgets.get(cWidget.get('parent')) : null;
+              const parent = cWidget.get('parent');
               if(!parent || !widgets.get(parent).get('alignChildren')) {
                 await cWidget.set('x', (a.properties.x !== undefined ? a.properties.x : w.get('x')) + a.xOffset * i);
                 await cWidget.set('y', (a.properties.y !== undefined ? a.properties.y : w.get('y')) + a.yOffset * i);
@@ -1859,6 +1859,7 @@ export class Widget extends StateManaged {
         } else {
           const localPoint = this.hoverTarget.coordLocalFromCoordGlobal(globalPoint);
           shadowWidget.setPosition(localPoint.x, localPoint.y, localPoint.z);
+          await shadowWidget.bringToFront();
           if (this.hoverTarget.get('alignChildren'))
             await this.hoverTarget.receiveCard(shadowWidget, [localPoint.x, localPoint.y]);
         }
