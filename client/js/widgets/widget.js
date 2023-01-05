@@ -1859,7 +1859,8 @@ export class Widget extends StateManaged {
         } else {
           const localPoint = this.hoverTarget.coordLocalFromCoordGlobal(globalPoint);
           shadowWidget.setPosition(localPoint.x, localPoint.y, localPoint.z);
-          await this.hoverTarget.receiveCard(shadowWidget, [localPoint.x, localPoint.y]);
+          if (this.hoverTarget.get('alignChildren'))
+            await this.hoverTarget.receiveCard(shadowWidget, [localPoint.x, localPoint.y]);
         }
       }
     }
