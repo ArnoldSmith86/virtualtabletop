@@ -14,15 +14,15 @@
       "showName": true,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Basic",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "players": "1",
+      "language": "en-US",
+      "variant": "Basic",
+      "variantImage": ""
     }
   },
   "seat1": {
