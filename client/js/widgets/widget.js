@@ -1857,7 +1857,7 @@ export class Widget extends StateManaged {
           await shadowWidget.checkParent(true);
           await shadowWidget.moveToHolder(this.hoverTarget);
         } else {
-          const localPoint = this.coordParentFromCoordGlobal(globalPoint);
+          const localPoint = this.hoverTarget.coordLocalFromCoordGlobal(globalPoint);
           shadowWidget.setPosition(localPoint.x, localPoint.y, localPoint.z);
           await this.hoverTarget.receiveCard(shadowWidget, [localPoint.x, localPoint.y]);
         }
