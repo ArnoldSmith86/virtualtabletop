@@ -426,8 +426,7 @@ export class Widget extends StateManaged {
     await this.set('dropShadowWidget', (await shadowWidget.clone({
         'classes': (shadowWidget.state.classes || '') + ' dragging-shadow',
         'movable': false,
-        // A bit of a hack to prevent shadows from being part of any piles.
-        'onPileCreation': { 'random': Math.random() },
+        'dropShadowClone': this.get('id'),
         'parent': null}, true)).get('id'));
   }
 
@@ -2147,7 +2146,7 @@ export class Widget extends StateManaged {
       return;
 
     const thisParent = this.get('parent');
-    if(this.isBeingRemoved || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
+    if(this.isBeingRemoved || this.get('dropShadowClone') || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
       return;
 
     const thisX = this.get('x');
@@ -2163,7 +2162,7 @@ export class Widget extends StateManaged {
 
       // check if this widget is closer than 10px from another widget in the same parent
       if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
-        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
+        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowClone') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
