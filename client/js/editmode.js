@@ -655,40 +655,45 @@ function populateAddWidgetOverlay() {
   });
 
   // Populate the Game Pieces panel in the add widget overlay
-  let y = 100;
+  let xC = 380;
+  const xOff = 300;
+  let yC = 80;
+  const yOff = 88;
   // First the pins, checkers, and pawns
-  for(const color of [ '#bc5bee','#4c5fea','#23ca5b','#e0cb0b','#e2a633','#e84242','#000000','#4a4a4a','#ffffff' ]) {
-    addWidgetToAddWidgetOverlay(new BasicWidget('add-pin-'+color), {
-      classes: 'pinPiece',
-      color,
-      width: 35.85,
-      height: 43.83,
-      x: 380,
-      y
-    });
+  const color = [ '#bc5bee','#4c5fea','#23ca5b','#e0cb0b','#e2a633','#e84242','#000000','#4a4a4a','#ffffff' ];
+  for (let col=0; col <=2; col++)
+    for (let row=0; row<=2; row++) {
+      const thisColor = color[3*col+row];
+      addWidgetToAddWidgetOverlay(new BasicWidget('add-pin-'+thisColor), {
+        classes: 'pinPiece',
+        color: thisColor,
+        width: 35.85,
+        height: 43.83,
+        x: xC + xOff*col,
+        y: yC + yOff*row
+      });
 
-    addWidgetToAddWidgetOverlay(new BasicWidget('add-checkers-'+color), {
-      faces: [
-        { classes: "checkersPiece"         },
-        { classes: "checkersPiece crowned" }
-      ],
-      color,
-      width: 73.5,
-      height: 73.5,
-      x: 440,
-      y: Math.round(y + (43.83 - 73.5)/2)
-    });
+      addWidgetToAddWidgetOverlay(new BasicWidget('add-checkers-'+thisColor), {
+        faces: [
+          { classes: "checkersPiece"         },
+          { classes: "checkersPiece crowned" }
+        ],
+        color: thisColor,
+        width: 73.5,
+        height: 73.5,
+        x: xC + xOff*col + 60,
+        y: yC + yOff*row + Math.round((43.83 - 73.5)/2)
+      });
 
-    addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
-      classes: 'classicPiece',
-      color,
-      width: 56,
-      height: 84,
-      x: 528,
-      y: Math.round(y + (43.83 - 84)/2)
-    });
-    y += 88;
-  }
+      addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+thisColor), {
+        classes: 'classicPiece',
+        color: thisColor,
+        width: 56,
+        height: 84,
+        x: xC + xOff*col + 150,
+        y: yC + yOff*row + Math.round((43.83 - 84)/2)
+      });
+    }
 
   // Next the unicode symbols
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
@@ -698,7 +703,7 @@ function populateAddWidgetOverlay() {
     width: 25,
     height: 25,
     x: 380,
-    y: y + 5
+    y: yC + yOff*3 + 25
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeM'), {
@@ -707,64 +712,64 @@ function populateAddWidgetOverlay() {
     width: 50,
     height: 50,
     x: 440,
-    y
+    y: yC + yOff*3 + 25
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeL'), {
     text: '♞',
     css: 'font-size:100px;'+centerStyle,
     x: 500,
-    y: y - 25
+    y: yC + yOff*3
   });
 
   // Populate the Interactive panel in the add widget overlay.
   // Note that the Add Canvas and Add Seat buttons are in room.html.
 
   // First the various spinners
-  y = 180;
-  for(const sides of [ 2, 6, 10, 20 ]) {
+  xC = 380;
+  for(const sides of [ 2, 4, 6, 8 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
       type: 'spinner',
       value: sides,
       options: Array.from({length: sides}, (_, i) => i + 1),
-      x: 675,
-      y: y
+      x: xC,
+      y: 730
     });
-    y += 120;
+    xC += 120;
   }
 
-  y = 180;
-  for(const sides of [ 4, 8, 12 ]) {
+  xC = 380;
+  for(const sides of [ 10, 12, 20 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
       type: 'spinner',
       value: sides,
       options: Array.from({length: sides}, (_, i) => i + 1),
-      x: 810,
-      y: y
+      x: xC,
+      y: 850
     });
-    y += 120;
+    xC += 120;
   }
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',
     text: 'DEAL',
     clickRoutine: [],
-    x: 760,
-    y: 660
+    x: 1000,
+    y: 700
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 710, 790), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 955, 840), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateTimerWidgets(id, 710, 790))
+    for(const w of generateTimerWidgets(id, 955, 840))
       await addWidgetLocal(w);
     return id
   });
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 767, 870), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1008, 920), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCounterWidgets(id, 767, 870))
+    for(const w of generateCounterWidgets(id, 1008, 920))
       await addWidgetLocal(w);
     return id
   });
@@ -773,8 +778,8 @@ function populateAddWidgetOverlay() {
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
     type: 'label',
     text: 'Label',
-    x: 1000,
-    y: 400
+    x: 1385,
+    y: 100
   });
 
   addWidgetToAddWidgetOverlay(new Label('add-heading'), {
@@ -783,11 +788,9 @@ function populateAddWidgetOverlay() {
     css: 'font-size: 30px',
     height: 42,
     width: 200,
-    x: 1000,
-    y: 600
+    x: 1335,
+    y: 150
   });
-
-  /* Note that the button to add a scoreboard is in room.html */
 }
 // end of JSON generators
 
