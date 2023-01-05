@@ -37,6 +37,9 @@
 #addSeat::before{
   content:'[chair]';
 }
+#addScoreboard::before{
+  content:'[scoreboard]';
+}
 #addHand::before{
   content:'[holder_hand]';
 }
