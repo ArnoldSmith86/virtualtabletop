@@ -1193,6 +1193,18 @@ onLoad(function() {
       x: 840,
       y: 90
     })
+    overlayDone(id);
+  });
+
+  on('#addSeatCounter', 'click', async function() {
+    const seats = widgetFilter(w=>w.get('type')=='seat');
+    const maxIndex = Math.max(...seats.map(w=>w.get('index')));
+    const id = await addWidgetLocal({
+      type: 'seat',
+      index: seats.length && maxIndex ? maxIndex+1 : 1,
+      x: 840,
+      y: 90
+    })
     await addWidgetLocal({
       id: id+'C',
       parent: id,
