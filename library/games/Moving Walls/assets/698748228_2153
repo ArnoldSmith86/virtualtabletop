@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 160" width="100" height="160">
+	<defs>
+		<image width="90" height="150" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAACWCAMAAABpXG//AAAAAXNSR0IB2cksfwAAAEtQTFRFAAAAJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPJoIPZ+zMmAAAABl0Uk5TAApcnc7u/xmQ+Gn1mKf85sORT+yGEu9ll7VLuQ4AAADqSURBVHic7dtHDsJAFATRdvpORBPvf1IYwCJIrDy9qzrA08gee9fSXFFWdROLauqqLPRb2/XL2Lm+a7/lYcwDp8bhU17lg1Ort7zOK0esTWdOvc495JcjHs+7zfgG343pnnQOOaK7fymZ7vNvfaHSI0eUqlx0pdpF11r4R/pfI5ccAQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NbaE3LnmjrYveaueid9q76L0mFz1JB498kHT00Mc7fTo75PMpDQsuDvrynENc88tX/zzEOWpxTnGcAyLH7OkG/Bo6Or8tUdYAAAAASUVORK5CYII="/>
+		<image width="100" height="100" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAAXNSR0IB2cksfwAAAJBQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////lgAZ8AAAADB0Uk5TAB5Lc5a0zeHw/y5wreU9j9uOGXrWM52eNKgbmnH2L75sASPHPFDGai28b/SYMqf3WMAf8AAAAkJJREFUeJztmtmWgjAMhiMoEhEUdx33Zfbl/d9uqOgIUrClTa7mu+d8h0Npk/4BUKThuM2W1/YxwW97rabrNFSfVaITdEOUEHaDjh1D1OvLBFf6cWRqGAxHVYaU0XBgoBhPHhtSpuOaitlcVSGYz2ooFk86CsHTQtexXOk6EFdLLcV6o68QbNbqjm09hWCrqNhN6zuSdbZTcewPJg7Ew/6x4yjdQHQIj48cjqlC4FQ7TjYciCfy9xBUvMvRlgOx9Lvsjb/5jbBsjT3bcyQrWf6/KO/rakxljhe7DukO82rbgVjcLd/sSzb3jnf7DsS782XwQSFZ5c/KTwpHciJnHV80DsRsdfFNJZkzvAjirR6z/K9nmfwtLToH4rWCHVJKhheJQk1dn1HqiCgdiGlnEdNKemdJZY9jTl84OrQORNHxBdSSIJF0qSXdRGKxRJETJv05tQOxYa9oLMcBl17iQpNe0oQWvaQFHr3Egza9pA0+vcQHegfiv0RPwvLhWZYwy8/Isq2wbJAsWz3LocVy/LIUEjwlEUtxx1KmshTc0KOVxHxNEEs7x9OYsrTYlJcFt0vCMZ0kE0NpBUs6ZC5wYEYlyQVd2gGWGrlLNVjUiLAe83MXpS0pJIUgrWZUVkXhyhbW9iWSqM4gkpOzLToAjEK5ItJAAHaGsVyekmiDJ6RhiZt4gjOeCJAnzOSJZXkCZp6oHFhCf+AZXwCWQQzgGSkBluEYwVh5nU3qjvkIGAaWzkRx9ehVz3j0KoV+iOyCyTjcL2OAJOBag/8XAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Shape 1" href="#img1" x="5" y="5" />
+	<g id="layer1">
+		<use id="path4524" href="#img2" x="0" y="30" />
+	</g>
+</svg>

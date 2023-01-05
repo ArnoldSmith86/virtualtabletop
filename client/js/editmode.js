@@ -85,9 +85,9 @@ function applyEditOptionsBasic(widget) {
 function populateEditOptionsButton(widget) {
   $('#buttonText').value = widget.text || "~ no text found ~";
   $('#buttonImage').value = widget.image || "~ no image found ~";
-  $('#buttonColorMain').value = widget.backgroundColor || "#1f5ca6";
-  $('#buttonColorBorder').value = widget.borderColor || "#0d2f5e";
-  $('#buttonColorText').value = widget.textColor || "#ffffff"
+  $('#buttonColorMain').value = toHex(widget.backgroundColor || "#1f5ca6");
+  $('#buttonColorBorder').value = toHex(widget.borderColor || "#0d2f5e");
+  $('#buttonColorText').value = toHex(widget.textColor || "#ffffff");
 
 
   $('#buttonText').style = "display: inline";
@@ -137,13 +137,10 @@ function applyEditOptionsButton(widget) {
 //canvas functions
 function populateEditOptionsCanvas(widget) {
   const cm = widget.colorMap || Canvas.defaultColors
-  const ctx = document.createElement('canvas').getContext('2d');
 
   for(let i=0; i<10; ++i) {
     $a('.colorComponent > [type=radio]')[i].checked = widget.activeColor == i;
-    // using canvas fillStyle to turn color names into hex colors
-    ctx.fillStyle = cm[i] || Canvas.defaultColors[i];
-    $a('.colorComponent > [type=color]')[i].value = ctx.fillStyle;
+    $a('.colorComponent > [type=color]')[i].value = toHex(cm[i] || Canvas.defaultColors[i]);
   }
 
   $('#canvasColorReset').checked = false;
@@ -272,7 +269,7 @@ function applyEditOptionsLabel(widget) {
 
 //piece widget functions
 function populateEditOptionsPiece(widget) {
-  $('#pieceColor').value = widget.color || "black";
+  $('#pieceColor').value = toHex(widget.color || "black");
   if (widget.classes == "classicPiece") {
     $('#pieceTypeClassic').checked = true
   } else if (widget.classes == "checkersPiece" || widget.classes == "checkersPiece crowned") {
@@ -309,7 +306,7 @@ function applyEditOptionsPiece(widget) {
 
 //seat functions
 function populateEditOptionsSeat(widget) {
-  $('#seatPlayerColor').value = widget.color || "black";
+  $('#seatPlayerColor').value = toHex(widget.color || "black");
   $('#seatPlayerName').value = widget.player || "~ empty seat ~";
   $('#seatEmpty').checked = false;
 }
@@ -320,7 +317,7 @@ function applyEditOptionsSeat(widget) {
     delete widget.color;
   } else {
     if(widget.player) {
-      toServer('playerColor', { player: widget.player, color: $('#seatPlayerColor').value });
+      toServer('playerColor', { player: widget.player, color: toHex($('#seatPlayerColor').value) });
       toServer('rename', { oldName: widget.player, newName: $('#seatPlayerName').value });
     }
     widget.player = $('#seatPlayerName').value;
@@ -789,6 +786,8 @@ function populateAddWidgetOverlay() {
     x: 1000,
     y: 600
   });
+
+  /* Note that the button to add a scoreboard is in room.html */
 }
 // end of JSON generators
 
@@ -1045,8 +1044,6 @@ function toggleEditMode() {
 }
 
 onLoad(function() {
-  on('#editButton', 'click', toggleEditMode);
-
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
     const id = await addWidgetLocal({
@@ -1236,6 +1233,15 @@ onLoad(function() {
     overlayDone(id);
   });
 
+  on('#addScoreboard', 'click', async function() {
+    await addWidgetLocal({
+      type: 'scoreboard',
+      x: 1000,
+      y:660
+    });
+    showOverlay();
+  });
+  
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 

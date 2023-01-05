@@ -15,17 +15,16 @@ async function removeGame(t, index) {
 }
 
 function publicLibraryTest(game, variant, md5, tests) {
-  test.after(async t => {
-    await removeGame(t);
-    await t.expect(Selector('#statesOverlay').visible).ok();
-  })(`Public library: ${game} (variant ${variant})`, async t => {
+  test(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
+    await ClientFunction(_=>Math.random())(); // game library overhaul removed the Math.random call for generating a new state ID
     await t
       .pressKey('esc')
       .click('#statesButton')
-      .click(Selector('td.name').withExactText(game).prevSibling().child())
-      .hover('.roomState')
-      .click(Selector('button.play').nth(variant));
+      .click('#filterByType')
+      .click('#filterByType > option:nth-child(1)')
+      .click(Selector('.roomState h3').withExactText(game).parent().parent())
+      .click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
     await setName(t);
     await tests(t);
     await compareState(t, md5);
@@ -52,7 +51,7 @@ publicLibraryButtons('Blue',               0, 'c0b6df4181e1e14db376c87cef71a1c3'
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', '#buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
-publicLibraryButtons('Bhukhar',            0, '2748e96293b8646894700440508dd280', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
+publicLibraryButtons('Bhukhar',            0, '5f7dde10e662cd45e1377f589fae4b35', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
 publicLibraryButtons('Dice',               0, 'a68d28c20b624d6ddf87149bae230598', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
 publicLibraryButtons('Dots',               0, '23894df38f786cb014fa1cd79f2345db', [ 'reset', '#buttonInputGo', 'col11', 'col21', 'col12', 'col22', 'row11', 'row31', 'row21', 'row32', 'row12', 'row42', 'row22', 'row23', 'col23' ]);
 publicLibraryButtons('Solitaire',          0, 'd5babf02d0c94500673d31188405ad9a', [ 'reset', 'jemz', 'reset' ]);

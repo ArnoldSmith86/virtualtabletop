@@ -58,6 +58,8 @@ export function addWidget(widget, instance) {
     w = new Label(id);
   } else if(widget.type == 'pile') {
     w = new Pile(id);
+  } else if(widget.type == 'scoreboard') {
+    w = new Scoreboard(id);
   } else if(widget.type == 'seat') {
     w = new Seat(id);
   } else if(widget.type == 'spinner') {
@@ -161,7 +163,7 @@ function receiveStateFromServer(args) {
   }
 
   if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-    showOverlay('statesOverlay');
+    $('#statesButton').click();
     overlayShownForEmptyRoom = true;
   }
   toServer('confirm');
