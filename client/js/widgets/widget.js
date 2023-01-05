@@ -63,6 +63,7 @@ export class Widget extends StateManaged {
       dragging: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
+      dropShadowClone: false,
       dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
@@ -426,7 +427,7 @@ export class Widget extends StateManaged {
     await this.set('dropShadowWidget', (await shadowWidget.clone({
         'classes': (shadowWidget.state.classes || '') + ' dragging-shadow',
         'movable': false,
-        'dropShadowClone': this.get('id'),
+        'dropShadowClone': true,
         'parent': null}, true)).get('id'));
   }
 
