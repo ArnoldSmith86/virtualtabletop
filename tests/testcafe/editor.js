@@ -47,6 +47,7 @@ test('Create game using edit mode', async t => {
     .click('#activeGameButton')
     .click('#addButton')
     .click('#addSeat')
+    .click('#addButton')
     .click('#addScoreboard')
     .click('#w_es5b');
 
