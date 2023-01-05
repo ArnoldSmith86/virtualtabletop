@@ -1849,13 +1849,18 @@ export class Widget extends StateManaged {
       // If we currently have a shadow widget, position it and place it in the holder.
       if (this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
         const shadowWidget = widgets.get(this.get('dropShadowWidget'));
-        shadowWidget.currentParent = widgets.get(shadowWidget.get('parent'));
-        await shadowWidget.set('parent', null);
-        shadowWidget.setPosition(this.get('x'), this.get('y'), this.get('z') - 1);
-        if (this.hoverTarget != shadowWidget.currentParent)
+        const globalPoint = {x: this.get('x'), y: this.get('y'), z: this.get('z')};
+        if (lastHoverTarget != this.hoverTarget) {
+          shadowWidget.currentParent = widgets.get(shadowWidget.get('parent'));
+          await shadowWidget.set('parent', null);
+          shadowWidget.setPosition(globalPoint.x, globalPoint.y, globalPoint.z);
           await shadowWidget.checkParent(true);
-        if (this.hoverTarget)
           await shadowWidget.moveToHolder(this.hoverTarget);
+        } else {
+          const localPoint = this.coordParentFromCoordGlobal(globalPoint);
+          shadowWidget.setPosition(localPoint.x, localPoint.y, localPoint.z);
+          await this.hoverTarget.receiveCard(shadowWidget, [localPoint.x, localPoint.y]);
+        }
       }
     }
   }
