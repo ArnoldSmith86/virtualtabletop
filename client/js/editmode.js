@@ -612,6 +612,34 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
   }
 }
 
+const initialColor = '#bc5bee';
+  
+function addPieceToAddWidgetOverlay(w, wi) {
+  w.applyInitialDelta(wi);
+  w.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await w.showInputOverlay({
+        header: '',
+        fields: [
+          {
+            type: 'color',
+            value: initialColor,
+            variable: 'color'
+          }
+        ]
+      });
+      const toAdd = {...wi};
+      toAdd.z = getMaxZ(w.get('layer')) + 1;
+      toAdd.color = result.color;
+
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  w.domElement.id = w.id;
+  $('#addOverlay').appendChild(w.domElement);
+}
+
 function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
@@ -654,46 +682,34 @@ function populateAddWidgetOverlay() {
     return id
   });
 
-  // Populate the Game Pieces panel in the add widget overlay
-  let xC = 380;
-  const xOff = 300;
-  let yC = 80;
-  const yOff = 88;
-  // First the pins, checkers, and pawns
-  const color = [ '#bc5bee','#4c5fea','#23ca5b','#e0cb0b','#e2a633','#e84242','#000000','#4a4a4a','#ffffff' ];
-  for (let col=0; col <=2; col++)
-    for (let row=0; row<=2; row++) {
-      const thisColor = color[3*col+row];
-      addWidgetToAddWidgetOverlay(new BasicWidget('add-pin-'+thisColor), {
-        classes: 'pinPiece',
-        color: thisColor,
-        width: 35.85,
-        height: 43.83,
-        x: xC + xOff*col,
-        y: yC + yOff*row
-      });
-
-      addWidgetToAddWidgetOverlay(new BasicWidget('add-checkers-'+thisColor), {
-        faces: [
-          { classes: "checkersPiece"         },
-          { classes: "checkersPiece crowned" }
-        ],
-        color: thisColor,
-        width: 73.5,
-        height: 73.5,
-        x: xC + xOff*col + 60,
-        y: yC + yOff*row + Math.round((43.83 - 73.5)/2)
-      });
-
-      addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+thisColor), {
-        classes: 'classicPiece',
-        color: thisColor,
-        width: 56,
-        height: 84,
-        x: xC + xOff*col + 150,
-        y: yC + yOff*row + Math.round((43.83 - 84)/2)
-      });
-    }
+  // Populate the game panel pieces. The real piece choosing happens in popups.
+  addPieceToAddWidgetOverlay( new BasicWidget('add-pin0'), {
+    classes: 'pinPiece',
+    color: initialColor,
+    width: 35.85,
+    height: 43.83,
+    x: 380,
+    y: 80
+  });
+  addPieceToAddWidgetOverlay( new BasicWidget('add-checkers0'), {
+    faces: [
+      { classes: "checkersPiece"         },
+      { classes: "checkersPiece crowned" }
+    ],
+    color: initialColor,
+    width: 73.5,
+    height: 73.5,
+    x: 380 + 60,
+    y: 80 + Math.round((43.83 - 73.5)/2)
+  });
+  addPieceToAddWidgetOverlay( new BasicWidget('add-classic0'), {
+    classes: 'classicPiece',
+    color: initialColor,
+    width: 56,
+    height: 84,
+    x: 380 + 150,
+    y: 80 + Math.round((43.83 - 84)/2)
+  });
 
   // Next the unicode symbols
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
@@ -703,7 +719,7 @@ function populateAddWidgetOverlay() {
     width: 25,
     height: 25,
     x: 380,
-    y: yC + yOff*3 + 25
+    y: 175
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeM'), {
@@ -712,28 +728,29 @@ function populateAddWidgetOverlay() {
     width: 50,
     height: 50,
     x: 440,
-    y: yC + yOff*3 + 25
+    y: 175
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeL'), {
     text: '♞',
     css: 'font-size:100px;'+centerStyle,
     x: 500,
-    y: yC + yOff*3
+    y: 150
   });
 
   // Populate the Interactive panel in the add widget overlay.
   // Note that the Add Canvas, Add Seat, and Add Scoreboard buttons are in room.html.
 
+  // Populate the spinners. The real spinner choosing happens in a popup.
   const spinner = new Spinner('add-spinner0');
-  let attributes = {
+  const spinAttrs = {
     type: 'spinner',
     value: 4,
     options: Array.from({length: 4}, (_, i) => i + 1),
     x: 380,
     y: 730
   };
-  spinner.applyInitialDelta(attributes);
+  spinner.applyInitialDelta(spinAttrs);
   spinner.domElement.addEventListener('click', async _=>{
     try {
       const result = await spinner.showInputOverlay({
@@ -749,7 +766,7 @@ function populateAddWidgetOverlay() {
         ]
       });
       const values = result.values;
-      const toAdd = {...attributes};
+      const toAdd = {...spinAttrs};
       toAdd.z = getMaxZ(spinner.get('layer')) + 1;
       toAdd.value = values;
       toAdd.options = Array.from({length: values}, (_, i) => i + 1);
