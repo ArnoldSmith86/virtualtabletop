@@ -723,32 +723,44 @@ function populateAddWidgetOverlay() {
   });
 
   // Populate the Interactive panel in the add widget overlay.
-  // Note that the Add Canvas and Add Seat buttons are in room.html.
+  // Note that the Add Canvas, Add Seat, and Add Scoreboard buttons are in room.html.
 
-  // First the various spinners
-  xC = 380;
-  for(const sides of [ 2, 4, 6, 8 ]) {
-    addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
-      type: 'spinner',
-      value: sides,
-      options: Array.from({length: sides}, (_, i) => i + 1),
-      x: xC,
-      y: 730
-    });
-    xC += 120;
-  }
+  const spinner = new Spinner('add-spinner0');
+  let attributes = {
+    type: 'spinner',
+    value: 4,
+    options: Array.from({length: 4}, (_, i) => i + 1),
+    x: 380,
+    y: 730
+  };
+  spinner.applyInitialDelta(attributes);
+  spinner.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await spinner.showInputOverlay({
+        header: '',
+        fields: [
+          {
+            type: 'number',
+            label: 'Values',
+            value: 2,
+            variable: 'values',
+            min: 2
+          }
+        ]
+      });
+      const values = result.values;
+      const toAdd = {...attributes};
+      toAdd.z = getMaxZ(spinner.get('layer')) + 1;
+      toAdd.value = values;
+      toAdd.options = Array.from({length: values}, (_, i) => i + 1);
 
-  xC = 380;
-  for(const sides of [ 10, 12, 20 ]) {
-    addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
-      type: 'spinner',
-      value: sides,
-      options: Array.from({length: sides}, (_, i) => i + 1),
-      x: xC,
-      y: 850
-    });
-    xC += 120;
-  }
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  spinner.domElement.id = spinner.id;
+  $('#addOverlay').appendChild(spinner.domElement);
+
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',
