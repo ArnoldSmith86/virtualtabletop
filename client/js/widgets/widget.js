@@ -925,16 +925,28 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'COUNT') {
-        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
+        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT', owner: null });
         let collection;
         let theItem;
         if(a.holder !== undefined) {
-          variables[a.variable] = 0;
           theItem = `${a.holder}`;
-          for (const h of asArray(a.holder))
-            variables[a.variable] += this.isValidID(h, problems) ? widgets.get(h).children().length : 0;
+          variables[a.variable] = 0;
+          for (const h of asArray(a.holder)) {
+            if(this.isValidID(h,problems)) {
+              const children = widgets.get(h).children();
+              if(a.owner === null) {
+                variables[a.variable] += children.length;
+              } else {
+                variables[a.variable] += children.filter(widget => widget.get('owner') === a.owner).length;
+              }
+            }
+          }
         } else if(collection = getCollection(a.collection)) {
-          variables[a.variable] = collections[collection].length;
+          if(a.owner === null) {
+            variables[a.variable] = collections[collection].length;
+          } else {
+            variables[a.variable] = collections[collection].filter(widget => widget.get('owner') === a.owner).length;
+          }
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
