@@ -14,6 +14,7 @@ class Scoreboard extends Widget {
       playersInColumns: true,
       rounds: null,
       roundLabel: 'Round',
+      totalsLabel: 'Totals',
       scoreProperty: 'score',
       seats: null,
       showAllRounds: false,
@@ -64,7 +65,7 @@ class Scoreboard extends Widget {
       let rounds = this.getRounds(seats, scoreProperty, 1).map(function(r, i) { return { text: r, value: i+1 }; });
 
       if(this.totalsOnly)
-        rounds = [{text: 'total', value: 0}];
+        rounds = [{text: this.get('totalsLabel'), value: 0}];
       
       if(!players.length || !rounds.length)
         return;
@@ -253,7 +254,7 @@ class Scoreboard extends Widget {
     let rounds = this.getRounds(seats, scoreProperty);
     let numRounds = rounds.length;
     if(showTotals)
-      rounds.push('Totals');
+      rounds.push(this.get('totalsLabel'));
     rounds.unshift(this.get('roundLabel'));
 
     // Fill scores array. pScores[i][0] is player name or team name, last is total
