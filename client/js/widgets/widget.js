@@ -330,6 +330,8 @@ export class Widget extends StateManaged {
       className += ' dragging';
     if(this.get('dragging') == playerName)
       className += ' draggingSelf';
+    if (this.get('dropShadowClone'))
+      className += ' dragging-shadow';
 
     if(this.isHighlighted)
       className += ' selectedInEdit';
@@ -426,7 +428,6 @@ export class Widget extends StateManaged {
     if (!shadowWidget)
       return null;
     await this.set('dropShadowWidget', (await shadowWidget.clone({
-        'classes': (shadowWidget.state.classes || '') + ' dragging-shadow',
         'movable': false,
         'dropShadowClone': true,
         'parent': null}, true)).get('id'));
