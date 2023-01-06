@@ -786,6 +786,8 @@ function populateAddWidgetOverlay() {
     x: 1000,
     y: 600
   });
+
+  /* Note that the button to add a scoreboard is in room.html */
 }
 // end of JSON generators
 
@@ -1185,15 +1187,73 @@ onLoad(function() {
   on('#addSeat', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
-    await addWidgetLocal({
+    const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
       x: 840,
       y: 90
+    })
+    overlayDone(id);
+  });
+
+  on('#addSeatCounter', 'click', async function() {
+    const seats = widgetFilter(w=>w.get('type')=='seat');
+    const maxIndex = Math.max(...seats.map(w=>w.get('index')));
+    const id = await addWidgetLocal({
+      type: 'seat',
+      index: seats.length && maxIndex ? maxIndex+1 : 1,
+      x: 840,
+      y: 90
+    })
+    await addWidgetLocal({
+      id: id+'C',
+      parent: id,
+      fixedParent: true,
+      x: -20,
+      y: -20,
+      width: 30,
+      height: 30,
+      borderRadius: 100,
+      movable: false,
+      movableInEdit: false,
+      clickable: false,
+      css: {'font-size':'18px', 'display':'flex','align-items':'center','justify-content':'center','color':'#6d6d6d','background':'#e4e4e4','border':'2px solid #999999'},
+      text: '0',
+      ownerGlobalUpdateRoutine: [
+        'var parent = ${PROPERTY parent}',
+        "var COUNT = 0",
+        {
+          "func": "COUNT",
+          "holder": "${PROPERTY hand OF $parent}",
+          "owner": "${PROPERTY player OF $parent}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "text",
+          "value": "${COUNT}"
+        }
+      ],
+      playerGlobalUpdateRoutine: [
+        {
+          "func": "CALL",
+          "routine": "ownerGlobalUpdateRoutine",
+          "widget": "${PROPERTY id}"
+        }
+      ]
+    });
+    overlayDone(id);
+  });
+
+  on('#addScoreboard', 'click', async function() {
+    await addWidgetLocal({
+      type: 'scoreboard',
+      x: 1000,
+      y:660
     });
     showOverlay();
   });
-
+  
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 
