@@ -70,6 +70,9 @@
 #addSeat::before{
   content:'[chair]';
 }
+#addSeatCounter::before{
+  content:'[chair]';
+}
 #addHand::before{
   content:'[holder_hand]';
 }
