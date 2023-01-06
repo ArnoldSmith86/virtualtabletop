@@ -3,7 +3,12 @@
     "type": "holder",
     "id": "table",
     "z": 101,
-    "css": "transform: translate3d(20px,50px,-80px) rotateX(25deg) !important; background: #a85",
+    "css": {
+      "": {
+        "transform": "translate3d(20px,50px,-80px) rotateX(25deg) !important",
+        "background": "#a85"
+      }
+    },
     "width": 1580,
     "height": 800,
     "alignChildren": false,
