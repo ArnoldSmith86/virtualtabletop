@@ -48,8 +48,8 @@ test('Create game using edit mode', async t => {
     .click('#addButton')
     .click('#addSeat')
     .click('#addButton')
+    .click('#addSeatCounter')
     .click('#addScoreboard')
     .click('#w_es5b');
-
-  await compareState(t, 'e2e970e64ec4fcdf40bf97cc17b4d6d1');
+  await compareState(t, '4d628565e7335e97edbd9824e6e34873');
 });
