@@ -26,6 +26,7 @@ export class Widget extends StateManaged {
     super();
     this.id = id;
     this.domElement = div;
+    this.targetTransform = '';
     this.childArray = [];
     this.propertiesUsedInCSS = [];
 
@@ -137,13 +138,14 @@ export class Widget extends StateManaged {
     for(const property of this.cssProperties()) {
       if(delta[property] !== undefined) {
         this.domElement.style.cssText = mapAssetURLs(this.css());
+        this.targetTransform = this.domElement.style.transform;
         return;
       }
     }
 
     for(const property of this.cssTransformProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.style.transform = this.cssTransform();
+        this.targetTransform = this.domElement.style.transform = this.cssTransform();
         return;
       }
     }
@@ -179,7 +181,7 @@ export class Widget extends StateManaged {
         // Force style recalc to commit from transform and start a transition
         // on applying the destination transform.
         this.domElement.offsetTop;
-        this.domElement.style.transform = this.cssTransform();
+        this.domElement.style.transform = this.targetTransform;
       }
 
       if(delta.parent !== null) {
