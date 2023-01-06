@@ -612,18 +612,18 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
   }
 }
 
-const initialColor = '#bc5bee';
+const VTTblue = '#1f5ca6';
   
 function addPieceToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     try {
       const result = await w.showInputOverlay({
-        header: '',
+        header: 'Choose piece color',
         fields: [
           {
             type: 'color',
-            value: initialColor,
+            value: VTTblue,
             variable: 'color'
           }
         ]
@@ -685,7 +685,7 @@ function populateAddWidgetOverlay() {
   // Populate the game panel pieces. The real piece choosing happens in popups.
   addPieceToAddWidgetOverlay( new BasicWidget('add-pin0'), {
     classes: 'pinPiece',
-    color: initialColor,
+    color: VTTblue,
     width: 35.85,
     height: 43.83,
     x: 380,
@@ -696,7 +696,7 @@ function populateAddWidgetOverlay() {
       { classes: "checkersPiece"         },
       { classes: "checkersPiece crowned" }
     ],
-    color: initialColor,
+    color: VTTblue,
     width: 73.5,
     height: 73.5,
     x: 380 + 60,
@@ -704,7 +704,7 @@ function populateAddWidgetOverlay() {
   });
   addPieceToAddWidgetOverlay( new BasicWidget('add-classic0'), {
     classes: 'classicPiece',
-    color: initialColor,
+    color: VTTblue,
     width: 56,
     height: 84,
     x: 380 + 150,
@@ -745,8 +745,8 @@ function populateAddWidgetOverlay() {
   const spinner = new Spinner('add-spinner0');
   const spinAttrs = {
     type: 'spinner',
-    value: 4,
-    options: Array.from({length: 4}, (_, i) => i + 1),
+    value: 6,
+    options: Array.from({length: 6}, (_, i) => i + 1),
     x: 380,
     y: 730
   };
@@ -754,12 +754,12 @@ function populateAddWidgetOverlay() {
   spinner.domElement.addEventListener('click', async _=>{
     try {
       const result = await spinner.showInputOverlay({
-        header: '',
+        header: 'Choose number of spinner values',
         fields: [
           {
             type: 'number',
             label: 'Values',
-            value: 2,
+            value: 6,
             variable: 'values',
             min: 2
           }
