@@ -422,7 +422,7 @@ export class Widget extends StateManaged {
       return;
 
     // Use the top child if this is a pile widget.
-    const shadowWidget = this.get('type') == 'pile' ? this.children().slice(-1)[0] : this;
+    const shadowWidget = this.get('type') == 'pile' ? this.children()[0] : this;
     if (!shadowWidget)
       return null;
     await this.set('dropShadowWidget', (await shadowWidget.clone({
@@ -1902,15 +1902,12 @@ export class Widget extends StateManaged {
         if (lastHoverTarget != this.hoverTarget) {
           shadowWidget.currentParent = widgets.get(shadowWidget.get('parent'));
           await shadowWidget.set('parent', null);
-          shadowWidget.setPosition(globalPoint.x, globalPoint.y, globalPoint.z);
+          await shadowWidget.setPosition(globalPoint.x, globalPoint.y, globalPoint.z);
           await shadowWidget.checkParent(true);
           await shadowWidget.moveToHolder(this.hoverTarget);
         } else {
-          const localPoint = this.hoverTarget.coordLocalFromCoordGlobal(globalPoint);
-          shadowWidget.setPosition(localPoint.x, localPoint.y, localPoint.z);
-          await shadowWidget.bringToFront();
-          if (this.hoverTarget.get('alignChildren'))
-            await this.hoverTarget.receiveCard(shadowWidget, [localPoint.x, localPoint.y]);
+          await shadowWidget.setPosition(globalPoint.x, globalPoint.y, globalPoint.z);
+          await this.hoverTarget.onChildAddAlign(shadowWidget);
         }
       }
     }
