@@ -39,6 +39,7 @@
 }
 #addSeatCounter::before{
   content:'[chair]';
+}
 #addScoreboard::before{
   content:'[scoreboard]';
 }
