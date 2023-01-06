@@ -1564,7 +1564,7 @@ function populateAddWidgetOverlay() {
     value: 6,
     options: Array.from({length: 6}, (_, i) => i + 1),
     x: 450,
-    y: 820
+    y: 835
   };
   spinner.applyInitialDelta(spinAttrs);
   spinner.domElement.addEventListener('click', async _=>{
@@ -1600,13 +1600,13 @@ function populateAddWidgetOverlay() {
     text: 'DEAL',
     clickRoutine: [],
     x: 750,
-    y: 835
+    y: 850
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 810), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateTimerWidgets(id, 1005, 810))
+    for(const w of generateTimerWidgets(id, 1005, 825))
       await addWidgetLocal(w);
     return id
   });
@@ -1641,8 +1641,9 @@ function populateAddWidgetOverlay() {
     y: 325,
     width: 200,
     height: 0,
+    borderRadius: "3px",
 
-    css: "border: 3px solid #666; border-radius: 3px;"
+    css: { "border": "3px solid #666" }
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('LineHorizontal'), {
@@ -1650,8 +1651,9 @@ function populateAddWidgetOverlay() {
     y: 190,
     width: 0,
     height: 200,
+    borderRadius: "3px",
 
-    css: "border: 3px solid #666; border-radius: 3px;"
+    css: { "border": "3px solid #666" }
   });
 }
 // end of JSON generators

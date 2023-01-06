@@ -38,6 +38,10 @@
   margin-bottom: 8px;
 }
 
+#gridContainerAddOverlay > .category > div > button {
+  margin-bottom: 8px;
+}
+
 #gridContainerAddOverlay >.category.cards {
   grid-area: cards;
 }
