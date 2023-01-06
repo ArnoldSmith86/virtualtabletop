@@ -340,7 +340,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'dropShadowClone', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
