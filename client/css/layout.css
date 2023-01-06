@@ -936,6 +936,8 @@ button:disabled:hover {
   gap: 8px;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .ui-button::before {

@@ -662,26 +662,27 @@ function overlayDone(id) {
 
 function populateAddWidgetOverlay() {
   // Populate the Cards panel in the add widget overlay
-  const x = 20+140-111/2;
+  const x = 115;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
     x,
-    y: 130
+    y: 150
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 320, false), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 320, false))
+    for(const w of generateCardDeckWidgets(id, x, 340, false))
       await addWidgetLocal(w);
     return id
   });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 550, true), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 550, true))
+    for(const w of generateCardDeckWidgets(id, x, 570, true))
       await addWidgetLocal(w);
     return id
   });
 
+/* Don't add old-style game pieces; replaced by svg
   // Populate the game panel pieces. The real piece choosing happens in popups.
   addPieceToAddWidgetOverlay( new BasicWidget('add-pin0'), {
     classes: 'pinPiece',
@@ -710,7 +711,9 @@ function populateAddWidgetOverlay() {
     x: 380 + 150,
     y: 80 + Math.round((43.83 - 84)/2)
   });
-
+*/
+  
+/* Don't add the unicode symbols
   // Next the unicode symbols
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeS'), {
@@ -737,11 +740,12 @@ function populateAddWidgetOverlay() {
     x: 500,
     y: 150
   });
-
-  //populate svg game pieces
-
-  addWidgetToAddWidgetOverlay(new BasicWidget('Pawn3DSVG'), {
-    x: 610,
+*/
+  
+  //Add svg game pieces
+  // First row
+  addPieceToAddWidgetOverlay(new BasicWidget('Pawn3DSVG'), {
+    x: 380,
     y: 79,
     width: 50.4,
     height: 90,
@@ -751,17 +755,17 @@ function populateAddWidgetOverlay() {
     image: "i/game-pieces/3D/Pawn-3D.svg",
     svgReplaces: {
       "#primaryColor": "color",
-      "#borderColor": "borberColor",
+      "#borderColor": "borderColor",
       "#borderWidth": "borderWidth"
     },
 
-    borberColor: "black",
+    borderColor: "black",
     borderWidth: 1
   });
 
   
-  addWidgetToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
-    x: 683,
+  addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
+    x: 380+75,
     y: 111,
     width: 35,
     height: 40,
@@ -779,8 +783,8 @@ function populateAddWidgetOverlay() {
     borderWidth: "1"
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
-    x: 739,
+  addPieceToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
+    x: 380+2*75,
     y: 114,
     width: 35,
     height: 35,
@@ -791,17 +795,17 @@ function populateAddWidgetOverlay() {
     svgReplaces: {
       "#primaryColor": "color",
       "#secondaryColor": "secondaryColor",
-      "#borderColor": "borberColor",
+      "#borderColor": "borderColor",
       "#borderWidth": "borderWidth"
     },
 
-    borberColor: "#ffffff",
+    borderColor: "#ffffff",
     borderWidth: 1,
     secondaryColor: "#000000"
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
-    x: 789,
+  addPieceToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
+    x: 380+3*75,
     y: 110,
     width: 36,
     height: 40,
@@ -812,20 +816,20 @@ function populateAddWidgetOverlay() {
     svgReplaces: {
       "#primaryColor": "color",
       "#secondaryColor": "secondaryColor",
-      "#borderColor": "borberColor",
+      "#borderColor": "borderColor",
       "#borderWidth": "borderWidth"
     },
 
-    borberColor: "white",
+    borderColor: "white",
     borderWidth: 1,
     secondaryColor: "black"
   });
 
-  //line 2
+  // Second row
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('Checker2DSVG'), {
-    x: 618,
-    y: 177,
+  addPieceToAddWidgetOverlay(new BasicWidget('Checker2DSVG'), {
+    x: 435,
+    y: 180,
     width: 75,
     height: 75,
 
@@ -846,19 +850,19 @@ function populateAddWidgetOverlay() {
     svgReplaces: {
       "#primaryColor": "color",
       "#secondaryColor": "secondaryColor",
-      "#borderColor": "borberColor",
+      "#borderColor": "borderColor",
       "#borderWidth": "borderWidth"
     },
 
-    borberColor: "#000000",
+    borderColor: "#000000",
     borderWidth: 1,
     crowned: true,
     secondaryColor: "#ffffff"
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('Checker3DSVG'), {
-    x: 735,
-    y: 177,
+  addPieceToAddWidgetOverlay(new BasicWidget('Checker3DSVG'), {
+    x: 435+100,
+    y: 180,
     width: 75,
     height: 75,
 
@@ -879,21 +883,40 @@ function populateAddWidgetOverlay() {
     svgReplaces: {
       "#primaryColor": "color",
       "#secondaryColor": "secondaryColor",
-      "#borderColor": "borberColor",
+      "#borderColor": "borderColor",
       "#borderWidth": "borderWidth"
     },
 
-    borberColor: "#000000",
+    borderColor: "#000000",
     borderWidth: 1,
     crowned: true,
     secondaryColor: "#ffffff"
   });
 
-  //line 3
+  //Third row
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('Meeple3DSVG'), {
-    x: 626,
-    y: 272,
+  addPieceToAddWidgetOverlay(new BasicWidget('Meeple2DSVG'), {
+    x: 440,
+    y: 283,
+    width: 56,
+    height: 56,
+
+    color: VTTblue,
+    css: "border-radius: 100% 100% 25% 25%; ",
+    image: "i/game-pieces/2D/Meeple-2D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 3
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Meeple3DSVG'), {
+    x: 440+100,
+    y: 280,
     width: 66.5,
     height: 70,
 
@@ -914,58 +937,20 @@ function populateAddWidgetOverlay() {
     image: "i/game-pieces/3D/Meeple-3D.svg",
     svgReplaces: {
       "#primaryColor": "color",
-      "#borderColor": "borberColor",
+      "#borderColor": "borderColor",
       "#borderWidth": "borderWidth"
     },
 
-    borberColor: "#000000",
+    borderColor: "#000000",
     borderWidth: 1,
     state: "alive"
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('Meeple2DSVG'), {
-    x: 744,
-    y: 275,
-    width: 56,
-    height: 56,
+  //Fourth row
 
-    color: VTTblue,
-    css: "border-radius: 100% 100% 25% 25%; ",
-    image: "i/game-pieces/2D/Meeple-2D.svg",
-    svgReplaces: {
-      "#primaryColor": "color",
-      "#borderColor": "borberColor",
-      "#borderWidth": "borderWidth"
-    },
-
-    borberColor: "#000000",
-    borderWidth: 3
-  });
-
-  //line 4
-
-  addWidgetToAddWidgetOverlay(new BasicWidget('Pig3DSVG'), {
-    x: 629,
-    y: 372,
-    width: 85.7,
-    height: 60,
-
-    color: VTTblue,
-    css: "border-radius: 30% 40% 40% 40%/20% 30% 60% 100%; ",
-    image: "i/game-pieces/3D/Pig-3D.svg",
-    svgReplaces: {
-      "#primaryColor": "color",
-      "#borderColor": "borberColor",
-      "#borderWidth": "borderWidth"
-    },
-
-    borberColor: "#000000",
-    borderWidth: 1
-  });
-
-  addWidgetToAddWidgetOverlay(new BasicWidget('Pig2DSVG'), {
-    x: 738,
-    y: 376,
+  addPieceToAddWidgetOverlay(new BasicWidget('Pig2DSVG'), {
+    x: 440,
+    y: 382,
     width: 68.56,
     height: 48,
 
@@ -974,18 +959,37 @@ function populateAddWidgetOverlay() {
     image: "i/game-pieces/2D/Pig-2D.svg",
     svgReplaces: {
       "#primaryColor": "color",
-      "#borderColor": "borberColor",
+      "#borderColor": "borderColor",
       "#borderWidth": "borderWidth"
     },
 
-    borberColor: "#000000",
+    borderColor: "#000000",
     borderWidth: 2
   });
 
-  //line 5
+  addPieceToAddWidgetOverlay(new BasicWidget('Pig3DSVG'), {
+    x: 440+100,
+    y: 378,
+    width: 85.7,
+    height: 60,
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('Building3DSVG'), {
-    x: 608,
+    color: VTTblue,
+    css: "border-radius: 30% 40% 40% 40%/20% 30% 60% 100%; ",
+    image: "i/game-pieces/3D/Pig-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 1
+  });
+
+  //Fifth row
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Building3DSVG'), {
+    x: 380,
     y: 444,
     width: 69,
     height: 77,
@@ -995,16 +999,16 @@ function populateAddWidgetOverlay() {
     image: "/i/game-pieces/3D/Building-3D.svg",
     svgReplaces: {
       "#primaryColor": "color",
-      "#borderColor": "borberColor",
+      "#borderColor": "borderColor",
       "#borderWidth": "borderWidth"
     },
 
-    borberColor: "#000000",
+    borderColor: "#000000",
     borderWidth: 1
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('House3DSVG'), {
-    x: 688,
+  addPieceToAddWidgetOverlay(new BasicWidget('House3DSVG'), {
+    x: 480,
     y: 457,
     width: 60,
     height: 60,
@@ -1015,17 +1019,17 @@ function populateAddWidgetOverlay() {
     svgReplaces: {
       "#primaryColor": "color",
       "#secondaryColor": "secondaryColor",
-      "#borderColor": "borberColor",
+      "#borderColor": "borderColor",
       "#borderWidth": "borderWidth"
     },
 
-    borberColor: "#000000",
+    borderColor: "#000000",
     borderWidth: 2
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('Road3DSVG'), {
-    x: 797,
-    y: 423,
+  addPieceToAddWidgetOverlay(new BasicWidget('Road3DSVG'), {
+    x: 600,
+    y: 430,
     width: 26,
     height: 100,
     rotation: 60,
@@ -1065,8 +1069,8 @@ function populateAddWidgetOverlay() {
   //Poker column 1
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker2DSVG'), {
-    x: 600,
-    y: 548,
+    x: 920,
+    y: 164,
     width: 73,
     height: 73,
 
@@ -1088,8 +1092,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
-    x: 600,
-    y: 640,
+    x: 920,
+    y: 257,
     width: 73,
     height: 73,
 
@@ -1115,8 +1119,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('5Poker2DSVG'), {
-    x: 600,
-    y: 725,
+    x: 920,
+    y: 350,
     width: 73,
     height: 73,
 
@@ -1142,8 +1146,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('25Poker2DSVG'), {
-    x: 600,
-    y: 806,
+    x: 920,
+    y: 443,
     width: 73,
     height: 73,
 
@@ -1169,8 +1173,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('500Poker2DSVG'), {
-    x: 600,
-    y: 888,
+    x: 920,
+    y: 536,
     width: 73,
     height: 73,
 
@@ -1198,8 +1202,8 @@ function populateAddWidgetOverlay() {
   //Poker column 2
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
-    x: 690,
-    y: 560,
+    x: 1010,
+    y: 173,
     width: 75,
     height: 54.75,
 
@@ -1222,8 +1226,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('1Poker2DSVG'), {
-    x: 690,
-    y: 644,
+    x: 1010,
+    y: 257,
     width: 73,
     height: 73,
 
@@ -1249,8 +1253,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('10Poker2DSVG'), {
-    x: 690,
-    y: 725,
+    x: 1010,
+    y: 350,
     width: 73,
     height: 73,
 
@@ -1276,8 +1280,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('100Poker2DSVG'), {
-    x: 690,
-    y: 810,
+    x: 1010,
+    y: 443,
     width: 73,
     height: 73,
 
@@ -1303,8 +1307,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('1000Poker3DSVG'), {
-    x: 690,
-    y: 889,
+    x: 1010,
+    y: 536,
     width: 73,
     height: 73,
 
@@ -1334,8 +1338,8 @@ function populateAddWidgetOverlay() {
 
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
-    x: 780,
-    y: 513,
+    x: 1100,
+    y: 108,
     width: 75,
     height: 54.75,
 
@@ -1361,8 +1365,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('1Poker3DSVG'), {
-    x: 780,
-    y: 569.5714285714286,
+    x: 1100,
+    y: 173,
     width: 75,
     height: 54.75,
 
@@ -1388,8 +1392,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('5Poker3DSVG'), {
-    x: 780,
-    y: 626.1428571428571,
+    x: 1100,
+    y: 238,
     width: 75,
     height: 54.75,
 
@@ -1415,8 +1419,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('10Poker3DSVG'), {
-    x: 780,
-    y: 682.7142857142858,
+    x: 1100,
+    y: 303,
     width: 75,
     height: 54.75,
 
@@ -1442,8 +1446,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('25Poker3DSVG'), {
-    x: 780,
-    y: 739.2857142857142,
+    x: 1100,
+    y: 368,
     width: 75,
     height: 54.75,
 
@@ -1469,8 +1473,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('100Poker3DSVG'), {
-    x: 780,
-    y: 794,
+    x: 1100,
+    y: 433,
     width: 75,
     height: 54.75,
 
@@ -1496,8 +1500,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('500Poker3DSVG'), {
-    x: 780,
-    y: 852.4285714285713,
+    x: 1100,
+    y: 498,
     width: 75,
     height: 54.75,
 
@@ -1523,8 +1527,8 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('1000Poker3DSVG'), {
-    x: 780,
-    y: 909,
+    x: 1100,
+    y: 563,
     width: 75,
     height: 54.75,
 
@@ -1559,8 +1563,8 @@ function populateAddWidgetOverlay() {
     type: 'spinner',
     value: 6,
     options: Array.from({length: 6}, (_, i) => i + 1),
-    x: 380,
-    y: 730
+    x: 450,
+    y: 820
   };
   spinner.applyInitialDelta(spinAttrs);
   spinner.domElement.addEventListener('click', async _=>{
@@ -1595,22 +1599,22 @@ function populateAddWidgetOverlay() {
     type: 'button',
     text: 'DEAL',
     clickRoutine: [],
-    x: 1000,
-    y: 700
+    x: 750,
+    y: 835
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 955, 840), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 810), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateTimerWidgets(id, 955, 840))
+    for(const w of generateTimerWidgets(id, 1005, 810))
       await addWidgetLocal(w);
     return id
   });
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1008, 920), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCounterWidgets(id, 1008, 920))
+    for(const w of generateCounterWidgets(id, 1058, 890))
       await addWidgetLocal(w);
     return id
   });
