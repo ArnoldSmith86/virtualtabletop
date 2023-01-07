@@ -721,8 +721,8 @@ function populateAddWidgetOverlay() {
   // Note that the Add Canvas and Add Seat buttons are in room.html.
 
   // First the various spinners
-  y = 180;
-  for(const sides of [ 2, 6, 10, 20 ]) {
+  y = 300;
+  for(const sides of [ 2, 6, 10 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
       type: 'spinner',
       value: sides,
@@ -733,7 +733,7 @@ function populateAddWidgetOverlay() {
     y += 120;
   }
 
-  y = 180;
+  y = 300;
   for(const sides of [ 4, 8, 12 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
       type: 'spinner',
@@ -1187,13 +1187,62 @@ onLoad(function() {
   on('#addSeat', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
-    await addWidgetLocal({
+    const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
       x: 840,
       y: 90
+    })
+    overlayDone(id);
+  });
+
+  on('#addSeatCounter', 'click', async function() {
+    const seats = widgetFilter(w=>w.get('type')=='seat');
+    const maxIndex = Math.max(...seats.map(w=>w.get('index')));
+    const id = await addWidgetLocal({
+      type: 'seat',
+      index: seats.length && maxIndex ? maxIndex+1 : 1,
+      x: 840,
+      y: 90
+    })
+    await addWidgetLocal({
+      id: id+'C',
+      parent: id,
+      fixedParent: true,
+      x: -20,
+      y: -20,
+      width: 30,
+      height: 30,
+      borderRadius: 100,
+      movable: false,
+      movableInEdit: false,
+      clickable: false,
+      css: {'font-size':'18px', 'display':'flex','align-items':'center','justify-content':'center','color':'#6d6d6d','background':'#e4e4e4','border':'2px solid #999999'},
+      text: '0',
+      ownerGlobalUpdateRoutine: [
+        'var parent = ${PROPERTY parent}',
+        "var COUNT = 0",
+        {
+          "func": "COUNT",
+          "holder": "${PROPERTY hand OF $parent}",
+          "owner": "${PROPERTY player OF $parent}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "text",
+          "value": "${COUNT}"
+        }
+      ],
+      playerGlobalUpdateRoutine: [
+        {
+          "func": "CALL",
+          "routine": "ownerGlobalUpdateRoutine",
+          "widget": "${PROPERTY id}"
+        }
+      ]
     });
-    showOverlay();
+    overlayDone(id);
   });
 
   on('#addScoreboard', 'click', async function() {
