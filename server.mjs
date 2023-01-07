@@ -201,7 +201,7 @@ MinifyRoom().then(function(result) {
     const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
-        activeRooms.get(req.params.room).addState('', 'link', `${Config.get('externalURL')}/s/${req.params.share}/name.vtt`, '');
+        activeRooms.get(req.params.room).addState(req.params.share, 'link', `${Config.get('externalURL')}/s/${req.params.share}/name.vtt`, '');
         res.send('OK');
       }
     }).catch(next);
