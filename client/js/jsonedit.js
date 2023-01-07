@@ -555,6 +555,21 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_moveLimit',
+    name: 'move limits',
+    context: '^[^ ]* ↦ moveLimit',
+    call: async function() {
+      const w = widgets.get(jeStateNow.id);
+      jeStateNow.moveLimit.push({
+        minX: '###SELECT ME###',
+        maxX: 1600 - w.get('width'),
+        minY: 0,
+        maxY: 1000 - w.get('height'),
+      });
+      jeSetAndSelect(0);
+    }
+  },
+  {
     id: 'je_imageTemplate',
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
