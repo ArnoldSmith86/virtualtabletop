@@ -11,6 +11,7 @@ export class Label extends Widget {
       layer: -2,
       typeClasses: 'widget label',
       clickable: false,
+      spellCheck: false,
 
       text: '',
       editable: false,
@@ -27,6 +28,7 @@ export class Label extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
+      this.input.setAttribute("spellcheck", this.get('spellCheck'));
       this.input.value = this.get('text');
       if(this.get('twoRowBottomAlign')) {
         this.input.style.height = '20px';
