@@ -27,8 +27,7 @@ export class Label extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined || delta.spellCheck !== undefined) {
-      this.input.setAttribute('spellcheck', this.get('spellCheck') === true)
+    if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
       this.input.value = this.get('text');
       if(this.get('twoRowBottomAlign')) {
         this.input.style.height = '20px';
@@ -52,6 +51,9 @@ export class Label extends Widget {
         this.input.removeAttribute("readonly");
       else
         this.input.setAttribute("readonly", !delta.editable);
+    }
+    if(delta.spellCheck !== undefined) {
+      this.input.setAttribute('spellcheck', this.get('spellCheck') === true)
     }
   }
 }
