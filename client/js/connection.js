@@ -18,6 +18,7 @@ export function startWebSocket() {
   connection = new WebSocket(url);
 
   connection.onopen = () => {
+    lastTimeout = 500;
     showOverlay(null, true);
     showOverlay(lastOverlay);
     if(!urlProperties.askID) {
