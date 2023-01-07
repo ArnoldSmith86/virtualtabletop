@@ -6,6 +6,7 @@ import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
+import { randomHue } from '../client/js/color.js';
 import Statistics from './statistics.mjs';
 
 export default class Room {
@@ -603,37 +604,7 @@ export default class Room {
   }
 
   newPlayerColor() {
-    let hue = 0;
-    const hues = [];
-    for(const player in this.state._meta.players) {
-      const hex = this.state._meta.players[player];
-      const r = parseInt(hex.slice(1,3), 16) / 255;
-      const g = parseInt(hex.slice(3,5), 16) / 255;
-      const b = parseInt(hex.slice(5,7), 16) / 255;
-      const max = Math.max(r,g,b);
-      const d = max - Math.min(r,g,b);
-      if(d < .25) continue;
-      switch(max) {
-        case r: hues.push((360 + (g - b) * 60 / d) % 360); break;
-        case g: hues.push(120 + (b - r) * 60 / d); break;
-        case b: hues.push(240 + (r - g) * 60 / d); break;
-      }
-    }
-    if(hues.length == 0) {
-      hue = Math.random() * 360;
-    } else {
-      const gaps = hues.sort((a,b)=>a-b).map((h, i, a) => (i != (a.length - 1)) ? a[i + 1 ] - h : a[0] + 360 - h);
-      const gap = Math.max(...gaps);
-      hue = (Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
-    }
-    const v = [240, 220, 120, 200, 240, 240];
-    const value = v[Math.floor(hue/60)] * (60 - hue%60) / 60 + v[Math.ceil(hue/60) % 6] * (hue%60) / 60;
-    const f = n => {
-      const k = (n + hue / 30) % 12;
-      const c = .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-      return Math.round(value * c).toString(16).padStart(2, '0');
-    }
-    return `#${f(0)}${f(8)}${f(4)}`;
+    return randomHue(this.state._meta.players)
   }
 
   receiveDelta(player, delta) {
@@ -979,6 +950,8 @@ export default class Room {
       delete state._meta.info.publicLibrary;
       delete state._meta.info.publicLibraryCategory;
 
+      state._meta.info.lastUpdate = +new Date();
+
       fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
     }
 
@@ -1005,6 +978,8 @@ export default class Room {
     delete copy._meta.info.timePlayed;
     delete copy._meta.info.link;
     delete copy._meta.info.variants;
+
+    copy._meta.info.lastUpdate = +new Date();
 
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
     this.writePublicLibraryAssetsToFilesystem(stateID);
