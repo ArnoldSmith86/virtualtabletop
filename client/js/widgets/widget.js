@@ -52,6 +52,7 @@ export class Widget extends StateManaged {
       clickSound: null,
 
       grid: [],
+      gridCornerAlign: false,
       enlarge: false,
       overlap: true,
       ignoreOnLeave: false,
@@ -2112,8 +2113,15 @@ export class Widget extends StateManaged {
         if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
           continue;
 
-        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
-        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
+        let snapX;
+        let snapY;
+        if(this.get('gridCornerAlign')) {
+          snapX = grid.x * Math.round((x - (grid.offsetX || 0)) / grid.x) + (grid.offsetX || 0);
+          snapY = grid.y * Math.round((y - (grid.offsetY || 0)) / grid.y) + (grid.offsetY || 0);
+        } else {
+          snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
+          snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
+        }
 
         const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
         if(distance < closestDistance) {
