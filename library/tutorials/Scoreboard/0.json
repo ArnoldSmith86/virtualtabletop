@@ -10,19 +10,19 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "id": "4ebx",
-      "showName": true,
+      "showName": false,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Basic",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1",
+      "lastUpdate": 1672953252502
     }
   },
   "seat1": {
