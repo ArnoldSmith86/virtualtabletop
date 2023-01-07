@@ -28,7 +28,11 @@ export class Label extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
-      this.input.setAttribute("spellcheck", this.get('spellCheck'));
+      if (this.get('spellCheck')) {
+        this.input.setAttribute('spellcheck', true);
+      } else {
+        this.input.setAttribute('spellcheck', false);
+      }
       this.input.value = this.get('text');
       if(this.get('twoRowBottomAlign')) {
         this.input.style.height = '20px';
