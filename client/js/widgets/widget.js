@@ -42,10 +42,7 @@ export class Widget extends StateManaged {
       borderRadius: null,
       rotation: 0,
       scale: 1,
-      xLimitMin: null,
-      xLimitMax: null,
-      yLimitMin: null,
-      yLimitMax: null,
+      moveLimit: [],
 
       typeClasses: 'widget',
       classes: '',
@@ -1824,25 +1821,20 @@ export class Widget extends StateManaged {
     const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
     let newX = Math.round(coordParent.x + offset.x);
     let newY = Math.round(coordParent.y + offset.y);
-    const xLimitMin = this.get('xLimitMin');
-    const xLimitMax = this.get('xLimitMax');
-    const yLimitMin = this.get('yLimitMin');
-    const yLimitMax = this.get('yLimitMax');
+    const limit = this.get('moveLimit');
  
-    if (typeof xLimitMin === 'number') {
-      newX = Math.max(xLimitMin, newX);
-    }
-    
-    if (typeof xLimitMax === 'number') {
-      newX = Math.min(xLimitMax, newX);
-    }
-    
-    if (typeof yLimitMin === 'number') {
-      newY = Math.max(yLimitMin, newY);
-    }
-    
-    if (typeof yLimitMax === 'number') {
-      newY = Math.min(yLimitMax, newY);
+    if (limit.length) {
+      for (const p in limit[0]) {
+        if (p === 'minX') {
+          newX = Math.max(limit[0].minX, newX);
+        } else if (p === 'maxX') {
+          newX = Math.min(limit[0].maxX, newX);
+        } else if (p === 'minY') {
+          newY = Math.max(limit[0].minY, newY);
+        } else if (p === 'maxY') {
+          newY = Math.min(limit[0].maxY, newY);
+        }
+      }
     }
 
     if(tracingEnabled)
