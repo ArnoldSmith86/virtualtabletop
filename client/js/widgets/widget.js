@@ -42,7 +42,7 @@ export class Widget extends StateManaged {
       borderRadius: null,
       rotation: 0,
       scale: 1,
-      moveLimit: [],
+      moveLimit: {},
 
       typeClasses: 'widget',
       classes: '',
@@ -1823,18 +1823,17 @@ export class Widget extends StateManaged {
     let newY = Math.round(coordParent.y + offset.y);
     const limit = this.get('moveLimit');
  
-    if (limit.length) {
-      for (const p in limit[0]) {
-        if (p === 'minX') {
-          newX = Math.max(limit[0].minX, newX);
-        } else if (p === 'maxX') {
-          newX = Math.min(limit[0].maxX, newX);
-        } else if (p === 'minY') {
-          newY = Math.max(limit[0].minY, newY);
-        } else if (p === 'maxY') {
-          newY = Math.min(limit[0].maxY, newY);
-        }
-      }
+    if (limit.minX !== undefined) {
+      newX = Math.max(limit.minX, newX);
+    }
+    if (limit.maxX !== undefined) {
+      newX = Math.min(limit.maxX, newX);
+    }
+    if (limit.minY !== undefined) {
+      newY = Math.max(limit.minY, newY);
+    }
+    if (limit.maxY !== undefined) {
+      newY = Math.min(limit.maxY, newY);
     }
 
     if(tracingEnabled)
