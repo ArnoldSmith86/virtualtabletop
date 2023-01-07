@@ -28,10 +28,10 @@ export class Label extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
-      if (this.get('spellCheck') === false) {
-        this.input.setAttribute('spellcheck', false);
-      } else {
+      if (this.get('spellCheck') === true) {
         this.input.setAttribute('spellcheck', true);
+      } else {
+        this.input.setAttribute('spellcheck', false);
       }
       this.input.value = this.get('text');
       if(this.get('twoRowBottomAlign')) {
