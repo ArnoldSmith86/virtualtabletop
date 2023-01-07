@@ -560,12 +560,12 @@ const jeCommands = [
     context: '^[^ ]* ↦ moveLimit',
     call: async function() {
       const w = widgets.get(jeStateNow.id);
-      jeStateNow.moveLimit.push({
+      jeStateNow.moveLimit = {
         minX: '###SELECT ME###',
         maxX: 1600 - w.get('width'),
         minY: 0,
         maxY: 1000 - w.get('height'),
-      });
+      };
       jeSetAndSelect(0);
     }
   },
