@@ -42,6 +42,10 @@ export class Widget extends StateManaged {
       borderRadius: null,
       rotation: 0,
       scale: 1,
+      xLimitMin: null,
+      xLimitMax: null,
+      yLimitMin: null,
+      yLimitMax: null,
 
       typeClasses: 'widget',
       classes: '',
@@ -1818,8 +1822,28 @@ export class Widget extends StateManaged {
   async move(coordGlobal, localAnchor) {
     const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
     const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
-    const newX = Math.round(coordParent.x + offset.x);
-    const newY = Math.round(coordParent.y + offset.y);
+    let newX = Math.round(coordParent.x + offset.x);
+    let newY = Math.round(coordParent.y + offset.y);
+    const xLimitMin = this.get('xLimitMin');
+    const xLimitMax = this.get('xLimitMax');
+    const yLimitMin = this.get('yLimitMin');
+    const yLimitMax = this.get('yLimitMax');
+ 
+    if (typeof xLimitMin === 'number') {
+      newX = Math.max(xLimitMin, newX);
+    }
+    
+    if (typeof xLimitMax === 'number') {
+      newX = Math.min(xLimitMax, newX);
+    }
+    
+    if (typeof yLimitMin === 'number') {
+      newY = Math.max(yLimitMin, newY);
+    }
+    
+    if (typeof yLimitMax === 'number') {
+      newY = Math.min(yLimitMax, newY);
+    }
 
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX, newY });
