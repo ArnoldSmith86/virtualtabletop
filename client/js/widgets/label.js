@@ -27,7 +27,7 @@ export class Label extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
+    if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined || delta.label !== undefined) {
       this.input.setAttribute('spellcheck', this.get('spellCheck') === true)
       this.input.value = this.get('text');
       if(this.get('twoRowBottomAlign')) {
