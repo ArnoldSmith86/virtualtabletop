@@ -88,14 +88,18 @@ export function showOverlay(id, forced) {
 
   if(id) {
     const style = $(`#${id}`).style;
-    style.display = !forced && style.display === 'flex' ? 'none' : 'flex';
-    overlayActive = style.display === 'flex';
+    style.display = !forced && style.display !== 'none' ? 'none' : 'flex';
+    overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
 
     //Hack to focus on the Go button for the input overlay
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
+    }
+    //Hack to set grid display for add Overlay
+    if (id == 'addOverlay' && style.display !== 'none') {
+      style.display = 'grid'
     }
     toServer('mouse',{inactive:true})
   } else {
@@ -331,9 +335,9 @@ onLoad(function() {
 
   on('.toolbarTab', 'click', function(e) {
     if(e.currentTarget.classList.contains('active')) {
-      if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display == 'flex')
+      if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
         showStatesOverlay('statesOverlay');
-      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display == 'flex')
+      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display != 'none')
         showOverlay();
       e.stopImmediatePropagation();
       return;
