@@ -38,14 +38,6 @@ function getPropertyValue(widgetID, state, property, defaultValue) {
   }
   if (widget.type == 'card' && widget.deck !== null && state[widget.deck] !== undefined) {
     const deck = state[widget.deck];
-    if (typeof deck.faceTemplates == 'object' && typeof deck.faceTemplates[widget.activeFace || 0] == 'object') {
-      const faceTemplate = deck.faceTemplates[widget.activeFace || 0];
-      if (typeof faceTemplate.objects == 'object') {
-        value = faceTemplate.objects[0][property];
-        if (value !== undefined)
-          return value;
-      }
-    }
     if (widget.cardType !== null && typeof deck.cardTypes == 'object' && deck.cardTypes[widget.cardType] !== undefined) {
       value = deck.cardTypes[widget.cardType][property];
       if (value !== undefined)
@@ -401,9 +393,9 @@ function v10GridOffset(properties, widgetID, state) {
       }
     }
   }
-  const width = getPropertyValue(widgetID, state, 'width', state[widgetID].type == 'card' ? 103 : 100);
-  const height = getPropertyValue(widgetID, state, 'height', state[widgetID].type == 'card' ? 160 : 100);
-  console.log(`Fixing width ${width} and height ${height} on ${widgetID}`);
+  const scale = getPropertyValue(widgetID, state, 'scale', 1);
+  const width = getPropertyValue(widgetID, state, 'width', state[widgetID].type == 'card' ? 103 : 100) * scale;
+  const height = getPropertyValue(widgetID, state, 'height', state[widgetID].type == 'card' ? 160 : 100) * scale;
   for (let i = 0; i < grid.length; ++i) {
     grid[i].offsetX = (grid[i].offsetX || 0) - grid[i].x/2 + width/2;
     grid[i].offsetY = (grid[i].offsetY || 0) - grid[i].y/2 + height/2;
