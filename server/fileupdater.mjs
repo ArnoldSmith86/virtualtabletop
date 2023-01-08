@@ -56,8 +56,8 @@ function updateProperties(properties, v, widgetID, state) {
   if(typeof properties != 'object')
     return;
 
-  if(!properties.type && properties.faces && properties.faces.length) {
-    for (let i = 0; i < properties.faces.length; i++)
+  if(!properties.type && typeof properties.faces == 'object') {
+    for (let i in properties.faces)
       updateProperties(properties.faces[i], v, widgetID, state);
   }
   if(properties.type == 'deck')
