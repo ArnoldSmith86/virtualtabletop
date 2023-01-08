@@ -5,7 +5,7 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
-import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize } from '../geometry.js';
+import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -27,6 +27,7 @@ export class Widget extends StateManaged {
     this.id = id;
     this.domElement = div;
     this.dropShadowWidget = null;
+    this.targetTransform = '';
     this.childArray = [];
     this.propertiesUsedInCSS = [];
 
@@ -140,19 +141,27 @@ export class Widget extends StateManaged {
     for(const property of this.cssProperties()) {
       if(delta[property] !== undefined) {
         this.domElement.style.cssText = mapAssetURLs(this.css());
+        this.targetTransform = this.domElement.style.transform;
         return;
       }
     }
 
     for(const property of this.cssTransformProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.style.transform = this.cssTransform();
+        this.targetTransform = this.domElement.style.transform = this.cssTransform();
         return;
       }
     }
   }
 
   applyDeltaToDOM(delta) {
+    let fromTransform = null;
+    let newParent = undefined;
+    if(delta.parent !== undefined) {
+      newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
+      fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
+    }
+
     this.applyCSS(delta);
     if(delta.audio !== null)
       this.addAudio(this);
@@ -163,14 +172,20 @@ export class Widget extends StateManaged {
     if(delta.movable !== undefined)
       this.isDraggable = delta.movable;
 
-    if(delta.parent !== undefined) {
+    if(newParent !== undefined) {
       if(this.parent)
         this.parent.applyChildRemove(this);
 
-      if(delta.parent === null)
-        $('#topSurface').appendChild(this.domElement);
-      else
-        widgets.get(delta.parent).domElement.appendChild(this.domElement);
+      newParent.appendChild(this.domElement);
+      if (fromTransform) {
+        // If we changed parents, we apply a transform to the previous location
+        // to allow for a smooth transition animation.
+        this.domElement.style.transform = fromTransform;
+        // Force style recalc to commit from transform and start a transition
+        // on applying the destination transform.
+        this.domElement.offsetTop;
+        this.domElement.style.transform = this.targetTransform;
+      }
 
       if(delta.parent !== null) {
         this.parent = widgets.get(delta.parent);
@@ -1358,7 +1373,7 @@ export class Widget extends StateManaged {
           problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           a.mode = 'set'
         }
-        
+
         if(a.value === null)
           a.value = a.mode=='set' ? 0 : 1;
         if(isNaN(parseFloat(a.value))) {
