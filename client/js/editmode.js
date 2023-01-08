@@ -1594,7 +1594,6 @@ function populateAddWidgetOverlay() {
   spinner.domElement.id = spinner.id;
   $('#addOverlay').appendChild(spinner.domElement);
 
-
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',
     text: 'DEAL',
