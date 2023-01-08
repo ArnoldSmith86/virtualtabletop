@@ -515,7 +515,7 @@ export class Widget extends StateManaged {
       return null;
     // For now expects exactly two percentage values. This could be relaxed
     // to support more valid transform-origin syntaxes in the future.
-    let parts = anchorOrigin.match(/^\s*(-?[\d.]+)% (-?[\d].+)%\s*$/);
+    let parts = anchorOrigin.match(/^\s*(-?[\d.]+)% (-?[\d.]+)%\s*$/);
     if (!parts)
       return null;
     return {x: this.get('width') * parseFloat(parts[1]) * 0.01,
@@ -1359,7 +1359,7 @@ export class Widget extends StateManaged {
           problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           a.mode = 'set'
         }
-        
+
         if(a.value === null)
           a.value = a.mode=='set' ? 0 : 1;
         if(isNaN(parseFloat(a.value))) {
