@@ -397,7 +397,6 @@ function v10GridOffset(properties, widgetID, state) {
   }
   const width = getPropertyValue(widgetID, state, 'width', state[widgetID].type == 'card' ? 103 : 100);
   const height = getPropertyValue(widgetID, state, 'height', state[widgetID].type == 'card' ? 160 : 100);
-  console.log(`converting grid for ${widgetID} with ${width}x${height}`);
   for (let i = 0; i < grid.length; ++i) {
     grid[i].offsetX = (grid[i].offsetX || 0) - grid[i].x*0.5 + width*0.5;
     grid[i].offsetY = (grid[i].offsetY || 0) - grid[i].y*0.5 + height*0.5;
