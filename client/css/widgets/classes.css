@@ -230,7 +230,7 @@ body.edit .widget.legacyPinPiece::after {
   background-image: radial-gradient(circle, var(--color), var(--color) 20%, var(--roomColor) 30%);
 }
 
-.chip3D {
+.chip3D, .pokerChip3D {
   
   font-weight:900; 
   display:flex;  
@@ -245,7 +245,7 @@ body.edit .widget.legacyPinPiece::after {
   line-height: 1; 
 }
 
-.chip {
+.chip, .pokerChip {
   font-weight:900;
   display:flex;  
   justify-content: center; 
