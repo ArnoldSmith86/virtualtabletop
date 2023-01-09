@@ -1378,7 +1378,7 @@ function populateAddWidgetOverlay() {
     text: 'DEAL',
     clickRoutine: [],
     x: 750,
-    y: 850
+    y: 860
   });
 
   // Add the composite timer widget
