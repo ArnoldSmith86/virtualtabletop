@@ -514,6 +514,24 @@ function generateChipPileWidgets(id, x, y, type) {
   const widgets = [
     { type:'holder', id, x, y, width: 81,
       height: type==2 ? 81 : 54, borderRadius: "100%", dropOffsetY: type==2 ? 4 : -6, dropTarget: { classes: type==2 ? 'pokerChip' : 'pokerChip3D' } },
+    {
+      type: 'button',
+      id: id+'B',
+      parent: id,
+      fixedParent: true,
+      y: type==2 ? 83: 56,
+      width: 81,
+      height: 35,
+      movableInEdit: false,
+      classes: 'symbols',
+      css: { 'font-size': '30px' },
+      text: 'recallsort_ascending',
+
+      clickRoutine: [
+        { func: 'RECALL', holder: '${PROPERTY parent}' },
+        { func: 'SORT', holder: '${PROPERTY parent}', reverse: true }
+      ]
+    },
     { type:'pile',
       id: id+'P',
       parent: id,
