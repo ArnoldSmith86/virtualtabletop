@@ -895,7 +895,7 @@ function populateAddWidgetOverlay() {
   //Add svg game pieces
   // First row
   addPieceToAddWidgetOverlay(new BasicWidget('Pawn3DSVG'), {
-    x: 380,
+    x: 390,
     y: 79,
     width: 50.4,
     height: 90,
@@ -915,7 +915,7 @@ function populateAddWidgetOverlay() {
 
   
   addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
-    x: 380+75,
+    x: 390+75,
     y: 111,
     width: 35,
     height: 40,
@@ -934,7 +934,7 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
-    x: 380+2*75,
+    x: 390+2*75,
     y: 114,
     width: 35,
     height: 35,
@@ -955,7 +955,7 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
-    x: 380+3*75,
+    x: 390+3*75,
     y: 110,
     width: 36,
     height: 40,
@@ -978,8 +978,8 @@ function populateAddWidgetOverlay() {
   // Second row
 
   addPieceToAddWidgetOverlay(new BasicWidget('Checker2DSVG'), {
-    x: 435,
-    y: 180,
+    x: 445,
+    y: 190,
     width: 75,
     height: 75,
 
@@ -1011,10 +1011,10 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Checker3DSVG'), {
-    x: 435+100,
-    y: 180,
+    x: 445+100,
+    y: 200,
     width: 75,
-    height: 75,
+    height: 54.75,
 
     activeFace: 1,
     classes: "chip3D",
@@ -1046,8 +1046,8 @@ function populateAddWidgetOverlay() {
   //Third row
 
   addPieceToAddWidgetOverlay(new BasicWidget('Meeple2DSVG'), {
-    x: 440,
-    y: 283,
+    x: 450,
+    y: 303,
     width: 56,
     height: 56,
 
@@ -1065,8 +1065,8 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Meeple3DSVG'), {
-    x: 440+100,
-    y: 280,
+    x: 450+100,
+    y: 300,
     width: 66.5,
     height: 70,
 
@@ -1099,8 +1099,8 @@ function populateAddWidgetOverlay() {
   //Fourth row
 
   addPieceToAddWidgetOverlay(new BasicWidget('Pig2DSVG'), {
-    x: 440,
-    y: 382,
+    x: 450,
+    y: 412,
     width: 68.56,
     height: 48,
 
@@ -1118,8 +1118,8 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Pig3DSVG'), {
-    x: 440+100,
-    y: 378,
+    x: 450+100,
+    y: 408,
     width: 85.7,
     height: 60,
 
@@ -1139,8 +1139,8 @@ function populateAddWidgetOverlay() {
   //Fifth row
 
   addPieceToAddWidgetOverlay(new BasicWidget('Building3DSVG'), {
-    x: 380,
-    y: 444,
+    x: 390,
+    y: 494,
     width: 69,
     height: 77,
 
@@ -1158,8 +1158,8 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('House3DSVG'), {
-    x: 480,
-    y: 457,
+    x: 490,
+    y: 507,
     width: 60,
     height: 60,
 
@@ -1178,8 +1178,8 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Road3DSVG'), {
-    x: 600,
-    y: 430,
+    x: 610,
+    y: 480,
     width: 26,
     height: 100,
     rotation: 60,
