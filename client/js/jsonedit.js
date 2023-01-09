@@ -555,12 +555,12 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_moveLimit',
-    name: 'move limits',
-    context: '^[^ ]* ↦ moveLimit',
+    id: 'je_dragLimit',
+    name: 'drag limits',
+    context: '^[^ ]* ↦ dragLimit',
     call: async function() {
       const w = widgets.get(jeStateNow.id);
-      jeStateNow.moveLimit = {
+      jeStateNow.dragLimit = {
         minX: '###SELECT ME###',
         maxX: 1600 - w.get('width'),
         minY: 0,

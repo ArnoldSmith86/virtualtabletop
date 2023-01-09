@@ -43,7 +43,7 @@ export class Widget extends StateManaged {
       borderRadius: null,
       rotation: 0,
       scale: 1,
-      moveLimit: {},
+      dragLimit: {},
 
       typeClasses: 'widget',
       classes: '',
@@ -1836,7 +1836,9 @@ export class Widget extends StateManaged {
     const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
     let newX = Math.round(coordParent.x + offset.x);
     let newY = Math.round(coordParent.y + offset.y);
-    const limit = this.get('moveLimit');
+
+    //Keeps widget's top left corner within coordinates set by dragLimit object
+    const limit = this.get('dragLimit');
  
     if (limit.minX !== undefined) {
       newX = Math.max(limit.minX, newX);
