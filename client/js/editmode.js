@@ -514,7 +514,46 @@ function generateChipPileWidgets(id, x, y, type) {
   const widgets = [
     { type:'holder', id, x, y, width: 81,
       height: type==2 ? 81 : 54, borderRadius: "100%", dropTarget: { classes: type==2 ? 'pokerChip' : 'pokerChip3D' } },
-    { type:'pile', id: id+'P', parent: id, width:73, height:73, y: type==2 ? 4 : -6 },
+    { type:'pile',
+      id: id+'P',
+      parent: id,
+      width:73,
+      height:73,
+      y: type==2 ? 4 : -6, 
+      text: 1641,
+      enterRoutine: [
+        {
+          func: "GET",
+          property: "value",
+          collection: "child",
+          aggregation: "sum",
+          variable: "value"
+        },
+        {
+          func: "SET",
+          property: "text",
+          collection: "thisButton",
+          relation: "+",
+          value: "\${value}"
+        }
+      ],
+      leaveRoutine: [
+        {
+          func: "GET",
+          property: "value",
+          collection: "child",
+          aggregation: "sum",
+          variable: "value"
+        },
+        {
+          func: "SET",
+          property: "text",
+          collection: "thisButton",
+          relation: "-",
+          value: "\${value}"
+        }
+      ]
+    },
     { type: 'deck',
       id: id+'D',
       parent: id,
