@@ -513,7 +513,7 @@ function generateCardDeckWidgets(id, x, y, addCards) {
 function generateChipPileWidgets(id, x, y, type) {
   const widgets = [
     { type:'holder', id, x, y, width: 81,
-      height: type==2 ? 81 : 54, borderRadius: "100%", dropOffsetY: -6, dropTarget: { classes: type==2 ? 'pokerChip' : 'pokerChip3D' } },
+      height: type==2 ? 81 : 54, borderRadius: "100%", dropOffsetY: type==2 ? 4 : -6, dropTarget: { classes: type==2 ? 'pokerChip' : 'pokerChip3D' } },
     { type:'pile',
       id: id+'P',
       parent: id,
