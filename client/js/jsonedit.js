@@ -555,21 +555,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_dragLimit',
-    name: 'drag limits',
-    context: '^[^ ]* ↦ dragLimit',
-    call: async function() {
-      const w = widgets.get(jeStateNow.id);
-      jeStateNow.dragLimit = {
-        minX: '###SELECT ME###',
-        maxX: 1600 - w.get('width'),
-        minY: 0,
-        maxY: 1000 - w.get('height'),
-      };
-      jeSetAndSelect(0);
-    }
-  },
-  {
     id: 'je_imageTemplate',
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
@@ -943,6 +928,11 @@ function jeAddCommands() {
   jeAddGridCommand('offsetY', 0);
   jeAddGridCommand('rotation', 0);
 
+  jeAddLimitCommand('minX', 0);
+  jeAddLimitCommand('maxX', 1600);
+  jeAddLimitCommand('minY', 0);
+  jeAddLimitCommand('maxY', 1000);
+
   jeAddFieldCommand('text', 'subtitle|title|text', '');
   jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
   jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
@@ -1216,6 +1206,19 @@ function jeAddGridCommand(key, value) {
     show: _=>!(key in jeStateNow.grid[+jeContext[2]]),
     call: async function() {
       jeStateNow.grid[+jeContext[2]][key] = '###SELECT ME###';
+      jeSetAndSelect(value);
+    }
+  });
+}
+
+function jeAddLimitCommand(key, value) {
+  jeCommands.push({
+    id: 'limit_' + key,
+    name: key,
+    context: '^[^ ]* ↦ dragLimit',
+    show: _=>!(key in jeStateNow.dragLimit),
+    call: async function() {
+      jeStateNow.dragLimit[key] = '###SELECT ME###';
       jeSetAndSelect(value);
     }
   });
