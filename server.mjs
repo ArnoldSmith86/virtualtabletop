@@ -13,15 +13,19 @@ import Room       from './server/room.mjs';
 import MinifyRoom from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
+import Statistics from './server/statistics.mjs';
 
 const app = express();
 const server = http.Server(app);
+const router = express.Router();
 
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
 
 const serverStart = +new Date();
+
+app.use(Config.get('urlPrefix'), router);
 
 fs.mkdirSync(assetsdir, { recursive: true });
 fs.mkdirSync(savedir + '/rooms',  { recursive: true });
@@ -42,6 +46,16 @@ async function ensureRoomIsLoaded(id) {
   return true;
 }
 
+function validateInput(res, next, values) {
+  for(const value of values) {
+    if(value && !value.match(/^[A-Za-z0-9.: _-]+$/)) {
+      next(new Logging.UserError(403, 'Invalid characters in parameters'));
+      return false;
+    }
+  }
+  return true;
+}
+
 async function downloadState(res, roomID, stateID, variantID) {
   if(await ensureRoomIsLoaded(roomID)) {
     const d = await activeRooms.get(roomID).download(stateID, variantID);
@@ -55,32 +69,42 @@ function autosaveRooms() {
   setInterval(function() {
     for(const [ _, room ] of activeRooms) {
       try {
+        room.updateTimeStatistics();
         room.writeToFilesystem();
       } catch(e) {
         Logging.handleGenericException('autosaveRooms', e);
       }
     }
+    Statistics.writeToFilesystem();
   }, 60*1000);
 }
 
 MinifyRoom().then(function(result) {
-  app.use('/', express.static(path.resolve() + '/client'));
-  app.use('/i', express.static(path.resolve() + '/assets'));
-  app.use('/library', express.static(Config.directory('library')));
+  router.use('/', express.static(path.resolve() + '/client'));
+  router.use('/i', express.static(path.resolve() + '/assets'));
 
-  app.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
+  router.get('/scripts/:name', function(req, res) {
+    res.setHeader('Content-Type', 'application/javascript');
+    if(req.params.name == 'jszip')
+      res.send(fs.readFileSync('node_modules/jszip/dist/jszip.min.js'));
+  });
+
+  router.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
     const result = {};
     if(Array.isArray(req.body))
       for(const asset of req.body)
         if(asset.match(/^[0-9_-]+$/))
-          result[asset] = fs.existsSync(assetsdir + '/' + asset);
+          result[asset] = !!Config.resolveAsset(asset);
     res.send(result);
   });
 
-  app.get('/assets/:name', function(req, res) {
-    if(!req.params.name.match(/^[0-9_-]+$/))
+  router.get('/assets/:name', function(req, res) {
+    if(!req.params.name.match(/^[0-9_-]+$/) || !Config.resolveAsset(req.params.name)) {
+      res.sendStatus(404);
       return;
-    fs.readFile(assetsdir + '/' + req.params.name, function(err, content) {
+    }
+
+    fs.readFile(Config.resolveAsset(req.params.name), function(err, content) {
       if(!content) {
         res.sendStatus(404);
         Logging.log(`WARNING: Could not load asset ${req.params.name}`);
@@ -106,31 +130,43 @@ MinifyRoom().then(function(result) {
     });
   });
 
-  app.post('/heapsnapshot', function(req, res) {
+  router.post('/heapsnapshot', function(req, res) {
     v8.getHeapSnapshot().pipe(fs.createWriteStream('memory.heapsnapshot'));
   });
 
-  app.post('/quit', function(req, res) {
+  router.post('/quit', function(req, res) {
     process.exit();
   });
 
-  app.get('/', function(req, res) {
-    res.redirect(Math.random().toString(36).substring(3, 7));
+  router.get('/', function(req, res) {
+    let id = null;
+    while(!id || fs.existsSync(savedir + '/rooms/' + id + '.json'))
+      id = Math.random().toString(36).substring(3, 7);
+    res.redirect(id);
   });
 
-  app.get('/dl/:room/:state/:variant', function(req, res, next) {
+  router.get('/dl/:room/:state/:variant', function(req, res, next) {
     downloadState(res, req.params.room, req.params.state, req.params.variant).catch(next);
   });
 
-  app.get('/dl/:room/:state', function(req, res, next) {
+  router.get('/dl/:room/:state', function(req, res, next) {
     downloadState(res, req.params.room, req.params.state).catch(next);
   });
 
-  app.get('/dl/:room', function(req, res, next) {
+  router.get('/dl/:room', function(req, res, next) {
     downloadState(res, req.params.room).catch(next);
   });
 
-  app.get('/state/:room', function(req, res, next) {
+  function allowCORS(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.sendStatus(200);
+  }
+
+  router.options('/state/:room', allowCORS);
+
+  router.get('/state/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -142,7 +178,7 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
-  app.put('/state/:room', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+  router.put('/state/:room', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     if(typeof req.body == 'object') {
       ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
@@ -156,27 +192,62 @@ MinifyRoom().then(function(result) {
     }
   });
 
-  app.get('/s/:link/:junk', function(req, res, next) {
+  router.options('/api/addShareToRoom/:room/:share', allowCORS);
+  router.get('/api/addShareToRoom/:room/:share', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if(!sharedLinks[`/s/${req.params.share}`])
+      return res.sendStatus(404);
+
+    const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).addState(req.params.share, 'link', `${Config.get('externalURL')}/s/${req.params.share}/name.vtt`, '');
+        res.send('OK');
+      }
+    }).catch(next);
+  });
+
+  router.options('/api/shareDetails/:share', allowCORS);
+  router.get('/api/shareDetails/:share', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if(!sharedLinks[`/s/${req.params.share}`])
+      return res.sendStatus(404);
+
+    const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
+    ensureRoomIsLoaded(tokens[2]).then(function(isLoaded) {
+      if(isLoaded) {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(activeRooms.get(tokens[2]).state._meta.states[tokens[3]]));
+      }
+    }).catch(next);
+  });
+
+  router.get('/s/:link/:junk', function(req, res, next) {
     if(!sharedLinks[`/s/${req.params.link}`])
-      return res.status(404);
+      return res.sendStatus(404);
 
     const tokens = sharedLinks[`/s/${req.params.link}`].split('/');
     downloadState(res, tokens[2], tokens[3]).catch(next);
   });
 
-  app.get('/share/:room/:state', function(req, res) {
+  router.get('/share/:room/:state', function(req, res, next) {
     const target = `/dl/${req.params.room}/${req.params.state}`;
     for(const link in sharedLinks)
       if(sharedLinks[link] == target)
-        return res.send(link);
+        return res.send(Config.get('urlPrefix') + link);
 
-    const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
-    sharedLinks[newLink] = target;
-    fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
-    res.send(newLink);
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded)
+        activeRooms.get(req.params.room).writeToFilesystem();
+
+      const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
+      sharedLinks[newLink] = target;
+      fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
+      res.send(Config.get('urlPrefix') + newLink);
+    }).catch(next);
   });
 
-  app.get('/:room', function(req, res, next) {
+  router.get('/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(!isLoaded) {
         res.send('Invalid characters in room ID.');
@@ -192,14 +263,29 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
-  app.put('/asset', bodyParser.raw({ limit: '100mb' }), function(req, res) {
+  router.get('/createTempState/:room', function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
+      if(isLoaded)
+        res.send(await activeRooms.get(req.params.room).createTempState());
+    }).catch(next);
+  });
+
+  router.put('/createTempState/:room/:tempID', bodyParser.raw({ limit: '500mb' }), function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
+      if(isLoaded && req.params.tempID.match(/^[a-z0-9]{8}$/))
+        res.send(await activeRooms.get(req.params.room).createTempState(req.params.tempID, req.body));
+    }).catch(next);
+  });
+
+  router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
-    if(!fs.existsSync(assetsdir + filename))
+    if(!Config.resolveAsset(filename.substr(1)))
       fs.writeFileSync(assetsdir + filename, req.body);
     res.send(`/assets${filename}`);
   });
 
-  app.put('/addState/:room/:id/:type/:name/:addAsVariant?', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+  router.put('/addState/:room/:id/:type/:name/:addAsVariant?', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+    if(!validateInput(res, next, [ req.params.id, req.params.addAsVariant ])) return;
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
         activeRooms.get(req.params.room).addState(req.params.id, req.params.type, req.body, req.params.name, req.params.addAsVariant).then(function() {
@@ -209,7 +295,7 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
-  app.put('/moveServer/:room/:returnServer/:returnState', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+  router.put('/moveServer/:room/:returnServer/:returnState', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
         activeRooms.get(req.params.room).receiveState(req.body, req.params.returnServer, req.params.returnState).then(function() {
@@ -219,9 +305,9 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
-  app.use(Logging.userErrorHandler);
+  router.use(Logging.userErrorHandler);
 
-  app.use(Logging.errorHandler);
+  router.use(Logging.errorHandler);
 
   server.listen(Config.get('port'), function() {
     Logging.log(`Listening on ${server.address().port}`);
@@ -242,6 +328,7 @@ autosaveRooms();
   process.on(eventType, function() {
     for(const [ _, room ] of activeRooms)
       room.unload();
+    Statistics.writeToFilesystem();
     if(eventType != 'exit')
       process.exit();
   });

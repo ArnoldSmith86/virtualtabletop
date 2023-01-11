@@ -1,0 +1,200 @@
+{
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 104,
+    "y": 175,
+    "z": 23,
+    "hideWhenUnused": true,
+    "turn": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 512,
+    "y": 175,
+    "z": 24,
+    "index": 2,
+    "hideWhenUnused": true
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 875,
+    "y": 175,
+    "z": 25,
+    "index": 3,
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1225,
+    "y": 175,
+    "z": 26,
+    "index": 4,
+    "hideWhenUnused": true
+  },
+  "nmm6": {
+    "classes": "classicPiece",
+    "color": "#e84242",
+    "width": 90,
+    "height": 90,
+    "x": 134.375,
+    "y": 260,
+    "z": 75,
+    "id": "nmm6",
+    "linkedToSeat": "seat1"
+  },
+  "gat4": {
+    "classes": "classicPiece",
+    "color": "#e0cb0b",
+    "width": 90,
+    "height": 90,
+    "x": 549.625,
+    "y": 260,
+    "z": 73,
+    "id": "gat4",
+    "linkedToSeat": "seat2"
+  },
+  "dmgx": {
+    "classes": "classicPiece",
+    "color": "#4c5fea",
+    "width": 90,
+    "height": 90,
+    "x": 915.875,
+    "y": 260,
+    "z": 77,
+    "id": "dmgx",
+    "linkedToSeat": "seat3"
+  },
+  "2pto": {
+    "classes": "classicPiece",
+    "color": "#23ca5b",
+    "width": 90,
+    "height": 90,
+    "x": 1264,
+    "y": 260,
+    "z": 78,
+    "id": "2pto",
+    "linkedToSeat": "seat4"
+  },
+  "n6g3": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e84242",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 142.625,
+    "y": 86.25,
+    "z": 82,
+    "id": "n6g3",
+    "onlyVisibleForSeat": "seat1"
+  },
+  "n6g4": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#23ca5b",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 1272.25,
+    "y": 86.25,
+    "z": 79,
+    "id": "n6g4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "n6g5": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 924.125,
+    "y": 86.25,
+    "z": 80,
+    "id": "n6g5",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "n6g6": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "width": 73.5,
+    "height": 73.5,
+    "x": 557.875,
+    "y": 86.25,
+    "z": 83,
+    "id": "n6g6",
+    "onlyVisibleForSeat": "seat2",
+    "color": "#e0cb0b"
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "x": 568,
+    "width": 400,
+    "z": 72,
+    "css": "font-size: 60px",
+    "text": "Seats: Basic",
+    "y": 4
+  },
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Seats",
+      "image": "/assets/-65508335_6985",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1673017752214,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    }
+  },
+  "qaui": {
+    "id": "qaui",
+    "z": 89,
+    "x": 101,
+    "y": 411,
+    "css": "font-size: 25px; ",
+    "height": 600,
+    "text": "Open this room in separate browser windows (one using incognito/private mode) or on separate devices to see how sitting in a seat changes the apperance.  Each seat has the 'hideWhenUnused' property set to true (defaults to false). When a user takes a seat, all other unused seats and linked widgets are hidden. Seats that are occupied remain visible.\n\nEach seat also has the default turn settings, so pressing the Turn button will make each seat glow in turn.\n\nThe pawns have the property 'linkedToSeat' set to true (defaults to false). This means the pawns will only be visible for seated players in seats that are occupied. If a player has not taken a seat yet, the pawns will be visible.\n\nThe checkers have the property 'onlyVisibleForSeat' set to true (defaults to false). This means that each checker is only visible for a particular player in a particular seat.",
+    "width": 1400,
+    "movable": false
+  }
+}

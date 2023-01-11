@@ -5,12 +5,16 @@ let playerCursorsTimeout = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
 let playerColor = 'red';
 let activePlayers = [];
+let activeColors = [];
+let mouseCoords = [];
 localStorage.setItem('playerName', playerName);
 
 export {
   playerName,
   playerColor,
-  activePlayers
+  activePlayers,
+  activeColors,
+  mouseCoords
 }
 
 function addPlayerCursor(playerName, playerColor) {
@@ -25,6 +29,7 @@ function addPlayerCursor(playerName, playerColor) {
 
 function fillPlayerList(players, active) {
   activePlayers = [...new Set(active)];
+  activeColors = activePlayers.map(playerName=>players[playerName]);
   removeFromDOM('#playerList > div, #playerCursors > .cursor');
 
   for(const player in players) {
@@ -32,7 +37,7 @@ function fillPlayerList(players, active) {
     $('.teamColor', entry).value = players[player];
     $('.playerName', entry).value = player;
     $('.teamColor', entry).addEventListener('change', function(e) {
-      toServer('playerColor', { player, color: e.target.value });
+      toServer('playerColor', { player, color: toHex(e.target.value) });
     });
     $('.playerName', entry).addEventListener('change', function(e) {
       toServer('rename', { oldName: player, newName: e.target.value });
@@ -83,7 +88,7 @@ onLoad(function() {
           playerCursors[args.player].classList.add('foreign');
         else
           playerCursors[args.player].classList.remove('foreign');
-        playerCursorsTimeout[args.player] = setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, 100 )
+        playerCursorsTimeout[args.player] = setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, parseInt(getComputedStyle(playerCursors[args.player]).getPropertyValue('--cursorActiveDuration')))
       }
     }
   });

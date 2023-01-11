@@ -1,10 +1,11 @@
-import { $, removeFromDOM, asArray, escapeCSS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
-import { playerName, playerColor, activePlayers } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
-import { showOverlay } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
+import { toHex } from '../color.js';
+import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -21,10 +22,11 @@ const readOnlyProperties = new Set([
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
-    div.id = id;
+    div.id = 'w_' + escapeID(id);
     super();
     this.id = id;
     this.domElement = div;
+    this.targetTransform = '';
     this.childArray = [];
     this.propertiesUsedInCSS = [];
 
@@ -47,7 +49,7 @@ export class Widget extends StateManaged {
       css: '',
       movable: true,
       movableInEdit: true,
-      clickable: false,
+      clickable: true,
       clickSound: null,
 
       grid: [],
@@ -59,12 +61,15 @@ export class Widget extends StateManaged {
       fixedParent: false,
       inheritFrom: null,
       owner: null,
+      dragging: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
       inheritChildZ: false,
+      hoverTarget: null,
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
+      hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
       changeRoutine: null,
@@ -117,6 +122,11 @@ export class Widget extends StateManaged {
     this.applyZ();
   }
 
+  applyChildZ(child, previousZ) {
+    if(this.get('inheritChildZ') && (this.z == previousZ || child.z > this.z))
+      this.applyZ();
+  }
+
   applyCSS(delta) {
     for(const property of this.classesProperties()) {
       if(delta[property] !== undefined) {
@@ -127,20 +137,28 @@ export class Widget extends StateManaged {
 
     for(const property of this.cssProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.style.cssText = this.css();
+        this.domElement.style.cssText = mapAssetURLs(this.css());
+        this.targetTransform = this.domElement.style.transform;
         return;
       }
     }
 
     for(const property of this.cssTransformProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.style.transform = this.cssTransform();
+        this.targetTransform = this.domElement.style.transform = this.cssTransform();
         return;
       }
     }
   }
 
   applyDeltaToDOM(delta) {
+    let fromTransform = null;
+    let newParent = undefined;
+    if(delta.parent !== undefined) {
+      newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
+      fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
+    }
+
     this.applyCSS(delta);
     if(delta.audio !== null)
       this.addAudio(this);
@@ -151,14 +169,20 @@ export class Widget extends StateManaged {
     if(delta.movable !== undefined)
       this.isDraggable = delta.movable;
 
-    if(delta.parent !== undefined) {
+    if(newParent !== undefined) {
       if(this.parent)
         this.parent.applyChildRemove(this);
 
-      if(delta.parent === null)
-        $('#topSurface').appendChild(this.domElement);
-      else
-        widgets.get(delta.parent).domElement.appendChild(this.domElement);
+      newParent.appendChild(this.domElement);
+      if (fromTransform) {
+        // If we changed parents, we apply a transform to the previous location
+        // to allow for a smooth transition animation.
+        this.domElement.style.transform = fromTransform;
+        // Force style recalc to commit from transform and start a transition
+        // on applying the destination transform.
+        this.domElement.offsetTop;
+        this.domElement.style.transform = this.targetTransform;
+      }
 
       if(delta.parent !== null) {
         this.parent = widgets.get(delta.parent);
@@ -225,23 +249,26 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.parent)
-      this.parent.applyChildRemove(this);
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      widgets.get(this.get('parent')).applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
-    if($(`#${escapeCSS(this.id)}STYLESHEET`))
-      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
   }
 
+  applyRemoveRecursive() {
+    for(const child of Widget.prototype.children.call(this)) // use Widget.children even for holders so it doesn't filter
+      child.applyRemoveRecursive();
+    this.applyRemove();
+  }
+
   applyZ(force) {
-    const thisInheritChildZ = this.get('inheritChildZ');
-    if(force || thisInheritChildZ) {
+    if(force || this.get('inheritChildZ')) {
       this.domElement.style.zIndex = this.calculateZ();
-      if(thisInheritChildZ && this.get('parent'))
-        widgets.get(this.get('parent')).applyZ();
     }
   }
 
@@ -250,10 +277,15 @@ export class Widget extends StateManaged {
   }
 
   calculateZ() {
+    const pZ = this.z;
     this.z = ((this.get('layer') + 10) * 100000) + this.get('z');
     if(this.get('inheritChildZ'))
       for(const child of this.childrenOwned())
         this.z = Math.max(this.z, child.z);
+    if (this.z != pZ) {
+      if(this.get('parent') && widgets.has(this.get('parent')))
+        widgets.get(this.get('parent')).applyChildZ(this, pZ);
+    }
     return this.z;
   }
 
@@ -283,18 +315,42 @@ export class Widget extends StateManaged {
       className += ' foreign';
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
-    if(this.get('onlyVisibleForSeat'))
-      if(!widgetFilter(w=>w.get('player') == playerName && asArray(this.get('onlyVisibleForSeat')).indexOf(w.get('id')) != -1).length)
+
+    let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
+
+    // If the element is currently being dragged we may inherit restricted seat visibility.
+    const hoverTarget = this.get('hoverTarget') ? widgets.get(this.get('hoverTarget')) : null;
+    if (hoverTarget)
+      onlyVisibleForSeat = hoverTarget.inheritSeatVisibility(onlyVisibleForSeat);
+
+    let invisible = onlyVisibleForSeat !== null;
+    for(const seatID of asArray(onlyVisibleForSeat) || []) {
+      if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
+        invisible = false;
+        break;
+      }
+    }
+    if(invisible)
+      className += ' foreign';
+
+    const linkedToSeat = this.get('linkedToSeat');
+    if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+      if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
-    if(this.get('linkedToSeat') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
-      if(!widgetFilter(w=>asArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
-        className += ' foreign';
+
+    if(typeof this.get('dragging') == 'string')
+      className += ' dragging';
+    if(this.get('dragging') == playerName)
+      className += ' draggingSelf';
+
+    if(this.isHighlighted)
+      className += ' selectedInEdit';
 
     return className;
   }
 
   classesProperties() {
-    return [ 'classes', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -327,47 +383,29 @@ export class Widget extends StateManaged {
     return coordLocal.x >= 0 && coordLocal.y >= 0 && coordLocal.x <= this.get('width') && coordLocal.y <= this.get('height');
   }
   coordLocalFromCoordClient(coord) {
-    const s = this.get('_absoluteScale') * scale;
-    const rot = this.get('_absoluteRotation') % 360;
-    const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
-    const offset = getOffset(center(this.domElement), coord);
-    return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
+    const result = getPointOnPlane(getScreenTransform(this.domElement), coord.x, coord.y);
+    return result || new DOMPoint();
   }
   coordLocalFromCoordGlobal(coord) {
     return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
   }
   coordLocalFromCoordParent(coord) {
-    const s = this.get('scale');
-    const rot = this.get('rotation') % 360;
-    if(s == 1 && rot == 0) {
-      return {x: coord.x - this.get('x'), y: coord.y - this.get('y')};
-    } else {
-      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
-      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
-      const offset = getOffset(parentCenter, coord);
-      return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
-    }
+    const result = getPointOnPlane(getElementTransform(this.domElement), coord.x, coord.y);
+    return result || new DOMPoint();
   }
   coordParentFromCoordGlobal(coord) {
     const p = this.get('parent');
     return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
   }
   coordParentFromCoordLocal(coord) {
-    let s = this.get('scale');
-    let rot = this.get('rotation') % 360;
-    if(s == 1 && rot == 0) {
-      return {x: coord.x + this.get('x'), y: coord.y + this.get('y')};
-    } else {
-      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
-      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
-      const offset = getOffset(localCenter, coord);
-      return applyTransformedOffset(parentCenter, offset, s, rot );
-    }
+    const transform = getElementTransform(this.domElement);
+    return dehomogenize(transform.transformPoint(new DOMPoint(coord.x, coord.y)));
   }
+
   css() {
     this.propertiesUsedInCSS = [];
-    if($(`#${escapeCSS(this.id)}STYLESHEET`))
-      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
 
     css = this.cssBorderRadius() + css;
@@ -379,12 +417,12 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssAsText(css) {
+  cssAsText(css, nested = false) {
     if(typeof css == 'object') {
       let cssText = '';
       for(const key in css) {
         if(typeof css[key] == 'object')
-          return this.cssToStylesheet(css);
+          return this.cssToStylesheet(css, nested);
         cssText += `; ${key}: ${css[key]}`;
       }
       return cssText;
@@ -392,6 +430,7 @@ export class Widget extends StateManaged {
       return css;
     }
   }
+
   cssBorderRadius() {
     let br = this.get('borderRadius');
     switch(typeof(br)) {
@@ -426,12 +465,27 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssToStylesheet(css) {
+  cssToStylesheet(css, nested = false) {
+    let styleString = '';
+    for(const key in css) {
+      let selector = key;
+      if(!nested) {
+        if(key == 'inline')
+          continue;
+        if(key == 'default')
+          selector = '';
+        if(selector.charAt(0) != '@')
+          selector = `#w_${escapeID(this.id)}${selector}`;
+      }
+      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }\n`;
+    }
+
+    if(nested)
+      return styleString;
+
     const style = document.createElement('style');
-    style.id = `${this.id}STYLESHEET`;
-    for(const key in css)
-      if(key != 'inline')
-        style.appendChild(document.createTextNode(`#${escapeCSS(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+    style.id = `STYLES_${escapeID(this.id)}`;
+    style.appendChild(document.createTextNode(styleString));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
@@ -457,23 +511,23 @@ export class Widget extends StateManaged {
     if(go) {
       for(const field of o.fields) {
         if(field.type == 'checkbox') {
-          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
+          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
         } else if(field.type == 'switch') {
-          let thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
+          let thisresult = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
           if(thisresult){
             result[field.variable] = 'on';
           } else {
             result[field.variable] = 'off';
           }
         } else if(field.type == 'number') {
-          let thisvalue = document.getElementById(this.get('id') + ';' + field.variable).value;
+          let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
           if(thisvalue > field.max)
             thisvalue = field.max;
           if(thisvalue < field.min)
             thisvalue = field.min;
           result[field.variable] = thisvalue
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
-          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
+          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
         }
       }
     }
@@ -520,7 +574,9 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
-        return indexName !== undefined ? varContent[indexName] : varContent;
+        if(varContent === null && indexName !== undefined)
+          problems.push(`Cannot index a variable that evaluates to 'null'.`);
+        return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
       }
 
       // property
@@ -565,7 +621,7 @@ export class Widget extends StateManaged {
         newCollection = '$collection_' + batchDepth;
         collections[newCollection] = widgetFilter(w=>collection.indexOf(w.id)!=-1);
       } else
-        problems.push(`Collection ${collection} does not exist and is not an array.`);
+        problems.push(`Collection ${collection} does not exist or is not an array.`);
       return newCollection;
     }
 
@@ -589,7 +645,10 @@ export class Widget extends StateManaged {
     let variables = initialVariables;
     let collections = initialCollections;
     if(!byReference) {
-      variables = Object.assign({}, initialVariables, {
+      variables = Object.assign({
+        activeColors,
+        mouseCoords
+      }, initialVariables, {
         playerName,
         playerColor,
         activePlayers,
@@ -603,13 +662,13 @@ export class Widget extends StateManaged {
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
+      var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
         a = evaluateVariablesRecursively(a)
       else
         a = original.trim();
 
-      var problems = [];
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
@@ -668,7 +727,7 @@ export class Widget extends StateManaged {
 
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
           const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
-          if(index !== undefined && typeof variables[variable] != 'object')
+          if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
             problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
           else if(index !== undefined)
             variables[variable][index] = getValue(variables[variable][index]);
@@ -681,7 +740,7 @@ export class Widget extends StateManaged {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
-            problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+            problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
           }
         }
       }
@@ -695,9 +754,16 @@ export class Widget extends StateManaged {
 
       if(a.func == 'CALL') {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
+        if(Array.isArray(a.routine)) {
+          if(a.routine.length > 1)
+            problems.push('Routine parameter must refer to only one routine, first routine executed.');
+          a.routine = a.routine[0]
+        }
         if(!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
-        } else if(this.isValidID(a.widget)) {
+        } else if(this.isValidID(a.widget, problems)) {
+          if(Array.isArray(a.widget))
+            a.widget = a.widget[0];
           if(!Array.isArray(widgets.get(a.widget).get(a.routine))) {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
@@ -712,7 +778,7 @@ export class Widget extends StateManaged {
             collections[a.collection] = result.collection;
 
             if(jeRoutineLogging) {
-              const theWidget = this.isValidID(a.widget) && a.widget != this.get('id') ? `in ${a.widget}` : '';
+              const theWidget = a.widget != this.get('id') ? `in ${a.widget}` : '';
               if (a.return) {
                 let returnCollection = result.collection.map(w=>w.get('id')).join(',');
                 if(!result.collection.length || result.collection.length >= 5)
@@ -761,25 +827,24 @@ export class Widget extends StateManaged {
             }
             else
               await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
-          }
+          } else
+            problems.push(`Widget ${widget.get('id')} is not a canvas.`);
         };
 
         let phrase;
-        let collection;
 
         if(a.canvas !== undefined) {
-          if(this.isValidID(a.canvas, problems)) {
-            await w(a.canvas, execute);
-            phrase = `canvas ${a.canvas}`;
-          }
-        } else if(collection = getCollection(a.collection)) {
-          if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count || 999999))
+          a.collection = asArray(a.canvas);
+          delete a.canvas
+        }
+        this.isValidID(a.collection, problems); // Validate widget IDs in collection
+        const collection = getCollection(a.collection);
+        if(collections[collection] && collections[collection].length) {
+          for(const c of collections[collection].slice(0, a.count || 999999))
               await execute(c);
-            phrase = `canvas widgets in ${a.collection}`;
-          } else {
-            problems.push(`Collection ${a.collection} is empty.`);
-          }
+          phrase = `canvas widgets in ${a.collection}`;
+        } else {
+          problems.push(`Collection ${a.collection} is empty.`);
         }
 
         if(jeRoutineLogging) {
@@ -875,16 +940,28 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'COUNT') {
-        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
+        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT', owner: null });
         let collection;
         let theItem;
         if(a.holder !== undefined) {
-          if(this.isValidID(a.holder,problems)) {
-            variables[a.variable] = widgets.get(a.holder).children().length;
-            theItem = `${a.holder}`;
+          theItem = `${a.holder}`;
+          variables[a.variable] = 0;
+          for (const h of asArray(a.holder)) {
+            if(this.isValidID(h,problems)) {
+              const children = widgets.get(h).children();
+              if(a.owner === null) {
+                variables[a.variable] += children.length;
+              } else {
+                variables[a.variable] += children.filter(widget => widget.get('owner') === a.owner).length;
+              }
+            }
           }
         } else if(collection = getCollection(a.collection)) {
-          variables[a.variable] = collections[collection].length;
+          if(a.owner === null) {
+            variables[a.variable] = collections[collection].length;
+          } else {
+            variables[a.variable] = collections[collection].filter(widget => widget.get('owner') === a.owner).length;
+          }
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
@@ -948,7 +1025,7 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
           await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationEnd(problems, variables, collections, false);
+            jeLoggingRoutineOperationEnd([], variables, collections, false);
           for(const add in addVariables) {
             if(variableBackups[add] !== undefined)
               variables[add] = variableBackups[add];
@@ -966,12 +1043,50 @@ export class Widget extends StateManaged {
           for(const key in a.in)
             await callWithAdditionalValues({ key, value: a.in[key] }, {});
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `element in '${JSON.stringify(a.in)}'`);
+            jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
+        } else if(a.range) {
+          let range = [...asArray(a.range)];
+
+          if(range.length == 0) {
+            problems.push(`Empty range given, [1] used.`);
+            range = [1]
+          }
+          if(range.length == 1)
+            range.unshift(1);
+          let start = parseFloat(range[0]);
+          if(isNaN(start)) {
+            problems.push(`Invalid start of range ${JSON.stringify(range[0])}, 1 used`);
+            start = 1;
+          }
+
+          let end = parseFloat(range[1]);
+          if(isNaN(end)) {
+            problems.push(`Invalid end of range ${JSON.stringify(range[1])}, 1 used`);
+            end = 1;
+          }
+
+          if(range.length == 2)
+            range.push(end > start ? 1 : -1);
+          let step = parseFloat(range[2]);
+          if(isNaN(step) || step == 0) {
+            step = end > start ? 1 : -1;
+            problems.push(`Invalid step value ${JSON.stringify(range[2])}, ${step} used`);
+          }
+
+          if(start>end && step>0 || start<end && step<0) {
+            step = -step;
+            problems.push(`Step ${-step} changed to ${step}`)
+          }
+
+          for (let index=start; (step > 0) ? index <= end : index >= end; index += step)
+            await callWithAdditionalValues({ value: index });
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary( `values in range '${JSON.stringify(a.range)}'`);
         } else if(collection = getCollection(a.collection)) {
           for(const widget of collections[collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `widget in '${a.collection}'`);
+            jeLoggingRoutineOperationSummary( `widgets in '${a.collection}'`);
         }
       }
 
@@ -1123,12 +1238,14 @@ export class Widget extends StateManaged {
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
                     if(widgets.has(target.get('hand'))) {
+                      const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
-                      await c.moveToHolder(widgets.get(target.get('hand')));
-                      if(widgets.get(target.get('hand')).get('childrenPerOwner'))
-                        await c.set('owner', target.get('player'));
+                      c.targetPlayer = target.get('player')
+                      await c.moveToHolder(targetHand);
+                      delete c.targetPlayer
                       c.bringToFront()
-                      widgets.get(target.get('hand')).updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                      if(targetHand.get('type') == 'holder')
+                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                     } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
@@ -1220,6 +1337,49 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'SCORE') {
+        setDefaults(a, { mode: 'set', property: 'score', seats: null, round: null, value: null});
+        if([ 'set', 'inc', 'dec' ].indexOf(a.mode) == -1) {
+          problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
+          a.mode = 'set'
+        }
+        
+        if(a.value === null)
+          a.value = a.mode=='set' ? 0 : 1;
+        if(isNaN(parseFloat(a.value))) {
+          problems.push(`value ${a.value} must be a number, assuming 0.`);
+          a.value = 0;
+        }
+        a.value = parseFloat(a.value);
+
+        let round = a.round ? parseInt(a.round) : null;
+        if(round !== null && (isNaN(parseInt(round)) || round < 1)) {
+          problems.push(`round ${a.round} must be null or a positive integer, assuming null.`);
+          round = null;
+        }
+
+        const seats = widgetFilter(w => w.get('type')=='seat' && (a.seats===null || asArray(a.seats).includes(w.get('id'))));
+
+        const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
+        for(let i=0; i < seats.length; i++) {
+          let newScore = [...asArray(seats[i].get(a.property) || 0)];
+          const seatRound = a.round === null ? newScore.length + 1 : a.round;
+          if(a.round > newScore.length)
+            newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
+          newScore[seatRound-1] = compute(relation, null, newScore[seatRound-1] || 0, a.value);
+          await seats[i].set(a.property, newScore);
+        }
+
+        if(jeRoutineLogging) {
+          const phrase = round===null ? 'new round' : `round ${a.round}`;
+          const seatIds = seats.map(w => w.get('id'));
+          if(a.mode == 'inc' || a.mode == 'dec')
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase} in seats ${JSON.stringify(seatIds)} by ${a.value}`)
+          else
+            jeLoggingRoutineOperationSummary(`set ${phrase} in seats ${JSON.stringify(seatIds)} to ${a.value}`)
+        }
+      }
+
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         let source;
@@ -1265,7 +1425,7 @@ export class Widget extends StateManaged {
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)
-            await this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
+            await sortWidgets(collections[a.collection], a.sortBy);
 
           if(jeRoutineLogging) {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
@@ -1285,8 +1445,6 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
-        } else if (readOnlyProperties.has(a.property)) {
-          problems.push(`Tried setting read-only property ${a.property}.`);
         } else if (collection = getCollection(a.collection)) {
           if (a.property == 'id') {
             for(const oldWidget of collections[collection]) {
@@ -1301,13 +1459,17 @@ export class Widget extends StateManaged {
                 await onClickUpdateWidget(false);
                 for(const c in collections)
                   collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
-                sendDelta(true);
               } else {
                 problems.push(`id ${newState.id} already in use, ignored.`);
               }
             }
           } else {
             for(const w of collections[collection]) {
+              if (w.readOnlyProperties().has(a.property)) {
+                problems.push(`Tried setting read-only property ${a.property}.`);
+                continue;
+              }
+
               if(a.relation == '+' && w.get(String(a.property)) == null)
                 a.relation = '=';
               if(a.relation == '+' && a.value == null)
@@ -1327,17 +1489,16 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children())
-                await c.set('z', Math.floor(Math.random()*10000));
-              await holder.updateAfterShuffle();
+              await shuffleWidgets(holder.children());
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
               jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection])
-              await c.set('z', Math.floor(Math.random()*10000));
+            await shuffleWidgets(collections[collection]);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1347,21 +1508,27 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT' });
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true });
         let collection;
-        let reverse = a.reverse ? 'in reverse' : '';
+        let reverse = (a.reverse && !Array.isArray(a.reverse)) ? ' in reverse' : '';
+        let key = asArray(a.key).map((k)=>{
+          if(k !== null && typeof k.key == 'string')
+            return `'${k.key}'${k.reverse ? ' desc' : ''}`;
+          return typeof k == 'string' ? `'${k}'` : k;
+        }).join(', ');
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              await holder.updateAfterShuffle();
+              await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
             });
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by '${a.key}' ${reverse}`);
+            jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            await this.sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, true);
+            await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();
@@ -1370,7 +1537,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by '${a.key}' ${reverse}`);
+            jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by ${key}${reverse}`);
         }
       }
 
@@ -1503,16 +1670,17 @@ export class Widget extends StateManaged {
 
     batchEnd();
 
-    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string' && variables.playerColor.match(/^#[0-9a-fA-F]{6}$/)) {
-      toServer('playerColor', { player: playerName, color: variables.playerColor });
-      playerColor = variables.playerColor;
+    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string') {
+      const hexColor = toHex(variables.playerColor);
+      toServer('playerColor', { player: playerName, color: hexColor });
+      playerColor = hexColor;
     }
     if(variables.playerName != playerName && typeof variables.playerName == 'string') {
       toServer('rename', { oldName: playerName, newName: variables.playerName });
       playerName = variables.playerName;
     }
 
-    return { variable: variables.result || null, collection: collections.result || [] };
+    return { variable: variables.result === undefined ? null : variables.result, collection: collections.result || [] };
   }
 
   get(property) {
@@ -1546,8 +1714,11 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/))
+    if (!this.domElement.className.match(/selected/)) {
       $('#enlarged').classList.add('hidden');
+      if($('#enlargeStyle'))
+        removeFromDOM($('#enlargeStyle'));
+    }
   }
 
   async addAudio(widget){
@@ -1563,7 +1734,7 @@ export class Widget extends StateManaged {
       if(pName == "null" || pName == playerName) {
         var audioElement = document.createElement('audio');
         audioElement.setAttribute('class', 'audio');
-        audioElement.setAttribute('src', source);
+        audioElement.setAttribute('src', mapAssetURLs(source));
         audioElement.setAttribute('type', type);
         audioElement.setAttribute('maxVolume', maxVolume);
         audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
@@ -1596,15 +1767,38 @@ export class Widget extends StateManaged {
     }
   }
 
+  inheritSeatVisibility(seatVisibility) {
+    if (this.get('hoverInheritVisibleForSeat')) {
+      const widgetSeatVisibility = this.get('onlyVisibleForSeat');
+      if (widgetSeatVisibility) {
+        // Filter seatVisibility by current widgets seats.
+        if (!seatVisibility) {
+          seatVisibility = widgetSeatVisibility;
+        } else {
+          let filterTo = new Set(asArray(widgetSeatVisibility));
+          seatVisibility = asArray(seatVisibility).filter((seatId) => { return filterTo.has(seatId); });
+        }
+      }
+    }
+    const thisParent = this.get('parent');
+    if (thisParent && widgets.has(thisParent))
+      seatVisibility = widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
+    return seatVisibility;
+  }
+
   isValidID(id, problems) {
     if(Array.isArray(id))
       return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
     if(widgets.has(id))
       return true;
     problems.push(`Widget ID ${id} does not exist.`);
+    return false;
   }
 
   async moveToHolder(holder) {
+    if(this.inRemovalQueue)
+      return;
+
     await this.bringToFront();
     if(this.get('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.get('parent'));
@@ -1620,6 +1814,7 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveStart', { id: this.get('id') });
 
     await this.bringToFront();
+    await this.set('dragging', playerName);
 
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
@@ -1654,23 +1849,31 @@ export class Widget extends StateManaged {
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
-      let targetCursor = false;
-      let targetOverlap = 0;
-      let targetDist = 99999;
+      let hitElements = document.elementsFromPoint(myCenter.x, myCenter.y);
 
-      for(const t of this.dropTargets) {
-        const tOverlap = overlapScore(this.domElement, t.domElement);
-        if(tOverlap > 0) {
-          const tCursor = t.coordGlobalInside(coordGlobal);
-          const tDist = distance(center(t.domElement), myCenter) / scale;
-          const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
-          const validTarget = tCursor || tDist <= (myMinDim + tMinDim) / 2;
-          const bestTarget = tDist <= targetDist;
-          if(validTarget && bestTarget) {
-            targetCursor = tCursor;
-            targetOverlap= tOverlap;
-            targetDist = tDist;
-            this.hoverTarget = t;
+      // First, check for elements under the midpoint in order in which they were hit.
+      for (let i = 0; i < hitElements.length; i++) {
+        let widget = widgets.get(unescapeID(hitElements[i].id.slice(2)));
+        if (hitElements[i].classList.contains('droppable') && widget) {
+          this.hoverTarget = widget;
+          break;
+        }
+      }
+      // Then, look for nearby elements if nothing found in the previous pass.
+      if (!this.hoverTarget) {
+        let targetDist = 99999;
+        for(const t of this.dropTargets) {
+          if(overlap(this.domElement, t.domElement)) {
+            const tCursor = t.coordGlobalInside(coordGlobal);
+            const tDist = distance(center(t.domElement), myCenter) / scale;
+            const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
+            const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2);
+            const bestTarget = tDist <= targetDist;
+
+            if(validTarget && bestTarget) {
+              targetDist = tDist;
+              this.hoverTarget = t;
+            }
           }
         }
       }
@@ -1678,12 +1881,21 @@ export class Widget extends StateManaged {
         lastHoverTarget.domElement.classList.remove('droptarget');
       if(this.hoverTarget)
         this.hoverTarget.domElement.classList.add('droptarget');
+
+      if (lastHoverTarget != this.hoverTarget) {
+        await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
+        if(this.hoverTarget != this.currentParent)
+          await this.checkParent(true);
+      }
     }
   }
 
   async moveEnd(coord, localAnchor) {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
+
+    await this.set('dragging', null);
+    await this.set('hoverTarget', null);
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -1752,6 +1964,10 @@ export class Widget extends StateManaged {
     }
   }
 
+  readOnlyProperties() {
+    return readOnlyProperties;
+  }
+
   async rotate(degrees, mode) {
     if(!mode || mode == 'add')
       await this.set('rotation', (this.get('rotation') + degrees) % 360);
@@ -1759,12 +1975,22 @@ export class Widget extends StateManaged {
       await this.set('rotation', degrees);
   }
 
+  setHighlighted(isHighlighted) {
+    if(this.isHighlighted != isHighlighted) {
+      this.isHighlighted = isHighlighted;
+      if(isHighlighted)
+        this.domElement.classList.add('selectedInEdit');
+      else
+        this.domElement.classList.remove('selectedInEdit');
+    }
+  }
+
   async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec') {
         let newText = (parseFloat(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text;
         const decimalPlacesOld = this.get('text').toString().match(/\..*$/);
-        const decimalPlacesChange = text.toString().match(/\..*$/);
+        const decimalPlacesChange = (+text).toString().match(/\..*$/);
         const decimalPlaces = Math.max(decimalPlacesOld ? decimalPlacesOld[0].length-1 : 0, decimalPlacesChange ? decimalPlacesChange[0].length-1 : 0);
         const factor = 10**decimalPlaces;
         newText = Math.round(newText*factor)/factor;
@@ -1791,21 +2017,49 @@ export class Widget extends StateManaged {
 
   showEnlarged(event) {
     if(this.get('enlarge')) {
+      const id = this.get('id');
       const e = $('#enlarged');
+      const boundBox = this.domElement.getBoundingClientRect();
+      let cssText = this.domElement.style.cssText;
+      cssText += `;--originalLeft:${boundBox.left}px`;
+      cssText += `;--originalTop:${boundBox.top}px`;
+      cssText += `;--originalRight:${boundBox.right}px`;
+      cssText += `;--originalBottom:${boundBox.bottom}px`;
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
-      e.dataset.id = this.get('id');
-      e.style.cssText = this.domElement.style.cssText;
+      e.dataset.id = id;
+      for(const clone of e.querySelectorAll('canvas')) {
+        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+        const context = clone.getContext('2d');
+        clone.width = original.width;
+        clone.height = original.height;
+        context.drawImage(original, 0, 0);
+      }
+      e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
-      if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
+      const cursor = clientPointer.getBoundingClientRect();
+      if(cursor.left < window.innerWidth/2)
         e.classList.add('right');
+      if(cursor.top < window.innerHeight/2)
+        e.classList.add('bottom');
+
+      const wStyle = $(`#STYLES_${escapeID(id)}`);
+      if(wStyle) {
+        if($('#enlargeStyle'))
+          removeFromDOM($('#enlargeStyle'));
+        const eStyle = document.createElement('style');
+        eStyle.id = "enlargeStyle";
+        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`,'#enlarged')));
+        $('head').appendChild(eStyle);
+      }
     }
     if(event)
       event.preventDefault();
   }
 
   async showInputOverlay(o, widgets, variables, problems) {
+    $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
     return new Promise((resolve, reject) => {
       const maxRandomRotate = o.randomRotation || 0;
       const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
@@ -1837,7 +2091,7 @@ export class Widget extends StateManaged {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
-        formField(field, dom, this.get('id') + ';' + field.variable);
+        formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
@@ -1845,11 +2099,13 @@ export class Widget extends StateManaged {
         this.evaluateInputOverlay(o, resolve, reject, true)
         $('#buttonInputGo').removeEventListener('click', goHandler);
         $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+        delete $('#activeGameButton').dataset.overlay;
       };
       const cancelHandler = e=>{
         this.evaluateInputOverlay(o, resolve, reject, false)
         $('#buttonInputGo').removeEventListener('click', goHandler);
         $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+        delete $('#activeGameButton').dataset.overlay;
       };
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
@@ -1890,24 +2146,6 @@ export class Widget extends StateManaged {
     }
   }
 
-  async sortWidgets(w, key, reverse, locales, options, rearrange) {
-    let z = 1;
-    let children = w.reverse().sort((w1,w2)=>{
-      if(typeof w1.get(key) == 'number')
-        return w1.get(key) - w2.get(key);
-      else
-        if(w1.get(key) === null)
-          return w2.get(key) === null ?  0 : -1;
-        else
-          return w2.get(key) === null ? 1 : w1.get(key).localeCompare(w2.get(key), locales, options);
-    });
-    if(reverse)
-      children = children.reverse();
-    if(rearrange)
-      for(const c of children)
-        await c.set('z', ++z);
-  }
-
   supportsPiles() {
     return true;
   }
@@ -1922,7 +2160,7 @@ export class Widget extends StateManaged {
       return;
 
     const thisParent = this.get('parent');
-    if(this.isBeingRemoved || thisParent && !widgets.get(thisParent).supportsPiles())
+    if(this.isBeingRemoved || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
       return;
 
     const thisX = this.get('x');

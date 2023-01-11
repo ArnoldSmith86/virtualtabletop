@@ -1,0 +1,4769 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Small Settlements",
+      "image": "/assets/1657780064_54194",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/265736/tiny-towns",
+      "year": "2019",
+      "mode": "solo; vs",
+      "time": "45-60",
+      "players": "1-6",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "If playing with Town Hall rules, click the next button on the left side of the screen to choose the next resource.\n\nIf playing solo mode, move the used resource card into the small holder on the left. Move the resource onto the board, then press the +1 button to update the available resources.\n\nRoom design and layout by LawDawg96.\n\nThe card back and library image image by OpenClipart-Vectors is available under the Pixabay license from https://pixabay.com/vectors/village-medieval-middle-ages-145656/.\n\nOther icons are available under CC BY 3.0 from:\n - Delapouite\n    House https://game-icons.net/1x1/delapouite/house.html\n    Barn https://game-icons.net/1x1/delapouite/barn.html\n    Church https://game-icons.net/1x1/delapouite/church.html\n    Shop https://game-icons.net/1x1/delapouite/shop.html\n    Tavern https://game-icons.net/1x1/delapouite/tavern-sign.html\n    Flour https://game-icons.net/1x1/delapouite/flour.html\n    Cave https://game-icons.net/1x1/delapouite/cave-entrance.html\n\n - Lorc\n    Tower https://game-icons.net/1x1/lorc/white-tower.html\n\n  - Caro Ascercion\n    Water mill https://game-icons.net/1x1/caro-asercion/water-mill.html",
+      "similarName": "Tiny Towns",
+      "description": "Place colored resource blocks into designated patterns on individual 4x4 grid board. When pattern is completed, turn resource cubes into buildings with special point scoring powers. Play until all players can no longer place resources. Highest score wins.",
+      "showName": true,
+      "helpText": "Players take seats. Press reset button in upper right and choose options. Press turn button to advance turn indicator for player that is the Master Builder. At end of game, enter scores into table on left. Sum is calculated automatically. Be sure to enter 0 or a negative number for the space with the X indicating blank squares remaining. Players can click on the eye icon beneath any player's seat to see that player's board. Click back on the eye icon beneath your own seat to view your board.",
+      "lastUpdate": 1659650063000
+    }
+  },
+  "tbbq": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting board ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "You are about to reset the board. Select options below then press Reset to begin a new game or Cancel to close this menu."
+          },
+          {
+            "type": "switch",
+            "label": "Use Cavern rule?",
+            "variable": "cave",
+            "value": "${PROPERTY cave}"
+          },
+          {
+            "type": "switch",
+            "label": "Use Town Hall rules?",
+            "variable": "town",
+            "value": "${PROPERTY town}"
+          },
+          {
+            "type": "switch",
+            "label": "Play in solo mode? (Do not use either of the 2 middle seats for solo mode).",
+            "variable": "solo",
+            "value": "${PROPERTY solo}"
+          }
+        ],
+        "confirmButtonText": "Reset"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cave",
+        "value": "${cave}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "town",
+        "value": "${town}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "solo",
+        "value": "${solo}"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "board${value}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": [
+              "seat${value}"
+            ]
+          },
+          "var wName = 'seat' + ${value}",
+          {
+            "func": "SET",
+            "collection": [
+              "viewing${value}"
+            ],
+            "property": "text",
+            "value": "${PROPERTY player OF $wName}"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "buildingDeckHolder",
+          "monumentDeckHolder",
+          "soloDeckHolder"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "buildingDeckHolder",
+          "monumentDeckHolder",
+          "soloDeckHolder"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "buildingDeckHolder",
+          "monumentDeckHolder",
+          "soloDeckHolder"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "IF",
+        "operand1": "${solo}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "soloMode",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "offBoard"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "monumentDeckHolder",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4",
+          "seat5",
+          "seat6"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "loopRoutine": [
+          "var cardArray = []",
+          {
+            "func": "SELECT",
+            "property": "cardGroup",
+            "value": "${value}"
+          },
+          {
+            "func": "IF",
+            "operand1": "${solo}",
+            "operand2": "on",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "soloMode",
+                "value": true,
+                "mode": "remove"
+              }
+            ]
+          },
+          {
+            "func": "GET",
+            "aggregation": "array",
+            "property": "id",
+            "variable": "idArray"
+          },
+          "var cardArray = ${idArray}",
+          "var length = ${cardArray} length",
+          "var length = ${length} - 1",
+          "var random = randInt 0 ${length}",
+          "var oneCard = ${cardArray} getIndex ${random}",
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "operand2": 2,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${oneCard}"
+                ],
+                "property": "parent",
+                "value": "goals1"
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${oneCard}"
+                ],
+                "property": "parent",
+                "value": "goals2"
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "operand2": 4,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${oneCard}"
+                ],
+                "property": "parent",
+                "value": "goals2"
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "operand2": 5,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${oneCard}"
+                ],
+                "property": "parent",
+                "value": "goals3"
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "operand2": 6,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${oneCard}"
+                ],
+                "property": "parent",
+                "value": "goals3"
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "operand2": 7,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${oneCard}"
+                ],
+                "property": "parent",
+                "value": "goals4"
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "cardType",
+            "value": "Cottage"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "goals1"
+          },
+          {
+            "func": "IF",
+            "operand1": "${cave}",
+            "operand2": "on",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "cardType",
+                "value": "Cavern"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "goals4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${solo}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "soloHolder"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "soloMove"
+            ],
+            "count": 3
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "soloHolder"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "subScore",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "IF",
+        "operand1": "${town}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "townPlay"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "townMove"
+          },
+          {
+            "func": "SET",
+            "property": "state1",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "property": "state2",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": -40
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "townPlay"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "x": 1550,
+    "z": 110,
+    "id": "tbbq",
+    "text": "restart",
+    "classes": "symbols",
+    "color": "white",
+    "css": "font-size: 35px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "width": 50,
+    "height": 50,
+    "movableInEdit": false,
+    "cave": "off",
+    "solo": "off",
+    "town": "off"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 10,
+    "y": 10,
+    "z": 89,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "viewing${PROPERTY index}"
+        ],
+        "property": "text",
+        "value": "${PROPERTY player}"
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 270,
+    "y": 10,
+    "z": 79,
+    "index": 2,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "viewing${PROPERTY index}"
+        ],
+        "property": "text",
+        "value": "${PROPERTY player}"
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 530,
+    "y": 10,
+    "z": 93,
+    "index": 3,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "viewing${PROPERTY index}"
+        ],
+        "property": "text",
+        "value": "${PROPERTY player}"
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 790,
+    "y": 10,
+    "z": 79,
+    "index": 4,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "viewing${PROPERTY index}"
+        ],
+        "property": "text",
+        "value": "${PROPERTY player}"
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "x": 1050,
+    "y": 10,
+    "z": 79,
+    "index": 5,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "viewing${PROPERTY index}"
+        ],
+        "property": "text",
+        "value": "${PROPERTY player}"
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "x": 1310,
+    "y": 10,
+    "z": 79,
+    "index": 6,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "viewing${PROPERTY index}"
+        ],
+        "property": "text",
+        "value": "${PROPERTY player}"
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "view1": {
+    "type": "button",
+    "id": "view1",
+    "y": 70,
+    "width": 40,
+    "height": 40,
+    "z": 88,
+    "classes": "symbols",
+    "css": "font-size: 35px; ",
+    "text": "visibility",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "homeID"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "homeIndex"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "index",
+        "value": "${PROPERTY PID}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "variable": "pName"
+      },
+      "var visArray = []",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "loopRoutine": [
+          "// Remove the playerName from the `onlyVisibleForSeat` property of the other boards",
+          "var wName = 'board' + ${value}",
+          "var visArray = ${PROPERTY onlyVisibleForSeat OF $wName}",
+          "var isIn = ${visArray} indexOf ${homeID}",
+          {
+            "func": "IF",
+            "operand1": "${isIn}",
+            "relation": ">=",
+            "operand2": 0,
+            "thenRoutine": [
+              "var visArray = remove ${isIn} 1",
+              {
+                "func": "SET",
+                "collection": [
+                  "board${value}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": "${visArray}"
+              }
+            ]
+          }
+        ]
+      },
+      "var wName2 = 'board' + ${PROPERTY PID}",
+      "var visArray2 = ${PROPERTY onlyVisibleForSeat OF $wName2}",
+      "var visArray2 = push ${homeID}",
+      {
+        "func": "SET",
+        "collection": [
+          "board${PROPERTY PID}"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${visArray2}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "viewing${homeIndex}"
+        ],
+        "property": "text",
+        "value": "${pName}"
+      }
+    ],
+    "movableInEdit": false,
+    "x": 15,
+    "PID": 1,
+    "linkedToSeat": "seat1"
+  },
+  "view2": {
+    "inheritFrom": "view1",
+    "id": "view2",
+    "type": "button",
+    "x": 275,
+    "y": 70,
+    "PID": 2,
+    "linkedToSeat": "seat2"
+  },
+  "view3": {
+    "inheritFrom": "view1",
+    "id": "view3",
+    "type": "button",
+    "x": 535,
+    "y": 70,
+    "PID": 3,
+    "linkedToSeat": "seat3"
+  },
+  "view4": {
+    "inheritFrom": "view1",
+    "id": "view4",
+    "type": "button",
+    "x": 795,
+    "y": 70,
+    "PID": 4,
+    "linkedToSeat": "seat4"
+  },
+  "view5": {
+    "inheritFrom": "view1",
+    "id": "view5",
+    "type": "button",
+    "x": 1055,
+    "y": 70,
+    "PID": 5,
+    "linkedToSeat": "seat5"
+  },
+  "view6": {
+    "inheritFrom": "view1",
+    "id": "view6",
+    "type": "button",
+    "x": 1315,
+    "y": 70,
+    "PID": 6,
+    "linkedToSeat": "seat6"
+  },
+  "viewing1": {
+    "id": "viewing1",
+    "x": 64,
+    "y": 81,
+    "z": 159,
+    "movable": false,
+    "movableInEdit": false,
+    "textChangeRoutine": [
+      "var wName = 'seat' + ${PROPERTY PID}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "relation": "!=",
+        "operand2": "${PROPERTY player OF $wName}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "red"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "black"
+          }
+        ]
+      }
+    ],
+    "PID": 1,
+    "textColor": "black",
+    "css": {
+      "color": "${PROPERTY textColor}"
+    },
+    "height": 20
+  },
+  "viewing2": {
+    "inheritFrom": "viewing1",
+    "id": "viewing2",
+    "x": 324,
+    "y": 81,
+    "text": "",
+    "PID": 2,
+    "textColor": "black"
+  },
+  "viewing3": {
+    "inheritFrom": "viewing1",
+    "id": "viewing3",
+    "x": 584,
+    "y": 81,
+    "text": "",
+    "PID": 3,
+    "textColor": "black",
+    "activeFace": 0
+  },
+  "viewing4": {
+    "inheritFrom": "viewing1",
+    "id": "viewing4",
+    "x": 844,
+    "y": 81,
+    "text": "",
+    "PID": 4,
+    "textColor": "black",
+    "activeFace": 0
+  },
+  "viewing5": {
+    "inheritFrom": "viewing1",
+    "id": "viewing5",
+    "x": 1104,
+    "y": 81,
+    "text": "",
+    "PID": 5,
+    "textColor": "black",
+    "activeFace": 0
+  },
+  "viewing6": {
+    "inheritFrom": "viewing1",
+    "id": "viewing6",
+    "x": 1364,
+    "y": 81,
+    "text": "",
+    "PID": 6,
+    "textColor": "black",
+    "activeFace": 0
+  },
+  "i5aq": {
+    "type": "card",
+    "cardType": "Cottage",
+    "id": "i5aq",
+    "z": 21332,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "uow1": {
+    "type": "card",
+    "cardType": "Well",
+    "id": "uow1",
+    "z": 21306,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "694j": {
+    "type": "card",
+    "cardType": "Shed",
+    "id": "694j",
+    "z": 21335,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "681h": {
+    "type": "card",
+    "cardType": "Millstone",
+    "id": "681h",
+    "z": 21286,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "legend": {
+    "id": "legend",
+    "x": 1210,
+    "y": 125,
+    "z": 2886,
+    "css": "text-align:left;background: #fefed5;font-size: 23px;line-height:0.8",
+    "width": 378,
+    "enlarge": 2,
+    "movable": false,
+    "borderRadius": 8,
+    "text": "\n\n[A]    [B]    [C]    [D]    [E]    [F]    [G]    [H]",
+    "height": 65
+  },
+  "legendA": {
+    "id": "legendA",
+    "parent": "legend",
+    "fixedParent": true,
+    "y": 2,
+    "width": 30,
+    "height": 30,
+    "z": 184,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/1658291751_3958",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#249da4"
+  },
+  "legendB": {
+    "id": "legendB",
+    "parent": "legend",
+    "fixedParent": true,
+    "y": 2,
+    "width": 30,
+    "height": 30,
+    "z": 184,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/222368859_554",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#b7b3a1",
+    "x": 49
+  },
+  "legendG": {
+    "id": "legendG",
+    "parent": "legend",
+    "fixedParent": true,
+    "y": 2,
+    "width": 30,
+    "height": 30,
+    "z": 184,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/2118145502_5448",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#103142",
+    "x": 294
+  },
+  "legendF": {
+    "id": "legendF",
+    "parent": "legend",
+    "fixedParent": true,
+    "y": 2,
+    "width": 30,
+    "height": 30,
+    "z": 184,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/1526250328_5020",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#ef8a22",
+    "x": 245
+  },
+  "legendE": {
+    "id": "legendE",
+    "parent": "legend",
+    "fixedParent": true,
+    "y": 2,
+    "width": 30,
+    "height": 30,
+    "z": 184,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-320526454_5295",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#fdbb42",
+    "x": 196
+  },
+  "legendD": {
+    "id": "legendD",
+    "parent": "legend",
+    "fixedParent": true,
+    "y": 2,
+    "width": 30,
+    "height": 30,
+    "z": 184,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/794175936_4768",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#ee2924",
+    "x": 147
+  },
+  "legendC": {
+    "id": "legendC",
+    "parent": "legend",
+    "fixedParent": true,
+    "y": 2,
+    "width": 30,
+    "height": 30,
+    "z": 184,
+    "movable": false,
+    "image": "/assets/158571832_5323",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#078149",
+    "movableInEdit": false,
+    "x": 98
+  },
+  "legendH": {
+    "id": "legendH",
+    "parent": "legend",
+    "fixedParent": true,
+    "x": 344,
+    "y": 2,
+    "width": 30,
+    "height": 30,
+    "z": 184,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-651888302_4061",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#b44390"
+  },
+  "0w5x": {
+    "type": "card",
+    "cardType": "Fountain",
+    "id": "0w5x",
+    "z": 21284,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "idk2": {
+    "type": "card",
+    "cardType": "Tavern",
+    "id": "idk2",
+    "z": 21305,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "f7gq": {
+    "type": "card",
+    "cardType": "Inn",
+    "id": "f7gq",
+    "z": 21296,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "9qe5": {
+    "type": "card",
+    "cardType": "Feast Hall",
+    "id": "9qe5",
+    "z": 21302,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "xflt": {
+    "type": "card",
+    "cardType": "Almshouse",
+    "id": "xflt",
+    "z": 21341,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "vfr3": {
+    "type": "card",
+    "cardType": "Orchard",
+    "id": "vfr3",
+    "z": 21307,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "ouye": {
+    "type": "card",
+    "cardType": "Greenhouse",
+    "id": "ouye",
+    "z": 21338,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "qiq9": {
+    "type": "card",
+    "cardType": "Granary",
+    "id": "qiq9",
+    "z": 21301,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "61fx": {
+    "type": "card",
+    "cardType": "Farm",
+    "id": "61fx",
+    "z": 21303,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "c4je": {
+    "type": "card",
+    "cardType": "Theater",
+    "id": "c4je",
+    "z": 21290,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "o0nh": {
+    "type": "card",
+    "cardType": "Tailor",
+    "id": "o0nh",
+    "z": 21347,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "ucvd": {
+    "type": "card",
+    "cardType": "Market",
+    "id": "ucvd",
+    "z": 21299,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "sr7y": {
+    "type": "card",
+    "cardType": "Bakery",
+    "id": "sr7y",
+    "z": 21291,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "6vba": {
+    "type": "card",
+    "cardType": "Cloister",
+    "id": "6vba",
+    "z": 21344,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "yxeu": {
+    "type": "card",
+    "cardType": "Temple",
+    "id": "yxeu",
+    "z": 21298,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "2kuf": {
+    "type": "card",
+    "cardType": "Chapel",
+    "id": "2kuf",
+    "z": 21297,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "vcwk": {
+    "type": "card",
+    "cardType": "Abbey",
+    "id": "vcwk",
+    "z": 21289,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "gsv5": {
+    "type": "card",
+    "cardType": "Bank",
+    "id": "gsv5",
+    "z": 21287,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "yn0t": {
+    "type": "card",
+    "cardType": "Trading Post",
+    "id": "yn0t",
+    "z": 21350,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "yupp": {
+    "type": "card",
+    "cardType": "Warehouse",
+    "id": "yupp",
+    "z": 21300,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "vx05": {
+    "type": "card",
+    "cardType": "Factory",
+    "id": "vx05",
+    "z": 21304,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "bdik": {
+    "type": "card",
+    "cardType": "Cavern",
+    "id": "bdik",
+    "z": 21354,
+    "deck": "buildingDeck",
+    "parent": "rqkf"
+  },
+  "buildingDeck": {
+    "type": "deck",
+    "id": "buildingDeck",
+    "x": 4,
+    "y": 4,
+    "z": 11,
+    "cardDefaults": {
+      "width": 115,
+      "height": 160,
+      "enlarge": 3,
+      "layer": 3,
+      "classes": "condensed_font"
+    },
+    "cardTypes": {
+      "Cavern": {
+        "cardGroup": 0,
+        "buildingType": "/assets/-220168990_4865",
+        "buildingColor": "#000000",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/1556590566_339",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "Twice per game, you may place a resource named by another player near your seat for no points and no penalties.",
+        "noteSize": 11
+      },
+      "Cottage": {
+        "cardGroup": 1,
+        "buildingType": "/assets/1658291751_3958",
+        "buildingColor": "#249da4",
+        "yText": 4,
+        "typeSize": 18,
+        "fed": "/assets/920128252_5714",
+        "shape": "/assets/1193333564_492",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(3) if building is fed.",
+        "noteSize": 15
+      },
+      "Well": {
+        "cardGroup": 2,
+        "buildingType": "/assets/222368859_554",
+        "buildingColor": "#b7b3a1",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1536969343_349",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(1) for each adjacent [A].",
+        "noteSize": 15
+      },
+      "Shed": {
+        "cardGroup": 2,
+        "buildingType": "/assets/222368859_554",
+        "buildingColor": "#b7b3a1",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1536969343_349",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(1). May place on any empty square on the board.",
+        "noteSize": 15
+      },
+      "Millstone": {
+        "cardGroup": 2,
+        "buildingType": "/assets/222368859_554",
+        "buildingColor": "#b7b3a1",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1536969343_349",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(2) if adjacent to a [D] or [E].",
+        "noteSize": 15
+      },
+      "Fountain": {
+        "cardGroup": 2,
+        "buildingType": "/assets/222368859_554",
+        "buildingColor": "#b7b3a1",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1536969343_349",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(2) if adjacent to another Fountain.",
+        "noteSize": 15
+      },
+      "Tavern": {
+        "cardGroup": 3,
+        "buildingType": "/assets/158571832_5323",
+        "buildingColor": "#078149",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/36511300_429",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(VP) based on total Taverns.\n             1    2    3    4    5\n-------------------------------------\n  (VP)   2    5    9  14  20",
+        "noteSize": 12
+      },
+      "Inn": {
+        "cardGroup": 3,
+        "buildingType": "/assets/158571832_5323",
+        "buildingColor": "#078149",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/696968759_485",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(3) if not in row or column with another Inn.",
+        "noteSize": 15,
+        "soloMode": true
+      },
+      "Feast Hall": {
+        "cardGroup": 3,
+        "buildingType": "/assets/158571832_5323",
+        "buildingColor": "#078149",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/813861426_427",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(2). +(1) if you have more Feast Halls than player on your right.",
+        "noteSize": 15
+      },
+      "Almshouse": {
+        "cardGroup": 3,
+        "buildingType": "/assets/158571832_5323",
+        "buildingColor": "#078149",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/566045460_429",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(VP) based on total Almshouses.\n          1   2   3   4    5    6\n-------------------------------------\n(VP) -1   5  -3  15  -5  26",
+        "noteSize": 12
+      },
+      "Orchard": {
+        "cardGroup": 4,
+        "buildingType": "/assets/794175936_4768",
+        "buildingColor": "#ee2924",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/995586845_540",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "Feeds all buildings in same row or column.",
+        "noteSize": 15
+      },
+      "Greenhouse": {
+        "cardGroup": 4,
+        "buildingType": "/assets/794175936_4768",
+        "buildingColor": "#ee2924",
+        "yText": 3,
+        "typeSize": 17,
+        "shape": "/assets/-1722084970_541",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "Feeds 1 continguous group of buildings anywhere on the board.",
+        "noteSize": 13
+      },
+      "Granary": {
+        "cardGroup": 4,
+        "buildingType": "/assets/794175936_4768",
+        "buildingColor": "#ee2924",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-2110217533_542",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "Feeds all buildings in surrounding 8 squares.",
+        "noteSize": 15
+      },
+      "Farm": {
+        "cardGroup": 4,
+        "buildingType": "/assets/794175936_4768",
+        "buildingColor": "#ee2924",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/1174144857_483",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "Feeds 4 buildings anywhere on the board.",
+        "noteSize": 15
+      },
+      "Theater": {
+        "cardGroup": 5,
+        "buildingType": "/assets/-320526454_5295",
+        "buildingColor": "#fdbb42",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/854408624_545",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1) for each other unique building type in same row and column.",
+        "noteSize": 15
+      },
+      "Tailor": {
+        "cardGroup": 5,
+        "buildingType": "/assets/-320526454_5295",
+        "buildingColor": "#fdbb42",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1380937838_547",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1). +(1) for each other Tailor in 4 center squares of the board.",
+        "noteSize": 15
+      },
+      "Market": {
+        "cardGroup": 5,
+        "buildingType": "/assets/-320526454_5295",
+        "buildingColor": "#fdbb42",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/1318049630_546",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1) for each Market in same row or column (not both).",
+        "noteSize": 15
+      },
+      "Bakery": {
+        "cardGroup": 5,
+        "buildingType": "/assets/-320526454_5295",
+        "buildingColor": "#fdbb42",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/1640398663_547",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(3) if adjacent to [D] or [G].",
+        "noteSize": 15
+      },
+      "Cloister": {
+        "cardGroup": 6,
+        "buildingType": "/assets/1526250328_5020",
+        "buildingColor": "#ef8a22",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/382131843_605",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1) for each Cloister in a corner of the board.",
+        "noteSize": 15
+      },
+      "Temple": {
+        "cardGroup": 6,
+        "buildingType": "/assets/1526250328_5020",
+        "buildingColor": "#ef8a22",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/506828488_549",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(4) if adjacent to at least 2 fed [A].",
+        "noteSize": 15
+      },
+      "Chapel": {
+        "cardGroup": 6,
+        "buildingType": "/assets/1526250328_5020",
+        "buildingColor": "#ef8a22",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-617941853_492",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1) for each fed [A].",
+        "noteSize": 15
+      },
+      "Abbey": {
+        "cardGroup": 6,
+        "buildingType": "/assets/1526250328_5020",
+        "buildingColor": "#ef8a22",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1441189562_549",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(3) if not adjacent to [C], [E], or [G].",
+        "noteSize": 15
+      },
+      "Bank": {
+        "cardGroup": 7,
+        "buildingType": "/assets/2118145502_5448",
+        "buildingColor": "#103142",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-2100188373_663",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(4). Place a resource on this building that is not on another Bank on your board. As Master Builder, you can no longer name that resource.",
+        "noteSize": 11,
+        "soloMode": true
+      },
+      "Trading Post": {
+        "cardGroup": 7,
+        "buildingType": "/assets/2118145502_5448",
+        "buildingColor": "#103142",
+        "yText": 4,
+        "typeSize": 17,
+        "shape": "/assets/-1420560546_605",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1). You may treat Trading Post as a wildcard resource for future buildings.",
+        "noteSize": 14
+      },
+      "Warehouse": {
+        "cardGroup": 7,
+        "buildingType": "/assets/2118145502_5448",
+        "buildingColor": "#103142",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/1184457699_604",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "-(1) for each resource on Warehouse. Each Warehouse can store 3 resources. When another player names a resource, you may place it on a Warehouse or swap it with another one on a Warehouse.",
+        "noteSize": 9
+      },
+      "Factory": {
+        "cardGroup": 7,
+        "buildingType": "/assets/2118145502_5448",
+        "buildingColor": "#103142",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-2025721320_610",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "When built, place 1 of the 5 resources on the Factory. When another player names that resource, you may substitute a different one.",
+        "noteSize": 11
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 160,
+            "color": "#8FBC8F",
+            "value": "/assets/1529174257_144845"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "note": "Shape back area",
+            "type": "image",
+            "x": 0,
+            "y": 20,
+            "width": 115,
+            "height": 65,
+            "css": "background-image: radial-gradient(#f2ddb5, #f8edd8);"
+          },
+          {
+            "note": "Top back area",
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 30,
+            "css": "border-radius:8px;background-image: linear-gradient(to bottom,  #edcd93, #b57f1e, #edcd93)"
+          },
+          {
+            "note": "Top building back",
+            "type": "image",
+            "x": 92,
+            "y": -2,
+            "width": 30,
+            "height": 30,
+            "color": "white",
+            "css": "border-radius:100%"
+          },
+          {
+            "note": "Bottom back area",
+            "type": "image",
+            "x": 0,
+            "y": 80,
+            "width": 115,
+            "height": 86,
+            "css": "border-radius:8px;background-image: linear-gradient(to bottom, #e9c37d, #eed099)"
+          },
+          {
+            "note": "Building symbol",
+            "type": "image",
+            "x": 94,
+            "y": 4,
+            "width": 20,
+            "height": 20,
+            "color": "transparent",
+            "svgReplaces": {
+              "#ffffff": "buildingColor"
+            },
+            "dynamicProperties": {
+              "value": "buildingType"
+            }
+          },
+          {
+            "note": "Fed symbol",
+            "type": "image",
+            "x": 82,
+            "y": 9,
+            "width": 10,
+            "height": 10,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "fed"
+            }
+          },
+          {
+            "note": "Card type",
+            "type": "text",
+            "x": 1,
+            "width": 92,
+            "dynamicProperties": {
+              "value": "cardType",
+              "y": "yText",
+              "fontSize": "typeSize"
+            }
+          },
+          {
+            "note": "Shape",
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "shape",
+              "x": "xShape",
+              "y": "yShape",
+              "width": "widthShape",
+              "height": "heightShape"
+            }
+          },
+          {
+            "note": "Card notes",
+            "type": "text",
+            "x": 1,
+            "y": 80,
+            "width": 113,
+            "dynamicProperties": {
+              "value": "note",
+              "fontSize": "noteSize"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "buildingDeckHolder"
+  },
+  "monumentDeck": {
+    "type": "deck",
+    "id": "monumentDeck",
+    "x": 4,
+    "y": 4,
+    "z": 13,
+    "cardDefaults": {
+      "width": 115,
+      "height": 160,
+      "enlarge": 3,
+      "layer": 3,
+      "classes": "condensed_font"
+    },
+    "cardTypes": {
+      "Barrett Castle": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 6,
+        "typeSize": 14,
+        "fed": "/assets/920128252_5714",
+        "shape": "/assets/-1222055514_780",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(5) if fed. Counts as 2 [A].",
+        "noteSize": 15
+      },
+      "Mandras Palace": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 6,
+        "typeSize": 13,
+        "shape": "/assets/1976471211_599",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(2) for each unique adjacent building type.",
+        "noteSize": 15
+      },
+      "Grand Mausoleum of the Rodina": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 2,
+        "typeSize": 12,
+        "shape": "/assets/-1209246288_541",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(3) for each unfed [A].",
+        "noteSize": 15
+      },
+      "Obelisk of the Crescent": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 0,
+        "typeSize": 14,
+        "shape": "/assets/-1192490710_551",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "You may place all future buildings on any empty space on the board.",
+        "noteSize": 14
+      },
+      "Grove University": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 6,
+        "typeSize": 13,
+        "shape": "/assets/619211054_553",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(3). Immediately place a building on an empty square on your board.",
+        "noteSize": 15
+      },
+      "Shrine of the Elder Tree": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 1,
+        "typeSize": 13,
+        "shape": "/assets/1141136176_775",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(VP) based on total # of buildings when built.\n          1   2   3   4   5   6\n-------------------------------------\n(VP)   1   2   3   4   5  8",
+        "noteSize": 12
+      },
+      "Silva Forum": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-2039760699_669",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1). +(1) for each building in largest continguous group of same type.",
+        "noteSize": 15
+      },
+      "Statue of the Bondmaker": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 1,
+        "typeSize": 13,
+        "shape": "/assets/421400574_661",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "When another player names a resource, you can place it on a square with [A]. Each [A] can hold 1 resource.",
+        "noteSize": 12
+      },
+      "The Sky Baths": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 6,
+        "typeSize": 14,
+        "shape": "/assets/-2129872793_782",
+        "xShape": 35,
+        "yShape": 32,
+        "widthShape": 45,
+        "heightShape": 45,
+        "note": "(2) for each building type missing on your board.",
+        "noteSize": 15
+      },
+      "Architect's Guild": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 7,
+        "typeSize": 13,
+        "shape": "/assets/-639071649_726",
+        "xShape": 34,
+        "yShape": 32,
+        "widthShape": 45,
+        "heightShape": 45,
+        "note": "(1). When built, replace up to 2 buildings on board with a different type.",
+        "noteSize": 13
+      },
+      "The Starloom": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 7,
+        "typeSize": 13,
+        "shape": "/assets/2003460318_542",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(VP) based on finishing position.\n      1st   2nd   3rd   4th+\n-------------------------------------\n(VP) 6     3       2        0",
+        "noteSize": 12
+      },
+      "Archive of the Second Age": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 2,
+        "typeSize": 12,
+        "shape": "/assets/1655103980_543",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(1) for each unique building type other than [H] on your board.",
+        "noteSize": 15
+      },
+      "Cathedral of Caterina": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 2,
+        "typeSize": 12,
+        "shape": "/assets/2048064685_489",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(2). Empty squares on board are worth 0 instead of -1.",
+        "noteSize": 15
+      },
+      "Fort Ironweed": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 5,
+        "typeSize": 15,
+        "shape": "/assets/717033057_663",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(7). Unless you are the last player, no longer take turns as Master Builder.",
+        "noteSize": 15,
+        "soloMode": true
+      },
+      "Opaleye's Watch": {
+        "buildingType": "/assets/-651888302_4061",
+        "buildingColor": "#b44390",
+        "yText": 6,
+        "typeSize": 14,
+        "shape": "/assets/-1154058777_780",
+        "xShape": 32,
+        "yShape": 25,
+        "widthShape": 60,
+        "heightShape": 60,
+        "note": "Immediately place 3 unique buildings on this card. Whenever a player on your left or right builds 1 of those buildings, take building from here and place on empty square on your board.",
+        "noteSize": 9,
+        "soloMode": true
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 160,
+            "color": "#8FBC8F",
+            "value": "/assets/1529174257_144845"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "note": "Shape back area",
+            "type": "image",
+            "x": 0,
+            "y": 20,
+            "width": 115,
+            "height": 65,
+            "css": "background-image: radial-gradient(#f2ddb5, #f8edd8);"
+          },
+          {
+            "note": "Top back area",
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 30,
+            "css": "border-radius:8px;background-image: linear-gradient(to bottom,  #edcd93, #b57f1e, #edcd93)"
+          },
+          {
+            "note": "Top building back",
+            "type": "image",
+            "x": 92,
+            "y": -2,
+            "width": 30,
+            "height": 30,
+            "color": "white",
+            "css": "border-radius:100%"
+          },
+          {
+            "note": "Bottom back area",
+            "type": "image",
+            "x": 0,
+            "y": 80,
+            "width": 115,
+            "height": 86,
+            "css": "border-radius:8px;background-image: linear-gradient(to bottom, #e9c37d, #eed099)"
+          },
+          {
+            "note": "Building symbol",
+            "type": "image",
+            "x": 94,
+            "y": 4,
+            "width": 20,
+            "height": 20,
+            "color": "transparent",
+            "svgReplaces": {
+              "#ffffff": "buildingColor"
+            },
+            "dynamicProperties": {
+              "value": "buildingType"
+            }
+          },
+          {
+            "note": "Fed symbol",
+            "type": "image",
+            "x": 82,
+            "y": 9,
+            "width": 10,
+            "height": 10,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "fed"
+            }
+          },
+          {
+            "note": "Card type",
+            "type": "text",
+            "x": 1,
+            "width": 92,
+            "dynamicProperties": {
+              "value": "cardType",
+              "y": "yText",
+              "fontSize": "typeSize"
+            }
+          },
+          {
+            "note": "Shape",
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "shape",
+              "x": "xShape",
+              "y": "yShape",
+              "width": "widthShape",
+              "height": "heightShape"
+            }
+          },
+          {
+            "note": "Card notes",
+            "type": "text",
+            "x": 1,
+            "y": 80,
+            "width": 113,
+            "dynamicProperties": {
+              "value": "note",
+              "fontSize": "noteSize"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "monumentDeckHolder"
+  },
+  "30hn": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Barrett Castle",
+    "id": "30hn",
+    "z": 21320,
+    "parent": "tj26"
+  },
+  "gm6y": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Mandras Palace",
+    "id": "gm6y",
+    "z": 21321,
+    "parent": "tj26"
+  },
+  "he85": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Grand Mausoleum of the Rodina",
+    "id": "he85",
+    "z": 21323,
+    "parent": "tj26"
+  },
+  "xnil": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Obelisk of the Crescent",
+    "id": "xnil",
+    "z": 21314,
+    "parent": "tj26"
+  },
+  "xdkg": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Grove University",
+    "id": "xdkg",
+    "z": 21312,
+    "parent": "tj26"
+  },
+  "2h80": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Shrine of the Elder Tree",
+    "id": "2h80",
+    "z": 21311,
+    "parent": "tj26"
+  },
+  "ymdh": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Silva Forum",
+    "id": "ymdh",
+    "z": 21313,
+    "parent": "tj26"
+  },
+  "zaew": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Statue of the Bondmaker",
+    "id": "zaew",
+    "z": 21319,
+    "parent": "tj26"
+  },
+  "7it8": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "The Sky Baths",
+    "id": "7it8",
+    "z": 21315,
+    "parent": "tj26"
+  },
+  "b1sv": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Architect's Guild",
+    "id": "b1sv",
+    "z": 21322,
+    "parent": "tj26"
+  },
+  "i8hh": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "The Starloom",
+    "id": "i8hh",
+    "z": 21316,
+    "parent": "tj26"
+  },
+  "bxye": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Archive of the Second Age",
+    "id": "bxye",
+    "z": 21317,
+    "parent": "tj26"
+  },
+  "ci28": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Cathedral of Caterina",
+    "id": "ci28",
+    "z": 21310,
+    "parent": "tj26"
+  },
+  "h619": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Fort Ironweed",
+    "id": "h619",
+    "z": 21329,
+    "parent": "tj26"
+  },
+  "09mj": {
+    "deck": "monumentDeck",
+    "type": "card",
+    "cardType": "Opaleye's Watch",
+    "id": "09mj",
+    "z": 21318,
+    "parent": "tj26"
+  },
+  "soloDeck": {
+    "type": "deck",
+    "id": "soloDeck",
+    "z": 7,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "enlarge": 3,
+      "layer": 3,
+      "classes": "condensed_font"
+    },
+    "cardTypes": {
+      "Wood": {
+        "buildingType": "/assets/-651888302_4061",
+        "resourceColor": "#6a3a35"
+      },
+      "Stone": {
+        "buildingType": "/assets/-651888302_4061",
+        "resourceColor": "#bbb09f"
+      },
+      "Glass": {
+        "buildingType": "/assets/-651888302_4061",
+        "resourceColor": "#209da6"
+      },
+      "Wheat": {
+        "buildingType": "/assets/-651888302_4061",
+        "resourceColor": "#fdbe3f"
+      },
+      "Brick": {
+        "buildingType": "/assets/-651888302_4061",
+        "resourceColor": "#ef3c29"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "#8FBC8F",
+            "value": "/assets/1529174257_144845"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "note": "Shape back area",
+            "type": "image",
+            "x": 0,
+            "y": 20,
+            "width": 100,
+            "height": 80,
+            "css": "background-image: radial-gradient(#f2ddb5, #f8edd8);"
+          },
+          {
+            "note": "Top back area",
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 30,
+            "css": "border-radius:8px;background-image: linear-gradient(to bottom,  #edcd93, #b57f1e, #edcd93)"
+          },
+          {
+            "note": "Card type",
+            "type": "text",
+            "x": 0,
+            "y": 3,
+            "width": 100,
+            "css": "text-align:center",
+            "fontSize": 20,
+            "dynamicProperties": {
+              "value": "cardType"
+            }
+          },
+          {
+            "note": "Resource",
+            "type": "image",
+            "x": 24,
+            "y": 35,
+            "width": 55,
+            "height": 55,
+            "css": "border-radius:5px",
+            "dynamicProperties": {
+              "color": "resourceColor"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "soloDeckHolder"
+  },
+  "qxbw": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "qxbw",
+    "z": 21278,
+    "parent": "f3jk"
+  },
+  "fsp4": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Stone",
+    "id": "fsp4",
+    "z": 21276,
+    "parent": "f3jk"
+  },
+  "q2xt": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Glass",
+    "id": "q2xt",
+    "z": 21274,
+    "parent": "f3jk"
+  },
+  "avn4": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "avn4",
+    "z": 21283,
+    "parent": "f3jk"
+  },
+  "wh2l": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Brick",
+    "id": "wh2l",
+    "z": 21275,
+    "parent": "f3jk"
+  },
+  "soloDeckHolder": {
+    "type": "holder",
+    "id": "soloDeckHolder",
+    "y": 539,
+    "z": 84,
+    "width": 100,
+    "height": 100,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "soloDeck"
+    },
+    "x": -144
+  },
+  "so2v": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "so2v",
+    "z": 21277,
+    "parent": "f3jk"
+  },
+  "4q7y": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Stone",
+    "id": "4q7y",
+    "z": 21271,
+    "parent": "f3jk"
+  },
+  "icol": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Glass",
+    "id": "icol",
+    "z": 21280,
+    "parent": "f3jk"
+  },
+  "e1y0": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "e1y0",
+    "z": 21282,
+    "parent": "f3jk"
+  },
+  "rm70": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Brick",
+    "id": "rm70",
+    "z": 21272,
+    "parent": "f3jk"
+  },
+  "buildingDeckHolder": {
+    "type": "holder",
+    "id": "buildingDeckHolder",
+    "y": 63,
+    "width": 123,
+    "z": 82,
+    "dropTarget": {
+      "deck": "buildingDeck"
+    },
+    "x": -164
+  },
+  "monumentDeckHolder": {
+    "type": "holder",
+    "id": "monumentDeckHolder",
+    "x": -161,
+    "y": 287,
+    "width": 123,
+    "z": 83,
+    "dropTarget": {
+      "deck": "monumentDeck"
+    }
+  },
+  "02zc": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "02zc",
+    "z": 21279,
+    "parent": "f3jk"
+  },
+  "udtr": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Stone",
+    "id": "udtr",
+    "z": 21273,
+    "parent": "f3jk"
+  },
+  "kzy7": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Glass",
+    "id": "kzy7",
+    "z": 21270,
+    "parent": "f3jk"
+  },
+  "cqyu": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "cqyu",
+    "z": 21269,
+    "parent": "f3jk"
+  },
+  "al8s": {
+    "deck": "soloDeck",
+    "type": "card",
+    "cardType": "Brick",
+    "id": "al8s",
+    "z": 21281,
+    "parent": "f3jk"
+  },
+  "woodHolder": {
+    "type": "holder",
+    "id": "woodHolder",
+    "x": 400,
+    "y": 925,
+    "z": 59,
+    "inheritFrom": "cottageHolder",
+    "dropTarget": {
+      "wood": true
+    },
+    "width": 75,
+    "height": 75,
+    "css": "background-color: #6a3a3580"
+  },
+  "brickHolder": {
+    "type": "holder",
+    "id": "brickHolder",
+    "x": 1125,
+    "y": 925,
+    "inheritFrom": "woodHolder",
+    "dropTarget": {
+      "brick": true
+    },
+    "css": "background-color: #ef3c2980"
+  },
+  "wheatHolder": {
+    "type": "holder",
+    "id": "wheatHolder",
+    "x": 943.75,
+    "y": 925,
+    "inheritFrom": "woodHolder",
+    "dropTarget": {
+      "wheat": true
+    },
+    "css": "background-color: #fdbe3f80"
+  },
+  "glassHolder": {
+    "type": "holder",
+    "id": "glassHolder",
+    "x": 762.5,
+    "y": 925,
+    "inheritFrom": "woodHolder",
+    "dropTarget": {
+      "glass": true
+    },
+    "css": "background-color: #209da680"
+  },
+  "stoneHolder": {
+    "type": "holder",
+    "id": "stoneHolder",
+    "x": 581.25,
+    "y": 925,
+    "inheritFrom": "woodHolder",
+    "dropTarget": {
+      "stone": true
+    },
+    "css": "background-color: #bbb09f80"
+  },
+  "cottageHolder": {
+    "type": "holder",
+    "id": "cottageHolder",
+    "x": 275,
+    "y": 125,
+    "width": 100,
+    "height": 100,
+    "z": 60,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cottage": true
+    },
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "css": "background-color: #249da480"
+  },
+  "miscHolder": {
+    "type": "holder",
+    "id": "miscHolder",
+    "x": 275,
+    "y": 242,
+    "dropTarget": {
+      "misc": true
+    },
+    "inheritFrom": "cottageHolder",
+    "css": "background-color: #b7b3a180"
+  },
+  "millHolder": {
+    "type": "holder",
+    "id": "millHolder",
+    "x": 275,
+    "y": 825,
+    "dropTarget": {
+      "mill": true
+    },
+    "inheritFrom": "cottageHolder",
+    "css": "background-color: #10314280"
+  },
+  "churchHolder": {
+    "type": "holder",
+    "id": "churchHolder",
+    "x": 275,
+    "y": 708,
+    "dropTarget": {
+      "church": true
+    },
+    "inheritFrom": "cottageHolder",
+    "css": "background-color: #ef8a2280"
+  },
+  "shopHolder": {
+    "type": "holder",
+    "id": "shopHolder",
+    "x": 275,
+    "y": 592,
+    "dropTarget": {
+      "shop": true
+    },
+    "inheritFrom": "cottageHolder",
+    "css": "background-color: #fdbb4250"
+  },
+  "barnnHolder": {
+    "type": "holder",
+    "id": "barnnHolder",
+    "x": 275,
+    "y": 475,
+    "dropTarget": {
+      "barn": true
+    },
+    "inheritFrom": "cottageHolder",
+    "css": "background-color: #ee292480"
+  },
+  "tavernHolder": {
+    "type": "holder",
+    "id": "tavernHolder",
+    "x": 275,
+    "y": 358,
+    "dropTarget": {
+      "tavern": true
+    },
+    "inheritFrom": "cottageHolder",
+    "css": "background-color: #07814980"
+  },
+  "monumentHolder": {
+    "type": "holder",
+    "id": "monumentHolder",
+    "x": 165,
+    "y": 900,
+    "dropTarget": {
+      "monument": true
+    },
+    "inheritFrom": "cottageHolder",
+    "css": "background-color: #b4439080"
+  },
+  "rqkf": {
+    "type": "pile",
+    "width": 115,
+    "height": 160,
+    "id": "rqkf",
+    "z": 72,
+    "parent": "buildingDeckHolder"
+  },
+  "tj26": {
+    "type": "pile",
+    "width": 115,
+    "height": 160,
+    "id": "tj26",
+    "z": 66,
+    "parent": "monumentDeckHolder"
+  },
+  "board1": {
+    "type": "holder",
+    "id": "board1",
+    "x": 400,
+    "y": 125,
+    "z": 204,
+    "width": 800,
+    "height": 800,
+    "layer": -2,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [
+      "seat1"
+    ],
+    "css": "background-image:url(/assets/1764390997_1325);background-size: contain",
+    "dropTarget": [
+      {
+        "resource": true
+      },
+      {
+        "building": true
+      }
+    ],
+    "alignChildren": false,
+    "classes": "transparent"
+  },
+  "goals1": {
+    "type": "holder",
+    "id": "goals1",
+    "x": 1265,
+    "y": 216,
+    "width": 270,
+    "scale": 1.2,
+    "z": 71,
+    "stackOffsetX": 145,
+    "movableInEdit": false,
+    "dropTarget": [
+      {
+        "deck": "buildingDeck"
+      },
+      {
+        "deck": "monumentDeck"
+      }
+    ],
+    "css": "background-color:#ffffff80",
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "goals2": {
+    "type": "holder",
+    "id": "goals2",
+    "y": 414.66666666666663,
+    "z": 74,
+    "inheritFrom": "goals1"
+  },
+  "goals3": {
+    "type": "holder",
+    "id": "goals3",
+    "y": 613.3333333333333,
+    "z": 73,
+    "inheritFrom": "goals1"
+  },
+  "goals4": {
+    "type": "holder",
+    "id": "goals4",
+    "y": 812,
+    "z": 75,
+    "inheritFrom": "goals1"
+  },
+  "board2": {
+    "type": "holder",
+    "id": "board2",
+    "x": 400,
+    "y": 125,
+    "z": 204,
+    "width": 800,
+    "height": 800,
+    "layer": -2,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [
+      "seat2"
+    ],
+    "css": "background-image:url(/assets/1764390997_1325);background-size: contain",
+    "dropTarget": [
+      {
+        "resource": true
+      },
+      {
+        "building": true
+      }
+    ],
+    "alignChildren": false,
+    "classes": "transparent"
+  },
+  "board3": {
+    "type": "holder",
+    "id": "board3",
+    "x": 400,
+    "y": 125,
+    "z": 204,
+    "width": 800,
+    "height": 800,
+    "layer": -2,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [
+      "seat3"
+    ],
+    "css": "background-image:url(/assets/1764390997_1325);background-size: contain",
+    "dropTarget": [
+      {
+        "resource": true
+      },
+      {
+        "building": true
+      }
+    ],
+    "alignChildren": false,
+    "classes": "transparent"
+  },
+  "board4": {
+    "type": "holder",
+    "id": "board4",
+    "x": 400,
+    "y": 125,
+    "z": 204,
+    "width": 800,
+    "height": 800,
+    "layer": -2,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [
+      "seat4"
+    ],
+    "css": "background-image:url(/assets/1764390997_1325);background-size: contain",
+    "dropTarget": [
+      {
+        "resource": true
+      },
+      {
+        "building": true
+      }
+    ],
+    "alignChildren": false,
+    "classes": "transparent"
+  },
+  "board5": {
+    "type": "holder",
+    "id": "board5",
+    "x": 400,
+    "y": 125,
+    "z": 204,
+    "width": 800,
+    "height": 800,
+    "layer": -2,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [
+      "seat5"
+    ],
+    "css": "background-image:url(/assets/1764390997_1325);background-size: contain",
+    "dropTarget": [
+      {
+        "resource": true
+      },
+      {
+        "building": true
+      }
+    ],
+    "alignChildren": false,
+    "classes": "transparent"
+  },
+  "board6": {
+    "type": "holder",
+    "id": "board6",
+    "x": 400,
+    "y": 125,
+    "z": 204,
+    "width": 800,
+    "height": 800,
+    "layer": -2,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [
+      "seat6"
+    ],
+    "css": "background-image:url(/assets/1764390997_1325);background-size: contain",
+    "dropTarget": [
+      {
+        "resource": true
+      },
+      {
+        "building": true
+      }
+    ],
+    "alignChildren": false,
+    "classes": "transparent"
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "childrenPerOwner": true,
+    "x": 17,
+    "y": 814,
+    "width": 123,
+    "id": "hand",
+    "scale": 1.2,
+    "movableInEdit": false,
+    "dropTarget": {
+      "deck": "monumentDeck"
+    },
+    "css": "background-color:#ffffff80"
+  },
+  "background": {
+    "id": "background",
+    "y": -100,
+    "width": 1600,
+    "height": 1200,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "opacity:0.35",
+    "image": "/assets/-939983407_457124"
+  },
+  "buildingDeck1": {
+    "type": "deck",
+    "id": "buildingDeck1",
+    "x": 4,
+    "y": 4,
+    "z": 11,
+    "cardDefaults": {
+      "width": 115,
+      "height": 160,
+      "enlarge": 3,
+      "layer": 3,
+      "classes": "condensed_font"
+    },
+    "cardTypes": {
+      "Cavern": {
+        "cardGroup": 0,
+        "buildingType": "/assets/-220168990_4865",
+        "buildingColor": "#000000",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/1556590566_339",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "Twice per game, you may place a resource named by another player on this card for no points and no penalties.",
+        "noteSize": 11
+      },
+      "Cottage": {
+        "cardGroup": 1,
+        "buildingType": "/assets/1658291751_3958",
+        "buildingColor": "#249da4",
+        "yText": 4,
+        "typeSize": 18,
+        "fed": "/assets/920128252_5714",
+        "shape": "/assets/1193333564_492",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(3) if building is fed.",
+        "noteSize": 15
+      },
+      "Well": {
+        "cardGroup": 2,
+        "buildingType": "/assets/222368859_554",
+        "buildingColor": "#b7b3a1",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1536969343_349",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(1) for each adjacent [A].",
+        "noteSize": 15
+      },
+      "Shed": {
+        "cardGroup": 2,
+        "buildingType": "/assets/222368859_554",
+        "buildingColor": "#b7b3a1",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1536969343_349",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(1). May place on any empty square on the board.",
+        "noteSize": 15
+      },
+      "Millstone": {
+        "cardGroup": 2,
+        "buildingType": "/assets/222368859_554",
+        "buildingColor": "#b7b3a1",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1536969343_349",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(2) if adjacent to a [D] or [E].",
+        "noteSize": 15
+      },
+      "Fountain": {
+        "cardGroup": 2,
+        "buildingType": "/assets/222368859_554",
+        "buildingColor": "#b7b3a1",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1536969343_349",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "(2) if adjacent to another Fountain.",
+        "noteSize": 15
+      },
+      "Tavern": {
+        "cardGroup": 3,
+        "buildingType": "/assets/158571832_5323",
+        "buildingColor": "#078149",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/36511300_429",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(VP) based on total Taverns.\n             1    2    3    4    5\n-------------------------------------\n  (VP)   2    5    9  14  20",
+        "noteSize": 12
+      },
+      "Inn": {
+        "cardGroup": 3,
+        "buildingType": "/assets/158571832_5323",
+        "buildingColor": "#078149",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/696968759_485",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(3) if not in row or column with another Inn.",
+        "noteSize": 15
+      },
+      "Feast Hall": {
+        "cardGroup": 3,
+        "buildingType": "/assets/158571832_5323",
+        "buildingColor": "#078149",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/813861426_427",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(2). +(1) if you have more Feast Halls than player on your right.",
+        "noteSize": 15
+      },
+      "Almshouse": {
+        "cardGroup": 3,
+        "buildingType": "/assets/158571832_5323",
+        "buildingColor": "#078149",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/566045460_429",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(VP) based on total Almshouses.\n          1   2   3   4    5    6\n-------------------------------------\n(VP) -1   5  -3  15  -5  26",
+        "noteSize": 12
+      },
+      "Orchard": {
+        "cardGroup": 4,
+        "buildingType": "/assets/794175936_4768",
+        "buildingColor": "#ee2924",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/995586845_540",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "Feeds all buildings in same row or column.",
+        "noteSize": 15
+      },
+      "Greenhouse": {
+        "cardGroup": 4,
+        "buildingType": "/assets/794175936_4768",
+        "buildingColor": "#ee2924",
+        "yText": 3,
+        "typeSize": 17,
+        "shape": "/assets/-1722084970_541",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "Feeds 1 continguous group of buildings anywhere on the board.",
+        "noteSize": 13
+      },
+      "Granary": {
+        "cardGroup": 4,
+        "buildingType": "/assets/794175936_4768",
+        "buildingColor": "#ee2924",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-2110217533_542",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "Feeds all buildings in surrounding 8 squares.",
+        "noteSize": 15
+      },
+      "Farm": {
+        "cardGroup": 4,
+        "buildingType": "/assets/794175936_4768",
+        "buildingColor": "#ee2924",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/1174144857_483",
+        "xShape": 35,
+        "yShape": 35,
+        "widthShape": 40,
+        "heightShape": 40,
+        "note": "Feeds 4 buildings anywhere on the board.",
+        "noteSize": 15
+      },
+      "Theater": {
+        "cardGroup": 5,
+        "buildingType": "/assets/-320526454_5295",
+        "buildingColor": "#fdbb42",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/854408624_545",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1) for each other unique building type in same row and column.",
+        "noteSize": 15
+      },
+      "Tailor": {
+        "cardGroup": 5,
+        "buildingType": "/assets/-320526454_5295",
+        "buildingColor": "#fdbb42",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1380937838_547",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1). +(1) for each other Tailor in 4 center squares of the board.",
+        "noteSize": 15
+      },
+      "Market": {
+        "cardGroup": 5,
+        "buildingType": "/assets/-320526454_5295",
+        "buildingColor": "#fdbb42",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/1318049630_546",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1) for each Market in same row or column (not both).",
+        "noteSize": 15
+      },
+      "Bakery": {
+        "cardGroup": 5,
+        "buildingType": "/assets/-320526454_5295",
+        "buildingColor": "#fdbb42",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/1640398663_547",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(3) if adjacent to [D] or [G].",
+        "noteSize": 15
+      },
+      "Cloister": {
+        "cardGroup": 6,
+        "buildingType": "/assets/1526250328_5020",
+        "buildingColor": "#ef8a22",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/382131843_605",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1) for each Cloister in a corner of the board.",
+        "noteSize": 15
+      },
+      "Temple": {
+        "cardGroup": 6,
+        "buildingType": "/assets/1526250328_5020",
+        "buildingColor": "#ef8a22",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/506828488_549",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(4) if adjacent to at least 2 fed [A].",
+        "noteSize": 15
+      },
+      "Chapel": {
+        "cardGroup": 6,
+        "buildingType": "/assets/1526250328_5020",
+        "buildingColor": "#ef8a22",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-617941853_492",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1) for each fed [A].",
+        "noteSize": 15
+      },
+      "Abbey": {
+        "cardGroup": 6,
+        "buildingType": "/assets/1526250328_5020",
+        "buildingColor": "#ef8a22",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-1441189562_549",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(3) if not adjacent to [C], [E], or [G].",
+        "noteSize": 15
+      },
+      "Bank": {
+        "cardGroup": 7,
+        "buildingType": "/assets/2118145502_5448",
+        "buildingColor": "#103142",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-2100188373_663",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(4). Place a resource on this building that is not on another Bank on your board. As Master Builder, you can no longer name that resource.",
+        "noteSize": 11
+      },
+      "Trading Post": {
+        "cardGroup": 7,
+        "buildingType": "/assets/2118145502_5448",
+        "buildingColor": "#103142",
+        "yText": 4,
+        "typeSize": 17,
+        "shape": "/assets/-1420560546_605",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "(1). You may treat Trading Post as a wildcard resource for future buildings.",
+        "noteSize": 14
+      },
+      "Warehouse": {
+        "cardGroup": 7,
+        "buildingType": "/assets/2118145502_5448",
+        "buildingColor": "#103142",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/1184457699_604",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "-(1) for each resource on Warehouse. Each Warehouse can store 3 resources. When another player names a resource, you may place it on a Warehouse or swap it with another one on a Warehouse.",
+        "noteSize": 9
+      },
+      "Factory": {
+        "cardGroup": 7,
+        "buildingType": "/assets/2118145502_5448",
+        "buildingColor": "#103142",
+        "yText": 4,
+        "typeSize": 18,
+        "shape": "/assets/-2025721320_610",
+        "xShape": 25,
+        "yShape": 22,
+        "widthShape": 65,
+        "heightShape": 65,
+        "note": "When built, place 1 of the 5 resources on the Factory. When another player names that resource, you may substitute a different one.",
+        "noteSize": 11
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 160,
+            "color": "#8FBC8F",
+            "value": "/assets/1529174257_144845"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "note": "Shape back area",
+            "type": "image",
+            "x": 0,
+            "y": 20,
+            "width": 115,
+            "height": 65,
+            "css": "background-image: radial-gradient(#f2ddb5, #f8edd8);"
+          },
+          {
+            "note": "Top back area",
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 30,
+            "css": "border-radius:8px;background-image: linear-gradient(to bottom,  #edcd93, #b57f1e, #edcd93)"
+          },
+          {
+            "note": "Top building back",
+            "type": "image",
+            "x": 92,
+            "y": -2,
+            "width": 30,
+            "height": 30,
+            "color": "white",
+            "css": "border-radius:100%"
+          },
+          {
+            "note": "Bottom back area",
+            "type": "image",
+            "x": 0,
+            "y": 80,
+            "width": 115,
+            "height": 86,
+            "css": "border-radius:8px;background-image: linear-gradient(to bottom, #e9c37d, #eed099)"
+          },
+          {
+            "note": "Building symbol",
+            "type": "image",
+            "x": 94,
+            "y": 4,
+            "width": 20,
+            "height": 20,
+            "color": "transparent",
+            "svgReplaces": {
+              "#ffffff": "buildingColor"
+            },
+            "dynamicProperties": {
+              "value": "buildingType"
+            }
+          },
+          {
+            "note": "Fed symbol",
+            "type": "image",
+            "x": 82,
+            "y": 9,
+            "width": 10,
+            "height": 10,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "fed"
+            }
+          },
+          {
+            "note": "Card type",
+            "type": "text",
+            "x": 1,
+            "width": 92,
+            "dynamicProperties": {
+              "value": "cardType",
+              "y": "yText",
+              "fontSize": "typeSize"
+            }
+          },
+          {
+            "note": "Shape",
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "shape",
+              "x": "xShape",
+              "y": "yShape",
+              "width": "widthShape",
+              "height": "heightShape"
+            }
+          },
+          {
+            "note": "Card notes",
+            "type": "text",
+            "x": 1,
+            "y": 80,
+            "width": 113,
+            "dynamicProperties": {
+              "value": "note",
+              "fontSize": "noteSize"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "offBoard"
+  },
+  "offBoard": {
+    "type": "holder",
+    "id": "offBoard",
+    "x": -161,
+    "y": 815,
+    "width": 123,
+    "z": 85,
+    "dropTarget": {
+      "deck": "buildingDeck"
+    }
+  },
+  "soloHolder": {
+    "type": "holder",
+    "id": "soloHolder",
+    "x": 640,
+    "y": 10,
+    "z": 88,
+    "height": 100,
+    "width": 320,
+    "stackOffsetX": 110,
+    "movableInEdit": false,
+    "dropTarget": {
+      "deck": "soloDeck"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 3,
+    "css": "background-color:#ffffff80",
+    "scale": 0
+  },
+  "soloPlay": {
+    "type": "holder",
+    "id": "soloPlay",
+    "x": -180,
+    "width": 100,
+    "height": 100,
+    "z": 90,
+    "movableInEdit": false,
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "fixedParent": true,
+    "parent": "soloHolder",
+    "css": "background-color:#ffffff80",
+    "dropTarget": {
+      "deck": "soloDeck"
+    },
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "soloMove"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ]
+  },
+  "f3jk": {
+    "type": "pile",
+    "parent": "soloDeckHolder",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "id": "f3jk"
+  },
+  "soloMove": {
+    "type": "button",
+    "id": "soloMove",
+    "parent": "soloHolder",
+    "fixedParent": true,
+    "y": 25,
+    "width": 50,
+    "height": 50,
+    "z": 115,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "soloPlay"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "soloDeckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SORT",
+        "holder": "soloDeckHolder",
+        "key": "z"
+      },
+      {
+        "func": "MOVE",
+        "from": "soloDeckHolder",
+        "to": "soloHolder"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "x": -65
+  },
+  "cb0t": {
+    "z": 2909,
+    "image": "/assets/-651888302_4061",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#b44390",
+    "id": "cb0t",
+    "y": 484.44444444444434,
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "scoreBoard1",
+    "x": 10
+  },
+  "xe2b": {
+    "z": 2906,
+    "image": "/assets/2118145502_5448",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#103142",
+    "id": "xe2b",
+    "y": 416.66666666666663,
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "scoreBoard1",
+    "x": 10
+  },
+  "v1cj": {
+    "z": 2903,
+    "image": "/assets/1526250328_5020",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#ef8a22",
+    "id": "v1cj",
+    "y": 348.88888888888886,
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "scoreBoard1",
+    "x": 10
+  },
+  "mtu6": {
+    "z": 2897,
+    "image": "/assets/794175936_4768",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#ee2924",
+    "id": "mtu6",
+    "y": 213.33333333333331,
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "scoreBoard1",
+    "x": 10
+  },
+  "ro2y": {
+    "z": 2893,
+    "image": "/assets/158571832_5323",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#078149",
+    "id": "ro2y",
+    "y": 145.55555555555554,
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "scoreBoard1",
+    "x": 10
+  },
+  "puzl": {
+    "z": 2914,
+    "image": "/assets/222368859_554",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#b7b3a1",
+    "id": "puzl",
+    "y": 77.77777777777777,
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "scoreBoard1",
+    "x": 10
+  },
+  "7qn5": {
+    "z": 2900,
+    "image": "/assets/-320526454_5295",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#fdbb42",
+    "id": "7qn5",
+    "x": 10,
+    "y": 281.1111111111111,
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "scoreBoard1"
+  },
+  "3ft9": {
+    "z": 2916,
+    "image": "/assets/1658291751_3958",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#249da4",
+    "id": "3ft9",
+    "y": 10,
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "scoreBoard1",
+    "x": 10
+  },
+  "scoreBoard1": {
+    "id": "scoreBoard1",
+    "parent": "board1",
+    "fixedParent": true,
+    "x": -394,
+    "width": 120,
+    "height": 670,
+    "z": 2917,
+    "movable": false,
+    "css": "background: #fefed5; font-size: 30px; ",
+    "borderRadius": 8,
+    "movableInEdit": false
+  },
+  "2zex": {
+    "id": "2zex",
+    "z": 2911,
+    "y": 552.2222222222222,
+    "css": "background-color:#cbf8b4;border: 5px solid #aeca9f;color:red;font-size: 50px;text-align:center;line-height:0.73",
+    "width": 35,
+    "height": 35,
+    "text": "X",
+    "movableInEdit": false,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "scoreBoard1",
+    "x": 10
+  },
+  "cakf": {
+    "text": "∑",
+    "id": "cakf",
+    "z": 2915,
+    "y": 615,
+    "x": 21,
+    "css": "font-size: 30px; ",
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "scoreBoard1"
+  },
+  "totalScore1": {
+    "type": "label",
+    "id": "totalScore1",
+    "parent": "scoreBoard1",
+    "x": 57,
+    "y": 615,
+    "inheritFrom": "subScore1",
+    "bColor": "#ffffff",
+    "editable": false,
+    "totalScoreRoutine": [
+      {
+        "func": "SELECT",
+        "property": "subPID",
+        "value": "${pID}"
+      },
+      {
+        "func": "GET",
+        "aggregation": "sum",
+        "property": "text",
+        "variable": "total"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${total}"
+      }
+    ],
+    "subPID": 0,
+    "text": ""
+  },
+  "subScore1": {
+    "type": "label",
+    "id": "subScore1",
+    "parent": "scoreBoard1",
+    "fixedParent": true,
+    "x": 57,
+    "y": 10,
+    "width": 51,
+    "height": 50,
+    "z": 210,
+    "movableInEdit": false,
+    "css": {
+      "background": "${PROPERTY bColor}",
+      "font-size": "29px",
+      "border": "1px solid black",
+      "line-height": "1.7",
+      "color": "black"
+    },
+    "editable": true,
+    "twoRowBottomAlign": true,
+    "bColor": "#249da480",
+    "subScore": true,
+    "textChangeRoutine": [
+      {
+        "func": "CALL",
+        "widget": "totalScore${PROPERTY subPID}",
+        "routine": "totalScoreRoutine",
+        "arguments": {
+          "pID": "${PROPERTY subPID}"
+        }
+      }
+    ],
+    "subPID": 1
+  },
+  "subScore2": {
+    "type": "label",
+    "id": "subScore2",
+    "parent": "scoreBoard1",
+    "x": 57,
+    "y": 77.22222222222223,
+    "inheritFrom": "subScore1",
+    "text": "",
+    "bColor": "#b7b3a180"
+  },
+  "subScore3": {
+    "type": "label",
+    "id": "subScore3",
+    "parent": "scoreBoard1",
+    "x": 57,
+    "y": 144.44444444444446,
+    "inheritFrom": "subScore1",
+    "text": "",
+    "bColor": "#07814980"
+  },
+  "subScore4": {
+    "type": "label",
+    "id": "subScore4",
+    "parent": "scoreBoard1",
+    "x": 57,
+    "y": 211.66666666666669,
+    "inheritFrom": "subScore1",
+    "text": "",
+    "bColor": "#ee292480"
+  },
+  "subScore5": {
+    "type": "label",
+    "id": "subScore5",
+    "parent": "scoreBoard1",
+    "x": 57,
+    "y": 278.8888888888889,
+    "inheritFrom": "subScore1",
+    "text": "",
+    "bColor": "#fdbb4280"
+  },
+  "subScore6": {
+    "type": "label",
+    "id": "subScore6",
+    "parent": "scoreBoard1",
+    "x": 57,
+    "y": 346.11111111111114,
+    "inheritFrom": "subScore1",
+    "text": "",
+    "bColor": "#ef8a2280"
+  },
+  "subScore7": {
+    "type": "label",
+    "id": "subScore7",
+    "parent": "scoreBoard1",
+    "x": 57,
+    "y": 413.33333333333337,
+    "inheritFrom": "subScore1",
+    "text": "",
+    "bColor": "#10314280"
+  },
+  "subScore8": {
+    "type": "label",
+    "id": "subScore8",
+    "parent": "scoreBoard1",
+    "x": 57,
+    "y": 480.55555555555566,
+    "inheritFrom": "subScore1",
+    "text": "",
+    "bColor": "#b4439080"
+  },
+  "subScore9": {
+    "type": "label",
+    "id": "subScore9",
+    "parent": "scoreBoard1",
+    "x": 57,
+    "y": 547.7777777777778,
+    "inheritFrom": "subScore1",
+    "text": "",
+    "bColor": "#cbf8b480"
+  },
+  "scoreBoard2": {
+    "inheritFrom": "scoreBoard1",
+    "id": "scoreBoard2",
+    "x": -394,
+    "y": 0,
+    "parent": "board2"
+  },
+  "cb1t": {
+    "inheritFrom": "cb0t",
+    "id": "cb1t",
+    "parent": "scoreBoard2"
+  },
+  "xe3b": {
+    "inheritFrom": "xe2b",
+    "id": "xe3b",
+    "parent": "scoreBoard2"
+  },
+  "v2cj": {
+    "inheritFrom": "v1cj",
+    "id": "v2cj",
+    "parent": "scoreBoard2"
+  },
+  "mtu7": {
+    "inheritFrom": "mtu6",
+    "id": "mtu7",
+    "parent": "scoreBoard2"
+  },
+  "ro3y": {
+    "inheritFrom": "ro2y",
+    "id": "ro3y",
+    "parent": "scoreBoard2"
+  },
+  "puzl1": {
+    "inheritFrom": "puzl",
+    "id": "puzl1",
+    "parent": "scoreBoard2"
+  },
+  "7qn6": {
+    "inheritFrom": "7qn5",
+    "id": "7qn6",
+    "parent": "scoreBoard2"
+  },
+  "3ft10": {
+    "inheritFrom": "3ft9",
+    "id": "3ft10",
+    "parent": "scoreBoard2"
+  },
+  "3zex": {
+    "inheritFrom": "2zex",
+    "id": "3zex",
+    "parent": "scoreBoard2"
+  },
+  "cakf1": {
+    "inheritFrom": "cakf",
+    "id": "cakf1",
+    "parent": "scoreBoard2"
+  },
+  "totalScore2": {
+    "inheritFrom": "totalScore1",
+    "id": "totalScore2",
+    "type": "label",
+    "parent": "scoreBoard2",
+    "text": ""
+  },
+  "subScore10": {
+    "inheritFrom": "subScore1",
+    "id": "subScore10",
+    "type": "label",
+    "parent": "scoreBoard2",
+    "subPID": 2,
+    "text": ""
+  },
+  "subScore11": {
+    "inheritFrom": "subScore2",
+    "id": "subScore11",
+    "type": "label",
+    "parent": "scoreBoard2",
+    "subPID": 2,
+    "text": ""
+  },
+  "subScore12": {
+    "inheritFrom": "subScore3",
+    "id": "subScore12",
+    "type": "label",
+    "parent": "scoreBoard2",
+    "subPID": 2,
+    "text": ""
+  },
+  "subScore13": {
+    "inheritFrom": "subScore4",
+    "id": "subScore13",
+    "type": "label",
+    "parent": "scoreBoard2",
+    "subPID": 2,
+    "text": ""
+  },
+  "subScore14": {
+    "inheritFrom": "subScore5",
+    "id": "subScore14",
+    "type": "label",
+    "parent": "scoreBoard2",
+    "subPID": 2,
+    "text": ""
+  },
+  "subScore15": {
+    "inheritFrom": "subScore6",
+    "id": "subScore15",
+    "type": "label",
+    "parent": "scoreBoard2",
+    "subPID": 2,
+    "text": ""
+  },
+  "subScore16": {
+    "inheritFrom": "subScore7",
+    "id": "subScore16",
+    "type": "label",
+    "parent": "scoreBoard2",
+    "subPID": 2,
+    "text": ""
+  },
+  "subScore17": {
+    "inheritFrom": "subScore8",
+    "id": "subScore17",
+    "type": "label",
+    "parent": "scoreBoard2",
+    "subPID": 2,
+    "text": ""
+  },
+  "subScore18": {
+    "inheritFrom": "subScore9",
+    "id": "subScore18",
+    "type": "label",
+    "parent": "scoreBoard2",
+    "subPID": 2,
+    "text": ""
+  },
+  "scoreBoard3": {
+    "inheritFrom": "scoreBoard1",
+    "id": "scoreBoard3",
+    "x": -394,
+    "y": 0,
+    "parent": "board3"
+  },
+  "cb2t": {
+    "inheritFrom": "cb0t",
+    "id": "cb2t",
+    "parent": "scoreBoard3"
+  },
+  "xe4b": {
+    "inheritFrom": "xe2b",
+    "id": "xe4b",
+    "parent": "scoreBoard3"
+  },
+  "v3cj": {
+    "inheritFrom": "v1cj",
+    "id": "v3cj",
+    "parent": "scoreBoard3"
+  },
+  "mtu8": {
+    "inheritFrom": "mtu6",
+    "id": "mtu8",
+    "parent": "scoreBoard3"
+  },
+  "ro4y": {
+    "inheritFrom": "ro2y",
+    "id": "ro4y",
+    "parent": "scoreBoard3"
+  },
+  "puzl2": {
+    "inheritFrom": "puzl",
+    "id": "puzl2",
+    "parent": "scoreBoard3"
+  },
+  "7qn7": {
+    "inheritFrom": "7qn5",
+    "id": "7qn7",
+    "parent": "scoreBoard3"
+  },
+  "3ft11": {
+    "inheritFrom": "3ft9",
+    "id": "3ft11",
+    "parent": "scoreBoard3"
+  },
+  "4zex": {
+    "inheritFrom": "2zex",
+    "id": "4zex",
+    "parent": "scoreBoard3"
+  },
+  "cakf2": {
+    "inheritFrom": "cakf",
+    "id": "cakf2",
+    "parent": "scoreBoard3"
+  },
+  "totalScore3": {
+    "inheritFrom": "totalScore1",
+    "id": "totalScore3",
+    "type": "label",
+    "parent": "scoreBoard3",
+    "text": ""
+  },
+  "subScore19": {
+    "inheritFrom": "subScore1",
+    "id": "subScore19",
+    "type": "label",
+    "parent": "scoreBoard3",
+    "subPID": 3,
+    "text": ""
+  },
+  "subScore20": {
+    "inheritFrom": "subScore2",
+    "id": "subScore20",
+    "type": "label",
+    "parent": "scoreBoard3",
+    "subPID": 3,
+    "text": ""
+  },
+  "subScore21": {
+    "inheritFrom": "subScore3",
+    "id": "subScore21",
+    "type": "label",
+    "parent": "scoreBoard3",
+    "subPID": 3,
+    "text": ""
+  },
+  "subScore22": {
+    "inheritFrom": "subScore4",
+    "id": "subScore22",
+    "type": "label",
+    "parent": "scoreBoard3",
+    "subPID": 3,
+    "text": ""
+  },
+  "subScore23": {
+    "inheritFrom": "subScore5",
+    "id": "subScore23",
+    "type": "label",
+    "parent": "scoreBoard3",
+    "subPID": 3,
+    "text": ""
+  },
+  "subScore24": {
+    "inheritFrom": "subScore6",
+    "id": "subScore24",
+    "type": "label",
+    "parent": "scoreBoard3",
+    "subPID": 3,
+    "text": ""
+  },
+  "subScore25": {
+    "inheritFrom": "subScore7",
+    "id": "subScore25",
+    "type": "label",
+    "parent": "scoreBoard3",
+    "subPID": 3,
+    "text": ""
+  },
+  "subScore26": {
+    "inheritFrom": "subScore8",
+    "id": "subScore26",
+    "type": "label",
+    "parent": "scoreBoard3",
+    "subPID": 3,
+    "text": ""
+  },
+  "subScore27": {
+    "inheritFrom": "subScore9",
+    "id": "subScore27",
+    "type": "label",
+    "parent": "scoreBoard3",
+    "subPID": 3,
+    "text": ""
+  },
+  "scoreBoard4": {
+    "inheritFrom": "scoreBoard1",
+    "id": "scoreBoard4",
+    "x": -394,
+    "y": 0,
+    "parent": "board4"
+  },
+  "cb3t": {
+    "inheritFrom": "cb0t",
+    "id": "cb3t",
+    "parent": "scoreBoard4"
+  },
+  "xe5b": {
+    "inheritFrom": "xe2b",
+    "id": "xe5b",
+    "parent": "scoreBoard4"
+  },
+  "v4cj": {
+    "inheritFrom": "v1cj",
+    "id": "v4cj",
+    "parent": "scoreBoard4"
+  },
+  "mtu9": {
+    "inheritFrom": "mtu6",
+    "id": "mtu9",
+    "parent": "scoreBoard4"
+  },
+  "ro5y": {
+    "inheritFrom": "ro2y",
+    "id": "ro5y",
+    "parent": "scoreBoard4"
+  },
+  "puzl3": {
+    "inheritFrom": "puzl",
+    "id": "puzl3",
+    "parent": "scoreBoard4"
+  },
+  "7qn8": {
+    "inheritFrom": "7qn5",
+    "id": "7qn8",
+    "parent": "scoreBoard4"
+  },
+  "3ft12": {
+    "inheritFrom": "3ft9",
+    "id": "3ft12",
+    "parent": "scoreBoard4"
+  },
+  "5zex": {
+    "inheritFrom": "2zex",
+    "id": "5zex",
+    "parent": "scoreBoard4"
+  },
+  "cakf3": {
+    "inheritFrom": "cakf",
+    "id": "cakf3",
+    "parent": "scoreBoard4"
+  },
+  "totalScore4": {
+    "inheritFrom": "totalScore1",
+    "id": "totalScore4",
+    "type": "label",
+    "parent": "scoreBoard4",
+    "text": ""
+  },
+  "subScore28": {
+    "inheritFrom": "subScore1",
+    "id": "subScore28",
+    "type": "label",
+    "parent": "scoreBoard4",
+    "subPID": 4,
+    "text": ""
+  },
+  "subScore29": {
+    "inheritFrom": "subScore2",
+    "id": "subScore29",
+    "type": "label",
+    "parent": "scoreBoard4",
+    "subPID": 4,
+    "text": ""
+  },
+  "subScore30": {
+    "inheritFrom": "subScore3",
+    "id": "subScore30",
+    "type": "label",
+    "parent": "scoreBoard4",
+    "subPID": 4,
+    "text": ""
+  },
+  "subScore31": {
+    "inheritFrom": "subScore4",
+    "id": "subScore31",
+    "type": "label",
+    "parent": "scoreBoard4",
+    "subPID": 4,
+    "text": ""
+  },
+  "subScore32": {
+    "inheritFrom": "subScore5",
+    "id": "subScore32",
+    "type": "label",
+    "parent": "scoreBoard4",
+    "subPID": 4,
+    "text": ""
+  },
+  "subScore33": {
+    "inheritFrom": "subScore6",
+    "id": "subScore33",
+    "type": "label",
+    "parent": "scoreBoard4",
+    "subPID": 4,
+    "text": ""
+  },
+  "subScore34": {
+    "inheritFrom": "subScore7",
+    "id": "subScore34",
+    "type": "label",
+    "parent": "scoreBoard4",
+    "subPID": 4,
+    "text": ""
+  },
+  "subScore35": {
+    "inheritFrom": "subScore8",
+    "id": "subScore35",
+    "type": "label",
+    "parent": "scoreBoard4",
+    "subPID": 4,
+    "text": ""
+  },
+  "subScore36": {
+    "inheritFrom": "subScore9",
+    "id": "subScore36",
+    "type": "label",
+    "parent": "scoreBoard4",
+    "subPID": 4,
+    "text": ""
+  },
+  "scoreBoard5": {
+    "inheritFrom": "scoreBoard1",
+    "id": "scoreBoard5",
+    "x": -394,
+    "y": 0,
+    "parent": "board5"
+  },
+  "cb4t": {
+    "inheritFrom": "cb0t",
+    "id": "cb4t",
+    "parent": "scoreBoard5"
+  },
+  "xe6b": {
+    "inheritFrom": "xe2b",
+    "id": "xe6b",
+    "parent": "scoreBoard5"
+  },
+  "v5cj": {
+    "inheritFrom": "v1cj",
+    "id": "v5cj",
+    "parent": "scoreBoard5"
+  },
+  "mtu10": {
+    "inheritFrom": "mtu6",
+    "id": "mtu10",
+    "parent": "scoreBoard5"
+  },
+  "ro6y": {
+    "inheritFrom": "ro2y",
+    "id": "ro6y",
+    "parent": "scoreBoard5"
+  },
+  "puzl4": {
+    "inheritFrom": "puzl",
+    "id": "puzl4",
+    "parent": "scoreBoard5"
+  },
+  "7qn9": {
+    "inheritFrom": "7qn5",
+    "id": "7qn9",
+    "parent": "scoreBoard5"
+  },
+  "3ft13": {
+    "inheritFrom": "3ft9",
+    "id": "3ft13",
+    "parent": "scoreBoard5"
+  },
+  "6zex": {
+    "inheritFrom": "2zex",
+    "id": "6zex",
+    "parent": "scoreBoard5"
+  },
+  "cakf4": {
+    "inheritFrom": "cakf",
+    "id": "cakf4",
+    "parent": "scoreBoard5"
+  },
+  "totalScore5": {
+    "inheritFrom": "totalScore1",
+    "id": "totalScore5",
+    "type": "label",
+    "parent": "scoreBoard5",
+    "text": ""
+  },
+  "subScore37": {
+    "inheritFrom": "subScore1",
+    "id": "subScore37",
+    "type": "label",
+    "parent": "scoreBoard5",
+    "subPID": 5,
+    "text": ""
+  },
+  "subScore38": {
+    "inheritFrom": "subScore2",
+    "id": "subScore38",
+    "type": "label",
+    "parent": "scoreBoard5",
+    "subPID": 5,
+    "text": ""
+  },
+  "subScore39": {
+    "inheritFrom": "subScore3",
+    "id": "subScore39",
+    "type": "label",
+    "parent": "scoreBoard5",
+    "subPID": 5,
+    "text": ""
+  },
+  "subScore40": {
+    "inheritFrom": "subScore4",
+    "id": "subScore40",
+    "type": "label",
+    "parent": "scoreBoard5",
+    "subPID": 5,
+    "text": ""
+  },
+  "subScore41": {
+    "inheritFrom": "subScore5",
+    "id": "subScore41",
+    "type": "label",
+    "parent": "scoreBoard5",
+    "subPID": 5,
+    "text": ""
+  },
+  "subScore42": {
+    "inheritFrom": "subScore6",
+    "id": "subScore42",
+    "type": "label",
+    "parent": "scoreBoard5",
+    "subPID": 5,
+    "text": ""
+  },
+  "subScore43": {
+    "inheritFrom": "subScore7",
+    "id": "subScore43",
+    "type": "label",
+    "parent": "scoreBoard5",
+    "subPID": 5,
+    "text": ""
+  },
+  "subScore44": {
+    "inheritFrom": "subScore8",
+    "id": "subScore44",
+    "type": "label",
+    "parent": "scoreBoard5",
+    "subPID": 5,
+    "text": ""
+  },
+  "subScore45": {
+    "inheritFrom": "subScore9",
+    "id": "subScore45",
+    "type": "label",
+    "parent": "scoreBoard5",
+    "subPID": 5,
+    "text": ""
+  },
+  "scoreBoard6": {
+    "inheritFrom": "scoreBoard1",
+    "id": "scoreBoard6",
+    "x": -394,
+    "y": 0,
+    "parent": "board6"
+  },
+  "cb5t": {
+    "inheritFrom": "cb0t",
+    "id": "cb5t",
+    "parent": "scoreBoard6"
+  },
+  "xe7b": {
+    "inheritFrom": "xe2b",
+    "id": "xe7b",
+    "parent": "scoreBoard6"
+  },
+  "v6cj": {
+    "inheritFrom": "v1cj",
+    "id": "v6cj",
+    "parent": "scoreBoard6"
+  },
+  "mtu11": {
+    "inheritFrom": "mtu6",
+    "id": "mtu11",
+    "parent": "scoreBoard6"
+  },
+  "ro7y": {
+    "inheritFrom": "ro2y",
+    "id": "ro7y",
+    "parent": "scoreBoard6"
+  },
+  "puzl5": {
+    "inheritFrom": "puzl",
+    "id": "puzl5",
+    "parent": "scoreBoard6"
+  },
+  "7qn10": {
+    "inheritFrom": "7qn5",
+    "id": "7qn10",
+    "parent": "scoreBoard6"
+  },
+  "3ft14": {
+    "inheritFrom": "3ft9",
+    "id": "3ft14",
+    "parent": "scoreBoard6"
+  },
+  "7zex": {
+    "inheritFrom": "2zex",
+    "id": "7zex",
+    "parent": "scoreBoard6"
+  },
+  "cakf5": {
+    "inheritFrom": "cakf",
+    "id": "cakf5",
+    "parent": "scoreBoard6"
+  },
+  "totalScore6": {
+    "inheritFrom": "totalScore1",
+    "id": "totalScore6",
+    "type": "label",
+    "parent": "scoreBoard6",
+    "text": ""
+  },
+  "subScore46": {
+    "inheritFrom": "subScore1",
+    "id": "subScore46",
+    "type": "label",
+    "parent": "scoreBoard6",
+    "subPID": 6,
+    "text": ""
+  },
+  "subScore47": {
+    "inheritFrom": "subScore2",
+    "id": "subScore47",
+    "type": "label",
+    "parent": "scoreBoard6",
+    "subPID": 6,
+    "text": ""
+  },
+  "subScore48": {
+    "inheritFrom": "subScore3",
+    "id": "subScore48",
+    "type": "label",
+    "parent": "scoreBoard6",
+    "subPID": 6,
+    "text": ""
+  },
+  "subScore49": {
+    "inheritFrom": "subScore4",
+    "id": "subScore49",
+    "type": "label",
+    "parent": "scoreBoard6",
+    "subPID": 6,
+    "text": ""
+  },
+  "subScore50": {
+    "inheritFrom": "subScore5",
+    "id": "subScore50",
+    "type": "label",
+    "parent": "scoreBoard6",
+    "subPID": 6,
+    "text": ""
+  },
+  "subScore51": {
+    "inheritFrom": "subScore6",
+    "id": "subScore51",
+    "type": "label",
+    "parent": "scoreBoard6",
+    "subPID": 6,
+    "text": ""
+  },
+  "subScore52": {
+    "inheritFrom": "subScore7",
+    "id": "subScore52",
+    "type": "label",
+    "parent": "scoreBoard6",
+    "subPID": 6,
+    "text": ""
+  },
+  "subScore53": {
+    "inheritFrom": "subScore8",
+    "id": "subScore53",
+    "type": "label",
+    "parent": "scoreBoard6",
+    "subPID": 6,
+    "text": ""
+  },
+  "subScore54": {
+    "inheritFrom": "subScore9",
+    "id": "subScore54",
+    "type": "label",
+    "parent": "scoreBoard6",
+    "subPID": 6,
+    "text": ""
+  },
+  "townPlay": {
+    "type": "holder",
+    "id": "townPlay",
+    "x": 150,
+    "width": 100,
+    "height": 100,
+    "z": 90,
+    "movableInEdit": false,
+    "css": "background-color:#ffffff80",
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "soloDeck"
+    },
+    "y": 475,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "scale": 0
+  },
+  "townMove": {
+    "type": "button",
+    "id": "townMove",
+    "parent": "townPlay",
+    "fixedParent": true,
+    "x": 25,
+    "y": -40,
+    "width": 50,
+    "height": 35,
+    "z": 118,
+    "movableInEdit": false,
+    "css": "font-size: 18px; ",
+    "text": "Next",
+    "state1": 0,
+    "state2": 0,
+    "clickRoutine": [
+      "var a = ${PROPERTY state1} + 1",
+      "var b = ${a} % 2",
+      "var c = ${PROPERTY state2} + 1",
+      "var d = ${c} % 10",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "state1",
+        "value": "${b}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "state2",
+        "value": "${d}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${b}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "value": -40
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "value": 105
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${d}",
+        "operand2": 9,
+        "thenRoutine": [
+          {
+            "func": "SHUFFLE",
+            "holder": "soloDeckHolder"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "townPlay"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "soloDeckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SORT",
+        "holder": "soloDeckHolder",
+        "key": "z"
+      },
+      {
+        "func": "MOVE",
+        "from": "soloDeckHolder",
+        "to": "townPlay"
+      }
+    ]
+  },
+  "nqc1": {
+    "width": 75,
+    "height": 75,
+    "z": 3413,
+    "image": "/assets/1517055033_977",
+    "svgReplaces": {
+      "red": "resourceColor"
+    },
+    "wood": true,
+    "resourceColor": "#6a3a35",
+    "clonedFrom": "oous",
+    "resource": true,
+    "id": "nqc1",
+    "parent": "woodHolder"
+  },
+  "xr56": {
+    "width": 75,
+    "height": 75,
+    "z": 3415,
+    "image": "/assets/1517055033_977",
+    "svgReplaces": {
+      "red": "resourceColor"
+    },
+    "resourceColor": "#fdbe3f",
+    "clonedFrom": "8he3",
+    "wheat": true,
+    "resource": true,
+    "id": "xr56",
+    "parent": "wheatHolder"
+  },
+  "5xyt": {
+    "width": 75,
+    "height": 75,
+    "z": 3417,
+    "image": "/assets/1517055033_977",
+    "svgReplaces": {
+      "red": "resourceColor"
+    },
+    "resourceColor": "#bbb09f",
+    "clonedFrom": "dav8",
+    "stone": true,
+    "resource": true,
+    "id": "5xyt",
+    "parent": "stoneHolder"
+  },
+  "x139": {
+    "width": 75,
+    "height": 75,
+    "z": 3419,
+    "image": "/assets/1517055033_977",
+    "svgReplaces": {
+      "red": "resourceColor"
+    },
+    "resourceColor": "#209da6",
+    "clonedFrom": "3hl5",
+    "glass": true,
+    "resource": true,
+    "id": "x139",
+    "parent": "glassHolder"
+  },
+  "q0z9": {
+    "width": 75,
+    "height": 75,
+    "z": 3421,
+    "image": "/assets/1517055033_977",
+    "svgReplaces": {
+      "red": "resourceColor"
+    },
+    "resourceColor": "#ef3c29",
+    "clonedFrom": "x858",
+    "brick": true,
+    "resource": true,
+    "id": "q0z9",
+    "parent": "brickHolder"
+  },
+  "ch5v": {
+    "z": 3423,
+    "image": "/assets/1658291751_3958",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#249da4",
+    "cottage": true,
+    "clonedFrom": "f8va",
+    "building": true,
+    "id": "ch5v",
+    "parent": "cottageHolder"
+  },
+  "av96": {
+    "z": 3425,
+    "image": "/assets/222368859_554",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#b7b3a1",
+    "misc": true,
+    "clonedFrom": "lsps",
+    "building": true,
+    "id": "av96",
+    "parent": "miscHolder"
+  },
+  "401b": {
+    "z": 3427,
+    "image": "/assets/158571832_5323",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#078149",
+    "tavern": true,
+    "clonedFrom": "dnb7",
+    "building": true,
+    "id": "401b",
+    "parent": "tavernHolder"
+  },
+  "lqfc": {
+    "z": 3429,
+    "image": "/assets/794175936_4768",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#ee2924",
+    "barn": true,
+    "clonedFrom": "5309",
+    "building": true,
+    "id": "lqfc",
+    "parent": "barnnHolder"
+  },
+  "otn6": {
+    "z": 3431,
+    "image": "/assets/-320526454_5295",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#fdbb42",
+    "shop": true,
+    "clonedFrom": "fljf",
+    "building": true,
+    "id": "otn6",
+    "parent": "shopHolder"
+  },
+  "b9jb": {
+    "z": 3433,
+    "image": "/assets/1526250328_5020",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#ef8a22",
+    "church": true,
+    "clonedFrom": "5rou",
+    "building": true,
+    "id": "b9jb",
+    "parent": "churchHolder"
+  },
+  "xn2v": {
+    "z": 3435,
+    "image": "/assets/2118145502_5448",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#103142",
+    "mill": true,
+    "clonedFrom": "me6g",
+    "building": true,
+    "id": "xn2v",
+    "parent": "millHolder"
+  },
+  "k0kc": {
+    "z": 3437,
+    "image": "/assets/-651888302_4061",
+    "svgReplaces": {
+      "#ffffff": "buildingColor"
+    },
+    "buildingColor": "#b44390",
+    "monument": true,
+    "clonedFrom": "tvnf",
+    "building": true,
+    "id": "k0kc",
+    "parent": "monumentHolder"
+  },
+  "qcfp": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ],
+    "x": 1550,
+    "y": 75,
+    "z": 121,
+    "id": "qcfp",
+    "width": 50,
+    "height": 40,
+    "text": "Turn",
+    "movableInEdit": false
+  }
+}

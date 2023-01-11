@@ -12,10 +12,10 @@
 
 #jsonEditor.wide {
   --commandPaneWidth: 320px;
-  --editorPaneWidth: 600px;
+  --editorPaneWidth: 602px;
 }
 
-#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper {
+#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper, .jeLogNested {
   display: none;
 }
 
@@ -32,13 +32,118 @@
   box-sizing: border-box;
 }
 
-#jeText, #jeTextHighlight {
-  white-space: pre-wrap;
-  overflow-y: auto;
+/*** Tree and widget display/edit area ***/
+/**** CSS to set up the grid ****/
+#jeEditArea {
+  --treeHeight: 70%;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: min-content 25px var(--treeHeight)  8px auto;
+  row-gap: 0px;
+  top: 0;
   height: 100%;
   width: var(--editorPaneWidth);
   right: var(--commandPaneWidth);
+  border: 1px solid white;
+}
+
+#jeEditHeader {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+  border-bottom: 1px solid white;
+}
+
+#jeMouseCoords {
+  grid-column: 2 / span 1;
+  grid-row: 1 /span 1;
+  display: block;
+  text-align: right;
+  right: calc(var(--commandPaneWidth) + 20px);
+  border-bottom: 1px solid white;
+}
+
+#jeTree {
+  grid-column: 1 / span 2;
+  grid-row: 3 / span 1;
   overflow-wrap: break-word;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  border-top: 1px dashed gray;
+}
+
+#jeWidgetSearch {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+}
+
+#jeWidgetSearchResults {
+  grid-column: 1 / span 2;
+  grid-row: 3;
+  overflow: hidden auto;
+  display: none;
+  height: 100%;
+  background-color: #484848;
+}
+
+#jeResize {
+  content: '';
+  grid-column: 1 / span 2;
+  grid-row: 4 / span 1;
+  cursor: ns-resize;
+  background-color: #b8c6db;
+  background-image: linear-gradient(#b8c6db 0%, #f5f7fa 20%, #b8c6db 80%);
+}
+
+#jeText, #jeTextHighlight {
+  grid-column: 1 / span 2;
+  grid-row: 5 / span 1;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+}
+/**** End of grid layout ****/
+
+#jeTree ul, .jeTreeDisplay, .jeNestedTree {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+#jeTree li, .jeNestedTree {
+  margin-left: 10px;
+  padding-left: 0;
+}
+
+.jeInSearchWindow, .jeTreeWidget {
+  cursor: pointer;
+}
+
+/* Style the caret/arrow */
+.jeTreeExpander, .jeTreeExpander-down {
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.jeTreeExpander::before, .jeTreeExpander-down::before {
+  content: "\25B6";
+  color: white;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.jeTreeExpander-down::before {
+  content: "\25BC";
+}
+
+/* Hide the nested list */
+.jeNestedTree.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.jeNestedTree.active, .jeLogNested.active {
+  display: block;
 }
 
 #jeText {
@@ -47,11 +152,63 @@
   text-fill-color: transparent;
   outline: none;
 }
+
 #jeText::selection {
   background-color: #808080;
   -webkit-text-fill-color: white;
 }
 
+/*** CSS to handle search box for tree widget ***/
+#jeWidgetSearchBox {
+  margin-top: 1px;
+  width: 50%;
+}
+
+#jeSearchTable {
+  overflow-wrap: anywhere;
+}
+
+.jeHighlightRow {
+  background-color: gray;
+}
+
+/**** End tree search CSS ****/
+
+/**** Color formatting for widgets ****/
+
+#jsonEditor i {
+  font-style: normal;
+}
+
+i.key     { color: yellow;  }
+i.custom  { color: orange;  }
+i.extern  { color: red;     }
+.extern   { color: red;     }
+i.string  { color: #7ed07e; }
+i.number  { color: #dda0dd; }
+i.null    { color: blue;    }
+i.default { color: #606060; }
+i.variable{ color: #40e0d0; }
+i.error   { color: red; font-weight: bold; }
+
+body.jsonEdit .selectedInEdit:not(.pile) {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
+
+body.jsonEdit .selectedInEdit.pile .handle {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
+
+body.jsonEdit:not(.edit) .selectedInEdit.deck {
+  display: block;
+  font-size: 0;
+}
+
+/**** End color formatting ****/
+
+/*** End setup of edit area ***/
+
+/*** CSS to handle search box for compute operations ***/
 #var_results > table {
   table-layout: fixed;
 }
@@ -62,20 +219,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-#jsonEditor i {
-  font-style: normal;
-}
-
-i.key     { color: yellow;  }
-i.custom  { color: orange;  }
-i.extern  { color: red;     }
-i.string  { color: #7ed07e; }
-i.number  { color: #dda0dd; }
-i.null    { color: blue;    }
-i.default { color: #606060; }
-i.variable{ color: #40e0d0; }
-i.error   { color: red; font-weight: bold; }
+/*** End compute operations CSS ***/
 
 #jeCommands {
   white-space: pre-wrap;
@@ -122,24 +266,22 @@ body.jsonEdit #toolbar {
   display: none;
 }
 
-body.jsonEdit #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  left: 0;
+body.jsonEdit {
+  --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
+  --roomLeft: 0px;
+}
+
+body.jsonEdit.jeZoomOut {
+  --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
+  --roomLeft: 12.5%;
 }
 
 body.jsonEdit.jeZoomOut #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  left: 12.5%;
   overflow: visible;
 }
 
 body.jsonEdit.jeZoomOut #topSurface {
   overflow: visible;
-}
-
-#jeMouseCoords {
-  display: block;
-  right: calc(var(--commandPaneWidth) + 20px);
 }
 
 #jeLogWrapper {
@@ -176,16 +318,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   margin: 0;
 }
 
-#jeLogWrapper:hover #jeLog {
-  display: block;
-}
-
-#jeLogWrapper:hover > h1, .jeLogNested {
-  display: none;
-}
-
-/* Show the nested list when the user clicks on the caret/arrow */
-.jeLogNested.active {
+#jeLog.active {
   display: block;
 }
 
@@ -207,6 +340,10 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 .jeLogResult {
   color: orange;
+}
+
+.jeLogTime {
+  color: yellow;
 }
 
 /* Create the caret/arrow with a unicode, and style it */
@@ -235,10 +372,16 @@ body.jsonEdit.jeZoomOut #topSurface {
   transform: rotate(90deg);
 }
 
+/* .jeLogHasProblems and .jeLogHasNoProblems control the text color of the first item displayed. */
 .jeLogHasProblems, .jeLogProblems {
   color: red;
 }
 
+.jeLogHasNoProblems {
+  color: lightgray;
+}
+
+/* .jeLogProblems controls the color and display of the problem text */
 .jeLogProblems {
   display: none;
 }
@@ -277,11 +420,34 @@ body.jsonEdit.jeZoomOut #topSurface {
   text-shadow: 0px 1px 2px rgb(9, 12, 51);
   color: white;
   font-family: 'VTT-Symbols';
+  vertical-align: top;
+}
+
+[id=jeTopButtons] button.material {
+  font-family: 'Material Icons';
 }
 
 #jeTopButtons button:disabled {
   background: gray;
   opacity: 0.5;
+}
+
+/* For the zoom, edit, wide, highlight, and debug "on" states */
+[id=jeTopButtons] button.onState {
+  color: yellow
+}
+#je_toggleHighlight.onState {
+  position: relative;
+}
+#je_toggleHighlight.onState::before {
+  position: absolute;
+  height: 22px;
+  width: 17px;
+  content: '';
+  top: 1px;
+  left: 4px;
+  border: 2px solid yellow;
+  border-radius: 20%;
 }
 
 #jeCommands .context{
@@ -303,22 +469,25 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 #je_showWidget{
 }
-#je_tree{
+#je_reverseFkeys{
 }
 #je_addNewWidget{
   color: rgb(95, 167, 95);
 }
-#je_duplicateWidget{
-  color: yellow;
-}
 #je_removeWidget{
   color: rgb(255, 73, 73);
+}
+#je_duplicateWidget{
 }
 #je_editMode{
 }
 #je_openParent{
 }
 #je_toggleWide{
+}
+#je_toggleHighlight{
+}
+#je_toggleDebug{
 }
 
 #jeCommands > button::before{
@@ -336,7 +505,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   content: '[tag]';
 }
 #widget_css::before{
-    content: '[style]';
+  content: '[style]';
   }
 #widget_rotation::before{
   content: '[rotate_right]';
@@ -357,4 +526,3 @@ body.jsonEdit.jeZoomOut #topSurface {
 #jeCommands #jeCommandOptions input[type="number"]{
   width: 6ch;
 }
-

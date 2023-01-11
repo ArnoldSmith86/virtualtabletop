@@ -67,7 +67,7 @@ class Holder extends Widget {
       return;
 
     if(this.get('childrenPerOwner'))
-      await child.set('owner', playerName);
+      await child.set('owner', child.targetPlayer||playerName);
 
     if(this != child.currentParent) { // FIXME: this isn't exactly pretty
       let toProcess = [ child ];
@@ -115,6 +115,13 @@ class Holder extends Widget {
       await this.receiveCard(child, [ this.get('stackOffsetX')*999999, this.get('stackOffsetY')*999999 ]);
     else
       await this.receiveCard(child, [ child.get('x') - this.absoluteCoord('x'), child.get('y') - this.absoluteCoord('y') ]);
+  }
+
+  async onPropertyChange(property, oldValue, newValue) {
+    await super.onPropertyChange(property, oldValue, newValue);
+    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') {
+      await this.updateAfterShuffle();
+    }
   }
 
   async receiveCard(card, pos) {

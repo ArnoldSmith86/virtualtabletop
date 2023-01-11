@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+	<defs>
+		<image width="40" height="40" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoAQMAAAC2MCouAAAAAXNSR0IB2cksfwAAAAZQTFRF/wAA/wAA/zsm7gAAAAJ0Uk5TZv9oNu6UAAAAFUlEQVR4nGNgQAL2/////zMMSSQAAADxl+HkbmsrAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="img1" href="#img1" transform="matrix(-1,0,0,1,80,0)"/>
+	<use id="img2" href="#img1" transform="matrix(-1,0,0,1,80,80)"/>
+	<use id="img3" href="#img1" transform="matrix(-1,0,0,1,80,40)"/>
+	<use id="img4" href="#img1" transform="matrix(-1,0,0,1,120,0)"/>
+	<use id="img5" href="#img1" transform="matrix(-1,0,0,1,40,40)"/>
+</svg>
