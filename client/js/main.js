@@ -88,7 +88,8 @@ export function showOverlay(id, forced) {
 
   if(id) {
     const style = $(`#${id}`).style;
-    style.display = !forced && style.display !== 'none' ? 'none' : 'flex';
+    const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
+    style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
     overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
@@ -96,10 +97,6 @@ export function showOverlay(id, forced) {
     //Hack to focus on the Go button for the input overlay
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
-    }
-    //Hack to set grid display for add Overlay
-    if (id == 'addOverlay' && style.display !== 'none') {
-      style.display = 'grid'
     }
     toServer('mouse',{inactive:true})
   } else {
