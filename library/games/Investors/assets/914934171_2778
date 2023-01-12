@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="779.42" version="1.1" viewBox="0 0 900 779.42391" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="c" x="-.11938" y="-.12062" width="1.2388" height="1.2412" color-interpolation-filters="sRGB">
+   <feGaussianBlur stdDeviation="34.8205"/>
+  </filter>
+  <clipPath id="i">
+   <path d="m-1657.4 393.45 99.999 5e-4h600l-50-86.603-500-5e-4 350-606.22-99.999-5e-4 -350 606.22-49.999 86.602z" fill="#8c0000" filter="url(#c)"/>
+  </clipPath>
+  <clipPath id="h">
+   <path d="m-1657.4 393.45 99.999 5e-4h600l-50-86.603-500-5e-4 350-606.22-99.999-5e-4 -350 606.22-49.999 86.602z" fill="#8c0000" filter="url(#c)"/>
+  </clipPath>
+  <filter id="b" x="-.12235" y="-.11774" width="1.2447" height="1.2355" color-interpolation-filters="sRGB">
+   <feGaussianBlur stdDeviation="38.235548"/>
+  </filter>
+  <clipPath id="g">
+   <path d="m-1157.4-299.37-50 86.602-300 519.62h100l250-433.01 350 606.22 50-86.602-350-606.22-50-86.602z" fill="#b40000" filter="url(#b)"/>
+  </clipPath>
+  <clipPath id="f">
+   <path d="m-1157.4-299.37-50 86.602-300 519.62h100l250-433.01 350 606.22 50-86.602-350-606.22-50-86.602z" fill="#b40000" filter="url(#b)"/>
+  </clipPath>
+  <filter id="a" x="-.10279" y="-.14413" width="1.2056" height="1.2883" color-interpolation-filters="sRGB">
+   <feGaussianBlur stdDeviation="36.405425"/>
+  </filter>
+  <clipPath id="e">
+   <path d="m-807.36 480.05-49.999-86.602-300-519.62-50 86.603 250 433.01-700 5e-4 49.999 86.602 700 5e-4 99.999-5e-4z" fill="#dc0000" filter="url(#a)"/>
+  </clipPath>
+  <clipPath id="d">
+   <path d="m-807.36 480.05-49.999-86.602-300-519.62-50 86.603 250 433.01-700 5e-4 49.999 86.602 700 5e-4 99.999-5e-4z" fill="#dc0000" filter="url(#a)"/>
+  </clipPath>
+ </defs>
+ <g transform="translate(2311.7 962.65)">
+  <g transform="translate(-654.37 -663.27)">
+   <path d="m-1657.4 393.45 99.999 5e-4h600l-50-86.603-500-5e-4 350-606.22-99.999-5e-4 -350 606.22-49.999 86.602z" clip-path="url(#h)"/>
+   <path d="m-1657.4 393.45 99.999 5e-4h600l-50-86.603-500-5e-4 350-606.22-99.999-5e-4 -350 606.22-49.999 86.602z" clip-path="url(#i)" fill="#8c0000" filter="url(#c)"/>
+   <path d="m-1157.4-299.37-50 86.602-300 519.62h100l250-433.01 350 606.22 50-86.602-350-606.22-50-86.602z" clip-path="url(#f)"/>
+   <path d="m-1157.4-299.37-50 86.602-300 519.62h100l250-433.01 350 606.22 50-86.602-350-606.22-50-86.602z" clip-path="url(#g)" fill="#b40000" filter="url(#b)"/>
+   <path d="m-807.36 480.05-49.999-86.602-300-519.62-50 86.603 250 433.01-700 5e-4 49.999 86.602 700 5e-4 99.999-5e-4z" clip-path="url(#d)"/>
+   <path d="m-807.36 480.05-49.999-86.602-300-519.62-50 86.603 250 433.01-700 5e-4 49.999 86.602 700 5e-4 99.999-5e-4z" clip-path="url(#e)" fill="#dc0000" filter="url(#a)"/>
+  </g>
+ </g>
+</svg>

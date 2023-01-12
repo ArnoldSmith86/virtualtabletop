@@ -1,4 +1,4 @@
-export const VERSION = 8;
+export const VERSION = 10;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -56,7 +56,8 @@ function updateRoutine(routine, v) {
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
-  v<9 && v9UpdateCountParameter(routine);
+  v<9 && v9NumericStringSort(routine);
+  v<10 && v10UpdateCountParameter(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -334,9 +335,15 @@ function v8HoverInheritVisibleForSeat(properties) {
     properties.hoverInheritVisibleForSeat = false;
 }
 
-function v9UpdateCountParameter(routine) {
+function v9NumericStringSort(routine) {
+  for(const key in routine)
+    if(typeof routine[key] === 'string')
+      routine[key] = routine[key].replace('numericSort', 'numericStringSort');
+}
+
+function v10UpdateCountParameter(routine) {
   for(const operation of routine) {
     if(operation.count === 0)
-        operation.count = 'all';
+      operation.count = 'all';
   }
 }

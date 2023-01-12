@@ -397,6 +397,140 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_exportCSV',
+    name: 'export to CSV',
+    options: [
+      { label: 'separator',    type: 'select',    options: [ { value: ',', text: ',' }, { value: ';', text: ';' } ] }
+    ],
+    context: '^deck ↦ cardTypes',
+    call: async function(options) {
+
+      function downloadCSV(csv, filename) {
+        const csvFile = new Blob([csv], {type:"text/csv"});
+        const downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        downloadLink.remove();
+      }
+
+      function escapeField(v) {
+        if(v === undefined)
+          return '';
+        if(typeof v == 'number')
+          return v.toString();
+
+        return typeof v == 'string' && !v.match(/^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$|^JSON:/) ? `"${v.replace(/"/g, '""')}"` : `"JSON:${JSON.stringify(v).replace(/"/g, '""')}"`;
+      }
+
+      const allProperties = [...new Set(Object.values(jeStateNow.cardTypes).reduce((a,t)=>a.concat(...Object.keys(t)), []))];
+      let csvText = `id::INTERNAL${options["separator"]}${allProperties.map(escapeField).join(options["separator"])}${options["separator"]}cardCount::INTERNAL\n`;
+      for(const [ id, type ] of Object.entries(jeStateNow.cardTypes)) {
+        const cardCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
+        csvText += `${escapeField(id)}${options["separator"]}${allProperties.map(p=>escapeField(type[p])).join(options["separator"])}${options["separator"]}${cardCount}\n`;
+      }
+      downloadCSV(csvText, `${jeStateNow.id} cardTypes.csv`);
+    }
+  },
+  {
+    id: 'je_importCSV',
+    name: 'import from CSV',
+    options: [
+      { label: 'mode',    type: 'select',    options: [ { value: 'set', text: 'set' }, { value: 'add', text: 'add' } ] }
+    ],
+    context: '^deck ↦ cardTypes',
+    call: async function(options) {
+
+      let csv = await selectFile('TEXT')
+
+      //source : https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data/41563966#41563966
+
+      function csvToArray(text, delimiter) {
+        let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
+        for (l of text) {
+            if ('"' === l) {
+                if (s && l === p) row[i] += l;
+                s = !s;
+            } else if (delimiter === l && s) l = row[++i] = '';
+            else if ('\n' === l && s) {
+                if ('\r' === p) row[i] = row[i].slice(0, -1);
+                row = ret[++r] = [l = '']; i = 0;
+            } else row[i] += l;
+            p = l;
+        }
+        return ret;
+      };
+
+      function unescapeField(v) {
+        try {
+          if(v.match(/^JSON:/))
+            return JSON.parse(v.substr(5));
+          else if(v && v.match(/^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$/))
+            return parseFloat(v);
+          else if(v)
+            return v;
+        } catch(e) {
+          return e.toString();
+        }
+      }
+
+      const oldCardTypeIDs = Object.keys(jeStateNow.cardTypes);
+
+      if(options["mode"]== "set")
+        jeStateNow.cardTypes = {};
+
+      const lines=csvToArray(csv.content, csv.content.split(';').length > csv.content.split(',').length ? ';' : ',');
+      const headers=lines[0].map(unescapeField);
+      const targetCounts = {};
+
+      for(let i=1;i<lines.length;i++){
+
+        const obj = {};
+        const currentline=lines[i]
+
+        if(lines[i].length == 1 && !lines[i][0])
+          continue;
+
+        for(let j=0;j<Math.min(headers.length, currentline.length);j++)
+          obj[headers[j]] = unescapeField(currentline[j]);
+
+        const cardTypeID = obj['id::INTERNAL'] || generateUniqueWidgetID();
+        delete obj['id::INTERNAL'];
+
+        targetCounts[cardTypeID] = obj['cardCount::INTERNAL'];
+        delete obj['cardCount::INTERNAL'];
+
+        jeStateNow.cardTypes[cardTypeID] = obj;
+      }
+
+      batchStart();
+
+      for(const oldID of oldCardTypeIDs)
+        if(!jeStateNow.cardTypes[oldID])
+          for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==oldID))
+            await removeWidgetLocal(card.get('id'));
+
+      jeSetAndSelect();
+      jeApplyChanges();
+
+      for(const [ id, targetCount ] of Object.entries(targetCounts)) {
+        const currentCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
+        for(let i=0; i<targetCount-currentCount; ++i) {
+          const cardId = await addWidgetLocal({ deck:jeStateNow.id, type:'card', cardType:id });
+          if(jeStateNow.parent)
+            await widgets.get(cardId).moveToHolder(widgets.get(jeStateNow.parent));
+        }
+        for(let i=0; i<currentCount-targetCount; ++i) {
+          const card = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id)[0];
+          await removeWidgetLocal(card.get('id'));
+        }
+      }
+
+      batchEnd();
+    }
+  },
+  {
     id: 'je_faceTemplate',
     name: 'face template',
     context: '^deck ↦ faceTemplates',
@@ -743,6 +877,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Seat()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
@@ -751,7 +886,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
-  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
+  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
@@ -764,6 +899,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###'});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
@@ -784,6 +920,8 @@ function jeAddCommands() {
 
   jeAddGridCommand('x', 0);
   jeAddGridCommand('y', 0);
+  jeAddGridCommand('maxX', 0);
+  jeAddGridCommand('maxY', 0);
   jeAddGridCommand('minX', 0);
   jeAddGridCommand('minY', 0);
   jeAddGridCommand('offsetX', 0);
@@ -813,6 +951,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
+  jeAddEnumCommands('^.*\\(SCORE\\) ↦ mode', [ 'set', 'inc', 'dec' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add', 'remove', 'intersect' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
@@ -825,6 +964,8 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ collection', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
+  jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
+  jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
@@ -2194,6 +2335,7 @@ function jeToggle() {
   jeRoutineLogging = jeEnabled;
   jeLoggingHTML = '';
   if(jeEnabled) {
+    $('#activeGameButton').click();
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
       jeEmpty();

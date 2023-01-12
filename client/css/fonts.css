@@ -256,7 +256,7 @@
     font-family: "Material Icons";
     font-style: normal;
     font-weight: 400;
-    src: url("i/fonts/Material-Icons.woff2?version=6") format("woff2");
+    src: url("i/fonts/Material-Icons.woff2?version=7") format("woff2");
 }
 
 .font-material-icons{
@@ -290,6 +290,9 @@
     -webkit-font-feature-settings: "liga";
     -webkit-font-smoothing: antialiased;
     font-feature-settings: "liga";
+}
+.material-icons.intext {
+    font-size: 20px;
 }
 
 @font-face {
@@ -387,3 +390,93 @@
     font-family: "Handwriting Casual";
 }
 
+
+
+#symbolPickerOverlay > button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#symbolPickerOverlay input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#symbolList {
+  color: black;
+  overflow-x: hidden;
+  overflow-y: auto;
+  word-wrap: anywhere;
+}
+
+#symbolPickerOverlay h1 {
+  margin-top: 0;
+}
+
+#symbolPickerOverlay h2 {
+  font-size: 16px;
+  border-bottom: 1px solid black;
+  padding-left: 4px;
+}
+
+#symbolPickerOverlay i {
+  font-style: normal;
+  font-size: 24px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+#symbolPickerOverlay i.emoji {
+  word-break: break-all;
+}
+
+#symbolPickerOverlay .hidden {
+  display: none;
+}
+
+@media (max-width: 600px), (max-height: 375px) {
+  #symbolPickerOverlay {
+    padding: 2%;
+  }
+}
+@media (max-width: 300px), (max-height: 187px) {
+  #symbolPickerOverlay {
+    padding: 0;
+  }
+  #symbolPickerOverlay h1 {
+    text-align: left;
+    margin: 10px 50px 10px 5px;
+  }
+  #symbolPickerOverlay .titleWithCloseButton button {
+    right: 10px;
+    top: 10px;
+  }
+  #symbolPickerOverlay div[icon] {
+    padding: 5px;
+    border-radius: 10px;
+  }
+}
+
+p[icon] {
+  color: black;
+  margin: 20px;
+  margin-left: 60px;
+}
+p[icon]::before {
+  content: attr(icon);
+  font-family: "Material Icons";
+  font-size: 200%;
+  position: absolute;
+  left: -40px;
+}
+@media (max-width: 600px), (max-height: 375px) {
+  p[icon] {
+    margin: 10px;
+    margin-left: 40px;
+  }
+  p[icon]::before {
+    font-size: 150%;
+    left: -30px;
+  }
+}

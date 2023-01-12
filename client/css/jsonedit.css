@@ -103,13 +103,13 @@
 }
 /**** End of grid layout ****/
 
-ul, .jeTreeDisplay, .jeNestedTree {
+#jeTree ul, .jeTreeDisplay, .jeNestedTree {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-li, .jeNestedTree {
+#jeTree li, .jeNestedTree {
   margin-left: 10px;
   padding-left: 0;
 }
@@ -137,12 +137,12 @@ li, .jeNestedTree {
 }
 
 /* Hide the nested list */
-.nested {
+.jeNestedTree.nested {
   display: none;
 }
 
 /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.active {
+.jeNestedTree.active, .jeLogNested.active {
   display: block;
 }
 
