@@ -947,7 +947,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: 'all', face: null, faceCyle: null, collection: 'DEFAULT' });
         const count = a.count || 0;
         count = a.count === 'all' ? 999999 : a.count;
 
