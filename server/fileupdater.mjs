@@ -56,6 +56,7 @@ function updateRoutine(routine, v) {
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
+  v<9 && v9UpdateCountParameter(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -331,4 +332,11 @@ function v7HolderClickable(properties) {
 function v8HoverInheritVisibleForSeat(properties) {
   if (properties.onlyVisibleForSeat)
     properties.hoverInheritVisibleForSeat = false;
+}
+
+function v9UpdateCountParameter(routine) {
+  for(const operation of routine) {
+    if(operation.count === 0)
+        operation.count = 'all';
+  }
 }
