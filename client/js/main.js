@@ -88,8 +88,9 @@ export function showOverlay(id, forced) {
 
   if(id) {
     const style = $(`#${id}`).style;
-    style.display = !forced && style.display === 'flex' ? 'none' : 'flex';
-    overlayActive = style.display === 'flex';
+    const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
+    style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
+    overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
 
@@ -331,9 +332,9 @@ onLoad(function() {
 
   on('.toolbarTab', 'click', function(e) {
     if(e.currentTarget.classList.contains('active')) {
-      if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display == 'flex')
+      if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
         showStatesOverlay('statesOverlay');
-      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display == 'flex')
+      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display != 'none')
         showOverlay();
       e.stopImmediatePropagation();
       return;
