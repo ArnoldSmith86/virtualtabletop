@@ -510,6 +510,174 @@ function generateCardDeckWidgets(id, x, y, addCards) {
   return widgets;
 }
 
+function generateChipPileWidgets(id, x, y, type) {
+  const widgets = [
+    { type:'holder', id, x, y, width: 81,
+      height: type==2 ? 81 : 54, borderRadius: "100%", dropOffsetY: type==2 ? 4 : -6, dropTarget: { classes: type==2 ? 'pokerChip' : 'pokerChip3D' } },
+    {
+      type: 'button',
+      id: id+'B',
+      parent: id,
+      fixedParent: true,
+      y: type==2 ? 83: 56,
+      width: 81,
+      height: 35,
+      movableInEdit: false,
+      classes: 'symbols',
+      css: { 'font-size': '30px' },
+      text: 'recallsort_ascending',
+
+      clickRoutine: [
+        { func: 'RECALL', holder: '${PROPERTY parent}' },
+        { func: 'SORT', holder: '${PROPERTY parent}', reverse: true }
+      ]
+    },
+    { type:'pile',
+      id: id+'P',
+      parent: id,
+      width:73,
+      height:73,
+      y: type==2 ? 4 : -6, 
+      text: 1641,
+      enterRoutine: [
+        {
+          func: "GET",
+          property: "value",
+          collection: "child",
+          aggregation: "sum",
+          variable: "value"
+        },
+        {
+          func: "SET",
+          property: "text",
+          collection: "thisButton",
+          relation: "+",
+          value: "\${value}"
+        }
+      ],
+      leaveRoutine: [
+        {
+          func: "GET",
+          property: "value",
+          collection: "child",
+          aggregation: "sum",
+          variable: "value"
+        },
+        {
+          func: "SET",
+          property: "text",
+          collection: "thisButton",
+          relation: "-",
+          value: "\${value}"
+        }
+      ]
+    },
+    { type: 'deck',
+      id: id+'D',
+      parent: id,
+      x: -2,
+      y: -2,
+      scale: 0.5,
+      cardDefaults: {
+        classes: type==2 ? 'pokerChip' : 'pokerChip3D',
+        width: 73,
+        height: 73,
+        onPileCreation: {
+          text: 0,
+          enterRoutine: [
+            {
+              func: "GET",
+              property: "value",
+              collection: "child",
+              aggregation: "sum",
+              variable: "value"
+            },
+            {
+              func: "SET",
+              property: "text",
+              collection: "thisButton",
+              relation: "+",
+              value: "\${value}"
+            }
+          ],
+          leaveRoutine: [
+            {
+              func: "GET",
+              property: "value",
+              collection: "child",
+              aggregation: "sum",
+              variable: "value"
+            },
+            {
+              func: "SET",
+              property: "text",
+              collection: "thisButton",
+              relation: "-",
+              value: "\${value}"
+            }
+          ]
+        }
+      },
+      cardTypes: {
+        1: { value: 1, accentColor1: "#808080", accentColor2: "#add8e6", borderColor: "#000000", borderWidth: 2, labelColor: "#d3d3d3", primaryColor: "#ffffff"
+        },
+        5: { value: 5, accentColor1: "#ffffff", accentColor2: "#ffff00", borderColor: "#000000", borderWidth: 2, labelColor: "#ed8080", primaryColor: "#ff0000"
+        },
+        10: { value: 10, accentColor1: "#ffffff", accentColor2: "#87ceeb", borderColor: "#000000", borderWidth: 2, labelColor: "#b0c4de", primaryColor: "#000080"
+        },
+        25: { value: 25, accentColor1: "#ffffff", accentColor2: "#000000", borderColor: "#000000", borderWidth: 2, labelColor: "#22ba22", primaryColor: "#008000"
+        },
+        100: { value: 100, accentColor1: "#ffffff", accentColor2: "#ffc0cb", borderColor: "#000000", borderWidth: 2, labelColor: "#ee82ee", primaryColor: "#4b0082"
+        },
+        500: { value: 500, accentColor1: "#ffffff", accentColor2: "#808080", borderColor: "#000000", borderWidth: 2, labelColor: "#a9a9a9", primaryColor: "#000000"
+        },
+        1000: { value: 1000, accentColor1: "#ff0000", accentColor2: "#daa520", borderColor: "#000000", borderWidth: 2, labelColor: "#ffff00", primaryColor: "#ffd700"
+        }
+      },
+      faceTemplates: [
+        {
+          border: false,
+          radius: false,
+          objects: [
+            {
+              css: type==2 ? "font-size:1.5rem" : "font-size:1.3rem",
+              type: "image",
+              x: 0,
+              y: 0,
+              width: 73,
+              height: 73,
+              color: "transparent",
+              value: type==2 ? "i/game-pieces/2D/Poker-2D.svg" : "i/game-pieces/3D/Poker-3D.svg",
+              dynamicProperties: { accentColor1: "accentColor1", accentColor2: "accentColor2", borderColor: "borderColor", borderWidth: "borderWidth", labelColor: "labelColor", primaryColor: "primaryColor"
+              },
+              svgReplaces: { "#accentColor1": "accentColor1", "#accentColor2": "accentColor2", "#borderColor": "borderColor", "#borderWidth": "borderWidth", "#labelColor": "labelColor", "#primaryColor": "primaryColor"
+              }
+            },
+            {
+              type: "text",
+              x: 0,
+              y: 26,
+              fontSize: 22,
+              textAlign: "center",
+              width: 73,
+              dynamicProperties: {
+                value: "value"
+              },
+              css: "color: #222222;"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+
+  for (const value of [1000, 500, 100, 25, 10, 5, 1]) {
+    widgets.push({ type: "card", id: `${id}C${value}`, parent: id + 'P', deck: id + 'D', cardType: value, x:0, y:0})
+  }
+
+  return widgets;
+}
+
 function generateCounterWidgets(id, x, y) {
   const r = { func: 'LABEL', label: '${PROPERTY parent}', mode: 'dec', value: 1 };
 
@@ -612,6 +780,34 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
   }
 }
 
+const VTTblue = '#1f5ca6';
+  
+function addPieceToAddWidgetOverlay(w, wi) {
+  w.applyInitialDelta(wi);
+  w.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await w.showInputOverlay({
+        header: 'Choose piece color',
+        fields: [
+          {
+            type: 'color',
+            value: VTTblue,
+            variable: 'color'
+          }
+        ]
+      });
+      const toAdd = {...wi};
+      toAdd.z = getMaxZ(w.get('layer')) + 1;
+      toAdd.color = result.color;
+
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  w.domElement.id = w.id;
+  $('#addOverlay').appendChild(w.domElement);
+}
+
 function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
@@ -634,62 +830,58 @@ function overlayDone(id) {
 
 function populateAddWidgetOverlay() {
   // Populate the Cards panel in the add widget overlay
-  const x = 20+140-111/2;
+  const x = 115;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
     x,
-    y: 130
+    y: 150
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 320, false), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 320, false))
+    for(const w of generateCardDeckWidgets(id, x, 340, false))
       await addWidgetLocal(w);
     return id
   });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 550, true), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 550, true))
+    for(const w of generateCardDeckWidgets(id, x, 570, true))
       await addWidgetLocal(w);
     return id
   });
 
-  // Populate the Game Pieces panel in the add widget overlay
-  let y = 100;
-  // First the pins, checkers, and pawns
-  for(const color of [ '#bc5bee','#4c5fea','#23ca5b','#e0cb0b','#e2a633','#e84242','#000000','#4a4a4a','#ffffff' ]) {
-    addWidgetToAddWidgetOverlay(new BasicWidget('add-pin-'+color), {
-      classes: 'pinPiece',
-      color,
-      width: 35.85,
-      height: 43.83,
-      x: 380,
-      y
-    });
-
-    addWidgetToAddWidgetOverlay(new BasicWidget('add-checkers-'+color), {
-      faces: [
-        { classes: "checkersPiece"         },
-        { classes: "checkersPiece crowned" }
-      ],
-      color,
-      width: 73.5,
-      height: 73.5,
-      x: 440,
-      y: Math.round(y + (43.83 - 73.5)/2)
-    });
-
-    addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
-      classes: 'classicPiece',
-      color,
-      width: 56,
-      height: 84,
-      x: 528,
-      y: Math.round(y + (43.83 - 84)/2)
-    });
-    y += 88;
-  }
-
+/* Don't add old-style game pieces; replaced by svg
+  // Populate the game panel pieces. The real piece choosing happens in popups.
+  addPieceToAddWidgetOverlay( new BasicWidget('add-pin0'), {
+    classes: 'pinPiece',
+    color: VTTblue,
+    width: 35.85,
+    height: 43.83,
+    x: 380,
+    y: 80
+  });
+  addPieceToAddWidgetOverlay( new BasicWidget('add-checkers0'), {
+    faces: [
+      { classes: "checkersPiece"         },
+      { classes: "checkersPiece crowned" }
+    ],
+    color: VTTblue,
+    width: 73.5,
+    height: 73.5,
+    x: 380 + 60,
+    y: 80 + Math.round((43.83 - 73.5)/2)
+  });
+  addPieceToAddWidgetOverlay( new BasicWidget('add-classic0'), {
+    classes: 'classicPiece',
+    color: VTTblue,
+    width: 56,
+    height: 84,
+    x: 380 + 150,
+    y: 80 + Math.round((43.83 - 84)/2)
+  });
+*/
+  
+/* Don't add the unicode symbols
   // Next the unicode symbols
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeS'), {
@@ -698,7 +890,7 @@ function populateAddWidgetOverlay() {
     width: 25,
     height: 25,
     x: 380,
-    y: y + 5
+    y: 175
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeM'), {
@@ -707,64 +899,518 @@ function populateAddWidgetOverlay() {
     width: 50,
     height: 50,
     x: 440,
-    y
+    y: 175
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeL'), {
     text: '♞',
     css: 'font-size:100px;'+centerStyle,
     x: 500,
-    y: y - 25
+    y: 150
+  });
+*/
+  
+  //Add svg game pieces
+  // First row
+  addPieceToAddWidgetOverlay(new BasicWidget('Pawn3DSVG'), {
+    x: 390,
+    y: 79,
+    width: 50.4,
+    height: 90,
+
+    color: VTTblue,
+    css: "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    image: "i/game-pieces/3D/Pawn-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "black",
+    borderWidth: 1
+  });
+
+  
+  addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
+    x: 390+75,
+    y: 111,
+    width: 35,
+    height: 40,
+
+    color: VTTblue,
+    css: "border-radius: 80% 80% 40% 110%",
+    image: "/i/game-pieces/3D/Pin-3D.svg",
+    svgReplaces: {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+
+    borderColor: "black",
+    borderWidth: "1"
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
+    x: 390+2*75,
+    y: 114,
+    width: 35,
+    height: 35,
+
+    color: VTTblue,
+    css: "border-radius: 50%;",
+    image: "/i/game-pieces/3D/Marble-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#ffffff",
+    borderWidth: 1,
+    secondaryColor: "#000000"
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
+    x: 390+3*75,
+    y: 110,
+    width: 36,
+    height: 40,
+
+    color: VTTblue,
+    css: "border-radius: 50%/35%;",
+    image: "/i/game-pieces/3D/Cube-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "white",
+    borderWidth: 1,
+    secondaryColor: "black"
+  });
+
+  // Second row
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Checker2DSVG'), {
+    x: 445,
+    y: 190,
+    width: 75,
+    height: 75,
+
+    activeFace: 1,
+    classes: "chip",
+    color: VTTblue,
+    faces: [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    image: "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 1,
+    crowned: true,
+    secondaryColor: "#ffffff"
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Checker3DSVG'), {
+    x: 445+100,
+    y: 200,
+    width: 75,
+    height: 54.75,
+
+    activeFace: 1,
+    classes: "chip3D",
+    color: VTTblue,
+    faces: [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    image: "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 1,
+    crowned: true,
+    secondaryColor: "#ffffff"
+  });
+
+  //Third row
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Meeple2DSVG'), {
+    x: 450,
+    y: 303,
+    width: 56,
+    height: 56,
+
+    color: VTTblue,
+    css: "border-radius: 100% 100% 25% 25%; ",
+    image: "i/game-pieces/2D/Meeple-2D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 3
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Meeple3DSVG'), {
+    x: 450+100,
+    y: 300,
+    width: 66.5,
+    height: 70,
+
+    color: VTTblue,
+    css: "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    faces: [
+      {
+        "image": "i/game-pieces/3D/Meeple-3D.svg",
+        "rotation": 0,
+        "state": "alive"
+      },
+      {
+        "image": "i/game-pieces/3D/Meeple240-3D-iso.svg",
+        "rotation": 240,
+        "state": "dead"
+      }
+    ],
+    image: "i/game-pieces/3D/Meeple-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 1,
+    state: "alive"
+  });
+
+  //Fourth row
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Pig2DSVG'), {
+    x: 450,
+    y: 412,
+    width: 68.56,
+    height: 48,
+
+    color: VTTblue,
+    css: "border-radius: 15% 20% 20% 25%/ 15% 20% 50% 75%;",
+    image: "i/game-pieces/2D/Pig-2D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 2
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Pig3DSVG'), {
+    x: 450+100,
+    y: 408,
+    width: 85.7,
+    height: 60,
+
+    color: VTTblue,
+    css: "border-radius: 30% 40% 40% 40%/20% 30% 60% 100%; ",
+    image: "i/game-pieces/3D/Pig-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 1
+  });
+
+  //Fifth row
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Building3DSVG'), {
+    x: 390,
+    y: 494,
+    width: 69,
+    height: 77,
+
+    color: VTTblue,
+    css: "border-radius: 52% 48% 35% 65%/30% 70% 25% 45%;",
+    image: "/i/game-pieces/3D/Building-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 1
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('House3DSVG'), {
+    x: 490,
+    y: 507,
+    width: 60,
+    height: 60,
+
+    color: VTTblue,
+    css: "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    image: "/i/game-pieces/3D/House-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 2
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('Road3DSVG'), {
+    x: 610,
+    y: 480,
+    width: 26,
+    height: 100,
+    rotation: 60,
+
+    activeFace: 1,
+    color: VTTblue,
+    faces: [
+      {
+        "image": "i/game-pieces/3D/Road-3D.svg",
+        "rotation": 0
+      },
+      {
+        "image": "i/game-pieces/3D/Road240-3D.svg",
+        "rotation": 60
+      },
+      {
+        "image": "i/game-pieces/3D/Road90-3D.svg",
+        "rotation": 90
+      },
+      {
+        "image": "i/game-pieces/3D/Road120-3D.svg",
+        "rotation": 300
+      }
+    ],
+    image: "i/game-pieces/3D/Road240-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    note: "Game designer: You can remove any face you may not need. That way you can limit rotation",
+    borderColor: "#000000",
+    borderWidth: 1
+  });
+
+  //Poker chips
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker2DSVG'), {
+    x: 920,
+    y: 164,
+    width: 73,
+    height: 73,
+
+    classes: "pokerChip",
+    color: VTTblue,
+    image: "i/game-pieces/2D/Poker-2D.svg",
+    svgReplaces: {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#00000022"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
+    x: 920,
+    y: 257,
+    width: 73,
+    height: 73,
+
+    classes: "pokerChip",
+    image: "i/game-pieces/2D/Poker-2D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "Dealer",
+
+    accentColor1: "#55bb66",
+    accentColor2: "#55bb66",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#ffffff",
+    primaryColor: "#55bb66"
+
+  });
+
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 350, 2), async function() {
+    const id = generateUniqueWidgetID();
+    for(const w of generateChipPileWidgets(id, 916, 350, 2))
+      await addWidgetLocal(w);
+    return id
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
+    x: 1010,
+    y: 173,
+    width: 75,
+    height: 54.75,
+
+    classes: "pokerChip3D",
+    color: VTTblue,
+    css: "color: #ffffffcc; font-size: 1.8rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#00000022"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
+    x: 1010,
+    y: 266,
+    width: 75,
+    height: 54.75,
+
+    classes: "pokerChip3D",
+    css: "font-size:0.9rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "Dealer",
+
+    accentColor1: "#55bb66",
+    accentColor2: "#55bb66",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#ffffff",
+    primaryColor: "#55bb66"
+  });
+
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 359, 3), async function() {
+    const id = generateUniqueWidgetID();
+    for(const w of generateChipPileWidgets(id, 1010, 359, 3))
+      await addWidgetLocal(w);
+    return id
   });
 
   // Populate the Interactive panel in the add widget overlay.
-  // Note that the Add Canvas and Add Seat buttons are in room.html.
+  // Note that the Add Canvas, Add Seat, and Add Scoreboard buttons are in room.html.
 
-  // First the various spinners
-  y = 300;
-  for(const sides of [ 2, 6, 10 ]) {
-    addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
-      type: 'spinner',
-      value: sides,
-      options: Array.from({length: sides}, (_, i) => i + 1),
-      x: 675,
-      y: y
-    });
-    y += 120;
-  }
+  // Populate the spinners. The real spinner choosing happens in a popup.
+  const spinner = new Spinner('add-spinner0');
+  const spinAttrs = {
+    type: 'spinner',
+    value: 6,
+    options: Array.from({length: 6}, (_, i) => i + 1),
+    x: 450,
+    y: 835
+  };
+  spinner.applyInitialDelta(spinAttrs);
+  spinner.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await spinner.showInputOverlay({
+        header: 'Choose number of spinner values',
+        fields: [
+          {
+            type: 'number',
+            label: 'Values',
+            value: 6,
+            variable: 'values',
+            min: 2
+          }
+        ]
+      });
+      const values = result.values;
+      const toAdd = {...spinAttrs};
+      toAdd.z = getMaxZ(spinner.get('layer')) + 1;
+      toAdd.value = values;
+      toAdd.options = Array.from({length: values}, (_, i) => i + 1);
 
-  y = 300;
-  for(const sides of [ 4, 8, 12 ]) {
-    addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
-      type: 'spinner',
-      value: sides,
-      options: Array.from({length: sides}, (_, i) => i + 1),
-      x: 810,
-      y: y
-    });
-    y += 120;
-  }
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  spinner.domElement.id = spinner.id;
+  $('#addOverlay').appendChild(spinner.domElement);
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',
     text: 'DEAL',
     clickRoutine: [],
-    x: 760,
-    y: 660
+    x: 750,
+    y: 860
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 710, 790), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateTimerWidgets(id, 710, 790))
+    for(const w of generateTimerWidgets(id, 1005, 825))
       await addWidgetLocal(w);
     return id
   });
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 767, 870), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCounterWidgets(id, 767, 870))
+    for(const w of generateCounterWidgets(id, 1058, 890))
       await addWidgetLocal(w);
     return id
   });
@@ -773,8 +1419,8 @@ function populateAddWidgetOverlay() {
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
     type: 'label',
     text: 'Label',
-    x: 1000,
-    y: 400
+    x: 1385,
+    y: 100
   });
 
   addWidgetToAddWidgetOverlay(new Label('add-heading'), {
@@ -783,11 +1429,28 @@ function populateAddWidgetOverlay() {
     css: 'font-size: 30px',
     height: 42,
     width: 200,
-    x: 1000,
-    y: 600
+    x: 1335,
+    y: 150
+  });
+  addWidgetToAddWidgetOverlay(new BasicWidget('LineVertical'), {
+    x: 1300,
+    y: 325,
+    width: 200,
+    height: 0,
+    borderRadius: "3px",
+
+    css: { "border": "3px solid #666" }
   });
 
-  /* Note that the button to add a scoreboard is in room.html */
+  addWidgetToAddWidgetOverlay(new BasicWidget('LineHorizontal'), {
+    x: 1535,
+    y: 190,
+    width: 0,
+    height: 200,
+    borderRadius: "3px",
+
+    css: { "border": "3px solid #666" }
+  });
 }
 // end of JSON generators
 
