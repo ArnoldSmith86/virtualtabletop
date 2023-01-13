@@ -11,18 +11,18 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1673631052002,
+      "lastUpdate": 1673631378177,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "8fr3": {
@@ -46,7 +46,7 @@
     "layer": -3,
     "z": 129,
     "css": "font-size: 25px; ",
-    "text": "FLIP works on cards and any widget with a face, including checkers and basic widgets that have multiple faces assigned.  It works on holders and collections. There are a variety of parameters, demonstrated below, that can be applied. As part of the FLIP function, the 'activeFace' property of the widget will be updated to indicate which face is being displayed. The 'count' property limits how many widgets will be flipped. It defaults to 'all'."
+    "text": "FLIP works on cards and any widget with a face, including checkers and basic widgets that have multiple faces assigned.  It works on holders and collections. There are a variety of parameters, demonstrated below, that can be applied. As part of the FLIP function, the 'activeFace' property of the widget will be updated to indicate which face is being displayed. The 'count' parameter limits how many widgets will be flipped. It defaults to 'all'."
   },
   "bm4j": {
     "text": "The button above performs a simple FLIP function on the card. This card has 7 faces (a back and 6 numbered faces). FLIP moves through each in sequence.",
