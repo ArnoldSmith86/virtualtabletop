@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 5,
+    "version": 10,
     "info": {
       "name": "Functions - MOVE",
       "image": "/assets/1395250784_7006",
@@ -8,13 +8,21 @@
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
-      "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "",
+      "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1639100537000
+      "lastUpdate": 1673631509633,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "8fr3": {
@@ -64,7 +72,7 @@
     "x": 808,
     "z": 75,
     "width": 300,
-    "text": "This button moves all the cards from the left to the right holder. There is no setting for 'all' cards, so use a high count value, such as 999, to ensure they are all moved. This also sets the the cards to be face up using the 'face' parameter. However, if the receiving holder has an onEnter property to set the activeFace to something else (like a hand), the onEnter will override the MOVE's face parameter. Note that the pile is not flipped as you would with a physical deck. The order of the cards is unchanged. They are each turned face up and remain in the same order.",
+    "text": "This button moves all the cards from the left to the right holder. This also sets the the cards to be face up using the 'face' parameter. However, if the receiving holder has an onEnter property to set the activeFace to something else (like a hand), the onEnter will override the MOVE's face parameter. Note that the pile is not flipped as you would with a physical deck. The order of the cards is unchanged. They are each turned face up and remain in the same order.",
     "movable": false,
     "y": 530
   },
@@ -106,7 +114,7 @@
         "func": "MOVE",
         "from": "2om8",
         "to": "r88q",
-        "count": 999,
+        "count": "all",
         "face": 1
       }
     ],
@@ -2582,13 +2590,14 @@
   },
   "pawn": {
     "id": "pawn",
-    "x": 102.5,
-    "width": 90,
-    "height": 90,
+    "x": 119.5,
+    "width": 56,
+    "height": 84,
     "z": 96,
     "classes": "classicPiece",
     "color": "#23ca5b",
-    "parent": "g63n"
+    "parent": "g63n",
+    "y": null
   },
   "pin": {
     "id": "pin",
