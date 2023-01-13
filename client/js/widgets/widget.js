@@ -5,7 +5,7 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
-import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize } from '../geometry.js';
+import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -26,6 +26,7 @@ export class Widget extends StateManaged {
     super();
     this.id = id;
     this.domElement = div;
+    this.targetTransform = '';
     this.childArray = [];
     this.propertiesUsedInCSS = [];
 
@@ -42,6 +43,7 @@ export class Widget extends StateManaged {
       borderRadius: null,
       rotation: 0,
       scale: 1,
+      dragLimit: {},
 
       typeClasses: 'widget',
       classes: '',
@@ -137,19 +139,27 @@ export class Widget extends StateManaged {
     for(const property of this.cssProperties()) {
       if(delta[property] !== undefined) {
         this.domElement.style.cssText = mapAssetURLs(this.css());
+        this.targetTransform = this.domElement.style.transform;
         return;
       }
     }
 
     for(const property of this.cssTransformProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.style.transform = this.cssTransform();
+        this.targetTransform = this.domElement.style.transform = this.cssTransform();
         return;
       }
     }
   }
 
   applyDeltaToDOM(delta) {
+    let fromTransform = null;
+    let newParent = undefined;
+    if(delta.parent !== undefined) {
+      newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
+      fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
+    }
+
     this.applyCSS(delta);
     if(delta.audio !== null)
       this.addAudio(this);
@@ -160,14 +170,20 @@ export class Widget extends StateManaged {
     if(delta.movable !== undefined)
       this.isDraggable = delta.movable;
 
-    if(delta.parent !== undefined) {
+    if(newParent !== undefined) {
       if(this.parent)
         this.parent.applyChildRemove(this);
 
-      if(delta.parent === null)
-        $('#topSurface').appendChild(this.domElement);
-      else
-        widgets.get(delta.parent).domElement.appendChild(this.domElement);
+      newParent.appendChild(this.domElement);
+      if (fromTransform) {
+        // If we changed parents, we apply a transform to the previous location
+        // to allow for a smooth transition animation.
+        this.domElement.style.transform = fromTransform;
+        // Force style recalc to commit from transform and start a transition
+        // on applying the destination transform.
+        this.domElement.offsetTop;
+        this.domElement.style.transform = this.targetTransform;
+      }
 
       if(delta.parent !== null) {
         this.parent = widgets.get(delta.parent);
@@ -925,16 +941,28 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'COUNT') {
-        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
+        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT', owner: null });
         let collection;
         let theItem;
         if(a.holder !== undefined) {
-          variables[a.variable] = 0;
           theItem = `${a.holder}`;
-          for (const h of asArray(a.holder))
-            variables[a.variable] += this.isValidID(h, problems) ? widgets.get(h).children().length : 0;
+          variables[a.variable] = 0;
+          for (const h of asArray(a.holder)) {
+            if(this.isValidID(h,problems)) {
+              const children = widgets.get(h).children();
+              if(a.owner === null) {
+                variables[a.variable] += children.length;
+              } else {
+                variables[a.variable] += children.filter(widget => widget.get('owner') === a.owner).length;
+              }
+            }
+          }
         } else if(collection = getCollection(a.collection)) {
-          variables[a.variable] = collections[collection].length;
+          if(a.owner === null) {
+            variables[a.variable] = collections[collection].length;
+          } else {
+            variables[a.variable] = collections[collection].filter(widget => widget.get('owner') === a.owner).length;
+          }
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
@@ -1310,6 +1338,49 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'SCORE') {
+        setDefaults(a, { mode: 'set', property: 'score', seats: null, round: null, value: null});
+        if([ 'set', 'inc', 'dec' ].indexOf(a.mode) == -1) {
+          problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
+          a.mode = 'set'
+        }
+        
+        if(a.value === null)
+          a.value = a.mode=='set' ? 0 : 1;
+        if(isNaN(parseFloat(a.value))) {
+          problems.push(`value ${a.value} must be a number, assuming 0.`);
+          a.value = 0;
+        }
+        a.value = parseFloat(a.value);
+
+        let round = a.round ? parseInt(a.round) : null;
+        if(round !== null && (isNaN(parseInt(round)) || round < 1)) {
+          problems.push(`round ${a.round} must be null or a positive integer, assuming null.`);
+          round = null;
+        }
+
+        const seats = widgetFilter(w => w.get('type')=='seat' && (a.seats===null || asArray(a.seats).includes(w.get('id'))));
+
+        const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
+        for(let i=0; i < seats.length; i++) {
+          let newScore = [...asArray(seats[i].get(a.property) || 0)];
+          const seatRound = a.round === null ? newScore.length + 1 : a.round;
+          if(a.round > newScore.length)
+            newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
+          newScore[seatRound-1] = compute(relation, null, newScore[seatRound-1] || 0, a.value);
+          await seats[i].set(a.property, newScore);
+        }
+
+        if(jeRoutineLogging) {
+          const phrase = round===null ? 'new round' : `round ${a.round}`;
+          const seatIds = seats.map(w => w.get('id'));
+          if(a.mode == 'inc' || a.mode == 'dec')
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase} in seats ${JSON.stringify(seatIds)} by ${a.value}`)
+          else
+            jeLoggingRoutineOperationSummary(`set ${phrase} in seats ${JSON.stringify(seatIds)} to ${a.value}`)
+        }
+      }
+
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         let source;
@@ -1375,8 +1446,6 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
-        } else if (readOnlyProperties.has(a.property)) {
-          problems.push(`Tried setting read-only property ${a.property}.`);
         } else if (collection = getCollection(a.collection)) {
           if (a.property == 'id') {
             for(const oldWidget of collections[collection]) {
@@ -1397,6 +1466,11 @@ export class Widget extends StateManaged {
             }
           } else {
             for(const w of collections[collection]) {
+              if (w.readOnlyProperties().has(a.property)) {
+                problems.push(`Tried setting read-only property ${a.property}.`);
+                continue;
+              }
+
               if(a.relation == '+' && w.get(String(a.property)) == null)
                 a.relation = '=';
               if(a.relation == '+' && a.value == null)
@@ -1760,8 +1834,24 @@ export class Widget extends StateManaged {
   async move(coordGlobal, localAnchor) {
     const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
     const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
-    const newX = Math.round(coordParent.x + offset.x);
-    const newY = Math.round(coordParent.y + offset.y);
+    let newX = Math.round(coordParent.x + offset.x);
+    let newY = Math.round(coordParent.y + offset.y);
+
+    //Keeps widget's top left corner within coordinates set by dragLimit object
+    const limit = this.get('dragLimit');
+ 
+    if (limit.minX !== undefined) {
+      newX = Math.max(limit.minX, newX);
+    }
+    if (limit.maxX !== undefined) {
+      newX = Math.min(limit.maxX, newX);
+    }
+    if (limit.minY !== undefined) {
+      newY = Math.max(limit.minY, newY);
+    }
+    if (limit.maxY !== undefined) {
+      newY = Math.min(limit.maxY, newY);
+    }
 
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX, newY });
@@ -1889,6 +1979,10 @@ export class Widget extends StateManaged {
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
     }
+  }
+
+  readOnlyProperties() {
+    return readOnlyProperties;
   }
 
   async rotate(degrees, mode) {
