@@ -929,9 +929,10 @@ function jeAddCommands() {
   jeAddGridCommand('rotation', 0);
 
   jeAddLimitCommand('minX', 0);
-  jeAddLimitCommand('maxX', 1600);
   jeAddLimitCommand('minY', 0);
-  jeAddLimitCommand('maxY', 1000);
+  // Default max limits are computed dynamically.
+  jeAddLimitCommand('maxX');
+  jeAddLimitCommand('maxY');
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
   jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
@@ -1218,8 +1219,14 @@ function jeAddLimitCommand(key, value) {
     context: '^[^ ]* ↦ dragLimit',
     show: _=>!(key in jeStateNow.dragLimit),
     call: async function() {
+      const w = widgets.get(jeStateNow.id);
       jeStateNow.dragLimit[key] = '###SELECT ME###';
-      jeSetAndSelect(value);
+      let limit = value;
+      if (key == 'maxX')
+        limit = 1600 - w.get('width');
+      else if (key == 'maxY')
+        limit = 1000 - w.get('height');
+      jeSetAndSelect(limit);
     }
   });
 }
