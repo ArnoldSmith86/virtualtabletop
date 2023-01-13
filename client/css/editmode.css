@@ -3,15 +3,19 @@
   height: var(--roomHeight);
   transform: scale(var(--scale));
   transform-origin: left top;
-  flex-direction: row;
-  padding: 0;
+  display: none;
+  grid-template-areas:         "cards pieces decorative"
+                               "cards pieces decorative"
+                               "cards interactive custom";
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  padding: 20px;
+  gap: 20px;
 }
 
 #addOverlay > .category {
   background: var(--roomColor);
-  width: 100%;
   border-radius: 32px;
-  margin: 20px;
   text-align: center;
 }
 
@@ -23,8 +27,28 @@
   display: flex;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 8px;
 }
+
+#addOverlay >.category.cards {
+  grid-area: cards;
+}
+
+#addOverlay >.category.pieces {
+  grid-area: pieces;
+}
+
+#addOverlay >.category.interactive {
+  grid-area: interactive;
+}
+
+#addOverlay >.category.decorative {
+  grid-area: decorative;
+}
+
+#addOverlay >.category.custom {
+  grid-area: custom;
+}
+
 #uploadBoard::before, #uploadToken::before{
   content:'[upload]';
 }
