@@ -2,13 +2,17 @@
 
 export function toHex(inputColor) {
   const hexPattern = /^#([A-Fa-f0-9]{6})$/;
-  if (hexPattern.test(inputColor)) {    
+  if (hexPattern.test(inputColor)) {
     return inputColor;
+  }
+  // server doesn't have document
+  if (typeof document === 'undefined') {
+    return '#000000';
   }
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = inputColor;
-  const hexColor = ctx.fillStyle;  
+  const hexColor = ctx.fillStyle;
   canvas.remove();
   return hexPattern.test(hexColor) ? hexColor : '#000000';
 }
@@ -24,7 +28,7 @@ export function toRGBArray(inputColor) {
 
 export function toRGBString(inputColor) {
   let rgbArray = toRGBArray(inputColor);
-  return `rgb(${rgbArray[0]},${rgbArray[1]},${rgbArray[2]})`;  
+  return `rgb(${rgbArray[0]},${rgbArray[1]},${rgbArray[2]})`;
 }
 
 export function calcLuminance(inputColor) {
@@ -51,7 +55,7 @@ export function calcLuminance(inputColor) {
 export function calcContrast(color1, color2) {
   let lum1 = calcLuminance(color1);
   let lum2 = calcLuminance(color2);
-  return (Math.max(lum1,lum2)+0.05) / (Math.min(lum1,lum2)+0.05);  
+  return (Math.max(lum1,lum2)+0.05) / (Math.min(lum1,lum2)+0.05);
 }
 
 export function contrastAnyColor(inputColor, intensity) {
