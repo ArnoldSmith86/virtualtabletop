@@ -11,19 +11,18 @@
       "time": "",
       "attribution": "The pawn used in this variant is a VTT asset released to the public domain under CC0.",
       "lastUpdate": 1672720696186,
-      "id": "gqt3",
       "showName": false,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Basic",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "vzvp": {
