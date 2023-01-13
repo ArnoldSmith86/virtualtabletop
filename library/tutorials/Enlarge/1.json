@@ -1,36 +1,27 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 6,
     "info": {
-      "name": "Enlarge v2",
-      "image": "",
+      "name": "Enlarge",
+      "image": "/assets/-1439185659_4027",
       "rules": "",
       "bgg": "",
-      "year": "",
-      "mode": "",
+      "year": "2022",
+      "mode": "Tutorial",
       "time": "",
-      "attribution": "",
-      "lastUpdate": 1673574997812,
-      "id": "1z6d",
-      "showName": true,
-      "skill": "",
-      "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "",
-      "players": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": ""
+      "players": "1",
+      "language": "en-US",
+      "variant": "Cards",
+      "attribution": "The pawn used in this variant is a VTT asset released to the public domain under CC0.",
+      "showName": false,
+      "lastUpdate": 1654391055000
     }
   },
   "smgd": {
     "type": "holder",
     "id": "smgd",
     "x": 321,
-    "y": 415,
+    "y": 365,
     "dropTarget": {
       "type": "card"
     },
@@ -185,7 +176,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Enlarge: Cards"
+    "text": "Enlarge"
   },
   "406b": {
     "id": "406b",
@@ -196,11 +187,11 @@
     "layer": -3,
     "z": 125,
     "css": "font-size: 25px; ",
-    "text": "With the additional elements of faces and cardTypes, enlarging cards can be a bit more complex than other widget types."
+    "text": "Enlarge is a property that can be set on any widget type that will display an enlarged version of itself and its child widgets. Enlarge is either `false` or a number. The number is a scale, so a value of 2 means the enlarged version is twice as large as the original.  A value of 0.5 displays a version half as big as the original. In theory, negative values flip the enlarged widget around its horizontal axis, but this also changes the location so negative numbers should generally be avoided. Enlarge is activated when the widget is moused-over or when pressed for at least a half second on touch devices."
   },
   "bm7j": {
     "id": "bm7j",
-    "y": 650,
+    "y": 600,
     "width": 450,
     "z": 9732,
     "movable": false,
@@ -228,7 +219,7 @@
     "width": 103,
     "height": 160,
     "id": "ttz4",
-    "z": 603,
+    "z": 572,
     "parent": "smgd"
   },
   "bc8u": {
@@ -238,8 +229,8 @@
     "id": "bc8u",
     "z": 569,
     "x": 187,
-    "activeFace": 1,
-    "y": 420
+    "y": 370,
+    "activeFace": 1
   },
   "mvi1": {
     "deck": "smgdD",
@@ -251,7 +242,7 @@
   },
   "bm8j": {
     "id": "bm8j",
-    "y": 650,
+    "y": 600,
     "width": 450,
     "z": 9732,
     "movable": false,
@@ -262,7 +253,7 @@
     "type": "holder",
     "id": "it3s",
     "x": 855,
-    "y": 415,
+    "y": 365,
     "z": 133,
     "dropTarget": {
       "type": "card"
@@ -424,7 +415,7 @@
     "width": 103,
     "height": 160,
     "id": "k8m7",
-    "z": 600,
+    "z": 581,
     "parent": "it3s"
   },
   "ahhk": {
@@ -442,12 +433,12 @@
     "id": "c1yl",
     "z": 570,
     "x": 723,
-    "activeFace": 1,
-    "y": 420
+    "y": 370,
+    "activeFace": 1
   },
   "bm9j": {
     "id": "bm9j",
-    "y": 650,
+    "y": 600,
     "width": 400,
     "z": 10070,
     "movable": false,
@@ -458,7 +449,7 @@
     "type": "holder",
     "id": "r736",
     "x": 1369,
-    "y": 415,
+    "y": 365,
     "z": 134,
     "dropTarget": {
       "type": "card"
@@ -581,7 +572,7 @@
     "id": "qrf0",
     "z": 595,
     "x": 1230,
-    "y": 455
+    "y": 407
   },
   "8ab4": {
     "deck": "r736D",
@@ -590,180 +581,6 @@
     "id": "8ab4",
     "z": 590,
     "x": 1232,
-    "y": 525
-  },
-  "smgd1": {
-    "type": "holder",
-    "id": "smgd1",
-    "x": 546,
-    "y": 169,
-    "dropTarget": {
-      "type": "card"
-    },
-    "z": 136
-  },
-  "smgdB1": {
-    "id": "smgdB1",
-    "parent": "smgd1",
-    "fixedParent": true,
-    "y": 171.36,
-    "width": 111,
-    "height": 40,
-    "type": "button",
-    "text": "Recall & Shuffle",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "${PROPERTY parent}"
-      }
-    ]
-  },
-  "smgdD1": {
-    "type": "deck",
-    "id": "smgdD1",
-    "parent": "smgd1",
-    "x": 12,
-    "y": 41,
-    "cardTypes": {
-      "C 01": {
-        "image": "/i/cards-default/AC.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "01",
-        "rankA": "5A",
-        "rankFixed": "01 C"
-      },
-      "C 02": {
-        "image": "/i/cards-default/2C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "02",
-        "rankA": "02",
-        "rankFixed": "02 C"
-      },
-      "C 03": {
-        "image": "/i/cards-default/3C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "03",
-        "rankA": "03",
-        "rankFixed": "03 C"
-      },
-      "C 04": {
-        "image": "/i/cards-default/4C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "04",
-        "rankA": "04",
-        "rankFixed": "04 C"
-      }
-    },
-    "faceTemplates": [
-      {
-        "border": false,
-        "radius": false,
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "transparent",
-            "value": "/i/cards-default/2B.svg"
-          }
-        ]
-      },
-      {
-        "border": false,
-        "radius": false,
-        "properties": {
-          "enlarge": 2
-        },
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "transparent",
-            "dynamicProperties": {
-              "value": "image"
-            }
-          }
-        ]
-      }
-    ],
-    "cardDefaults": {
-      "enlarge": 2
-    }
-  },
-  "pbsx": {
-    "deck": "smgdD1",
-    "type": "card",
-    "cardType": "C 01",
-    "id": "pbsx",
-    "z": 620,
-    "parent": "tw64"
-  },
-  "knq5": {
-    "deck": "smgdD1",
-    "type": "card",
-    "cardType": "C 02",
-    "id": "knq5",
-    "z": 628,
-    "activeFace": 1,
-    "x": 414,
-    "y": 174,
-    "enlarge": 3
-  },
-  "tw64": {
-    "type": "pile",
-    "parent": "smgd1",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "tw64"
-  },
-  "jlnx": {
-    "deck": "smgdD1",
-    "type": "card",
-    "cardType": "C 03",
-    "id": "jlnx",
-    "z": 621,
-    "parent": "tw64"
-  },
-  "cs7v": {
-    "deck": "smgdD1",
-    "type": "card",
-    "cardType": "C 04",
-    "id": "cs7v",
-    "z": 622,
-    "parent": "tw64"
-  },
-  "bm10j": {
-    "id": "bm10j",
-    "y": 195,
-    "width": 450,
-    "z": 10071,
-    "movable": false,
-    "text": "This deck demonstrates the basic way to use enlarge on cards. Simply add the enlarge property and size value to the `cardDefaults` section of the deck. This will enlarge both sides of the card. Note that if you add an enlarge property to a specific card, that overrides the cardDefaults. For example, the 2 of clubs in this deck is enlarged by 3 and other cards are 2.",
-    "x": 681
+    "y": 474
   }
 }
