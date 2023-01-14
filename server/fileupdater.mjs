@@ -1,4 +1,4 @@
-export const VERSION = 9;
+export const VERSION = 10;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -57,6 +57,7 @@ function updateRoutine(routine, v) {
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
   v<9 && v9NumericStringSort(routine);
+  v<10 && v10OwnerMOVEXY(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -338,4 +339,13 @@ function v9NumericStringSort(routine) {
   for(const key in routine)
     if(typeof routine[key] === 'string')
       routine[key] = routine[key].replace('numericSort', 'numericStringSort');
+}
+
+function v10OwnerMOVEXY(routine) {
+for(const operation of routine) {
+  if(operation.func == 'MOVEXY') {
+    if(operation.resetOwner === undefined)
+        operation.resetOwner = false;  
+    }
+  }
 }
