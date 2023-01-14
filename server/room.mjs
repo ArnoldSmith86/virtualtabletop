@@ -637,6 +637,9 @@ export default class Room {
         if (clonedFrom && this.state[clonedFrom] && this.state[clonedFrom].dragging == player.name) {
           let delta = {s: {}};
           delta.s[widgetID] = null;
+          delta.s[clonedFrom] = {
+            dropShadowWidget: null
+          };
           this.receiveDelta(player, delta);
           break;
         }
