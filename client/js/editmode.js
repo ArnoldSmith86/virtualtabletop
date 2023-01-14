@@ -537,7 +537,7 @@ function generateChipPileWidgets(id, x, y, type) {
       parent: id,
       width:73,
       height:73,
-      y: type==2 ? 4 : -6, 
+      y: type==2 ? 4 : -6,
       text: 1641,
       enterRoutine: [
         {
@@ -781,7 +781,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 }
 
 const VTTblue = '#1f5ca6';
-  
+
 function addPieceToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
@@ -880,7 +880,7 @@ function populateAddWidgetOverlay() {
     y: 80 + Math.round((43.83 - 84)/2)
   });
 */
-  
+
 /* Don't add the unicode symbols
   // Next the unicode symbols
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
@@ -909,7 +909,7 @@ function populateAddWidgetOverlay() {
     y: 150
   });
 */
-  
+
   //Add svg game pieces
   // First row
   addPieceToAddWidgetOverlay(new BasicWidget('Pawn3DSVG'), {
@@ -931,7 +931,7 @@ function populateAddWidgetOverlay() {
     borderWidth: 1
   });
 
-  
+
   addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
     x: 390+75,
     y: 111,
@@ -1724,6 +1724,7 @@ onLoad(function() {
       dropOffsetY: 14,
       stackOffsetX: 40,
       childrenPerOwner: true,
+      dropShadow: true,
       x: 50,
       y: 820,
       width: 1500,
@@ -1916,7 +1917,7 @@ onLoad(function() {
     });
     showOverlay();
   });
-  
+
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 
