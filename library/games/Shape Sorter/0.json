@@ -1,22 +1,28 @@
 {
   "_meta": {
-    "version": 4,
+    "version": 8,
     "info": {
       "name": "Shape Sorter",
-      "image": "/assets/1633231935_15183",
+      "image": "/assets/2053592104_47917",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/25669/qwirkle",
       "year": "2006",
       "mode": "vs",
       "time": "45",
-      "players": "2-4",
-      "language": "",
-      "variant": "",
-      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under CC BY 3.0:\nhttps://game-icons.net/1x1/delapouite/plain-square.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/plain-circle.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/seven-pointed-star.html (by Delapouite)\nhttps://game-icons.net/1x1/darkzaitzev/star-shuriken.html (by DarkZaitzev)\nhttps://game-icons.net/1x1/skoll/divided-square.html (by Skoll)\nhttps://game-icons.net/1x1/sbed/health-normal.html (by sbed)",
+      "attribution": "Board layout by ArnoldSmith86. Update by RaphaelAlvez and LawDawg Released to public domain under CC0.\n\nImages released under CC BY 3.0:\nhttps://game-icons.net/1x1/delapouite/plain-square.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/plain-circle.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/seven-pointed-star.html (by Delapouite)\nhttps://game-icons.net/1x1/darkzaitzev/star-shuriken.html (by DarkZaitzev)\nhttps://game-icons.net/1x1/skoll/divided-square.html (by Skoll)\nhttps://game-icons.net/1x1/sbed/health-normal.html (by sbed)",
       "similarName": "Qwirkle",
-      "description": "Place blocks in patterns on board while matching 6 shapes and 6 colors.  Player with most points wins.",
+      "description": "Place blocks in patterns on board while matching 6 shapes and 6 colors. Player with most points wins.",
       "showName": true,
-      "lastUpdate": 1634502388000
+      "lastUpdate": 1672671600000,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-4"
     }
   },
   "Draw": {
@@ -31,160 +37,184 @@
     "type": "deck",
     "id": "Deck",
     "cardDefaults": {
+      "css": {
+        "border-radius": "10%"
+      },
       "width": 80,
       "height": 80,
       "shift": true,
       "grid": [
         {
-          "x": 80,
-          "y": 80
+          "x": 85,
+          "y": 85,
+          "maxX": 1350,
+          "minX": 80,
+          "maxY": 1000,
+          "minY": 0,
+          "offsetX": 2.5,
+          "offsetY": 42.5
         }
-      ]
+      ],
+      "onPileCreation": {
+        "shift": true,
+        "grid": [
+          {
+            "x": 85,
+            "y": 85,
+            "maxX": 1350,
+            "minX": 100,
+            "maxY": 1000,
+            "minY": 0,
+            "offsetX": 2.5,
+            "offsetY": 42.5
+          }
+        ]
+      }
     },
     "cardTypes": {
       "Purple Star": {
         "image": "/assets/-849728462_387",
-        "color": "purple"
+        "color": "#cc79a7"
       },
       "Purple Shuriken": {
         "image": "/assets/-333022907_601",
-        "color": "purple"
+        "color": "#cc79a7"
       },
       "Purple Square": {
         "image": "/assets/1636040670_241",
-        "color": "purple"
+        "color": "#cc79a7"
       },
       "Purple Circle": {
         "image": "/assets/-109256569_315",
-        "color": "purple"
+        "color": "#cc79a7"
       },
       "Purple Cross": {
         "image": "/assets/1889467958_402",
-        "color": "purple"
+        "color": "#cc79a7"
       },
       "Purple Diamond": {
         "image": "/assets/-8841087_577",
-        "color": "purple"
+        "color": "#cc79a7"
       },
       "Blue Star": {
         "image": "/assets/-849728462_387",
-        "color": "blue"
+        "color": "#56b4e9"
       },
       "Blue Shuriken": {
         "image": "/assets/-333022907_601",
-        "color": "blue"
+        "color": "#56b4e9"
       },
       "Blue Square": {
         "image": "/assets/1636040670_241",
-        "color": "blue"
+        "color": "#56b4e9"
       },
       "Blue Circle": {
         "image": "/assets/-109256569_315",
-        "color": "blue"
+        "color": "#56b4e9"
       },
       "Blue Cross": {
         "image": "/assets/1889467958_402",
-        "color": "blue"
+        "color": "#56b4e9"
       },
       "Blue Diamond": {
         "image": "/assets/-8841087_577",
-        "color": "blue"
+        "color": "#56b4e9"
       },
       "Red Star": {
         "image": "/assets/-849728462_387",
-        "color": "red"
+        "color": "#d55e00"
       },
       "Red Shuriken": {
         "image": "/assets/-333022907_601",
-        "color": "red"
+        "color": "#d55e00"
       },
       "Red Square": {
         "image": "/assets/1636040670_241",
-        "color": "red"
+        "color": "#d55e00"
       },
       "Red Circle": {
         "image": "/assets/-109256569_315",
-        "color": "red"
+        "color": "#d55e00"
       },
       "Red Cross": {
         "image": "/assets/1889467958_402",
-        "color": "red"
+        "color": "#d55e00"
       },
       "Red Diamond": {
         "image": "/assets/-8841087_577",
-        "color": "red"
+        "color": "#d55e00"
       },
       "Yellow Star": {
         "image": "/assets/-849728462_387",
-        "color": "yellow"
+        "color": "#f0e442"
       },
       "Yellow Shuriken": {
         "image": "/assets/-333022907_601",
-        "color": "yellow"
+        "color": "#f0e442"
       },
       "Yellow Square": {
         "image": "/assets/1636040670_241",
-        "color": "yellow"
+        "color": "#f0e442"
       },
       "Yellow Circle": {
         "image": "/assets/-109256569_315",
-        "color": "yellow"
+        "color": "#f0e442"
       },
       "Yellow Cross": {
         "image": "/assets/1889467958_402",
-        "color": "yellow"
+        "color": "#f0e442"
       },
       "Yellow Diamond": {
         "image": "/assets/-8841087_577",
-        "color": "yellow"
+        "color": "#f0e442"
       },
       "Green Star": {
         "image": "/assets/-849728462_387",
-        "color": "green"
+        "color": "#009e9b"
       },
       "Green Shuriken": {
         "image": "/assets/-333022907_601",
-        "color": "green"
+        "color": "#009e9b"
       },
       "Green Square": {
         "image": "/assets/1636040670_241",
-        "color": "green"
+        "color": "#009e9b"
       },
       "Green Circle": {
         "image": "/assets/-109256569_315",
-        "color": "green"
+        "color": "#009e9b"
       },
       "Green Cross": {
         "image": "/assets/1889467958_402",
-        "color": "green"
+        "color": "#009e9b"
       },
       "Green Diamond": {
         "image": "/assets/-8841087_577",
-        "color": "green"
+        "color": "#009e9b"
       },
       "Orange Star": {
         "image": "/assets/-849728462_387",
-        "color": "orange"
+        "color": "#e69f00"
       },
       "Orange Shuriken": {
         "image": "/assets/-333022907_601",
-        "color": "orange"
+        "color": "#e69f00"
       },
       "Orange Square": {
         "image": "/assets/1636040670_241",
-        "color": "orange"
+        "color": "#e69f00"
       },
       "Orange Circle": {
         "image": "/assets/-109256569_315",
-        "color": "orange"
+        "color": "#e69f00"
       },
       "Orange Cross": {
         "image": "/assets/1889467958_402",
-        "color": "orange"
+        "color": "#e69f00"
       },
       "Orange Diamond": {
         "image": "/assets/-8841087_577",
-        "color": "orange"
+        "color": "#e69f00"
       }
     },
     "faceTemplates": [
@@ -194,11 +224,27 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "color": "black",
-            "valueType": "static",
+            "color": "#555",
             "value": "",
             "width": 80,
-            "height": 80
+            "height": 80,
+            "css": {
+              "border-radius": "10%",
+              "background": "radial-gradient(circle at 0 0, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.5) 100%)"
+            }
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "color": "black",
+            "value": "",
+            "width": 70,
+            "height": 70,
+            "css": {
+              "border-radius": "10%",
+              "background": "radial-gradient(circle at 0 0, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0) 100%)"
+            }
           }
         ]
       },
@@ -208,23 +254,40 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "color": "black",
-            "valueType": "static",
+            "color": "#555",
             "value": "",
             "width": 80,
-            "height": 80
+            "height": 80,
+            "css": {
+              "border-radius": "10%",
+              "background": "radial-gradient(circle at 0 0, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.5) 100%)"
+            }
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "color": "black",
+            "value": "",
+            "width": 70,
+            "height": 70,
+            "css": {
+              "border-radius": "10%",
+              "background": "radial-gradient(circle at 0 0, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0) 100%)"
+            }
           },
           {
             "type": "image",
             "x": 10,
             "y": 10,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 60,
             "height": 60,
             "svgReplaces": {
               "#fff": "color"
+            },
+            "dynamicProperties": {
+              "value": "image"
             }
           }
         ]
@@ -237,871 +300,864 @@
     "type": "card",
     "cardType": "Purple Star",
     "id": "zuv9",
-    "parent": "f0z0",
-    "z": 6995
+    "z": 22494,
+    "parent": "hx3a"
   },
   "w63m": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Shuriken",
     "id": "w63m",
-    "parent": "f0z0",
-    "z": 9738
-  },
-  "f0z0": {
-    "type": "pile",
-    "width": 80,
-    "height": 80,
-    "id": "f0z0",
-    "parent": "Draw"
+    "z": 22443,
+    "parent": "hx3a"
   },
   "4f4z": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Square",
     "id": "4f4z",
-    "parent": "f0z0",
-    "z": 3532
+    "z": 22475,
+    "parent": "hx3a"
   },
   "fnvv": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Circle",
     "id": "fnvv",
-    "parent": "f0z0",
-    "z": 5995
+    "z": 22498,
+    "parent": "hx3a"
   },
   "p29t": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Cross",
     "id": "p29t",
-    "parent": "f0z0",
-    "z": 4056
+    "z": 22480,
+    "parent": "hx3a"
   },
   "dfjq": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Diamond",
     "id": "dfjq",
-    "parent": "f0z0",
-    "z": 5132
+    "z": 22520,
+    "parent": "hx3a"
   },
   "983u": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Star",
     "id": "983u",
-    "parent": "f0z0",
-    "z": 89
+    "z": 22502,
+    "parent": "hx3a"
   },
   "yfyb": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Shuriken",
     "id": "yfyb",
-    "parent": "f0z0",
-    "z": 5061
+    "z": 22481,
+    "parent": "hx3a"
   },
   "l5o3": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Square",
     "id": "l5o3",
-    "parent": "f0z0",
-    "z": 5066
+    "z": 22484,
+    "parent": "hx3a"
   },
   "wwf5": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Circle",
     "id": "wwf5",
-    "parent": "f0z0",
-    "z": 2629
+    "z": 22457,
+    "parent": "hx3a"
   },
   "xvi8": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Cross",
     "id": "xvi8",
-    "parent": "f0z0",
-    "z": 7709
+    "z": 22456,
+    "parent": "hx3a"
   },
   "xmds": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Diamond",
     "id": "xmds",
-    "z": 3726,
-    "parent": "f0z0"
+    "z": 22458,
+    "parent": "hx3a"
   },
   "wc7u": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Star",
     "id": "wc7u",
-    "parent": "f0z0",
-    "z": 6996
+    "z": 22478,
+    "parent": "hx3a"
   },
   "awkv": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Shuriken",
     "id": "awkv",
-    "parent": "f0z0",
-    "z": 9064
+    "z": 22428,
+    "parent": "hx3a"
   },
   "ioqc": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Square",
     "id": "ioqc",
-    "parent": "f0z0",
-    "z": 5873
+    "z": 22447,
+    "parent": "hx3a"
   },
   "a0ae": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Circle",
     "id": "a0ae",
-    "z": 2077,
-    "parent": "f0z0"
+    "z": 22506,
+    "parent": "hx3a"
   },
   "qion": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Cross",
     "id": "qion",
-    "parent": "f0z0",
-    "z": 6946
+    "z": 22439,
+    "parent": "hx3a"
   },
   "rx8f": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Diamond",
     "id": "rx8f",
-    "parent": "f0z0",
-    "z": 1229
+    "z": 22463,
+    "parent": "hx3a"
   },
   "xyhm": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Star",
     "id": "xyhm",
-    "parent": "f0z0",
-    "z": 3317
+    "z": 22425,
+    "parent": "hx3a"
   },
   "a6mj": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Shuriken",
     "id": "a6mj",
-    "parent": "f0z0",
-    "z": 6824
+    "z": 22461,
+    "parent": "hx3a"
   },
   "ym22": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Square",
     "id": "ym22",
-    "parent": "f0z0",
-    "z": 6454
+    "z": 22442,
+    "parent": "hx3a"
   },
   "d4ql": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Circle",
     "id": "d4ql",
-    "parent": "f0z0",
-    "z": 3980
+    "z": 22522,
+    "parent": "hx3a"
   },
   "79t6": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Cross",
     "id": "79t6",
-    "parent": "f0z0",
-    "z": 6386
+    "z": 22434,
+    "parent": "hx3a"
   },
   "vci2": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Diamond",
     "id": "vci2",
-    "parent": "f0z0",
-    "z": 7340
+    "z": 22464,
+    "parent": "hx3a"
   },
   "wlg4": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Star",
     "id": "wlg4",
-    "parent": "f0z0",
-    "z": 1013
+    "z": 22511,
+    "parent": "hx3a"
   },
   "9xr4": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Shuriken",
     "id": "9xr4",
-    "parent": "f0z0",
-    "z": 603
+    "z": 22515,
+    "parent": "hx3a"
   },
   "6qks": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Square",
     "id": "6qks",
-    "parent": "f0z0",
-    "z": 2153
+    "z": 22518,
+    "parent": "hx3a"
   },
   "vlse": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Circle",
     "id": "vlse",
-    "parent": "f0z0",
-    "z": 7847
+    "z": 22437,
+    "parent": "hx3a"
   },
   "hmok": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Cross",
     "id": "hmok",
-    "parent": "f0z0",
-    "z": 9859
+    "z": 22479,
+    "parent": "hx3a"
   },
   "hvyp": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Diamond",
     "id": "hvyp",
-    "z": 706,
-    "parent": "f0z0"
+    "z": 22454,
+    "parent": "hx3a"
   },
   "ixk3": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Star",
     "id": "ixk3",
-    "parent": "f0z0",
-    "z": 570
+    "z": 22472,
+    "parent": "hx3a"
   },
   "mqm8": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Shuriken",
     "id": "mqm8",
-    "parent": "f0z0",
-    "z": 866
+    "z": 22424,
+    "parent": "hx3a"
   },
   "uq7a": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Square",
     "id": "uq7a",
-    "parent": "f0z0",
-    "z": 1996
+    "z": 22497,
+    "parent": "hx3a"
   },
   "sims": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Circle",
     "id": "sims",
-    "parent": "f0z0",
-    "z": 3870
+    "z": 22514,
+    "parent": "hx3a"
   },
   "v9jd": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Cross",
     "id": "v9jd",
-    "parent": "f0z0",
-    "z": 9999
+    "z": 22460,
+    "parent": "hx3a"
   },
   "333c": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Diamond",
     "id": "333c",
-    "parent": "f0z0",
-    "z": 4375
+    "z": 22526,
+    "parent": "hx3a"
   },
   "59hp": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Star",
     "id": "59hp",
-    "parent": "f0z0",
-    "z": 2565
+    "z": 22524,
+    "parent": "hx3a"
   },
   "aqa9": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Shuriken",
     "id": "aqa9",
-    "parent": "f0z0",
-    "z": 3035
+    "z": 22444,
+    "parent": "hx3a"
   },
   "f3n5": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Square",
     "id": "f3n5",
-    "parent": "f0z0",
-    "z": 7928
+    "z": 22503,
+    "parent": "hx3a"
   },
   "s0i8": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Circle",
     "id": "s0i8",
-    "parent": "f0z0",
-    "z": 2262
+    "z": 22438,
+    "parent": "hx3a"
   },
   "32kn": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Cross",
     "id": "32kn",
-    "parent": "f0z0",
-    "z": 4662
+    "z": 22505,
+    "parent": "hx3a"
   },
   "5z4a": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Diamond",
     "id": "5z4a",
-    "parent": "f0z0",
-    "z": 7558
+    "z": 22483,
+    "parent": "hx3a"
   },
   "vn4i": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Star",
     "id": "vn4i",
-    "parent": "f0z0",
-    "z": 45
+    "z": 22476,
+    "parent": "hx3a"
   },
   "reih": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Shuriken",
     "id": "reih",
-    "parent": "f0z0",
-    "z": 891
+    "z": 22423,
+    "parent": "hx3a"
   },
   "cwxv": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Square",
     "id": "cwxv",
-    "parent": "f0z0",
-    "z": 7438
+    "z": 22441,
+    "parent": "hx3a"
   },
   "row2": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Circle",
     "id": "row2",
-    "parent": "f0z0",
-    "z": 8523
+    "z": 22529,
+    "parent": "hx3a"
   },
   "zebf": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Cross",
     "id": "zebf",
-    "parent": "f0z0",
-    "z": 104
+    "z": 22435,
+    "parent": "hx3a"
   },
   "e8hq": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Diamond",
     "id": "e8hq",
-    "parent": "f0z0",
-    "z": 5501
+    "z": 22513,
+    "parent": "hx3a"
   },
   "d5o5": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Star",
     "id": "d5o5",
-    "parent": "f0z0",
-    "z": 1002
+    "z": 22501,
+    "parent": "hx3a"
   },
   "7u24": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Shuriken",
     "id": "7u24",
-    "parent": "f0z0",
-    "z": 8828
+    "z": 22487,
+    "parent": "hx3a"
   },
   "ghzq": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Square",
     "id": "ghzq",
-    "parent": "f0z0",
-    "z": 6469
+    "z": 22509,
+    "parent": "hx3a"
   },
   "gof0": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Circle",
     "id": "gof0",
-    "parent": "f0z0",
-    "z": 1605
+    "z": 22436,
+    "parent": "hx3a"
   },
   "yqsf": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Cross",
     "id": "yqsf",
-    "parent": "f0z0",
-    "z": 6156
+    "z": 22495,
+    "parent": "hx3a"
   },
   "uubv": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Diamond",
     "id": "uubv",
-    "z": 2684,
-    "parent": "f0z0"
+    "z": 22462,
+    "parent": "hx3a"
   },
   "ckiy": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Star",
     "id": "ckiy",
-    "parent": "f0z0",
-    "z": 7480
+    "z": 22507,
+    "parent": "hx3a"
   },
   "307z": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Shuriken",
     "id": "307z",
-    "z": 3614,
-    "parent": "f0z0"
+    "z": 22465,
+    "parent": "hx3a"
   },
   "pxc3": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Square",
     "id": "pxc3",
-    "z": 4077,
-    "parent": "f0z0"
+    "z": 22433,
+    "parent": "hx3a"
   },
   "psk2": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Circle",
     "id": "psk2",
-    "parent": "f0z0",
-    "z": 3383
+    "z": 22516,
+    "parent": "hx3a"
   },
   "q71q": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Cross",
     "id": "q71q",
-    "parent": "f0z0",
-    "z": 2261
+    "z": 22448,
+    "parent": "hx3a"
   },
   "zfj1": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Diamond",
     "id": "zfj1",
-    "parent": "f0z0",
-    "z": 8680
+    "z": 22446,
+    "parent": "hx3a"
   },
   "6m4h": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Star",
     "id": "6m4h",
-    "parent": "f0z0",
-    "z": 6260
+    "z": 22453,
+    "parent": "hx3a"
   },
   "4bug": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Shuriken",
     "id": "4bug",
-    "parent": "f0z0",
-    "z": 6655
+    "z": 22452,
+    "parent": "hx3a"
   },
   "u9u6": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Square",
     "id": "u9u6",
-    "z": 2709,
-    "parent": "f0z0"
+    "z": 22474,
+    "parent": "hx3a"
   },
   "cpk6": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Circle",
     "id": "cpk6",
-    "parent": "f0z0",
-    "z": 1007
+    "z": 22508,
+    "parent": "hx3a"
   },
   "oofq": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Cross",
     "id": "oofq",
-    "parent": "f0z0",
-    "z": 4990
+    "z": 22467,
+    "parent": "hx3a"
   },
   "e7g2": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Diamond",
     "id": "e7g2",
-    "parent": "f0z0",
-    "z": 2767
+    "z": 22450,
+    "parent": "hx3a"
   },
   "oot5": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Star",
     "id": "oot5",
-    "parent": "f0z0",
-    "z": 5630
+    "z": 22431,
+    "parent": "hx3a"
   },
   "fjdt": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Shuriken",
     "id": "fjdt",
-    "parent": "f0z0",
-    "z": 7845
+    "z": 22466,
+    "parent": "hx3a"
   },
   "mw1t": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Square",
     "id": "mw1t",
-    "parent": "f0z0",
-    "z": 353
+    "z": 22519,
+    "parent": "hx3a"
   },
   "ajwn": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Circle",
     "id": "ajwn",
-    "parent": "f0z0",
-    "z": 3320
+    "z": 22521,
+    "parent": "hx3a"
   },
   "ss5r": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Cross",
     "id": "ss5r",
-    "parent": "f0z0",
-    "z": 1488
+    "z": 22449,
+    "parent": "hx3a"
   },
   "k47o": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Diamond",
     "id": "k47o",
-    "parent": "f0z0",
-    "z": 4034
+    "z": 22469,
+    "parent": "hx3a"
   },
   "8z7e": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Star",
     "id": "8z7e",
-    "parent": "f0z0",
-    "z": 7929
+    "z": 22432,
+    "parent": "hx3a"
   },
   "kigz": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Shuriken",
     "id": "kigz",
-    "parent": "f0z0",
-    "z": 3767
+    "z": 22440,
+    "parent": "hx3a"
   },
   "h91i": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Square",
     "id": "h91i",
-    "parent": "f0z0",
-    "z": 8389
+    "z": 22496,
+    "parent": "hx3a"
   },
   "4n7h": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Circle",
     "id": "4n7h",
-    "parent": "f0z0",
-    "z": 7039
+    "z": 22491,
+    "parent": "hx3a"
   },
   "mlbz": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Cross",
     "id": "mlbz",
-    "parent": "f0z0",
-    "z": 2711
+    "z": 22517,
+    "parent": "hx3a"
   },
   "2pod": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Purple Diamond",
     "id": "2pod",
-    "parent": "f0z0",
-    "z": 1267
+    "z": 22470,
+    "parent": "hx3a"
   },
   "3bab": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Star",
     "id": "3bab",
-    "parent": "f0z0",
-    "z": 2560
+    "z": 22451,
+    "parent": "hx3a"
   },
   "5pcp": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Shuriken",
     "id": "5pcp",
-    "z": 6990,
-    "parent": "f0z0"
+    "z": 22489,
+    "parent": "hx3a"
   },
   "9z6p": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Square",
     "id": "9z6p",
-    "parent": "f0z0",
-    "z": 1858
+    "z": 22528,
+    "parent": "hx3a"
   },
   "v359": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Circle",
     "id": "v359",
-    "parent": "f0z0",
-    "z": 7275
+    "z": 22500,
+    "parent": "hx3a"
   },
   "mfxq": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Cross",
     "id": "mfxq",
-    "parent": "f0z0",
-    "z": 848
+    "z": 22468,
+    "parent": "hx3a"
   },
   "ox58": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Blue Diamond",
     "id": "ox58",
-    "parent": "f0z0",
-    "z": 6620
+    "z": 22486,
+    "parent": "hx3a"
   },
   "um9x": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Star",
     "id": "um9x",
-    "parent": "f0z0",
-    "z": 4113
+    "z": 22490,
+    "parent": "hx3a"
   },
   "c1se": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Shuriken",
     "id": "c1se",
-    "parent": "f0z0",
-    "z": 1942
+    "z": 22527,
+    "parent": "hx3a"
   },
   "cok0": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Square",
     "id": "cok0",
-    "parent": "f0z0",
-    "z": 7374
+    "z": 22471,
+    "parent": "hx3a"
   },
   "6n6w": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Circle",
     "id": "6n6w",
-    "parent": "f0z0",
-    "z": 5664
+    "z": 22510,
+    "parent": "hx3a"
   },
   "ei8l": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Cross",
     "id": "ei8l",
-    "parent": "f0z0",
-    "z": 4036
+    "z": 22445,
+    "parent": "hx3a"
   },
   "vnn9": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Red Diamond",
     "id": "vnn9",
-    "parent": "f0z0",
-    "z": 5254
+    "z": 22459,
+    "parent": "hx3a"
   },
   "tazg": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Star",
     "id": "tazg",
-    "parent": "f0z0",
-    "z": 9067
+    "z": 22512,
+    "parent": "hx3a"
   },
   "mgju": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Shuriken",
     "id": "mgju",
-    "parent": "f0z0",
-    "z": 5938
+    "z": 22525,
+    "parent": "hx3a"
   },
   "zeq7": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Square",
     "id": "zeq7",
-    "parent": "f0z0",
-    "z": 202
+    "z": 22473,
+    "parent": "hx3a"
   },
   "1zax": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Circle",
     "id": "1zax",
-    "parent": "f0z0",
-    "z": 4155
+    "z": 22534,
+    "parent": "hx3a"
   },
   "yzhf": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Cross",
     "id": "yzhf",
-    "parent": "f0z0",
-    "z": 6228
+    "z": 22430,
+    "parent": "hx3a"
   },
   "56gs": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Yellow Diamond",
     "id": "56gs",
-    "parent": "f0z0",
-    "z": 3556
+    "z": 22493,
+    "parent": "hx3a"
   },
   "g9z4": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Star",
     "id": "g9z4",
-    "parent": "f0z0",
-    "z": 6722
+    "z": 22488,
+    "parent": "hx3a"
   },
   "rt7q": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Shuriken",
     "id": "rt7q",
-    "parent": "f0z0",
-    "z": 9043
+    "z": 22427,
+    "parent": "hx3a"
   },
   "53ov": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Square",
     "id": "53ov",
-    "parent": "f0z0",
-    "z": 6047
+    "z": 22455,
+    "parent": "hx3a"
   },
   "48g9": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Circle",
     "id": "48g9",
-    "parent": "f0z0",
-    "z": 3967
+    "z": 22492,
+    "parent": "hx3a"
   },
   "t6e6": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Cross",
     "id": "t6e6",
-    "parent": "f0z0",
-    "z": 3334
+    "z": 22485,
+    "parent": "hx3a"
   },
   "s4w7": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Green Diamond",
     "id": "s4w7",
-    "z": 7810,
-    "parent": "f0z0"
+    "z": 22477,
+    "parent": "hx3a"
   },
   "vfkc": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Star",
     "id": "vfkc",
-    "parent": "f0z0",
-    "z": 6955
+    "z": 22426,
+    "parent": "hx3a"
   },
   "jggb": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Shuriken",
     "id": "jggb",
-    "parent": "f0z0",
-    "z": 3960
+    "z": 22523,
+    "parent": "hx3a"
   },
   "icvb": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Square",
     "id": "icvb",
-    "parent": "f0z0",
-    "z": 7906
+    "z": 22482,
+    "parent": "hx3a"
   },
   "yfe9": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Circle",
     "id": "yfe9",
-    "parent": "f0z0",
-    "z": 7409
+    "z": 22429,
+    "parent": "hx3a"
   },
   "nzeb": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Cross",
     "id": "nzeb",
-    "parent": "f0z0",
-    "z": 9639
+    "z": 22499,
+    "parent": "hx3a"
   },
   "mej1": {
     "deck": "Deck",
     "type": "card",
     "cardType": "Orange Diamond",
     "id": "mej1",
-    "parent": "f0z0",
-    "z": 8343
+    "z": 22504,
+    "parent": "hx3a"
   },
   "Discard": {
     "type": "holder",
@@ -1113,14 +1169,16 @@
   "Hand": {
     "type": "holder",
     "id": "Hand",
-    "y": 507,
+    "y": 506,
     "inheritFrom": "Draw",
     "childrenPerOwner": true,
     "stackOffsetY": 80,
     "height": 488,
     "onEnter": {
       "activeFace": 1
-    }
+    },
+    "z": 1,
+    "x": 5
   },
   "Fill": {
     "type": "button",
@@ -1186,6 +1244,22 @@
           "Player 3",
           "Player 4"
         ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shiftParent"
+        ],
+        "property": "shiftX",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shiftParent"
+        ],
+        "property": "shiftY",
+        "value": 0
       }
     ],
     "width": 60,
@@ -1195,246 +1269,6 @@
     "svgReplaces": {
       "currentColor": "color"
     }
-  },
-  "u14vD": {
-    "id": "u14vD",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "text": "-",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ],
-    "parent": "Player 1"
-  },
-  "u14vU": {
-    "id": "u14vU",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "text": "+",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ],
-    "parent": "Player 1"
-  },
-  "Player 1": {
-    "type": "label",
-    "id": "Player 1",
-    "x": 1490,
-    "y": 750,
-    "width": 65,
-    "height": 40,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "text": 0
-  },
-  "Player 1 - Label": {
-    "type": "label",
-    "id": "Player 1 - Label",
-    "parent": "Player 1",
-    "text": "Player 1",
-    "x": -17.5,
-    "y": -24,
-    "editable": true
-  },
-  "Player 2": {
-    "type": "label",
-    "id": "Player 2",
-    "x": 1490,
-    "y": 819.3333333333334,
-    "width": 65,
-    "height": 40,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "text": 0
-  },
-  "u15vD": {
-    "id": "u15vD",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "text": "-",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ],
-    "parent": "Player 2"
-  },
-  "u15vU": {
-    "id": "u15vU",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "text": "+",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ],
-    "parent": "Player 2"
-  },
-  "Player 2 - Label": {
-    "type": "label",
-    "id": "Player 2 - Label",
-    "parent": "Player 2",
-    "text": "Player 2",
-    "x": -17.5,
-    "y": -24,
-    "editable": true
-  },
-  "Player 3": {
-    "type": "label",
-    "id": "Player 3",
-    "x": 1490,
-    "y": 888.6666666666666,
-    "width": 65,
-    "height": 40,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "text": 0
-  },
-  "u16vD": {
-    "id": "u16vD",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "text": "-",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ],
-    "parent": "Player 3"
-  },
-  "u16vU": {
-    "id": "u16vU",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "text": "+",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ],
-    "parent": "Player 3"
-  },
-  "Player 3 - Label": {
-    "type": "label",
-    "id": "Player 3 - Label",
-    "parent": "Player 3",
-    "text": "Player 3",
-    "x": -17.5,
-    "y": -24,
-    "editable": true
-  },
-  "Player 4": {
-    "type": "label",
-    "id": "Player 4",
-    "x": 1490,
-    "y": 958,
-    "width": 65,
-    "height": 40,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "text": 0
-  },
-  "u17vD": {
-    "id": "u17vD",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "text": "-",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ],
-    "parent": "Player 4"
-  },
-  "u17vU": {
-    "id": "u17vU",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "text": "+",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ],
-    "parent": "Player 4"
-  },
-  "Player 4 - Label": {
-    "type": "label",
-    "id": "Player 4 - Label",
-    "parent": "Player 4",
-    "text": "Player 4",
-    "x": -17.5,
-    "y": -24,
-    "editable": true
   },
   "Discard Button": {
     "type": "button",
@@ -1464,150 +1298,765 @@
       "currentColor": "color"
     }
   },
-  "floor": {
-    "type": "holder",
-    "id": "floor",
-    "x": -500,
-    "y": -820,
-    "width": 2600,
-    "height": 2000,
-    "layer": -9,
-    "z": 1,
-    "movableInEdit": false,
-    "alignChildren": false,
-    "classes": "transparent",
-    "css": "border: none",
-    "dropTarget": {
-      "shift": true
-    }
+  "yu2g": {
+    "type": "label",
+    "text": 0,
+    "id": "yu2g",
+    "x": 42.5,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 4,
+    "parent": "Player1"
   },
-  "shiftdown": {
+  "yu2gD": {
+    "id": "yu2gD",
+    "parent": "yu2g",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
     "type": "button",
-    "id": "shiftdown",
-    "x": 1509,
-    "y": 667,
-    "width": 50,
-    "height": 50,
-    "layer": 2,
-    "z": 617,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "font-size": "28px",
+      "border-radius": "25%"
+    },
+    "text": "remove",
     "clickRoutine": [
       {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "yu2gU": {
+    "id": "yu2gU",
+    "parent": "yu2g",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": {
+      "font-size": "28px",
+      "border-radius": "25%"
+    }
+  },
+  "Player1": {
+    "type": "seat",
+    "id": "Player1",
+    "x": 1430,
+    "y": 485,
+    "z": 4,
+    "hand": "Hand",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Enter your name"
+              },
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "Player2": {
+    "type": "seat",
+    "id": "Player2",
+    "x": 1430,
+    "y": 605,
+    "z": 5,
+    "index": 2,
+    "hand": "Hand",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Enter your name"
+              },
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "yu3g": {
+    "type": "label",
+    "text": 0,
+    "id": "yu3g",
+    "x": 42.5,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 4,
+    "parent": "Player2"
+  },
+  "yu3gD": {
+    "id": "yu3gD",
+    "parent": "yu3g",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "font-size": "28px",
+      "border-radius": "25%"
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "yu3gU": {
+    "id": "yu3gU",
+    "parent": "yu3g",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": {
+      "font-size": "28px",
+      "border-radius": "25%"
+    }
+  },
+  "Player3": {
+    "type": "seat",
+    "id": "Player3",
+    "x": 1430,
+    "y": 735,
+    "z": 4,
+    "index": 3,
+    "hand": "Hand",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Enter your name"
+              },
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "yu4g": {
+    "type": "label",
+    "text": 0,
+    "id": "yu4g",
+    "x": 42.5,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 4,
+    "parent": "Player3"
+  },
+  "yu4gD": {
+    "id": "yu4gD",
+    "parent": "yu4g",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "font-size": "28px",
+      "border-radius": "25%"
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "yu4gU": {
+    "id": "yu4gU",
+    "parent": "yu4g",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": {
+      "font-size": "28px",
+      "border-radius": "25%"
+    }
+  },
+  "Player4": {
+    "type": "seat",
+    "id": "Player4",
+    "x": 1430,
+    "y": 865,
+    "z": 4,
+    "index": 4,
+    "hand": "Hand",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Enter your name"
+              },
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "yu5g": {
+    "type": "label",
+    "text": 0,
+    "id": "yu5g",
+    "x": 42.5,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 4,
+    "parent": "Player4"
+  },
+  "yu5gD": {
+    "id": "yu5gD",
+    "parent": "yu5g",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "font-size": "28px",
+      "border-radius": "25%"
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "yu5gU": {
+    "id": "yu5gU",
+    "parent": "yu5g",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": {
+      "font-size": "28px",
+      "border-radius": "25%"
+    }
+  },
+  "hx3a": {
+    "type": "pile",
+    "width": 80,
+    "height": 80,
+    "shift": true,
+    "grid": [
+      {
+        "x": 85,
+        "y": 85,
+        "maxX": 1350,
+        "minX": 100,
+        "maxY": 1000,
+        "minY": 0,
+        "offsetX": 2.5,
+        "offsetY": 42.5
+      }
+    ],
+    "id": "hx3a",
+    "z": 22535,
+    "parent": "Draw"
+  },
+  "shiftParent": {
+    "id": "shiftParent",
+    "x": 1440,
+    "y": 330,
+    "width": 140,
+    "height": 140,
+    "z": 11,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-size": "50px",
+        "color": "#000",
+        "border-radius": "50%"
+      },
+      ":hover": {
+        "color": "#888"
+      }
+    },
+    "setShift": 85,
+    "shiftX": 0,
+    "shiftY": 0,
+    "shiftRoutine": [
+      {
         "func": "SELECT",
+        "property": "shift",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true,
+        "type": "pile",
+        "collection": "pile"
+      },
+      {
+        "func": "SELECT",
+        "source": "pile",
+        "property": "parent",
+        "value": null,
+        "type": "pile",
+        "collection": "DEFAULT",
+        "mode": "add"
+      },
+      {
+        "func": "GET",
         "property": "id",
-        "value": "floor"
+        "aggregation": "first",
+        "variable": "id"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "grid",
+        "relation": "!=",
+        "value": "",
+        "collection": "gridWidget"
+      },
+      {
+        "func": "GET",
+        "collection": "gridWidget",
+        "property": "grid",
+        "aggregation": "first",
+        "variable": "grid"
+      },
+      "var gridInfo = ${grid.0}",
+      {
+        "func": "IF",
+        "condition": "${gridInfo}",
+        "thenRoutine": [
+          "var shiftValue = ${gridInfo.$direction}"
+        ],
+        "elseRoutine": [
+          "var shiftValue = ${PROPERTY width OF $id} min ${PROPERTY height OF $id}"
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY setShift}",
+        "thenRoutine": [
+          "var shiftValue = ${PROPERTY setShift}"
+        ]
       },
       {
         "func": "SET",
-        "property": "y",
-        "relation": "+",
-        "value": 80
+        "property": "${direction}",
+        "relation": "${sign}",
+        "value": "${shiftValue}"
+      },
+      "var direction = ${direction} toUpperCase",
+      "var shiftProp = 'shift' + ${direction}",
+      "var shiftValue = ${sign} + ${shiftValue}",
+      "var shiftValue = ${shiftValue} parseFloat",
+      "var newShift = ${PROPERTY $shiftProp} + ${shiftValue}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "${shiftProp}",
+        "value": "${newShift}"
       }
-    ],
-    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
-    "image": "/assets/-1712546135_277"
+    ]
   },
-  "shiftup": {
-    "type": "button",
-    "id": "shiftup",
-    "x": 1509,
-    "y": 587,
+  "shiftUp": {
+    "id": "shiftUp",
+    "parent": "shiftParent",
+    "x": 45,
+    "y": 0,
     "width": 50,
     "height": 50,
     "layer": 2,
     "z": 618,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "inheritFrom": {
+      "shiftParent": [
+        "css"
+      ]
+    },
+    "text": "arrow_up",
     "clickRoutine": [
       {
-        "func": "SELECT",
-        "property": "id",
-        "value": "floor"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "relation": "-",
-        "value": 80
+        "func": "CALL",
+        "routine": "shiftRoutine",
+        "widget": "shiftParent",
+        "arguments": {
+          "direction": "y",
+          "sign": "-"
+        }
       }
-    ],
-    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
-    "image": "/assets/979051549_277"
+    ]
   },
-  "shiftcenter": {
-    "type": "button",
-    "id": "shiftcenter",
-    "x": 1514,
-    "y": 632,
-    "width": 40,
-    "height": 40,
-    "layer": 2,
-    "z": 619,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "floor"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": -500
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": -500
-      }
-    ],
-    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
-    "image": "/assets/-27377452_736"
-  },
-  "shiftleft": {
-    "type": "button",
-    "id": "shiftleft",
-    "x": 1470,
-    "y": 626,
+  "shiftLeft": {
+    "id": "shiftLeft",
+    "parent": "shiftParent",
+    "x": 0,
+    "y": 45,
     "width": 50,
     "height": 50,
     "layer": 2,
-    "z": 620,
+    "z": 625,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "inheritFrom": {
+      "shiftParent": [
+        "css"
+      ]
+    },
+    "text": "arrow_left",
     "clickRoutine": [
       {
-        "func": "SELECT",
-        "property": "id",
-        "value": "floor"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "relation": "-",
-        "value": 80
+        "func": "CALL",
+        "routine": "shiftRoutine",
+        "widget": "shiftParent",
+        "arguments": {
+          "direction": "x",
+          "sign": "-"
+        }
       }
-    ],
-    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
-    "image": "/assets/1502865726_277"
+    ]
   },
-  "shiftright": {
-    "type": "button",
-    "id": "shiftright",
-    "x": 1548,
-    "y": 626,
+  "shiftDown": {
+    "id": "shiftDown",
+    "parent": "shiftParent",
+    "x": 45,
+    "y": 90,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 626,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "inheritFrom": {
+      "shiftParent": [
+        "css"
+      ]
+    },
+    "text": "arrow_down",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "shiftRoutine",
+        "widget": "shiftParent",
+        "arguments": {
+          "direction": "y",
+          "sign": "+"
+        }
+      }
+    ]
+  },
+  "shiftRight": {
+    "id": "shiftRight",
+    "parent": "shiftParent",
+    "x": 90,
+    "y": 45,
     "width": 50,
     "height": 50,
     "layer": 2,
     "z": 621,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "inheritFrom": {
+      "shiftParent": [
+        "css"
+      ]
+    },
+    "text": "arrow_right",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "shiftRoutine",
+        "widget": "shiftParent",
+        "arguments": {
+          "direction": "x",
+          "sign": "+"
+        }
+      }
+    ]
+  },
+  "shiftCenter": {
+    "id": "shiftCenter",
+    "parent": "shiftParent",
+    "x": 45,
+    "y": 45,
+    "width": 50,
+    "height": 50,
+    "scale": 0.8,
+    "layer": 2,
+    "z": 628,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "inheritFrom": {
+      "shiftParent": [
+        "css"
+      ]
+    },
+    "text": "visibility",
     "clickRoutine": [
       {
         "func": "SELECT",
-        "property": "id",
-        "value": "floor"
+        "property": "shift",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true,
+        "type": "pile",
+        "collection": "pile"
+      },
+      {
+        "func": "SELECT",
+        "source": "pile",
+        "property": "parent",
+        "value": null,
+        "type": "pile",
+        "collection": "DEFAULT",
+        "mode": "add"
+      },
+      {
+        "func": "GET",
+        "property": "x",
+        "aggregation": "array",
+        "variable": "arrayX"
+      },
+      {
+        "func": "GET",
+        "property": "y",
+        "aggregation": "array",
+        "variable": "arrayY"
+      },
+      {
+        "func": "GET",
+        "property": "y",
+        "aggregation": "array",
+        "variable": "currentY"
+      },
+      "var shiftX = ${PROPERTY shiftX OF shiftParent}",
+      "var shiftY = ${PROPERTY shiftY OF shiftParent}",
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "property": "x",
+            "relation": "-",
+            "value": "${shiftX}"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "relation": "-",
+            "value": "${shiftY}"
+          }
+        ]
       },
       {
         "func": "SET",
-        "property": "x",
-        "relation": "+",
-        "value": 80
+        "collection": [
+          "shiftParent"
+        ],
+        "property": "shiftX",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shiftParent"
+        ],
+        "property": "shiftY",
+        "value": 0
       }
     ],
-    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
-    "image": "/assets/822277903_277"
+    "shiftX": 0,
+    "shiftY": 0
   }
 }
