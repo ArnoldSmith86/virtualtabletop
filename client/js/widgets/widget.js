@@ -1279,6 +1279,7 @@ export class Widget extends StateManaged {
                 c.flip(a.face);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
+              await c.set('owner',  null);
               if(a.snapToGrid)
                 await c.snapToGrid();
               await c.set('parent', null);
