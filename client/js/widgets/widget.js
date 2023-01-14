@@ -1818,9 +1818,7 @@ export class Widget extends StateManaged {
 
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
-      this.currentParent = widgets.get(this.get('parent'));
-      while (this.currentParent && this.currentParent.get('type') == 'pile')
-        this.currentParent = widgets.get(this.currentParent.get('parent'));
+      this.currentParent = widgets.get(this.get('_ancestor'));
       this.hoverTarget = null;
 
       this.disablePileUpdateAfterParentChange = true;
