@@ -2115,7 +2115,9 @@ export class Widget extends StateManaged {
   }
 
   async snapToGrid() {
-    let align = this.get('gridAlign').split(' ').map(s => parseFloat(s) / 100);
+    let align = typeof this.get('gridAlign') == 'string' && this.get('gridAlign').split(' ').map(s => parseFloat(s) / 100);
+    if (align.length != 2 || isNaN(align[0]) || isNaN(align[1]))
+      align = [0, 0];
     align[0] *= this.get('width');
     align[1] *= this.get('height');
 
