@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 8,
+    "version": 10,
     "info": {
       "name": "Shape Sorter",
       "image": "/assets/2053592104_47917",
@@ -13,7 +13,7 @@
       "similarName": "Qwirkle",
       "description": "Place blocks in patterns on board while matching 6 shapes and 6 colors. Player with most points wins.",
       "showName": true,
-      "lastUpdate": 1672671600000,
+      "lastUpdate": 1673662124126,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",
@@ -1283,7 +1283,7 @@
         "func": "MOVE",
         "from": "Discard",
         "to": "Draw",
-        "count": 0,
+        "count": "all",
         "face": 0
       },
       {
