@@ -376,7 +376,7 @@ export class Widget extends StateManaged {
     }
   }
 
-  async clone(overrideProperties, recursive = false, problems = null) {
+  async clone(overrideProperties, recursive = false, problems = null, xOffset = 0, yOffset = 0) {
     const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
     const parent = clone.parent;
     clone.clonedFrom = this.get('id');
@@ -392,6 +392,13 @@ export class Widget extends StateManaged {
       // use moveToHolder so that CLONE triggers onEnter and similar features
       cWidget.movedByButton = problems != null;
       await cWidget.moveToHolder(widgets.get(parent));
+
+      // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
+      if(!widgets.get(parent).get('alignChildren')) {
+        await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
+        await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
+        await cWidget.updatePiles();
+      }
       delete cWidget.movedByButton;
     }
 
@@ -931,17 +938,7 @@ export class Widget extends StateManaged {
           var c=[];
           for(const w of collections[source]) {
             for(let i=1; i<=a.count; ++i) {
-              const cWidget = await w.clone(a.properties, false, problems);
-
-              // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
-              const parent = cWidget.get('parent');
-              if(!parent || !widgets.get(parent).get('alignChildren')) {
-                await cWidget.set('x', (a.properties.x !== undefined ? a.properties.x : w.get('x')) + a.xOffset * i);
-                await cWidget.set('y', (a.properties.y !== undefined ? a.properties.y : w.get('y')) + a.yOffset * i);
-                await cWidget.updatePiles();
-              }
-
-              c.push(cWidget);
+              c.push(await w.clone(a.properties, false, problems, a.xOffset * i, a.yOffset * i));
             }
           }
           collections[a.collection]=c;
