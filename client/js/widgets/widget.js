@@ -987,6 +987,9 @@ export class Widget extends StateManaged {
         setDefaults(a, { count: 'all', face: null, faceCyle: null, collection: 'DEFAULT' });
         if(a.count === 'all')
           a.count = 999999;
+        
+        if(typeof(a.count)!="number")
+          problems.push("count is not a number or 'all'");
 
         let collection;
         if(a.holder !== undefined) {
@@ -1226,6 +1229,9 @@ export class Widget extends StateManaged {
         setDefaults(a, { count: 1, face: null });
         if(a.count === 'all')
           a.count = 999999;
+        
+        if(typeof(a.count)!="number")
+          problems.push("count is not a number or 'all'");
 
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
@@ -1276,6 +1282,9 @@ export class Widget extends StateManaged {
         if(a.count === 'all')
           a.count = 999999;
 
+        if(typeof(a.count)!="number")
+          problems.push("count is not a number or 'all'");  
+
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
             for(const c of source.children().slice(0, a.count).reverse()) {
@@ -1322,6 +1331,9 @@ export class Widget extends StateManaged {
         setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
         if(a.count === 'all')
           a.count = 999999;
+        
+        if(typeof(a.count)!="number")
+          problems.push("count is not a number or 'all'");
 
         let collection;
         const mode = a.mode == 'set' ? 'to' : 'by';
