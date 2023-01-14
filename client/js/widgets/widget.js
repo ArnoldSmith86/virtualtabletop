@@ -1985,10 +1985,17 @@ export class Widget extends StateManaged {
       return;
     if (widgets.has(this.get('dropShadowWidget'))) {
       const shadowWidget = widgets.get(this.get('dropShadowWidget'));
-      shadowWidget.currentParent = widgets.get(shadowWidget.get('parent'));
+      const holder = widgets.get(shadowWidget.get('parent'));
+      const preventRearrange = shadowWidget.get('parent') == this.get('hoverTarget');
+      shadowWidget.currentParent = holder;
+      if (preventRearrange)
+        holder.preventRearrangeDuringPileDrop = true;
+
       await shadowWidget.set('parent', null);
       await shadowWidget.checkParent(true);
       await removeWidgetLocal(shadowWidget.get('id'));
+      if (preventRearrange)
+        delete holder.preventRearrangeDuringPileDrop;
     }
     await this.set('dropShadowWidget', null);
   }
