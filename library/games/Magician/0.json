@@ -9375,7 +9375,7 @@
     "x": 1220
   },
   "_meta": {
-    "version": 3,
+    "version": 10,
     "info": {
       "name": "Magician",
       "image": "/assets/2060903656_3659",
@@ -9384,14 +9384,20 @@
       "year": "1984",
       "mode": "vs",
       "time": "45",
-      "players": "3-6",
-      "language": "en-US",
-      "variant": "",
       "attribution": "The room layout is public domain by https://www.reddit.com/user/Ingegneus. The card deck and library image were added by ArnoldSmith86 (along with a few layout changes) and are also public domain.\n\nThe background image by Nathan Dumlao is free to use under the Unsplash License: https://unsplash.com/photos/J2gEgTPM_OA",
       "similarName": "Wizard",
-      "description": "Trick taking, trump card game using a deck of 60 cards where players must take exact number of tricks bid and 8 cards have special rules.  Most points wins.",
+      "description": "Trick taking, trump card game using a deck of 60 cards where players must take exact number of tricks bid and 8 cards have special rules. Most points wins.",
       "showName": true,
-      "lastUpdate": 1624554755000
+      "lastUpdate": 1673660933063,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-6",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "y953": {
@@ -9911,7 +9917,6 @@
             "y": 0,
             "width": 155,
             "height": 240,
-            "valueType": "static",
             "value": "",
             "color": "transparent",
             "css": "background-image: linear-gradient(-45deg, #111 25%, black 25%, black 50%, #111 50%, #111 75%, black 75%, black);background-size: 50px 50px;background-repeat:repeat"
@@ -9921,7 +9926,6 @@
             "x": 0,
             "y": 80,
             "fontSize": 120,
-            "valueType": "static",
             "value": "M",
             "textAlign": "center",
             "width": 155,
@@ -9938,7 +9942,6 @@
             "x": 0,
             "y": 0,
             "color": "#111",
-            "valueType": "static",
             "value": "",
             "width": 155,
             "height": 240
@@ -9948,22 +9951,24 @@
             "x": 2,
             "y": 6,
             "fontSize": 36,
-            "valueType": "dynamic",
-            "value": "value",
             "textAlign": "center",
             "width": 50,
-            "css": "color: var(--color); "
+            "css": "color: var(--color); ",
+            "dynamicProperties": {
+              "value": "value"
+            }
           },
           {
             "type": "text",
             "x": 0,
             "y": 80,
             "fontSize": 120,
-            "valueType": "dynamic",
-            "value": "value",
             "textAlign": "center",
             "width": 155,
-            "css": "color: var(--color); "
+            "css": "color: var(--color); ",
+            "dynamicProperties": {
+              "value": "value"
+            }
           }
         ],
         "radius": 10,
