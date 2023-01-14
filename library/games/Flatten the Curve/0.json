@@ -8,7 +8,7 @@
     "parent": "greenHolder"
   },
   "_meta": {
-    "version": 6,
+    "version": 10,
     "info": {
       "name": "Flatten the Curve",
       "image": "/assets/1461147320_152461",
@@ -17,15 +17,20 @@
       "year": "2008",
       "mode": "coop",
       "time": "45",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
       "attribution": "The game layout, game board, and library image were done by LawDawg and are released to the Public Domain by CC0.\n\nThe research station was was done by mousewax and is released to the Public Domain by CC0.\n\nThe map was made using the tools at https://mapchart.net/world.html and is available under CC BY-SA 4.0.\n\nThe bacteria icons are available under the Vecteezy license from: https://www.vecteezy.com/vector-art/149324-free-bacteria-icon-vector.",
       "similarName": "Pandemic",
       "description": "Cooperative game where players move around board to eliminate diseases. Players win by curing all four diseases and lose if diseases spread too far or cures take too long.",
       "showName": true,
       "helpText": "Players choose seats. Select options using gear icon. Press restart icon to begin (and to automatically set up board if that option is chosen). After play begins, all disease markers are moved by players. To automatically move disease markers of that city color, click on that city holder. To return disease marker to holder, click on marker. Cities only hold 3 markers; manually place other markers nearby. To change outbreak counter, just click on it. If a card needs to be removed from the board, drag it to the trash can holder in the bottom right.",
-      "lastUpdate": 1647839274000
+      "lastUpdate": 1673658909469,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
     }
   },
   "map": {
@@ -865,7 +870,8 @@
         "from": "yellowHolder",
         "to": "${thisID}"
       }
-    ]
+    ],
+    "clickable": false
   },
   "virus1": {
     "id": "virus1",
@@ -985,7 +991,8 @@
         "from": "blackHolder",
         "to": "${thisID}"
       }
-    ]
+    ],
+    "clickable": false
   },
   "virus3": {
     "id": "virus3",
@@ -1062,7 +1069,8 @@
         "from": "redHolder",
         "to": "${thisID}"
       }
-    ]
+    ],
+    "clickable": false
   },
   "label16": {
     "inheritFrom": "label13",
@@ -2818,7 +2826,8 @@
     "layer": 2,
     "movableInEdit": false,
     "childrenPerOwner": "",
-    "onlyVisibleForSeat": "seat1"
+    "onlyVisibleForSeat": "seat1",
+    "hoverInheritVisibleForSeat": false
   },
   "playerCardsHolder": {
     "type": "holder",
@@ -2911,7 +2920,8 @@
     "y": 105,
     "linkedToSeat": "seat2",
     "childrenPerOwner": "",
-    "onlyVisibleForSeat": "seat2"
+    "onlyVisibleForSeat": "seat2",
+    "hoverInheritVisibleForSeat": false
   },
   "handSeat3": {
     "inheritFrom": "handSeat1",
@@ -2922,7 +2932,8 @@
     "linkedToSeat": "seat3",
     "z": 12336,
     "childrenPerOwner": "",
-    "onlyVisibleForSeat": "seat3"
+    "onlyVisibleForSeat": "seat3",
+    "hoverInheritVisibleForSeat": false
   },
   "handSeat4": {
     "inheritFrom": "handSeat1",
@@ -2932,7 +2943,8 @@
     "y": 650,
     "linkedToSeat": "seat4",
     "childrenPerOwner": "",
-    "onlyVisibleForSeat": "seat4"
+    "onlyVisibleForSeat": "seat4",
+    "hoverInheritVisibleForSeat": false
   },
   "roleHolder": {
     "type": "holder",
@@ -6005,10 +6017,16 @@
           "var handSeat = 'handSeat' + ${value}",
           "var role = 'role' + ${value}",
           {
-            "func": "MOVE",
-            "from": "playerCardsHolder",
-            "to": "${handSeat}",
-            "count": "${startCards}"
+            "func": "IF",
+            "condition": "${startCards}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "playerCardsHolder",
+                "to": "${handSeat}",
+                "count": "${startCards}"
+              }
+            ]
           },
           {
             "func": "MOVE",
@@ -6112,7 +6130,7 @@
             "func": "MOVE",
             "from": "${value}",
             "to": "playerCardsHolder",
-            "count": 0
+            "count": "all"
           }
         ]
       },
@@ -6404,7 +6422,7 @@
         "func": "MOVE",
         "from": "infectionDiscard",
         "to": "infectionHolder",
-        "count": 0
+        "count": "all"
       }
     ],
     "x": 1372,
