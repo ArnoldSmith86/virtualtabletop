@@ -1,4 +1,4 @@
-export const VERSION = 9;
+export const VERSION = 10;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -35,6 +35,7 @@ function updateProperties(properties, v) {
   v<6 && v6cssPieces(properties);
   v<7 && v7HolderClickable(properties);
   v<8 && v8HoverInheritVisibleForSeat(properties);
+  v<10 && v10HandDropShadow(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -338,4 +339,10 @@ function v9NumericStringSort(routine) {
   for(const key in routine)
     if(typeof routine[key] === 'string')
       routine[key] = routine[key].replace('numericSort', 'numericStringSort');
+}
+
+function v10HandDropShadow(properties) {
+  if (properties.type == 'holder' && properties.childrenPerOwner && !properties.enterRoutine && !properties.leaveRoutine && !properties.changeRoutine) {
+    properties.dropShadow = true;
+  }
 }
