@@ -346,7 +346,7 @@ function v10UpdateCountParameter(routine) {
     if(routine[key] && [ 'FLIP', 'MOVE', 'MOVEXY', 'ROTATE' ].indexOf(routine[key].func) != -1 && typeof routine[key].count != 'undefined') {
       if(!routine[key].count) {
         routine[key].count = 'all';
-      } else if(typeof routine[key].count == 'string') {
+      } else if(typeof routine[key].count == 'string' && routine[key].count.includes('$')) {
         routine[key] = {
           note: `This was added by the automatic file migration because the behavior of ${routine[key].func} with count=0 changed.`,
           func: 'IF',
