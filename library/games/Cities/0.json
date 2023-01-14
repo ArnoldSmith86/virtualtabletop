@@ -62,7 +62,6 @@
             "y": 0,
             "width": 70,
             "height": 70,
-            "valueType": "static",
             "value": "",
             "color": "transparent",
             "css": "background-image: linear-gradient(-45deg, #111 25%, black 25%, black 50%, #111 50%, #111 75%, black 75%, black);background-size: 50px 50px;background-repeat:repeat"
@@ -72,7 +71,6 @@
             "x": -2,
             "y": 4,
             "fontSize": 50,
-            "valueType": "static",
             "value": "C",
             "textAlign": "center",
             "width": 70,
@@ -87,88 +85,96 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "i",
             "width": 70,
             "height": 70,
-            "css": "background-size:auto;background-position:calc(var(--x1) * -70px) calc(var(--y1) * -70px);transform:rotate(calc(var(--r1) * 90deg))"
+            "css": "background-size:auto;background-position:calc(var(--x1) * -70px) calc(var(--y1) * -70px);transform:rotate(calc(var(--r1) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "i",
             "width": 70,
             "height": 70,
-            "css": "background-size:auto;background-position:calc(var(--x2) * -70px) calc(var(--y2) * -70px);transform:rotate(calc(var(--r2) * 90deg))"
+            "css": "background-size:auto;background-position:calc(var(--x2) * -70px) calc(var(--y2) * -70px);transform:rotate(calc(var(--r2) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "i",
             "width": 70,
             "height": 70,
-            "css": "background-size:auto;background-position:calc(var(--x3) * -70px) calc(var(--y3) * -70px);transform:rotate(calc(var(--r3) * 90deg))"
+            "css": "background-size:auto;background-position:calc(var(--x3) * -70px) calc(var(--y3) * -70px);transform:rotate(calc(var(--r3) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "i",
             "width": 70,
             "height": 70,
-            "css": "background-size:auto;background-position:calc(var(--x4) * -70px) calc(var(--y4) * -70px);transform:rotate(calc(var(--r4) * 90deg))"
+            "css": "background-size:auto;background-position:calc(var(--x4) * -70px) calc(var(--y4) * -70px);transform:rotate(calc(var(--r4) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "i",
             "width": 70,
             "height": 70,
-            "css": "background-size:auto;background-position:calc(var(--x5) * -70px) calc(var(--y5) * -70px);transform:rotate(calc(var(--r5) * 90deg))"
+            "css": "background-size:auto;background-position:calc(var(--x5) * -70px) calc(var(--y5) * -70px);transform:rotate(calc(var(--r5) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "i",
             "width": 70,
             "height": 70,
-            "css": "background-size:auto;background-position:calc(var(--x6) * -70px) calc(var(--y6) * -70px);transform:rotate(calc(var(--r6) * 90deg))"
+            "css": "background-size:auto;background-position:calc(var(--x6) * -70px) calc(var(--y6) * -70px);transform:rotate(calc(var(--r6) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "i",
             "width": 70,
             "height": 70,
-            "css": "background-size:auto;background-position:calc(var(--x7) * -70px) calc(var(--y7) * -70px);transform:rotate(calc(var(--r7) * 90deg))"
+            "css": "background-size:auto;background-position:calc(var(--x7) * -70px) calc(var(--y7) * -70px);transform:rotate(calc(var(--r7) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "i",
             "width": 70,
             "height": 70,
-            "css": "background-size:auto;background-position:calc(var(--x8) * -70px) calc(var(--y8) * -70px);transform:rotate(calc(var(--r8) * 90deg))"
+            "css": "background-size:auto;background-position:calc(var(--x8) * -70px) calc(var(--y8) * -70px);transform:rotate(calc(var(--r8) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
           }
         ]
       }
@@ -3785,7 +3791,7 @@
           "Player 7 - Towers"
         ],
         "to": "Player 8 - Towers",
-        "count": 0
+        "count": "all"
       },
       "var towerCount = ${PROPERTY towerCount}",
       "var towerCount = ${towerCount.$playerCount}",
@@ -3809,10 +3815,16 @@
             "operand2": "${value}",
             "thenRoutine": [
               {
-                "func": "MOVE",
-                "from": "Player 8 - Towers",
-                "to": "Player ${value} - Towers",
-                "count": "${towerCount}"
+                "func": "IF",
+                "condition": "${towerCount}",
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "Player 8 - Towers",
+                    "to": "Player ${value} - Towers",
+                    "count": "${towerCount}"
+                  }
+                ]
               },
               {
                 "func": "SELECT",
@@ -3958,7 +3970,7 @@
     "y": 152
   },
   "_meta": {
-    "version": 4,
+    "version": 10,
     "info": {
       "name": "Cities",
       "image": "/assets/-369771875_19142",
@@ -3967,14 +3979,20 @@
       "year": "2000",
       "mode": "vs",
       "time": "45",
-      "players": "2-8",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "Room layout by ArnoldSmith86 and LawDawg96 released to public domain by CC0.\n\nGame pieces by ArnoldSmith86 released to public domain by CC0.\n\nThe sprite sheet for the tiles was created by ArnoldSmith86 and LawDawg96, licensed as CC By 3.0, and contains the following artwork:\n\nCC By 3.0 by Delapouite:\n - https://game-icons.net/1x1/delapouite/rolled-cloth.html\n - https://game-icons.net/1x1/lorc/wheat.html\n - https://game-icons.net/1x1/delapouite/barrel.html\n - https://game-icons.net/1x1/delapouite/house.html\n - https://game-icons.net/1x1/delapouite/stone-bridge.html\n - https://game-icons.net/1x1/delapouite/church.html\n - https://game-icons.net/1x1/delapouite/smoking-volcano.html (as modified by LawDawg96)\n\nCC By 3.0 by Lorc:\n - https://game-icons.net/1x1/lorc/dragon-head.html\n - https://game-icons.net/1x1/lorc/magic-portal.html\n\nCC By 3.0 by Skoll:\n - https://game-icons.net/1x1/skoll/chess-rook.html\n\nAvailable under the Flaticon License by Photo3idea_studio:\nhttps://www.flaticon.com/free-icon/church_4446088?term=church&page=1&position=2&page=1&position=2&related_id=4446088&origin=style#",
+      "attribution": "Room layout by ArnoldSmith86 and LawDawg96 released to public domain by CC0.\n\nGame pieces by ArnoldSmith86 released to public domain by CC0.\n\nThe sprite sheet for the tiles was created by ArnoldSmith86 and LawDawg96, licensed as CC By 3.0, and contains the following artwork:\n\nCC By 3.0 by Delapouite:\n - https://game-icons.net/1x1/delapouite/rolled-cloth.html\n - https://game-icons.net/1x1/lorc/wheat.html\n - https://game-icons.net/1x1/delapouite/barrel.html\n - https://game-icons.net/1x1/delapouite/house.html\n - https://game-icons.net/1x1/delapouite/stone-bridge.html\n - https://game-icons.net/1x1/delapouite/church.html\n - https://game-icons.net/1x1/delapouite/smoking-volcano.html (as modified by LawDawg96)\n\nCC By 3.0 by Lorc:\n - https://game-icons.net/1x1/lorc/dragon-head.html\n - https://game-icons.net/1x1/lorc/magic-portal.html\n\nCC By 3.0 by Skoll:\n - https://game-icons.net/1x1/skoll/chess-rook.html\n\nAvailable under the Flaticon License by Photo3idea_studio:\nhttps://www.flaticon.com/free-icon/church_4446088?term=church&amp;page=1&amp;position=2&amp;page=1&amp;position=2&amp;related_id=4446088&amp;origin=style#",
       "similarName": "Carcassonne",
       "description": "Tile-building game where players create and link farmland, cities, and roads to earn points. Optional 4 expansion packs with additional tiles, scoring system, and rules available and built-in to the main game.",
       "showName": true,
-      "lastUpdate": 1635211586000
+      "lastUpdate": 1673658097003,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-8",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "Player 2 - Big Meeple": {
@@ -7395,22 +7413,24 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "i",
             "width": 30,
             "height": 30,
-            "css": "background-size:auto;background-position:-73px -210px"
+            "css": "background-size:auto;background-position:-73px -210px",
+            "dynamicProperties": {
+              "value": "i"
+            }
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "i",
             "width": 30,
             "height": 30,
-            "css": "background-size:auto;background-position:calc(calc(var(--x) * -70px) - 3px) -210px"
+            "css": "background-size:auto;background-position:calc(calc(var(--x) * -70px) - 3px) -210px",
+            "dynamicProperties": {
+              "value": "i"
+            }
           }
         ]
       }
