@@ -20,7 +20,7 @@ function computeGlobalProperties(state, v) {
   if (globalProperties.v10DropShadowAllowed = v < 10) {
     for (const id in state) {
       const properties = state[id];
-      if (properties.type == 'card' || properties.type == 'deck') {
+      if (properties.type == 'card' || properties.type == 'deck' || properties.type == 'pile') {
         globalProperties.v10DropShadowAllowed = globalProperties.v10DropShadowAllowed &&
             !hasPropertyCondition(properties, (properties) => {
               return properties.parentChangeRoutine || properties.changeRoutine;
@@ -38,11 +38,13 @@ function computeGlobalProperties(state, v) {
 }
 
 function hasPropertyCondition(properties, condition) {
-  if (!properties)
+  if (typeof properties != 'object')
     return false;
   if (condition(properties))
     return true;
   if (properties.type) {
+    if (hasPropertyCondition(properties.onPileCreation, condition))
+      return true;
     if (typeof properties.faces == 'object') {
       for (const face of properties.faces) {
         if (hasPropertyCondition(properties.faces[face], condition))
