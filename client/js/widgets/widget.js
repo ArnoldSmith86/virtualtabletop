@@ -1279,7 +1279,8 @@ export class Widget extends StateManaged {
                 c.flip(a.face);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
-              await c.set('owner',  null);
+              if(c.get('_ancestor') && widgets.get(c.get('_ancestor')).get('childrenPerOwner'))
+                await c.set('owner',  null);
               if(a.snapToGrid)
                 await c.snapToGrid();
               await c.set('parent', null);
@@ -1347,7 +1348,7 @@ export class Widget extends StateManaged {
           problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           a.mode = 'set'
         }
-        
+
         if(a.value === null)
           a.value = a.mode=='set' ? 0 : 1;
         if(isNaN(parseFloat(a.value))) {
@@ -1842,7 +1843,7 @@ export class Widget extends StateManaged {
 
     //Keeps widget's top left corner within coordinates set by dragLimit object
     const limit = this.get('dragLimit');
- 
+
     if (limit.minX !== undefined) {
       newX = Math.max(limit.minX, newX);
     }
