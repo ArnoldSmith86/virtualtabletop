@@ -502,7 +502,6 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "valueType": "static",
             "value": "/assets/-1126543810_112781",
             "width": 103,
             "height": 160
@@ -518,10 +517,11 @@
             "x": 0,
             "y": 0,
             "color": "#dcc28f",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 103,
-            "height": 160
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": false,
@@ -6326,7 +6326,7 @@
     "id": "5u7o"
   },
   "_meta": {
-    "version": 3,
+    "version": 10,
     "info": {
       "name": "Medieval VNO",
       "image": "/assets/1844049714_249128",
@@ -6335,14 +6335,20 @@
       "year": "1971",
       "mode": "vs",
       "time": "30",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "Automated version",
       "attribution": "Game pieces are from:\n\n- https://www.hiclipart.com/free-transparent-background-png-clipart-lxyxq. Available for non-commercial use.\n- https://www.hiclipart.com/free-transparent-background-png-clipart-lxyxq. In the public domain under CC0.\n- https://www.clipartkey.com/view/ioTimT_finger-clipart-pointed-finger-pointing-hand/. Available for non-commercial use.\n-https://www.kenney.nl/assets/ui-pack-rpg-expansion.In the public domain under CC0.\n-https://unsplash.com/photos/J2gEgTPM_OA.Photo by Nathan Dumlao on Unsplash\n\n\nThe room design, library image, and other room elements are by Ingegneus and are released to the public domain under CC0.\n\n--\n\nThe only step you need to make manually is clicking next after buying cards.\n\n\nGame pieces are from:\n\n- https://www.hiclipart.com/free-transparent-background-png-clipart-lxyxq. Available for non-commercial use.\n- https://www.hiclipart.com/free-transparent-background-png-clipart-lxyxq. In the public domain under CC0.\n- https://www.clipartkey.com/view/ioTimT_finger-clipart-pointed-finger-pointing-hand/. Available for non-commercial use.\n-https://www.kenney.nl/assets/ui-pack-rpg-expansion.In the public domain under CC0.\n-https://unsplash.com/photos/J2gEgTPM_OA.Photo by Nathan Dumlao on Unsplash\n\n\nThe room design, library image, and other room elements are by Ingegneus, with automation modifications by RaphaelAlvez, and are released to the public domain under CC0.",
       "similarName": "UNO",
-      "description": "Play cards onto discard stack matching color or number.  Use cards with powers to influence play.  First to get rid of all cards wins.",
+      "description": "Play cards onto discard stack matching color or number. Use cards with powers to influence play. First to get rid of all cards wins.",
       "showName": true,
-      "lastUpdate": 1673381158873
+      "lastUpdate": 1673661834043,
+      "skill": "",
+      "variantImage": "",
+      "variant": "Automated version",
+      "language": "en-US",
+      "players": "2-4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "buyPile": {
