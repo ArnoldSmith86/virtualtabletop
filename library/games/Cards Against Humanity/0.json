@@ -42,7 +42,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Cards Against Humanity is free to use under the Creative Commons BY-NC-SA 2.0 License. Visit https://www.cardsagainsthumanity.com/ for details.<br></div><div><br></div><div>The game file itself was created by ArnoldSmith86 and is also released under the Creative Commons BY-NC-SA 2.0 License.</div>",
-      "lastUpdate": 1673731783593,
+      "lastUpdate": 1673736552843,
       "showName": true,
       "skill": "creativity",
       "description": "Card game where you pick a response to a given prompt. One player gives points for the funniest combination. Player with most points wins.",
@@ -796,114 +796,58 @@
       {
         "func": "COUNT",
         "holder": "Panel 2",
-        "variable": "responsesCount"
+        "variable": "responsesCount1"
+      },
+      {
+        "func": "COUNT",
+        "holder": "Panel 3",
+        "variable": "responsesCount2"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "Panel 1"
+      },
+      {
+        "func": "GET",
+        "property": "responses",
+        "variable": "responsesExpected"
       },
       {
         "func": "IF",
         "operand1": "${playerCount}",
-        "operand2": "${responsesCount}",
+        "operand2": "${responsesCount1}",
         "thenRoutine": [
           {
-            "func": "SET",
-            "collection": [
-              "Vote Overlay"
+            "func": "IF",
+            "operand1": "${responsesExpected}",
+            "relation": "<",
+            "operand2": 2,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "pickRoutine"
+              }
             ],
-            "property": "owner"
-          },
-          {
-            "func": "FOREACH",
-            "in": [
-              "A",
-              "B",
-              "C",
-              "D",
-              "E",
-              "F",
-              "G",
-              "H",
-              "I"
-            ],
-            "loopRoutine": [
-              "var player = ${players.$key}",
+            "elseRoutine": [
               {
                 "func": "IF",
-                "condition": "${player}",
+                "operand1": "${playerCount}",
+                "operand2": "${responsesCount2}",
                 "thenRoutine": [
                   {
-                    "func": "SELECT",
-                    "property": "parent",
-                    "relation": "in",
-                    "value": [
-                      "Panel 1",
-                      "Panel 2",
-                      "Panel 3"
-                    ],
-                    "collection": "playedCards"
-                  },
+                    "func": "CALL",
+                    "routine": "pickRoutine"
+                  }
+                ],
+                "elseRoutine": [
                   {
-                    "func": "SELECT",
-                    "source": "playedCards",
-                    "property": "activeFace",
-                    "value": 1
-                  },
-                  {
-                    "func": "FOREACH",
-                    "loopRoutine": [
+                    "func": "INPUT",
+                    "header": "Too Few Cards",
+                    "fields": [
                       {
-                        "func": "GET",
-                        "property": "parent",
-                        "variable": "panel"
-                      },
-                      {
-                        "func": "CLONE",
-                        "properties": {
-                          "parent": "Voting ${panel} ${value}"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "func": "SELECT",
-                    "source": "playedCards",
-                    "property": "playedBy",
-                    "value": "${player}"
-                  },
-                  {
-                    "func": "SELECT",
-                    "source": "DEFAULT",
-                    "property": "activeFace",
-                    "value": 0
-                  },
-                  {
-                    "func": "COUNT"
-                  },
-                  {
-                    "func": "FOREACH",
-                    "loopRoutine": [
-                      {
-                        "func": "SET",
-                        "value": "Voting ${PROPERTY _ancestor OF $widgetID} ${value}"
-                      },
-                      {
-                        "func": "SET",
-                        "property": "activeFace",
-                        "value": 1
-                      },
-                      {
-                        "func": "SET",
-                        "value": "${player}",
-                        "property": "player",
-                        "collection": [
-                          "Vote Button ${value}"
-                        ]
-                      },
-                      {
-                        "func": "SET",
-                        "value": "${COUNT}",
-                        "property": "score",
-                        "collection": [
-                          "Vote Button ${value}"
-                        ]
+                        "type": "text",
+                        "text": "The game expects ${playerCount} cards in both of the middle and right holders. There are ${responsesCount1} in the middle and ${responsesCount2} in the right."
                       }
                     ]
                   }
@@ -919,7 +863,7 @@
             "fields": [
               {
                 "type": "text",
-                "text": "The game expects ${playerCount} cards in the middle holder. There are ${responsesCount}."
+                "text": "The game expects ${playerCount} cards in the middle holder. There are ${responsesCount1}."
               }
             ]
           }
@@ -933,7 +877,117 @@
       "--wcFont": "black",
       "--wcFontOH": "white",
       "font-weight": "bold"
-    }
+    },
+    "pickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Vote Overlay"
+        ],
+        "property": "owner"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I"
+        ],
+        "loopRoutine": [
+          "var player = ${players.$key}",
+          {
+            "func": "IF",
+            "condition": "${player}",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "relation": "in",
+                "value": [
+                  "Panel 1",
+                  "Panel 2",
+                  "Panel 3"
+                ],
+                "collection": "playedCards"
+              },
+              {
+                "func": "SELECT",
+                "source": "playedCards",
+                "property": "activeFace",
+                "value": 1
+              },
+              {
+                "func": "FOREACH",
+                "loopRoutine": [
+                  {
+                    "func": "GET",
+                    "property": "parent",
+                    "variable": "panel"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "Voting ${panel} ${value}"
+                    }
+                  }
+                ]
+              },
+              {
+                "func": "SELECT",
+                "source": "playedCards",
+                "property": "playedBy",
+                "value": "${player}"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "activeFace",
+                "value": 0
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "FOREACH",
+                "loopRoutine": [
+                  {
+                    "func": "SET",
+                    "value": "Voting ${PROPERTY _ancestor OF $widgetID} ${value}"
+                  },
+                  {
+                    "func": "SET",
+                    "property": "activeFace",
+                    "value": 1
+                  },
+                  {
+                    "func": "SET",
+                    "value": "${player}",
+                    "property": "player",
+                    "collection": [
+                      "Vote Button ${value}"
+                    ]
+                  },
+                  {
+                    "func": "SET",
+                    "value": "${COUNT}",
+                    "property": "score",
+                    "collection": [
+                      "Vote Button ${value}"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "Start": {
     "type": "button",
@@ -942,6 +996,16 @@
     "y": 109,
     "text": "Start",
     "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Start Over",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Are you sure you want to start over?"
+          }
+        ]
+      },
       {
         "func": "SELECT",
         "property": "clonedFrom",
