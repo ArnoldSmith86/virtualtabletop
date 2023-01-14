@@ -1,4 +1,4 @@
-export const VERSION = 10;
+export const VERSION = 9;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -8,63 +8,23 @@ export default function FileUpdater(state) {
     throw Error(`File version ${v} is newer than the supported version ${VERSION}.`);
 
   for(const id in state)
-    updateProperties(state[id], v, id, state);
+    updateProperties(state[id], v);
 
   state._meta.version = VERSION;
   return state;
 }
 
-function getPropertyValue(widgetID, state, property, defaultValue) {
-  const widget = state[widgetID];
-  let value = widget[property];
-  if (value !== undefined)
-    return value;
-  if (widget.inheritFrom != null) {
-    if (typeof widget.inheritFrom == 'string') {
-      value = getProperty(widget.inheritFrom, state, property, defaultValue);
-      if (value !== undefined)
-        return value;
-    } else if (typeof widget.inheritFrom == 'object') {
-      for (let inheritID in widget.inheritFrom) {
-        if (widget.inheritFrom[inheritID] == '*' ||
-            widget.inheritFrom[inheritID].indexOf(property) != -1 ||
-            (widget.inheritFrom[inheritID].length > 0 && widget.inheritFrom[inheritID][0][0] == '!')) {
-          value = getProperty(inheritID, state, property, defaultValue);
-          if (value !== undefined)
-            return value;
-        }
-      }
-    }
-  }
-  if (widget.type == 'card' && widget.deck !== null && state[widget.deck] !== undefined) {
-    const deck = state[widget.deck];
-    if (widget.cardType !== null && typeof deck.cardTypes == 'object' && deck.cardTypes[widget.cardType] !== undefined) {
-      value = deck.cardTypes[widget.cardType][property];
-      if (value !== undefined)
-        return value;
-    }
-    if (typeof deck.cardDefaults == 'object') {
-      value = deck.cardDefaults[property];
-      if (value !== undefined)
-        return value;
-    }
-  }
-  return defaultValue;
-}
-
-function updateProperties(properties, v, widgetID, state) {
+function updateProperties(properties, v) {
   if(typeof properties != 'object')
     return;
 
-  if(!properties.type && typeof properties.faces == 'object') {
-    for (let i in properties.faces)
-      updateProperties(properties.faces[i], v, widgetID, state);
-  }
+  if(!properties.type)
+    updateProperties(properties.faces, v);
   if(properties.type == 'deck')
-    updateProperties(properties.cardDefaults, v, widgetID, state);
+    updateProperties(properties.cardDefaults, v);
   if(properties.type == 'deck' && typeof properties.cardTypes == 'object')
     for(const cardType in properties.cardTypes)
-      updateProperties(properties.cardTypes[cardType], v, widgetID, state);
+      updateProperties(properties.cardTypes[cardType], v);
 
   for(const property in properties)
     if(property.match(/Routine$/))
@@ -75,7 +35,6 @@ function updateProperties(properties, v, widgetID, state) {
   v<6 && v6cssPieces(properties);
   v<7 && v7HolderClickable(properties);
   v<8 && v8HoverInheritVisibleForSeat(properties);
-  v<10 && widgetID && v10GridOffset(properties, widgetID, state);
 }
 
 function updateRoutine(routine, v) {
@@ -379,36 +338,4 @@ function v9NumericStringSort(routine) {
   for(const key in routine)
     if(typeof routine[key] === 'string')
       routine[key] = routine[key].replace('numericSort', 'numericStringSort');
-}
-
-function v10GridOffset(properties, widgetID, state) {
-  const grid = properties.grid;
-  const widget = state[widgetID];
-  if (!grid)
-    return;
-  if (widget.type == 'deck') {
-    // Use a sample card from that deck.
-    for (let id in state) {
-      if (state[id].type == 'card' && state[id].deck == widgetID) {
-        widgetID = id;
-        break;
-      }
-    }
-  }
-  const width = getPropertyValue(widgetID, state, 'width', state[widgetID].type == 'card' ? 103 : 100);
-  const height = getPropertyValue(widgetID, state, 'height', state[widgetID].type == 'card' ? 160 : 100);
-  for (let i = 0; i < grid.length; ++i) {
-    const xAdjustment = -grid[i].x*0.5 + width*0.5;
-    const yAdjustment = -grid[i].y*0.5 + height*0.5;
-    grid[i].offsetX = (grid[i].offsetX || 0) + xAdjustment;
-    grid[i].offsetY = (grid[i].offsetY || 0) + yAdjustment;
-    if (typeof grid[i].minX == 'number')
-      grid[i].minX += xAdjustment;
-    if (typeof grid[i].maxX == 'number')
-      grid[i].maxX += xAdjustment;
-    if (typeof grid[i].minY == 'number')
-      grid[i].minY += yAdjustment;
-    if (typeof grid[i].maxY == 'number')
-      grid[i].maxY += yAdjustment;
-  }
 }

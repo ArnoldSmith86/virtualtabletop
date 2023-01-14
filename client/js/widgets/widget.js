@@ -2137,10 +2137,9 @@ export class Widget extends StateManaged {
   }
 
   async snapToGrid() {
-    const anchor = this.dropAnchor() || {x: this.get('width')/2, y: this.get('height')/2};
     if(this.get('grid').length) {
-      const x = this.get('x') + anchor.x;
-      const y = this.get('y') + anchor.y;
+      const x = this.get('x');
+      const y = this.get('y');
 
       let closest = null;
       let closestDistance = 999999;
@@ -2151,8 +2150,8 @@ export class Widget extends StateManaged {
         if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
           continue;
 
-        const snapX = x + grid.x/2 - mod(x + grid.x/2 - (grid.offsetX || 0), grid.x);
-        const snapY = y + grid.y/2 - mod(y + grid.y/2 - (grid.offsetY || 0), grid.y);
+        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
+        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
 
         const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
         if(distance < closestDistance) {
@@ -2162,7 +2161,7 @@ export class Widget extends StateManaged {
       }
 
       if(closest) {
-        this.setPosition(closest[0] - anchor.x, closest[1] - anchor.y, this.get('z'));
+        this.setPosition(closest[0], closest[1], this.get('z'));
         for(const p in closest[2])
           if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
             await this.set(p, closest[2][p]);
