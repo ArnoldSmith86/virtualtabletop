@@ -7,51 +7,98 @@ export default function FileUpdater(state) {
   if(v > VERSION)
     throw Error(`File version ${v} is newer than the supported version ${VERSION}.`);
 
+  const globalProperties = computeGlobalProperties(state, v);
   for(const id in state)
-    updateProperties(state[id], v);
+    updateProperties(state[id], v, globalProperties);
 
   state._meta.version = VERSION;
   return state;
 }
 
-function updateProperties(properties, v) {
+function computeGlobalProperties(state, v) {
+  let globalProperties = {};
+  if (globalProperties.v10DropShadowAllowed = v < 10) {
+    for (const id in state) {
+      const properties = state[id];
+      if (properties.type == 'card' || properties.type == 'deck') {
+        globalProperties.v10DropShadowAllowed = globalProperties.v10DropShadowAllowed &&
+            !hasPropertyCondition(properties, (properties) => {
+              return properties.parentChangeRoutine || properties.changeRoutine;
+            });
+      }
+      globalProperties.v10DropShadowAllowed = globalProperties.v10DropShadowAllowed &&
+          !hasPropertyCondition(properties, (properties) => {
+            return properties.parentGlobalUpdateRoutine || properties.globalUpdateRoutine;
+          });
+      if (!globalProperties.v10DropShadowAllowed)
+        break;
+    }
+  }
+  return globalProperties;
+}
+
+function hasPropertyCondition(properties, condition) {
+  if (!properties)
+    return false;
+  if (condition(properties))
+    return true;
+  if (properties.type) {
+    if (typeof properties.faces == 'object') {
+      for (const face of properties.faces) {
+        if (hasPropertyCondition(properties.faces[face], condition))
+          return true;
+      }
+    }
+    if (properties.type == 'deck') {
+      if (hasPropertyCondition(properties.cardDefaults, condition))
+        return true;
+      if (typeof properties.cardTypes == 'object')
+        for(const cardType in properties.cardTypes)
+          if (hasPropertyCondition(properties.cardTypes[cardType], condition))
+            return true;
+    }
+  }
+  return false;
+}
+
+function updateProperties(properties, v, globalProperties) {
   if(typeof properties != 'object')
     return;
 
   if(!properties.type)
-    updateProperties(properties.faces, v);
+    updateProperties(properties.faces, v, globalProperties);
   if(properties.type == 'deck')
-    updateProperties(properties.cardDefaults, v);
+    updateProperties(properties.cardDefaults, v, globalProperties);
   if(properties.type == 'deck' && typeof properties.cardTypes == 'object')
     for(const cardType in properties.cardTypes)
-      updateProperties(properties.cardTypes[cardType], v);
+      updateProperties(properties.cardTypes[cardType], v, globalProperties);
 
   for(const property in properties)
     if(property.match(/Routine$/))
-      updateRoutine(properties[property], v);
+      updateRoutine(properties[property], v, globalProperties);
 
   v<4 && v4ModifyDropTargetEmptyArray(properties);
   v<5 && v5DynamicFaceProperties(properties);
   v<6 && v6cssPieces(properties);
   v<7 && v7HolderClickable(properties);
   v<8 && v8HoverInheritVisibleForSeat(properties);
-  v<10 && v10HandDropShadow(properties);
+  v<10 && globalProperties.v10DropShadowAllowed && v10HandDropShadow(properties);
 }
 
-function updateRoutine(routine, v) {
+function updateRoutine(routine, v, globalProperties) {
   if(!Array.isArray(routine))
     return;
 
   for(const operation of routine) {
     if(operation.func == 'CLONE') {
-      updateProperties(operation.properties, v);
+      updateProperties(operation.properties, v, globalProperties);
     }
     if(operation.func == 'FOREACH') {
-      updateRoutine(operation.loopRoutine, v);
+      updateRoutine(operation.loopRoutine, v, globalProperties);
     }
     if(operation.func == 'IF') {
-      updateRoutine(operation.thenRoutine, v);
-      updateRoutine(operation.elseRoutine, v);
+      updateRoutine(operation.thenRoutine, v, globalProperties);
+      updateRoutine(operation.elseRoutine, v, globalProperties);
     }
   }
 
