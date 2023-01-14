@@ -10,7 +10,6 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/-111262717_23581",
             "width": 160,
             "height": 240
@@ -20,7 +19,6 @@
             "x": 0,
             "y": 0,
             "color": "#000000a0",
-            "valueType": "static",
             "value": "",
             "width": 160,
             "height": 240
@@ -30,7 +28,6 @@
             "x": 20,
             "y": 40,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/-1431085592_42429",
             "width": 80,
             "height": 80,
@@ -41,7 +38,6 @@
             "x": 40,
             "y": 80,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/-314994489_25206",
             "width": 80,
             "height": 80,
@@ -52,7 +48,6 @@
             "x": 60,
             "y": 120,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/-111262717_23581",
             "width": 80,
             "height": 80,
@@ -68,33 +63,36 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 160,
             "height": 240,
-            "css": "background-size: cover"
+            "css": "background-size: cover",
+            "dynamicProperties": {
+              "value": "image"
+            }
           },
           {
             "type": "text",
             "x": 0,
             "y": 20,
             "fontSize": 120,
-            "valueType": "dynamic",
-            "value": "number",
             "textAlign": "center",
             "width": 160,
-            "css": "color: white; text-shadow: 4px 4px black;"
+            "css": "color: white; text-shadow: 4px 4px black;",
+            "dynamicProperties": {
+              "value": "number"
+            }
           },
           {
             "type": "text",
             "x": 0,
             "y": 45,
             "fontSize": 70,
-            "valueType": "dynamic",
-            "value": "smallnumber",
             "textAlign": "center",
             "width": 160,
-            "css": "color: white; text-shadow: 4px 4px black;"
+            "css": "color: white; text-shadow: 4px 4px black;",
+            "dynamicProperties": {
+              "value": "smallnumber"
+            }
           }
         ],
         "radius": 30
@@ -1153,7 +1151,6 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/-314994489_25206",
             "width": 160,
             "height": 240
@@ -1163,7 +1160,6 @@
             "x": 0,
             "y": 0,
             "color": "#00000080",
-            "valueType": "static",
             "value": "",
             "width": 160,
             "height": 240
@@ -1173,22 +1169,24 @@
             "x": 0,
             "y": 60,
             "fontSize": 46,
-            "valueType": "dynamic",
-            "value": "text",
             "textAlign": "center",
             "width": 160,
-            "css": "color: white; text-shadow: 4px 4px black;"
+            "css": "color: white; text-shadow: 4px 4px black;",
+            "dynamicProperties": {
+              "value": "text"
+            }
           },
           {
             "type": "text",
             "x": 0,
             "y": 180,
             "fontSize": 46,
-            "valueType": "dynamic",
-            "value": "bottomtext",
             "textAlign": "center",
             "width": 160,
-            "css": "color: white; text-shadow: 4px 4px black;"
+            "css": "color: white; text-shadow: 4px 4px black;",
+            "dynamicProperties": {
+              "value": "bottomtext"
+            }
           }
         ],
         "radius": 30
@@ -1286,10 +1284,16 @@
       "var targetHeightHigh = ${targetHeight.$players} + 5",
       "var targetHeight = randInt ${targetHeightLow} ${targetHeightHigh}",
       {
-        "func": "MOVE",
-        "from": "Draw",
-        "to": "Discard",
-        "count": "${targetHeight}"
+        "func": "IF",
+        "condition": "${targetHeight}",
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "Draw",
+            "to": "Discard",
+            "count": "${targetHeight}"
+          }
+        ]
       },
       {
         "func": "MOVE",
@@ -1297,10 +1301,16 @@
         "to": "Draw"
       },
       {
-        "func": "MOVE",
-        "from": "Discard",
-        "to": "Draw",
-        "count": "${targetHeight}"
+        "func": "IF",
+        "condition": "${targetHeight}",
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "Discard",
+            "to": "Draw",
+            "count": "${targetHeight}"
+          }
+        ]
       },
       {
         "func": "LABEL",
@@ -1475,7 +1485,7 @@
     "text": "Stack"
   },
   "_meta": {
-    "version": 3,
+    "version": 10,
     "info": {
       "name": "Elemental",
       "image": "/assets/-170776426_30255",
@@ -1484,14 +1494,20 @@
       "year": "2020",
       "mode": "vs",
       "time": "15",
-      "players": "2-6",
-      "language": "en-US",
-      "variant": "",
       "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/rocks-stones-pebbles-background-1246668/\nhttps://pixabay.com/photos/ice-frost-winter-snow-snowflakes-6538605/\nhttps://pixabay.com/photos/fire-wood-fire-flame-burn-brand-171229/\nhttps://pixabay.com/photos/grass-lawn-field-meadow-grassy-84622/",
       "similarName": "Spicy",
-      "description": "Bluffing card game. Play or pass each turn while declaring card. Penalties for getting caught lieing and wrong challenges. Collect reward cards for points.  Most points wins.",
+      "description": "Bluffing card game. Play or pass each turn while declaring card. Penalties for getting caught lieing and wrong challenges. Collect reward cards for points. Most points wins.",
       "showName": true,
-      "lastUpdate": 1634502388000
+      "lastUpdate": 1673658579095,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-6",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "Background": {
