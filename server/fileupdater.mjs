@@ -342,10 +342,7 @@ function v9NumericStringSort(routine) {
 }
 
 function v10OwnerMOVEXY(routine) {
-for(const operation of routine) {
-  if(operation.func == 'MOVEXY') {
-    if(operation.resetOwner === undefined)
-        operation.resetOwner = false;  
-    }
-  }
+  for(const operation of routine)
+    if(operation.func == 'MOVEXY' && operation.resetOwner === undefined)
+      operation.resetOwner = false;
 }
