@@ -220,8 +220,9 @@ export class Widget extends StateManaged {
       inheriting.applyDeltaToDOM(inheritedDelta);
     }
 
-    if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/))
-      this.showEnlarged();
+    if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
+      this.showEnlarged(null, delta);
+    }
   }
 
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
@@ -404,10 +405,11 @@ export class Widget extends StateManaged {
   }
 
   css() {
-    this.propertiesUsedInCSS = [];
     if($(`#STYLES_${escapeID(this.id)}`))
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
-    let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
+    const usedProperties = new Set();
+    let css = this.cssReplaceProperties(this.cssAsText(this.get('css')), usedProperties);
+    this.propertiesUsedInCSS = Array.from(usedProperties);
 
     css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
@@ -418,12 +420,12 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssAsText(css, nested = false) {
+  cssAsText(css, usedProperties, nested = false) {
     if(typeof css == 'object') {
       let cssText = '';
       for(const key in css) {
         if(typeof css[key] == 'object')
-          return this.cssToStylesheet(css, nested);
+          return this.cssToStylesheet(css, usedProperties, nested);
         cssText += `; ${key}: ${css[key]}`;
       }
       return cssText;
@@ -458,15 +460,15 @@ export class Widget extends StateManaged {
     return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
   }
 
-  cssReplaceProperties(css) {
+  cssReplaceProperties(css, usedProperties) {
     for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
       css = css.replace(match[0], this.get(match[1]));
-      this.propertiesUsedInCSS.push(match[1]);
+      usedProperties.add(match[1]);
     }
     return css;
   }
 
-  cssToStylesheet(css, nested = false) {
+  cssToStylesheet(css, usedProperties, nested = false) {
     let styleString = '';
     for(const key in css) {
       let selector = key;
@@ -478,7 +480,7 @@ export class Widget extends StateManaged {
         if(selector.charAt(0) != '@')
           selector = `#w_${escapeID(this.id)}${selector}`;
       }
-      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }\n`;
+      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], usedProperties, true), usedProperties))} }\n`;
     }
 
     if(nested)
@@ -489,7 +491,7 @@ export class Widget extends StateManaged {
     style.appendChild(document.createTextNode(styleString));
     $('head').appendChild(style);
 
-    return this.cssAsText(css.inline || '');
+    return this.cssAsText(css.inline || '', usedProperties);
   }
 
   cssTransform() {
@@ -2032,17 +2034,31 @@ export class Widget extends StateManaged {
     this.domElement.classList.remove('selected');
   }
 
-  showEnlarged(event) {
+  showEnlarged(event, delta) {
     if(this.get('enlarge')) {
       const id = this.get('id');
       const e = $('#enlarged');
+      // If there is no delta passed in, we must update the enlarged widget. Otherwise,
+      // we only need to update it if the delta results in a visual change.
+      let needsContentUpdate = !delta;
+      if (delta) {
+        for (let prop in delta) {
+          if (prop != 'x' && prop != 'y' && prop != 'z' && prop != 'dragging') {
+            needsContentUpdate = true;
+            break;
+          }
+        }
+      }
       const boundBox = this.domElement.getBoundingClientRect();
       let cssText = this.domElement.style.cssText;
       cssText += `;--originalLeft:${boundBox.left}px`;
       cssText += `;--originalTop:${boundBox.top}px`;
       cssText += `;--originalRight:${boundBox.right}px`;
       cssText += `;--originalBottom:${boundBox.bottom}px`;
-      e.innerHTML = this.domElement.innerHTML;
+      // Only update the enlarged element if there is a non-position delta.
+      if (needsContentUpdate)
+        e.innerHTML = this.domElement.innerHTML;
+
       e.className = this.domElement.className;
       e.dataset.id = id;
       for(const clone of e.querySelectorAll('canvas')) {
