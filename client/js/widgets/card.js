@@ -108,10 +108,11 @@ class Card extends Widget {
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
       for(const original of face.objects) {
-        const objectDiv = document.createElement('div');
+        const objectDiv = document.createElement(original.type == 'html' ? 'iframe' : 'div');
         objectDiv.classList.add('cardFaceObject');
 
         const setValue = _=>{
+          const usedProperties = new Set();
           const object = JSON.parse(JSON.stringify(original));
 
           if(typeof object.dynamicProperties == 'object')
@@ -121,7 +122,7 @@ class Card extends Widget {
 
           const x = face.border ? object.x-face.border : object.x;
           const y = face.border ? object.y-face.border : object.y;
-          let css = object.css ? this.cssAsText(object.css,true) + '; ' : '';
+          let css = object.css ? this.cssAsText(object.css,usedProperties,true) + '; ' : '';
           css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
           css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
           objectDiv.style.cssText = mapAssetURLs(css);
@@ -143,25 +144,47 @@ class Card extends Widget {
               }
             }
             objectDiv.style.backgroundColor = object.color || 'white';
+          } else if (object.type == 'html') {
+            // Prevent input from going to frame.
+            objectDiv.style.pointerEvents = 'none';
+            objectDiv.setAttribute('sandbox', 'allow-same-origin');
+            objectDiv.setAttribute('width', object.width);
+            objectDiv.setAttribute('height', object.height);
+            objectDiv.setAttribute('allow', 'autoplay');
+            const content = object.value.replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {
+              usedProperties.add(n);
+              return this.get(n) || '';
+            });
+            // Applies a template which fills available space, uses the same classes and applies
+            // nested CSS style rules.
+            const css = object['css'];
+            const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, usedProperties, true) : '';
+            const html = `<!DOCTYPE html>\n` +
+                `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
+                `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
+            objectDiv.srcdoc = html;
           } else {
             objectDiv.textContent = object.value;
             objectDiv.style.color = object.color;
           }
+          return usedProperties;
         }
 
         // add a callback that makes sure dynamic property changes are reflected on the DOM
-        const properties = original.svgReplaces ? Object.values(original.svgReplaces) : [];
+        const properties = setValue();
+        if (original.svgReplaces)
+          for (const property of Object.values(original.svgReplaces))
+            properties.add(property);
         if(typeof original.dynamicProperties == 'object')
           for(const dp of Object.keys(original.dynamicProperties))
             if(original[dp] === undefined)
-              properties.push(original.dynamicProperties[dp]);
+              properties.add(original.dynamicProperties[dp]);
         for(const p of properties) {
           if(!this.dynamicProperties[p])
             this.dynamicProperties[p] = [];
           this.dynamicProperties[p].push(setValue);
         }
 
-        setValue();
         faceDiv.appendChild(objectDiv);
       }
       this.domElement.appendChild(faceDiv);
