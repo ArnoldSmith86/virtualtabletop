@@ -295,18 +295,18 @@
       "time": "0",
       "attribution": "Good reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing\n\nAlso see the separate tutorial about hexagons.",
       "showName": false,
-      "lastUpdate": 1673815388704,
+      "lastUpdate": 1673815962751,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Hexagonal Grid",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Hexagonal Grid",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "34s0": {

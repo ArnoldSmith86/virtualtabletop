@@ -179,23 +179,23 @@
       "time": "0",
       "attribution": "Good reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing\n\nAlso see the separate tutorial about hexagons.",
       "showName": false,
-      "lastUpdate": 1673815388701,
+      "lastUpdate": 1673815962744,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Alignment",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Alignment",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "checker1": {
     "id": "checker1",
-    "z": 174,
+    "z": 26462,
     "classes": "chip",
     "color": "blue",
     "faces": [
@@ -222,12 +222,17 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "secondaryColor": "#ffffff"
+    "secondaryColor": "#ffffff",
+    "dragLimit": {
+      "minX": 0,
+      "minY": 0,
+      "maxX": 1500,
+      "maxY": 900
+    }
   },
   "comment1": {
     "id": "comment1",
     "x": 200,
-    "y": 20,
     "width": 296,
     "z": 173,
     "css": {
@@ -235,9 +240,10 @@
       "border": "2px solid blue",
       "font-size": "14px"
     },
-    "text": "The blue checker uses the default alignment in the top-left corner and moves on a 100x100 grid and is centered between the grid lines.",
-    "height": 50,
-    "movable": false
+    "text": "The blue checker uses the default alignment in the top-left corner and moves on a 100x100 grid and is centered between the grid lines. It also uses dragLimits to prevent losing the checker off the visible screen.",
+    "movable": false,
+    "height": 90,
+    "y": 3
   },
   "comment2": {
     "id": "comment2",
@@ -257,7 +263,7 @@
   "checker2": {
     "id": "checker2",
     "y": 150,
-    "z": 175,
+    "z": 26460,
     "classes": "chip",
     "color": "red",
     "faces": [
@@ -390,7 +396,7 @@
     "y": 519,
     "width": 50.4,
     "height": 90,
-    "z": 189,
+    "z": 26461,
     "color": "orange",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "grid": [
@@ -416,7 +422,7 @@
     "y": 700,
     "width": 40,
     "height": 40,
-    "z": 222,
+    "z": 26452,
     "activeFace": 1,
     "classes": "chip",
     "color": "blue",
@@ -472,7 +478,7 @@
     "y": 880,
     "width": 40,
     "height": 40,
-    "z": 234,
+    "z": 26453,
     "classes": "chip",
     "color": "blue",
     "faces": [
