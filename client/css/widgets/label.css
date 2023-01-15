@@ -30,6 +30,6 @@ body.edit .widget.label > * {
 }
 
 .widget.label > textarea:read-only {
-  pointer-events: none;
+  outline: none;
 }
 
