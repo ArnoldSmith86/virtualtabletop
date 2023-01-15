@@ -2144,7 +2144,7 @@ export class Widget extends StateManaged {
       if(closest) {
         this.setPosition(closest[0], closest[1], this.get('z'));
         for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'align' ].indexOf(p) == -1)
             await this.set(p, closest[2][p]);
       }
     }
