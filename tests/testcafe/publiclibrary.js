@@ -85,3 +85,5 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
   'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
   'violetbutton', 'fae4', 'vbx5'
 ]);
+publicLibraryButtons('Functions - SCORE', 0, 'changehash', [ 'button2', 'button2', 'button7', 'button15', 'seat9', 'bd9n', 'button17']);
+publicLibraryButtons('Scoreboard', 2, 'changehash', [ 'button1', 'button2', 'button3', 'button4']);
