@@ -2122,9 +2122,8 @@ export class Widget extends StateManaged {
       let closestDistance = 999999;
 
       for(const grid of this.get('grid')) {
-        const align = typeof grid.align == 'object' ? grid.align : [0, 0];
-        const alignX = (typeof align[0] == 'number' ? align[0] : 0) * this.get('width');
-        const alignY = (typeof align[1] == 'number' ? align[1] : 0) * this.get('height');
+        const alignX = (grid.alignX || 0) * this.get('width');
+        const alignY = (grid.alignY || 0) * this.get('height');
 
         if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
           continue;
@@ -2144,7 +2143,7 @@ export class Widget extends StateManaged {
       if(closest) {
         this.setPosition(closest[0], closest[1], this.get('z'));
         for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'align' ].indexOf(p) == -1)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY' ].indexOf(p) == -1)
             await this.set(p, closest[2][p]);
       }
     }
