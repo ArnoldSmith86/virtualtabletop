@@ -39,23 +39,39 @@ const jeMacroPreset = `
 // EXAMPLES
 
 // add a property to all cards of a deck
-// if(w.deck == "deckName")
-//   w.customVariable = true;
+/*
+if(w.deck == "deckName")
+  w.customVariable = true;
+*/
 
 // change ID of matching widgets
-// var match = w.id.match(/^Player 3 - ((First|Second).*)$/)
-// if(match)
-//   w.id = "Player 5 - "+match[1]
+/*
+var match = w.id.match(/^Player 3 - ((First|Second).*)$/)
+if(match)
+  w.id = "Player 5 - "+match[1]
+*/
 
 // move matching widgets to the left
-// if(w.id.match(/^Player [13] - (Score|Seat)/))
-//   w.x -= 20;
+/*
+if(w.id.match(/^Player [13] - (Score|Seat)/))
+  w.x -= 20;
+*/
 
 // change all widget IDs to a counter prefixed by "w"
-// if(!v.i)
-//   v.i = 1
-// w.id = "w"+v.i
-// v.i++
+/*
+if(!v.i)
+  v.i = 1
+w.id = "w"+v.i
+v.i++
+*/
+
+// Adds pseudo players to seats
+/*
+if (w.type=="seat" && w.player==null) {
+  w.player = "player " + (w.index||1)
+  w.color = "hsl("+Math.floor(Math.random() * 360)+", 100%, 50%)"
+}
+*/
 `;
 
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
@@ -930,6 +946,12 @@ function jeAddCommands() {
   jeAddGridCommand('offsetY', 0);
   jeAddGridCommand('rotation', 0);
 
+  jeAddLimitCommand('minX', 0);
+  jeAddLimitCommand('minY', 0);
+  // Default max limits are computed dynamically.
+  jeAddLimitCommand('maxX');
+  jeAddLimitCommand('maxY');
+
   jeAddFieldCommand('text', 'subtitle|title|text', '');
   jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
   jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
@@ -1204,6 +1226,25 @@ function jeAddGridCommand(key, value) {
     call: async function() {
       jeStateNow.grid[+jeContext[2]][key] = '###SELECT ME###';
       jeSetAndSelect(value);
+    }
+  });
+}
+
+function jeAddLimitCommand(key, value) {
+  jeCommands.push({
+    id: 'limit_' + key,
+    name: key,
+    context: '^[^ ]* ↦ dragLimit',
+    show: _=>!(key in jeStateNow.dragLimit),
+    call: async function() {
+      const w = widgets.get(jeStateNow.id);
+      jeStateNow.dragLimit[key] = '###SELECT ME###';
+      let limit = value;
+      if (key == 'maxX')
+        limit = 1600 - w.get('width');
+      else if (key == 'maxY')
+        limit = 1000 - w.get('height');
+      jeSetAndSelect(limit);
     }
   });
 }
