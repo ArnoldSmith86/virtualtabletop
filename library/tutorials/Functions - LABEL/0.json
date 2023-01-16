@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 5,
+    "version": 9,
     "info": {
       "name": "Functions - LABEL",
       "image": "/assets/-282998185_6535",
@@ -9,12 +9,20 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "",
-      "players": "1",
-      "language": "en-US",
-      "variant": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1639024855000
+      "lastUpdate": 1673139372004,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "8fr3": {
@@ -177,7 +185,7 @@
     "editable": true
   },
   "bm6j": {
-    "text": "Note, the LABEL function should not be confused with the label type of widget. There are 2 default types available in the add widget menu, both of which are shown to the right. They are the same except for size and font-size. Label widgets are 'textareas', which is now seen mostly as a disadvantage. The only advantage labels have over other widget types is the 'editable' property, which if set to true, allows a player to change the text without using a JSON editor.  ",
+    "text": "Note, the LABEL function should not be confused with the label type of widget. There are 2 default types available in the add widget menu, both of which are shown to the right. They are the same except for size and font-size. Label widgets are 'textareas' which means if the 'editable' property is true, a player can type to change the text. There is also an option to use the browser's spell check functionality that is disabled by default.",
     "id": "bm6j",
     "x": 93,
     "z": 202,

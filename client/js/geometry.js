@@ -38,6 +38,9 @@ export function dehomogenize(point) {
 
 export function getPointOnPlane(transform, x, y) {
   const inv = transform.inverse();
+  // If the transform is not invertible, the inverse will be all NaNs.
+  if (isNaN(inv.a))
+    return null;
   const p0 = dehomogenize(inv.transformPoint(new DOMPoint(x, y, 0)));
   // Get transformed direction vector of ray in (0, 0, 1) direction.
   let dir = dehomogenize(inv.transformPoint(new DOMPoint(x, y, 1)));
@@ -101,5 +104,10 @@ export function getElementTransformRelativeTo(elem, parent) {
     destTransform.preMultiplySelf(getElementTransform(parent));
     parent = parent.offsetParent;
   }
-  return transform.preMultiplySelf(destTransform.inverse());
+  const destTransformInverse = destTransform.inverse();
+  // If the matrix is not invertible its components are set to NaN.
+  // We cannot produce a transform relative to this parent.
+  if (isNaN(destTransformInverse.a))
+    return null;
+  return transform.preMultiplySelf(destTransformInverse);
 }

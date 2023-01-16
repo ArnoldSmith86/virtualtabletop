@@ -836,6 +836,7 @@ export default class Room {
       this.state = FileUpdater(this.state);
     this.state._meta = meta;
     this.broadcast('state', state);
+    this.sendMetaUpdate();
   }
 
   toggleStateStar(player, publicLibraryName) {
