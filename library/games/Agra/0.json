@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 10,
+    "version": 6,
     "info": {
       "name": "Agra",
       "image": "/assets/-1085177012_1335",
@@ -15,14 +15,14 @@
       "showName": true,
       "helpText": "Players take seats. Press restart button in upper right to begin game. After each player's turn, press skip-next button to advance turn indicator and auto-fill market with 5 cards. Each player can only see the count of camel cards for themself. At end of round, each player press the sigma/sum button to calculate and show score. Drag victory point token to circle holder by player name and press restart button to go to next round.",
       "skill": "",
-      "similarImage": "",
-      "similarAwards": "2014 Juego del Año Winner\n2014 Juego del Año Finalist\n2011 Games Magazine Best New Family Card Game Winner\n2010 Tric Trac Nominee\n2010 Spiel des Jahres Recommended\n2010 Lys Grand Public Finalist\n2010 International Gamers Award - General Strategy: Two-players\n2010 Golden Geek Best Card Game Nominee\n2010 Golden Geek Best 2-Player Board Game Nominee\n2010 Fairplay À la carte Winner",
-      "ruleText": "",
-      "lastUpdate": 1673656882907,
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "2"
+      "players": "2",
+      "similarImage": "",
+      "similarAwards": "2014 Juego del Año Winner\n2014 Juego del Año Finalist\n2011 Games Magazine Best New Family Card Game Winner\n2010 Tric Trac Nominee\n2010 Spiel des Jahres Recommended\n2010 Lys Grand Public Finalist\n2010 International Gamers Award - General Strategy: Two-players\n2010 Golden Geek Best Card Game Nominee\n2010 Golden Geek Best 2-Player Board Game Nominee\n2010 Fairplay À la carte Winner",
+      "ruleText": "",
+      "lastUpdate": 1670775305000
     }
   },
   "hand": {
@@ -3337,8 +3337,7 @@
     "movable": false,
     "movableInEdit": false,
     "onlyVisibleForSeat": "seat1",
-    "layer": -1,
-    "hoverInheritVisibleForSeat": false
+    "layer": -1
   },
   "camelSymbol1": {
     "id": "camelSymbol1",
@@ -3529,8 +3528,7 @@
     "movable": false,
     "movableInEdit": false,
     "onlyVisibleForSeat": "seat2",
-    "layer": -1,
-    "hoverInheritVisibleForSeat": false
+    "layer": -1
   },
   "camelSymbol2": {
     "id": "camelSymbol2",

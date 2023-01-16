@@ -167,7 +167,7 @@
         "func": "MOVE",
         "from": "tileSource",
         "to": "hand",
-        "count": 1
+        "count": "1"
       }
     ],
     "x": 270,
@@ -186,7 +186,7 @@
         "func": "MOVE",
         "from": "tileSource",
         "to": "hand",
-        "count": 14
+        "count": "14"
       }
     ],
     "x": 270,
@@ -469,6 +469,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
+            "valueType": "static",
             "value": "/assets/1570279455_22720",
             "width": 75,
             "height": 75
@@ -483,6 +484,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
+            "valueType": "static",
             "value": "/assets/-624263697_28202",
             "width": 75,
             "height": 75
@@ -492,11 +494,10 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
             "width": 75,
-            "height": 75,
-            "dynamicProperties": {
-              "value": "image"
-            }
+            "height": 75
           }
         ],
         "border": false,
@@ -1945,14 +1946,16 @@
         "func": "SELECT",
         "property": "parent",
         "value": "tileSource",
-        "collection": "tilesToMove"
+        "collection": "tilesToMove",
+        "mode": "set"
       },
       {
         "func": "SELECT",
         "source": "tilesToMove",
         "property": "type",
         "value": "card",
-        "collection": "tilesToMove"
+        "collection": "tilesToMove",
+        "mode": "set"
       },
       {
         "func": "SELECT",
@@ -1960,7 +1963,8 @@
         "property": "y",
         "relation": ">=",
         "value": 0,
-        "collection": "tilesToMove"
+        "collection": "tilesToMove",
+        "mode": "set"
       },
       {
         "func": "SELECT",
@@ -1970,26 +1974,56 @@
         "max": 1,
         "collection": "thisTile"
       },
-      "var newX = randInt 16 154",
-      "var newY = randInt -275 -181",
-      "var newR = randInt -29 60",
+      {
+        "func": "RANDOM",
+        "min": 16,
+        "max": 154,
+        "variable": "newX"
+      },
+      {
+        "func": "RANDOM",
+        "min": -275,
+        "max": -181,
+        "variable": "newY"
+      },
+      {
+        "func": "RANDOM",
+        "min": -29,
+        "max": 60,
+        "variable": "newR"
+      },
       {
         "func": "SET",
         "collection": "thisTile",
         "property": "x",
-        "value": "${newX}"
+        "applyVariables": [
+          {
+            "variable": "newX",
+            "parameter": "value"
+          }
+        ]
       },
       {
         "func": "SET",
         "collection": "thisTile",
         "property": "y",
-        "value": "${newY}"
+        "applyVariables": [
+          {
+            "variable": "newY",
+            "parameter": "value"
+          }
+        ]
       },
       {
         "func": "SET",
         "collection": "thisTile",
         "property": "rotation",
-        "value": "${newR}"
+        "applyVariables": [
+          {
+            "variable": "newR",
+            "parameter": "value"
+          }
+        ]
       },
       {
         "func": "COUNT",
@@ -1998,12 +2032,29 @@
       {
         "func": "SELECT",
         "property": "id",
-        "value": "randomMove"
+        "value": "randomMove",
+        "mode": "set"
       },
-      "var last = ${COUNT} <= 1",
+      {
+        "func": "COMPUTE",
+        "operation": "<=",
+        "operand2": 1,
+        "variable": "last",
+        "applyVariables": [
+          {
+            "variable": "COUNT",
+            "parameter": "operand1"
+          }
+        ]
+      },
       {
         "func": "CLICK",
-        "skip": "${last}"
+        "applyVariables": [
+          {
+            "variable": "last",
+            "parameter": "skip"
+          }
+        ]
       }
     ],
     "x": 62.5,
@@ -2031,11 +2082,13 @@
       {
         "func": "SELECT",
         "property": "parent",
-        "value": "deckHolder"
+        "value": "deckHolder",
+        "mode": "set"
       },
       {
         "func": "SELECT",
         "source": "DEFAULT",
+        "mode": "set",
         "property": "type",
         "value": "card"
       },
@@ -2061,7 +2114,8 @@
       {
         "func": "SELECT",
         "property": "id",
-        "value": "randomMove"
+        "value": "randomMove",
+        "mode": "set"
       },
       {
         "func": "CLICK",
@@ -2109,7 +2163,7 @@
     "id": "deckHolder"
   },
   "_meta": {
-    "version": 10,
+    "version": 1,
     "info": {
       "name": "Rummy Tiles",
       "image": "/assets/1329361085_73912",
@@ -2118,20 +2172,14 @@
       "year": "",
       "mode": "vs",
       "time": "60",
+      "players": "2-4",
+      "language": "",
+      "variant": "",
       "attribution": "Images and layout created by David Robarts. ©2021 \n\nThis work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.\n\nhttp://creativecommons.org/licenses/by-nc/4.0/",
       "similarName": "Rummikub",
       "description": "Rearrange the tiles to make sets and runs. First to play all their tiles wins.",
       "showName": true,
-      "lastUpdate": 1673717221486,
-      "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "",
-      "players": "2-4",
-      "similarImage": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": ""
+      "lastUpdate": 1617836258000
     }
   },
   "6txh": {

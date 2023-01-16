@@ -1131,7 +1131,7 @@
     "y": 339
   },
   "_meta": {
-    "version": 10,
+    "version": 7,
     "info": {
       "name": "Speedy Fruits",
       "image": "/assets/1560517833_99964",
@@ -1140,20 +1140,14 @@
       "year": "1990",
       "mode": "vs",
       "time": "10",
+      "players": "2-8",
+      "language": "en-US",
+      "variant": "",
       "attribution": "How to use the room:\nFirstly click the reset button on the bottom right and choose the player count, as well as the way penalities are handeled (automatically if you want to stick to the official rules and manually if you have some house rules). Now you can take a seat. After everyone is seated press the play button. There is a \"safety switch\" built in, to guarantee that nobody is cheating and hovering with the mouse ofer the bell. Before you can click the bell you have to click your discard holder and then your click on the bell will have an effect. To clear the bell press the play button.\n\nThe room design, library image, bell sound, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe deck back image by Michael Schwarzenberger is from https://pixabay.com/photos/playing-card-back-pattern-568200/ and is available under the Pixabay License.\n\nThe UI elements from the player menu are from-https://www.kenney.nl/assets/ui-pack-rpg-expansion and are in the public domain under CC0.",
       "similarName": "Halli Galli",
-      "description": "Flip cards to reveal matching fruits and ring bell when 5 of a kind are displayed to win opponent cards. Player with most cards wins.",
+      "description": "Flip cards to reveal matching fruits and ring bell when 5 of a kind are displayed to win opponent cards.  Player with most cards wins.",
       "showName": true,
-      "lastUpdate": 1673663452079,
-      "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-8",
-      "similarImage": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": ""
+      "lastUpdate": 1662819167000
     }
   },
   "p2": {

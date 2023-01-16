@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 10,
+    "version": 3,
     "info": {
       "name": "Zookeeper",
       "image": "/assets/-625025145_20168",
@@ -9,20 +9,14 @@
       "year": "1997",
       "mode": "vs",
       "time": "45",
+      "players": "3-5",
+      "language": "en-US",
+      "variant": "",
       "attribution": "Coin image and board layout by ArnoldSmith86. Released to public domain under CC0.\n\nAnimal images released under Pixabay License:\nhttps://pixabay.com/photos/maltese-dog-puppy-small-dog-1123016/\nhttps://pixabay.com/photos/cat-kitten-pet-kitty-young-cat-551554/\nhttps://pixabay.com/photos/wood-mouse-rodent-foraging-mouse-3082922/\nhttps://pixabay.com/photos/bunny-rabbit-spring-baby-bunny-5014814/\nhttps://pixabay.com/photos/cute-small-portrait-golden-hamster-3161014/\nhttps://pixabay.com/photos/elephant-animal-safari-mammal-114543/\nhttps://pixabay.com/photos/lion-lion-king-forest-king-lion-794962/\nhttps://pixabay.com/photos/cow-alps-horn-759018/",
       "similarName": "Bohnanza",
       "description": "Collect animal cards and play in order picked up. Trade cards to improve hand. Collect coins based on strength of play. Most coins at end of game wins.",
       "showName": true,
-      "lastUpdate": 1673734521519,
-      "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "3-5",
-      "similarImage": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": ""
+      "lastUpdate": 1634502388000
     }
   },
   "brhd": {
@@ -1020,6 +1014,7 @@
             "x": 0,
             "y": 0,
             "color": "#1f5ca6",
+            "valueType": "dynamic",
             "value": "",
             "width": 150,
             "height": 225
@@ -1029,11 +1024,9 @@
             "x": 19,
             "y": 94,
             "color": "transparent",
+            "value": "coin",
             "width": 140,
-            "height": 140,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 140
           }
         ],
         "radius": 20
@@ -1045,6 +1038,7 @@
             "x": 0,
             "y": 0,
             "color": "#1f5ca6",
+            "valueType": "static",
             "value": "",
             "width": 150,
             "height": 225
@@ -1054,194 +1048,167 @@
             "x": 5,
             "y": 40,
             "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
             "width": 140,
             "height": 140,
-            "css": "border-radius: 10px; ",
-            "dynamicProperties": {
-              "value": "image"
-            }
+            "css": "border-radius: 10px; "
           },
           {
             "type": "text",
             "x": 0,
             "y": 4,
             "fontSize": 26,
+            "valueType": "dynamic",
+            "value": "name",
             "textAlign": "center",
             "width": 150,
-            "css": "color: white",
-            "dynamicProperties": {
-              "value": "name"
-            }
+            "css": "color: white"
           },
           {
             "type": "text",
             "x": 10,
             "y": 45,
             "fontSize": 20,
+            "valueType": "dynamic",
+            "value": "count",
             "textAlign": "left",
             "width": 30,
-            "css": "background: white; border-radius: 100%; height: 30px; display: flex; justify-content: center; align-items: center;",
-            "dynamicProperties": {
-              "value": "count"
-            }
+            "css": "background: white; border-radius: 100%; height: 30px; display: flex; justify-content: center; align-items: center;"
           },
           {
             "type": "image",
             "x": 5,
             "y": 202,
             "color": "transparent",
+            "value": "coin",
             "width": 40,
-            "height": 40,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 40
           },
           {
             "type": "text",
             "x": 5,
             "y": 185,
             "fontSize": 28,
+            "valueType": "dynamic",
+            "value": "1coin",
             "textAlign": "center",
             "width": 35,
-            "css": "color: white",
-            "dynamicProperties": {
-              "value": "1coin"
-            }
+            "css": "color: white"
           },
           {
             "type": "image",
             "x": 40,
             "y": 202,
             "color": "transparent",
+            "value": "coin",
             "width": 40,
-            "height": 40,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 40
           },
           {
             "type": "image",
             "x": 42,
             "y": 196,
             "color": "transparent",
+            "value": "coin",
             "width": 40,
-            "height": 40,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 40
           },
           {
             "type": "text",
             "x": 40,
             "y": 185,
             "fontSize": 28,
+            "valueType": "dynamic",
+            "value": "2coin",
             "textAlign": "center",
             "width": 35,
-            "css": "color: white",
-            "dynamicProperties": {
-              "value": "2coin"
-            }
+            "css": "color: white"
           },
           {
             "type": "image",
             "x": 75,
             "y": 202,
             "color": "transparent",
+            "value": "coin",
             "width": 40,
-            "height": 40,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 40
           },
           {
             "type": "image",
             "x": 77,
             "y": 196,
             "color": "transparent",
+            "value": "coin",
             "width": 40,
-            "height": 40,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 40
           },
           {
             "type": "image",
             "x": 74,
             "y": 190,
             "color": "transparent",
+            "value": "coin",
             "width": 40,
-            "height": 40,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 40
           },
           {
             "type": "text",
             "x": 75,
             "y": 185,
             "fontSize": 28,
+            "valueType": "dynamic",
+            "value": "3coin",
             "textAlign": "center",
             "width": 35,
-            "css": "color: white",
-            "dynamicProperties": {
-              "value": "3coin"
-            }
+            "css": "color: white"
           },
           {
             "type": "image",
             "x": 110,
             "y": 202,
             "color": "transparent",
+            "value": "coin",
             "width": 40,
-            "height": 40,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 40
           },
           {
             "type": "image",
             "x": 112,
             "y": 196,
             "color": "transparent",
+            "value": "coin",
             "width": 40,
-            "height": 40,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 40
           },
           {
             "type": "image",
             "x": 109,
             "y": 190,
             "color": "transparent",
+            "value": "coin",
             "width": 40,
-            "height": 40,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 40
           },
           {
             "type": "image",
             "x": 113,
             "y": 184,
             "color": "transparent",
+            "value": "coin",
             "width": 40,
-            "height": 40,
-            "dynamicProperties": {
-              "value": "coin"
-            }
+            "height": 40
           },
           {
             "type": "text",
             "x": 110,
             "y": 185,
             "fontSize": 28,
+            "valueType": "dynamic",
+            "value": "4coin",
             "textAlign": "center",
             "width": 35,
-            "css": "color: white",
-            "dynamicProperties": {
-              "value": "4coin"
-            }
+            "css": "color: white"
           }
         ],
         "radius": 20
@@ -1396,7 +1363,7 @@
         "func": "MOVE",
         "from": "Discard",
         "to": "Draw",
-        "count": "all",
+        "count": 0,
         "face": 0
       },
       {
@@ -1548,7 +1515,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -1615,7 +1582,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -1682,7 +1649,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -1786,7 +1753,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -1862,7 +1829,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -1938,7 +1905,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -2042,7 +2009,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -2118,7 +2085,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -2194,7 +2161,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -2261,7 +2228,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -2328,7 +2295,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -2395,7 +2362,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -2499,7 +2466,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -2575,7 +2542,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
@@ -2651,7 +2618,7 @@
         "func": "MOVE",
         "from": "${PROPERTY parent}",
         "to": "Discard",
-        "count": "all"
+        "count": 0
       }
     ],
     "text": "Sell"
