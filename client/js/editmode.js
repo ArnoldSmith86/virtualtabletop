@@ -1527,19 +1527,13 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
   const cards = widgetFilter(w=>w.get('deck')==previousState.id);
 
-  if(widget.id !== previousState.id || widget.type !== previousState.type) {
+  if(widget.id !== previousState.id) {
     for(const child of children)
       sendPropertyUpdate(child.get('id'), 'parent', null);
     for(const card of cards)
       sendPropertyUpdate(card.get('id'), 'deck', null);
     await removeWidgetLocal(previousState.id, true);
-  } else {
-    for(const key in previousState)
-      if(widget[key] === undefined)
-        widget[key] = null;
-  }
-
-  if(widget.id !== previousState.id || widget.type !== previousState.type) {
+    
     const id = await addWidgetLocal(widget);
 
     for(const child of children)
@@ -1560,7 +1554,13 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
       }
       inheritor.set('inheritFrom', newInherits)
     };
+  } else if (widget.type !== previousState.type) {
+    await removeWidgetLocal(previousState.id, true);
+    const id = await addWidgetLocal(widget);
   } else {
+    for(const key in previousState)
+      if(widget[key] === undefined)
+        widget[key] = null;
     for(const key in widget) {
       if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
         sendPropertyUpdate(widget.id, key, widget[key]);
