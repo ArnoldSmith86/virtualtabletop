@@ -1524,36 +1524,8 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   if(applyChangesFromUI)
     await applyEditOptions(widget);
 
-  const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
-  const cards = widgetFilter(w=>w.get('deck')==previousState.id);
-
   if(widget.id !== previousState.id) {
-    for(const child of children)
-      sendPropertyUpdate(child.get('id'), 'parent', null);
-    for(const card of cards)
-      sendPropertyUpdate(card.get('id'), 'deck', null);
-    await removeWidgetLocal(previousState.id, true);
-    
-    const id = await addWidgetLocal(widget);
-
-    for(const child of children)
-      sendPropertyUpdate(child.get('id'), 'parent', id);
-    for(const card of cards)
-      sendPropertyUpdate(card.get('id'), 'deck', id);
-    StateManaged.inheritFromMapping[id] = StateManaged.inheritFromMapping[previousState.id];
-    delete StateManaged.inheritFromMapping[previousState.id];
-    for (const inheritor of StateManaged.inheritFromMapping[id]) {
-      const oldInherits = inheritor.get('inheritFrom');
-      let newInherits;
-      if(typeof oldInherits == "string")
-        newInherits = id;
-      else {
-        newInherits = {...oldInherits};
-        newInherits[id] = newInherits[previousState.id];
-        delete newInherits[previousState.id]
-      }
-      inheritor.set('inheritFrom', newInherits)
-    };
+    updateWidgetId(widget, previousState);
   } else if (widget.type !== previousState.type) {
     await removeWidgetLocal(previousState.id, true);
     const id = await addWidgetLocal(widget);
@@ -1569,6 +1541,47 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   }
 
   batchEnd();
+}
+
+async function updateWidgetId(widget, previousState) {
+  const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
+  const cards = widgetFilter(w=>w.get('deck')==previousState.id);
+
+  for(const child of children)
+    sendPropertyUpdate(child.get('id'), 'parent', null);
+  for(const card of cards)
+    sendPropertyUpdate(card.get('id'), 'deck', null);
+  await removeWidgetLocal(previousState.id, true);
+  
+  const id = await addWidgetLocal(widget);
+
+  // Restore children
+  for(const child of children)
+    sendPropertyUpdate(child.get('id'), 'parent', id);
+  for(const card of cards)
+    sendPropertyUpdate(card.get('id'), 'deck', id);
+
+  // Change inheritFrom on widgets inheriting from altered widget
+  StateManaged.inheritFromMapping[id] = StateManaged.inheritFromMapping[previousState.id];
+  delete StateManaged.inheritFromMapping[previousState.id];
+  for (const inheritor of StateManaged.inheritFromMapping[id]) {
+    const oldInherits = inheritor.get('inheritFrom');
+    let newInherits;
+    if(typeof oldInherits == "string")
+      newInherits = id;
+    else {
+      newInherits = {...oldInherits};
+      newInherits[id] = newInherits[previousState.id];
+      delete newInherits[previousState.id]
+    }
+    inheritor.set('inheritFrom', newInherits)
+  };
+
+  // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
+  if(widget.type == 'seat') {
+    widgetFilter(w => w.get('onlyVisibleForSeat') == previousState.id).map( w => w.set('onlyVisibleForSeat', id));
+    widgetFilter(w => w.get('linkedToSeat') == previousState.id).map( w => w.set('linkedToSeat', id));
+  }
 }
 
 async function onClickUpdateWidget(applyChangesFromUI) {
