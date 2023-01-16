@@ -1,0 +1,1003 @@
+{
+  "_meta": {
+    "version": 9,
+    "info": {
+      "name": "Senet",
+      "image": "/assets/-78804023_44226",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/2399/senet",
+      "year": "-3000",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "<div>Room layout and design by LawDawg and released to the public domain by CC0.<br></div><div><br></div><div>Board symbols are available under the icons8 license at:</div><ul><li>Ankh: https://icons8.com/icon/10404/ankh</li><li>One: https://icons8.com/icon/zW3ft7PmEdvi/one</li><li>Two: https://icons8.com/icon/lPRNKrv0lpVq/two</li><li>Three: https://icons8.com/icon/7XoFCDZ9ju3f/three</li><li>Cross: https://icons8.com/icon/X6BDW9w3pZVf/taw</li><li>Circle with line: https://icons8.com/icon/NFWOf50Z3e64/waw</li></ul><div>Background image available under the Pixabay license at:&nbsp;https://pixabay.com/illustrations/hieroglyphics-egypt-egyptian-7448842/</div><div><br></div><div>Library image is in the public domain as CC0 from: https://commons.wikimedia.org/wiki/File:Gameboard_and_Gaming_Pieces_MET_DP310299.jpg</div>",
+      "lastUpdate": 1673907599678,
+      "id": "3724",
+      "showName": true,
+      "skill": "",
+      "description": "Take turns throwing sticks and moving pieces around board. First player to remove all pieces from the board wins.",
+      "similarImage": "",
+      "similarName": "Senet",
+      "similarAwards": "",
+      "ruleText": "Choose a starting player and token.&nbsp; Cubes go first.<div><br></div><div><b>Basic Movement</b><br><div><br></div><div>Throw sticks. Count number of white sticks (zero = five because the concetp of zero was not known in ancient Egypt).&nbsp; Move one piece forward the indicated number of spaces.&nbsp; Move from left to right on the top and bottom rows and from right to left on the middle row. When you reach the end of a row, the next move is into the next row.&nbsp;<span style=\"color: var(--overlayFontColor);\">Only one piece is allowed per space.</span></div><div><br></div><div>If you cannot move a piece forward, then you must move a piece backward.&nbsp; If you cannot do either, you forfeit that opportunity to move.</div><div><br></div><div>If you rolled a 1, 4, or 5 go again.<br></div><div><br></div><div><b>Last 5 Squares</b></div><div><b><br></b></div><div>The 26th square of the board has a symbol with a line extending from a circle. No piece can go past that square without landing on it first and you can only reach that square by an exact throw of the sticks.</div><div><br></div><div>Once a piece reaches that square:</div><div><ul><li>On a throw of 5, remove the piece from the board.</li><li>On a throw of 2, 3, or 4, advance to the appropriate square. Once on those last 3 squares, you must throw the exact count (indicated by the number of marks on the square) to remove it from the board.&nbsp; Those pieces cannot move forward or back.</li><li>On a throw of 1, move to the space with an X and follow the rules for \"drowning.\"</li></ul></div><div><b>Piece Interaction</b></div></div><div><b><br></b></div><div>When a piece lands on a square occupied by an opponent, swap places sending the opponent's piece to where the moving piece started which may be forward or backward.&nbsp; If two or more pieces of the same player are on adjacent squares, they are protected and cannot be swapped.</div><div><br></div><div>If a piece is on one of the last 3 squares (marked with 1, 2, or 3 lines), then those pieces are never protected.&nbsp; If attacked, the opponents piece is moved to the square with an X.</div><div><br></div><div><b>Drowning</b></div><div><b><br></b></div><div>When a player has a piece \"drowning\" on the X, the player's other pieces do not provide protection for each other when on adjacent squares. Also, this is the only piece the player can move.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">If the piece moves onto the X while the player has the sticks, t</span><span style=\"color: var(--overlayFontColor);\">he player keeps rolling until getting a 4 and moving the piece off, or until rolling a 2 or 3.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">On the player's next turn, he may either:</span></div><div><ul><li><span style=\"color: var(--overlayFontColor);\">Take the sticks and roll again for a 4 or</span></li><li><span style=\"color: var(--overlayFontColor);\">Move the piece to the square with the ankh symbol. If that square is occupied, then move it to the first free square behind it. That ends the player's turn.</span></li></ul><div>If the piece is drowning when during an opponent's turn:</div><div><ul><li>If the opponent's piece must enter the X square through a roll of 1, then the drowning piece and the opponent's piece swap places.&nbsp;</li><li>If the opponent's move causes one of the player's other pieces in the last few spaces of the board to move back to the X, then the one currently on the X is moved to the square with the ankh.</li></ul></div></div><div><b>End of Game</b></div><div><b><br></b></div><div>The first player to remove all of his pieces from the board wins.</div><div><br></div><div><b>Variations</b></div><div><b><br></b></div><div>Since the ancient Egyptians did not write down the rules, we do not really know what they are.&nbsp; There are many rule variants you can find on the internet.&nbsp; These are based on the a file uploaded to boardgamegeek.com by Urhixidur in 2002.&nbsp; Feel free to make up your own variations.</div>",
+      "helpText": "Click the sticks.&nbsp; Move the pieces.",
+      "players": "2",
+      "language": "",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "table": {
+    "id": "table",
+    "x": 200,
+    "y": 300,
+    "width": 1200,
+    "height": 360,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "border": "2px solid #518e9c",
+      "background": "white"
+    },
+    "borderRadius": 3
+  },
+  "house1": {
+    "type": "holder",
+    "id": "house1",
+    "parent": "table",
+    "fixedParent": true,
+    "width": 120,
+    "height": 120,
+    "z": 1,
+    "movableInEdit": false,
+    "css": {
+      "background": "#3d93a950",
+      "border": "transparent !important"
+    },
+    "borderRadius": 4,
+    "dropTarget": {},
+    "dropOffsetX": 20,
+    "dropOffsetY": 10,
+    "dropLimit": 1
+  },
+  "house2": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house2",
+    "x": 120,
+    "y": 0,
+    "css": {
+      "background": "#3d93a999",
+      "border": "transparent !important"
+    }
+  },
+  "house3": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house3",
+    "x": 240,
+    "y": 0
+  },
+  "house4": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house4",
+    "x": 360,
+    "y": 0
+  },
+  "house5": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house5",
+    "x": 480,
+    "y": 0
+  },
+  "house6": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house6",
+    "x": 600,
+    "y": 0
+  },
+  "house7": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house7",
+    "x": 720,
+    "y": 0
+  },
+  "house8": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house8",
+    "x": 840,
+    "y": 0
+  },
+  "house9": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house9",
+    "x": 960,
+    "y": 0
+  },
+  "house10": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house10",
+    "x": 1080,
+    "y": 0
+  },
+  "house11": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house11",
+    "x": 0,
+    "y": 120
+  },
+  "house12": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house12",
+    "x": 120,
+    "y": 120
+  },
+  "house13": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house13",
+    "x": 240,
+    "y": 120
+  },
+  "house14": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house14",
+    "x": 360,
+    "y": 120
+  },
+  "house15": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house15",
+    "x": 480,
+    "y": 120
+  },
+  "house16": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house16",
+    "x": 600,
+    "y": 120
+  },
+  "house17": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house17",
+    "x": 720,
+    "y": 120
+  },
+  "house18": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house18",
+    "x": 840,
+    "y": 120
+  },
+  "house19": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house19",
+    "x": 960,
+    "y": 120
+  },
+  "house20": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house20",
+    "x": 1080,
+    "y": 120
+  },
+  "house21": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house21",
+    "x": 0,
+    "y": 240
+  },
+  "house22": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house22",
+    "x": 120,
+    "y": 240
+  },
+  "house23": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house23",
+    "x": 240,
+    "y": 240
+  },
+  "house24": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house24",
+    "x": 360,
+    "y": 240
+  },
+  "house25": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house25",
+    "x": 480,
+    "y": 240
+  },
+  "house26": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house26",
+    "x": 600,
+    "y": 240
+  },
+  "house27": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house27",
+    "x": 720,
+    "y": 240
+  },
+  "house28": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house28",
+    "x": 840,
+    "y": 240
+  },
+  "house29": {
+    "inheritFrom": {
+      "house1": "*"
+    },
+    "type": "holder",
+    "id": "house29",
+    "x": 960,
+    "y": 240
+  },
+  "house30": {
+    "inheritFrom": {
+      "house2": "*"
+    },
+    "type": "holder",
+    "id": "house30",
+    "x": 1080,
+    "y": 240
+  },
+  "cube1": {
+    "id": "cube1",
+    "x": 20,
+    "y": 10,
+    "width": 80,
+    "z": 362,
+    "color": "#468e9b",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#749ba5",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "house2"
+    },
+    "parent": "house2"
+  },
+  "pawn1": {
+    "id": "pawn1",
+    "x": 20,
+    "y": 10,
+    "width": 80,
+    "height": 90,
+    "z": 366,
+    "color": "#749ba5",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "house1"
+    },
+    "parent": "house1"
+  },
+  "symbol1": {
+    "id": "symbol1",
+    "parent": "table",
+    "fixedParent": true,
+    "x": 1110,
+    "y": 270,
+    "width": 60,
+    "height": 60,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "image": "/assets/158322165_555"
+  },
+  "symbol2": {
+    "id": "symbol2",
+    "parent": "table",
+    "fixedParent": true,
+    "y": 270,
+    "width": 60,
+    "height": 60,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "image": "/assets/1640058402_954",
+    "x": 990,
+    "css": {
+      "opacity": 0.6
+    }
+  },
+  "symbol3": {
+    "id": "symbol3",
+    "parent": "table",
+    "fixedParent": true,
+    "y": 270,
+    "width": 60,
+    "height": 60,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "image": "/assets/-278711968_1330",
+    "x": 870
+  },
+  "symbol4": {
+    "id": "symbol4",
+    "parent": "table",
+    "fixedParent": true,
+    "y": 270,
+    "width": 60,
+    "height": 60,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "image": "/assets/-854925127_847",
+    "x": 750,
+    "rotation": -40,
+    "css": {
+      "opacity": 0.6
+    }
+  },
+  "symbol5": {
+    "id": "symbol5",
+    "parent": "table",
+    "fixedParent": true,
+    "y": 270,
+    "width": 60,
+    "height": 60,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "image": "/assets/2086639842_762",
+    "x": 630,
+    "rotation": 180
+  },
+  "symbol6": {
+    "id": "symbol6",
+    "parent": "table",
+    "fixedParent": true,
+    "width": 60,
+    "height": 60,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "image": "/assets/470422437_690",
+    "css": {
+      "opacity": 0.6
+    },
+    "x": 630,
+    "y": 150
+  },
+  "pawn2": {
+    "id": "pawn2",
+    "x": 20,
+    "y": 10,
+    "width": 80,
+    "height": 90,
+    "z": 360,
+    "color": "#749ba5",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "house3"
+    },
+    "parent": "house3"
+  },
+  "pawn3": {
+    "id": "pawn3",
+    "x": 20,
+    "y": 10,
+    "width": 80,
+    "height": 90,
+    "z": 356,
+    "color": "#749ba5",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "house5"
+    },
+    "parent": "house5"
+  },
+  "pawn4": {
+    "id": "pawn4",
+    "x": 20,
+    "y": 10,
+    "width": 80,
+    "height": 90,
+    "z": 352,
+    "color": "#749ba5",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "house7"
+    },
+    "parent": "house7"
+  },
+  "pawn5": {
+    "id": "pawn5",
+    "x": 20,
+    "y": 10,
+    "width": 80,
+    "height": 90,
+    "z": 344,
+    "color": "#749ba5",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "house9"
+    },
+    "parent": "house9"
+  },
+  "cube2": {
+    "id": "cube2",
+    "x": 20,
+    "y": 10,
+    "width": 80,
+    "z": 358,
+    "color": "#468e9b",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#749ba5",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "house4"
+    },
+    "parent": "house4"
+  },
+  "cube3": {
+    "id": "cube3",
+    "x": 20,
+    "y": 10,
+    "width": 80,
+    "z": 354,
+    "color": "#468e9b",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#749ba5",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "house6"
+    },
+    "parent": "house6"
+  },
+  "cube4": {
+    "id": "cube4",
+    "x": 20,
+    "y": 10,
+    "width": 80,
+    "z": 350,
+    "color": "#468e9b",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#749ba5",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "house8"
+    },
+    "parent": "house8"
+  },
+  "cube5": {
+    "id": "cube5",
+    "x": 20,
+    "y": 10,
+    "width": 80,
+    "z": 348,
+    "color": "#468e9b",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#749ba5",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "house10"
+    },
+    "parent": "house10"
+  },
+  "stick1": {
+    "id": "stick1",
+    "x": 680,
+    "y": 725,
+    "width": 40,
+    "height": 200,
+    "borderRadius": 15,
+    "z": 326,
+    "css": {
+      "background": "#fff"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#444",
+          "border": "3px solid #fff",
+          "rotation": 90,
+          "transition": "linear 0.2s"
+        }
+      },
+      {
+        "css": {
+          "background": "#fff",
+          "border": "3px solid #444",
+          "transition": "linear 0.2s"
+        }
+      }
+    ],
+    "resetProperties": {
+      "rotation": null,
+      "activeFace": 0
+    }
+  },
+  "background": {
+    "id": "background",
+    "width": 1792,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": 0.15
+    },
+    "image": "/assets/-2115246459_536956",
+    "x": -96
+  },
+  "stick2": {
+    "id": "stick2",
+    "x": 743,
+    "y": 725,
+    "width": 40,
+    "height": 200,
+    "borderRadius": 15,
+    "z": 326,
+    "css": {
+      "background": "#444",
+      "border": "3px solid #fff",
+      "rotation": 90,
+      "transition": "linear 0.2s"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#444",
+          "border": "3px solid #fff",
+          "rotation": 90,
+          "transition": "linear 0.2s"
+        }
+      },
+      {
+        "css": {
+          "background": "#fff",
+          "border": "3px solid #444",
+          "transition": "linear 0.2s"
+        }
+      }
+    ],
+    "resetProperties": {
+      "rotation": null,
+      "activeFace": 1
+    },
+    "activeFace": 1
+  },
+  "stick3": {
+    "id": "stick3",
+    "x": 807,
+    "y": 725,
+    "width": 40,
+    "height": 200,
+    "borderRadius": 15,
+    "z": 326,
+    "css": {
+      "background": "#444",
+      "border": "3px solid #fff",
+      "rotation": 90,
+      "transition": "linear 0.2s"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#444",
+          "border": "3px solid #fff",
+          "rotation": 90,
+          "transition": "linear 0.2s"
+        }
+      },
+      {
+        "css": {
+          "background": "#fff",
+          "border": "3px solid #444",
+          "transition": "linear 0.2s"
+        }
+      }
+    ],
+    "resetProperties": {
+      "rotation": null,
+      "activeFace": 0
+    }
+  },
+  "stick4": {
+    "id": "stick4",
+    "x": 870,
+    "y": 725,
+    "width": 40,
+    "height": 200,
+    "borderRadius": 15,
+    "z": 326,
+    "css": {
+      "background": "#444",
+      "border": "3px solid #fff",
+      "rotation": 90,
+      "transition": "linear 0.2s"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#444",
+          "border": "3px solid #fff",
+          "rotation": 90,
+          "transition": "linear 0.2s"
+        }
+      },
+      {
+        "css": {
+          "background": "#fff",
+          "border": "3px solid #444",
+          "transition": "linear 0.2s"
+        }
+      }
+    ],
+    "resetProperties": {
+      "rotation": null,
+      "activeFace": 1
+    },
+    "activeFace": 1
+  },
+  "clicker": {
+    "id": "clicker",
+    "x": 560,
+    "y": 701,
+    "width": 480,
+    "height": 250,
+    "z": 331,
+    "movable": false,
+    "movableInEdit": false,
+    "layer": 2,
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          "stick1",
+          "stick2",
+          "stick3",
+          "stick4"
+        ],
+        "loopRoutine": [
+          "var randomClick = randInt 1 2",
+          "var randomRot = randInt 0 359",
+          {
+            "func": "CLICK",
+            "collection": [
+              "${value}"
+            ],
+            "count": "${randomClick}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "rotation",
+            "value": "${randomRot}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "stick1",
+          "stick2",
+          "stick3",
+          "stick4"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result"
+            ],
+            "property": "text",
+            "value": "Move 5. Go again."
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result"
+            ],
+            "property": "text",
+            "value": "Move 1. Go again."
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result"
+            ],
+            "property": "text",
+            "value": "Move 2. Pass sticks."
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result"
+            ],
+            "property": "text",
+            "value": "Move 3. Pass sticks."
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result"
+            ],
+            "property": "text",
+            "value": "Move 4. Go again."
+          }
+        ]
+      }
+    ],
+    "css": {
+      "border": "1px solid black",
+      "box-shadow": "2px 2px 15px inset",
+      "opacity": 0.3
+    },
+    "borderRadius": 4
+  },
+  "result": {
+    "id": "result",
+    "x": 560,
+    "y": 960,
+    "z": 330,
+    "text": "Click sticks to start.",
+    "height": 30,
+    "css": {
+      "font-size": "25px",
+      "text-align": "center"
+    },
+    "width": 480,
+    "movable": false,
+    "movableInEdit": false,
+    "resetProperties": {
+      "text": "Click sticks to start."
+    }
+  },
+  "dfcx": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 1550,
+    "z": 3,
+    "id": "dfcx",
+    "width": 50,
+    "height": 50,
+    "classes": "symbols",
+    "text": "restart",
+    "css": {
+      "color": "#41727d",
+      "font-size": "40px",
+      "--wcMain": "#c7dde4",
+      "--wcBorder": "#93becc",
+      "--wcMainOH": "#93becc",
+      "--wcBorderOH": "#c7dde4"
+    },
+    "y": 1
+  }
+}
