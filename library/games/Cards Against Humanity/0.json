@@ -42,7 +42,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Cards Against Humanity is free to use under the Creative Commons BY-NC-SA 2.0 License. Visit https://www.cardsagainsthumanity.com/ for details.<br></div><div><br></div><div>The game file itself was created by ArnoldSmith86 and is also released under the Creative Commons BY-NC-SA 2.0 License.</div>",
-      "lastUpdate": 1673736552843,
+      "lastUpdate": 1673902023906,
       "showName": true,
       "skill": "creativity",
       "description": "Card game where you pick a response to a given prompt. One player gives points for the funniest combination. Player with most points wins.",
@@ -228,7 +228,12 @@
     "rounds": [
       "Score"
     ],
-    "showAllRounds": true
+    "showAllRounds": true,
+    "css": {
+      " tr": {
+        "height": "50px"
+      }
+    }
   },
   "Panel 1": {
     "type": "holder",
