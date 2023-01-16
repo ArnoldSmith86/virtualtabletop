@@ -1526,9 +1526,9 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
 
   if(widget.id !== previousState.id) {
     updateWidgetId(widget, previousState);
-  } else if (widget.type !== previousState.type) {
+/*  } else if (widget.type !== previousState.type) {
     await removeWidgetLocal(previousState.id, true);
-    const id = await addWidgetLocal(widget);
+    const id = await addWidgetLocal(widget);*/
   } else {
     for(const key in previousState)
       if(widget[key] === undefined)
@@ -1582,6 +1582,9 @@ async function updateWidgetId(widget, previousState) {
     widgetFilter(w => w.get('onlyVisibleForSeat') == previousState.id).map( w => w.set('onlyVisibleForSeat', id));
     widgetFilter(w => w.get('linkedToSeat') == previousState.id).map( w => w.set('linkedToSeat', id));
   }
+
+  // Finally, change any seats that use the old id as a hand.
+  widgetFilter(w => w.get('type') == 'seat' && w.get('hand') == previousState.id).map( w => w.set('hand', id));
 }
 
 async function onClickUpdateWidget(applyChangesFromUI) {
