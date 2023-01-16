@@ -2,6 +2,7 @@
   font-size: 16px;
   color: #6d6d6d;
   text-align: center;
+  overflow: auto;
 }
 
 .widget.label > textarea {
@@ -16,6 +17,7 @@
   min-height: 100%;
   resize: none;
   text-transform: inherit;
+  overflow: hidden;
 }
 
 body.edit .widget.label {
@@ -30,6 +32,6 @@ body.edit .widget.label > * {
 }
 
 .widget.label > textarea:read-only {
-  outline: none;
+  pointer-events: none;
 }
 
