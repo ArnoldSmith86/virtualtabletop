@@ -10,20 +10,20 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Room layout and design by LawDawg and released to the public domain by CC0.<br></div><div><br></div><div>Board symbols are available under the icons8 license at:</div><ul><li>Ankh: https://icons8.com/icon/10404/ankh</li><li>One: https://icons8.com/icon/zW3ft7PmEdvi/one</li><li>Two: https://icons8.com/icon/lPRNKrv0lpVq/two</li><li>Three: https://icons8.com/icon/7XoFCDZ9ju3f/three</li><li>Cross: https://icons8.com/icon/X6BDW9w3pZVf/taw</li><li>Circle with line: https://icons8.com/icon/NFWOf50Z3e64/waw</li></ul><div>Background image available under the Pixabay license at:&nbsp;https://pixabay.com/illustrations/hieroglyphics-egypt-egyptian-7448842/</div><div><br></div><div>Library image is in the public domain as CC0 from: https://commons.wikimedia.org/wiki/File:Gameboard_and_Gaming_Pieces_MET_DP310299.jpg</div>",
-      "lastUpdate": 1673907599678,
+      "lastUpdate": 1673882390791,
       "id": "3724",
       "showName": true,
       "skill": "",
       "description": "Take turns throwing sticks and moving pieces around board. First player to remove all pieces from the board wins.",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2",
       "similarImage": "",
       "similarName": "Senet",
       "similarAwards": "",
       "ruleText": "Choose a starting player and token.&nbsp; Cubes go first.<div><br></div><div><b>Basic Movement</b><br><div><br></div><div>Throw sticks. Count number of white sticks (zero = five because the concetp of zero was not known in ancient Egypt).&nbsp; Move one piece forward the indicated number of spaces.&nbsp; Move from left to right on the top and bottom rows and from right to left on the middle row. When you reach the end of a row, the next move is into the next row.&nbsp;<span style=\"color: var(--overlayFontColor);\">Only one piece is allowed per space.</span></div><div><br></div><div>If you cannot move a piece forward, then you must move a piece backward.&nbsp; If you cannot do either, you forfeit that opportunity to move.</div><div><br></div><div>If you rolled a 1, 4, or 5 go again.<br></div><div><br></div><div><b>Last 5 Squares</b></div><div><b><br></b></div><div>The 26th square of the board has a symbol with a line extending from a circle. No piece can go past that square without landing on it first and you can only reach that square by an exact throw of the sticks.</div><div><br></div><div>Once a piece reaches that square:</div><div><ul><li>On a throw of 5, remove the piece from the board.</li><li>On a throw of 2, 3, or 4, advance to the appropriate square. Once on those last 3 squares, you must throw the exact count (indicated by the number of marks on the square) to remove it from the board.&nbsp; Those pieces cannot move forward or back.</li><li>On a throw of 1, move to the space with an X and follow the rules for \"drowning.\"</li></ul></div><div><b>Piece Interaction</b></div></div><div><b><br></b></div><div>When a piece lands on a square occupied by an opponent, swap places sending the opponent's piece to where the moving piece started which may be forward or backward.&nbsp; If two or more pieces of the same player are on adjacent squares, they are protected and cannot be swapped.</div><div><br></div><div>If a piece is on one of the last 3 squares (marked with 1, 2, or 3 lines), then those pieces are never protected.&nbsp; If attacked, the opponents piece is moved to the square with an X.</div><div><br></div><div><b>Drowning</b></div><div><b><br></b></div><div>When a player has a piece \"drowning\" on the X, the player's other pieces do not provide protection for each other when on adjacent squares. Also, this is the only piece the player can move.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">If the piece moves onto the X while the player has the sticks, t</span><span style=\"color: var(--overlayFontColor);\">he player keeps rolling until getting a 4 and moving the piece off, or until rolling a 2 or 3.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">On the player's next turn, he may either:</span></div><div><ul><li><span style=\"color: var(--overlayFontColor);\">Take the sticks and roll again for a 4 or</span></li><li><span style=\"color: var(--overlayFontColor);\">Move the piece to the square with the ankh symbol. If that square is occupied, then move it to the first free square behind it. That ends the player's turn.</span></li></ul><div>If the piece is drowning when during an opponent's turn:</div><div><ul><li>If the opponent's piece must enter the X square through a roll of 1, then the drowning piece and the opponent's piece swap places.&nbsp;</li><li>If the opponent's move causes one of the player's other pieces in the last few spaces of the board to move back to the X, then the one currently on the X is moved to the square with the ankh.</li></ul></div></div><div><b>End of Game</b></div><div><b><br></b></div><div>The first player to remove all of his pieces from the board wins.</div><div><br></div><div><b>Variations</b></div><div><b><br></b></div><div>Since the ancient Egyptians did not write down the rules, we do not really know what they are.&nbsp; There are many rule variants you can find on the internet.&nbsp; These are based on the a file uploaded to boardgamegeek.com by Urhixidur in 2002.&nbsp; Feel free to make up your own variations.</div>",
-      "helpText": "Click the sticks.&nbsp; Move the pieces.",
-      "players": "2",
-      "language": "",
-      "variant": "",
-      "variantImage": ""
+      "helpText": "Click the sticks.&nbsp; Move the pieces."
     }
   },
   "table": {
@@ -58,7 +58,65 @@
     "dropTarget": {},
     "dropOffsetX": 20,
     "dropOffsetY": 10,
-    "dropLimit": 1
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "sortBy": {
+          "key": "z",
+          "reverse": false
+        }
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "property": "z",
+            "aggregation": "min",
+            "variable": "pieceZ"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "z",
+            "value": "${pieceZ}"
+          },
+          {
+            "func": "GET",
+            "property": "_absoluteX",
+            "variable": "absX"
+          },
+          {
+            "func": "GET",
+            "property": "_absoluteY",
+            "variable": "absY"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": "${absX}"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": "${absY}"
+          }
+        ]
+      }
+    ]
   },
   "house2": {
     "inheritFrom": {
@@ -71,7 +129,8 @@
     "css": {
       "background": "#3d93a999",
       "border": "transparent !important"
-    }
+    },
+    "z": 1
   },
   "house3": {
     "inheritFrom": {
@@ -80,7 +139,8 @@
     "type": "holder",
     "id": "house3",
     "x": 240,
-    "y": 0
+    "y": 0,
+    "z": 1
   },
   "house4": {
     "inheritFrom": {
@@ -89,7 +149,8 @@
     "type": "holder",
     "id": "house4",
     "x": 360,
-    "y": 0
+    "y": 0,
+    "z": 1
   },
   "house5": {
     "inheritFrom": {
@@ -98,7 +159,8 @@
     "type": "holder",
     "id": "house5",
     "x": 480,
-    "y": 0
+    "y": 0,
+    "z": 1
   },
   "house6": {
     "inheritFrom": {
@@ -107,7 +169,8 @@
     "type": "holder",
     "id": "house6",
     "x": 600,
-    "y": 0
+    "y": 0,
+    "z": 1
   },
   "house7": {
     "inheritFrom": {
@@ -116,7 +179,8 @@
     "type": "holder",
     "id": "house7",
     "x": 720,
-    "y": 0
+    "y": 0,
+    "z": 1
   },
   "house8": {
     "inheritFrom": {
@@ -125,7 +189,8 @@
     "type": "holder",
     "id": "house8",
     "x": 840,
-    "y": 0
+    "y": 0,
+    "z": 1
   },
   "house9": {
     "inheritFrom": {
@@ -134,7 +199,8 @@
     "type": "holder",
     "id": "house9",
     "x": 960,
-    "y": 0
+    "y": 0,
+    "z": 1
   },
   "house10": {
     "inheritFrom": {
@@ -143,97 +209,8 @@
     "type": "holder",
     "id": "house10",
     "x": 1080,
-    "y": 0
-  },
-  "house11": {
-    "inheritFrom": {
-      "house2": "*"
-    },
-    "type": "holder",
-    "id": "house11",
-    "x": 0,
-    "y": 120
-  },
-  "house12": {
-    "inheritFrom": {
-      "house1": "*"
-    },
-    "type": "holder",
-    "id": "house12",
-    "x": 120,
-    "y": 120
-  },
-  "house13": {
-    "inheritFrom": {
-      "house2": "*"
-    },
-    "type": "holder",
-    "id": "house13",
-    "x": 240,
-    "y": 120
-  },
-  "house14": {
-    "inheritFrom": {
-      "house1": "*"
-    },
-    "type": "holder",
-    "id": "house14",
-    "x": 360,
-    "y": 120
-  },
-  "house15": {
-    "inheritFrom": {
-      "house2": "*"
-    },
-    "type": "holder",
-    "id": "house15",
-    "x": 480,
-    "y": 120
-  },
-  "house16": {
-    "inheritFrom": {
-      "house1": "*"
-    },
-    "type": "holder",
-    "id": "house16",
-    "x": 600,
-    "y": 120
-  },
-  "house17": {
-    "inheritFrom": {
-      "house2": "*"
-    },
-    "type": "holder",
-    "id": "house17",
-    "x": 720,
-    "y": 120
-  },
-  "house18": {
-    "inheritFrom": {
-      "house1": "*"
-    },
-    "type": "holder",
-    "id": "house18",
-    "x": 840,
-    "y": 120
-  },
-  "house19": {
-    "inheritFrom": {
-      "house2": "*"
-    },
-    "type": "holder",
-    "id": "house19",
-    "x": 960,
-    "y": 120
-  },
-  "house20": {
-    "inheritFrom": {
-      "house1": "*"
-    },
-    "type": "holder",
-    "id": "house20",
-    "x": 1080,
-    "y": 120
+    "y": 0,
+    "z": 1
   },
   "house21": {
     "inheritFrom": {
@@ -242,7 +219,8 @@
     "type": "holder",
     "id": "house21",
     "x": 0,
-    "y": 240
+    "y": 240,
+    "z": 1
   },
   "house22": {
     "inheritFrom": {
@@ -251,7 +229,8 @@
     "type": "holder",
     "id": "house22",
     "x": 120,
-    "y": 240
+    "y": 240,
+    "z": 1
   },
   "house23": {
     "inheritFrom": {
@@ -260,7 +239,8 @@
     "type": "holder",
     "id": "house23",
     "x": 240,
-    "y": 240
+    "y": 240,
+    "z": 1
   },
   "house24": {
     "inheritFrom": {
@@ -269,7 +249,8 @@
     "type": "holder",
     "id": "house24",
     "x": 360,
-    "y": 240
+    "y": 240,
+    "z": 1
   },
   "house25": {
     "inheritFrom": {
@@ -278,7 +259,8 @@
     "type": "holder",
     "id": "house25",
     "x": 480,
-    "y": 240
+    "y": 240,
+    "z": 1
   },
   "house26": {
     "inheritFrom": {
@@ -287,7 +269,8 @@
     "type": "holder",
     "id": "house26",
     "x": 600,
-    "y": 240
+    "y": 240,
+    "z": 1
   },
   "house27": {
     "inheritFrom": {
@@ -296,7 +279,8 @@
     "type": "holder",
     "id": "house27",
     "x": 720,
-    "y": 240
+    "y": 240,
+    "z": 1
   },
   "house28": {
     "inheritFrom": {
@@ -305,7 +289,8 @@
     "type": "holder",
     "id": "house28",
     "x": 840,
-    "y": 240
+    "y": 240,
+    "z": 1
   },
   "house29": {
     "inheritFrom": {
@@ -314,7 +299,8 @@
     "type": "holder",
     "id": "house29",
     "x": 960,
-    "y": 240
+    "y": 240,
+    "z": 1
   },
   "house30": {
     "inheritFrom": {
@@ -323,14 +309,15 @@
     "type": "holder",
     "id": "house30",
     "x": 1080,
-    "y": 240
+    "y": 240,
+    "z": 1
   },
   "cube1": {
     "id": "cube1",
     "x": 20,
     "y": 10,
     "width": 80,
-    "z": 362,
+    "z": 1,
     "color": "#468e9b",
     "css": "border-radius: 50%/35%;",
     "image": "/i/game-pieces/3D/Cube-3D.svg",
@@ -342,7 +329,9 @@
     "borderColor": "#749ba5",
     "borderWidth": 1,
     "resetProperties": {
-      "parent": "house2"
+      "parent": "house2",
+      "x": 20,
+      "y": 10
     },
     "parent": "house2"
   },
@@ -352,7 +341,7 @@
     "y": 10,
     "width": 80,
     "height": 90,
-    "z": 366,
+    "z": 1,
     "color": "#749ba5",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -364,7 +353,9 @@
     "borderColor": "black",
     "borderWidth": 1,
     "resetProperties": {
-      "parent": "house1"
+      "parent": "house1",
+      "x": 20,
+      "y": 10
     },
     "parent": "house1"
   },
@@ -463,7 +454,7 @@
     "y": 10,
     "width": 80,
     "height": 90,
-    "z": 360,
+    "z": 1,
     "color": "#749ba5",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -475,7 +466,9 @@
     "borderColor": "black",
     "borderWidth": 1,
     "resetProperties": {
-      "parent": "house3"
+      "parent": "house3",
+      "x": 20,
+      "y": 10
     },
     "parent": "house3"
   },
@@ -485,7 +478,7 @@
     "y": 10,
     "width": 80,
     "height": 90,
-    "z": 356,
+    "z": 1,
     "color": "#749ba5",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -497,7 +490,9 @@
     "borderColor": "black",
     "borderWidth": 1,
     "resetProperties": {
-      "parent": "house5"
+      "parent": "house5",
+      "x": 20,
+      "y": 10
     },
     "parent": "house5"
   },
@@ -507,7 +502,7 @@
     "y": 10,
     "width": 80,
     "height": 90,
-    "z": 352,
+    "z": 1,
     "color": "#749ba5",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -519,7 +514,9 @@
     "borderColor": "black",
     "borderWidth": 1,
     "resetProperties": {
-      "parent": "house7"
+      "parent": "house7",
+      "x": 20,
+      "y": 10
     },
     "parent": "house7"
   },
@@ -529,7 +526,7 @@
     "y": 10,
     "width": 80,
     "height": 90,
-    "z": 344,
+    "z": 1,
     "color": "#749ba5",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -541,7 +538,9 @@
     "borderColor": "black",
     "borderWidth": 1,
     "resetProperties": {
-      "parent": "house9"
+      "parent": "house9",
+      "x": 20,
+      "y": 10
     },
     "parent": "house9"
   },
@@ -550,7 +549,7 @@
     "x": 20,
     "y": 10,
     "width": 80,
-    "z": 358,
+    "z": 1,
     "color": "#468e9b",
     "css": "border-radius: 50%/35%;",
     "image": "/i/game-pieces/3D/Cube-3D.svg",
@@ -562,7 +561,9 @@
     "borderColor": "#749ba5",
     "borderWidth": 1,
     "resetProperties": {
-      "parent": "house4"
+      "parent": "house4",
+      "x": 20,
+      "y": 10
     },
     "parent": "house4"
   },
@@ -571,7 +572,7 @@
     "x": 20,
     "y": 10,
     "width": 80,
-    "z": 354,
+    "z": 1,
     "color": "#468e9b",
     "css": "border-radius: 50%/35%;",
     "image": "/i/game-pieces/3D/Cube-3D.svg",
@@ -583,7 +584,9 @@
     "borderColor": "#749ba5",
     "borderWidth": 1,
     "resetProperties": {
-      "parent": "house6"
+      "parent": "house6",
+      "x": 20,
+      "y": 10
     },
     "parent": "house6"
   },
@@ -592,7 +595,7 @@
     "x": 20,
     "y": 10,
     "width": 80,
-    "z": 350,
+    "z": 1,
     "color": "#468e9b",
     "css": "border-radius: 50%/35%;",
     "image": "/i/game-pieces/3D/Cube-3D.svg",
@@ -604,16 +607,16 @@
     "borderColor": "#749ba5",
     "borderWidth": 1,
     "resetProperties": {
-      "parent": "house8"
+      "parent": "house8",
+      "x": 20,
+      "y": 10
     },
     "parent": "house8"
   },
   "cube5": {
     "id": "cube5",
-    "x": 20,
-    "y": 10,
     "width": 80,
-    "z": 348,
+    "z": 1,
     "color": "#468e9b",
     "css": "border-radius: 50%/35%;",
     "image": "/i/game-pieces/3D/Cube-3D.svg",
@@ -625,8 +628,12 @@
     "borderColor": "#749ba5",
     "borderWidth": 1,
     "resetProperties": {
-      "parent": "house10"
+      "parent": "house10",
+      "x": 20,
+      "y": 10
     },
+    "x": 20,
+    "y": 10,
     "parent": "house10"
   },
   "stick1": {
@@ -636,7 +643,7 @@
     "width": 40,
     "height": 200,
     "borderRadius": 15,
-    "z": 326,
+    "z": 1,
     "css": {
       "background": "#fff"
     },
@@ -672,7 +679,8 @@
       "opacity": 0.15
     },
     "image": "/assets/-2115246459_536956",
-    "x": -96
+    "x": -96,
+    "z": 1
   },
   "stick2": {
     "id": "stick2",
@@ -681,7 +689,7 @@
     "width": 40,
     "height": 200,
     "borderRadius": 15,
-    "z": 326,
+    "z": 1,
     "css": {
       "background": "#444",
       "border": "3px solid #fff",
@@ -718,7 +726,7 @@
     "width": 40,
     "height": 200,
     "borderRadius": 15,
-    "z": 326,
+    "z": 1,
     "css": {
       "background": "#444",
       "border": "3px solid #fff",
@@ -754,7 +762,7 @@
     "width": 40,
     "height": 200,
     "borderRadius": 15,
-    "z": 326,
+    "z": 1,
     "css": {
       "background": "#444",
       "border": "3px solid #fff",
@@ -790,7 +798,7 @@
     "y": 701,
     "width": 480,
     "height": 250,
-    "z": 331,
+    "z": 1,
     "movable": false,
     "movableInEdit": false,
     "layer": 2,
@@ -930,7 +938,7 @@
     "id": "result",
     "x": 560,
     "y": 960,
-    "z": 330,
+    "z": 1,
     "text": "Click sticks to start.",
     "height": 30,
     "css": {
@@ -981,10 +989,21 @@
             ]
           }
         ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
       }
     ],
     "x": 1550,
-    "z": 3,
+    "z": 1,
     "id": "dfcx",
     "width": 50,
     "height": 50,
@@ -999,5 +1018,105 @@
       "--wcBorderOH": "#c7dde4"
     },
     "y": 1
+  },
+  "house11": {
+    "type": "holder",
+    "id": "house11",
+    "x": 1080,
+    "y": 120,
+    "z": 1,
+    "inheritFrom": {
+      "house1": "*"
+    }
+  },
+  "house12": {
+    "type": "holder",
+    "id": "house12",
+    "x": 960,
+    "y": 120,
+    "z": 1,
+    "inheritFrom": {
+      "house2": "*"
+    }
+  },
+  "house13": {
+    "type": "holder",
+    "id": "house13",
+    "x": 840,
+    "y": 120,
+    "z": 1,
+    "inheritFrom": {
+      "house1": "*"
+    }
+  },
+  "house14": {
+    "type": "holder",
+    "id": "house14",
+    "x": 720,
+    "y": 120,
+    "z": 1,
+    "inheritFrom": {
+      "house2": "*"
+    }
+  },
+  "house15": {
+    "type": "holder",
+    "id": "house15",
+    "x": 600,
+    "y": 120,
+    "z": 1,
+    "inheritFrom": {
+      "house1": "*"
+    }
+  },
+  "house16": {
+    "type": "holder",
+    "id": "house16",
+    "x": 480,
+    "y": 120,
+    "z": 1,
+    "inheritFrom": {
+      "house2": "*"
+    }
+  },
+  "house17": {
+    "type": "holder",
+    "id": "house17",
+    "x": 360,
+    "y": 120,
+    "z": 1,
+    "inheritFrom": {
+      "house1": "*"
+    }
+  },
+  "house18": {
+    "type": "holder",
+    "id": "house18",
+    "x": 240,
+    "y": 120,
+    "z": 1,
+    "inheritFrom": {
+      "house2": "*"
+    }
+  },
+  "house19": {
+    "type": "holder",
+    "id": "house19",
+    "x": 120,
+    "y": 120,
+    "z": 1,
+    "inheritFrom": {
+      "house1": "*"
+    }
+  },
+  "house20": {
+    "type": "holder",
+    "id": "house20",
+    "x": 0,
+    "y": 120,
+    "z": 1,
+    "inheritFrom": {
+      "house2": "*"
+    }
   }
 }
