@@ -1546,6 +1546,20 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
       sendPropertyUpdate(child.get('id'), 'parent', id);
     for(const card of cards)
       sendPropertyUpdate(card.get('id'), 'deck', id);
+    StateManaged.inheritFromMapping[id] = StateManaged.inheritFromMapping[previousState.id];
+    delete StateManaged.inheritFromMapping[previousState.id];
+    for (const inheritor of StateManaged.inheritFromMapping[id]) {
+      const oldInherits = inheritor.get('inheritFrom');
+      let newInherits;
+      if(typeof oldInherits == "string")
+        newInherits = id;
+      else {
+        newInherits = {...oldInherits};
+        newInherits[id] = newInherits[previousState.id];
+        delete newInherits[previousState.id]
+      }
+      inheritor.set('inheritFrom', newInherits)
+    };
   } else {
     for(const key in widget) {
       if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
