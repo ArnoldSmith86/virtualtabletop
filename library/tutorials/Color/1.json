@@ -10,9 +10,19 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "players": "1",
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Examples",
       "language": "en-US",
-      "variant": "Examples"
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "lastUpdate": 1673796557202
     }
   },
   "8fr3": {
