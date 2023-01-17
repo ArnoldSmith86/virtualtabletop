@@ -10,20 +10,19 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Room layout and design by LawDawg and released to the public domain by CC0.<br></div><div><br></div><div>Board symbols are available under the icons8 license at:</div><ul><li>Ankh: https://icons8.com/icon/10404/ankh</li><li>One: https://icons8.com/icon/zW3ft7PmEdvi/one</li><li>Two: https://icons8.com/icon/lPRNKrv0lpVq/two</li><li>Three: https://icons8.com/icon/7XoFCDZ9ju3f/three</li><li>Cross: https://icons8.com/icon/X6BDW9w3pZVf/taw</li><li>Circle with line: https://icons8.com/icon/NFWOf50Z3e64/waw</li></ul><div>Background image available under the Pixabay license at:&nbsp;https://pixabay.com/illustrations/hieroglyphics-egypt-egyptian-7448842/</div><div><br></div><div>Library image is in the public domain as CC0 from: https://commons.wikimedia.org/wiki/File:Gameboard_and_Gaming_Pieces_MET_DP310299.jpg</div>",
-      "lastUpdate": 1673882390791,
-      "id": "3724",
+      "lastUpdate": 1673929430401,
       "showName": true,
       "skill": "",
       "description": "Take turns throwing sticks and moving pieces around board. First player to remove all pieces from the board wins.",
-      "variantImage": "",
-      "variant": "",
-      "language": "",
-      "players": "2",
       "similarImage": "",
       "similarName": "Senet",
       "similarAwards": "",
-      "ruleText": "Choose a starting player and token.&nbsp; Cubes go first.<div><br></div><div><b>Basic Movement</b><br><div><br></div><div>Throw sticks. Count number of white sticks (zero = five because the concetp of zero was not known in ancient Egypt).&nbsp; Move one piece forward the indicated number of spaces.&nbsp; Move from left to right on the top and bottom rows and from right to left on the middle row. When you reach the end of a row, the next move is into the next row.&nbsp;<span style=\"color: var(--overlayFontColor);\">Only one piece is allowed per space.</span></div><div><br></div><div>If you cannot move a piece forward, then you must move a piece backward.&nbsp; If you cannot do either, you forfeit that opportunity to move.</div><div><br></div><div>If you rolled a 1, 4, or 5 go again.<br></div><div><br></div><div><b>Last 5 Squares</b></div><div><b><br></b></div><div>The 26th square of the board has a symbol with a line extending from a circle. No piece can go past that square without landing on it first and you can only reach that square by an exact throw of the sticks.</div><div><br></div><div>Once a piece reaches that square:</div><div><ul><li>On a throw of 5, remove the piece from the board.</li><li>On a throw of 2, 3, or 4, advance to the appropriate square. Once on those last 3 squares, you must throw the exact count (indicated by the number of marks on the square) to remove it from the board.&nbsp; Those pieces cannot move forward or back.</li><li>On a throw of 1, move to the space with an X and follow the rules for \"drowning.\"</li></ul></div><div><b>Piece Interaction</b></div></div><div><b><br></b></div><div>When a piece lands on a square occupied by an opponent, swap places sending the opponent's piece to where the moving piece started which may be forward or backward.&nbsp; If two or more pieces of the same player are on adjacent squares, they are protected and cannot be swapped.</div><div><br></div><div>If a piece is on one of the last 3 squares (marked with 1, 2, or 3 lines), then those pieces are never protected.&nbsp; If attacked, the opponents piece is moved to the square with an X.</div><div><br></div><div><b>Drowning</b></div><div><b><br></b></div><div>When a player has a piece \"drowning\" on the X, the player's other pieces do not provide protection for each other when on adjacent squares. Also, this is the only piece the player can move.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">If the piece moves onto the X while the player has the sticks, t</span><span style=\"color: var(--overlayFontColor);\">he player keeps rolling until getting a 4 and moving the piece off, or until rolling a 2 or 3.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">On the player's next turn, he may either:</span></div><div><ul><li><span style=\"color: var(--overlayFontColor);\">Take the sticks and roll again for a 4 or</span></li><li><span style=\"color: var(--overlayFontColor);\">Move the piece to the square with the ankh symbol. If that square is occupied, then move it to the first free square behind it. That ends the player's turn.</span></li></ul><div>If the piece is drowning when during an opponent's turn:</div><div><ul><li>If the opponent's piece must enter the X square through a roll of 1, then the drowning piece and the opponent's piece swap places.&nbsp;</li><li>If the opponent's move causes one of the player's other pieces in the last few spaces of the board to move back to the X, then the one currently on the X is moved to the square with the ankh.</li></ul></div></div><div><b>End of Game</b></div><div><b><br></b></div><div>The first player to remove all of his pieces from the board wins.</div><div><br></div><div><b>Variations</b></div><div><b><br></b></div><div>Since the ancient Egyptians did not write down the rules, we do not really know what they are.&nbsp; There are many rule variants you can find on the internet.&nbsp; These are based on the a file uploaded to boardgamegeek.com by Urhixidur in 2002.&nbsp; Feel free to make up your own variations.</div>",
-      "helpText": "Click the sticks.&nbsp; Move the pieces."
+      "ruleText": "Choose a starting player and token.&nbsp; Cubes go first.<div><br></div><div><b>Basic Movement</b><br><div><br></div><div>Throw sticks. Count number of white sticks (zero = five because the concetp of zero was not known in ancient Egypt).&nbsp; Move one piece forward the indicated number of spaces.&nbsp; Move from left to right on the top and bottom rows and from right to left on the middle row. When you reach the end of a row, the next move is into the next row.&nbsp;<span style=\"color: var(--overlayFontColor);\">Only one piece is allowed per space.</span></div><div><br></div><div>If you cannot move a piece forward, then you must move a piece backward.&nbsp; If you cannot do either, you forfeit that opportunity to move.</div><div><br></div><div>If you rolled a 1, 4, or 5 go again.<br></div><div><br></div><div><b>Last 5 Squares</b></div><div><b><br></b></div><div>The 26th square of the board has a symbol with a line extending from a circle. No piece can go past that square without landing on it first and you can only reach that square by an exact throw of the sticks.</div><div><br></div><div>Once a piece reaches that square:</div><div><ul><li>On a throw of 5, remove the piece from the board.</li><li>On a throw of 2, 3, or 4, advance to the appropriate square. Once on those last 3 squares, you must throw the exact count (indicated by the number of marks on the square) to remove it from the board.&nbsp; Those pieces cannot move forward or back.</li><li>On a throw of 1, move to the space with an X and follow the rules for \"drowning.\"</li></ul></div><div><b>Piece Interaction</b></div></div><div><b><br></b></div><div>When a piece lands on a square occupied by an opponent, swap places sending the opponent's piece to where the moving piece started which may be forward or backward.&nbsp; If two or more pieces of the same player are on adjacent squares, they are protected and cannot be swapped.</div><div><br></div><div>If a piece is on one of the last 3 squares (marked with 1, 2, or 3 lines), then those pieces are never protected.&nbsp; If attacked, the opponents piece is moved to the square with an X.</div><div><br></div><div><b>Drowning</b></div><div><b><br></b></div><div>When a player has a piece \"drowning\" on the X, the player's other pieces do not provide protection for each other when on adjacent squares. Also, this is the only piece the player can move.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">If the piece moves onto the X while the player has the sticks, t</span><span style=\"color: var(--overlayFontColor);\">he player keeps rolling until getting a 4 and moving the piece off, or until rolling a 2 or 3.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">On the player's next turn, he may either:</span></div><div><ul><li><span style=\"color: var(--overlayFontColor);\">Take the sticks and roll again for a 4 or</span></li><li><span style=\"color: var(--overlayFontColor);\">Move the piece to the square with the ankh symbol. If that square is occupied, then move it to the first free square behind it. That ends the player's turn.</span></li></ul><div>If the piece is drowning when during an opponent's turn:</div><div><ul><li>If the opponent's piece must enter the X square through a roll of 1, then the drowning piece and the opponent's piece swap places.&nbsp;</li><li>If the opponent's move causes one of the player's other pieces in the last few spaces of the board to move back to the X, then the one currently on the X is moved to the square with the ankh.</li></ul></div></div><div><b>End of Game</b></div><div><b><br></b></div><div>The first player to remove all of his pieces from the board wins.</div><div><br></div><div><b>Variations</b></div><div><b><br></b></div><div>Since the ancient Egyptians did not write down the rules, we do not really know what they are.&nbsp; There are many rule variants you can find on the internet.&nbsp; These are based on a file uploaded to boardgamegeek.com by Urhixidur in 2002. There are extra pieces in the room for use in some rule variants.&nbsp;<span style=\"color: var(--overlayFontColor);\">Feel free to make up your own variations.</span></div>",
+      "helpText": "Click the sticks.&nbsp; Move the pieces.",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
     }
   },
   "table": {
@@ -1117,6 +1116,231 @@
     "z": 1,
     "inheritFrom": {
       "house2": "*"
+    }
+  },
+  "pawn6": {
+    "id": "pawn6",
+    "x": 10,
+    "width": 80,
+    "height": 90,
+    "z": 6,
+    "color": "#749ba5",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": null,
+      "x": 10,
+      "y": 100
+    },
+    "y": 100
+  },
+  "pawn7": {
+    "id": "pawn7",
+    "x": 90,
+    "width": 80,
+    "height": 90,
+    "z": 7,
+    "color": "#749ba5",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": null,
+      "x": 90,
+      "y": 100
+    },
+    "y": 98
+  },
+  "pawn8": {
+    "id": "pawn8",
+    "x": 170,
+    "width": 80,
+    "height": 90,
+    "z": 8,
+    "color": "#749ba5",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": null,
+      "x": 170,
+      "y": 100
+    },
+    "y": 100
+  },
+  "pawn9": {
+    "id": "pawn9",
+    "x": 250,
+    "width": 80,
+    "height": 90,
+    "z": 3,
+    "color": "#749ba5",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": null,
+      "x": 250,
+      "y": 100
+    },
+    "y": 100
+  },
+  "pawn10": {
+    "id": "pawn10",
+    "x": 330,
+    "width": 80,
+    "height": 90,
+    "z": 3,
+    "color": "#749ba5",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": null,
+      "x": 330,
+      "y": 100
+    },
+    "y": 100
+  },
+  "cube6": {
+    "id": "cube6",
+    "x": 1140,
+    "y": 100,
+    "width": 80,
+    "z": 4,
+    "color": "#468e9b",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#749ba5",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": null,
+      "x": 1140,
+      "y": 100
+    }
+  },
+  "cube7": {
+    "id": "cube7",
+    "x": 1230,
+    "y": 100,
+    "width": 80,
+    "z": 4,
+    "color": "#468e9b",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#749ba5",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": null,
+      "x": 1230,
+      "y": 100
+    }
+  },
+  "cube8": {
+    "id": "cube8",
+    "x": 1320,
+    "y": 100,
+    "width": 80,
+    "z": 4,
+    "color": "#468e9b",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#749ba5",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": null,
+      "x": 1320,
+      "y": 100
+    }
+  },
+  "cube9": {
+    "id": "cube9",
+    "x": 1410,
+    "y": 100,
+    "width": 80,
+    "z": 4,
+    "color": "#468e9b",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#749ba5",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": null,
+      "x": 1410,
+      "y": 100
+    }
+  },
+  "cube10": {
+    "id": "cube10",
+    "x": 1500,
+    "y": 100,
+    "width": 80,
+    "z": 4,
+    "color": "#468e9b",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#749ba5",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": null,
+      "x": 1500,
+      "y": 100
     }
   }
 }
