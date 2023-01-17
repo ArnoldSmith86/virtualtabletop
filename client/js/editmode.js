@@ -1562,9 +1562,7 @@ async function updateWidgetId(widget, previousState) {
     sendPropertyUpdate(card.get('id'), 'deck', id);
 
   // Change inheritFrom on widgets inheriting from altered widget
-  StateManaged.inheritFromMapping[id] = StateManaged.inheritFromMapping[previousState.id];
-  delete StateManaged.inheritFromMapping[previousState.id];
-  for (const inheritor of StateManaged.inheritFromMapping[id]) {
+  for (const inheritor of StateManaged.inheritFromMapping[previousState.id]) {
     const oldInherits = inheritor.get('inheritFrom');
     let newInherits;
     if(typeof oldInherits == "string")
