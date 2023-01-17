@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 8,
+    "version": 9,
     "info": {
       "name": "Scoreboard",
       "image": "/assets/-751946941_5803",
@@ -18,11 +18,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "lastUpdate": 1673742960399,
       "variantImage": "",
       "variant": "Totals and Teams",
       "language": "en-US",
-      "players": "1",
-      "lastUpdate": 1672953252505
+      "players": "1"
     }
   },
   "seat1": {
@@ -169,7 +169,7 @@
     "width": 300,
     "z": 10075,
     "movable": false,
-    "text": "This scoreboard sets up 2 teams with 4 players each. Each round displays the sum of the scores for the seats in that team and the total of all rounds is displayed at the bottom. The team with the higher score is highlighted blue.",
+    "text": "This scoreboard sets up 2 teams with 4 players each. Each round displays the sum of the scores for the seats in that team and the total of all rounds is displayed at the bottom.",
     "layer": -2
   },
   "comment6": {
@@ -179,7 +179,7 @@
     "width": 300,
     "z": 10075,
     "movable": false,
-    "text": "This button uses the `SCORE` function to increase the value of Player 8's round 4 score by 1. Press the button several times to watch the Right Team score increase. This button also changes the blue highlight to the team with the higher score.",
+    "text": "This button uses the `SCORE` function to increase the value of Player 8's round 4 score by 1. Press the button several times to watch the Right Team score increase.",
     "layer": -2
   },
   "comment7": {
@@ -315,7 +315,7 @@
         "variable": "noNull"
       },
       "var noNull = remove 0 1",
-      "var sorted = numericSort ${noNull}",
+      "var sorted = numericStringSort ${noNull}",
       "var lowest = ${sorted.0}",
       "var seatIndex = ${total} indexOf ${lowest}",
       {
@@ -327,63 +327,6 @@
         "value": true
       }
     ]
-  },
-  "scoreboard2": {
-    "type": "scoreboard",
-    "id": "scoreboard2",
-    "x": 100,
-    "y": 600,
-    "z": 4,
-    "movableInEdit": false,
-    "seats": {
-      "Left Team": [
-        "seat1",
-        "seat2",
-        "seat3",
-        "seat4"
-      ],
-      "Right Team": [
-        "seat5",
-        "seat6",
-        "seat7",
-        "seat8"
-      ]
-    },
-    "css": {
-      ".scoreboard td:nth-child(2)": {
-        "background": "${PROPERTY highlight0}"
-      },
-      ".scoreboard td:nth-child(3)": {
-        "background": "${PROPERTY highlight1}"
-      }
-    },
-    "highlight0": "lightblue",
-    "movable": false
-  },
-  "scoreboard3": {
-    "type": "scoreboard",
-    "id": "scoreboard3",
-    "x": 750,
-    "y": 600,
-    "z": 4,
-    "movable": false,
-    "movableInEdit": false,
-    "seats": {
-      "Team 1": [
-        "seat8",
-        "seat1",
-        "seat4"
-      ],
-      "Team 2": [
-        "seat2",
-        "seat7",
-        "seat3"
-      ],
-      "Team 3": [
-        "seat6",
-        "seat5"
-      ]
-    }
   },
   "button3": {
     "type": "button",
@@ -404,68 +347,6 @@
         "seats": "seat8",
         "value": 1,
         "round": 4
-      },
-      {
-        "func": "GET",
-        "collection": [
-          "scoreboard2"
-        ],
-        "property": "_totals",
-        "variable": "total"
-      },
-      {
-        "func": "GET",
-        "collection": [
-          "scoreboard2"
-        ],
-        "property": "_totals",
-        "variable": "noNull"
-      },
-      "var noNull = remove 0 1",
-      "var sorted = numericSort ${noNull}",
-      "var sorted = reverse ${sorted}",
-      "var highest = ${sorted.0}",
-      "var teamIndex = ${total} indexOf ${highest}",
-      {
-        "func": "IF",
-        "operand1": "${teamIndex}",
-        "operand2": 1,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "scoreboard2"
-            ],
-            "property": "highlight0",
-            "value": "lightblue"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "scoreboard2"
-            ],
-            "property": "highlight1",
-            "value": null
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "scoreboard2"
-            ],
-            "property": "highlight1",
-            "value": "lightblue"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "scoreboard2"
-            ],
-            "property": "highlight0",
-            "value": null
-          }
-        ]
       }
     ]
   },
@@ -578,5 +459,60 @@
     "movable": false,
     "text": "How many teams (1-8)?",
     "movableInEdit": false
+  },
+  "scoreboard2": {
+    "type": "scoreboard",
+    "id": "scoreboard2",
+    "x": 100,
+    "y": 600,
+    "movable": false,
+    "movableInEdit": false,
+    "seats": {
+      "Left Team": [
+        "seat1",
+        "seat2",
+        "seat3",
+        "seat4"
+      ],
+      "Right Team": [
+        "seat5",
+        "seat6",
+        "seat7",
+        "seat8"
+      ]
+    },
+    "css": {
+      ".scoreboard tr:nth-child(2)": {
+        "background": "${ROPERTY highlight0}"
+      },
+      ".scoreboard tr:nth-child(3)": {
+        "background": "${ROPERTY highlight1}"
+      }
+    },
+    "highlight0": "lightblue"
+  },
+  "scoreboard3": {
+    "type": "scoreboard",
+    "id": "scoreboard3",
+    "x": 750,
+    "y": 600,
+    "movable": false,
+    "movableInEdit": false,
+    "seats": {
+      "Team 1": [
+        "seat8",
+        "seat1",
+        "seat4"
+      ],
+      "Team 2": [
+        "seat2",
+        "seat7",
+        "seat3"
+      ],
+      "Team 3": [
+        "seat6",
+        "seat5"
+      ]
+    }
   }
 }
