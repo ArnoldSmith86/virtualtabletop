@@ -1579,8 +1579,26 @@ async function updateWidgetId(widget, previousState) {
 
   // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
   if(widget.type == 'seat') {
-    widgetFilter(w => w.get('onlyVisibleForSeat') == previousState.id).map( w => w.set('onlyVisibleForSeat', id));
-    widgetFilter(w => w.get('linkedToSeat') == previousState.id).map( w => w.set('linkedToSeat', id));
+    const onlyList = widgetFilter(w => w.get('onlyVisibleForSeat') && asArray(w.get('onlyVisibleForSeat')).includes(previousState.id));
+    onlyList.map( w => {
+      if(typeof w.get('onlyVisibleForSeat') === 'string')
+        w.set('onlyVisibleForSeat', id)
+      else {
+        const vis = [...w.get('onlyVisibleForSeat')];
+        vis[vis.indexOf(previousState.id)] = id;
+        w.set('onlyVisibleForSeat', vis)
+      }
+    });
+    const linkedList = widgetFilter(w => w.get('linkedToSeat') && asArray(w.get('linkedToSeat')).includes(previousState.id));
+    linkedList.map( w => {
+      if(typeof w.get('linkedToSeat') === 'string')
+        w.set('linkedToSeat', id)
+      else {
+        const link = [...w.get('linkedToSeat')];
+        link[link.indexOf(previousState.id)] = id;
+        w.set('linkedToSeat', link)
+      }
+    });
   }
 
   // Finally, change any seats that use the old id as a hand.
