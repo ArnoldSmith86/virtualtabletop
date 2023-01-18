@@ -1,0 +1,2995 @@
+{
+  "ligz": {
+    "deck": "Marker Cards",
+    "type": "card",
+    "cardType": "AC",
+    "z": 16828,
+    "clonedFrom": "1io6",
+    "x": 4,
+    "y": 4,
+    "id": "ligz"
+  },
+  "l4pk": {
+    "deck": "Marker Cards",
+    "type": "card",
+    "cardType": "AC",
+    "z": 16829,
+    "clonedFrom": "1io6",
+    "x": 4,
+    "y": 4,
+    "id": "l4pk"
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-939983407_457124",
+    "height": 1200,
+    "css": "opacity:0.35",
+    "y": -100
+  },
+  "floor": {
+    "type": "holder",
+    "id": "floor",
+    "x": -500,
+    "y": -500,
+    "width": 2600,
+    "height": 2000,
+    "z": 5,
+    "movableInEdit": false,
+    "alignChildren": false,
+    "classes": "transparent",
+    "css": "border: 0px !important",
+    "dropTarget": {
+      "shift": true
+    }
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "width": 50,
+    "height": 50,
+    "layer": 15,
+    "z": 10375,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You are about to recall all cards. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Recall",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "RECALL",
+        "holder": "baseHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "baseHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "waterExpHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "waterExpHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "flyExpHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "flyExpHolder"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "shiftCenter"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "baseHolder"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 500
+      }
+    ],
+    "color": "white",
+    "css": "font-size: 40px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "x": 1545,
+    "classes": "symbols",
+    "text": "restart",
+    "movableInEdit": false
+  },
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Dog Eat Dog World",
+      "image": "/assets/-1896214630_2512",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/309110/food-chain-island",
+      "year": "2020",
+      "mode": "solo",
+      "time": "15",
+      "players": "1",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "Room layout and card design by LawDawg96. Released to the public domain under CC0.\n\nRoom background is from https://pixabay.com/photos/background-texture-pictorial-2668435/ and is available under the Pixabay license.\n\nCard images from https://icons8.com/ and available under the Icons8 license:\n - Plant https://icons8.com/icon/80791/plant\n - Ant https://icons8.com/icon/16010/ant\n - Spider https://icons8.com/icon/17372/spider\n - Mouse https://icons8.com/icon/NZ8kvzWb7v6Q/mouse\n - Lizard https://icons8.com/icon/NMg3nPX3R1UT/lizard\n - Rat https://icons8.com/icon/vzz0xyvO-UyC/rat\n - Bat https://icons8.com/icon/5mD2JRHQvi8_/bat\n - Snake https://icons8.com/icon/OwPRfsLEUW71/snake\n - Racoon https://icons8.com/icon/xuqvSAsgBfzm/raccoon\n - Fox https://icons8.com/icon/OzPzLNFKW3qG/fox\n - Wolf https://icons8.com/icon/VcTCb_viZ8ui/wolf\n - Tiger https://icons8.com/icon/I5OML1bajbP2/tiger\n - Gator https://icons8.com/icon/ucFXo98hhFEL/alligator\n - Lion https://icons8.com/icon/33035/lion\n - Polar bear https://icons8.com/icon/c3GBKV63y0qQ/polar-bear\n - Whale https://icons8.com/icon/AHWkIE_i5sGn/whale\n - Shark https://icons8.com/icon/w3JYY-Hele6S/shark\n\n\nCard images from https://www.flaticon.com/ and available under the Flaticon license:\n - Lynx https://cdn-icons-png.flaticon.com/512/6855/6855249.png\n\nCard images from https://game-icons.net/ by Lorc available under CC BY 3.0:\n - Teeth https://game-icons.net/1x1/lorc/alligator-clip.html\n - Food chain (card back and library image) https://game-icons.net/1x1/lorc/food-chain.html",
+      "similarName": "Food Chain Island",
+      "description": "Starting with grid of 16 cards representing animals, move card to eat another smaller, adjacent animal card. Then activate the special power of the eating animal. Game ends when player cannot move to eat an animal. Goal is to have only one animal card remaining.",
+      "showName": true,
+      "lastUpdate": 1656358260000
+    }
+  },
+  "shiftup": {
+    "id": "shiftup",
+    "x": 1514,
+    "y": 875,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 621,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "-",
+        "value": 166
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_up"
+  },
+  "shiftcenter": {
+    "id": "shiftcenter",
+    "x": 1519,
+    "y": 920,
+    "width": 40,
+    "height": 40,
+    "layer": 2,
+    "z": 615,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -500
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "40px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "visibility"
+  },
+  "shiftright": {
+    "id": "shiftright",
+    "x": 1558,
+    "y": 914,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 620,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "+",
+        "value": 210
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_right"
+  },
+  "shiftdown": {
+    "id": "shiftdown",
+    "x": 1511,
+    "y": 955,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 622,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "+",
+        "value": 166
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_down"
+  },
+  "shiftleft": {
+    "id": "shiftleft",
+    "x": 1470,
+    "y": 914,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 619,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "-",
+        "value": 210
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_left"
+  },
+  "baseDeck": {
+    "type": "deck",
+    "id": "baseDeck",
+    "x": 4,
+    "y": 4,
+    "z": 16779,
+    "cardDefaults": {
+      "onPileCreation": {
+        "handlePosition": "top right",
+        "handleOffset": 1,
+        "handleSize": 45,
+        "grid": [
+          {
+            "x": 210,
+            "y": 166,
+            "offsetX": -105,
+            "offsetY": -81
+          }
+        ]
+      },
+      "width": 210,
+      "height": 166,
+      "shift": true,
+      "grid": [
+        {
+          "x": 210,
+          "y": 166,
+          "offsetX": -105,
+          "offsetY": -81
+        }
+      ]
+    },
+    "cardTypes": {
+      "0": {
+        "back": "/assets/285490058_37799",
+        "power": "\nNo ability.",
+        "rank": 0,
+        "animal": "Plant",
+        "pic": "/assets/247025176_6173",
+        "eats": "-\n-\n-",
+        "mouth": "/assets/641119557_659"
+      },
+      "1": {
+        "back": "/assets/285490058_37799",
+        "power": "\nMove 1 animal 1-3 spaces.",
+        "rank": 1,
+        "animal": "Ant",
+        "pic": "/assets/16729238_4653",
+        "eats": "0\n -\n -",
+        "mouth": "/assets/641119557_659"
+      },
+      "2": {
+        "back": "/assets/285490058_37799",
+        "power": "Move 2 animals 1 space each.",
+        "rank": 2,
+        "animal": "Spider",
+        "pic": "/assets/-1831023091_4087",
+        "eats": "1\n0\n -",
+        "mouth": "/assets/641119557_659"
+      },
+      "3": {
+        "back": "/assets/285490058_37799",
+        "power": "\nMove 1 animal 1-2 spaces.",
+        "rank": 3,
+        "animal": "Mouse",
+        "pic": "/assets/2019931743_6877",
+        "eats": "2\n1\n0",
+        "mouth": "/assets/641119557_659"
+      },
+      "4": {
+        "back": "/assets/285490058_37799",
+        "power": "Remove any 1 unstacked animal.",
+        "rank": 4,
+        "animal": "Lizard",
+        "pic": "/assets/-518779194_4918",
+        "eats": "3\n2\n1",
+        "mouth": "/assets/641119557_659"
+      },
+      "5": {
+        "back": "/assets/285490058_37799",
+        "power": "\nMove 1 animal 2 spaces.",
+        "rank": 5,
+        "animal": "Rat",
+        "pic": "/assets/240192970_5806",
+        "eats": "4\n3\n2",
+        "mouth": "/assets/641119557_659"
+      },
+      "6": {
+        "back": "/assets/285490058_37799",
+        "power": "After eating, move this animal to any other space.",
+        "rank": 6,
+        "animal": "Bat",
+        "pic": "/assets/-1604661557_6306",
+        "eats": "5\n4\n3",
+        "mouth": "/assets/641119557_659"
+      },
+      "7": {
+        "back": "/assets/285490058_37799",
+        "power": "Swap location of any 2 animals.",
+        "rank": 7,
+        "animal": "Snake",
+        "pic": "/assets/1871769281_7246",
+        "eats": "6\n5\n4",
+        "mouth": "/assets/641119557_659"
+      },
+      "8": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, if eat animal exactly 1 below, discard any 1 unstacked animal.",
+        "rank": 8,
+        "animal": "Racoon",
+        "pic": "/assets/-1359264367_9737",
+        "eats": "7\n6\n5",
+        "mouth": "/assets/641119557_659"
+      },
+      "9": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must move diagonally 1 space to eat.",
+        "rank": 9,
+        "animal": "Fox",
+        "pic": "/assets/-1018269906_11010",
+        "eats": "8\n7\n6",
+        "mouth": "/assets/641119557_659"
+      },
+      "10": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must jump over 1 card orthogonally to eat.",
+        "rank": 10,
+        "animal": "Lynx",
+        "pic": "/assets/-976699747_7373",
+        "eats": "9\n8\n7",
+        "mouth": "/assets/641119557_659"
+      },
+      "11": {
+        "back": "/assets/285490058_37799",
+        "power": "After eating, move this animal 1 space.",
+        "rank": 11,
+        "animal": "Wolf",
+        "pic": "/assets/-285296612_8602",
+        "eats": "10\n  9\n  8",
+        "mouth": "/assets/641119557_659"
+      },
+      "12": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must move 2 spaces to eat.",
+        "rank": 12,
+        "animal": "Tiger",
+        "pic": "/assets/710920103_10420",
+        "eats": "11\n10\n  9",
+        "mouth": "/assets/641119557_659"
+      },
+      "13": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, move eaten animal to predator's space & place on bottom of stack.",
+        "rank": 13,
+        "animal": "Gator",
+        "pic": "/assets/351891706_3481",
+        "eats": "12\n11\n10",
+        "mouth": "/assets/641119557_659"
+      },
+      "14": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must eat animal valued exactly 1 less.",
+        "rank": 14,
+        "animal": "Lion",
+        "pic": "/assets/-1675015526_4531",
+        "eats": "13\n12\n11",
+        "mouth": "/assets/641119557_659"
+      },
+      "15": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, cannot use this animal to eat.",
+        "rank": 15,
+        "animal": "Polar Bear",
+        "pic": "/assets/-866234605_7409",
+        "eats": "14\n13\n12",
+        "mouth": "/assets/641119557_659"
+      },
+      "Whale": {
+        "back": "/assets/1949068194_19399",
+        "power": "Move 1 animal to any other space.",
+        "animal": "Whale",
+        "pic": "/assets/1239450149_6369"
+      },
+      "Shark": {
+        "back": "/assets/1949068194_19399",
+        "power": "Move animal 1 space to eat. Can eat animal of ANY smaller value.",
+        "animal": "Shark",
+        "pic": "/assets/1470255297_5482"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "",
+            "width": 210,
+            "height": 166
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "/assets/-1896214630_2512",
+            "width": 210,
+            "height": 166
+          }
+        ],
+        "border": false,
+        "radius": 10
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 210,
+            "height": 111,
+            "css": "filter:blur(2px)",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 210,
+            "height": 111,
+            "css": "filter:opacity(30%)"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 110,
+            "color": "#a19595",
+            "width": 210,
+            "height": 166
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 110,
+            "fontSize": 15,
+            "color": "black",
+            "textAlign": "center",
+            "width": 190,
+            "height": 166,
+            "dynamicProperties": {
+              "value": "power"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 2,
+            "fontSize": 25,
+            "color": "white",
+            "width": 10,
+            "height": 10,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 28,
+            "color": "#000080",
+            "width": 210,
+            "textAlign": "center",
+            "height": 10,
+            "dynamicProperties": {
+              "value": "animal"
+            }
+          },
+          {
+            "type": "image",
+            "x": 65,
+            "y": 30,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "pic"
+            }
+          },
+          {
+            "type": "image",
+            "x": 170,
+            "y": 25,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "mouth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 180,
+            "y": 55,
+            "fontSize": 20,
+            "color": "black",
+            "width": 210,
+            "height": 10,
+            "css": "line-height:0.9",
+            "dynamicProperties": {
+              "value": "eats"
+            }
+          }
+        ],
+        "border": false,
+        "radius": 10
+      }
+    ],
+    "parent": "baseHolder"
+  },
+  "jdp8": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "0",
+    "id": "jdp8",
+    "z": 40057,
+    "parent": "6rrk"
+  },
+  "ljl4": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "1",
+    "id": "ljl4",
+    "z": 40066,
+    "parent": "6rrk"
+  },
+  "v3t7": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "2",
+    "id": "v3t7",
+    "z": 40060,
+    "parent": "6rrk"
+  },
+  "qjl5": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "3",
+    "id": "qjl5",
+    "z": 40059,
+    "parent": "6rrk"
+  },
+  "mnnu": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "4",
+    "id": "mnnu",
+    "z": 40071,
+    "parent": "6rrk"
+  },
+  "5pau": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "5",
+    "id": "5pau",
+    "z": 40061,
+    "parent": "6rrk"
+  },
+  "nab4": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "nab4",
+    "z": 40070,
+    "parent": "6rrk"
+  },
+  "161q": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "8",
+    "id": "161q",
+    "z": 40063,
+    "parent": "6rrk"
+  },
+  "wmcc": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "9",
+    "id": "wmcc",
+    "z": 40062,
+    "parent": "6rrk"
+  },
+  "5fzx": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "10",
+    "id": "5fzx",
+    "z": 40064,
+    "parent": "6rrk"
+  },
+  "518i": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "11",
+    "id": "518i",
+    "z": 40058,
+    "parent": "6rrk"
+  },
+  "xwzn": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "12",
+    "id": "xwzn",
+    "z": 40067,
+    "parent": "6rrk"
+  },
+  "dafy": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "13",
+    "id": "dafy",
+    "z": 40065,
+    "parent": "6rrk"
+  },
+  "3eft": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "14",
+    "id": "3eft",
+    "z": 40068,
+    "parent": "6rrk"
+  },
+  "k0ab": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "15",
+    "id": "k0ab",
+    "z": 40056,
+    "parent": "6rrk"
+  },
+  "htpa": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "Whale",
+    "id": "htpa",
+    "z": 40069,
+    "grid": [],
+    "parent": "6rrk"
+  },
+  "5lua": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "Shark",
+    "id": "5lua",
+    "z": 40072,
+    "grid": [],
+    "parent": "6rrk"
+  },
+  "zabz": {
+    "deck": "baseDeck",
+    "type": "card",
+    "cardType": "7",
+    "id": "zabz",
+    "z": 40073,
+    "parent": "6rrk"
+  },
+  "space1": {
+    "type": "holder",
+    "id": "space1",
+    "parent": "floor",
+    "x": 920,
+    "y": 502,
+    "width": 210,
+    "height": 166,
+    "z": 7,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "no": "no"
+    },
+    "classes": "transparent"
+  },
+  "space2": {
+    "inheritFrom": "space1",
+    "id": "space2",
+    "type": "holder",
+    "x": 1130,
+    "y": 502,
+    "parent": "floor"
+  },
+  "space3": {
+    "inheritFrom": "space1",
+    "id": "space3",
+    "type": "holder",
+    "x": 1340,
+    "y": 502,
+    "parent": "floor"
+  },
+  "space4": {
+    "inheritFrom": "space1",
+    "id": "space4",
+    "type": "holder",
+    "x": 1550,
+    "y": 502,
+    "parent": "floor"
+  },
+  "space5": {
+    "inheritFrom": "space1",
+    "id": "space5",
+    "type": "holder",
+    "x": 1760,
+    "y": 502,
+    "parent": "floor"
+  },
+  "space6": {
+    "inheritFrom": "space1",
+    "id": "space6",
+    "type": "holder",
+    "x": 920,
+    "y": 668,
+    "parent": "floor"
+  },
+  "space7": {
+    "inheritFrom": "space1",
+    "id": "space7",
+    "type": "holder",
+    "x": 1130,
+    "y": 668,
+    "parent": "floor"
+  },
+  "space8": {
+    "inheritFrom": "space1",
+    "id": "space8",
+    "type": "holder",
+    "x": 1340,
+    "y": 668,
+    "parent": "floor"
+  },
+  "space9": {
+    "inheritFrom": "space1",
+    "id": "space9",
+    "type": "holder",
+    "x": 1550,
+    "y": 668,
+    "parent": "floor"
+  },
+  "space10": {
+    "inheritFrom": "space1",
+    "id": "space10",
+    "type": "holder",
+    "x": 1760,
+    "y": 668,
+    "parent": "floor"
+  },
+  "space11": {
+    "inheritFrom": "space1",
+    "id": "space11",
+    "type": "holder",
+    "x": 920,
+    "y": 834,
+    "parent": "floor"
+  },
+  "space12": {
+    "inheritFrom": "space1",
+    "id": "space12",
+    "type": "holder",
+    "x": 1130,
+    "y": 834,
+    "parent": "floor"
+  },
+  "space13": {
+    "inheritFrom": "space1",
+    "id": "space13",
+    "type": "holder",
+    "x": 1340,
+    "y": 834,
+    "parent": "floor"
+  },
+  "space14": {
+    "inheritFrom": "space1",
+    "id": "space14",
+    "type": "holder",
+    "x": 1550,
+    "y": 834,
+    "parent": "floor"
+  },
+  "space15": {
+    "inheritFrom": "space1",
+    "id": "space15",
+    "type": "holder",
+    "x": 1760,
+    "y": 834,
+    "parent": "floor"
+  },
+  "space16": {
+    "inheritFrom": "space1",
+    "id": "space16",
+    "type": "holder",
+    "x": 920,
+    "y": 1000,
+    "parent": "floor"
+  },
+  "space17": {
+    "inheritFrom": "space1",
+    "id": "space17",
+    "type": "holder",
+    "x": 1130,
+    "y": 1000,
+    "parent": "floor"
+  },
+  "space18": {
+    "inheritFrom": "space1",
+    "id": "space18",
+    "type": "holder",
+    "x": 1340,
+    "y": 1000,
+    "parent": "floor"
+  },
+  "space19": {
+    "inheritFrom": "space1",
+    "id": "space19",
+    "type": "holder",
+    "x": 1550,
+    "y": 1000,
+    "parent": "floor"
+  },
+  "space20": {
+    "inheritFrom": "space1",
+    "id": "space20",
+    "type": "holder",
+    "x": 1760,
+    "y": 1000,
+    "parent": "floor"
+  },
+  "space21": {
+    "inheritFrom": "space1",
+    "id": "space21",
+    "type": "holder",
+    "x": 920,
+    "y": 1166,
+    "parent": "floor"
+  },
+  "space22": {
+    "inheritFrom": "space1",
+    "id": "space22",
+    "type": "holder",
+    "x": 1130,
+    "y": 1166,
+    "parent": "floor"
+  },
+  "space23": {
+    "inheritFrom": "space1",
+    "id": "space23",
+    "type": "holder",
+    "x": 1340,
+    "y": 1166,
+    "parent": "floor"
+  },
+  "space24": {
+    "inheritFrom": "space1",
+    "id": "space24",
+    "type": "holder",
+    "x": 1550,
+    "y": 1166,
+    "parent": "floor"
+  },
+  "space25": {
+    "inheritFrom": "space1",
+    "id": "space25",
+    "type": "holder",
+    "x": 1760,
+    "y": 1166,
+    "parent": "floor"
+  },
+  "space26": {
+    "inheritFrom": "space1",
+    "id": "space26",
+    "type": "holder",
+    "x": 920,
+    "y": 1332,
+    "parent": "floor"
+  },
+  "space27": {
+    "inheritFrom": "space1",
+    "id": "space27",
+    "type": "holder",
+    "x": 1130,
+    "y": 1332,
+    "parent": "floor"
+  },
+  "space28": {
+    "inheritFrom": "space1",
+    "id": "space28",
+    "type": "holder",
+    "x": 1340,
+    "y": 1332,
+    "parent": "floor"
+  },
+  "space29": {
+    "inheritFrom": "space1",
+    "id": "space29",
+    "type": "holder",
+    "x": 1550,
+    "y": 1332,
+    "parent": "floor"
+  },
+  "space30": {
+    "inheritFrom": "space1",
+    "id": "space30",
+    "type": "holder",
+    "x": 1760,
+    "y": 1332,
+    "parent": "floor"
+  },
+  "baseHolder": {
+    "type": "holder",
+    "id": "baseHolder",
+    "width": 210,
+    "height": 166,
+    "z": 10382,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "layer": -2,
+    "x": -300
+  },
+  "dealDefault": {
+    "type": "button",
+    "id": "dealDefault",
+    "x": 1545,
+    "width": 50,
+    "height": 50,
+    "layer": 15,
+    "z": 10387,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "color": "white",
+    "css": "font-size: 40px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "text": "grid",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Standard deal...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You are about to recall all cards and deal them into the default grid pattern. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Recall & Deal",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "RECALL",
+        "holder": "baseHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "baseHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "waterExpHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "waterExpHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "flyExpHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "flyExpHolder"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "shiftCenter"
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY flyExp OF options}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "flyExpRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY waterExp OF options}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "waterExpRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "waterCardsRoutine"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "baseHolder",
+        "to": [
+          "space6",
+          "space7",
+          "space8",
+          "space9",
+          "space11",
+          "space12",
+          "space13",
+          "space14",
+          "space16",
+          "space17",
+          "space18",
+          "space19",
+          "space21",
+          "space22",
+          "space23",
+          "space24"
+        ],
+        "face": 1
+      },
+      {
+        "func": "CALL",
+        "routine": "floorRoutine"
+      }
+    ],
+    "waterCardsRoutine": [
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Whale"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 834
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Shark"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1000
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "floorRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "rank",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${widgetID}"
+          },
+          {
+            "func": "GET",
+            "property": "_absoluteX",
+            "variable": "absX"
+          },
+          {
+            "func": "GET",
+            "property": "_absoluteY",
+            "variable": "absY"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "floor"
+          },
+          "var xDiff = abs ${PROPERTY x OF floor}",
+          "var yDiff = abs ${PROPERTY y OF floor}",
+          "var absX = ${absX} + ${xDiff}",
+          "var absY = ${absY} + ${yDiff}",
+          {
+            "func": "SET",
+            "property": "x",
+            "value": "${absX}"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": "${absY}"
+          }
+        ]
+      }
+    ],
+    "flyExpRoutine": [
+      {
+        "func": "MOVEXY",
+        "from": "flyExpHolder",
+        "x": 0,
+        "y": 168,
+        "face": 1,
+        "count": 1
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY flyNum OF options}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "MOVEXY",
+            "from": "flyExpHolder",
+            "x": 0,
+            "y": 0,
+            "face": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY flyNum OF options}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "MOVEXY",
+                "from": "flyExpHolder",
+                "x": 0,
+                "y": 84,
+                "face": 1
+              },
+              {
+                "func": "MOVEXY",
+                "from": "flyExpHolder",
+                "x": 0,
+                "y": 0,
+                "face": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "flyExp",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "_ancestor",
+        "relation": "!=",
+        "value": "flyExpHolder"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "floor"
+      }
+    ],
+    "waterExpRoutine": [
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Whale"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "temp"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Shark"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "temp"
+      },
+      {
+        "func": "MOVEXY",
+        "from": "waterExpHolder",
+        "x": 0,
+        "y": 666,
+        "face": 1
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY waterNum OF options}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "MOVEXY",
+            "from": "waterExpHolder",
+            "x": 0,
+            "y": 500,
+            "face": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY waterNum OF options}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "MOVEXY",
+                "from": "waterExpHolder",
+                "x": 0,
+                "y": 500,
+                "face": 1
+              },
+              {
+                "func": "MOVEXY",
+                "from": "waterExpHolder",
+                "x": 0,
+                "y": 334,
+                "face": 1
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY waterNum OF options}",
+                "operand2": 4,
+                "thenRoutine": [
+                  {
+                    "func": "MOVEXY",
+                    "from": "waterExpHolder",
+                    "x": 0,
+                    "y": 556,
+                    "face": 1
+                  },
+                  {
+                    "func": "MOVEXY",
+                    "from": "waterExpHolder",
+                    "x": 0,
+                    "y": 446,
+                    "face": 1
+                  },
+                  {
+                    "func": "MOVEXY",
+                    "from": "waterExpHolder",
+                    "x": 0,
+                    "y": 334,
+                    "face": 1
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY waterNum OF options}",
+                    "operand2": 5,
+                    "thenRoutine": [
+                      {
+                        "func": "MOVEXY",
+                        "from": "waterExpHolder",
+                        "x": 0,
+                        "y": 583,
+                        "face": 1
+                      },
+                      {
+                        "func": "MOVEXY",
+                        "from": "waterExpHolder",
+                        "x": 0,
+                        "y": 500,
+                        "face": 1
+                      },
+                      {
+                        "func": "MOVEXY",
+                        "from": "waterExpHolder",
+                        "x": 0,
+                        "y": 417,
+                        "face": 1
+                      },
+                      {
+                        "func": "MOVEXY",
+                        "from": "waterExpHolder",
+                        "x": 0,
+                        "y": 334,
+                        "face": 1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "waterExp",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "_ancestor",
+        "relation": "!=",
+        "value": "waterExpHolder"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "floor"
+      }
+    ],
+    "y": 60
+  },
+  "dealRandom": {
+    "type": "button",
+    "id": "dealRandom",
+    "x": 1545,
+    "width": 50,
+    "height": 50,
+    "layer": 15,
+    "z": 10387,
+    "movableInEdit": false,
+    "color": "white",
+    "css": "font-size: 40px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Advanced deal...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You are about to recall all cards and deal them into one of 6 randomly selected, pre-defined patterns. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Recall & Deal",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "RECALL",
+        "holder": "baseHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "baseHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "waterExpHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "waterExpHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "flyExpHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "flyExpHolder"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "shiftCenter"
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY flyExp OF options}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "flyExpRoutine",
+            "widget": "dealDefault"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY waterExp OF options}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "waterExpRoutine",
+            "widget": "dealDefault"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "waterCardsRoutine",
+            "widget": "dealDefault"
+          }
+        ]
+      },
+      "var random = randInt 1 6",
+      {
+        "func": "CALL",
+        "routine": "pattern${random}Routine"
+      },
+      {
+        "func": "CALL",
+        "widget": "dealDefault",
+        "routine": "floorRoutine"
+      }
+    ],
+    "classes": "symbols",
+    "text": "die",
+    "pattern1Routine": [
+      {
+        "func": "MOVE",
+        "from": "baseHolder",
+        "to": [
+          "space1",
+          "space2",
+          "space6",
+          "space7",
+          "space8",
+          "space9",
+          "space11",
+          "space12",
+          "space13",
+          "space14",
+          "space16",
+          "space17",
+          "space18",
+          "space19",
+          "space23",
+          "space24"
+        ],
+        "face": 1
+      }
+    ],
+    "pattern2Routine": [
+      {
+        "func": "MOVE",
+        "from": "baseHolder",
+        "to": [
+          "space7",
+          "space8",
+          "space9",
+          "space11",
+          "space12",
+          "space13",
+          "space14",
+          "space15",
+          "space16",
+          "space17",
+          "space18",
+          "space19",
+          "space20",
+          "space22",
+          "space23",
+          "space24"
+        ],
+        "face": 1
+      }
+    ],
+    "pattern3Routine": [
+      {
+        "func": "MOVE",
+        "from": "baseHolder",
+        "to": [
+          "space6",
+          "space8",
+          "space10",
+          "space11",
+          "space12",
+          "space13",
+          "space14",
+          "space15",
+          "space16",
+          "space17",
+          "space18",
+          "space19",
+          "space20",
+          "space21",
+          "space23",
+          "space25"
+        ],
+        "face": 1
+      }
+    ],
+    "pattern4Routine": [
+      {
+        "func": "MOVE",
+        "from": "baseHolder",
+        "to": [
+          "space6",
+          "space7",
+          "space8",
+          "space9",
+          "space10",
+          "space11",
+          "space13",
+          "space15",
+          "space16",
+          "space18",
+          "space20",
+          "space21",
+          "space22",
+          "space23",
+          "space24",
+          "space25"
+        ],
+        "face": 1
+      }
+    ],
+    "pattern5Routine": [
+      {
+        "func": "MOVE",
+        "from": "baseHolder",
+        "to": [
+          "space7",
+          "space8",
+          "space9",
+          "space12",
+          "space13",
+          "space14",
+          "space16",
+          "space17",
+          "space18",
+          "space19",
+          "space20",
+          "space21",
+          "space22",
+          "space23",
+          "space24",
+          "space25"
+        ],
+        "face": 1
+      }
+    ],
+    "pattern6Routine": [
+      {
+        "func": "MOVE",
+        "from": "baseHolder",
+        "to": [
+          "space7",
+          "space8",
+          "space9",
+          "space10",
+          "space11",
+          "space12",
+          "space13",
+          "space15",
+          "space16",
+          "space17",
+          "space18",
+          "space20",
+          "space22",
+          "space23",
+          "space24",
+          "space25"
+        ],
+        "face": 1
+      }
+    ],
+    "y": 120
+  },
+  "waterExpHolder": {
+    "type": "holder",
+    "id": "waterExpHolder",
+    "width": 210,
+    "height": 166,
+    "z": 10382,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "y": 200,
+    "x": -300
+  },
+  "flyExpHolder": {
+    "type": "holder",
+    "id": "flyExpHolder",
+    "width": 210,
+    "height": 166,
+    "z": 10382,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "y": 400,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "x": -300
+  },
+  "waterExpDeck": {
+    "type": "deck",
+    "id": "waterExpDeck",
+    "parent": "waterExpHolder",
+    "x": 4,
+    "y": 4,
+    "z": 16779,
+    "cardDefaults": {
+      "onPileCreation": {
+        "handlePosition": "top right",
+        "handleOffset": 1
+      },
+      "width": 210,
+      "height": 166,
+      "shift": true,
+      "waterExp": true
+    },
+    "cardTypes": {
+      "Ray": {
+        "back": "/assets/1949068194_19399",
+        "power": "Prevent next predator's ability from activating.",
+        "animal": "Manta Ray",
+        "pic": "/assets/-676480823_6681"
+      },
+      "Octopus": {
+        "back": "/assets/1949068194_19399",
+        "power": "Discard unstacked animal and activate its ability.",
+        "animal": "Octopus",
+        "pic": "/assets/1086411978_6539"
+      },
+      "Dolphin": {
+        "back": "/assets/1949068194_19399",
+        "power": "Move animal 1 space to eat. Place the predator below the prey.",
+        "animal": "Dolphin",
+        "pic": "/assets/668659640_3052"
+      },
+      "Whale2": {
+        "back": "/assets/1949068194_19399",
+        "power": "Move 1 animal to any other space.",
+        "animal": "Whale",
+        "pic": "/assets/1239450149_6369"
+      },
+      "Shark2": {
+        "back": "/assets/1949068194_19399",
+        "power": "Move animal 1 space to eat. Can eat animal of ANY smaller value.",
+        "animal": "Shark",
+        "pic": "/assets/1470255297_5482"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "",
+            "width": 210,
+            "height": 166
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "/assets/-1896214630_2512",
+            "width": 210,
+            "height": 166
+          }
+        ],
+        "border": false,
+        "radius": 10
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 210,
+            "height": 111,
+            "css": "filter:blur(2px)",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 210,
+            "height": 111,
+            "css": "filter:opacity(30%)"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 110,
+            "color": "#a19595",
+            "width": 210,
+            "height": 166
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 110,
+            "fontSize": 15,
+            "color": "black",
+            "textAlign": "center",
+            "width": 190,
+            "height": 166,
+            "dynamicProperties": {
+              "value": "power"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 2,
+            "fontSize": 25,
+            "color": "white",
+            "width": 10,
+            "height": 10,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 28,
+            "color": "#000080",
+            "width": 210,
+            "textAlign": "center",
+            "height": 10,
+            "dynamicProperties": {
+              "value": "animal"
+            }
+          },
+          {
+            "type": "image",
+            "x": 65,
+            "y": 30,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "pic"
+            }
+          },
+          {
+            "type": "image",
+            "x": 170,
+            "y": 25,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "mouth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 180,
+            "y": 55,
+            "fontSize": 20,
+            "color": "black",
+            "width": 210,
+            "height": 10,
+            "css": "line-height:0.9",
+            "dynamicProperties": {
+              "value": "eats"
+            }
+          }
+        ],
+        "border": false,
+        "radius": 10
+      }
+    ]
+  },
+  "skfb": {
+    "deck": "waterExpDeck",
+    "type": "card",
+    "cardType": "Ray",
+    "id": "skfb",
+    "z": 40085,
+    "parent": "ykjd"
+  },
+  "rvcf": {
+    "deck": "waterExpDeck",
+    "type": "card",
+    "cardType": "Octopus",
+    "id": "rvcf",
+    "z": 40088,
+    "parent": "ykjd"
+  },
+  "9kmx": {
+    "deck": "waterExpDeck",
+    "type": "card",
+    "cardType": "Dolphin",
+    "id": "9kmx",
+    "z": 40087,
+    "parent": "ykjd"
+  },
+  "flyExpDeck": {
+    "type": "deck",
+    "id": "flyExpDeck",
+    "parent": "flyExpHolder",
+    "x": 4,
+    "y": 4,
+    "z": 16779,
+    "cardDefaults": {
+      "onPileCreation": {
+        "handlePosition": "top right",
+        "handleOffset": 1
+      },
+      "width": 210,
+      "height": 166,
+      "shift": true,
+      "flyExp": true
+    },
+    "cardTypes": {
+      "Eagle": {
+        "back": "/assets/1497107858_3232",
+        "power": "Use only if <10 animals. Shuffle 3 adjacent animals in row or column. Return.",
+        "animal": "Eagle",
+        "pic": "/assets/1005367801_5253"
+      },
+      "Owl": {
+        "back": "/assets/1497107858_3232",
+        "power": "Shuffle stack of >2 animals. Randomly draw 1 and return it. Discard others.",
+        "animal": "Owl",
+        "pic": "/assets/823179525_9888"
+      },
+      "Buzzard": {
+        "back": "/assets/1497107858_3232",
+        "power": "Next 3 predators must have odd numbers.",
+        "animal": "Buzzard",
+        "pic": "/assets/721218923_9556"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "",
+            "width": 210,
+            "height": 166
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "/assets/-1896214630_2512",
+            "width": 210,
+            "height": 166
+          }
+        ],
+        "border": false,
+        "radius": 10
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 210,
+            "height": 111,
+            "css": "filter:blur(2px)",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 210,
+            "height": 111,
+            "css": "filter:opacity(30%)"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 110,
+            "color": "#a19595",
+            "width": 210,
+            "height": 166
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 110,
+            "fontSize": 15,
+            "color": "black",
+            "textAlign": "center",
+            "width": 190,
+            "height": 166,
+            "dynamicProperties": {
+              "value": "power"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 2,
+            "fontSize": 25,
+            "color": "white",
+            "width": 10,
+            "height": 10,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 28,
+            "color": "#000080",
+            "width": 210,
+            "textAlign": "center",
+            "height": 10,
+            "dynamicProperties": {
+              "value": "animal"
+            }
+          },
+          {
+            "type": "image",
+            "x": 65,
+            "y": 30,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "pic"
+            }
+          },
+          {
+            "type": "image",
+            "x": 170,
+            "y": 25,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "mouth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 180,
+            "y": 55,
+            "fontSize": 20,
+            "color": "black",
+            "width": 210,
+            "height": 10,
+            "css": "line-height:0.9",
+            "dynamicProperties": {
+              "value": "eats"
+            }
+          }
+        ],
+        "border": false,
+        "radius": 10
+      }
+    ]
+  },
+  "eua1": {
+    "deck": "flyExpDeck",
+    "type": "card",
+    "cardType": "Eagle",
+    "id": "eua1",
+    "z": 40095,
+    "parent": "si0v"
+  },
+  "64ns": {
+    "deck": "flyExpDeck",
+    "type": "card",
+    "cardType": "Owl",
+    "id": "64ns",
+    "z": 40097,
+    "parent": "si0v"
+  },
+  "4kgr": {
+    "deck": "flyExpDeck",
+    "type": "card",
+    "cardType": "Buzzard",
+    "id": "4kgr",
+    "z": 40096,
+    "parent": "si0v"
+  },
+  "options": {
+    "type": "button",
+    "id": "options",
+    "x": 1545,
+    "y": 180,
+    "width": 50,
+    "height": 50,
+    "layer": 15,
+    "z": 10387,
+    "movableInEdit": false,
+    "classes": "material-icons",
+    "color": "white",
+    "css": "font-size: 40px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "text": "settings",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Setting options...",
+        "fields": [
+          {
+            "type": "checkbox",
+            "label": "Play with water animals expansion?",
+            "value": "${PROPERTY waterExp}",
+            "variable": "waterExp"
+          },
+          {
+            "type": "number",
+            "label": "If so, use how many water animals?",
+            "min": 1,
+            "max": 5,
+            "value": "${PROPERTY waterNum}",
+            "variable": "waterNum"
+          },
+          {
+            "type": "checkbox",
+            "label": "Play with flying animals expansion?",
+            "value": "${PROPERTY flyExp}",
+            "variable": "flyExp"
+          },
+          {
+            "type": "number",
+            "label": "If so, use how many flying animals?",
+            "min": 1,
+            "max": 3,
+            "value": "${PROPERTY flyNum}",
+            "variable": "flyNum"
+          }
+        ],
+        "confirmButtonText": "Set options",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "waterExp",
+        "value": "${waterExp}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "waterNum",
+        "value": "${waterNum}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "flyExp",
+        "value": "${flyExp}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "flyNum",
+        "value": "${flyNum}"
+      }
+    ],
+    "waterExp": false,
+    "waterNum": "2",
+    "flyExp": false,
+    "flyNum": "1"
+  },
+  "baseDeck1": {
+    "type": "deck",
+    "id": "baseDeck1",
+    "x": 4,
+    "y": 4,
+    "z": 16779,
+    "cardDefaults": {
+      "onPileCreation": {
+        "handlePosition": "top right",
+        "handleOffset": 1,
+        "grid": [
+          {
+            "x": 210,
+            "y": 166,
+            "offsetX": -105,
+            "offsetY": -81
+          }
+        ]
+      },
+      "width": 210,
+      "height": 166,
+      "shift": true,
+      "grid": [
+        {
+          "x": 210,
+          "y": 166,
+          "offsetX": -105,
+          "offsetY": -81
+        }
+      ]
+    },
+    "cardTypes": {
+      "0": {
+        "back": "/assets/285490058_37799",
+        "power": "\nNo ability.",
+        "rank": 0,
+        "animal": "Plant",
+        "pic": "/assets/247025176_6173",
+        "eats": "-\n-\n-",
+        "mouth": "/assets/641119557_659"
+      },
+      "1": {
+        "back": "/assets/285490058_37799",
+        "power": "\nMove 1 animal 1-3 spaces.",
+        "rank": 1,
+        "animal": "Ant",
+        "pic": "/assets/16729238_4653",
+        "eats": "0\n -\n -",
+        "mouth": "/assets/641119557_659"
+      },
+      "2": {
+        "back": "/assets/285490058_37799",
+        "power": "Move 2 animals 1 space each.",
+        "rank": 2,
+        "animal": "Spider",
+        "pic": "/assets/-1831023091_4087",
+        "eats": "1\n0\n -",
+        "mouth": "/assets/641119557_659"
+      },
+      "3": {
+        "back": "/assets/285490058_37799",
+        "power": "\nMove 1 animal 1-2 spaces.",
+        "rank": 3,
+        "animal": "Mouse",
+        "pic": "/assets/2019931743_6877",
+        "eats": "2\n1\n0",
+        "mouth": "/assets/641119557_659"
+      },
+      "4": {
+        "back": "/assets/285490058_37799",
+        "power": "Remove any 1 unstacked animal.",
+        "rank": 4,
+        "animal": "Lizard",
+        "pic": "/assets/-518779194_4918",
+        "eats": "3\n2\n1",
+        "mouth": "/assets/641119557_659"
+      },
+      "5": {
+        "back": "/assets/285490058_37799",
+        "power": "\nMove 1 animal 2 spaces.",
+        "rank": 5,
+        "animal": "Rat",
+        "pic": "/assets/240192970_5806",
+        "eats": "4\n3\n2",
+        "mouth": "/assets/641119557_659"
+      },
+      "6": {
+        "back": "/assets/285490058_37799",
+        "power": "After eating, move this animal to any other space.",
+        "rank": 6,
+        "animal": "Bat",
+        "pic": "/assets/-1604661557_6306",
+        "eats": "5\n4\n3",
+        "mouth": "/assets/641119557_659"
+      },
+      "7": {
+        "back": "/assets/285490058_37799",
+        "power": "Swap location of any 2 animals.",
+        "rank": 7,
+        "animal": "Snake",
+        "pic": "/assets/1871769281_7246",
+        "eats": "6\n5\n4",
+        "mouth": "/assets/641119557_659"
+      },
+      "8": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, if eat animal exactly 1 below, discard any 1 unstacked animal.",
+        "rank": 8,
+        "animal": "Racoon",
+        "pic": "/assets/-1359264367_9737",
+        "eats": "7\n6\n5",
+        "mouth": "/assets/641119557_659"
+      },
+      "9": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must move diagonally 1 space to eat.",
+        "rank": 9,
+        "animal": "Fox",
+        "pic": "/assets/-1018269906_11010",
+        "eats": "8\n7\n6",
+        "mouth": "/assets/641119557_659"
+      },
+      "10": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must jump over 1 card orthogonally to eat.",
+        "rank": 10,
+        "animal": "Lynx",
+        "pic": "/assets/-976699747_7373",
+        "eats": "9\n8\n7",
+        "mouth": "/assets/641119557_659"
+      },
+      "11": {
+        "back": "/assets/285490058_37799",
+        "power": "After eating, move this animal 1 space.",
+        "rank": 11,
+        "animal": "Wolf",
+        "pic": "/assets/-285296612_8602",
+        "eats": "10\n  9\n  8",
+        "mouth": "/assets/641119557_659"
+      },
+      "12": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must move 2 spaces to eat.",
+        "rank": 12,
+        "animal": "Tiger",
+        "pic": "/assets/710920103_10420",
+        "eats": "11\n10\n  9",
+        "mouth": "/assets/641119557_659"
+      },
+      "13": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, move eaten animal to predator's space & place on bottom of stack.",
+        "rank": 13,
+        "animal": "Gator",
+        "pic": "/assets/351891706_3481",
+        "eats": "12\n11\n10",
+        "mouth": "/assets/641119557_659"
+      },
+      "14": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must eat animal valued exactly 1 less.",
+        "rank": 14,
+        "animal": "Lion",
+        "pic": "/assets/-1675015526_4531",
+        "eats": "13\n12\n11",
+        "mouth": "/assets/641119557_659"
+      },
+      "15": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, cannot use this animal to eat.",
+        "rank": 15,
+        "animal": "Polar Bear",
+        "pic": "/assets/-866234605_7409",
+        "eats": "14\n13\n12",
+        "mouth": "/assets/641119557_659"
+      },
+      "Whale": {
+        "back": "/assets/1949068194_19399",
+        "power": "Move 1 animal to any other space.",
+        "animal": "Whale",
+        "pic": "/assets/1239450149_6369"
+      },
+      "Shark": {
+        "back": "/assets/1949068194_19399",
+        "power": "Move animal 1 space to eat. Can eat animal of ANY smaller value.",
+        "animal": "Shark",
+        "pic": "/assets/1470255297_5482"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "",
+            "width": 210,
+            "height": 166
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "/assets/-1896214630_2512",
+            "width": 210,
+            "height": 166
+          }
+        ],
+        "border": false,
+        "radius": 10
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 210,
+            "height": 111,
+            "css": "filter:blur(2px)",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 210,
+            "height": 111,
+            "css": "filter:opacity(30%)"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 110,
+            "color": "#a19595",
+            "width": 210,
+            "height": 166
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 110,
+            "fontSize": 15,
+            "color": "black",
+            "textAlign": "center",
+            "width": 190,
+            "height": 166,
+            "dynamicProperties": {
+              "value": "power"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 2,
+            "fontSize": 25,
+            "color": "white",
+            "width": 10,
+            "height": 10,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 28,
+            "color": "#000080",
+            "width": 210,
+            "textAlign": "center",
+            "height": 10,
+            "dynamicProperties": {
+              "value": "animal"
+            }
+          },
+          {
+            "type": "image",
+            "x": 65,
+            "y": 30,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "pic"
+            }
+          },
+          {
+            "type": "image",
+            "x": 170,
+            "y": 25,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "mouth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 180,
+            "y": 55,
+            "fontSize": 20,
+            "color": "black",
+            "width": 210,
+            "height": 10,
+            "css": "line-height:0.9",
+            "dynamicProperties": {
+              "value": "eats"
+            }
+          }
+        ],
+        "border": false,
+        "radius": 10
+      }
+    ],
+    "parent": "temp"
+  },
+  "temp": {
+    "type": "holder",
+    "id": "temp",
+    "x": -300,
+    "y": 600,
+    "width": 210,
+    "height": 166,
+    "layer": -2,
+    "z": 10382,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "lshd": {
+    "deck": "waterExpDeck",
+    "type": "card",
+    "cardType": "Whale2",
+    "id": "lshd",
+    "z": 40086,
+    "parent": "ykjd"
+  },
+  "aai5": {
+    "deck": "waterExpDeck",
+    "type": "card",
+    "cardType": "Shark2",
+    "id": "aai5",
+    "z": 40084,
+    "parent": "ykjd"
+  },
+  "baseDeck2": {
+    "type": "deck",
+    "id": "baseDeck2",
+    "x": 4,
+    "y": 4,
+    "z": 16779,
+    "cardDefaults": {
+      "onPileCreation": {
+        "handlePosition": "top right",
+        "handleOffset": 1,
+        "grid": [
+          {
+            "x": 210,
+            "y": 166,
+            "offsetX": -105,
+            "offsetY": -81
+          }
+        ]
+      },
+      "width": 210,
+      "height": 166,
+      "shift": true,
+      "grid": [
+        {
+          "x": 210,
+          "y": 166,
+          "offsetX": -105,
+          "offsetY": -81
+        }
+      ]
+    },
+    "cardTypes": {
+      "0": {
+        "back": "/assets/285490058_37799",
+        "power": "\nNo ability.",
+        "rank": 0,
+        "animal": "Plant",
+        "pic": "/assets/247025176_6173",
+        "eats": "-\n-\n-",
+        "mouth": "/assets/641119557_659"
+      },
+      "1": {
+        "back": "/assets/285490058_37799",
+        "power": "\nMove 1 animal 1-3 spaces.",
+        "rank": 1,
+        "animal": "Ant",
+        "pic": "/assets/16729238_4653",
+        "eats": "0\n -\n -",
+        "mouth": "/assets/641119557_659"
+      },
+      "2": {
+        "back": "/assets/285490058_37799",
+        "power": "Move 2 animals 1 space each.",
+        "rank": 2,
+        "animal": "Spider",
+        "pic": "/assets/-1831023091_4087",
+        "eats": "1\n0\n -",
+        "mouth": "/assets/641119557_659"
+      },
+      "3": {
+        "back": "/assets/285490058_37799",
+        "power": "\nMove 1 animal 1-2 spaces.",
+        "rank": 3,
+        "animal": "Mouse",
+        "pic": "/assets/2019931743_6877",
+        "eats": "2\n1\n0",
+        "mouth": "/assets/641119557_659"
+      },
+      "4": {
+        "back": "/assets/285490058_37799",
+        "power": "Remove any 1 unstacked animal.",
+        "rank": 4,
+        "animal": "Lizard",
+        "pic": "/assets/-518779194_4918",
+        "eats": "3\n2\n1",
+        "mouth": "/assets/641119557_659"
+      },
+      "5": {
+        "back": "/assets/285490058_37799",
+        "power": "\nMove 1 animal 2 spaces.",
+        "rank": 5,
+        "animal": "Rat",
+        "pic": "/assets/240192970_5806",
+        "eats": "4\n3\n2",
+        "mouth": "/assets/641119557_659"
+      },
+      "6": {
+        "back": "/assets/285490058_37799",
+        "power": "After eating, move this animal to any other space.",
+        "rank": 6,
+        "animal": "Bat",
+        "pic": "/assets/-1604661557_6306",
+        "eats": "5\n4\n3",
+        "mouth": "/assets/641119557_659"
+      },
+      "7": {
+        "back": "/assets/285490058_37799",
+        "power": "Swap location of any 2 animals.",
+        "rank": 7,
+        "animal": "Snake",
+        "pic": "/assets/1871769281_7246",
+        "eats": "6\n5\n4",
+        "mouth": "/assets/641119557_659"
+      },
+      "8": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, if eat animal exactly 1 below, discard any 1 unstacked animal.",
+        "rank": 8,
+        "animal": "Racoon",
+        "pic": "/assets/-1359264367_9737",
+        "eats": "7\n6\n5",
+        "mouth": "/assets/641119557_659"
+      },
+      "9": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must move diagonally 1 space to eat.",
+        "rank": 9,
+        "animal": "Fox",
+        "pic": "/assets/-1018269906_11010",
+        "eats": "8\n7\n6",
+        "mouth": "/assets/641119557_659"
+      },
+      "10": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must jump over 1 card orthogonally to eat.",
+        "rank": 10,
+        "animal": "Lynx",
+        "pic": "/assets/-976699747_7373",
+        "eats": "9\n8\n7",
+        "mouth": "/assets/641119557_659"
+      },
+      "11": {
+        "back": "/assets/285490058_37799",
+        "power": "After eating, move this animal 1 space.",
+        "rank": 11,
+        "animal": "Wolf",
+        "pic": "/assets/-285296612_8602",
+        "eats": "10\n  9\n  8",
+        "mouth": "/assets/641119557_659"
+      },
+      "12": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must move 2 spaces to eat.",
+        "rank": 12,
+        "animal": "Tiger",
+        "pic": "/assets/710920103_10420",
+        "eats": "11\n10\n  9",
+        "mouth": "/assets/641119557_659"
+      },
+      "13": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, move eaten animal to predator's space & place on bottom of stack.",
+        "rank": 13,
+        "animal": "Gator",
+        "pic": "/assets/351891706_3481",
+        "eats": "12\n11\n10",
+        "mouth": "/assets/641119557_659"
+      },
+      "14": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, animal must eat animal valued exactly 1 less.",
+        "rank": 14,
+        "animal": "Lion",
+        "pic": "/assets/-1675015526_4531",
+        "eats": "13\n12\n11",
+        "mouth": "/assets/641119557_659"
+      },
+      "15": {
+        "back": "/assets/285490058_37799",
+        "power": "On next turn, cannot use this animal to eat.",
+        "rank": 15,
+        "animal": "Polar Bear",
+        "pic": "/assets/-866234605_7409",
+        "eats": "14\n13\n12",
+        "mouth": "/assets/641119557_659"
+      },
+      "Whale": {
+        "back": "/assets/1949068194_19399",
+        "power": "Move 1 animal to any other space.",
+        "animal": "Whale",
+        "pic": "/assets/1239450149_6369"
+      },
+      "Shark": {
+        "back": "/assets/1949068194_19399",
+        "power": "Move animal 1 space to eat. Can eat animal of ANY smaller value.",
+        "animal": "Shark",
+        "pic": "/assets/1470255297_5482"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "",
+            "width": 210,
+            "height": 166
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "/assets/-1896214630_2512",
+            "width": 210,
+            "height": 166
+          }
+        ],
+        "border": false,
+        "radius": 10
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 210,
+            "height": 111,
+            "css": "filter:blur(2px)",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 210,
+            "height": 111,
+            "css": "filter:opacity(30%)"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 110,
+            "color": "#a19595",
+            "width": 210,
+            "height": 166
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 110,
+            "fontSize": 15,
+            "color": "black",
+            "textAlign": "center",
+            "width": 190,
+            "height": 166,
+            "dynamicProperties": {
+              "value": "power"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 2,
+            "fontSize": 25,
+            "color": "white",
+            "width": 10,
+            "height": 10,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 28,
+            "color": "#000080",
+            "width": 210,
+            "textAlign": "center",
+            "height": 10,
+            "dynamicProperties": {
+              "value": "animal"
+            }
+          },
+          {
+            "type": "image",
+            "x": 65,
+            "y": 30,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "pic"
+            }
+          },
+          {
+            "type": "image",
+            "x": 170,
+            "y": 25,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "mouth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 180,
+            "y": 55,
+            "fontSize": 20,
+            "color": "black",
+            "width": 210,
+            "height": 10,
+            "css": "line-height:0.9",
+            "dynamicProperties": {
+              "value": "eats"
+            }
+          }
+        ],
+        "border": false,
+        "radius": 10
+      }
+    ],
+    "parent": "discard"
+  },
+  "discard": {
+    "type": "holder",
+    "id": "discard",
+    "width": 210,
+    "height": 166,
+    "layer": -2,
+    "z": 10382,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "scale": 0.8,
+    "css": "background: #ffffff80; ",
+    "y": 830
+  },
+  "ykjd": {
+    "type": "pile",
+    "parent": "waterExpHolder",
+    "x": 0,
+    "y": 0,
+    "width": 210,
+    "height": 166,
+    "handlePosition": "top right",
+    "handleOffset": 1,
+    "id": "ykjd"
+  },
+  "si0v": {
+    "type": "pile",
+    "parent": "flyExpHolder",
+    "x": 0,
+    "y": 0,
+    "width": 210,
+    "height": 166,
+    "handlePosition": "top right",
+    "handleOffset": 1,
+    "id": "si0v"
+  },
+  "discardLabel": {
+    "id": "discardLabel",
+    "x": 75,
+    "y": 980,
+    "z": 2642,
+    "movable": false,
+    "text": "Discard",
+    "movableInEdit": false
+  },
+  "6rrk": {
+    "type": "pile",
+    "parent": "floor",
+    "x": 500,
+    "y": 500,
+    "width": 210,
+    "height": 166,
+    "handlePosition": "top right",
+    "handleOffset": 1,
+    "handleSize": 45,
+    "grid": [
+      {
+        "x": 210,
+        "y": 166,
+        "offsetX": -105,
+        "offsetY": -81
+      }
+    ],
+    "id": "6rrk"
+  }
+}

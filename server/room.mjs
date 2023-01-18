@@ -6,11 +6,14 @@ import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
+import { randomHue } from '../client/js/color.js';
+import Statistics from './statistics.mjs';
 
 export default class Room {
   players = [];
   state = {};
   deltaID = 0;
+  lastStatisticsDeltaID = 0;
 
   constructor(id, unloadCallback) {
     this.id = id;
@@ -49,7 +52,6 @@ export default class Room {
   async addState(id, type, src, srcName, addAsVariant) {
     const initialAddAsVariant = addAsVariant;
     let stateID = addAsVariant || id;
-    let variantID = id;
 
     let states = { room: [ this.state ] };
     let etag = null;
@@ -67,11 +69,12 @@ export default class Room {
       try {
         fs.writeFileSync(Config.directory('save') + '/errors/' + Math.random().toString(36).substring(3, 7), src);
       } catch(e) {}
-      throw e;
+      throw new Logging.UserError(404, 'Unable to load and add the game.');
     }
 
     for(const state in states) {
       for(const v in states[state]) {
+        const newVariantID = String(addAsVariant ? this.state._meta.states[stateID].variants.length : 0);
         let name = type == 'file' && srcName || 'Unnamed';
         if(state.match(/\.pcio$/))
           name = state;
@@ -82,59 +85,104 @@ export default class Room {
           image: '',
           rules: '',
           bgg: '',
-          year: 0,
-          mode: 'vs',
-          time: 30,
-          players: '2-4',
-          language: 'US',
+          year: '',
+          mode: '',
+          time: '',
+          players: '',
+          language: '',
           variant: '',
           link: '',
           attribution: ''
         };
 
-        if(type != 'link')
-          fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(variant));
+        if(stateID.match(/^PL:/))
+          return this.writePublicLibraryToFilesystem(stateID, newVariantID, variant);
 
-        const variantMeta = {
+        if(type != 'link')
+          fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
+
+        let variantMeta = {
           players: meta.players,
           language: meta.language,
           variant: meta.variant,
-          attribution: meta.attribution
+          variantImage: meta.variantImage
         };
-        if(type == 'link') {
-          const baseLink = src.replace(/#.*/, '');
-          meta.link = `${baseLink}#${state}`;
-          variantMeta.link = `${meta.link}/${v}`;
-          if(src.match(/#.*\//))
-            meta.link = variantMeta.link;
+
+        if(String(meta.link).match(/#[^#\/]+\/[^#\/]+/))
+          variantMeta.link = meta.link;
+        if(meta.plStateID) {
+          variantMeta = {
+            plStateID: meta.plStateID,
+            plVariantID: meta.plVariantID
+          };
         }
+
+        if(type == 'link') {
+          const baseLink = src.replace(/#[^#]*$/, '');
+          meta.link = `${baseLink}#${state}`;
+          if(!variantMeta.link && !variantMeta.plStateID) {
+            variantMeta.link = `${meta.link}/${v}`;
+            if(src.match(/#[^#\/]+\/[^#\/]+/))
+              meta.link = variantMeta.link;
+          }
+        }
+
         delete meta.players;
         delete meta.language;
         delete meta.variant;
-        delete meta.attribution;
+        delete meta.variantImage;
+
+        meta.lastUpdate = +new Date();
 
         if(addAsVariant) {
-          if(!this.state._meta.states[stateID].variants[variantID])
-            this.state._meta.states[stateID].variants[variantID] = variantMeta;
+          if(!this.state._meta.states[stateID].variants[newVariantID])
+            this.state._meta.states[stateID].variants[newVariantID] = variantMeta;
           else if(type != 'link')
-            delete this.state._meta.states[stateID].variants[variantID].link;
+            delete this.state._meta.states[stateID].variants[newVariantID].link;
+          if(!this.state._meta.states[stateID].attribution)
+            this.state._meta.states[stateID].attribution = meta.attribution;
+          if(meta.attribution && meta.attribution != this.state._meta.states[stateID].attribution)
+            this.state._meta.states[stateID].attribution += '\n\n--\n\n'+meta.attribution;
         } else {
-          meta.variants = {};
-          meta.variants[variantID] = variantMeta;
+          meta.variants = [ variantMeta ];
           this.state._meta.states[stateID] = meta;
         }
 
         addAsVariant = true;
-        variantID = Math.random().toString(36).substring(3, 7);
+
+        if(type == 'state')
+          this.state._meta.activeState = { stateID, variantID: newVariantID };
       }
+
 
       if(!initialAddAsVariant) {
         addAsVariant = false;
         stateID = Math.random().toString(36).substring(3, 7);
       }
-      variantID = Math.random().toString(36).substring(3, 7);
     }
     this.sendMetaUpdate();
+  }
+
+  addStateToPublicLibrary(player, id) {
+    if(!Config.get('allowPublicLibraryEdits'))
+      return;
+
+    const variantData = {};
+    for(const variantID in this.state._meta.states[id].variants)
+      variantData[variantID] = JSON.parse(fs.readFileSync(this.variantFilename(id, variantID)));
+
+    this.state._meta.states[id].publicLibrary = `games/${this.state._meta.states[id].name.replace(/[^a-zA-Z0-9 _-]/g, '_')}`;
+    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary);
+    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary + '/assets');
+
+    Room.publicLibrary['PL:NEW'] = this.state._meta.states['PL:NEW'] = this.state._meta.states[id];
+    for(const variantID in this.state._meta.states[id].variants) {
+      this.state._meta.states['PL:NEW'].variants[variantID] = JSON.parse(JSON.stringify(Object.assign(this.state._meta.states['PL:NEW'], this.state._meta.states['PL:NEW'].variants[variantID])));
+      delete this.state._meta.states['PL:NEW'].variants[variantID].variants;
+      this.writePublicLibraryToFilesystem('PL:NEW', variantID, variantData[variantID]);
+    }
+
+    this.removeState(player, id);
   }
 
   broadcast(func, args, exceptPlayer) {
@@ -145,14 +193,19 @@ export default class Room {
         player.send(func, args);
   }
 
-  deleteUnusedVariantFiles(stateID, oldState, newState) {
-    for(const oldVariantID in oldState.variants) {
-      if(!newState.variants[oldVariantID]) {
-        const savefile = this.variantFilename(stateID, oldVariantID);
-        if(fs.existsSync(savefile))
-          fs.unlinkSync(savefile);
-      }
-    }
+  async createTempState(tempID, fileContent) {
+    const filenameSuffix = tempID || String(+new Date()) + Math.random().toString(36).substring(3, 7);
+
+    let states = { VTT: [ {...this.state} ] };
+    states.VTT[0]._meta = { version: states.VTT[0]._meta.version };
+    if(fileContent)
+      states = await FileLoader.readStatesFromBuffer(fileContent)
+
+    for(const state of Object.values(states))
+      for(const [ i, variant ] of Object.entries(state))
+        fs.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}--${i}.json`, JSON.stringify(variant));
+
+    return filenameSuffix;
   }
 
   async download(stateID, variantID) {
@@ -175,8 +228,10 @@ export default class Room {
     if(!this.state._meta.states[stateID])
       throw new Logging.UserError(404, `State ${stateID} does not exist.`);
 
-    for(const vID of variantID ? [ variantID ] : Object.keys(this.state._meta.states[stateID].variants)) {
-      const v = this.state._meta.states[stateID].variants[vID];
+    const s = this.state._meta.states[stateID];
+
+    for(const vID of variantID ? [ variantID ] : Object.keys(s.variants)) {
+      const v = s.variants[vID];
       if(!v)
         throw new Logging.UserError(404, `Variant ${vID} does not exist.`);
 
@@ -185,39 +240,115 @@ export default class Room {
         state = await FileLoader.readVariantFromLink(v.link);
       else
         state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)));
-      state._meta = { version: state._meta.version, info: { ...this.state._meta.states[stateID] } };
+      state._meta = { version: state._meta.version, info: { ...s } };
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       delete state._meta.info.variants;
       delete state._meta.info.link;
+      delete state._meta.info.publicLibrary;
+      delete state._meta.info.publicLibraryCategory;
+      delete state._meta.info.starred;
+      delete state._meta.info.stars;
+      delete state._meta.info.timePlayed;
 
       zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
       if(includeAssets)
         for(const asset of this.getAssetList(state))
-          if(fs.existsSync(Config.directory('assets') + asset.substr(7)))
-            zip.file(asset.substr(1), fs.readFileSync(Config.directory('assets') + asset.substr(7)));
+          if(Config.resolveAsset(asset.substr(8)))
+            zip.file(asset.substr(1), fs.readFileSync(Config.resolveAsset(asset.substr(8))));
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
+
+    let name = s.name + '.vtt';
+    if(s.savePlayers)
+      name = `${s.name} ${new Date(s.saveDate).toISOString().substr(0,10)} ${s.savePlayers}.vtts`;
+
     return {
-      name: this.state._meta.states[stateID].name + '.vtt',
+      name,
       type: 'application/zip',
       content: zipBuffer
     };
   }
 
-  async editState(player, id, meta) {
-    this.deleteUnusedVariantFiles(id, this.state._meta.states[id], meta);
+  editState(player, id, meta, variantInput, variantOperationQueue) {
+    const variants = this.state._meta.states[id].variants;
 
-    // if update links were removed, download their current contents to files
-    const currentState = this.state._meta.states[id];
-    for(const variantID in meta.variants) {
-      if(currentState.variants[variantID].link && !meta.variants[variantID].link) {
-        const state = await FileLoader.readVariantFromLink(currentState.variants[variantID].link);
-        fs.writeFileSync(this.variantFilename(id, variantID), JSON.stringify(state));
+    const renameVariantFile = (stateID, oldVariantID, newVariantID)=>{
+      if(oldVariantID == player.name && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != player.name && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
+        fs.renameSync(this.variantFilename(stateID, oldVariantID), this.variantFilename(stateID, newVariantID));
+    };
+
+    for(const o of variantOperationQueue) {
+
+      if(o.operation == 'create' || o.operation == 'save') {
+        if(String(o.filenameSuffix).match(/^([0-9]+|[0-9a-z]{4})[0-9a-z]{4}$/)) {
+          const prefix = `${Config.directory('save')}/states/${this.id}--TEMPSTATE--${o.filenameSuffix}--`;
+          for(let i=0; fs.existsSync(`${prefix}${i}.json`); ++i) {
+            fs.renameSync(`${prefix}${i}.json`, this.variantFilename(id, o.operation == 'save' ? o.variantID : variants.length));
+            if(o.operation == 'create')
+              variants.push({});
+          }
+        }
       }
+
+      if(o.operation == 'newLink') {
+        variants.push(o.variant);
+      }
+
+      if(o.operation == 'up') {
+        if(o.variantID) {
+          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID-1, o.variantID);
+          renameVariantFile(id, player.name,   o.variantID-1);
+
+          variants.splice(o.variantID-1, 0, variants.splice(o.variantID, 1)[0]);
+        } else {
+          renameVariantFile(id, o.variantID, player.name);
+          for(let i=1; i<variants.length; ++i)
+            renameVariantFile(id, i, i-1);
+          renameVariantFile(id, player.name, variants.length-1);
+
+          variants.push(variants.shift());
+        }
+      }
+
+      if(o.operation == 'down') {
+        if(o.variantID < variants.length-1) {
+          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID+1, o.variantID);
+          renameVariantFile(id, player.name,   o.variantID+1);
+
+          variants.splice(o.variantID+1, 0, variants.splice(o.variantID, 1)[0]);
+        } else {
+          renameVariantFile(id, o.variantID, player.name);
+          for(let i=variants.length-2; i>=0; --i)
+            renameVariantFile(id, i, i+1);
+          renameVariantFile(id, player.name, 0);
+
+          variants.unshift(variants.pop());
+        }
+      }
+
+      if(o.operation == 'delete') {
+        if(!variants[o.variantID].plStateID && !variants[o.variantID].link)
+          fs.unlinkSync(this.variantFilename(id, o.variantID));
+        for(let i=o.variantID+1; i<variants.length; ++i)
+          renameVariantFile(id, i, i-1);
+
+        variants.splice(o.variantID, 1);
+      }
+
     }
 
+    for(const variantID in variantInput)
+      Object.assign(variants[variantID], variantInput[variantID]);
+
+    meta.variants = variants;
     Object.assign(this.state._meta.states[id], meta);
+
+    if(String(id).match(/^PL:/))
+      this.writePublicLibraryMetaToFilesystem(id, meta);
+
     this.sendMetaUpdate();
   }
 
@@ -232,38 +363,91 @@ export default class Room {
       return null;
   }
 
+  getPublicLibraryGames() {
+    if(!Room.publicLibrary) {
+      Room.publicLibrary = {};
+      for(const subLibrary of [ 'Games', 'Tutorials', 'Assets' ]) {
+        for(const dir of fs.readdirSync(Config.directory('library') + '/' + subLibrary.toLowerCase())) {
+          const gameDir = Config.directory('library') + '/' + subLibrary.toLowerCase() + '/' + dir;
+          if(fs.lstatSync(gameDir).isDirectory()) {
+            for(const file of fs.readdirSync(gameDir)) {
+              if(file.match(/json$/)) {
+                const gameFile = JSON.parse(fs.readFileSync(gameDir + '/' + file));
+                const id = 'PL:' + subLibrary.toLowerCase() + ':' + gameFile._meta.info.name;
+                if(!Room.publicLibrary[id]) {
+                  Room.publicLibrary[id] = gameFile._meta.info;
+                  Room.publicLibrary[id].publicLibrary = subLibrary.toLowerCase() + '/' + dir;
+                  Room.publicLibrary[id].publicLibraryCategory = subLibrary;
+                  Room.publicLibrary[id].variants = [];
+                }
+                Room.publicLibrary[id].variants[file.replace(/\.json$/, '')] = {
+                  players: gameFile._meta.info.players,
+                  language: gameFile._meta.info.language,
+                  variant: gameFile._meta.info.variant,
+                  variantImage: gameFile._meta.info.variantImage,
+                  publicLibrary: subLibrary.toLowerCase() + '/' + dir + '/' + file
+                };
+                delete gameFile._meta.info.players;
+                delete gameFile._meta.info.language;
+                delete gameFile._meta.info.variant;
+                delete gameFile._meta.info.variantImage;
+              }
+            }
+          }
+        }
+      }
+    }
+    Statistics.updateDataInsideStates(Room.publicLibrary);
+    return Room.publicLibrary;
+  }
+
   async load(fileOrLink, player) {
     const emptyState = {
       _meta: {
         version: 1,
+        metaVersion: 1,
         players: {},
-        states: {}
+        states: {},
+        starred: {}
       }
     };
 
     if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
       Logging.log(`creating room ${this.id}`);
       this.state = FileUpdater(emptyState);
+      this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
       this.traceIsEnabled(Config.get('forceTracing'));
     } else if(!fileOrLink) {
       Logging.log(`loading room ${this.id}`);
       this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
+      this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+
+      this.migrateOldPublicLibraryLinks();
+      await this.updateLinkedStates();
+      this.removeInvalidPublicLibraryLinks(player);
+
       this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
-      if(fileOrLink.match(/^http/))
-        newState = await FileLoader.readVariantFromLink(fileOrLink);
-      else
-        newState = JSON.parse(fs.readFileSync(fileOrLink));
+      let errorMessage = 'Error loading state.';
+      try {
+        if(fileOrLink.match(/^http/))
+          newState = await FileLoader.readVariantFromLink(fileOrLink);
+        else
+          newState = JSON.parse(fs.readFileSync(fileOrLink));
+      } catch(e) {
+        errorMessage = `Error loading state:\n${e.toString()}`;
+        newState = null;
+      }
       if(newState) {
         Logging.log(`loading room ${this.id} from ${fileOrLink}`);
         this.setState(newState);
       } else {
-        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED`);
+        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
         this.setState(emptyState);
         if(player)
-          player.send('error', 'Error loading state.');
+          player.send('error', errorMessage);
       }
     }
 
@@ -274,13 +458,145 @@ export default class Room {
       this.trace('init', { initialState: this.state });
   }
 
-  async loadState(player, stateID, variantID) {
-    const variantInfo = this.state._meta.states[stateID].variants[variantID];
+  async loadState(player, stateID, variantID, linkSourceStateID) {
+    const stateInfo = this.state._meta.states[stateID];
+    const variantInfo = stateInfo.variants[variantID];
 
     if(variantInfo.link)
       await this.load(variantInfo.link, player);
     else
       await this.load(this.variantFilename(stateID, variantID), player);
+
+    if(linkSourceStateID != stateID)
+      this.state._meta.activeState = { linkStateID: linkSourceStateID, stateID, variantID };
+    else if(stateInfo.savePlayers && stateInfo.saveLinkState)
+      this.state._meta.activeState = { saveStateID: stateID, stateID: stateInfo.saveState, variantID: stateInfo.saveVariant, linkStateID: stateInfo.saveLinkState };
+    else if(stateInfo.savePlayers)
+      this.state._meta.activeState = { saveStateID: stateID, stateID: stateInfo.saveState, variantID: stateInfo.saveVariant };
+    else
+      this.state._meta.activeState = { stateID, variantID };
+
+    this.sendMetaUpdate();
+  }
+
+  migrateOldPublicLibraryLinks() {
+    function plTarget(match) {
+      if(!match)
+        return null;
+      if(match[2] == 'JSON User Guide')
+        return `tutorials/JSON Editor User Guide`;
+
+      let target = `games/${match[2]}`;
+      if(match[1] == 'Tutorial')
+        target = `tutorials/${match[2]}`;
+      if(match[1] == 'Assets')
+        target = `assets/${match[2]}`;
+      return decodeURI(target);
+    }
+
+    const comparisonMap = {
+      'JSON Editor User Guide': 'JSON User Guide',
+      '/assets/1479011481_9212': '/assets/1368104302_9195'
+    };
+    for(const [ from, to ] of Object.entries(comparisonMap))
+      comparisonMap[to] = from;
+    function compareNameAndImage(a, b) {
+      return (a.name == b.name || a.name == comparisonMap[b.name]) && (a.image == b.image || a.image == comparisonMap[b.image]);
+    }
+
+    if(!this.state._meta.metaVersion) {
+      if(!this.state._meta.starred)
+        this.state._meta.starred = {};
+      for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+        const target = plTarget(state.link && state.link.match(/\/library\/(?:(Tutorial|Assets) - )?(.*)\.vtt/))
+        if(target) {
+          let foundTargetState = false;
+          let migratedToTargetState = false;
+          for(const [ targetID, targetState ] of Object.entries(this.state._meta.states)) {
+            if(targetState.publicLibrary == target) {
+              foundTargetState = true;
+              let allVariantsFromPL = true;
+              for(const [ vID, variant ] of Object.entries(state.variants))
+                if((variant.link && variant.link.indexOf(state.link)) !== 0)
+                  allVariantsFromPL = false;
+              if(allVariantsFromPL && compareNameAndImage(state, targetState)) {
+                Logging.log(`migrating ${target} in room ${this.id}`);
+                if(!this.state._meta.starred[targetState.publicLibrary])
+                  Statistics.toggleStateStar(targetState.publicLibrary, true);
+                this.state._meta.starred[targetState.publicLibrary] = true;
+                this.removeState(undefined, id);
+                migratedToTargetState = true;
+                break;
+              }
+              delete state.link;
+            }
+          }
+          if(migratedToTargetState)
+            continue;
+
+          if(!foundTargetState)
+            Logging.log(`could not migrate public library state ${target} in room ${this.id}`);
+        }
+
+        for(const [ vID, variant ] of Object.entries(state.variants)) {
+          const target = plTarget(variant.link && variant.link.match(/\/library\/(?:(Tutorial|Assets) - )?(.*)\.vtt/))
+          if(target) {
+            let foundTargetState = false;
+            for(const [ targetID, targetState ] of Object.entries(this.state._meta.states)) {
+              if(targetState.publicLibrary == target) {
+                for(const [ targetVid, targetVariant ] of Object.entries(targetState.variants)) {
+                  if(targetVariant.players == variant.players && (targetVariant.language.match(variant.language) || targetVariant.language === '' && variant.language == 'UN') && targetVariant.variant == variant.variant || targetState.variants.length == 1 || target == 'games/Diced' && targetVid == 0) {
+                    this.state._meta.states[id].variants[vID] = {
+                      plStateID: targetID,
+                      plVariantID: targetVid
+                    };
+                    Logging.log(`migrating variant to ${target}/${targetVid} in room ${this.id}`);
+                    foundTargetState = true;
+                    break;
+                  }
+                }
+                break;
+              }
+            }
+          }
+
+          if(target && !this.state._meta.states[id].variants[vID].plStateID)
+            Logging.log(`could not migrate variant to public library state ${target} in room ${this.id}`);
+
+          if(!target && !state.publicLibrary) {
+            // map languages that existed in the old public library to their new values
+            const languageMap = { BR: 'pt-BR', CN: 'zh-CN', DE: 'de-DE', GB: 'en-GB', UN: '', US: 'en-US' };
+            if(languageMap[variant.language] !== undefined)
+              variant.language = languageMap[variant.language]
+
+            // move attribution from variant to state
+            if(!state.attribution)
+              state.attribution = variant.attribution;
+            if(variant.attribution && variant.attribution != state.attribution)
+              state.attribution += '\n\n--\n\n'+variant.attribution;
+            delete variant.attribution;
+          }
+        }
+      }
+
+      for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+        if(state.publicLibrary)
+          continue;
+
+        const newVariants = [];
+        for(const [ variantID, variant ] of Object.entries(state.variants)) {
+          if(variant.plStateID || variant.link) {
+            newVariants.push(variant);
+          } else if(fs.existsSync(this.variantFilename(id, variantID))) {
+            fs.renameSync(this.variantFilename(id, variantID), this.variantFilename(id, newVariants.length));
+            newVariants.push(variant);
+          }
+        }
+        state.variants = newVariants;
+      }
+
+      this.state._meta.metaVersion = 1;
+    }
   }
 
   mouseMove(player, mouseState) {
@@ -288,37 +604,7 @@ export default class Room {
   }
 
   newPlayerColor() {
-    let hue = 0;
-    const hues = [];
-    for(const player in this.state._meta.players) {
-      const hex = this.state._meta.players[player];
-      const r = parseInt(hex.slice(1,3), 16) / 255;
-      const g = parseInt(hex.slice(3,5), 16) / 255;
-      const b = parseInt(hex.slice(5,7), 16) / 255;
-      const max = Math.max(r,g,b);
-      const d = max - Math.min(r,g,b);
-      if(d < .25) continue;
-      switch(max) {
-        case r: hues.push((360 + (g - b) * 60 / d) % 360); break;
-        case g: hues.push(120 + (b - r) * 60 / d); break;
-        case b: hues.push(240 + (r - g) * 60 / d); break;
-      }
-    }
-    if(hues.length == 0) {
-      hue = Math.random() * 360;
-    } else {
-      const gaps = hues.sort((a,b)=>a-b).map((h, i, a) => (i != (a.length - 1)) ? a[i + 1 ] - h : a[0] + 360 - h);
-      const gap = Math.max(...gaps);
-      hue = (Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
-    }
-    const v = [240, 220, 120, 200, 240, 240];
-    const value = v[Math.floor(hue/60)] * (60 - hue%60) / 60 + v[Math.ceil(hue/60) % 6] * (hue%60) / 60;
-    const f = n => {
-      const k = (n + hue / 30) % 12;
-      const c = .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-      return Math.round(value * c).toString(16).padStart(2, '0');
-    }
-    return `#${f(0)}${f(8)}${f(4)}`;
+    return randomHue(this.state._meta.players)
   }
 
   receiveDelta(player, delta) {
@@ -365,6 +651,17 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  removeInvalidPublicLibraryLinks(player) {
+    for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+      const operations = [];
+      for(const [ variantID, variant ] of Object.entries(state.variants))
+        if(variant.plStateID && (!this.state._meta.states[variant.plStateID] || !this.state._meta.states[variant.plStateID].variants[variant.plVariantID]))
+          operations.push({ operation: 'delete', variantID });
+      if(operations.length)
+        this.editState(player, id, state, state.variants, operations);
+    }
+  }
+
   removePlayer(player) {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
@@ -380,8 +677,25 @@ export default class Room {
   }
 
   removeState(player, stateID) {
-    this.deleteUnusedVariantFiles(stateID, this.state._meta.states[stateID], { variants: {} });
+    if(stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
+      return;
+
+    for(const variantID in this.state._meta.states[stateID].variants) {
+      const savefile = this.variantFilename(stateID, variantID);
+      if(fs.existsSync(savefile))
+        fs.unlinkSync(savefile);
+    }
+
+    if(stateID.match(/^PL:/)) {
+      this.state._meta.states[stateID].variants = [];
+      this.writePublicLibraryAssetsToFilesystem(stateID);
+
+      fs.rmdirSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets'));
+      fs.rmdirSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, ''));
+    }
+
     delete this.state._meta.states[stateID];
+
     this.sendMetaUpdate();
   }
 
@@ -402,6 +716,44 @@ export default class Room {
 
   roomFilename() {
     return Config.directory('save') + '/rooms/' + this.id + '.json';
+  }
+
+  saveState(player, players, updateCurrentSave) {
+    if(updateCurrentSave) {
+      const stateID = this.state._meta.activeState.saveStateID;
+      const newContent = {...this.state};
+      delete newContent._meta;
+      this.state._meta.states[stateID].saveDate = +new Date();
+      fs.writeFileSync(this.variantFilename(stateID, 0), JSON.stringify(newContent));
+      return this.sendMetaUpdate();
+    }
+
+    const id = Math.random().toString(36).substring(3, 7);
+
+    this.state._meta.states[id] = {...this.state._meta.states[this.state._meta.activeState.linkStateID || this.state._meta.activeState.stateID]};
+    this.state._meta.states[id].variants = [];
+    this.state._meta.states[id].saveState = this.state._meta.activeState.stateID;
+    this.state._meta.states[id].saveVariant = this.state._meta.activeState.variantID;
+    if(this.state._meta.activeState.linkStateID)
+      this.state._meta.states[id].saveLinkState = this.state._meta.activeState.linkStateID;
+    this.state._meta.states[id].savePlayers = players;
+    this.state._meta.states[id].saveDate = +new Date();
+
+    delete this.state._meta.states[id].publicLibrary;
+    delete this.state._meta.states[id].publicLibraryCategory;
+    delete this.state._meta.states[id].starred;
+    delete this.state._meta.states[id].stars;
+    delete this.state._meta.states[id].timePlayed;
+    delete this.state._meta.states[id].link;
+
+    this.addState(id, 'room', null, null, id);
+
+    this.state._meta.states[id].variants[0].variant = players;
+    this.state._meta.states[id].variants[0].players = this.state._meta.states[this.state._meta.activeState.stateID].variants[this.state._meta.activeState.variantID].players;
+
+    this.state._meta.activeState.saveStateID = id;
+
+    this.sendMetaUpdate();
   }
 
   sendMetaUpdate() {
@@ -433,8 +785,8 @@ export default class Room {
           const zip = new JSZip();
           zip.file(`${this.id}.json`, JSON.stringify(this.state, null, '  '));
           for(const asset in assetStatus)
-            if(!assetStatus[asset] && fs.existsSync(Config.directory('assets') + '/' + asset))
-              zip.file('assets/' + asset, fs.readFileSync(Config.directory('assets') + '/' + asset));
+            if(!assetStatus[asset] && Config.resolveAsset(asset))
+              zip.file('assets/' + asset, fs.readFileSync(Config.resolveAsset(asset)));
 
           zipBuffer = await zip.generateAsync({type:'nodebuffer'});
         }
@@ -458,6 +810,8 @@ export default class Room {
   }
 
   setState(state) {
+    delete this.state._meta.activeState;
+
     this.trace('setState', { state });
     const meta = this.state._meta;
     this.state = state;
@@ -465,6 +819,21 @@ export default class Room {
       this.state = FileUpdater(this.state);
     this.state._meta = meta;
     this.broadcast('state', state);
+    this.sendMetaUpdate();
+  }
+
+  toggleStateStar(player, publicLibraryName) {
+    if(this.state._meta.starred[publicLibraryName])
+      delete this.state._meta.starred[publicLibraryName];
+    else
+      this.state._meta.starred[publicLibraryName] = 1;
+
+    Statistics.toggleStateStar(publicLibraryName, this.state._meta.starred[publicLibraryName]);
+    for(const state of Object.values(this.state._meta.states))
+      if(state.publicLibrary == publicLibraryName)
+        state.stars += this.state._meta.starred[publicLibraryName] ? 1 : -1;
+
+    this.sendMetaUpdate();
   }
 
   trace(source, payload) {
@@ -494,9 +863,20 @@ export default class Room {
     return this.state && this.state._meta && this.state._meta.tracingEnabled;
   }
 
+  async unlinkState(player, stateID) {
+    for(const [ variantID, variant ] of Object.entries(this.state._meta.states[stateID].variants)) {
+      const variantState = await FileLoader.readVariantFromLink(variant.link);
+      fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(variantState, null, '  '));
+      delete variant.link;
+    }
+    delete this.state._meta.states[stateID].link;
+    this.sendMetaUpdate();
+  }
+
   unload() {
     if(this.state && this.state._meta) {
-      if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
+      const nonPLgames = Object.keys(this.state._meta.states).filter(i=>!i.match(/^PL:/));
+      if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
         Logging.log(`unloading room ${this.id}`);
         this.writeToFilesystem();
       } else {
@@ -511,12 +891,114 @@ export default class Room {
     this.unloadCallback();
   }
 
+  async updateLinkedStates() {
+    for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+      if(state.link) {
+        try {
+          await this.addState(id, 'link', state.link);
+        } catch(e) {
+          Logging.log(`ERROR: updating linked state ${id} in room ${this.id} failed: ${e}`);
+        }
+      }
+    }
+  }
+
+  updateTimeStatistics() {
+    if(this.deltaID > this.lastStatisticsDeltaID && this.state._meta.activeState && this.state._meta.activeState.stateID.match(/^PL/)) {
+      Statistics.updateTimeStatistics(this.state._meta.states[this.state._meta.activeState.stateID].publicLibrary, this.players.length);
+      this.lastStatisticsDeltaID = this.deltaID;
+    }
+  }
+
+  writePublicLibraryAssetsToFilesystem(stateID) {
+    if(!Config.get('allowPublicLibraryEdits'))
+      return;
+
+    const assetsDir = this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets');
+
+    const usedAssets = {};
+    for(const vID in this.state._meta.states[stateID].variants)
+      for(const asset of this.getAssetList(JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)))))
+        usedAssets[asset.split('/')[2]] = true;
+
+    const savedAssets = {};
+    for(const file of fs.readdirSync(assetsDir))
+      savedAssets[file] = true;
+
+    for(const savedAsset in savedAssets)
+      if(!usedAssets[savedAsset])
+        fs.unlinkSync(assetsDir + '/' + savedAsset);
+
+    for(const usedAsset in usedAssets)
+      if(!savedAssets[usedAsset])
+        fs.copyFileSync(Config.directory('assets') + '/' + usedAsset, assetsDir + '/' + usedAsset);
+  }
+
+  writePublicLibraryMetaToFilesystem(stateID, meta) {
+    if(!Config.get('allowPublicLibraryEdits'))
+      return;
+
+    for(const variantID in this.state._meta.states[stateID].variants) {
+      const state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, variantID)));
+
+      state._meta.info = Object.assign(JSON.parse(JSON.stringify(meta)), JSON.parse(JSON.stringify(meta.variants[variantID])));
+
+      delete state._meta.info.id;
+      delete state._meta.info.variants;
+      delete state._meta.info.starred;
+      delete state._meta.info.stars;
+      delete state._meta.info.timePlayed;
+      delete state._meta.info.publicLibrary;
+      delete state._meta.info.publicLibraryCategory;
+
+      state._meta.info.lastUpdate = +new Date();
+
+      fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
+    }
+
+    this.writePublicLibraryAssetsToFilesystem(stateID);
+
+    delete Room.publicLibrary;
+    this.getPublicLibraryGames();
+  }
+
+  writePublicLibraryToFilesystem(stateID, variantID, state) {
+    if(!Config.get('allowPublicLibraryEdits'))
+      return;
+
+    const copy = JSON.parse(JSON.stringify(state));
+    copy._meta = {
+      version: copy._meta.version,
+      info: JSON.parse(JSON.stringify(this.state._meta.states[stateID].variants[variantID]))
+    };
+
+    delete copy._meta.info.publicLibrary;
+    delete copy._meta.info.publicLibraryCategory;
+    delete copy._meta.info.starred;
+    delete copy._meta.info.stars;
+    delete copy._meta.info.timePlayed;
+    delete copy._meta.info.link;
+    delete copy._meta.info.variants;
+
+    copy._meta.info.lastUpdate = +new Date();
+
+    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+    this.writePublicLibraryAssetsToFilesystem(stateID);
+  }
+
   writeToFilesystem() {
-    const json = JSON.stringify(this.state);
+    const copy = JSON.parse(JSON.stringify(this.state));
+    for(const id in copy._meta.states)
+      if(id.match(/^PL:/))
+        delete copy._meta.states[id];
+    const json = JSON.stringify(copy);
     fs.writeFileSync(this.roomFilename(), json);
   }
 
   variantFilename(stateID, variantID) {
-    return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
+    if(stateID.match(/^PL:/) && String(variantID).match(/^[0-9]+$/))
+      return Config.directory('library') + `/${Room.publicLibrary[stateID].publicLibrary}/${variantID}.json`;
+    else
+      return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + String(variantID).replace(/[^a-z0-9]/g, '_') + '.json';
   }
 }

@@ -1,0 +1,292 @@
+{
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 104,
+    "y": 175,
+    "z": 23,
+    "turn": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 512,
+    "y": 175,
+    "z": 24,
+    "index": 2
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 875,
+    "y": 175,
+    "z": 25,
+    "index": 3
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1225,
+    "y": 175,
+    "z": 26,
+    "index": 4
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "x": 568,
+    "width": 400,
+    "z": 72,
+    "css": "font-size: 60px",
+    "text": "Seats: Turns",
+    "y": 4
+  },
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Seats",
+      "image": "/assets/-65508335_6985",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1673017752218,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Turns",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    }
+  },
+  "qaui": {
+    "id": "qaui",
+    "z": 114,
+    "x": 223,
+    "y": 257,
+    "css": "font-size: 25px; ",
+    "height": 600,
+    "text": "For this tutorial, you can use a single browser window and should 'sit' in every seat at the same time. (But also try with one seat empty to see how that changes things). The 'hideWhenUnused' property is left in its default false state so you can do this. The default `TURN` behavior is to move forward one seat each turn. Turn is indicated by a glow around the seat.\n\nThe key parameter is `turnCycle`.  While sitting in all 4 seats simultaneously, click each of the buttons and examine the JSON to see details of this paramater.\n\n\n\n\n\n\nYou can also set the parameter programmatically as in the example button below which sets up a 'snake' turn pattern: 1,2,3,4 then 4,3,2,1. This button also takes into account situations when a seat (including the first or last seat) is empty.",
+    "movable": false,
+    "width": 1200,
+    "layer": -1
+  },
+  "1gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "backward"
+      }
+    ],
+    "x": 470.4,
+    "y": 491,
+    "z": 108,
+    "id": "1gbf",
+    "layer": 1,
+    "text": "Backward"
+  },
+  "2gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "x": 583.8,
+    "y": 491,
+    "z": 107,
+    "id": "2gbf",
+    "layer": 1,
+    "text": "Random"
+  },
+  "3gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "position",
+        "turn": "first"
+      }
+    ],
+    "x": 697,
+    "y": 491,
+    "z": 114,
+    "id": "3gbf",
+    "layer": 1,
+    "text": "Position:\nFirst"
+  },
+  "4gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "x": 357,
+    "y": 491,
+    "z": 109,
+    "id": "4gbf",
+    "layer": 1,
+    "text": "Forward"
+  },
+  "5gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "position",
+        "turn": "last"
+      }
+    ],
+    "x": 810.6,
+    "y": 491,
+    "z": 110,
+    "id": "5gbf",
+    "layer": 1,
+    "text": "Position:\nLast"
+  },
+  "6gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "position",
+        "turn": 2
+      }
+    ],
+    "x": 924,
+    "y": 491,
+    "z": 111,
+    "id": "6gbf",
+    "layer": 1,
+    "text": "Position:\n2"
+  },
+  "7gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "note": "Select all active seats and determine the highest and lowest index number.",
+        "func": "SELECT",
+        "property": "type",
+        "value": "seat"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "aggregation": "min",
+        "variable": "minIndex"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "aggregation": "max",
+        "variable": "maxIndex"
+      },
+      {
+        "Note": "Find the index number of the current turn.",
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "currentIndex"
+      },
+      {
+        "Note": "Determine if the turn cycle is currently moving forward or backward.",
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "direction",
+        "variable": "direction"
+      },
+      {
+        "func": "IF",
+        "operand1": "${direction}",
+        "operand2": "forward",
+        "thenRoutine": [
+          {
+            "note": "If current turn is less than highest index, and the turn is moving forward, then advance one seat.",
+            "func": "IF",
+            "operand1": "${currentIndex}",
+            "relation": "<",
+            "operand2": "${maxIndex}",
+            "thenRoutine": [
+              {
+                "func": "TURN",
+                "turnCycle": "forward"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "If current turn is equal to highest index, and the turn is moving forward, then set the turn equal to the last seat to start the cycle over, then change the direction.",
+                "func": "TURN",
+                "turnCycle": "position",
+                "turn": "last"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "direction",
+                "value": "backward"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "note": "If current turn is higher than lowest index, and the turn is moving backward, then go backward one seat.",
+            "func": "IF",
+            "operand1": "${currentIndex}",
+            "relation": ">",
+            "operand2": "${minIndex}",
+            "thenRoutine": [
+              {
+                "func": "TURN",
+                "turnCycle": "backward"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "If current turn is equal to lowest index, and the turn is moving backward, then set the turn equal to the first seat to start the cycle over, then change the direction.",
+                "func": "TURN",
+                "turnCycle": "position",
+                "turn": "first"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "direction",
+                "value": "forward"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 357,
+    "y": 753,
+    "z": 117,
+    "id": "7gbf",
+    "layer": 1,
+    "text": "Snake",
+    "direction": "backward"
+  }
+}
