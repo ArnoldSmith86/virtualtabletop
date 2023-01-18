@@ -1,4 +1,4 @@
-export const VERSION = 9;
+export const VERSION = 10;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -18,8 +18,13 @@ function updateProperties(properties, v) {
   if(typeof properties != 'object')
     return;
 
-  if(!properties.type)
-    updateProperties(properties.faces, v);
+  if(!properties.type) {
+    if (typeof properties.faces == 'object') {
+      for (let face in properties.faces) {
+        updateProperties(properties.faces[face], v);
+      }
+    }
+  }
   if(properties.type == 'deck')
     updateProperties(properties.cardDefaults, v);
   if(properties.type == 'deck' && typeof properties.cardTypes == 'object')
@@ -35,6 +40,7 @@ function updateProperties(properties, v) {
   v<6 && v6cssPieces(properties);
   v<7 && v7HolderClickable(properties);
   v<8 && v8HoverInheritVisibleForSeat(properties);
+  v<10 && v10GridOffset(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -338,4 +344,24 @@ function v9NumericStringSort(routine) {
   for(const key in routine)
     if(typeof routine[key] === 'string')
       routine[key] = routine[key].replace('numericSort', 'numericStringSort');
+}
+
+function v10GridOffset(properties) {
+  const grid = properties.grid;
+  if (!grid)
+    return;
+  for (let i = 0; i < grid.length; ++i) {
+    const xAdjustment = -grid[i].x*0.5;
+    const yAdjustment = -grid[i].y*0.5;
+    grid[i].offsetX = (grid[i].offsetX || 0) + xAdjustment;
+    grid[i].offsetY = (grid[i].offsetY || 0) + yAdjustment;
+    if (typeof grid[i].minX == 'number')
+      grid[i].minX += xAdjustment;
+    if (typeof grid[i].maxX == 'number')
+      grid[i].maxX += xAdjustment;
+    if (typeof grid[i].minY == 'number')
+      grid[i].minY += yAdjustment;
+    if (typeof grid[i].maxY == 'number')
+      grid[i].maxY += yAdjustment;
+  }
 }

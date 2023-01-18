@@ -619,6 +619,7 @@ function fillStateDetails(states, state, dom) {
       toggleClass($('img', arrowDom), 'hidden', $('img', arrowDom).src == location.href);
       $('h3', arrowDom).innerText = $('h3', targetDom).innerText;
       $('h4', arrowDom).innerText = $('h4', targetDom).innerText;
+      arrowDom.className = targetDom.className;
     }
     arrowDom.onclick = function() {
       showOverlay();
