@@ -940,6 +940,8 @@ function jeAddCommands() {
   jeAddGridCommand('maxY', 0);
   jeAddGridCommand('minX', 0);
   jeAddGridCommand('minY', 0);
+  jeAddGridCommand('alignX', 0);
+  jeAddGridCommand('alignY', 0);
   jeAddGridCommand('offsetX', 0);
   jeAddGridCommand('offsetY', 0);
   jeAddGridCommand('rotation', 0);
