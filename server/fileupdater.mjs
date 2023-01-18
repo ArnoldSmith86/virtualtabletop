@@ -1,6 +1,5 @@
 export const VERSION = 11;
 
-
 export default function FileUpdater(state) {
   const v = state._meta.version;
   if(v == VERSION)
@@ -366,6 +365,7 @@ function v10GridOffset(properties) {
     if (typeof grid[i].maxY == 'number')
       grid[i].maxY += yAdjustment;
   }
+}
 
 function v11OwnerMOVEXY(routine) {
   for(const operation of routine)
