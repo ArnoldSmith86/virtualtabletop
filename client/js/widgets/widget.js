@@ -345,6 +345,15 @@ export class Widget extends StateManaged {
     if(this.get('dragging') == playerName)
       className += ' draggingSelf';
 
+    if(this.get('clickable'))
+      className += ' clickable';
+
+    if(this.get('movable') )
+      className += ' movable';
+
+    if(this.get('enlarge'))
+      className += ' enlarge';
+
     if(this.isHighlighted)
       className += ' selectedInEdit';
 
@@ -352,7 +361,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
