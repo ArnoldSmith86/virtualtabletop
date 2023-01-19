@@ -52,11 +52,11 @@
     "@node-minify/no-compress": "^7.1.0",
     "@node-minify/uglify-es": "^7.1.0",
     "crc-32": "^1.2.2",
-    "dompurify": "^2.3.8",
+    "dompurify": "^2.4.3",
     "express": "^4.18.2",
     "jszip": "^3.10.1",
-    "node-fetch": "^2.6.1",
-    "ws": "^8.11.0"
+    "node-fetch": "^2.6.8",
+    "ws": "^8.12.0"
   },
   "devDependencies": {
     "jest": "^29.3.1",
@@ -64,6 +64,6 @@
     "jest-environment-jsdom-global": "^4.0.0",
     "json-diff": "^1.0.0",
     "nodemon": "^2.0.20",
-    "testcafe": "^2.1.0"
+    "testcafe": "^2.2.0"
   }
 }
