@@ -1271,7 +1271,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
             for(const c of source.children().slice(0, a.count || 999999).reverse()) {
@@ -1279,6 +1279,8 @@ export class Widget extends StateManaged {
                 c.flip(a.face);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
+              if(a.resetOwner)
+                await c.set('owner', null);
               if(a.snapToGrid)
                 await c.snapToGrid();
               await c.set('parent', null);
@@ -1841,7 +1843,7 @@ export class Widget extends StateManaged {
 
     //Keeps widget's top left corner within coordinates set by dragLimit object
     const limit = this.get('dragLimit');
- 
+
     if (limit.minX !== undefined) {
       newX = Math.max(limit.minX, newX);
     }
