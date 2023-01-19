@@ -57,92 +57,13 @@
     "dropTarget": {},
     "dropOffsetX": 20,
     "dropOffsetY": 10,
-    "xenterRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${thisID}",
-        "sortBy": {
-          "key": "z",
-          "reverse": false
-        }
-      },
-      {
-        "func": "COUNT"
-      },
-      {
-        "func": "IF",
-        "operand1": "${COUNT}",
-        "relation": ">",
-        "operand2": 1,
-        "thenRoutine": [
-          {
-            "func": "GET",
-            "property": "z",
-            "aggregation": "min",
-            "variable": "pieceZ"
-          },
-          {
-            "func": "SELECT",
-            "source": "DEFAULT",
-            "property": "z",
-            "value": "${pieceZ}"
-          },
-          {
-            "func": "GET",
-            "property": "_absoluteX",
-            "variable": "absX"
-          },
-          {
-            "func": "GET",
-            "property": "_absoluteY",
-            "variable": "absY"
-          },
-          {
-            "func": "SET",
-            "property": "parent",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "property": "x",
-            "value": "${absX}"
-          },
-          {
-            "func": "SET",
-            "property": "y",
-            "value": "${absY}"
-          }
-        ]
-      }
-    ],
     "enterRoutine": [
       {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${thisID}",
-        "sortBy": {
-          "key": "z",
-          "reverse": false
-        }
-      },
-      {
-        "func": "COUNT"
-      },
-      {
-        "func": "IF",
-        "operand1": "${COUNT}",
-        "relation": ">",
-        "operand2": 1,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "child",
-            "property": "z",
-            "value": 0
-          }
-        ]
-      }
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "z",
+        "reverse": true
+       }
     ]
   },
   "house2": {
