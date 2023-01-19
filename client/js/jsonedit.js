@@ -912,7 +912,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "OK", fields: [] } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
-  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
@@ -940,6 +940,8 @@ function jeAddCommands() {
   jeAddGridCommand('maxY', 0);
   jeAddGridCommand('minX', 0);
   jeAddGridCommand('minY', 0);
+  jeAddGridCommand('alignX', 0);
+  jeAddGridCommand('alignY', 0);
   jeAddGridCommand('offsetX', 0);
   jeAddGridCommand('offsetY', 0);
   jeAddGridCommand('rotation', 0);
