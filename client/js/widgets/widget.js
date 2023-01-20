@@ -1838,7 +1838,7 @@ export class Widget extends StateManaged {
 
   async move(coordGlobal, localAnchor) {
     const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
-    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), this.coordParentFromCoordLocal({x: 0, y: 0}));
     let newX = Math.round(coordParent.x + offset.x);
     let newY = Math.round(coordParent.y + offset.y);
 
