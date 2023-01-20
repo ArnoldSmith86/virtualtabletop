@@ -490,9 +490,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
           fillStateDetails(states, state, entry);
       });
       $('.star', entry).addEventListener('click', function(e) {
+        e.target.disabled = true;
         entry.dataset.stars = +entry.dataset.stars + (state.starred ? -1 : 1);
         if($('#stateDetailsOverlay').dataset.id == state.id) {
-          $('#stateDetailsOverlay [data-field=stars]').innerText = entry.dataset.stars;
+          $('#stateDetailsOverlay [data-field=stars]').innerText = +entry.dataset.stars || '';
           toggleClass($('#stateDetailsOverlay .star'), 'active', !state.starred);
         }
         toggleStateStar(state, entry);
@@ -618,6 +619,7 @@ function fillStateDetails(states, state, dom) {
       toggleClass($('img', arrowDom), 'hidden', $('img', arrowDom).src == location.href);
       $('h3', arrowDom).innerText = $('h3', targetDom).innerText;
       $('h4', arrowDom).innerText = $('h4', targetDom).innerText;
+      arrowDom.className = targetDom.className;
     }
     arrowDom.onclick = function() {
       showOverlay();

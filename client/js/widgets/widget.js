@@ -408,7 +408,7 @@ export class Widget extends StateManaged {
     if($(`#STYLES_${escapeID(this.id)}`))
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     const usedProperties = new Set();
-    let css = this.cssReplaceProperties(this.cssAsText(this.get('css')), usedProperties);
+    let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
     this.propertiesUsedInCSS = Array.from(usedProperties);
 
     css = this.cssBorderRadius() + css;
@@ -463,7 +463,8 @@ export class Widget extends StateManaged {
   cssReplaceProperties(css, usedProperties) {
     for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
       css = css.replace(match[0], this.get(match[1]));
-      usedProperties.add(match[1]);
+      if (usedProperties)
+        usedProperties.add(match[1]);
     }
     return css;
   }
@@ -1271,7 +1272,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
             for(const c of source.children().slice(0, a.count || 999999).reverse()) {
@@ -1279,6 +1280,8 @@ export class Widget extends StateManaged {
                 c.flip(a.face);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
+              if(a.resetOwner)
+                await c.set('owner', null);
               if(a.snapToGrid)
                 await c.snapToGrid();
               await c.set('parent', null);
@@ -1346,7 +1349,7 @@ export class Widget extends StateManaged {
           problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           a.mode = 'set'
         }
-        
+
         if(a.value === null)
           a.value = a.mode=='set' ? 0 : 1;
         if(isNaN(parseFloat(a.value))) {
@@ -1821,7 +1824,7 @@ export class Widget extends StateManaged {
 
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
-      this.currentParent = widgets.get(this.get('parent'));
+      this.currentParent = widgets.get(this.get('_ancestor'));
       this.hoverTarget = null;
 
       this.disablePileUpdateAfterParentChange = true;
@@ -1841,7 +1844,7 @@ export class Widget extends StateManaged {
 
     //Keeps widget's top left corner within coordinates set by dragLimit object
     const limit = this.get('dragLimit');
- 
+
     if (limit.minX !== undefined) {
       newX = Math.max(limit.minX, newX);
     }
@@ -2155,17 +2158,20 @@ export class Widget extends StateManaged {
       let closestDistance = 999999;
 
       for(const grid of this.get('grid')) {
+        const alignX = (grid.alignX || 0) * this.get('width');
+        const alignY = (grid.alignY || 0) * this.get('height');
+
         if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
           continue;
         if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
           continue;
 
-        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
-        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
+        const snapX = x + alignX + grid.x/2 - mod(x + alignX + grid.x/2 - (grid.offsetX || 0), grid.x);
+        const snapY = y + alignY + grid.y/2 - mod(y + alignY + grid.y/2 - (grid.offsetY || 0), grid.y);
 
         const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
         if(distance < closestDistance) {
-          closest = [ snapX, snapY, grid ];
+          closest = [ snapX - alignX, snapY - alignY, grid ];
           closestDistance = distance;
         }
       }
@@ -2173,7 +2179,7 @@ export class Widget extends StateManaged {
       if(closest) {
         this.setPosition(closest[0], closest[1], this.get('z'));
         for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY' ].indexOf(p) == -1)
             await this.set(p, closest[2][p]);
       }
     }
