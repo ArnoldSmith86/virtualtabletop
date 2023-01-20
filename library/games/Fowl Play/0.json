@@ -1,0 +1,5151 @@
+{
+  "_meta": {
+    "version": 11,
+    "info": {
+      "name": "Fowl Play",
+      "image": "/assets/1671096424_450159",
+      "rules": "https://www.chickapig.com/chickapig",
+      "bgg": "https://boardgamegeek.com/boardgame/202490/chickapig",
+      "year": "2016",
+      "mode": "",
+      "time": "",
+      "attribution": "<div>The room layout, card design, and card text is by LawDawg and is released to the public domain under CC0.</div><div><br></div>Icons available under Icons8 license at:<div><ul><li>htttps://icons8.com/icon/KhZMR2XAXjsg/cow</li><li>https://icons8.com/icon/VImnajNuKmtY/chicken</li><li>https://icons8.com/icon/xHeIJ8q2guQb/poop<br></li><li>https://icons8.com/icon/kftPEW36MIYa/haystack<br></li></ul><div>Images available under Pixabay license at:&nbsp; &nbsp;<p class=\"MsoNormal\"></p><ul><li>Cow: https://pixabay.com/vectors/cow-milk-farming-animal-eyes-farm-35561/<br></li><li>Daisy: https://pixabay.com/vectors/flower-yellow-daisy-nature-spring-1295436/<br></li></ul><div>The library image is available as CC BY-NC 4.0. It was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"illustrated children's book style drawing of flock of chickens.\"<br></div><p></p></div></div>",
+      "lastUpdate": 1674190171637,
+      "id": "6idl",
+      "showName": true,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "Chickapig",
+      "similarAwards": "2018 Mensa Recommended",
+      "ruleText": "",
+      "helpText": "Players choose color using the Players overlay on the right of the screen. Then choose seats. Game pieces are linked to player colors.&nbsp; Pick a starting player and roll the dice. Cow = 1. Daisy = 2. If you draw a card you can keep, move it to the holder (hand) below each deck. The circle in the seat shows how many daisy cards each player has. Press the turn button to advance the turn indicator to the next player.",
+      "players": "2-4",
+      "language": "en-US",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "square1": {
+    "type": "holder",
+    "id": "square1",
+    "x": 310,
+    "y": 10,
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "movableInEdit": false,
+    "dropTarget": {
+      "piece": true
+    },
+    "css": {
+      "background": "#d8c1a8",
+      "border": "1px solid #A0522D"
+    },
+    "borderRadius": 3
+  },
+  "square2": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square2",
+    "x": 380,
+    "y": 10,
+    "z": 1
+  },
+  "square3": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square3",
+    "x": 450,
+    "y": 10,
+    "z": 1
+  },
+  "square4": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square4",
+    "x": 520,
+    "y": 10,
+    "z": 1
+  },
+  "square5": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square5",
+    "x": 590,
+    "y": 10,
+    "z": 1
+  },
+  "square6": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square6",
+    "x": 660,
+    "y": 10,
+    "z": 1
+  },
+  "square7": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square7",
+    "x": 730,
+    "y": 10,
+    "z": 1
+  },
+  "square8": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square8",
+    "x": 800,
+    "y": 10,
+    "z": 1
+  },
+  "square9": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square9",
+    "x": 870,
+    "y": 10,
+    "z": 1
+  },
+  "square10": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square10",
+    "x": 940,
+    "y": 10,
+    "z": 1
+  },
+  "square11": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square11",
+    "x": 1010,
+    "y": 10,
+    "z": 1
+  },
+  "square12": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square12",
+    "x": 1080,
+    "y": 10,
+    "z": 1
+  },
+  "square13": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square13",
+    "x": 1150,
+    "y": 10,
+    "z": 1
+  },
+  "square14": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square14",
+    "x": 1220,
+    "y": 10,
+    "z": 1
+  },
+  "square15": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square15",
+    "x": 310,
+    "y": 80,
+    "z": 1
+  },
+  "square16": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square16",
+    "x": 380,
+    "y": 80,
+    "z": 1
+  },
+  "square17": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square17",
+    "x": 450,
+    "y": 80,
+    "z": 1
+  },
+  "square18": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square18",
+    "x": 520,
+    "y": 80,
+    "z": 1
+  },
+  "square19": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square19",
+    "x": 590,
+    "y": 80,
+    "z": 1
+  },
+  "square20": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square20",
+    "x": 660,
+    "y": 80,
+    "z": 1
+  },
+  "square21": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square21",
+    "x": 730,
+    "y": 80,
+    "z": 1
+  },
+  "square22": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square22",
+    "x": 800,
+    "y": 80,
+    "z": 1
+  },
+  "square23": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square23",
+    "x": 870,
+    "y": 80,
+    "z": 1
+  },
+  "square24": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square24",
+    "x": 940,
+    "y": 80,
+    "z": 1
+  },
+  "square25": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square25",
+    "x": 1010,
+    "y": 80,
+    "z": 1
+  },
+  "square26": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square26",
+    "x": 1080,
+    "y": 80,
+    "z": 1
+  },
+  "square27": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square27",
+    "x": 1150,
+    "y": 80,
+    "z": 1
+  },
+  "square28": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square28",
+    "x": 1220,
+    "y": 80,
+    "z": 1
+  },
+  "square29": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square29",
+    "x": 310,
+    "y": 150,
+    "z": 1
+  },
+  "square30": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square30",
+    "x": 380,
+    "y": 150,
+    "z": 1
+  },
+  "square31": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square31",
+    "x": 450,
+    "y": 150,
+    "z": 1
+  },
+  "square32": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square32",
+    "x": 520,
+    "y": 150,
+    "z": 1
+  },
+  "square33": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square33",
+    "x": 590,
+    "y": 150,
+    "z": 1
+  },
+  "square34": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square34",
+    "x": 660,
+    "y": 150,
+    "z": 1
+  },
+  "square35": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square35",
+    "x": 730,
+    "y": 150,
+    "z": 1
+  },
+  "square36": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square36",
+    "x": 800,
+    "y": 150,
+    "z": 1
+  },
+  "square37": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square37",
+    "x": 870,
+    "y": 150,
+    "z": 1
+  },
+  "square38": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square38",
+    "x": 940,
+    "y": 150,
+    "z": 1
+  },
+  "square39": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square39",
+    "x": 1010,
+    "y": 150,
+    "z": 1
+  },
+  "square40": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square40",
+    "x": 1080,
+    "y": 150,
+    "z": 1
+  },
+  "square41": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square41",
+    "x": 1150,
+    "y": 150,
+    "z": 1
+  },
+  "square42": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square42",
+    "x": 1220,
+    "y": 150,
+    "z": 1
+  },
+  "square43": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square43",
+    "x": 310,
+    "y": 220,
+    "z": 1
+  },
+  "square44": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square44",
+    "x": 380,
+    "y": 220,
+    "z": 1
+  },
+  "square45": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square45",
+    "x": 450,
+    "y": 220,
+    "z": 1
+  },
+  "square46": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square46",
+    "x": 520,
+    "y": 220,
+    "z": 1
+  },
+  "square47": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square47",
+    "x": 590,
+    "y": 220,
+    "z": 1
+  },
+  "square48": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square48",
+    "x": 660,
+    "y": 220,
+    "z": 1
+  },
+  "square49": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square49",
+    "x": 730,
+    "y": 220,
+    "z": 1
+  },
+  "square50": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square50",
+    "x": 800,
+    "y": 220,
+    "z": 1
+  },
+  "square51": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square51",
+    "x": 870,
+    "y": 220,
+    "z": 1
+  },
+  "square52": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square52",
+    "x": 940,
+    "y": 220,
+    "z": 1
+  },
+  "square53": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square53",
+    "x": 1010,
+    "y": 220,
+    "z": 1
+  },
+  "square54": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square54",
+    "x": 1080,
+    "y": 220,
+    "z": 1
+  },
+  "square55": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square55",
+    "x": 1150,
+    "y": 220,
+    "z": 1
+  },
+  "square56": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square56",
+    "x": 1220,
+    "y": 220,
+    "z": 1
+  },
+  "square57": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square57",
+    "x": 310,
+    "y": 290,
+    "z": 1
+  },
+  "square58": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square58",
+    "x": 380,
+    "y": 290,
+    "z": 1
+  },
+  "square59": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square59",
+    "x": 450,
+    "y": 290,
+    "z": 1
+  },
+  "square60": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square60",
+    "x": 520,
+    "y": 290,
+    "z": 1
+  },
+  "square61": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square61",
+    "x": 590,
+    "y": 290,
+    "z": 1
+  },
+  "square62": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square62",
+    "x": 660,
+    "y": 290,
+    "z": 1
+  },
+  "square63": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square63",
+    "x": 730,
+    "y": 290,
+    "z": 1
+  },
+  "square64": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square64",
+    "x": 800,
+    "y": 290,
+    "z": 1
+  },
+  "square65": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square65",
+    "x": 870,
+    "y": 290,
+    "z": 1
+  },
+  "square66": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square66",
+    "x": 940,
+    "y": 290,
+    "z": 1
+  },
+  "square67": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square67",
+    "x": 1010,
+    "y": 290,
+    "z": 1
+  },
+  "square68": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square68",
+    "x": 1080,
+    "y": 290,
+    "z": 1
+  },
+  "square69": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square69",
+    "x": 1150,
+    "y": 290,
+    "z": 1
+  },
+  "square70": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square70",
+    "x": 1220,
+    "y": 290,
+    "z": 1
+  },
+  "square71": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square71",
+    "x": 310,
+    "y": 360,
+    "z": 1
+  },
+  "square72": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square72",
+    "x": 380,
+    "y": 360,
+    "z": 1
+  },
+  "square73": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square73",
+    "x": 450,
+    "y": 360,
+    "z": 1
+  },
+  "square74": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square74",
+    "x": 520,
+    "y": 360,
+    "z": 1
+  },
+  "square75": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square75",
+    "x": 590,
+    "y": 360,
+    "z": 1
+  },
+  "square76": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square76",
+    "x": 660,
+    "y": 360,
+    "z": 1
+  },
+  "square77": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square77",
+    "x": 730,
+    "y": 360,
+    "z": 1
+  },
+  "square78": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square78",
+    "x": 800,
+    "y": 360,
+    "z": 1
+  },
+  "square79": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square79",
+    "x": 870,
+    "y": 360,
+    "z": 1
+  },
+  "square80": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square80",
+    "x": 940,
+    "y": 360,
+    "z": 1
+  },
+  "square81": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square81",
+    "x": 1010,
+    "y": 360,
+    "z": 1
+  },
+  "square82": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square82",
+    "x": 1080,
+    "y": 360,
+    "z": 1
+  },
+  "square83": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square83",
+    "x": 1150,
+    "y": 360,
+    "z": 1
+  },
+  "square84": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square84",
+    "x": 1220,
+    "y": 360,
+    "z": 1
+  },
+  "square85": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square85",
+    "x": 310,
+    "y": 430,
+    "z": 1
+  },
+  "square86": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square86",
+    "x": 380,
+    "y": 430,
+    "z": 1
+  },
+  "square87": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square87",
+    "x": 450,
+    "y": 430,
+    "z": 1
+  },
+  "square88": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square88",
+    "x": 520,
+    "y": 430,
+    "z": 1
+  },
+  "square89": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square89",
+    "x": 590,
+    "y": 430,
+    "z": 1
+  },
+  "square90": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square90",
+    "x": 660,
+    "y": 430,
+    "z": 1
+  },
+  "square91": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square91",
+    "x": 730,
+    "y": 430,
+    "z": 1
+  },
+  "square92": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square92",
+    "x": 800,
+    "y": 430,
+    "z": 1
+  },
+  "square93": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square93",
+    "x": 870,
+    "y": 430,
+    "z": 1
+  },
+  "square94": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square94",
+    "x": 940,
+    "y": 430,
+    "z": 1
+  },
+  "square95": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square95",
+    "x": 1010,
+    "y": 430,
+    "z": 1
+  },
+  "square96": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square96",
+    "x": 1080,
+    "y": 430,
+    "z": 1
+  },
+  "square97": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square97",
+    "x": 1150,
+    "y": 430,
+    "z": 1
+  },
+  "square98": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square98",
+    "x": 1220,
+    "y": 430,
+    "z": 1
+  },
+  "square99": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square99",
+    "x": 310,
+    "y": 500,
+    "z": 1
+  },
+  "square100": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square100",
+    "x": 380,
+    "y": 500,
+    "z": 1
+  },
+  "square101": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square101",
+    "x": 450,
+    "y": 500,
+    "z": 1
+  },
+  "square102": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square102",
+    "x": 520,
+    "y": 500,
+    "z": 1
+  },
+  "square103": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square103",
+    "x": 590,
+    "y": 500,
+    "z": 1
+  },
+  "square104": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square104",
+    "x": 660,
+    "y": 500,
+    "z": 1
+  },
+  "square105": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square105",
+    "x": 730,
+    "y": 500,
+    "z": 1
+  },
+  "square106": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square106",
+    "x": 800,
+    "y": 500,
+    "z": 1
+  },
+  "square107": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square107",
+    "x": 870,
+    "y": 500,
+    "z": 1
+  },
+  "square108": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square108",
+    "x": 940,
+    "y": 500,
+    "z": 1
+  },
+  "square109": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square109",
+    "x": 1010,
+    "y": 500,
+    "z": 1
+  },
+  "square110": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square110",
+    "x": 1080,
+    "y": 500,
+    "z": 1
+  },
+  "square111": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square111",
+    "x": 1150,
+    "y": 500,
+    "z": 1
+  },
+  "square112": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square112",
+    "x": 1220,
+    "y": 500,
+    "z": 1
+  },
+  "square113": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square113",
+    "x": 310,
+    "y": 570,
+    "z": 1
+  },
+  "square114": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square114",
+    "x": 380,
+    "y": 570,
+    "z": 1
+  },
+  "square115": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square115",
+    "x": 450,
+    "y": 570,
+    "z": 1
+  },
+  "square116": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square116",
+    "x": 520,
+    "y": 570,
+    "z": 1
+  },
+  "square117": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square117",
+    "x": 590,
+    "y": 570,
+    "z": 1
+  },
+  "square118": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square118",
+    "x": 660,
+    "y": 570,
+    "z": 1
+  },
+  "square119": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square119",
+    "x": 730,
+    "y": 570,
+    "z": 1
+  },
+  "square120": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square120",
+    "x": 800,
+    "y": 570,
+    "z": 1
+  },
+  "square121": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square121",
+    "x": 870,
+    "y": 570,
+    "z": 1
+  },
+  "square122": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square122",
+    "x": 940,
+    "y": 570,
+    "z": 1
+  },
+  "square123": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square123",
+    "x": 1010,
+    "y": 570,
+    "z": 1
+  },
+  "square124": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square124",
+    "x": 1080,
+    "y": 570,
+    "z": 1
+  },
+  "square125": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square125",
+    "x": 1150,
+    "y": 570,
+    "z": 1
+  },
+  "square126": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square126",
+    "x": 1220,
+    "y": 570,
+    "z": 1
+  },
+  "square127": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square127",
+    "x": 310,
+    "y": 640,
+    "z": 1
+  },
+  "square128": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square128",
+    "x": 380,
+    "y": 640,
+    "z": 1
+  },
+  "square129": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square129",
+    "x": 450,
+    "y": 640,
+    "z": 1
+  },
+  "square130": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square130",
+    "x": 520,
+    "y": 640,
+    "z": 1
+  },
+  "square131": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square131",
+    "x": 590,
+    "y": 640,
+    "z": 1
+  },
+  "square132": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square132",
+    "x": 660,
+    "y": 640,
+    "z": 1
+  },
+  "square133": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square133",
+    "x": 730,
+    "y": 640,
+    "z": 1
+  },
+  "square134": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square134",
+    "x": 800,
+    "y": 640,
+    "z": 1
+  },
+  "square135": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square135",
+    "x": 870,
+    "y": 640,
+    "z": 1
+  },
+  "square136": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square136",
+    "x": 940,
+    "y": 640,
+    "z": 1
+  },
+  "square137": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square137",
+    "x": 1010,
+    "y": 640,
+    "z": 1
+  },
+  "square138": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square138",
+    "x": 1080,
+    "y": 640,
+    "z": 1
+  },
+  "square139": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square139",
+    "x": 1150,
+    "y": 640,
+    "z": 1
+  },
+  "square140": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square140",
+    "x": 1220,
+    "y": 640,
+    "z": 1
+  },
+  "square141": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square141",
+    "x": 310,
+    "y": 710,
+    "z": 1
+  },
+  "square142": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square142",
+    "x": 380,
+    "y": 710,
+    "z": 1
+  },
+  "square143": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square143",
+    "x": 450,
+    "y": 710,
+    "z": 1
+  },
+  "square144": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square144",
+    "x": 520,
+    "y": 710,
+    "z": 1
+  },
+  "square145": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square145",
+    "x": 590,
+    "y": 710,
+    "z": 1
+  },
+  "square146": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square146",
+    "x": 660,
+    "y": 710,
+    "z": 1
+  },
+  "square147": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square147",
+    "x": 730,
+    "y": 710,
+    "z": 1
+  },
+  "square148": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square148",
+    "x": 800,
+    "y": 710,
+    "z": 1
+  },
+  "square149": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square149",
+    "x": 870,
+    "y": 710,
+    "z": 1
+  },
+  "square150": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square150",
+    "x": 940,
+    "y": 710,
+    "z": 1
+  },
+  "square151": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square151",
+    "x": 1010,
+    "y": 710,
+    "z": 1
+  },
+  "square152": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square152",
+    "x": 1080,
+    "y": 710,
+    "z": 1
+  },
+  "square153": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square153",
+    "x": 1150,
+    "y": 710,
+    "z": 1
+  },
+  "square154": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square154",
+    "x": 1220,
+    "y": 710,
+    "z": 1
+  },
+  "square155": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square155",
+    "x": 310,
+    "y": 780,
+    "z": 1
+  },
+  "square156": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square156",
+    "x": 380,
+    "y": 780,
+    "z": 1
+  },
+  "square157": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square157",
+    "x": 450,
+    "y": 780,
+    "z": 1
+  },
+  "square158": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square158",
+    "x": 520,
+    "y": 780,
+    "z": 1
+  },
+  "square159": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square159",
+    "x": 590,
+    "y": 780,
+    "z": 1
+  },
+  "square160": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square160",
+    "x": 660,
+    "y": 780,
+    "z": 1
+  },
+  "square161": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square161",
+    "x": 730,
+    "y": 780,
+    "z": 1
+  },
+  "square162": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square162",
+    "x": 800,
+    "y": 780,
+    "z": 1
+  },
+  "square163": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square163",
+    "x": 870,
+    "y": 780,
+    "z": 1
+  },
+  "square164": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square164",
+    "x": 940,
+    "y": 780,
+    "z": 1
+  },
+  "square165": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square165",
+    "x": 1010,
+    "y": 780,
+    "z": 1
+  },
+  "square166": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square166",
+    "x": 1080,
+    "y": 780,
+    "z": 1
+  },
+  "square167": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square167",
+    "x": 1150,
+    "y": 780,
+    "z": 1
+  },
+  "square168": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square168",
+    "x": 1220,
+    "y": 780,
+    "z": 1
+  },
+  "square169": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square169",
+    "x": 310,
+    "y": 850,
+    "z": 1
+  },
+  "square170": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square170",
+    "x": 380,
+    "y": 850,
+    "z": 1
+  },
+  "square171": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square171",
+    "x": 450,
+    "y": 850,
+    "z": 1
+  },
+  "square172": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square172",
+    "x": 520,
+    "y": 850,
+    "z": 1
+  },
+  "square173": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square173",
+    "x": 590,
+    "y": 850,
+    "z": 1
+  },
+  "square174": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square174",
+    "x": 660,
+    "y": 850,
+    "z": 1
+  },
+  "square175": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square175",
+    "x": 730,
+    "y": 850,
+    "z": 1
+  },
+  "square176": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square176",
+    "x": 800,
+    "y": 850,
+    "z": 1
+  },
+  "square177": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square177",
+    "x": 870,
+    "y": 850,
+    "z": 1
+  },
+  "square178": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square178",
+    "x": 940,
+    "y": 850,
+    "z": 1
+  },
+  "square179": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square179",
+    "x": 1010,
+    "y": 850,
+    "z": 1
+  },
+  "square180": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square180",
+    "x": 1080,
+    "y": 850,
+    "z": 1
+  },
+  "square181": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square181",
+    "x": 1150,
+    "y": 850,
+    "z": 1
+  },
+  "square182": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square182",
+    "x": 1220,
+    "y": 850,
+    "z": 1
+  },
+  "square183": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square183",
+    "x": 310,
+    "y": 920,
+    "z": 1
+  },
+  "square184": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square184",
+    "x": 380,
+    "y": 920,
+    "z": 1
+  },
+  "square185": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square185",
+    "x": 450,
+    "y": 920,
+    "z": 1
+  },
+  "square186": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square186",
+    "x": 520,
+    "y": 920,
+    "z": 1
+  },
+  "square187": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square187",
+    "x": 590,
+    "y": 920,
+    "z": 1
+  },
+  "square188": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square188",
+    "x": 660,
+    "y": 920,
+    "z": 1
+  },
+  "square189": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square189",
+    "x": 730,
+    "y": 920,
+    "z": 1
+  },
+  "square190": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square190",
+    "x": 800,
+    "y": 920,
+    "z": 1
+  },
+  "square191": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square191",
+    "x": 870,
+    "y": 920,
+    "z": 1
+  },
+  "square192": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square192",
+    "x": 940,
+    "y": 920,
+    "z": 1
+  },
+  "square193": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square193",
+    "x": 1010,
+    "y": 920,
+    "z": 1
+  },
+  "square194": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square194",
+    "x": 1080,
+    "y": 920,
+    "z": 1
+  },
+  "square195": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square195",
+    "x": 1150,
+    "y": 920,
+    "z": 1
+  },
+  "square196": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square196",
+    "x": 1220,
+    "y": 920,
+    "z": 1
+  },
+  "cow": {
+    "id": "cow",
+    "x": 770,
+    "y": 473,
+    "width": 56,
+    "height": 56,
+    "borderRadius": 100,
+    "z": 2,
+    "css": {
+      "border": "2px solid black",
+      "background": "lightgray",
+      "background-size": "contain",
+      "box-shadow": "2px 2px 2px black"
+    },
+    "image": "/assets/-1738502711_2343",
+    "piece": true,
+    "resetProperties": {
+      "parent": null,
+      "x": 770,
+      "y": 473,
+      "z": 2
+    }
+  },
+  "poop1": {
+    "id": "poop1",
+    "width": 56,
+    "height": 56,
+    "borderRadius": 100,
+    "z": 1,
+    "css": {
+      "border": "2px solid black",
+      "background": "#41280b",
+      "background-size": "contain",
+      "box-shadow": "2px 2px 2px black"
+    },
+    "image": "/assets/256008871_3150",
+    "piece": true,
+    "svgReplaces": {
+      "currentColor": "outlineColor"
+    },
+    "resetProperties": {
+      "parent": null,
+      "x": 770,
+      "y": 473,
+      "z": 1
+    },
+    "x": 770,
+    "y": 473,
+    "outlineColor": "white"
+  },
+  "chicken1": {
+    "id": "chicken1",
+    "x": 4,
+    "width": 56,
+    "height": 56,
+    "borderRadius": 100,
+    "z": 1,
+    "css": {
+      "border": "2px solid black",
+      "background": "${PROPERTY player1}",
+      "background-size": "contain",
+      "box-shadow": "2px 2px 2px black"
+    },
+    "image": "/assets/-2110476494_2560",
+    "piece": true,
+    "resetProperties": {
+      "parent": "square2",
+      "x": 4,
+      "y": 4
+    },
+    "svgReplaces": {
+      "currentColor": "outlineColor"
+    },
+    "outlineColor": "#000000",
+    "player1": "#999999",
+    "y": 4,
+    "parent": "square2"
+  },
+  "hay1": {
+    "id": "hay1",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "css": {
+      "border": "2px solid black",
+      "background": "${PROPERTY player1}",
+      "background-size": "contain",
+      "box-shadow": "2px 2px 2px black"
+    },
+    "image": "/assets/1569326218_2938",
+    "borderRadius": 4,
+    "scale": 0.94,
+    "resetProperties": {
+      "parent": "square20",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken1": [
+        "player1",
+        "piece",
+        "height",
+        "width",
+        "svgReplaces",
+        "outlineColor",
+        "player1"
+      ]
+    },
+    "parent": "square20"
+  },
+  "fence1": {
+    "id": "fence1",
+    "width": 12,
+    "height": 70,
+    "borderRadius": "3px",
+    "z": 1,
+    "css": {
+      "background": "${PROPERTY player3}"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "square7",
+    "x": -6,
+    "y": 0,
+    "inheritFrom": {
+      "chicken13": [
+        "player3"
+      ]
+    }
+  },
+  "backBorder": {
+    "id": "backBorder",
+    "x": 306,
+    "y": 6,
+    "width": 980,
+    "height": 980,
+    "borderRadius": 8,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "border": "4px solid #A0522D",
+      "box-shadow": "8px 8px 10px grey"
+    },
+    "z": 1
+  },
+  "fence2": {
+    "id": "fence2",
+    "width": 12,
+    "height": 70,
+    "borderRadius": "3px",
+    "z": 1,
+    "css": {
+      "background": "${PROPERTY player3}"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "square9",
+    "x": -6,
+    "y": 0,
+    "inheritFrom": {
+      "chicken13": [
+        "player3"
+      ]
+    }
+  },
+  "fence3": {
+    "id": "fence3",
+    "width": 70,
+    "height": 12,
+    "borderRadius": "3px",
+    "z": 1,
+    "css": {
+      "background": "${PROPERTY player4}"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "square98",
+    "y": -6,
+    "x": 0,
+    "inheritFrom": {
+      "chicken19": [
+        "player4"
+      ]
+    }
+  },
+  "fence4": {
+    "id": "fence4",
+    "width": 70,
+    "height": 12,
+    "borderRadius": "3px",
+    "z": 1,
+    "css": {
+      "background": "${PROPERTY player4}"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "square126",
+    "y": -6,
+    "x": 0,
+    "inheritFrom": {
+      "chicken19": [
+        "player4"
+      ]
+    }
+  },
+  "fence5": {
+    "id": "fence5",
+    "width": 12,
+    "height": 70,
+    "borderRadius": "3px",
+    "z": 1,
+    "css": {
+      "background": "${PROPERTY player1}"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "square191",
+    "x": -6,
+    "y": 0,
+    "inheritFrom": {
+      "chicken1": [
+        "player1"
+      ]
+    }
+  },
+  "fence6": {
+    "id": "fence6",
+    "width": 12,
+    "height": 70,
+    "borderRadius": "3px",
+    "z": 1,
+    "css": {
+      "background": "${PROPERTY player1}"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "square189",
+    "x": -6,
+    "y": 0,
+    "inheritFrom": {
+      "chicken1": [
+        "player1"
+      ]
+    }
+  },
+  "fence7": {
+    "id": "fence7",
+    "width": 70,
+    "height": 12,
+    "borderRadius": "3px",
+    "z": 1,
+    "css": {
+      "background": "${PROPERTY player2}"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "square113",
+    "y": -6,
+    "x": 0,
+    "inheritFrom": {
+      "chicken7": [
+        "player2"
+      ]
+    }
+  },
+  "fence8": {
+    "id": "fence8",
+    "width": 70,
+    "height": 12,
+    "borderRadius": "3px",
+    "z": 1,
+    "css": {
+      "background": "${PROPERTY player2}"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "square85",
+    "y": -6,
+    "x": 0,
+    "inheritFrom": {
+      "chicken7": [
+        "player2"
+      ]
+    }
+  },
+  "fence": {
+    "id": "fence",
+    "x": 730,
+    "y": 430,
+    "z": 1,
+    "css": {
+      "border": "20px solid #41280b"
+    },
+    "resetProperties": {
+      "parent": null,
+      "x": 730,
+      "y": 430
+    }
+  },
+  "hay2": {
+    "id": "hay2",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square23",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay1": [
+        "image",
+        "player1",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square23"
+  },
+  "hay3": {
+    "id": "hay3",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square149",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay1": [
+        "image",
+        "player1",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square149"
+  },
+  "hay4": {
+    "id": "hay4",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square146",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay1": [
+        "image",
+        "player1",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square146"
+  },
+  "chicken3": {
+    "id": "chicken3",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square6",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken1": [
+        "image",
+        "player1",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square6"
+  },
+  "chicken4": {
+    "id": "chicken4",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square9",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken1": [
+        "image",
+        "player1",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square9"
+  },
+  "chicken5": {
+    "id": "chicken5",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square11",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken1": [
+        "image",
+        "player1",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square11"
+  },
+  "chicken6": {
+    "id": "chicken6",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square13",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken1": [
+        "image",
+        "player1",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square13"
+  },
+  "chicken7": {
+    "id": "chicken7",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square28",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken1": [
+        "image",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces"
+      ]
+    },
+    "player2": "#999999",
+    "css": {
+      "border": "2px solid black",
+      "background": "${PROPERTY player2}",
+      "background-size": "contain",
+      "box-shadow": "2px 2px 2px black"
+    },
+    "z": 1,
+    "outlineColor": "#000000",
+    "parent": "square28"
+  },
+  "chicken9": {
+    "id": "chicken9",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square84",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken7": [
+        "image",
+        "player2",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square84"
+  },
+  "chicken10": {
+    "id": "chicken10",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square126",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken7": [
+        "image",
+        "player2",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square126"
+  },
+  "chicken11": {
+    "id": "chicken11",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square154",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken7": [
+        "image",
+        "player2",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square154"
+  },
+  "chicken12": {
+    "id": "chicken12",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square182",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken7": [
+        "image",
+        "player2",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square182"
+  },
+  "chicken13": {
+    "id": "chicken13",
+    "x": 4,
+    "y": 4,
+    "css": {
+      "border": "2px solid black",
+      "background": "${PROPERTY player3}",
+      "background-size": "contain",
+      "box-shadow": "2px 2px 2px black"
+    },
+    "resetProperties": {
+      "parent": "square195",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken1": [
+        "image",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces"
+      ]
+    },
+    "player3": "#999999",
+    "z": 1,
+    "outlineColor": "#000000",
+    "parent": "square195"
+  },
+  "chicken14": {
+    "id": "chicken14",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square193",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken13": [
+        "image",
+        "player3",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square193"
+  },
+  "chicken15": {
+    "id": "chicken15",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square191",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken13": [
+        "image",
+        "player3",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square191"
+  },
+  "chicken16": {
+    "id": "chicken16",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square188",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken13": [
+        "image",
+        "player3",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square188"
+  },
+  "chicken17": {
+    "id": "chicken17",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square186",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken13": [
+        "image",
+        "player3",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square186"
+  },
+  "chicken18": {
+    "id": "chicken18",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square184",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken13": [
+        "image",
+        "player3",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square184"
+  },
+  "chicken19": {
+    "id": "chicken19",
+    "x": 4,
+    "y": 4,
+    "css": {
+      "border": "2px solid black",
+      "background": "${PROPERTY player4}",
+      "background-size": "contain",
+      "box-shadow": "2px 2px 2px black"
+    },
+    "resetProperties": {
+      "parent": "square169",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken1": [
+        "image",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces"
+      ]
+    },
+    "player4": "#999999",
+    "z": 1,
+    "outlineColor": "#000000",
+    "parent": "square169"
+  },
+  "chicken20": {
+    "id": "chicken20",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square141",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken19": [
+        "image",
+        "player4",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square141"
+  },
+  "chicken21": {
+    "id": "chicken21",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square113",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken19": [
+        "image",
+        "player4",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square113"
+  },
+  "chicken22": {
+    "id": "chicken22",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square71",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken19": [
+        "image",
+        "player4",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square71"
+  },
+  "chicken23": {
+    "id": "chicken23",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square43",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken19": [
+        "image",
+        "player4",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square43"
+  },
+  "chicken24": {
+    "id": "chicken24",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square15",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken19": [
+        "image",
+        "player4",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square15"
+  },
+  "chicken2": {
+    "id": "chicken2",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "resetProperties": {
+      "parent": "square4",
+      "x": 4,
+      "y": 4
+    },
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "chicken1": [
+        "image",
+        "player1",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "player2": "#c03939",
+    "parent": "square4"
+  },
+  "chicken8": {
+    "id": "chicken8",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square56",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "chicken7": [
+        "image",
+        "player2",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square56"
+  },
+  "hay5": {
+    "id": "hay5",
+    "x": 4,
+    "y": 4,
+    "css": {
+      "border": "2px solid black",
+      "background": "${PROPERTY player2}",
+      "background-size": "contain",
+      "box-shadow": "2px 2px 2px black"
+    },
+    "resetProperties": {
+      "parent": "square83",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay1": [
+        "image",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "scale"
+      ],
+      "chicken7": [
+        "player2",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square83"
+  },
+  "hay6": {
+    "id": "hay6",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square125",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay5": [
+        "image",
+        "player2",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square125"
+  },
+  "hay7": {
+    "id": "hay7",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square116",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay5": [
+        "image",
+        "player2",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square116"
+  },
+  "hay8": {
+    "id": "hay8",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square74",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay5": [
+        "image",
+        "player2",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square74"
+  },
+  "hay9": {
+    "id": "hay9",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "css": {
+      "border": "2px solid black",
+      "background": "${PROPERTY player3}",
+      "background-size": "contain",
+      "box-shadow": "2px 2px 2px black"
+    },
+    "resetProperties": {
+      "parent": "square177",
+      "x": 4,
+      "y": 4
+    },
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "hay1": [
+        "image",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "scale"
+      ],
+      "chicken13": [
+        "player3",
+        "outlineColor"
+      ]
+    },
+    "parent": "square177"
+  },
+  "hay10": {
+    "id": "hay10",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square174",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay9": [
+        "image",
+        "player3",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square174"
+  },
+  "hay11": {
+    "id": "hay11",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square48",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay9": [
+        "image",
+        "player3",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square48"
+  },
+  "hay12": {
+    "id": "hay12",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square51",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay9": [
+        "image",
+        "player3",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square51"
+  },
+  "hay13": {
+    "id": "hay13",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "css": {
+      "border": "2px solid black",
+      "background": "${PROPERTY player4}",
+      "background-size": "contain",
+      "box-shadow": "2px 2px 2px black"
+    },
+    "resetProperties": {
+      "parent": "square114",
+      "x": 4,
+      "y": 4
+    },
+    "parent": "square114",
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "hay1": [
+        "image",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "svgReplaces",
+        "scale"
+      ],
+      "chicken19": [
+        "player4",
+        "outlineColor"
+      ]
+    }
+  },
+  "hay14": {
+    "id": "hay14",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square72",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay13": [
+        "image",
+        "player4",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square72"
+  },
+  "hay15": {
+    "id": "hay15",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square81",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay13": [
+        "image",
+        "player4",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square81"
+  },
+  "hay16": {
+    "id": "hay16",
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "square123",
+      "x": 4,
+      "y": 4
+    },
+    "inheritFrom": {
+      "hay13": [
+        "image",
+        "player4",
+        "css",
+        "piece",
+        "width",
+        "height",
+        "borderRadius",
+        "scale",
+        "svgReplaces",
+        "outlineColor"
+      ]
+    },
+    "z": 1,
+    "parent": "square123"
+  },
+  "c4kvC": {
+    "id": "c4kvC",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY hand OF $parent}",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "z": 1
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 139,
+    "y": 13,
+    "z": 1,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      "var outlineColor = colorContrast ${PROPERTY color} 0.6",
+      {
+        "func": "SET",
+        "collection": [
+          "chicken1"
+        ],
+        "property": "player1",
+        "value": "${PROPERTY color}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "chicken1"
+        ],
+        "property": "outlineColor",
+        "value": "${outlineColor}"
+      }
+    ],
+    "index": 2,
+    "turn": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 1430,
+    "y": 470,
+    "z": 1,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      "var outlineColor = colorContrast ${PROPERTY color} 0.6",
+      {
+        "func": "SET",
+        "collection": [
+          "chicken7"
+        ],
+        "property": "player2",
+        "value": "${PROPERTY color}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "chicken7"
+        ],
+        "property": "outlineColor",
+        "value": "${outlineColor}"
+      }
+    ],
+    "index": 2,
+    "turn": true
+  },
+  "c5kvC": {
+    "id": "c5kvC",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY hand OF $parent}",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "z": 1
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 1305,
+    "y": 929,
+    "z": 1,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      "var outlineColor = colorContrast ${PROPERTY color} 0.6",
+      {
+        "func": "SET",
+        "collection": [
+          "chicken13"
+        ],
+        "property": "player3",
+        "value": "${PROPERTY color}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "chicken13"
+        ],
+        "property": "outlineColor",
+        "value": "${outlineColor}"
+      }
+    ],
+    "index": 3
+  },
+  "c6kvC": {
+    "id": "c6kvC",
+    "parent": "seat3",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY hand OF $parent}",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "z": 1
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 15,
+    "y": 470,
+    "z": 1,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      "var outlineColor = colorContrast ${PROPERTY color} 0.6",
+      {
+        "func": "SET",
+        "collection": [
+          "chicken19"
+        ],
+        "property": "player4",
+        "value": "${PROPERTY color}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "chicken19"
+        ],
+        "property": "outlineColor",
+        "value": "${outlineColor}"
+      }
+    ],
+    "index": 4
+  },
+  "c7kvC": {
+    "id": "c7kvC",
+    "parent": "seat4",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY hand OF $parent}",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "z": 1
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1548,
+    "y": -1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "css": {
+      "font-size": "40px"
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to reset the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "poopDeckHolder"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "poopDeckRS"
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "daisyDeckHolder"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "daisyDeckRS"
+        ]
+      }
+    ]
+  },
+  "css": {
+    "id": "css",
+    "text": "CSS",
+    "css": {
+      "": {
+        "font-size": "20px",
+        "background": "white"
+      },
+      "_, .transition": {
+        "transition": "transform 250ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "z": 1,
+    "x": -138,
+    "y": 5
+  },
+  "dice1": {
+    "id": "dice1",
+    "x": 1330,
+    "y": 470,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "z": 1,
+    "css": {
+      "default": {
+        "font-family": "VTT-Symbols",
+        "font-size": "50px",
+        "color": "black",
+        "background-color": "white",
+        "border": "0.5px solid black"
+      }
+    },
+    "resetProperties": {
+      "x": 1330,
+      "y": 470,
+      "activeFace": 0,
+      "parent": null
+    },
+    "classes": "transition",
+    "faces": [
+      {
+        "image": "/assets/-1738502711_2343"
+      },
+      {
+        "image": "/assets/297240859_28866"
+      },
+      {
+        "image": "/i/icons/die_face_3.svg"
+      },
+      {
+        "image": "/i/icons/die_face_4.svg"
+      },
+      {
+        "image": "/i/icons/die_face_5.svg"
+      },
+      {
+        "image": "/i/icons/die_face_6.svg"
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "timer",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false
+  },
+  "timer1": {
+    "type": "timer",
+    "id": "timer1",
+    "parent": "dice1",
+    "fixedParent": true,
+    "scale": 0,
+    "z": 1,
+    "precision": 100,
+    "millisecondsChangeRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var check = ${PROPERTY milliseconds} / 100",
+      "var check = ${check} / 2",
+      "var round = ${check} floor",
+      "var isEven = ${check} == ${round}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "relation": ">=",
+        "operand2": 1000,
+        "thenRoutine": [
+          {
+            "func": "TIMER",
+            "timer": "${PROPERTY id}",
+            "mode": "reset"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${parent}"
+            ],
+            "property": "rotation",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${parent}"
+            ],
+            "property": "clickable",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "condition": "${isEven}",
+            "thenRoutine": [
+              "var random = randInt 15 65",
+              "var rotation = ${PROPERTY rotation OF $parent} + ${random}",
+              {
+                "func": "SET",
+                "collection": [
+                  "${parent}"
+                ],
+                "property": "rotation",
+                "value": "${rotation}"
+              }
+            ],
+            "elseRoutine": [
+              "var random = randInt 15 65",
+              "var rotation = ${PROPERTY rotation} - ${random}",
+              {
+                "func": "SET",
+                "collection": [
+                  "${parent}"
+                ],
+                "property": "rotation",
+                "value": "${rotation}"
+              },
+              "var random = randInt 0 5",
+              {
+                "func": "SET",
+                "collection": [
+                  "${parent}"
+                ],
+                "property": "activeFace",
+                "value": "${random}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "uu59": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ],
+    "x": 230,
+    "y": 470,
+    "z": 1,
+    "id": "uu59",
+    "width": 50,
+    "height": 50,
+    "text": "Turn"
+  },
+  "poop2": {
+    "inheritFrom": {
+      "poop1": [
+        "width",
+        "height",
+        "borderRadius",
+        "css",
+        "image",
+        "svgReplaces",
+        "outlineColor",
+        "piece"
+      ]
+    },
+    "id": "poop2",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "resetProperties": {
+      "parent": "poopHolder",
+      "x": 0,
+      "y": 0
+    },
+    "parent": "poopHolder"
+  },
+  "poopDeckHolder": {
+    "type": "holder",
+    "id": "poopDeckHolder",
+    "x": 1350,
+    "y": 78,
+    "z": 1,
+    "dropTarget": {
+      "deck": "poopDeck"
+    },
+    "width": 222,
+    "height": 336
+  },
+  "poopHolder": {
+    "type": "holder",
+    "id": "poopHolder",
+    "x": 1435,
+    "y": 8,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "z": 1,
+    "css": {
+      "background": "#715642"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "image": "/assets/256008871_3150"
+    }
+  },
+  "poop3": {
+    "inheritFrom": {
+      "poop1": [
+        "width",
+        "height",
+        "borderRadius",
+        "css",
+        "image",
+        "svgReplaces",
+        "outlineColor",
+        "piece"
+      ]
+    },
+    "id": "poop3",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "resetProperties": {
+      "parent": "poopHolder",
+      "x": 0,
+      "y": 0
+    },
+    "parent": "poopHolder"
+  },
+  "poop4": {
+    "inheritFrom": {
+      "poop1": [
+        "width",
+        "height",
+        "borderRadius",
+        "css",
+        "image",
+        "svgReplaces",
+        "outlineColor",
+        "piece"
+      ]
+    },
+    "id": "poop4",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "resetProperties": {
+      "parent": "poopHolder",
+      "x": 0,
+      "y": 0
+    },
+    "parent": "poopHolder"
+  },
+  "poop5": {
+    "inheritFrom": {
+      "poop1": [
+        "width",
+        "height",
+        "borderRadius",
+        "css",
+        "image",
+        "svgReplaces",
+        "outlineColor",
+        "piece"
+      ]
+    },
+    "id": "poop5",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "resetProperties": {
+      "parent": "poopHolder",
+      "x": 0,
+      "y": 0
+    },
+    "parent": "poopHolder"
+  },
+  "poop6": {
+    "inheritFrom": {
+      "poop1": [
+        "width",
+        "height",
+        "borderRadius",
+        "css",
+        "image",
+        "svgReplaces",
+        "outlineColor",
+        "piece"
+      ]
+    },
+    "id": "poop6",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "resetProperties": {
+      "parent": "poopHolder",
+      "x": 0,
+      "y": 0
+    },
+    "parent": "poopHolder"
+  },
+  "poop7": {
+    "inheritFrom": {
+      "poop1": [
+        "width",
+        "height",
+        "borderRadius",
+        "css",
+        "image",
+        "svgReplaces",
+        "outlineColor",
+        "piece"
+      ]
+    },
+    "id": "poop7",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "resetProperties": {
+      "parent": "poopHolder",
+      "x": 0,
+      "y": 0
+    },
+    "activeFace": 0,
+    "parent": "poopHolder"
+  },
+  "poop8": {
+    "inheritFrom": {
+      "poop1": [
+        "width",
+        "height",
+        "borderRadius",
+        "css",
+        "image",
+        "svgReplaces",
+        "outlineColor",
+        "piece"
+      ]
+    },
+    "id": "poop8",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "resetProperties": {
+      "parent": "poopHolder",
+      "x": 0,
+      "y": 0
+    },
+    "activeFace": 0,
+    "parent": "poopHolder"
+  },
+  "poopDeck": {
+    "type": "deck",
+    "id": "poopDeck",
+    "parent": "poopDeckHolder",
+    "x": 12,
+    "y": 41,
+    "z": 1,
+    "cardTypes": {
+      "1": {
+        "cardText": "Eww. This one wont go away. Keep this card until you would have drawn a daisy card, then use this one instead."
+      },
+      "2": {
+        "cardText": "You really shouldnt do that there. Place a poop in a space inside your goal gate."
+      },
+      "3": {
+        "cardText": "Your next turn? Gone. Lost. Forget about it. You dont have one."
+      },
+      "4": {
+        "cardText": "Take a chicken from the pen. Move it back to start. At least you get to choose which starting position."
+      },
+      "5": {
+        "cardText": "Bye, bye daisy. Shuffle your daisy card back into its deck. Its happier there."
+      },
+      "6": {
+        "cardText": "Lucky you? Your next turn is only 2 moves. Dont roll the dice and dont use the 2 to get a daisy card."
+      },
+      "7": {
+        "cardText": "Before their turn starts, the next player moves one of your chickens or haystacks 1 legal move. Maybe they will be nice."
+      },
+      "8": {
+        "cardText": "Was it really that good? Use the same dice result as the player before you."
+      },
+      "9": {
+        "cardText": "Your chickens got tired. On your next turn, you can only move your haystacks."
+      },
+      "10": {
+        "cardText": "Maybe they know better than you. Each opponent in clockwise order moves one of your chicken or haystacks 1 legal move."
+      },
+      "11": {
+        "cardText": "The good news is you move 3 on your next turn. The bad news is you have to draw another poop card."
+      },
+      "12": {
+        "cardText": "Do you know which end of the cow is which? Keep this card. Discard it instead of moving the cow the next time you could."
+      },
+      "13": {
+        "cardText": "Did you get lost in all the poop? Next turn, do not move any of your pieces forward."
+      },
+      "14": {
+        "cardText": "I hope you like the player who goes before you. Because they get to draw a daisy card. Guess who doesnt get one? You."
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "color": "#4c3108",
+            "width": 222,
+            "height": 336
+          },
+          {
+            "type": "image",
+            "x": 28,
+            "y": 42,
+            "width": 166,
+            "height": 252,
+            "color": "transparent",
+            "value": "/assets/1206683833_6045"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "color": "#4c3108",
+            "width": 222,
+            "height": 336
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 222,
+            "height": 336,
+            "color": "white",
+            "css": {
+              "text-align": "center",
+              "display": "flex",
+              "align-items": "center",
+              "font-size": "27px"
+            },
+            "dynamicProperties": {
+              "value": "cardText"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 222,
+      "height": 336,
+      "classes": "handwriting_casual_font"
+    }
+  },
+  "poopDeckRS": {
+    "type": "button",
+    "id": "poopDeckRS",
+    "parent": "poopDeckHolder",
+    "fixedParent": true,
+    "x": 50,
+    "y": 345,
+    "width": 122,
+    "height": 30,
+    "z": 1,
+    "movableInEdit": false,
+    "text": "Shuffle",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "starter1": {
+    "id": "starter1",
+    "x": 410,
+    "y": 10,
+    "width": 10,
+    "height": 10,
+    "borderRadius": 100,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "${PROPERTY player1}"
+    },
+    "inheritFrom": {
+      "chicken1": [
+        "player1"
+      ]
+    },
+    "svgReplaces": {
+      "currentColor": "outlineColor"
+    },
+    "layer": -3
+  },
+  "starter2": {
+    "inheritFrom": {
+      "starter1": "*"
+    },
+    "id": "starter2",
+    "x": 550,
+    "z": 1
+  },
+  "starter3": {
+    "inheritFrom": {
+      "starter1": "*"
+    },
+    "id": "starter3",
+    "x": 690,
+    "z": 1
+  },
+  "starter4": {
+    "inheritFrom": {
+      "starter1": "*"
+    },
+    "id": "starter4",
+    "x": 900,
+    "z": 1
+  },
+  "starter5": {
+    "inheritFrom": {
+      "starter1": "*"
+    },
+    "id": "starter5",
+    "x": 1040,
+    "z": 1
+  },
+  "starter6": {
+    "inheritFrom": {
+      "starter1": "*"
+    },
+    "id": "starter6",
+    "x": 1180,
+    "z": 1
+  },
+  "starter7": {
+    "inheritFrom": {
+      "chicken7": [
+        "player2"
+      ]
+    },
+    "id": "starter7",
+    "x": 1280,
+    "z": 1,
+    "y": 110,
+    "css": {
+      "background": "${PROPERTY player2}"
+    },
+    "svgReplaces": {
+      "currentColor": "outlineColor"
+    },
+    "width": 10,
+    "height": 10,
+    "borderRadius": 100,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "starter8": {
+    "inheritFrom": {
+      "starter7": "*"
+    },
+    "id": "starter8",
+    "y": 250,
+    "z": 1
+  },
+  "starter9": {
+    "inheritFrom": {
+      "starter7": "*"
+    },
+    "id": "starter9",
+    "y": 390,
+    "z": 1
+  },
+  "starter10": {
+    "inheritFrom": {
+      "starter7": "*"
+    },
+    "id": "starter10",
+    "y": 600,
+    "z": 1
+  },
+  "starter11": {
+    "inheritFrom": {
+      "starter7": "*"
+    },
+    "id": "starter11",
+    "y": 740,
+    "z": 1
+  },
+  "starter12": {
+    "inheritFrom": {
+      "starter7": "*"
+    },
+    "id": "starter12",
+    "y": 880,
+    "z": 1
+  },
+  "starter13": {
+    "id": "starter13",
+    "x": 1180,
+    "y": 980,
+    "width": 10,
+    "height": 10,
+    "borderRadius": 100,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "${PROPERTY player3}"
+    },
+    "inheritFrom": {
+      "chicken13": [
+        "player3"
+      ]
+    },
+    "svgReplaces": {
+      "currentColor": "outlineColor"
+    },
+    "layer": -3
+  },
+  "starter14": {
+    "inheritFrom": {
+      "starter13": "*"
+    },
+    "id": "starter14",
+    "x": 1040,
+    "z": 1
+  },
+  "starter15": {
+    "inheritFrom": {
+      "starter13": "*"
+    },
+    "id": "starter15",
+    "x": 900,
+    "z": 1
+  },
+  "starter16": {
+    "inheritFrom": {
+      "starter13": "*"
+    },
+    "id": "starter16",
+    "x": 690,
+    "z": 1
+  },
+  "starter17": {
+    "inheritFrom": {
+      "starter13": "*"
+    },
+    "id": "starter17",
+    "x": 550,
+    "z": 1
+  },
+  "starter18": {
+    "inheritFrom": {
+      "starter13": "*"
+    },
+    "id": "starter18",
+    "x": 410,
+    "z": 1
+  },
+  "starter19": {
+    "id": "starter19",
+    "x": 310,
+    "y": 880,
+    "width": 10,
+    "height": 10,
+    "borderRadius": 100,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "${PROPERTY player4}"
+    },
+    "inheritFrom": {
+      "chicken19": [
+        "player4"
+      ]
+    },
+    "svgReplaces": {
+      "currentColor": "outlineColor"
+    },
+    "layer": -3
+  },
+  "starter20": {
+    "inheritFrom": {
+      "starter19": "*"
+    },
+    "id": "starter20",
+    "y": 740,
+    "z": 1
+  },
+  "starter21": {
+    "inheritFrom": {
+      "starter19": "*"
+    },
+    "id": "starter21",
+    "y": 600,
+    "z": 1
+  },
+  "starter22": {
+    "inheritFrom": {
+      "starter19": "*"
+    },
+    "id": "starter22",
+    "y": 390,
+    "z": 1
+  },
+  "starter23": {
+    "inheritFrom": {
+      "starter22": "*"
+    },
+    "id": "starter23",
+    "y": 250,
+    "z": 1
+  },
+  "starter24": {
+    "inheritFrom": {
+      "starter22": "*"
+    },
+    "id": "starter24",
+    "y": 110,
+    "z": 1
+  },
+  "daisyDeckHolder": {
+    "type": "holder",
+    "id": "daisyDeckHolder",
+    "x": 50,
+    "y": 79,
+    "width": 222,
+    "height": 336,
+    "z": 1,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "daisyDeck": {
+    "type": "deck",
+    "id": "daisyDeck",
+    "parent": "daisyDeckHolder",
+    "x": 12,
+    "y": 41,
+    "z": 1,
+    "cardDefaults": {
+      "width": 222,
+      "height": 336,
+      "classes": "handwriting_casual_font"
+    },
+    "cardTypes": {
+      "1": {
+        "cardText": "Twice as much is twice as nice. Double your roll."
+      },
+      "2": {
+        "cardText": "They can fly? Fly over 1 chicken, haystack, or cow at any point in your turn as one of your moves."
+      },
+      "3": {
+        "cardText": "Get the shovel ready. After your move, relocate a poop to any open saure and roll again. No poop? No problem. Still roll again."
+      },
+      "4": {
+        "cardText": "You smell like a daisy. Cancel the effects of a poop. Or add 2 moves to your roll."
+      },
+      "5": {
+        "cardText": "Maybe they wont notice. Shuffle this card back into the deck and steal one from anybody. Or add 2 moves to your roll."
+      },
+      "6": {
+        "cardText": "Get out of my way! Move another players piece (chicken or haystack) 1 legal move any time during your turn."
+      },
+      "7": {
+        "cardText": "Poop-ray vision. Take the top 3 poop cards. Order then however you want and put them back on top."
+      },
+      "8": {
+        "cardText": "I dont want that poop. Shuffle the poop deck before drawing a card. Or add 2 moves to your roll."
+      },
+      "9": {
+        "cardText": "Fast forward. Move a chicken from start to finish. But not your last one. That would be too easy."
+      },
+      "10": {
+        "cardText": "The best gift ever. Use this card to force another player to draw a poop card."
+      },
+      "11": {
+        "cardText": "Slow and steady wins the race. If you have no chickens at the finish, take one from another players pen and put it on the board."
+      },
+      "12": {
+        "cardText": "Double your chances. Roll again. Choose the best one from the two rolls."
+      },
+      "13": {
+        "cardText": "Lets go cow tipping. Push the cow one space in the same direction after running into it."
+      },
+      "14": {
+        "cardText": "Mooove along. Move the cow as if you rolled a 1 in addition to your regular moves."
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "color": "#d29d70",
+            "width": 222,
+            "height": 336
+          },
+          {
+            "type": "image",
+            "x": 28,
+            "y": 42,
+            "width": 166,
+            "height": 252,
+            "color": "transparent",
+            "value": "/assets/297240859_28866"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "color": "#d29d70",
+            "width": 222,
+            "height": 336
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 222,
+            "height": 336,
+            "color": "black",
+            "css": {
+              "text-align": "center",
+              "display": "flex",
+              "align-items": "center",
+              "font-size": "27px"
+            },
+            "dynamicProperties": {
+              "value": "cardText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 0,
+    "childrenPerOwner": true,
+    "x": 50,
+    "y": 575,
+    "width": 222,
+    "height": 336,
+    "id": "hand",
+    "z": 1,
+    "dropOffsetY": 0
+  },
+  "handPoop": {
+    "type": "holder",
+    "id": "handPoop",
+    "x": 1350,
+    "y": 575,
+    "width": 222,
+    "height": 336,
+    "z": 1,
+    "childrenPerOwner": true,
+    "dropOffsetX": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetY": 0
+  },
+  "daisyDeckRS": {
+    "type": "button",
+    "id": "daisyDeckRS",
+    "parent": "daisyDeckHolder",
+    "fixedParent": true,
+    "x": 50,
+    "y": 345,
+    "width": 122,
+    "height": 30,
+    "z": 1,
+    "movableInEdit": false,
+    "text": "Shuffle",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "neyh": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "1",
+    "id": "neyh",
+    "z": 859,
+    "parent": "nojs"
+  },
+  "vqas": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "2",
+    "id": "vqas",
+    "z": 857,
+    "parent": "nojs"
+  },
+  "h9be": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "3",
+    "id": "h9be",
+    "z": 854,
+    "parent": "nojs"
+  },
+  "hod4": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "4",
+    "id": "hod4",
+    "z": 853,
+    "parent": "nojs"
+  },
+  "4sot": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "5",
+    "id": "4sot",
+    "z": 852,
+    "parent": "nojs"
+  },
+  "xaes": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "xaes",
+    "z": 844,
+    "parent": "nojs"
+  },
+  "tck5": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "7",
+    "id": "tck5",
+    "z": 863,
+    "parent": "nojs"
+  },
+  "e87h": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "8",
+    "id": "e87h",
+    "z": 862,
+    "parent": "nojs"
+  },
+  "0tuu": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "9",
+    "id": "0tuu",
+    "z": 864,
+    "parent": "nojs"
+  },
+  "m0f4": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "10",
+    "id": "m0f4",
+    "z": 860,
+    "parent": "nojs"
+  },
+  "op0s": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "11",
+    "id": "op0s",
+    "z": 841,
+    "parent": "nojs"
+  },
+  "7t02": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "12",
+    "id": "7t02",
+    "z": 851,
+    "parent": "nojs"
+  },
+  "8dep": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "13",
+    "id": "8dep",
+    "z": 858,
+    "parent": "nojs"
+  },
+  "htot": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "14",
+    "id": "htot",
+    "z": 861,
+    "parent": "nojs"
+  },
+  "nojs": {
+    "type": "pile",
+    "parent": "daisyDeckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 222,
+    "height": 336,
+    "id": "nojs"
+  },
+  "5pg6": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "1",
+    "id": "5pg6",
+    "z": 840,
+    "parent": "nojs"
+  },
+  "whmj": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "2",
+    "id": "whmj",
+    "z": 842,
+    "parent": "nojs"
+  },
+  "rm63": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "3",
+    "id": "rm63",
+    "z": 843,
+    "parent": "nojs"
+  },
+  "92zt": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "4",
+    "id": "92zt",
+    "z": 856,
+    "parent": "nojs"
+  },
+  "vu7l": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "5",
+    "id": "vu7l",
+    "z": 846,
+    "parent": "nojs"
+  },
+  "8iga": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "8iga",
+    "z": 845,
+    "parent": "nojs"
+  },
+  "ebqj": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "7",
+    "id": "ebqj",
+    "z": 866,
+    "parent": "nojs"
+  },
+  "gmky": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "8",
+    "id": "gmky",
+    "z": 850,
+    "parent": "nojs"
+  },
+  "lbtp": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "9",
+    "id": "lbtp",
+    "z": 847,
+    "parent": "nojs"
+  },
+  "5abx": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "10",
+    "id": "5abx",
+    "z": 849,
+    "parent": "nojs"
+  },
+  "zt2f": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "11",
+    "id": "zt2f",
+    "z": 865,
+    "parent": "nojs"
+  },
+  "9r57": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "12",
+    "id": "9r57",
+    "z": 848,
+    "parent": "nojs"
+  },
+  "izca": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "13",
+    "id": "izca",
+    "z": 867,
+    "parent": "nojs"
+  },
+  "lz1d": {
+    "deck": "daisyDeck",
+    "type": "card",
+    "cardType": "14",
+    "id": "lz1d",
+    "z": 855,
+    "parent": "nojs"
+  },
+  "n5fx": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "1",
+    "id": "n5fx",
+    "z": 921,
+    "parent": "0a4e"
+  },
+  "xf2c": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "2",
+    "id": "xf2c",
+    "z": 907,
+    "parent": "0a4e"
+  },
+  "hfrx": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "3",
+    "id": "hfrx",
+    "z": 923,
+    "parent": "0a4e"
+  },
+  "iq98": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "4",
+    "id": "iq98",
+    "z": 906,
+    "parent": "0a4e"
+  },
+  "v02x": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "5",
+    "id": "v02x",
+    "z": 908,
+    "parent": "0a4e"
+  },
+  "9jg2": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "9jg2",
+    "z": 905,
+    "parent": "0a4e"
+  },
+  "cq8s": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "7",
+    "id": "cq8s",
+    "z": 922,
+    "parent": "0a4e"
+  },
+  "lbaz": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "8",
+    "id": "lbaz",
+    "z": 901,
+    "parent": "0a4e"
+  },
+  "g1tq": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "9",
+    "id": "g1tq",
+    "z": 903,
+    "parent": "0a4e"
+  },
+  "ndzn": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "10",
+    "id": "ndzn",
+    "z": 916,
+    "parent": "0a4e"
+  },
+  "su6y": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "11",
+    "id": "su6y",
+    "z": 904,
+    "parent": "0a4e"
+  },
+  "0s0s": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "12",
+    "id": "0s0s",
+    "z": 900,
+    "parent": "0a4e"
+  },
+  "wbhj": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "13",
+    "id": "wbhj",
+    "z": 896,
+    "parent": "0a4e"
+  },
+  "pnto": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "14",
+    "id": "pnto",
+    "z": 902,
+    "parent": "0a4e"
+  },
+  "0a4e": {
+    "type": "pile",
+    "parent": "poopDeckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 222,
+    "height": 336,
+    "id": "0a4e"
+  },
+  "syyi": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "1",
+    "id": "syyi",
+    "z": 913,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "y4ul": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "2",
+    "id": "y4ul",
+    "z": 917,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "puih": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "3",
+    "id": "puih",
+    "z": 919,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "zqjh": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "4",
+    "id": "zqjh",
+    "z": 914,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "eo86": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "5",
+    "id": "eo86",
+    "z": 899,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "3co6": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "3co6",
+    "z": 898,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "t1d5": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "7",
+    "id": "t1d5",
+    "z": 915,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "6bb0": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "8",
+    "id": "6bb0",
+    "z": 897,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "ur5r": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "9",
+    "id": "ur5r",
+    "z": 912,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "ri3x": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "10",
+    "id": "ri3x",
+    "z": 920,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "cp89": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "11",
+    "id": "cp89",
+    "z": 910,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "l3ox": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "12",
+    "id": "l3ox",
+    "z": 911,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "zui1": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "13",
+    "id": "zui1",
+    "z": 918,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  },
+  "8bk1": {
+    "deck": "poopDeck",
+    "type": "card",
+    "cardType": "14",
+    "id": "8bk1",
+    "z": 909,
+    "parent": "0a4e",
+    "x": null,
+    "y": null
+  }
+}
