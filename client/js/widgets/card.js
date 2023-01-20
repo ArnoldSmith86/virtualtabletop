@@ -101,7 +101,7 @@ class Card extends Widget {
 
       faceDiv.classList.add('cardFace');
       if(face.css !== undefined)
-        faceDiv.style.cssText = mapAssetURLs(this.cssAsText(face.css,true));
+        faceDiv.style.cssText = mapAssetURLs(this.cssAsText(face.css,null,true));
       if(face.classes !== undefined)
         faceDiv.classList.add(face.classes);
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
