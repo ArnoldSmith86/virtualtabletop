@@ -553,12 +553,20 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Example: Moving Widget",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1625237253000
+      "lastUpdate": 1625237253000,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Example: Moving Widget",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "arrayText": {
