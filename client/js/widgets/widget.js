@@ -1947,7 +1947,7 @@ export class Widget extends StateManaged {
       }
 
       // If we currently have a shadow widget, position it and place it in the holder.
-      if (this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
+      if (this.hoverTarget && this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
         const shadowWidget = widgets.get(this.get('dropShadowWidget'));
         const globalPoint = {x: this.get('x'), y: this.get('y'), z: this.get('z')};
         const shadowParentId = shadowWidget.get('parent');
