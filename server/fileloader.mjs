@@ -80,7 +80,7 @@ function checkForLinkToOwnServer(link) {
     const m = sharedLinks[match[1]].split('/');
 
     const states = {};
-    states['VTT'] = [];
+    states[m[3]] = [];
 
     const room = JSON.parse(fs.readFileSync(Config.directory('save') + '/rooms/' + m[2] + '.json'));
 
@@ -90,12 +90,12 @@ function checkForLinkToOwnServer(link) {
     for(const [ i, variant ] of Object.entries(room._meta.states[m[3]].variants)) {
       const info = Object.assign({...room._meta.states[m[3]]}, variant);
       if(variant.link || variant.plStateID) {
-        states['VTT'].push({ _meta: { version: 8, info } });
+        states[m[3]].push({ _meta: { version: 8, info } });
       } else {
-        states['VTT'].push(JSON.parse(fs.readFileSync(Config.directory('save') + `/states/${m[2]}-${m[3]}-${i}.json`)));
-        states['VTT'][i]._meta = { version: states['VTT'][i]._meta.version, info };
+        states[m[3]].push(JSON.parse(fs.readFileSync(Config.directory('save') + `/states/${m[2]}-${m[3]}-${i}.json`)));
+        states[m[3]][i]._meta = { version: states[m[3]][i]._meta.version, info };
       }
-      delete states['VTT'][i]._meta.info.variants;
+      delete states[m[3]][i]._meta.info.variants;
     }
 
     return states;
@@ -118,10 +118,6 @@ async function readStatesFromLink(linkAndPath, includeVariantNameList) {
       delete states._variantNameList;
     return states;
   }
-
-  // if the state ID isn't in there but there is only one state, use that instead
-  if(!states[path[0]] && Object.keys(states).length == 1)
-    path[0] = Object.keys(states)[0];
 
   if(path.length == 1) {
     const returnStates = {};
