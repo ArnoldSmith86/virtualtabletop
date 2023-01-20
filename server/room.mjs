@@ -635,10 +635,13 @@ export default class Room {
     // Remove shadow from actively dragged widget in the case of a conflict.
     for (let widgetID in this.state) {
       if (this.state[widgetID].dropShadowOwner == player.name) {
+        const clonedFrom = this.state[widgetID].clonedFrom;
         serverDelta.s[widgetID] = null;
-        serverDelta.s[clonedFrom] = {
-          dropShadowWidget: null
-        };
+        if (clonedFrom) {
+          serverDelta.s[clonedFrom] = {
+            dropShadowWidget: null
+          };
+        }
         changed = true;
       }
     }
