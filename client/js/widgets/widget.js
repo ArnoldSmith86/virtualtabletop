@@ -1935,16 +1935,15 @@ export class Widget extends StateManaged {
           await this.checkParent(true);
 
         // When the hover target changes we may need to create or remove the shadow widget.
-        if (!this.hoverTarget || !this.hoverTarget.get('dropShadow'))
+        // Only create a shadow widget if the holder is shared and doesn't already have one in it.
+        // Multiple shadows being positioned in the same holder can lead to conflicting updates.
+        if (!this.get('dropShadowWidget') && this.hoverTarget && this.hoverTarget.get('dropShadow') &&
+            (this.hoverTarget.get('childrenPerOwner') ||
+            this.hoverTarget.children().filter(c => c.get('dropShadowClone')).length == 0)) {
+          await this.createShadowWidget();
+        } else if (!this.hoverTarget || !this.hoverTarget.get('dropShadow')) {
           await this.hideShadowWidget();
-      }
-
-      // Only create a shadow widget if the holder is shared and doesn't already have one in it.
-      // Multiple shadows being positioned in the same holder can lead to conflicting updates.
-      if (!this.get('dropShadowWidget') && this.hoverTarget && this.hoverTarget.get('dropShadow') &&
-          (this.hoverTarget.get('childrenPerOwner') ||
-           this.hoverTarget.children().filter(c => c.get('dropShadowClone')).length == 0)) {
-        await this.createShadowWidget();
+        }
       }
 
       // If we currently have a shadow widget, position it and place it in the holder.
