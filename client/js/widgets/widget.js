@@ -1346,7 +1346,7 @@ export class Widget extends StateManaged {
           problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           a.mode = 'set'
         }
-        
+
         if(a.value === null)
           a.value = a.mode=='set' ? 0 : 1;
         if(isNaN(parseFloat(a.value))) {
@@ -1835,13 +1835,13 @@ export class Widget extends StateManaged {
 
   async move(coordGlobal, localAnchor) {
     const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
-    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), this.coordParentFromCoordLocal({x: 0, y: 0}));
     let newX = Math.round(coordParent.x + offset.x);
     let newY = Math.round(coordParent.y + offset.y);
 
     //Keeps widget's top left corner within coordinates set by dragLimit object
     const limit = this.get('dragLimit');
- 
+
     if (limit.minX !== undefined) {
       newX = Math.max(limit.minX, newX);
     }
