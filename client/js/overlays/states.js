@@ -490,9 +490,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
           fillStateDetails(states, state, entry);
       });
       $('.star', entry).addEventListener('click', function(e) {
+        e.target.disabled = true;
         entry.dataset.stars = +entry.dataset.stars + (state.starred ? -1 : 1);
         if($('#stateDetailsOverlay').dataset.id == state.id) {
-          $('#stateDetailsOverlay [data-field=stars]').innerText = entry.dataset.stars;
+          $('#stateDetailsOverlay [data-field=stars]').innerText = +entry.dataset.stars || '';
           toggleClass($('#stateDetailsOverlay .star'), 'active', !state.starred);
         }
         toggleStateStar(state, entry);

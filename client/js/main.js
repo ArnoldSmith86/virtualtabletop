@@ -118,7 +118,9 @@ function checkURLproperties(connected) {
     try {
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
-        if(playerParams) {
+        if(location.hash == '#tutorials') {
+          $('#filterByType').value = 'Tutorials';
+        } else if(playerParams) {
           urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
         } else {
           urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
