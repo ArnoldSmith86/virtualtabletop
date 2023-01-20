@@ -66,7 +66,7 @@ export class Widget extends StateManaged {
       dragging: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
-      dropShadowClone: false,
+      dropShadowOwner: null,
       dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
@@ -347,7 +347,7 @@ export class Widget extends StateManaged {
       className += ' dragging';
     if(this.get('dragging') == playerName)
       className += ' draggingSelf';
-    if (this.get('dropShadowClone'))
+    if (this.get('dropShadowOwner'))
       className += ' dragging-shadow';
 
     if(this.isHighlighted)
@@ -357,7 +357,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'dropShadowClone', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -453,7 +453,7 @@ export class Widget extends StateManaged {
       return null;
     await this.set('dropShadowWidget', (await shadowWidget.clone({
         'movable': false,
-        'dropShadowClone': true,
+        'dropShadowOwner': playerName,
         'parent': null}, true)).get('id'));
   }
 
@@ -1939,7 +1939,7 @@ export class Widget extends StateManaged {
         // Multiple shadows being positioned in the same holder can lead to conflicting updates.
         if (!this.get('dropShadowWidget') && this.hoverTarget && this.hoverTarget.get('dropShadow') &&
             (this.hoverTarget.get('childrenPerOwner') ||
-            this.hoverTarget.children().filter(c => c.get('dropShadowClone')).length == 0)) {
+             this.hoverTarget.children().filter(c => c.get('dropShadowOwner') != null).length == 0)) {
           await this.createShadowWidget();
         } else if (!this.hoverTarget || !this.hoverTarget.get('dropShadow')) {
           await this.hideShadowWidget();
@@ -2273,7 +2273,7 @@ export class Widget extends StateManaged {
       return;
 
     const thisParent = this.get('parent');
-    if(this.isBeingRemoved || this.get('dropShadowClone') || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
+    if(this.isBeingRemoved || this.get('dropShadowOwner') || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
       return;
 
     const thisX = this.get('x');
@@ -2289,7 +2289,7 @@ export class Widget extends StateManaged {
 
       // check if this widget is closer than 10px from another widget in the same parent
       if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
-        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowClone') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
+        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowOwner') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
