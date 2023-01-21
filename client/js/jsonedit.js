@@ -39,23 +39,39 @@ const jeMacroPreset = `
 // EXAMPLES
 
 // add a property to all cards of a deck
-// if(w.deck == "deckName")
-//   w.customVariable = true;
+/*
+if(w.deck == "deckName")
+  w.customVariable = true;
+*/
 
 // change ID of matching widgets
-// var match = w.id.match(/^Player 3 - ((First|Second).*)$/)
-// if(match)
-//   w.id = "Player 5 - "+match[1]
+/*
+var match = w.id.match(/^Player 3 - ((First|Second).*)$/)
+if(match)
+  w.id = "Player 5 - "+match[1]
+*/
 
 // move matching widgets to the left
-// if(w.id.match(/^Player [13] - (Score|Seat)/))
-//   w.x -= 20;
+/*
+if(w.id.match(/^Player [13] - (Score|Seat)/))
+  w.x -= 20;
+*/
 
 // change all widget IDs to a counter prefixed by "w"
-// if(!v.i)
-//   v.i = 1
-// w.id = "w"+v.i
-// v.i++
+/*
+if(!v.i)
+  v.i = 1
+w.id = "w"+v.i
+v.i++
+*/
+
+// Adds pseudo players to seats
+/*
+if (w.type=="seat" && w.player==null) {
+  w.player = "player " + (w.index||1)
+  w.color = "hsl("+Math.floor(Math.random() * 360)+", 100%, 50%)"
+}
+*/
 `;
 
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
@@ -397,6 +413,140 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_exportCSV',
+    name: 'export to CSV',
+    options: [
+      { label: 'separator',    type: 'select',    options: [ { value: ',', text: ',' }, { value: ';', text: ';' } ] }
+    ],
+    context: '^deck ↦ cardTypes',
+    call: async function(options) {
+
+      function downloadCSV(csv, filename) {
+        const csvFile = new Blob([csv], {type:"text/csv"});
+        const downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        downloadLink.remove();
+      }
+
+      function escapeField(v) {
+        if(v === undefined)
+          return '';
+        if(typeof v == 'number')
+          return v.toString();
+
+        return typeof v == 'string' && !v.match(/^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$|^JSON:/) ? `"${v.replace(/"/g, '""')}"` : `"JSON:${JSON.stringify(v).replace(/"/g, '""')}"`;
+      }
+
+      const allProperties = [...new Set(Object.values(jeStateNow.cardTypes).reduce((a,t)=>a.concat(...Object.keys(t)), []))];
+      let csvText = `id::INTERNAL${options["separator"]}${allProperties.map(escapeField).join(options["separator"])}${options["separator"]}cardCount::INTERNAL\n`;
+      for(const [ id, type ] of Object.entries(jeStateNow.cardTypes)) {
+        const cardCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
+        csvText += `${escapeField(id)}${options["separator"]}${allProperties.map(p=>escapeField(type[p])).join(options["separator"])}${options["separator"]}${cardCount}\n`;
+      }
+      downloadCSV(csvText, `${jeStateNow.id} cardTypes.csv`);
+    }
+  },
+  {
+    id: 'je_importCSV',
+    name: 'import from CSV',
+    options: [
+      { label: 'mode',    type: 'select',    options: [ { value: 'set', text: 'set' }, { value: 'add', text: 'add' } ] }
+    ],
+    context: '^deck ↦ cardTypes',
+    call: async function(options) {
+
+      let csv = await selectFile('TEXT')
+
+      //source : https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data/41563966#41563966
+
+      function csvToArray(text, delimiter) {
+        let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
+        for (l of text) {
+            if ('"' === l) {
+                if (s && l === p) row[i] += l;
+                s = !s;
+            } else if (delimiter === l && s) l = row[++i] = '';
+            else if ('\n' === l && s) {
+                if ('\r' === p) row[i] = row[i].slice(0, -1);
+                row = ret[++r] = [l = '']; i = 0;
+            } else row[i] += l;
+            p = l;
+        }
+        return ret;
+      };
+
+      function unescapeField(v) {
+        try {
+          if(v.match(/^JSON:/))
+            return JSON.parse(v.substr(5));
+          else if(v && v.match(/^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$/))
+            return parseFloat(v);
+          else if(v)
+            return v;
+        } catch(e) {
+          return e.toString();
+        }
+      }
+
+      const oldCardTypeIDs = Object.keys(jeStateNow.cardTypes);
+
+      if(options["mode"]== "set")
+        jeStateNow.cardTypes = {};
+
+      const lines=csvToArray(csv.content, csv.content.split(';').length > csv.content.split(',').length ? ';' : ',');
+      const headers=lines[0].map(unescapeField);
+      const targetCounts = {};
+
+      for(let i=1;i<lines.length;i++){
+
+        const obj = {};
+        const currentline=lines[i]
+
+        if(lines[i].length == 1 && !lines[i][0])
+          continue;
+
+        for(let j=0;j<Math.min(headers.length, currentline.length);j++)
+          obj[headers[j]] = unescapeField(currentline[j]);
+
+        const cardTypeID = obj['id::INTERNAL'] || generateUniqueWidgetID();
+        delete obj['id::INTERNAL'];
+
+        targetCounts[cardTypeID] = obj['cardCount::INTERNAL'];
+        delete obj['cardCount::INTERNAL'];
+
+        jeStateNow.cardTypes[cardTypeID] = obj;
+      }
+
+      batchStart();
+
+      for(const oldID of oldCardTypeIDs)
+        if(!jeStateNow.cardTypes[oldID])
+          for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==oldID))
+            await removeWidgetLocal(card.get('id'));
+
+      jeSetAndSelect();
+      jeApplyChanges();
+
+      for(const [ id, targetCount ] of Object.entries(targetCounts)) {
+        const currentCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
+        for(let i=0; i<targetCount-currentCount; ++i) {
+          const cardId = await addWidgetLocal({ deck:jeStateNow.id, type:'card', cardType:id });
+          if(jeStateNow.parent)
+            await widgets.get(cardId).moveToHolder(widgets.get(jeStateNow.parent));
+        }
+        for(let i=0; i<currentCount-targetCount; ++i) {
+          const card = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id)[0];
+          await removeWidgetLocal(card.get('id'));
+        }
+      }
+
+      batchEnd();
+    }
+  },
+  {
     id: 'je_faceTemplate',
     name: 'face template',
     context: '^deck ↦ faceTemplates',
@@ -708,7 +858,6 @@ function jeAddRoutineOperationCommands(command, defaults) {
     show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
   });
 
-  defaults.skip = false;
   for(const property in defaults) {
     jeCommands.push({
       id: 'default_' + command + '_' + property,
@@ -745,6 +894,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Seat()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
@@ -753,19 +903,20 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
-  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
+  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
   jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "OK", fields: [] } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
-  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###'});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
@@ -786,11 +937,21 @@ function jeAddCommands() {
 
   jeAddGridCommand('x', 0);
   jeAddGridCommand('y', 0);
+  jeAddGridCommand('maxX', 0);
+  jeAddGridCommand('maxY', 0);
   jeAddGridCommand('minX', 0);
   jeAddGridCommand('minY', 0);
+  jeAddGridCommand('alignX', 0);
+  jeAddGridCommand('alignY', 0);
   jeAddGridCommand('offsetX', 0);
   jeAddGridCommand('offsetY', 0);
   jeAddGridCommand('rotation', 0);
+
+  jeAddLimitCommand('minX', 0);
+  jeAddLimitCommand('minY', 0);
+  // Default max limits are computed dynamically.
+  jeAddLimitCommand('maxX');
+  jeAddLimitCommand('maxY');
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
   jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
@@ -815,6 +976,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
+  jeAddEnumCommands('^.*\\(SCORE\\) ↦ mode', [ 'set', 'inc', 'dec' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add', 'remove', 'intersect' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
@@ -827,6 +989,8 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ collection', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
+  jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
+  jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
@@ -1063,6 +1227,25 @@ function jeAddGridCommand(key, value) {
     call: async function() {
       jeStateNow.grid[+jeContext[2]][key] = '###SELECT ME###';
       jeSetAndSelect(value);
+    }
+  });
+}
+
+function jeAddLimitCommand(key, value) {
+  jeCommands.push({
+    id: 'limit_' + key,
+    name: key,
+    context: '^[^ ]* ↦ dragLimit',
+    show: _=>!(key in jeStateNow.dragLimit),
+    call: async function() {
+      const w = widgets.get(jeStateNow.id);
+      jeStateNow.dragLimit[key] = '###SELECT ME###';
+      let limit = value;
+      if (key == 'maxX')
+        limit = 1600 - w.get('width');
+      else if (key == 'maxY')
+        limit = 1000 - w.get('height');
+      jeSetAndSelect(limit);
     }
   });
 }
@@ -1827,8 +2010,8 @@ function jeLoggingRoutineEnd(variables, collections) {
     const problems = document.getElementsByClassName('jeLogHasProblems');
     for (i=0; i<problems.length; i++) {
       let node = problems[i];
-      while (node && !node.classList.contains('jeLog')) {
-        if(node.classList.contains('jeLogOperation')) {
+      while (node && node.id != 'jeLog') {
+        if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
           node.firstElementChild.classList.remove('jeExpander');
           node.firstElementChild.classList.add('jeRedExpander')
         }
@@ -1893,7 +2076,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 
   jeLoggingHTML =  `
     ${savedHTML[0]}
-    <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
+    <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
       <div class="jeExpander">
         <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
       </div>
@@ -2196,9 +2379,14 @@ function jeToggle() {
   jeRoutineLogging = jeEnabled;
   jeLoggingHTML = '';
   if(jeEnabled) {
+    $('#activeGameButton').click();
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
       jeEmpty();
+    if(jeDebugViewing) {
+      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
+      jeShowCommands()
+    }
     jeDisplayTree();
   } else {
     $('body').classList.remove('jsonEdit');

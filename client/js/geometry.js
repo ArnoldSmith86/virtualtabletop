@@ -18,12 +18,97 @@ export function getOffset(origin, target) {
   return {x: target.x - origin.x, y: target.y - origin.y}
 }
 
-export function applyTransformedOffset(origin, offset, scale, rotation) {
-  if(rotation % 360 == 0) {
-    return {x: origin.x + offset.x * scale, y: origin.y + offset.y * scale}
-  } else {
-    const dist = distance({x:0,y:0},offset) * scale;
-    const angle = Math.atan2(offset.y ,offset.x) + rotation * Math.PI / 180;
-    return {x: origin.x + dist * Math.cos(angle), y: origin.y + dist * Math.sin(angle)};
+export function getScreenTransform(elem) {
+  let transform = new DOMMatrix();
+  let t = new DOMPoint(10, 10);
+  while (elem) {
+    transform.preMultiplySelf(getElementTransform(elem));
+    elem = elem.offsetParent;
   }
+  return transform;
+}
+
+function parseLengths(str) {
+  return str.split(' ').map(s => parseFloat(s))
+}
+
+export function dehomogenize(point) {
+  return new DOMPoint(point.x / point.w, point.y / point.w, point.z / point.w);
+}
+
+export function getPointOnPlane(transform, x, y) {
+  const inv = transform.inverse();
+  // If the transform is not invertible, the inverse will be all NaNs.
+  if (isNaN(inv.a))
+    return null;
+  const p0 = dehomogenize(inv.transformPoint(new DOMPoint(x, y, 0)));
+  // Get transformed direction vector of ray in (0, 0, 1) direction.
+  let dir = dehomogenize(inv.transformPoint(new DOMPoint(x, y, 1)));
+  dir.x -= p0.x;
+  dir.y -= p0.y;
+  dir.z -= p0.z;
+  // If the projected line is parallel with the plane, no intersection point can be determined.
+  if (dir.z == 0)
+    return null;
+  // Find point of intersection with plane.
+  const t = -p0.z / dir.z;
+  return new DOMPoint(p0.x + dir.x * t, p0.y + dir.y * t, p0.z + dir.z * t);
+}
+
+export function getElementTransform(elem) {
+  let transform = new DOMMatrix();
+  const computedStyle = getComputedStyle(elem);
+  const computedPerspective = computedStyle.perspective;
+  if (computedPerspective != 'none' && computedPerspective != '0px') {
+    const perspective = parseFloat(computedPerspective);
+    const perspectiveOrigin = parseLengths(computedStyle.perspectiveOrigin);
+    // From https://w3c.github.io/csswg-drafts/css-transforms-2/#PerspectiveDefined
+    transform.translateSelf(perspectiveOrigin[0], perspectiveOrigin[1]);
+    transform.multiplySelf(new DOMMatrix([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -1/perspective, 0, 0, 0, 1]));
+    transform.translateSelf(-perspectiveOrigin[0], -perspectiveOrigin[1]);
+  }
+  const computedTransform = computedStyle.transform;
+  if (computedTransform !='none') {
+    const transformOrigin = parseLengths(computedStyle.transformOrigin);
+    transform.translateSelf(transformOrigin[0], transformOrigin[1]);
+    transform.multiplySelf(new DOMMatrix(computedStyle.transform));
+    transform.translateSelf(-transformOrigin[0], -transformOrigin[1]);
+  }
+  transform.translateSelf(elem.offsetLeft, elem.offsetTop);
+  return transform;
+}
+
+function closestAncestor(a, b) {
+  let ancestors = new Set();
+  while (a) {
+    ancestors.add(a);
+    a = a.offsetParent;
+  }
+  ancestors.add(null);
+  while (!ancestors.has(b)) {
+    b = b.offsetParent;
+  }
+  return b;
+}
+
+export function getElementTransformRelativeTo(elem, parent) {
+  if (!elem.offsetParent)
+    return null;
+  let ancestor = closestAncestor(elem, parent);
+  let transform = getElementTransform(elem);
+  while (elem.offsetParent != ancestor) {
+    elem = elem.offsetParent;
+    transform.preMultiplySelf(getElementTransform(elem));
+  }
+  let destTransform = new DOMMatrix();
+  while (parent != ancestor) {
+    destTransform.preMultiplySelf(getElementTransform(parent));
+    parent = parent.offsetParent;
+  }
+  const destTransformInverse = destTransform.inverse();
+  // If the matrix is not invertible its components are set to NaN.
+  // We cannot produce a transform relative to this parent.
+  if (isNaN(destTransformInverse.a))
+    return null;
+  return transform.preMultiplySelf(destTransformInverse);
 }

@@ -1,0 +1,3666 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Scrappet Kaiser Princess",
+      "image": "/assets/-1179000204_770072",
+      "rules": "https://zoql.itch.io/scrappetkaiserprincess",
+      "bgg": "https://zoql.itch.io/scrappetkaiserprincess",
+      "year": "2021",
+      "mode": "solo",
+      "time": "45",
+      "players": "1",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "An original game by Zoql available under CC BY-SA-NC 4.0. Thanks to Ly (coloring) and meBID (digital version). Adapted for use on virtualtabletop.io by LawDawg96.\n\nFor more information and additional versions of the game, see https://zoql.itch.io/scrappetkaiserprincess.",
+      "similarName": "Scrappet Kaiser Princess",
+      "description": "Place workers on game board and assign them tasks of earning money, buying cards, trading for cards, or dueling for cards. Play 7 rounds and earn as many points as possible. Compare against game ending point chart to see how well you did.",
+      "showName": true,
+      "lastUpdate": 1656358260000
+    }
+  },
+  "4412f609-87fe-4491-96f4-54973edcc131": {
+    "id": "4412f609-87fe-4491-96f4-54973edcc131",
+    "z": 43810,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "e26264d2-32ee-4137-ad59-0adbb71b20ed": {
+    "id": "e26264d2-32ee-4137-ad59-0adbb71b20ed",
+    "z": 43812,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "48b00a56-c562-4abb-a6e9-2490ca1d4d63": {
+    "id": "48b00a56-c562-4abb-a6e9-2490ca1d4d63",
+    "x": 1355.58,
+    "y": 253.99,
+    "z": 10037,
+    "type": "deck",
+    "cardTypes": {
+      "type-275c7b75-9623-45bf-9e45-97fc2ffa2c4e": {
+        "image": "/assets/1984500956_18698",
+        "label": "Penny_tokenA.png",
+        "sortingOrder": 1
+      },
+      "type-3598c380-672a-4903-912a-44dabf45a47d": {
+        "image": "/assets/276196710_19535",
+        "label": "Link_tokenA.png",
+        "sortingOrder": 2
+      },
+      "type-c36191be-029e-417a-be1e-730b528f142a": {
+        "image": "/assets/-142539889_15486",
+        "label": "Spiff_tokenA.png",
+        "sortingOrder": 3
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 25,
+            "height": 25,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 25,
+            "height": 25,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 25,
+      "height": 25
+    }
+  },
+  "5793b558-86b1-498b-bf0c-313b0453c4ab": {
+    "id": "5793b558-86b1-498b-bf0c-313b0453c4ab",
+    "x": 21,
+    "y": 45,
+    "z": 27606,
+    "type": "deck",
+    "parent": "62cab4fe-4eaf-43f1-83d5-231119b04674",
+    "cardTypes": {
+      "joker-black": {
+        "label": "Dog Bower",
+        "image": "/i/cards-default/2J.svg",
+        "text2": "1 Strength.",
+        "text1": "Dog Bower",
+        "image1": "/assets/1039071904_197560",
+        "sortingOrder": 1
+      },
+      "joker-red": {
+        "label": "Sour Broccoli",
+        "image": "/i/cards-default/1J.svg",
+        "text2": "3 Strength. This card can only leave your binder for duels in the Alley.",
+        "text1": "Cowboy Spitball",
+        "image1": "/assets/-1735036999_228180",
+        "sortingOrder": 2
+      },
+      "joker-blue": {
+        "label": "Rotten Puddle",
+        "image": "/i/cards-default/1J.svg",
+        "text2": "1 Strength. Lose 5 Ego at the end of the round.",
+        "text1": "Lemon Slime",
+        "image1": "/assets/-1668475151_228789",
+        "sortingOrder": 3
+      },
+      "diamonds-a": {
+        "label": "Cowboy Spitball",
+        "image": "/i/cards-default/AD.svg",
+        "text2": "-1 Strength. Only Penny may trade this card. Gain 1 less Ego at the end of the round.",
+        "text1": "Rotten Puddle",
+        "image1": "/assets/2020810011_267324",
+        "sortingOrder": 4
+      },
+      "diamonds-2": {
+        "label": "Eggbert the Resilient",
+        "image": "/i/cards-default/2D.svg",
+        "text2": "0 Strength. If you have 50 Ego, +9 Strength to this card",
+        "text1": "Eggbert the Resilient",
+        "image1": "/assets/-1422566788_271718",
+        "sortingOrder": 5
+      },
+      "type-e5fa07a6-5114-4416-84ba-b8dac5599eb1": {
+        "image1": "/assets/179852369_288436",
+        "label": "XE-Ninjin Sugar BB 1973",
+        "sortingOrder": 6
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/381001813_443154",
+            "color": "rgb(237,54,54)",
+            "width": 120,
+            "height": 168
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 168,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 120,
+      "height": 168,
+      "enlarge": 3
+    }
+  },
+  "d098e5f0-ce3b-46f4-aba0-cea657ad9436": {
+    "id": "d098e5f0-ce3b-46f4-aba0-cea657ad9436",
+    "x": 1319.82,
+    "y": 624.65,
+    "z": 10027,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "65117ad2-1fc2-4f8b-9dbc-2f6e242f7f6a": {
+    "id": "65117ad2-1fc2-4f8b-9dbc-2f6e242f7f6a",
+    "x": 973.21,
+    "y": 394.96,
+    "z": 10035,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "404311bc-6c32-4c7b-a39f-aaf1a26f26f2": {
+    "id": "404311bc-6c32-4c7b-a39f-aaf1a26f26f2",
+    "z": 43955,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-2",
+    "parent": "4ynv"
+  },
+  "082f9265-78cd-4b50-a544-48b67c263e56": {
+    "id": "082f9265-78cd-4b50-a544-48b67c263e56",
+    "z": 1,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-8",
+    "parent": "playground1",
+    "activeFace": 1
+  },
+  "8951d906-daeb-4899-83ba-079ad047c2d7": {
+    "id": "8951d906-daeb-4899-83ba-079ad047c2d7",
+    "x": 455,
+    "y": 554,
+    "z": 32110,
+    "type": "card",
+    "deck": "000476ba-47ed-4d3c-b9bc-7ebb2e868e33",
+    "cardType": "type-47039533-6720-4446-b7b8-49d625e62e14",
+    "resetProperties": {
+      "x": 455,
+      "y": 554
+    }
+  },
+  "d7b3e64b-0220-4ea0-9510-e7defe0a000f": {
+    "id": "d7b3e64b-0220-4ea0-9510-e7defe0a000f",
+    "x": 1455.69,
+    "y": 805.39,
+    "z": 10022,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "b8c24e20-043d-4564-9060-b5b0764cf99f": {
+    "id": "b8c24e20-043d-4564-9060-b5b0764cf99f",
+    "z": 43935,
+    "type": "card",
+    "deck": "a2815f1d-ea1c-4f52-899a-ca0eff080c3e",
+    "cardType": "joker-blue",
+    "parent": "rj80"
+  },
+  "3381ef58-ea4a-4c52-bab3-d8452bb4453b": {
+    "id": "3381ef58-ea4a-4c52-bab3-d8452bb4453b",
+    "z": 43814,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "293fd838-06c6-4a2b-bdcb-feb21dafbdc2": {
+    "id": "293fd838-06c6-4a2b-bdcb-feb21dafbdc2",
+    "z": 43912,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "type-9d86e1fd-4591-4cba-8a79-6229a769fd78",
+    "parent": "ajt1"
+  },
+  "d356830b-4256-4bc5-aeaa-1c7038124369": {
+    "id": "d356830b-4256-4bc5-aeaa-1c7038124369",
+    "z": 43956,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-7",
+    "parent": "4ynv"
+  },
+  "000476ba-47ed-4d3c-b9bc-7ebb2e868e33": {
+    "id": "000476ba-47ed-4d3c-b9bc-7ebb2e868e33",
+    "x": 399.18,
+    "y": 575.53,
+    "z": 15280,
+    "type": "deck",
+    "cardTypes": {
+      "type-00dd86ea-745e-4568-b200-979ed6f1376e": {
+        "image": "/assets/418617267_20446",
+        "label": "Mindy_tokenA.png",
+        "sortingOrder": 1
+      },
+      "type-47039533-6720-4446-b7b8-49d625e62e14": {
+        "image": "/assets/1986504211_17288",
+        "label": "Jessa_tokenA.png",
+        "sortingOrder": 2
+      },
+      "type-9d13ce1a-87d7-44da-94c4-a4597fd3cb3b": {
+        "image": "/assets/1984500956_18698",
+        "label": "Penny_tokenA.png",
+        "sortingOrder": 3
+      },
+      "type-9bb0e0b1-9411-4f59-9d3b-c486d6cae554": {
+        "image": "/assets/276196710_19535",
+        "label": "Link_tokenA.png",
+        "sortingOrder": 4
+      },
+      "type-10b4f284-f17a-41a9-9921-7899cfe31009": {
+        "image": "/assets/-142539889_15486",
+        "label": "Spiff_tokenA.png",
+        "sortingOrder": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 75,
+            "height": 75,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 75,
+            "height": 75,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 75,
+      "height": 75
+    }
+  },
+  "a2815f1d-ea1c-4f52-899a-ca0eff080c3e": {
+    "id": "a2815f1d-ea1c-4f52-899a-ca0eff080c3e",
+    "x": 21,
+    "y": 45,
+    "z": 29933,
+    "type": "deck",
+    "parent": "eef5fe56-02de-4e54-af73-e0955b9f0e33",
+    "cardTypes": {
+      "joker-black": {
+        "label": "Baby Filkiss",
+        "image": "/i/cards-default/2J.svg",
+        "text1": "Both of Griswald's Knees",
+        "text2": "Strength 12. Lose the Ego you bet, then reduce the amount of bet Ego by half (round down) for the Strength check.",
+        "image1": "/assets/592545700_304336",
+        "sortingOrder": 1
+      },
+      "joker-red": {
+        "label": "Dirk Canyon, Esquire",
+        "image": "/i/cards-default/1J.svg",
+        "text1": "Lumby But Giga",
+        "text2": "Strength 15. Lose 1 Buck for each Ego you bet. If you cannot pay the full amount, you cannot gain this card.",
+        "image1": "/assets/-1929849110_363750",
+        "sortingOrder": 2
+      },
+      "joker-blue": {
+        "label": "Dog Bower's Dad",
+        "image": "/i/cards-default/1J.svg",
+        "text1": "Baby Filkiss",
+        "text2": "Strength 5. Immediately gain the amount of Ego you bet.",
+        "image1": "/assets/1968616371_324478",
+        "sortingOrder": 3
+      },
+      "diamonds-a": {
+        "label": "Carl",
+        "image": "/i/cards-default/AD.svg",
+        "text2": "Strength 10. Reduce the amount of Ego bet by 10. If you tie or lose this duel, lose the card you dueled with",
+        "text1": "Dog Bower's Dad",
+        "image1": "/assets/816020250_304250",
+        "sortingOrder": 4
+      },
+      "diamonds-2": {
+        "label": "Both of Griswald's Knees",
+        "image": "/i/cards-default/2D.svg",
+        "text2": "Strength 8. If you win this duel without betting Ego, gain 10 Ego. Otherwise, lose the Ego you bet.",
+        "text1": "Dirk Canyon, Esquire",
+        "image1": "/assets/1354527075_332863",
+        "sortingOrder": 5
+      },
+      "diamonds-3": {
+        "label": "Lumby But Giga",
+        "image": "/i/cards-default/3D.svg",
+        "text2": "Strength 11. After this duel, lose 15 Ego.",
+        "text1": "Carl",
+        "image1": "/assets/-1855562153_287065",
+        "sortingOrder": 6
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/1619202229_744479",
+            "color": "rgb(255,242,53)",
+            "width": 120,
+            "height": 168
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 168,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 120,
+      "height": 168,
+      "enlarge": 3
+    }
+  },
+  "8abac02d-c029-4017-95c8-39afdd21cbd0": {
+    "id": "8abac02d-c029-4017-95c8-39afdd21cbd0",
+    "z": 43979,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "diamonds-4",
+    "parent": "qcm4"
+  },
+  "57fba51e-5e59-4b8a-954d-d66807a50581": {
+    "id": "57fba51e-5e59-4b8a-954d-d66807a50581",
+    "z": 43936,
+    "type": "card",
+    "deck": "a2815f1d-ea1c-4f52-899a-ca0eff080c3e",
+    "cardType": "diamonds-a",
+    "parent": "rj80"
+  },
+  "a4c61614-cd42-47c4-ab49-23aa482f40f6": {
+    "id": "a4c61614-cd42-47c4-ab49-23aa482f40f6",
+    "z": 43951,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-10",
+    "parent": "4ynv"
+  },
+  "04d5e414-5125-4641-8239-6298e8aa56c6": {
+    "id": "04d5e414-5125-4641-8239-6298e8aa56c6",
+    "x": 1178.76,
+    "y": 805.13,
+    "z": 10028,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "74ff0d40-2d3a-42f5-9d69-bf028784954e": {
+    "id": "74ff0d40-2d3a-42f5-9d69-bf028784954e",
+    "z": 36407,
+    "type": "card",
+    "deck": "02c0a83d-da94-461e-97ac-169e1bcd92df",
+    "cardType": "type-00dd86ea-745e-4568-b200-979ed6f1376e",
+    "resetProperties": {
+      "x": 925,
+      "y": 850,
+      "layer": -1,
+      "parent": null
+    },
+    "x": 925,
+    "y": 850,
+    "layer": -1
+  },
+  "7ffee70f-a265-46db-a50c-6359f4fa48f2": {
+    "id": "7ffee70f-a265-46db-a50c-6359f4fa48f2",
+    "x": 1543.91,
+    "y": 340.19,
+    "z": 8796,
+    "type": "card",
+    "deck": "48b00a56-c562-4abb-a6e9-2490ca1d4d63",
+    "cardType": "type-c36191be-029e-417a-be1e-730b528f142a"
+  },
+  "314fb902-0cd6-416b-8f77-b6255856b4a5": {
+    "id": "314fb902-0cd6-416b-8f77-b6255856b4a5",
+    "z": 4,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "joker-red",
+    "parent": "playground1",
+    "x": 390,
+    "activeFace": 1
+  },
+  "18dee7d9-c8f9-48b8-b550-92e0b4519608": {
+    "id": "18dee7d9-c8f9-48b8-b550-92e0b4519608",
+    "z": 43948,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-2",
+    "parent": "4ynv"
+  },
+  "285c11be-669b-45b0-891d-4f54904b41c8": {
+    "id": "285c11be-669b-45b0-891d-4f54904b41c8",
+    "z": 35397,
+    "type": "card",
+    "deck": "02c0a83d-da94-461e-97ac-169e1bcd92df",
+    "cardType": "type-9bb0e0b1-9411-4f59-9d3b-c486d6cae554",
+    "resetProperties": {
+      "x": 1345,
+      "y": 850,
+      "layer": -1,
+      "parent": null
+    },
+    "x": 1345,
+    "y": 850,
+    "layer": -1
+  },
+  "325c6b7c-a32f-475e-9d00-c894fe692ee9": {
+    "id": "325c6b7c-a32f-475e-9d00-c894fe692ee9",
+    "z": 43985,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "diamonds-a",
+    "parent": "qcm4"
+  },
+  "82f05163-002b-43b1-b285-1f557785b4fa": {
+    "id": "82f05163-002b-43b1-b285-1f557785b4fa",
+    "z": 43816,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "deck": "buckDeck",
+    "parent": "uac2"
+  },
+  "999e9463-f7b1-4049-bec3-50953bc9546b": {
+    "id": "999e9463-f7b1-4049-bec3-50953bc9546b",
+    "z": 43818,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "9c0dc734-0e09-4aba-9236-6758d6b2479c": {
+    "id": "9c0dc734-0e09-4aba-9236-6758d6b2479c",
+    "z": 43820,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "37520c93-4e0c-496f-8fa0-c1fc0f425b96": {
+    "id": "37520c93-4e0c-496f-8fa0-c1fc0f425b96",
+    "z": 43822,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "deck": "buckDeck",
+    "parent": "uac2"
+  },
+  "71771876-117a-4df3-9737-ac2d87f58424": {
+    "id": "71771876-117a-4df3-9737-ac2d87f58424",
+    "z": 43910,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "diamonds-10",
+    "parent": "ajt1"
+  },
+  "5a1297bc-9e9a-4e29-a2c8-a8ffaf747d29": {
+    "id": "5a1297bc-9e9a-4e29-a2c8-a8ffaf747d29",
+    "z": 43940,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "joker-black",
+    "parent": "4ynv"
+  },
+  "0b22e7d9-7bd1-464b-a50b-2028c35179af": {
+    "id": "0b22e7d9-7bd1-464b-a50b-2028c35179af",
+    "x": 1455.07,
+    "y": 624.42,
+    "z": 10023,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "680142a5-293a-49f0-a4ae-174f52c48efc": {
+    "id": "680142a5-293a-49f0-a4ae-174f52c48efc",
+    "z": 43983,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "diamonds-7",
+    "parent": "qcm4"
+  },
+  "0978bdb2-0492-4e89-9711-8b5b1ca8be2f_decrementButton": {
+    "id": "0978bdb2-0492-4e89-9711-8b5b1ca8be2f_decrementButton",
+    "parent": "0978bdb2-0492-4e89-9711-8b5b1ca8be2f",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "0978bdb2-0492-4e89-9711-8b5b1ca8be2f",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "0978bdb2-0492-4e89-9711-8b5b1ca8be2f_incrementButton": {
+    "id": "0978bdb2-0492-4e89-9711-8b5b1ca8be2f_incrementButton",
+    "parent": "0978bdb2-0492-4e89-9711-8b5b1ca8be2f",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "0978bdb2-0492-4e89-9711-8b5b1ca8be2f",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "0978bdb2-0492-4e89-9711-8b5b1ca8be2f": {
+    "id": "0978bdb2-0492-4e89-9711-8b5b1ca8be2f",
+    "x": 619.17,
+    "y": 551.23,
+    "z": 27619,
+    "type": "label",
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "text": 0,
+    "editable": true
+  },
+  "01ace300-2407-4a63-9db7-a48ac086ad77": {
+    "id": "01ace300-2407-4a63-9db7-a48ac086ad77",
+    "z": 3,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-j",
+    "parent": "playground1",
+    "x": 260,
+    "activeFace": 1
+  },
+  "7b1331c5-cdb3-420e-81a7-41282a47c4bc": {
+    "id": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "x": 21,
+    "y": 45,
+    "z": 30369,
+    "type": "deck",
+    "parent": "144dc07f-de96-4044-913c-e8612964a7a6",
+    "cardTypes": {
+      "joker-black": {
+        "label": "Rainy Day",
+        "image": "/i/cards-default/2J.svg",
+        "text1": "Rainy Day",
+        "text2": "All kids at the Playground and the Lemonade Stand return home. If Mindy is at the Alley, instead of dueling, she may buy Dues' revealed card with Bucks",
+        "image1": "/assets/63097719_368088",
+        "sortingOrder": 1
+      },
+      "joker-red": {
+        "label": "Intense Dodgeball",
+        "image": "/i/cards-default/1J.svg",
+        "text1": "Sunny Day",
+        "text2": "All kids at the Lemonade Stand earn double Money",
+        "image1": "/assets/545015308_300146",
+        "sortingOrder": 2
+      },
+      "joker-blue": {
+        "label": "Toy Sale",
+        "image": "/i/cards-default/1J.svg",
+        "text1": "Intense Dodgeball",
+        "text2": "If Spiff is at the Playground, Spiff loses all his held cards and bucks, and does not trade this round. Remove 1 extra card from the Playground during cleanup",
+        "image1": "/assets/-1579794660_279116",
+        "sortingOrder": 3
+      },
+      "diamonds-a": {
+        "label": "Big Sister",
+        "image": "/i/cards-default/AD.svg",
+        "text1": "Toy Sale",
+        "text2": "If Link is at the Store, he loses 4 Bucks before purchasing any Booster cards",
+        "image1": "/assets/84977750_429241",
+        "sortingOrder": 4
+      },
+      "diamonds-2": {
+        "label": "BOGO",
+        "image": "/i/cards-default/2D.svg",
+        "text1": "Big Sister",
+        "text2": "If Penny is at the Lemonade Stand, she does not gain any Bucks, losing 5 instead if possible.",
+        "image1": "/assets/1364032105_340011",
+        "sortingOrder": 5
+      },
+      "diamonds-3": {
+        "label": "Teenager Takeover",
+        "image": "/i/cards-default/3D.svg",
+        "text1": "BOGO",
+        "text2": "All kids at the store get one free Booster card.",
+        "image1": "/assets/226052123_285089",
+        "sortingOrder": 6
+      },
+      "diamonds-4": {
+        "label": "Dropped Wallet",
+        "image": "/i/cards-default/4D.svg",
+        "text1": "Teenager Takeover",
+        "text2": "Replace each card in the Playground with a card from the top of the Store deck. Replaced cards go to the bottom of the deck.",
+        "image1": "/assets/-1332807119_195457",
+        "sortingOrder": 7
+      },
+      "diamonds-5": {
+        "label": "First Subs!",
+        "image": "/i/cards-default/5D.svg",
+        "text2": "All kids at the alley gain 10 Bucks",
+        "text1": "Dropped Wallet",
+        "image1": "/assets/-649512873_244254",
+        "sortingOrder": 8
+      },
+      "diamonds-6": {
+        "label": "Where's Our Cut?",
+        "image": "/i/cards-default/6D.svg",
+        "text1": "First Subs!",
+        "text2": "Gain 10 Ego. If this would force you to unfriend a kid, unfriend them now.",
+        "image1": "/assets/-230812617_363152",
+        "sortingOrder": 9
+      },
+      "diamonds-7": {
+        "label": "Bossy Bestie",
+        "image": "/i/cards-default/7D.svg",
+        "text2": "If multiple kids are at the Lemonade Stand, no Bucks are gained",
+        "text1": "Surprise Pizza Party",
+        "image1": "/assets/1799792165_373347",
+        "sortingOrder": 10
+      },
+      "diamonds-8": {
+        "label": "Stray Cat Distraction",
+        "image": "/i/cards-default/8D.svg",
+        "text2": "If multiple kids are at the Store, they lose all their Bucks and gain only 1 card",
+        "text1": "New Video Game!",
+        "image1": "/assets/1834474781_373814",
+        "sortingOrder": 11
+      },
+      "diamonds-9": {
+        "label": "New Video Game",
+        "image": "/i/cards-default/9D.svg",
+        "text1": "Bossy Bestie",
+        "text2": "Jessa can move to another location after activating her current location's effects, collecting any needed bucks or cards on the way. She performs her action as if Mindy were with her.",
+        "image1": "/assets/155283465_370341",
+        "sortingOrder": 12
+      },
+      "diamonds-10": {
+        "label": "Unexpected Holiday",
+        "image": "/i/cards-default/TD.svg",
+        "text1": "Stray Cat Distraction",
+        "text2": "Kids at the Lemonade Stand only gain half the Bucks they would normally have, rounded down.",
+        "image1": "/assets/-1537099644_356611",
+        "sortingOrder": 13
+      },
+      "type-cf426dd1-a33c-41a1-9428-a574c09de83d": {
+        "image1": "/assets/-317993208_369588",
+        "label": "The Heemer Twins",
+        "sortingOrder": 14
+      },
+      "type-9d86e1fd-4591-4cba-8a79-6229a769fd78": {
+        "image1": "/assets/1977168021_363893",
+        "label": "The Boss Is Gone",
+        "sortingOrder": 15
+      },
+      "type-5149f018-9995-449f-a271-25cce8887bbc": {
+        "image1": "/assets/-57465516_316074",
+        "label": "Tournament Jitters",
+        "sortingOrder": 16
+      },
+      "type-deb1dfd5-97a4-40f9-b952-82e6b0c0a10d": {
+        "image1": "/assets/-1069518563_393791",
+        "label": "Card Casualty",
+        "sortingOrder": 17
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-1511818286_228715",
+            "color": "rgb(36,71,219)",
+            "width": 120,
+            "height": 168
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 168,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 120,
+      "height": 168,
+      "enlarge": 3
+    }
+  },
+  "575d53c1-57d2-4f72-9b18-19bbcc1dd8b0": {
+    "id": "575d53c1-57d2-4f72-9b18-19bbcc1dd8b0",
+    "z": 43824,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "d31d4c11-dde9-44d1-a6b1-9cbe71e80196": {
+    "id": "d31d4c11-dde9-44d1-a6b1-9cbe71e80196",
+    "z": 43826,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "8a732a34-7d7c-48d4-aa3e-6cfeb8c71d47": {
+    "id": "8a732a34-7d7c-48d4-aa3e-6cfeb8c71d47",
+    "z": 43960,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-6",
+    "parent": "4ynv"
+  },
+  "408a72d4-d231-4dc9-8da5-54bf6b40c57b": {
+    "id": "408a72d4-d231-4dc9-8da5-54bf6b40c57b",
+    "z": 35398,
+    "type": "card",
+    "deck": "02c0a83d-da94-461e-97ac-169e1bcd92df",
+    "cardType": "type-10b4f284-f17a-41a9-9921-7899cfe31009",
+    "resetProperties": {
+      "x": 1485,
+      "y": 850,
+      "layer": -1,
+      "parent": null
+    },
+    "x": 1485,
+    "y": 850,
+    "layer": -1
+  },
+  "3a186a26-8f25-4c9c-bd56-1a1dfab7a0db": {
+    "id": "3a186a26-8f25-4c9c-bd56-1a1dfab7a0db",
+    "z": 43828,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "c862bb41-d8f3-42da-b6ce-3ab9dc9b3854": {
+    "id": "c862bb41-d8f3-42da-b6ce-3ab9dc9b3854",
+    "z": 43947,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-q",
+    "parent": "4ynv"
+  },
+  "efd52a29-efa0-41fd-9bd8-462ee127e81f": {
+    "id": "efd52a29-efa0-41fd-9bd8-462ee127e81f",
+    "z": 43830,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "b04525ec-2e24-4be3-9b55-4d8a2237077a": {
+    "id": "b04525ec-2e24-4be3-9b55-4d8a2237077a",
+    "z": 43832,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "eb268ff4-ab19-4ac6-90d5-4a3a9e93216f": {
+    "id": "eb268ff4-ab19-4ac6-90d5-4a3a9e93216f",
+    "z": 2,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-j",
+    "parent": "playground1",
+    "x": 130,
+    "activeFace": 1
+  },
+  "bfb4e89e-99d7-4f7e-a1fd-db1336f295f1": {
+    "id": "bfb4e89e-99d7-4f7e-a1fd-db1336f295f1",
+    "z": 43945,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-8",
+    "parent": "4ynv"
+  },
+  "e19c7aeb-a9ab-4a44-8803-0c83e669ff54": {
+    "id": "e19c7aeb-a9ab-4a44-8803-0c83e669ff54",
+    "z": 38105,
+    "type": "card",
+    "deck": "fdb31939-04b5-49a1-86af-f4d284031653",
+    "cardType": "joker-red",
+    "resetProperties": {
+      "activeFace": 1,
+      "parent": "67977246-ce28-42b4-9b00-2ed0bad31cff"
+    },
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "67977246-ce28-42b4-9b00-2ed0bad31cff"
+  },
+  "23ea0e77-73c3-4e45-94fa-684685a65805": {
+    "id": "23ea0e77-73c3-4e45-94fa-684685a65805",
+    "z": 35606,
+    "type": "card",
+    "deck": "fdb31939-04b5-49a1-86af-f4d284031653",
+    "cardType": "joker-blue",
+    "resetProperties": {
+      "activeFace": 1,
+      "parent": "04d5e414-5125-4641-8239-6298e8aa56c6"
+    },
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "04d5e414-5125-4641-8239-6298e8aa56c6"
+  },
+  "b2ed09f8-d3e0-4a3a-a495-ccf48a6b4820": {
+    "id": "b2ed09f8-d3e0-4a3a-a495-ccf48a6b4820",
+    "z": 35192,
+    "type": "card",
+    "deck": "02c0a83d-da94-461e-97ac-169e1bcd92df",
+    "cardType": "type-47039533-6720-4446-b7b8-49d625e62e14",
+    "resetProperties": {
+      "x": 1065,
+      "y": 850,
+      "layer": -1,
+      "parent": null
+    },
+    "x": 1065,
+    "y": 850,
+    "layer": -1
+  },
+  "56a80f7f-07be-40c5-9c21-256e6c6ee0b1": {
+    "id": "56a80f7f-07be-40c5-9c21-256e6c6ee0b1",
+    "z": 43834,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "c73cc41c-8e9d-484d-9312-812c26bced4a": {
+    "id": "c73cc41c-8e9d-484d-9312-812c26bced4a",
+    "z": 43957,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "spades-a",
+    "parent": "4ynv"
+  },
+  "a7d0d578-260a-47c2-80a1-a058a6e7228f": {
+    "id": "a7d0d578-260a-47c2-80a1-a058a6e7228f",
+    "z": 43836,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "49711102-8152-4601-a35a-e7fe566979ab": {
+    "id": "49711102-8152-4601-a35a-e7fe566979ab",
+    "z": 43346,
+    "type": "card",
+    "deck": "72816203-4749-4156-9471-8041e100b464",
+    "cardType": "joker-black",
+    "resetProperties": {
+      "activeFace": 0,
+      "parent": "65117ad2-1fc2-4f8b-9dbc-2f6e242f7f6a"
+    },
+    "parent": "qcm4"
+  },
+  "3f3b94b6-5969-4110-ab46-d6570a8fb6af": {
+    "id": "3f3b94b6-5969-4110-ab46-d6570a8fb6af",
+    "z": 43943,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-6",
+    "parent": "4ynv"
+  },
+  "3651bf40-f4b2-44f3-8444-9123e887a3f6": {
+    "id": "3651bf40-f4b2-44f3-8444-9123e887a3f6",
+    "z": 43838,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "23811597-3708-4ab6-9a1b-fa9432c4597f": {
+    "id": "23811597-3708-4ab6-9a1b-fa9432c4597f",
+    "z": 43840,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "57156793-b39c-442f-8a1b-7cae552ec1c5": {
+    "id": "57156793-b39c-442f-8a1b-7cae552ec1c5",
+    "z": 43842,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "973be5ef-4c00-4210-b5f3-dbc9712b7d5b_decrementButton": {
+    "id": "973be5ef-4c00-4210-b5f3-dbc9712b7d5b_decrementButton",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "ego",
+        "mode": "inc",
+        "value": -1
+      }
+    ],
+    "parent": "ego"
+  },
+  "973be5ef-4c00-4210-b5f3-dbc9712b7d5b_incrementButton": {
+    "id": "973be5ef-4c00-4210-b5f3-dbc9712b7d5b_incrementButton",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "ego",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "ego"
+  },
+  "3efca4df-515e-4308-b634-7b70979a793e": {
+    "id": "3efca4df-515e-4308-b634-7b70979a793e",
+    "x": 1145.21,
+    "y": 393.98,
+    "z": 10034,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "a4137f0d-f2ac-4886-bb8f-e666705ee9d7": {
+    "id": "a4137f0d-f2ac-4886-bb8f-e666705ee9d7",
+    "z": 43844,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "86183a26-aedc-4416-bebb-d4c1ec44b905": {
+    "id": "86183a26-aedc-4416-bebb-d4c1ec44b905",
+    "z": 43916,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "diamonds-8",
+    "parent": "ajt1"
+  },
+  "25d24c1d-34ae-438c-a8e6-a974b4494bd1": {
+    "id": "25d24c1d-34ae-438c-a8e6-a974b4494bd1",
+    "z": 43846,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "72816203-4749-4156-9471-8041e100b464": {
+    "id": "72816203-4749-4156-9471-8041e100b464",
+    "x": 21,
+    "y": 45,
+    "z": 27610,
+    "type": "deck",
+    "parent": "65117ad2-1fc2-4f8b-9dbc-2f6e242f7f6a",
+    "cardTypes": {
+      "joker-black": {
+        "label": "Are We Still Friends?",
+        "image": "/i/cards-default/2J.svg",
+        "text1": "Are We Still Friends?",
+        "text2": "If you no longer own your Starter Card, immediately send Jessa home and Unfriend her",
+        "image1": "/assets/1550388906_268828",
+        "sortingOrder": 1
+      },
+      "joker-red": {
+        "label": "Red Joker",
+        "image": "/i/cards-default/1J.svg",
+        "text1": "Scoring: Ego + Strength + Money + 10 per friend",
+        "sortingOrder": 2
+      },
+      "joker-blue": {
+        "label": "Blue Joker",
+        "image": "/i/cards-default/1J.svg",
+        "sortingOrder": 3
+      },
+      "diamonds-a": {
+        "label": "A of Diamonds",
+        "image": "/i/cards-default/AD.svg",
+        "sortingOrder": 4
+      },
+      "diamonds-2": {
+        "label": "2 of Diamonds",
+        "image": "/i/cards-default/2D.svg",
+        "sortingOrder": 5
+      },
+      "diamonds-3": {
+        "label": "3 of Diamonds",
+        "image": "/i/cards-default/3D.svg",
+        "sortingOrder": 6
+      },
+      "diamonds-4": {
+        "label": "4 of Diamonds",
+        "image": "/i/cards-default/4D.svg",
+        "sortingOrder": 7
+      },
+      "diamonds-5": {
+        "label": "5 of Diamonds",
+        "image": "/i/cards-default/5D.svg",
+        "sortingOrder": 8
+      },
+      "diamonds-6": {
+        "label": "6 of Diamonds",
+        "image": "/i/cards-default/6D.svg",
+        "sortingOrder": 9
+      },
+      "diamonds-7": {
+        "label": "7 of Diamonds",
+        "image": "/i/cards-default/7D.svg",
+        "sortingOrder": 10
+      },
+      "diamonds-8": {
+        "label": "8 of Diamonds",
+        "image": "/i/cards-default/8D.svg",
+        "sortingOrder": 11
+      },
+      "diamonds-9": {
+        "label": "9 of Diamonds",
+        "image": "/i/cards-default/9D.svg",
+        "sortingOrder": 12
+      },
+      "diamonds-10": {
+        "label": "10 of Diamonds",
+        "image": "/i/cards-default/TD.svg",
+        "sortingOrder": 13
+      },
+      "diamonds-j": {
+        "label": "J of Diamonds",
+        "image": "/i/cards-default/JD.svg",
+        "sortingOrder": 14
+      },
+      "diamonds-q": {
+        "label": "Q of Diamonds",
+        "image": "/i/cards-default/QD.svg",
+        "sortingOrder": 15
+      },
+      "diamonds-k": {
+        "label": "K of Diamonds",
+        "image": "/i/cards-default/KD.svg",
+        "sortingOrder": 16
+      },
+      "hearts-a": {
+        "label": "A of Hearts",
+        "image": "/i/cards-default/AH.svg",
+        "sortingOrder": 17
+      },
+      "hearts-2": {
+        "label": "2 of Hearts",
+        "image": "/i/cards-default/2H.svg",
+        "sortingOrder": 18
+      },
+      "hearts-3": {
+        "label": "3 of Hearts",
+        "image": "/i/cards-default/3H.svg",
+        "sortingOrder": 19
+      },
+      "hearts-4": {
+        "label": "4 of Hearts",
+        "image": "/i/cards-default/4H.svg",
+        "sortingOrder": 20
+      },
+      "hearts-5": {
+        "label": "5 of Hearts",
+        "image": "/i/cards-default/5H.svg",
+        "sortingOrder": 21
+      },
+      "hearts-6": {
+        "label": "6 of Hearts",
+        "image": "/i/cards-default/6H.svg",
+        "sortingOrder": 22
+      },
+      "hearts-7": {
+        "label": "7 of Hearts",
+        "image": "/i/cards-default/7H.svg",
+        "sortingOrder": 23
+      },
+      "hearts-8": {
+        "label": "8 of Hearts",
+        "image": "/i/cards-default/8H.svg",
+        "sortingOrder": 24
+      },
+      "hearts-9": {
+        "label": "9 of Hearts",
+        "image": "/i/cards-default/9H.svg",
+        "sortingOrder": 25
+      },
+      "hearts-10": {
+        "label": "10 of Hearts",
+        "image": "/i/cards-default/TH.svg",
+        "sortingOrder": 26
+      },
+      "hearts-j": {
+        "label": "J of Hearts",
+        "image": "/i/cards-default/JH.svg",
+        "sortingOrder": 27
+      },
+      "hearts-q": {
+        "label": "Q of Hearts",
+        "image": "/i/cards-default/QH.svg",
+        "sortingOrder": 28
+      },
+      "hearts-k": {
+        "label": "K of Hearts",
+        "image": "/i/cards-default/KH.svg",
+        "sortingOrder": 29
+      },
+      "spades-a": {
+        "label": "A of Spades",
+        "image": "/i/cards-default/AS.svg",
+        "sortingOrder": 30
+      },
+      "spades-2": {
+        "label": "2 of Spades",
+        "image": "/i/cards-default/2S.svg",
+        "sortingOrder": 31
+      },
+      "spades-3": {
+        "label": "3 of Spades",
+        "image": "/i/cards-default/3S.svg",
+        "sortingOrder": 32
+      },
+      "spades-4": {
+        "label": "4 of Spades",
+        "image": "/i/cards-default/4S.svg",
+        "sortingOrder": 33
+      },
+      "spades-5": {
+        "label": "5 of Spades",
+        "image": "/i/cards-default/5S.svg",
+        "sortingOrder": 34
+      },
+      "spades-6": {
+        "label": "6 of Spades",
+        "image": "/i/cards-default/6S.svg",
+        "sortingOrder": 35
+      },
+      "spades-7": {
+        "label": "7 of Spades",
+        "image": "/i/cards-default/7S.svg",
+        "sortingOrder": 36
+      },
+      "spades-8": {
+        "label": "8 of Spades",
+        "image": "/i/cards-default/8S.svg",
+        "sortingOrder": 37
+      },
+      "spades-9": {
+        "label": "9 of Spades",
+        "image": "/i/cards-default/9S.svg",
+        "sortingOrder": 38
+      },
+      "spades-10": {
+        "label": "10 of Spades",
+        "image": "/i/cards-default/TS.svg",
+        "sortingOrder": 39
+      },
+      "spades-j": {
+        "label": "J of Spades",
+        "image": "/i/cards-default/JS.svg",
+        "sortingOrder": 40
+      },
+      "spades-q": {
+        "label": "Q of Spades",
+        "image": "/i/cards-default/QS.svg",
+        "sortingOrder": 41
+      },
+      "spades-k": {
+        "label": "K of Spades",
+        "image": "/i/cards-default/KS.svg",
+        "sortingOrder": 42
+      },
+      "clubs-a": {
+        "label": "A of Clubs",
+        "image": "/i/cards-default/AC.svg",
+        "sortingOrder": 43
+      },
+      "clubs-2": {
+        "label": "2 of Clubs",
+        "image": "/i/cards-default/2C.svg",
+        "sortingOrder": 44
+      },
+      "clubs-3": {
+        "label": "3 of Clubs",
+        "image": "/i/cards-default/3C.svg",
+        "sortingOrder": 45
+      },
+      "clubs-4": {
+        "label": "4 of Clubs",
+        "image": "/i/cards-default/4C.svg",
+        "sortingOrder": 46
+      },
+      "clubs-5": {
+        "label": "5 of Clubs",
+        "image": "/i/cards-default/5C.svg",
+        "sortingOrder": 47
+      },
+      "clubs-6": {
+        "label": "6 of Clubs",
+        "image": "/i/cards-default/6C.svg",
+        "sortingOrder": 48
+      },
+      "clubs-7": {
+        "label": "7 of Clubs",
+        "image": "/i/cards-default/7C.svg",
+        "sortingOrder": 49
+      },
+      "clubs-8": {
+        "label": "8 of Clubs",
+        "image": "/i/cards-default/8C.svg",
+        "sortingOrder": 50
+      },
+      "clubs-9": {
+        "label": "9 of Clubs",
+        "image": "/i/cards-default/9C.svg",
+        "sortingOrder": 51
+      },
+      "clubs-10": {
+        "label": "10 of Clubs",
+        "image": "/i/cards-default/TC.svg",
+        "sortingOrder": 52
+      },
+      "clubs-j": {
+        "label": "J of Clubs",
+        "image": "/i/cards-default/JC.svg",
+        "sortingOrder": 53
+      },
+      "clubs-q": {
+        "label": "Q of Clubs",
+        "image": "/i/cards-default/QC.svg",
+        "sortingOrder": 54
+      },
+      "clubs-k": {
+        "label": "K of Clubs",
+        "image": "/i/cards-default/KC.svg",
+        "sortingOrder": 55
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#840202",
+            "value": "/i/cards-default/2B.svg",
+            "width": 103,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-1419982488_367895",
+            "width": 120,
+            "height": 168
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 168,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 120,
+      "height": 168,
+      "enlarge": 3
+    }
+  },
+  "441d69ce-9824-4b0d-9c6b-805090f475fa": {
+    "id": "441d69ce-9824-4b0d-9c6b-805090f475fa",
+    "z": 43941,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-5",
+    "parent": "4ynv"
+  },
+  "fe18a8d5-424c-4914-99d3-12e34aaf5691": {
+    "id": "fe18a8d5-424c-4914-99d3-12e34aaf5691",
+    "z": 43919,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "joker-red",
+    "parent": "ajt1"
+  },
+  "29e0d34a-9d55-453d-abc1-90889ae0887b": {
+    "id": "29e0d34a-9d55-453d-abc1-90889ae0887b",
+    "z": 43977,
+    "type": "card",
+    "deck": "5793b558-86b1-498b-bf0c-313b0453c4ab",
+    "cardType": "joker-red",
+    "parent": "8e5499e9-788b-42b3-a003-6a9d19109d3f",
+    "x": 4,
+    "y": 4,
+    "activeFace": 1
+  },
+  "27964812-1eb5-481c-9d1a-c20a916a70d3": {
+    "id": "27964812-1eb5-481c-9d1a-c20a916a70d3",
+    "z": 43938,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-10",
+    "parent": "4ynv"
+  },
+  "804db5e1-c7a4-483d-a1fc-1a89f81e2b1d": {
+    "id": "804db5e1-c7a4-483d-a1fc-1a89f81e2b1d",
+    "x": 318,
+    "y": 628,
+    "z": 32106,
+    "type": "card",
+    "deck": "000476ba-47ed-4d3c-b9bc-7ebb2e868e33",
+    "cardType": "type-9d13ce1a-87d7-44da-94c4-a4597fd3cb3b",
+    "resetProperties": {
+      "x": 318,
+      "y": 628
+    }
+  },
+  "328d36cd-b92e-46c8-a288-c836c71c8b82": {
+    "id": "328d36cd-b92e-46c8-a288-c836c71c8b82",
+    "z": 43848,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "7c5b2164-c4aa-4442-a5cf-c136d812ce61": {
+    "id": "7c5b2164-c4aa-4442-a5cf-c136d812ce61",
+    "z": 43850,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "5f6a776e-23b1-41ff-b844-67ff2c1de0a5": {
+    "id": "5f6a776e-23b1-41ff-b844-67ff2c1de0a5",
+    "z": 43852,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "4986e39e-3efa-49dc-8114-79c97888813c": {
+    "id": "4986e39e-3efa-49dc-8114-79c97888813c",
+    "z": 43854,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "e5611a1a-6e33-4571-a9ea-065c8f23d0cc": {
+    "id": "e5611a1a-6e33-4571-a9ea-065c8f23d0cc",
+    "z": 43856,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "59f75e37-da31-4fa6-95a7-129250f09e16": {
+    "id": "59f75e37-da31-4fa6-95a7-129250f09e16",
+    "z": 43987,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "type-deb1dfd5-97a4-40f9-b952-82e6b0c0a10d",
+    "parent": "qcm4"
+  },
+  "a74e1ea7-e7a2-4fd1-ba2d-2e79ccfcb1ae": {
+    "id": "a74e1ea7-e7a2-4fd1-ba2d-2e79ccfcb1ae",
+    "z": 43858,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "3324d97f-4a18-4ff5-b275-1f98994da50a": {
+    "id": "3324d97f-4a18-4ff5-b275-1f98994da50a",
+    "z": 43961,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-a",
+    "parent": "4ynv"
+  },
+  "85bec91b-d6dd-47fc-b45a-ff2a613da865": {
+    "id": "85bec91b-d6dd-47fc-b45a-ff2a613da865",
+    "z": 43860,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "a0fefa4b-68e0-4686-ad99-80ff51566fba": {
+    "id": "a0fefa4b-68e0-4686-ad99-80ff51566fba",
+    "z": 43862,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "e172cb9d-6d94-4cae-ba05-f15b31536a6f": {
+    "id": "e172cb9d-6d94-4cae-ba05-f15b31536a6f",
+    "z": 43930,
+    "type": "card",
+    "deck": "5793b558-86b1-498b-bf0c-313b0453c4ab",
+    "cardType": "diamonds-a",
+    "parent": "2yur"
+  },
+  "29ce8ba3-14c2-4df2-a7a8-ed0a1d28e974": {
+    "id": "29ce8ba3-14c2-4df2-a7a8-ed0a1d28e974",
+    "z": 43911,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "joker-black",
+    "parent": "ajt1"
+  },
+  "fb1292cc-7507-4066-b649-ecee9392689d": {
+    "id": "fb1292cc-7507-4066-b649-ecee9392689d",
+    "z": 43864,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "42495bca-a021-4a29-afa3-71540e6d9bfd": {
+    "id": "42495bca-a021-4a29-afa3-71540e6d9bfd",
+    "z": 38107,
+    "type": "card",
+    "deck": "fdb31939-04b5-49a1-86af-f4d284031653",
+    "cardType": "joker-black",
+    "resetProperties": {
+      "x": 904,
+      "y": 810,
+      "activeFace": 1,
+      "parent": null
+    },
+    "x": 904,
+    "y": 810,
+    "activeFace": 1
+  },
+  "28919f0f-3870-421c-9950-9c1569e3e9cd": {
+    "id": "28919f0f-3870-421c-9950-9c1569e3e9cd",
+    "z": 43866,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "203856fb-f799-4a95-a9f1-cc3239529aae": {
+    "id": "203856fb-f799-4a95-a9f1-cc3239529aae",
+    "z": 43868,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "5e725555-2df0-4cba-a447-4b2d2b6e4c32": {
+    "id": "5e725555-2df0-4cba-a447-4b2d2b6e4c32",
+    "z": 43927,
+    "type": "card",
+    "deck": "5793b558-86b1-498b-bf0c-313b0453c4ab",
+    "cardType": "joker-blue",
+    "parent": "2yur"
+  },
+  "d06c918f-2b7d-4dd3-a64f-8c14689b8a84": {
+    "id": "d06c918f-2b7d-4dd3-a64f-8c14689b8a84",
+    "z": 43914,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "diamonds-6",
+    "parent": "ajt1"
+  },
+  "fdb31939-04b5-49a1-86af-f4d284031653": {
+    "id": "fdb31939-04b5-49a1-86af-f4d284031653",
+    "x": 21,
+    "y": 45,
+    "z": 30908,
+    "type": "deck",
+    "parent": "e02436c1-ccc8-4bc3-a772-9f8620043062",
+    "cardTypes": {
+      "joker-black": {
+        "label": "Mindy",
+        "image": "/assets/657110807_466712",
+        "image1": "/assets/772025793_257979",
+        "sortingOrder": 1
+      },
+      "joker-red": {
+        "label": "Jessa",
+        "image": "/assets/-1939669696_386594",
+        "image1": "/assets/-1988055186_271833",
+        "sortingOrder": 2
+      },
+      "joker-blue": {
+        "label": "Penny",
+        "image": "/assets/-1997383400_176102",
+        "image1": "/assets/-285732234_320545",
+        "sortingOrder": 3
+      },
+      "diamonds-a": {
+        "label": "Link",
+        "image": "/assets/486124169_174667",
+        "image1": "/assets/-895999166_300037",
+        "sortingOrder": 4
+      },
+      "diamonds-2": {
+        "label": "Spiff",
+        "image": "/assets/1552082114_150044",
+        "image1": "/assets/-156211666_277957",
+        "sortingOrder": 5
+      },
+      "diamonds-3": {
+        "label": "3 of Diamonds",
+        "image": "/i/cards-default/3D.svg",
+        "sortingOrder": 6
+      },
+      "diamonds-4": {
+        "label": "4 of Diamonds",
+        "image": "/i/cards-default/4D.svg",
+        "sortingOrder": 7
+      },
+      "diamonds-5": {
+        "label": "5 of Diamonds",
+        "image": "/i/cards-default/5D.svg",
+        "sortingOrder": 8
+      },
+      "diamonds-6": {
+        "label": "6 of Diamonds",
+        "image": "/i/cards-default/6D.svg",
+        "sortingOrder": 9
+      },
+      "diamonds-7": {
+        "label": "7 of Diamonds",
+        "image": "/i/cards-default/7D.svg",
+        "sortingOrder": 10
+      },
+      "diamonds-8": {
+        "label": "8 of Diamonds",
+        "image": "/i/cards-default/8D.svg",
+        "sortingOrder": 11
+      },
+      "diamonds-9": {
+        "label": "9 of Diamonds",
+        "image": "/i/cards-default/9D.svg",
+        "sortingOrder": 12
+      },
+      "diamonds-10": {
+        "label": "10 of Diamonds",
+        "image": "/i/cards-default/TD.svg",
+        "sortingOrder": 13
+      },
+      "diamonds-j": {
+        "label": "J of Diamonds",
+        "image": "/i/cards-default/JD.svg",
+        "sortingOrder": 14
+      },
+      "diamonds-q": {
+        "label": "Q of Diamonds",
+        "image": "/i/cards-default/QD.svg",
+        "sortingOrder": 15
+      },
+      "diamonds-k": {
+        "label": "K of Diamonds",
+        "image": "/i/cards-default/KD.svg",
+        "sortingOrder": 16
+      },
+      "hearts-a": {
+        "label": "A of Hearts",
+        "image": "/i/cards-default/AH.svg",
+        "sortingOrder": 17
+      },
+      "hearts-2": {
+        "label": "2 of Hearts",
+        "image": "/i/cards-default/2H.svg",
+        "sortingOrder": 18
+      },
+      "hearts-3": {
+        "label": "3 of Hearts",
+        "image": "/i/cards-default/3H.svg",
+        "sortingOrder": 19
+      },
+      "hearts-4": {
+        "label": "4 of Hearts",
+        "image": "/i/cards-default/4H.svg",
+        "sortingOrder": 20
+      },
+      "hearts-5": {
+        "label": "5 of Hearts",
+        "image": "/i/cards-default/5H.svg",
+        "sortingOrder": 21
+      },
+      "hearts-6": {
+        "label": "6 of Hearts",
+        "image": "/i/cards-default/6H.svg",
+        "sortingOrder": 22
+      },
+      "hearts-7": {
+        "label": "7 of Hearts",
+        "image": "/i/cards-default/7H.svg",
+        "sortingOrder": 23
+      },
+      "hearts-8": {
+        "label": "8 of Hearts",
+        "image": "/i/cards-default/8H.svg",
+        "sortingOrder": 24
+      },
+      "hearts-9": {
+        "label": "9 of Hearts",
+        "image": "/i/cards-default/9H.svg",
+        "sortingOrder": 25
+      },
+      "hearts-10": {
+        "label": "10 of Hearts",
+        "image": "/i/cards-default/TH.svg",
+        "sortingOrder": 26
+      },
+      "hearts-j": {
+        "label": "J of Hearts",
+        "image": "/i/cards-default/JH.svg",
+        "sortingOrder": 27
+      },
+      "hearts-q": {
+        "label": "Q of Hearts",
+        "image": "/i/cards-default/QH.svg",
+        "sortingOrder": 28
+      },
+      "hearts-k": {
+        "label": "K of Hearts",
+        "image": "/i/cards-default/KH.svg",
+        "sortingOrder": 29
+      },
+      "spades-a": {
+        "label": "A of Spades",
+        "image": "/i/cards-default/AS.svg",
+        "sortingOrder": 30
+      },
+      "spades-2": {
+        "label": "2 of Spades",
+        "image": "/i/cards-default/2S.svg",
+        "sortingOrder": 31
+      },
+      "spades-3": {
+        "label": "3 of Spades",
+        "image": "/i/cards-default/3S.svg",
+        "sortingOrder": 32
+      },
+      "spades-4": {
+        "label": "4 of Spades",
+        "image": "/i/cards-default/4S.svg",
+        "sortingOrder": 33
+      },
+      "spades-5": {
+        "label": "5 of Spades",
+        "image": "/i/cards-default/5S.svg",
+        "sortingOrder": 34
+      },
+      "spades-6": {
+        "label": "6 of Spades",
+        "image": "/i/cards-default/6S.svg",
+        "sortingOrder": 35
+      },
+      "spades-7": {
+        "label": "7 of Spades",
+        "image": "/i/cards-default/7S.svg",
+        "sortingOrder": 36
+      },
+      "spades-8": {
+        "label": "8 of Spades",
+        "image": "/i/cards-default/8S.svg",
+        "sortingOrder": 37
+      },
+      "spades-9": {
+        "label": "9 of Spades",
+        "image": "/i/cards-default/9S.svg",
+        "sortingOrder": 38
+      },
+      "spades-10": {
+        "label": "10 of Spades",
+        "image": "/i/cards-default/TS.svg",
+        "sortingOrder": 39
+      },
+      "spades-j": {
+        "label": "J of Spades",
+        "image": "/i/cards-default/JS.svg",
+        "sortingOrder": 40
+      },
+      "spades-q": {
+        "label": "Q of Spades",
+        "image": "/i/cards-default/QS.svg",
+        "sortingOrder": 41
+      },
+      "spades-k": {
+        "label": "K of Spades",
+        "image": "/i/cards-default/KS.svg",
+        "sortingOrder": 42
+      },
+      "clubs-a": {
+        "label": "A of Clubs",
+        "image": "/i/cards-default/AC.svg",
+        "sortingOrder": 43
+      },
+      "clubs-2": {
+        "label": "2 of Clubs",
+        "image": "/i/cards-default/2C.svg",
+        "sortingOrder": 44
+      },
+      "clubs-3": {
+        "label": "3 of Clubs",
+        "image": "/i/cards-default/3C.svg",
+        "sortingOrder": 45
+      },
+      "clubs-4": {
+        "label": "4 of Clubs",
+        "image": "/i/cards-default/4C.svg",
+        "sortingOrder": 46
+      },
+      "clubs-5": {
+        "label": "5 of Clubs",
+        "image": "/i/cards-default/5C.svg",
+        "sortingOrder": 47
+      },
+      "clubs-6": {
+        "label": "6 of Clubs",
+        "image": "/i/cards-default/6C.svg",
+        "sortingOrder": 48
+      },
+      "clubs-7": {
+        "label": "7 of Clubs",
+        "image": "/i/cards-default/7C.svg",
+        "sortingOrder": 49
+      },
+      "clubs-8": {
+        "label": "8 of Clubs",
+        "image": "/i/cards-default/8C.svg",
+        "sortingOrder": 50
+      },
+      "clubs-9": {
+        "label": "9 of Clubs",
+        "image": "/i/cards-default/9C.svg",
+        "sortingOrder": 51
+      },
+      "clubs-10": {
+        "label": "10 of Clubs",
+        "image": "/i/cards-default/TC.svg",
+        "sortingOrder": 52
+      },
+      "clubs-j": {
+        "label": "J of Clubs",
+        "image": "/i/cards-default/JC.svg",
+        "sortingOrder": 53
+      },
+      "clubs-q": {
+        "label": "Q of Clubs",
+        "image": "/i/cards-default/QC.svg",
+        "sortingOrder": 54
+      },
+      "clubs-k": {
+        "label": "K of Clubs",
+        "image": "/i/cards-default/KC.svg",
+        "sortingOrder": 55
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "rgb(171,169,169)",
+            "width": 120,
+            "height": 168,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 120,
+            "height": 168,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 120,
+      "height": 168,
+      "enlarge": 3
+    }
+  },
+  "3bba6354-8bcf-4368-bc14-cdbd114817ee": {
+    "id": "3bba6354-8bcf-4368-bc14-cdbd114817ee",
+    "z": 43870,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "144dc07f-de96-4044-913c-e8612964a7a6": {
+    "id": "144dc07f-de96-4044-913c-e8612964a7a6",
+    "x": 1465,
+    "y": 70,
+    "z": 15110,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "e1d8bed1-0fd2-4192-afac-2dbe40a14948": {
+    "id": "e1d8bed1-0fd2-4192-afac-2dbe40a14948",
+    "z": 43933,
+    "type": "card",
+    "deck": "a2815f1d-ea1c-4f52-899a-ca0eff080c3e",
+    "cardType": "joker-red",
+    "parent": "rj80"
+  },
+  "d7a2d7df-5f4f-4bb5-87ba-17147ef2ebf3": {
+    "id": "d7a2d7df-5f4f-4bb5-87ba-17147ef2ebf3",
+    "z": 43872,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "199cc2ab-512f-4e49-b0dc-a32374f2bbcf": {
+    "id": "199cc2ab-512f-4e49-b0dc-a32374f2bbcf",
+    "z": 43874,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "e21b80a5-c9ef-4a6f-bc3b-963cd62263c7": {
+    "id": "e21b80a5-c9ef-4a6f-bc3b-963cd62263c7",
+    "z": 43913,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "diamonds-2",
+    "parent": "ajt1"
+  },
+  "b7279ec5-2fa0-426d-81d0-2fd771753852": {
+    "id": "b7279ec5-2fa0-426d-81d0-2fd771753852",
+    "z": 43918,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "diamonds-5",
+    "parent": "ajt1"
+  },
+  "44a3dab9-b6b0-4962-b544-62291d6e5419": {
+    "id": "44a3dab9-b6b0-4962-b544-62291d6e5419",
+    "x": 373,
+    "y": 548,
+    "z": 32109,
+    "type": "card",
+    "deck": "000476ba-47ed-4d3c-b9bc-7ebb2e868e33",
+    "cardType": "type-00dd86ea-745e-4568-b200-979ed6f1376e",
+    "resetProperties": {
+      "x": 373,
+      "y": 548
+    }
+  },
+  "08d8c9cd-4b98-46fa-b35f-700bb730b090": {
+    "id": "08d8c9cd-4b98-46fa-b35f-700bb730b090",
+    "x": 1444.44,
+    "y": 397.22,
+    "z": 8711,
+    "type": "card",
+    "deck": "48b00a56-c562-4abb-a6e9-2490ca1d4d63",
+    "cardType": "type-3598c380-672a-4903-912a-44dabf45a47d",
+    "movable": false
+  },
+  "015a8ef9-e40d-4ac8-a941-d840461c9b22_decrementButton": {
+    "id": "015a8ef9-e40d-4ac8-a941-d840461c9b22_decrementButton",
+    "parent": "015a8ef9-e40d-4ac8-a941-d840461c9b22",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "015a8ef9-e40d-4ac8-a941-d840461c9b22",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "015a8ef9-e40d-4ac8-a941-d840461c9b22_incrementButton": {
+    "id": "015a8ef9-e40d-4ac8-a941-d840461c9b22_incrementButton",
+    "parent": "015a8ef9-e40d-4ac8-a941-d840461c9b22",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "015a8ef9-e40d-4ac8-a941-d840461c9b22",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "015a8ef9-e40d-4ac8-a941-d840461c9b22": {
+    "id": "015a8ef9-e40d-4ac8-a941-d840461c9b22",
+    "x": 707.72,
+    "y": 947.96,
+    "z": 15110,
+    "type": "label",
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "text": 0,
+    "editable": true
+  },
+  "1358e35b-1148-4eea-a998-3142dcc35cf4": {
+    "id": "1358e35b-1148-4eea-a998-3142dcc35cf4",
+    "z": 43876,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "7bf9c49e-b4c6-4084-a84a-813de8651ba6": {
+    "id": "7bf9c49e-b4c6-4084-a84a-813de8651ba6",
+    "x": 508,
+    "y": 633,
+    "z": 32108,
+    "type": "card",
+    "deck": "000476ba-47ed-4d3c-b9bc-7ebb2e868e33",
+    "cardType": "type-10b4f284-f17a-41a9-9921-7899cfe31009",
+    "resetProperties": {
+      "x": 508,
+      "y": 633
+    }
+  },
+  "f146044b-d12a-4bcb-a228-b82362c23491": {
+    "id": "f146044b-d12a-4bcb-a228-b82362c23491",
+    "z": 43932,
+    "type": "card",
+    "deck": "a2815f1d-ea1c-4f52-899a-ca0eff080c3e",
+    "cardType": "joker-black",
+    "parent": "rj80"
+  },
+  "02c0a83d-da94-461e-97ac-169e1bcd92df": {
+    "id": "02c0a83d-da94-461e-97ac-169e1bcd92df",
+    "x": 796.12,
+    "y": 788.33,
+    "z": 15610,
+    "type": "deck",
+    "cardTypes": {
+      "type-00dd86ea-745e-4568-b200-979ed6f1376e": {
+        "image": "/assets/-966254482_21322",
+        "label": "Ultra Mint",
+        "sortingOrder": 1
+      },
+      "type-47039533-6720-4446-b7b8-49d625e62e14": {
+        "image": "/assets/-1733149292_18290",
+        "label": "Sad Jessa",
+        "sortingOrder": 2
+      },
+      "type-9d13ce1a-87d7-44da-94c4-a4597fd3cb3b": {
+        "image": "/assets/1816127989_18432",
+        "label": "Sad Penny",
+        "sortingOrder": 3
+      },
+      "type-9bb0e0b1-9411-4f59-9d3b-c486d6cae554": {
+        "image": "/assets/193074908_20937",
+        "label": "Sad Link",
+        "sortingOrder": 4
+      },
+      "type-10b4f284-f17a-41a9-9921-7899cfe31009": {
+        "image": "/assets/1276486332_14178",
+        "label": "Sad Spiff",
+        "sortingOrder": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 75,
+            "height": 75,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 75,
+            "height": 75,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 75,
+      "height": 75
+    }
+  },
+  "499fa1a9-ea05-4448-ab6e-9cc26020d91d": {
+    "id": "499fa1a9-ea05-4448-ab6e-9cc26020d91d",
+    "z": 43929,
+    "type": "card",
+    "deck": "5793b558-86b1-498b-bf0c-313b0453c4ab",
+    "cardType": "joker-black",
+    "parent": "2yur"
+  },
+  "da2c73c4-8d70-448b-920b-2a76e1632cd5": {
+    "id": "da2c73c4-8d70-448b-920b-2a76e1632cd5",
+    "z": 43949,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-q",
+    "parent": "4ynv"
+  },
+  "753a1bf5-2897-4160-a092-4f2c4a94c5c3": {
+    "id": "753a1bf5-2897-4160-a092-4f2c4a94c5c3",
+    "x": 1320.14,
+    "y": 807.18,
+    "z": 10025,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "9bd24c80-d207-44d5-85bf-1e59481c91c5": {
+    "id": "9bd24c80-d207-44d5-85bf-1e59481c91c5",
+    "z": 43878,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "a3bbd3a8-f6a7-49cb-a283-3f0a1f73f2de": {
+    "id": "a3bbd3a8-f6a7-49cb-a283-3f0a1f73f2de",
+    "z": 43909,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "type-5149f018-9995-449f-a271-25cce8887bbc",
+    "parent": "ajt1"
+  },
+  "62cab4fe-4eaf-43f1-83d5-231119b04674": {
+    "id": "62cab4fe-4eaf-43f1-83d5-231119b04674",
+    "x": 1181.42,
+    "y": 72.67,
+    "z": 15107,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "0443a1f8-6eee-4100-b485-5805cf22ae2d": {
+    "id": "0443a1f8-6eee-4100-b485-5805cf22ae2d",
+    "z": 43880,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "e4b01650-e368-458d-901f-425daa6834eb": {
+    "id": "e4b01650-e368-458d-901f-425daa6834eb",
+    "x": 412,
+    "y": 635,
+    "z": 32107,
+    "type": "card",
+    "deck": "000476ba-47ed-4d3c-b9bc-7ebb2e868e33",
+    "cardType": "type-9bb0e0b1-9411-4f59-9d3b-c486d6cae554",
+    "resetProperties": {
+      "x": 412,
+      "y": 635
+    }
+  },
+  "d1d3baac-2572-47dc-93b3-b1921e1bf5fa": {
+    "id": "d1d3baac-2572-47dc-93b3-b1921e1bf5fa",
+    "x": 1470,
+    "y": 357,
+    "z": 30916,
+    "type": "spinner",
+    "options": [
+      1,
+      2,
+      3
+    ],
+    "value": 2,
+    "angle": 2755,
+    "movable": false
+  },
+  "2bcebbe4-e78c-4ae2-be09-f65eadb19609": {
+    "id": "2bcebbe4-e78c-4ae2-be09-f65eadb19609",
+    "z": 43882,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "fa8c7ce7-0a2b-4e0d-ab43-ed31db528d3f": {
+    "id": "fa8c7ce7-0a2b-4e0d-ab43-ed31db528d3f",
+    "z": 35608,
+    "type": "card",
+    "deck": "fdb31939-04b5-49a1-86af-f4d284031653",
+    "cardType": "diamonds-a",
+    "resetProperties": {
+      "activeFace": 1,
+      "parent": "753a1bf5-2897-4160-a092-4f2c4a94c5c3"
+    },
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "753a1bf5-2897-4160-a092-4f2c4a94c5c3"
+  },
+  "8799c787-cb26-4118-85fa-be4a0848a189": {
+    "id": "8799c787-cb26-4118-85fa-be4a0848a189",
+    "z": 35610,
+    "type": "card",
+    "deck": "fdb31939-04b5-49a1-86af-f4d284031653",
+    "cardType": "diamonds-2",
+    "resetProperties": {
+      "activeFace": 1,
+      "parent": "d7b3e64b-0220-4ea0-9510-e7defe0a000f"
+    },
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "d7b3e64b-0220-4ea0-9510-e7defe0a000f"
+  },
+  "8e0408f0-2541-44d7-b2e6-221c9c912afe": {
+    "id": "8e0408f0-2541-44d7-b2e6-221c9c912afe",
+    "z": 43884,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "6f7ee922-ebea-4ff4-881c-4739089627d7": {
+    "id": "6f7ee922-ebea-4ff4-881c-4739089627d7",
+    "z": 43886,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "d89c80a9-f1ae-4c56-b8ba-c258e0105e20": {
+    "id": "d89c80a9-f1ae-4c56-b8ba-c258e0105e20",
+    "x": 1544,
+    "y": 457,
+    "z": 8677,
+    "type": "card",
+    "deck": "48b00a56-c562-4abb-a6e9-2490ca1d4d63",
+    "cardType": "type-275c7b75-9623-45bf-9e45-97fc2ffa2c4e",
+    "movable": false
+  },
+  "8002c40b-11b6-4689-bc12-c1a1e0059149": {
+    "id": "8002c40b-11b6-4689-bc12-c1a1e0059149",
+    "z": 43942,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-5",
+    "parent": "4ynv"
+  },
+  "c3a01950-55b0-4238-814e-a37452f8b791": {
+    "id": "c3a01950-55b0-4238-814e-a37452f8b791",
+    "x": 1178.98,
+    "y": 624.67,
+    "z": 10029,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "722cff07-60fe-4a79-b54e-714b637bd1be": {
+    "id": "722cff07-60fe-4a79-b54e-714b637bd1be",
+    "z": 43888,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "deck": "buckDeck",
+    "parent": "uac2"
+  },
+  "332a14c0-c294-4e50-9603-d19ac5095cdc": {
+    "id": "332a14c0-c294-4e50-9603-d19ac5095cdc",
+    "z": 43981,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "diamonds-9",
+    "parent": "qcm4"
+  },
+  "720b0cb2-b25d-4a1a-a41d-7710ab66f2f7": {
+    "id": "720b0cb2-b25d-4a1a-a41d-7710ab66f2f7",
+    "z": 43890,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "24c53f60-f8d9-457a-967b-01989278d5f3": {
+    "id": "24c53f60-f8d9-457a-967b-01989278d5f3",
+    "z": 43959,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-3",
+    "parent": "4ynv"
+  },
+  "eea031f4-efc4-404f-8c8c-6b880d66e88b": {
+    "id": "eea031f4-efc4-404f-8c8c-6b880d66e88b",
+    "z": 43953,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-9",
+    "parent": "4ynv"
+  },
+  "e953ab3a-40ad-443a-85b1-b70409a421b3": {
+    "id": "e953ab3a-40ad-443a-85b1-b70409a421b3",
+    "z": -19931,
+    "image": "/assets/2133144713_423608",
+    "movable": false,
+    "layer": -4,
+    "width": 1600,
+    "height": 1000,
+    "movableInEdit": false
+  },
+  "56bfdac6-e22f-4be5-bba3-57b0ab4d6bc6": {
+    "id": "56bfdac6-e22f-4be5-bba3-57b0ab4d6bc6",
+    "z": 43892,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "c7d142fa-4fbd-4375-a069-c653f01d6719": {
+    "id": "c7d142fa-4fbd-4375-a069-c653f01d6719",
+    "z": 43934,
+    "type": "card",
+    "deck": "a2815f1d-ea1c-4f52-899a-ca0eff080c3e",
+    "cardType": "diamonds-3",
+    "parent": "rj80"
+  },
+  "037f321b-65a5-4f45-a0cb-33299342359d": {
+    "id": "037f321b-65a5-4f45-a0cb-33299342359d",
+    "z": 43894,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "deck": "buckDeck",
+    "parent": "uac2"
+  },
+  "8e5499e9-788b-42b3-a003-6a9d19109d3f": {
+    "id": "8e5499e9-788b-42b3-a003-6a9d19109d3f",
+    "x": 1041.92,
+    "y": 624.03,
+    "z": 10031,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "c864b0d7-b6f4-43d0-81ac-67483f425acb": {
+    "id": "c864b0d7-b6f4-43d0-81ac-67483f425acb",
+    "z": 35396,
+    "type": "card",
+    "deck": "02c0a83d-da94-461e-97ac-169e1bcd92df",
+    "cardType": "type-9d13ce1a-87d7-44da-94c4-a4597fd3cb3b",
+    "resetProperties": {
+      "x": 1205,
+      "y": 850,
+      "layer": -1,
+      "parent": null
+    },
+    "x": 1205,
+    "y": 850,
+    "layer": -1
+  },
+  "b690be66-ef1c-4b8b-8728-5f919a99e2bb": {
+    "id": "b690be66-ef1c-4b8b-8728-5f919a99e2bb",
+    "z": 43926,
+    "type": "card",
+    "deck": "5793b558-86b1-498b-bf0c-313b0453c4ab",
+    "cardType": "type-e5fa07a6-5114-4416-84ba-b8dac5599eb1",
+    "parent": "2yur"
+  },
+  "7c466036-eb48-4c20-8eb5-d4d81fcddb5a": {
+    "id": "7c466036-eb48-4c20-8eb5-d4d81fcddb5a",
+    "z": 43896,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "dac46ae2-7ee0-4dbc-8dc5-3f9e37449af1": {
+    "id": "dac46ae2-7ee0-4dbc-8dc5-3f9e37449af1",
+    "z": 43898,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "uac2",
+    "deck": "buckDeck"
+  },
+  "1fa77bef-9b13-4e60-9bd4-7a5751ae712c": {
+    "id": "1fa77bef-9b13-4e60-9bd4-7a5751ae712c",
+    "z": 43946,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-9",
+    "parent": "4ynv"
+  },
+  "53befb3a-1bf8-4bfa-ba96-bfae7d4c3661": {
+    "id": "53befb3a-1bf8-4bfa-ba96-bfae7d4c3661",
+    "z": 43950,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-k",
+    "parent": "4ynv"
+  },
+  "b1085e6a-35eb-4490-839e-d422cb203e05": {
+    "id": "b1085e6a-35eb-4490-839e-d422cb203e05",
+    "z": 43944,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "joker-blue",
+    "parent": "4ynv"
+  },
+  "24ead9ba-9d5d-4410-acbb-f65801603603": {
+    "id": "24ead9ba-9d5d-4410-acbb-f65801603603",
+    "z": 43989,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "joker-blue",
+    "parent": "qcm4"
+  },
+  "74a1ccaa-9934-4e4f-8a40-e25301e8c104": {
+    "id": "74a1ccaa-9934-4e4f-8a40-e25301e8c104",
+    "z": 43952,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-7",
+    "parent": "4ynv"
+  },
+  "1fb8aeff-df2f-48a8-ae50-351840e52c56": {
+    "id": "1fb8aeff-df2f-48a8-ae50-351840e52c56",
+    "z": 43958,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-4",
+    "parent": "4ynv"
+  },
+  "1532272f-0bb7-4da1-b1f1-479bf06a4a31": {
+    "id": "1532272f-0bb7-4da1-b1f1-479bf06a4a31",
+    "z": 43937,
+    "type": "card",
+    "deck": "a2815f1d-ea1c-4f52-899a-ca0eff080c3e",
+    "cardType": "diamonds-2",
+    "parent": "rj80"
+  },
+  "a2e779f2-8044-44f4-b586-b679b7bfeaea": {
+    "id": "a2e779f2-8044-44f4-b586-b679b7bfeaea",
+    "z": 43968,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "u3bj",
+    "deck": "buckDeck"
+  },
+  "6f6502d9-cb8b-4f2c-b249-168968ffdebf": {
+    "id": "6f6502d9-cb8b-4f2c-b249-168968ffdebf",
+    "z": 43970,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "u3bj",
+    "deck": "buckDeck"
+  },
+  "32f0c4c7-9eaf-425d-b966-dcb167e62a00": {
+    "id": "32f0c4c7-9eaf-425d-b966-dcb167e62a00",
+    "z": 43972,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "u3bj",
+    "deck": "buckDeck"
+  },
+  "def90625-5b13-42e3-9b0f-b43e124394ef": {
+    "id": "def90625-5b13-42e3-9b0f-b43e124394ef",
+    "z": 43963,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-4",
+    "parent": "4ynv"
+  },
+  "bc5e821c-a498-4027-95e8-571d6c6ce333": {
+    "id": "bc5e821c-a498-4027-95e8-571d6c6ce333",
+    "z": 43917,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "type-cf426dd1-a33c-41a1-9428-a574c09de83d",
+    "parent": "ajt1"
+  },
+  "f9a1ec23-6290-44a1-9b23-e959775e9760": {
+    "id": "f9a1ec23-6290-44a1-9b23-e959775e9760",
+    "z": 43939,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "diamonds-3",
+    "parent": "4ynv"
+  },
+  "31244e28-fe7e-4005-bd71-23289c1226c6": {
+    "id": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "x": 21,
+    "y": 45,
+    "z": 15278,
+    "type": "deck",
+    "cardTypes": {
+      "joker-black": {
+        "label": "Griswald's Crusty Beard",
+        "image": "/i/cards-default/2J.svg",
+        "text2": "Strength 2",
+        "image1": "/assets/-595700657_346000",
+        "sortingOrder": 1
+      },
+      "joker-red": {
+        "label": "Just a Little Guy",
+        "image": "/i/cards-default/1J.svg",
+        "text2": "Strength 3",
+        "image1": "/assets/-1729223579_82788",
+        "sortingOrder": 2
+      },
+      "joker-blue": {
+        "label": "Robo Squeep",
+        "image": "/i/cards-default/1J.svg",
+        "text2": "Strength 4",
+        "image1": "/assets/1028301211_191648",
+        "sortingOrder": 3
+      },
+      "diamonds-a": {
+        "label": "Gootus the Courageous",
+        "image": "/i/cards-default/AD.svg",
+        "text2": "Strength 5",
+        "image1": "/assets/544888322_275743",
+        "sortingOrder": 4
+      },
+      "diamonds-2": {
+        "label": "Idiot Boksen",
+        "image": "/i/cards-default/2D.svg",
+        "text2": "Strength 6",
+        "image1": "/assets/-1310908510_263216",
+        "sortingOrder": 5
+      },
+      "diamonds-3": {
+        "label": "Cough Noir",
+        "image": "/i/cards-default/3D.svg",
+        "text2": "Strength 7",
+        "image1": "/assets/113700149_252662",
+        "sortingOrder": 6
+      },
+      "diamonds-4": {
+        "label": "Funkeemon Keycard",
+        "image": "/i/cards-default/4D.svg",
+        "text2": "Strength 8",
+        "image1": "/assets/-1021969519_309580",
+        "sortingOrder": 7
+      },
+      "diamonds-5": {
+        "label": "Not That Darby",
+        "image": "/i/cards-default/5D.svg",
+        "text2": "Strength 9",
+        "image1": "/assets/1338434384_165713",
+        "sortingOrder": 8
+      },
+      "diamonds-6": {
+        "label": "Pete Zah",
+        "image": "/i/cards-default/6D.svg",
+        "text1": "Griswald's Crusty Beard",
+        "text2": "Strength 2",
+        "image1": "/assets/1266549581_204193",
+        "sortingOrder": 9
+      },
+      "diamonds-7": {
+        "label": "Shy Bean",
+        "image": "/i/cards-default/7D.svg",
+        "text1": "Just a Little Guy",
+        "text2": "Strength 2",
+        "image1": "/assets/977011633_207882",
+        "sortingOrder": 10
+      },
+      "diamonds-8": {
+        "label": "Vee in 20 Years",
+        "image": "/i/cards-default/8D.svg",
+        "text1": "Funkeemon Keycard",
+        "text2": "Strength 3",
+        "image1": "/assets/-1583655918_175137",
+        "sortingOrder": 11
+      },
+      "diamonds-9": {
+        "label": "Handsome Man",
+        "image": "/i/cards-default/9D.svg",
+        "text1": "Mr. Beetle",
+        "text2": "Strength 3",
+        "image1": "/assets/1108734691_207480",
+        "sortingOrder": 12
+      },
+      "diamonds-10": {
+        "label": "Griswald's Combover",
+        "image": "/i/cards-default/TD.svg",
+        "text1": "Griswald's Combover",
+        "text2": "Strength 4",
+        "image1": "/assets/-675736385_243943",
+        "sortingOrder": 13
+      },
+      "diamonds-j": {
+        "label": "Rhinosuave",
+        "image": "/i/cards-default/JD.svg",
+        "text1": "Rhinosuave",
+        "text2": "Strength 4",
+        "image1": "/assets/-1841947889_296167",
+        "sortingOrder": 14
+      },
+      "diamonds-q": {
+        "label": "Oyon",
+        "image": "/i/cards-default/QD.svg",
+        "text1": "Oyon",
+        "text2": "Strength 4",
+        "image1": "/assets/1004483955_265953",
+        "sortingOrder": 15
+      },
+      "diamonds-k": {
+        "label": "Godzuki",
+        "image": "/i/cards-default/KD.svg",
+        "text1": "Beelzebud",
+        "text2": "Strength 5",
+        "image1": "/assets/292785756_243945",
+        "sortingOrder": 16
+      },
+      "hearts-a": {
+        "label": "Black Hole Guppy",
+        "image": "/i/cards-default/AH.svg",
+        "text1": "Aiyai Captain",
+        "text2": "Strength 5",
+        "image1": "/assets/-1374009992_253895",
+        "sortingOrder": 17
+      },
+      "hearts-2": {
+        "label": "Beelzebud",
+        "image": "/i/cards-default/2H.svg",
+        "text1": "Griswald's Roller Blades",
+        "text2": "Strength 6",
+        "image1": "/assets/493660724_231373",
+        "sortingOrder": 18
+      },
+      "hearts-3": {
+        "label": "Aiyai Captain",
+        "image": "/i/cards-default/3H.svg",
+        "text1": "Dark Justice",
+        "text2": "Strength 9",
+        "image1": "/assets/-353615740_145074",
+        "sortingOrder": 19
+      },
+      "hearts-4": {
+        "label": "Dainty Shocks",
+        "image": "/i/cards-default/4H.svg",
+        "text1": "Pete Zah",
+        "text2": "Strength 3",
+        "image1": "/assets/-196611918_340970",
+        "sortingOrder": 20
+      },
+      "hearts-5": {
+        "label": "Darrip",
+        "image": "/i/cards-default/5H.svg",
+        "image1": "/assets/1293755393_302675",
+        "sortingOrder": 21
+      },
+      "hearts-6": {
+        "label": "Kabuto Gold",
+        "image": "/i/cards-default/6H.svg",
+        "image1": "/assets/-1206879973_212949",
+        "sortingOrder": 22
+      },
+      "hearts-7": {
+        "label": "Griswald's Roller Blades",
+        "image": "/i/cards-default/7H.svg",
+        "image1": "/assets/1406731326_248876",
+        "sortingOrder": 23
+      },
+      "hearts-8": {
+        "label": "He Who Flattened",
+        "image": "/i/cards-default/8H.svg",
+        "image1": "/assets/12074069_244532",
+        "sortingOrder": 24
+      },
+      "hearts-9": {
+        "label": "El Bañana",
+        "image": "/i/cards-default/9H.svg",
+        "image1": "/assets/-120849922_281094",
+        "sortingOrder": 25
+      },
+      "hearts-10": {
+        "label": "Fuzzy Tuber",
+        "image": "/i/cards-default/TH.svg",
+        "image1": "/assets/-1014546470_225017",
+        "sortingOrder": 26
+      },
+      "hearts-j": {
+        "label": "Froark",
+        "image": "/i/cards-default/JH.svg",
+        "image1": "/assets/1796475015_261155",
+        "sortingOrder": 27
+      },
+      "hearts-q": {
+        "label": "Zengou the Honorable",
+        "image": "/i/cards-default/QH.svg",
+        "image1": "/assets/-224876490_232417",
+        "sortingOrder": 28
+      },
+      "hearts-k": {
+        "label": "Slendelien",
+        "image": "/i/cards-default/KH.svg",
+        "image1": "/assets/-256783175_280843",
+        "sortingOrder": 29
+      },
+      "spades-a": {
+        "label": "Dark Justice",
+        "image": "/i/cards-default/AS.svg",
+        "image1": "/assets/-788835870_173741",
+        "sortingOrder": 30
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-489619505_291484",
+            "color": "rgb(91,242,43)",
+            "width": 120,
+            "height": 168
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 168,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 168,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 120,
+      "height": 168
+    },
+    "parent": "store"
+  },
+  "eef5fe56-02de-4e54-af73-e0955b9f0e33": {
+    "id": "eef5fe56-02de-4e54-af73-e0955b9f0e33",
+    "x": 774.88,
+    "y": 592.05,
+    "z": 9963,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "1981d9c1-51b8-42e9-88fc-f3fa4fe7890c": {
+    "id": "1981d9c1-51b8-42e9-88fc-f3fa4fe7890c",
+    "z": 43954,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-k",
+    "parent": "4ynv"
+  },
+  "e02436c1-ccc8-4bc3-a772-9f8620043062": {
+    "id": "e02436c1-ccc8-4bc3-a772-9f8620043062",
+    "x": 1319.35,
+    "y": 71.35,
+    "z": 15108,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "5ac3ca51-f824-4309-a878-16770e24b27e": {
+    "id": "5ac3ca51-f824-4309-a878-16770e24b27e",
+    "z": 43928,
+    "type": "card",
+    "deck": "5793b558-86b1-498b-bf0c-313b0453c4ab",
+    "cardType": "diamonds-2",
+    "parent": "2yur"
+  },
+  "b0ee5abf-b530-4605-98ec-03784f9c653f": {
+    "id": "b0ee5abf-b530-4605-98ec-03784f9c653f",
+    "z": 43974,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "u3bj",
+    "deck": "buckDeck"
+  },
+  "410f97cd-a89f-4668-87b0-315cd255bc08": {
+    "id": "410f97cd-a89f-4668-87b0-315cd255bc08",
+    "z": 43915,
+    "type": "card",
+    "deck": "7b1331c5-cdb3-420e-81a7-41282a47c4bc",
+    "cardType": "diamonds-3",
+    "parent": "ajt1"
+  },
+  "67977246-ce28-42b4-9b00-2ed0bad31cff": {
+    "id": "67977246-ce28-42b4-9b00-2ed0bad31cff",
+    "x": 1041.51,
+    "y": 805.9,
+    "z": 10030,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 128,
+    "height": 176
+  },
+  "8e10b3b5-934c-4b23-81cb-13bed82227c8": {
+    "id": "8e10b3b5-934c-4b23-81cb-13bed82227c8",
+    "z": 43976,
+    "type": "card",
+    "cardType": "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48",
+    "parent": "u3bj",
+    "deck": "buckDeck"
+  },
+  "ea1a67db-5955-43af-9ded-eb766b1a52b4": {
+    "id": "ea1a67db-5955-43af-9ded-eb766b1a52b4",
+    "z": 43962,
+    "type": "card",
+    "deck": "31244e28-fe7e-4005-bd71-23289c1226c6",
+    "cardType": "hearts-a",
+    "parent": "4ynv"
+  },
+  "76p3": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting board ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will reset the board and start a new game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Restart",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "62cab4fe-4eaf-43f1-83d5-231119b04674",
+          "144dc07f-de96-4044-913c-e8612964a7a6",
+          "eef5fe56-02de-4e54-af73-e0955b9f0e33",
+          "store",
+          "buckPile"
+        ],
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "62cab4fe-4eaf-43f1-83d5-231119b04674",
+          "144dc07f-de96-4044-913c-e8612964a7a6",
+          "eef5fe56-02de-4e54-af73-e0955b9f0e33",
+          "store"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "62cab4fe-4eaf-43f1-83d5-231119b04674",
+          "144dc07f-de96-4044-913c-e8612964a7a6",
+          "eef5fe56-02de-4e54-af73-e0955b9f0e33",
+          "store"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ego"
+        ],
+        "property": "text",
+        "value": 10
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "015a8ef9-e40d-4ac8-a941-d840461c9b22",
+          "0978bdb2-0492-4e89-9711-8b5b1ca8be2f"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "MOVE",
+        "from": "buckPile",
+        "to": "buckBank",
+        "count": 5
+      },
+      {
+        "func": "MOVE",
+        "from": "62cab4fe-4eaf-43f1-83d5-231119b04674",
+        "to": "8e5499e9-788b-42b3-a003-6a9d19109d3f",
+        "face": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "144dc07f-de96-4044-913c-e8612964a7a6",
+        "to": "65117ad2-1fc2-4f8b-9dbc-2f6e242f7f6a",
+        "count": 6
+      },
+      {
+        "func": "MOVE",
+        "from": "store",
+        "to": [
+          "playground1"
+        ],
+        "count": 4
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "highlight25",
+          "highlight35",
+          "highlight40"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "x": 1567,
+    "y": 561,
+    "z": 30375,
+    "id": "76p3",
+    "width": 30,
+    "height": 30,
+    "classes": "symbols",
+    "text": "restart",
+    "css": "font-size: 28px; "
+  },
+  "2yur": {
+    "type": "pile",
+    "width": 120,
+    "height": 168,
+    "id": "2yur",
+    "z": 37005,
+    "parent": "62cab4fe-4eaf-43f1-83d5-231119b04674"
+  },
+  "rj80": {
+    "type": "pile",
+    "parent": "eef5fe56-02de-4e54-af73-e0955b9f0e33",
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 168,
+    "id": "rj80"
+  },
+  "buckPile": {
+    "type": "holder",
+    "id": "buckPile",
+    "x": 1340,
+    "y": 365,
+    "width": 70,
+    "height": 70,
+    "z": 15114,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "deck": "buckDeck"
+    }
+  },
+  "buckDeck": {
+    "type": "deck",
+    "id": "buckDeck",
+    "parent": "buckPile",
+    "x": 4,
+    "y": 4,
+    "z": 31655,
+    "cardDefaults": {
+      "width": 80,
+      "height": 72
+    },
+    "cardTypes": {
+      "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48": {
+        "image": "/assets/1552564581_7082",
+        "label": "Buck.png",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 72,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 80,
+            "height": 72,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ]
+  },
+  "uac2": {
+    "type": "pile",
+    "parent": "buckPile",
+    "x": 0,
+    "y": 0,
+    "width": 80,
+    "height": 72,
+    "id": "uac2"
+  },
+  "buckBank": {
+    "type": "holder",
+    "id": "buckBank",
+    "x": 167,
+    "y": 448,
+    "width": 70,
+    "height": 70,
+    "z": 15117,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "buckDeck"
+    }
+  },
+  "ajt1": {
+    "type": "pile",
+    "parent": "144dc07f-de96-4044-913c-e8612964a7a6",
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 168,
+    "id": "ajt1"
+  },
+  "playground1": {
+    "type": "holder",
+    "id": "playground1",
+    "x": 370,
+    "y": 25,
+    "z": 15119,
+    "width": 650,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 130,
+    "classes": "transparent",
+    "css": "border: 0px !important",
+    "layer": 2,
+    "dropLimit": 5
+  },
+  "playground2": {
+    "type": "holder",
+    "id": "playground2",
+    "x": 1020,
+    "y": 25,
+    "z": 15120,
+    "width": 120,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "fake1": {
+    "id": "fake1",
+    "x": 370,
+    "y": 25,
+    "width": 120,
+    "height": 168,
+    "borderRadius": 8,
+    "z": 35199,
+    "css": "background: white; ",
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -4
+  },
+  "fake2": {
+    "inheritFrom": "fake1",
+    "id": "fake2",
+    "x": 500,
+    "y": 25
+  },
+  "fake3": {
+    "inheritFrom": "fake1",
+    "id": "fake3",
+    "x": 630,
+    "y": 25
+  },
+  "fake4": {
+    "inheritFrom": "fake1",
+    "id": "fake4",
+    "x": 760,
+    "y": 25
+  },
+  "fake5": {
+    "inheritFrom": "fake1",
+    "id": "fake5",
+    "x": 890,
+    "y": 25
+  },
+  "off1": {
+    "type": "holder",
+    "id": "off1",
+    "x": -428,
+    "y": 30,
+    "z": 35205
+  },
+  "n0gp": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "playground2"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "commonFirstStepsRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "toBottomRoutine"
+          },
+          {
+            "func": "MOVE",
+            "from": "store",
+            "to": "playground1"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "commonFirstStepsRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "toBottomRoutine"
+          },
+          {
+            "func": "MOVE",
+            "from": "playground2",
+            "to": "playground1"
+          },
+          {
+            "func": "MOVE",
+            "from": "store",
+            "to": "playground2"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "property": "_ancestor",
+                "value": "playground2"
+              },
+              {
+                "func": "GET",
+                "collection": "DEFAULT",
+                "property": "z",
+                "aggregation": "min",
+                "variable": "bottomZ"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "z",
+                "value": "${bottomZ}",
+                "collection": "nextCard"
+              },
+              {
+                "func": "CALL",
+                "routine": "commonFirstStepsRoutine"
+              },
+              {
+                "func": "CALL",
+                "routine": "toBottomRoutine"
+              },
+              {
+                "func": "SET",
+                "collection": "nextCard",
+                "property": "parent",
+                "value": "off3"
+              },
+              {
+                "func": "MOVE",
+                "from": "off3",
+                "to": "playground1"
+              }
+            ]
+          },
+          {
+            "func": "MOVE",
+            "from": "store",
+            "to": "playground2"
+          }
+        ]
+      }
+    ],
+    "x": 1074,
+    "y": 256,
+    "z": 36412,
+    "id": "n0gp",
+    "text": "Cleanup",
+    "toBottomRoutine": [
+      {
+        "func": "MOVE",
+        "from": "store",
+        "to": "off2",
+        "count": 0
+      },
+      {
+        "func": "MOVE",
+        "from": "off1",
+        "to": "store",
+        "count": 0
+      },
+      {
+        "func": "MOVE",
+        "from": "off2",
+        "to": "store",
+        "count": 0
+      }
+    ],
+    "commonFirstStepsRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "playground1"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "z",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "off1"
+      }
+    ]
+  },
+  "store": {
+    "type": "holder",
+    "id": "store",
+    "x": 10.34,
+    "y": 23.62,
+    "width": 128,
+    "height": 176,
+    "z": 10511,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "off2": {
+    "type": "holder",
+    "id": "off2",
+    "x": -273,
+    "y": 30,
+    "z": 35206
+  },
+  "off3": {
+    "type": "holder",
+    "id": "off3",
+    "x": -140,
+    "y": 28,
+    "z": 35207
+  },
+  "86w1": {
+    "id": "86w1",
+    "z": 1,
+    "x": 917,
+    "y": 246,
+    "movable": false,
+    "movableInEdit": false,
+    "text": "If more than 6 cards, stack in the far right holder with oldest on bottom and newest on top. Click button.",
+    "width": 140
+  },
+  "4ynv": {
+    "type": "pile",
+    "parent": "store",
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 168,
+    "id": "4ynv"
+  },
+  "highlight25": {
+    "id": "highlight25",
+    "x": 1483,
+    "y": 530,
+    "width": 20,
+    "height": 20,
+    "z": 4,
+    "css": "background: #ff00ff60; ",
+    "movable": false,
+    "movableInEdit": false,
+    "scale": 0
+  },
+  "highlight35": {
+    "id": "highlight35",
+    "x": 1509,
+    "y": 530,
+    "width": 20,
+    "height": 20,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background: #ff00ff60; ",
+    "scale": 0
+  },
+  "highlight40": {
+    "id": "highlight40",
+    "x": 1552,
+    "y": 530,
+    "width": 20,
+    "height": 20,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background: #ff00ff60; ",
+    "scale": 0
+  },
+  "ego": {
+    "type": "label",
+    "id": "ego",
+    "x": 1323.99,
+    "y": 522.31,
+    "width": 140,
+    "height": 44,
+    "z": 27617,
+    "css": "font-size: 30px;color:white",
+    "editable": true,
+    "text": 10,
+    "textChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "relation": ">=",
+        "operand2": 25,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "highlight25"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "relation": ">=",
+        "operand2": 35,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "highlight35"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "relation": ">=",
+        "operand2": 40,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "highlight40"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  "u3bj": {
+    "type": "pile",
+    "parent": "buckBank",
+    "x": 0,
+    "y": 0,
+    "width": 80,
+    "height": 72,
+    "id": "u3bj"
+  },
+  "qcm4": {
+    "type": "pile",
+    "parent": "65117ad2-1fc2-4f8b-9dbc-2f6e242f7f6a",
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 168,
+    "id": "qcm4"
+  }
+}

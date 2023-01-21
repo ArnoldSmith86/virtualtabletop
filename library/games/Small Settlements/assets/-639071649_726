@@ -1,0 +1,15 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+	<title>Monument 3x3</title>
+	<style>
+		.s0 { fill: #ef3c29;stroke: #ffffff;stroke-width: 5 } 
+		.s1 { fill: #6a3a35;stroke: #ffffff;stroke-width: 5 } 
+		.s2 { fill: #bbb09f;stroke: #ffffff;stroke-width: 5 } 
+		.s3 { fill: #fdbe3f;stroke: #ffffff;stroke-width: 5 } 
+		.s4 { fill: #209da6;stroke: #ffffff;stroke-width: 5 } 
+	</style>
+	<path id="Brick" class="s0" d="m100 200h100v100h-100z"/>
+	<path id="Wood" class="s1" d="m0 200h100v100h-100z"/>
+	<path id="Stone" class="s2" d="m200 100h100v100h-100z"/>
+	<path id="Wheat" class="s3" d="m100 100h100v100h-100z"/>
+	<path id="Glass" class="s4" d="m200 0h100v100h-100z"/>
+</svg>
