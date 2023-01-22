@@ -20,6 +20,7 @@ export class Timer extends Widget {
       paused: true,
       alert: false,
       alertSound: null,
+      alertSoundCount: 1,
       countdown: false,
       start: 0,
       end: null
@@ -100,9 +101,12 @@ export class Timer extends Widget {
 
     if(property == 'milliseconds') {
       await this.set('alert', this.get('end') !== null && ((this.get('countdown') && newValue<=this.get('end')) || (!this.get('countdown') && newValue>=this.get('end'))));
+      if (this.get('alertSoundCount') === 'repeat') {
+        this.get('alertSoundCount') = 999999;
+      }
       if (this.get('alertSound') && this.get('alert') && !this.soundState.soundPlayed) {
         this.soundState.soundPlayed = true;
-        this.set('audio','source: ' + this.get('alertSound') + ', type: audio/mpeg, maxVolume: 1.0, length: null, player: null');
+        this.set('audio','source: ' + this.get('alertSound') + ', type: audio/mpeg, maxVolume: 1.0, length: null, player: null, count: ' + this.get('alertSoundCount'));
       }
     }
 

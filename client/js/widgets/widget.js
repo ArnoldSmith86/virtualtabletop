@@ -759,9 +759,11 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null, repeat: 1 });
+        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null, count: 1 });
+        if(a.count === 'repeat')
+          a.count = 999999;
         if(a.source !== undefined) {
-          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player + ', repeat: ' + a.repeat );
+          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player + ', count: ' + a.count);
         }
       }
 
@@ -1749,7 +1751,7 @@ export class Widget extends StateManaged {
       const length = audioArray[7];
       const pName = audioArray[9];
       const repeat = audioArray[11];
-      let repeatCount = 1;
+      let repeatCount = Math.max(repeat, 0);
 
       if(pName == "null" || pName == playerName) {
         var audioElement = document.createElement('audio');
@@ -1759,7 +1761,9 @@ export class Widget extends StateManaged {
         audioElement.setAttribute('maxVolume', maxVolume);
         audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
         document.body.appendChild(audioElement);
-        audioElement.play();
+        if(repeat > 0) {
+          audioElement.play();
+        }
 
         if(length != "null") {
           setInterval(function(){
@@ -1771,9 +1775,8 @@ export class Widget extends StateManaged {
             }}, length);
         } else {
           audioElement.onended = function() {
-            if (repeatCount < repeat) {
-              repeatCount++;
-              audioElement.play();
+            if (repeatCount-- > 1) {
+                audioElement.play();
             } else {
               audioElement.pause();
               clearInterval();
