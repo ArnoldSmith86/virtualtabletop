@@ -759,9 +759,9 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
+        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null, repeat: 1 });
         if(a.source !== undefined) {
-          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player);
+          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player + ', repeat: ' + a.repeat );
         }
       }
 
@@ -1585,7 +1585,10 @@ export class Widget extends StateManaged {
           if(a.timer !== undefined) {
             if (this.isValidID(a.timer, problems)) {
               await w(a.timer, async widget=>{
-                if(widget.setMilliseconds)
+                if(widget.setMilliseconds) {
+                  if(a.mode === 'reset') {
+                    widget.reset();
+                  }}
                   await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
               });
             }
@@ -1745,6 +1748,8 @@ export class Widget extends StateManaged {
       const maxVolume = audioArray[5];
       const length = audioArray[7];
       const pName = audioArray[9];
+      const repeat = audioArray[11];
+      let repeatCount = 1;
 
       if(pName == "null" || pName == playerName) {
         var audioElement = document.createElement('audio');
@@ -1766,10 +1771,15 @@ export class Widget extends StateManaged {
             }}, length);
         } else {
           audioElement.onended = function() {
-            audioElement.pause();
-            clearInterval();
-            if(audioElement.parentNode)
-              audioElement.parentNode.removeChild(audioElement);
+            if (repeatCount < repeat) {
+              repeatCount++;
+              audioElement.play();
+            } else {
+              audioElement.pause();
+              clearInterval();
+              if(audioElement.parentNode)
+                audioElement.parentNode.removeChild(audioElement);
+            }
           };
           audioElement.onerror = function() {
             if(audioElement.parentNode)

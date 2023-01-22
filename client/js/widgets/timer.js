@@ -1,6 +1,11 @@
+const soundState = {
+  soundPlayed: false
+}
+
 export class Timer extends Widget {
   constructor(id) {
     super(id);
+    this.soundState = soundState;
 
     this.addDefaults({
       width: 74,
@@ -14,6 +19,7 @@ export class Timer extends Widget {
       precision: 1000,
       paused: true,
       alert: false,
+      alertSound: null,
       countdown: false,
       start: 0,
       end: null
@@ -85,11 +91,23 @@ export class Timer extends Widget {
     return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
   }
 
+  reset() {
+    this.soundState.soundPlayed = false;
+  }
+
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
 
-    if(property == 'milliseconds')
+    if(property == 'milliseconds') {
+        if(newValue === 0) {
+          this.reset();
+        }
       await this.set('alert', this.get('end') !== null && ((this.get('countdown') && newValue<=this.get('end')) || (!this.get('countdown') && newValue>=this.get('end'))));
+      if (this.get('alertSound') && this.get('alert') && !this.soundState.soundPlayed) {
+        this.soundState.soundPlayed = true;
+        this.set('audio','source: ' + this.get('alertSound') + ', type: audio/mpeg, maxVolume: 1.0, length: null, player: null');
+      }
+    }
 
     if(property == 'paused' && newValue !== true) {
       this.stopTimer();
