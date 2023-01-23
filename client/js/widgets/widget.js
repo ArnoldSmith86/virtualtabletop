@@ -1532,9 +1532,9 @@ export class Widget extends StateManaged {
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();
             });
-            if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
           }
+        if(jeRoutineLogging)
+          jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
             await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
