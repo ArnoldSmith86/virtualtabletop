@@ -71,15 +71,27 @@ class Dice extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
 
-    if(delta.options !== undefined || delta.shape3d !== undefined || delta.pipSymbols !== undefined)
+    let childNodesWereRecreated = false;
+    if(delta.options !== undefined || delta.shape3d !== undefined || delta.pipSymbols !== undefined) {
       this.createChildNodes();
+      childNodesWereRecreated = true;
+    } else {
+      let needsUpdate = false;
+      for(const o of this.options())
+        if(typeof o == 'object' && o !== null && typeof o.svgReplaces == 'object' && o.svgReplaces !== null)
+          for(const property of Object.values(o.svgReplaces))
+            if(delta[property] !== undefined)
+              needsUpdate = true;
+      this.createChildNodes();
+      childNodesWereRecreated = true;
+    }
 
     if(delta.rollCount !== undefined) {
       this.rollHash = funhash(this.get('id')+this.get('rollCount'));
       this.animate();
     }
 
-    if(delta.activeFace !== undefined || delta.options !== undefined || delta.pipSymbols !== undefined) {
+    if(delta.activeFace !== undefined || childNodesWereRecreated) {
       if(this.activeFaceElement !== undefined) {
         this.activeFaceElement.classList.remove('active');
       }
@@ -88,7 +100,7 @@ class Dice extends Widget {
         this.activeFaceElement.classList.add('active');
       this.previousActiveFace = this.activeFace();
     }
-    if(delta.rollCount !== undefined || delta.activeFace !== undefined || delta.options !== undefined || delta.shape3d !== undefined || delta.pipSymbols !== undefined)
+    if(delta.rollCount !== undefined || delta.activeFace !== undefined || childNodesWereRecreated)
       this.threeDfaces();
   }
 
@@ -109,7 +121,7 @@ class Dice extends Widget {
 
   async click(mode='respect') {
     if(!await super.click(mode)) {
-      await this.set('activeFace', Math.floor(Math.random()*this.get('options').length));
+      await this.set('activeFace', Math.floor(Math.random()*this.options().length));
       await this.set('rollCount', this.get('rollCount')+1);
     }
   }
@@ -118,7 +130,7 @@ class Dice extends Widget {
     this.facesElement.innerHTML = '';
 
     this.faceElements = [];
-    const options = this.get('options');
+    const options = this.options();
     const polygonBorder = document.createElement('span');
     polygonBorder.className = "polygonBorder";
     for(const i in options) {
@@ -135,8 +147,18 @@ class Dice extends Widget {
         } else {
           face.textContent = content.text || content.value || '';
         }
-        if(content.image)
-          face.style.backgroundImage = `url("${mapAssetURLs(content.image)}")`;
+        if(content.image) {
+          let image = mapAssetURLs(content.image);
+
+          if(typeof content.svgReplaces == 'object' && content.svgReplaces !== null) {
+            const replaces = {};
+            for(const key in content.svgReplaces)
+              replaces[key] = this.get(content.svgReplaces[key]);
+            image = getSVG(content.image, replaces, _=>face.style.backgroundImage = `url("${getSVG(content.image, replaces)}")`);
+          }
+
+          face.style.backgroundImage = `url("${image}")`;
+        }
       } else if(typeof content == 'number' && content>=1 && content<=9 && this.pipSymbols()) {
         face.textContent = `die_face_${content}`;
         face.className = 'dicePip';
@@ -184,7 +206,7 @@ class Dice extends Widget {
   }
 
   getValueMap() {
-    return this.get('options').map(function(v,k) {
+    return this.options().map(function(v,k) {
       if(typeof v != 'object' || v === null)
         return v;
       else if(typeof v.value != 'undefined')
@@ -194,6 +216,12 @@ class Dice extends Widget {
       else
         return k+1;
     });
+  }
+
+  options() {
+    const o = this.get('options');
+    console.log(o, Array.isArray(o) ? o : []);
+    return Array.isArray(o) ? o : [];
   }
 
   pipSymbols() {
@@ -348,7 +376,7 @@ class Dice extends Widget {
     let shape = shapes.filter((s) => (s.shapeName == s3d || s.sides == s3d));
     if(shape.length)
       return shape[0];
-    const n = this.get('options').length || 0;
+    const n = this.options().length || 0;
     return shapes.filter((s) => s.sides>=n)[0] || shapes[shapes.length - 1];
   }
 }
