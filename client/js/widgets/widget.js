@@ -2223,7 +2223,8 @@ export class Widget extends StateManaged {
         continue;
 
       // check if this widget is closer than 10px from another widget in the same parent
-      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
+      let snapRadius = 50;
+      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < snapRadius && Math.abs(widget.get('y')-thisY) < snapRadius) {
         if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
           continue;
 

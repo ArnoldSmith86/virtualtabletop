@@ -15,6 +15,8 @@ class Pile extends Widget {
 
       text: null,
 
+      snapRadius: 10,
+
       handleCSS: '',
       handleSize: 'auto',
       handleOffset: 15,
@@ -38,7 +40,10 @@ class Pile extends Widget {
     this.updateText();
   }
 
-  applyDeltaToDOM(delta) {
+   applyDeltaToDOM(delta) {
+
+    this.handle.snapRadius = this.get('snapRadius');
+
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
       this.handle.style = mapAssetURLs(this.cssAsText(this.get('handleCSS'),null,true));
