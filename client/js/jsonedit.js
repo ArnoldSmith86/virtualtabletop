@@ -885,18 +885,19 @@ function jeAddCommands() {
   const widgetTypes = [ 'all' ];
   const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget' ];
 
-  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Button()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Card()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
+  const widgetBase = new Widget();
+  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Button(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Card(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
@@ -1264,22 +1265,23 @@ function jeAddNumberCommand(name, key, callback) {
   });
 }
 
-function jeAddWidgetPropertyCommands(object) {
+function jeAddWidgetPropertyCommands(object, widgetBase) {
   for(const property in object.defaults)
     if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
-      jeAddWidgetPropertyCommand(object, property);
+      jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
 }
 
 const buttonColorProperties = ['backgroundColor', 'borderColor', 'textColor', 'backgroundColorOH', 'borderColorOH', 'textColorOH'];
 
-function jeAddWidgetPropertyCommand(object, property) {
+function jeAddWidgetPropertyCommand(object, widgetBase, property) {
   jeCommands.push({
     id: 'widget_' + object.getDefaultValue('typeClasses').replace('widget ', '') + '_' + property,
     name: property,
     class: 'property',
     context: `^${object.getDefaultValue('typeClasses').replace('widget ', '')}`,
+    isTypeSpecific: JSON.stringify(widgetBase.getDefaultValue(property)) !== JSON.stringify(object.getDefaultValue(property)),
     call: property=='dropTarget'? // Special case for dropTarget, faces, and spinner options
             async function() {
               jeStateNow.dropTarget = {
@@ -2294,9 +2296,10 @@ function jeShowCommands() {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
     if(contextMatch && contextMatch[0]!= "" && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
-      if(activeCommands[contextMatch[0]] === undefined)
-        activeCommands[contextMatch[0]] = [];
-      activeCommands[contextMatch[0]].push(command);
+      const title = command.isTypeSpecific ? contextMatch[0] : 'widget';
+      if(activeCommands[title] === undefined)
+        activeCommands[title] = [];
+      activeCommands[title].push(command);
     };
   }
 
@@ -2318,7 +2321,7 @@ function jeShowCommands() {
       return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
     }
 
-    for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
+    for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length).sort((a,b)=>a==='widget'?1:(b==='widget'?-1:0)))) {
       commandText += `\n  <div class="context">${html(contextMatch)}</div>\n`;
       for(const command of activeCommands[contextMatch].sort(sortByName)) {
         try {
