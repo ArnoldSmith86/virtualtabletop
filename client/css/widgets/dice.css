@@ -131,7 +131,7 @@
   animation-name: shake;
 }
 
-.aminateBegin.shaking.dice.widget:not(.shape3D) > .diceFaces {
+.animateBegin.shaking.dice.widget:not(.shape3D) > .diceFaces {
   animation: none;
   transform: translate3d(calc(var(--changeX) * 2%), 0, 0) rotate(calc(var(--changeZ) * -5deg));
   transition: transform 50ms;
