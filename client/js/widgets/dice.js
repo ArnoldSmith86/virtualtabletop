@@ -123,7 +123,16 @@ class Dice extends Widget {
     for(const i in options) {
       const content = options[i];
       const face = document.createElement('div');
-      if(typeof content == 'number' && content>=1 && content<=9 && this.pipSymbols()) {
+      if(typeof content == 'object' && content !== null) {
+        if(content.pips) {
+          face.textContent = `die_face_${content.pips}`;
+          face.className = 'dicePip';
+        } else {
+          face.textContent = content.text || content.value || '';
+        }
+        if(content.image)
+          face.style.backgroundImage = `url("${mapAssetURLs(content.image)}")`;
+      } else if(typeof content == 'number' && content>=1 && content<=9 && this.pipSymbols()) {
         face.textContent = `die_face_${content}`;
         face.className = 'dicePip';
       } else if(typeof content == 'string' && content.match(/^\/(assets|i)/)) {
@@ -161,11 +170,24 @@ class Dice extends Widget {
 
   getDefaultValue(property) {
     if(property == 'value') {
-      const o = this.get('options');
+      const o = this.getValueMap();
       if(Array.isArray(o) && o.length > this.activeFace())
         return o[this.activeFace()];
     }
     return super.getDefaultValue(property);
+  }
+
+  getValueMap() {
+    return this.get('options').map(function(v,k) {
+      if(typeof v != 'object' || v === null)
+        return v;
+      else if(typeof v.value != 'undefined')
+        return v.value;
+      else if(typeof v.text != 'undefined')
+        return v.text;
+      else
+        return k+1;
+    });
   }
 
   pipSymbols() {
@@ -173,12 +195,12 @@ class Dice extends Widget {
     if(pipSymb != null)
       return pipSymb;
     const shape = this.threeDshape();
-    return (shape == null || shape.shapeName == 'd6');      
+    return (shape == null || shape.shapeName == 'd6');
   }
 
   async set(property, value) {
     if(property == 'value' && value != null) {
-      const o = this.get('options');
+      const o = this.getValueMap();
       if(Array.isArray(o) && o.indexOf(value) > -1 && this.getDefaultValue(property) != value)
         await this.set('activeFace', o.indexOf(value));
     } else if(property == 'activeFace' && this.state['value'] != undefined) {
@@ -296,7 +318,7 @@ class Dice extends Widget {
       {
         "shapeName": "d12",
         "sides": 12,
-        "faceX": [    0, 116.5650512, -63.43494882, 116.5650512, -63.43494882, 116.5650512, 
+        "faceX": [    0, 116.5650512, -63.43494882, 116.5650512, -63.43494882, 116.5650512,
            -63.43494882, 116.5650512, -63.43494882, 116.5650512, -63.43494882, -180 ],
         "faceY": [ 0 ],
         "faceZ": [     0,    -180,     -108,      -36,       36,     108,
