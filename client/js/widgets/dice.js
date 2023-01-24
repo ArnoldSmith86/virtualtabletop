@@ -123,6 +123,10 @@ class Dice extends Widget {
     for(const i in options) {
       const content = options[i];
       const face = document.createElement('div');
+
+      if(content.css)
+        face.style = mapAssetURLs(this.cssAsText(content.css, null, true));
+
       if(typeof content == 'object' && content !== null) {
         if(content.pips) {
           face.textContent = `die_face_${content.pips}`;
