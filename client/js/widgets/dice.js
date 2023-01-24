@@ -221,7 +221,6 @@ class Dice extends Widget {
 
   options() {
     const o = this.get('options');
-    console.log(o, Array.isArray(o) ? o : []);
     return Array.isArray(o) ? o : [];
   }
 
