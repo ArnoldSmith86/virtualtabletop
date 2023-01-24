@@ -183,6 +183,7 @@ class Dice extends Widget {
     css += '; --pipColor:' + this.get('pipColor');
     css += '; --backgroundColor:' + this.get('backgroundColor');
     css += '; --borderColor:' + (this.get('borderColor') || this.get('pipColor'));
+    css += '; --size:' + Math.min(this.get('width'), this.get('height')) + 'px';
 
     if(this.get('shape3d'))
       css += this.threeDrotationsCSS();
