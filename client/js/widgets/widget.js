@@ -759,11 +759,15 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null, count: 1 });
+        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null, count: 1, silenceAll: false });
         if(a.count === 'repeat')
           a.count = 999999;
-        if(a.source !== undefined) {
-          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player + ', count: ' + a.count);
+        if(a.silenceAll == true) {
+          const audioElements = document.querySelectorAll('audio');
+          audioElements.forEach(audio=>audio.pause())
+        } else {}
+          if(a.source !== undefined) {
+            this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player + ', count: ' + a.count);
         }
       }
 
