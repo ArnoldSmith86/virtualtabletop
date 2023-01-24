@@ -2296,7 +2296,7 @@ function jeShowCommands() {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
     if(contextMatch && contextMatch[0]!= "" && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
-      const title = command.isTypeSpecific ? contextMatch[0] : 'widget';
+      const title = command.isTypeSpecific || command.isTypeSpecific === undefined ? contextMatch[0] : 'widget';
       if(activeCommands[title] === undefined)
         activeCommands[title] = [];
       activeCommands[title].push(command);
