@@ -35,13 +35,13 @@ class Dice extends Widget {
   }
 
   animate() {
-    if(!this.facesElement)
+    if(!this.facesElement || !this.faceElements.length)
       return;
 
     const faceElements = this.faceElements;
 
     const hash = this.rollHash ? this.rollHash : 0;
-    const fc = faceElements.length? faceElements.length : 1;
+    const fc = faceElements.length;
     const af = this.activeFace();
     const f0 = this.previousActiveFace;
     let f1 = (f0 + (hash) % (fc - 1) + 1) % fc || 0;
@@ -221,6 +221,8 @@ class Dice extends Widget {
 
   options() {
     const o = this.get('options');
+    if(typeof o == 'string')
+      return o.split('');
     return Array.isArray(o) ? o : [];
   }
 
