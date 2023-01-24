@@ -19,6 +19,7 @@ class Dice extends Widget {
       borderRadius: '16%',
       pipColor: 'black',
       backgroundColor: 'white',
+      borderColor: null,
 
       options: [ 1, 2, 3, 4, 5, 6 ],
       activeFace: 0,
@@ -159,6 +160,7 @@ class Dice extends Widget {
 
     css += '; --pipColor:' + this.get('pipColor');
     css += '; --backgroundColor:' + this.get('backgroundColor');
+    css += '; --borderColor:' + (this.get('borderColor') || this.get('pipColor'));
 
     if(this.get('shape3d'))
       css += this.threeDrotationsCSS();
@@ -168,7 +170,7 @@ class Dice extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('pipColor', 'backgroundColor', 'activeFace', 'rollCount', 'shape3d');
+    p.push('pipColor', 'backgroundColor', 'borderColor', 'activeFace', 'rollCount', 'shape3d');
     return p;
   }
 

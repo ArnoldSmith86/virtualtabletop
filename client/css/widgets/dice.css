@@ -1,6 +1,6 @@
 .dice.widget {
   --fontSize: calc(var(--size) * .95);
-  --faceBorder: 0.5px solid var(--pipColor);
+  --faceBorder: 0.5px solid var(--borderColor);
   --faceWidth: var(--size);
   --faceHeight: var(--size);
   animation-duration: 0.5s;
@@ -394,27 +394,27 @@
 
 .d10.dice.widget > * > .diceFace:nth-child(10n + 1),
 .d10.dice.widget > * > .diceFace:nth-child(10n)  {
-  --rZ: 0deg;  
+  --rZ: 0deg;
 }
 
 .d10.dice.widget > * > .diceFace:nth-child(10n + 2),
 .d10.dice.widget > * > .diceFace:nth-child(10n + 9) {
-  --rZ: 72deg;  
+  --rZ: 72deg;
 }
 
 .d10.dice.widget > * > .diceFace:nth-child(10n + 3),
 .d10.dice.widget > * > .diceFace:nth-child(10n + 8) {
-  --rZ: 144deg;  
+  --rZ: 144deg;
 }
 
 .d10.dice.widget > * > .diceFace:nth-child(10n + 4),
 .d10.dice.widget > * > .diceFace:nth-child(10n + 7) {
-  --rZ: 216deg;  
+  --rZ: 216deg;
 }
 
 .d10.dice.widget > * > .diceFace:nth-child(10n + 5),
 .d10.dice.widget > * > .diceFace:nth-child(10n + 6) {
-  --rZ: 288deg;  
+  --rZ: 288deg;
 }
 
 .d10.dice.widget > * > .diceFace > .polygonBorder {
@@ -646,8 +646,8 @@
   }
   90% {
     transform: translate3d(
-        0, 
-        calc(var(--changeY) * -2%), 
+        0,
+        calc(var(--changeY) * -2%),
         0
       )
       rotate(calc(var(--changeR) * 5deg));
