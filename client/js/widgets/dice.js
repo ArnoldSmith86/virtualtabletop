@@ -210,6 +210,8 @@ class Dice extends Widget {
     return this.options().map(function(v,k) {
       if(typeof v != 'object' || v === null)
         return v;
+      else if(typeof v.pips != 'undefined')
+        return v.pips;
       else if(typeof v.value != 'undefined')
         return v.value;
       else if(typeof v.text != 'undefined')
