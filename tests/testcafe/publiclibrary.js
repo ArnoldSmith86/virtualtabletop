@@ -51,7 +51,7 @@ publicLibraryButtons('Blue',               0, '17336f122e1c676d7d61f6088f7a818c'
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', '#buttonInputGo', 'visibility_button'
 ]);
-publicLibraryButtons('Bhukhar',            0, '5f7dde10e662cd45e1377f589fae4b35', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
+publicLibraryButtons('Bhukhar',            0, '5acd32f30d0645001e118881b37421fc', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
 publicLibraryButtons('Dice',               0, 'a68d28c20b624d6ddf87149bae230598', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
 publicLibraryButtons('Dots',               0, '23894df38f786cb014fa1cd79f2345db', [ 'reset', '#buttonInputGo', 'col11', 'col21', 'col12', 'col22', 'row11', 'row31', 'row21', 'row32', 'row12', 'row42', 'row22', 'row23', 'col23' ]);
 publicLibraryButtons('Solitaire',          0, 'd5babf02d0c94500673d31188405ad9a', [ 'reset', 'jemz', 'reset' ]);
@@ -66,16 +66,16 @@ publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36'
          [ ()=>Selector("#w_zpiece19"), ()=>Selector("#w_sq35") ],
          [ ()=>Selector("#w_zpiece08"), ()=>Selector("#w_sq53") ]
        ]);
-publicLibraryButtons('Reward',             0, '60c8c548fec57ead23c697b43216544f', [
+publicLibraryButtons('Reward',             0, '0851edd2c63050084a8f7cdfd0c16c42', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', 'seat1', 'next'
 ]);
-publicLibraryButtons('Rummy Tiles',        0, '387b229578a5e32ab5eccb057e3485bb', [ 'startMix', 'draw14' ]);
+publicLibraryButtons('Rummy Tiles',        0, '5d48d6c77b52f3dc4d1f95cadd6f54bb', [ 'startMix', 'draw14' ]);
 publicLibraryButtons('Undercover',         1, '97725a1d0733ef74dd5e1d0f9f260cb5', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Functions - CALL',   0, '4ef11451bfae5b8708e8f0eac2a06df4', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'd44e77e0782cadbc9594494e5a83dde0', [ '7u2q' ]);
-publicLibraryButtons('Functions - ROTATE', 0, '70782503b9e3fb2d4e24495f5c53ef1b', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
+publicLibraryButtons('Functions - ROTATE', 0, '241d87e4b6b825f8835893a2dd5dbdcc', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
 publicLibraryButtons('Functions - SELECT', 2, '51f108279a644454323430b8d993068a', [ 'jkmt1']);
 publicLibraryButtons('Functions - SORT',   1, '433948b27014f8236bd1978bdbe39443', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
