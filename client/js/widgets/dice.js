@@ -115,7 +115,7 @@ class Dice extends Widget {
 
   classesProperties() {
     const p = super.classesProperties();
-    p.push('shape3d');
+    p.push('shape3d', 'options');
     return p;
   }
 
@@ -193,7 +193,7 @@ class Dice extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('pipColor', 'backgroundColor', 'borderColor', 'activeFace', 'rollCount', 'shape3d');
+    p.push('pipColor', 'backgroundColor', 'borderColor', 'activeFace', 'rollCount', 'shape3d', 'options');
     return p;
   }
 
