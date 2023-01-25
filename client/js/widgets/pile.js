@@ -15,7 +15,7 @@ class Pile extends Widget {
 
       text: null,
 
-      snapRadius: 10,
+      pileSnapRange: 10,
 
       handleCSS: '',
       handleSize: 'auto',
@@ -41,8 +41,6 @@ class Pile extends Widget {
   }
 
    applyDeltaToDOM(delta) {
-
-    this.handle.snapRadius = this.get('snapRadius');
 
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)

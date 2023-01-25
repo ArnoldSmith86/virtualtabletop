@@ -12,6 +12,7 @@ class Card extends Widget {
 
       deck: null,
       cardType: null,
+      pileSnapRange: 10,
       onPileCreation: {}
     });
 

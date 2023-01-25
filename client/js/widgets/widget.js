@@ -2222,9 +2222,8 @@ export class Widget extends StateManaged {
       if(widgetType != 'card' && widgetType != 'pile')
         continue;
 
-      // check if this widget is closer than 10px from another widget in the same parent
-      let snapRadius = 50;
-      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < snapRadius && Math.abs(widget.get('y')-thisY) < snapRadius) {
+      // check if this widget is closer than the pileSnapRange from another widget in the same parent
+      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < this.get('pileSnapRange') && Math.abs(widget.get('y')-thisY) < this.get('pileSnapRange')) {
         if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
           continue;
 
