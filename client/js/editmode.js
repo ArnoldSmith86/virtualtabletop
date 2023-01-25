@@ -1238,7 +1238,7 @@ function populateAddWidgetOverlay() {
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker2DSVG'), {
     x: 920,
-    y: 164,
+    y: 114,
     width: 73,
     height: 73,
 
@@ -1261,7 +1261,7 @@ function populateAddWidgetOverlay() {
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
     x: 920,
-    y: 257,
+    y: 207,
     width: 73,
     height: 73,
 
@@ -1286,16 +1286,16 @@ function populateAddWidgetOverlay() {
 
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 350, 2), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, 916, 350, 2))
+    for(const w of generateChipPileWidgets(id, 916, 300, 2))
       await addWidgetLocal(w);
     return id
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
     x: 1010,
-    y: 173,
+    y: 123,
     width: 75,
     height: 54.75,
 
@@ -1319,7 +1319,7 @@ function populateAddWidgetOverlay() {
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
     x: 1010,
-    y: 266,
+    y: 216,
     width: 75,
     height: 54.75,
 
@@ -1344,12 +1344,90 @@ function populateAddWidgetOverlay() {
     primaryColor: "#55bb66"
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 359, 3), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, 1010, 359, 3))
+    for(const w of generateChipPileWidgets(id, 1010, 309, 3))
       await addWidgetLocal(w);
     return id
   });
+
+  // Populate the dice. The real dice choosing happens in a popup.
+  const dice2D = new Dice('add-dice2D0');
+  const dice2DAttrs = {
+    type: 'dice',
+    x: 930,
+    y: 455,
+    options: [1,2,3,4,5,6],
+    shape3D: false
+  };
+  dice2D.applyInitialDelta(dice2DAttrs);
+  dice2D.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await dice2D.showInputOverlay({
+        header: 'Choose number of sides',
+        fields: [
+          {
+            type: 'number',
+            label: 'Sides',
+            value: 6,
+            variable: 'sides',
+            min: 2
+          }
+        ]
+      });
+      const sides = result.sides;
+      const toAdd = {...dice2DAttrs};
+      toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
+      toAdd.options = Array.from({length: sides}, (_, i) => i + 1);
+
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  dice2D.domElement.id = dice2D.id;
+  $('#addOverlay').appendChild(dice2D.domElement);
+
+  const dice3D = new Dice('add-dice3D0');
+  const dice3DAttrs = {
+    type: 'dice',
+    x: 1020,
+    y: 455,
+    shape3d: 'd8',
+    options: [1,2,3,4,5,6,7,8]
+  };
+  dice3D.applyInitialDelta(dice3DAttrs);
+  dice3D.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await dice3D.showInputOverlay({
+        header: 'Choose number of sides',
+        fields: [
+          {
+            type: 'number',
+            select: 'Sides',
+            value: 8,
+            variable: 'sides',
+            min: 2
+          },
+          {
+            type: 'checkbox',
+            value: false,
+            variable: 'd2',
+            label: 'Use coin-flip animation'
+          }
+        ]
+      });
+      const sides = result.sides;
+      const toAdd = {...dice3DAttrs};
+      toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
+      toAdd.options = Array.from({length: sides}, (_, i) => i + 1);
+      toadd.shape3d = result.d2 ? 'd2-flip' : true;
+
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  dice3D.domElement.id = dice3D.id;
+  $('#addOverlay').appendChild(dice3D.domElement);
 
   // Populate the Interactive panel in the add widget overlay.
   // Note that the Add Canvas, Add Seat, and Add Scoreboard buttons are in room.html.
