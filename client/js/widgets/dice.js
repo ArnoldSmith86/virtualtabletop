@@ -379,6 +379,6 @@ class Dice extends Widget {
     if(shape.length)
       return shape[0];
     const n = this.options().length || 0;
-    return shapes.filter((s) => s.sides>=n)[0] || shapes[shapes.length - 1];
+    return shapes.reverse().filter((s) => s.sides<=n)[0] || shapes[shapes.length - 1];
   }
 }
