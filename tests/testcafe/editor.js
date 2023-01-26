@@ -51,13 +51,13 @@ test('Create game using edit mode', async t => {
     .click('#add-2D-chips')
     .click('#addButton')
     .click('#EmptyPoker3DSVG')
-    .click('#w_3fseC1')
+    .click('#w_cgp8C1')
     .click('#addButton')
     .click('#addSeat')
     .click('#addButton')
     .click('#addSeatCounter')
     .click('#addButton')
     .click('#addScoreboard')
-    .click('#w_9972');
-  await compareState(t, 'e02bf9c6e248299f20d145c58b047990');
+    .click('#w_8sfj');
+  await compareState(t, '47c4f74ff2321bc5ecc8840b29919d1f');
 });
