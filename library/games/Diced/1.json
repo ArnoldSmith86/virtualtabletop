@@ -1,7 +1,6 @@
 {
   "9530": {
     "image": "/assets/511114215_667",
-    "z": 656,
     "x": 400,
     "y": 502.5,
     "movable": false,
@@ -19,7 +18,6 @@
     "height": 60,
     "movable": false,
     "movableInEdit": false,
-    "z": 628,
     "linkedToSeat": "seat1"
   },
   "y5s7-copy004-copy001": {
@@ -31,7 +29,6 @@
     "height": 60,
     "movable": false,
     "movableInEdit": false,
-    "z": 629,
     "linkedToSeat": "seat4"
   },
   "y5s7-copy004-copy002": {
@@ -43,7 +40,6 @@
     "height": 60,
     "movable": false,
     "movableInEdit": false,
-    "z": 630,
     "linkedToSeat": "seat2"
   },
   "y5s7-copy004-copy003": {
@@ -55,7 +51,6 @@
     "height": 60,
     "movable": false,
     "movableInEdit": false,
-    "z": 631,
     "linkedToSeat": "seat7"
   },
   "y5s7-copy004-copy004": {
@@ -67,7 +62,6 @@
     "height": 60,
     "movable": false,
     "movableInEdit": false,
-    "z": 632,
     "linkedToSeat": "seat5"
   },
   "y5s7-copy004-copy005": {
@@ -79,7 +73,6 @@
     "height": 60,
     "movable": false,
     "movableInEdit": false,
-    "z": 633,
     "linkedToSeat": "seat3"
   },
   "y5s7-copy004-copy001-copy001": {
@@ -91,7 +84,6 @@
     "height": 60,
     "movable": false,
     "movableInEdit": false,
-    "z": 634,
     "linkedToSeat": "seat8"
   },
   "y5s7-copy004-copy001-copy002": {
@@ -103,13 +95,11 @@
     "height": 60,
     "movable": false,
     "movableInEdit": false,
-    "z": 635,
     "linkedToSeat": "seat6"
   },
   "onxu": {
     "image": "/assets/338955399_1727",
     "id": "onxu",
-    "z": 639,
     "x": 624.5,
     "y": -738,
     "height": 180,
@@ -118,7 +108,6 @@
   "j8vq": {
     "image": "/assets/511114215_667",
     "id": "j8vq",
-    "z": 653,
     "x": 400,
     "y": 30,
     "movable": false,
@@ -128,7 +117,6 @@
   },
   "4mcd": {
     "image": "/assets/511114215_667",
-    "z": 657,
     "x": 400,
     "y": 739.5,
     "movable": false,
@@ -139,7 +127,6 @@
   },
   "cwu9": {
     "image": "/assets/511114215_667",
-    "z": 655,
     "x": 400,
     "y": 266.5,
     "movable": false,
@@ -150,7 +137,6 @@
   },
   "b0ol": {
     "image": "/assets/511114215_667",
-    "z": 666,
     "x": 1442,
     "y": 739.5,
     "movable": false,
@@ -161,7 +147,6 @@
   },
   "57fp": {
     "image": "/assets/511114215_667",
-    "z": 664,
     "x": 1442,
     "y": 266.5,
     "movable": false,
@@ -172,7 +157,6 @@
   },
   "1u53": {
     "image": "/assets/511114215_667",
-    "z": 663,
     "x": 1442,
     "y": 30,
     "movable": false,
@@ -183,7 +167,6 @@
   },
   "tses": {
     "image": "/assets/511114215_667",
-    "z": 665,
     "x": 1442,
     "y": 502.5,
     "movable": false,
@@ -1015,7 +998,6 @@
   "j447": {
     "image": "/assets/-1622960898_57584",
     "id": "j447",
-    "z": 670,
     "x": 669,
     "y": -41,
     "width": 220,
@@ -1025,196 +1007,9 @@
   "aq5v": {
     "image": "/assets/-369128651_2117",
     "id": "aq5v",
-    "z": 676,
     "x": 737,
     "y": 152,
     "movable": false
-  },
-  "zhbk": {
-    "type": "button",
-    "text": "🎲",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "diceWhite1"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "CALL",
-        "routine": "callRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "diceWhite2"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "CALL",
-        "routine": "callRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "diceRed"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "CALL",
-        "routine": "callRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "diceYellow"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "CALL",
-        "routine": "callRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "diceBlue"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "CALL",
-        "routine": "callRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "diceGreen"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "CALL",
-        "routine": "callRoutine"
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY started}",
-        "operand2": false,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "started",
-            "value": true
-          },
-          {
-            "func": "TURN",
-            "turnCycle": "position",
-            "turn": "first"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "TURN"
-          }
-        ]
-      }
-    ],
-    "x": 879,
-    "y": 567,
-    "z": 562,
-    "id": "zhbk",
-    "width": 90,
-    "height": 90,
-    "css": "--wcBorder:black;--wcBorderOH:white; --wcMain:white;--wcMainOH:black; border-radius: 100px; font-size:50px",
-    "callRoutine": [
-      {
-        "func": "GET",
-        "property": "jumpX"
-      },
-      {
-        "func": "GET",
-        "property": "x"
-      },
-      {
-        "func": "GET",
-        "property": "jumpY"
-      },
-      {
-        "func": "GET",
-        "property": "y"
-      },
-      "var sameX = ${x} == ${jumpX}",
-      "var sameY = ${y} == ${jumpY}",
-      "var movedByThis = ${sameX} && ${sameY}",
-      {
-        "func": "SET",
-        "property": "centerX",
-        "skip": "${movedByThis}",
-        "value": "${x}"
-      },
-      {
-        "func": "SET",
-        "property": "centerY",
-        "skip": "${movedByThis}",
-        "value": "${y}"
-      },
-      {
-        "func": "GET",
-        "property": "centerX"
-      },
-      {
-        "func": "GET",
-        "property": "centerY"
-      },
-      {
-        "func": "GET",
-        "property": "width"
-      },
-      "var max = ${width} / 10",
-      "var min = -1 * ${max}",
-      "var RANDOM = randInt ${min} ${max}",
-      "var COMPUTE = ${centerX} + ${RANDOM}",
-      {
-        "func": "SET",
-        "property": "x",
-        "value": "${COMPUTE}"
-      },
-      {
-        "func": "SET",
-        "property": "jumpX",
-        "value": "${COMPUTE}"
-      },
-      "var RANDOM = randInt ${min} ${max}",
-      "var COMPUTE = ${centerY} + ${RANDOM}",
-      {
-        "func": "SET",
-        "property": "y",
-        "value": "${COMPUTE}"
-      },
-      {
-        "func": "SET",
-        "property": "jumpY",
-        "value": "${COMPUTE}"
-      },
-      "var RANDOM = randInt -10 10",
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": "${RANDOM}"
-      }
-    ],
-    "started": false
   },
   "3bluescore": {
     "type": "label",
@@ -1262,7 +1057,6 @@
     ],
     "x": 624.5,
     "y": 425.5,
-    "z": 2086,
     "width": 45,
     "height": 45,
     "css": "border-color:transparent;background-color:transparent;border-radius:0",
@@ -1299,7 +1093,6 @@
     ],
     "x": 625,
     "y": 583.5,
-    "z": 600,
     "width": 45,
     "height": 45,
     "css": "border-color:transparent;background-color:transparent;border-radius:0",
@@ -1336,7 +1129,6 @@
     ],
     "x": 625,
     "y": 743,
-    "z": 602,
     "width": 45,
     "height": 45,
     "css": "border-color:transparent;background-color:transparent;border-radius:0",
@@ -1373,7 +1165,6 @@
     ],
     "x": 625,
     "y": 902,
-    "z": 604,
     "width": 45,
     "height": 45,
     "css": "border-color:transparent;background-color:transparent;border-radius:0",
@@ -1410,7 +1201,6 @@
     ],
     "x": 584.5,
     "y": 425.5,
-    "z": 597,
     "width": 45,
     "height": 45,
     "id": "redremove",
@@ -1447,7 +1237,6 @@
     ],
     "x": 584.5,
     "y": 583.5,
-    "z": 599,
     "width": 45,
     "height": 45,
     "css": "border-color:transparent;background-color:transparent;border-radius:0",
@@ -1484,7 +1273,6 @@
     ],
     "x": 584.5,
     "y": 743,
-    "z": 601,
     "width": 45,
     "height": 45,
     "css": "border-color:transparent;background-color:transparent;border-radius:0",
@@ -1521,7 +1309,6 @@
     ],
     "x": 584.5,
     "y": 902,
-    "z": 603,
     "width": 45,
     "height": 45,
     "css": "border-color:transparent;background-color:transparent;border-radius:0",
@@ -1539,7 +1326,6 @@
     "width": 60,
     "x": 24,
     "y": 207.6,
-    "z": 758,
     "id": "1redscore",
     "text": 0,
     "layer": 10,
@@ -1549,7 +1335,6 @@
   },
   "Scores": {
     "image": "/assets/2053949189_5471",
-    "z": 672,
     "x": 517,
     "y": 118,
     "width": 550,
@@ -1673,7 +1458,7 @@
     "linkedToSeat": "seat1"
   },
   "_meta": {
-    "version": 8,
+    "version": 11,
     "info": {
       "name": "Diced",
       "image": "/assets/1497875638_112785",
@@ -1682,866 +1467,28 @@
       "year": "2012",
       "mode": "vs",
       "time": "15",
-      "attribution": "The room layout and images, including the library image, were done by LawDawg96 and are released to the Public Domain by CC0.<div><br></div><div>The dice are VTT assets.\n\n</div>",
+      "attribution": "The room layout and images, including the library image, were done by LawDawg96 and are released to the Public Domain by CC0.<span style=\"color: var(--overlayFontColor);\">&nbsp;</span>",
       "similarName": "Qwixx",
       "description": "Roll colored and white dice to mark off scoresheet with boxes of 2-12 trying to get as many boxes as possible. Highest score wins.",
       "showName": true,
-      "id": "xbd4",
+      "id": "9yoh",
       "skill": "",
-      "variantImage": "",
-      "variant": "Diced and Sliced",
-      "language": "",
-      "players": "2-8",
       "similarImage": "",
       "similarAwards": "2014 Spring Parents' Choice Silver Honor Winner\n2014 Vuoden Peli Family Game of the Year Nominee\n2014 Nederlandse Spellenprijs Best Family Game Winner\n2014 Nederlandse Spellenprijs Best Family Game Nominee\n2014 Mensa Select Winner\n2013 Spiel des Jahres Nominee\n2013 Kinderspielexperten \"8-to-13-year-olds\" Nominee\n2013 Golden Geek Best Family Board Game Nominee\n2013 Golden Geek Best Abstract Board Game Nominee\n2013 Deutscher Lernspielpreis Nominee",
       "ruleText": "",
-      "helpText": "Players sit in seats. Press the black and white restart button in the upper right corner to randomly assign a starting player.&nbsp; The first roll of the dice will be done automatically at that top.&nbsp; Each player makes desired selections on their scoresheet by clicking the number to mark it.&nbsp; Click it again if a mistake was made to unmark it.&nbsp;<span style=\"color: var(--overlayFontColor);\">When the current player finishes, the next player clicks the roll dice button (white button outlined in black with image of dice). Play continues in that fashion.</span><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">If a player chooses not to make a mark when required to by rule, click on the white box at the end of the row. When a colored dice has been closed, click on the down arrow below the dice to hide it offscreen and block future changes to that color on the scoreboards. If a mistake is made, the dice can be returned to play by clicking on the up arrow.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Scoring is automatic for each player whenever the blue button with the sigma symbol is pressed. Typically you would wait until the end of the game to press it, but it can be used at any point in the game.</span></div>",
-      "lastUpdate": 1670737725000
+      "helpText": "Players sit in seats. Press the black and white restart button in the top center to randomly assign a starting player.&nbsp; Click the roll dice button to start. Each player makes desired selections on their scoresheet by clicking the number to mark it.&nbsp; Click the space again if a mistake was made to unmark it.&nbsp;<span style=\"color: var(--overlayFontColor);\">When the current player finishes, the next player clicks the roll dice button. Play continues in that fashion.</span><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">If a player chooses not to make a mark when required to by rule, click on the white box at the end of the row. When a colored dice has been closed, click on the down arrow below the dice to hide it offscreen and block future changes to that color on the scoreboards. If a mistake is made, the dice can be returned to play by clicking on the up arrow.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Scoring is automatic for each player whenever the blue button with the sigma symbol is pressed. Typically you would wait until the end of the game to press it, but it can be used at any point in the game.</span></div>",
+      "lastUpdate": 1674661972324,
+      "variantImage": "",
+      "variant": "Diced and Sliced",
+      "language": "",
+      "players": "2-8"
     }
-  },
-  "restart_button": {
-    "id": "restart_button",
-    "width": 46,
-    "height": 46,
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "header": "Resetting board...",
-        "fields": [
-          {
-            "type": "text",
-            "text": "You're about to start over and reset the board. Are you sure?"
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "redreturn"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "yellowreturn",
-        "mode": "add"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "bluereturn",
-        "mode": "add"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "greenreturn",
-        "mode": "add"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
-        "property": "activeFace",
-        "relation": "!=",
-        "value": null
-      },
-      {
-        "func": "SET",
-        "property": "activeFace",
-        "value": null
-      },
-      {
-        "func": "SELECT",
-        "property": "text",
-        "value": "Σ"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "TURN",
-        "turnCycle": "random"
-      },
-      {
-        "func": "CLICK",
-        "collection": [
-          "diceRed",
-          "diceYellow",
-          "diceBlue",
-          "diceGreen",
-          "diceWhite1",
-          "diceWhite2"
-        ]
-      }
-    ],
-    "x": 1553,
-    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
-    "z": 2085,
-    "y": -2,
-    "color": "white",
-    "image": "/assets/1342248376_1383",
-    "svgReplaces": {
-      "currentColor": "color"
-    }
-  },
-  "diceWhite1": {
-    "id": "diceWhite1",
-    "x": 735,
-    "y": 512,
-    "z": 75446,
-    "centerX": 735,
-    "centerY": 515,
-    "diceleft": "#e8e8e8",
-    "dicepip": "black",
-    "diceright": "#dbdbdb",
-    "dicetop": "#ffffff",
-    "faceCycle": "random",
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/-1673207543_1930"
-      },
-      {
-        "value": 1,
-        "image": "/assets/-148416619_2594"
-      },
-      {
-        "value": 1,
-        "image": "/assets/57330326_2141"
-      },
-      {
-        "value": 1,
-        "image": "/assets/1350182419_2805"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1914431809_2154"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1774090084_1917"
-      },
-      {
-        "value": 2,
-        "image": "/assets/2066276706_3248"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1523019352_3017"
-      },
-      {
-        "value": 3,
-        "image": "/assets/2144816233_1914"
-      },
-      {
-        "value": 3,
-        "image": "/assets/281682383_3024"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-138953411_2561"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-1994484808_3667"
-      },
-      {
-        "value": 4,
-        "image": "/assets/-492269528_2800"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1308996887_2124"
-      },
-      {
-        "value": 4,
-        "image": "/assets/218047296_3891"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1276023485_3215"
-      },
-      {
-        "value": 5,
-        "image": "/assets/441250679_2562"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1062860099_3665"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1961475664_2766"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-883353206_3871"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-2100839095_3225"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-1133653241_2997"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1984214093_3882"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1642317049_3654"
-      }
-    ],
-    "image": "/assets/-148416619_2594",
-    "jumpX": 735,
-    "jumpY": 512,
-    "svgReplaces": {
-      "topColor": "dicetop",
-      "leftColor": "diceleft",
-      "rightColor": "diceright",
-      "pipColor": "dicepip"
-    },
-    "value": 1,
-    "roll": true,
-    "width": 80,
-    "height": 80,
-    "rotation": -9,
-    "movable": false
-  },
-  "diceRed": {
-    "id": "diceRed",
-    "x": 583,
-    "y": 348,
-    "z": 75448,
-    "centerX": 584,
-    "centerY": 336,
-    "diceleft": "#eb1f0e",
-    "dicepip": "white",
-    "diceright": "#a8160a",
-    "dicetop": "#f6706f",
-    "faceCycle": "random",
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/-1673207543_1930"
-      },
-      {
-        "value": 1,
-        "image": "/assets/-148416619_2594"
-      },
-      {
-        "value": 1,
-        "image": "/assets/57330326_2141"
-      },
-      {
-        "value": 1,
-        "image": "/assets/1350182419_2805"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1914431809_2154"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1774090084_1917"
-      },
-      {
-        "value": 2,
-        "image": "/assets/2066276706_3248"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1523019352_3017"
-      },
-      {
-        "value": 3,
-        "image": "/assets/2144816233_1914"
-      },
-      {
-        "value": 3,
-        "image": "/assets/281682383_3024"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-138953411_2561"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-1994484808_3667"
-      },
-      {
-        "value": 4,
-        "image": "/assets/-492269528_2800"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1308996887_2124"
-      },
-      {
-        "value": 4,
-        "image": "/assets/218047296_3891"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1276023485_3215"
-      },
-      {
-        "value": 5,
-        "image": "/assets/441250679_2562"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1062860099_3665"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1961475664_2766"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-883353206_3871"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-2100839095_3225"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-1133653241_2997"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1984214093_3882"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1642317049_3654"
-      }
-    ],
-    "jumpX": 583,
-    "jumpY": 331,
-    "svgReplaces": {
-      "topColor": "dicetop",
-      "leftColor": "diceleft",
-      "rightColor": "diceright",
-      "pipColor": "dicepip"
-    },
-    "width": 80,
-    "height": 80,
-    "rotation": -2,
-    "movable": false
-  },
-  "diceWhite2": {
-    "id": "diceWhite2",
-    "x": 738,
-    "y": 618,
-    "z": 75445,
-    "centerX": 735,
-    "centerY": 617,
-    "diceleft": "#e8e8e8",
-    "dicepip": "black",
-    "diceright": "#dbdbdb",
-    "dicetop": "#ffffff",
-    "faceCycle": "random",
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/-1673207543_1930"
-      },
-      {
-        "value": 1,
-        "image": "/assets/-148416619_2594"
-      },
-      {
-        "value": 1,
-        "image": "/assets/57330326_2141"
-      },
-      {
-        "value": 1,
-        "image": "/assets/1350182419_2805"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1914431809_2154"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1774090084_1917"
-      },
-      {
-        "value": 2,
-        "image": "/assets/2066276706_3248"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1523019352_3017"
-      },
-      {
-        "value": 3,
-        "image": "/assets/2144816233_1914"
-      },
-      {
-        "value": 3,
-        "image": "/assets/281682383_3024"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-138953411_2561"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-1994484808_3667"
-      },
-      {
-        "value": 4,
-        "image": "/assets/-492269528_2800"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1308996887_2124"
-      },
-      {
-        "value": 4,
-        "image": "/assets/218047296_3891"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1276023485_3215"
-      },
-      {
-        "value": 5,
-        "image": "/assets/441250679_2562"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1062860099_3665"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1961475664_2766"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-883353206_3871"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-2100839095_3225"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-1133653241_2997"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1984214093_3882"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1642317049_3654"
-      }
-    ],
-    "image": "/assets/-148416619_2594",
-    "jumpX": 738,
-    "jumpY": 618,
-    "roll": true,
-    "svgReplaces": {
-      "topColor": "dicetop",
-      "leftColor": "diceleft",
-      "rightColor": "diceright",
-      "pipColor": "dicepip"
-    },
-    "value": 1,
-    "width": 80,
-    "height": 80,
-    "rotation": -5,
-    "movable": false
-  },
-  "diceYellow": {
-    "id": "diceYellow",
-    "x": 583,
-    "y": 508,
-    "width": 80,
-    "height": 80,
-    "rotation": 9,
-    "z": 75437,
-    "centerX": 588,
-    "centerY": 492,
-    "diceleft": "#f3c106",
-    "dicepip": "white",
-    "diceright": "#ad8a04",
-    "dicetop": "#fad447",
-    "faceCycle": "random",
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/-1673207543_1930"
-      },
-      {
-        "value": 1,
-        "image": "/assets/-148416619_2594"
-      },
-      {
-        "value": 1,
-        "image": "/assets/57330326_2141"
-      },
-      {
-        "value": 1,
-        "image": "/assets/1350182419_2805"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1914431809_2154"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1774090084_1917"
-      },
-      {
-        "value": 2,
-        "image": "/assets/2066276706_3248"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1523019352_3017"
-      },
-      {
-        "value": 3,
-        "image": "/assets/2144816233_1914"
-      },
-      {
-        "value": 3,
-        "image": "/assets/281682383_3024"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-138953411_2561"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-1994484808_3667"
-      },
-      {
-        "value": 4,
-        "image": "/assets/-492269528_2800"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1308996887_2124"
-      },
-      {
-        "value": 4,
-        "image": "/assets/218047296_3891"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1276023485_3215"
-      },
-      {
-        "value": 5,
-        "image": "/assets/441250679_2562"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1062860099_3665"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1961475664_2766"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-883353206_3871"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-2100839095_3225"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-1133653241_2997"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1984214093_3882"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1642317049_3654"
-      }
-    ],
-    "image": "/assets/-148416619_2594",
-    "jumpX": 583,
-    "jumpY": 489,
-    "svgReplaces": {
-      "topColor": "dicetop",
-      "leftColor": "diceleft",
-      "rightColor": "diceright",
-      "pipColor": "dicepip"
-    },
-    "value": 1,
-    "movable": false
-  },
-  "diceGreen": {
-    "id": "diceGreen",
-    "x": 591,
-    "y": 824,
-    "width": 80,
-    "height": 80,
-    "rotation": -9,
-    "z": 75439,
-    "centerX": 587,
-    "centerY": 809,
-    "diceleft": "#79c138",
-    "dicepip": "white",
-    "diceright": "#568a28",
-    "dicetop": "#9dd46c",
-    "faceCycle": "random",
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/-1673207543_1930"
-      },
-      {
-        "value": 1,
-        "image": "/assets/-148416619_2594"
-      },
-      {
-        "value": 1,
-        "image": "/assets/57330326_2141"
-      },
-      {
-        "value": 1,
-        "image": "/assets/1350182419_2805"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1914431809_2154"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1774090084_1917"
-      },
-      {
-        "value": 2,
-        "image": "/assets/2066276706_3248"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1523019352_3017"
-      },
-      {
-        "value": 3,
-        "image": "/assets/2144816233_1914"
-      },
-      {
-        "value": 3,
-        "image": "/assets/281682383_3024"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-138953411_2561"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-1994484808_3667"
-      },
-      {
-        "value": 4,
-        "image": "/assets/-492269528_2800"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1308996887_2124"
-      },
-      {
-        "value": 4,
-        "image": "/assets/218047296_3891"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1276023485_3215"
-      },
-      {
-        "value": 5,
-        "image": "/assets/441250679_2562"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1062860099_3665"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1961475664_2766"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-883353206_3871"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-2100839095_3225"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-1133653241_2997"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1984214093_3882"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1642317049_3654"
-      }
-    ],
-    "image": "/assets/-148416619_2594",
-    "jumpX": 591,
-    "jumpY": 806,
-    "svgReplaces": {
-      "topColor": "dicetop",
-      "leftColor": "diceleft",
-      "rightColor": "diceright",
-      "pipColor": "dicepip"
-    },
-    "value": 1,
-    "movable": false
-  },
-  "diceBlue": {
-    "id": "diceBlue",
-    "x": 586,
-    "y": 667,
-    "z": 75438,
-    "centerX": 588,
-    "centerY": 647,
-    "diceleft": "#004ff9",
-    "dicepip": "white",
-    "diceright": "#0038b2",
-    "dicetop": "#427eff",
-    "faceCycle": "random",
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/-1673207543_1930"
-      },
-      {
-        "value": 1,
-        "image": "/assets/-148416619_2594"
-      },
-      {
-        "value": 1,
-        "image": "/assets/57330326_2141"
-      },
-      {
-        "value": 1,
-        "image": "/assets/1350182419_2805"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1914431809_2154"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1774090084_1917"
-      },
-      {
-        "value": 2,
-        "image": "/assets/2066276706_3248"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-1523019352_3017"
-      },
-      {
-        "value": 3,
-        "image": "/assets/2144816233_1914"
-      },
-      {
-        "value": 3,
-        "image": "/assets/281682383_3024"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-138953411_2561"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-1994484808_3667"
-      },
-      {
-        "value": 4,
-        "image": "/assets/-492269528_2800"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1308996887_2124"
-      },
-      {
-        "value": 4,
-        "image": "/assets/218047296_3891"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1276023485_3215"
-      },
-      {
-        "value": 5,
-        "image": "/assets/441250679_2562"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1062860099_3665"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1961475664_2766"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-883353206_3871"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-2100839095_3225"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-1133653241_2997"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1984214093_3882"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1642317049_3654"
-      }
-    ],
-    "image": "/assets/-148416619_2594",
-    "jumpX": 586,
-    "jumpY": 648,
-    "svgReplaces": {
-      "topColor": "dicetop",
-      "leftColor": "diceleft",
-      "rightColor": "diceright",
-      "pipColor": "dicepip"
-    },
-    "value": 1,
-    "width": 80,
-    "height": 80,
-    "rotation": 6,
-    "movable": false
   },
   "seat1": {
     "type": "seat",
     "id": "seat1",
     "x": 136,
     "y": 5,
-    "z": 2103,
     "hideWhenUnused": true,
     "css": "font-size: 20px; ",
     "height": 30,
@@ -2599,7 +1546,6 @@
     "x": 1217,
     "y": 5,
     "index": 2,
-    "z": 2102,
     "color": "#999999"
   },
   "seat3": {
@@ -2619,7 +1565,6 @@
     "x": 136,
     "y": 244,
     "index": 3,
-    "z": 2101,
     "color": "#999999"
   },
   "seat4": {
@@ -2639,7 +1584,6 @@
     "x": 1217,
     "y": 244,
     "index": 4,
-    "z": 2100,
     "color": "#999999"
   },
   "seat5": {
@@ -2659,7 +1603,6 @@
     "x": 136,
     "y": 480,
     "index": 5,
-    "z": 2099,
     "color": "#999999"
   },
   "seat6": {
@@ -2679,7 +1622,6 @@
     "x": 1217,
     "y": 480,
     "index": 6,
-    "z": 2098,
     "color": "#999999"
   },
   "seat7": {
@@ -2699,7 +1641,6 @@
     "x": 136,
     "y": 719,
     "index": 7,
-    "z": 2097,
     "color": "#999999"
   },
   "seat8": {
@@ -2719,13 +1660,11 @@
     "x": 1217,
     "y": 719,
     "index": 8,
-    "z": 2096,
     "color": "#999999"
   },
   "board1": {
     "id": "board1",
     "x": 23,
-    "z": 75461,
     "y": 50,
     "width": 50,
     "height": 150,
@@ -2740,7 +1679,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f9bf00"
@@ -2751,7 +1689,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -2763,7 +1700,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -2775,7 +1711,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -2786,7 +1721,6 @@
     "parent": "board1",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -2799,7 +1733,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -2812,7 +1745,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -2825,7 +1757,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -2838,7 +1769,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -2850,7 +1780,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -2863,7 +1792,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -2876,7 +1804,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -2888,7 +1815,6 @@
     "parent": "board1",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -2901,7 +1827,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -2914,7 +1839,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -2927,7 +1851,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -2939,7 +1862,6 @@
     "width": 33,
     "height": 33,
     "borderRadius": "18%",
-    "z": 75473,
     "css": {
       "": {
         "background-color": "${PROPERTY markerColor}",
@@ -4013,7 +2935,6 @@
     "y": 162,
     "width": 30,
     "height": 30,
-    "z": 608,
     "movableInEdit": false,
     "css": "font-size:20px; --wcBorderOH:grey",
     "text": "Σ",
@@ -4406,7 +3327,6 @@
   "board2": {
     "id": "board2",
     "x": 1068,
-    "z": 75461,
     "y": 50,
     "width": 50,
     "height": 150,
@@ -4421,7 +3341,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f9bf00"
@@ -4432,7 +3351,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -4444,7 +3362,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -4456,7 +3373,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -4467,7 +3383,6 @@
     "parent": "board2",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -4480,7 +3395,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -4493,7 +3407,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -4506,7 +3419,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -4519,7 +3431,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -4531,7 +3442,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -4544,7 +3454,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -4557,7 +3466,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -4569,7 +3477,6 @@
     "parent": "board2",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -4582,7 +3489,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -4595,7 +3501,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -4608,7 +3513,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -4620,7 +3524,6 @@
     "width": 33,
     "height": 33,
     "borderRadius": "18%",
-    "z": 75473,
     "css": {
       "": {
         "background-color": "${PROPERTY markerColor}",
@@ -5960,7 +4863,6 @@
   "board3": {
     "id": "board3",
     "x": 23,
-    "z": 75461,
     "y": 289,
     "width": 50,
     "height": 150,
@@ -5975,7 +4877,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f9bf00"
@@ -5986,7 +4887,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -5998,7 +4898,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -6010,7 +4909,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -6021,7 +4919,6 @@
     "parent": "board3",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -6034,7 +4931,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -6047,7 +4943,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -6060,7 +4955,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -6073,7 +4967,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -6085,7 +4978,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -6098,7 +4990,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -6111,7 +5002,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -6123,7 +5013,6 @@
     "parent": "board3",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -6136,7 +5025,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -6149,7 +5037,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -6162,7 +5049,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -6174,7 +5060,6 @@
     "width": 33,
     "height": 33,
     "borderRadius": "18%",
-    "z": 75473,
     "css": {
       "": {
         "background-color": "${PROPERTY markerColor}",
@@ -7515,7 +6400,6 @@
   "board4": {
     "id": "board4",
     "x": 1068,
-    "z": 75461,
     "y": 289,
     "width": 50,
     "height": 150,
@@ -7530,7 +6414,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f9bf00"
@@ -7541,7 +6424,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -7553,7 +6435,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -7565,7 +6446,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -7576,7 +6456,6 @@
     "parent": "board4",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -7589,7 +6468,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -7602,7 +6480,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -7615,7 +6492,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -7628,7 +6504,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -7640,7 +6515,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -7653,7 +6527,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -7666,7 +6539,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -7678,7 +6550,6 @@
     "parent": "board4",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -7691,7 +6562,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -7704,7 +6574,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -7717,7 +6586,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -7729,7 +6597,6 @@
     "width": 33,
     "height": 33,
     "borderRadius": "18%",
-    "z": 75473,
     "css": {
       "": {
         "background-color": "${PROPERTY markerColor}",
@@ -9070,7 +7937,6 @@
   "board5": {
     "id": "board5",
     "x": 23,
-    "z": 75461,
     "y": 528,
     "width": 50,
     "height": 150,
@@ -9085,7 +7951,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f9bf00"
@@ -9096,7 +7961,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -9108,7 +7972,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -9120,7 +7983,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -9131,7 +7993,6 @@
     "parent": "board5",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -9144,7 +8005,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -9157,7 +8017,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -9170,7 +8029,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -9183,7 +8041,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -9195,7 +8052,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -9208,7 +8064,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -9221,7 +8076,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -9233,7 +8087,6 @@
     "parent": "board5",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -9246,7 +8099,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -9259,7 +8111,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -9272,7 +8123,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -9284,7 +8134,6 @@
     "width": 33,
     "height": 33,
     "borderRadius": "18%",
-    "z": 75473,
     "css": {
       "": {
         "background-color": "${PROPERTY markerColor}",
@@ -10625,7 +9474,6 @@
   "board6": {
     "id": "board6",
     "x": 1068,
-    "z": 75461,
     "y": 528,
     "width": 50,
     "height": 150,
@@ -10640,7 +9488,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f9bf00"
@@ -10651,7 +9498,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -10663,7 +9509,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -10675,7 +9520,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -10686,7 +9530,6 @@
     "parent": "board6",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -10699,7 +9542,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -10712,7 +9554,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -10725,7 +9566,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -10738,7 +9578,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -10750,7 +9589,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -10763,7 +9601,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -10776,7 +9613,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -10788,7 +9624,6 @@
     "parent": "board6",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -10801,7 +9636,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -10814,7 +9648,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -10827,7 +9660,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -10839,7 +9671,6 @@
     "width": 33,
     "height": 33,
     "borderRadius": "18%",
-    "z": 75473,
     "css": {
       "": {
         "background-color": "${PROPERTY markerColor}",
@@ -12180,7 +11011,6 @@
   "board7": {
     "id": "board7",
     "x": 23,
-    "z": 75461,
     "y": 767,
     "width": 50,
     "height": 150,
@@ -12195,7 +11025,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f9bf00"
@@ -12206,7 +11035,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -12218,7 +11046,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -12230,7 +11057,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -12241,7 +11067,6 @@
     "parent": "board7",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -12254,7 +11079,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -12267,7 +11091,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -12280,7 +11103,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -12293,7 +11115,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -12305,7 +11126,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -12318,7 +11138,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -12331,7 +11150,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -12343,7 +11161,6 @@
     "parent": "board7",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -12356,7 +11173,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -12369,7 +11185,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -12382,7 +11197,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -12394,7 +11208,6 @@
     "width": 33,
     "height": 33,
     "borderRadius": "18%",
-    "z": 75473,
     "css": {
       "": {
         "background-color": "${PROPERTY markerColor}",
@@ -13735,7 +12548,6 @@
   "board8": {
     "id": "board8",
     "x": 1068,
-    "z": 75461,
     "y": 767,
     "width": 50,
     "height": 150,
@@ -13750,7 +12562,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f9bf00"
@@ -13761,7 +12572,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -13773,7 +12583,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -13785,7 +12594,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -13796,7 +12604,6 @@
     "parent": "board8",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -13809,7 +12616,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -13822,7 +12628,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -13835,7 +12640,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -13848,7 +12652,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -13860,7 +12663,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -13873,7 +12675,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -13886,7 +12687,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -13898,7 +12698,6 @@
     "parent": "board8",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #70ad47",
@@ -13911,7 +12710,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #f40000",
@@ -13924,7 +12722,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #ffc000",
@@ -13937,7 +12734,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": "background: #4472c4",
@@ -13949,7 +12745,6 @@
     "width": 33,
     "height": 33,
     "borderRadius": "18%",
-    "z": 75473,
     "css": {
       "": {
         "background-color": "${PROPERTY markerColor}",
@@ -15348,7 +14143,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15366,7 +14160,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15385,7 +14178,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15404,7 +14196,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15422,7 +14213,6 @@
     "parent": "coverBoard1",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15442,7 +14232,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15462,7 +14251,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15482,7 +14270,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15502,7 +14289,6 @@
     "fixedParent": true,
     "width": 120,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15521,7 +14307,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15541,7 +14326,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15561,7 +14345,6 @@
     "fixedParent": true,
     "width": 115,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15580,7 +14363,6 @@
     "parent": "coverBoard1",
     "fixedParent": true,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15600,7 +14382,6 @@
     "fixedParent": true,
     "width": 152,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15620,7 +14401,6 @@
     "fixedParent": true,
     "width": 77,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15640,7 +14420,6 @@
     "fixedParent": true,
     "width": 154,
     "height": 40,
-    "z": 75455,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -15661,7 +14440,6 @@
     "width": 0,
     "height": 150,
     "layer": 4,
-    "z": 75461,
     "movable": false,
     "movableInEdit": false,
     "linkedToSeat": "seat1"
@@ -16389,7 +15167,6 @@
   },
   "b5wb": {
     "id": "b5wb",
-    "z": 75474,
     "x": 669,
     "y": 83,
     "width": 220,
@@ -16399,5 +15176,226 @@
     "text": "And Sliced",
     "css": "font-size: 35px; text-align:center",
     "classes": "handwriting_casual_font"
+  },
+  "diceRed": {
+    "type": "dice",
+    "id": "diceRed",
+    "x": 598,
+    "y": 348,
+    "width": 60,
+    "height": 60,
+    "movableInEdit": false,
+    "backgroundColor": "#f40000",
+    "pipColor": "#ffffff",
+    "shape3d": true
+  },
+  "diceYellow": {
+    "type": "dice",
+    "id": "diceYellow",
+    "x": 598,
+    "y": 508,
+    "width": 60,
+    "height": 60,
+    "movable": false,
+    "movableInEdit": false,
+    "backgroundColor": "#ffc000",
+    "pipColor": "#ffffff",
+    "shape3d": true
+  },
+  "diceBlue": {
+    "type": "dice",
+    "id": "diceBlue",
+    "x": 598,
+    "y": 667,
+    "width": 60,
+    "height": 60,
+    "movable": false,
+    "movableInEdit": false,
+    "backgroundColor": "#4472c4",
+    "pipColor": "#ffffff",
+    "shape3d": true
+  },
+  "diceGreen": {
+    "type": "dice",
+    "id": "diceGreen",
+    "x": 598,
+    "y": 824,
+    "width": 60,
+    "height": 60,
+    "movable": false,
+    "movableInEdit": false,
+    "backgroundColor": "#70ad47",
+    "pipColor": "#ffffff",
+    "shape3d": true
+  },
+  "diceWhite1": {
+    "type": "dice",
+    "id": "diceWhite1",
+    "x": 735,
+    "y": 525,
+    "width": 60,
+    "height": 60,
+    "movableInEdit": false,
+    "shape3d": true
+  },
+  "diceWhite2": {
+    "type": "dice",
+    "id": "diceWhite2",
+    "x": 735,
+    "y": 638,
+    "width": 60,
+    "height": 60,
+    "movableInEdit": false,
+    "shape3d": true
+  },
+  "rollDice": {
+    "type": "button",
+    "id": "rollDice",
+    "x": 879,
+    "y": 567,
+    "width": 90,
+    "height": 90,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "--wcBorder": "black",
+      "--wcBorderOH": "white",
+      "--wcMain": "white",
+      "--wcMainOH": "black",
+      "--wcFont": "black",
+      "--wcFontOH": "white",
+      "font-size": "80px"
+    },
+    "text": "die",
+    "started": true,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "diceWhite1"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "diceWhite1",
+          "diceWhite2",
+          "diceRed",
+          "diceYellow",
+          "diceBlue",
+          "diceGreen"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY started}",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "started",
+            "value": true
+          },
+          {
+            "func": "TURN",
+            "turnCycle": "position",
+            "turn": "first"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "TURN"
+          }
+        ]
+      }
+    ]
+  },
+  "restart_button": {
+    "type": "button",
+    "id": "restart_button",
+    "x": 900,
+    "y": 15,
+    "width": 50,
+    "height": 50,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "--wcMain": "black",
+      "--wcBorder": "white",
+      "--wcMainOH": "grey",
+      "--wcBorderOH": "black",
+      "font-size": "35px"
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting board...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to start over and reset the board. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "redreturn",
+          "yellowreturn",
+          "bluereturn",
+          "greenreturn"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "activeFace",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "text",
+        "value": "Σ"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "diceWhite1",
+          "diceWhite2",
+          "diceRed",
+          "diceYellow",
+          "diceBlue",
+          "diceGreen"
+        ],
+        "property": "rollCount",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": null
+      }
+    ]
   }
 }

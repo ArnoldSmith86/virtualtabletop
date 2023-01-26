@@ -1,16 +1,4 @@
 {
-  "7yu1": {
-    "id": "7yu1",
-    "x": 30,
-    "y": 10,
-    "width": 50,
-    "height": 50,
-    "z": 796,
-    "css": "border-radius: 25%; background-color:#ffffff",
-    "image": "/assets/-615055520_945",
-    "movable": false,
-    "parent": "h1"
-  },
   "_meta": {
     "version": 6,
     "info": {
@@ -19,16 +7,22 @@
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/2243/yahtzee",
       "year": "1956",
-      "mode": "solo; vs",
+      "mode": "vs",
       "time": "30",
-      "players": "1-6",
-      "language": "en-US",
-      "variant": "",
       "attribution": "The room design and other room elements are by RogerLipsett and are released to the Public Domain under CC0.\n\nThe library image is by AlbertHerring and is available under CC BY 2.0 from https://en.wikipedia.org/wiki/Yahtzee#/media/File:Yahtzee_game_example.jpg.",
-      "similarName": "Yahtzee",
-      "description": "Classic dice game. Roll dice up to three times to complete designated tasks on scorecard. Highest score wins.",
+      "id": "2v2x",
       "showName": true,
-      "lastUpdate": 1650427506000
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1-6",
+      "similarImage": "",
+      "similarName": "Yahtzee",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "xprj": {
@@ -40,91 +34,6 @@
     "movable": false,
     "width": 130,
     "x": 130,
-    "parent": "h1"
-  },
-  "7yu2": {
-    "id": "7yu2",
-    "y": 80,
-    "width": 50,
-    "height": 50,
-    "z": 797,
-    "movableInEdit": true,
-    "image": "/assets/-480703945_984",
-    "inheritFrom": {
-      "7yu1": [
-        "css",
-        "x",
-        "movable"
-      ]
-    },
-    "parent": "h1"
-  },
-  "7yu3": {
-    "id": "7yu3",
-    "y": 150,
-    "width": 50,
-    "height": 50,
-    "z": 798,
-    "movableInEdit": true,
-    "image": "/assets/-97339769_1023",
-    "inheritFrom": {
-      "7yu1": [
-        "css",
-        "x",
-        "movable"
-      ]
-    },
-    "parent": "h1"
-  },
-  "7yu4": {
-    "id": "7yu4",
-    "y": 220,
-    "width": 50,
-    "height": 50,
-    "z": 799,
-    "movableInEdit": true,
-    "image": "/assets/165895662_1062",
-    "inheritFrom": {
-      "7yu1": [
-        "css",
-        "x",
-        "movable"
-      ]
-    },
-    "parent": "h1"
-  },
-  "7yu6": {
-    "id": "7yu6",
-    "y": 360,
-    "width": 50,
-    "height": 50,
-    "z": 801,
-    "movableInEdit": true,
-    "image": "/assets/1034302627_1140",
-    "inheritFrom": {
-      "7yu1": [
-        "css",
-        "x",
-        "movable"
-      ]
-    },
-    "parent": "h1"
-  },
-  "7yu5": {
-    "id": "7yu5",
-    "y": 290,
-    "width": 50,
-    "height": 50,
-    "z": 800,
-    "movableInEdit": true,
-    "image": "/assets/-665230544_1101",
-    "inheritFrom": {
-      "7yu1": [
-        "css",
-        "x",
-        "movable"
-      ]
-    },
     "parent": "h1"
   },
   "xprj1": {
@@ -793,7 +702,7 @@
     ],
     "z": 1,
     "movableInEdit": false,
-    "movesMade": 3
+    "movesMade": 6
   },
   "rollBtn": {
     "type": "button",
@@ -802,7 +711,7 @@
     "y": 920,
     "width": 180,
     "height": 50,
-    "z": 15,
+    "z": 33,
     "css": "background:gray;font-size:20pt",
     "clickRoutine": [
       {
@@ -865,9 +774,8 @@
         "collection": "rollEm",
         "loopRoutine": [
           {
-            "func": "CALL",
-            "widget": "${widgetID}",
-            "routine": "rollRoutine"
+            "func": "CLICK",
+            "mode": "ignoreClickable"
           }
         ]
       },
@@ -1528,21 +1436,21 @@
     "z": 16,
     "saved": [
       "",
-      "",
-      "",
-      12,
-      5,
-      6,
+      8,
       "",
       "",
       "",
       "",
       "",
       "",
+      "",
+      30,
+      "",
+      50,
       ""
     ],
-    "savedLower": "",
-    "savedUpper": 23,
+    "savedLower": 80,
+    "savedUpper": "8",
     "clickRoutine": [
       {
         "func": "IF",
@@ -1840,7 +1748,7 @@
     },
     "text": "",
     "parent": "h1",
-    "zeroValue": false,
+    "zeroValue": true,
     "borderRadius": "0px"
   },
   "u4": {
@@ -1862,7 +1770,7 @@
     },
     "text": "",
     "parent": "h1",
-    "zeroValue": false,
+    "zeroValue": true,
     "borderRadius": "0px"
   },
   "u3": {
@@ -1884,7 +1792,7 @@
     },
     "text": "",
     "parent": "h1",
-    "zeroValue": true,
+    "zeroValue": false,
     "borderRadius": "0px"
   },
   "u2": {
@@ -1906,7 +1814,7 @@
     },
     "text": "",
     "parent": "h1",
-    "zeroValue": true,
+    "zeroValue": false,
     "borderRadius": "0px"
   },
   "u1": {
@@ -1980,7 +1888,7 @@
       }
     ],
     "parent": "h1",
-    "zeroValue": true,
+    "zeroValue": false,
     "borderRadius": "0px",
     "x": 290,
     "clickable": false
@@ -2176,7 +2084,7 @@
       }
     ],
     "parent": "h2",
-    "zeroValue": false,
+    "zeroValue": true,
     "borderRadius": "0px",
     "clickable": false
   },
@@ -2240,7 +2148,7 @@
       }
     ],
     "parent": "h2",
-    "zeroValue": false,
+    "zeroValue": true,
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": {
@@ -2384,6 +2292,8 @@
     "z": 16,
     "index": 2,
     "saved": [
+      2,
+      2,
       "",
       "",
       "",
@@ -2394,12 +2304,10 @@
       "",
       "",
       "",
-      "",
-      "",
-      ""
+      18
     ],
-    "savedLower": "",
-    "savedUpper": "",
+    "savedLower": "18",
+    "savedUpper": 4,
     "width": 150,
     "height": 40,
     "movable": false,
@@ -2700,7 +2608,7 @@
       }
     ],
     "borderRadius": "15px",
-    "text": "23"
+    "text": 88
   },
   "p2Summary": {
     "inheritFrom": {
@@ -2712,7 +2620,7 @@
     "type": "button",
     "x": -400,
     "y": 325,
-    "text": ""
+    "text": 22
   },
   "p3Summary": {
     "inheritFrom": {
@@ -2945,8 +2853,7 @@
     "z": 6,
     "movable": false,
     "clickable": false,
-    "css": "background-color:lightgray;border-radius:0px;border:1px solid black;font-size:16pt;color:black;text-align:center",
-    "text": 3
+    "css": "background-color:lightgray;border-radius:0px;border:1px solid black;font-size:16pt;color:black;text-align:center"
   },
   "su2": {
     "inheritFrom": {
@@ -2958,7 +2865,7 @@
     "x": 70,
     "y": 143,
     "parent": "brief",
-    "text": 4
+    "text": 8
   },
   "su3": {
     "inheritFrom": {
@@ -2970,7 +2877,7 @@
     "x": 70,
     "y": 193,
     "parent": "brief",
-    "text": 12
+    "text": ""
   },
   "su4": {
     "inheritFrom": {
@@ -2982,7 +2889,7 @@
     "x": 70,
     "y": 243,
     "parent": "brief",
-    "text": 12
+    "text": ""
   },
   "su5": {
     "inheritFrom": {
@@ -2994,7 +2901,7 @@
     "x": 70,
     "y": 293,
     "parent": "brief",
-    "text": 15
+    "text": ""
   },
   "su6": {
     "inheritFrom": {
@@ -3006,14 +2913,14 @@
     "x": 70,
     "y": 343,
     "parent": "brief",
-    "text": 18
+    "text": ""
   },
   "s3k": {
     "id": "s3k",
     "parent": "brief",
     "x": 220,
     "y": 93,
-    "text": 26,
+    "text": "",
     "inheritFrom": {
       "su1": [
         "!text"
@@ -3029,7 +2936,7 @@
         "!text"
       ]
     },
-    "text": 10
+    "text": ""
   },
   "sfh": {
     "id": "sfh",
@@ -3040,7 +2947,7 @@
         "!text"
       ]
     },
-    "text": 25
+    "text": ""
   },
   "sss": {
     "id": "sss",
@@ -3051,7 +2958,7 @@
         "!text"
       ]
     },
-    "text": 30
+    "text": ""
   },
   "sls": {
     "id": "sls",
@@ -3062,7 +2969,7 @@
         "!text"
       ]
     },
-    "text": 40
+    "text": ""
   },
   "s5k": {
     "id": "s5k",
@@ -3073,7 +2980,7 @@
         "!text"
       ]
     },
-    "text": 50
+    "text": ""
   },
   "schance": {
     "id": "schance",
@@ -3084,7 +2991,7 @@
         "!text"
       ]
     },
-    "text": 22
+    "text": ""
   },
   "78kl": {
     "type": "holder",
@@ -3102,7 +3009,7 @@
     "id": "sName",
     "x": 39,
     "z": 7,
-    "text": "Roger: 302",
+    "text": "Mike: 8",
     "parent": "brief",
     "y": 15,
     "css": "text-align:center;font-size:20pt;color:black",
@@ -3444,97 +3351,6 @@
       "height": 100
     }
   },
-  "d1": {
-    "type": "card",
-    "id": "d1",
-    "deck": "dice",
-    "cardType": "white/black",
-    "x": -786,
-    "y": 714,
-    "rotation": 22471,
-    "z": 125,
-    "centerX": 805,
-    "centerY": 710,
-    "jumpX": 814,
-    "jumpY": 714,
-    "kept": false,
-    "value": 4,
-    "text": 1,
-    "activeFace": 3
-  },
-  "d2": {
-    "type": "card",
-    "id": "d2",
-    "deck": "dice",
-    "cardType": "white/black",
-    "x": -615,
-    "y": 691,
-    "rotation": 23188,
-    "z": 122,
-    "centerX": 967,
-    "centerY": 710,
-    "jumpX": 985,
-    "jumpY": 691,
-    "kept": false,
-    "value": 5,
-    "text": 1,
-    "activeFace": 4
-  },
-  "d3": {
-    "type": "card",
-    "id": "d3",
-    "deck": "dice",
-    "cardType": "white/black",
-    "x": -460,
-    "y": 725,
-    "rotation": 22873,
-    "z": 122,
-    "centerX": 1128,
-    "centerY": 710,
-    "jumpX": 1140,
-    "jumpY": 725,
-    "kept": false,
-    "value": 4,
-    "text": 1,
-    "activeFace": 3
-  },
-  "d4": {
-    "type": "card",
-    "id": "d4",
-    "deck": "dice",
-    "cardType": "white/black",
-    "x": -292,
-    "y": 717,
-    "rotation": 22247,
-    "z": 122,
-    "centerX": 1289,
-    "centerY": 710,
-    "jumpX": 1308,
-    "jumpY": 717,
-    "kept": false,
-    "value": 5,
-    "text": 1,
-    "activeFace": 4
-  },
-  "d5": {
-    "type": "card",
-    "id": "d5",
-    "deck": "dice",
-    "cardType": "white/black",
-    "x": -131,
-    "y": 715,
-    "rotation": 23355,
-    "z": 122,
-    "centerX": 1451,
-    "centerY": 710,
-    "jumpX": 1469,
-    "jumpY": 715,
-    "kept": false,
-    "value": 4,
-    "borderRadius": "0px",
-    "text": 1,
-    "activeFace": 3
-  },
   "sUpper": {
     "type": "label",
     "id": "sUpper",
@@ -3542,7 +3358,7 @@
     "y": 410,
     "z": 8,
     "css": "text-align:center;font-size:16pt;color:black",
-    "text": "64 + 35 = 99",
+    "text": "8 + 0 = 8",
     "width": 120,
     "x": 10
   },
@@ -3554,7 +3370,7 @@
     "y": 410,
     "z": 8,
     "css": "text-align:center;font-size:16pt;color:black",
-    "text": 203
+    "text": "0"
   },
   "z321": {
     "type": "label",
@@ -3942,5 +3758,127 @@
         "value": 1700
       }
     ]
+  },
+  "7yu1": {
+    "type": "dice",
+    "id": "7yu1",
+    "parent": "h1",
+    "x": 30,
+    "y": 10,
+    "z": 805,
+    "backgroundColor": "#ffffff",
+    "rollCount": 3,
+    "shape3d": true,
+    "movableInEdit": false,
+    "clickable": false
+  },
+  "7yu2": {
+    "inheritFrom": "7yu1",
+    "id": "7yu2",
+    "type": "dice",
+    "x": 30,
+    "y": 80,
+    "activeFace": 1
+  },
+  "7yu3": {
+    "inheritFrom": "7yu1",
+    "id": "7yu3",
+    "type": "dice",
+    "x": 30,
+    "y": 150,
+    "activeFace": 2
+  },
+  "7yu4": {
+    "inheritFrom": "7yu1",
+    "id": "7yu4",
+    "type": "dice",
+    "x": 30,
+    "y": 220,
+    "activeFace": 3
+  },
+  "7yu5": {
+    "inheritFrom": "7yu1",
+    "id": "7yu5",
+    "type": "dice",
+    "x": 30,
+    "y": 290,
+    "activeFace": 4
+  },
+  "7yu6": {
+    "inheritFrom": "7yu1",
+    "id": "7yu6",
+    "type": "dice",
+    "x": 30,
+    "y": 360,
+    "activeFace": 5
+  },
+  "d1": {
+    "type": "dice",
+    "id": "d1",
+    "x": -790,
+    "y": 725,
+    "width": 90,
+    "height": 90,
+    "z": 813,
+    "backgroundColor": "#ffffff",
+    "rollCount": 87,
+    "shape3d": true,
+    "kept": false
+  },
+  "d2": {
+    "type": "dice",
+    "id": "d2",
+    "x": -630,
+    "y": 725,
+    "width": 90,
+    "height": 90,
+    "z": 813,
+    "backgroundColor": "#ffffff",
+    "rollCount": 92,
+    "shape3d": true,
+    "kept": false,
+    "activeFace": 5
+  },
+  "d3": {
+    "type": "dice",
+    "id": "d3",
+    "x": -470,
+    "y": 725,
+    "width": 90,
+    "height": 90,
+    "z": 813,
+    "backgroundColor": "#ffffff",
+    "rollCount": 83,
+    "shape3d": true,
+    "kept": false,
+    "activeFace": 1
+  },
+  "d4": {
+    "type": "dice",
+    "id": "d4",
+    "x": -310,
+    "y": 725,
+    "width": 90,
+    "height": 90,
+    "z": 813,
+    "backgroundColor": "#ffffff",
+    "rollCount": 89,
+    "shape3d": true,
+    "kept": false,
+    "activeFace": 2
+  },
+  "d5": {
+    "type": "dice",
+    "id": "d5",
+    "x": -150,
+    "y": 725,
+    "width": 90,
+    "height": 90,
+    "z": 813,
+    "backgroundColor": "#ffffff",
+    "rollCount": 95,
+    "shape3d": true,
+    "kept": false,
+    "activeFace": 5
   }
 }

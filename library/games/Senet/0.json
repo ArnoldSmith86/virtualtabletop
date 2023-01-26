@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 11,
     "info": {
       "name": "Senet",
       "image": "/assets/-78804023_44226",
@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Room layout and design by LawDawg and released to the public domain by CC0.<br></div><div><br></div><div>Board symbols are available under the icons8 license at:</div><ul><li>Ankh: https://icons8.com/icon/10404/ankh</li><li>One: https://icons8.com/icon/zW3ft7PmEdvi/one</li><li>Two: https://icons8.com/icon/lPRNKrv0lpVq/two</li><li>Three: https://icons8.com/icon/7XoFCDZ9ju3f/three</li><li>Cross: https://icons8.com/icon/X6BDW9w3pZVf/taw</li><li>Circle with line: https://icons8.com/icon/NFWOf50Z3e64/waw</li></ul><div>Background image available under the Pixabay license at:&nbsp;https://pixabay.com/illustrations/hieroglyphics-egypt-egyptian-7448842/</div><div><br></div><div>Library image is in the public domain as CC0 from: https://commons.wikimedia.org/wiki/File:Gameboard_and_Gaming_Pieces_MET_DP310299.jpg</div>",
-      "lastUpdate": 1674139392094,
+      "lastUpdate": 1674665992552,
       "showName": true,
       "skill": "",
       "description": "Take turns throwing sticks and moving pieces around board. First player to remove all pieces from the board wins.",
@@ -19,6 +19,7 @@
       "similarAwards": "",
       "ruleText": "<div>Choose either cubes or pawns for your piece. Cubes go first.</div><div><br></div><div><b>Basic Movement</b><br><div><br></div><div>Throw sticks. Count number of white sticks (zero = five because the concept of zero was not known in ancient Egypt). Move one piece forward the indicated number of spaces. Move from left to right on the top and bottom rows and from right to left on the middle row. When you reach the end of a row, the next move is into the next row.&nbsp;<span style=\"color: var(--overlayFontColor);\">Only one piece is allowed per space.</span></div><div><br></div><div>If you cannot move a piece forward, then you must move a piece backward. If you cannot do either, you forfeit that opportunity to move.</div><div><br></div><div>If you rolled a 1, 4, or 5 go again.<br></div><div><br></div><div><b>Last 5 Squares</b></div><div><b><br></b></div><div>The 26th square of the board has a symbol with a line extending from a circle. No piece can go past that square without landing on it first and you can only reach that square by an exact throw of the sticks.</div><div><br></div><div>Once a piece reaches that square:</div><div><ul><li>On a throw of 5, remove the piece from the board.</li><li>On a throw of 2, 3, or 4, advance to the appropriate square. Once on those last 3 squares, you must throw the exact count (indicated by the number of marks on the square) to remove it from the board. Those pieces cannot move forward or back.</li><li>On a throw of 1, move to the space with an X and follow the rules for \"drowning.\"</li></ul></div><div><b>Piece Interaction</b></div></div><div><b><br></b></div><div>When a piece lands on a square occupied by an opponent, swap places sending the opponent's piece to where the moving piece started which may be forward or backward. If two or more pieces of the same player are on adjacent squares, they are protected and cannot be swapped.</div><div><br></div><div>If a piece is on one of the last 3 squares (marked with 1, 2, or 3 lines), then those pieces are never protected.&nbsp; If attacked, move to the square with an X.</div><div><br></div><div><b>Drowning</b></div><div><b><br></b></div><div>When a player has a piece \"drowning\" on the X, the player's other pieces do not provide protection for each other when on adjacent squares. Also, this is the only piece the player can move.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">If the piece moves onto the X while the player has the sticks, t</span><span style=\"color: var(--overlayFontColor);\">he player keeps throwing sticks trying to get a 4 to move off the board. Throws of 1 and 5 mean nothing but the player can keep trying to get a 4. Throws of 2 and 3 end the turn.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">On the player's next turn, he may either:</span></div><div><ul><li><span style=\"color: var(--overlayFontColor);\">Take the sticks and roll again for a 4 or</span></li><li><span style=\"color: var(--overlayFontColor);\">Move the piece to the square with the ankh symbol. If that square is occupied, then move it to the first free square behind it. That ends the player's turn.</span></li></ul><div>If the piece is drowning when during an opponent's turn:</div><div><ul><li>If the opponent's piece must enter the X square through a roll of 1, then the drowning piece and the opponent's piece swap places.&nbsp;</li><li>If the opponent's move causes one of the player's other pieces in the last few spaces of the board to move back to the X, then the one currently on the X is moved to the square with the ankh.</li></ul></div></div><div><b>End of Game</b></div><div><b><br></b></div><div>The first player to remove all of his pieces from the board wins.</div><div><br></div><div><b>Variations</b></div><div><b><br></b></div><div>Since the ancient Egyptians did not write down the rules, we do not really know what they are. There are many rule variants you can find on the internet. These are based on a file uploaded to boardgamegeek.com by Urhixidur in 2002. There are extra pieces in the room for use in some rule variants.&nbsp;<span style=\"color: var(--overlayFontColor);\">Feel free to make up your own variations.</span></div>",
       "helpText": "Click the sticks.&nbsp; Move the pieces.",
+      "id": "94yl",
       "variantImage": "",
       "variant": "",
       "language": "",
@@ -63,7 +64,7 @@
         "holder": "${PROPERTY id}",
         "key": "z",
         "reverse": true
-       }
+      }
     ]
   },
   "house2": {
@@ -584,38 +585,6 @@
     "y": 10,
     "parent": "house10"
   },
-  "stick1": {
-    "id": "stick1",
-    "x": 680,
-    "y": 725,
-    "width": 40,
-    "height": 200,
-    "borderRadius": 15,
-    "z": 1,
-    "css": {
-      "background": "#fff"
-    },
-    "faces": [
-      {
-        "css": {
-          "background": "#444",
-          "border": "3px solid #fff",
-          "transition": "linear 0.2s"
-        }
-      },
-      {
-        "css": {
-          "background": "#fff",
-          "border": "3px solid #444",
-          "transition": "linear 0.2s"
-        }
-      }
-    ],
-    "resetProperties": {
-      "rotation": null,
-      "activeFace": 0
-    }
-  },
   "background": {
     "id": "background",
     "width": 1792,
@@ -628,113 +597,6 @@
     "image": "/assets/-2115246459_536956",
     "x": -96,
     "z": 1
-  },
-  "stick2": {
-    "id": "stick2",
-    "x": 743,
-    "y": 725,
-    "width": 40,
-    "height": 200,
-    "borderRadius": 15,
-    "z": 1,
-    "css": {
-      "background": "#444",
-      "border": "3px solid #fff",
-      "rotation": 90,
-      "transition": "linear 0.2s"
-    },
-    "faces": [
-      {
-        "css": {
-          "background": "#444",
-          "border": "3px solid #fff",
-          "transition": "linear 0.2s"
-        }
-      },
-      {
-        "css": {
-          "background": "#fff",
-          "border": "3px solid #444",
-          "transition": "linear 0.2s"
-        }
-      }
-    ],
-    "resetProperties": {
-      "rotation": null,
-      "activeFace": 1
-    },
-    "activeFace": 1
-  },
-  "stick3": {
-    "id": "stick3",
-    "x": 807,
-    "y": 725,
-    "width": 40,
-    "height": 200,
-    "borderRadius": 15,
-    "z": 1,
-    "css": {
-      "background": "#444",
-      "border": "3px solid #fff",
-      "rotation": 90,
-      "transition": "linear 0.2s"
-    },
-    "faces": [
-      {
-        "css": {
-          "background": "#444",
-          "border": "3px solid #fff",
-          "transition": "linear 0.2s"
-        }
-      },
-      {
-        "css": {
-          "background": "#fff",
-          "border": "3px solid #444",
-          "transition": "linear 0.2s"
-        }
-      }
-    ],
-    "resetProperties": {
-      "rotation": null,
-      "activeFace": 0
-    }
-  },
-  "stick4": {
-    "id": "stick4",
-    "x": 870,
-    "y": 725,
-    "width": 40,
-    "height": 200,
-    "borderRadius": 15,
-    "z": 1,
-    "css": {
-      "background": "#444",
-      "border": "3px solid #fff",
-      "rotation": 90,
-      "transition": "linear 0.2s"
-    },
-    "faces": [
-      {
-        "css": {
-          "background": "#444",
-          "border": "3px solid #fff",
-          "transition": "linear 0.2s"
-        }
-      },
-      {
-        "css": {
-          "background": "#fff",
-          "border": "3px solid #444",
-          "transition": "linear 0.2s"
-        }
-      }
-    ],
-    "resetProperties": {
-      "rotation": null,
-      "activeFace": 1
-    },
-    "activeFace": 1
   },
   "clicker": {
     "id": "clicker",
@@ -756,15 +618,15 @@
           "stick4"
         ],
         "loopRoutine": [
-          "var randomClick = randInt 1 2",
-          "var randomRot = randInt 0 359",
+          "var randomTransRot = randInt 1 2",
+          "var randomTransFlip = randInt 1.5 2.5",
+          "var randomRot = randInt 0 180",
           "var randomZ = randInt 1 4",
           {
             "func": "CLICK",
             "collection": [
               "${value}"
-            ],
-            "count": "${randomClick}"
+            ]
           },
           {
             "func": "SET",
@@ -781,6 +643,22 @@
             ],
             "property": "z",
             "value": "${randomZ}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "rotTrans",
+            "value": "${randomTransRot}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "flipTrans",
+            "value": "${randomTransFlip}"
           }
         ]
       },
@@ -795,11 +673,92 @@
           "stick4"
         ]
       },
+      "var a = ${PROPERTY state} + 1",
+      "var b = ${a} % 2",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "state",
+        "value": "${b}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${a}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "speed",
+            "value": 1.5
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "speed",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "speed",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "speed",
+            "value": 1.5
+          }
+        ]
+      },
       {
         "func": "SELECT",
         "source": "DEFAULT",
         "property": "activeFace",
-        "value": 1
+        "value": 0
       },
       {
         "func": "COUNT"
@@ -812,7 +771,8 @@
           {
             "func": "SET",
             "collection": [
-              "result"
+              "result1",
+              "result2"
             ],
             "property": "text",
             "value": "Move 5. Go again."
@@ -827,7 +787,8 @@
           {
             "func": "SET",
             "collection": [
-              "result"
+              "result1",
+              "result2"
             ],
             "property": "text",
             "value": "Move 1. Go again."
@@ -842,7 +803,8 @@
           {
             "func": "SET",
             "collection": [
-              "result"
+              "result1",
+              "result2"
             ],
             "property": "text",
             "value": "Move 2. Pass sticks."
@@ -857,7 +819,8 @@
           {
             "func": "SET",
             "collection": [
-              "result"
+              "result1",
+              "result2"
             ],
             "property": "text",
             "value": "Move 3. Pass sticks."
@@ -872,7 +835,8 @@
           {
             "func": "SET",
             "collection": [
-              "result"
+              "result1",
+              "result2"
             ],
             "property": "text",
             "value": "Move 4. Go again."
@@ -885,92 +849,8 @@
       "box-shadow": "2px 2px 15px inset",
       "opacity": 0.3
     },
-    "borderRadius": 4
-  },
-  "result": {
-    "id": "result",
-    "x": 560,
-    "y": 960,
-    "z": 1,
-    "text": "Click sticks to start.",
-    "height": 30,
-    "css": {
-      "font-size": "25px",
-      "text-align": "center"
-    },
-    "width": 480,
-    "movable": false,
-    "movableInEdit": false,
-    "resetProperties": {
-      "text": "Click sticks to start."
-    }
-  },
-  "dfcx": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Restarting ..."
-          },
-          {
-            "type": "subtitle",
-            "text": "Are you sure you want to restart the game?"
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "resetProperties",
-        "relation": "!=",
-        "value": null
-      },
-      {
-        "func": "FOREACH",
-        "loopRoutine": [
-          {
-            "func": "FOREACH",
-            "in": "${PROPERTY resetProperties OF $widgetID}",
-            "loopRoutine": [
-              {
-                "func": "SET",
-                "property": "${key}",
-                "value": "${value}"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "relation": "!=",
-        "value": null
-      },
-      {
-        "func": "SET",
-        "property": "z",
-        "value": 1
-      }
-    ],
-    "x": 1550,
-    "z": 1,
-    "id": "dfcx",
-    "width": 50,
-    "height": 50,
-    "classes": "symbols",
-    "text": "restart",
-    "css": {
-      "color": "#41727d",
-      "font-size": "40px",
-      "--wcMain": "#c7dde4",
-      "--wcBorder": "#93becc",
-      "--wcMainOH": "#93becc",
-      "--wcBorderOH": "#c7dde4"
-    },
-    "y": 1
+    "borderRadius": 4,
+    "state": 1
   },
   "house11": {
     "type": "holder",
@@ -1296,5 +1176,393 @@
       "x": 1500,
       "y": 100
     }
+  },
+  "stick1": {
+    "type": "dice",
+    "id": "stick1",
+    "x": 610,
+    "y": 800,
+    "width": 190,
+    "height": 40,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "#444",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s",
+        "--edgeColor": "grey"
+      }
+    },
+    "options": [
+      {
+        "css": {
+          "--faceBorder": "1px solid #444",
+          "--backgroundColor": "#fff"
+        }
+      },
+      {
+        "css": {
+          "--faceBorder": "1px solid #fff",
+          "--backgroundColor": "#444"
+        }
+      }
+    ],
+    "rollCount": 573,
+    "shape3d": "d2-flip",
+    "color1": "#fff",
+    "color2": "#444",
+    "resetProperties": {
+      "rotation": 90,
+      "activeFace": 0
+    },
+    "activeFaceChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#444"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#fff"
+          }
+        ]
+      }
+    ],
+    "rotation": 90,
+    "flipTrans": 2,
+    "rotTrans": 1
+  },
+  "stick2": {
+    "type": "dice",
+    "id": "stick2",
+    "x": 680,
+    "y": 800,
+    "width": 190,
+    "height": 40,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "#fff",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s",
+        "--edgeColor": "grey"
+      }
+    },
+    "options": [
+      {
+        "css": {
+          "--faceBorder": "1px solid #444",
+          "--backgroundColor": "#fff"
+        }
+      },
+      {
+        "css": {
+          "--faceBorder": "1px solid #fff",
+          "--backgroundColor": "#444"
+        }
+      }
+    ],
+    "rollCount": 573,
+    "shape3d": "d2-flip",
+    "color1": "#fff",
+    "color2": "#444",
+    "resetProperties": {
+      "rotation": 90,
+      "activeFace": 1
+    },
+    "activeFaceChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#444"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#fff"
+          }
+        ]
+      }
+    ],
+    "rotation": 90,
+    "flipTrans": 1,
+    "rotTrans": 2,
+    "activeFace": 1
+  },
+  "stick3": {
+    "type": "dice",
+    "id": "stick3",
+    "x": 750,
+    "y": 800,
+    "width": 190,
+    "height": 40,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "#444",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s",
+        "--edgeColor": "grey"
+      }
+    },
+    "options": [
+      {
+        "css": {
+          "--faceBorder": "1px solid #444",
+          "--backgroundColor": "#fff"
+        }
+      },
+      {
+        "css": {
+          "--faceBorder": "1px solid #fff",
+          "--backgroundColor": "#444"
+        }
+      }
+    ],
+    "rollCount": 573,
+    "shape3d": "d2-flip",
+    "color1": "#fff",
+    "color2": "#444",
+    "resetProperties": {
+      "rotation": 90,
+      "activeFace": 0
+    },
+    "activeFaceChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#444"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#fff"
+          }
+        ]
+      }
+    ],
+    "rotation": 90,
+    "flipTrans": 3,
+    "rotTrans": 2
+  },
+  "stick4": {
+    "type": "dice",
+    "id": "stick4",
+    "x": 820,
+    "y": 800,
+    "width": 190,
+    "height": 40,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "#fff",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s",
+        "--edgeColor": "grey"
+      }
+    },
+    "options": [
+      {
+        "css": {
+          "--faceBorder": "1px solid #444",
+          "--backgroundColor": "#fff"
+        }
+      },
+      {
+        "css": {
+          "--faceBorder": "1px solid #fff",
+          "--backgroundColor": "#444"
+        }
+      }
+    ],
+    "rollCount": 573,
+    "shape3d": "d2-flip",
+    "color1": "#fff",
+    "color2": "#444",
+    "resetProperties": {
+      "rotation": 90,
+      "activeFace": 1
+    },
+    "activeFaceChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#444"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#fff"
+          }
+        ]
+      }
+    ],
+    "flipTrans": 2,
+    "rotTrans": 1,
+    "rotation": 90,
+    "activeFace": 1
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "css": {
+      "color": "#41727d",
+      "font-size": "40px",
+      "--wcMain": "#c7dde4",
+      "--wcBorder": "#93becc",
+      "--wcMainOH": "#93becc",
+      "--wcBorderOH": "#c7dde4"
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ]
+  },
+  "result1": {
+    "id": "result1",
+    "x": 560,
+    "y": 960,
+    "width": 480,
+    "height": 30,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "transition": "linear ${PROPERTY speed}s",
+      "font-size": "25px",
+      "text-align": "center"
+    },
+    "text": "Click sticks to start.",
+    "resetProperties": {
+      "text": "Click sticks to start.",
+      "scale": 1
+    },
+    "speed": 1.5
+  },
+  "result2": {
+    "id": "result2",
+    "x": 560,
+    "y": 960,
+    "width": 480,
+    "height": 30,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "transition": "linear ${PROPERTY speed}s",
+      "font-size": "25px",
+      "text-align": "center"
+    },
+    "text": "Click sticks to start.",
+    "resetProperties": {
+      "text": "Click sticks to start.",
+      "scale": 0
+    },
+    "speed": 0,
+    "scale": 0
   }
 }
