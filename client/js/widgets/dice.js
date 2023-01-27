@@ -21,7 +21,7 @@ class Dice extends Widget {
       backgroundColor: 'white',
       borderColor: null,
 
-      options: [ 1, 2, 3, 4, 5, 6 ],
+      faces: [ 1, 2, 3, 4, 5, 6 ],
       activeFace: 0,
       rollCount: 0,
 
@@ -72,14 +72,14 @@ class Dice extends Widget {
     super.applyDeltaToDOM(delta);
 
     let childNodesWereRecreated = false;
-    if(delta.options !== undefined || delta.shape3d !== undefined || delta.pipSymbols !== undefined) {
+    if(delta.faces !== undefined || delta.shape3d !== undefined || delta.pipSymbols !== undefined) {
       this.createChildNodes();
       childNodesWereRecreated = true;
     } else {
       let needsUpdate = false;
-      for(const o of this.options())
-        if(typeof o == 'object' && o !== null && typeof o.svgReplaces == 'object' && o.svgReplaces !== null)
-          for(const property of Object.values(o.svgReplaces))
+      for(const f of this.faces())
+        if(typeof f == 'object' && f !== null && typeof f.svgReplaces == 'object' && f.svgReplaces !== null)
+          for(const property of Object.values(f.svgReplaces))
             if(delta[property] !== undefined)
               needsUpdate = true;
       this.createChildNodes();
@@ -115,13 +115,13 @@ class Dice extends Widget {
 
   classesProperties() {
     const p = super.classesProperties();
-    p.push('shape3d', 'options');
+    p.push('shape3d', 'faces');
     return p;
   }
 
   async click(mode='respect') {
     if(!await super.click(mode)) {
-      await this.set('activeFace', Math.floor(Math.random()*this.options().length));
+      await this.set('activeFace', Math.floor(Math.random()*this.faces().length));
       await this.set('rollCount', this.get('rollCount')+1);
     }
   }
@@ -130,11 +130,11 @@ class Dice extends Widget {
     this.facesElement.innerHTML = '';
 
     this.faceElements = [];
-    const options = this.options();
+    const faces = this.faces();
     const polygonBorder = document.createElement('span');
     polygonBorder.className = "polygonBorder";
-    for(const i in options) {
-      const content = options[i];
+    for(const i in faces) {
+      const content = faces[i];
       const face = document.createElement('div');
 
       if(content.css)
@@ -193,8 +193,15 @@ class Dice extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('pipColor', 'backgroundColor', 'borderColor', 'activeFace', 'rollCount', 'shape3d', 'options');
+    p.push('pipColor', 'backgroundColor', 'borderColor', 'activeFace', 'rollCount', 'shape3d', 'faces');
     return p;
+  }
+
+  faces() {
+    const f = this.get('faces');
+    if(typeof f == 'string')
+      return f.split('');
+    return Array.isArray(f) ? f : [];
   }
 
   getDefaultValue(property) {
@@ -207,7 +214,7 @@ class Dice extends Widget {
   }
 
   getValueMap() {
-    return this.options().map(function(v,k) {
+    return this.faces().map(function(v,k) {
       if(typeof v != 'object' || v === null)
         return v;
       else if(typeof v.pips != 'undefined')
@@ -219,13 +226,6 @@ class Dice extends Widget {
       else
         return k+1;
     });
-  }
-
-  options() {
-    const o = this.get('options');
-    if(typeof o == 'string')
-      return o.split('');
-    return Array.isArray(o) ? o : [];
   }
 
   pipSymbols() {
@@ -380,7 +380,7 @@ class Dice extends Widget {
     let shape = shapes.filter((s) => (s.shapeName == s3d || s.sides == s3d));
     if(shape.length)
       return shape[0];
-    const n = this.options().length || 0;
+    const n = this.faces().length || 0;
     return shapes.reverse().filter((s) => s.sides<=n)[0] || shapes[shapes.length - 1];
   }
 }
