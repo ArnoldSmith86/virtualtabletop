@@ -6,7 +6,6 @@ let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
 
-
 function loadJSZip() {
   const node = document.createElement('script');
   node.src = 'scripts/jszip';
@@ -515,7 +514,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.languages = validLanguages.join();
     entry.dataset.modes = state.mode;
 
-       if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
+    if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
       entry.dataset.type = 'Tutorials';
     else if(state.publicLibrary && state.publicLibrary.match(/assets/))
       entry.dataset.type = 'Assets';
