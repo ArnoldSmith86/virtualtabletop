@@ -78,7 +78,7 @@ class Dice extends Widget {
     }
 
     let childNodesWereRecreated = false;
-    if([ 'faces', 'shape3d', 'pipSymbols', 'faceCSS', 'image', 'text', 'value', 'pips', 'svgReplaces' ].map(p=>delta[p]).filter(p=>p!==undefined).length) {
+    if([ 'faces', 'shape3d', 'pipSymbols', 'faceCSS', 'image', 'text', 'pips', 'svgReplaces' ].map(p=>delta[p]).filter(p=>p!==undefined).length) {
       this.createChildNodes();
       childNodesWereRecreated = true;
     } else {
@@ -151,7 +151,7 @@ class Dice extends Widget {
           face.textContent = `die_face_${this.getFaceProperty(content, 'pips')}`;
           face.className = 'dicePip';
         } else {
-          face.textContent = this.getFaceProperty(content, 'text') || this.getFaceProperty(content, 'value') || '';
+          face.textContent = this.getFaceProperty(content, 'text') || content.value || ''; // don't inherit value from widget because it's only defined
         }
         const image = this.getFaceProperty(content, 'image');
         if(image) {
