@@ -139,17 +139,17 @@ class Dice extends Widget {
   }
 
   createChildNodes() {
-    const applySVGreplaces = (face, image, svgReplaces) => {
+    const applySVGreplaces = (faceDOM, faceDefinition, image, svgReplaces) => {
       let imageResult = mapAssetURLs(image);
 
       if(typeof svgReplaces == 'object' && svgReplaces !== null) {
         const replaces = {};
         for(const key in svgReplaces)
-          replaces[key] = this.get(svgReplaces[key]);
-        imageResult = getSVG(image, replaces, _=>face.style.backgroundImage = `url("${getSVG(image, replaces)}")`);
+          replaces[key] = this.getFaceProperty(faceDefinition, svgReplaces[key]);
+        imageResult = getSVG(image, replaces, _=>faceDOM.style.backgroundImage = `url("${getSVG(image, replaces)}")`);
       }
 
-      face.style.backgroundImage = `url("${imageResult}")`;
+      faceDOM.style.backgroundImage = `url("${imageResult}")`;
     }
 
     this.facesElement.innerHTML = '';
@@ -174,12 +174,12 @@ class Dice extends Widget {
         }
         const image = this.getFaceProperty(content, 'image');
         if(image)
-          applySVGreplaces(face, image, this.getFaceProperty(content, 'svgReplaces'));
+          applySVGreplaces(face, content, image, this.getFaceProperty(content, 'svgReplaces'));
       } else if(typeof content == 'number' && content>=1 && content<=9 && this.pipSymbols()) {
         face.textContent = `die_face_${content}`;
         face.className = 'dicePip';
       } else if(typeof content == 'string' && content.match(/^\/(assets|i)/)) {
-        applySVGreplaces(face, content, this.get('svgReplaces'));
+        applySVGreplaces(face, content, content, this.get('svgReplaces'));
       } else {
         face.textContent = content;
       }
