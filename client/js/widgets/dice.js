@@ -133,6 +133,19 @@ class Dice extends Widget {
   }
 
   createChildNodes() {
+    const applySVGreplaces = (face, image, svgReplaces) => {
+      let imageResult = mapAssetURLs(image);
+
+      if(typeof svgReplaces == 'object' && svgReplaces !== null) {
+        const replaces = {};
+        for(const key in svgReplaces)
+          replaces[key] = this.get(svgReplaces[key]);
+        imageResult = getSVG(image, replaces, _=>face.style.backgroundImage = `url("${getSVG(image, replaces)}")`);
+      }
+
+      face.style.backgroundImage = `url("${imageResult}")`;
+    }
+
     this.facesElement.innerHTML = '';
 
     this.faceElements = [];
@@ -154,24 +167,13 @@ class Dice extends Widget {
           face.textContent = this.getFaceProperty(content, 'text') || content.value || ''; // don't inherit value from widget because it's only defined
         }
         const image = this.getFaceProperty(content, 'image');
-        if(image) {
-          let imageResult = mapAssetURLs(image);
-
-          const svgReplaces = this.getFaceProperty(content, 'svgReplaces');
-          if(typeof svgReplaces == 'object' && svgReplaces !== null) {
-            const replaces = {};
-            for(const key in svgReplaces)
-              replaces[key] = this.get(svgReplaces[key]);
-            imageResult = getSVG(image, replaces, _=>face.style.backgroundImage = `url("${getSVG(image, replaces)}")`);
-          }
-
-          face.style.backgroundImage = `url("${imageResult}")`;
-        }
+        if(image)
+          applySVGreplaces(face, image, this.getFaceProperty(content, 'svgReplaces'));
       } else if(typeof content == 'number' && content>=1 && content<=9 && this.pipSymbols()) {
         face.textContent = `die_face_${content}`;
         face.className = 'dicePip';
       } else if(typeof content == 'string' && content.match(/^\/(assets|i)/)) {
-        face.style.backgroundImage = `url("${mapAssetURLs(content)}")`;
+        applySVGreplaces(face, content, this.get('svgReplaces'));
       } else {
         face.textContent = content;
       }
@@ -227,7 +229,7 @@ class Dice extends Widget {
   }
 
   getFaceProperty(face, property) {
-    if(typeof face[property] != 'undefined')
+    if(typeof face == 'object' && face !== null && typeof face[property] != 'undefined')
       return face[property];
     return this.get(property);
   }
