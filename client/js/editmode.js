@@ -537,7 +537,7 @@ function generateChipPileWidgets(id, x, y, type) {
       parent: id,
       width:73,
       height:73,
-      y: type==2 ? 4 : -6, 
+      y: type==2 ? 4 : -6,
       text: 1641,
       enterRoutine: [
         {
@@ -781,7 +781,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 }
 
 const VTTblue = '#1f5ca6';
-  
+
 function addPieceToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
@@ -880,7 +880,7 @@ function populateAddWidgetOverlay() {
     y: 80 + Math.round((43.83 - 84)/2)
   });
 */
-  
+
 /* Don't add the unicode symbols
   // Next the unicode symbols
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
@@ -909,7 +909,7 @@ function populateAddWidgetOverlay() {
     y: 150
   });
 */
-  
+
   //Add svg game pieces
   // First row
   addPieceToAddWidgetOverlay(new BasicWidget('Pawn3DSVG'), {
@@ -931,7 +931,7 @@ function populateAddWidgetOverlay() {
     borderWidth: 1
   });
 
-  
+
   addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
     x: 390+75,
     y: 111,
@@ -1356,9 +1356,7 @@ function populateAddWidgetOverlay() {
   const dice2DAttrs = {
     type: 'dice',
     x: 930,
-    y: 455,
-    options: [1,2,3,4,5,6],
-    shape3D: false
+    y: 455
   };
   dice2D.applyInitialDelta(dice2DAttrs);
   dice2D.domElement.addEventListener('click', async _=>{
@@ -1378,7 +1376,7 @@ function populateAddWidgetOverlay() {
       const sides = result.sides;
       const toAdd = {...dice2DAttrs};
       toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
-      toAdd.options = Array.from({length: sides}, (_, i) => i + 1);
+      toAdd.faces = Array.from({length: sides}, (_, i) => sides == 6 ? i + 1 : ""+(i+1));
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
@@ -1393,7 +1391,7 @@ function populateAddWidgetOverlay() {
     x: 1020,
     y: 455,
     shape3d: 'd8',
-    options: [1,2,3,4,5,6,7,8]
+    faces: ['1','2','3','4','5','6','7','8']
   };
   dice3D.applyInitialDelta(dice3DAttrs);
   dice3D.domElement.addEventListener('click', async _=>{
@@ -1419,7 +1417,7 @@ function populateAddWidgetOverlay() {
       const sides = result.sides;
       const toAdd = {...dice3DAttrs};
       toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
-      toAdd.options = Array.from({length: sides}, (_, i) => i + 1);
+      toAdd.faces = Array.from({length: sides}, (_, i) => sides == 6 ? i + 1 : ""+(i+1));
       toAdd.shape3d = result.d2 ? 'd2-flip' : true;
 
       const id = await addWidgetLocal(toAdd);
@@ -1994,7 +1992,7 @@ onLoad(function() {
     });
     showOverlay();
   });
-  
+
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 
