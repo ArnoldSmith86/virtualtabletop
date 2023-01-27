@@ -71,8 +71,14 @@ class Dice extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
 
+    if(delta.activeFace !== undefined || delta.faces !== undefined) {
+      let face = this.faces()[this.get('activeFace')];
+      if(face !== undefined)
+        this.applyDeltaToDOM(face);
+    }
+
     let childNodesWereRecreated = false;
-    if(delta.faces !== undefined || delta.shape3d !== undefined || delta.pipSymbols !== undefined) {
+    if([ 'faces', 'shape3d', 'pipSymbols', 'faceCSS', 'image', 'text', 'value', 'pips', 'svgReplaces' ].map(p=>delta[p]).filter(p=>p!==undefined).length) {
       this.createChildNodes();
       childNodesWereRecreated = true;
     } else {
@@ -137,27 +143,29 @@ class Dice extends Widget {
       const content = faces[i];
       const face = document.createElement('div');
 
-      if(content.faceCSS)
-        face.style = mapAssetURLs(this.cssAsText(content.faceCSS, null, true));
+      if(this.getFaceProperty(content, 'faceCSS'))
+        face.style = mapAssetURLs(this.cssAsText(this.getFaceProperty(content, 'faceCSS'), null, true));
 
       if(typeof content == 'object' && content !== null) {
-        if(content.pips) {
-          face.textContent = `die_face_${content.pips}`;
+        if(this.getFaceProperty(content, 'pips')) {
+          face.textContent = `die_face_${this.getFaceProperty(content, 'pips')}`;
           face.className = 'dicePip';
         } else {
-          face.textContent = content.text || content.value || '';
+          face.textContent = this.getFaceProperty(content, 'text') || this.getFaceProperty(content, 'value') || '';
         }
-        if(content.image) {
-          let image = mapAssetURLs(content.image);
+        const image = this.getFaceProperty(content, 'image');
+        if(image) {
+          let imageResult = mapAssetURLs(image);
 
-          if(typeof content.svgReplaces == 'object' && content.svgReplaces !== null) {
+          const svgReplaces = this.getFaceProperty(content, 'svgReplaces');
+          if(typeof svgReplaces == 'object' && svgReplaces !== null) {
             const replaces = {};
-            for(const key in content.svgReplaces)
-              replaces[key] = this.get(content.svgReplaces[key]);
-            image = getSVG(content.image, replaces, _=>face.style.backgroundImage = `url("${getSVG(content.image, replaces)}")`);
+            for(const key in svgReplaces)
+              replaces[key] = this.get(svgReplaces[key]);
+            imageResult = getSVG(image, replaces, _=>face.style.backgroundImage = `url("${getSVG(image, replaces)}")`);
           }
 
-          face.style.backgroundImage = `url("${image}")`;
+          face.style.backgroundImage = `url("${imageResult}")`;
         }
       } else if(typeof content == 'number' && content>=1 && content<=9 && this.pipSymbols()) {
         face.textContent = `die_face_${content}`;
@@ -210,7 +218,18 @@ class Dice extends Widget {
       if(Array.isArray(o) && o.length > this.activeFace())
         return o[this.activeFace()];
     }
+    if(property == 'faces' || property == 'activeFace' || !this.faces()[this.get('activeFace')])
+      return super.getDefaultValue(property);
+    const d = this.faces()[this.get('activeFace')][property];
+    if(d !== undefined)
+      return d;
     return super.getDefaultValue(property);
+  }
+
+  getFaceProperty(face, property) {
+    if(typeof face[property] != 'undefined')
+      return face[property];
+    return this.get(property);
   }
 
   getValueMap() {
