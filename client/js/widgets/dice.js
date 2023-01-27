@@ -25,6 +25,12 @@ class Dice extends Widget {
       activeFace: 0,
       rollCount: 0,
 
+      image: null,
+      text: null,
+      pips: null,
+      svgReplaces: null,
+      faceCSS: null,
+
       pipSymbols: null,
       shape3d: false
     });
