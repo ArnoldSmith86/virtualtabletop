@@ -6,7 +6,6 @@ let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
 
-document.title = `VirtualTabletop.io - ${document.location.pathname.split('/').pop()}`;
 
 function loadJSZip() {
   const node = document.createElement('script');
@@ -701,7 +700,6 @@ function fillStateDetails(states, state, dom) {
       if(loadNewState)
         toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
       showStatesOverlay(detailsOverlay);
-      document.title = `VTT - ${state.name}`;
       if(switchToActiveGame)
         $('#activeGameButton').click();
     };
