@@ -10,9 +10,8 @@
       "mode": "",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1674856591316,
-      "id": "p8nt",
-      "showName": true,
+      "lastUpdate": 1674858587813,
+      "showName": false,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -20,10 +19,10 @@
       "similarAwards": "",
       "ruleText": "For more information:&nbsp;\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/cursor",
       "helpText": "",
-      "players": "",
-      "language": "",
+      "variantImage": "",
       "variant": "Default browser cursors",
-      "variantImage": ""
+      "language": "",
+      "players": ""
     }
   },
   "cursorCSS": {
