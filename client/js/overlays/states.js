@@ -6,6 +6,8 @@ let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
 
+document.title = `VirtualTabletop.io - ${document.location.pathname.split('/').pop()}`;
+
 function loadJSZip() {
   const node = document.createElement('script');
   node.src = 'scripts/jszip';
@@ -514,7 +516,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.languages = validLanguages.join();
     entry.dataset.modes = state.mode;
 
-    if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
+       if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
       entry.dataset.type = 'Tutorials';
     else if(state.publicLibrary && state.publicLibrary.match(/assets/))
       entry.dataset.type = 'Assets';
@@ -699,6 +701,7 @@ function fillStateDetails(states, state, dom) {
       if(loadNewState)
         toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
       showStatesOverlay(detailsOverlay);
+      document.title = `VTT - ${state.name}`;
       if(switchToActiveGame)
         $('#activeGameButton').click();
     };
