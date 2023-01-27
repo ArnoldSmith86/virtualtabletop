@@ -137,8 +137,8 @@ class Dice extends Widget {
       const content = faces[i];
       const face = document.createElement('div');
 
-      if(content.css)
-        face.style = mapAssetURLs(this.cssAsText(content.css, null, true));
+      if(content.faceCSS)
+        face.style = mapAssetURLs(this.cssAsText(content.faceCSS, null, true));
 
       if(typeof content == 'object' && content !== null) {
         if(content.pips) {
