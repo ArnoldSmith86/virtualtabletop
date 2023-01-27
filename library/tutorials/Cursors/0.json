@@ -10,7 +10,7 @@
       "mode": "",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1674859060636,
+      "lastUpdate": 1674859493531,
       "showName": false,
       "skill": "",
       "description": "",
@@ -79,7 +79,7 @@
         "cursor": "url('/i/cursors/grabbing.svg') 9 3, auto"
       },
       "this, .canvas": {
-        "cursor": "url('/i/cursors/painting brush holding.svg'), auto"
+        "cursor": "url('/i/cursors/paint brush holding.svg'), auto"
       },
       "this, .thumbsUp": {
         "cursor": "url('/i/cursors/thumbs up.svg'), auto"

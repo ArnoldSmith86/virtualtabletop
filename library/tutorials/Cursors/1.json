@@ -10,7 +10,7 @@
       "mode": "",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1674859060638,
+      "lastUpdate": 1674859493533,
       "showName": false,
       "skill": "",
       "description": "",
@@ -162,7 +162,7 @@
     "y": 350,
     "width": 40,
     "height": 40,
-    "image": "/i/cursors/paint brush holding.svg",
+    "image": "/i/cursors/painting brush holding.svg",
     "z": 6,
     "id": "fs16e",
     "movable": false,
@@ -401,7 +401,7 @@
         "cursor": "url('/i/cursors/grabbing.svg') 9 3, auto"
       },
       "this, .canvas": {
-        "cursor": "url('/i/cursors/painting brush holding.svg'), auto"
+        "cursor": "url('/i/cursors/paint brush holding.svg'), auto"
       }
     },
     "text": "CSS\n here ",
