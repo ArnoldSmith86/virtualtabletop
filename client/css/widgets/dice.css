@@ -380,6 +380,7 @@
   transform-origin: 50% 0;
   transform: translateY(50%) translateZ(var(--tZ)) rotateZ(var(--rZ)) rotateX(var(--rX));
   padding-top: 40%;
+  border-width: 0;
 }
 
 .d10.dice.widget > * > .diceFace:nth-child(2n + 1) {
