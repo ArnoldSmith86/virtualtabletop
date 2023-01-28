@@ -763,8 +763,14 @@ export class Widget extends StateManaged {
         if(a.count === 'repeat')
           a.count = 999999;
         if(a.silenceAll == true) {
-          const audioElements = document.querySelectorAll('audio');
-          audioElements.forEach(audio=>audio.pause())
+          document.addEventListener('play', function(e){
+            var audios = document.getElementsByTagName('audio');
+            for(var i = 0, len = audios.length; i < len;i++){
+                if(audios[i] != e.target){
+                    audios[i].pause();
+                }
+            }
+          }, true);
         } else {}
           if(a.source !== undefined) {
             this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player + ', count: ' + a.count);
