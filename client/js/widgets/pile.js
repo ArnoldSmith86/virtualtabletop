@@ -14,7 +14,6 @@ class Pile extends Widget {
       inheritChildZ: true,
 
       text: null,
-
       pileSnapRange: 10,
 
       handleCSS: '',
@@ -41,7 +40,6 @@ class Pile extends Widget {
   }
 
    applyDeltaToDOM(delta) {
-
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
       this.handle.style = mapAssetURLs(this.cssAsText(this.get('handleCSS'),null,true));
