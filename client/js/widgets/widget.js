@@ -345,6 +345,15 @@ export class Widget extends StateManaged {
     if(this.get('dragging') == playerName)
       className += ' draggingSelf';
 
+    if(this.get('clickable'))
+      className += ' clickable';
+
+    if(this.get('movable') )
+      className += ' movable';
+
+    if(this.get('enlarge'))
+      className += ' enlarge';
+
     if(this.isHighlighted)
       className += ' selectedInEdit';
 
@@ -352,7 +361,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
@@ -408,7 +417,7 @@ export class Widget extends StateManaged {
     if($(`#STYLES_${escapeID(this.id)}`))
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     const usedProperties = new Set();
-    let css = this.cssReplaceProperties(this.cssAsText(this.get('css')), usedProperties);
+    let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
     this.propertiesUsedInCSS = Array.from(usedProperties);
 
     css = this.cssBorderRadius() + css;
@@ -463,7 +472,8 @@ export class Widget extends StateManaged {
   cssReplaceProperties(css, usedProperties) {
     for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
       css = css.replace(match[0], this.get(match[1]));
-      usedProperties.add(match[1]);
+      if (usedProperties)
+        usedProperties.add(match[1]);
     }
     return css;
   }
@@ -1276,7 +1286,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
             for(const c of source.children().slice(0, a.count || 999999).reverse()) {
@@ -1284,6 +1294,8 @@ export class Widget extends StateManaged {
                 c.flip(a.face);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
+              if(a.resetOwner)
+                await c.set('owner', null);
               if(a.snapToGrid)
                 await c.snapToGrid();
               await c.set('parent', null);
@@ -1840,13 +1852,13 @@ export class Widget extends StateManaged {
 
   async move(coordGlobal, localAnchor) {
     const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
-    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), this.coordParentFromCoordLocal({x: 0, y: 0}));
     let newX = Math.round(coordParent.x + offset.x);
     let newY = Math.round(coordParent.y + offset.y);
 
     //Keeps widget's top left corner within coordinates set by dragLimit object
     const limit = this.get('dragLimit');
- 
+
     if (limit.minX !== undefined) {
       newX = Math.max(limit.minX, newX);
     }
