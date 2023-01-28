@@ -6,6 +6,7 @@ import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo } from '../geometry.js';
+import { defaultPileSnapRange } from './pile.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -2222,8 +2223,9 @@ export class Widget extends StateManaged {
       if(widgetType != 'card' && widgetType != 'pile')
         continue;
 
-      // check if this widget is closer than 10px from another widget in the same parent
-      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
+      // check if this widget is closer than the pileSnapRange from another widget in the same parent
+      let pileSnapRange = (widgetType == 'card' ? this.get('onPileCreation').pileSnapRange : this.get('pileSnapRange')) || defaultPileSnapRange;
+      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < pileSnapRange && Math.abs(widget.get('y')-thisY) < pileSnapRange) {
         if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
           continue;
 

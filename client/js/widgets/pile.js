@@ -1,3 +1,5 @@
+export const defaultPileSnapRange = 10;
+
 class Pile extends Widget {
   constructor(id) {
     super(id);
@@ -14,6 +16,7 @@ class Pile extends Widget {
       inheritChildZ: true,
 
       text: null,
+      pileSnapRange: defaultPileSnapRange,
 
       handleCSS: '',
       handleSize: 'auto',
