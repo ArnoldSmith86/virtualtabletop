@@ -117,7 +117,7 @@ export class Widget extends StateManaged {
   }
 
   animateProperties() {
-    return asArray(this.get('animatePropertyChange'));
+    return asArray(JSON.parse(JSON.stringify(this.get('animatePropertyChange'))));
   }
 
   applyChildAdd(child) {
