@@ -1,0 +1,474 @@
+{
+  "_meta": {
+    "version": 11,
+    "info": {
+      "name": "Piles",
+      "image": "/assets/245080149_4003",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "The paper clip icon is from https://www.nicepng.com/ourpic/u2q8r5q8y3q8i1w7_quantum-professional-t-paper-clip-transparent-png/ and is available under the NicePNG.com License for personal use.\n\nThe brown envelope images are by user mousewax and are released into the Public Domain through CC0.",
+      "showName": false,
+      "lastUpdate": 1674938360299,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "pileSnapRange",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "demoDeck": {
+    "type": "deck",
+    "id": "demoDeck",
+    "parent": "demoHolder",
+    "z": 633,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "onPileCreation": {
+        "pileSnapRange": 100
+      }
+    },
+    "cardTypes": {
+      "red-100": {
+        "cardColor": "red"
+      },
+      "green-100": {
+        "cardColor": "green"
+      },
+      "blue-100": {
+        "cardColor": "blue"
+      },
+      "orange-100": {
+        "cardColor": "orange"
+      },
+      "purple-100": {
+        "cardColor": "purple"
+      },
+      "pink-100": {
+        "cardColor": "pink"
+      },
+      "brown-100": {
+        "cardColor": "brown"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "color": "cardColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "cardType"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 20,
+            "width": 100,
+            "height": 100,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "x"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 40,
+            "width": 100,
+            "height": 100,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "y"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "demoHolder": {
+    "type": "holder",
+    "id": "demoHolder",
+    "x": 280,
+    "y": 820,
+    "width": 100,
+    "height": 100,
+    "borderRadius": 0,
+    "z": 101,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "demoB": {
+    "type": "button",
+    "id": "demoB",
+    "parent": "demoHolder",
+    "fixedParent": true,
+    "x": -7,
+    "y": 106,
+    "width": 111,
+    "height": 40,
+    "z": 1,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "4aot": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "red-100",
+    "id": "4aot",
+    "z": 1101,
+    "parent": "zdlh"
+  },
+  "2plr": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "green-100",
+    "id": "2plr",
+    "z": 1111,
+    "parent": "g9xv"
+  },
+  "we6c": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "blue-100",
+    "id": "we6c",
+    "z": 1139,
+    "x": 420,
+    "y": 521
+  },
+  "n7zq": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "purple-100",
+    "id": "n7zq",
+    "z": 1105,
+    "parent": "g9xv"
+  },
+  "3uxe": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "pink-100",
+    "id": "3uxe",
+    "z": 1140,
+    "x": 171,
+    "y": 665
+  },
+  "rg57": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "brown-100",
+    "id": "rg57",
+    "z": 1098,
+    "parent": "zdlh"
+  },
+  "demoHolder1": {
+    "type": "holder",
+    "id": "demoHolder1",
+    "x": 1166,
+    "y": 825,
+    "width": 100,
+    "height": 100,
+    "borderRadius": 0,
+    "z": 102,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "demoDeck1": {
+    "type": "deck",
+    "id": "demoDeck1",
+    "parent": "demoHolder1",
+    "z": 633,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "onPileCreation": {
+        "pileSnapRange": 50
+      }
+    },
+    "cardTypes": {
+      "red-50": {
+        "cardColor": "red"
+      },
+      "green-50": {
+        "cardColor": "green"
+      },
+      "blue-50": {
+        "cardColor": "blue"
+      },
+      "orange-50": {
+        "cardColor": "orange"
+      },
+      "purple-50": {
+        "cardColor": "purple"
+      },
+      "pink-50": {
+        "cardColor": "pink"
+      },
+      "brown-50": {
+        "cardColor": "brown"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "color": "cardColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "cardType"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 20,
+            "width": 100,
+            "height": 100,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "x"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 40,
+            "width": 100,
+            "height": 100,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "y"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "demoB1": {
+    "type": "button",
+    "id": "demoB1",
+    "parent": "demoHolder1",
+    "fixedParent": true,
+    "x": -7,
+    "y": 106,
+    "width": 111,
+    "height": 40,
+    "z": 1,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "j38j": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "orange-100",
+    "id": "j38j",
+    "z": 1090,
+    "parent": "demoHolder"
+  },
+  "ucy1": {
+    "deck": "demoDeck1",
+    "type": "card",
+    "cardType": "red-50",
+    "id": "ucy1",
+    "z": 1119,
+    "parent": "b029"
+  },
+  "gll4": {
+    "deck": "demoDeck1",
+    "type": "card",
+    "cardType": "green-50",
+    "id": "gll4",
+    "z": 1134,
+    "parent": "svf3"
+  },
+  "hrvk": {
+    "deck": "demoDeck1",
+    "type": "card",
+    "cardType": "blue-50",
+    "id": "hrvk",
+    "z": 1121,
+    "x": 1292,
+    "y": 533
+  },
+  "jawv": {
+    "deck": "demoDeck1",
+    "type": "card",
+    "cardType": "orange-50",
+    "id": "jawv",
+    "z": 1136,
+    "parent": "demoHolder1"
+  },
+  "7rf2": {
+    "deck": "demoDeck1",
+    "type": "card",
+    "cardType": "purple-50",
+    "id": "7rf2",
+    "z": 1132,
+    "parent": "svf3"
+  },
+  "p1vr": {
+    "deck": "demoDeck1",
+    "type": "card",
+    "cardType": "pink-50",
+    "id": "p1vr",
+    "z": 1123,
+    "x": 1035,
+    "y": 687
+  },
+  "t0hr": {
+    "deck": "demoDeck1",
+    "type": "card",
+    "cardType": "brown-50",
+    "id": "t0hr",
+    "z": 1116,
+    "parent": "b029"
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "60px",
+      "text-align": "center"
+    },
+    "text": "Piles: pileSnapRange",
+    "width": 1600
+  },
+  "406b": {
+    "id": "406b",
+    "x": 46,
+    "y": 85,
+    "width": 1500,
+    "height": 300,
+    "layer": -3,
+    "z": 96,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 24px; ",
+    "text": "By default, piles will form and cards will be added to existing piles when the card being dragged is within 10 pixels of either the x or y coordinates of the other card/pile. This can be changed using 'onPileCreation' and the 'pileSnapRange' property. 'pileSnapRange' defaults to 10 and can be any positive number. The larger the number, the further away cards will form or snap to existing piles.\n\nThere are 2 decks of cards in this room. The cards with -100 in the name at the top have 'pileSnapRange' set to 100 and those with -50 have it set to 50. The cards will not mix with each other because the 'onPileCreation' properties are not identical. The cards with 100 will form a pile or snap to an existing pile when they are within 100 pixel of another card of the same type. The cards in this room are 100 pixels wide, so any overlap between the cards will cause it to move into a pile. The numbers on the cards are its x,y coordinates in the room, provided just as a reference so you can compare how close the cards are. Drag cards and piles around and observe the interactions."
+  },
+  "zdlh": {
+    "type": "pile",
+    "parent": null,
+    "x": 175,
+    "y": 518,
+    "width": 100,
+    "height": 100,
+    "pileSnapRange": 100,
+    "id": "zdlh",
+    "z": 1141
+  },
+  "g9xv": {
+    "type": "pile",
+    "parent": null,
+    "x": 415,
+    "y": 664,
+    "width": 100,
+    "height": 100,
+    "pileSnapRange": 100,
+    "id": "g9xv",
+    "z": 1138
+  },
+  "b029": {
+    "type": "pile",
+    "parent": null,
+    "x": 1038,
+    "y": 537,
+    "width": 100,
+    "height": 100,
+    "pileSnapRange": 50,
+    "id": "b029",
+    "z": 1122
+  },
+  "svf3": {
+    "type": "pile",
+    "parent": null,
+    "x": 1292,
+    "y": 690,
+    "width": 100,
+    "height": 100,
+    "pileSnapRange": 50,
+    "id": "svf3",
+    "z": 1135
+  }
+}
