@@ -1,4 +1,4 @@
-export const defaultPileSnapRange = 10;
+const defaultPileSnapRange = 10;
 
 class Pile extends Widget {
   constructor(id) {

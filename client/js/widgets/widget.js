@@ -6,7 +6,6 @@ import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo } from '../geometry.js';
-import { defaultPileSnapRange } from './pile.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
