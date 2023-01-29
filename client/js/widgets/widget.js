@@ -481,7 +481,7 @@ export class Widget extends StateManaged {
   cssToStylesheet(css, usedProperties, nested = false) {
     let styleString = '';
     for(const key in css) {
-      let selector = key;
+      let selector = key.replace(/\$\{THIS\}/g, `#w_${escapeID(this.id)}`);
       if(!nested) {
         if(key == 'inline')
           continue;
