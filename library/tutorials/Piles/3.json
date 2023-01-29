@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "The paper clip icon is from https://www.nicepng.com/ourpic/u2q8r5q8y3q8i1w7_quantum-professional-t-paper-clip-transparent-png/ and is available under the NicePNG.com License for personal use.\n\nThe brown envelope images are by user mousewax and are released into the Public Domain through CC0.",
       "showName": false,
-      "lastUpdate": 1674938360299,
+      "lastUpdate": 1675016320425,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -94,7 +94,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "x"
+              "value": "_absoluteX"
             }
           },
           {
@@ -105,7 +105,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "y"
+              "value": "_absoluteY"
             }
           }
         ]
@@ -115,12 +115,12 @@
   "demoHolder": {
     "type": "holder",
     "id": "demoHolder",
-    "x": 280,
-    "y": 820,
+    "x": 300,
+    "y": 800,
     "width": 100,
     "height": 100,
     "borderRadius": 0,
-    "z": 101,
+    "z": 103,
     "dropOffsetX": 0,
     "dropOffsetY": 0,
     "dropTarget": {
@@ -168,8 +168,8 @@
     "type": "card",
     "cardType": "green-100",
     "id": "2plr",
-    "z": 1111,
-    "parent": "g9xv"
+    "z": 1161,
+    "parent": "upca"
   },
   "we6c": {
     "deck": "demoDeck",
@@ -177,8 +177,8 @@
     "cardType": "blue-100",
     "id": "we6c",
     "z": 1139,
-    "x": 420,
-    "y": 521
+    "x": 425,
+    "y": 500
   },
   "n7zq": {
     "deck": "demoDeck",
@@ -186,7 +186,7 @@
     "cardType": "purple-100",
     "id": "n7zq",
     "z": 1105,
-    "parent": "g9xv"
+    "parent": "upca"
   },
   "3uxe": {
     "deck": "demoDeck",
@@ -194,8 +194,8 @@
     "cardType": "pink-100",
     "id": "3uxe",
     "z": 1140,
-    "x": 171,
-    "y": 665
+    "x": 175,
+    "y": 650
   },
   "rg57": {
     "deck": "demoDeck",
@@ -208,12 +208,12 @@
   "demoHolder1": {
     "type": "holder",
     "id": "demoHolder1",
-    "x": 1166,
-    "y": 825,
+    "x": 1125,
+    "y": 800,
     "width": 100,
     "height": 100,
     "borderRadius": 0,
-    "z": 102,
+    "z": 104,
     "dropOffsetX": 0,
     "dropOffsetY": 0,
     "dropTarget": {
@@ -289,7 +289,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "x"
+              "value": "_absoluteX"
             }
           },
           {
@@ -300,7 +300,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "y"
+              "value": "_absoluteY"
             }
           }
         ]
@@ -340,7 +340,7 @@
     "type": "card",
     "cardType": "orange-100",
     "id": "j38j",
-    "z": 1090,
+    "z": 1168,
     "parent": "demoHolder"
   },
   "ucy1": {
@@ -356,8 +356,8 @@
     "type": "card",
     "cardType": "green-50",
     "id": "gll4",
-    "z": 1134,
-    "parent": "svf3"
+    "z": 1163,
+    "parent": "z0dy"
   },
   "hrvk": {
     "deck": "demoDeck1",
@@ -365,15 +365,15 @@
     "cardType": "blue-50",
     "id": "hrvk",
     "z": 1121,
-    "x": 1292,
-    "y": 533
+    "x": 1250,
+    "y": 500
   },
   "jawv": {
     "deck": "demoDeck1",
     "type": "card",
     "cardType": "orange-50",
     "id": "jawv",
-    "z": 1136,
+    "z": 1165,
     "parent": "demoHolder1"
   },
   "7rf2": {
@@ -382,7 +382,7 @@
     "cardType": "purple-50",
     "id": "7rf2",
     "z": 1132,
-    "parent": "svf3"
+    "parent": "z0dy"
   },
   "p1vr": {
     "deck": "demoDeck1",
@@ -390,8 +390,8 @@
     "cardType": "pink-50",
     "id": "p1vr",
     "z": 1123,
-    "x": 1035,
-    "y": 687
+    "x": 1000,
+    "y": 650
   },
   "t0hr": {
     "deck": "demoDeck1",
@@ -431,44 +431,42 @@
     "type": "pile",
     "parent": null,
     "x": 175,
-    "y": 518,
+    "y": 500,
     "width": 100,
     "height": 100,
     "pileSnapRange": 100,
     "id": "zdlh",
     "z": 1141
   },
-  "g9xv": {
-    "type": "pile",
-    "parent": null,
-    "x": 415,
-    "y": 664,
-    "width": 100,
-    "height": 100,
-    "pileSnapRange": 100,
-    "id": "g9xv",
-    "z": 1138
-  },
   "b029": {
     "type": "pile",
     "parent": null,
-    "x": 1038,
-    "y": 537,
+    "x": 1000,
+    "y": 500,
     "width": 100,
     "height": 100,
     "pileSnapRange": 50,
     "id": "b029",
     "z": 1122
   },
-  "svf3": {
+  "upca": {
     "type": "pile",
     "parent": null,
-    "x": 1292,
-    "y": 690,
+    "x": 425,
+    "y": 650,
+    "width": 100,
+    "height": 100,
+    "pileSnapRange": 100,
+    "id": "upca"
+  },
+  "z0dy": {
+    "type": "pile",
+    "parent": null,
+    "x": 1250,
+    "y": 650,
     "width": 100,
     "height": 100,
     "pileSnapRange": 50,
-    "id": "svf3",
-    "z": 1135
+    "id": "z0dy"
   }
 }
