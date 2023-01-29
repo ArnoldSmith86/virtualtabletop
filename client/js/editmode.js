@@ -1,3 +1,5 @@
+import { contrastAnyColor } from "./color";
+
 let edit = false;
 
 function generateUniqueWidgetID() {
@@ -1384,6 +1386,77 @@ function populateAddWidgetOverlay() {
   });
   dice2D.domElement.id = dice2D.id;
   $('#addOverlay').appendChild(dice2D.domElement);
+
+  const dice2DCube = new Dice('add-dice2DCube0');
+  const dice2DCubeAttrs = {
+    type: 'dice',
+    x: 930,
+    y: 525,
+    faces: [
+      "/assets/-1673207543_1930",
+      "/assets/-148416619_2594",
+      "/assets/57330326_2141",
+      "/assets/1350182419_2805",
+      "/assets/-1914431809_2154",
+      "/assets/-1774090084_1917",
+      "/assets/2066276706_3248",
+      "/assets/-1523019352_3017",
+      "/assets/2144816233_1914",
+      "/assets/281682383_3024",
+      "/assets/-138953411_2561",
+      "/assets/-1994484808_3667",
+      "/assets/-492269528_2800",
+      "/assets/1308996887_2124",
+      "/assets/218047296_3891",
+      "/assets/1276023485_3215",
+      "/assets/441250679_2562",
+      "/assets/-1062860099_3665",
+      "/assets/-1961475664_2766",
+      "/assets/-883353206_3871",
+      "/assets/-2100839095_3225",
+      "/assets/-1133653241_2997",
+      "/assets/1984214093_3882",
+      "/assets/1642317049_3654"
+    ],
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+    svgReplaces: {
+      'topColor': 'cT',
+      'leftColor': 'cL',
+      'rightColor': 'cR',
+      'pipColor': 'cP'
+    },
+    cT: '#ffffff',
+    cL: '#e8e8e8',
+    cR: '#dbdbdb',
+    cP: '#000000'
+  };
+  dice2DCube.applyInitialDelta(dice2DCubeAttrs);
+  dice2DCube.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await dice2DCube.showInputOverlay({
+        header: 'Choose piece color',
+        fields: [
+          {
+            type: 'color',
+            value: '#ffffff',
+            variable: 'color'
+          }
+        ]
+      });
+      const toAdd = {...dice2DCubeAttrs};
+      toAdd.z = getMaxZ(dice2DCube.get('layer')) + 1;
+      toAdd.cT = result.color;
+      toAdd.cL = contrastAnyColor(result.color, 0.2);
+      toAdd.cR = contrastAnyColor(result.color, 0.4);
+      toAdd.cP = contrastAnyColor(result.color, 1);
+
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  dice2DCube.domElement.id = dice2DCube.id;
+  $('#addOverlay').appendChild(dice2DCube.domElement);
 
   const dice3D = new Dice('add-dice3D0');
   const dice3DAttrs = {
