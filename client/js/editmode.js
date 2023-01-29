@@ -1419,7 +1419,24 @@ function populateAddWidgetOverlay() {
       toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => sides == 6 ? i + 1 : ""+(i+1));
       toAdd.shape3d = result.d2 ? 'd2-flip' : true;
-
+      if (sides == 6){
+        toAdd.animatePropertyChange = [{
+          'property': 'rollCount',
+          'className': 'rolling',
+          'duration': 500
+        }];
+        toAdd.css = {
+          'default': {
+            'overflow': 'clip'
+          },
+          '>.diceFaces>.diceFace': {
+            'border-radius': '${PROPERTY borderRadius}'
+          },
+          '.rolling': {
+            'overflow': 'visible'
+          }
+        }
+      }
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
     } catch(e) {}
