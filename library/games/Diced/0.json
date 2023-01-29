@@ -13116,13 +13116,12 @@
       "similarName": "Qwixx",
       "description": "Roll colored and white dice to mark off scoresheet with boxes of 2-12 trying to get as many boxes as possible. Highest score wins.",
       "showName": true,
-      "id": "9yoh",
       "skill": "",
       "similarImage": "",
       "similarAwards": "2014 Spring Parents' Choice Silver Honor Winner\n2014 Vuoden Peli Family Game of the Year Nominee\n2014 Nederlandse Spellenprijs Best Family Game Winner\n2014 Nederlandse Spellenprijs Best Family Game Nominee\n2014 Mensa Select Winner\n2013 Spiel des Jahres Nominee\n2013 Kinderspielexperten \"8-to-13-year-olds\" Nominee\n2013 Golden Geek Best Family Board Game Nominee\n2013 Golden Geek Best Abstract Board Game Nominee\n2013 Deutscher Lernspielpreis Nominee",
       "ruleText": "",
       "helpText": "Players sit in seats. Press the black and white restart button in the top center to randomly assign a starting player.&nbsp; Click the roll dice button to start. Each player makes desired selections on their scoresheet by clicking the number to mark it.&nbsp; Click the space again if a mistake was made to unmark it.&nbsp;<span style=\"color: var(--overlayFontColor);\">When the current player finishes, the next player clicks the roll dice button. Play continues in that fashion.</span><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">If a player chooses not to make a mark when required to by rule, click on the white box at the end of the row. When a colored dice has been closed, click on the down arrow below the dice to hide it offscreen and block future changes to that color on the scoreboards. If a mistake is made, the dice can be returned to play by clicking on the up arrow.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Scoring is automatic for each player whenever the blue button with the sigma symbol is pressed. Typically you would wait until the end of the game to press it, but it can be used at any point in the game.</span></div>",
-      "lastUpdate": 1674661972324,
+      "lastUpdate": 1674959490796,
       "variantImage": "",
       "variant": "Diced",
       "language": "",
@@ -13404,7 +13403,25 @@
     "movableInEdit": false,
     "backgroundColor": "#f40000",
     "pipColor": "#ffffff",
-    "shape3d": true
+    "shape3d": true,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "diceGreen": {
     "type": "dice",
@@ -13416,7 +13433,25 @@
     "movableInEdit": false,
     "backgroundColor": "#70ad47",
     "pipColor": "#ffffff",
-    "shape3d": true
+    "shape3d": true,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "diceYellow": {
     "type": "dice",
@@ -13428,7 +13463,25 @@
     "movableInEdit": false,
     "backgroundColor": "#ffc000",
     "pipColor": "#ffffff",
-    "shape3d": true
+    "shape3d": true,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "diceBlue": {
     "type": "dice",
@@ -13440,7 +13493,25 @@
     "movableInEdit": false,
     "backgroundColor": "#4472c4",
     "pipColor": "#ffffff",
-    "shape3d": true
+    "shape3d": true,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "diceWhite1": {
     "type": "dice",
@@ -13450,7 +13521,25 @@
     "width": 60,
     "height": 60,
     "movableInEdit": false,
-    "shape3d": true
+    "shape3d": true,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "diceWhite2": {
     "type": "dice",
@@ -13460,7 +13549,25 @@
     "width": 60,
     "height": 60,
     "movableInEdit": false,
-    "shape3d": true
+    "shape3d": true,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "rollDice": {
     "type": "button",
