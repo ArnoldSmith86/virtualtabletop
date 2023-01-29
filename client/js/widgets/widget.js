@@ -658,16 +658,21 @@ export class Widget extends StateManaged {
     let variables = initialVariables;
     let collections = initialCollections;
     if(!byReference) {
+      const playerSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')==playerName);
       variables = Object.assign({
         activeColors,
-        mouseCoords
+        mouseCoords,
+        seatIndex: playerSeats.length ? playerSeats[0].get('index') : null,
+        seatID: playerSeats.length ? playerSeats[0].get('id') : null
       }, initialVariables, {
         playerName,
         playerColor,
         activePlayers,
         thisID : this.get('id')
       });
-      collections = Object.assign({}, initialCollections, {
+      collections = Object.assign({
+        playerSeats
+      }, initialCollections, {
         thisButton : [this]
       });
     }
