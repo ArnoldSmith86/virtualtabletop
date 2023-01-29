@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 11,
     "info": {
       "name": "Five of a Kind",
       "image": "/assets/-337719674_582921",
@@ -10,19 +10,19 @@
       "mode": "vs",
       "time": "30",
       "attribution": "The room design and other room elements are by RogerLipsett and are released to the Public Domain under CC0.\n\nThe library image is by AlbertHerring and is available under CC BY 2.0 from https://en.wikipedia.org/wiki/Yahtzee#/media/File:Yahtzee_game_example.jpg.",
-      "id": "2v2x",
       "showName": true,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1-6",
       "similarImage": "",
       "similarName": "Yahtzee",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1-6",
+      "lastUpdate": 1674959218224
     }
   },
   "xprj": {
@@ -702,7 +702,7 @@
     ],
     "z": 1,
     "movableInEdit": false,
-    "movesMade": 6
+    "movesMade": 0
   },
   "rollBtn": {
     "type": "button",
@@ -1436,7 +1436,6 @@
     "z": 16,
     "saved": [
       "",
-      8,
       "",
       "",
       "",
@@ -1444,13 +1443,14 @@
       "",
       "",
       "",
-      30,
       "",
-      50,
+      "",
+      "",
+      "",
       ""
     ],
-    "savedLower": 80,
-    "savedUpper": "8",
+    "savedLower": "",
+    "savedUpper": "",
     "clickRoutine": [
       {
         "func": "IF",
@@ -1748,7 +1748,7 @@
     },
     "text": "",
     "parent": "h1",
-    "zeroValue": true,
+    "zeroValue": false,
     "borderRadius": "0px"
   },
   "u4": {
@@ -1792,7 +1792,7 @@
     },
     "text": "",
     "parent": "h1",
-    "zeroValue": false,
+    "zeroValue": true,
     "borderRadius": "0px"
   },
   "u2": {
@@ -2292,8 +2292,6 @@
     "z": 16,
     "index": 2,
     "saved": [
-      2,
-      2,
       "",
       "",
       "",
@@ -2304,10 +2302,12 @@
       "",
       "",
       "",
-      18
+      "",
+      "",
+      ""
     ],
-    "savedLower": "18",
-    "savedUpper": 4,
+    "savedLower": "",
+    "savedUpper": "",
     "width": 150,
     "height": 40,
     "movable": false,
@@ -2607,8 +2607,7 @@
         "value": "${title}"
       }
     ],
-    "borderRadius": "15px",
-    "text": 88
+    "borderRadius": "15px"
   },
   "p2Summary": {
     "inheritFrom": {
@@ -2620,7 +2619,7 @@
     "type": "button",
     "x": -400,
     "y": 325,
-    "text": 22
+    "text": ""
   },
   "p3Summary": {
     "inheritFrom": {
@@ -3766,11 +3765,27 @@
     "x": 30,
     "y": 10,
     "z": 805,
-    "backgroundColor": "#ffffff",
-    "rollCount": 3,
     "shape3d": true,
     "movableInEdit": false,
-    "clickable": false
+    "clickable": false,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "7yu2": {
     "inheritFrom": "7yu1",
@@ -3820,10 +3835,26 @@
     "width": 90,
     "height": 90,
     "z": 813,
-    "backgroundColor": "#ffffff",
-    "rollCount": 87,
     "shape3d": true,
-    "kept": false
+    "kept": false,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "d2": {
     "type": "dice",
@@ -3833,11 +3864,27 @@
     "width": 90,
     "height": 90,
     "z": 813,
-    "backgroundColor": "#ffffff",
-    "rollCount": 92,
     "shape3d": true,
     "kept": false,
-    "activeFace": 5
+    "activeFace": 1,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "d3": {
     "type": "dice",
@@ -3847,11 +3894,27 @@
     "width": 90,
     "height": 90,
     "z": 813,
-    "backgroundColor": "#ffffff",
-    "rollCount": 83,
     "shape3d": true,
     "kept": false,
-    "activeFace": 1
+    "activeFace": 2,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "d4": {
     "type": "dice",
@@ -3861,11 +3924,27 @@
     "width": 90,
     "height": 90,
     "z": 813,
-    "backgroundColor": "#ffffff",
-    "rollCount": 89,
     "shape3d": true,
     "kept": false,
-    "activeFace": 2
+    "activeFace": 3,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
   },
   "d5": {
     "type": "dice",
@@ -3875,10 +3954,26 @@
     "width": 90,
     "height": 90,
     "z": 813,
-    "backgroundColor": "#ffffff",
-    "rollCount": 95,
     "shape3d": true,
     "kept": false,
-    "activeFace": 5
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    },
+    "activeFace": 4
   }
 }
