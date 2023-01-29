@@ -1436,7 +1436,7 @@ function populateAddWidgetOverlay() {
             'overflow': 'visible'
           }
         }
-      }
+      };
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
     } catch(e) {}
