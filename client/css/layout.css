@@ -657,8 +657,22 @@ div[icon] .buttons {
   -moz-user-select: none;
 }
 
-.widget.foreign {
+body:not(.jsonEdit) .widget.foreign {
   display: none !important;
+}
+
+body.jsonEdit .widget.foreign {
+  /* Edit mode uses elementsFromPoint to determine widgets under the cursor, so
+     we hide and pass pointer events through the element but don't use display: none here
+     to prevent invalidating all layout every time the mouse moves. */
+  visibility: hidden;
+  pointer-events: none;
+}
+
+body.jsonEdit.hitTest .widget.foreign {
+  /* When hit testing under the cursor we temporarily make the element visible / hittable. */
+  visibility: visible;
+  pointer-events: auto;
 }
 
 #clientPointer {
