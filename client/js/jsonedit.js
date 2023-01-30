@@ -1408,6 +1408,7 @@ function jeApplyDelta(delta) {
   }
 
   jeUpdateTree(delta.s);
+  widgetCoordCache = null;
 }
 
 function jeApplyState(state) {
@@ -2416,6 +2417,7 @@ const clickButton = async function(event) {
   }
 }
 
+let widgetCoordCache = null;
 window.addEventListener('mousemove', function(e) {
   if(!jeEnabled)
     return;
@@ -2425,13 +2427,33 @@ window.addEventListener('mousemove', function(e) {
   if(!jeZoomOut && x > 1600 || jeMouseButtonIsDown)
     return;
 
-  const hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
+  if(!widgetCoordCache) {
+    widgetCoordCache = [];
+    for(const widget of widgets.values()) {
+      const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
+      coords.r = coords.x + widget.get('width');
+      coords.b = coords.y + widget.get('height');
+      coords.widget = widget;
+      widgetCoordCache.push(coords);
+    }
+  }
+
+  let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
+  const hiddenParent =  function(widget) {
+    return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
+  };
+  // Append any hidden widgets to the hovered widgets list as these won't be detected by elementsFromPoint.
+  hoveredWidgets = hoveredWidgets.concat(widgetCoordCache.filter(c=>hiddenParent(c.widget) && x>=c.x && x<=c.r && y>=c.y && y<=c.b).map(c=>c.widget));
   hoveredWidgets.sort(function(w1,w2) {
     const w1card = w1.get('type') == 'card';
     const w2card = w2.get('type') == 'card';
-    const w1normal = !w1card;
-    const w2normal = !w2card;
-    return ((w1card && w2card) || (w1normal && w2normal)) ? 0 : (w1card && !w2card) ? 1 : -1;
+    const w1foreign = !w1card && hiddenParent(w1);
+    const w2foreign =  !w2card && hiddenParent(w2);
+    const w1normal = !w1foreign && !w1card;
+    const w2normal = !w2foreign && !w2card;
+    return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
+      jeFKeyOrderDescending*(w2.calculateZ() - w1.calculateZ()) :
+      ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
   });
 
   for(let i=1; i<=11; ++i) {
