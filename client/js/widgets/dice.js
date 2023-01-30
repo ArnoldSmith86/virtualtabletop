@@ -68,7 +68,7 @@ class Dice extends Widget {
   animateProperties() {
     const rules = super.animateProperties();
     rules.unshift(
-      'rollCount',
+      'activeFace','rollCount',
       { property: 'rollCount', className: 'animateBegin', duration: 50 }
     );
     return rules;
@@ -94,8 +94,10 @@ class Dice extends Widget {
           for(const property of Object.values(f.svgReplaces))
             if(delta[property] !== undefined)
               needsUpdate = true;
-      this.createChildNodes();
-      childNodesWereRecreated = true;
+      if(needsUpdate) {
+        this.createChildNodes();
+        childNodesWereRecreated = true;
+      }
     }
 
     if(delta.rollCount !== undefined) {
