@@ -1,6 +1,8 @@
 # Joker cards
 
-The design of the two joker card images (`3J.svg`, `4J.svg`) is based [the joker cards](https://commons.wikimedia.org/wiki/File:Red_joker.svg) in Byron Knoll's "Playing cards set", which was [released into the public domain](http://byronknoll.blogspot.com/2011/03/vector-playing-cards.html) by the author.
+The original design of the two jokers cards (originally named `1J.svg` and `2J.svg`) are renamed as `3J.svg` and `4J.svg`.
+
+The new design of the two joker card images (named `1J.svg`, `2J.svg`) is based [the joker cards](https://commons.wikimedia.org/wiki/File:Red_joker.svg) in Byron Knoll's "Playing cards set", which was [released into the public domain](http://byronknoll.blogspot.com/2011/03/vector-playing-cards.html) by the author.
 
 Tsan-Kuang Lee made some adjustments (new layout to match others cards in this folder, and to improve visibility when cards are stacked with a narrow offset; converted the font to SVG paths for better compability). The new works are also released into the public domain.
 
