@@ -84,7 +84,7 @@ class Dice extends Widget {
     }
 
     let childNodesWereRecreated = false;
-    if([ 'faces', 'shape3d', 'pipSymbols', 'faceCSS', 'image', 'text', 'pips', 'svgReplaces' ].map(p=>delta[p]).filter(p=>p!==undefined).length) {
+    if([ 'faces', 'shape3d', 'pipSymbols', 'faceCSS', 'image', 'text', 'pips', 'svgReplaces' ].reduce((result,p)=>(result||delta[p]!==undefined),false)) {
       this.createChildNodes();
       childNodesWereRecreated = true;
     } else {
