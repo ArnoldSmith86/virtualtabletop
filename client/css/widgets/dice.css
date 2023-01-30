@@ -149,7 +149,7 @@
   width: var(--faceWidth);
   height: var(--faceHeight);
   transform-style: preserve-3d;
-  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(var(--rotX)) rotateZ(var(--rotZ)) rotateY(var(--rotY));
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--curRot);
   transition: transform 0.5s cubic-bezier(1, 1.65, 0.6, 0.85);
   --translateY: 0;
   --translateZ: calc(var(--size) / -2);
@@ -370,7 +370,9 @@
   --fontSize: calc(var(--faceWidth) * 0.5);
 }
 
+
 .d10.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(10deg) var(--curRot);
   --translateZ: 0;
   --translateY: 3%;
 }

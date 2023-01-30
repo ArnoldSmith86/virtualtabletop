@@ -105,6 +105,9 @@ class Dice extends Widget {
       this.animate();
     }
 
+    if(delta.rollCount !== undefined || delta.activeFace !== undefined || childNodesWereRecreated)
+      this.threeDfaces();
+
     if(delta.activeFace !== undefined || childNodesWereRecreated) {
       if(this.activeFaceElement !== undefined) {
         this.activeFaceElement.classList.remove('active');
@@ -114,8 +117,6 @@ class Dice extends Widget {
         this.activeFaceElement.classList.add('active');
       this.previousActiveFace = this.activeFace();
     }
-    if(delta.rollCount !== undefined || delta.activeFace !== undefined || childNodesWereRecreated)
-      this.threeDfaces();
   }
 
   classes() {
@@ -302,19 +303,16 @@ class Dice extends Widget {
   }
 
   threeDrotationsCSS() {
-    const s3d = this.threeDshape();
-    const af = this.activeFace();
-    const rc = this.get('rollCount');
-    const xRot = s3d.faceX;
-    const yRot = s3d.faceY;
-    const zRot = s3d.faceZ;
-
-    let css = '';
-    css += `; --rotX:${xRot[af % xRot.length] + s3d.rollX * rc * 360}deg`;
-    css += `; --rotY:${yRot[af % yRot.length] + s3d.rollY * rc * 360}deg`;
-    css += `; --rotZ:${zRot[af % zRot.length] + s3d.rollZ * rc * 360}deg`;
-
-    return css;
+    const calculateFacesRotation = (elem) => {
+      let m = new DOMMatrix(getComputedStyle(elem).transform).invertSelf();
+      m.m41 = 0; m.m42 = 0; m.m43 = 0; m.m44 = 1; m.m14 = 0; m.m24 = 0; m.m34 = 0;
+      return m.toString()
+    }
+    const curRot = calculateFacesRotation(this.faceElements[this.activeFace()]);
+    let preRot = curRot
+    if (this.previousActiveFace!=undefined && this.faceElements[this.previousActiveFace] !=undefined)
+      preRot = calculateFacesRotation(this.faceElements[this.previousActiveFace]);
+    return `; --preRot:${preRot}; --curRot:${curRot}`;
   }
 
   threeDshape() {
