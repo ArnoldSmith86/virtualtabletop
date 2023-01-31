@@ -2,12 +2,17 @@
   display: none;
 }
 
-body.hitTest .deck, body.edit .deck {
+body.jsonEdit .deck, body.edit .deck {
   display: block;
   padding-top: 40px;
   text-align: center;
 
   font-size: 200%;
+}
+
+body.jsonEdit:not(.hitTest) .deck {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 body.edit .deck::before, body.edit .deck::after {
