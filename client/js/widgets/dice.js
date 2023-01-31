@@ -185,7 +185,7 @@ class Dice extends Widget {
         const image = this.getFaceProperty(content, 'image');
         if(image)
           applySVGreplaces(face, content, image, this.getFaceProperty(content, 'svgReplaces'));
-      } else if(typeof content == 'number' && content>=1 && content<=9 && this.pipSymbols()) {
+      } else if(Number.isInteger(content) && content>=1 && content<=9 && this.pipSymbols()) {
         face.textContent = `die_face_${content}`;
         face.className = 'dicePip';
       } else if(typeof content == 'string' && content.match(/^\/(assets|i)/)) {
