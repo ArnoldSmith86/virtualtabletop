@@ -661,18 +661,14 @@ body:not(.jsonEdit) .widget.foreign {
   display: none !important;
 }
 
-body.jsonEdit .widget.foreign {
+body.jsonEdit:not(.hitTest) .widget.foreign {
   /* Edit mode uses elementsFromPoint to determine widgets under the cursor, so
      we hide and pass pointer events through the element but don't use display: none here
-     to prevent invalidating all layout every time the mouse moves. */
+     to prevent invalidating all layout every time the mouse moves. When hit testing
+     the foreign layers are temporarily visible (but the class is removed before a frame
+     is presented to the user). */
   visibility: hidden;
   pointer-events: none;
-}
-
-body.jsonEdit.hitTest .widget.foreign {
-  /* When hit testing under the cursor we temporarily make the element visible / hittable. */
-  visibility: visible;
-  pointer-events: auto;
 }
 
 #clientPointer {
