@@ -25,6 +25,9 @@ class Dice extends Widget {
       activeFace: 0,
       rollCount: 0,
 
+      rollTime: 800,
+      swapTime: 500,
+
       image: null,
       text: null,
       pips: null,
@@ -67,8 +70,12 @@ class Dice extends Widget {
 
   animateProperties() {
     const rules = super.animateProperties();
+    const swap = this.get('swapTime');
+    const roll = this.get('rollTime');
     rules.unshift(
-      'activeFace','rollCount',
+      { property: 'activeFace', duration: typeof swap == 'number'? swap + 50 : 1000},
+      { property: 'activeFace', className: 'animateBegin', duration: 50 },
+      { property: 'rollCount', duration: typeof roll == 'number'? roll + 50 : 1000},
       { property: 'rollCount', className: 'animateBegin', duration: 50 }
     );
     return rules;
@@ -203,16 +210,15 @@ class Dice extends Widget {
     css += '; --backgroundColor:' + this.get('backgroundColor');
     css += '; --borderColor:' + (this.get('borderColor') || this.get('pipColor'));
     css += '; --size:' + Math.min(this.get('width'), this.get('height')) + 'px';
-
-    if(this.get('shape3d'))
-      css += this.threeDrotationsCSS();
+    css += '; --rollTime:' + this.get('rollTime') + 'ms';
+    css += '; --swapTime:' + this.get('swapTime') + 'ms';
 
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('pipColor', 'backgroundColor', 'borderColor', 'activeFace', 'rollCount', 'shape3d', 'faces');
+    p.push('pipColor', 'backgroundColor', 'borderColor', 'rollTime', 'swapTime');
     return p;
   }
 
@@ -281,6 +287,24 @@ class Dice extends Widget {
     const s3d = this.threeDshape();
     if(!s3d)
       return;
+    const calculateFacesRotation = (elem) => {
+      if(!(elem instanceof HTMLElement))
+        return '';
+      const m = new DOMMatrix(getComputedStyle(elem).transform).invertSelf();
+      m.m41 = 0; m.m42 = 0; m.m43 = 0; m.m44 = 1; m.m14 = 0; m.m24 = 0; m.m34 = 0;
+      return m.toString()
+    }
+    const hash = this.rollHash? this.rollHash : 0;
+    const af = this.activeFace();
+    const pf = this.previousActiveFace;
+    const curRot = calculateFacesRotation(this.faceElements[af]);
+    const preRot = calculateFacesRotation(this.faceElements[(pf!=undefined)?pf:af]);
+    const theda = Math.PI * (hash >> 12)/2**19;
+    const z = ((hash << 20) >> 20)/2**11;
+    const r = Math.sqrt(1 - z**2);
+    const rollRot = `rotate3d(${r*Math.cos(theda)}, ${r*Math.sin(theda)}, ${z}, 3turn)`;
+    this.facesElement.style = `--curRot: ${curRot}; --preRot: ${preRot}; --rollRot: ${rollRot}`
+
     const n = s3d.sides;
     const fc = this.faceElements.length;
     for(var i = 0; i < fc; i++) {
@@ -288,8 +312,6 @@ class Dice extends Widget {
     }
     if(this.faceElements.length > n) {
       const shift = Math.floor(32 / n);
-      const af = this.activeFace();
-      const hash = this.rollHash? this.rollHash : 0;
       for(var side = 0; side < n && side < (fc - n); side++) {
         const facesOnSide = Math.floor((fc - 1 - side) / n ) + 1;
         const visibleFace = (side == af % n) ? af :
@@ -302,19 +324,6 @@ class Dice extends Widget {
     }
   }
 
-  threeDrotationsCSS() {
-    const calculateFacesRotation = (elem) => {
-      let m = new DOMMatrix(getComputedStyle(elem).transform).invertSelf();
-      m.m41 = 0; m.m42 = 0; m.m43 = 0; m.m44 = 1; m.m14 = 0; m.m24 = 0; m.m34 = 0;
-      return m.toString()
-    }
-    const curRot = calculateFacesRotation(this.faceElements[this.activeFace()]);
-    let preRot = curRot
-    if (this.previousActiveFace!=undefined && this.faceElements[this.previousActiveFace] !=undefined)
-      preRot = calculateFacesRotation(this.faceElements[this.previousActiveFace]);
-    return `; --preRot:${preRot}; --curRot:${curRot}`;
-  }
-
   threeDshape() {
     const s3d = this.get('shape3d');
     if(!s3d)
@@ -323,9 +332,6 @@ class Dice extends Widget {
       {
         "shapeName": "d2",
         "sides": 2,
-        "faceX": [ 0 ],
-        "faceY": [ 0, 180 ],
-        "faceZ": [ 0 ],
         "rollX": 2,
         "rollY": 3,
         "rollZ": 1
@@ -333,9 +339,6 @@ class Dice extends Widget {
       {
         "shapeName": "d2-flip",
         "sides": 2,
-        "faceX": [ 0, 180 ],
-        "faceY": [ 0 ],
-        "faceZ": [ 0 ],
         "rollX": 3,
         "rollY": 0,
         "rollZ": 0
@@ -343,9 +346,6 @@ class Dice extends Widget {
       {
         "shapeName": "d4",
         "sides": 4,
-        "faceX": [ -109.5, -109.5, -109.5, 0 ],
-        "faceY": [  0 ],
-        "faceZ": [     300,    180,  60, 0 ],
         "rollX": 2,
         "rollY": 2,
         "rollZ": 2
@@ -353,9 +353,6 @@ class Dice extends Widget {
       {
         "shapeName": "d6",
         "sides": 6,
-        "faceX": [ 0, 90,  90,  90, 90,   180 ],
-        "faceY": [ 0,  0,  0, 0,  0, 0 ],
-        "faceZ": [ 0,  0, 90,  -90,  -180,   -180 ],
         "rollX": 2,
         "rollY": 2,
         "rollZ": 2
@@ -363,9 +360,6 @@ class Dice extends Widget {
       {
         "shapeName": "d8",
         "sides": 8,
-        "faceX": [ 54.7, -125.3 ],
-        "faceY": [ 0 ],
-        "faceZ": [ 45, -45, 225, 135, 135, 225, 315, 405 ],
         "rollX": 1,
         "rollY": 0,
         "rollZ": 2
@@ -373,9 +367,6 @@ class Dice extends Widget {
       {
         "shapeName": "d10",
         "sides": 10,
-        "faceX": [ 65, -115 ],
-        "faceY": [ 0 ],
-        "faceZ": [ 0, -72, -144, -216, -288, -288, -216, -144, -72, 0 ],
         "rollX": 1,
         "rollY": 0,
         "rollZ": 2
@@ -383,11 +374,6 @@ class Dice extends Widget {
       {
         "shapeName": "d12",
         "sides": 12,
-        "faceX": [    0, 116.5650512, -63.43494882, 116.5650512, -63.43494882, 116.5650512,
-           -63.43494882, 116.5650512, -63.43494882, 116.5650512, -63.43494882, -180 ],
-        "faceY": [ 0 ],
-        "faceZ": [     0,    -180,     -108,      -36,       36,     108,
-                       108,    36,      -36,       -108,     -180,     0 ],
         "rollX": 2,
         "rollY": 2,
         "rollZ": 2
@@ -395,10 +381,6 @@ class Dice extends Widget {
       {
         "shapeName": "d20",
         "sides": 20,
-        "faceX": [ 37.37736814, 100.812317, -79.18768304, -142.6226319 ],
-        "faceY": [ 0 ],
-        "faceZ": [ -144, 108, 180, 72, 144, 36, 108, 0, 72, -36,
-                   36, -72, 0, -108, -36, -144, -72, 180, -108, 144 ],
         "rollX": 1,
         "rollY": 1,
         "rollZ": 2

@@ -3,7 +3,7 @@
   --faceBorder: 0.5px solid var(--borderColor);
   --faceWidth: var(--size);
   --faceHeight: var(--size);
-  animation-duration: 0.5s;
+  animation-duration: var(--rollTime);
 }
 
 .dice.widget > .diceFaces {
@@ -150,10 +150,23 @@
   height: var(--faceHeight);
   transform-style: preserve-3d;
   transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--curRot);
-  transition: transform 0.5s cubic-bezier(1, 1.65, 0.6, 0.85);
   --translateY: 0;
   --translateZ: calc(var(--size) / -2);
 }
+
+.shape3D.animate_activeFace.dice.widget > .diceFaces {
+  transition: transform var(--swapTime);
+}
+
+.shape3D.animate_rollCount.dice.widget > .diceFaces {
+  transition: transform var(--rollTime);
+}
+
+.shape3D.animateBegin.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--preRot) var(--rollRot);
+  transition: none;
+}
+
 
 .shape3D.dice.widget > * > .diceFace {
   display: flex;
@@ -161,7 +174,7 @@
 }
 
 .shape3D.dice.widget > * > .extra3Dface {
-  display: none;
+  visibility: hidden;
 }
 
 
@@ -185,6 +198,10 @@
 
 .d2-flip.dice.widget {
   --edgeColor: var(--backgroundColor);
+}
+
+.d2-flip.animateBegin.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--preRot) rotateX(calc(var(--changeX) * 4turn ));
 }
 
 .d2-flip.dice.widget > * > .diceFace {
@@ -372,9 +389,14 @@
 
 
 .d10.dice.widget > .diceFaces {
-  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(10deg) var(--curRot);
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(15deg) var(--curRot);
   --translateZ: 0;
   --translateY: 3%;
+}
+
+.d10.animateBegin.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(15deg) var(--preRot) var(--rollRot);
+  transition: none;
 }
 
 .d10.dice.widget > * > .diceFace {
@@ -653,7 +675,7 @@
         calc(var(--changeY) * -2%),
         0
       )
-      rotate(calc(var(--changeR) * 5deg));
+      rotate(calc(var(--changeZ) * 5deg));
   }
 }
 @keyframes faceChange {
