@@ -55,15 +55,15 @@
     "dompurify": "^2.4.3",
     "express": "^4.18.2",
     "jszip": "^3.10.1",
-    "node-fetch": "^2.6.8",
+    "node-fetch": "^2.6.9",
     "ws": "^8.12.0"
   },
   "devDependencies": {
-    "jest": "^29.3.1",
-    "jest-environment-jsdom": "^29.3.1",
+    "jest": "^29.4.1",
+    "jest-environment-jsdom": "^29.4.1",
     "jest-environment-jsdom-global": "^4.0.0",
     "json-diff": "^1.0.0",
     "nodemon": "^2.0.20",
-    "testcafe": "^2.2.0"
+    "testcafe": "^2.3.0"
   }
 }
