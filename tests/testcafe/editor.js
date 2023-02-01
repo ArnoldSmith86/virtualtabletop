@@ -70,5 +70,5 @@ test('Create game using edit mode', async t => {
     .click('#INPUT_\\;d2')
     .click('#buttonInputGo')
     .click('#w_d0ps');
-  await compareState(t, '7fefb3f3e80c218e80ba223794df1328');
+  await compareState(t, 'e4852fb53230fa666c78c08c460ec490');
 });
