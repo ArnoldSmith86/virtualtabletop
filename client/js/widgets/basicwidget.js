@@ -34,8 +34,8 @@ class BasicWidget extends Widget {
         this.domElement.style.cssText = mapAssetURLs(this.css());
   }
 
-  classes() {
-    let className = super.classes();
+  classes(includeTemporary=true) {
+    let className = super.classes(includeTemporary);
 
     if(this.get('image'))
       className += ' hasImage';

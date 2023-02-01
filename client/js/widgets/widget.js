@@ -110,6 +110,7 @@ export class Widget extends StateManaged {
     }
 
     this.animateTimeouts = {};
+    this.animateClasses = new Set;
   }
 
   absoluteCoord(coord) {
@@ -208,12 +209,21 @@ export class Widget extends StateManaged {
           if(delta[rule.property] !== undefined) {
             if(rule.className == null)
               rule.className = `animate_${escapeID(rule.property)}`;
+            rule.className = asArray(rule.className).join(' ').split(' ').filter(c=>c!='');
             if(typeof rule.duration != 'number')
               rule.duration = 1000;
-            if(this.animateTimeouts[rule.className])
-              clearTimeout(this.animateTimeouts[rule.className]);
-            this.domElement.classList.add(rule.className);
-            this.animateTimeouts[rule.className] = setTimeout(()=>this.domElement.classList.remove(rule.className),rule.duration);
+            rule.className.forEach(c => {
+              if(this.animateTimeouts[c])
+                clearTimeout(this.animateTimeouts[c]);
+              this.domElement.classList.add(c);
+              this.animateClasses.add(c);
+              this.animateTimeouts[c] = setTimeout(()=>{
+                console.log(this.classes(false));
+                if(this.classes(false).split(' ').indexOf(c) == -1)
+                  this.domElement.classList.remove(c);
+                this.animateClasses.delete(c);
+              },rule.duration);        
+            });
           }
         }
       });
@@ -341,7 +351,7 @@ export class Widget extends StateManaged {
     }
   }
 
-  classes() {
+  classes(includeTemporary = true) {
     let className = this.get('typeClasses') + ' ' + this.get('classes');
 
     if(Array.isArray(this.get('owner')) && this.get('owner').indexOf(playerName) == -1)
@@ -388,7 +398,10 @@ export class Widget extends StateManaged {
     if(this.isHighlighted)
       className += ' selectedInEdit';
 
-    return className;
+    if(includeTemporary)
+      className += ' ' + Array.from(this.animateClasses.values()).join(' ');
+
+      return className;
   }
 
   classesProperties() {
