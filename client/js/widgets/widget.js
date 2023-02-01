@@ -218,7 +218,6 @@ export class Widget extends StateManaged {
               this.domElement.classList.add(c);
               this.animateClasses.add(c);
               this.animateTimeouts[c] = setTimeout(()=>{
-                console.log(this.classes(false));
                 if(this.classes(false).split(' ').indexOf(c) == -1)
                   this.domElement.classList.remove(c);
                 this.animateClasses.delete(c);
