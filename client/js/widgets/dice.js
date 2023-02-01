@@ -73,8 +73,7 @@ class Dice extends Widget {
     const swap = this.get('swapTime');
     const roll = this.get('rollTime');
     rules.unshift(
-      { property: 'activeFace', duration: typeof swap == 'number'? swap + 50 : 1000},
-      { property: 'activeFace', className: 'animateBegin', duration: 50 },
+      { property: 'activeFace', duration: typeof swap == 'number'? swap : 1000},
       { property: 'rollCount', duration: typeof roll == 'number'? roll + 50 : 1000},
       { property: 'rollCount', className: 'animateBegin', duration: 50 }
     );

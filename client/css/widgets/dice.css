@@ -313,6 +313,23 @@
 }
 
 
+.d6.dice.widget {
+  overflow: clip;
+}
+
+.d6.animate_activeFace.dice.widget,
+.d6.animate_rollCount.dice.widget {
+  overflow: visible;
+}
+
+.d6.animateBegin.dice.widget {
+  overflow: clip;
+}
+
+.d6.shape3D.dice.widget > * > .diceFace {
+  border-radius: inherit;
+}
+
 .d6.dice.widget > * > .diceFace:nth-child(6n + 1) {
   transform: rotateY(  0deg) translateZ(calc(var(--size) / 2));
 }
