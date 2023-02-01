@@ -641,7 +641,7 @@ export default class Room {
     }
     if(zipBody && zipBody.length) {
       await this.addState('serverMove', 'file', zipBody, 'source', false);
-      await this.loadState(null, 'serverMove', 'serverMove');
+      await this.loadState(null, 'serverMove', 0);
       this.removeState(null, 'serverMove');
     }
   }
