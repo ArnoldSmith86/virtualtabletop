@@ -13,7 +13,7 @@ body.edit .deck {
   font-size: 200%;
 }
 
-body.jsonEdit:not(.hitTest):not(.edit) .deck {
+body.jsonEdit:not(.hitTest, .edit) .deck {
   visibility: hidden;
   pointer-events: none;
 }
