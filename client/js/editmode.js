@@ -814,32 +814,6 @@ function addPieceToAddWidgetOverlay(w, wi) {
   $('#addOverlay').appendChild(w.domBox);
 }
 
-function addPieceToAddWidgetOverlay(w, wi) {
-  w.applyInitialDelta(wi);
-  w.domBox.addEventListener('click', async _=>{
-    try {
-      const result = await w.showInputOverlay({
-        header: 'Choose piece color',
-        fields: [
-          {
-            type: 'color',
-            value: VTTblue,
-            variable: 'color'
-          }
-        ]
-      });
-      const toAdd = {...wi};
-      toAdd.z = getMaxZ(w.get('layer')) + 1;
-      toAdd.color = result.color;
-
-      const id = await addWidgetLocal(toAdd);
-      overlayDone(id);
-    } catch(e) {}
-  });
-  w.domElement.id = w.id;
-  $('#addOverlay').appendChild(w.domElement);
-}
-
 function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domBox.addEventListener('click', async _=>{
