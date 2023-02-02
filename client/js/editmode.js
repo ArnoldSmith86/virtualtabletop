@@ -1370,7 +1370,7 @@ function populateAddWidgetOverlay() {
     y: 835
   };
   spinner.applyInitialDelta(spinAttrs);
-  spinner.domElement.addEventListener('click', async _=>{
+  spinner.domBox.addEventListener('click', async _=>{
     try {
       const result = await spinner.showInputOverlay({
         header: 'Choose number of spinner values',
@@ -1394,8 +1394,8 @@ function populateAddWidgetOverlay() {
       overlayDone(id);
     } catch(e) {}
   });
-  spinner.domElement.id = spinner.id;
-  $('#addOverlay').appendChild(spinner.domElement);
+  spinner.domBox.id = spinner.id;
+  $('#addOverlay').appendChild(spinner.domBox);
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',
