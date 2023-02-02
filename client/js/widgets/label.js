@@ -11,6 +11,7 @@ export class Label extends Widget {
       layer: -2,
       typeClasses: 'widget label',
       clickable: false,
+      spellCheck: false,
 
       text: '',
       editable: false,
@@ -51,6 +52,9 @@ export class Label extends Widget {
         this.input.removeAttribute("readonly");
       else
         this.input.setAttribute("readonly", !delta.editable);
+    }
+    if(delta.spellCheck !== undefined) {
+      this.input.setAttribute('spellcheck', this.get('spellCheck') === true)
     }
   }
 }

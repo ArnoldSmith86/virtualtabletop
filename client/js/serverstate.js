@@ -1,5 +1,6 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID } from './domhelpers.js';
+import { getElementTransformRelativeTo } from './geometry.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
 
@@ -46,24 +47,26 @@ export function addWidget(widget, instance) {
       deferredCards[widget.deck].push(widget);
       return;
     }
-  } else if(widget.type == 'pile') {
-    w = new Pile(id);
+  } else if(widget.type == 'button') {
+    w = new Button(id);
   } else if(widget.type == 'canvas') {
     w = new Canvas(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
   } else if(widget.type == 'holder') {
     w = new Holder(id);
-  } else if(widget.type == 'spinner') {
-    w = new Spinner(id);
-  } else if(widget.type == 'seat') {
-    w = new Seat(id);
-  } else if(widget.type == 'timer') {
-    w = new Timer(id);
   } else if(widget.type == 'label') {
     w = new Label(id);
-  } else if(widget.type == 'button') {
-    w = new Button(id);
+  } else if(widget.type == 'pile') {
+    w = new Pile(id);
+  } else if(widget.type == 'scoreboard') {
+    w = new Scoreboard(id);
+  } else if(widget.type == 'seat') {
+    w = new Seat(id);
+  } else if(widget.type == 'spinner') {
+    w = new Spinner(id);
+  } else if(widget.type == 'timer') {
+    w = new Timer(id);
   } else {
     w = new BasicWidget(id);
   }
@@ -100,9 +103,14 @@ export function batchEnd() {
 
 function receiveDelta(delta) {
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
-  for(const widgetID in delta.s)
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID))
-      $('#topSurface').appendChild(widgets.get(widgetID).domBox);
+  for(const widgetID in delta.s) {
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID)) {
+      const domBox = widgets.get(widgetID).domBox;
+      const topTransform = getElementTransformRelativeTo(domBox, $('#topSurface')) || 'none';
+      $('#topSurface').appendChild(domBox);
+      domBox.style.transform = topTransform;
+    }
+  }
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
@@ -128,8 +136,8 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  for(const el of $a('[id^=w_]'))
-    widgets.get(unescapeID(el.id.slice(2))).applyRemove();
+  for(const widget of widgetFilter(w=>w.get('parent')===null))
+    widget.applyRemoveRecursive();
   widgets.clear();
   dropTargets.clear();
   maxZ = {};
@@ -161,7 +169,7 @@ function receiveStateFromServer(args) {
   }
 
   if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-    showOverlay('statesOverlay');
+    $('#statesButton').click();
     overlayShownForEmptyRoom = true;
   }
   toServer('confirm');

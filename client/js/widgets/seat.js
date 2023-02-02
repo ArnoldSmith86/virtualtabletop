@@ -34,13 +34,13 @@ class Seat extends Widget {
       setText(this.domInner, displayedText);
       this.domBox.setAttribute('data-text', displayedText);
     }
-    if(delta.player !== undefined)
-      this.updateLinkedWidgets();
+
+    this.updateLinkedWidgets(delta.player !== undefined);
   }
 
   applyInitialDelta(delta) {
     super.applyInitialDelta(delta);
-    this.updateLinkedWidgets();
+    this.updateLinkedWidgets(true);
   }
 
   classes() {
@@ -93,7 +93,12 @@ class Seat extends Widget {
     }
   }
 
-  updateLinkedWidgets() {
-    widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
+  updateLinkedWidgets(playerChanged) {
+    const scoreboard = widgetFilter(w => w.get('type') == 'scoreboard');
+    for(const board of scoreboard)
+      board.updateTable();
+
+    if(playerChanged)
+      widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
   }
 }

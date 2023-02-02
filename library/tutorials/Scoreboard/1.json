@@ -1,0 +1,390 @@
+{
+  "_meta": {
+    "version": 8,
+    "info": {
+      "name": "Scoreboard",
+      "image": "/assets/-751946941_5803",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "lastUpdate": 1673742960398,
+      "variantImage": "",
+      "variant": "Appearance",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "z": 6,
+    "scale": 0.5,
+    "x": -37,
+    "y": 10,
+    "color": "red",
+    "score": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "movableInEdit": false,
+    "player": "Player 1",
+    "score2": [
+      3,
+      4
+    ]
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "z": 2,
+    "scale": 0.5,
+    "x": -37,
+    "y": 103,
+    "index": 3,
+    "color": "yellow",
+    "player": "Player 3",
+    "score": [
+      1,
+      3,
+      5
+    ],
+    "movableInEdit": false,
+    "score2": [
+      2,
+      2
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": -37,
+    "y": 53,
+    "scale": 0.5,
+    "z": 2,
+    "color": "orange",
+    "player": "Player 2",
+    "score": [
+      0,
+      0,
+      1,
+      3,
+      4,
+      1
+    ],
+    "movableInEdit": false,
+    "score2": [
+      0,
+      5
+    ]
+  },
+  "comment1": {
+    "id": "comment1",
+    "x": 100,
+    "y": 485,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "This sets most of the scoreboard to be transparent so a colored widget placed behind it shows through. You still need to color the last row and the first column if a scrollbar might be used. Otherwise, the the text overlaps when scrolling and is not readable.",
+    "layer": -2
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 114,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 126,
+    "css": "font-size: 25px; ",
+    "text": "The appearance of scoreboards can be highly customized using css. Unlike with many other capabilities in the JSON Editor, customizing css requires a lot of manual entry as there are not buttons to automate the placement of the properties. You also need to understand a little bit about the VTT code for the scoreboard widget and html table structure in order to maximize the customization potential. This room contains some samples that demonstrate some of the features most likely to be implemented.  Look at the JSON (ctrl-J) of each scoreboard to see the css.",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "header": {
+    "id": "header",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Scoreboard: Appearance"
+  },
+  "scoreboard1": {
+    "type": "scoreboard",
+    "id": "scoreboard1",
+    "x": 100,
+    "y": 275,
+    "z": 4,
+    "movableInEdit": false,
+    "css": {
+      ".scoreboard": {
+        "background": "transparent"
+      },
+      ".scoreboard td:first-child": {
+        "background": "lightblue"
+      },
+      ".scoreboard .totalsLine": {
+        "background": "lightblue"
+      }
+    },
+    "movable": false
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": -37,
+    "y": 153,
+    "scale": 0.5,
+    "z": 2,
+    "movableInEdit": false,
+    "color": "green",
+    "player": "Player 4",
+    "score": [
+      1,
+      2,
+      "",
+      "no",
+      4,
+      1
+    ],
+    "score2": [
+      4,
+      1
+    ]
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "index": 5,
+    "x": -37,
+    "y": 203,
+    "scale": 0.5,
+    "z": 2,
+    "movableInEdit": false,
+    "color": "blue",
+    "player": "Player 5",
+    "score": [],
+    "score2": [
+      5,
+      2
+    ]
+  },
+  "backWidget": {
+    "id": "backWidget",
+    "x": 100,
+    "y": 275,
+    "width": 300,
+    "height": 200,
+    "layer": -2,
+    "z": 76,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "radial-gradient(blue, lightblue, white)"
+    }
+  },
+  "scoreboard2": {
+    "type": "scoreboard",
+    "id": "scoreboard2",
+    "x": 425,
+    "y": 275,
+    "z": 4,
+    "movableInEdit": false,
+    "css": {
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "border-bottom": "1px solid black"
+      },
+      ".scoreboard .totalsLine": {
+        "border-top": "2px solid black"
+      }
+    },
+    "movable": false
+  },
+  "comment2": {
+    "id": "comment2",
+    "x": 425,
+    "y": 485,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "This adds a solid border line at the bottom of the top row and at the top of the bottom row to more clearly set off the data.",
+    "layer": -2
+  },
+  "scoreboard3": {
+    "type": "scoreboard",
+    "id": "scoreboard3",
+    "x": 750,
+    "y": 275,
+    "z": 4,
+    "movableInEdit": false,
+    "css": {
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "10px"
+      },
+      ".scoreboard .currentRound": {
+        "background-color": "pink"
+      }
+    },
+    "movable": false,
+    "currentRound": 4,
+    "roundLabel": "",
+    "showTotals": false
+  },
+  "comment3": {
+    "id": "comment3",
+    "x": 750,
+    "y": 485,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "This shows how to change the width of the first column while letting every other column autosize. It also shows how to change the color of the 'currentRound' highlight.",
+    "layer": -2
+  },
+  "scoreboard4": {
+    "type": "scoreboard",
+    "id": "scoreboard4",
+    "x": 1075,
+    "y": 275,
+    "z": 4,
+    "movableInEdit": false,
+    "movable": false,
+    "playersInColumns": false,
+    "scoreProperty": "score2",
+    "showTotals": false,
+    "seats": [
+      "seat1",
+      "seat2",
+      "seat3",
+      "seat4"
+    ],
+    "css": {
+      ".scoreboard table": {
+        "height": "100%"
+      },
+      ".scoreboard td": {
+        "text-align": "center"
+      }
+    }
+  },
+  "comment4": {
+    "id": "comment4",
+    "x": 1075,
+    "y": 485,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "Scoreboards only autosize across columns. To make the scoreboard fill the entire vertical height, use css that changes its height like in the example above.",
+    "layer": -2
+  },
+  "scoreboard6": {
+    "type": "scoreboard",
+    "id": "scoreboard6",
+    "x": 100,
+    "y": 650,
+    "z": 4,
+    "movableInEdit": false,
+    "css": {
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "color": "white",
+        "background": "#cbadcf"
+      },
+      ".scoreboard td": {
+        "text-align": "center",
+        "font-size": "1.2em"
+      }
+    },
+    "movable": false,
+    "autosizeColumns": false,
+    "classes": "gothic_font",
+    "showPlayerColors": false
+  },
+  "comment6": {
+    "id": "comment6",
+    "y": 855,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "This modifies the appearance of the first row. It changes the color of the background and the text. It increases the size and centers the text. It also uses the 'classes' property to change the font to one of the supported VTT options (for the entire scoreboard).",
+    "layer": -2,
+    "x": 100
+  },
+  "scoreboard7": {
+    "type": "scoreboard",
+    "id": "scoreboard7",
+    "x": 425,
+    "y": 650,
+    "z": 4,
+    "movableInEdit": false,
+    "css": {
+      ".scoreboard div": {
+        "border": "3px dashed blue"
+      },
+      ".scoreboard td:nth-child(odd)": {
+        "background": "#ddd"
+      },
+      ".scoreboard td:nth-child(1)": {
+        "background": "lightblue"
+      }
+    },
+    "movable": false,
+    "autosizeColumns": false
+  },
+  "scoreboard8": {
+    "type": "scoreboard",
+    "id": "scoreboard8",
+    "x": 750,
+    "y": 650,
+    "z": 4,
+    "movableInEdit": false,
+    "css": {
+      ".scoreboard tr:nth-child(odd)": {
+        "background": "lightgray"
+      },
+      ".scoreboard .totalsLine": {
+        "background": "lightblue"
+      }
+    },
+    "movable": false,
+    "autosizeColumns": false
+  },
+  "comment7": {
+    "id": "comment7",
+    "y": 855,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "This makes every other column, starting with the first one, light gray. If you want a different effect on the first column, you have to specify that in a different, more specific property, AFTER the more general one. This also changes the border around the entire scoreboard.",
+    "layer": -2,
+    "x": 425
+  },
+  "comment8": {
+    "id": "comment8",
+    "y": 855,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "This makes every other row light gray and the totals row light blue.",
+    "layer": -2,
+    "x": 750
+  }
+}

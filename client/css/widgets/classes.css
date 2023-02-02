@@ -239,3 +239,32 @@ body.edit .pinPiece::after,
 body.edit .legacyPinPiece::after {
   background: radial-gradient(circle, var(--color), var(--color) 20%, var(--roomColor) 30%);
 }
+
+.chip3D, .pokerChip3D {
+  
+  font-weight:900; 
+  display:flex;  
+  justify-content: center; 
+  align-items: center; 
+  text-align:center; 
+  font-size: 1rem;
+  border-radius:50%; 
+  padding-bottom:6.875px; 
+  box-sizing:border-box; 
+  color:#222; 
+  line-height: 1; 
+}
+
+.chip, .pokerChip {
+  font-weight:900;
+  display:flex;  
+  justify-content: center; 
+  align-items: center; 
+  text-align:center;
+  font-size:1rem;
+  border-radius:50%;
+  box-sizing:border-box;
+  color:#222;
+  line-height: 1; 
+  text-align:center;
+}
