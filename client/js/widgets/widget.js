@@ -21,11 +21,16 @@ const readOnlyProperties = new Set([
 
 export class Widget extends StateManaged {
   constructor(id) {
-    const div = document.createElement('div');
-    div.id = 'w_' + escapeID(id);
+    const box = document.createElement('div');
+    box.id = 'w_' + escapeID(id);
+    box.className = 'widget';
+    const inner = document.createElement('div');
+    inner.className = 'widget-content';
+    box.appendChild(inner);
     super();
     this.id = id;
-    this.domElement = div;
+    this.domBox = box;
+    this.domInner = inner;
     this.targetTransform = '';
     this.childArray = [];
     this.propertiesUsedInCSS = [];
@@ -78,33 +83,31 @@ export class Widget extends StateManaged {
       leaveRoutine: null,
       globalUpdateRoutine: null
     });
-    this.domElement.timer = false
-
-    this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
-    this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
-    this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener('mousedown',  e => this.selected(), false);
-    this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
-    this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
-    this.domElement.addEventListener("touchend", e => this.touchend(), false);
+    this.domBox.addEventListener('contextmenu', e => this.showEnlarged(e), false);
+    this.domBox.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
+    this.domBox.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
+    this.domBox.addEventListener('mousedown',  e => this.selected(), false);
+    this.domBox.addEventListener('mouseup',  e => this.notSelected(), false);
+    this.domBox.addEventListener("touchstart", e => this.touchstart(), false);
+    this.domBox.addEventListener("touchend", e => this.touchend(), false);
 
     this.touchstart = function() {
-      if (!this.timer) {
-        this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
+      if (!this.touchTimer) {
+        this.touchTimer = setTimeout(this.onlongtouch.bind(this), 500, false);
       }
     }
 
     this.touchend = function() {
-      clearTimeout(this.timer);
-      this.timer = null;
+      clearTimeout(this.touchTimer);
+      this.touchTimer = null;
       this.hideEnlarged();
     }
 
     this.onlongtouch = function() {
       this.showEnlarged();
-      clearTimeout(this.timer);
-      this.timer = null;
-      this.domElement.classList.add('longtouch');
+      clearTimeout(this.touchTimer);
+      this.touchTimer = null;
+      this.domBox.classList.add('longtouch');
     }
   }
 
@@ -131,22 +134,31 @@ export class Widget extends StateManaged {
   applyCSS(delta) {
     for(const property of this.classesProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.className = this.classes();
+        const className = this.classes()
+        this.domBox.className = this.get('typeClasses') + ' ' + className;
+        this.domInner.className = 'widget-content ' + className;
         break;
       }
     }
 
-    for(const property of this.cssProperties()) {
+    for(const property of this.cssInnerProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.style.cssText = mapAssetURLs(this.css());
-        this.targetTransform = this.domElement.style.transform;
+        this.domInner.style.cssText = mapAssetURLs(this.cssInner());
+        break;
+      }
+    }
+
+    for(const property of this.cssBoxProperties()) {
+      if(delta[property] !== undefined) {
+        this.domBox.style.cssText = mapAssetURLs(this.cssBox());
+        this.targetTransform = this.domBox.style.transform;
         return;
       }
     }
 
     for(const property of this.cssTransformProperties()) {
       if(delta[property] !== undefined) {
-        this.targetTransform = this.domElement.style.transform = this.cssTransform();
+        this.targetTransform = this.domBox.style.transform = this.cssTransform();
         return;
       }
     }
@@ -156,8 +168,8 @@ export class Widget extends StateManaged {
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
-      newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
-      fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
+      newParent = delta.parent ? widgets.get(delta.parent).domBox : $('#topSurface');
+      fromTransform = getElementTransformRelativeTo(this.domBox, newParent);
     }
 
     this.applyCSS(delta);
@@ -174,15 +186,15 @@ export class Widget extends StateManaged {
       if(this.parent)
         this.parent.applyChildRemove(this);
 
-      newParent.appendChild(this.domElement);
+      newParent.appendChild(this.domBox);
       if (fromTransform) {
         // If we changed parents, we apply a transform to the previous location
         // to allow for a smooth transition animation.
-        this.domElement.style.transform = fromTransform;
+        this.domBox.style.transform = fromTransform;
         // Force style recalc to commit from transform and start a transition
         // on applying the destination transform.
-        this.domElement.offsetTop;
-        this.domElement.style.transform = this.targetTransform;
+        this.domBox.offsetTop;
+        this.domBox.style.transform = this.targetTransform;
       }
 
       if(delta.parent !== null) {
@@ -257,7 +269,7 @@ export class Widget extends StateManaged {
       widgets.get(this.get('deck')).removeCard(this);
     if($(`#STYLES_${escapeID(this.id)}`))
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
-    removeFromDOM(this.domElement);
+    removeFromDOM(this.domBox);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
   }
@@ -270,7 +282,7 @@ export class Widget extends StateManaged {
 
   applyZ(force) {
     if(force || this.get('inheritChildZ')) {
-      this.domElement.style.zIndex = this.calculateZ();
+      this.domBox.style.zIndex = this.calculateZ();
     }
   }
 
@@ -300,7 +312,7 @@ export class Widget extends StateManaged {
   }
 
   async checkParent(forceDetach) {
-    if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
+    if(this.currentParent && (forceDetach || !overlap(this.domBox, this.currentParent.domBox))) {
       await this.set('parent', null);
       if(this.currentParent.get('childrenPerOwner'))
         await this.set('owner',  null);
@@ -311,7 +323,7 @@ export class Widget extends StateManaged {
   }
 
   classes() {
-    let className = this.get('typeClasses') + ' ' + this.get('classes');
+    let className = this.get('classes');
 
     if(Array.isArray(this.get('owner')) && this.get('owner').indexOf(playerName) == -1)
       className += ' foreign';
@@ -394,14 +406,14 @@ export class Widget extends StateManaged {
     return coordLocal.x >= 0 && coordLocal.y >= 0 && coordLocal.x <= this.get('width') && coordLocal.y <= this.get('height');
   }
   coordLocalFromCoordClient(coord) {
-    const result = getPointOnPlane(getScreenTransform(this.domElement), coord.x, coord.y);
-    return result || new DOMPoint();
+    const result = getPointOnPlane(getScreenTransform(this.domBox), coord.x, coord.y);
+    return result || new DOMPoint();    
   }
   coordLocalFromCoordGlobal(coord) {
     return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
   }
   coordLocalFromCoordParent(coord) {
-    const result = getPointOnPlane(getElementTransform(this.domElement), coord.x, coord.y);
+    const result = getPointOnPlane(getElementTransform(this.domBox), coord.x, coord.y);
     return result || new DOMPoint();
   }
   coordParentFromCoordGlobal(coord) {
@@ -409,24 +421,8 @@ export class Widget extends StateManaged {
     return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
   }
   coordParentFromCoordLocal(coord) {
-    const transform = getElementTransform(this.domElement);
+    const transform = getElementTransform(this.domBox);
     return dehomogenize(transform.transformPoint(new DOMPoint(coord.x, coord.y)));
-  }
-
-  css() {
-    if($(`#STYLES_${escapeID(this.id)}`))
-      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
-    const usedProperties = new Set();
-    let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
-    this.propertiesUsedInCSS = Array.from(usedProperties);
-
-    css = this.cssBorderRadius() + css;
-    css += '; width:'  + this.get('width')  + 'px';
-    css += '; height:' + this.get('height') + 'px';
-    css += '; z-index:' + this.calculateZ();
-    css += '; transform:' + this.cssTransform();
-
-    return css;
   }
 
   cssAsText(css, usedProperties, nested = false) {
@@ -464,9 +460,28 @@ export class Widget extends StateManaged {
         return ''
     }
   }
-
-  cssProperties() {
-    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+  cssBox() {
+    let css = this.cssBorderRadius();
+    css += '; width:'  + this.get('width')  + 'px';
+    css += '; height:' + this.get('height') + 'px';
+    css += '; z-index:' + this.calculateZ();
+    css += '; transform:' + this.cssTransform();
+    return css;
+  }
+  cssBoxProperties() {
+    return [ 'borderRadius', 'height', 'inheritChildZ', 'layer', 'width' ];
+  }
+  cssInner() {
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
+    const usedProperties = new Set();
+    let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
+    this.propertiesUsedInCSS = Array.from(usedProperties);
+    css = this.cssBorderRadius() + css;
+    return css;
+  }
+  cssInnerProperties() {
+    return [ 'css' ].concat(this.propertiesUsedInCSS);
   }
 
   cssReplaceProperties(css, usedProperties) {
@@ -1734,7 +1749,7 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/)) {
+    if (!this.domBox.className.match(/selected/)) {
       $('#enlarged').classList.add('hidden');
       if($('#enlargeStyle'))
         removeFromDOM($('#enlargeStyle'));
@@ -1846,7 +1861,7 @@ export class Widget extends StateManaged {
       delete this.disablePileUpdateAfterParentChange;
 
       for(const t of this.dropTargets)
-        t.domElement.classList.add('droppable');
+        t.domBox.classList.add('droppable');
     }
   }
 
@@ -1882,7 +1897,7 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       const lastHoverTarget = this.hoverTarget;
-      const myCenter = center(this.domElement);
+      const myCenter = center(this.domBox);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
       let hitElements = document.elementsFromPoint(myCenter.x, myCenter.y);
@@ -1899,9 +1914,9 @@ export class Widget extends StateManaged {
       if (!this.hoverTarget) {
         let targetDist = 99999;
         for(const t of this.dropTargets) {
-          if(overlap(this.domElement, t.domElement)) {
+          if(overlap(this.domBox, t.domBox)) {
             const tCursor = t.coordGlobalInside(coordGlobal);
-            const tDist = distance(center(t.domElement), myCenter) / scale;
+            const tDist = distance(center(t.domBox), myCenter) / scale;
             const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
             const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2);
             const bestTarget = tDist <= targetDist;
@@ -1914,9 +1929,9 @@ export class Widget extends StateManaged {
         }
       }
       if(lastHoverTarget)
-        lastHoverTarget.domElement.classList.remove('droptarget');
+        lastHoverTarget.domBox.classList.remove('droptarget');
       if(this.hoverTarget)
-        this.hoverTarget.domElement.classList.add('droptarget');
+        this.hoverTarget.domBox.classList.add('droptarget');
 
       if (lastHoverTarget != this.hoverTarget) {
         await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
@@ -1935,7 +1950,7 @@ export class Widget extends StateManaged {
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
-        t.domElement.classList.remove('droppable');
+        t.domBox.classList.remove('droppable');
 
       await this.checkParent();
 
@@ -1946,13 +1961,13 @@ export class Widget extends StateManaged {
         this.setPosition(coordNew.x, coordNew.y, this.get('z'));
         await this.snapToGrid();
         await this.moveToHolder(this.hoverTarget);
-        this.hoverTarget.domElement.classList.remove('droptarget');
+        this.hoverTarget.domBox.classList.remove('droptarget');
       }
     }
 
     this.hideEnlarged();
-    if(this.domElement.classList.contains('longtouch'))
-      this.domElement.classList.remove('longtouch');
+    if(this.domBox.classList.contains('longtouch'))
+      this.domBox.classList.remove('longtouch');
 
     await this.updatePiles();
   }
@@ -2015,9 +2030,9 @@ export class Widget extends StateManaged {
     if(this.isHighlighted != isHighlighted) {
       this.isHighlighted = isHighlighted;
       if(isHighlighted)
-        this.domElement.classList.add('selectedInEdit');
+        this.domBox.classList.add('selectedInEdit');
       else
-        this.domElement.classList.remove('selectedInEdit');
+        this.domBox.classList.remove('selectedInEdit');
     }
   }
 
@@ -2041,14 +2056,15 @@ export class Widget extends StateManaged {
         await this.set('text', text);
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
+    this.domBox.setAttribute('data-text', this.get('text'));
   }
 
   selected() {
-    this.domElement.classList.add('selected');
+    this.domBox.classList.add('selected');
   }
 
   notSelected() {
-    this.domElement.classList.remove('selected');
+    this.domBox.classList.remove('selected');
   }
 
   showEnlarged(event, delta) {
@@ -2066,27 +2082,27 @@ export class Widget extends StateManaged {
           }
         }
       }
-      const boundBox = this.domElement.getBoundingClientRect();
-      let cssText = this.domElement.style.cssText;
+      const boundBox = this.domBox.getBoundingClientRect();
+      let cssText = this.domBox.style.cssText;
       cssText += `;--originalLeft:${boundBox.left}px`;
       cssText += `;--originalTop:${boundBox.top}px`;
       cssText += `;--originalRight:${boundBox.right}px`;
       cssText += `;--originalBottom:${boundBox.bottom}px`;
       // Only update the enlarged element if there is a non-position delta.
       if (needsContentUpdate)
-        e.innerHTML = this.domElement.innerHTML;
+        e.innerHTML = this.domBox.innerHTML;
 
-      e.className = this.domElement.className;
+      e.className = this.domBox.className;
       e.dataset.id = id;
       for(const clone of e.querySelectorAll('canvas')) {
-        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+        const original = this.domBox.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
         const context = clone.getContext('2d');
         clone.width = original.width;
         clone.height = original.height;
         context.drawImage(original, 0, 0);
       }
       e.style.cssText = cssText;
-      e.style.display = this.domElement.style.display;
+      e.style.display = this.domBox.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
       const cursor = clientPointer.getBoundingClientRect();
       if(cursor.left < window.innerWidth/2)
@@ -2204,7 +2220,9 @@ export class Widget extends StateManaged {
   }
 
   updateOwner() {
-    this.domElement.className = this.classes();
+    const className = this.classes()
+    this.domBox.className = this.get('typeClasses') + ' ' + className;
+    this.domInner.className = 'widget-content ' + className;
   }
 
   async updatePiles() {

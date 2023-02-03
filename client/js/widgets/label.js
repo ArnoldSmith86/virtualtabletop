@@ -18,7 +18,7 @@ export class Label extends Widget {
       twoRowBottomAlign: false
     });
 
-    this.domElement.appendChild(this.input);
+    this.domInner.appendChild(this.input);
     this.input.addEventListener('keyup', e=>{
       if(this.get('editable') && e.target.value !== this.get('text'))
         this.setText(e.target.value)
@@ -29,6 +29,7 @@ export class Label extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
       this.input.value = this.get('text');
+      this.domBox.setAttribute('data-text', this.get('text'));
       if(this.get('twoRowBottomAlign')) {
         this.input.style.height = '20px';
         this.input.style.minHeight = 'unset';

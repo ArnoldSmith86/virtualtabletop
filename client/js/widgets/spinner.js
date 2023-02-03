@@ -33,6 +33,7 @@ class Spinner extends Widget {
         clearTimeout(this.timeout);
       this.timeout = setTimeout(_=>{
         this.value.textContent = this.get('value');
+        this.domBox.setAttribute('data-text', this.value.textContent);
         this.value.classList.remove('hidden')
       }, 1300);
     }
@@ -43,13 +44,14 @@ class Spinner extends Widget {
       const angle = this.get('angle') + Math.floor((2+Math.random())*360);
       const o = this.get('options');
       await this.set('angle', angle);
-      if(o.length)
+      if(o.length) {
         await this.set('value', o[Math.floor(angle/(360/o.length))%o.length]);
+        this.domBox.setAttribute('data-text', this.get('value'));
+      }
     }
   }
 
   createChildNodes() {
-    const childNodes = [...this.domElement.childNodes];
     const ns = 'http://www.w3.org/2000/svg'
 
     const bg = document.createElementNS(ns, 'svg');
@@ -79,27 +81,23 @@ class Spinner extends Widget {
       bg.appendChild(line);
       bg.appendChild(text);
     }
-    this.domElement.innerHTML = '';
-    this.domElement.appendChild(bg);
+    this.domInner.innerHTML = '';
+    this.domInner.appendChild(bg);
 
     this.spinner = document.createElement('div');
     this.spinner.setAttribute('class', 'spinningPart');
     this.spinner.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('spinnerCSS'),null,true)));
-    this.domElement.appendChild(this.spinner);
+    this.domInner.appendChild(this.spinner);
 
     this.value = document.createElement('div');
     this.value.setAttribute('class', 'value');
     this.value.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('valueCSS'),null,true)));
     this.value.textContent = this.get('value');
-    this.domElement.appendChild(this.value);
-
-    for(const child of childNodes)
-      if(String(child.className).match(/widget/))
-        this.domElement.appendChild(child);
+    this.domInner.appendChild(this.value);
   }
 
-  css() {
-    let css = super.css();
+  cssInner() {
+    let css = super.cssInner();
     css += `; font-size:${Math.min(this.get('width'), this.get('height')) * 0.4}px`;
     return css;
   }

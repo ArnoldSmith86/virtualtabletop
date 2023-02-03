@@ -233,9 +233,8 @@ class Scoreboard extends Widget {
     // First, empty the table
     if(!this.tableDOM) {
       this.tableDOM = document.createElement('table');
-      const intermediateDiv = document.createElement('div');
-      intermediateDiv.className = 'scoreboardIntermediate';
-      this.domElement.appendChild(intermediateDiv);
+      const intermediateDiv = this.domInner;
+      intermediateDiv.classList.add('scoreboardIntermediate');
       intermediateDiv.appendChild(this.tableDOM);
     } else {
       this.tableDOM.innerHTML = '';
@@ -361,7 +360,7 @@ class Scoreboard extends Widget {
           this.tableDOM.rows[r].cells[numCols-1].classList.add('totalsLine');
       }
     }
-    this.domElement.style.setProperty('--firstColWidth', '50px');
-    this.domElement.style.setProperty('--columns', numCols);
+    this.domBox.style.setProperty('--firstColWidth', '50px');
+    this.domBox.style.setProperty('--columns', numCols);
   }
 }

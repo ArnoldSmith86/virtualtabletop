@@ -20,9 +20,8 @@ class Card extends Widget {
 
   applyDeltaToDOM(delta) {
     if(delta.deck !== undefined) {
-      const childNodes = [...this.domElement.childNodes];
       if(this.deck) {
-        this.domElement.innerHTML = '';
+        this.domInner.innerHTML = '';
         this.deck.removeCard(this);
       }
       if(delta.deck) {
@@ -32,9 +31,6 @@ class Card extends Widget {
       } else {
         this.deck = null;
       }
-      for(const child of childNodes)
-        if(!child.className.match(/cardFace/))
-          this.domElement.appendChild(child);
     }
 
     if((delta.cardType !== undefined || delta.deck !== undefined) && this.deck) {
@@ -50,11 +46,11 @@ class Card extends Widget {
     }
 
     if(delta.deck !== undefined || delta.activeFace !== undefined) {
-      for(let i=0; i<this.domElement.children.length; ++i) {
+      for(let i=0; i<this.domInner.children.length; ++i) {
         if(i == this.get('activeFace'))
-          this.domElement.children[i].classList.add('active');
+          this.domInner.children[i].classList.add('active');
         else
-          this.domElement.children[i].classList.remove('active');
+          this.domInner.children[i].classList.remove('active');
       }
 
       const deltaForFaceChange = {};
@@ -187,12 +183,17 @@ class Card extends Widget {
 
         faceDiv.appendChild(objectDiv);
       }
-      this.domElement.appendChild(faceDiv);
+      this.domInner.appendChild(faceDiv);
     }
   }
 
-  cssProperties() {
-    const p = super.cssProperties();
+  cssBoxProperties() {
+    const p = super.cssBoxProperties();
+    p.push('deck');
+    return p;
+  }
+  cssInnerProperties() {
+    const p = super.cssInnerProperties();
     p.push('deck');
     return p;
   }

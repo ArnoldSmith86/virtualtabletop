@@ -1,26 +1,20 @@
-.deck {
+.widget.deck {
+  border-radius: 50%;
+}
+
+.widget.deck > .widget-content {
   display: none;
 }
 
-body.edit .deck {
-  display: block;
-  padding-top: 40px;
-  text-align: center;
-
-  font-size: 200%;
-}
-
-body.edit .deck::before, body.edit .deck::after {
-  position: absolute;
-  width: 15px;
-  height: 25px;
-  border: 2px solid var(--editColor);
-  top: 10px;
-  left: 30px;
-  content: "";
+body.edit .deck::before {
+  padding-top: 34px;
+  font-size: 24px;
 }
 
 body.edit .deck::after {
-  top: 15px;
-  left: 35px;
+  font-family: 'VTT-Symbols';
+  font-size: 32px;
+  padding-bottom: 26px;
+
+  content: 'deck';
 }

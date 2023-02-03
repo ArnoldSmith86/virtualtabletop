@@ -14,12 +14,13 @@ class Deck extends Widget {
     });
 
     this.cards = {};
-    this.domElement.textContent = 0;
+    this.domInner.textContent = 0;
   }
 
   addCard(card) {
     this.cards[card.get('id')] = card;
-    ++this.domElement.textContent;
+    ++this.domInner.textContent;
+    this.domBox.setAttribute('data-text', this.domInner.textContent);
   }
 
   applyDeltaToDOM(delta) {
@@ -67,6 +68,7 @@ class Deck extends Widget {
 
   removeCard(card) {
     delete this.cards[card.get('id')];
-    --this.domElement.textContent;
+    --this.domInner.textContent;
+    this.domBox.setAttribute('data-text', this.domInner.textContent);
   }
 }

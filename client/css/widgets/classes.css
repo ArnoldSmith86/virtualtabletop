@@ -1,10 +1,28 @@
-.classicPiece, .legacyClassicPiece {
+.classicPiece {
+  --mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 90' preserveAspectRatio='none'%3E%3Cpath d='M2 77A5 5 0 0 0 1 84C4 88 20 90 30 90C40 90 56 88 59 84A5 5 0 0 0 58 77L46 70L38 32A17 17 0 1 0 22 32L14 70Z' /%3E%3C/svg%3E");
+}
+.legacyClassicPiece {
+  --mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' %3E%3Cpath d='M38.84 30.94C41.71 32.37 44.44 32.73 46.66 32.62C49.4 32.5 51.95 31.7 54.14 30.37C54.28 30.29 54.42 30.21 54.56 30.13L62.81 65.86L72.96 78.7C73.65 79.57 74 80.61 74 81.81C74 83.01 73.65 84.05 72.96 84.92C72.27 85.8 71.45 86.23 70.5 86.23L63.26 86.23C62.97 86.74 62.67 87 62.33 87L29.67 87C29.33 87 29.03 86.74 28.74 86.23L21.5 86.23C20.55 86.23 19.73 85.8 19.04 84.92C18.35 84.05 18 83.01 18 81.81C18 80.61 18.35 79.57 19.04 78.7L29.19 65.86L37.44 30.13L37.91 30.4C38.05 30.49 38.2 30.57 38.35 30.66L38.84 30.94ZM48.94 32.32C50.51 31.98 51.84 31.67 54.14 30.37C58.6 27.68 61.56 22.84 61.56 17.32C61.56 8.85 54.6 2 46 2C37.4 2 30.44 8.85 30.44 17.32C30.44 22.86 33.43 27.72 37.91 30.4L38.35 30.66C40.61 31.91 43.22 32.63 46 32.63C46.22 32.63 46.44 32.63 46.66 32.62C47.5 32.57 48.26 32.46 48.94 32.32Z' /%3E%3C/svg%3E%0A");
+}
+.classicPiece > .widget-content,
+.legacyClassicPiece > .widget-content, 
+body.edit .widget.classicPiece::before,
+body.edit .widget.legacyClassicPiece::before {
   -webkit-mask-image: var(--mask);
   mask-image: var(--mask);
   background: var(--color);
 }
-.classicPiece {
-  --mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 90' preserveAspectRatio='none'%3E%3Cpath d='M2 77A5 5 0 0 0 1 84C4 88 20 90 30 90C40 90 56 88 59 84A5 5 0 0 0 58 77L46 70L38 32A17 17 0 1 0 22 32L14 70Z' /%3E%3C/svg%3E");
+.classicPiece > .widget-content::before,
+.classicPiece > .widget-content::after,
+body.edit .classicPiece::after,
+body.edit .legacyClassicPiece::after {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  border-width: 0;
+}
+.classicPiece > .widget-content {
   background-image: radial-gradient(
       circle at 50% 0%,
       rgba(0, 0, 0, 0) 90%,
@@ -23,15 +41,7 @@
       rgba(0, 0, 0, 0) 70%
     );
 }
-.classicPiece::before,
-.classicPiece::after,
-body.edit .legacyClassicPiece::after {
-  position: absolute;
-  display: block;
-  content: "";
-  top: 0;
-}
-.classicPiece::before {
+.classicPiece > .widget-content::before {
   width: calc(32 / 60 * 100%);
   height: calc(45 / 90 * 100%);
   border-radius: 50% / calc(4 / 45 * 100%);
@@ -51,7 +61,7 @@ body.edit .legacyClassicPiece::after {
       rgba(0, 0, 0, 0) 50%
     );
 }
-.classicPiece::after {
+.classicPiece > .widget-content::after {
   width: calc(34 / 60 * 100%);
   height: calc(34 / 90 * 100%);
   border-radius: 50%;
@@ -64,20 +74,15 @@ body.edit .legacyClassicPiece::after {
     rgba(0, 0, 0, 0.3) 80%
   );
 }
-.legacyClassicPiece {
-  --mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' %3E%3Cpath d='M38.84 30.94C41.71 32.37 44.44 32.73 46.66 32.62C49.4 32.5 51.95 31.7 54.14 30.37C54.28 30.29 54.42 30.21 54.56 30.13L62.81 65.86L72.96 78.7C73.65 79.57 74 80.61 74 81.81C74 83.01 73.65 84.05 72.96 84.92C72.27 85.8 71.45 86.23 70.5 86.23L63.26 86.23C62.97 86.74 62.67 87 62.33 87L29.67 87C29.33 87 29.03 86.74 28.74 86.23L21.5 86.23C20.55 86.23 19.73 85.8 19.04 84.92C18.35 84.05 18 83.01 18 81.81C18 80.61 18.35 79.57 19.04 78.7L29.19 65.86L37.44 30.13L37.91 30.4C38.05 30.49 38.2 30.57 38.35 30.66L38.84 30.94ZM48.94 32.32C50.51 31.98 51.84 31.67 54.14 30.37C58.6 27.68 61.56 22.84 61.56 17.32C61.56 8.85 54.6 2 46 2C37.4 2 30.44 8.85 30.44 17.32C30.44 22.86 33.43 27.72 37.91 30.4L38.35 30.66C40.61 31.91 43.22 32.63 46 32.63C46.22 32.63 46.44 32.63 46.66 32.62C47.5 32.57 48.26 32.46 48.94 32.32Z' /%3E%3C/svg%3E%0A");
-}
-body.edit .widget.classicPiece,
-body.edit .widget.legacyClassicPiece {
+body.edit .widget.classicPiece::before,
+body.edit .widget.legacyClassicPiece::before {
   border: none;
-  background: var(--editColor) !important;
-}
-body.edit .widget.classicPiece::before {
-  display: none;
+  background: var(--editColor);
 }
 body.edit .widget.classicPiece::after,
 body.edit .widget.legacyClassicPiece::after {
   background: var(--color);
+  border-radius: 50%;
   width: 16px;
   height: 16px;
 }
@@ -86,38 +91,39 @@ body.edit .widget.classicPiece::after {
   top: calc(19% - 8px);
 }
 body.edit .widget.legacyClassicPiece::after {
-  border-radius: 50%;
   left: 38px;
   top: 9px;
 }
 
-.checkersPiece, .checkersPiece::before, .checkersPiece::after {
-  box-sizing: border-box;
+.checkersPiece {
   border-radius: 50%;
+}
+.checkersPiece > .widget-content {
   background: var(--color);
 }
-.checkersPiece::before, .checkersPiece::after {
+.checkersPiece > .widget-content::before, 
+.checkersPiece > .widget-content::after,
+body.edit .checkersPiece::after {
   content: "";
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  border-radius: inherit;
+  background: var(--color);
+}
+.checkersPiece > .widget-content::before {
   background: rgba(255,255,255,.32);
-  background-size: 50px 50px;
-  background-position: -17px -14px;
   width: 79%;
   height: 79%;
-  position: absolute;
-  border-radius: 50%;
   top: 10.5%;
   left: 10.5%;
-  box-sizing: border-box;
 }
-.checkersPiece::after {
+.checkersPiece > .widget-content::after {
   background: var(--color);
   width: 57%;
   height: 57%;
   top: 21.5%;
   left: 21.5%;
-}
-.checkersPiece.crowned::after {
-  content: "♛";
   font-size: 40px;
   color: rgba(255,255,255,.32);
   display: flex;
@@ -125,13 +131,11 @@ body.edit .widget.legacyClassicPiece::after {
   align-items: center;
   text-align: center;
 }
-body.edit .widget.checkersPiece {
-  border-width: 10px;
-  box-shadow: none;
-  box-sizing: border-box;
+.checkersPiece.crowned > .widget-content::after {
+  content: "♛";
 }
 body.edit .widget.checkersPiece::before {
-  display: none;
+  border-width: 10px;
 }
 body.edit .widget.checkersPiece::after {
   width: 20%;
@@ -144,15 +148,24 @@ body.edit .widget.checkersPiece::after {
   --borderColor: #3f3b38;
   --borderWidth: 3;
 }
+body.edit .pinPiece::before,
+body.edit .pinPiece::after {
+  --borderColor: var(--editColor);
+  --borderWidth: 3;
+}
 .pinPiece {
   --pinWidth: 40;
   --pinLength: 80;
   --pinAngle: -30;
 }
-.pinPiece::before,
-.pinPiece::after,
-.legacyPinPiece::before,
-.legacyPinPiece::after {
+.pinPiece > .widget-content::before,
+.pinPiece > .widget-content::after,
+.legacyPinPiece > .widget-content::before,
+.legacyPinPiece > .widget-content::after,
+body.edit .pinPiece::before,
+body.edit .pinPiece::after,
+body.edit .legacyPinPiece::before,
+pody.edit .legacyPinPiece::after {
   position: absolute;
   display: block;
   box-sizing: border-box;
@@ -162,7 +175,8 @@ body.edit .widget.checkersPiece::after {
   border: calc(var(--borderWidth) * 1px) solid var(--borderColor);
   background-color: var(--color);
 }
-.pinPiece::before {
+.pinPiece > .widget-content::before,
+body.edit .pinPiece::before {
   width: calc(var(--pinWidth) * 1%);
   padding-top: calc(var(--pinLength) * 1% - var(--borderWidth) * 2px);
   border-radius: 50% / calc(var(--pinWidth) / var(--pinLength) * 30%);
@@ -177,7 +191,8 @@ body.edit .widget.checkersPiece::after {
     rgba(0, 0, 0, 0.1)
   );
 }
-.pinPiece::after {
+.pinPiece > .widget-content::after,
+body.edit .pinPiece::after {
   width: 100%;
   padding-top: calc(100% - var(--borderWidth) * 2px);
   border-radius: 50%;
@@ -189,12 +204,15 @@ body.edit .widget.checkersPiece::after {
     rgba(0, 0, 0, 0.3)
   );
 }
-.legacyPinPiece::before,
-.legacyPinPiece::after {
+.legacyPinPiece > .widget-content::before,
+.legacyPinPiece > .widget-content::after,
+body.edit .legacyPinPiece::before,
+body.edit .legacyPinPiece::after {
   background-size: 50px 50px;
   background-position: -17px -14px;
 }
-.legacyPinPiece::before {
+.legacyPinPiece > .widget-content::before,
+body.edit .legacyPinPiece::before {
   background-image: linear-gradient(90deg, rgba(255,255,255,.32), rgba(0,0,0,.16));
   background-size: 50px 50px;
   background-position: -17px -14px;
@@ -204,7 +222,8 @@ body.edit .widget.checkersPiece::after {
   height: 79%;
   transform: rotate(-30deg);
 }
-.legacyPinPiece::after {
+.legacyPinPiece > .widget-content::after,
+body.edit .legacyPinPiece::after {
   background-image: radial-gradient(circle, rgba(255,255,255,.32), rgba(255,255,255,0) 30%, rgba(0,0,0,.16));
   width: 35.85px;
   height: 35.85px;
@@ -212,22 +231,13 @@ body.edit .widget.checkersPiece::after {
   left: 0;
   top: 0;
 }
-body.edit .widget.pinPiece,
-body.edit .widget.legacyPinPiece {
-  border: none;
-  box-shadow: none;
-  box-sizing: border-box;
+body.edit .pinPiece::before,
+body.edit .legacyPinPiece::before {
+  background: transparent
 }
-body.edit .widget.pinPiece::before,
-body.edit .widget.pinPiece::after,
-body.edit .widget.legacyPinPiece::before,
-body.edit .widget.legacyPinPiece::after {
-  border: 3px solid var(--editColor);
-  background: none;
-}
-body.edit .widget.pinPiece::after,
-body.edit .widget.legacyPinPiece::after {
-  background-image: radial-gradient(circle, var(--color), var(--color) 20%, var(--roomColor) 30%);
+body.edit .pinPiece::after,
+body.edit .legacyPinPiece::after {
+  background: radial-gradient(circle, var(--color), var(--color) 20%, var(--roomColor) 30%);
 }
 
 .chip3D, .pokerChip3D {

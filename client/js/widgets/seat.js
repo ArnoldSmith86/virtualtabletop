@@ -31,7 +31,8 @@ class Seat extends Widget {
       let displayedText = String(display || '')
       displayedText = displayedText.replaceAll('seatIndex',this.get('index'))
       displayedText = displayedText.replaceAll('playerName',this.get('player'))
-      setText(this.domElement, displayedText);
+      setText(this.domInner, displayedText);
+      this.domBox.setAttribute('data-text', displayedText);
     }
 
     this.updateLinkedWidgets(delta.player !== undefined);
@@ -66,8 +67,8 @@ class Seat extends Widget {
       await this.setPlayer();
   }
 
-  css() {
-    let css = super.css();
+  cssBox() {
+    let css = super.cssBox();
 
     if(this.get('color'))
       css += '; --color:' + this.get('color');
@@ -75,8 +76,8 @@ class Seat extends Widget {
     return css;
   }
 
-  cssProperties() {
-    const p = super.cssProperties();
+  cssBoxProperties() {
+    const p = super.cssBoxProperties();
     p.push('color');
     return p;
   }

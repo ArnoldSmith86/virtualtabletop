@@ -26,12 +26,16 @@ class BasicWidget extends Widget {
       if(face !== undefined)
         this.applyDelta(face);
     }
-    if(delta.text !== undefined)
-      setText(this.domElement, delta.text);
+    if(delta.text !== undefined) {
+      setText(this.domInner, delta.text);
+      this.domBox.setAttribute('data-text', delta.text);
+    }
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
-      if(delta[property] !== undefined)
-        this.domElement.style.cssText = mapAssetURLs(this.css());
+      if(delta[property] !== undefined) {
+        this.domInner.style.cssText = mapAssetURLs(this.cssInner());
+        break;
+      }
   }
 
   classes() {
@@ -54,20 +58,30 @@ class BasicWidget extends Widget {
       await this.flip();
   }
 
-  css() {
-    let css = super.css();
+  cssBox() {
+    let css = super.cssBox();
 
     if(this.get('color'))
       css += '; --color:' + this.get('color');
+
+    return css;
+  }
+  cssBoxProperties() {
+    const p = super.cssBoxProperties();
+    p.push('color');
+    return p;
+  }
+  cssInner() {
+    let css = super.cssInner();
+
     if(this.get('image'))
       css += '; background-image: url("' + this.getImage() + '")';
 
     return css;
   }
-
-  cssProperties() {
-    const p = super.cssProperties();
-    p.push('image', 'color', 'svgReplaces');
+  cssInnerProperties() {
+    const p = super.cssInnerProperties();
+    p.push('image', 'svgReplaces');
     return p;
   }
 
@@ -104,6 +118,6 @@ class BasicWidget extends Widget {
     const replaces = {};
     for(const key in this.get('svgReplaces'))
       replaces[key] = this.get(this.get('svgReplaces')[key]);
-    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
+    return getSVG(this.get('image'), replaces, _=>this.domInner.style.cssText = this.cssInner());
   }
 }

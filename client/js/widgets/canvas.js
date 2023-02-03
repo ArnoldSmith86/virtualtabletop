@@ -23,7 +23,7 @@ class Canvas extends Widget {
     this.addDefaults(defaults);
 
     this.passthroughMouse = true;
-    this.domElement.appendChild(this.canvas);
+    this.domInner.appendChild(this.canvas);
   }
 
   applyDeltaToDOM(delta) {

@@ -105,10 +105,10 @@ function receiveDelta(delta) {
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s) {
     if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID)) {
-      const domElement = widgets.get(widgetID).domElement;
-      const topTransform = getElementTransformRelativeTo(domElement, $('#topSurface')) || 'none';
-      $('#topSurface').appendChild(domElement);
-      domElement.style.transform = topTransform;
+      const domBox = widgets.get(widgetID).domBox;
+      const topTransform = getElementTransformRelativeTo(domBox, $('#topSurface')) || 'none';
+      $('#topSurface').appendChild(domBox);
+      domBox.style.transform = topTransform;
     }
   }
 

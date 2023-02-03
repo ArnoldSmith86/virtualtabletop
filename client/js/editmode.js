@@ -290,6 +290,7 @@ function applyEditOptionsPiece(widget) {
     widget.classes = "checkersPiece";
     widget.activeFace = 0;
     widget.faces = [{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}];
+    widget.borderRadius = "50%";
     widget.height = 73.5;
     widget.width = 73.5;
     widget.activeFace = (widget.activeFace ? 1 : 0);
@@ -770,14 +771,14 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
     w.applyInitialDelta(wi);
-    w.domElement.id = w.id;
+    w.domBox.id = w.id;
     if(!wi.parent) {
-      w.domElement.addEventListener('click', async _=>{
+      w.domBox.addEventListener('click', async _=>{
         batchStart();
         overlayDone(await onClick());
         batchEnd();
       });
-      $('#addOverlay').appendChild(w.domElement);
+      $('#addOverlay').appendChild(w.domBox);
     }
   }
   for(const wi of widgetsToAdd) {
@@ -789,7 +790,7 @@ const VTTblue = '#1f5ca6';
   
 function addPieceToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
-  w.domElement.addEventListener('click', async _=>{
+  w.domBox.addEventListener('click', async _=>{
     try {
       const result = await w.showInputOverlay({
         header: 'Choose piece color',
@@ -809,20 +810,20 @@ function addPieceToAddWidgetOverlay(w, wi) {
       overlayDone(id);
     } catch(e) {}
   });
-  w.domElement.id = w.id;
-  $('#addOverlay').appendChild(w.domElement);
+  w.domBox.id = w.id;
+  $('#addOverlay').appendChild(w.domBox);
 }
 
 function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
-  w.domElement.addEventListener('click', async _=>{
+  w.domBox.addEventListener('click', async _=>{
     const toAdd = {...wi};
     toAdd.z = getMaxZ(w.get('layer')) + 1;
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
   });
-  w.domElement.id = w.id;
-  $('#addOverlay').appendChild(w.domElement);
+  w.domBox.id = w.id;
+  $('#addOverlay').appendChild(w.domBox);
 }
 
 // Called by most routines that add widgets. If the widget add came from the JSON editor,
@@ -1369,7 +1370,7 @@ function populateAddWidgetOverlay() {
     y: 835
   };
   spinner.applyInitialDelta(spinAttrs);
-  spinner.domElement.addEventListener('click', async _=>{
+  spinner.domBox.addEventListener('click', async _=>{
     try {
       const result = await spinner.showInputOverlay({
         header: 'Choose number of spinner values',
@@ -1393,8 +1394,8 @@ function populateAddWidgetOverlay() {
       overlayDone(id);
     } catch(e) {}
   });
-  spinner.domElement.id = spinner.id;
-  $('#addOverlay').appendChild(spinner.domElement);
+  spinner.domBox.id = spinner.id;
+  $('#addOverlay').appendChild(spinner.domBox);
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',

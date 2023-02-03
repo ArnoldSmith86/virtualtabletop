@@ -30,6 +30,7 @@ export default function minifyRoom() {
         'client/css/overlays/connectionlost.css',
         'client/css/overlays/about.css',
 
+        'client/css/widgets/widget.css',
         'client/css/widgets/basicwidget.css',
         'client/css/widgets/button.css',
         'client/css/widgets/canvas.css',
