@@ -192,11 +192,17 @@ class Dice extends Widget {
         face.style = mapAssetURLs(this.cssAsText(this.getFaceProperty(content, 'faceCSS'), null, true));
 
       if(typeof content == 'object' && content !== null) {
-        if(this.getFaceProperty(content, 'pips')) {
-          face.textContent = `die_face_${this.getFaceProperty(content, 'pips')}`;
+        let pips = this.getFaceProperty(content, 'pips');
+        const text = this.getFaceProperty(content, 'text');
+        if(pips == undefined && text == undefined && content.value != undefined && content.image == undefined && this.pipSymbols()) 
+          pips = content.value;
+        if(Number.isInteger(pips) && pips >= 1 && pips <= 9) {
+          face.textContent = `die_face_${pips}`;
           face.className = 'dicePip';
-        } else {
-          face.textContent = this.getFaceProperty(content, 'text') || content.value || ''; // don't inherit value from widget because it's only defined
+        } else if(text != undefined) {
+          face.textContent = text;
+        } else if(content.value != undefined && content.image == undefined) {
+          face.textContent = content.value; // don't inherit value from widget because it's only defined
         }
         const image = this.getFaceProperty(content, 'image');
         if(image)
