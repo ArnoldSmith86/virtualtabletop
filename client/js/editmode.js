@@ -1383,7 +1383,9 @@ function populateAddWidgetOverlay() {
       const sides = result.sides;
       const toAdd = {...dice2DAttrs};
       toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
-      toAdd.faces = Array.from({length: sides}, (_, i) => sides == 6 ? i + 1 : ""+(i+1));
+      toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
+      if(sides != 6)
+        toAdd.pipSymbols = false;
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
@@ -1398,30 +1400,30 @@ function populateAddWidgetOverlay() {
     x: 930,
     y: 525,
     faces: [
-      "/assets/-1673207543_1930",
-      "/assets/-148416619_2594",
-      "/assets/57330326_2141",
-      "/assets/1350182419_2805",
-      "/assets/-1914431809_2154",
-      "/assets/-1774090084_1917",
-      "/assets/2066276706_3248",
-      "/assets/-1523019352_3017",
-      "/assets/2144816233_1914",
-      "/assets/281682383_3024",
-      "/assets/-138953411_2561",
-      "/assets/-1994484808_3667",
-      "/assets/-492269528_2800",
-      "/assets/1308996887_2124",
-      "/assets/218047296_3891",
-      "/assets/1276023485_3215",
-      "/assets/441250679_2562",
-      "/assets/-1062860099_3665",
-      "/assets/-1961475664_2766",
-      "/assets/-883353206_3871",
-      "/assets/-2100839095_3225",
-      "/assets/-1133653241_2997",
-      "/assets/1984214093_3882",
-      "/assets/1642317049_3654"
+      {value:1,image:"/assets/-1673207543_1930"},
+      {value:1,image:"/assets/-148416619_2594"},
+      {value:1,image:"/assets/57330326_2141"},
+      {value:1,image:"/assets/1350182419_2805"},
+      {value:2,image:"/assets/-1914431809_2154"},
+      {value:2,image:"/assets/-1774090084_1917"},
+      {value:2,image:"/assets/2066276706_3248"},
+      {value:2,image:"/assets/-1523019352_3017"},
+      {value:3,image:"/assets/2144816233_1914"},
+      {value:3,image:"/assets/281682383_3024"},
+      {value:3,image:"/assets/-138953411_2561"},
+      {value:3,image:"/assets/-1994484808_3667"},
+      {value:4,image:"/assets/-492269528_2800"},
+      {value:4,image:"/assets/1308996887_2124"},
+      {value:4,image:"/assets/218047296_3891"},
+      {value:4,image:"/assets/1276023485_3215"},
+      {value:5,image:"/assets/441250679_2562"},
+      {value:5,image:"/assets/-1062860099_3665"},
+      {value:5,image:"/assets/-1961475664_2766"},
+      {value:5,image:"/assets/-883353206_3871"},
+      {value:6,image:"/assets/-2100839095_3225"},
+      {value:6,image:"/assets/-1133653241_2997"},
+      {value:6,image:"/assets/1984214093_3882"},
+      {value:6,image:"/assets/1642317049_3654"}
     ],
     backgroundColor: 'transparent',
     borderColor: 'transparent',
@@ -1468,7 +1470,7 @@ function populateAddWidgetOverlay() {
     type: 'dice',
     x: 1020,
     y: 455,
-    shape3d: 'd8',
+    shape3d: true,
     faces: ['1','2','3','4','5','6','7','8']
   };
   dice3D.applyInitialDelta(dice3DAttrs);
@@ -1483,20 +1485,16 @@ function populateAddWidgetOverlay() {
             value: 8,
             variable: 'sides',
             min: 2
-          },
-          {
-            type: 'checkbox',
-            value: false,
-            variable: 'd2',
-            label: 'Use coin-flip animation'
           }
         ]
       });
       const sides = result.sides;
       const toAdd = {...dice3DAttrs};
       toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
-      toAdd.faces = Array.from({length: sides}, (_, i) => sides == 6 ? i + 1 : ""+(i+1));
-      toAdd.shape3d = result.d2 ? 'd2-flip' : false;
+      toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
+      if(sides != 6)
+        toAdd.pipSymbols = false;
+      toAdd.shape3d = sides == 2 ? 'd2-flip' : true;
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
     } catch(e) {}
