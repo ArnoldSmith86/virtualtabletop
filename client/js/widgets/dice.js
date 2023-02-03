@@ -87,10 +87,10 @@ class Dice extends Widget {
       if(typeof priorFace == 'object' && priorFace != null) {
         for(const prop in priorFace) {
           if(Object.prototype.hasOwnProperty.call(priorFace, prop))
-            diceDelta.prop = null;
+            diceDelta[prop] = null;
         }
       } else {
-        diceDelta.value = null;
+        diceDelta['value'] = null;
       }
     }
     Object.assign(diceDelta,delta);
@@ -99,7 +99,7 @@ class Dice extends Widget {
       if(typeof face == 'object' && face != null)
         Object.assign(diceDelta,face);
       else
-        diceDelta.value = face;
+        diceDelta['value'] = face;
       this.previousActiveFaceProps = face;
     }
     delta = diceDelta;
