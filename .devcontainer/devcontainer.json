@@ -1,0 +1,14 @@
+{
+    "updateContentCommand": "npm install",
+    "postStartCommand": "npm run debug",
+    "portsAttributes": {
+        "8272": {
+            "label": "virtualtabletop",
+            "onAutoForward": "notify"
+        },
+        "9229":{
+            "label": "VTT-websocket",
+            "onAutoForward": "silent"
+        }
+    }
+}
