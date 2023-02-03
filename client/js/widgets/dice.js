@@ -194,7 +194,7 @@ class Dice extends Widget {
       if(typeof content == 'object' && content !== null) {
         let pips = this.getFaceProperty(content, 'pips');
         const text = this.getFaceProperty(content, 'text');
-        if(pips == undefined && text == undefined && content.value != undefined && content.image == undefined && this.pipSymbols()) 
+        if(pips == undefined && text == undefined && content.image == undefined && this.pipSymbols()) 
           pips = content.value;
         if(Number.isInteger(pips) && pips >= 1 && pips <= 9) {
           face.textContent = `die_face_${pips}`;
@@ -203,6 +203,8 @@ class Dice extends Widget {
           face.textContent = text;
         } else if(content.value != undefined && content.image == undefined) {
           face.textContent = content.value; // don't inherit value from widget because it's only defined
+        } else if(pips != undefined) {
+          face.textContent = pips;
         }
         const image = this.getFaceProperty(content, 'image');
         if(image)
