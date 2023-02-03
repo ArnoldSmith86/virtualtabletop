@@ -81,13 +81,30 @@ class Dice extends Widget {
   }
 
   applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
-
+    const diceDelta = {};
     if(delta.activeFace !== undefined || delta.faces !== undefined) {
-      let face = this.faces()[this.get('activeFace')];
-      if(face !== undefined)
-        this.applyDeltaToDOM(face);
+      const priorFace = this.previousActiveFaceProps;
+      if(typeof priorFace == 'object' && priorFace != null) {
+        for(const prop in priorFace) {
+          if(Object.prototype.hasOwnProperty.call(priorFace, prop))
+            diceDelta.prop = null;
+        }
+      } else {
+        diceDelta.value = null;
+      }
     }
+    Object.assign(diceDelta,delta);
+    if(delta.activeFace !== undefined || delta.faces !== undefined) {
+      const face = this.faces()[this.get('activeFace')];
+      if(typeof face == 'object' && face != null)
+        Object.assign(diceDelta,face);
+      else
+        diceDelta.value = face;
+      this.previousActiveFaceProps = face;
+    }
+    delta = diceDelta;
+
+    super.applyDeltaToDOM(delta);
 
     let childNodesWereRecreated = false;
     if([ 'faces', 'shape3d', 'pipSymbols', 'faceCSS', 'image', 'text', 'pips', 'svgReplaces' ].reduce((result,p)=>(result||delta[p]!==undefined),false)) {
