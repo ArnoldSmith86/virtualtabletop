@@ -112,6 +112,23 @@ MinifyRoom().then(function(result) {
     res.send(result);
   });
 
+  router.get('/assets/:game/:name', function(req, res) {
+    const highest_allowed_directory = path.join(Config.directory('library'), "games") + "/";
+    const filepath = path.join(highest_allowed_directory, req.params.game, "assets", req.params.name);
+    // security guard against escaping the highest_allowed_directory
+    if (filepath.indexOf(highest_allowed_directory) !== 0) {
+      res.sendStatus(404);
+    }
+
+    fs.access(filepath, fs.F_OK, (err) => {
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        res.sendFile(filepath);
+      }
+    });
+  });
+
   router.get('/assets/:name', function(req, res) {
     if(!req.params.name.match(/^[0-9_-]+$/) || !Config.resolveAsset(req.params.name)) {
       res.sendStatus(404);
