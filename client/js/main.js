@@ -204,7 +204,7 @@ export async function shuffleWidgets(collection) {
   // Fisher–Yates shuffle
   const len = collection.length;
   let indexes = [...Array(len).keys()];
-  for (let i = len - 1; i > 0; i--) {
+  for (let i = len-1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i+1));
     [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
   }
