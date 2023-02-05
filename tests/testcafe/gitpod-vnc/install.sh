@@ -17,9 +17,9 @@ if [ ! -d ~/.bashrc.d ]
 then
   mkdir ~/.bashrc.d
   chmod 700 ~/.bashrc.d
-  echo "for file in ~/.bashrc.d/*.bashrc;" >> ~/.bashrc
+  echo "for file in ~/.bashrc.d/*;" >> ~/.bashrc
   echo "do" >> ~/.bashrc
-  echo "source '$file'" >> ~/.bashrc
+  echo 'source "$file"' >> ~/.bashrc
   echo "done" >> ~/.bashrc
 fi
 
