@@ -7,7 +7,7 @@
             "onAutoForward": "notify"
         },
         "9229":{
-            "label": "VTT-websocket",
+            "label": "Node.JS debugger",
             "onAutoForward": "silent"
         }
     }
