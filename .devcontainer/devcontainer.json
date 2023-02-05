@@ -1,6 +1,7 @@
 {
     "updateContentCommand": "npm install",
-    "postAttachCommand": "npm run debug",
+    "postStartCommand": "npm run debug",
+    "forwardPorts": [8272,9229,5900,6080],
     "portsAttributes": {
         "8272": {
             "label": "virtualtabletop",
