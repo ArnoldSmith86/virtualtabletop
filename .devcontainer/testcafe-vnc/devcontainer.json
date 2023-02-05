@@ -1,0 +1,23 @@
+{
+    "onCreateCommand": "tests/testcafe/gitpod-vnc/instal.sh",
+    "updateContentCommand": "npm install",
+    "postStartCommand": "npm run debug",
+    "forwardPorts": [8272,9229,5900,6080],
+    "portsAttributes": {
+        "8272": {
+            "label": "virtualtabletop",
+            "onAutoForward": "notify"
+        },
+        "9229":{
+            "label": "Node.JS debugger",
+            "onAutoForward": "silent"
+        },
+        "5900":{
+            "label": "VNC",
+            "onAutoForward": "silent"
+        },"6080":{
+            "label": "noVNC",
+            "onAutoForward": "notify"
+        }
+    }
+}
