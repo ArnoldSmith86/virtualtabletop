@@ -1,6 +1,8 @@
 {
-    "onCreateCommand": "tests/testcafe/gitpod-vnc/instal.sh",
-    "updateContentCommand": "npm install",
+    "updateContentCommand": {
+        "install virtualtabletop":"npm install",
+        "install noVNC":"/workspaces/virtualtabletop/tests/testcafe/gitpod-vnc/install.sh"
+    },
     "postStartCommand": "npm run debug",
     "forwardPorts": [8272,9229,5900,6080],
     "portsAttributes": {
