@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "25-60",
       "attribution": "<div>The room layout, card design, and card text is by LawDawg and is released to the public domain under CC0.</div><div><br></div>Icons available under Icons8 license at:<div><ul><li>htttps://icons8.com/icon/KhZMR2XAXjsg/cow</li><li>https://icons8.com/icon/VImnajNuKmtY/chicken</li><li>https://icons8.com/icon/xHeIJ8q2guQb/poop<br></li><li>https://icons8.com/icon/kftPEW36MIYa/haystack<br></li></ul><div>Images available under Pixabay license at:&nbsp; &nbsp;<p class=\"MsoNormal\"></p><ul><li>Cow: https://pixabay.com/vectors/cow-milk-farming-animal-eyes-farm-35561/<br></li><li>Daisy: https://pixabay.com/vectors/flower-yellow-daisy-nature-spring-1295436/<br></li></ul><div>The library image is available as CC BY-NC 4.0. It was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"illustrated children's book style drawing of flock of chickens.\"<br></div><p></p></div></div>",
-      "lastUpdate": 1674249075456,
+      "lastUpdate": 1675570960315,
       "showName": true,
       "skill": "",
       "description": "Move pieces around the board until running into another piece or the wall. Avoid moving over poop tokens. First player to reach goal area and remove all 6 pieces from the board wins.",
@@ -2104,7 +2104,7 @@
       "currentColor": "outlineColor"
     },
     "outlineColor": "#000000",
-    "player1": "#999999",
+    "player1": "#ff0000",
     "y": 4,
     "parent": "square2"
   },
@@ -2536,7 +2536,7 @@
         "svgReplaces"
       ]
     },
-    "player2": "#999999",
+    "player2": "#0000ff",
     "css": {
       "border": "2px solid black",
       "background": "${PROPERTY player2}",
@@ -2544,7 +2544,7 @@
       "box-shadow": "2px 2px 2px black"
     },
     "z": 1,
-    "outlineColor": "#000000",
+    "outlineColor": "#ffffff",
     "parent": "square28"
   },
   "chicken9": {
@@ -2672,7 +2672,7 @@
         "svgReplaces"
       ]
     },
-    "player3": "#999999",
+    "player3": "#008000",
     "z": 1,
     "outlineColor": "#000000",
     "parent": "square195"
@@ -2827,7 +2827,7 @@
         "svgReplaces"
       ]
     },
-    "player4": "#999999",
+    "player4": "#ffff00",
     "z": 1,
     "outlineColor": "#000000",
     "parent": "square169"
@@ -3405,26 +3405,75 @@
         "collection": "thisButton",
         "mode": "ignoreClickRoutine"
       },
-      "var outlineColor = colorContrast ${PROPERTY color} 0.6",
       {
-        "func": "SET",
-        "collection": [
-          "chicken1"
-        ],
-        "property": "player1",
-        "value": "${PROPERTY color}"
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Choose color ..."
+              },
+              {
+                "type": "checkbox",
+                "label": "Use default color? (Uncheck box to use player color).",
+                "value": true,
+                "variable": "changeColor"
+              }
+            ]
+          }
+        ]
       },
       {
-        "func": "SET",
-        "collection": [
-          "chicken1"
+        "func": "IF",
+        "operand1": "${changeColor}",
+        "operand2": false,
+        "thenRoutine": [
+          "var outlineColor = colorContrast ${PROPERTY color} 0.6",
+          {
+            "func": "SET",
+            "collection": [
+              "chicken1"
+            ],
+            "property": "player1",
+            "value": "${PROPERTY color}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "chicken1"
+            ],
+            "property": "outlineColor",
+            "value": "${outlineColor}"
+          }
         ],
-        "property": "outlineColor",
-        "value": "${outlineColor}"
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "chicken1"
+            ],
+            "property": "player1",
+            "value": "#ff0000"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "chicken1"
+            ],
+            "property": "outlineColor",
+            "value": "#000000"
+          }
+        ]
       }
     ],
     "index": 2,
-    "turn": true
+    "turn": true,
+    "movableInEdit": false
   },
   "seat2": {
     "type": "seat",
@@ -3438,26 +3487,75 @@
         "collection": "thisButton",
         "mode": "ignoreClickRoutine"
       },
-      "var outlineColor = colorContrast ${PROPERTY color} 0.6",
       {
-        "func": "SET",
-        "collection": [
-          "chicken7"
-        ],
-        "property": "player2",
-        "value": "${PROPERTY color}"
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Choose color ..."
+              },
+              {
+                "type": "checkbox",
+                "label": "Use default color? (Uncheck box to use player color).",
+                "value": true,
+                "variable": "changeColor"
+              }
+            ]
+          }
+        ]
       },
       {
-        "func": "SET",
-        "collection": [
-          "chicken7"
+        "func": "IF",
+        "operand1": "${changeColor}",
+        "operand2": false,
+        "thenRoutine": [
+          "var outlineColor = colorContrast ${PROPERTY color} 0.6",
+          {
+            "func": "SET",
+            "collection": [
+              "chicken7"
+            ],
+            "property": "player2",
+            "value": "${PROPERTY color}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "chicken7"
+            ],
+            "property": "outlineColor",
+            "value": "${outlineColor}"
+          }
         ],
-        "property": "outlineColor",
-        "value": "${outlineColor}"
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "chicken7"
+            ],
+            "property": "player2",
+            "value": "#0000ff"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "chicken7"
+            ],
+            "property": "outlineColor",
+            "value": "#ffffff"
+          }
+        ]
       }
     ],
     "index": 2,
-    "turn": true
+    "turn": true,
+    "movableInEdit": false
   },
   "c5kvC": {
     "id": "c5kvC",
@@ -3517,25 +3615,74 @@
         "collection": "thisButton",
         "mode": "ignoreClickRoutine"
       },
-      "var outlineColor = colorContrast ${PROPERTY color} 0.6",
       {
-        "func": "SET",
-        "collection": [
-          "chicken13"
-        ],
-        "property": "player3",
-        "value": "${PROPERTY color}"
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Choose color ..."
+              },
+              {
+                "type": "checkbox",
+                "label": "Use default color? (Uncheck box to use player color).",
+                "value": true,
+                "variable": "changeColor"
+              }
+            ]
+          }
+        ]
       },
       {
-        "func": "SET",
-        "collection": [
-          "chicken13"
+        "func": "IF",
+        "operand1": "${changeColor}",
+        "operand2": false,
+        "thenRoutine": [
+          "var outlineColor = colorContrast ${PROPERTY color} 0.6",
+          {
+            "func": "SET",
+            "collection": [
+              "chicken13"
+            ],
+            "property": "player3",
+            "value": "${PROPERTY color}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "chicken13"
+            ],
+            "property": "outlineColor",
+            "value": "${outlineColor}"
+          }
         ],
-        "property": "outlineColor",
-        "value": "${outlineColor}"
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "chicken13"
+            ],
+            "property": "player3",
+            "value": "#008000"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "chicken13"
+            ],
+            "property": "outlineColor",
+            "value": "#000000"
+          }
+        ]
       }
     ],
-    "index": 3
+    "index": 3,
+    "movableInEdit": false
   },
   "c6kvC": {
     "id": "c6kvC",
@@ -3595,25 +3742,74 @@
         "collection": "thisButton",
         "mode": "ignoreClickRoutine"
       },
-      "var outlineColor = colorContrast ${PROPERTY color} 0.6",
       {
-        "func": "SET",
-        "collection": [
-          "chicken19"
-        ],
-        "property": "player4",
-        "value": "${PROPERTY color}"
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Choose color ..."
+              },
+              {
+                "type": "checkbox",
+                "label": "Use default color? (Uncheck box to use player color).",
+                "value": true,
+                "variable": "changeColor"
+              }
+            ]
+          }
+        ]
       },
       {
-        "func": "SET",
-        "collection": [
-          "chicken19"
+        "func": "IF",
+        "operand1": "${changeColor}",
+        "operand2": false,
+        "thenRoutine": [
+          "var outlineColor = colorContrast ${PROPERTY color} 0.6",
+          {
+            "func": "SET",
+            "collection": [
+              "chicken19"
+            ],
+            "property": "player4",
+            "value": "${PROPERTY color}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "chicken19"
+            ],
+            "property": "outlineColor",
+            "value": "${outlineColor}"
+          }
         ],
-        "property": "outlineColor",
-        "value": "${outlineColor}"
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "chicken19"
+            ],
+            "property": "player4",
+            "value": "#ffff00"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "chicken19"
+            ],
+            "property": "outlineColor",
+            "value": "#000000"
+          }
+        ]
       }
     ],
-    "index": 4
+    "index": 4,
+    "movableInEdit": false
   },
   "c7kvC": {
     "id": "c7kvC",
