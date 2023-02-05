@@ -1,6 +1,6 @@
 {
     "updateContentCommand": "npm install",
-    "postStartCommand": "npm run debug",
+    "postAttachCommand": "npm run debug",
     "portsAttributes": {
         "8272": {
             "label": "virtualtabletop",
@@ -9,6 +9,13 @@
         "9229":{
             "label": "Node.JS debugger",
             "onAutoForward": "silent"
+        },
+        "5900":{
+            "label": "VNC",
+            "onAutoForward": "silent"
+        },"6080":{
+            "label": "noVNC",
+            "onAutoForward": "notify"
         }
     }
 }
