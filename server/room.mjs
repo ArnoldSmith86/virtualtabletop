@@ -730,7 +730,15 @@ export default class Room {
 
     const id = Math.random().toString(36).substring(3, 7);
 
-    this.state._meta.states[id] = {...this.state._meta.states[this.state._meta.activeState.linkStateID || this.state._meta.activeState.stateID]};
+    let targetState = null;
+    for(const id of [ this.state._meta.activeState.saveStateID, this.state._meta.activeState.stateID, this.state._meta.activeState.linkStateID ])
+      if(this.state._meta.states[id])
+        targetState = this.state._meta.states[id];
+
+    if(!targetState)
+      throw new Logging.UserError(404, 'Could not find base state for saving the game.');
+
+    this.state._meta.states[id] = {...targetState};
     this.state._meta.states[id].variants = [];
     this.state._meta.states[id].saveState = this.state._meta.activeState.stateID;
     this.state._meta.states[id].saveVariant = this.state._meta.activeState.variantID;
@@ -749,7 +757,7 @@ export default class Room {
     this.addState(id, 'room', null, null, id);
 
     this.state._meta.states[id].variants[0].variant = players;
-    this.state._meta.states[id].variants[0].players = this.state._meta.states[this.state._meta.activeState.stateID].variants[this.state._meta.activeState.variantID].players;
+    this.state._meta.states[id].variants[0].players = targetState.variants[this.state._meta.activeState.variantID].players;
 
     this.state._meta.activeState.saveStateID = id;
 
