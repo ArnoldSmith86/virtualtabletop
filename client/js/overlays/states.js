@@ -450,7 +450,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
         updateSaveButton.style.display = 'inline-flex';
     }
 
-    $('img', entry).src = mapAssetURLs(state.image);
+    if(state.image)
+      $('img', entry).src = mapAssetURLs(state.image);
 
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
