@@ -359,8 +359,8 @@ function sortStatesCallback(stateA, stateB) {
   if(sortBy == 'timePlayed' && stateB.timePlayed != stateA.timePlayed)
     return stateB.timePlayed - stateA.timePlayed;
   if(sortBy == 'similarName' && stateB.similarName != stateA.similarName)
-    return (stateA.similarName||stateA.name).localeCompare(stateB.similarName||stateB.name);
-  return stateA.name.localeCompare(stateB.name);
+    return String(stateA.similarName||stateA.name).localeCompare(String(stateB.similarName||stateB.name));
+  return String(stateA.name).localeCompare(String(stateB.name));
 }
 function resortStatesList() {
   for(const list of $a('#statesList .list')) {
@@ -474,7 +474,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       }
     }
 
-    for(const mode of state.mode.split(/[,;] */))
+    for(const mode of String(state.mode).split(/[,;] */))
       modeOptions[mode] = true;
 
     if(hasVariants) {
