@@ -29,6 +29,7 @@ class Dice extends Widget {
       swapTime: 500,
 
       image: null,
+      imageScale: 1,
       text: null,
       pips: null,
       svgReplaces: null,
@@ -194,7 +195,7 @@ class Dice extends Widget {
       if(typeof content == 'object' && content !== null) {
         let pips = this.getFaceProperty(content, 'pips');
         const text = this.getFaceProperty(content, 'text');
-        if(pips == undefined && text == undefined && content.image == undefined && this.pipSymbols()) 
+        if(pips == undefined && text == undefined && content.image == undefined && this.pipSymbols())
           pips = content.value;
         if(Number.isInteger(pips) && pips >= 1 && pips <= 9) {
           face.textContent = `die_face_${pips}`;
@@ -234,6 +235,7 @@ class Dice extends Widget {
     css += '; --backgroundColor:' + this.get('backgroundColor');
     css += '; --borderColor:' + (this.get('borderColor') || this.get('pipColor'));
     css += '; --size:' + Math.min(this.get('width'), this.get('height')) + 'px';
+    css += '; --imageScale:' + this.get('imageScale');
     css += '; --rollTime:' + this.get('rollTime') + 'ms';
     css += '; --swapTime:' + this.get('swapTime') + 'ms';
 
@@ -242,7 +244,7 @@ class Dice extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('pipColor', 'backgroundColor', 'borderColor', 'rollTime', 'swapTime');
+    p.push('pipColor', 'backgroundColor', 'borderColor', 'imageScale', 'rollTime', 'swapTime');
     return p;
   }
 
