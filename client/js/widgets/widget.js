@@ -221,7 +221,7 @@ export class Widget extends StateManaged {
                 if(this.classes(false).split(' ').indexOf(c) == -1)
                   this.domElement.classList.remove(c);
                 this.animateClasses.delete(c);
-              },rule.duration);        
+              },rule.duration);
             });
           }
         }
@@ -400,7 +400,7 @@ export class Widget extends StateManaged {
     if(includeTemporary)
       className += ' ' + Array.from(this.animateClasses.values()).join(' ');
 
-      return className;
+    return className;
   }
 
   classesProperties() {
