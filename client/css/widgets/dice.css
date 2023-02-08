@@ -246,7 +246,7 @@
 .d8.dice.widget,
 .d20.dice.widget {
   --faceWidth: calc(var(--faceHeight) * 1.154700538);
-  --fontSize: calc(var(--faceHeight) * .45);
+  --fontSize: calc(var(--faceHeight) * .6);
 }
 
 .triangle.dice.widget > .diceFaces,
@@ -260,8 +260,10 @@
 .d4.dice.widget > * > .diceFace,
 .d8.dice.widget > * > .diceFace,
 .d20.dice.widget > * > .diceFace {
+  background-size: 57%;
+  background-position: center bottom;
   clip-path: polygon(50% 0, 100% 100%, 0% 100%);
-  padding-top: 25%;
+  padding-top: 35%;
   border: none;
 }
 
@@ -401,7 +403,7 @@
 .d10.dice.widget {
   --faceWidth: calc(var(--size) * 0.6180339887);
   --faceHeight: calc(var(--faceWidth) * 1.268095046);
-  --fontSize: calc(var(--faceWidth) * 0.5);
+  --fontSize: calc(var(--faceHeight) * 0.45);
 }
 
 
@@ -417,6 +419,8 @@
 }
 
 .d10.dice.widget > * > .diceFace {
+  background-size: 74%;
+  background-position: 50% 90%;
   clip-path: polygon( 50% 0, 100% 80.90169944%, 50% 100%, 0 80.90169944% );
   transform-origin: 50% 0;
   transform: translateY(50%) translateZ(var(--tZ)) rotateZ(var(--rZ)) rotateX(var(--rX));
@@ -484,10 +488,12 @@
 
 .pentagon.dice.widget > * > .diceFace,
 .d12.dice.widget > * > .diceFace {
+  background-size: 83%;
+  background-position: 50% 92%;
   clip-path: polygon(50% 0, 100% 38.2%, 80.9% 100%, 19.1% 100%, 0 38.2%);
   transform-origin: 50% 55.27864045%;
   border-width: 0;
-  padding-top: 10%;
+  padding-top: 16%;
 }
 
 .pentagon.dice.widget > * > .diceFace > .polygonBorder,
@@ -515,7 +521,7 @@
 .d12.dice.widget {
   --faceWidth: calc(var(--size) * 0.726542528);
   --faceHeight: calc(var(--faceWidth) * 0.9510565163);
-  --fontSize: calc(var(--faceWidth) * 0.6);
+  --fontSize: calc(var(--faceHeight) * 0.7);
 }
 
 .d12.dice.widget > .diceFaces {
@@ -573,7 +579,6 @@
 
 .d20.dice.widget {
   --faceHeight: calc(var(--size) * 0.5729490169);
-  --fontSize: calc(var(--faceHeight) *0.4);
 }
 
 .d20.dice.widget > .diceFaces {
