@@ -9,6 +9,7 @@ test('Create game using edit mode', async t => {
   await ClientFunction(prepareClient)();
   await setName(t);
   await t
+    .resizeWindow(1200,900)
     .click('#addButton')
     .click('#add-spinner0')
     .typeText('#INPUT_\\;values', '8')
