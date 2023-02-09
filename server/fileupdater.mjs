@@ -43,20 +43,23 @@ function hasPropertyCondition(properties, condition) {
   if (condition(properties))
     return true;
   if (properties.type) {
-    if (hasPropertyCondition(properties.onPileCreation, condition))
-      return true;
-    if (typeof properties.faces == 'object') {
-      for (const face of properties.faces) {
+    for (const property of ['onPileCreation', 'onEnter', 'onLeave'])
+      if (hasPropertyCondition(properties[property], condition))
+        return true;
+    if (typeof properties.faces == 'object')
+      for (const face in properties.faces)
         if (hasPropertyCondition(properties.faces[face], condition))
           return true;
-      }
-    }
     if (properties.type == 'deck') {
       if (hasPropertyCondition(properties.cardDefaults, condition))
         return true;
       if (typeof properties.cardTypes == 'object')
         for(const cardType in properties.cardTypes)
           if (hasPropertyCondition(properties.cardTypes[cardType], condition))
+            return true;
+      if (typeof properties.faceTemplates == 'object')
+        for(const face in properties.faceTemplates)
+          if (hasPropertyCondition(properties.faceTemplates[face], condition))
             return true;
     }
   }
