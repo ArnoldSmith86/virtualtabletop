@@ -1,5 +1,8 @@
 {
     "name": "virtualtabletop-dev",
+    "onCreateCommand": ". nvm; nvm install 16; nvm use 16",
+    "updateContentCommand": "npm install",
+    "postStartCommand": "npm run debug",
     "forwardPorts": [8272,9229,6080,5900],
     "portsAttributes": {
         "8272": {
@@ -21,7 +24,5 @@
     },
     "otherPortsAttributes": {
         "onAutoForward": "ignore"
-    },
-    "updateContentCommand": "npm install",
-    "postStartCommand": "npm run debug"
+    }
 }

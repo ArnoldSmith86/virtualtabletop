@@ -14,9 +14,6 @@ ports:
   - port: 6080
     name: noVNC
     visibility: private
-  - port: 9239
-    visibility: private
-    onOpen: ignore
   - port: 5900
     name: vnc
     visibility: private

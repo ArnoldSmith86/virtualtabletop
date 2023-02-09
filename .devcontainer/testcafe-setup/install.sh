@@ -8,8 +8,8 @@ if [ ! -d /opt/novnc ]
 then
   sudo git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
     && sudo git clone --depth 1 https://github.com/novnc/websockify /opt/novnc/utils/websockify
-  sudo cp tests/testcafe/gitpod-vnc/novnc-index.html /opt/novnc/index.html
-  sudo cp tests/testcafe/gitpod-vnc/start-vnc-session.sh /usr/bin/
+  sudo cp .devcontainer/testcafe-setup/novnc-index.html /opt/novnc/index.html
+  sudo cp .devcontainer/testcafe-setup/start-vnc-session.sh /usr/bin/
   sudo chmod +x /usr/bin/start-vnc-session.sh
 fi
 
@@ -25,8 +25,7 @@ fi
 
 if [ ! -f ~/.bashrc.d/300-vnc ]
 then
-  echo "export DISPLAY=:0" >> ~/.bashrc.d/300-vnc
-  echo "[ ! -e /tmp/X0-lock ] && (/usr/bin/start-vnc-session.sh &> /tmp/display-\${DISPLAY}.log)" >> ~/.bashrc.d/300-vnc
+  cp .devcontainer/testcafe-setup/bashrc ~/.bashrc.d/300-vnc.bashrc
 fi
 
 . ~/.bashrc.d/300-vnc
