@@ -1,2 +1,2 @@
-export DISPLAY=:0
+export DISPLAY=${DISPLAY:0}
 [ ! -e /tmp/X0-lock ] && (/usr/bin/start-vnc-session.sh &> /tmp/display-\${DISPLAY}.log)
