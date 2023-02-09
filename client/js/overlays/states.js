@@ -697,8 +697,11 @@ function fillStateDetails(states, state, dom) {
         switchToActiveGame = loadNewState !== null;
       }
 
-      if(loadNewState)
+      if(loadNewState) {
+        if(!state.savePlayers)
+          triggerGameStartRoutineOnNextStateLoad = true;
         toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
+      }
       showStatesOverlay(detailsOverlay);
       if(switchToActiveGame)
         $('#activeGameButton').click();
