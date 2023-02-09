@@ -29,13 +29,13 @@ test('Create game using edit mode', async t => {
     .click('#w_9ee9B')
     .click('#w_9ee9P > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('#w_5ip4 > .handle')
+    .click('#w_b86p > .handle')
     .click('#pileOverlay > button:nth-of-type(1)')
-    .click('#w_5ip4 > .handle')
+    .click('#w_b86p > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('#w_oklb > .handle')
+    .click('#w_5ip4 > .handle')
     .click('#pileOverlay > button:nth-of-type(2)')
-    .dragToElement('#w_oklb > .handle', '#w_hand')
+    .dragToElement('#w_5ip4 > .handle', '#w_hand')
     .click('#editButton')
     .click('#w_2ng4')
     .click('#duplicateWidget')
@@ -51,13 +51,13 @@ test('Create game using edit mode', async t => {
     .click('#add-2D-chips')
     .click('#addButton')
     .click('#EmptyPoker3DSVG')
-    .click('#w_cgp8C1')
+    .click('#w_es5b')
     .click('#addButton')
     .click('#addSeat')
     .click('#addButton')
     .click('#addSeatCounter')
     .click('#addButton')
     .click('#addScoreboard')
-    .click('#w_8sfj');
-  await compareState(t, '47c4f74ff2321bc5ecc8840b29919d1f');
+    .click('#w_m06r');
+  await compareState(t, '552ceb986bf484226ffaf86ff6bb03e6');
 });
