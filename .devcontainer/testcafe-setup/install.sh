@@ -25,7 +25,7 @@ fi
 
 if [ ! -f ~/.bashrc.d/300-vnc ]
 then
-  cp .devcontainer/testcafe-setup/bashrc ~/.bashrc.d/300-vnc.bashrc
+  cp .devcontainer/testcafe-setup/bashrc ~/.bashrc.d/300-vnc
 fi
 
 . ~/.bashrc.d/300-vnc
