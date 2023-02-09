@@ -10,7 +10,7 @@ import CRC32 from 'crc-32';
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
-import MinifyRoom from './server/minify.mjs';
+import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
 import Statistics from './server/statistics.mjs';
@@ -79,7 +79,7 @@ function autosaveRooms() {
   }, 60*1000);
 }
 
-MinifyRoom().then(function(result) {
+MinifyHTML().then(function(result) {
   router.use('/', express.static(path.resolve() + '/client'));
 
   // fonts.css is specifically made available for use from card html iframe. It must
@@ -259,6 +259,16 @@ MinifyRoom().then(function(result) {
       fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
       res.send(Config.get('urlPrefix') + newLink);
     }).catch(next);
+  });
+
+  router.get('/edit.html', function(req, res, next) {
+    if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+      res.setHeader('Content-Encoding', 'gzip');
+      res.setHeader('Content-Type', 'text/html');
+      res.send(result.editorGzipped);
+    } else {
+      res.send(result.editorMin);
+    }
   });
 
   router.get('/:room', function(req, res, next) {

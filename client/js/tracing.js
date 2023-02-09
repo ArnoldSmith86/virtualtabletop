@@ -1,6 +1,5 @@
 import { onLoad } from './domhelpers.js';
 
-let tracingEnabled = false;
 let tracingActiveIndex = 0;
 let loadedTrace = null;
 
