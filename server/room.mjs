@@ -6,6 +6,7 @@ import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
+import { randomHue } from '../client/js/color.js';
 import Statistics from './statistics.mjs';
 
 export default class Room {
@@ -603,37 +604,7 @@ export default class Room {
   }
 
   newPlayerColor() {
-    let hue = 0;
-    const hues = [];
-    for(const player in this.state._meta.players) {
-      const hex = this.state._meta.players[player];
-      const r = parseInt(hex.slice(1,3), 16) / 255;
-      const g = parseInt(hex.slice(3,5), 16) / 255;
-      const b = parseInt(hex.slice(5,7), 16) / 255;
-      const max = Math.max(r,g,b);
-      const d = max - Math.min(r,g,b);
-      if(d < .25) continue;
-      switch(max) {
-        case r: hues.push((360 + (g - b) * 60 / d) % 360); break;
-        case g: hues.push(120 + (b - r) * 60 / d); break;
-        case b: hues.push(240 + (r - g) * 60 / d); break;
-      }
-    }
-    if(hues.length == 0) {
-      hue = Math.random() * 360;
-    } else {
-      const gaps = hues.sort((a,b)=>a-b).map((h, i, a) => (i != (a.length - 1)) ? a[i + 1 ] - h : a[0] + 360 - h);
-      const gap = Math.max(...gaps);
-      hue = (Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
-    }
-    const v = [240, 220, 120, 200, 240, 240];
-    const value = v[Math.floor(hue/60)] * (60 - hue%60) / 60 + v[Math.ceil(hue/60) % 6] * (hue%60) / 60;
-    const f = n => {
-      const k = (n + hue / 30) % 12;
-      const c = .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-      return Math.round(value * c).toString(16).padStart(2, '0');
-    }
-    return `#${f(0)}${f(8)}${f(4)}`;
+    return randomHue(this.state._meta.players)
   }
 
   receiveDelta(player, delta) {
@@ -670,7 +641,7 @@ export default class Room {
     }
     if(zipBody && zipBody.length) {
       await this.addState('serverMove', 'file', zipBody, 'source', false);
-      await this.loadState(null, 'serverMove', 'serverMove');
+      await this.loadState(null, 'serverMove', 0);
       this.removeState(null, 'serverMove');
     }
   }
@@ -759,7 +730,15 @@ export default class Room {
 
     const id = Math.random().toString(36).substring(3, 7);
 
-    this.state._meta.states[id] = {...this.state._meta.states[this.state._meta.activeState.linkStateID || this.state._meta.activeState.stateID]};
+    let targetState = null;
+    for(const id of [ this.state._meta.activeState.saveStateID, this.state._meta.activeState.stateID, this.state._meta.activeState.linkStateID ])
+      if(this.state._meta.states[id])
+        targetState = this.state._meta.states[id];
+
+    if(!targetState)
+      throw new Logging.UserError(404, 'Could not find base state for saving the game.');
+
+    this.state._meta.states[id] = {...targetState};
     this.state._meta.states[id].variants = [];
     this.state._meta.states[id].saveState = this.state._meta.activeState.stateID;
     this.state._meta.states[id].saveVariant = this.state._meta.activeState.variantID;
@@ -778,7 +757,7 @@ export default class Room {
     this.addState(id, 'room', null, null, id);
 
     this.state._meta.states[id].variants[0].variant = players;
-    this.state._meta.states[id].variants[0].players = this.state._meta.states[this.state._meta.activeState.stateID].variants[this.state._meta.activeState.variantID].players;
+    this.state._meta.states[id].variants[0].players = targetState.variants[this.state._meta.activeState.variantID].players;
 
     this.state._meta.activeState.saveStateID = id;
 
@@ -848,6 +827,7 @@ export default class Room {
       this.state = FileUpdater(this.state);
     this.state._meta = meta;
     this.broadcast('state', state);
+    this.sendMetaUpdate();
   }
 
   toggleStateStar(player, publicLibraryName) {
@@ -979,6 +959,8 @@ export default class Room {
       delete state._meta.info.publicLibrary;
       delete state._meta.info.publicLibraryCategory;
 
+      state._meta.info.lastUpdate = +new Date();
+
       fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
     }
 
@@ -1005,6 +987,8 @@ export default class Room {
     delete copy._meta.info.timePlayed;
     delete copy._meta.info.link;
     delete copy._meta.info.variants;
+
+    copy._meta.info.lastUpdate = +new Date();
 
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
     this.writePublicLibraryAssetsToFilesystem(stateID);

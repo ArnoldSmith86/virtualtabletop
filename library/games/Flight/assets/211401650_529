@@ -1,0 +1,11 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 550" width="550" height="550">
+	<title>nest-eggs-svg</title>
+	<style>
+		.s0 { fill: #808080 } 
+		.s1 { fill: #ffffff } 
+	</style>
+	<path id="Shape 1" class="s0" d="m275 550c-152.1 0-275-122.9-275-275 0-152.1 122.9-275 275-275 152.1 0 275 122.9 275 275 0 152.1-122.9 275-275 275z"/>
+	<path id="Layer 1" class="s1" d="m411.8 468.3l-136.4-94.3-135.8 95.2 47.4-158.9-132.4-99.7 165.7-3.9 53.9-156.8 55 156.4 165.8 2.8-131.8 100.6z"/>
+	<g id="Layer">
+	</g>
+</svg>

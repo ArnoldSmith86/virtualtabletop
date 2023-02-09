@@ -1,10 +1,11 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
-import { playerName, playerColor, activePlayers } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize } from '../geometry.js';
+import { toHex } from '../color.js';
+import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -25,6 +26,7 @@ export class Widget extends StateManaged {
     super();
     this.id = id;
     this.domElement = div;
+    this.targetTransform = '';
     this.childArray = [];
     this.propertiesUsedInCSS = [];
 
@@ -41,6 +43,7 @@ export class Widget extends StateManaged {
       borderRadius: null,
       rotation: 0,
       scale: 1,
+      dragLimit: {},
 
       typeClasses: 'widget',
       classes: '',
@@ -136,19 +139,27 @@ export class Widget extends StateManaged {
     for(const property of this.cssProperties()) {
       if(delta[property] !== undefined) {
         this.domElement.style.cssText = mapAssetURLs(this.css());
+        this.targetTransform = this.domElement.style.transform;
         return;
       }
     }
 
     for(const property of this.cssTransformProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.style.transform = this.cssTransform();
+        this.targetTransform = this.domElement.style.transform = this.cssTransform();
         return;
       }
     }
   }
 
   applyDeltaToDOM(delta) {
+    let fromTransform = null;
+    let newParent = undefined;
+    if(delta.parent !== undefined) {
+      newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
+      fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
+    }
+
     this.applyCSS(delta);
     if(delta.audio !== null)
       this.addAudio(this);
@@ -159,14 +170,20 @@ export class Widget extends StateManaged {
     if(delta.movable !== undefined)
       this.isDraggable = delta.movable;
 
-    if(delta.parent !== undefined) {
+    if(newParent !== undefined) {
       if(this.parent)
         this.parent.applyChildRemove(this);
 
-      if(delta.parent === null)
-        $('#topSurface').appendChild(this.domElement);
-      else
-        widgets.get(delta.parent).domElement.appendChild(this.domElement);
+      newParent.appendChild(this.domElement);
+      if (fromTransform) {
+        // If we changed parents, we apply a transform to the previous location
+        // to allow for a smooth transition animation.
+        this.domElement.style.transform = fromTransform;
+        // Force style recalc to commit from transform and start a transition
+        // on applying the destination transform.
+        this.domElement.offsetTop;
+        this.domElement.style.transform = this.targetTransform;
+      }
 
       if(delta.parent !== null) {
         this.parent = widgets.get(delta.parent);
@@ -203,8 +220,9 @@ export class Widget extends StateManaged {
       inheriting.applyDeltaToDOM(inheritedDelta);
     }
 
-    if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/))
-      this.showEnlarged();
+    if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
+      this.showEnlarged(null, delta);
+    }
   }
 
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
@@ -327,6 +345,15 @@ export class Widget extends StateManaged {
     if(this.get('dragging') == playerName)
       className += ' draggingSelf';
 
+    if(this.get('clickable'))
+      className += ' clickable';
+
+    if(this.get('movable') )
+      className += ' movable';
+
+    if(this.get('enlarge'))
+      className += ' enlarge';
+
     if(this.isHighlighted)
       className += ' selectedInEdit';
 
@@ -334,7 +361,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
@@ -387,10 +414,11 @@ export class Widget extends StateManaged {
   }
 
   css() {
-    this.propertiesUsedInCSS = [];
     if($(`#STYLES_${escapeID(this.id)}`))
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
-    let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
+    const usedProperties = new Set();
+    let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
+    this.propertiesUsedInCSS = Array.from(usedProperties);
 
     css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
@@ -401,12 +429,12 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssAsText(css, nested = false) {
+  cssAsText(css, usedProperties, nested = false) {
     if(typeof css == 'object') {
       let cssText = '';
       for(const key in css) {
         if(typeof css[key] == 'object')
-          return this.cssToStylesheet(css, nested);
+          return this.cssToStylesheet(css, usedProperties, nested);
         cssText += `; ${key}: ${css[key]}`;
       }
       return cssText;
@@ -441,15 +469,16 @@ export class Widget extends StateManaged {
     return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
   }
 
-  cssReplaceProperties(css) {
+  cssReplaceProperties(css, usedProperties) {
     for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
       css = css.replace(match[0], this.get(match[1]));
-      this.propertiesUsedInCSS.push(match[1]);
+      if (usedProperties)
+        usedProperties.add(match[1]);
     }
     return css;
   }
 
-  cssToStylesheet(css, nested = false) {
+  cssToStylesheet(css, usedProperties, nested = false) {
     let styleString = '';
     for(const key in css) {
       let selector = key;
@@ -461,7 +490,7 @@ export class Widget extends StateManaged {
         if(selector.charAt(0) != '@')
           selector = `#w_${escapeID(this.id)}${selector}`;
       }
-      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }\n`;
+      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], usedProperties, true), usedProperties))} }\n`;
     }
 
     if(nested)
@@ -472,7 +501,7 @@ export class Widget extends StateManaged {
     style.appendChild(document.createTextNode(styleString));
     $('head').appendChild(style);
 
-    return this.cssAsText(css.inline || '');
+    return this.cssAsText(css.inline || '', usedProperties);
   }
 
   cssTransform() {
@@ -629,13 +658,21 @@ export class Widget extends StateManaged {
     let variables = initialVariables;
     let collections = initialCollections;
     if(!byReference) {
-      variables = Object.assign({}, initialVariables, {
+      const playerSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')==playerName);
+      variables = Object.assign({
+        activeColors,
+        mouseCoords,
+        seatIndex: playerSeats.length ? playerSeats[0].get('index') : null,
+        seatID: playerSeats.length ? playerSeats[0].get('id') : null
+      }, initialVariables, {
         playerName,
         playerColor,
         activePlayers,
         thisID : this.get('id')
       });
-      collections = Object.assign({}, initialCollections, {
+      collections = Object.assign({
+        playerSeats
+      }, initialCollections, {
         thisButton : [this]
       });
     }
@@ -921,16 +958,28 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'COUNT') {
-        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
+        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT', owner: null });
         let collection;
         let theItem;
         if(a.holder !== undefined) {
-          variables[a.variable] = 0;
           theItem = `${a.holder}`;
-          for (const h of asArray(a.holder))
-            variables[a.variable] += this.isValidID(h, problems) ? widgets.get(h).children().length : 0;
+          variables[a.variable] = 0;
+          for (const h of asArray(a.holder)) {
+            if(this.isValidID(h,problems)) {
+              const children = widgets.get(h).children();
+              if(a.owner === null) {
+                variables[a.variable] += children.length;
+              } else {
+                variables[a.variable] += children.filter(widget => widget.get('owner') === a.owner).length;
+              }
+            }
+          }
         } else if(collection = getCollection(a.collection)) {
-          variables[a.variable] = collections[collection].length;
+          if(a.owner === null) {
+            variables[a.variable] = collections[collection].length;
+          } else {
+            variables[a.variable] = collections[collection].filter(widget => widget.get('owner') === a.owner).length;
+          }
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
@@ -1237,7 +1286,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
             for(const c of source.children().slice(0, a.count || 999999).reverse()) {
@@ -1245,6 +1294,8 @@ export class Widget extends StateManaged {
                 c.flip(a.face);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
+              if(a.resetOwner)
+                await c.set('owner', null);
               if(a.snapToGrid)
                 await c.snapToGrid();
               await c.set('parent', null);
@@ -1303,6 +1354,49 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
+        }
+      }
+
+      if(a.func == 'SCORE') {
+        setDefaults(a, { mode: 'set', property: 'score', seats: null, round: null, value: null});
+        if([ 'set', 'inc', 'dec' ].indexOf(a.mode) == -1) {
+          problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
+          a.mode = 'set'
+        }
+
+        if(a.value === null)
+          a.value = a.mode=='set' ? 0 : 1;
+        if(isNaN(parseFloat(a.value))) {
+          problems.push(`value ${a.value} must be a number, assuming 0.`);
+          a.value = 0;
+        }
+        a.value = parseFloat(a.value);
+
+        let round = a.round ? parseInt(a.round) : null;
+        if(round !== null && (isNaN(parseInt(round)) || round < 1)) {
+          problems.push(`round ${a.round} must be null or a positive integer, assuming null.`);
+          round = null;
+        }
+
+        const seats = widgetFilter(w => w.get('type')=='seat' && (a.seats===null || asArray(a.seats).includes(w.get('id'))));
+
+        const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
+        for(let i=0; i < seats.length; i++) {
+          let newScore = [...asArray(seats[i].get(a.property) || 0)];
+          const seatRound = a.round === null ? newScore.length + 1 : a.round;
+          if(a.round > newScore.length)
+            newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
+          newScore[seatRound-1] = compute(relation, null, newScore[seatRound-1] || 0, a.value);
+          await seats[i].set(a.property, newScore);
+        }
+
+        if(jeRoutineLogging) {
+          const phrase = round===null ? 'new round' : `round ${a.round}`;
+          const seatIds = seats.map(w => w.get('id'));
+          if(a.mode == 'inc' || a.mode == 'dec')
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase} in seats ${JSON.stringify(seatIds)} by ${a.value}`)
+          else
+            jeLoggingRoutineOperationSummary(`set ${phrase} in seats ${JSON.stringify(seatIds)} to ${a.value}`)
         }
       }
 
@@ -1371,8 +1465,6 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
-        } else if (readOnlyProperties.has(a.property)) {
-          problems.push(`Tried setting read-only property ${a.property}.`);
         } else if (collection = getCollection(a.collection)) {
           if (a.property == 'id') {
             for(const oldWidget of collections[collection]) {
@@ -1393,6 +1485,11 @@ export class Widget extends StateManaged {
             }
           } else {
             for(const w of collections[collection]) {
+              if (w.readOnlyProperties().has(a.property)) {
+                problems.push(`Tried setting read-only property ${a.property}.`);
+                continue;
+              }
+
               if(a.relation == '+' && w.get(String(a.property)) == null)
                 a.relation = '=';
               if(a.relation == '+' && a.value == null)
@@ -1594,9 +1691,10 @@ export class Widget extends StateManaged {
 
     batchEnd();
 
-    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string' && variables.playerColor.match(/^#[0-9a-fA-F]{6}$/)) {
-      toServer('playerColor', { player: playerName, color: variables.playerColor });
-      playerColor = variables.playerColor;
+    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string') {
+      const hexColor = toHex(variables.playerColor);
+      toServer('playerColor', { player: playerName, color: hexColor });
+      playerColor = hexColor;
     }
     if(variables.playerName != playerName && typeof variables.playerName == 'string') {
       toServer('rename', { oldName: playerName, newName: variables.playerName });
@@ -1741,7 +1839,7 @@ export class Widget extends StateManaged {
 
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
-      this.currentParent = widgets.get(this.get('parent'));
+      this.currentParent = widgets.get(this.get('_ancestor'));
       this.hoverTarget = null;
 
       this.disablePileUpdateAfterParentChange = true;
@@ -1755,9 +1853,25 @@ export class Widget extends StateManaged {
 
   async move(coordGlobal, localAnchor) {
     const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
-    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
-    const newX = Math.round(coordParent.x + offset.x);
-    const newY = Math.round(coordParent.y + offset.y);
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), this.coordParentFromCoordLocal({x: 0, y: 0}));
+    let newX = Math.round(coordParent.x + offset.x);
+    let newY = Math.round(coordParent.y + offset.y);
+
+    //Keeps widget's top left corner within coordinates set by dragLimit object
+    const limit = this.get('dragLimit');
+
+    if (limit.minX !== undefined) {
+      newX = Math.max(limit.minX, newX);
+    }
+    if (limit.maxX !== undefined) {
+      newX = Math.min(limit.maxX, newX);
+    }
+    if (limit.minY !== undefined) {
+      newY = Math.max(limit.minY, newY);
+    }
+    if (limit.maxY !== undefined) {
+      newY = Math.min(limit.maxY, newY);
+    }
 
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX, newY });
@@ -1887,6 +2001,10 @@ export class Widget extends StateManaged {
     }
   }
 
+  readOnlyProperties() {
+    return readOnlyProperties;
+  }
+
   async rotate(degrees, mode) {
     if(!mode || mode == 'add')
       await this.set('rotation', (this.get('rotation') + degrees) % 360);
@@ -1934,17 +2052,31 @@ export class Widget extends StateManaged {
     this.domElement.classList.remove('selected');
   }
 
-  showEnlarged(event) {
+  showEnlarged(event, delta) {
     if(this.get('enlarge')) {
       const id = this.get('id');
       const e = $('#enlarged');
+      // If there is no delta passed in, we must update the enlarged widget. Otherwise,
+      // we only need to update it if the delta results in a visual change.
+      let needsContentUpdate = !delta;
+      if (delta) {
+        for (let prop in delta) {
+          if (prop != 'x' && prop != 'y' && prop != 'z' && prop != 'dragging') {
+            needsContentUpdate = true;
+            break;
+          }
+        }
+      }
       const boundBox = this.domElement.getBoundingClientRect();
       let cssText = this.domElement.style.cssText;
       cssText += `;--originalLeft:${boundBox.left}px`;
       cssText += `;--originalTop:${boundBox.top}px`;
       cssText += `;--originalRight:${boundBox.right}px`;
       cssText += `;--originalBottom:${boundBox.bottom}px`;
-      e.innerHTML = this.domElement.innerHTML;
+      // Only update the enlarged element if there is a non-position delta.
+      if (needsContentUpdate)
+        e.innerHTML = this.domElement.innerHTML;
+
       e.className = this.domElement.className;
       e.dataset.id = id;
       for(const clone of e.querySelectorAll('canvas')) {
@@ -2041,17 +2173,20 @@ export class Widget extends StateManaged {
       let closestDistance = 999999;
 
       for(const grid of this.get('grid')) {
+        const alignX = (grid.alignX || 0) * this.get('width');
+        const alignY = (grid.alignY || 0) * this.get('height');
+
         if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
           continue;
         if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
           continue;
 
-        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
-        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
+        const snapX = x + alignX + grid.x/2 - mod(x + alignX + grid.x/2 - (grid.offsetX || 0), grid.x);
+        const snapY = y + alignY + grid.y/2 - mod(y + alignY + grid.y/2 - (grid.offsetY || 0), grid.y);
 
         const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
         if(distance < closestDistance) {
-          closest = [ snapX, snapY, grid ];
+          closest = [ snapX - alignX, snapY - alignY, grid ];
           closestDistance = distance;
         }
       }
@@ -2059,7 +2194,7 @@ export class Widget extends StateManaged {
       if(closest) {
         this.setPosition(closest[0], closest[1], this.get('z'));
         for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY' ].indexOf(p) == -1)
             await this.set(p, closest[2][p]);
       }
     }

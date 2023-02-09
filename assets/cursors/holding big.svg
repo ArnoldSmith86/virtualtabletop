@@ -1,0 +1,11 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="18" height="18">
+	<title>zoom in big</title>
+	<style>
+		.s0 { fill: #000000;stroke: #000000;stroke-width: 0 } 
+		.s1 { fill: #ffffff;stroke: #000000;stroke-width: 0 } 
+	</style>
+	<g id="holding">
+		<path id="Shape 5" class="s0" d="m3 7v1h1v1h1v-7h1v-1h2v-1h3v1h3v1h1v2h2v1h1v9h-1v2h-1v1h-1v1h-9v-1h-1v-1h-1v-2h-1v-2h-1v-1h-1v-1h-1v-3z"/>
+		<path id="Shape 6" class="s1" d="m3 8v1h1v1h1v-1h1v-7h2v5h1v-6h2v7h1v-6h2v7h1v-4h2v9h-1v2h-1v1h-9v-1h-1v-2h-1v-2h-1v-1h-1v-1h-1v-2z"/>
+	</g>
+</svg>

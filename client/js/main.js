@@ -92,8 +92,9 @@ export function showOverlay(id, forced) {
 
   if(id) {
     const style = $(`#${id}`).style;
-    style.display = !forced && style.display === 'flex' ? 'none' : 'flex';
-    overlayActive = style.display === 'flex';
+    const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
+    style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
+    overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
 
@@ -120,7 +121,9 @@ function checkURLproperties(connected) {
     try {
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
-        if(playerParams) {
+        if(location.hash == '#tutorials') {
+          $('#filterByType').value = 'Tutorials';
+        } else if(playerParams) {
           urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
         } else {
           urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
@@ -161,7 +164,7 @@ function checkURLproperties(connected) {
   } else {
 
     if(urlProperties.color)
-      toServer('playerColor', { player: playerName, color: urlProperties.color });
+      toServer('playerColor', { player: playerName, color: toHex(urlProperties.color) });
 
   }
 }
@@ -200,11 +203,15 @@ function setScale() {
 }
 
 export async function shuffleWidgets(collection) {
-  const shuffle = collection.map(widget => {
-    return {widget, rand:Math.random()};
-  }).sort((a, b)=> a.rand - b.rand);
-  for(let i of shuffle) {
-    await i.widget.bringToFront();
+  // Fisher–Yates shuffle
+  const len = collection.length;
+  let indexes = [...Array(len).keys()];
+  for (let i = len-1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i+1));
+    [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+  }
+  for (let i of indexes) {
+    await collection[i].bringToFront();
   }
 }
 
@@ -333,9 +340,9 @@ onLoad(function() {
 
   on('.toolbarTab', 'click', function(e) {
     if(e.currentTarget.classList.contains('active')) {
-      if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display == 'flex')
+      if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
         showStatesOverlay('statesOverlay');
-      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display == 'flex')
+      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display != 'none')
         showOverlay();
       e.stopImmediatePropagation();
       return;

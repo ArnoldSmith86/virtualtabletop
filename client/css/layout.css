@@ -141,6 +141,7 @@ body.aspectTooGood.hiddenToolbar {
       body.wideToolbar #toolbar > img {
         display: block;
         margin: 10px 20px 3px 20px;
+        height: 52px;
       }
       body.wideToolbar #toolbar .divider:nth-child(2) {
         display: block;
@@ -936,6 +937,7 @@ button:disabled:hover {
   gap: 8px;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
+  margin: 8px;
 }
 
 .ui-button::before {

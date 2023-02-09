@@ -1,5 +1,6 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID } from './domhelpers.js';
+import { getElementTransformRelativeTo } from './geometry.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
 
@@ -66,6 +67,8 @@ export function addWidget(widget, instance) {
     w = new Label(id);
   } else if(widget.type == 'pile') {
     w = new Pile(id);
+  } else if(widget.type == 'scoreboard') {
+    w = new Scoreboard(id);
   } else if(widget.type == 'seat') {
     w = new Seat(id);
   } else if(widget.type == 'spinner') {
@@ -130,9 +133,14 @@ export function batchEnd() {
 
 function receiveDelta(delta) {
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
-  for(const widgetID in delta.s)
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID))
-      $('#topSurface').appendChild(widgets.get(widgetID).domElement);
+  for(const widgetID in delta.s) {
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID)) {
+      const domElement = widgets.get(widgetID).domElement;
+      const topTransform = getElementTransformRelativeTo(domElement, $('#topSurface')) || 'none';
+      $('#topSurface').appendChild(domElement);
+      domElement.style.transform = topTransform;
+    }
+  }
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
