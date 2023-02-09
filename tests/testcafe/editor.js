@@ -5,11 +5,13 @@ import { compareState, prepareClient, setName, setRoomState, setupTestEnvironmen
 setupTestEnvironment();
 
 test('Create game using edit mode', async t => {
+  const [width,height] = await t.eval(() => [window.innerWidth,window.innerHeight]);
+  if(width<=960||height<=520)
+    t.resizeWindow(width>960?width:980,height>520?height:540);
   await setRoomState();
   await ClientFunction(prepareClient)();
   await setName(t);
   await t
-    .resizeWindow(1200,900)
     .click('#addButton')
     .click('#add-spinner0')
     .typeText('#INPUT_\\;values', '8')
@@ -60,5 +62,6 @@ test('Create game using edit mode', async t => {
     .click('#addButton')
     .click('#addScoreboard')
     .click('#w_m06r');
+  t.resizeWindow(width,height);
   await compareState(t, '552ceb986bf484226ffaf86ff6bb03e6');
 });
