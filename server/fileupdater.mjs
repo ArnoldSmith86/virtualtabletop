@@ -57,10 +57,6 @@ function hasPropertyCondition(properties, condition) {
         for(const cardType in properties.cardTypes)
           if (hasPropertyCondition(properties.cardTypes[cardType], condition))
             return true;
-      if (typeof properties.faceTemplates == 'object')
-        for(const face in properties.faceTemplates)
-          if (hasPropertyCondition(properties.faceTemplates[face], condition))
-            return true;
     }
   }
   return false;
