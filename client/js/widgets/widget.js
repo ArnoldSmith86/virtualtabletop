@@ -157,7 +157,9 @@ export class Widget extends StateManaged {
     let newParent = undefined;
     if(delta.parent !== undefined) {
       newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
-      fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
+      // If the widget wasn't newly created, transition from its previous location.
+      if (delta.id === undefined)
+        fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
     }
 
     this.applyCSS(delta);
