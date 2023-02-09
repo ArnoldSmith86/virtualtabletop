@@ -1,7 +1,7 @@
 {
     "name": "virtualtabletop-gitpod",
     "image": "gitpod/workspace-full-vnc",
-    "onCreateCommand": ". nvm; nvm install 16; nvm use 16",
+    "onCreateCommand": ". ${NVM_DIR}/nvm.sh; nvm install 16; nvm use 16",
     "updateContentCommand": "npm install",
     "postStartCommand": "npm run debug",
     "forwardPorts": [8272,9229,6080,5900],

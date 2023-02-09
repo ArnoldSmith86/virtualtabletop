@@ -1,8 +1,8 @@
 {
     "name": "virtualtabletop-vnc",
     "onCreateCommand": {
-        "setup node": ". nvm; nvm install 16; nvm use 16",
-        "setup testcafe": ".devcontainer/testcafe-setup/install.sh"
+        "set node.js version": ". ${NVM_DIR}/nvm.sh; nvm install 16; nvm use 16",
+        "setup testcafe": ". .devcontainer/testcafe-setup/install.sh"
     },
     "updateContentCommand": "npm install",
     "postStartCommand": "npm run debug",
