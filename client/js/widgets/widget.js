@@ -1308,6 +1308,82 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'QUICKRESET') {
+        // FIXME: need to press the button twice
+        setDefaults(a, { property: 'resetProperties', decks: [] });
+        const decks = {};
+        for(const deck of asArray(a.decks))
+          decks[deck] = true;
+
+        const offsetX = {};
+        const offsetY = {};
+        const cards = {};
+        const piles = {};
+        const parents = {};
+        for(const [ id, w ] of widgets) {
+          if(w.state.type == 'card') {
+            if(decks[w.state.deck])
+              cards[id] = w.state;
+          } else if(w.state.type == 'pile') {
+            piles[w.state.parent] = id;
+            piles[id] = true;
+          } else if(w.state.type == 'deck') {
+            parents[id] = w.state.parent;
+            if(w.state.parent) {
+              const parentState = widgets.get(w.state.parent).state;
+              offsetX[id] = parentState.dropOffsetX || 4;
+              offsetY[id] = parentState.dropOffsetY || 4;
+            } else {
+              offsetX[id] = 0;
+              offsetY[id] = 0;
+            }
+          } else if(w.state[a.property]) {
+            const wDelta = {};
+            let wIsEmpty = true;
+            for(const i in w.state[a.property]) {
+              if(w.state[a.property][i] != w.state[i]) {
+                wDelta[i] = w.state[a.property][i];
+                wIsEmpty = false;
+              }
+            }
+            if(!wIsEmpty) {
+              delta.s[id] = wDelta;
+              deltaChanged = true;
+            }
+          }
+        }
+
+        for(const cID in cards) {
+          const cState = cards[cID];
+
+          if(parents[cState.deck] && !piles[parents[cState.deck]]) {
+            const newPileID = piles[parents[cState.deck]] = generateUniqueWidgetID();
+            delta.s[newPileID] = {
+              id: newPileID,
+              type: 'pile',
+              parent: parents[cState.deck],
+              width: widgets.get(cID).get('width'),
+              height: widgets.get(cID).get('height')
+            };
+          }
+
+          if(!delta.s[cID]) {
+            delta.s[cID] = {
+              z: Math.floor(Math.random()*10000)
+            };
+          }
+
+          if(cState.parent != piles[parents[cState.deck]]) {
+            if(cState.parent && piles[cState.parent])
+              delta.s[cState.parent] = null;
+            delta.s[cID].parent = piles[parents[cState.deck]];
+          }
+          for(const property of [ 'activeFace', 'rotation', 'x', 'y' ])
+            if(cState[property])
+              delta.s[cID][property] = null;
+        }
+      }
+
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
         if(this.isValidID(a.holder, problems)) {
