@@ -38,7 +38,7 @@ function computeGlobalProperties(state, v) {
 }
 
 function hasPropertyCondition(properties, condition) {
-  if (typeof properties != 'object')
+  if (properties == null || typeof properties != 'object')
     return false;
   if (condition(properties))
     return true;
@@ -56,6 +56,11 @@ function hasPropertyCondition(properties, condition) {
       if (typeof properties.cardTypes == 'object')
         for(const cardType in properties.cardTypes)
           if (hasPropertyCondition(properties.cardTypes[cardType], condition))
+            return true;
+      if(typeof properties.faceTemplates == 'object')
+        for(const face in properties.faceTemplates)
+          if (typeof properties.faceTemplates[face] == 'object' &&
+              hasPropertyCondition(properties.faceTemplates[face].properties, condition))
             return true;
     }
   }
