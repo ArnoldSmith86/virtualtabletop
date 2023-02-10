@@ -349,9 +349,9 @@ function v9NumericStringSort(routine) {
 
 function v10GridOffset(properties) {
   const grid = properties.grid;
-  if (!grid || typeof grid != 'object' || !grid.length)
+  if (!grid || typeof grid != 'object')
     return;
-  for (let i = 0; i < grid.length; ++i) {
+  for (let i in grid) {
     if (!grid[i] || typeof grid[i] != 'object')
       continue;
     const xAdjustment = -grid[i].x*0.5;
