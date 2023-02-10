@@ -55,6 +55,11 @@ export function getPointOnPlane(transform, x, y) {
   return new DOMPoint(p0.x + dir.x * t, p0.y + dir.y * t, p0.z + dir.z * t);
 }
 
+export function getTransformOrigin(elem) {
+  const lengths = parseLengths(getComputedStyle(elem).transformOrigin);
+  return {x: lengths[0], y: lengths[1]};
+}
+
 export function getElementTransform(elem) {
   let transform = new DOMMatrix();
   const computedStyle = getComputedStyle(elem);
