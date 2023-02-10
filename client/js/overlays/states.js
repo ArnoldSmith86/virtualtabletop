@@ -700,7 +700,7 @@ function fillStateDetails(states, state, dom) {
       if(loadNewState) {
         if(!state.savePlayers)
           triggerGameStartRoutineOnNextStateLoad = true;
-        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
+        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id, delayForGameStartRoutine: !state.savePlayers });
       }
       showStatesOverlay(detailsOverlay);
       if(switchToActiveGame)
