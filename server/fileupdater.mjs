@@ -352,6 +352,8 @@ function v10GridOffset(properties) {
   if (!grid)
     return;
   for (let i = 0; i < grid.length; ++i) {
+    if (typeof grid[i] != 'object')
+      continue;
     const xAdjustment = -grid[i].x*0.5;
     const yAdjustment = -grid[i].y*0.5;
     grid[i].offsetX = (grid[i].offsetX || 0) + xAdjustment;
