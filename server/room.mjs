@@ -629,6 +629,25 @@ export default class Room {
 
   receiveInvalidDelta(player, delta, widgetID, property) {
     Logging.log(`WARNING: received conflicting delta data for property ${property} of widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
+
+    let serverDelta = {s: {}};
+    let changed = false;
+    // Remove shadow from actively dragged widget in the case of a conflict.
+    for (let widgetID in this.state) {
+      if (this.state[widgetID].dropShadowOwner == player.name) {
+        const clonedFrom = this.state[widgetID].clonedFrom;
+        serverDelta.s[widgetID] = null;
+        if (clonedFrom) {
+          serverDelta.s[clonedFrom] = {
+            dropShadowWidget: null
+          };
+        }
+        changed = true;
+      }
+    }
+    if (changed)
+      this.receiveDelta(player, serverDelta);
+
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
   }
