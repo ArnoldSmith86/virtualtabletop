@@ -141,6 +141,7 @@ body.aspectTooGood.hiddenToolbar {
       body.wideToolbar #toolbar > img {
         display: block;
         margin: 10px 20px 3px 20px;
+        height: 52px;
       }
       body.wideToolbar #toolbar .divider:nth-child(2) {
         display: block;
