@@ -349,7 +349,7 @@ function v9NumericStringSort(routine) {
 
 function v10GridOffset(properties) {
   const grid = properties.grid;
-  if (!grid)
+  if (!grid || typeof grid != 'object' || !grid.length)
     return;
   for (let i = 0; i < grid.length; ++i) {
     if (!grid[i] || typeof grid[i] != 'object')
