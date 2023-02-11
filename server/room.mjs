@@ -901,7 +901,7 @@ export default class Room {
   }
 
   unload() {
-    if(this.state && this.state._meta) {
+    if(this.state && this.state._meta && this.state._meta.states && typeof this.state._meta.states == 'object' && this.state._meta.starred && typeof this.state._meta.starred == 'object') {
       const nonPLgames = Object.keys(this.state._meta.states).filter(i=>!i.match(/^PL:/));
       if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
         Logging.log(`unloading room ${this.id}`);
