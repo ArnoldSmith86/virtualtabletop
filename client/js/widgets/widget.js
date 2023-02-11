@@ -833,7 +833,7 @@ export class Widget extends StateManaged {
           a.routine = a.routine[0]
         }
         if (typeof a.routine != 'string') {
-          problems.push('Routine paramater must be a string');
+          problems.push('Routine parameter must be a string');
         } else if (!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
         } else if(this.isValidID(a.widget, problems)) {
