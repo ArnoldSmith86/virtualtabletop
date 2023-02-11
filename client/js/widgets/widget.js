@@ -1138,13 +1138,20 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'GET') {
-        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
+        const propertyPath = asArray(a.property || 'id');
+        const mainProperty = String(propertyPath.shift());
+
+        setDefaults(a, { variable: mainProperty, collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         const collection = getCollection(a.collection);
         if(collection) {
-          let c = collections[collection];
+
+          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>w.get(mainProperty))));
+          for(const subkey of propertyPath)
+            c = c.map(v=>v && typeof v == 'object' && v[subkey] || null);
+
           if (a.skipMissing)
-            c = c.filter(w=>w.get(String(a.property)) !== null && w.get(String(a.property)) !== undefined);
-          c = JSON.parse(JSON.stringify(c.map(w=>w.get(String(a.property)))));
+            c = c.filter(v=>v !== null && v !== undefined);
+
           if(c.length) {
             switch(a.aggregation) {
             case 'first':
@@ -1181,7 +1188,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${a.property}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
         }
       }
 
