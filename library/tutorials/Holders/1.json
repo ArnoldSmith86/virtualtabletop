@@ -860,12 +860,21 @@
       "year": "2020",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Offset: Basic",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1638938699000
+      "lastUpdate": 1672957367300,
+      "id": "k020",
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Offset: Basic",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "5gtd": {
