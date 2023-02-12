@@ -437,10 +437,9 @@ function v12HandDropShadow(properties) {
 }
 
 function v13fixedParentDefaults(properties) {
-  if (properties.type == 'card' || properties.type == 'pile' || properties.type == null){
-    if (properties.fixedParent=true)
-      properties.fixedParent=true;
-  } else if (properties.fixedParent=false){
-    properties.fixedparent=false;
+  if (!(properties.type == 'card' || properties.type == 'pile' || properties.type == null)){
+    if (typeof properties.fixedParent === 'undefined' && (properties.movable == true)){
+    properties.fixedParent = false;
+    }
   }
 }
