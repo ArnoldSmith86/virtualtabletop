@@ -1053,7 +1053,6 @@
         "type": "card",
         "property": "parent",
         "relation": "in",
-        "collection": "gridGroup",
         "value": "${PROPERTY gridGroup}"
       },
       {
