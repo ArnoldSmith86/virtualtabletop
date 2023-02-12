@@ -7,7 +7,7 @@ setupTestEnvironment();
 test('Create game using edit mode', async t => {
   const [width,height] = await t.eval(() => [window.innerWidth,window.innerHeight]);
   if(width<=960||height<=520)
-    t.resizeWindow(width>960?width:980,height>520?height:540);
+    await t.resizeWindow(width>960?width:980,height>520?height:540);
   await setRoomState();
   await ClientFunction(prepareClient)();
   await setName(t);
@@ -62,6 +62,6 @@ test('Create game using edit mode', async t => {
     .click('#addButton')
     .click('#addScoreboard')
     .click('#w_m06r');
-  t.resizeWindow(width,height);
+  await t.resizeWindow(width,height);
   await compareState(t, '90763067f59a7d65ca134cdc9266858c');
 });
