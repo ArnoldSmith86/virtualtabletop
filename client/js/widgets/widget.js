@@ -7,6 +7,8 @@ import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
+let callStackDepth = 0;
+const maxCallStackDepth = 100;
 const readOnlyProperties = new Set([
   '_absoluteRotation',
   '_absoluteScale',
@@ -840,34 +842,39 @@ export class Widget extends StateManaged {
           if(!Array.isArray(widgets.get(a.widget).get(a.routine))) {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
-            // make sure everything is passed in a way that the variables and collections of this routine won't be changed
-            const inheritVariables = Object.assign(JSON.parse(JSON.stringify(variables)), a.arguments);
-            const inheritCollections = {};
-            for(const c in collections)
-              inheritCollections[c] = [ ...collections[c] ];
-            inheritCollections['caller'] = [ this ];
-            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
-            variables[a.variable] = result.variable;
-            collections[a.collection] = result.collection;
-
-            if(jeRoutineLogging) {
-              const theWidget = a.widget != this.get('id') ? `in ${a.widget}` : '';
-              if (a.return) {
-                let returnCollection = result.collection.map(w=>w.get('id')).join(',');
-                if(!result.collection.length || result.collection.length >= 5)
-                  returnCollection = `(${result.collection.length} widgets)`;
-                jeLoggingRoutineOperationSummary(
-                  `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
-                  `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
-              } else {
-                jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
+            if (callStackDepth > maxCallStackDepth) {
+              problems.push(`Call stack depth exceeded ${maxCallStackDepth}. Stopped executiion to prevent infinit loop.`);
+            } else {
+              callStackDepth++;
+              const inheritVariables = Object.assign(JSON.parse(JSON.stringify(variables)), a.arguments);
+              const inheritCollections = {};
+              for(const c in collections)
+                inheritCollections[c] = [ ...collections[c] ];
+              inheritCollections['caller'] = [ this ];
+              const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
+              variables[a.variable] = result.variable;
+              collections[a.collection] = result.collection;
+        
+              if(jeRoutineLogging) {
+                const theWidget = a.widget != this.get('id') ? `in ${a.widget}` : '';
+                if (a.return) {
+                  let returnCollection = result.collection.map(w=>w.get('id')).join(',');
+                  if(!result.collection.length || result.collection.length >= 5)
+                    returnCollection = `(${result.collection.length} widgets)`;
+                  jeLoggingRoutineOperationSummary(
+                    `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
+                    `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
+                } else {
+                  jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
+                }
               }
+              callStackDepth--;
             }
           }
         }
         if (!a.return)
           abortRoutine = true;
-      }
+      }      
 
       if(a.func == 'CANVAS') {
         setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: "#1F5CA6" });
