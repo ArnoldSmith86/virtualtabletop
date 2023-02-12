@@ -1,4 +1,4 @@
-export const VERSION = 12;
+export const VERSION = 13;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -95,6 +95,7 @@ function updateProperties(properties, v, globalProperties) {
   v<8 && v8HoverInheritVisibleForSeat(properties);
   v<10 && v10GridOffset(properties);
   v<12 && globalProperties.v12DropShadowAllowed && v12HandDropShadow(properties);
+  v<13 && v13fixedParentDefaults(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -432,5 +433,14 @@ function v11OwnerMOVEXY(routine) {
 function v12HandDropShadow(properties) {
   if (properties.type == 'holder' && properties.childrenPerOwner && !properties.enterRoutine && !properties.leaveRoutine && !properties.changeRoutine) {
     properties.dropShadow = true;
+  }
+}
+
+function v13fixedParentDefaults(properties) {
+  if (properties.type == 'card' || properties.type == 'pile' || properties.type == null){
+    if (properties.fixedParent=true)
+      properties.fixedParent=true;
+  } else if (properties.fixedParent=false){
+    properties.fixedparent=false;
   }
 }
