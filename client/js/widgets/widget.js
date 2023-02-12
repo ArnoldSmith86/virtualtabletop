@@ -607,7 +607,7 @@ export class Widget extends StateManaged {
       reject(result);
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+  async evaluateRoutine(property, initialVariables, initialCollections, callstack = [], byReference) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -698,9 +698,10 @@ export class Widget extends StateManaged {
         await callback(a);
     }
 
-    if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
+    if(callstack.length == 0 && (this.isBeingRemoved || this.inRemovalQueue))
       return;
-
+    
+    callstack.push({widget:this.get('id'),routine:property});
     batchStart();
 
     let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
@@ -835,18 +836,26 @@ export class Widget extends StateManaged {
         if(!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
         } else if(this.isValidID(a.widget, problems)) {
-          if(Array.isArray(a.widget))
+          if(Array.isArray(a.widget)) {
+            if(a.widget.length > 1)
+              problems.push('Widget parameter must refer to only one widget, first widget called');
             a.widget = a.widget[0];
+          }
+          const recursion = callstack.filter(call=>(call.widget==a.widget&&call.routine==a.routine)).length;
           if(!Array.isArray(widgets.get(a.widget).get(a.routine))) {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
+          } else if (recursion > 99) {
+            problems.push(`Recursive call to ${a.routine} in ${a.widget} exceeds limits, canceling call`)
           } else {
+            if(recursion)
+              problems.push(`Warning: Recursive call to ${a.routine} in ${a.widget} detected. ${recursion}/100`)
             // make sure everything is passed in a way that the variables and collections of this routine won't be changed
             const inheritVariables = Object.assign(JSON.parse(JSON.stringify(variables)), a.arguments);
             const inheritCollections = {};
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
+            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, callstack);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
 
@@ -1070,7 +1079,7 @@ export class Widget extends StateManaged {
           }
           if(jeRoutineLogging)
             jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
-          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, callstack, true);
           if(jeRoutineLogging)
             jeLoggingRoutineOperationEnd([], variables, collections, false);
           for(const add in addVariables) {
@@ -1197,7 +1206,7 @@ export class Widget extends StateManaged {
             condition = compute(a.relation, null, a.operand1, a.operand2);
           const branch = condition ? 'thenRoutine' : 'elseRoutine';
           if(Array.isArray(a[branch]))
-            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+            await this.evaluateRoutine(a[branch], variables, collections, callstack, true);
           if(jeRoutineLogging) {
             if (a.condition === undefined)
               jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
@@ -1718,6 +1727,7 @@ export class Widget extends StateManaged {
     if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
 
     batchEnd();
+    callstack.pop();
 
     if(variables.playerColor != playerColor && typeof variables.playerColor == 'string') {
       const hexColor = toHex(variables.playerColor);
