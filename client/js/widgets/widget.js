@@ -60,7 +60,7 @@ export class Widget extends StateManaged {
       ignoreOnLeave: false,
 
       parent: null,
-      fixedParent: false,
+      fixedParent: true,
       inheritFrom: null,
       owner: null,
       dragging: null,

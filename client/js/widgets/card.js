@@ -3,6 +3,7 @@ class Card extends Widget {
     super(id);
 
     this.addDefaults({
+      fixedParent: false,
       width: 103,
       height: 160,
       typeClasses: 'widget card',
