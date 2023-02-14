@@ -490,7 +490,7 @@ onLoad(async function() {
     toServer, batchStart, batchEnd, sendPropertyUpdate,
     addWidgetLocal, removeWidgetLocal,
     generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset,
-    roomID, deltaID, widgets, widgetFilter,
+    roomID, getDeltaID, widgets, widgetFilter,
     formField,
     Widget, BasicWidget, Button, Canvas, Card, Deck, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
     toHex

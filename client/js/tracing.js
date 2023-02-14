@@ -16,7 +16,7 @@ function enableTracing() {
 }
 
 function sendTraceEvent(type, payload) {
-  toServer('trace', { time: +new Date, deltaID, type, payload });
+  toServer('trace', { time: +new Date, deltaID: getDeltaID(), type, payload });
 }
 
 function sendUserTraceEvent() {

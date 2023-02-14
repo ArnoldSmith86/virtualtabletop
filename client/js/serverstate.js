@@ -131,6 +131,10 @@ export function batchEnd() {
   sendDelta();
 }
 
+function getDeltaID() {
+  return deltaID;
+}
+
 function receiveDelta(delta) {
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s) {
