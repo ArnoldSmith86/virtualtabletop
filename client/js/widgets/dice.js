@@ -41,7 +41,7 @@ class Dice extends Widget {
   }
 
   activeFace() {
-    return mod(Math.round(this.get('activeFace')), this.faceElements.length) || 0;
+    return mod(Math.round(this.get('activeFace',{ignoreFaceProperties:true})), this.faceElements.length) || 0;
   }
 
   animate() {
@@ -92,21 +92,20 @@ class Dice extends Widget {
             diceDelta[prop] = null;
         }
       } else {
-        diceDelta['value'] = null;
+        diceDelta.value = null;
       }
     }
     Object.assign(diceDelta,delta);
     if(delta.activeFace !== undefined || delta.faces !== undefined) {
-      const face = this.faces()[this.get('activeFace')];
+      const face = this.faces()[this.activeFace()];
       if(typeof face == 'object' && face != null)
         Object.assign(diceDelta,face);
       else
-        diceDelta['value'] = face;
+        diceDelta.value = face;
       this.previousActiveFaceProps = face;
     }
-    delta = diceDelta;
 
-    super.applyDeltaToDOM(delta);
+    super.applyDeltaToDOM(diceDelta);
 
     let childNodesWereRecreated = false;
     if([ 'faces', 'shape3d', 'pipSymbols', 'faceCSS', 'image', 'text', 'pips', 'svgReplaces' ].reduce((result,p)=>(result||delta[p]!==undefined),false)) {
@@ -126,11 +125,11 @@ class Dice extends Widget {
     }
 
     if(delta.rollCount !== undefined) {
-      this.rollHash = funhash(this.get('id')+this.get('rollCount'));
+      this.rollHash = funhash(this.get('id',{ignoreFaceProperties:true})+this.get('rollCount',{ignoreFaceProperties:true}));
       this.animate();
     }
 
-    if(delta.rollCount !== undefined || delta.activeFace !== undefined || childNodesWereRecreated)
+    if(diceDelta.rollCount !== undefined || delta.activeFace !== undefined || childNodesWereRecreated)
       this.threeDfaces();
 
     if(delta.activeFace !== undefined || childNodesWereRecreated) {
@@ -162,7 +161,7 @@ class Dice extends Widget {
   async click(mode='respect') {
     if(!await super.click(mode)) {
       await this.set('activeFace', Math.floor(Math.random()*this.faces().length));
-      await this.set('rollCount', this.get('rollCount')+1);
+      await this.set('rollCount', this.get('rollCount',{ignoreFaceProperties:true})+1);
     }
   }
 
@@ -256,24 +255,24 @@ class Dice extends Widget {
     return Array.isArray(f) ? f : [];
   }
 
-  getDefaultValue(property) {
-    if(property == 'value') {
-      const o = this.getValueMap();
-      if(Array.isArray(o) && o.length > this.activeFace())
-        return o[this.activeFace()];
+  get(property, options) {
+    if(typeof options == 'object' && options != null && !options.ignoreFaceProperties) {
+      if(property == 'value') {
+        const o = this.getValueMap();
+        if(Array.isArray(o) && o.length > this.activeFace())
+          return o[this.activeFace()];
+      }
+      const faceProps = this.get('faces')[this.activeFace()];
+      if(typeof faceProps == 'object' && Object.hasOwnProperty(faceProps, property))
+        return faceProps[property];
     }
-    if(property == 'faces' || property == 'activeFace' || !this.faces()[this.get('activeFace')])
-      return super.getDefaultValue(property);
-    const d = this.faces()[this.get('activeFace')][property];
-    if(d !== undefined)
-      return d;
-    return super.getDefaultValue(property);
+    return super.get(property);
   }
 
   getFaceProperty(face, property) {
     if(typeof face == 'object' && face !== null && typeof face[property] != 'undefined')
       return face[property];
-    return this.get(property);
+    return this.get(property, {ignoreFaceProperties:true});
   }
 
   getValueMap() {
