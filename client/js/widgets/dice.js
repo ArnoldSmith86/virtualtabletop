@@ -4,7 +4,6 @@ class Dice extends Widget {
 
     this.facesElement = document.createElement('div');
     this.facesElement.className = 'diceFaces';
-    this.faceElements = [];
 
     this.domElement.appendChild(this.facesElement);
 
@@ -42,7 +41,9 @@ class Dice extends Widget {
   }
 
   activeFace() {
-    return Math.round(this.get('activeFace',{ignoreFaceProperties:true})) % this.faceElements.length || 0;
+    const af = Math.round(this.get('activeFace',{ignoreFaceProperties:true})) || 0;
+    const fc = this.faces().length;
+    return (af % fc + fc) % fc;
   }
 
   animate() {
@@ -250,7 +251,7 @@ class Dice extends Widget {
   }
 
   faces() {
-    const f = this.get('faces');
+    const f = this.get('faces',{ignoreFaceProperties:true});
     if(typeof f == 'string')
       return f.split('');
     return Array.isArray(f) ? f : [];
