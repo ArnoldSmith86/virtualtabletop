@@ -2373,7 +2373,7 @@ function jeInitTree() {
   });
 }
 
-function jeToggle() {
+export function jeToggle() {
   if(jeEnabled === null) {
     jeInitTree();
     jeAddCommands();
@@ -2498,10 +2498,6 @@ function jeInitEventListeners() {
   });
 
   window.addEventListener('keydown', async function(e) {
-    if(e.ctrlKey && e.key == 'j') {
-      e.preventDefault();
-      jeToggle();
-    }
     if(!jeEnabled)
       return;
 

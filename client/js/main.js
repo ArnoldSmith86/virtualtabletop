@@ -9,7 +9,7 @@ let muted = false;
 let unmuteVol = 30;
 let optionsHidden = true;
 
-let edit = false;
+let edit = null;
 let jeEnabled = null;
 let jeZoomOut = false;
 let jeRoutineLogging = false;
@@ -341,7 +341,38 @@ function getSVG(url, replaces, callback) {
   return '';
 }
 
-function toggleEditMode() {
+async function loadEditMode() {
+  if(edit === null) {
+    edit = false;
+    Object.assign(window, {
+      $, $a, on, onMessage, showOverlay,
+      setJEenabled, setJEroutineLogging, setJEzoomOut, toggleEditMode, getEdit,
+      toServer, batchStart, batchEnd, sendPropertyUpdate,
+      addWidgetLocal, removeWidgetLocal,
+      generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset,
+      roomID, getDeltaID, widgets, widgetFilter,
+      formField,
+      Widget, BasicWidget, Button, Canvas, Card, Deck, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
+      toHex
+    });
+    $('body').classList.add('loadingEditMode');
+    const editmode = await import('./edit.js');
+    $('body').classList.remove('loadingEditMode');
+    Object.assign(window, editmode);
+    initializeEditMode();
+  }
+}
+
+window.addEventListener('keydown', async function(e) {
+  if(e.ctrlKey && e.key == 'j') {
+    e.preventDefault();
+    await loadEditMode();
+    jeToggle();
+  }
+});
+
+async function toggleEditMode() {
+  await loadEditMode();
   if(edit)
     $('body').classList.remove('edit');
   else
@@ -350,7 +381,7 @@ function toggleEditMode() {
   showOverlay();
 }
 
-onLoad(async function() {
+onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
@@ -380,9 +411,12 @@ onLoad(async function() {
     showOverlay();
   });
 
-  on('.toolbarButton', 'click', function(e) {
+  on('.toolbarButton', 'click', async function(e) {
     const overlay = e.currentTarget.dataset.overlay;
     if(overlay) {
+      if(overlay == 'addOverlay')
+        await loadEditMode();
+
       showOverlay(overlay);
       if(overlay == 'statesOverlay')
         updateFilterOverflow();
@@ -483,21 +517,6 @@ onLoad(async function() {
       checkURLproperties(true);
     checkedOnce = true;
   });
-
-  Object.assign(window, {
-    $, $a, on, onMessage, showOverlay,
-    setJEenabled, setJEroutineLogging, setJEzoomOut, toggleEditMode, getEdit,
-    toServer, batchStart, batchEnd, sendPropertyUpdate,
-    addWidgetLocal, removeWidgetLocal,
-    generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset,
-    roomID, getDeltaID, widgets, widgetFilter,
-    formField,
-    Widget, BasicWidget, Button, Canvas, Card, Deck, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
-    toHex
-  });
-  const editmode = await import('./edit.js');
-  Object.assign(window, editmode);
-  initializeEditMode();
 });
 
 function getEdit() {

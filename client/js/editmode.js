@@ -1668,7 +1668,7 @@ export function initializeEditMode() {
   style.appendChild(document.createTextNode(' //*** CSS ***// '));
   $('head').appendChild(style);
 
-  for(const overlay of $a('#editorOverlays'))
+  for(const overlay of $a('#editorOverlays > *'))
     $('#roomArea').append(overlay);
 
   // This now adds an empty basic widget
