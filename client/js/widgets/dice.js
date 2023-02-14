@@ -74,8 +74,9 @@ class Dice extends Widget {
     const swap = this.get('swapTime');
     const roll = this.get('rollTime');
     rules.unshift(
-      { property: 'activeFace', duration: typeof swap == 'number'? swap : 1000},
+      { property: 'activeFace', duration: typeof swap == 'number'? swap + 50 : 1000},
       { property: 'rollCount', duration: typeof roll == 'number'? roll + 50 : 1000},
+      { property: 'activeFace', className: 'animateBegin', duration: 50 },
       { property: 'rollCount', className: 'animateBegin', duration: 50 }
     );
     return rules;
@@ -313,23 +314,69 @@ class Dice extends Widget {
     const s3d = this.threeDshape();
     if(!s3d)
       return;
-    const calculateFacesRotation = (elem) => {
-      if(!(elem instanceof HTMLElement))
+    function rotationMatrix(elem) {
+      if(!elem instanceof HTMLElement)
+        return new DOMMatrix();
+      const R = new DOMMatrix(getComputedStyle(elem).transform);
+      // assumes no scale or skew transformations
+      R.m14 = 0; R.m24 = 0; R.m34 = 0; R.m41 = 0; R.m42 = 0; R.m43 = 0; R.m44 = 1;
+      return R
+    }
+    function axisAngle(matrix) {
+      if(!matrix instanceof DOMMatrix)
         return '';
-      const m = new DOMMatrix(getComputedStyle(elem).transform).invertSelf();
-      m.m41 = 0; m.m42 = 0; m.m43 = 0; m.m44 = 1; m.m14 = 0; m.m24 = 0; m.m34 = 0;
-      return m.toString()
+      const M = matrix.toFloat64Array();
+      const Q = [M.slice(0,3),M.slice(4,7),M.slice(8,11)];
+      let l = Q.map(v=>Math.sqrt(v.reduce((p,c)=>p+c**2,0)));
+      if(l.indexOf(0) != -1)
+        return '';
+      Q.forEach((v,i)=>v.forEach(c=>c/l[i]));
+      //compute quarternion
+      const t = Q[0][0] + Q[1][1] + Q[2][2];
+      let r, s, w, x, y, z;
+      if(1+t > .001) {
+        r = Math.sqrt(1 + t);
+        s = .5 / r;
+        w = .5 * r;
+        x = (Q[1][2] - Q[2][1]) * s;
+        y = (Q[2][0] - Q[0][2]) * s;
+        z = (Q[0][1] - Q[1][0]) * s;
+      } else if (Q[0][0] > Q[1][1] && Q[0][0] > Q[2][2]) {
+        r = Math.sqrt(1 + Q[0][0] - Q[1][1] - Q[2][2]);
+        s = .5 / r;
+        x = .5 * r;
+        y = (Q[1][0] + Q[0][1]) * s;
+        z = (Q[2][0] + Q[0][2]) * s;
+        w = (Q[1][2] - Q[2][1]) * s;
+      } else if (Q[1][1] > Q[2][2]) {
+        r = Math.sqrt(1 - Q[0][0] + Q[1][1] - Q[2][2]);
+        s = .5 / r;
+        x = (Q[0][1] + Q[1][0]) * s;
+        y = .5 * r;
+        z = (Q[2][1] + Q[1][2]) * s;
+        w = (Q[2][0] - Q[0][2]) * s;
+      } else {
+        r = Math.sqrt(1 - Q[0][0] - Q[1][1] + Q[2][2]);
+        s = .5 / r;
+        x = (Q[0][2] + Q[2][0]) * s;
+        y = (Q[1][2] + Q[2][1]) * s;
+        z = .5 * r;
+        w = (Q[0][1] - Q[1][0]) * s;
+      }
+      if(w<0)
+        w = -w; x=-x; y=-y; z=-z; 
+      return `rotate3d(${x},${y},${z},${Math.acos(w)*-2}rad)`;
     }
     const hash = this.rollHash? this.rollHash : 0;
-    const af = this.activeFace();
-    const pf = this.previousActiveFace;
-    const curRot = calculateFacesRotation(this.faceElements[af]);
-    const preRot = calculateFacesRotation(this.faceElements[(pf!=undefined)?pf:af]);
+    const af = rotationMatrix(this.faceElements[this.activeFace()]);
+    const pf = rotationMatrix(this.faceElements[this.previousActiveFace]);
+    const curRot = axisAngle(af.inverse());
+    const transRot = axisAngle(af.multiply(pf.inverse()));
     const theda = Math.PI * (hash >> 12)/2**19;
     const z = ((hash << 20) >> 20)/2**11;
     const r = Math.sqrt(1 - z**2);
     const rollRot = `rotate3d(${r*Math.cos(theda)}, ${r*Math.sin(theda)}, ${z}, 3turn)`;
-    this.facesElement.style = `--curRot: ${curRot}; --preRot: ${preRot}; --rollRot: ${rollRot}`
+    this.facesElement.style = `--curRot: ${curRot}; --transRot: ${transRot}; --rollRot: ${rollRot}`
 
     const n = s3d.sides;
     const fc = this.faceElements.length;

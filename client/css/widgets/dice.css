@@ -163,8 +163,13 @@
   transition: transform var(--rollTime);
 }
 
-.shape3D.animateBegin.dice.widget > .diceFaces {
-  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--preRot) var(--rollRot);
+.animate_activeFace.animateBegin.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--curRot) var(--transRot);
+  transition: none;
+}
+
+.animate_rollCount.animateBegin.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--curRot) var(--transRot) var(--rollRot);
   transition: none;
 }
 
@@ -201,8 +206,8 @@
   --edgeColor: var(--backgroundColor);
 }
 
-.d2-flip.animateBegin.dice.widget > .diceFaces {
-  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--preRot) rotateX(calc(var(--changeX) * 4turn ));
+.d2-flip.animate_rollCount.animateBegin.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--curRot) var(--transRot) rotateX(calc(var(--changeX) * 4turn ));
 }
 
 .d2-flip.dice.widget > * > .diceFace {
@@ -413,8 +418,13 @@
   --translateY: 3%;
 }
 
-.d10.animateBegin.dice.widget > .diceFaces {
-  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(15deg) var(--preRot) var(--rollRot);
+.d10.animate_activeFace.animateBegin.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(15deg) var(--curRot) var(--transRot);
+  transition: none;
+}
+
+.d10.animate_rollcount.animateBegin.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(15deg) var(--curRot) var(--transRot) var(--rollRot);
   transition: none;
 }
 
