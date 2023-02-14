@@ -1875,6 +1875,7 @@ onLoad(function() {
       dropOffsetY: 14,
       stackOffsetX: 40,
       childrenPerOwner: true,
+      dropShadow: true,
       x: 50,
       y: 820,
       width: 1500,
