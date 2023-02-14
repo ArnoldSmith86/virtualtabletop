@@ -261,13 +261,13 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
-  router.get('/edit.html', function(req, res, next) {
+  router.get('/edit.js', function(req, res, next) {
+    res.setHeader('Content-Type', 'text/javascript');
     if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
       res.setHeader('Content-Encoding', 'gzip');
-      res.setHeader('Content-Type', 'text/html');
-      res.send(result.editorGzipped);
+      res.send(result.editorJSgzipped);
     } else {
-      res.send(result.editorMin);
+      res.send(result.editorJSmin);
     }
   });
 
@@ -277,9 +277,9 @@ MinifyHTML().then(function(result) {
         res.send('Invalid characters in room ID.');
         return;
       }
+      res.setHeader('Content-Type', 'text/html');
       if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
         res.setHeader('Content-Encoding', 'gzip');
-        res.setHeader('Content-Type', 'text/html');
         res.send(result.gzipped);
       } else {
         res.send(result.min);

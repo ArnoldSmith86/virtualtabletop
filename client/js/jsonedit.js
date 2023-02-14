@@ -1,3 +1,5 @@
+let jeEnabled = null;
+let jeRoutineLogging = false;
 let jeZoomOut = false;
 let jeMode = null;
 let jeWidget = null;
@@ -85,6 +87,7 @@ const jeCommands = [
     classes: _=>jeZoomOut ? 'onState' : '',
     call: async function() {
       jeZoomOut = !jeZoomOut;
+      setJEzoomOut(jeZoomOut);
       if(jeZoomOut) {
         $('body').classList.add('jeZoomOut');
       } else {
@@ -229,7 +232,7 @@ const jeCommands = [
     name: 'Edit mode',
     icon: '[edit]',
     forceKey: 'F',
-    classes: _=>edit ? 'onState' : '',
+    classes: _=>getEdit() ? 'onState' : '',
     call: async function() {
       toggleEditMode();
     }
@@ -1372,7 +1375,7 @@ async function jeApplyChangesMulti() {
   }
 }
 
-function jeApplyDelta(delta) {
+export function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
@@ -1475,7 +1478,7 @@ function jeCommandOptions() {
   });
 }
 
-async function jeClick(widget, e) {
+export async function jeClick(widget, e) {
   if(e.ctrlKey) {
     jeSelectWidget(widget, false, e.shiftKey || e.which == 3 || e.button == 2);
   } else {
@@ -1680,29 +1683,6 @@ function jeColorize() {
 }
 
 /* Displaying and controlling tree subpane of edit area */
-
-const editPanel = $('#jeEditArea');
-
-let treeNodes = {};
-let mouse_reference;
-let resizer_reference;
-
-function resize(e){
-  const height = Math.min(editPanel.offsetHeight - 75, Math.max(0, resizer_reference - mouse_reference + e.y));
-  editPanel.style.setProperty('--treeHeight', height + "px");
-}
-
-editPanel.addEventListener("mousedown", function(e){
-  if(e.target == $('#jeResize')) {
-    mouse_reference = e.y;
-    resizer_reference = $('#jeTree').offsetHeight;
-    document.addEventListener("mousemove", resize, false);
-  }
-});
-
-document.addEventListener("mouseup", function(){
-  document.removeEventListener("mousemove", resize, false);
-});
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
@@ -1967,7 +1947,7 @@ function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
-function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
+export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
@@ -1985,7 +1965,7 @@ function jeLoggingRoutineStart(widget, property, initialVariables, initialCollec
   ++jeLoggingDepth;
 }
 
-function jeLoggingRoutineEnd(variables, collections) {
+export function jeLoggingRoutineEnd(variables, collections) {
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
@@ -2020,7 +2000,7 @@ function jeLoggingRoutineEnd(variables, collections) {
   }
 }
 
-function jeLoggingRoutineOperationStart(original, applied) {
+export function jeLoggingRoutineOperationStart(original, applied) {
   let fcn;
   if (typeof applied == 'string')
     if (applied.substring(0,3) == 'var')
@@ -2035,7 +2015,7 @@ function jeLoggingRoutineOperationStart(original, applied) {
   jeLoggingHTML = '';
 }
 
-function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped) {
+export function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped) {
   const collDisplay = {};
   for(const name in collections)
     collDisplay[name] = collections[name].map(w=>`${html(w.get('id'))} (${html(w.get('type')||'basic')})`);
@@ -2100,7 +2080,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
   jeRoutineResult = '';
 }
 
-function jeLoggingRoutineOperationSummary(definition, result) {
+export function jeLoggingRoutineOperationSummary(definition, result) {
   jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span>
      ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
 }
@@ -2368,15 +2348,44 @@ function jeShowCommands() {
     jeCommandOptions();
 }
 
+let editPanel = null;
+let treeNodes = {};
+let mouse_reference;
+let resizer_reference;
+
+function jeInitTree() {
+  editPanel = $('#jeEditArea');
+
+  function resize(e){
+    const height = Math.min(editPanel.offsetHeight - 75, Math.max(0, resizer_reference - mouse_reference + e.y));
+    editPanel.style.setProperty('--treeHeight', height + "px");
+  }
+
+  editPanel.addEventListener("mousedown", function(e){
+    if(e.target == $('#jeResize')) {
+      mouse_reference = e.y;
+      resizer_reference = $('#jeTree').offsetHeight;
+      document.addEventListener("mousemove", resize, false);
+    }
+  });
+
+  document.addEventListener("mouseup", function(){
+    document.removeEventListener("mousemove", resize, false);
+  });
+}
+
 function jeToggle() {
   if(jeEnabled === null) {
+    jeInitTree();
     jeAddCommands();
     jeEmpty();
     $('#jeText').addEventListener('input', jeColorize);
     $('#jeText').onscroll = e=>$('#jeTextHighlight').scrollTop = e.target.scrollTop;
   }
   jeEnabled = !jeEnabled;
+  setJEenabled(jeEnabled);
   jeRoutineLogging = jeEnabled;
+  setJEroutineLogging(jeEnabled);
   jeLoggingHTML = '';
   if(jeEnabled) {
     $('#activeGameButton').click();
@@ -2416,170 +2425,171 @@ const clickButton = async function(event) {
 }
 
 let widgetCoordCache = null;
-window.addEventListener('mousemove', function(e) {
-  if(!jeEnabled)
-    return;
-  const x = jeState.mouseX = Math.floor((e.clientX - roomRectangle.left) / scale);
-  const y = jeState.mouseY = Math.floor((e.clientY - roomRectangle.top ) / scale);
 
-  if(!jeZoomOut && x > 1600 || jeMouseButtonIsDown)
-    return;
+function jeInitEventListeners() {
+  window.addEventListener('mousemove', function(e) {
+    if(!jeEnabled)
+      return;
+    const x = jeState.mouseX = Math.floor((e.clientX - getRoomRectangle().left) / getScale());
+    const y = jeState.mouseY = Math.floor((e.clientY - getRoomRectangle().top ) / getScale());
 
-  if(!widgetCoordCache) {
-    widgetCoordCache = [];
-    for(const widget of widgets.values()) {
-      const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
-      coords.r = coords.x + widget.get('width');
-      coords.b = coords.y + widget.get('height');
-      coords.widget = widget;
-      widgetCoordCache.push(coords);
+    if(!jeZoomOut && x > 1600 || jeMouseButtonIsDown)
+      return;
+
+    if(!widgetCoordCache) {
+      widgetCoordCache = [];
+      for(const widget of widgets.values()) {
+        const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
+        coords.r = coords.x + widget.get('width');
+        coords.b = coords.y + widget.get('height');
+        coords.widget = widget;
+        widgetCoordCache.push(coords);
+      }
     }
-  }
 
-  const hoveredWidgets = widgetCoordCache.filter(c=>x>=c.x && x<=c.r && y>=c.y && y<=c.b).map(c=>c.widget);
+    const hoveredWidgets = widgetCoordCache.filter(c=>x>=c.x && x<=c.r && y>=c.y && y<=c.b).map(c=>c.widget);
 
-  hoveredWidgets.sort(function(w1,w2) {
-    const hiddenParent =  function(widget) {
-      return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
-    };
+    hoveredWidgets.sort(function(w1,w2) {
+      const hiddenParent =  function(widget) {
+        return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
+      };
 
-    const w1card = w1.get('type') == 'card';
-    const w2card = w2.get('type') == 'card';
-    const w1foreign = !w1card && hiddenParent(w1);
-    const w2foreign =  !w2card && hiddenParent(w2);
-    const w1normal = !w1foreign && !w1card;
-    const w2normal = !w2foreign && !w2card;
-    return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
-      jeFKeyOrderDescending*(w2.calculateZ() - w1.calculateZ()) :
-      ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
+      const w1card = w1.get('type') == 'card';
+      const w2card = w2.get('type') == 'card';
+      const w1foreign = !w1card && hiddenParent(w1);
+      const w2foreign =  !w2card && hiddenParent(w2);
+      const w1normal = !w1foreign && !w1card;
+      const w2normal = !w2foreign && !w2card;
+      return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
+        jeFKeyOrderDescending*(w2.calculateZ() - w1.calculateZ()) :
+        ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
+    });
+
+    for(let i=1; i<=11; ++i) {
+      const hotkey = i>=4 ? i+1 : i;
+      if(hoveredWidgets[i-1]) {
+        jeWidgetLayers[hotkey] = hoveredWidgets[i-1];
+        var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ndeck: ${hoveredWidgets[i-1].get('deck')}` : "";
+        var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
+        $(`#jeWidgetLayer${hotkey}`).textContent = `F${hotkey}: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${deck} ${cardType}`;
+      } else {
+        delete jeWidgetLayers[hotkey];
+        $(`#jeWidgetLayer${hotkey}`).textContent = '';
+      }
+    }
+
+    if((getRoomRectangle().left <= e.clientX && e.clientX <= getRoomRectangle().right && getRoomRectangle().top <= e.clientY && e.clientY <= getRoomRectangle().bottom) || jeZoomOut) {
+      $('#jeMouseCoords').innerHTML = "(" + jeState.mouseX + ", " + jeState.mouseY + ")";
+    } else {
+      $('#jeMouseCoords').innerHTML = ""
+    }
   });
 
-  for(let i=1; i<=11; ++i) {
-    const hotkey = i>=4 ? i+1 : i;
-    if(hoveredWidgets[i-1]) {
-      jeWidgetLayers[hotkey] = hoveredWidgets[i-1];
-      var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ndeck: ${hoveredWidgets[i-1].get('deck')}` : "";
-      var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
-      $(`#jeWidgetLayer${hotkey}`).textContent = `F${hotkey}: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${deck} ${cardType}`;
-    } else {
-      delete jeWidgetLayers[hotkey];
-      $(`#jeWidgetLayer${hotkey}`).textContent = '';
+  window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
+  window.addEventListener('mouseup', async function(e) {
+    if(!jeEnabled)
+      return;
+    jeRoutineResetOnNextLog = true;
+    jeMouseButtonIsDown = false;
+
+    if(e.target == $('#jeText') && jeContext != 'macro') // Click in widget text, fix context
+      jeGetContext();
+  });
+
+  window.addEventListener('keydown', async function(e) {
+    if(e.ctrlKey && e.key == 'j') {
+      e.preventDefault();
+      jeToggle();
     }
-  }
+    if(!jeEnabled)
+      return;
 
-  if((roomRectangle.left <= e.clientX && e.clientX <= roomRectangle.right && roomRectangle.top <= e.clientY && e.clientY <= roomRectangle.bottom) || jeZoomOut) {
-    $('#jeMouseCoords').innerHTML = "(" + jeState.mouseX + ", " + jeState.mouseY + ")";
-  } else {
-    $('#jeMouseCoords').innerHTML = ""
-  }
-});
+    if(e.key == 'Control')
+      jeState.ctrl = true;
+    if(e.key == 'Shift')
+      jeState.shift = true;
 
-window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
-window.addEventListener('mouseup', async function(e) {
-  if(!jeEnabled)
-    return;
-  jeRoutineResetOnNextLog = true;
-  jeMouseButtonIsDown = false;
+    if(e.ctrlKey) {
+      if(e.key == ' ' && jeMode == 'widget') {
+        const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
+        if(locationLine) {
+          const pos = jeGetEditorContent().split('\n').slice(0, locationLine[1]-1).join('\n').length + +locationLine[2];
+          jeSelect(pos, pos, true);
+        }
 
-  if(e.target == $('#jeText') && jeContext != 'macro') // Click in widget text, fix context
-    jeGetContext();
-});
+        const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
+        if(locationPostion)
+          jeSelect(+locationPostion[1], +locationPostion[1], true);
+      // } else {
+      //   for(const command of jeCommands) {
+      //     if(command.currentKey == e.key) {
+      //       e.preventDefault();
+      //       try {
+      //         jeCommandError = null;
+      //         await jeCallCommand(command);
+      //       } catch(e) {
+      //         jeCommandError = e;
+      //       }
+      //     }
+      //   }
+      }
+    }
 
-onLoad(function() {
+    const functionKey = e.key.match(/F([0-9]+)/);
+    if(functionKey && jeWidgetLayers[+functionKey[1]]) {
+      e.preventDefault();
+      if(e.ctrlKey) {
+        let id = jeWidgetLayers[+functionKey[1]].get('id');
+        if(jeContext[jeContext.length-1] == '"null"')
+          id = `"${id}"`;
+        jePasteText(id, true);
+      } else {
+        jeSelectWidget(jeWidgetLayers[+functionKey[1]], false, e.shiftKey);
+      }
+    }
+  });
+
   on('#jeText', 'paste', function(e) {
     const paste = (e.clipboardData || window.clipboardData).getData('text');
     jePasteText(paste, false);
     e.preventDefault();
   });
-});
 
-window.addEventListener('keydown', async function(e) {
-  if(e.ctrlKey && e.key == 'j') {
-    e.preventDefault();
-    jeToggle();
-  }
-  if(!jeEnabled)
-    return;
-
-  if(e.key == 'Control')
-    jeState.ctrl = true;
-  if(e.key == 'Shift')
-    jeState.shift = true;
-
-  if(e.ctrlKey) {
-    if(e.key == ' ' && jeMode == 'widget') {
-      const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
-      if(locationLine) {
-        const pos = jeGetEditorContent().split('\n').slice(0, locationLine[1]-1).join('\n').length + +locationLine[2];
-        jeSelect(pos, pos, true);
-      }
-
-      const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
-      if(locationPostion)
-        jeSelect(+locationPostion[1], +locationPostion[1], true);
-    // } else {
-    //   for(const command of jeCommands) {
-    //     if(command.currentKey == e.key) {
-    //       e.preventDefault();
-    //       try {
-    //         jeCommandError = null;
-    //         await jeCallCommand(command);
-    //       } catch(e) {
-    //         jeCommandError = e;
-    //       }
-    //     }
-    //   }
+  on('#jsonEditor', 'keydown', function(e) {
+    if(e.key == 'Enter') {
+      jeNewline();
+      e.preventDefault();
     }
-  }
+  });
 
-  const functionKey = e.key.match(/F([0-9]+)/);
-  if(functionKey && jeWidgetLayers[+functionKey[1]]) {
-    e.preventDefault();
-    if(e.ctrlKey) {
-      let id = jeWidgetLayers[+functionKey[1]].get('id');
-      if(jeContext[jeContext.length-1] == '"null"')
-        id = `"${id}"`;
-      jePasteText(id, true);
-    } else {
-      jeSelectWidget(jeWidgetLayers[+functionKey[1]], false, e.shiftKey);
+  window.addEventListener('click', function(e) {
+    if(jeEnabled && e.target != $('#jeWidgetSearchResults')) {
+      $('#jeWidgetSearchBox').value = '';
+      $('#jeWidgetSearchResults').style.display = 'none';
     }
-  }
-});
+  });
 
-on('#jsonEditor', 'keydown', function(e) {
-  if(e.key == 'Enter') {
-    jeNewline();
-    e.preventDefault();
-  }
-});
+  window.addEventListener('keydown', function(e) {
+    if(!jeEnabled)
+      return;
+    if(e.key != 'Control')
+      jeKeyIsDown = true;
+  });
 
-window.addEventListener('click', function(e) {
-  if(jeEnabled && e.target != $('#jeWidgetSearchResults')) {
-    $('#jeWidgetSearchBox').value = '';
-    $('#jeWidgetSearchResults').style.display = 'none';
-  }
-});
+  window.addEventListener('keyup', function(e) {
+    if(!jeEnabled)
+      return;
+    if(e.key == 'Control')
+      jeState.ctrl = false;
+    if(e.key == 'Shift')
+      jeState.shift = false;
 
-window.addEventListener('keydown', function(e) {
-  if(!jeEnabled)
-    return;
-  if(e.key != 'Control')
-    jeKeyIsDown = true;
-});
-
-window.addEventListener('keyup', function(e) {
-  if(!jeEnabled)
-    return;
-  if(e.key == 'Control')
-    jeState.ctrl = false;
-  if(e.key == 'Shift')
-    jeState.shift = false;
-
-  if(e.target == $('#jeText')) {
-    jeGetContext();
-    if((jeWidget || jeMode == 'multi') && !jeJSONerror)
-      jeApplyChanges();
-  }
-  jeKeyIsDown = false;
-  jeKeyIsDownDeltas = [];
-});
+    if(e.target == $('#jeText')) {
+      jeGetContext();
+      if((jeWidget || jeMode == 'multi') && !jeJSONerror)
+        jeApplyChanges();
+    }
+    jeKeyIsDown = false;
+    jeKeyIsDownDeltas = [];
+  });
+}

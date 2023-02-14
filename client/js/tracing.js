@@ -1,5 +1,3 @@
-import { onLoad } from './domhelpers.js';
-
 let tracingActiveIndex = 0;
 let loadedTrace = null;
 
@@ -181,25 +179,23 @@ function updateTraceInput(e) {
   loadStateAtIndex(+e.target.value);
 }
 
-window.addEventListener('keydown', function(e) {
-  if(!jeEnabled && e.key == 'F9') {
-    if(e.ctrlKey)
-      selectFile('TEXT').then(loadTraceFile);
-    else if(!tracingEnabled)
-      enableTracing();
-    else
-      sendUserTraceEvent();
-  }
-});
+function initTracing() {
+  window.addEventListener('keydown', function(e) {
+    if(!jeEnabled && e.key == 'F9') {
+      if(e.ctrlKey)
+        selectFile('TEXT').then(loadTraceFile);
+      else if(!tracingEnabled)
+        enableTracing();
+      else
+        sendUserTraceEvent();
+    }
+  });
 
-onLoad(function() {
   onMessage('tracing', _=>tracingEnabled=true);
   on('#traceInput', 'input', updateTraceInput);
-});
 
-window.onerror = function(msg, url, line, col, err) {
-  sendTraceEvent('error', { msg, url, line, col, err });
-  location.reload();
+  window.onerror = function(msg, url, line, col, err) {
+    sendTraceEvent('error', { msg, url, line, col, err });
+    location.reload();
+  }
 }
-
-export { tracingEnabled };

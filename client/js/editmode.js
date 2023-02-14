@@ -1,3 +1,5 @@
+let vmEditOverlay;
+
 //This section holds the edit overlays for each widget
 //basic widget functions
 function populateEditOptionsBasic(widget) {
@@ -375,7 +377,7 @@ async function applyEditOptions(widget) {
     applyEditOptionsTimer(widget);
 }
 
-function editClick(widget) {
+export function editClick(widget) {
   $('#editWidgetJSON').value = JSON.stringify(widget.state, null, '  ');
   $('#editWidgetJSON').dataset.previousState = $('#editWidgetJSON').value;
 
@@ -513,7 +515,7 @@ function generateChipPileWidgets(id, x, y, type) {
       parent: id,
       width:73,
       height:73,
-      y: type==2 ? 4 : -6, 
+      y: type==2 ? 4 : -6,
       text: 1641,
       enterRoutine: [
         {
@@ -757,7 +759,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 }
 
 const VTTblue = '#1f5ca6';
-  
+
 function addPieceToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
@@ -778,7 +780,9 @@ function addPieceToAddWidgetOverlay(w, wi) {
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
-    } catch(e) {}
+    } catch(e) {
+      console.log(e);
+    }
   });
   w.domElement.id = w.id;
   $('#addOverlay').appendChild(w.domElement);
@@ -856,7 +860,7 @@ function populateAddWidgetOverlay() {
     y: 80 + Math.round((43.83 - 84)/2)
   });
 */
-  
+
 /* Don't add the unicode symbols
   // Next the unicode symbols
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
@@ -885,7 +889,7 @@ function populateAddWidgetOverlay() {
     y: 150
   });
 */
-  
+
   //Add svg game pieces
   // First row
   addPieceToAddWidgetOverlay(new BasicWidget('Pawn3DSVG'), {
@@ -907,7 +911,7 @@ function populateAddWidgetOverlay() {
     borderWidth: 1
   });
 
-  
+
   addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
     x: 390+75,
     y: 111,
@@ -1650,16 +1654,23 @@ function addCardType(cardType, value) {
     $('#editWidgetJSON').value = JSON.stringify(widget)
 }
 
-function toggleEditMode() {
-  if(edit)
-    $('body').classList.remove('edit');
-  else
-    $('body').classList.add('edit');
-  edit = !edit;
-  showOverlay();
-}
+export function initializeEditMode() {
+  jeInitEventListeners();
+  initTracing();
 
-onLoad(function() {
+  window.Vue = Vue;
+
+  const div = document.createElement('div');
+  div.innerHTML = ' //*** HTML ***// ';
+  $('body').append(div);
+
+  const style = document.createElement('style');
+  style.appendChild(document.createTextNode(' //*** CSS ***// '));
+  $('head').appendChild(style);
+
+  for(const overlay of $a('#editorOverlays'))
+    $('#roomArea').append(overlay);
+
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
     const id = await addWidgetLocal({
@@ -1869,7 +1880,7 @@ onLoad(function() {
     });
     showOverlay();
   });
-  
+
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 
@@ -1913,4 +1924,4 @@ onLoad(function() {
   }));
 
   populateAddWidgetOverlay();
-});
+};

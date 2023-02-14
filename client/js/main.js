@@ -11,9 +11,9 @@ let optionsHidden = true;
 
 let edit = false;
 let jeEnabled = null;
+let jeZoomOut = false;
 let jeRoutineLogging = false;
-let vmEditOverlay;
-let tracingEnabled = false;
+export let tracingEnabled = false;
 
 let urlProperties = {};
 
@@ -202,6 +202,14 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
 
+function getScale() {
+  return scale;
+}
+
+function getRoomRectangle() {
+  return roomRectangle;
+}
+
 export async function shuffleWidgets(collection) {
   // Fisher–Yates shuffle
   const len = collection.length;
@@ -333,7 +341,16 @@ function getSVG(url, replaces, callback) {
   return '';
 }
 
-onLoad(function() {
+function toggleEditMode() {
+  if(edit)
+    $('body').classList.remove('edit');
+  else
+    $('body').classList.add('edit');
+  edit = !edit;
+  showOverlay();
+}
+
+onLoad(async function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
@@ -466,7 +483,38 @@ onLoad(function() {
       checkURLproperties(true);
     checkedOnce = true;
   });
+
+  Object.assign(window, {
+    $, $a, on, onMessage, showOverlay,
+    setJEenabled, setJEroutineLogging, setJEzoomOut, toggleEditMode, getEdit,
+    toServer, batchStart, batchEnd, sendPropertyUpdate,
+    addWidgetLocal, removeWidgetLocal,
+    generateUniqueWidgetID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset,
+    roomID, deltaID, widgets, widgetFilter,
+    formField,
+    Widget, BasicWidget, Button, Canvas, Card, Deck, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
+    toHex
+  });
+  const editmode = await import('./edit.js');
+  Object.assign(window, editmode);
+  initializeEditMode();
 });
+
+function getEdit() {
+  return edit;
+}
+
+function setJEenabled(v) {
+  jeEnabled = v;
+}
+
+function setJEzoomOut(v) {
+  jeZoomOut = v;
+}
+
+function setJEroutineLogging(v) {
+  jeRoutineLogging = v;
+}
 
 window.onresize = function(event) {
   setScale();

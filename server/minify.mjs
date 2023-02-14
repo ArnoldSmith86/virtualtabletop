@@ -1,6 +1,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import util from 'util';
 import zlib from 'zlib';
 
 import minify from '@node-minify/core';
@@ -68,12 +69,14 @@ export default async function minifyHTML() {
     'client/js/main.js'
   ]);
 
-  const editor = await compress('client/editor.html', [
+  const editorCSS = await compressCSS([
     'client/css/editmode.css',
     'client/css/jsonedit.css',
     'client/css/tracing.css'
-  ], [
-    //'node_modules/vue/dist/vue.global.js',
+  ]);
+
+  let editorJS = await compressJS([
+    'node_modules/vue/dist/vue.global.js',
 
     'client/js/editmode.js',
     'client/js/jsonedit.js',
@@ -83,43 +86,59 @@ export default async function minifyHTML() {
     'client/components/deckEditor.js',
     'client/components/loadComponents.js'
   ]);
+  editorJS = editorJS.replace(/["']\ \/\/\*\*\*\ CSS\ \*\*\*\/\/\ ["']/, '`' + editorCSS.replace(/\\/g, '\\\\') + '`');
+  editorJS = editorJS.replace(/["']\ \/\/\*\*\*\ HTML\ \*\*\*\/\/\ ["']/, '`' + await minify({
+    compressor: htmlMinifier,
+    content: fs.readFileSync(path.resolve() + '/client/editor.html', {encoding:'utf8'}),
+    options: {
+      conservativeCollapse: true
+    }
+  }) + '`');
 
   return {
     min: room.min,
     gzipped: room.gzipped,
-    editorMin: editor.min,
-    editorGzipped: editor.gzipped
+    editorJSmin: editorJS,
+    editorJSgzipped: await util.promisify(zlib.gzip)(editorJS)
   };
 }
 
-function compress(htmlFile, cssFiles, jsFiles) {
+async function compressCSS(cssFiles) {
+  return await minify({
+    compressor: cleanCSS,
+    input: cssFiles,
+    output: os.tmpdir() + '/out.css'
+  });
+}
+
+async function compressJS(jsFiles) {
+  return await minify({
+    compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
+    input: jsFiles,
+    output: os.tmpdir() + '/out.js'
+  });
+}
+
+async function compress(htmlFile, cssFiles, jsFiles) {
   let htmlString = fs.readFileSync(path.resolve() + '/' + htmlFile, {encoding:'utf8'});
 
-  return new Promise((resolve, reject) => {
-    minify({
-      compressor: cleanCSS,
-      input: cssFiles,
-      output: os.tmpdir() + '/out.css'
-    }).then(function(min) {
-      htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, min).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, `const config = ${JSON.stringify(Config.config)};`);
-      return minify({
-        compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
-        input: jsFiles,
-        output: os.tmpdir() + '/out.js'
-      });
-    }).then(function(min) {
-      const minNoImports = min.replace(/\bimport[^;]*\.\/[^;]*;/g, "")
-      return minify({
-        compressor: htmlMinifier,
-        content: htmlString.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, minNoImports),
-        options: {
-          conservativeCollapse: true
-        }
-      })
-    }).then(function(min) {
-      zlib.gzip(min, (err, gzipped) => {
-        resolve({ min, gzipped });
-      });
-    });
+  const css = await compressCSS(cssFiles);
+  htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, `const config = ${JSON.stringify(Config.config)};`);
+
+  const js = await compressJS(jsFiles);
+  htmlString = htmlString.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, js.replace(/\bimport[^(][^;]*\.\/[^;]*;/g, ""));
+
+  const html = await minify({
+    compressor: htmlMinifier,
+    content: htmlString,
+    options: {
+      conservativeCollapse: true
+    }
   });
+
+  const gzipped = await util.promisify(zlib.gzip)(html);
+  return {
+    min: html,
+    gzipped
+  };
 }
