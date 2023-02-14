@@ -73,7 +73,6 @@ test('Create game using edit mode', async t => {
     .typeText('#INPUT_\\;sides', '12', { replace: true })
     .click('#buttonInputGo')
     .click('#w_31mw');
-    .click('#w_m06r');
   await t.resizeWindow(width,height);
   await compareState(t, '90763067f59a7d65ca134cdc9266858c');
   // hash on branch prior to merge 'e9dbf613823c875c68d18802bc066d7e'
