@@ -1410,7 +1410,6 @@ export function jeApplyDelta(delta) {
   }
 
   jeUpdateTree(delta.s);
-  widgetCoordCache = null;
 }
 
 function jeApplyState(state) {
@@ -2447,13 +2446,15 @@ function jeInitEventListeners() {
       }
     }
 
-    const hoveredWidgets = widgetCoordCache.filter(c=>x>=c.x && x<=c.r && y>=c.y && y<=c.b).map(c=>c.widget);
+    // Adding hitTest makes foreign elements temporarily hittable.
+    document.body.classList.add('hitTest');
+    let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
+    document.body.classList.remove('hitTest');
 
     hoveredWidgets.sort(function(w1,w2) {
       const hiddenParent =  function(widget) {
         return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
       };
-
       const w1card = w1.get('type') == 'card';
       const w2card = w2.get('type') == 'card';
       const w1foreign = !w1card && hiddenParent(w1);

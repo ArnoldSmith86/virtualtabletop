@@ -97,6 +97,15 @@ export default class Player {
       }
     }
 
+    for(const widgetID in delta.s) {
+      if (!this.room.state[widgetID] && delta.s[widgetID] && !delta.s[widgetID].id) {
+        // tried to modify properties of a missing widget -> client is in bad state
+        this.waitingForStateConfirmation = true;
+        this.room.receiveInvalidDelta(this, delta, widgetID, '<modification>');
+        return;
+      }
+    }
+
     this.possiblyConflictingDeltas = [];
     this.room.receiveDelta(this, delta);
   }

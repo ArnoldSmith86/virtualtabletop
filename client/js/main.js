@@ -489,7 +489,7 @@ onLoad(async function() {
     setJEenabled, setJEroutineLogging, setJEzoomOut, toggleEditMode, getEdit,
     toServer, batchStart, batchEnd, sendPropertyUpdate,
     addWidgetLocal, removeWidgetLocal,
-    generateUniqueWidgetID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset,
+    generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset,
     roomID, deltaID, widgets, widgetFilter,
     formField,
     Widget, BasicWidget, Button, Canvas, Card, Deck, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
