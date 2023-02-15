@@ -1,0 +1,4 @@
+body:not(.edit) #editor,
+body.edit #toolbar {
+  display: none;
+}

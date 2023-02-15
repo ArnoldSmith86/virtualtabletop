@@ -72,12 +72,21 @@ export default async function minifyHTML() {
   ]);
 
   const editorCSS = await compressCSS([
+    'client/css/editor/layout.css',
+    'client/css/editor/toolbar.css',
+
     'client/css/editmode.css',
     'client/css/jsonedit.css',
     'client/css/tracing.css'
   ]);
 
   let editorJS = await compressJS([
+    'client/js/editor/layout.js',
+    'client/js/editor/toolbarButton.js',
+    'client/js/editor/toolbar/new.js',
+    'client/js/editor/toolbar/save.js',
+    'client/js/editor/toolbar/close.js',
+
     'node_modules/vue/dist/vue.global.js',
 
     'client/js/editmode.js',

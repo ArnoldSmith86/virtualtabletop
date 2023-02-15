@@ -1,0 +1,28 @@
+#editorToolbar {
+  display: flex;
+  background: var(--VTTblue);
+}
+
+#editorToolbar button {
+  padding: 5px;
+}
+
+#editorToolbar button::before {
+  margin: 0;
+}
+
+#editorToolbar button span {
+  display: none;
+  position: absolute;
+  top: 38px;
+  background: var(--VTTblueDark);
+  margin: 0;
+  margin-left: -5px;
+  padding: 10px;
+  border-radius: 5px;
+  text-transform: none;
+}
+
+#editorToolbar button:hover span {
+  display: block;
+}

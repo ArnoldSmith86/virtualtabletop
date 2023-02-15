@@ -1655,9 +1655,6 @@ function addCardType(cardType, value) {
 }
 
 export function initializeEditMode() {
-  jeInitEventListeners();
-  initializeTraceViewer();
-
   window.Vue = Vue;
 
   const div = document.createElement('div');
@@ -1670,6 +1667,10 @@ export function initializeEditMode() {
 
   for(const overlay of $a('#editorOverlays > *'))
     $('#roomArea').append(overlay);
+
+  jeInitEventListeners();
+  initializeTraceViewer();
+  initializeEditor();
 
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
