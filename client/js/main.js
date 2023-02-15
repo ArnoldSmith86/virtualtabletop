@@ -13,7 +13,6 @@ let edit = null;
 export let jeEnabled = null;
 let jeZoomOut = false;
 let jeRoutineLogging = false;
-export let tracingEnabled = false;
 
 let urlProperties = {};
 

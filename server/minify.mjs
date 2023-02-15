@@ -46,8 +46,8 @@ export default async function minifyHTML() {
     'client/js/geometry.js',
     'client/js/compute.js',
     'client/js/mousehandling.js',
-    'client/js/statemanaged.js',
     'client/js/tracing.js',
+    'client/js/statemanaged.js',
     'client/js/color.js',
 
     'client/js/overlays/players.js',

@@ -1,3 +1,7 @@
+import { onLoad } from './domhelpers.js';
+
+export let tracingEnabled = false;
+
 function enableTracing() {
   sendTraceEvent('enable');
   tracingEnabled = true;

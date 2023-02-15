@@ -1,7 +1,6 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
-import { jeEnabled } from './main.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
 
@@ -159,7 +158,7 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] === null && widgets.has(widgetID))
       removeWidget(widgetID);
 
-  if(jeEnabled)
+  if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
 }
 
@@ -209,7 +208,7 @@ function receiveStateFromServer(args) {
   }
   toServer('confirm');
 
-  if(jeEnabled)
+  if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyState(args);
 }
 
