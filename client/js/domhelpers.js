@@ -159,7 +159,7 @@ export function formField(field, dom, id) {
 
   if(field.type == 'palette') {
     const input = document.createElement('div');
-    for(const option of field.options) {
+    for(const option of field.colors) {
       const optionlabel = document.createElement('label');
       optionlabel.htmlFor = option;
       optionlabel.textContent = ' ';
