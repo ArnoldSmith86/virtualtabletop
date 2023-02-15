@@ -1366,7 +1366,6 @@ input:invalid+span:after {
 .inputpalette > div{
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
   padding: 0 5px;
 }
 .inputpalette > div input{
@@ -1376,11 +1375,12 @@ input:invalid+span:after {
   height: 35px;
   width: 35px;
   display: inline-block;
-  border-radius: 5px;
+  border-radius: 8px;
   position: relative;
   border: 3px solid var(--roomColor);
-  overflow: hidden;
   padding: 0px;
+  overflow: hidden;
+  
 }
 .inputpalette > div input[type="radio"]:checked+label{
   border: 3px solid var(--VTTblue);
@@ -1401,7 +1401,7 @@ input:invalid+span:after {
   right: -3px;
   border: 2px solid white;
 }
-.inputpalette > div label::before{
+.inputpalette > div label > div{
   display: block;
   content: '';
   position: absolute;
@@ -1410,7 +1410,9 @@ input:invalid+span:after {
   bottom: 0px;
   left: 0px;
   position: absolute;
-  border-radius: 2px;
   border: 2px solid white;
   overflow: hidden;
+  background-color: inherit;
+  border-radius: 5px;
+  box-shadow: 0 0 1px white;
 }

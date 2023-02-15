@@ -163,7 +163,10 @@ export function formField(field, dom, id) {
       const optionlabel = document.createElement('label');
       optionlabel.htmlFor = option;
       optionlabel.textContent = ' ';
-      optionlabel.style="background-color:"+option+";"
+
+      const optionlabelinterior = document.createElement('div');
+      optionlabelinterior.style="background-color:"+option+";"
+      optionlabel.appendChild(optionlabelinterior);
 
       const optionElement = document.createElement('input');
       optionElement.type = 'radio';
