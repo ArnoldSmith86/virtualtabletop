@@ -1851,13 +1851,14 @@ export class Widget extends StateManaged {
       return;
 
     await this.bringToFront();
-    if(this.get('parent') && !this.currentParent)
-      this.currentParent = widgets.get(this.get('parent'));
-    if(this.currentParent != holder)
+    const curAncestor = this.get('_ancestor');
+    if(curAncestor && !this.currentParent)
+      this.currentParent = widgets.get(curAncestor);
+    if(this.currentParent != holder) {
       await this.checkParent(true);
-
-    await this.set('owner',  null);
-    await this.set('parent', holder.get('id'));
+      await this.set('owner',  null);
+      await this.set('parent', holder.get('id'));
+    }
   }
 
   async moveStart() {
