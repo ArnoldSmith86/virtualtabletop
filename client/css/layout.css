@@ -1378,13 +1378,13 @@ input:invalid+span:after {
   display: inline-block;
   border-radius: 5px;
   position: relative;
-  border: 2px solid transparent;
+  border: 2px solid var(--roomColor);
   overflow: hidden;
 }
 .inputpalette > div input[type="radio"]:checked+label{
   border: 2px solid var(--VTTblue);
 }
-.inputpalette > div input[type="radio"]:checked+label::before{
+.inputpalette > div input[type="radio"]:checked+label::after{
   font-family: 'Material Icons';
   line-height: 1.25em;
   text-align: center;
@@ -1393,8 +1393,23 @@ input:invalid+span:after {
   background: var(--VTTblue);
   color: white;
   border-radius: 100%;
+  border-top-right-radius: 0;
   content: 'check';
   position: absolute;
   top: -3px;
   right: -3px;
+  border: 2px solid var(--roomColor);
+}
+.inputpalette > div label::before{
+  content: '';
+  position: absolute;
+  
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  position: absolute;
+  border-radius: 5px;
+  border: 3px solid white;
+  overflow: hidden;
 }
