@@ -1373,13 +1373,14 @@ input:invalid+span:after {
   display: none;
 }
 .inputpalette > div label{
-  height: 30px;
-  width: 30px;
+  height: 35px;
+  width: 35px;
   display: inline-block;
   border-radius: 5px;
   position: relative;
   border: 3px solid var(--roomColor);
   overflow: hidden;
+  padding: 0px;
 }
 .inputpalette > div input[type="radio"]:checked+label{
   border: 3px solid var(--VTTblue);
