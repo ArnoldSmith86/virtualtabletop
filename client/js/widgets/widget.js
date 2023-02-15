@@ -1854,8 +1854,9 @@ export class Widget extends StateManaged {
     const curAncestor = this.get('_ancestor');
     if(curAncestor && !this.currentParent)
       this.currentParent = widgets.get(curAncestor);
-    if(this.currentParent != holder) {
+    if(this.currentParent != holder)
       await this.checkParent(true);
+    if(this.currentParent != holder || this.get('owner') || holder.get('childrenPerOwner')) {
       await this.set('owner',  null);
       await this.set('parent', holder.get('id'));
     }
