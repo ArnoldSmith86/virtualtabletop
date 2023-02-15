@@ -82,3 +82,16 @@
     font-size: 13px;
   }
 }
+
+@media (orientation: portrait) {
+  body.edit {
+    --editSidebarWidth: 36px;
+    --roomTop: calc(100vh - 1000px * var(--scale));
+  }
+  #editorModule {
+    left: 0;
+    top: var(--editToolbarHeight);
+    width: calc(100vw - var(--editSidebarWidth));
+    height: calc(100vh - var(--editToolbarHeight) - 1000px * var(--scale));
+  }
+}
