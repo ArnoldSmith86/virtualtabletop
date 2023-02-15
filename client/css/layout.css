@@ -1414,5 +1414,4 @@ input:invalid+span:after {
   overflow: hidden;
   background-color: inherit;
   border-radius: 5px;
-  box-shadow: 0 0 1px white;
 }
