@@ -1366,7 +1366,7 @@ input:invalid+span:after {
 .inputpalette > div{
   display: flex;
   flex-wrap: wrap;
-  padding: 0 2px;
+  padding: 0 3px;
 }
 .inputpalette > div input{
   display: none;
@@ -1379,6 +1379,7 @@ input:invalid+span:after {
   position: relative;
   border: 3px solid transparent;
   padding: 0;
+  margin: -1.5px;
 }
 .inputpalette > div input[type="radio"]:checked+label{
   border: 3px solid var(--VTTblue);
