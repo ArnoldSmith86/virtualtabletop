@@ -170,7 +170,7 @@ export function formField(field, dom, id) {
       optionElement.value = option || '';
       optionElement.id = option || '';
       optionElement.name = id;
-      if(option == field.value)
+      if(toHex(option) == field.value)
         optionElement.checked = 'checked';
       input.appendChild(optionElement);
       input.appendChild(optionlabel);
