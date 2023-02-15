@@ -83,7 +83,7 @@
   }
 }
 
-@media (orientation: portrait) {
+@media (orientation: portrait) and (min-width: 700px), (orientation: portrait) and (min-height: 700px) {
   body.edit {
     --editSidebarWidth: 36px;
     --roomTop: calc(100vh - 1000px * var(--scale));
@@ -91,7 +91,23 @@
   #editorModule {
     left: 0;
     top: var(--editToolbarHeight);
-    width: calc(100vw - var(--editSidebarWidth));
-    height: calc(100vh - var(--editToolbarHeight) - 1000px * var(--scale));
+    right: var(--editSidebarWidth);
+    bottom: calc(1000px * var(--scale));
+    width: unset;
+    height: unset;
+  }
+}
+
+@media (max-width: 700px), (max-height: 700px) {
+  body.edit {
+    --editSidebarWidth: 36px;
+  }
+  #editorModule {
+    left: 0;
+    top: var(--editToolbarHeight);
+    right: var(--editSidebarWidth);
+    bottom: 0;
+    width: unset;
+    height: unset;
   }
 }
