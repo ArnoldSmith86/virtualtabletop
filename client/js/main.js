@@ -173,14 +173,21 @@ function setScale() {
   const h = window.innerHeight;
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
-  if(edit) {
+  if(edit || jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
     const targetHeight = jeZoomOut ? 2000 : 1000;
-    const availableWidth = getEditorRight();
-    if(availableWidth/(h-70) < 1600/1000)
+    const availableRect = getAvailableRoomRectangle();
+    const availableWidth = availableRect.right-availableRect.left;
+    const availableHeight = availableRect.bottom-availableRect.top;
+    if(availableWidth/availableHeight < 1600/1000) {
       scale = availableWidth/targetWidth;
-    else
-      scale = (h-70)/targetHeight;
+      document.documentElement.style.setProperty('--editModeRoomLeft', availableRect.left + 'px');
+      document.documentElement.style.setProperty('--editModeRoomTop', (availableRect.top + (availableHeight-scale*targetHeight)/2) + 'px');
+    } else {
+      scale = availableHeight/targetHeight;
+      document.documentElement.style.setProperty('--editModeRoomLeft', (availableRect.left + (availableWidth-scale*targetWidth)/2) + 'px');
+      document.documentElement.style.setProperty('--editModeRoomTop', availableRect.top + 'px');
+    }
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }

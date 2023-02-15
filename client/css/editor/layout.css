@@ -9,3 +9,8 @@ body.edit {
 body.edit::after {
   display: none;
 }
+
+body.edit {
+  --roomTop: var(--editModeRoomTop);
+  --roomLeft: var(--editModeRoomLeft);
+}

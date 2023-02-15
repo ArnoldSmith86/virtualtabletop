@@ -1,17 +1,23 @@
+:root {
+  --editSidebarWidth: 128px;
+}
+
 #editorSidebar {
   background: var(--VTTblue);
   position: absolute;
-  width: 100px;
+  width: var(--editSidebarWidth);
   right: 0;
-  top: 36px;
+  top: var(--editToolbarHeight);
   bottom: 0;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 #editorSidebar button span {
   display: none;
   position: absolute;
-  right: 38px;
+  right: calc(var(--editSidebarWidth) + 2px);
   background: var(--VTTblueDark);
   margin: 0;
   margin-top: -5px;
@@ -39,14 +45,14 @@
 
 #editorSidebar button.active span {
   color: white;
-  right: 36px;
+  right: var(--editSidebarWidth);
 }
 
 #editorModule {
   display: none;
   position: absolute;
-  right: 36px;
-  top: 36px;
+  right: var(--editSidebarWidth);
+  top: var(--editToolbarHeight);
   bottom: 0;
   width: 300px;
   min-width: 300px;
@@ -62,8 +68,8 @@
 }
 
 @media (max-width: 1300px) {
-  #editorSidebar {
-    width: 36px;
+  :root {
+    --editSidebarWidth: 36px;
   }
   #editorSidebar button {
     font-size: 0;

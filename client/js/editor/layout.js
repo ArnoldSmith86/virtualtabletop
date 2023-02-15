@@ -21,11 +21,20 @@ function renderSidebar(modules) {
     module.renderButton($('#editorSidebar'));
 }
 
-export function getEditorRight() {
-  if(jeEnabled)
-    return $('#jeEditArea').offsetLeft;
-  else if($('#editor.moduleActive'))
-    return $('#editorModule').offsetLeft;
-  else
-    return $('#editorSidebar').offsetLeft;
+export function getAvailableRoomRectangle() {
+  if(jeEnabled) {
+    return {
+      top: 35,
+      right: $('#jeEditArea').offsetLeft,
+      left: 0,
+      bottom: window.innerHeight - 35
+    };
+  } else {
+    return {
+      top: 36,
+      right: ($('#editor.moduleActive') ? $('#editorModule') : $('#editorSidebar')).offsetLeft,
+      left: 0,
+      bottom: window.innerHeight
+    };
+  }
 }

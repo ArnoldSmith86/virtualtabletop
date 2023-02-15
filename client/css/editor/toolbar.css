@@ -1,3 +1,7 @@
+:root {
+  --editToolbarHeight: 36px;
+}
+
 #editorToolbar {
   position: absolute;
   display: flex;
