@@ -1199,7 +1199,8 @@ button:disabled:hover {
 }
 .inputnumber,
 .inputstring,
-.inputselect{
+.inputselect,
+.inputpalette{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -1208,7 +1209,8 @@ button:disabled:hover {
 
 .inputnumber label,
 .inputstring label,
-.inputselect label{
+.inputselect label,
+.inputpalette label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1361,4 +1363,38 @@ input:invalid+span:after {
   color: red;
   letter-spacing: -1px;
 }
-
+.inputpalette > div{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0 5px;
+}
+.inputpalette > div input{
+  display: none;
+}
+.inputpalette > div label{
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  border-radius: 5px;
+  position: relative;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+.inputpalette > div input[type="radio"]:checked+label{
+  border: 2px solid var(--VTTblue);
+}
+.inputpalette > div input[type="radio"]:checked+label::before{
+  font-family: 'Material Icons';
+  line-height: 1.25em;
+  text-align: center;
+  height: 1.25em;
+  width: 1.25em;
+  background: var(--VTTblue);
+  color: white;
+  border-radius: 100%;
+  content: 'check';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+}
