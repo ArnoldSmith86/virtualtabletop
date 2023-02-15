@@ -1656,7 +1656,7 @@ function addCardType(cardType, value) {
 
 export function initializeEditMode() {
   jeInitEventListeners();
-  initTracing();
+  initializeTraceViewer();
 
   window.Vue = Vue;
 

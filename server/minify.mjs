@@ -47,6 +47,7 @@ export default async function minifyHTML() {
     'client/js/compute.js',
     'client/js/mousehandling.js',
     'client/js/statemanaged.js',
+    'client/js/tracing.js',
     'client/js/color.js',
 
     'client/js/overlays/players.js',
@@ -80,7 +81,7 @@ export default async function minifyHTML() {
 
     'client/js/editmode.js',
     'client/js/jsonedit.js',
-    'client/js/tracing.js',
+    'client/js/traceviewer.js',
 
     'client/components/baseEditOverlay.js',
     'client/components/deckEditor.js',

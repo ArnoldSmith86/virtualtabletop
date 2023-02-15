@@ -10,7 +10,7 @@ let unmuteVol = 30;
 let optionsHidden = true;
 
 let edit = null;
-let jeEnabled = null;
+export let jeEnabled = null;
 let jeZoomOut = false;
 let jeRoutineLogging = false;
 export let tracingEnabled = false;
