@@ -957,9 +957,10 @@ function jeAddCommands() {
   jeAddFieldCommand('label', 'checkbox|color|number|palette|select|string|switch', '');
   jeAddFieldCommand('value', 'checkbox|color|number|palette|select|string|switch', '');
   jeAddFieldCommand('variable', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('colors', 'palette', []);
   jeAddFieldCommand('min', 'number', 0);
   jeAddFieldCommand('max', 'number', 10);
-  jeAddFieldCommand('options', 'palette|select', [ { value: 'value', text: 'text' } ]);
+  jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
 
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
