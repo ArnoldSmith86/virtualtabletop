@@ -2,3 +2,10 @@ body:not(.edit) #editor,
 body.edit #toolbar {
   display: none;
 }
+
+body.edit {
+  background-image: none;
+}
+body.edit::after {
+  display: none;
+}
