@@ -228,16 +228,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_editMode',
-    name: 'Edit mode',
-    icon: '[edit]',
-    forceKey: 'F',
-    classes: _=>getEdit() ? 'onState' : '',
-    call: async function() {
-      toggleEditMode();
-    }
-  },
-  {
     id: 'je_openParent',
     name: 'Open parent',
     icon: '[up_one_level]',
