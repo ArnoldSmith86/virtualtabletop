@@ -173,10 +173,10 @@ function setScale() {
   const h = window.innerHeight;
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
-  if(jeEnabled) {
+  if(edit) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
     const targetHeight = jeZoomOut ? 2000 : 1000;
-    const availableWidth = $('#jeEditArea').offsetLeft;
+    const availableWidth = getEditorRight();
     if(availableWidth/(h-70) < 1600/1000)
       scale = availableWidth/targetWidth;
     else

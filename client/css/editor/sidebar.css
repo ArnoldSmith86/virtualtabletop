@@ -1,0 +1,78 @@
+#editorSidebar {
+  background: var(--VTTblue);
+  position: absolute;
+  width: 100px;
+  right: 0;
+  top: 36px;
+  bottom: 0;
+  z-index: 2;
+}
+
+#editorSidebar button span {
+  display: none;
+  position: absolute;
+  right: 38px;
+  background: var(--VTTblueDark);
+  margin: 0;
+  margin-top: -5px;
+  padding: 10px;
+  border-radius: 5px;
+  text-transform: none;
+}
+
+#editorSidebar button:hover span {
+  display: block;
+}
+
+#editorSidebar button.active {
+  background: white;
+  color: var(--VTTblue);
+  position: relative;
+  left: -2px;
+  border-radius: 0 5px 5px 0;
+}
+
+#editorSidebar button.active::before {
+  position: relative;
+  left: 2px;
+}
+
+#editorSidebar button.active span {
+  color: white;
+  right: 36px;
+}
+
+#editorModule {
+  display: none;
+  position: absolute;
+  right: 36px;
+  top: 36px;
+  bottom: 0;
+  width: 300px;
+  min-width: 300px;
+  width: 25vw;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 10px;
+  background: white;
+}
+
+#editorModule.active {
+  display: block;
+}
+
+@media (max-width: 1300px) {
+  #editorSidebar {
+    width: 36px;
+  }
+  #editorSidebar button {
+    font-size: 0;
+    padding: 5px;
+  }
+  #editorSidebar button::before {
+    margin: 0;
+  }
+  #editorSidebar button span {
+    font-size: 13px;
+  }
+}

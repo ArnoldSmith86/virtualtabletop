@@ -1,6 +1,10 @@
 #editorToolbar {
+  position: absolute;
   display: flex;
   background: var(--VTTblue);
+  z-index: 1;
+  left: 0;
+  right: 0;
 }
 
 #editorToolbar button {

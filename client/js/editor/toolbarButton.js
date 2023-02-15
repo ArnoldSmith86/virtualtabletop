@@ -1,4 +1,4 @@
-export class ToolbarButton {
+class ToolbarButton {
   constructor(icon, tooltip) {
     this.icon = icon;
     this.tooltip = tooltip;

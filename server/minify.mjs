@@ -74,6 +74,7 @@ export default async function minifyHTML() {
   const editorCSS = await compressCSS([
     'client/css/editor/layout.css',
     'client/css/editor/toolbar.css',
+    'client/css/editor/sidebar.css',
 
     'client/css/editmode.css',
     'client/css/jsonedit.css',
@@ -86,6 +87,9 @@ export default async function minifyHTML() {
     'client/js/editor/toolbar/new.js',
     'client/js/editor/toolbar/save.js',
     'client/js/editor/toolbar/close.js',
+    'client/js/editor/sidebarModule.js',
+    'client/js/editor/sidebar/properties.js',
+    'client/js/editor/sidebar/undo.js',
 
     'node_modules/vue/dist/vue.global.js',
 
