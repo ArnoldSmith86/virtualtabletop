@@ -152,6 +152,12 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
+    @media (max-width: 530px) {
+      body.horizontalToolbar #toolbar {
+        padding: 0 5px;
+      }
+    }
+
   /* dividers */
 
     #toolbar .divider {
@@ -220,6 +226,13 @@ body.aspectTooGood.hiddenToolbar {
       justify-content: flex-end;
     }
 
+    @media (max-width: 530px) {
+      body.horizontalToolbar .toolbarButton:not(.toolbarTab) {
+        padding: 2px;
+        margin: 0;
+      }
+    }
+
   /* tabs */
 
     .toolbarTab {
@@ -249,9 +262,15 @@ body.aspectTooGood.hiddenToolbar {
       width: unset;
     }
 
-    @media (min-width: 760px) {
+    @media (min-width: 950px) {
       body.horizontalToolbar .toolbarTab::before {
         font-size: 24px;
+      }
+    }
+
+    @media (max-width: 530px) {
+      body.horizontalToolbar .toolbarTab {
+        padding: 0 8px;
       }
     }
 
@@ -298,7 +317,7 @@ body.aspectTooGood.hiddenToolbar {
       bottom: 46px;
     }
 
-    @media (min-width: 760px) {
+    @media (min-width: 950px) {
       body.horizontalToolbar .toolbarTab .tooltip {
         box-shadow: unset;
         background: none;
@@ -458,37 +477,31 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
-    @media (max-width: 960px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 759px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
-        display: flex;
-      }
-    }
-
-    @media (max-width: 530px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 430px) {
+    @media (max-width: 390px) {
       body.horizontalToolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
         display: none;
       }
     }
 
-    @media (max-width: 340px) {
+    @media (max-width: 320px) {
+      body.horizontalToolbar #addButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 300px) {
       body.horizontalToolbar #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 270px) {
+    @media (max-width: 245px) {
+      body.horizontalToolbar #editButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 190px) {
       body.horizontalToolbar #playersButton {
         display: none;
       }
