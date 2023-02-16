@@ -13,7 +13,8 @@ function initializeEditor() {
   renderSidebar(sidebarModules = [
     new PropertiesModule(),
     new UndoModule(),
-    new JsonModule()
+    new JsonModule(),
+    new TreeModule()
   ]);
 }
 

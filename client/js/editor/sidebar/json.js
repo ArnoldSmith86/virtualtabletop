@@ -28,3 +28,34 @@ class JsonModule extends SidebarModule {
     $('#jsonEditor').style.display = 'none';
   }
 }
+
+class TreeModule extends SidebarModule {
+  constructor() {
+    super('account_tree', 'Tree', 'View and select your widgets in a tree based on their parents.');
+  }
+
+  onClose() {
+    $('#jsonEditor').append($('#jeTree'));
+    //$('#jsonEditor').append($('#jeWidgetSearch'));
+    //$('#jsonEditor').append($('#jeWidgetSearchResults'));
+  }
+
+  onSelectionChangedWhileActive(newSelection) {
+    if(newSelection.length) {
+      jeSelectWidget(newSelection[0]);
+      for(let i=1; i<newSelection.length; ++i)
+        jeSelectWidget(newSelection[i], false, true);
+    } else {
+      jeEmpty();
+    }
+    jeDisplayTree();
+  }
+
+  renderModule(target) {
+    //target.append($('#jeWidgetSearch'));
+    //target.append($('#jeWidgetSearchResults'));
+    target.append($('#jeTree'));
+    jeInitTree();
+    jeDisplayTree();
+  }
+}

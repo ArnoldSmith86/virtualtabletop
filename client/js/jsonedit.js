@@ -1696,7 +1696,7 @@ function jeDisplayTree() {
   on('#jeWidgetSearchBox', 'click', jeDisplayFilteredWidgets);
 
   on('.jeTreeWidget', 'click', function(e) {
-    jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText), false, e.shiftKey);
+    editClick(widgets.get($('.key', e.currentTarget).innerText));
     e.stopPropagation();
   });
 }

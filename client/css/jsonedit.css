@@ -71,7 +71,7 @@
   overflow-wrap: break-word;
   overflow-y: auto;
   white-space: pre-wrap;
-  border-top: 1px dashed gray;
+  font-family: monospace;
 }
 
 #jeWidgetSearch {
@@ -133,9 +133,13 @@
 /* Create the caret/arrow with a unicode, and style it */
 .jeTreeExpander::before, .jeTreeExpander-down::before {
   content: "\25B6";
-  color: white;
+  color: black;
   display: inline-block;
   margin-right: 6px;
+}
+
+body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::before {
+  color: white;
 }
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
@@ -176,6 +180,10 @@
 }
 
 .jeHighlightRow {
+  background-color: #ccc;
+}
+
+body.lightsOff .jeHighlightRow {
   background-color: gray;
 }
 
@@ -183,7 +191,7 @@
 
 /**** Color formatting for widgets ****/
 
-#jeTextHighlight i {
+#jeTextHighlight i, #jeTree i {
   font-style: normal;
 }
 
