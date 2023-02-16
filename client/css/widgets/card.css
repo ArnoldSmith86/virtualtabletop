@@ -2,10 +2,6 @@
   overflow: hidden;
 }
 
-body.edit .card {
-  display: none;
-}
-
 .card > .cardFace {
   display: none;
 }

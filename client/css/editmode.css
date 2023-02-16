@@ -147,26 +147,6 @@
   background-color: var(--VTTblueDark);
 }
 
-body.edit .surface {
-  background-size: 30px 30px;
-
-  background-image:
-    repeating-linear-gradient(        #e0e0e0, #e0e0e0 1px, transparent 2px, transparent 30px),
-    repeating-linear-gradient(-90deg, #e0e0e0, #e0e0e0 1px, transparent 2px, transparent 30px);
-}
-
-body.edit .widget {
-  background-color: transparent !important;
-  border: 3px solid var(--editColor);
-  color: var(--editColor);
-  box-sizing: border-box;
-}
-
-body.edit .widget > .widget {
-  left: -3px;
-  top: -3px;
-}
-
 #cardTypesList td {
   padding: 10px;
   vertical-align: top;
