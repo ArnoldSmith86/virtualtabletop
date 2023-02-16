@@ -83,7 +83,7 @@
   }
 }
 
-@media (orientation: portrait) and (min-width: 700px), (orientation: portrait) and (min-height: 700px) {
+@media (orientation: portrait) and (min-width: 700px) {
   body.edit {
     --editSidebarWidth: 36px;
     --roomTop: calc(100vh - 1000px * var(--scale));
@@ -98,7 +98,7 @@
   }
 }
 
-@media (max-width: 700px), (max-height: 700px) {
+@media (max-width: 700px) {
   body.edit {
     --editSidebarWidth: 36px;
   }
