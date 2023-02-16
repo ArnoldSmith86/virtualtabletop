@@ -87,6 +87,7 @@ export default async function minifyHTML() {
     'client/js/editor/toolbarButton.js',
     'client/js/editor/toolbar/new.js',
     'client/js/editor/toolbar/save.js',
+    'client/js/editor/toolbar/click.js',
     'client/js/editor/toolbar/close.js',
     'client/js/editor/sidebarModule.js',
     'client/js/editor/sidebar/properties.js',

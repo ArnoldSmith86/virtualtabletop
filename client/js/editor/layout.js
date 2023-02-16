@@ -7,6 +7,7 @@ function initializeEditor() {
   renderToolbar(toolbarButtons = [
     new NewButton(),
     new SaveButton(),
+    new ClickButton(),
     new CloseButton()
   ]);
 
@@ -14,7 +15,8 @@ function initializeEditor() {
     new PropertiesModule(),
     new UndoModule(),
     new JsonModule(),
-    new TreeModule()
+    new TreeModule(),
+    new DebugModule()
   ]);
 }
 

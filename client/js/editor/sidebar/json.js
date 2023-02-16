@@ -59,3 +59,21 @@ class TreeModule extends SidebarModule {
     jeDisplayTree();
   }
 }
+
+class DebugModule extends SidebarModule {
+  constructor() {
+    super('pest_control', 'Debug', 'View debug information for the most recent routine execution.');
+  }
+
+  onClose() {
+    $('#jsonEditor').append($('#jeLog'));
+    //$('#jsonEditor').append($('#jeWidgetSearch'));
+    //$('#jsonEditor').append($('#jeWidgetSearchResults'));
+  }
+
+  renderModule(target) {
+    //target.append($('#jeWidgetSearch'));
+    //target.append($('#jeWidgetSearchResults'));
+    target.append($('#jeLog'));
+  }
+}

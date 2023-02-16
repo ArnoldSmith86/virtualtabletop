@@ -262,18 +262,6 @@ const jeCommands = [
       jeHighlightWidgets();
     }
   },
-  {
-    id: 'je_toggleDebug',
-    name: 'Toggle debug information',
-    icon: 'pest_control',
-    forceKey: 'B',
-    classes: _=> jeDebugViewing ? 'onState' : '',
-    show: _=>jeDebugViewing != null,
-    call: async function() {
-      jeDebugViewing = ! jeDebugViewing;
-      $('#jeLog').classList.toggle('active');
-    }
-  },
   /* Now the context-dependent stuff */
   {
     id: 'je_toggleBoolean',
@@ -1960,11 +1948,6 @@ export function jeLoggingRoutineEnd(variables, collections) {
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
-    // Enable the je_toggleDebug button the first time a routine is executed.
-    if ( jeDebugViewing == null) {
-      jeDebugViewing = false;
-      jeShowCommands()
-    }
 
     // Make it so clicking on the arrows expands the subtree
     const expanders = document.getElementsByClassName('jeExpander');

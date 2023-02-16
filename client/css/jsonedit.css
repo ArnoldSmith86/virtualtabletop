@@ -22,7 +22,7 @@
   display: none;
 }
 
-#jsonEditor > *, #jeWidgetLayers > div, #jeLog {
+#jsonEditor > *, #jeWidgetLayers > div {
   background: #08090a;
 }
 #jsonEditor > * {
@@ -310,15 +310,6 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 #jeLog {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: none;
-  height: 90vh;
-  right: calc(var(--commandPaneWidth) + var(--editorPaneWidth));
-  overflow: auto;
-  box-sizing: border-box;
-  border: 3px solid white;
 }
 
 @media (max-width: 1000px) {
@@ -343,34 +334,45 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 .jeLog {
   white-space: normal;
+  font-family: monospace;
   font-size: 12px;
-  background: #ffffff10;
-  margin-left: 20px;
-  color:lightgray;
-}
-
-.jeLogSkipped {
+  margin-left: -20px;
   color: grey;
 }
-
-.jeLogSummary {
-  color: lightgreen;
+body.lightsOff .jeLog {
+  color: lightgrey;
 }
 
-.jeLogResult {
-  color: orange;
+#jeLog > .jeLog > .jeExpander {
+  color: black;
+  font-weight: bold;
+}
+body.lightsOff #jeLog > .jeLog > .jeExpander {
+  color: white;
+}
+#jeLog > .jeLog + .jeLog {
+  margin-top: 20px;
 }
 
-.jeLogTime {
-  color: yellow;
-}
+.jeLogSkipped { color: darkgrey; }
+.jeLogSummary { color: green; }
+.jeLogResult  { color: orange; }
+.jeLogTime    { color: #880; }
+
+body.lightsOff .jeLogSkipped { color: grey; }
+body.lightsOff .jeLogSummary { color: lightgreen; }
+body.lightsOff .jeLogResult  { color: orange; }
+body.lightsOff .jeLogTime    { color: yellow; }
 
 /* Create the caret/arrow with a unicode, and style it */
 .jeExpander::before {
   content: "\25B6";
-  color: white;
+  color: black;
   display: inline-block;
   margin-right: 6px;
+}
+body.lightsOff .jeExpander::before {
+  color: white;
 }
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
@@ -397,6 +399,10 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 .jeLogHasNoProblems {
+  color: gray;
+}
+
+body.lightsOff .jeLogHasNoProblems {
   color: lightgray;
 }
 
@@ -412,6 +418,10 @@ body.jsonEdit.jeZoomOut #topSurface {
 .jeLogDetails {
   word-break: break-all;
   margin-left: 20px;
+  color: gray;
+}
+
+body.lightsOff .jeLogDetails {
   color: lightgray;
 }
 
