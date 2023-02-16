@@ -848,7 +848,6 @@ export class Widget extends StateManaged {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else if (recursion > 99) {
             problems.push(`Recursive call to ${a.routine} in ${a.widget} exceeds limits, canceling call`);
-            abortRoutine = true;
           } else {
             if(recursion)
               problems.push(`Warning: Recursive call to ${a.routine} in ${a.widget} detected. ${recursion}/100`)
