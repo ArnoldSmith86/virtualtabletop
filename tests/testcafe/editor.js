@@ -63,5 +63,5 @@ test('Create game using edit mode', async t => {
     .click('#addScoreboard')
     .click('#w_m06r');
   await t.resizeWindow(width,height);
-  await compareState(t, '90763067f59a7d65ca134cdc9266858c');
+  await compareState(t, '1ec0b52e161aaffce367d792f7f840f9');
 });
