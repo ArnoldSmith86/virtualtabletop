@@ -8,6 +8,7 @@ function initializeEditor() {
     new NewButton(),
     new SaveButton(),
     new ClickButton(),
+    new DarkModeButton(),
     new CloseButton()
   ]);
 
