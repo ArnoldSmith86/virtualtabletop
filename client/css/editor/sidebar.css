@@ -7,7 +7,7 @@
   position: absolute;
   width: var(--editSidebarWidth);
   right: 0;
-  top: var(--editToolbarHeight);
+  top: calc(var(--editToolbarHeight) - 1px);
   bottom: 0;
   z-index: 2;
   display: flex;
@@ -17,13 +17,13 @@
 #editorSidebar button span {
   display: none;
   position: absolute;
-  right: calc(var(--editSidebarWidth) + 2px);
+  right: calc(var(--editSidebarWidth) + 1px);
   background: var(--VTTblueDark);
   margin: 0;
-  margin-top: -5px;
-  padding: 10px;
+  padding: 9px;
   border-radius: 5px;
   text-transform: none;
+  width: 200px;
 }
 
 #editorSidebar button:hover span {
@@ -31,11 +31,11 @@
 }
 
 #editorSidebar button.active {
-  background: white;
-  color: var(--VTTblue);
   position: relative;
   left: -2px;
   border-radius: 0 5px 5px 0;
+  background: white;
+  color: var(--VTTblue);
 }
 
 #editorSidebar button.active::before {
@@ -45,7 +45,7 @@
 
 #editorSidebar button.active span {
   color: white;
-  right: var(--editSidebarWidth);
+  right: calc(var(--editSidebarWidth) - 2px);
 }
 
 #editorModule {

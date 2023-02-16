@@ -22,7 +22,7 @@
 #editorToolbar button span {
   display: none;
   position: absolute;
-  top: 38px;
+  top: calc(var(--editToolbarHeight) + 1px);
   background: var(--VTTblueDark);
   margin: 0;
   margin-left: -5px;
