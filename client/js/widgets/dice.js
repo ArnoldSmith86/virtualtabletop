@@ -369,10 +369,12 @@ class Dice extends Widget {
       return `rotate3d(${x},${y},${z},${Math.acos(w)*-2}rad)`;
     }
     const hash = this.rollHash? this.rollHash : 0;
-    const af = rotationMatrix(this.faceElements[this.activeFace()]);
-    const pf = rotationMatrix(this.faceElements[this.previousActiveFace]);
-    const curRot = axisAngle(af.inverse());
-    const transRot = axisAngle(af.multiply(pf.inverse()));
+    const af = this.activeFace();
+    const afRot = rotationMatrix(this.faceElements[af]);
+    const pf = this.previousActiveFace;
+    const pfRot = rotationMatrix(this.faceElements[pf]);
+    const curRot = axisAngle(afRot.inverse());
+    const transRot = axisAngle(afRot.multiply(pfRot.inverse()));
     const theda = Math.PI * (hash >> 12)/2**19;
     const z = ((hash << 20) >> 20)/2**11;
     const r = Math.sqrt(1 - z**2);
