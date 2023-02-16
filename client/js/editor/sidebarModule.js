@@ -8,34 +8,52 @@ class SidebarModule {
   click() {
     const target = $('#editorModule');
 
-    if($('#editorSidebar button.active') && $('#editorSidebar button.active') != this.domElement)
+    if($('#editorSidebar button.active') && $('#editorSidebar button.active') != this.buttonDOM)
       $('#editorSidebar button.active').click();
 
-    if(this.activeIn) {
+    if(this.moduleDOM) {
       $('#editor').classList.remove('moduleActive');
-      this.activeIn.classList.remove('active');
-      this.domElement.classList.remove('active');
-      delete this.activeIn;
+      this.moduleDOM.classList.remove('active');
+      this.buttonDOM.classList.remove('active');
+      delete this.moduleDOM;
     } else {
-      this.activeIn = target;
+      this.moduleDOM = target;
       $('#editor').classList.add('moduleActive');
       target.classList.add('active');
-      this.domElement.classList.add('active');
-      this.renderModule(target);
+      this.buttonDOM.classList.add('active');
+      if(this.renderModule)
+        this.renderModule(target);
+      if(this.onSelectionChangedWhileActive)
+        this.onSelectionChangedWhileActive(selectedWidgets, []);
     }
 
     setScale();
+  }
+
+  onDeltaReceived(delta) {
+    if(this.moduleDOM && this.onDeltaReceivedWhileActive)
+      this.onDeltaReceivedWhileActive(delta);
+  }
+
+  onSelectionChanged(newSelection, oldSelection) {
+    if(this.moduleDOM && this.onSelectionChangedWhileActive)
+      this.onSelectionChangedWhileActive(newSelection, oldSelection);
+  }
+
+  onStateReceived(state) {
+    if(this.moduleDOM && this.onStateReceivedWhileActive)
+      this.onStateReceivedWhileActive(state);
   }
 
   renderButton(target) {
     const tooltip = document.createElement('span');
     tooltip.innerText = this.tooltip;
 
-    this.domElement = document.createElement('button');
-    this.domElement.innerText = this.title;
-    this.domElement.setAttribute('icon', this.icon);
-    this.domElement.append(tooltip);
-    target.append(this.domElement);
-    this.domElement.onclick = e=>this.click(e);
+    this.buttonDOM = document.createElement('button');
+    this.buttonDOM.innerText = this.title;
+    this.buttonDOM.setAttribute('icon', this.icon);
+    this.buttonDOM.append(tooltip);
+    target.append(this.buttonDOM);
+    this.buttonDOM.onclick = e=>this.click(e);
   }
 }

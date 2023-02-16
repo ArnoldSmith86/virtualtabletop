@@ -377,49 +377,6 @@ async function applyEditOptions(widget) {
     applyEditOptionsTimer(widget);
 }
 
-export function editClick(widget) {
-  $('#editWidgetJSON').value = JSON.stringify(widget.state, null, '  ');
-  $('#editWidgetJSON').dataset.previousState = $('#editWidgetJSON').value;
-
-  $a('#editOverlay > div').forEach(d=>d.style.display = 'none');
-
-  var type = widget.state.type||'piece';
-  if (type=='piece' && widget.state.image)
-    type = 'basic';
-
-  const typeSpecific = $(`#editOverlay > .${type}Edit`);
-
-  if(!typeSpecific) {
-    $('#legacy-link').href += `#${roomID}`;
-    return showOverlay('editJSONoverlay');
-  }
-
-  typeSpecific.style.display = 'block';
-
-  vmEditOverlay.selectedWidget = widget
-
-  if(type == 'basic')
-    populateEditOptionsBasic(widget.state);
-  if(type == 'button')
-    populateEditOptionsButton(widget.state);
-  if(type == 'canvas')
-    populateEditOptionsCanvas(widget.state);
-  if(type == 'holder')
-    populateEditOptionsHolder(widget.state);
-  if(type == 'label')
-    populateEditOptionsLabel(widget.state);
-  if(type == 'piece')
-    populateEditOptionsPiece(widget.state);
-  if(type == 'seat')
-    populateEditOptionsSeat(widget.state);
-  if(type == 'spinner')
-    populateEditOptionsSpinner(widget.state);
-  if(type == 'timer')
-    populateEditOptionsTimer(widget.state);
-
-  showOverlay('editOverlay');
-}
-
 //This section holds the functions that generate the JSON of the widgets in the add widget overlay
 function generateCardDeckWidgets(id, x, y, addCards) {
   const widgets = [

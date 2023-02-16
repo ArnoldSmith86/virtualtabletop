@@ -1,11 +1,16 @@
+let toolbarButtons = null;
+let sidebarModules = null;
+
 function initializeEditor() {
-  renderToolbar([
+  registerSelectionEventHandlers();
+
+  renderToolbar(toolbarButtons = [
     new NewButton(),
     new SaveButton(),
     new CloseButton()
   ]);
 
-  renderSidebar([
+  renderSidebar(sidebarModules = [
     new PropertiesModule(),
     new UndoModule()
   ]);

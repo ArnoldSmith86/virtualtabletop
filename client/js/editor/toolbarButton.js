@@ -7,6 +7,9 @@ class ToolbarButton {
   click() {
   }
 
+  onSelectionChanged(newSelection, oldSelection) {
+  }
+
   render(target) {
     const tooltip = document.createElement('span');
     tooltip.innerText = this.tooltip;

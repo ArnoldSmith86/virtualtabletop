@@ -162,6 +162,9 @@ function receiveDelta(delta) {
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
+
+  if(edit)
+    editorReceiveDelta(delta);
 }
 
 function receiveDeltaFromServer(delta) {
