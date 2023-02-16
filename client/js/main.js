@@ -355,7 +355,7 @@ async function loadEditMode() {
       setJEenabled, setJEroutineLogging, setJEzoomOut, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, sendPropertyUpdate,
       addWidgetLocal, removeWidgetLocal,
-      generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset,
+      generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
       roomID, getDeltaID, widgets, widgetFilter,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
@@ -373,7 +373,8 @@ window.addEventListener('keydown', async function(e) {
   if(e.ctrlKey && e.key == 'j') {
     e.preventDefault();
     await loadEditMode();
-    jeToggle();
+    $('#editButton').click();
+    $('#editorSidebar button[icon=data_object]').click();
   }
 });
 
@@ -548,13 +549,12 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    if(overlayActive || edit)
+    if($('body.edit #editorSidebar button.active'))
+      $('#editorSidebar button.active').click();
+    else if(edit)
+      $('#editorToolbar button[icon=close]').click();
+    else if(overlayActive)
       $('#activeGameButton').click();
-    else if(jeEnabled && jeDebugViewing) {
-      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
-      jeShowCommands();
-    } else if(jeEnabled)
-      jeToggle();
   }
 }
 

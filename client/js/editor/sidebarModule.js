@@ -15,34 +15,47 @@ class SidebarModule {
       $('#editor').classList.remove('moduleActive');
       this.moduleDOM.classList.remove('active');
       this.buttonDOM.classList.remove('active');
+      this.onClose();
+      this.moduleDOM.innerHTML = '';
       delete this.moduleDOM;
     } else {
       this.moduleDOM = target;
       $('#editor').classList.add('moduleActive');
       target.classList.add('active');
+      target.classList.add(this.icon);
       this.buttonDOM.classList.add('active');
-      if(this.renderModule)
-        this.renderModule(target);
-      if(this.onSelectionChangedWhileActive)
-        this.onSelectionChangedWhileActive(selectedWidgets, []);
+      this.renderModule(target);
+      this.onSelectionChanged(selectedWidgets, []);
     }
 
     setScale();
   }
 
+  onClose() {
+  }
+
   onDeltaReceived(delta) {
-    if(this.moduleDOM && this.onDeltaReceivedWhileActive)
+    if(this.moduleDOM)
       this.onDeltaReceivedWhileActive(delta);
   }
 
+  onDeltaReceivedWhileActive(delta) {
+  }
+
   onSelectionChanged(newSelection, oldSelection) {
-    if(this.moduleDOM && this.onSelectionChangedWhileActive)
+    if(this.moduleDOM)
       this.onSelectionChangedWhileActive(newSelection, oldSelection);
   }
 
+  onSelectionChangedWhileActive(newSelection, oldSelection) {
+  }
+
   onStateReceived(state) {
-    if(this.moduleDOM && this.onStateReceivedWhileActive)
+    if(this.moduleDOM)
       this.onStateReceivedWhileActive(state);
+  }
+
+  onStateReceivedWhileActive(state) {
   }
 
   renderButton(target) {
@@ -55,5 +68,8 @@ class SidebarModule {
     this.buttonDOM.append(tooltip);
     target.append(this.buttonDOM);
     this.buttonDOM.onclick = e=>this.click(e);
+  }
+
+  renderModule(target) {
   }
 }

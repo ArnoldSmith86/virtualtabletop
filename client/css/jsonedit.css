@@ -1,6 +1,9 @@
-#jsonEditor {
+:root {
   --commandPaneWidth: 180px;
   --editorPaneWidth: 320px;
+}
+
+#jsonEditor {
   white-space: pre-line;
   font-family: monospace;
   display: none;
@@ -19,7 +22,7 @@
   display: none;
 }
 
-#jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
+#jsonEditor > *, #jeWidgetLayers > div, #jeLog {
   background: #08090a;
 }
 #jsonEditor > * {
@@ -95,8 +98,12 @@
 }
 
 #jeText, #jeTextHighlight {
-  grid-column: 1 / span 2;
-  grid-row: 5 / span 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: var(--commandPaneWidth);
+  font-family: monospace;
   white-space: pre-wrap;
   overflow-y: auto;
   overflow-wrap: break-word;
@@ -176,20 +183,31 @@
 
 /**** Color formatting for widgets ****/
 
-#jsonEditor i {
+#jeTextHighlight i {
   font-style: normal;
 }
 
-i.key     { color: yellow;  }
+i.key     { color: #880;  }
 i.custom  { color: orange;  }
 i.extern  { color: red;     }
 .extern   { color: red;     }
-i.string  { color: #7ed07e; }
-i.number  { color: #dda0dd; }
+i.string  { color: green; }
+i.number  { color: purple; }
 i.null    { color: blue;    }
-i.default { color: #606060; }
-i.variable{ color: #40e0d0; }
+i.default { color: #ccc; }
+i.variable{ color: darkcyan; }
 i.error   { color: red; font-weight: bold; }
+
+body.lightsOff i.key     { color: yellow;  }
+body.lightsOff i.custom  { color: orange;  }
+body.lightsOff i.extern  { color: red;     }
+body.lightsOff .extern   { color: red;     }
+body.lightsOff i.string  { color: #7ed07e; }
+body.lightsOff i.number  { color: #dda0dd; }
+body.lightsOff i.null    { color: blue;    }
+body.lightsOff i.default { color: #606060; }
+body.lightsOff i.variable{ color: #40e0d0; }
+body.lightsOff i.error   { color: red; font-weight: bold; }
 
 body.jsonEdit .selectedInEdit:not(.pile) {
   box-shadow: 0px 0px 0px 5px yellow;
@@ -223,9 +241,12 @@ body.jsonEdit:not(.edit) .selectedInEdit.deck {
 
 #jeCommands {
   white-space: pre-wrap;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
   height: 100%;
   width: var(--commandPaneWidth);
-  right: 0;
   overflow: auto;
   display: flex;
   flex-wrap: wrap;
@@ -264,16 +285,6 @@ body.jsonEdit #jeCommands > button {
 
 body.jsonEdit #toolbar {
   display: none;
-}
-
-body.jsonEdit {
-  --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  --roomLeft: 0px;
-}
-
-body.jsonEdit.jeZoomOut {
-  --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  --roomLeft: 12.5%;
 }
 
 body.jsonEdit.jeZoomOut #roomArea {

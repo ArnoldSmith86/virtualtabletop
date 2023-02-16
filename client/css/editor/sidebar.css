@@ -68,6 +68,11 @@
   display: block;
 }
 
+body.lightsOff #editorModule {
+  background: #08090a;
+  color: #f8f8f2;
+}
+
 @media (max-width: 1300px) {
   :root {
     --editSidebarWidth: 36px;

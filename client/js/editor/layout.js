@@ -12,7 +12,8 @@ function initializeEditor() {
 
   renderSidebar(sidebarModules = [
     new PropertiesModule(),
-    new UndoModule()
+    new UndoModule(),
+    new JsonModule()
   ]);
 }
 
@@ -27,19 +28,10 @@ function renderSidebar(modules) {
 }
 
 export function getAvailableRoomRectangle() {
-  if(jeEnabled) {
-    return {
-      top: 35,
-      right: $('#jeEditArea').offsetLeft,
-      left: 0,
-      bottom: window.innerHeight - 35
-    };
-  } else {
-    return {
-      top: window.innerWidth/window.innerHeight > 1 || window.innerWidth < 700 ? 36 : window.innerHeight/2,
-      right: (window.innerWidth/window.innerHeight > 1 && $('#editor.moduleActive') ? $('#editorModule') : $('#editorSidebar')).offsetLeft,
-      left: 0,
-      bottom: window.innerHeight
-    };
-  }
+  return {
+    top: window.innerWidth/window.innerHeight > 1 || window.innerWidth < 700 ? 36 : window.innerHeight/2,
+    right: (window.innerWidth/window.innerHeight > 1 && $('#editor.moduleActive') ? $('#editorModule') : $('#editorSidebar')).offsetLeft,
+    left: 0,
+    bottom: window.innerHeight
+  };
 }

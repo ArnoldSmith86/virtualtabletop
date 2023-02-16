@@ -4,6 +4,8 @@ class CloseButton extends ToolbarButton {
   }
 
   click() {
+    if($('#editorSidebar button.active'))
+      $('#editorSidebar button.active').click();
     $('#activeGameButton').click();
     setScale();
   }

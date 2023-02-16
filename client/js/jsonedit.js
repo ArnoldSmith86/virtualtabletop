@@ -2378,7 +2378,6 @@ export function jeToggle() {
   setJEroutineLogging(jeEnabled);
   jeLoggingHTML = '';
   if(jeEnabled) {
-    $('#activeGameButton').click();
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
       jeEmpty();
@@ -2390,7 +2389,6 @@ export function jeToggle() {
   } else {
     $('body').classList.remove('jsonEdit');
   }
-  setScale();
 }
 
 function jeEmpty() {

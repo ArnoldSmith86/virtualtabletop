@@ -86,10 +86,10 @@ async function inputHandler(name, e) {
       if(ms.status != 'initial' && ms.moveTarget)
         await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(jeEnabled)
-          await jeClick(widget, e);
-        else if(edit)
+        if(edit)
           editClick(widget);
+        else if(jeEnabled)
+          await jeClick(widget, e);
         else
           if(!target.classList.contains('longtouch'))
             await widget.click();
