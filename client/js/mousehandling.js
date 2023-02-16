@@ -28,16 +28,19 @@ async function inputHandler(name, e) {
     if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
 
-  e.preventDefault();
-
   if(name == 'mousedown' || name == 'touchstart') {
     if (!window.getSelection().isCollapsed)
       window.getSelection().collapseToEnd();
     document.activeElement.blur();
   }
   let target = e.target;
-  while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2)))))
+  while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2))))) {
+    if(target.id == 'editorModule')
+      return;
     target = target.parentNode;
+  }
+
+  e.preventDefault();
 
   const coords = eventCoords(name, e);
   mouseCoords = [Math.round(coords.x), Math.round(coords.y)];
