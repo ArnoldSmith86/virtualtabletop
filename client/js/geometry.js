@@ -110,7 +110,13 @@ export function getElementTransformRelativeTo(elem, parent) {
     destTransform.preMultiplySelf(getElementTransform(parent));
     parent = parent.offsetParent;
   }
-  const destTransformInverse = destTransform.inverse();
+  const transformOrigin = parseLengths(getComputedStyle(elem).transformOrigin);
+  let elemTransform = new DOMMatrix();
+  elemTransform.translateSelf(-transformOrigin[0], -transformOrigin[1]);
+  elemTransform.multiplySelf(destTransform);
+  elemTransform.translateSelf(transformOrigin[0], transformOrigin[1]);
+
+  const destTransformInverse = elemTransform.inverse();
   // If the matrix is not invertible its components are set to NaN.
   // We cannot produce a transform relative to this parent.
   if (isNaN(destTransformInverse.a))

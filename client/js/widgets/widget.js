@@ -833,7 +833,9 @@ export class Widget extends StateManaged {
             problems.push('Routine parameter must refer to only one routine, first routine executed.');
           a.routine = a.routine[0]
         }
-        if(!a.routine.match(/Routine$/)) {
+        if (typeof a.routine != 'string') {
+          problems.push('Routine parameter must be a string');
+        } else if (!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
         } else if(this.isValidID(a.widget, problems)) {
           if(Array.isArray(a.widget)) {
@@ -1875,7 +1877,7 @@ export class Widget extends StateManaged {
     await this.bringToFront();
     await this.set('dragging', playerName);
 
-    if(!this.get('fixedParent')) {
+    if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('_ancestor'));
       this.hoverTarget = null;
@@ -1918,7 +1920,7 @@ export class Widget extends StateManaged {
     await this.setPosition(newX, newY, this.get('z'));
     await this.snapToGrid();
 
-    if(!this.get('fixedParent')) {
+    if(!this.get('fixedParent') && this.get('movable')) {
       await this.checkParent();
 
       const lastHoverTarget = this.hoverTarget;
@@ -2002,7 +2004,7 @@ export class Widget extends StateManaged {
     await this.set('dragging', null);
     await this.set('hoverTarget', null);
 
-    if(!this.get('fixedParent')) {
+    if(!this.get('fixedParent') && this.get('movable')) {
       for(const t of this.dropTargets)
         t.domElement.classList.remove('droppable');
 
