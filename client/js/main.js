@@ -353,7 +353,7 @@ async function loadEditMode() {
     Object.assign(window, {
       $, $a, on, onMessage, showOverlay,
       setJEenabled, setJEroutineLogging, setJEzoomOut, toggleEditMode, getEdit,
-      toServer, batchStart, batchEnd, sendPropertyUpdate,
+      toServer, batchStart, batchEnd, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,
       generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
       roomID, getDeltaID, widgets, widgetFilter,

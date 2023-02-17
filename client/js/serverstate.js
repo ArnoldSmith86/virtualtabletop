@@ -17,6 +17,8 @@ let overlayShownForEmptyRoom = false;
 
 let triggerGameStartRoutineOnNextStateLoad = false;
 
+let undoProtocol = [];
+
 function generateUniqueWidgetID() {
   let id;
   do {
@@ -138,6 +140,8 @@ function getDeltaID() {
 }
 
 function receiveDelta(delta) {
+  addEntryToUndoProtocol(delta);
+
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s) {
     if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID)) {
@@ -165,6 +169,43 @@ function receiveDelta(delta) {
 
   if(edit)
     editorReceiveDelta(delta);
+}
+
+function addEntryToUndoProtocol(delta, state) {
+  const undoDelta = {};
+
+  for(const widgetID in delta.s) {
+    if(delta.s[widgetID] === null) {
+      if(widgets.has(widgetID))
+        undoDelta[widgetID] = JSON.parse(JSON.stringify(widgets.get(widgetID).unalteredState));
+    } else if(delta.s[widgetID].id) {
+      undoDelta[widgetID] = null;
+    } else {
+      undoDelta[widgetID] = {};
+      for(const property in delta.s[widgetID]) {
+        undoDelta[widgetID][property] = widgets.get(widgetID).unalteredState[property];
+        if(typeof undoDelta[widgetID][property] == 'undefined')
+          undoDelta[widgetID][property] = null;
+      }
+    }
+  }
+
+  undoProtocol.push({ delta, undoDelta });
+}
+
+function getUndoProtocol() {
+  return undoProtocol;
+}
+
+function setUndoProtocol(up) {
+  undoProtocol = up;
+}
+
+function sendRawDelta(delta) {
+  console.log('SENDING', delta);
+  receiveDelta(delta);
+  delta.id = deltaID;
+  toServer('delta', delta);
 }
 
 function receiveDeltaFromServer(delta) {
