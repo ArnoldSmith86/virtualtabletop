@@ -587,6 +587,13 @@ export class Widget extends StateManaged {
           } else {
             result[field.variable] = 'off';
           }
+        } else if(field.type == 'palette') {
+          let thisresult = document.getElementsByName('INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
+          for (var i=0;i<thisresult.length;i++){
+            if ( thisresult[i].checked ) {
+              result[field.variable] = thisresult[i].value;
+            }
+          }
         } else if(field.type == 'number') {
           let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
           if(thisvalue > field.max)
@@ -1867,7 +1874,7 @@ export class Widget extends StateManaged {
     await this.bringToFront();
     await this.set('dragging', playerName);
 
-    if(!this.get('fixedParent')) {
+    if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('_ancestor'));
       this.hoverTarget = null;
@@ -1910,7 +1917,7 @@ export class Widget extends StateManaged {
     await this.setPosition(newX, newY, this.get('z'));
     await this.snapToGrid();
 
-    if(!this.get('fixedParent')) {
+    if(!this.get('fixedParent') && this.get('movable')) {
       await this.checkParent();
 
       const lastHoverTarget = this.hoverTarget;
@@ -1994,7 +2001,7 @@ export class Widget extends StateManaged {
     await this.set('dragging', null);
     await this.set('hoverTarget', null);
 
-    if(!this.get('fixedParent')) {
+    if(!this.get('fixedParent') && this.get('movable')) {
       for(const t of this.dropTargets)
         t.domElement.classList.remove('droppable');
 

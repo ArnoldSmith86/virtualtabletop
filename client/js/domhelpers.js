@@ -157,6 +157,31 @@ export function formField(field, dom, id) {
     input.id = id;
   }
 
+  if(field.type == 'palette') {
+    const input = document.createElement('div');
+    for(const option of field.colors) {
+      const optionlabel = document.createElement('label');
+      optionlabel.htmlFor = option;
+      optionlabel.textContent = ' ';
+
+      const optionlabelinterior = document.createElement('div');
+      optionlabelinterior.style="background-color:"+option+";"
+      optionlabel.appendChild(optionlabelinterior);
+
+      const optionElement = document.createElement('input');
+      optionElement.type = 'radio';
+      optionElement.value = option || '';
+      optionElement.id = option || '';
+      optionElement.name = id;
+      if(toHex(option) == field.value)
+        optionElement.checked = 'checked';
+      input.appendChild(optionElement);
+      input.appendChild(optionlabel);
+    }
+    dom.appendChild(input);
+    input.id = id;
+  }
+
   if(field.type == 'string') {
     const input = document.createElement('input');
     input.value = field.value || '';
