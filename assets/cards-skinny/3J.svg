@@ -10,7 +10,6 @@
    inkscape:export-filename="/home/pwinckles/workspace/pcio/52-domino/png/joker-black.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
-   inkscape:dataloss="true"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -96,8 +95,8 @@
        xml:space="preserve"><tspan
          x="5.5413333"
          y="15.10947"
-         id="tspan1556"><tspan
+         id="tspan30"><tspan
            style="shape-inside:url(#rect21)"
-           id="tspan1554">★</tspan></tspan></text>
+           id="tspan28">★</tspan></tspan></text>
   </g>
 </svg>
