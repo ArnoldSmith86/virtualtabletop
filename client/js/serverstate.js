@@ -140,7 +140,7 @@ function getDeltaID() {
 }
 
 function receiveDelta(delta) {
-  addEntryToUndoProtocol(delta);
+  addDeltaEntryToUndoProtocol(delta);
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s) {
@@ -171,7 +171,7 @@ function receiveDelta(delta) {
     editorReceiveDelta(delta);
 }
 
-function addEntryToUndoProtocol(delta, state) {
+function addDeltaEntryToUndoProtocol(delta) {
   const undoDelta = {};
 
   for(const widgetID in delta.s) {
@@ -193,6 +193,35 @@ function addEntryToUndoProtocol(delta, state) {
   undoProtocol.push({ delta, undoDelta });
 }
 
+function addStateEntryToUndoProtocol(state) {
+  const undoDelta = {};
+  const redoDelta = {...state};
+  delete redoDelta._meta;
+
+
+  for(const id in redoDelta)
+    undoDelta[id] = null;
+
+  for(const [ id, widget ] of widgets) {
+    if(!redoDelta[id])
+      redoDelta[id] = null;
+
+    undoDelta[id] = widget.unalteredState;
+
+    // unset properties of widgets with same ID
+    if(redoDelta[id]) {
+      for(const property in redoDelta[id])
+        if(typeof undoDelta[id][property] == 'undefined')
+          undoDelta[id][property] = null;
+      for(const property in undoDelta[id])
+        if(typeof redoDelta[id][property] == 'undefined')
+          redoDelta[id][property] = null;
+    }
+  }
+
+  undoProtocol.push({ delta: {s:redoDelta}, undoDelta });
+}
+
 function getUndoProtocol() {
   return undoProtocol;
 }
@@ -202,7 +231,6 @@ function setUndoProtocol(up) {
 }
 
 function sendRawDelta(delta) {
-  console.log('SENDING', delta);
   receiveDelta(delta);
   delta.id = deltaID;
   toServer('delta', delta);
@@ -214,6 +242,8 @@ function receiveDeltaFromServer(delta) {
 }
 
 function receiveStateFromServer(args) {
+  addStateEntryToUndoProtocol(args);
+
   mouseTarget = null;
   deltaID = args._meta.deltaID;
   for(const widget of widgetFilter(w=>w.get('parent')===null))

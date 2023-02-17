@@ -23,7 +23,7 @@ class UndoModule extends SidebarModule {
     this.inUndoMode = true;
     for(let i=this.activeIndex; i>index; --i)
       sendRawDelta({s:this.protocol[i].undoDelta});
-    for(let i=this.activeIndex; i<=index; ++i)
+    for(let i=this.activeIndex+1; i<=index; ++i)
       sendRawDelta(this.protocol[i].delta);
     this.setActiveIndex(index, dom);
     this.inUndoMode = false;
