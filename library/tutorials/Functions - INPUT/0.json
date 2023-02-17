@@ -45,7 +45,7 @@
     "layer": -3,
     "z": 129,
     "css": "font-size: 25px; ",
-    "text": "INPUT is used to prompt a user to enter data that can be stored in a variable and acted upon. At its most basic form, it can serve as a confirmation prompt. Even if the variable is not stored, unless the user presses the continue/go button, the routine will not continue. Each of the examples immediately below demonstrates one of the 6 possible field types of INPUT. They are each presented in their most basic and default form. The result is displayed in the button text. The lower buttons show how you can change the visual appearance of an INPUT function.",
+    "text": "INPUT is used to prompt a user to enter data that can be stored in a variable and acted upon. At its most basic form, it can serve as a confirmation prompt. Even if the variable is not stored, unless the user presses the continue/go button, the routine will not continue. Each of the examples immediately below demonstrates one of the 7 possible field types of INPUT. They are each presented in their most basic and default form. The result is displayed in the button text. The lower buttons show how you can change the visual appearance of an INPUT function.",
     "y": 80,
     "movable": false,
     "movableInEdit": false
