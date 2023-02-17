@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 12,
     "info": {
       "name": "Functions - INPUT",
       "image": "/assets/86171241_6035",
@@ -9,12 +9,20 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1640802992000
+      "lastUpdate": 1676594694159,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "8fr3": {
@@ -475,7 +483,7 @@
   "colorbutton": {
     "type": "button",
     "id": "colorbutton",
-    "x": 325,
+    "x": 278,
     "y": 250,
     "z": 22829,
     "clickRoutine": [
@@ -502,7 +510,7 @@
   "numberbutton": {
     "type": "button",
     "id": "numberbutton",
-    "x": 605,
+    "x": 512,
     "y": 250,
     "z": 22835,
     "clickRoutine": [
@@ -608,7 +616,7 @@
   "selectbutton": {
     "type": "button",
     "id": "selectbutton",
-    "x": 885,
+    "x": 978,
     "y": 250,
     "z": 22831,
     "clickRoutine": [
@@ -649,7 +657,7 @@
   "stringbutton": {
     "type": "button",
     "id": "stringbutton",
-    "x": 1165,
+    "x": 1212,
     "y": 250,
     "z": 22834,
     "clickRoutine": [
@@ -699,5 +707,53 @@
       }
     ],
     "text": "on"
+  },
+  "zjgm6": {
+    "id": "zjgm6",
+    "z": 22811,
+    "parent": "palettebutton",
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:center  ",
+    "x": -15,
+    "y": 90,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "text": "Palette"
+  },
+  "palettebutton": {
+    "type": "button",
+    "id": "palettebutton",
+    "x": 745,
+    "y": 250,
+    "z": 22835,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "palette",
+            "label": "Choose a color",
+            "colors": [
+              "#000000",
+              "#0000FF",
+              "#008000",
+              "#800080",
+              "#FF0000",
+              "#FFFF00"
+            ],
+            "variable": "color",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${color}"
+      }
+    ],
+    "text": "#800080"
   }
 }
