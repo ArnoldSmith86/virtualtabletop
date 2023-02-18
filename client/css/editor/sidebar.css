@@ -54,9 +54,8 @@
   right: var(--editSidebarWidth);
   top: var(--editToolbarHeight);
   bottom: 0;
-  width: 300px;
-  min-width: 300px;
-  width: 25vw;
+  min-width: 500px;
+  width: 33vw;
   z-index: 1;
   box-sizing: border-box;
   padding: 10px;
@@ -73,7 +72,8 @@ body.lightsOff #editorModule {
   color: #f8f8f2;
 }
 
-@media (max-width: 1300px) {
+/* iconify sidebar icons */
+@media (max-width: 1600px) {
   :root {
     --editSidebarWidth: 36px;
   }
@@ -89,7 +89,8 @@ body.lightsOff #editorModule {
   }
 }
 
-@media (orientation: portrait) and (min-width: 700px) {
+/* module above the room */
+@media (orientation: portrait) and (min-width: 1000px), (max-aspect-ratio: 16/20) {
   body.edit {
     --editSidebarWidth: 36px;
     --roomTop: calc(100vh - 1000px * var(--scale));
@@ -100,11 +101,13 @@ body.lightsOff #editorModule {
     right: var(--editSidebarWidth);
     bottom: calc(1000px * var(--scale));
     width: unset;
+    min-width: unset;
     height: unset;
   }
 }
 
-@media (max-width: 700px) {
+/* module as fullscreen overlay */
+@media (max-width: 1000px) and (min-aspect-ratio: 16/20) {
   body.edit {
     --editSidebarWidth: 36px;
   }
@@ -114,6 +117,7 @@ body.lightsOff #editorModule {
     right: var(--editSidebarWidth);
     bottom: 0;
     width: unset;
+    min-width: unset;
     height: unset;
   }
 }
