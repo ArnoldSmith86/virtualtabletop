@@ -200,7 +200,7 @@ body.jsonEdit .selectedInEdit.pile .handle {
 }
 
 body.jsonEdit:not(.edit) .selectedInEdit.deck {
-  display: block;
+  visibility: visible;
   font-size: 0;
 }
 
