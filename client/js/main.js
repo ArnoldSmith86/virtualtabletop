@@ -201,11 +201,15 @@ function setScale() {
 }
 
 export async function shuffleWidgets(collection) {
-  const shuffle = collection.map(widget => {
-    return {widget, rand:Math.random()};
-  }).sort((a, b)=> a.rand - b.rand);
-  for(let i of shuffle) {
-    await i.widget.bringToFront();
+  // Fisher–Yates shuffle
+  const len = collection.length;
+  let indexes = [...Array(len).keys()];
+  for (let i = len-1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i+1));
+    [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+  }
+  for (let i of indexes) {
+    await collection[i].bringToFront();
   }
 }
 

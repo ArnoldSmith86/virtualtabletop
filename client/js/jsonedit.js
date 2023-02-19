@@ -954,9 +954,10 @@ function jeAddCommands() {
   jeAddLimitCommand('maxY');
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
-  jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('variable', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('label', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('colors', 'palette', [ '#000000' ]);
   jeAddFieldCommand('min', 'number', 0);
   jeAddFieldCommand('max', 'number', 10);
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
@@ -972,7 +973,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
-  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'palette', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
@@ -1408,7 +1409,6 @@ function jeApplyDelta(delta) {
   }
 
   jeUpdateTree(delta.s);
-  widgetCoordCache = null;
 }
 
 function jeApplyState(state) {
@@ -2417,7 +2417,6 @@ const clickButton = async function(event) {
   }
 }
 
-let widgetCoordCache = null;
 window.addEventListener('mousemove', function(e) {
   if(!jeEnabled)
     return;
@@ -2427,24 +2426,15 @@ window.addEventListener('mousemove', function(e) {
   if(!jeZoomOut && x > 1600 || jeMouseButtonIsDown)
     return;
 
-  if(!widgetCoordCache) {
-    widgetCoordCache = [];
-    for(const widget of widgets.values()) {
-      const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
-      coords.r = coords.x + widget.get('width');
-      coords.b = coords.y + widget.get('height');
-      coords.widget = widget;
-      widgetCoordCache.push(coords);
-    }
-  }
-
-  const hoveredWidgets = widgetCoordCache.filter(c=>x>=c.x && x<=c.r && y>=c.y && y<=c.b).map(c=>c.widget);
+  // Adding hitTest makes foreign elements temporarily hittable.
+  document.body.classList.add('hitTest');
+  let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
+  document.body.classList.remove('hitTest');
 
   hoveredWidgets.sort(function(w1,w2) {
     const hiddenParent =  function(widget) {
       return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
     };
-
     const w1card = w1.get('type') == 'card';
     const w2card = w2.get('type') == 'card';
     const w1foreign = !w1card && hiddenParent(w1);
