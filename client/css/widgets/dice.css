@@ -1,4 +1,5 @@
 .dice.widget {
+  --borderColor: var(--pipColor);
   --fontSize: calc(var(--size) * .95);
   --faceBorder: 0.5px solid var(--borderColor);
   --faceWidth: var(--size);

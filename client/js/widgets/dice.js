@@ -1,3 +1,6 @@
+const diceFaceCssVariableProps = [
+  'pipColor','backgroundColor','borderColor','imageScale'
+];
 class Dice extends Widget {
   constructor(id) {
     super(id);
@@ -198,8 +201,13 @@ class Dice extends Widget {
           content = {value:content};
       }
 
-      if(this.getFaceProperty(content, 'faceCSS'))
-        face.style = mapAssetURLs(this.cssAsText(this.getFaceProperty(content, 'faceCSS'), null, true));
+      let faceCSS = this.getFaceProperty(content, 'faceCSS');
+      faceCSS = faceCSS ? mapAssetURLs(thisCssAsText(faceCSS, null, true)) : '';
+      diceFaceCssVariableProps.forEach(prop=>{
+        if(content.prop != undefined)
+          faceCSS += `; --${prop}:${content.prop}`
+      });
+      face.style = faceCSS;
 
       let pips = this.getFaceProperty(content, 'pips');
       const text = this.getFaceProperty(content, 'text');
@@ -232,11 +240,12 @@ class Dice extends Widget {
   css() {
     let css = super.css();
 
-    css += '; --pipColor:' + this.get('pipColor');
-    css += '; --backgroundColor:' + this.get('backgroundColor');
-    css += '; --borderColor:' + (this.get('borderColor') || this.get('pipColor'));
+    diceFaceCssVariableProps.forEach(prop=>{
+      const value = this.get(prop,{ignoreFaceProperties:true});
+      if(value)
+        css += `; --${prop}:${value}`;
+    });
     css += '; --size:' + Math.min(this.get('width'), this.get('height')) + 'px';
-    css += '; --imageScale:' + this.get('imageScale');
     css += '; --rollTime:' + this.get('rollTime') + 'ms';
     css += '; --swapTime:' + this.get('swapTime') + 'ms';
 
