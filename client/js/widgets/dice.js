@@ -258,7 +258,7 @@ class Dice extends Widget {
   }
 
   get(property, options) {
-    if(typeof options != 'object' || options == null || !options.ignoreFaceProperties) {
+    if(property !='faces' && typeof options != 'object' || options == null || !options.ignoreFaceProperties) {
       if(property == 'value') {
         const o = this.getValueMap();
         if(Array.isArray(o) && o.length > this.activeFace())
