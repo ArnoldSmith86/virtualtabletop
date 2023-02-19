@@ -423,7 +423,7 @@
   transition: none;
 }
 
-.d10.animate_rollcount.animateBegin.dice.widget > .diceFaces {
+.d10.animate_rollCount.animateBegin.dice.widget > .diceFaces {
   transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(15deg) var(--curRot) var(--transRot) var(--rollRot);
   transition: none;
 }
