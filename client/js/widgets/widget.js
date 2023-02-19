@@ -961,13 +961,13 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CLONE') {
-        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
+        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, recursive: false, collection: 'DEFAULT' });
         const source = getCollection(a.source);
         if(source) {
           var c=[];
           for(const w of collections[source]) {
             for(let i=1; i<=a.count; ++i) {
-              c.push(await w.clone(a.properties, false, problems, a.xOffset * i, a.yOffset * i));
+              c.push(await w.clone(a.properties, a.recursive, problems, a.xOffset * i, a.yOffset * i));
             }
           }
           collections[a.collection]=c;
