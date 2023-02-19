@@ -188,38 +188,37 @@ class Dice extends Widget {
     const polygonBorder = document.createElement('span');
     polygonBorder.className = "polygonBorder";
     for(const i in faces) {
-      const content = faces[i];
+      let content = faces[i];
       const face = document.createElement('div');
+
+      if(typeof content != 'object' || content == null) {
+        if(typeof content == 'string' && content.match(/^\/(assets|i)/))
+          content = {image:content};
+        else
+          content = {value:content};
+      }
 
       if(this.getFaceProperty(content, 'faceCSS'))
         face.style = mapAssetURLs(this.cssAsText(this.getFaceProperty(content, 'faceCSS'), null, true));
 
-      if(typeof content == 'object' && content !== null) {
-        let pips = this.getFaceProperty(content, 'pips');
-        const text = this.getFaceProperty(content, 'text');
-        if(pips == undefined && text == undefined && content.image == undefined && this.pipSymbols())
-          pips = content.value;
-        if(Number.isInteger(pips) && pips >= 1 && pips <= 9) {
-          face.textContent = `die_face_${pips}`;
-          face.className = 'dicePip';
-        } else if(text != undefined) {
-          face.textContent = text;
-        } else if(content.value != undefined && content.image == undefined) {
-          face.textContent = content.value; // don't inherit value from widget because it's only defined
-        } else if(pips != undefined) {
-          face.textContent = pips;
-        }
-        const image = this.getFaceProperty(content, 'image');
-        if(image)
-          applySVGreplaces(face, content, image, this.getFaceProperty(content, 'svgReplaces'));
-      } else if(Number.isInteger(content) && content>=1 && content<=9 && this.pipSymbols()) {
-        face.textContent = `die_face_${content}`;
+      let pips = this.getFaceProperty(content, 'pips');
+      const text = this.getFaceProperty(content, 'text');
+      if(pips == undefined && text == undefined && content.image == undefined && this.pipSymbols())
+        pips = content.value;
+      if(Number.isInteger(pips) && pips >= 1 && pips <= 9) {
+        face.textContent = `die_face_${pips}`;
         face.className = 'dicePip';
-      } else if(typeof content == 'string' && content.match(/^\/(assets|i)/)) {
-        applySVGreplaces(face, content, content, this.get('svgReplaces'));
-      } else {
-        face.textContent = content;
+      } else if(text != undefined) {
+        face.textContent = text;
+      } else if(content.value != undefined && content.image == undefined) {
+        face.textContent = content.value; // don't inherit value from widget because it's only defined
+      } else if(pips != undefined) {
+        face.textContent = pips;
       }
+      const image = this.getFaceProperty(content, 'image');
+      if(image)
+        applySVGreplaces(face, content, image, this.getFaceProperty(content, 'svgReplaces'));
+
       face.appendChild(polygonBorder.cloneNode(true));
       face.appendChild(polygonBorder.cloneNode(true));
 
