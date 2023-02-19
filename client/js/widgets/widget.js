@@ -416,8 +416,8 @@ export class Widget extends StateManaged {
     }
 
     if (recursive) {
-      for (const w of this.children()) {
-        w.clone({parent: cWidget.get('id')}, true, problems);
+      for (const w of this.childArray) {
+        await w.clone({parent: cWidget.get('id')}, true, problems);
       }
     }
     return cWidget;
