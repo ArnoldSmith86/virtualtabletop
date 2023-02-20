@@ -38,38 +38,40 @@ class Pile extends Widget {
     this.updateText();
   }
 
-  applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
-    if(this.handle && delta.handleCSS !== undefined)
-      this.handle.style = mapAssetURLs(this.cssAsText(this.get('handleCSS'),null,true));
-    if(this.handle && delta.text !== undefined)
-      this.updateText();
-    if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
-      if(this.get('handleSize') == 'auto' && (this.get('width') < 50 || this.get('height') < 50))
-        this.handle.classList.add('small');
-      else
-        this.handle.classList.remove('small');
-    }
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
+    super.applyDeltaToDOM(delta, modifyDOM, afterModify);
+    modifyDOM.then(() => {
+      if(this.handle && delta.handleCSS !== undefined)
+        this.handle.style = mapAssetURLs(this.cssAsText(this.get('handleCSS'),null,true));
+      if(this.handle && delta.text !== undefined)
+        this.updateText();
+      if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
+        if(this.get('handleSize') == 'auto' && (this.get('width') < 50 || this.get('height') < 50))
+          this.handle.classList.add('small');
+        else
+          this.handle.classList.remove('small');
+      }
 
-    const threshold = this.get('handleOffset')+5;
-    for(const e of [ [ 'x', 'right', 1600-this.get('width'), 'center' ], [ 'y', 'bottom', 1000-this.get('height'), 'middle' ] ]) {
-      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined || delta.handlePosition !== undefined || delta.handleOffset !== undefined)) {
-        if(this.get('handlePosition') == 'static') {
-          this.handle.classList.remove(e[1]);
-          this.handle.classList.remove(e[3]);
-        } else if(this.get('handlePosition').match(e[3])) {
-          this.handle.classList.remove(e[1]);
-          this.handle.classList.add(e[3]);
-        } else {
-          this.handle.classList.remove(e[3]);
-          const isRightOrBottom = this.get('handlePosition').match(e[1]);
-          if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
-            this.handle.classList.add(e[1]);
-          else
+      const threshold = this.get('handleOffset')+5;
+      for(const e of [ [ 'x', 'right', 1600-this.get('width'), 'center' ], [ 'y', 'bottom', 1000-this.get('height'), 'middle' ] ]) {
+        if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined || delta.handlePosition !== undefined || delta.handleOffset !== undefined)) {
+          if(this.get('handlePosition') == 'static') {
             this.handle.classList.remove(e[1]);
+            this.handle.classList.remove(e[3]);
+          } else if(this.get('handlePosition').match(e[3])) {
+            this.handle.classList.remove(e[1]);
+            this.handle.classList.add(e[3]);
+          } else {
+            this.handle.classList.remove(e[3]);
+            const isRightOrBottom = this.get('handlePosition').match(e[1]);
+            if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
+              this.handle.classList.add(e[1]);
+            else
+              this.handle.classList.remove(e[1]);
+          }
         }
       }
-    }
+    });
   }
 
   async click(mode='respect') {

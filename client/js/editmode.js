@@ -18,8 +18,18 @@ async function addWidgetLocal(widget) {
   }
 
   const isNewWidget = !widgets.has(widget.id);
-  if(isNewWidget)
-    addWidget(widget);
+  if(isNewWidget) {
+    // Ideally we'd pass these promises in and resolve them immediately.
+    let modifyDOM = new Promise((resolve) => {
+      setTimeout(resolve, 0);
+    });
+    let afterModify = new Promise((resolve) => {
+      modifyDOM.then(() => {
+        setTimeout(resolve, 0);
+      });
+    });
+    addWidget(widget, undefined, modifyDOM, afterModify);
+  }
   sendPropertyUpdate(widget.id, widget);
   sendDelta();
   batchStart();
@@ -769,7 +779,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'pile')   w = new Pile(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
-    w.applyInitialDelta(wi);
+    w.applyInitialDelta(wi, Promise.resolve(), Promise.resolve());
     w.domElement.id = w.id;
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
@@ -788,7 +798,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 const VTTblue = '#1f5ca6';
 
 function addPieceToAddWidgetOverlay(w, wi) {
-  w.applyInitialDelta(wi);
+  w.applyInitialDelta(wi, Promise.resolve(), Promise.resolve());
   w.domElement.addEventListener('click', async _=>{
     try {
       const result = await w.showInputOverlay({
@@ -814,7 +824,7 @@ function addPieceToAddWidgetOverlay(w, wi) {
 }
 
 function addWidgetToAddWidgetOverlay(w, wi) {
-  w.applyInitialDelta(wi);
+  w.applyInitialDelta(wi, Promise.resolve(), Promise.resolve());
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
     toAdd.z = getMaxZ(w.get('layer')) + 1;
@@ -1368,7 +1378,7 @@ function populateAddWidgetOverlay() {
     x: 450,
     y: 835
   };
-  spinner.applyInitialDelta(spinAttrs);
+  spinner.applyInitialDelta(spinAttrs, Promise.resolve(), Promise.resolve());
   spinner.domElement.addEventListener('click', async _=>{
     try {
       const result = await spinner.showInputOverlay({
@@ -1965,5 +1975,6 @@ onLoad(function() {
       $('#buttonImage').value = asset;
   }));
 
-  populateAddWidgetOverlay();
+  // TODO: Figure out why this crashes.
+  //populateAddWidgetOverlay();
 });

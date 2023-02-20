@@ -155,7 +155,7 @@ export class Widget extends StateManaged {
     }
   }
 
-  applyDeltaToDOM(delta) {
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
@@ -165,38 +165,40 @@ export class Widget extends StateManaged {
         fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
     }
 
-    this.applyCSS(delta);
-    if(delta.audio !== null)
-      this.addAudio(this);
-
-    if(delta.z !== undefined)
-      this.applyZ(true);
-
     if(delta.movable !== undefined)
       this.isDraggable = delta.movable;
 
-    if(newParent !== undefined) {
-      if(this.parent)
-        this.parent.applyChildRemove(this);
+    modifyDOM.then(() => {
+      this.applyCSS(delta);
+      if(delta.audio !== null)
+        this.addAudio(this);
 
-      newParent.appendChild(this.domElement);
-      if (fromTransform) {
-        // If we changed parents, we apply a transform to the previous location
-        // to allow for a smooth transition animation.
-        this.domElement.style.transform = fromTransform;
-        // Force style recalc to commit from transform and start a transition
-        // on applying the destination transform.
-        this.domElement.offsetTop;
-        this.domElement.style.transform = this.targetTransform;
+      if(delta.z !== undefined)
+        this.applyZ(true);
+      
+      if(newParent !== undefined) {
+        if(this.parent)
+          this.parent.applyChildRemove(this);
+  
+        newParent.appendChild(this.domElement);
+        if (fromTransform) {
+          // If we changed parents, we apply a transform to the previous location
+          // to allow for a smooth transition animation.
+          this.domElement.style.transform = fromTransform;
+          afterModify.then(() => {
+            this.domElement.style.transform = this.targetTransform;
+          });
+        }
+  
+        if(delta.parent !== null) {
+          this.parent = widgets.get(delta.parent);
+          this.parent.applyChildAdd(this);
+        } else {
+          delete this.parent;
+        }
       }
-
-      if(delta.parent !== null) {
-        this.parent = widgets.get(delta.parent);
-        this.parent.applyChildAdd(this);
-      } else {
-        delete this.parent;
-      }
-    }
+    
+    });
 
     for(const key in delta) {
       const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
@@ -214,7 +216,7 @@ export class Widget extends StateManaged {
       this.inheritFromUnregister();
 
       if(delta.inheritFrom)
-        this.applyInheritedValuesToDOM(this.inheritFrom(), true);
+        this.applyInheritedValuesToDOM(this.inheritFrom(), true, modifyDOM, afterModify);
 
       this.isDraggable = delta.movable;
     }
@@ -222,11 +224,13 @@ export class Widget extends StateManaged {
     for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
       const inheritedDelta = {};
       this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
-      inheriting.applyDeltaToDOM(inheritedDelta);
+      inheriting.applyDeltaToDOM(inheritedDelta, modifyDOM, afterModify);
     }
 
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
-      this.showEnlarged(null, delta);
+      modifyDOM.then(() => {
+        this.showEnlarged(null, delta);
+      });
     }
   }
 
@@ -236,13 +240,13 @@ export class Widget extends StateManaged {
           targetDelta[key] = sourceDelta[key];
   }
 
-  applyInheritedValuesToDOM(inheritFrom, pushasArray) {
+  applyInheritedValuesToDOM(inheritFrom, pushasArray, modifyDOM, afterModify) {
     const delta = {};
     for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
       if(widgets.has(id)) {
         const w = widgets.get(id);
         if(w.state.inheritFrom)
-          this.applyInheritedValuesToDOM(w.inheritFrom());
+          this.applyInheritedValuesToDOM(w.inheritFrom(), false, modifyDOM, afterModify);
         this.applyInheritedValuesToObject(properties, w.state, delta, this);
       }
 
@@ -252,7 +256,7 @@ export class Widget extends StateManaged {
         StateManaged.inheritFromMapping[id].push(this);
       }
     }
-    this.applyDeltaToDOM(delta);
+    this.applyDeltaToDOM(delta, modifyDOM, afterModify);
   }
 
   applyRemove() {

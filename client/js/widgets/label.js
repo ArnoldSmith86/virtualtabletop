@@ -25,35 +25,37 @@ export class Label extends Widget {
     });
   }
 
-  applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
-      this.input.value = this.get('text');
-      if(this.get('twoRowBottomAlign')) {
-        this.input.style.height = '20px';
-        this.input.style.minHeight = 'unset';
-        this.input.style.paddingTop = '0';
-        const contentHeight = this.input.scrollHeight;
-        if(contentHeight < this.get('height')) {
-          this.input.style.paddingTop = `${this.get('height')-contentHeight}px`;
-          this.input.style.height = 'auto';
-          this.input.style.minHeight = `${contentHeight}px`;
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
+    super.applyDeltaToDOM(delta, modifyDOM, afterModify);
+    modifyDOM.then(() => {
+      if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
+        this.input.value = this.get('text');
+        if(this.get('twoRowBottomAlign')) {
+          this.input.style.height = '20px';
+          this.input.style.minHeight = 'unset';
+          this.input.style.paddingTop = '0';
+          const contentHeight = this.input.scrollHeight;
+          if(contentHeight < this.get('height')) {
+            this.input.style.paddingTop = `${this.get('height')-contentHeight}px`;
+            this.input.style.height = 'auto';
+            this.input.style.minHeight = `${contentHeight}px`;
+          } else {
+            this.input.style.minHeight = '100%';
+          }
         } else {
           this.input.style.minHeight = '100%';
+          this.input.style.paddingTop = 'unset';
         }
-      } else {
-        this.input.style.minHeight = '100%';
-        this.input.style.paddingTop = 'unset';
       }
-    }
-    if(delta.editable !== undefined) {
-      if(delta.editable)
-        this.input.removeAttribute("readonly");
-      else
-        this.input.setAttribute("readonly", !delta.editable);
-    }
-    if(delta.spellCheck !== undefined) {
-      this.input.setAttribute('spellcheck', this.get('spellCheck') === true)
-    }
+      if(delta.editable !== undefined) {
+        if(delta.editable)
+          this.input.removeAttribute("readonly");
+        else
+          this.input.setAttribute("readonly", !delta.editable);
+      }
+      if(delta.spellCheck !== undefined) {
+        this.input.setAttribute('spellcheck', this.get('spellCheck') === true)
+      }
+    });
   }
 }

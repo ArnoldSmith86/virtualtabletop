@@ -15,7 +15,7 @@ let deltaID = 0;
 let batchDepth = 0;
 let overlayShownForEmptyRoom = false;
 
-export function addWidget(widget, instance) {
+export function addWidget(widget, instance, modifyDOM, afterModify) {
   if(widget.parent && !widgets.has(widget.parent)) {
     if(!deferredChildren[widget.parent])
       deferredChildren[widget.parent] = [];
@@ -31,6 +31,8 @@ export function addWidget(widget, instance) {
 
   let w;
 
+  // TODO: Many of the constructors perform DOM modifications that should be
+  // delayed until modifyDOM for performance.
   if(instance != undefined) {
     w = instance;
   } else if(widget.type == 'card') {
@@ -73,7 +75,7 @@ export function addWidget(widget, instance) {
 
   try {
     widgets.set(widget.id, w);
-    w.applyInitialDelta(widget);
+    w.applyInitialDelta(widget, modifyDOM, afterModify);
   } catch(e) {
     console.error(`Could not add widget!`, widget, e);
     removeWidget(widget.id);
@@ -84,11 +86,11 @@ export function addWidget(widget, instance) {
 
   if(widget.type == 'deck')
     for(const c of deferredCards[widget.id] || [])
-      addWidget(c);
+      addWidget(c, undefined, modifyDOM, afterModify);
   delete deferredCards[widget.id];
 
   for(const c of deferredChildren[widget.id] || [])
-    addWidget(c);
+    addWidget(c, undefined, modifyDOM, afterModify);
   delete deferredChildren[widget.id];
 }
 
@@ -102,27 +104,54 @@ export function batchEnd() {
 }
 
 function receiveDelta(delta) {
+  // Apply deltas in three phases to optimize for performance. See the following article for details on why we do this:
+  // https://web.dev/avoid-large-complex-layouts-and-layout-thrashing/#avoid-forced-synchronous-layouts
+  // The three phases are
+  // 1. DOM Measurement can be done right away (e.g. getting computed style, element positions, etc)
+  // 2. When the modifyDOM promise resolves, apply any DOM modifications *without* doing any further measurement
+  // 3. In afterModify transitions can be kicked off and further measurements can be done if needed.
+  // TODO: We should apply this to the rest of receiveDelta
+  let dispatchModify = null;
+  let dispatchAfterModify = null;
+  let modifyDOM = new Promise((resolve) => {
+    dispatchModify = resolve;
+  });
+  let afterModify = new Promise((resolve) => {
+    dispatchAfterModify = resolve;
+  });
+
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s) {
     if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID)) {
       const domElement = widgets.get(widgetID).domElement;
       const topTransform = getElementTransformRelativeTo(domElement, $('#topSurface')) || 'none';
-      $('#topSurface').appendChild(domElement);
-      domElement.style.transform = topTransform;
+      modifyDOM.then(() => {
+        $('#topSurface').appendChild(domElement);
+        domElement.style.transform = topTransform;
+      });
     }
   }
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
-      addWidget(delta.s[widgetID]);
+      addWidget(delta.s[widgetID], undefined, modifyDOM, afterModify);
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] !== null && widgets.has(widgetID)) // check widgets.has because addWidget above MIGHT have failed
-      widgets.get(widgetID).applyDelta(delta.s[widgetID]);
+      widgets.get(widgetID).applyDelta(delta.s[widgetID], modifyDOM, afterModify);
 
-  for(const widgetID in delta.s)
-    if(delta.s[widgetID] === null && widgets.has(widgetID))
-      removeWidget(widgetID);
+  modifyDOM.then(() => {
+    for(const widgetID in delta.s)
+      if(delta.s[widgetID] === null && widgets.has(widgetID))
+        removeWidget(widgetID);
+  });
+
+  // Apply DOM modifications
+  dispatchModify();
+
+  // Apply any effects to take effect after modifications.
+  dispatchAfterModify();
+
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
@@ -144,16 +173,29 @@ function receiveStateFromServer(args) {
   StateManaged.globalUpdateListeners = {};
   StateManaged.inheritFromMapping = {};
   let isEmpty = true;
+
+  let dispatchModify = null;
+  let dispatchAfterModify = null;
+  let modifyDOM = new Promise((resolve) => {
+    dispatchModify = resolve;
+  });
+  let afterModify = new Promise((resolve) => {
+    dispatchAfterModify = resolve;
+  });
+
   for(const widgetID in args) {
     if(widgetID != '_meta') {
       if(widgetID != args[widgetID].id) {
         console.error(`Could not add widget!`, widgetID, args[widgetID], 'ID does not equal key in state');
         continue;
       }
-      addWidget(args[widgetID]);
+      addWidget(args[widgetID], undefined, modifyDOM, afterModify);
       isEmpty = false;
     }
   }
+
+  dispatchModify();
+  dispatchAfterModify();
 
   if(Object.keys(deferredCards).length) {
     for(const [ deckID, widgets ] of Object.entries(deferredCards))
