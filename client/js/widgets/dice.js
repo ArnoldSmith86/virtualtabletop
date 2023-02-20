@@ -204,10 +204,11 @@ class Dice extends Widget {
       let faceCSS = this.getFaceProperty(content, 'faceCSS');
       faceCSS = faceCSS ? mapAssetURLs(this.cssAsText(faceCSS, null, true)) : '';
       diceFaceCssVariableProps.forEach(prop=>{
-        if(content.prop != undefined)
-          faceCSS += `; --${prop}:${content.prop}`
+        if(content[prop] != undefined)
+          faceCSS += `; --${prop}:${content[prop]}`
       });
-      face.style = faceCSS;
+      if(faceCSS !='')
+        face.style = faceCSS;
 
       let pips = this.getFaceProperty(content, 'pips');
       const text = this.getFaceProperty(content, 'text');
