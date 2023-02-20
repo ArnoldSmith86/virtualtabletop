@@ -580,8 +580,13 @@ export class Widget extends StateManaged {
         this.coordParentFromCoordGlobal(coordGlobal);
     const transformOrigin = getTransformOrigin(this.domElement);
     let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
-    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
-    let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
+    let offset = getOffset(positionCoord, this.coordParentFromCoordLocal(localAnchor));
+    if (parent && parent.get('childrenCounterRotate')) {
+      let transform = new DOMMatrix();
+      transform.rotateSelf(0, 0, -parent.get('rotation'));
+      offset = transform.transformPoint(offset);
+    }
+    let corner = {x: coord.x - offset.x - transformOrigin.x, y: coord.y - offset.y - transformOrigin.y, z: this.get('z')};
     return parent ?
         parent.coordGlobalFromCoordLocal(corner) : corner;
   }
