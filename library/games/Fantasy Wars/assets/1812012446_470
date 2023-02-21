@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 866" width="1000" height="866">
-	<style>
-		tspan { white-space:pre }
-		.shp0 { fill: #99907a } 
-		.shp1 { fill: #b3a98f } 
-	</style>
-	<path id="Forma 1" class="shp0" d="M1000.5 432.51L750.87 865.45L251.12 865.74L1 433.08L250.63 0.14L750.38 -0.14L1000.5 432.51Z" />
-	<path id="Forma 1 copy" class="shp1" d="M980.76 433.28L741.12 848.9L261.36 849.18L21.24 433.83L260.88 18.21L740.64 17.93L980.76 433.28Z" />
-</svg>
