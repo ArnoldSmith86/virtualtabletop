@@ -2,7 +2,7 @@
   "3961": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Fenix",
+    "cardType": "Phoenix",
     "id": "3961",
     "z": 30614,
     "parent": "aoi1",
@@ -29,7 +29,7 @@
   "1oeg": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Mounted Knight",
+    "cardType": "Horseman",
     "id": "1oeg",
     "z": 30620,
     "parent": "aoi1",
@@ -38,7 +38,7 @@
   "wth1": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Golen",
+    "cardType": "Golem",
     "id": "wth1",
     "z": 30622,
     "parent": "aoi1",
@@ -198,7 +198,7 @@
   "hdle": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Mounted Knight",
+    "cardType": "Horseman",
     "id": "hdle",
     "z": 30656,
     "parent": "aoi1",
@@ -207,7 +207,7 @@
   "9xob": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Mounted Knight",
+    "cardType": "Horseman",
     "id": "9xob",
     "z": 30658,
     "parent": "aoi1",
@@ -216,7 +216,7 @@
   "k1zm": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Mounted Knight",
+    "cardType": "Horseman",
     "id": "k1zm",
     "z": 30660,
     "parent": "aoi1",
@@ -225,7 +225,7 @@
   "w08s": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Golen",
+    "cardType": "Golem",
     "id": "w08s",
     "z": 30662,
     "parent": "aoi1",
@@ -234,7 +234,7 @@
   "t011": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Golen",
+    "cardType": "Golem",
     "id": "t011",
     "z": 30664,
     "parent": "aoi1",
@@ -243,7 +243,7 @@
   "0rmq": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Golen",
+    "cardType": "Golem",
     "id": "0rmq",
     "z": 30666,
     "parent": "aoi1",
@@ -252,7 +252,7 @@
   "6d5h": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Golen",
+    "cardType": "Golem",
     "id": "6d5h",
     "z": 30668,
     "parent": "aoi1",
@@ -261,7 +261,7 @@
   "aouv": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Fenix",
+    "cardType": "Phoenix",
     "id": "aouv",
     "z": 30670,
     "parent": "aoi1",
@@ -270,7 +270,7 @@
   "xy0c": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Fenix",
+    "cardType": "Phoenix",
     "id": "xy0c",
     "z": 30672,
     "parent": "aoi1",
@@ -279,7 +279,7 @@
   "9cgy": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Fenix",
+    "cardType": "Phoenix",
     "id": "9cgy",
     "z": 30674,
     "parent": "aoi1",
@@ -288,7 +288,7 @@
   "9bkr": {
     "deck": "allTokensDeck",
     "type": "card",
-    "cardType": "Fenix",
+    "cardType": "Phoenix",
     "id": "9bkr",
     "z": 30676,
     "parent": "aoi1",
@@ -908,7 +908,7 @@
     "type": "card",
     "id": "horsemanCard",
     "deck": "allCardsDeck",
-    "cardType": "Mounted Knight",
+    "cardType": "Horseman",
     "z": 1,
     "player": "p2",
     "parent": "line2",
@@ -919,7 +919,7 @@
     "type": "card",
     "id": "golemCard",
     "deck": "allCardsDeck",
-    "cardType": "Golen",
+    "cardType": "Golem",
     "layer": 10,
     "z": 1,
     "parent": "line4",
@@ -936,11 +936,11 @@
     "x": 478,
     "y": 4
   },
-  "fenixCard": {
+  "phoenixCard": {
     "type": "card",
-    "id": "fenixCard",
+    "id": "phoenixCard",
     "deck": "allCardsDeck",
-    "cardType": "Fenix",
+    "cardType": "Phoenix",
     "z": 2,
     "player": "p2",
     "parent": "line4",
@@ -1861,13 +1861,13 @@
       "Wizard": {
         "image": "/assets/-1697211857_10577"
       },
-      "Mounted Knight": {
+      "Horseman": {
         "image": "/assets/208115964_5891"
       },
-      "Golen": {
+      "Golem": {
         "image": "/assets/-2037382957_2560"
       },
-      "Fenix": {
+      "Phoenix": {
         "image": "/assets/771751108_6461"
       },
       "Unicorn": {
@@ -2002,7 +2002,7 @@
         "image": "/assets/-1697211857_10577",
         "Name": "Wizard",
         "P1 T": "Passive:",
-        "P1 L1": "Discard 1 upgrade to move 1 extra tile.",
+        "P1 L1": "Discard 1 upgrade to take 1 extra action.",
         "P1 L2": "",
         "P1 L3": "",
         "P2 T": "",
@@ -2010,7 +2010,7 @@
         "P2 L2": "(using giant eagles)",
         "Count": "5"
       },
-      "Mounted Knight": {
+      "Horseman": {
         "image": "/assets/208115964_5891",
         "Name": "Horseman",
         "P1 T": "Active:",
@@ -2022,11 +2022,11 @@
         "P2 L2": "",
         "Count": "4"
       },
-      "Golen": {
+      "Golem": {
         "image": "/assets/-2037382957_2560",
         "Name": "Golem",
         "P1 T": "Passive:",
-        "P1 L1": "Can be summoned near any friendly troop.",
+        "P1 L1": "Can be summoned next to any friendly troop.",
         "P1 L2": "",
         "P1 L3": "",
         "P2 T": "",
@@ -2034,7 +2034,7 @@
         "P2 L2": "",
         "Count": "5"
       },
-      "Fenix": {
+      "Phoenix": {
         "image": "/assets/771751108_6461",
         "Name": "Phoenix",
         "P1 T": "Passive:",
@@ -2767,7 +2767,7 @@
       "unicornCard",
       "minionCard",
       "gargoyleCard",
-      "fenixCard"
+      "phoenixCard"
     ],
     "playerCardHolders": [
       "p1c1",
@@ -3003,7 +3003,7 @@
       "archerCard",
       "griffinCard",
       "giantCard",
-      "fenixCard",
+      "phoenixCard",
       "unicornCard",
       "centaurCard",
       "horsemanCard",
@@ -3367,14 +3367,14 @@
   "_meta": {
     "version": 12,
     "info": {
-      "name": "Fantasy Wars (improved)",
+      "name": "Fantasy Wars",
       "image": "/assets/-2124487621_265811",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "1v1; 2v2",
       "time": "30 min",
-      "attribution": "<div>Implementation design by RaphaelAlvez and released under CC0.</div><div>Assets license may vary.</div><div><br></div><div>Wood texture: https://unsplash.com/photos/J2gEgTPM_OA</div><div>Cloth texture: https://unsplash.com/photos/xTaOPMa6wAE</div><div><br></div><div>Celtic knot: https://www.vecteezy.com/vector-art/338646-celtic-symbols</div><div>Troops assets modified from https://game-icons.net/</div>",
+      "attribution": "<div>Implementation design by RaphaelAlvez with modifications by Ingegneus and released under CC0.</div><div>Assets license may vary.</div><div><br></div><div>Wood texture: https://unsplash.com/photos/J2gEgTPM_OA under the Unsplash license</div><div>Cloth texture: https://unsplash.com/photos/xTaOPMa6wAE under the Unsplash license</div><div><br></div><div>Celtic knot: https://www.vecteezy.com/vector-art/338646-celtic-symbols under the Vecteezy license</div><div>Troops assets modified from https://game-icons.net/ under the CC BY 3.0 license</div>",
       "lastUpdate": 1676307258840,
       "id": "yz4o",
       "showName": true,
