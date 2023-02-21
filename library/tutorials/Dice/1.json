@@ -11,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1676860661604,
+      "lastUpdate": 1676952416726,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -101,7 +101,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 22px; ",
-    "text": "The 'rollTime' property of this dice has been increased from the default of 800ms to 2800ms. This lengthens the time it takes to complete the animation, but there is no way to change the number of steps in the animation (so it appears to move slower)."
+    "text": "The 'rollTime' property of this dice has been increased from the default of 800ms to 2800ms. This lengthens the time it takes to complete the animation."
   },
   "example1": {
     "type": "dice",
@@ -586,5 +586,114 @@
     "rollCount": 25,
     "rollTime": 2800,
     "shape3d": true
+  },
+  "dice6text": {
+    "id": "dice6text",
+    "x": 400,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 20px; ",
+    "text": "The 'swapTime' of these dice are provided for comparison. Click on any dice to advance all 3 to the next face3. The one on the left has a 'swapTime' of 100ms, the middle has the default 500ms, and the right has 'swapTime' set at 1500ms.",
+    "y": 725
+  },
+  "dice6": {
+    "type": "dice",
+    "id": "dice6",
+    "x": 425,
+    "y": 650,
+    "z": 226,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "pipSymbols": false,
+    "shape3d": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "dice6",
+          "dice7",
+          "dice8"
+        ],
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "swapTime": 100
+  },
+  "dice7": {
+    "type": "dice",
+    "id": "dice7",
+    "x": 525,
+    "y": 650,
+    "z": 227,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "pipSymbols": false,
+    "shape3d": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "dice6",
+          "dice7",
+          "dice8"
+        ],
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "dice8": {
+    "type": "dice",
+    "id": "dice8",
+    "x": 625,
+    "y": 650,
+    "z": 228,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "pipSymbols": false,
+    "shape3d": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "dice6",
+          "dice7",
+          "dice8"
+        ],
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "swapTime": 1500
   }
 }
