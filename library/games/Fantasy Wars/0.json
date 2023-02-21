@@ -2003,23 +2003,18 @@
         "Name": "Wizard",
         "P1 T": "Passive:",
         "P1 L1": "Discard 1 upgrade to take 1 extra action.",
-        "P1 L2": "",
-        "P1 L3": "",
         "P2 T": "",
         "P2 L1": "",
-        "P2 L2": "(using giant eagles)",
         "Count": "5"
       },
       "Horseman": {
         "image": "/assets/208115964_5891",
         "Name": "Horseman",
         "P1 T": "Active:",
-        "P1 L1": "Move up to 2 tiles and attack in a straight line.",
-        "P1 L2": "",
-        "P1 L3": "",
-        "P2 T": "",
-        "P2 L1": "",
-        "P2 L2": "",
+        "P1 L1": "Move up to 2 tiles in a straight line and attack in the same direction.",
+
+        "P2 T": "Passive:",
+        "P2 L1": "Can only use the active skill to attack",
         "Count": "4"
       },
       "Golem": {
