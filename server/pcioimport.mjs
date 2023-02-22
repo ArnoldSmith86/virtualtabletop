@@ -209,6 +209,8 @@ export default async function convertPCIO(content) {
         w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
       if(widget.hideStackTab)
         w.preventPiles = true;
+      if(widget.layoutType == 'freeform')
+        w.alignChildren = false;
 
       if(pileOverlaps[w.id]) {
         w.x += 4;
