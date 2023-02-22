@@ -902,6 +902,8 @@ export default async function convertPCIO(content) {
     if(w.image)
       w.image = mapName(w.image);
 
+    w.original = widget;
+
     output[widget.id] = w;
   }
   return output;
