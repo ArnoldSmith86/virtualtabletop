@@ -221,6 +221,20 @@ export default async function convertPCIO(content) {
         w.dropOffsetY = 0;
       }
 
+      if(widget.layoutType == 'spread') {
+        if(widget.spreadDirection == 'down') {
+          w.stackOffsetY = 168;
+        } else if(widget.spreadDirection == 'down') {
+          w.dropOffsetY = (w.height || 168) - 168;
+          w.stackOffsetY = -168;
+        } else if(widget.spreadDirection == 'left') {
+          w.dropOffsetX = (w.width || 111) - 111;
+          w.stackOffsetX = -111;
+        } else {
+          w.stackOffsetX = 111;
+        }
+      }
+
       if(widget.label) {
         output[widget.id + '_label'] = {
           id: widget.id + '_label',
