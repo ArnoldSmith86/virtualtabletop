@@ -205,8 +205,11 @@ export default async function convertPCIO(content) {
         w.classes = 'transparent';
       addDimensions(w, widget, 111, 168);
 
-      if(widget.allowedDecks)
+      if(widget.allowedDecks) {
         w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
+        if(pileHasDeck[widget.id] && widget.allowedDecks.indexOf(pileHasDeck[widget.id].id) == -1)
+          w.dropTarget.push({ deck: pileHasDeck[widget.id].id });
+      }
       if(widget.hideStackTab)
         w.preventPiles = true;
       if(widget.layoutType == 'freeform')
