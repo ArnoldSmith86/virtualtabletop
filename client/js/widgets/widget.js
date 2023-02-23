@@ -80,6 +80,7 @@ export class Widget extends StateManaged {
       enterRoutine: null,
       leaveRoutine: null,
       globalUpdateRoutine: null,
+      gameStartRoutine: null,
 
       animatePropertyChange: []
     });
@@ -629,6 +630,13 @@ export class Widget extends StateManaged {
             result[field.variable] = 'on';
           } else {
             result[field.variable] = 'off';
+          }
+        } else if(field.type == 'palette') {
+          let thisresult = document.getElementsByName('INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
+          for (var i=0;i<thisresult.length;i++){
+            if ( thisresult[i].checked ) {
+              result[field.variable] = thisresult[i].value;
+            }
           }
         } else if(field.type == 'number') {
           let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
