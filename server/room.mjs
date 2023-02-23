@@ -423,6 +423,7 @@ export default class Room {
       this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
 
       this.migrateOldPublicLibraryLinks();
+      this.migrateBrokenSaveWithoutVersion();
       await this.updateLinkedStates();
       this.removeInvalidPublicLibraryLinks(player);
 
@@ -477,6 +478,33 @@ export default class Room {
       this.state._meta.activeState = { stateID, variantID };
 
     this.sendMetaUpdate();
+  }
+
+  migrateBrokenSaveWithoutVersion() {
+    // a bug caused some savegames to be written to disk without file version
+    // this guesses and adds the missing version by looking at the save date and comparing it to the commit time of version bumps
+    if(this.state._meta.metaVersion < 2) {
+      this.state._meta.metaVersion = 2;
+      for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+        if(state.savePlayers) {
+          const content = JSON.parse(fs.readFileSync(this.variantFilename(id, 0)));
+          if(!content._meta || !content._meta.version) {
+            if(state.saveDate >= 1676062683000)
+              content._meta = { version: 12 };
+            else if(state.saveDate >= 1674097185000)
+              content._meta = { version: 11 };
+            else if(state.saveDate >= 1674011502000)
+              content._meta = { version: 10 };
+            else if(state.saveDate >= 1672556492000)
+              content._meta = { version: 9 };
+            else
+              content._meta = { version: 8 };
+            Logging.log(`setting missing file version to ${content._meta.version} for ${id} in room ${this.id}`);
+            fs.writeFileSync(this.variantFilename(id, 0), JSON.stringify(content));
+          }
+        }
+      }
+    }
   }
 
   migrateOldPublicLibraryLinks() {
@@ -636,6 +664,25 @@ export default class Room {
 
   receiveInvalidDelta(player, delta, widgetID, property) {
     Logging.log(`WARNING: received conflicting delta data for property ${property} of widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
+
+    let serverDelta = {s: {}};
+    let changed = false;
+    // Remove shadow from actively dragged widget in the case of a conflict.
+    for (let widgetID in this.state) {
+      if (this.state[widgetID].dropShadowOwner == player.name) {
+        const clonedFrom = this.state[widgetID].clonedFrom;
+        serverDelta.s[widgetID] = null;
+        if (clonedFrom) {
+          serverDelta.s[clonedFrom] = {
+            dropShadowWidget: null
+          };
+        }
+        changed = true;
+      }
+    }
+    if (changed)
+      this.receiveDelta(player, serverDelta);
+
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
   }
@@ -729,7 +776,7 @@ export default class Room {
     if(updateCurrentSave) {
       const stateID = this.state._meta.activeState.saveStateID;
       const newContent = {...this.state};
-      delete newContent._meta;
+      newContent._meta = { version: this.state._meta.version };
       this.state._meta.states[stateID].saveDate = +new Date();
       fs.writeFileSync(this.variantFilename(stateID, 0), JSON.stringify(newContent));
       return this.sendMetaUpdate();
@@ -900,7 +947,7 @@ export default class Room {
   }
 
   unload() {
-    if(this.state && this.state._meta) {
+    if(this.state && this.state._meta && this.state._meta.states && typeof this.state._meta.states == 'object' && this.state._meta.starred && typeof this.state._meta.starred == 'object') {
       const nonPLgames = Object.keys(this.state._meta.states).filter(i=>!i.match(/^PL:/));
       if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
         Logging.log(`unloading room ${this.id}`);
