@@ -3180,7 +3180,7 @@
       "text-align": "center",
       "line-height": "160%",
       "font-size": "25px",
-      "color": "#000000b0"
+      "color": "#999999b0"
     },
     "text": "DISCARD",
     "layer": -3
@@ -3211,7 +3211,7 @@
         "vertical-align": "30%",
         "line-height": "390%",
         "font-size": "25px",
-        "color": "#000000b0"
+        "color": "#999999b0"
       },
       "::before": {
         "content": "\"HAND\""
