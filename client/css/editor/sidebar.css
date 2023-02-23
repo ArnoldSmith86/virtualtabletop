@@ -48,7 +48,7 @@
   right: calc(var(--editSidebarWidth) - 2px);
 }
 
-#editorModule {
+#editorModules {
   display: none;
   position: absolute;
   right: var(--editSidebarWidth);
@@ -60,14 +60,133 @@
   box-sizing: border-box;
   padding: 10px;
   background: white;
+}
+
+#editor.hasTopLeft.hasTopRight #editorModules, #editor.hasBottomLeft.hasBottomRight #editorModules {
+  min-width: 750px;
+  width: 50vw;
+}
+
+#editorModules.active {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 2fr 1fr;
+}
+
+#editor.hasTopLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "topleft topleft";
+}
+
+#editor.hasTopRight #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "topright topright";
+}
+
+#editor.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "bottomleft bottomleft"
+    "bottomleft bottomleft";
+}
+
+#editor.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "bottomright bottomright"
+    "bottomright bottomright";
+}
+
+#editor.hasTopLeft.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "bottomleft bottomleft";
+}
+
+#editor.hasTopRight.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "bottomright bottomright";
+}
+
+#editor.hasTopRight.hasTopLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "topleft topright";
+}
+
+#editor.hasBottomRight.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "bottomleft bottomright"
+    "bottomleft bottomright";
+}
+
+#editor.hasTopRight.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "bottomleft bottomleft";
+}
+
+#editor.hasTopLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "bottomright bottomright";
+}
+
+#editor.hasTopRight.hasBottomLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "bottomleft bottomright";
+}
+
+#editor.hasTopLeft.hasBottomLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "bottomleft bottomright";
+}
+
+#editor.hasTopLeft.hasTopRight.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "bottomright bottomright";
+}
+
+#editor.hasTopLeft.hasTopRight.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "bottomleft bottomleft";
+}
+
+#editor.hasTopLeft.hasTopRight.hasBottomLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "bottomleft bottomright";
+}
+
+#editorModules > div {
+  display: none;
+  position: relative;
   overflow: auto;
 }
 
-#editorModule.active {
+#editorModuleTopLeft {
+  grid-area: topleft;
+}
+#editorModuleTopRight {
+  grid-area: topright;
+}
+#editorModuleBottomLeft {
+  grid-area: bottomleft;
+}
+#editorModuleBottomRight {
+  grid-area: bottomright;
+}
+
+#editorModules > div.active {
   display: block;
 }
 
-body.lightsOff #editorModule {
+body.lightsOff #editorModules {
   background: #08090a;
   color: #f8f8f2;
 }
@@ -95,13 +214,13 @@ body.lightsOff #editorModule {
     --editSidebarWidth: 36px;
     --roomTop: calc(100vh - 1000px * var(--scale));
   }
-  #editorModule {
+  #editorModules {
     left: 0;
     top: var(--editToolbarHeight);
     right: var(--editSidebarWidth);
     bottom: calc(1000px * var(--scale));
-    width: unset;
-    min-width: unset;
+    width: unset !important;
+    min-width: unset !important;
     height: unset;
   }
 }
@@ -111,13 +230,13 @@ body.lightsOff #editorModule {
   body.edit {
     --editSidebarWidth: 36px;
   }
-  #editorModule {
+  #editorModules {
     left: 0;
     top: var(--editToolbarHeight);
     right: var(--editSidebarWidth);
     bottom: 0;
-    width: unset;
-    min-width: unset;
+    width: unset !important;
+    min-width: unset !important;
     height: unset;
   }
 }

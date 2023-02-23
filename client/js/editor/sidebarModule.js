@@ -5,22 +5,35 @@ class SidebarModule {
     this.tooltip = tooltip;
   }
 
-  click() {
-    const target = $('#editorModule');
-
-    if($('#editorSidebar button.active') && $('#editorSidebar button.active') != this.buttonDOM)
-      $('#editorSidebar button.active').click();
+  click(e) {
+    let target = e.ctrlKey ? $('#editorModuleBottomLeft') : $('#editorModuleTopLeft');
+    if(e.button == 2)
+      target = e.ctrlKey ? $('#editorModuleBottomRight') : $('#editorModuleTopRight');
 
     if(this.moduleDOM) {
-      $('#editor').classList.remove('moduleActive');
+      this.moduleDOM.dataset.currentlyLoaded = '';
       this.moduleDOM.classList.remove('active');
+      this.moduleDOM.classList.remove(this.icon);
       this.buttonDOM.classList.remove('active');
+      $('#editor').classList.remove(this.moduleDOM.id.replace('editorModule', 'has'));
+
+      if(!$('#editorModules > .active')) {
+        $('#editor').classList.remove('moduleActive');
+        this.moduleDOM.parentNode.classList.remove('active');
+      }
+
       this.onClose();
       this.moduleDOM.innerHTML = '';
       delete this.moduleDOM;
     } else {
+      if(target.dataset.currentlyLoaded && target.dataset.currentlyLoaded != this.icon)
+        $(`#editorSidebar button.active[icon="${target.dataset.currentlyLoaded}"]`).click();
+
       this.moduleDOM = target;
+      this.moduleDOM.dataset.currentlyLoaded = this.icon;
       $('#editor').classList.add('moduleActive');
+      this.moduleDOM.parentNode.classList.add('active');
+      $('#editor').classList.add(this.moduleDOM.id.replace('editorModule', 'has'));
       target.classList.add('active');
       target.classList.add(this.icon);
       this.buttonDOM.classList.add('active');
@@ -29,6 +42,7 @@ class SidebarModule {
     }
 
     setScale();
+    e.preventDefault();
   }
 
   onClose() {
@@ -68,6 +82,7 @@ class SidebarModule {
     this.buttonDOM.append(tooltip);
     target.append(this.buttonDOM);
     this.buttonDOM.onclick = e=>this.click(e);
+    this.buttonDOM.oncontextmenu = e=>this.click(e);
   }
 
   renderModule(target) {

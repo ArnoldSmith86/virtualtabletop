@@ -35,7 +35,7 @@ async function inputHandler(name, e) {
   }
   let target = e.target;
   while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2))))) {
-    if(target.id == 'editorModule')
+    if(target.id == 'editor')
       return;
     target = target.parentNode;
   }

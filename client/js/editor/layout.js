@@ -34,7 +34,7 @@ function renderSidebar(modules) {
 export function getAvailableRoomRectangle() {
   return {
     top: window.innerWidth/window.innerHeight > 1 || window.innerWidth < 700 ? 36 : window.innerHeight/2,
-    right: (window.innerWidth/window.innerHeight > 1 && $('#editor.moduleActive') ? $('#editorModule') : $('#editorSidebar')).offsetLeft,
+    right: (window.innerWidth/window.innerHeight > 1 && $('#editor.moduleActive') ? $('#editorModules') : $('#editorSidebar')).offsetLeft,
     left: 0,
     bottom: window.innerHeight
   };
