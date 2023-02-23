@@ -79,7 +79,8 @@ export class Widget extends StateManaged {
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
-      globalUpdateRoutine: null
+      globalUpdateRoutine: null,
+      gameStartRoutine: null
     });
     this.domElement.timer = false
 
