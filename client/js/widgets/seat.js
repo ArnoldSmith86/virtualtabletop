@@ -24,22 +24,26 @@ class Seat extends Widget {
     });
   }
 
-  applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
-    if(delta.index !== undefined || delta.player !== undefined || delta.display !== undefined || delta.displayEmpty !== undefined) {
-      const display = this.get('player') != '' ? this.get('display') : this.get('displayEmpty');
-      let displayedText = String(display || '')
-      displayedText = displayedText.replaceAll('seatIndex',this.get('index'))
-      displayedText = displayedText.replaceAll('playerName',this.get('player'))
-      setText(this.domElement, displayedText);
-    }
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
+    super.applyDeltaToDOM(delta, modifyDOM, afterModify);
+    modifyDOM.then(() => {
+      if(delta.index !== undefined || delta.player !== undefined || delta.display !== undefined || delta.displayEmpty !== undefined) {
+        const display = this.get('player') != '' ? this.get('display') : this.get('displayEmpty');
+        let displayedText = String(display || '')
+        displayedText = displayedText.replaceAll('seatIndex',this.get('index'))
+        displayedText = displayedText.replaceAll('playerName',this.get('player'))
+        setText(this.domElement, displayedText);
+      }
 
-    this.updateLinkedWidgets(delta.player !== undefined);
+      this.updateLinkedWidgets(delta.player !== undefined);
+    });
   }
 
-  applyInitialDelta(delta) {
-    super.applyInitialDelta(delta);
-    this.updateLinkedWidgets(true);
+  applyInitialDelta(delta, modifyDOM, afterModify) {
+    super.applyInitialDelta(delta, modifyDOM, afterModify);
+    modifyDOM.then(() => {
+      this.updateLinkedWidgets(true);
+    });
   }
 
   classes() {

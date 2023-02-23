@@ -20,22 +20,24 @@ class Spinner extends Widget {
     });
   }
 
-  applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
+    super.applyDeltaToDOM(delta, modifyDOM, afterModify);
 
-    if(delta.options !== undefined || delta.backgroundCSS !== undefined || delta.spinnerCSS !== undefined || delta.valueCSS !== undefined)
-      this.createChildNodes();
+    modifyDOM.then(() => {
+      if(delta.options !== undefined || delta.backgroundCSS !== undefined || delta.spinnerCSS !== undefined || delta.valueCSS !== undefined)
+        this.createChildNodes();
 
-    if(delta.angle !== undefined && this.spinner || delta.value !== undefined && this.value) {
-      this.spinner.style.transform = `rotate(${delta.angle}deg)`;
-      this.value.classList.add('hidden');
-      if(this.timeout)
-        clearTimeout(this.timeout);
-      this.timeout = setTimeout(_=>{
-        this.value.textContent = this.get('value');
-        this.value.classList.remove('hidden')
-      }, 1300);
-    }
+      if(delta.angle !== undefined && this.spinner || delta.value !== undefined && this.value) {
+        this.spinner.style.transform = `rotate(${delta.angle}deg)`;
+        this.value.classList.add('hidden');
+        if(this.timeout)
+          clearTimeout(this.timeout);
+        this.timeout = setTimeout(_=>{
+          this.value.textContent = this.get('value');
+          this.value.classList.remove('hidden')
+        }, 1300);
+      }
+    });
   }
 
   async click(mode='respect') {

@@ -11,7 +11,7 @@ export class StateManaged {
     Object.assign(this.defaults, defaults);
   }
 
-  applyDelta(delta) {
+  applyDelta(delta, modifyDOM, afterModify) {
     const deltaForDOM = {};
     for(const i in delta) {
       if(delta[i] === null) {
@@ -21,15 +21,15 @@ export class StateManaged {
         deltaForDOM[i] = this.state[i] = delta[i];
       }
     }
-    this.applyDeltaToDOM(deltaForDOM);
+    this.applyDeltaToDOM(deltaForDOM, modifyDOM, afterModify);
 
     if(delta.z)
       updateMaxZ(this.get('layer'), delta.z);
   }
 
-  applyInitialDelta(delta) {
-    this.applyDeltaToDOM(this.defaults);
-    this.applyDelta(delta);
+  applyInitialDelta(delta, modifyDOM, afterModify) {
+    this.applyDeltaToDOM(this.defaults, modifyDOM, afterModify);
+    this.applyDelta(delta, modifyDOM, afterModify);
   }
 
   getDefaultValue(key) {

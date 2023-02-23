@@ -26,8 +26,8 @@ class Canvas extends Widget {
     this.domElement.appendChild(this.canvas);
   }
 
-  applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
+    super.applyDeltaToDOM(delta, modifyDOM, afterModify);
 
     if(this.context) {
       if(delta.resolution !== undefined) {

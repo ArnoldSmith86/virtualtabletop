@@ -19,19 +19,21 @@ class BasicWidget extends Widget {
     });
   }
 
-  applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
+    super.applyDeltaToDOM(delta, modifyDOM, afterModify);
     if(delta.activeFace !== undefined || delta.faces !== undefined) {
       let face = this.faces()[this.get('activeFace')];
       if(face !== undefined)
-        this.applyDelta(face);
+        this.applyDelta(face, modifyDOM, afterModify);
     }
-    if(delta.text !== undefined)
-      setText(this.domElement, delta.text);
+    modifyDOM.then(() => {
+      if(delta.text !== undefined)
+        setText(this.domElement, delta.text);
 
-    for(const property of Object.values(this.get('svgReplaces') || {}))
-      if(delta[property] !== undefined)
-        this.domElement.style.cssText = mapAssetURLs(this.css());
+      for(const property of Object.values(this.get('svgReplaces') || {}))
+        if(delta[property] !== undefined)
+          this.domElement.style.cssText = mapAssetURLs(this.css());
+    });
   }
 
   classes() {

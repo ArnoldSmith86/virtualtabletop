@@ -22,8 +22,8 @@ class Deck extends Widget {
     ++this.domElement.textContent;
   }
 
-  applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
+    super.applyDeltaToDOM(delta, modifyDOM, afterModify);
     if(delta.cardDefaults !== undefined || delta.cardTypes !== undefined || delta.faceTemplates !== undefined) {
       for(const cardID in this.cards) {
         const card = this.cards[cardID];
@@ -42,7 +42,7 @@ class Deck extends Widget {
         for(const key in card.state)
           deltaForCard[key] = card.get(key);
 
-        card.applyDeltaToDOM(deltaForCard);
+        card.applyDeltaToDOM(deltaForCard, modifyDOM, afterModify);
       }
       this.previousCardDefaults = this.get('cardDefaults');
       this.previousCardTypes = this.get('cardTypes');

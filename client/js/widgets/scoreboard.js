@@ -30,9 +30,13 @@ class Scoreboard extends Widget {
     });
   }
 
-  applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
-    this.updateTable();
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
+    super.applyDeltaToDOM(delta, modifyDOM, afterModify);
+    modifyDOM.then(() => {
+      // Scoreboard currently makes a lot of getComputedStyle calls during construction.
+      // Ideally we could do these ahead of time before the major dom modifications.
+      this.updateTable();
+    });
   }
 
   classes() {

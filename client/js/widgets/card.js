@@ -18,23 +18,25 @@ class Card extends Widget {
     this.deck = null;
   }
 
-  applyDeltaToDOM(delta) {
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
     if(delta.deck !== undefined) {
-      const childNodes = [...this.domElement.childNodes];
-      if(this.deck) {
-        this.domElement.innerHTML = '';
-        this.deck.removeCard(this);
-      }
-      if(delta.deck) {
-        this.deck = widgets.get(delta.deck);
-        this.deck.addCard(this);
-        this.createFaces(this.deck.get('faceTemplates'));
-      } else {
-        this.deck = null;
-      }
-      for(const child of childNodes)
-        if(!child.className.match(/cardFace/))
-          this.domElement.appendChild(child);
+      modifyDOM.then(() => {
+        const childNodes = [...this.domElement.childNodes];
+        if(this.deck) {
+          this.domElement.innerHTML = '';
+          this.deck.removeCard(this);
+        }
+        if(delta.deck) {
+          this.deck = widgets.get(delta.deck);
+          this.deck.addCard(this);
+          this.createFaces(this.deck.get('faceTemplates'));
+        } else {
+          this.deck = null;
+        }
+        for(const child of childNodes)
+          if(!child.className.match(/cardFace/))
+            this.domElement.appendChild(child);  
+      });
     }
 
     if((delta.cardType !== undefined || delta.deck !== undefined) && this.deck) {
@@ -46,16 +48,18 @@ class Card extends Widget {
       for(const [ k, v ] of Object.entries(defaultsFromDeck))
         if(this.state[k] === undefined)
           applyDefaultsFromDeck[k] = v;
-      this.applyDeltaToDOM(applyDefaultsFromDeck);
+      this.applyDeltaToDOM(applyDefaultsFromDeck, modifyDOM, afterModify);
     }
 
     if(delta.deck !== undefined || delta.activeFace !== undefined) {
-      for(let i=0; i<this.domElement.children.length; ++i) {
-        if(i == this.get('activeFace'))
-          this.domElement.children[i].classList.add('active');
-        else
-          this.domElement.children[i].classList.remove('active');
-      }
+      modifyDOM.then(() => {
+        for(let i=0; i<this.domElement.children.length; ++i) {
+          if(i == this.get('activeFace'))
+            this.domElement.children[i].classList.add('active');
+          else
+            this.domElement.children[i].classList.remove('active');
+        }
+      });
 
       const deltaForFaceChange = {};
       if(this.previousFaceProperties)
@@ -66,7 +70,7 @@ class Card extends Widget {
         for(const key in this.previousFaceProperties)
           deltaForFaceChange[key] = this.get(key);
       }
-      this.applyDeltaToDOM(deltaForFaceChange);
+      this.applyDeltaToDOM(deltaForFaceChange, modifyDOM, afterModify);
     }
 
     if(this.dynamicProperties)
@@ -74,11 +78,11 @@ class Card extends Widget {
         for(const callback of (this.dynamicProperties[p] || []))
           callback();
 
-    super.applyDeltaToDOM(delta);
+    super.applyDeltaToDOM(delta, modifyDOM, afterModify);
   }
 
-  applyInitialDelta(delta) {
-    super.applyInitialDelta(delta);
+  applyInitialDelta(delta, modifyDOM, afterModify) {
+    super.applyInitialDelta(delta, modifyDOM, afterModify);
     if(!delta.deck)
       throw `card "${delta.id}" requires property deck`;
     if(!delta.cardType)

@@ -20,22 +20,24 @@ export class Timer extends Widget {
     });
   }
 
-  applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
-    if(delta.milliseconds !== undefined) {
-      const s = Math.floor(Math.abs(delta.milliseconds)/1000);
-      setText(this.domElement, `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
-    }
+  applyDeltaToDOM(delta, modifyDOM, afterModify) {
+    super.applyDeltaToDOM(delta, modifyDOM, afterModify);
+    modifyDOM.then(() => {
+      if(delta.milliseconds !== undefined) {
+        const s = Math.floor(Math.abs(delta.milliseconds)/1000);
+        setText(this.domElement, `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
+      }
 
-    if(this.interval && (delta.paused !== undefined || delta.precision !== undefined)) {
-      this.stopTimer();
-      if(!this.get('paused'))
-        this.startTimer();
-    }
+      if(this.interval && (delta.paused !== undefined || delta.precision !== undefined)) {
+        this.stopTimer();
+        if(!this.get('paused'))
+          this.startTimer();
+      }
+    });
   }
 
-  applyInitialDelta(delta) {
-    super.applyInitialDelta(delta);
+  applyInitialDelta(delta, modifyDOM, afterModify) {
+    super.applyInitialDelta(delta, modifyDOM, afterModify);
     if(delta.paused === false && activePlayers.length == 1)
       this.startTimer();
   }
