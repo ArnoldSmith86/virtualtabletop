@@ -4,7 +4,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "4612",
-    "z": 17549,
+    "z": 17633,
     "parent": "u7w4"
   },
   "turnmarker": {
@@ -209,16 +209,16 @@
       "similarName": "Pentago",
       "description": "Place marble into a space on four connected and rotating 3x3 grids. Connect five marbles in a row to win.",
       "showName": true,
-      "lastUpdate": 1676078212986,
+      "lastUpdate": 1677251928761,
       "skill": "",
-      "variantImage": "",
-      "variant": "Original Board",
-      "language": "",
-      "players": "2",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Original Board",
+      "language": "",
+      "players": "2"
     }
   },
   "board1": {
@@ -258,6 +258,38 @@
         "collection": "child",
         "property": "rotation",
         "value": 0
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "rotation",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "relation": "<",
+        "operand2": 0,
+        "thenRoutine": [
+          "var rotation = abs ${rotation}",
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "rotation",
+            "value": "-${rotation}"
+          }
+        ]
       }
     ]
   },
@@ -570,7 +602,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "7wfj",
-    "z": 17551,
+    "z": 17635,
     "parent": "u7w4"
   },
   "j2bf": {
@@ -578,7 +610,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "j2bf",
-    "z": 17553,
+    "z": 17637,
     "parent": "u7w4"
   },
   "k2ae": {
@@ -586,7 +618,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "k2ae",
-    "z": 17555,
+    "z": 17639,
     "parent": "u7w4"
   },
   "h3xm": {
@@ -594,7 +626,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "h3xm",
-    "z": 17557,
+    "z": 17641,
     "parent": "u7w4"
   },
   "7zu2": {
@@ -602,7 +634,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "7zu2",
-    "z": 17559,
+    "z": 17643,
     "parent": "u7w4"
   },
   "jckf": {
@@ -610,7 +642,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "jckf",
-    "z": 17561,
+    "z": 17645,
     "parent": "u7w4"
   },
   "biqn": {
@@ -618,7 +650,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "biqn",
-    "z": 17563,
+    "z": 17647,
     "parent": "u7w4"
   },
   "ueok": {
@@ -626,7 +658,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "ueok",
-    "z": 17565,
+    "z": 17649,
     "parent": "u7w4"
   },
   "clxs": {
@@ -634,7 +666,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "clxs",
-    "z": 17567,
+    "z": 17651,
     "parent": "u7w4"
   },
   "b2hp": {
@@ -642,7 +674,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "b2hp",
-    "z": 17569,
+    "z": 17653,
     "parent": "u7w4"
   },
   "j87e": {
@@ -650,7 +682,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "j87e",
-    "z": 17571,
+    "z": 17655,
     "parent": "u7w4"
   },
   "5i94": {
@@ -658,7 +690,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "5i94",
-    "z": 17573,
+    "z": 17657,
     "parent": "u7w4"
   },
   "1mds": {
@@ -666,7 +698,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "1mds",
-    "z": 17575,
+    "z": 17659,
     "parent": "u7w4"
   },
   "u3at": {
@@ -674,7 +706,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "u3at",
-    "z": 17577,
+    "z": 17661,
     "parent": "u7w4"
   },
   "zlo1": {
@@ -682,7 +714,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "zlo1",
-    "z": 17579,
+    "z": 17663,
     "parent": "u7w4"
   },
   "1ydb": {
@@ -690,7 +722,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "1ydb",
-    "z": 17581,
+    "z": 17665,
     "parent": "u7w4"
   },
   "bgp8": {
@@ -698,7 +730,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "bgp8",
-    "z": 17583,
+    "z": 17667,
     "parent": "u7w4"
   },
   "greenHome": {
@@ -761,7 +793,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "z3np",
-    "z": 17585,
+    "z": 17669,
     "parent": "islf"
   },
   "1icu": {
@@ -769,7 +801,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "1icu",
-    "z": 17587,
+    "z": 17671,
     "parent": "islf"
   },
   "89dh": {
@@ -777,7 +809,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "89dh",
-    "z": 17589,
+    "z": 17673,
     "parent": "islf"
   },
   "oxpe": {
@@ -785,7 +817,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "oxpe",
-    "z": 17591,
+    "z": 17675,
     "parent": "islf"
   },
   "6xxk": {
@@ -793,7 +825,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "6xxk",
-    "z": 17593,
+    "z": 17677,
     "parent": "islf"
   },
   "r1qa": {
@@ -801,7 +833,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "r1qa",
-    "z": 17595,
+    "z": 17679,
     "parent": "islf"
   },
   "9ybs": {
@@ -809,7 +841,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "9ybs",
-    "z": 17597,
+    "z": 17681,
     "parent": "islf"
   },
   "9omk": {
@@ -817,7 +849,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "9omk",
-    "z": 17599,
+    "z": 17683,
     "parent": "islf"
   },
   "xyih": {
@@ -825,7 +857,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "xyih",
-    "z": 17601,
+    "z": 17685,
     "parent": "islf"
   },
   "vne6": {
@@ -833,7 +865,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "vne6",
-    "z": 17603,
+    "z": 17687,
     "parent": "islf"
   },
   "ipwu": {
@@ -841,7 +873,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "ipwu",
-    "z": 17605,
+    "z": 17689,
     "parent": "islf"
   },
   "x4xg": {
@@ -849,7 +881,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "x4xg",
-    "z": 17607,
+    "z": 17691,
     "parent": "islf"
   },
   "y9lc": {
@@ -857,7 +889,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "y9lc",
-    "z": 17609,
+    "z": 17693,
     "parent": "islf"
   },
   "04av": {
@@ -865,7 +897,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "04av",
-    "z": 17611,
+    "z": 17695,
     "parent": "islf"
   },
   "admt": {
@@ -873,7 +905,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "admt",
-    "z": 17613,
+    "z": 17697,
     "parent": "islf"
   },
   "x82e": {
@@ -881,7 +913,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "x82e",
-    "z": 17615,
+    "z": 17699,
     "parent": "islf"
   },
   "05th": {
@@ -889,7 +921,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "05th",
-    "z": 17617,
+    "z": 17701,
     "parent": "islf"
   },
   "jf9v": {
@@ -897,7 +929,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "jf9v",
-    "z": 17619,
+    "z": 17703,
     "parent": "islf"
   },
   "islf": {
