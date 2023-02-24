@@ -20,6 +20,18 @@
   top: 0;
 }
 
+.holder.showCardBacksToOtherPlayers > .foreign.card.widget {
+  display: block !important;
+}
+
+.holder.showCardBacksToOtherPlayers > .foreign.card.widget > .active.cardFace {
+  display: none;
+}
+
+.holder.showCardBacksToOtherPlayers > .foreign.card.widget > :not(.active).cardFace {
+  display: block;
+}
+
 .widget.droppable.droptarget {
   border: calc(1px / var(--scale)) solid #333 !important;
 }

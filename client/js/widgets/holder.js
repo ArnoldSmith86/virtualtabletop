@@ -17,6 +17,7 @@ class Holder extends Widget {
       alignChildren: true,
       preventPiles: false,
       childrenPerOwner: false,
+      showCardBacksToOtherPlayers: false,
 
       onEnter: {},
       onLeave: {},
@@ -41,6 +42,21 @@ class Holder extends Widget {
 
       return compareDropTarget(w, this, true);
     });
+  }
+
+  classes() {
+    let className = super.classes();
+
+    if(this.get('showCardBacksToOtherPlayers'))
+      className += ' showCardBacksToOtherPlayers';
+
+    return className;
+  }
+
+  classesProperties() {
+    const p = super.classesProperties();
+    p.push('showCardBacksToOtherPlayers');
+    return p;
   }
 
   async dispenseCard(card) {
