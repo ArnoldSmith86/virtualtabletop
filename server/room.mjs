@@ -401,7 +401,7 @@ export default class Room {
     return Room.publicLibrary;
   }
 
-  async load(fileOrLink, player) {
+  async load(fileOrLink, player, delayForGameStartRoutine) {
     const emptyState = {
       _meta: {
         version: 1,
@@ -443,10 +443,10 @@ export default class Room {
       }
       if(newState) {
         Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-        this.setState(newState);
+        this.setState(newState, player, delayForGameStartRoutine);
       } else {
         Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
-        this.setState(emptyState);
+        this.setState(emptyState, player, false);
         if(player)
           player.send('error', errorMessage);
       }
@@ -459,14 +459,14 @@ export default class Room {
       this.trace('init', { initialState: this.state });
   }
 
-  async loadState(player, stateID, variantID, linkSourceStateID) {
+  async loadState(player, stateID, variantID, linkSourceStateID, delayForGameStartRoutine) {
     const stateInfo = this.state._meta.states[stateID];
     const variantInfo = stateInfo.variants[variantID];
 
     if(variantInfo.link)
-      await this.load(variantInfo.link, player);
+      await this.load(variantInfo.link, player, delayForGameStartRoutine);
     else
-      await this.load(this.variantFilename(stateID, variantID), player);
+      await this.load(this.variantFilename(stateID, variantID), player, delayForGameStartRoutine);
 
     if(linkSourceStateID != stateID)
       this.state._meta.activeState = { linkStateID: linkSourceStateID, stateID, variantID };
@@ -652,7 +652,14 @@ export default class Room {
       }
     }
     delta.id = ++this.deltaID;
-    this.broadcast('delta', delta, player);
+
+    if(this.waitingForDeltaFromPlayer == player) {
+      delete this.waitingForDeltaFromPlayer;
+      this.broadcast('state', this.state, player);
+      this.sendMetaUpdate();
+    } else {
+      this.broadcast('delta', delta, player);
+    }
   }
 
   receiveInvalidDelta(player, delta, widgetID, property) {
@@ -864,7 +871,7 @@ export default class Room {
     }
   }
 
-  setState(state) {
+  setState(state, player, delayForGameStartRoutine) {
     delete this.state._meta.activeState;
 
     this.trace('setState', { state });
@@ -873,6 +880,17 @@ export default class Room {
     if(this.state._meta)
       this.state = FileUpdater(this.state);
     this.state._meta = meta;
+
+    if(delayForGameStartRoutine) {
+      for(const [ id, w ] of Object.entries(state)) {
+        if(w.gameStartRoutine) {
+          this.waitingForDeltaFromPlayer = player;
+          player.send('state', state);
+          return;
+        }
+      }
+    }
+
     this.broadcast('state', state);
     this.sendMetaUpdate();
   }
