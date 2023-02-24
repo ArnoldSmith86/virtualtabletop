@@ -254,41 +254,51 @@
     "type": "holder",
     "x": 1253,
     "y": 262,
-    "z": 27,
     "id": "wz8k",
-    "stackOffsetX": 0.0001
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
   },
   "hxnc": {
     "type": "holder",
     "x": 1132,
     "y": 262,
-    "z": 28,
     "id": "hxnc",
-    "stackOffsetX": 0.0001
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
   },
   "nk9t": {
     "type": "holder",
     "x": 1012,
     "y": 262,
-    "z": 29,
     "id": "nk9t",
-    "stackOffsetX": 0.0001
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
   },
   "q6fp": {
     "type": "holder",
     "x": 892,
     "y": 262,
-    "z": 30,
     "id": "q6fp",
-    "stackOffsetX": 0.0001
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
   },
   "wngl": {
     "type": "holder",
     "x": 772,
     "y": 262,
-    "z": 31,
     "id": "wngl",
-    "stackOffsetX": 0.0001
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
   },
   "Fireworks Deck": {
     "type": "deck",
@@ -432,7 +442,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -445,7 +454,6 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "static",
             "value": "",
             "width": 103,
             "height": 160
@@ -455,11 +463,12 @@
             "x": 0,
             "y": 0,
             "fontSize": 140,
-            "valueType": "dynamic",
-            "value": "value",
             "textAlign": "center",
             "width": 103,
-            "css": "color: var(--color); "
+            "css": "color: var(--color); ",
+            "dynamicProperties": {
+              "value": "value"
+            }
           }
         ]
       }
@@ -880,11 +889,12 @@
     "type": "holder",
     "x": 892,
     "y": 194,
-    "z": 10443,
     "id": "kbdg",
     "scale": 0.5,
     "height": 1000,
-    "stackOffsetY": 165
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "bpuz": {
     "faces": [
@@ -1317,12 +1327,17 @@
     "x": 110,
     "y": 41,
     "width": 426,
-    "z": 37,
     "onEnter": {
-      "activeFace": 1
+      "clickable": false,
+      "activeFace": 0
     },
     "stackOffsetX": 105,
-    "inheritChildZ": true
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "onLeave": {
+      "clickable": true
+    },
+    "showCardBacksToOtherPlayers": true
   },
   "p2": {
     "type": "holder",
@@ -1330,12 +1345,17 @@
     "x": 110,
     "y": 297.6666666666667,
     "width": 426,
-    "z": 10409,
-    "inheritChildZ": true,
     "onEnter": {
-      "activeFace": 1
+      "clickable": false,
+      "activeFace": 0
     },
-    "stackOffsetX": 105
+    "stackOffsetX": 105,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "onLeave": {
+      "clickable": true
+    },
+    "showCardBacksToOtherPlayers": true
   },
   "p3": {
     "type": "holder",
@@ -1343,12 +1363,17 @@
     "x": 110,
     "y": 554.3333333333334,
     "width": 426,
-    "z": 10417,
-    "inheritChildZ": true,
     "onEnter": {
-      "activeFace": 1
+      "clickable": false,
+      "activeFace": 0
     },
-    "stackOffsetX": 105
+    "stackOffsetX": 105,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "onLeave": {
+      "clickable": true
+    },
+    "showCardBacksToOtherPlayers": true
   },
   "p4": {
     "type": "holder",
@@ -1356,12 +1381,17 @@
     "x": 110,
     "y": 811,
     "width": 426,
-    "z": 10433,
-    "inheritChildZ": true,
     "onEnter": {
-      "activeFace": 1
+      "clickable": false,
+      "activeFace": 0
     },
-    "stackOffsetX": 105
+    "stackOffsetX": 105,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "onLeave": {
+      "clickable": true
+    },
+    "showCardBacksToOtherPlayers": true
   },
   "p5": {
     "type": "holder",
@@ -1369,18 +1399,23 @@
     "x": 697,
     "y": 41,
     "width": 426,
-    "z": 10425,
-    "inheritChildZ": true,
     "onEnter": {
-      "activeFace": 1
+      "clickable": false,
+      "activeFace": 0
     },
-    "stackOffsetX": 105
+    "stackOffsetX": 105,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "onLeave": {
+      "clickable": true
+    },
+    "showCardBacksToOtherPlayers": true
   },
   "p1Button": {
     "type": "button",
     "id": "p1Button",
-    "x": 283,
-    "y": 95,
+    "x": 173,
+    "y": 54,
     "height": 60,
     "z": 24,
     "clickRoutine": [
@@ -1394,25 +1429,16 @@
         "func": "LABEL",
         "label": "p1Name",
         "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "p1Cover"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
       }
     ],
-    "text": "Join"
+    "text": "Join",
+    "parent": "p1"
   },
   "p2Button": {
     "type": "button",
     "id": "p2Button",
-    "x": 283,
-    "y": 351.66666666666663,
+    "x": 173,
+    "y": 54,
     "height": 60,
     "z": 10416,
     "clickRoutine": [
@@ -1426,25 +1452,16 @@
         "func": "LABEL",
         "label": "p2Name",
         "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "p2Cover"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
       }
     ],
-    "text": "Join"
+    "text": "Join",
+    "parent": "p2"
   },
   "p3Button": {
     "type": "button",
     "id": "p3Button",
-    "x": 283,
-    "y": 608.3333333333333,
+    "x": 173,
+    "y": 54,
     "height": 60,
     "z": 10424,
     "clickRoutine": [
@@ -1458,25 +1475,16 @@
         "func": "LABEL",
         "label": "p3Name",
         "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "p3Cover"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
       }
     ],
-    "text": "Join"
+    "text": "Join",
+    "parent": "p3"
   },
   "p4Button": {
     "type": "button",
     "id": "p4Button",
-    "x": 283,
-    "y": 864.9999999999999,
+    "x": 173,
+    "y": 54,
     "height": 60,
     "z": 10440,
     "clickRoutine": [
@@ -1490,25 +1498,16 @@
         "func": "LABEL",
         "label": "p4Name",
         "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "p4Cover"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
       }
     ],
-    "text": "Join"
+    "text": "Join",
+    "parent": "p4"
   },
   "p5Button": {
     "type": "button",
     "id": "p5Button",
-    "x": 870,
-    "y": 95,
+    "x": 173,
+    "y": 54,
     "height": 60,
     "z": 10432,
     "clickRoutine": [
@@ -1522,132 +1521,57 @@
         "func": "LABEL",
         "label": "p5Name",
         "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "p5Cover"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
       }
     ],
-    "text": "Join"
-  },
-  "p5Cover": {
-    "id": "p5Cover",
-    "owner": [],
-    "x": 701,
-    "y": 44,
-    "width": 418,
-    "height": 160,
-    "layer": 10,
-    "z": 10431,
-    "movable": false,
-    "movableInEdit": null,
-    "cover": "yes",
-    "css": "background-repeat: space;background-image:url(/i/cards-default/2B.svg);background-color:white"
-  },
-  "p3Cover": {
-    "id": "p3Cover",
-    "owner": [],
-    "x": 114,
-    "y": 557.3333333333334,
-    "width": 418,
-    "height": 160,
-    "layer": 10,
-    "z": 10423,
-    "movable": false,
-    "movableInEdit": null,
-    "cover": "yes",
-    "css": "background-repeat: space;background-image:url(/i/cards-default/2B.svg);background-color:white"
-  },
-  "p2Cover": {
-    "id": "p2Cover",
-    "owner": [],
-    "x": 114,
-    "y": 300.6666666666667,
-    "width": 418,
-    "height": 160,
-    "layer": 10,
-    "z": 10415,
-    "movable": false,
-    "movableInEdit": null,
-    "cover": "yes",
-    "css": "background-repeat: space;background-image:url(/i/cards-default/2B.svg);background-color:white"
-  },
-  "p1Cover": {
-    "id": "p1Cover",
-    "owner": [],
-    "x": 114,
-    "y": 44,
-    "width": 418,
-    "height": 160,
-    "layer": 10,
-    "z": 304,
-    "movable": false,
-    "movableInEdit": null,
-    "cover": "yes",
-    "css": "background-repeat: space;background-image:url(/i/cards-default/2B.svg);background-color:white"
-  },
-  "p4Cover": {
-    "id": "p4Cover",
-    "owner": [],
-    "x": 114,
-    "y": 814,
-    "width": 418,
-    "height": 160,
-    "layer": 10,
-    "z": 10439,
-    "movable": false,
-    "movableInEdit": null,
-    "cover": "yes",
-    "css": "background-repeat: space;background-image:url(/i/cards-default/2B.svg);background-color:white"
+    "text": "Join",
+    "parent": "p5"
   },
   "g8c2": {
     "type": "holder",
     "x": 1012,
     "y": 194,
-    "z": 10446,
     "id": "g8c2",
     "scale": 0.5,
     "height": 1000,
-    "stackOffsetY": 165
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "o48b": {
     "type": "holder",
     "x": 1132,
     "y": 194,
-    "z": 10445,
     "id": "o48b",
     "scale": 0.5,
     "height": 1000,
-    "stackOffsetY": 165
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "hxt5": {
     "type": "holder",
     "x": 1253,
     "y": 194,
-    "z": 10447,
     "id": "hxt5",
     "scale": 0.5,
     "height": 1000,
-    "stackOffsetY": 165
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "bpqh": {
     "type": "holder",
     "x": 772,
     "y": 194,
-    "z": 10448,
     "id": "bpqh",
     "scale": 0.5,
     "height": 1000,
-    "stackOffsetY": 165
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "_meta": {
-    "version": 3,
+    "version": 12,
     "info": {
       "name": "Fireworks",
       "image": "/assets/222053642_15760",
@@ -1656,14 +1580,20 @@
       "year": "2010",
       "mode": "coop",
       "time": "25",
-      "players": "4-5",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The layout was created by ArnoldSmith86 and is released to the public domain using CC0. It does not use custom assets.\n\nThe library image is CC0 by Christina Pinckard: https://www.publicdomainpictures.net/en/view-image.php?image=33560&picture=fireworks",
+      "attribution": "The layout was created by ArnoldSmith86 and is released to the public domain using CC0. It does not use custom assets.\n\nThe library image is CC0 by Christina Pinckard: https://www.publicdomainpictures.net/en/view-image.php?image=33560&amp;picture=fireworks",
       "similarName": "Hanabi",
-      "description": "Cooperative card tile laying game.  Work together to complete the pattern before running out of cards and while never looking at your own cards.",
+      "description": "Cooperative card tile laying game. Work together to complete the pattern before running out of cards and while never looking at your own cards.",
       "showName": true,
-      "lastUpdate": 1625237157000
+      "lastUpdate": 1677250970547,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "4-5"
     }
   }
 }
