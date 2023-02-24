@@ -32,7 +32,7 @@ export default class Player {
       if(func == 'editState')
         await this.room.editState(this, args.id, args.meta, args.variantInput, args.variantOperationQueue);
       if(func == 'loadState')
-        await this.room.loadState(this, args.stateID, args.variantID, args.linkSourceStateID);
+        await this.room.loadState(this, args.stateID, args.variantID, args.linkSourceStateID, args.delayForGameStartRoutine);
       if(func == 'mouse')
         this.room.mouseMove(this, args);
       if(func == 'playerColor')
@@ -94,6 +94,15 @@ export default class Player {
             }
           }
         }
+      }
+    }
+
+    for(const widgetID in delta.s) {
+      if (!this.room.state[widgetID] && delta.s[widgetID] && !delta.s[widgetID].id) {
+        // tried to modify properties of a missing widget -> client is in bad state
+        this.waitingForStateConfirmation = true;
+        this.room.receiveInvalidDelta(this, delta, widgetID, '<modification>');
+        return;
       }
     }
 
