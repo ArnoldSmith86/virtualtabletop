@@ -10,7 +10,7 @@ This project is inspired by [playingcards.io](https://playingcards.io).
 
 This project aims to be able to import PCIO files and have them be immediately playable.
 
-Come join our [Discord server](https://discord.gg/xWxz9Gd) if you want to discuss the project.
+Come join our [Discord server](https://discord.gg/CEZz7wny9T) if you want to discuss the project.
 
 This project started after [a reddit post](https://www.reddit.com/r/PlayingCardsIO/comments/jiajth/mildly_ot_feature_requests_for_a_pcio_clone/) in our [playingcardsio subreddit](https://www.reddit.com/r/PlayingCardsIO/).
 
