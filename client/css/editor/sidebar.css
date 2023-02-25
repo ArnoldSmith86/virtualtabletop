@@ -65,6 +65,7 @@ body.darkMode #editorSidebar button.active {
   background: var(--backgroundColor);
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 2fr 1fr;
+  grid-gap: 10px;
 }
 
 #editor.hasTopLeft.hasTopRight #editorModules, #editor.hasBottomLeft.hasBottomRight #editorModules {
