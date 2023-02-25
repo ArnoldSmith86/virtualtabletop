@@ -4,7 +4,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "4612",
-    "z": 16925,
+    "z": 17633,
     "parent": "u7w4"
   },
   "turnmarker": {
@@ -196,7 +196,7 @@
     "parent": "wydq"
   },
   "_meta": {
-    "version": 6,
+    "version": 12,
     "info": {
       "name": "Spin 5",
       "image": "/assets/-1243222545_504241",
@@ -205,14 +205,20 @@
       "year": "2005",
       "mode": "vs",
       "time": "15",
-      "players": "2",
-      "language": "",
-      "variant": "Original Board",
       "attribution": "Gameplay:\n\n Each Turn:\n  - Place a piece anywhere\n  - Rotate any square\n\n Winning:\n  - Get 5 in a row (Diagonals Count)\n\n Ties:\n  - Multiple players get 5 in a row simultaneously\n  - Run out of space on the board \n\nThe game layout, assets, and library image were created by Casbuild, RaphaelAlvez, and LawDawg and are released to the public domain by CC0.",
       "similarName": "Pentago",
       "description": "Place marble into a space on four connected and rotating 3x3 grids. Connect five marbles in a row to win.",
       "showName": true,
-      "lastUpdate": 1659321088000
+      "lastUpdate": 1677251928761,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Original Board",
+      "language": "",
+      "players": "2"
     }
   },
   "board1": {
@@ -240,20 +246,50 @@
     "movableInEdit": false,
     "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%",
     "dropLimit": 1,
-    "enterRoutine": [
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "transition:linear 0.65s"
-      }
-    ],
     "leaveRoutine": [
       {
         "func": "SET",
         "collection": "child",
         "property": "css",
         "value": null
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": 0
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "rotation",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "relation": "<",
+        "operand2": 0,
+        "thenRoutine": [
+          "var rotation = abs ${rotation}",
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "rotation",
+            "value": "-${rotation}"
+          }
+        ]
       }
     ]
   },
@@ -566,7 +602,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "7wfj",
-    "z": 16927,
+    "z": 17635,
     "parent": "u7w4"
   },
   "j2bf": {
@@ -574,7 +610,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "j2bf",
-    "z": 16929,
+    "z": 17637,
     "parent": "u7w4"
   },
   "k2ae": {
@@ -582,7 +618,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "k2ae",
-    "z": 16931,
+    "z": 17639,
     "parent": "u7w4"
   },
   "h3xm": {
@@ -590,7 +626,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "h3xm",
-    "z": 16933,
+    "z": 17641,
     "parent": "u7w4"
   },
   "7zu2": {
@@ -598,7 +634,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "7zu2",
-    "z": 16935,
+    "z": 17643,
     "parent": "u7w4"
   },
   "jckf": {
@@ -606,7 +642,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "jckf",
-    "z": 16937,
+    "z": 17645,
     "parent": "u7w4"
   },
   "biqn": {
@@ -614,7 +650,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "biqn",
-    "z": 16939,
+    "z": 17647,
     "parent": "u7w4"
   },
   "ueok": {
@@ -622,7 +658,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "ueok",
-    "z": 16941,
+    "z": 17649,
     "parent": "u7w4"
   },
   "clxs": {
@@ -630,7 +666,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "clxs",
-    "z": 16943,
+    "z": 17651,
     "parent": "u7w4"
   },
   "b2hp": {
@@ -638,7 +674,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "b2hp",
-    "z": 16945,
+    "z": 17653,
     "parent": "u7w4"
   },
   "j87e": {
@@ -646,7 +682,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "j87e",
-    "z": 16947,
+    "z": 17655,
     "parent": "u7w4"
   },
   "5i94": {
@@ -654,7 +690,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "5i94",
-    "z": 16949,
+    "z": 17657,
     "parent": "u7w4"
   },
   "1mds": {
@@ -662,7 +698,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "1mds",
-    "z": 16951,
+    "z": 17659,
     "parent": "u7w4"
   },
   "u3at": {
@@ -670,8 +706,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "u3at",
-    "z": 16953,
-    "activeFace": 1,
+    "z": 17661,
     "parent": "u7w4"
   },
   "zlo1": {
@@ -679,7 +714,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "zlo1",
-    "z": 16955,
+    "z": 17663,
     "parent": "u7w4"
   },
   "1ydb": {
@@ -687,7 +722,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "1ydb",
-    "z": 16957,
+    "z": 17665,
     "parent": "u7w4"
   },
   "bgp8": {
@@ -695,7 +730,7 @@
     "type": "card",
     "cardType": "blueCards",
     "id": "bgp8",
-    "z": 16959,
+    "z": 17667,
     "parent": "u7w4"
   },
   "greenHome": {
@@ -758,7 +793,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "z3np",
-    "z": 16961,
+    "z": 17669,
     "parent": "islf"
   },
   "1icu": {
@@ -766,7 +801,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "1icu",
-    "z": 16963,
+    "z": 17671,
     "parent": "islf"
   },
   "89dh": {
@@ -774,7 +809,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "89dh",
-    "z": 16965,
+    "z": 17673,
     "parent": "islf"
   },
   "oxpe": {
@@ -782,7 +817,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "oxpe",
-    "z": 16967,
+    "z": 17675,
     "parent": "islf"
   },
   "6xxk": {
@@ -790,7 +825,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "6xxk",
-    "z": 16969,
+    "z": 17677,
     "parent": "islf"
   },
   "r1qa": {
@@ -798,7 +833,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "r1qa",
-    "z": 16971,
+    "z": 17679,
     "parent": "islf"
   },
   "9ybs": {
@@ -806,7 +841,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "9ybs",
-    "z": 16973,
+    "z": 17681,
     "parent": "islf"
   },
   "9omk": {
@@ -814,7 +849,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "9omk",
-    "z": 16975,
+    "z": 17683,
     "parent": "islf"
   },
   "xyih": {
@@ -822,7 +857,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "xyih",
-    "z": 16977,
+    "z": 17685,
     "parent": "islf"
   },
   "vne6": {
@@ -830,7 +865,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "vne6",
-    "z": 16979,
+    "z": 17687,
     "parent": "islf"
   },
   "ipwu": {
@@ -838,7 +873,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "ipwu",
-    "z": 16981,
+    "z": 17689,
     "parent": "islf"
   },
   "x4xg": {
@@ -846,7 +881,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "x4xg",
-    "z": 16983,
+    "z": 17691,
     "parent": "islf"
   },
   "y9lc": {
@@ -854,7 +889,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "y9lc",
-    "z": 16985,
+    "z": 17693,
     "parent": "islf"
   },
   "04av": {
@@ -862,7 +897,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "04av",
-    "z": 16987,
+    "z": 17695,
     "parent": "islf"
   },
   "admt": {
@@ -870,7 +905,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "admt",
-    "z": 16989,
+    "z": 17697,
     "parent": "islf"
   },
   "x82e": {
@@ -878,7 +913,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "x82e",
-    "z": 16991,
+    "z": 17699,
     "parent": "islf"
   },
   "05th": {
@@ -886,7 +921,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "05th",
-    "z": 16993,
+    "z": 17701,
     "parent": "islf"
   },
   "jf9v": {
@@ -894,7 +929,7 @@
     "type": "card",
     "cardType": "greenCards",
     "id": "jf9v",
-    "z": 16995,
+    "z": 17703,
     "parent": "islf"
   },
   "islf": {
@@ -933,6 +968,18 @@
     "textColor": "black",
     "textColorOH": "pink",
     "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "relation": "in",
+        "value": "${PROPERTY gridGroup}"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "transition:linear 0.65s"
+      },
       "var board = ${PROPERTY board}",
       "var rotation = ${PROPERTY rotation OF $board} - 90",
       {
@@ -1001,7 +1048,18 @@
         ]
       }
     ],
-    "board": "board1"
+    "board": "board1",
+    "gridGroup": [
+      "grid1",
+      "grid2",
+      "grid3",
+      "grid4",
+      "grid5",
+      "grid6",
+      "grid7",
+      "grid8",
+      "grid9"
+    ]
   },
   "right1": {
     "type": "button",
@@ -1022,6 +1080,18 @@
     "textColor": "black",
     "textColorOH": "pink",
     "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "relation": "in",
+        "value": "${PROPERTY gridGroup}"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "transition:linear 0.65s"
+      },
       "var board = ${PROPERTY board}",
       "var rotation = ${PROPERTY rotation OF $board} + 90",
       {
@@ -1090,7 +1160,18 @@
         ]
       }
     ],
-    "board": "board1"
+    "board": "board1",
+    "gridGroup": [
+      "grid1",
+      "grid2",
+      "grid3",
+      "grid4",
+      "grid5",
+      "grid6",
+      "grid7",
+      "grid8",
+      "grid9"
+    ]
   },
   "left2": {
     "inheritFrom": "left1",
@@ -1098,7 +1179,18 @@
     "type": "button",
     "x": 895,
     "y": 255,
-    "board": "board2"
+    "board": "board2",
+    "gridGroup": [
+      "grid10",
+      "grid11",
+      "grid12",
+      "grid13",
+      "grid14",
+      "grid15",
+      "grid16",
+      "grid17",
+      "grid18"
+    ]
   },
   "left3": {
     "inheritFrom": "left1",
@@ -1106,7 +1198,18 @@
     "type": "button",
     "x": 555,
     "y": 595,
-    "board": "board3"
+    "board": "board3",
+    "gridGroup": [
+      "grid19",
+      "grid20",
+      "grid21",
+      "grid22",
+      "grid23",
+      "grid24",
+      "grid25",
+      "grid26",
+      "grid27"
+    ]
   },
   "left4": {
     "inheritFrom": "left1",
@@ -1114,7 +1217,18 @@
     "type": "button",
     "x": 895,
     "y": 595,
-    "board": "board4"
+    "board": "board4",
+    "gridGroup": [
+      "grid28",
+      "grid29",
+      "grid30",
+      "grid31",
+      "grid32",
+      "grid33",
+      "grid34",
+      "grid35",
+      "grid36"
+    ]
   },
   "right2": {
     "inheritFrom": "right1",
@@ -1122,7 +1236,18 @@
     "type": "button",
     "x": 1004.5,
     "y": 254.75,
-    "board": "board2"
+    "board": "board2",
+    "gridGroup": [
+      "grid10",
+      "grid11",
+      "grid12",
+      "grid13",
+      "grid14",
+      "grid15",
+      "grid16",
+      "grid17",
+      "grid18"
+    ]
   },
   "right3": {
     "inheritFrom": "right1",
@@ -1130,7 +1255,18 @@
     "type": "button",
     "x": 664.5,
     "y": 594.75,
-    "board": "board3"
+    "board": "board3",
+    "gridGroup": [
+      "grid19",
+      "grid20",
+      "grid21",
+      "grid22",
+      "grid23",
+      "grid24",
+      "grid25",
+      "grid26",
+      "grid27"
+    ]
   },
   "right4": {
     "inheritFrom": "right1",
@@ -1138,7 +1274,18 @@
     "type": "button",
     "x": 1004.5,
     "y": 594.75,
-    "board": "board4"
+    "board": "board4",
+    "gridGroup": [
+      "grid28",
+      "grid29",
+      "grid30",
+      "grid31",
+      "grid32",
+      "grid33",
+      "grid34",
+      "grid35",
+      "grid36"
+    ]
   },
   "reset": {
     "type": "button",
