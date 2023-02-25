@@ -13,50 +13,43 @@ class SidebarModule {
     if(e.shiftKey)
       target = $('#editorModuleInOverlay');
 
-    if(this.moduleDOM) {
-      this.moduleDOM.dataset.currentlyLoaded = '';
-      this.moduleDOM.classList.remove('active');
-      this.moduleDOM.classList.remove(this.icon);
-      this.buttonDOM.classList.remove('active');
+    this.openInTarget(target);
+    e.preventDefault();
+  }
 
-      if(this.moduleDOM.id != 'editorModuleInOverlay') {
-        $('#editor').classList.remove(this.moduleDOM.id.replace('editorModule', 'has'));
+  dragStart() {
+    $('body').classList.add('draggingEditorSidebarModule');
 
-        if(!$('#editorModules > .active')) {
-          $('#editor').classList.remove('moduleActive');
-          this.moduleDOM.parentNode.classList.remove('active');
-        }
-      } else {
-        showOverlay();
-      }
-
-      this.onClose();
-      this.moduleDOM.innerHTML = '';
-      delete this.moduleDOM;
-    } else {
-      if(target.dataset.currentlyLoaded && target.dataset.currentlyLoaded != this.icon)
-        $(`#editorSidebar button.active[icon="${target.dataset.currentlyLoaded}"]`).click();
-
-      this.moduleDOM = target;
-      this.moduleDOM.dataset.currentlyLoaded = this.icon;
-
-      if(!e.shiftKey) {
-        $('#editor').classList.add('moduleActive');
-        this.moduleDOM.parentNode.classList.add('active');
-        $('#editor').classList.add(this.moduleDOM.id.replace('editorModule', 'has'));
-      } else {
-        showOverlay('editorModuleOverlay');
-      }
-
-      target.classList.add('active');
-      target.classList.add(this.icon);
-      this.buttonDOM.classList.add('active');
-      this.renderModule(target);
-      this.onSelectionChanged(selectedWidgets, []);
+    for(const module of $a('#editorModules > div, #editorModuleInOverlay')) {
+      module.ondragenter = module.ondragover = e=>this.dragEnter(e);
+      module.ondragleave = e=>this.dragLeave(e);
+      module.ondrop = e=>this.drop(e);
     }
 
     setScale();
+  }
+
+  dragEnd() {
+    $('body').classList.remove('draggingEditorSidebarModule');
+
+    for(const module of $a('#editorModules > div, #editorModuleInOverlay'))
+      module.ondrop = null;
+
+    setScale();
+  }
+
+  dragEnter(e) {
+    e.currentTarget.classList.add('dragHighlight');
     e.preventDefault();
+  }
+
+  dragLeave(e) {
+    e.currentTarget.classList.remove('dragHighlight');
+  }
+
+  drop(e) {
+    e.currentTarget.classList.remove('dragHighlight');
+    this.openInTarget(e.currentTarget);
   }
 
   onClose() {
@@ -86,6 +79,52 @@ class SidebarModule {
   onStateReceivedWhileActive(state) {
   }
 
+  openInTarget(target) {
+    if(this.moduleDOM) {
+      this.moduleDOM.dataset.currentlyLoaded = '';
+      this.moduleDOM.classList.remove('active');
+      this.moduleDOM.classList.remove(this.icon);
+      this.buttonDOM.classList.remove('active');
+
+      if(this.moduleDOM.id != 'editorModuleInOverlay') {
+        $('#editor').classList.remove(this.moduleDOM.id.replace('editorModule', 'has'));
+
+        if(!$('#editorModules > .active')) {
+          $('#editor').classList.remove('moduleActive');
+          this.moduleDOM.parentNode.classList.remove('active');
+        }
+      } else {
+        showOverlay();
+      }
+
+      this.onClose();
+      this.moduleDOM.innerHTML = '';
+      delete this.moduleDOM;
+    } else {
+      if(target.dataset.currentlyLoaded && target.dataset.currentlyLoaded != this.icon)
+        $(`#editorSidebar button.active[icon="${target.dataset.currentlyLoaded}"]`).click();
+
+      this.moduleDOM = target;
+      this.moduleDOM.dataset.currentlyLoaded = this.icon;
+
+      if(this.moduleDOM.id != 'editorModuleInOverlay') {
+        $('#editor').classList.add('moduleActive');
+        this.moduleDOM.parentNode.classList.add('active');
+        $('#editor').classList.add(this.moduleDOM.id.replace('editorModule', 'has'));
+      } else {
+        showOverlay('editorModuleOverlay');
+      }
+
+      target.classList.add('active');
+      target.classList.add(this.icon);
+      this.buttonDOM.classList.add('active');
+      this.renderModule(target);
+      this.onSelectionChanged(selectedWidgets, []);
+    }
+
+    setScale();
+  }
+
   renderButton(target) {
     const tooltip = document.createElement('span');
     tooltip.innerText = this.tooltip;
@@ -97,6 +136,10 @@ class SidebarModule {
     target.append(this.buttonDOM);
     this.buttonDOM.onclick = e=>this.click(e);
     this.buttonDOM.oncontextmenu = e=>this.click(e);
+
+    this.buttonDOM.draggable = true;
+    this.buttonDOM.ondragstart = e=>this.dragStart(e);
+    this.buttonDOM.ondragend = e=>this.dragEnd(e);
   }
 
   renderModule(target) {

@@ -60,6 +60,8 @@
   box-sizing: border-box;
   padding: 10px;
   background: white;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 2fr 1fr;
 }
 
 #editor.hasTopLeft.hasTopRight #editorModules, #editor.hasBottomLeft.hasBottomRight #editorModules {
@@ -69,8 +71,6 @@
 
 #editorModules.active {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 2fr 1fr;
 }
 
 #editor.hasTopLeft #editorModules.active {
@@ -177,6 +177,28 @@
   bottom: 10px;
   overflow: auto;
 }
+
+
+body.draggingEditorSidebarModule #editorModules {
+  display: grid;
+  grid-template-areas:
+    "topleft topright"
+    "bottomleft bottomright" !important;
+}
+
+body.draggingEditorSidebarModule #editorModuleOverlay {
+  display: flex !important;
+}
+
+body.draggingEditorSidebarModule #editorModules > div, body.draggingEditorSidebarModule #editorModuleInOverlay {
+  display: block;
+  border: 2px red dashed;
+}
+
+body.draggingEditorSidebarModule #editorModules > div.dragHighlight, body.draggingEditorSidebarModule #editorModuleInOverlay.dragHighlight {
+  border: 2px red solid;
+}
+
 
 #editorModuleTopLeft {
   grid-area: topleft;
