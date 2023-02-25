@@ -58,6 +58,9 @@ function getValidDropTargets(widget) {
         break;
     }
 
+    if (getComputedStyle(t.domElement).getPropertyValue('--foreign') == 'true')
+      continue;
+
     if(isValid)
       targets.push(t);
   }
