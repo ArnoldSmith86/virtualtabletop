@@ -402,19 +402,18 @@ export class Widget extends StateManaged {
     delete clone.parent;
     const cWidget = widgets.get(await addWidgetLocal(clone));
 
-    if(parent) {
-      // use moveToHolder so that CLONE triggers onEnter and similar features
-      cWidget.movedByButton = problems != null;
+    // use moveToHolder so that CLONE triggers onEnter and similar features
+    cWidget.movedByButton = problems != null;
+    if(parent)
       await cWidget.moveToHolder(widgets.get(parent));
 
-      // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
-      if(!widgets.get(parent).get('alignChildren')) {
-        await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
-        await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
-        await cWidget.updatePiles();
-      }
-      delete cWidget.movedByButton;
+    // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
+    if(!parent || !widgets.get(parent).get('alignChildren')) {
+      await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
+      await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
+      await cWidget.updatePiles();
     }
+    delete cWidget.movedByButton;
 
     if (recursive) {
       for (const w of this.childArray) {
