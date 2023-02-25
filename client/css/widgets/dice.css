@@ -66,6 +66,8 @@
   background-position: center center;
   background-size: contain;
   background-origin: content-box;
+
+  backface-visibility: hidden;
 }
 
 .dice.widget > * > .active.diceFace {
