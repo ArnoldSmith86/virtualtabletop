@@ -212,7 +212,7 @@ body.draggingEditorSidebarModule .editorModule.dragHighlight {
   grid-area: bottomright;
 }
 
-#editorModules > div.active {
+.active.editorModule {
   display: block;
 }
 
