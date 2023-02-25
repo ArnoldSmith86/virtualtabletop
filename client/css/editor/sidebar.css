@@ -163,7 +163,7 @@
     "bottomleft bottomright";
 }
 
-#editorModules > div {
+.editorModule {
   display: none;
   position: relative;
   overflow: auto;
@@ -175,7 +175,6 @@
   right: 10px;
   top: 10px;
   bottom: 10px;
-  overflow: auto;
 }
 
 
@@ -190,12 +189,12 @@ body.draggingEditorSidebarModule #editorModuleOverlay {
   display: flex !important;
 }
 
-body.draggingEditorSidebarModule #editorModules > div, body.draggingEditorSidebarModule #editorModuleInOverlay {
+body.draggingEditorSidebarModule .editorModule {
   display: block;
   border: 2px red dashed;
 }
 
-body.draggingEditorSidebarModule #editorModules > div.dragHighlight, body.draggingEditorSidebarModule #editorModuleInOverlay.dragHighlight {
+body.draggingEditorSidebarModule .editorModule.dragHighlight {
   border: 2px red solid;
 }
 

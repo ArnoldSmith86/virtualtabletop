@@ -75,6 +75,7 @@ export default async function minifyHTML() {
     'client/css/editor/layout.css',
     'client/css/editor/toolbar.css',
     'client/css/editor/sidebar.css',
+    'client/css/editor/sidebarModules.css',
 
     'client/css/editmode.css',
     'client/css/jsonedit.css',

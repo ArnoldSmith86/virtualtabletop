@@ -40,8 +40,6 @@ class UndoModule extends SidebarModule {
       const affectedWidgets = Object.keys(this.protocol[i].delta.s);
       div.innerText = `${i} - ` + (affectedWidgets.length > 5 ? `${affectedWidgets.length} widgets changed` : affectedWidgets.join(', '));
       div.onclick = _=>this.onEntryClick(i, div);
-      div.style.padding = '2px';
-      div.style.border = '2px solid black';
       this.moduleDOM.insertBefore(div, this.moduleDOM.firstChild);
 
       if(i == this.protocol.length-1)
@@ -53,9 +51,9 @@ class UndoModule extends SidebarModule {
 
   setActiveIndex(index, dom) {
     if(this.activeDOM)
-      this.activeDOM.style.background = 'white';
+      this.activeDOM.classList.remove('active');
     this.activeDOM = dom;
-    this.activeDOM.style.background = 'green';
+    this.activeDOM.classList.add('active');
     this.activeIndex = index;
   }
 }
