@@ -34,8 +34,11 @@
   position: relative;
   left: -2px;
   border-radius: 0 5px 5px 0;
-  background: white;
+  background: var(--backgroundColor);
   color: var(--VTTblue);
+}
+body.darkMode #editorSidebar button.active {
+  color: var(--textColor);
 }
 
 #editorSidebar button.active::before {
@@ -59,7 +62,7 @@
   z-index: 1;
   box-sizing: border-box;
   padding: 10px;
-  background: white;
+  background: var(--backgroundColor);
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 2fr 1fr;
 }
@@ -167,6 +170,12 @@
   display: none;
   position: relative;
   overflow: auto;
+  color: var(--textColor);
+  background-color: var(--backgroundColor);
+}
+
+#editorModuleOverlay {
+  background-color: var(--backgroundColor);
 }
 
 #editorModuleInOverlay {

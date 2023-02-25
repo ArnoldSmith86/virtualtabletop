@@ -1,3 +1,37 @@
+body {
+  --backgroundColor: white;
+  --textColor: black;
+
+  --backgroundHighlightColor1: #ccc;
+
+  --textHighlightColor1: #880;
+  --textHighlightColor2: orange;
+  --textHighlightColor3: red;
+  --textHighlightColor4: green;
+  --textHighlightColor5: purple;
+  --textHighlightColor6: blue;
+  --textHighlightColor7: darkcyan;
+
+  --textDimColor1: #ccc;
+}
+
+body.darkMode {
+  --backgroundColor: #08090a;
+  --textColor: #f8f8f2;
+
+  --backgroundHighlightColor1: #444;
+
+  --textHighlightColor1: yellow;
+  --textHighlightColor2: orange;
+  --textHighlightColor3: red;
+  --textHighlightColor4: #7ed07e;
+  --textHighlightColor5: #dda0dd;
+  --textHighlightColor6: blue;
+  --textHighlightColor7: #40e0d0;
+
+  --textDimColor1: #606060;
+}
+
 body:not(.edit) #editor,
 body.edit #toolbar {
   display: none;

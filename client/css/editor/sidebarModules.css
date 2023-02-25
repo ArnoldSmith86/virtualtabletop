@@ -2,14 +2,14 @@
 
 .undo.editorModule > div {
   padding: 2px;
-  border: 2px solid black;
-  background: grey;
+  color: var(--textDimColor1);
 }
 
 .undo.editorModule > div.active {
-  background: green;
+  color: var(--textColor);
+  background: var(--backgroundHighlightColor1);
 }
 
 .undo.editorModule > div.active ~ div {
-  background: unset;
+  color: var(--textColor);
 }

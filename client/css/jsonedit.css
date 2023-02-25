@@ -23,10 +23,10 @@
 }
 
 #jsonEditor > *, #jeWidgetLayers > div {
-  background: #08090a;
+  background: var(--backgroundColor);
 }
 #jsonEditor > * {
-  color: #f8f8f2;
+  color: var(--textColor);
   padding: 5px;
   margin: 0;
   position: fixed;
@@ -85,7 +85,7 @@
   overflow: hidden auto;
   display: none;
   height: 100%;
-  background-color: #484848;
+  background-color: var(--backgroundHighlightColor1);
 }
 
 #jeResize {
@@ -139,7 +139,7 @@
 }
 
 body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::before {
-  color: white;
+  color: var(--textColor);
 }
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
@@ -165,8 +165,8 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 }
 
 #jeText::selection {
-  background-color: #808080;
-  -webkit-text-fill-color: white;
+  background-color: var(--backgroundHighlightColor1);
+  -webkit-text-fill-color: var(--textColor);
 }
 
 /*** CSS to handle search box for tree widget ***/
@@ -180,11 +180,7 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 }
 
 .jeHighlightRow {
-  background-color: #ccc;
-}
-
-body.lightsOff .jeHighlightRow {
-  background-color: gray;
+  background-color: var(--backgroundHighlightColor1);
 }
 
 /**** End tree search CSS ****/
@@ -195,27 +191,16 @@ body.lightsOff .jeHighlightRow {
   font-style: normal;
 }
 
-i.key     { color: #880;  }
-i.custom  { color: orange;  }
-i.extern  { color: red;     }
-.extern   { color: red;     }
-i.string  { color: green; }
-i.number  { color: purple; }
-i.null    { color: blue;    }
-i.default { color: #ccc; }
-i.variable{ color: darkcyan; }
-i.error   { color: red; font-weight: bold; }
-
-body.lightsOff i.key     { color: yellow;  }
-body.lightsOff i.custom  { color: orange;  }
-body.lightsOff i.extern  { color: red;     }
-body.lightsOff .extern   { color: red;     }
-body.lightsOff i.string  { color: #7ed07e; }
-body.lightsOff i.number  { color: #dda0dd; }
-body.lightsOff i.null    { color: blue;    }
-body.lightsOff i.default { color: #606060; }
-body.lightsOff i.variable{ color: #40e0d0; }
-body.lightsOff i.error   { color: red; font-weight: bold; }
+i.key     { color: var(--textHighlightColor1); }
+i.custom  { color: var(--textHighlightColor2); }
+i.extern  { color: var(--textHighlightColor3); }
+.extern   { color: var(--textHighlightColor3); }
+i.string  { color: var(--textHighlightColor4); }
+i.number  { color: var(--textHighlightColor5); }
+i.null    { color: var(--textHighlightColor6); }
+i.default { color: var(--textDimColor1);       }
+i.variable{ color: var(--textHighlightColor7); }
+i.error   { color: var(--textHighlightColor3); font-weight: bold; }
 
 body.jsonEdit .selectedInEdit:not(.pile) {
   box-shadow: 0px 0px 0px 5px yellow;
@@ -337,42 +322,28 @@ body.jsonEdit.jeZoomOut #topSurface {
   font-family: monospace;
   font-size: 12px;
   margin-left: -20px;
-  color: grey;
-}
-body.lightsOff .jeLog {
-  color: lightgrey;
+  color: var(--textColor);
 }
 
 #jeLog > .jeLog > .jeExpander {
-  color: black;
+  color: var(--textColor);
   font-weight: bold;
-}
-body.lightsOff #jeLog > .jeLog > .jeExpander {
-  color: white;
 }
 #jeLog > .jeLog + .jeLog {
   margin-top: 20px;
 }
 
-.jeLogSkipped { color: darkgrey; }
-.jeLogSummary { color: green; }
-.jeLogResult  { color: orange; }
-.jeLogTime    { color: #880; }
-
-body.lightsOff .jeLogSkipped { color: grey; }
-body.lightsOff .jeLogSummary { color: lightgreen; }
-body.lightsOff .jeLogResult  { color: orange; }
-body.lightsOff .jeLogTime    { color: yellow; }
+.jeLogSkipped { color: var(--textDimColor1); }
+.jeLogSummary { color: var(--textHighlightColor4); }
+.jeLogResult  { color: var(--textHighlightColor2); }
+.jeLogTime    { color: var(--textDimColor1); }
 
 /* Create the caret/arrow with a unicode, and style it */
 .jeExpander::before {
   content: "\25B6";
-  color: black;
+  color: var(--textColor);
   display: inline-block;
   margin-right: 6px;
-}
-body.lightsOff .jeExpander::before {
-  color: white;
 }
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
@@ -395,15 +366,11 @@ body.lightsOff .jeExpander::before {
 
 /* .jeLogHasProblems and .jeLogHasNoProblems control the text color of the first item displayed. */
 .jeLogHasProblems, .jeLogProblems {
-  color: red;
+  color: var(--textHighlightColor3);
 }
 
 .jeLogHasNoProblems {
-  color: gray;
-}
-
-body.lightsOff .jeLogHasNoProblems {
-  color: lightgray;
+  color: var(--textColor);
 }
 
 /* .jeLogProblems controls the color and display of the problem text */
@@ -418,11 +385,7 @@ body.lightsOff .jeLogHasNoProblems {
 .jeLogDetails {
   word-break: break-all;
   margin-left: 20px;
-  color: gray;
-}
-
-body.lightsOff .jeLogDetails {
-  color: lightgray;
+  color: var(--textColor);
 }
 
 /* Show the details when the user clicks on the caret/arrow */

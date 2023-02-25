@@ -4,6 +4,6 @@ class DarkModeButton extends ToolbarButton {
   }
 
   async click() {
-    $('body').classList.toggle('lightsOff');
+    $('body').classList.toggle('darkMode');
   }
 }
