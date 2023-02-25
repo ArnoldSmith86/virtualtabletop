@@ -10,16 +10,24 @@ class SidebarModule {
     if(e.button == 2)
       target = e.ctrlKey ? $('#editorModuleBottomRight') : $('#editorModuleTopRight');
 
+    if(e.shiftKey)
+      target = $('#editorModuleInOverlay');
+
     if(this.moduleDOM) {
       this.moduleDOM.dataset.currentlyLoaded = '';
       this.moduleDOM.classList.remove('active');
       this.moduleDOM.classList.remove(this.icon);
       this.buttonDOM.classList.remove('active');
-      $('#editor').classList.remove(this.moduleDOM.id.replace('editorModule', 'has'));
 
-      if(!$('#editorModules > .active')) {
-        $('#editor').classList.remove('moduleActive');
-        this.moduleDOM.parentNode.classList.remove('active');
+      if(this.moduleDOM.id != 'editorModuleInOverlay') {
+        $('#editor').classList.remove(this.moduleDOM.id.replace('editorModule', 'has'));
+
+        if(!$('#editorModules > .active')) {
+          $('#editor').classList.remove('moduleActive');
+          this.moduleDOM.parentNode.classList.remove('active');
+        }
+      } else {
+        showOverlay();
       }
 
       this.onClose();
@@ -31,9 +39,15 @@ class SidebarModule {
 
       this.moduleDOM = target;
       this.moduleDOM.dataset.currentlyLoaded = this.icon;
-      $('#editor').classList.add('moduleActive');
-      this.moduleDOM.parentNode.classList.add('active');
-      $('#editor').classList.add(this.moduleDOM.id.replace('editorModule', 'has'));
+
+      if(!e.shiftKey) {
+        $('#editor').classList.add('moduleActive');
+        this.moduleDOM.parentNode.classList.add('active');
+        $('#editor').classList.add(this.moduleDOM.id.replace('editorModule', 'has'));
+      } else {
+        showOverlay('editorModuleOverlay');
+      }
+
       target.classList.add('active');
       target.classList.add(this.icon);
       this.buttonDOM.classList.add('active');
