@@ -17,6 +17,16 @@ export {
   mouseCoords
 }
 
+function getPlayerDetails() {
+  return {
+    playerName,
+    playerColor,
+    activePlayers,
+    activeColors,
+    mouseCoords
+  };
+}
+
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';

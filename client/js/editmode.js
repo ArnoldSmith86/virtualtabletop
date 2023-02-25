@@ -704,6 +704,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         batchStart();
+        setDeltaCause(`${playerName} added new ${wi.type || 'basic widget'} in editor: ${w.id}`);
         overlayDone(await onClick());
         batchEnd();
       });
@@ -1418,6 +1419,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   const previousState = JSON.parse(oldState);
   try {
     var widget = JSON.parse(currentState);
+    setDeltaCause(`${playerName} updated ${currentState.id} in editor`);
   } catch(e) {
     alert(e.toString());
     batchEnd();

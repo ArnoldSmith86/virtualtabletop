@@ -38,7 +38,7 @@ class UndoModule extends SidebarModule {
     for(let i=this.lastRenderedIndex+1; i<this.protocol.length; ++i) {
       const div = document.createElement('div');
       const affectedWidgets = Object.keys(this.protocol[i].delta.s);
-      div.innerText = `${i} - ` + (affectedWidgets.length > 5 ? `${affectedWidgets.length} widgets changed` : affectedWidgets.join(', '));
+      div.innerText = `${i+1} - ${this.protocol[i].delta.c || 'unknown'} (${affectedWidgets.length} widget${affectedWidgets.length == 1 ? '' : 's'} changed)`;
       div.onclick = _=>this.onEntryClick(i, div);
       this.moduleDOM.insertBefore(div, this.moduleDOM.firstChild);
 

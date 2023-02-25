@@ -135,6 +135,11 @@ export function batchEnd() {
   sendDelta();
 }
 
+function setDeltaCause(cause) {
+  if(!delta.c)
+    delta.c = cause;
+}
+
 function getDeltaID() {
   return deltaID;
 }
@@ -219,7 +224,7 @@ function addStateEntryToUndoProtocol(state) {
     }
   }
 
-  undoProtocol.push({ delta: {s:redoDelta}, undoDelta });
+  undoProtocol.push({ delta: {s:redoDelta,c:'received complete room state'}, undoDelta });
 }
 
 function getUndoProtocol() {

@@ -189,6 +189,7 @@ const jeCommands = [
     show: _=>jeStateNow,
     call: async function() {
       batchStart();
+      setDeltaCause(`${playerName} removed ${w.id} in editor`);
       for(const id of jeSelectedIDs())
         await removeWidgetLocal(id);
       batchEnd();
@@ -501,6 +502,7 @@ const jeCommands = [
       }
 
       batchStart();
+      setDeltaCause(`${playerName} imported CSV to ${jeStateNow.id} in editor`);
 
       for(const oldID of oldCardTypeIDs)
         if(!jeStateNow.cardTypes[oldID])
