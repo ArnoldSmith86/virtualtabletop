@@ -1,4 +1,5 @@
 config.json
+custom.*
 coverage
 node_modules
 save

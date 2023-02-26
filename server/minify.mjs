@@ -45,6 +45,7 @@ export default function minifyRoom() {
         'client/css/widgets/timer.css',
 
         'client/css/fonts.css',
+        'client/css/custom.css',
       ],
       output: os.tmpdir() + '/out.css'
     }).then(function(min) {
