@@ -232,27 +232,38 @@
     font-family: "Material Icons";
     font-style: normal;
     font-weight: 400;
-    src: url("i/fonts/Material-Icons.woff2?version=7") format("woff2");
+    src: url("i/fonts/MaterialIcons-Regular.ttf") format("truetype");
 }
 
-.font-material-icons{
-    font-family: "Material Icons";
-    font-weight: normal;
+@font-face {
+    font-family: "Material Icons Outlined";
     font-style: normal;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: "liga";
-    -webkit-font-smoothing: antialiased;
-    font-feature-settings: "liga";
+    font-weight: 400;
+    src: url("i/fonts/MaterialIconsOutlined-Regular.otf") format("opentype");
 }
 
-.material-icons {
-    font-family: "Material Icons";
+@font-face {
+    font-family: "Material Icons Round";
+    font-style: normal;
+    font-weight: 400;
+    src: url("i/fonts/MaterialIconsRound-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Material Icons Sharp";
+    font-style: normal;
+    font-weight: 400;
+    src: url("i/fonts/MaterialIconsSharp-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Material Icons Two Tone";
+    font-style: normal;
+    font-weight: 400;
+    src: url("i/fonts/MaterialIconsTwoTone-Regular.otf") format("opentype");
+}
+
+.material-icons, .material-icons-outlined, .material-icons-round, .material-icons-sharp, .material-icons-twotone, .font-material-icons {
     font-weight: normal;
     font-style: normal;
     font-size: 24px;
@@ -267,8 +278,29 @@
     -webkit-font-smoothing: antialiased;
     font-feature-settings: "liga";
 }
+
 .material-icons.intext {
     font-size: 20px;
+}
+
+.material-icons, .font-material-icons {
+    font-family: "Material Icons";
+}
+
+.material-icons-outlined {
+    font-family: "Material Icons Outlined";
+}
+
+.material-icons-round {
+    font-family: "Material Icons Round";
+}
+
+.material-icons-sharp {
+    font-family: "Material Icons Sharp";
+}
+
+.material-icons-twotone {
+    font-family: "Material Icons Two Tone";
 }
 
 @font-face {
