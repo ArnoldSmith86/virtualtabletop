@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 11,
+    "version": 12,
     "info": {
       "name": "Five of a Kind",
       "image": "/assets/-337719674_582921",
@@ -18,11 +18,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "lastUpdate": 1677458727414,
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1-6",
-      "lastUpdate": 1674959218224
+      "players": "1-6"
     }
   },
   "xprj": {
@@ -1726,7 +1726,7 @@
     },
     "text": "",
     "parent": "h1",
-    "zeroValue": false,
+    "zeroValue": true,
     "borderRadius": "0px"
   },
   "u5": {
@@ -2084,7 +2084,7 @@
       }
     ],
     "parent": "h2",
-    "zeroValue": true,
+    "zeroValue": false,
     "borderRadius": "0px",
     "clickable": false
   },
@@ -3836,25 +3836,7 @@
     "height": 90,
     "z": 813,
     "shape3d": true,
-    "kept": false,
-    "animatePropertyChange": [
-      {
-        "property": "rollCount",
-        "className": "rolling",
-        "duration": 500
-      }
-    ],
-    "css": {
-      "default": {
-        "overflow": "clip"
-      },
-      ">.diceFaces>.diceFace": {
-        "border-radius": "${PROPERTY borderRadius}"
-      },
-      ".rolling": {
-        "overflow": "visible"
-      }
-    }
+    "kept": false
   },
   "d2": {
     "type": "dice",
@@ -3865,26 +3847,7 @@
     "height": 90,
     "z": 813,
     "shape3d": true,
-    "kept": false,
-    "activeFace": 1,
-    "animatePropertyChange": [
-      {
-        "property": "rollCount",
-        "className": "rolling",
-        "duration": 500
-      }
-    ],
-    "css": {
-      "default": {
-        "overflow": "clip"
-      },
-      ">.diceFaces>.diceFace": {
-        "border-radius": "${PROPERTY borderRadius}"
-      },
-      ".rolling": {
-        "overflow": "visible"
-      }
-    }
+    "kept": false
   },
   "d3": {
     "type": "dice",
@@ -3895,26 +3858,7 @@
     "height": 90,
     "z": 813,
     "shape3d": true,
-    "kept": false,
-    "activeFace": 2,
-    "animatePropertyChange": [
-      {
-        "property": "rollCount",
-        "className": "rolling",
-        "duration": 500
-      }
-    ],
-    "css": {
-      "default": {
-        "overflow": "clip"
-      },
-      ">.diceFaces>.diceFace": {
-        "border-radius": "${PROPERTY borderRadius}"
-      },
-      ".rolling": {
-        "overflow": "visible"
-      }
-    }
+    "kept": false
   },
   "d4": {
     "type": "dice",
@@ -3925,26 +3869,7 @@
     "height": 90,
     "z": 813,
     "shape3d": true,
-    "kept": false,
-    "activeFace": 3,
-    "animatePropertyChange": [
-      {
-        "property": "rollCount",
-        "className": "rolling",
-        "duration": 500
-      }
-    ],
-    "css": {
-      "default": {
-        "overflow": "clip"
-      },
-      ">.diceFaces>.diceFace": {
-        "border-radius": "${PROPERTY borderRadius}"
-      },
-      ".rolling": {
-        "overflow": "visible"
-      }
-    }
+    "kept": false
   },
   "d5": {
     "type": "dice",
@@ -3955,25 +3880,6 @@
     "height": 90,
     "z": 813,
     "shape3d": true,
-    "kept": false,
-    "animatePropertyChange": [
-      {
-        "property": "rollCount",
-        "className": "rolling",
-        "duration": 500
-      }
-    ],
-    "css": {
-      "default": {
-        "overflow": "clip"
-      },
-      ">.diceFaces>.diceFace": {
-        "border-radius": "${PROPERTY borderRadius}"
-      },
-      ".rolling": {
-        "overflow": "visible"
-      }
-    },
-    "activeFace": 4
+    "kept": false
   }
 }
