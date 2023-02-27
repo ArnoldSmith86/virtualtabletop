@@ -64,7 +64,7 @@
   background-color: var(--backgroundColor);
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: contain;
+  background-size: calc(100% * var(--imageScale));
   background-origin: content-box;
 
   backface-visibility: hidden;
@@ -269,7 +269,7 @@
 .d4.dice.widget > * > .diceFace,
 .d8.dice.widget > * > .diceFace,
 .d20.dice.widget > * > .diceFace {
-  background-size: calc(57% * var(--imageScale));
+  background-size: calc(55% * var(--imageScale));
   clip-path: polygon(50% 0, 100% 100%, 0% 100%);
   padding-top: 30%;
   border: none;
@@ -433,7 +433,7 @@
 }
 
 .d10.dice.widget > * > .diceFace {
-  background-size: calc(73% * var(--imageScale));
+  background-size: calc(71% * var(--imageScale));
   clip-path: polygon( 50% 0, 100% 80.90169944%, 50% 100%, 0 80.90169944% );
   transform-origin: 50% 0;
   transform: translateY(50%) translateZ(var(--tZ)) rotateZ(var(--rZ)) rotateX(var(--rX));
@@ -501,7 +501,7 @@
 
 .pentagon.dice.widget > * > .diceFace,
 .d12.dice.widget > * > .diceFace {
-  background-size: calc(83% * var(--imageScale));
+  background-size: calc(81% * var(--imageScale));
   clip-path: polygon(50% 0, 100% 38.2%, 80.9% 100%, 19.1% 100%, 0 38.2%);
   transform-origin: 50% 55.27864045%;
   border-width: 0;

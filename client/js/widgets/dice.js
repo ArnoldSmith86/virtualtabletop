@@ -32,7 +32,7 @@ class Dice extends Widget {
       swapTime: 500,
 
       image: null,
-      imageScale: 1,
+      imageScale: 0.8,
       text: null,
       pips: null,
       svgReplaces: null,
@@ -374,7 +374,7 @@ class Dice extends Widget {
         w = (Q[0][1] - Q[1][0]) * s;
       }
       if(w<0)
-        w = -w; x=-x; y=-y; z=-z; 
+        w = -w; x=-x; y=-y; z=-z;
       return `rotate3d(${x},${y},${z},${Math.acos(w)*-2}rad)`;
     }
     const hash = this.rollHash? this.rollHash : 0;
