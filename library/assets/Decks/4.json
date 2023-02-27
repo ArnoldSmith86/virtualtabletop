@@ -1,280 +1,541 @@
 {
-  "28efd404-2d7b-4950-bf0d-e90dae5235c9": {
-    "id": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "x": 1,
-    "y": 40.99999999999999,
-    "z": 1039,
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Decks",
+      "image": "/assets/1978293539_65452",
+      "rules": "",
+      "bgg": "",
+      "year": "2023",
+      "mode": "Assets",
+      "time": "",
+      "players": "0",
+      "language": "",
+      "variant": "Domino (Skinny Cards)",
+      "variantImage": "/assets/366206727_18780",
+      "attribution": "DEFAULT: The default card deck was created by Adrian Kennard and released under CC0 Public Domain license: https://www.me.uk/cards/.\n\n--\n\nPIXEL ART: Available at https://www.kenney.nl/assets/playing-cards-pack and in the Public Domain under CC0.\n\n--\n\nMINIMALIST: Available at https://opengameart.org/content/playing-card-assets-52-cards-deck-chips and in the Public Domain under CC0.\n\n--\n\nBIG SYMBOLS: Created by 1001.com and available at https://opengameart.org/content/casino-pack under CC-BY-SA 3.0.\n\n--\n\nDOMINO (SKINNY CARDS): The cards in this deck were created by an anonymous person who gave the work to virtualtabletop.io. Virtualtabletop.io releases all of this to the Public Domain under CC0.\n\n--\n\nGRIM PIXEL ART (5 COLORS): Created by @bodogedama (https://twitter.com/bodogedama?s=20). The creator authorized the use of these cards as assets in virtualtabletop.io. Please contact the creator to obtain permission to use them elsewhere.",
+      "showName": false,
+      "lastUpdate": 1676268882000
+    }
+  },
+  "deckSkinny": {
     "type": "deck",
+    "id": "deckSkinny",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "z": 11501,
+    "cardDefaults": {
+      "width": 80,
+      "pilesWith": {
+        "type": "card"
+      },
+      "classes": "transition"
+    },
     "cardTypes": {
-      "type-cea8e39b-263f-447b-9c74-e2f1c0043120": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-2.png",
-        "label": "02 - Clubs",
-        "99suit": "1"
+      "C 01": {
+        "image": "/i/cards-skinny/AC.svg",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-6e35057a-e2d8-485b-a81d-84c5ac46abb0": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-3.png",
-        "label": "03 - Clubs",
-        "99suit": "1"
+      "C 02": {
+        "image": "/i/cards-skinny/2C.svg",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-d5e475a1-da7d-4da0-825c-beb0f46e2ab3": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-4.png",
-        "label": "04 - Clubs",
-        "99suit": "1"
+      "C 03": {
+        "image": "/i/cards-skinny/3C.svg",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-6f666e3b-a7ac-4775-a43f-9721982923d0": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-5.png",
-        "label": "05 - Clubs",
-        "99suit": "1"
+      "C 04": {
+        "image": "/i/cards-skinny/4C.svg",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-c5f813c1-842a-44fa-b9c2-66ee011b2ff4": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-6.png",
-        "label": "06 - Clubs",
-        "99suit": "1"
+      "C 05": {
+        "image": "/i/cards-skinny/5C.svg",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-06cb00a1-89d2-4884-9509-321f1abc584c": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-7.png",
-        "label": "07 - Clubs",
-        "99suit": "1"
+      "C 06": {
+        "image": "/i/cards-skinny/6C.svg",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-9a9d3893-e267-4296-b911-e25c8f70320f": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-8.png",
-        "label": "08 - Clubs",
-        "99suit": "1"
+      "C 07": {
+        "image": "/i/cards-skinny/7C.svg",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-5a30a51d-7d85-4711-bf7b-9a96c8fef333": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-9.png",
-        "label": "09 - Clubs",
-        "99suit": "1"
+      "C 08": {
+        "image": "/i/cards-skinny/8C.svg",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-ba86fb26-2b16-4247-9282-db7bb262a03c": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-t.png",
-        "label": "10 - Clubs",
-        "99suit": "1"
+      "C 09": {
+        "image": "/i/cards-skinny/9C.svg",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-a691ebfe-d0a7-4a87-9362-510ea72e7544": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-j.png",
-        "label": "11J - Clubs",
-        "99suit": "1"
+      "C 10": {
+        "image": "/i/cards-skinny/TC.svg",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-9ee3e6ad-e743-4806-a36e-b67aa6593b42": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-q.png",
-        "label": "12Q - Clubs",
-        "99suit": "1"
+      "C 2J": {
+        "image": "/i/cards-skinny/JC.svg",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-420f256e-a72a-4f4b-8b40-f544ef02499c": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-k.png",
-        "label": "13K - Clubs",
-        "99suit": "1"
+      "C 3Q": {
+        "image": "/i/cards-skinny/QC.svg",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-1feab597-9d62-4fde-899b-418c45b67c1e": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-a.png",
-        "label": "14A - Clubs",
-        "99suit": "1"
+      "C 4K": {
+        "image": "/i/cards-skinny/KC.svg",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C",
+        "suit": "C",
+        "suitAlt": "1♣",
+        "suitColor": "♣"
       },
-      "type-eb931699-d817-4046-beef-c7076dbdeae8": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-2.png",
-        "label": "02 - Spades",
-        "99suit": "3"
+      "D 01": {
+        "image": "/i/cards-skinny/AD.svg",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-de18a8e7-c8e4-4e55-9d48-990da2dc5014": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-3.png",
-        "label": "03 - Spades",
-        "99suit": "3"
+      "D 02": {
+        "image": "/i/cards-skinny/2D.svg",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-1c6e71be-e5a8-4286-9530-192098278858": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-4.png",
-        "label": "04 - Spades",
-        "99suit": "3"
+      "D 03": {
+        "image": "/i/cards-skinny/3D.svg",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-a7b47418-cf39-4a12-be37-4088bde825e9": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-5.png",
-        "label": "05 - Spades",
-        "99suit": "3"
+      "D 04": {
+        "image": "/i/cards-skinny/4D.svg",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-de67f2ef-c3be-44e3-8aba-738c4ef93060": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-6.png",
-        "label": "06 - Spades",
-        "99suit": "3"
+      "D 05": {
+        "image": "/i/cards-skinny/5D.svg",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-1d173e80-3b1a-4b49-8526-b7837b1cfe6b": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-7.png",
-        "label": "07 - Spades",
-        "99suit": "3"
+      "D 06": {
+        "image": "/i/cards-skinny/6D.svg",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-4aeffcd1-6888-419d-be32-0b6467b4b4a9": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-8.png",
-        "label": "08 - Spades",
-        "99suit": "3"
+      "D 07": {
+        "image": "/i/cards-skinny/7D.svg",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-1e2e3519-4a41-44a0-a82d-69ee7fccf81e": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-9.png",
-        "label": "09 - Spades",
-        "99suit": "3"
+      "D 08": {
+        "image": "/i/cards-skinny/8D.svg",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-ea539728-470a-4f2f-92a3-89208856e596": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-t.png",
-        "label": "10 - Spades",
-        "99suit": "3"
+      "D 09": {
+        "image": "/i/cards-skinny/9D.svg",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-e75f22ed-9d2c-47db-900b-7d34b01d95f6": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-j.png",
-        "label": "11J - Spades",
-        "99suit": "3"
+      "D 10": {
+        "image": "/i/cards-skinny/TD.svg",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-68978da5-8116-4539-b9ac-579164637b01": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-q.png",
-        "label": "12Q - Spades",
-        "99suit": "3"
+      "D 2J": {
+        "image": "/i/cards-skinny/JD.svg",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-ccba2331-1713-4d37-ab52-e4c7b4a6cccd": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-k.png",
-        "label": "13K - Spades",
-        "99suit": "3"
+      "D 3Q": {
+        "image": "/i/cards-skinny/QD.svg",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-65515f8c-d876-4f02-97dc-b196600732c3": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-a.png",
-        "label": "14A - Spades",
-        "99suit": "3"
+      "D 4K": {
+        "image": "/i/cards-skinny/KD.svg",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D",
+        "suit": "D",
+        "suitAlt": "4♦",
+        "suitColor": "♦"
       },
-      "type-2097bcda-af3c-4f60-a83b-8d549af56ab5": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-2.png",
-        "label": "02 - Hearts",
-        "99suit": "2"
+      "H 01": {
+        "image": "/i/cards-skinny/AH.svg",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-e3c9e164-debf-4dcf-aeec-9fffd8d5f068": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-3.png",
-        "label": "03 - Hearts",
-        "99suit": "2"
+      "H 02": {
+        "image": "/i/cards-skinny/2H.svg",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-27f1535f-4864-4378-9bf2-570b91d41678": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-4.png",
-        "label": "04 - Hearts",
-        "99suit": "2"
+      "H 03": {
+        "image": "/i/cards-skinny/3H.svg",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-66240e23-f78d-4b8b-b5d2-b3d6d8938fc3": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-5.png",
-        "label": "05 - Hearts",
-        "99suit": "2"
+      "H 04": {
+        "image": "/i/cards-skinny/4H.svg",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-191fe127-3560-456c-a72d-9b4615737fac": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-6.png",
-        "label": "06 - Hearts",
-        "99suit": "2"
+      "H 05": {
+        "image": "/i/cards-skinny/5H.svg",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-d2731157-eecb-4339-a745-32981f260d3b": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-7.png",
-        "label": "07 - Hearts",
-        "99suit": "2"
+      "H 06": {
+        "image": "/i/cards-skinny/6H.svg",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-903287d2-69d5-40dd-8e78-2e242856e7f3": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-8.png",
-        "label": "08 - Hearts",
-        "99suit": "2"
+      "H 07": {
+        "image": "/i/cards-skinny/7H.svg",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-5b324af2-7080-4afe-aaef-71c08f9ea7d7": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-9.png",
-        "label": "09 - Hearts",
-        "99suit": "2"
+      "H 08": {
+        "image": "/i/cards-skinny/8H.svg",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-7ed265a4-d69c-4df3-9815-c6ae45eeea0b": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-t.png",
-        "label": "10 - Hearts",
-        "99suit": "2"
+      "H 09": {
+        "image": "/i/cards-skinny/9H.svg",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-8cc91ee2-3d1a-44ff-8af7-d5fdddb077a6": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-j.png",
-        "label": "11J - Hearts",
-        "99suit": "2"
+      "H 10": {
+        "image": "/i/cards-skinny/TH.svg",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-2bfc6e01-17eb-4a3f-9469-0c226d036058": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-q.png",
-        "label": "12Q - Hearts",
-        "99suit": "2"
+      "H 2J": {
+        "image": "/i/cards-skinny/JH.svg",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-514b501c-5420-4c7e-948a-7192cdb509df": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-k.png",
-        "label": "13K - Hearts",
-        "99suit": "2"
+      "H 3Q": {
+        "image": "/i/cards-skinny/QH.svg",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-e37d6f7b-cd5a-4a86-b402-6831bf8e6b2c": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-a.png",
-        "label": "14A - Hearts",
-        "99suit": "2"
+      "H 4K": {
+        "image": "/i/cards-skinny/KH.svg",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K H",
+        "suit": "H",
+        "suitAlt": "2♥",
+        "suitColor": "♥"
       },
-      "type-b5308431-2335-4a79-8b1b-2d8f9c3c3d3d": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-2.png",
-        "label": "02 - Diamonds",
-        "99suit": "4"
+      "S 01": {
+        "image": "/i/cards-skinny/AS.svg",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-c1a08699-2a5c-443a-8db5-66f9e6487f20": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-3.png",
-        "label": "03 - Diamonds",
-        "99suit": "4"
+      "S 02": {
+        "image": "/i/cards-skinny/2S.svg",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-b6a63c02-ef77-452d-955f-2fe168ee7db9": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-4.png",
-        "label": "04 - Diamonds",
-        "99suit": "4"
+      "S 03": {
+        "image": "/i/cards-skinny/3S.svg",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-a838ebbf-be69-4a90-b897-274fc06858a4": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-5.png",
-        "label": "05 - Diamonds",
-        "99suit": "4"
+      "S 04": {
+        "image": "/i/cards-skinny/4S.svg",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-a77eddb8-50e8-4f46-ae2b-cbdf08646181": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-6.png",
-        "label": "06 - Diamonds",
-        "99suit": "4"
+      "S 05": {
+        "image": "/i/cards-skinny/5S.svg",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-8f22c649-7f03-4f77-9c53-1bfd03707423": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-7.png",
-        "label": "07 - Diamonds",
-        "99suit": "4"
+      "S 06": {
+        "image": "/i/cards-skinny/6S.svg",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-aa7f904d-0772-4db1-9022-7eee77255c64": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-8.png",
-        "label": "08 - Diamonds",
-        "99suit": "4"
+      "S 07": {
+        "image": "/i/cards-skinny/7S.svg",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-72c66dca-5aab-4810-9dfb-519421a37536": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-9.png",
-        "label": "09 - Diamonds",
-        "99suit": "4"
+      "S 08": {
+        "image": "/i/cards-skinny/8S.svg",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-5598eaf6-ead1-4da6-9b0b-f02ec1065922": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-t.png",
-        "label": "10 - Diamonds",
-        "99suit": "4"
+      "S 09": {
+        "image": "/i/cards-skinny/9S.svg",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-90f80457-70c3-4d86-b236-e01a87be33a1": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-j.png",
-        "label": "11J - Diamonds",
-        "99suit": "4"
+      "S 10": {
+        "image": "/i/cards-skinny/TS.svg",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-b5373af0-b518-493c-ab11-ad0a2b84a299": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-q.png",
-        "label": "12Q - Diamonds",
-        "99suit": "4"
+      "S 2J": {
+        "image": "/i/cards-skinny/JS.svg",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-3f1ff98e-fc26-4b82-b8a4-78cc4c576171": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-k.png",
-        "label": "13K - Diamonds",
-        "99suit": "4"
+      "S 3Q": {
+        "image": "/i/cards-skinny/QS.svg",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-1dc2e4af-e080-46ea-9b8d-03b0b8ae9293": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-a.png",
-        "label": "14A - Diamonds",
-        "99suit": "4"
+      "S 4K": {
+        "image": "/i/cards-skinny/KS.svg",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S",
+        "suit": "S",
+        "suitAlt": "3♠",
+        "suitColor": "♠"
       },
-      "type-bfe69fcc-c478-4856-8e6a-0e4058b14cf1": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/joker-black.png",
-        "label": "1Joker - Black",
-        "99suit": "0"
+      "T 1J": {
+        "image": "/i/cards-skinny/1J.svg",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T",
+        "suit": "T",
+        "suitAlt": "5J",
+        "suitColor": "🃏"
       },
-      "type-0675ed9c-d956-497a-a6c4-dd01128710a0": {
-        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/joker-red.png",
-        "label": "2Joker - Red",
-        "99suit": "0"
+      "T 2J": {
+        "image": "/i/cards-skinny/2J.svg",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T",
+        "suit": "T",
+        "suitAlt": "5J",
+        "suitColor": "🃏"
+      },
+      "T 3J": {
+        "image": "/i/cards-skinny/3J.svg",
+        "rank": "J3",
+        "rankA": "J3",
+        "rankFixed": "J3 T",
+        "suit": "T",
+        "suitAlt": "5J",
+        "suitColor": "🃏"
+      },
+      "T 4J": {
+        "image": "/i/cards-skinny/4J.svg",
+        "rank": "J4",
+        "rankA": "J4",
+        "rankFixed": "J4 T",
+        "suit": "T",
+        "suitAlt": "5J",
+        "suitColor": "🃏"
       }
     },
     "faceTemplates": [
@@ -284,33 +545,14 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "color": "#ffffff",
+            "color": "white",
             "valueType": "static",
-            "value": "/i/cards-default/2B.svg",
-            "width": 80,
-            "height": 160
-          },
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "valueType": "static",
-            "value": "",
-            "color": "#3461d2",
-            "width": 80,
-            "height": 160
-          },
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "valueType": "static",
-            "value": "/assets/393647028_14279",
+            "value": "/i/cards-skinny/1B.svg",
             "width": 80,
             "height": 160
           }
         ],
-        "border": false,
+        "border": 1,
         "radius": 8
       },
       {
@@ -320,8 +562,17 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
             "width": 80,
             "height": 160
           }
@@ -329,311 +580,33 @@
         "border": 1,
         "radius": 8
       }
-    ],
-    "cardDefaults": {
-      "pilesWith": {
-        "type": "card"
+    ]
+  },
+  "buttonRecallShuffle": {
+    "type": "button",
+    "id": "buttonRecallShuffle",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 88,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
       },
-      "width": 80,
-      "overlap": false
-    },
-    "parent": "deckHolder"
-  },
-  "a31cbed2-1515-45c3-873b-9d0dd5669eb2": {
-    "id": "a31cbed2-1515-45c3-873b-9d0dd5669eb2",
-    "z": 11205,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-c5f813c1-842a-44fa-b9c2-66ee011b2ff4",
-    "parent": "2tcu"
-  },
-  "3c99ac80-c7b5-412c-94d9-ee8016f1cf8b": {
-    "id": "3c99ac80-c7b5-412c-94d9-ee8016f1cf8b",
-    "z": 11172,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-06cb00a1-89d2-4884-9509-321f1abc584c",
-    "parent": "2tcu"
-  },
-  "1cd89dfb-922c-4465-8703-07cd07571ff8": {
-    "id": "1cd89dfb-922c-4465-8703-07cd07571ff8",
-    "z": 11187,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-9a9d3893-e267-4296-b911-e25c8f70320f",
-    "parent": "2tcu"
-  },
-  "c7f97f07-2101-4f04-b2e6-2273ba5ee97c": {
-    "id": "c7f97f07-2101-4f04-b2e6-2273ba5ee97c",
-    "z": 11193,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-5a30a51d-7d85-4711-bf7b-9a96c8fef333",
-    "parent": "2tcu"
-  },
-  "c36c5f6d-65ec-47b9-80e6-09c9eca6a946": {
-    "id": "c36c5f6d-65ec-47b9-80e6-09c9eca6a946",
-    "z": 11192,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-ba86fb26-2b16-4247-9282-db7bb262a03c",
-    "parent": "2tcu"
-  },
-  "8f5a6f0b-dad6-492e-9fdf-9fd02b5ba9e8": {
-    "id": "8f5a6f0b-dad6-492e-9fdf-9fd02b5ba9e8",
-    "z": 11178,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-a691ebfe-d0a7-4a87-9362-510ea72e7544",
-    "parent": "2tcu"
-  },
-  "42170037-a313-4ffc-ba2a-5d9bbdadf6cf": {
-    "id": "42170037-a313-4ffc-ba2a-5d9bbdadf6cf",
-    "z": 11204,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-9ee3e6ad-e743-4806-a36e-b67aa6593b42",
-    "parent": "2tcu"
-  },
-  "b460f6e1-6f4f-4acc-8c9c-395cd159d14b": {
-    "id": "b460f6e1-6f4f-4acc-8c9c-395cd159d14b",
-    "z": 11211,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-420f256e-a72a-4f4b-8b40-f544ef02499c",
-    "parent": "2tcu"
-  },
-  "35f3246f-0e4f-4a3b-b132-541267ac0f86": {
-    "id": "35f3246f-0e4f-4a3b-b132-541267ac0f86",
-    "z": 11180,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-1feab597-9d62-4fde-899b-418c45b67c1e",
-    "parent": "2tcu"
-  },
-  "29b2ed52-4217-4352-93ea-91111b26066d": {
-    "id": "29b2ed52-4217-4352-93ea-91111b26066d",
-    "z": 11174,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-de67f2ef-c3be-44e3-8aba-738c4ef93060",
-    "parent": "2tcu"
-  },
-  "9b442ed2-f482-42cc-a56c-9c9c868f3ebf": {
-    "id": "9b442ed2-f482-42cc-a56c-9c9c868f3ebf",
-    "z": 11197,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-1d173e80-3b1a-4b49-8526-b7837b1cfe6b",
-    "parent": "2tcu"
-  },
-  "8964fb71-1df0-49bb-a5fa-f2ed317165f5": {
-    "id": "8964fb71-1df0-49bb-a5fa-f2ed317165f5",
-    "z": 11189,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-4aeffcd1-6888-419d-be32-0b6467b4b4a9",
-    "parent": "2tcu"
-  },
-  "86fd6903-4c87-40b0-b797-52144256d9f8": {
-    "id": "86fd6903-4c87-40b0-b797-52144256d9f8",
-    "z": 11206,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-1e2e3519-4a41-44a0-a82d-69ee7fccf81e",
-    "parent": "2tcu"
-  },
-  "9ed628dc-2982-4728-9269-7b0fcf158029": {
-    "id": "9ed628dc-2982-4728-9269-7b0fcf158029",
-    "z": 11203,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-ea539728-470a-4f2f-92a3-89208856e596",
-    "parent": "2tcu"
-  },
-  "eb1154bd-5ad0-4e77-b8ec-327c7bb85bae": {
-    "id": "eb1154bd-5ad0-4e77-b8ec-327c7bb85bae",
-    "z": 11176,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-e75f22ed-9d2c-47db-900b-7d34b01d95f6",
-    "parent": "2tcu"
-  },
-  "e212d176-fcce-4c99-b335-5717213d8cd5": {
-    "id": "e212d176-fcce-4c99-b335-5717213d8cd5",
-    "z": 11190,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-68978da5-8116-4539-b9ac-579164637b01",
-    "parent": "2tcu"
-  },
-  "368f6e2a-2c37-4cc9-8bf4-77d280339506": {
-    "id": "368f6e2a-2c37-4cc9-8bf4-77d280339506",
-    "z": 11185,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-ccba2331-1713-4d37-ab52-e4c7b4a6cccd",
-    "parent": "2tcu"
-  },
-  "afcf8a49-fe25-4a22-a637-70b2465aa7b9": {
-    "id": "afcf8a49-fe25-4a22-a637-70b2465aa7b9",
-    "z": 11209,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-65515f8c-d876-4f02-97dc-b196600732c3",
-    "parent": "2tcu"
-  },
-  "46903fcc-a4c1-41b3-b257-7c3bc6687ed8": {
-    "id": "46903fcc-a4c1-41b3-b257-7c3bc6687ed8",
-    "z": 11201,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-191fe127-3560-456c-a72d-9b4615737fac",
-    "parent": "2tcu"
-  },
-  "b4c90e80-ea9e-4307-935f-24573573eb50": {
-    "id": "b4c90e80-ea9e-4307-935f-24573573eb50",
-    "z": 11182,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-d2731157-eecb-4339-a745-32981f260d3b",
-    "parent": "2tcu"
-  },
-  "487024a5-3b2d-49f8-b079-1d96f9a548b3": {
-    "id": "487024a5-3b2d-49f8-b079-1d96f9a548b3",
-    "z": 11200,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-903287d2-69d5-40dd-8e78-2e242856e7f3",
-    "parent": "2tcu"
-  },
-  "46d63882-b6eb-4140-a6a7-a0a9d9062396": {
-    "id": "46d63882-b6eb-4140-a6a7-a0a9d9062396",
-    "z": 11202,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-5b324af2-7080-4afe-aaef-71c08f9ea7d7",
-    "parent": "2tcu"
-  },
-  "299ff0ca-5252-4fa3-a838-769fab069276": {
-    "id": "299ff0ca-5252-4fa3-a838-769fab069276",
-    "z": 11179,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-7ed265a4-d69c-4df3-9815-c6ae45eeea0b",
-    "parent": "2tcu"
-  },
-  "34ae7284-48d3-41f0-8bd4-6eb2d1af1ee6": {
-    "id": "34ae7284-48d3-41f0-8bd4-6eb2d1af1ee6",
-    "z": 11188,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-8cc91ee2-3d1a-44ff-8af7-d5fdddb077a6",
-    "parent": "2tcu"
-  },
-  "a211b7f8-276f-4f1b-882a-9a9a4776f7dd": {
-    "id": "a211b7f8-276f-4f1b-882a-9a9a4776f7dd",
-    "z": 11212,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-2bfc6e01-17eb-4a3f-9469-0c226d036058",
-    "parent": "2tcu"
-  },
-  "672b63b5-0249-4860-bee3-5e20c062d904": {
-    "id": "672b63b5-0249-4860-bee3-5e20c062d904",
-    "z": 11168,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-514b501c-5420-4c7e-948a-7192cdb509df",
-    "parent": "2tcu"
-  },
-  "6e549adc-c32e-4a49-898f-2a13e6f31a16": {
-    "id": "6e549adc-c32e-4a49-898f-2a13e6f31a16",
-    "z": 11194,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-e37d6f7b-cd5a-4a86-b402-6831bf8e6b2c",
-    "parent": "2tcu"
-  },
-  "2f9374e0-96c0-4c98-b3d7-b04416da5f22": {
-    "id": "2f9374e0-96c0-4c98-b3d7-b04416da5f22",
-    "z": 11191,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-a77eddb8-50e8-4f46-ae2b-cbdf08646181",
-    "parent": "2tcu"
-  },
-  "026a7d80-b8ab-4f89-8f9a-593690ac4061": {
-    "id": "026a7d80-b8ab-4f89-8f9a-593690ac4061",
-    "z": 11208,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-8f22c649-7f03-4f77-9c53-1bfd03707423",
-    "parent": "2tcu"
-  },
-  "3fb6281f-1e6a-4f8e-8de4-c4f52afdca0f": {
-    "id": "3fb6281f-1e6a-4f8e-8de4-c4f52afdca0f",
-    "z": 11181,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-aa7f904d-0772-4db1-9022-7eee77255c64",
-    "parent": "2tcu"
-  },
-  "fa6b4a13-a239-4527-9256-bdcc63755b54": {
-    "id": "fa6b4a13-a239-4527-9256-bdcc63755b54",
-    "z": 11177,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-72c66dca-5aab-4810-9dfb-519421a37536",
-    "parent": "2tcu"
-  },
-  "48861758-2b2a-4e6b-b120-ef2402ad3043": {
-    "id": "48861758-2b2a-4e6b-b120-ef2402ad3043",
-    "z": 11171,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-5598eaf6-ead1-4da6-9b0b-f02ec1065922",
-    "parent": "2tcu"
-  },
-  "f3e8d125-8bb5-49ce-9d5a-7b545c37e728": {
-    "id": "f3e8d125-8bb5-49ce-9d5a-7b545c37e728",
-    "z": 11175,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-90f80457-70c3-4d86-b236-e01a87be33a1",
-    "parent": "2tcu"
-  },
-  "f7f4216e-303f-4931-8056-ce643537ecf4": {
-    "id": "f7f4216e-303f-4931-8056-ce643537ecf4",
-    "z": 11173,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-b5373af0-b518-493c-ab11-ad0a2b84a299",
-    "parent": "2tcu"
-  },
-  "364752ff-3063-4640-bc37-8047af252f80": {
-    "id": "364752ff-3063-4640-bc37-8047af252f80",
-    "z": 11207,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-3f1ff98e-fc26-4b82-b8a4-78cc4c576171",
-    "parent": "2tcu"
-  },
-  "7f4b1b97-35f6-4206-b895-6a9ea4e6992d": {
-    "id": "7f4b1b97-35f6-4206-b895-6a9ea4e6992d",
-    "z": 11196,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-1dc2e4af-e080-46ea-9b8d-03b0b8ae9293",
-    "parent": "2tcu"
-  },
-  "0f56173f-7758-493b-986a-b35dd426e57f": {
-    "id": "0f56173f-7758-493b-986a-b35dd426e57f",
-    "z": 11186,
-    "type": "card",
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
-    "cardType": "type-0675ed9c-d956-497a-a6c4-dd01128710a0",
-    "parent": "2tcu"
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
   },
   "deckHolder": {
     "id": "deckHolder",
@@ -644,166 +617,462 @@
     "inheritChildZ": true,
     "width": 88
   },
-  "2tcu": {
+  "u9u7": {
     "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
     "width": 80,
     "height": 160,
-    "id": "2tcu",
-    "z": 11170,
-    "parent": "deckHolder"
+    "id": "u9u7",
+    "z": 12065
   },
-  "_meta": {
-    "version": 1,
-    "info": {
-      "name": "Decks",
-      "image": "/assets/1978293539_65452",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Assets",
-      "time": "",
-      "players": "0",
-      "language": "",
-      "variant": "Domino (Skinny Cards)",
-      "attribution": "The default card deck was created by Adrian Kennard and released under CC0 Public Domain license: https://www.me.uk/cards/.\n\n--\n\nAvailable at https://www.kenney.nl/assets/playing-cards-pack and in the Public Domain under CC0.\n\n--\n\nAvailable at https://opengameart.org/content/playing-card-assets-52-cards-deck-chips and in the Public Domain under CC0.\n\n--\n\nCreated by 1001.com and available at https://opengameart.org/content/casino-pack under CC-BY-SA 3.0.\n\n--\n\nThe cards in this deck were created by an anonymous person who gave the work to virtualtabletop.io.  Virtualtabletop.io releases all of this to the Public Domain under CC0.\n\n--\n\nCreated by @bodogedama (https://twitter.com/bodogedama?s=20)\n\nThe creator authorized the use of these cards as assets in virtualtabletop.io.\n\nPlease contact the creator to obtain permission to use them elsewhere.",
-      "showName": false,
-      "lastUpdate": 1615608285000
-    }
-  },
-  "jrlk": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "b6qu": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-cea8e39b-263f-447b-9c74-e2f1c0043120",
-    "id": "jrlk",
-    "z": 11214,
-    "parent": "2tcu"
+    "cardType": "C 01",
+    "id": "b6qu",
+    "z": 11953,
+    "parent": "u9u7"
   },
-  "r1ug": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "hjy0": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-6e35057a-e2d8-485b-a81d-84c5ac46abb0",
-    "id": "r1ug",
-    "z": 11216,
-    "parent": "2tcu"
+    "cardType": "C 02",
+    "id": "hjy0",
+    "z": 11955,
+    "parent": "u9u7"
   },
-  "00dv": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "nnro": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-d5e475a1-da7d-4da0-825c-beb0f46e2ab3",
-    "id": "00dv",
-    "z": 11218,
-    "parent": "2tcu"
+    "cardType": "C 03",
+    "id": "nnro",
+    "z": 11957,
+    "parent": "u9u7"
   },
-  "gaxk": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "21j3": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-6f666e3b-a7ac-4775-a43f-9721982923d0",
-    "id": "gaxk",
-    "z": 11220,
-    "parent": "2tcu"
+    "cardType": "C 04",
+    "id": "21j3",
+    "z": 11959,
+    "parent": "u9u7"
   },
-  "n2s9": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "ggv7": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-eb931699-d817-4046-beef-c7076dbdeae8",
-    "id": "n2s9",
-    "z": 11222,
-    "parent": "2tcu"
+    "cardType": "C 05",
+    "id": "ggv7",
+    "z": 11961,
+    "parent": "u9u7"
   },
-  "8d76": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "4sf2": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-de18a8e7-c8e4-4e55-9d48-990da2dc5014",
-    "id": "8d76",
-    "z": 11224,
-    "parent": "2tcu"
+    "cardType": "C 06",
+    "id": "4sf2",
+    "z": 11963,
+    "parent": "u9u7"
   },
-  "fvco": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "0hb3": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-1c6e71be-e5a8-4286-9530-192098278858",
-    "id": "fvco",
-    "z": 11226,
-    "parent": "2tcu"
+    "cardType": "C 07",
+    "id": "0hb3",
+    "z": 11965,
+    "parent": "u9u7"
   },
-  "1lsl": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "ztzk": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-a7b47418-cf39-4a12-be37-4088bde825e9",
-    "id": "1lsl",
-    "z": 11228,
-    "parent": "2tcu"
+    "cardType": "C 08",
+    "id": "ztzk",
+    "z": 11967,
+    "parent": "u9u7"
   },
-  "ahlx": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "hny3": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-2097bcda-af3c-4f60-a83b-8d549af56ab5",
-    "id": "ahlx",
-    "z": 11230,
-    "parent": "2tcu"
+    "cardType": "C 09",
+    "id": "hny3",
+    "z": 11969,
+    "parent": "u9u7"
   },
-  "pqpf": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "mnt1": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-e3c9e164-debf-4dcf-aeec-9fffd8d5f068",
-    "id": "pqpf",
-    "z": 11232,
-    "parent": "2tcu"
+    "cardType": "C 10",
+    "id": "mnt1",
+    "z": 11971,
+    "parent": "u9u7"
   },
-  "98t4": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "x7uy": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-27f1535f-4864-4378-9bf2-570b91d41678",
-    "id": "98t4",
-    "z": 11234,
-    "parent": "2tcu"
+    "cardType": "C 2J",
+    "id": "x7uy",
+    "z": 11973,
+    "parent": "u9u7"
   },
-  "b0ex": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "f9yf": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-66240e23-f78d-4b8b-b5d2-b3d6d8938fc3",
-    "id": "b0ex",
-    "z": 11236,
-    "parent": "2tcu"
+    "cardType": "C 3Q",
+    "id": "f9yf",
+    "z": 11975,
+    "parent": "u9u7"
   },
-  "zeph": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "vk31": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-b5308431-2335-4a79-8b1b-2d8f9c3c3d3d",
-    "id": "zeph",
-    "z": 11238,
-    "parent": "2tcu"
+    "cardType": "C 4K",
+    "id": "vk31",
+    "z": 11977,
+    "parent": "u9u7"
   },
-  "0u1l": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "u1ry": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-c1a08699-2a5c-443a-8db5-66f9e6487f20",
-    "id": "0u1l",
-    "z": 11240,
-    "parent": "2tcu"
+    "cardType": "D 01",
+    "id": "u1ry",
+    "z": 11979,
+    "parent": "u9u7"
   },
-  "0pyb": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "3vgt": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-b6a63c02-ef77-452d-955f-2fe168ee7db9",
-    "id": "0pyb",
-    "z": 11255,
-    "parent": "2tcu"
+    "cardType": "D 02",
+    "id": "3vgt",
+    "z": 11981,
+    "parent": "u9u7"
   },
-  "cukr": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "h1t2": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-a838ebbf-be69-4a90-b897-274fc06858a4",
-    "id": "cukr",
-    "z": 11258,
-    "parent": "2tcu"
+    "cardType": "D 03",
+    "id": "h1t2",
+    "z": 11983,
+    "parent": "u9u7"
   },
-  "g8xv": {
-    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+  "f0pj": {
+    "deck": "deckSkinny",
     "type": "card",
-    "cardType": "type-bfe69fcc-c478-4856-8e6a-0e4058b14cf1",
-    "id": "g8xv",
-    "z": 11261,
-    "parent": "2tcu"
+    "cardType": "D 04",
+    "id": "f0pj",
+    "z": 11985,
+    "parent": "u9u7"
+  },
+  "q0e9": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "D 05",
+    "id": "q0e9",
+    "z": 11987,
+    "parent": "u9u7"
+  },
+  "ag8l": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "D 06",
+    "id": "ag8l",
+    "z": 11989,
+    "parent": "u9u7"
+  },
+  "46qf": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "D 07",
+    "id": "46qf",
+    "z": 11991,
+    "parent": "u9u7"
+  },
+  "z2ja": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "D 08",
+    "id": "z2ja",
+    "z": 11993,
+    "parent": "u9u7"
+  },
+  "8g8h": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "D 09",
+    "id": "8g8h",
+    "z": 11995,
+    "parent": "u9u7"
+  },
+  "c7ga": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "D 10",
+    "id": "c7ga",
+    "z": 11997,
+    "parent": "u9u7"
+  },
+  "720x": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "D 2J",
+    "id": "720x",
+    "z": 11999,
+    "parent": "u9u7"
+  },
+  "30n2": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "D 3Q",
+    "id": "30n2",
+    "z": 12001,
+    "parent": "u9u7"
+  },
+  "slzj": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "D 4K",
+    "id": "slzj",
+    "z": 12003,
+    "parent": "u9u7"
+  },
+  "x0w3": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 01",
+    "id": "x0w3",
+    "z": 12005,
+    "parent": "u9u7"
+  },
+  "t1ea": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 02",
+    "id": "t1ea",
+    "z": 12007,
+    "parent": "u9u7"
+  },
+  "zlhk": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 03",
+    "id": "zlhk",
+    "z": 12009,
+    "parent": "u9u7"
+  },
+  "y8f6": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 04",
+    "id": "y8f6",
+    "z": 12011,
+    "parent": "u9u7"
+  },
+  "79ts": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 05",
+    "id": "79ts",
+    "z": 12013,
+    "parent": "u9u7"
+  },
+  "d40n": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 06",
+    "id": "d40n",
+    "z": 12015,
+    "parent": "u9u7"
+  },
+  "2lkd": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 07",
+    "id": "2lkd",
+    "z": 12017,
+    "parent": "u9u7"
+  },
+  "maw4": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 08",
+    "id": "maw4",
+    "z": 12019,
+    "parent": "u9u7"
+  },
+  "ig4r": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 09",
+    "id": "ig4r",
+    "z": 12021,
+    "parent": "u9u7"
+  },
+  "9wgg": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 10",
+    "id": "9wgg",
+    "z": 12023,
+    "parent": "u9u7"
+  },
+  "stat": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 2J",
+    "id": "stat",
+    "z": 12025,
+    "parent": "u9u7"
+  },
+  "ab4f": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 3Q",
+    "id": "ab4f",
+    "z": 12027,
+    "parent": "u9u7"
+  },
+  "n09v": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "H 4K",
+    "id": "n09v",
+    "z": 12029,
+    "parent": "u9u7"
+  },
+  "b4ao": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 01",
+    "id": "b4ao",
+    "z": 12031,
+    "parent": "u9u7"
+  },
+  "9xap": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 02",
+    "id": "9xap",
+    "z": 12033,
+    "parent": "u9u7"
+  },
+  "75xy": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 03",
+    "id": "75xy",
+    "z": 12035,
+    "parent": "u9u7"
+  },
+  "8dzo": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 04",
+    "id": "8dzo",
+    "z": 12037,
+    "parent": "u9u7"
+  },
+  "qx3j": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 05",
+    "id": "qx3j",
+    "z": 12039,
+    "parent": "u9u7"
+  },
+  "rpun": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 06",
+    "id": "rpun",
+    "z": 12041,
+    "parent": "u9u7"
+  },
+  "tgfw": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 07",
+    "id": "tgfw",
+    "z": 12043,
+    "parent": "u9u7"
+  },
+  "5h1g": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 08",
+    "id": "5h1g",
+    "z": 12045,
+    "parent": "u9u7"
+  },
+  "b6mj": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 09",
+    "id": "b6mj",
+    "z": 12047,
+    "parent": "u9u7"
+  },
+  "zy4x": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 10",
+    "id": "zy4x",
+    "z": 12049,
+    "parent": "u9u7"
+  },
+  "bu89": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 2J",
+    "id": "bu89",
+    "z": 12051,
+    "parent": "u9u7"
+  },
+  "038n": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 3Q",
+    "id": "038n",
+    "z": 12053,
+    "parent": "u9u7"
+  },
+  "r07n": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "S 4K",
+    "id": "r07n",
+    "z": 12055,
+    "parent": "u9u7"
+  },
+  "h64x": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "T 1J",
+    "id": "h64x",
+    "z": 12057,
+    "parent": "u9u7"
+  },
+  "3jfv": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "T 2J",
+    "id": "3jfv",
+    "z": 12059,
+    "parent": "u9u7"
+  },
+  "z7u8": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "T 3J",
+    "id": "z7u8",
+    "z": 12073,
+    "parent": "u9u7"
+  },
+  "ahdy": {
+    "deck": "deckSkinny",
+    "type": "card",
+    "cardType": "T 4J",
+    "id": "ahdy",
+    "z": 12076,
+    "parent": "u9u7"
   }
 }

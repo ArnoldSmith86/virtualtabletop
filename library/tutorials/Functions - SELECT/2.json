@@ -1360,7 +1360,7 @@
         "value": "D",
         "sortBy": {
           "key": "rank",
-          "reverse": false
+          "reverse": true
         }
       },
       {
