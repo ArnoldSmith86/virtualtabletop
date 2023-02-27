@@ -299,6 +299,10 @@ export class Widget extends StateManaged {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
 
+  childrenTarget() {
+    return this.children()
+  }
+
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       await this.set('parent', null);
@@ -1332,7 +1336,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'ROTATE') {
-        setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        setDefaults(a, { count: 1, angle: 90, mode: 'add', target: 'DEFAULT' });
         let collection;
         const mode = a.mode == 'set' ? 'to' : 'by';
         if(a.holder !== undefined) {

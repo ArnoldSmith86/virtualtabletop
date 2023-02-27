@@ -42,6 +42,10 @@ class Seat extends Widget {
     this.updateLinkedWidgets(true);
   }
 
+  childrenTarget() {
+    return widgets.get(this.get("hand")).children().filter(c=>!c.get('owner') || c.get('owner')==this.get("player"));
+  }
+
   classes() {
     let className = super.classes();
 
