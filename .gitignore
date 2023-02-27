@@ -1,4 +1,6 @@
 config.json
+assets/custom/*
+!assets/custom/.keep
 custom.*
 coverage
 node_modules
