@@ -262,7 +262,7 @@ class Dice extends Widget {
         if(prop == 'color') {
           css += `; --backgroundColor:${value}`;
           if(!getFunction('pipColor') && !this.get('pipColor',{ignoreFaceProperties:true}))
-            css += `; --pipColor:${contrastAnyColor(value)}`;
+            css += `; --pipColor:${contrastAnyColor(value, 1)}`;
         } else {
           css += `; --${prop}:${value}`;
         }
