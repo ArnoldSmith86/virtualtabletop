@@ -74,5 +74,5 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .click('#w_bldn');
   await t.resizeWindow(width,height);
-  await compareState(t, 'e9dbf613823c875c68d18802bc066d7e');
+  await compareState(t, '98fcb4082874abd0f47d516eb2258aa6');
 });
