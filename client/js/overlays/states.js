@@ -1078,14 +1078,18 @@ onLoad(function() {
     updateFilterOverflow();
   });
   document.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-    $('#statesButton').click();
+    if(e.dataTransfer.types.includes('Files')) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+      $('#statesButton').click();
+    }
   });
   document.addEventListener('drop', function(e) {
-    e.preventDefault();
-    loadJSZip();
-    for(const file of e.dataTransfer.files)
-      resolveStateCollections(file, addStateFile);
+    if(e.dataTransfer.files.length) {
+      e.preventDefault();
+      loadJSZip();
+      for(const file of e.dataTransfer.files)
+        resolveStateCollections(file, addStateFile);
+    }
   });
 });

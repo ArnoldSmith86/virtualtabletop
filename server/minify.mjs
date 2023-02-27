@@ -37,6 +37,7 @@ export default async function minifyHTML() {
     'client/css/widgets/timer.css',
 
     'client/css/fonts.css',
+    'client/css/custom.css'
   ], [
     'node_modules/dompurify/dist/purify.js',
 
