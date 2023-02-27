@@ -39,23 +39,39 @@ const jeMacroPreset = `
 // EXAMPLES
 
 // add a property to all cards of a deck
-// if(w.deck == "deckName")
-//   w.customVariable = true;
+/*
+if(w.deck == "deckName")
+  w.customVariable = true;
+*/
 
 // change ID of matching widgets
-// var match = w.id.match(/^Player 3 - ((First|Second).*)$/)
-// if(match)
-//   w.id = "Player 5 - "+match[1]
+/*
+var match = w.id.match(/^Player 3 - ((First|Second).*)$/)
+if(match)
+  w.id = "Player 5 - "+match[1]
+*/
 
 // move matching widgets to the left
-// if(w.id.match(/^Player [13] - (Score|Seat)/))
-//   w.x -= 20;
+/*
+if(w.id.match(/^Player [13] - (Score|Seat)/))
+  w.x -= 20;
+*/
 
 // change all widget IDs to a counter prefixed by "w"
-// if(!v.i)
-//   v.i = 1
-// w.id = "w"+v.i
-// v.i++
+/*
+if(!v.i)
+  v.i = 1
+w.id = "w"+v.i
+v.i++
+*/
+
+// Adds pseudo players to seats
+/*
+if (w.type=="seat" && w.player==null) {
+  w.player = "player " + (w.index||1)
+  w.color = "hsl("+Math.floor(Math.random() * 360)+", 100%, 50%)"
+}
+*/
 `;
 
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
@@ -867,27 +883,28 @@ function jeAddRoutineOperationCommands(command, defaults) {
 
 function jeAddCommands() {
   const widgetTypes = [ 'all' ];
-  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget' ];
+  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats' ];
 
-  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Button()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Card()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
+  const widgetBase = new Widget();
+  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Button(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Card(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
-  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
+  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
@@ -896,7 +913,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "OK", fields: [] } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
-  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
@@ -924,14 +941,23 @@ function jeAddCommands() {
   jeAddGridCommand('maxY', 0);
   jeAddGridCommand('minX', 0);
   jeAddGridCommand('minY', 0);
+  jeAddGridCommand('alignX', 0);
+  jeAddGridCommand('alignY', 0);
   jeAddGridCommand('offsetX', 0);
   jeAddGridCommand('offsetY', 0);
   jeAddGridCommand('rotation', 0);
 
+  jeAddLimitCommand('minX', 0);
+  jeAddLimitCommand('minY', 0);
+  // Default max limits are computed dynamically.
+  jeAddLimitCommand('maxX');
+  jeAddLimitCommand('maxY');
+
   jeAddFieldCommand('text', 'subtitle|title|text', '');
-  jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('variable', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('label', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('colors', 'palette', [ '#000000' ]);
   jeAddFieldCommand('min', 'number', 0);
   jeAddFieldCommand('max', 'number', 10);
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
@@ -947,7 +973,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
-  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'palette', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
@@ -1206,6 +1232,25 @@ function jeAddGridCommand(key, value) {
   });
 }
 
+function jeAddLimitCommand(key, value) {
+  jeCommands.push({
+    id: 'limit_' + key,
+    name: key,
+    context: '^[^ ]* ↦ dragLimit',
+    show: _=>!(key in jeStateNow.dragLimit),
+    call: async function() {
+      const w = widgets.get(jeStateNow.id);
+      jeStateNow.dragLimit[key] = '###SELECT ME###';
+      let limit = value;
+      if (key == 'maxX')
+        limit = 1600 - w.get('width');
+      else if (key == 'maxY')
+        limit = 1000 - w.get('height');
+      jeSetAndSelect(limit);
+    }
+  });
+}
+
 function jeAddNumberCommand(name, key, callback) {
   jeCommands.push({
     id: 'number_' + name,
@@ -1221,22 +1266,23 @@ function jeAddNumberCommand(name, key, callback) {
   });
 }
 
-function jeAddWidgetPropertyCommands(object) {
+function jeAddWidgetPropertyCommands(object, widgetBase) {
   for(const property in object.defaults)
     if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
-      jeAddWidgetPropertyCommand(object, property);
+      jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
 }
 
 const buttonColorProperties = ['backgroundColor', 'borderColor', 'textColor', 'backgroundColorOH', 'borderColorOH', 'textColorOH'];
 
-function jeAddWidgetPropertyCommand(object, property) {
+function jeAddWidgetPropertyCommand(object, widgetBase, property) {
   jeCommands.push({
     id: 'widget_' + object.getDefaultValue('typeClasses').replace('widget ', '') + '_' + property,
     name: property,
     class: 'property',
     context: `^${object.getDefaultValue('typeClasses').replace('widget ', '')}`,
+    isTypeSpecific: JSON.stringify(widgetBase.getDefaultValue(property)) !== JSON.stringify(object.getDefaultValue(property)),
     call: property=='dropTarget'? // Special case for dropTarget, faces, and spinner options
             async function() {
               jeStateNow.dropTarget = {
@@ -1363,7 +1409,6 @@ function jeApplyDelta(delta) {
   }
 
   jeUpdateTree(delta.s);
-  widgetCoordCache = null;
 }
 
 function jeApplyState(state) {
@@ -2251,9 +2296,10 @@ function jeShowCommands() {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
     if(contextMatch && contextMatch[0]!= "" && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
-      if(activeCommands[contextMatch[0]] === undefined)
-        activeCommands[contextMatch[0]] = [];
-      activeCommands[contextMatch[0]].push(command);
+      const title = command.isTypeSpecific || command.isTypeSpecific === undefined ? contextMatch[0] : 'widget';
+      if(activeCommands[title] === undefined)
+        activeCommands[title] = [];
+      activeCommands[title].push(command);
     };
   }
 
@@ -2275,7 +2321,7 @@ function jeShowCommands() {
       return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
     }
 
-    for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
+    for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length).sort((a,b)=>a==='widget'?1:(b==='widget'?-1:0)))) {
       commandText += `\n  <div class="context">${html(contextMatch)}</div>\n`;
       for(const command of activeCommands[contextMatch].sort(sortByName)) {
         try {
@@ -2371,7 +2417,6 @@ const clickButton = async function(event) {
   }
 }
 
-let widgetCoordCache = null;
 window.addEventListener('mousemove', function(e) {
   if(!jeEnabled)
     return;
@@ -2381,24 +2426,15 @@ window.addEventListener('mousemove', function(e) {
   if(!jeZoomOut && x > 1600 || jeMouseButtonIsDown)
     return;
 
-  if(!widgetCoordCache) {
-    widgetCoordCache = [];
-    for(const widget of widgets.values()) {
-      const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
-      coords.r = coords.x + widget.get('width');
-      coords.b = coords.y + widget.get('height');
-      coords.widget = widget;
-      widgetCoordCache.push(coords);
-    }
-  }
-
-  const hoveredWidgets = widgetCoordCache.filter(c=>x>=c.x && x<=c.r && y>=c.y && y<=c.b).map(c=>c.widget);
+  // Adding hitTest makes foreign elements temporarily hittable.
+  document.body.classList.add('hitTest');
+  let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
+  document.body.classList.remove('hitTest');
 
   hoveredWidgets.sort(function(w1,w2) {
     const hiddenParent =  function(widget) {
       return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
     };
-
     const w1card = w1.get('type') == 'card';
     const w2card = w2.get('type') == 'card';
     const w1foreign = !w1card && hiddenParent(w1);

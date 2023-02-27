@@ -38,6 +38,9 @@ export function dehomogenize(point) {
 
 export function getPointOnPlane(transform, x, y) {
   const inv = transform.inverse();
+  // If the transform is not invertible, the inverse will be all NaNs.
+  if (isNaN(inv.a))
+    return null;
   const p0 = dehomogenize(inv.transformPoint(new DOMPoint(x, y, 0)));
   // Get transformed direction vector of ray in (0, 0, 1) direction.
   let dir = dehomogenize(inv.transformPoint(new DOMPoint(x, y, 1)));
@@ -52,22 +55,28 @@ export function getPointOnPlane(transform, x, y) {
   return new DOMPoint(p0.x + dir.x * t, p0.y + dir.y * t, p0.z + dir.z * t);
 }
 
+export function getTransformOrigin(elem) {
+  const lengths = parseLengths(getComputedStyle(elem).transformOrigin);
+  return {x: lengths[0], y: lengths[1]};
+}
+
 export function getElementTransform(elem) {
   let transform = new DOMMatrix();
-  const computedPerspective = getComputedStyle(elem).perspective;
+  const computedStyle = getComputedStyle(elem);
+  const computedPerspective = computedStyle.perspective;
   if (computedPerspective != 'none' && computedPerspective != '0px') {
     const perspective = parseFloat(computedPerspective);
-    const perspectiveOrigin = parseLengths(getComputedStyle(elem).perspectiveOrigin);
+    const perspectiveOrigin = parseLengths(computedStyle.perspectiveOrigin);
     // From https://w3c.github.io/csswg-drafts/css-transforms-2/#PerspectiveDefined
     transform.translateSelf(perspectiveOrigin[0], perspectiveOrigin[1]);
     transform.multiplySelf(new DOMMatrix([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -1/perspective, 0, 0, 0, 1]));
     transform.translateSelf(-perspectiveOrigin[0], -perspectiveOrigin[1]);
   }
-  const computedTransform = getComputedStyle(elem).transform;
+  const computedTransform = computedStyle.transform;
   if (computedTransform !='none') {
-    const transformOrigin = parseLengths(getComputedStyle(elem).transformOrigin);
+    const transformOrigin = parseLengths(computedStyle.transformOrigin);
     transform.translateSelf(transformOrigin[0], transformOrigin[1]);
-    transform.multiplySelf(new DOMMatrix(getComputedStyle(elem).transform));
+    transform.multiplySelf(new DOMMatrix(computedStyle.transform));
     transform.translateSelf(-transformOrigin[0], -transformOrigin[1]);
   }
   transform.translateSelf(elem.offsetLeft, elem.offsetTop);
@@ -101,5 +110,16 @@ export function getElementTransformRelativeTo(elem, parent) {
     destTransform.preMultiplySelf(getElementTransform(parent));
     parent = parent.offsetParent;
   }
-  return transform.preMultiplySelf(destTransform.inverse());
+  const transformOrigin = parseLengths(getComputedStyle(elem).transformOrigin);
+  let elemTransform = new DOMMatrix();
+  elemTransform.translateSelf(-transformOrigin[0], -transformOrigin[1]);
+  elemTransform.multiplySelf(destTransform);
+  elemTransform.translateSelf(transformOrigin[0], transformOrigin[1]);
+
+  const destTransformInverse = elemTransform.inverse();
+  // If the matrix is not invertible its components are set to NaN.
+  // We cannot produce a transform relative to this parent.
+  if (isNaN(destTransformInverse.a))
+    return null;
+  return transform.preMultiplySelf(destTransformInverse);
 }

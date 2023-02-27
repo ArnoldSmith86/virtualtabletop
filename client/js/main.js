@@ -118,7 +118,9 @@ function checkURLproperties(connected) {
     try {
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
-        if(playerParams) {
+        if(location.hash == '#tutorials') {
+          $('#filterByType').value = 'Tutorials';
+        } else if(playerParams) {
           urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
         } else {
           urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
@@ -199,11 +201,15 @@ function setScale() {
 }
 
 export async function shuffleWidgets(collection) {
-  const shuffle = collection.map(widget => {
-    return {widget, rand:Math.random()};
-  }).sort((a, b)=> a.rand - b.rand);
-  for(let i of shuffle) {
-    await i.widget.bringToFront();
+  // Fisher–Yates shuffle
+  const len = collection.length;
+  let indexes = [...Array(len).keys()];
+  for (let i = len-1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i+1));
+    [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+  }
+  for (let i of indexes) {
+    await collection[i].bringToFront();
   }
 }
 
