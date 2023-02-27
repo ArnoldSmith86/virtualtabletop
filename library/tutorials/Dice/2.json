@@ -11,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1676952416727,
+      "lastUpdate": 1677458472857,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -68,7 +68,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 22px; ",
-    "text": "Using faceCSS, the background color is set to semi-transparent orange and the text color is white. You could also set text color by using the 'pipColor' property and not using css."
+    "text": "Using faceCSS, the background color is set to semi-transparent orange, 'backface-visibility' is set to hidden, and the text color is white. You could also set text color by using the 'pipColor' property and not using css."
   },
   "dice3": {
     "type": "dice",
@@ -163,7 +163,8 @@
     "activeFace": 1,
     "faceCSS": {
       "background": "#ff800090",
-      "color": "#ffffff"
+      "color": "#ffffff",
+      "backface-visibility": "visible"
     },
     "faces": [
       1,
