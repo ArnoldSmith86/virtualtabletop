@@ -1340,16 +1340,16 @@ export class Widget extends StateManaged {
         let collection;
         const mode = a.mode == 'set' ? 'to' : 'by';
         if(a.holder !== undefined) {
-          if(this.isValidID(a.holder, problems)) {
-            await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
-                await c.rotate(a.angle, a.mode);
-            });
+          if(collection = getCollection(a.holder)) {
+            for(const w of collections[collection]){
+              for(const c of w.childrenTarget().slice(0, a.count || 999999))
+              await c.rotate(a.angle, a.mode);
+            }
             if(jeRoutineLogging) {
               jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
             }
           }
-        } else if(collection = getCollection(a.collection)) {
+        } else if(collection = getCollection(a.target)) {
           if(collections[collection].length) {
             for(const c of collections[collection].slice(0, a.count || 999999))
               await c.rotate(a.angle, a.mode);
