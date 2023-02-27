@@ -236,6 +236,9 @@ class Dice extends Widget {
       this.facesElement.appendChild(face);
       this.faceElements.push(face);
     }
+
+    if(faces.length <= this.previousActiveFace)
+      this.previousActiveFace = faces.length - 1;
   }
 
   css() {
