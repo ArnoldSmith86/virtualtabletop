@@ -1,6 +1,5 @@
-const diceFaceCssVariableProps = [
-  'pipColor','backgroundColor','borderColor','imageScale'
-];
+import { contrastAnyColor } from '../color.js';
+
 class Dice extends Widget {
   constructor(id) {
     super(id);
@@ -20,8 +19,8 @@ class Dice extends Widget {
       layer: 1,
 
       borderRadius: '16%',
-      pipColor: 'black',
-      backgroundColor: 'white',
+      color: 'white',
+      pipColor: null,
       borderColor: null,
 
       faces: [ 1, 2, 3, 4, 5, 6 ],
@@ -203,10 +202,7 @@ class Dice extends Widget {
 
       let faceCSS = this.getFaceProperty(content, 'faceCSS');
       faceCSS = faceCSS ? mapAssetURLs(this.cssAsText(faceCSS, null, true)) : '';
-      diceFaceCssVariableProps.forEach(prop=>{
-        if(content[prop] != undefined)
-          faceCSS += `; --${prop}:${content[prop]}`
-      });
+      faceCSS += this.faceCssVariables(prop=>content[prop]);
       if(faceCSS !='')
         face.style = faceCSS;
 
@@ -244,11 +240,7 @@ class Dice extends Widget {
   css() {
     let css = super.css();
 
-    diceFaceCssVariableProps.forEach(prop=>{
-      const value = this.get(prop,{ignoreFaceProperties:true});
-      if(value)
-        css += `; --${prop}:${value}`;
-    });
+    css += this.faceCssVariables((prop)=>this.get(prop,{ignoreFaceProperties:true}));
     css += '; --size:' + Math.min(this.get('width'), this.get('height')) + 'px';
     css += '; --rollTime:' + this.get('rollTime') + 'ms';
     css += '; --swapTime:' + this.get('swapTime') + 'ms';
@@ -258,8 +250,24 @@ class Dice extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('pipColor', 'backgroundColor', 'borderColor', 'imageScale', 'rollTime', 'swapTime');
+    p.push('pipColor', 'color', 'borderColor', 'imageScale', 'rollTime', 'swapTime');
     return p;
+  }
+
+  faceCssVariables(getFunction) {
+    let css = '';
+    ['color','pipColor','borderColor','imageScale'].forEach(prop=>{
+      const value = getFunction(prop);
+      if(value)
+        if(prop == 'color') {
+          css += `; --backgroundColor:${value}`;
+          if(!getFunction('pipColor') && !this.get('pipColor',{ignoreFaceProperties:true}))
+            css += `; --pipColor:${contrastAnyColor(value)}`;
+        } else {
+          css += `; --${prop}:${value}`;
+        }
+    });
+    return css;
   }
 
   faces() {

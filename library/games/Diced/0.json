@@ -13401,7 +13401,7 @@
     "width": 60,
     "height": 60,
     "movableInEdit": false,
-    "backgroundColor": "#f40000",
+    "color": "#f40000",
     "pipColor": "#ffffff",
     "shape3d": true
   },
@@ -13413,7 +13413,7 @@
     "width": 60,
     "height": 60,
     "movableInEdit": false,
-    "backgroundColor": "#70ad47",
+    "color": "#70ad47",
     "pipColor": "#ffffff",
     "shape3d": true
   },
@@ -13425,7 +13425,7 @@
     "width": 60,
     "height": 60,
     "movableInEdit": false,
-    "backgroundColor": "#ffc000",
+    "color": "#ffc000",
     "pipColor": "#ffffff",
     "shape3d": true
   },
@@ -13437,7 +13437,7 @@
     "width": 60,
     "height": 60,
     "movableInEdit": false,
-    "backgroundColor": "#4472c4",
+    "color": "#4472c4",
     "pipColor": "#ffffff",
     "shape3d": true
   },

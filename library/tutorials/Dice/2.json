@@ -36,7 +36,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "text": "This room shows some examples of how CSS can be used to customize the appearance of dice. Like several other widget types, dice have theor own set of CSS values that can be changed. You can use the 'css' property to change overall aspects of the dice (but probably should just use 'faceCSS'. Use 'faceCSS' to set css parameters on all faces or on individual faces. And use the specific parameters 'pipColor', 'backgroundColor', 'borderColor', and 'imageScale' to modify aspects specific to individual faces."
+    "text": "This room shows some examples of how CSS can be used to customize the appearance of dice. Like several other widget types, dice have theor own set of CSS values that can be changed. You can use the 'css' property to change overall aspects of the dice (but probably should just use 'faceCSS'. Use 'faceCSS' to set css parameters on all faces or on individual faces. And use the specific parameters 'pipColor', 'color', 'borderColor', and 'imageScale' to modify aspects specific to individual faces."
   },
   "title": {
     "id": "title",
@@ -80,31 +80,31 @@
     "faces": [
       {
         "value": 1,
-        "backgroundColor": "red",
+        "color": "red",
         "pipColor": "white"
       },
       {
         "value": 2,
-        "backgroundColor": "orange",
+        "color": "orange",
         "pipColor": "white"
       },
       {
         "value": 3,
-        "backgroundColor": "yellow"
+        "color": "yellow"
       },
       {
         "value": 4,
-        "backgroundColor": "green",
+        "color": "green",
         "pipColor": "white"
       },
       {
         "value": 5,
-        "backgroundColor": "blue",
+        "color": "blue",
         "pipColor": "white"
       },
       {
         "value": 6,
-        "backgroundColor": "purple",
+        "color": "purple",
         "pipColor": "white"
       }
     ],
@@ -119,7 +119,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 22px; ",
-    "text": "These dice all use 'backgroundColor' and 'pipColor' to change the colors on the faces. The only difference is in the use of 'value' and 'pips' (which both show pips) and text (used to show strings)."
+    "text": "These dice all use 'color' and 'pipColor' to change the colors on the faces. The only difference is in the use of 'value' and 'pips' (which both show pips) and text (used to show strings)."
   },
   "dice4text": {
     "id": "dice4text",
@@ -185,31 +185,31 @@
     "faces": [
       {
         "text": 1,
-        "backgroundColor": "red",
+        "color": "red",
         "pipColor": "white"
       },
       {
         "text": 2,
-        "backgroundColor": "orange",
+        "color": "orange",
         "pipColor": "white"
       },
       {
         "text": 3,
-        "backgroundColor": "yellow"
+        "color": "yellow"
       },
       {
         "text": 4,
-        "backgroundColor": "green",
+        "color": "green",
         "pipColor": "white"
       },
       {
         "text": 5,
-        "backgroundColor": "blue",
+        "color": "blue",
         "pipColor": "white"
       },
       {
         "text": 6,
-        "backgroundColor": "purple",
+        "color": "purple",
         "pipColor": "white"
       }
     ],
@@ -226,31 +226,31 @@
     "faces": [
       {
         "pips": 1,
-        "backgroundColor": "red",
+        "color": "red",
         "pipColor": "white"
       },
       {
         "pips": 2,
-        "backgroundColor": "orange",
+        "color": "orange",
         "pipColor": "white"
       },
       {
         "pips": 3,
-        "backgroundColor": "yellow"
+        "color": "yellow"
       },
       {
         "pips": 4,
-        "backgroundColor": "green",
+        "bcolor": "green",
         "pipColor": "white"
       },
       {
         "pips": 5,
-        "backgroundColor": "blue",
+        "color": "blue",
         "pipColor": "white"
       },
       {
         "pips": 6,
-        "backgroundColor": "purple",
+        "color": "purple",
         "pipColor": "white"
       }
     ],
@@ -381,6 +381,6 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 22px; ",
-    "text": "'faceCSS' is ued on this dice to set the backgroundColor. But you could also use the dice property 'backgroundColor'. But do not use the css parameter 'backgroundColor'. Also setting the 'pipColor' property to green also changes the border color of each face. "
+    "text": "'faceCSS' is ued on this dice to set the backgroundColor. But you could also use the dice property 'color'. But do not use the css parameter 'backgroundColor'. Also setting the 'pipColor' property to green also changes the border color of each face. "
   }
 }

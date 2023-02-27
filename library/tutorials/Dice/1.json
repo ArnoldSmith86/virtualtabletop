@@ -367,7 +367,7 @@
         "image": "/i/dice/cube-6-4.svg"
       }
     ],
-    "backgroundColor": "transparent",
+    "color": "transparent",
     "borderColor": "transparent",
     "svgReplaces": {
       "topColor": "cT",
@@ -409,7 +409,7 @@
     "y": 340,
     "z": 217,
     "activeFace": 7,
-    "backgroundColor": "transparent",
+    "color": "transparent",
     "borderColor": "transparent",
     "faces": [
       {
