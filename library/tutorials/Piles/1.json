@@ -1,29 +1,20 @@
 {
   "_meta": {
-    "version": 12,
+    "version": 4,
     "info": {
-      "name": "Pile",
+      "name": "Piles",
       "image": "/assets/245080149_4003",
       "rules": "",
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
       "time": "",
-      "attribution": "The paper clip icon is from https://www.nicepng.com/ourpic/u2q8r5q8y3q8i1w7_quantum-professional-t-paper-clip-transparent-png/ and is available under the NicePNG.com License for personal use.\n\nThe brown envelope images are by user mousewax and are released into the Public Domain through CC0.",
-      "lastUpdate": 1676368147013,
-      "id": "tnps",
-      "showName": false,
-      "skill": "",
-      "description": "",
-      "variantImage": "",
-      "variant": "Advanced",
-      "language": "en-US",
       "players": "1",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": ""
+      "language": "en-US",
+      "variant": "Advanced",
+      "attribution": "The paper clip icon is from https://www.nicepng.com/ourpic/u2q8r5q8y3q8i1w7_quantum-professional-t-paper-clip-transparent-png/ and is available under the NicePNG.com License for personal use.\n\nThe brown envelope images are by user mousewax and are released into the Public Domain through CC0.",
+      "showName": false,
+      "lastUpdate": 1640793026000
     }
   },
   "oit_2_C": {
