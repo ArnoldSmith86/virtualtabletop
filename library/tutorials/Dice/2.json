@@ -11,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1677458472857,
+      "lastUpdate": 1677542484400,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -222,7 +222,6 @@
     "x": 860,
     "y": 300,
     "z": 203,
-    "rollCount": 19,
     "faces": [
       {
         "pips": 1,
@@ -255,7 +254,8 @@
       }
     ],
     "shape3d": true,
-    "activeFace": 3
+    "activeFace": 5,
+    "rollCount": 19
   },
   "dice": {
     "type": "dice",
