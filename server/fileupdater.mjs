@@ -1,4 +1,4 @@
-export const VERSION = 11;
+export const VERSION = 50;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -64,6 +64,7 @@ function updateRoutine(routine, v) {
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
   v<9 && v9NumericStringSort(routine);
   v<11 && v11OwnerMOVEXY(routine);
+  v<50 && v50InputsUpdate(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -371,4 +372,17 @@ function v11OwnerMOVEXY(routine) {
   for(const operation of routine)
     if(operation.func == 'MOVEXY' && operation.resetOwner === undefined)
       operation.resetOwner = false;
+}
+
+function v50InputsUpdate(routine) {
+  for(const operation of routine)
+    if(operation.func == 'ROTATE'){
+      if (operation.collection) {
+        operation.target = operation.collection;
+        delete operation.collection;
+      }
+      if (typeof operation.holder == "string") {
+        operation.holder = [operation.holder];
+      }
+    }
 }
