@@ -1530,10 +1530,10 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     await applyEditOptions(widget);
 
   if(widget.id !== previousState.id) {
-    updateWidgetId(widget, previousState);
-/*  } else if (widget.type !== previousState.type) {
+    await updateWidgetId(widget, previousState);
+  } else if (widget.type !== previousState.type) {
     await removeWidgetLocal(previousState.id, true);
-    const id = await addWidgetLocal(widget);*/
+    const id = await addWidgetLocal(widget);
   } else {
     for(const key in previousState)
       if(widget[key] === undefined)
