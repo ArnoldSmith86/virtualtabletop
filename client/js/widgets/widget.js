@@ -79,7 +79,8 @@ export class Widget extends StateManaged {
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
-      globalUpdateRoutine: null
+      globalUpdateRoutine: null,
+      gameStartRoutine: null
     });
     this.domElement.timer = false
 
@@ -401,23 +402,22 @@ export class Widget extends StateManaged {
     delete clone.parent;
     const cWidget = widgets.get(await addWidgetLocal(clone));
 
-    if(parent) {
-      // use moveToHolder so that CLONE triggers onEnter and similar features
-      cWidget.movedByButton = problems != null;
+    // use moveToHolder so that CLONE triggers onEnter and similar features
+    cWidget.movedByButton = problems != null;
+    if(parent)
       await cWidget.moveToHolder(widgets.get(parent));
 
-      // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
-      if(!widgets.get(parent).get('alignChildren')) {
-        await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
-        await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
-        await cWidget.updatePiles();
-      }
-      delete cWidget.movedByButton;
+    // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
+    if(!parent || !widgets.get(parent).get('alignChildren')) {
+      await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
+      await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
+      await cWidget.updatePiles();
     }
+    delete cWidget.movedByButton;
 
     if (recursive) {
-      for (const w of this.children()) {
-        w.clone({parent: cWidget.get('id')}, true, problems);
+      for (const w of this.childArray) {
+        await w.clone({parent: cWidget.get('id')}, true, problems);
       }
     }
     return cWidget;
@@ -586,6 +586,13 @@ export class Widget extends StateManaged {
             result[field.variable] = 'on';
           } else {
             result[field.variable] = 'off';
+          }
+        } else if(field.type == 'palette') {
+          let thisresult = document.getElementsByName('INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
+          for (var i=0;i<thisresult.length;i++){
+            if ( thisresult[i].checked ) {
+              result[field.variable] = thisresult[i].value;
+            }
           }
         } else if(field.type == 'number') {
           let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
@@ -954,13 +961,13 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CLONE') {
-        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
+        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, recursive: false, collection: 'DEFAULT' });
         const source = getCollection(a.source);
         if(source) {
           var c=[];
           for(const w of collections[source]) {
             for(let i=1; i<=a.count; ++i) {
-              c.push(await w.clone(a.properties, false, problems, a.xOffset * i, a.yOffset * i));
+              c.push(await w.clone(a.properties, a.recursive, problems, a.xOffset * i, a.yOffset * i));
             }
           }
           collections[a.collection]=c;
