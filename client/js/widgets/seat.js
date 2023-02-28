@@ -43,7 +43,12 @@ class Seat extends Widget {
   }
 
   childrenTarget() {
-    return widgets.get(this.get("hand")).children().filter(c=>!c.get('owner') || c.get('owner')==this.get("player"));
+    if (widgets.get(this.get("hand"))) {
+      return widgets.get(this.get("hand")).children().filter(c=>!c.get('owner') || c.get('owner')==this.get("player"));
+    } else {
+      return {}
+    }
+    
   }
 
   classes() {
