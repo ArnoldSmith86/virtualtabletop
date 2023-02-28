@@ -993,13 +993,13 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
   jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
 
-  jeAddNumberCommand('increment number', '+', x=>x+1);
-  jeAddNumberCommand('decrement number', '-', x=>x-1);
-  jeAddNumberCommand('double number', '*', x=>x*2);
-  jeAddNumberCommand('half number', '/', x=>x/2);
-  jeAddNumberCommand('zero', '0', x=>0);
-  jeAddNumberCommand('opposite value', '0', x=>-x);
-  jeAddNumberCommand('${}', '0', x=>'${}');
+  jeAddNumberCommand('+1', 'increment', '+', x=>x+1);
+  jeAddNumberCommand('-1', 'decrement', '-', x=>x-1);
+  jeAddNumberCommand('×2', 'double', '*', x=>x*2);
+  jeAddNumberCommand('½', 'half', '/', x=>x/2);
+  jeAddNumberCommand('0', 'zero', '0', x=>0);
+  jeAddNumberCommand('-𝑛', 'opposite', '0', x=>-x);
+  jeAddNumberCommand('${}', 'variable', '0', x=>'${}');
 
   jeAddAlignmentCommands();
 }
@@ -1251,9 +1251,9 @@ function jeAddLimitCommand(key, value) {
   });
 }
 
-function jeAddNumberCommand(name, key, callback) {
+function jeAddNumberCommand(name, display, key, callback) {
   jeCommands.push({
-    id: 'number_' + name,
+    id: 'number_' + display,
     name: name,
     forceKey: key,
     context: '.*',

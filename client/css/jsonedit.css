@@ -454,6 +454,8 @@ body.jsonEdit.jeZoomOut #topSurface {
   font-weight: bold;
   margin-top: 8px;
   width: 100%;
+  min-height: 2rem;
+  border-top:1px dotted gray;
 }
 
 #jeCommands > button > b{
@@ -525,4 +527,11 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 #jeCommands #jeCommandOptions input[type="number"]{
   width: 6ch;
+}
+
+body.jsonEdit #jeCommands>button[id^="number_"]{
+  display: inline;
+    box-sizing: border-box;
+    width: 32px;
+    text-align: center;
 }
