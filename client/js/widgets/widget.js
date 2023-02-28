@@ -1345,6 +1345,12 @@ export class Widget extends StateManaged {
               if (w.childrenTarget().length){
                 for(const c of w.childrenTarget().slice(0, a.count || 999999))
                   await c.rotate(a.angle, a.mode);
+              } else {
+                if (w.get("type")=="seat") {
+                  problems.push(`the hand of ${w.get("id")} is empty or does not exist`);
+                } else{
+                  problems.push(`${w.get("id")} is empty or does not exist`);
+                }
               }
             }
             if(jeRoutineLogging) {
@@ -1356,9 +1362,9 @@ export class Widget extends StateManaged {
             for(const c of collections[collection].slice(0, a.count || 999999))
               await c.rotate(a.angle, a.mode);
             if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
+              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.target}' ${mode} ${a.angle}`);
           } else {
-            problems.push(`Collection ${a.collection} is empty.`);
+            problems.push(`Collection ${a.target} is empty.`);
           }
         }
       }
