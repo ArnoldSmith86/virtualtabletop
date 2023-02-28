@@ -141,6 +141,7 @@ body.aspectTooGood.hiddenToolbar {
       body.wideToolbar #toolbar > img {
         display: block;
         margin: 10px 20px 3px 20px;
+        height: 52px;
       }
       body.wideToolbar #toolbar .divider:nth-child(2) {
         display: block;
@@ -657,8 +658,18 @@ div[icon] .buttons {
   -moz-user-select: none;
 }
 
-.widget.foreign {
+body:not(.jsonEdit) .widget.foreign {
   display: none !important;
+}
+
+body.jsonEdit:not(.hitTest) .widget.foreign {
+  /* Edit mode uses elementsFromPoint to determine widgets under the cursor, so
+     we hide and pass pointer events through the element but don't use display: none here
+     to prevent invalidating all layout every time the mouse moves. When hit testing
+     the foreign layers are temporarily visible (but the class is removed before a frame
+     is presented to the user). */
+  visibility: hidden;
+  pointer-events: none;
 }
 
 #clientPointer {
@@ -1188,7 +1199,8 @@ button:disabled:hover {
 }
 .inputnumber,
 .inputstring,
-.inputselect{
+.inputselect,
+.inputpalette{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -1197,7 +1209,8 @@ button:disabled:hover {
 
 .inputnumber label,
 .inputstring label,
-.inputselect label{
+.inputselect label,
+.inputpalette label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1350,4 +1363,58 @@ input:invalid+span:after {
   color: red;
   letter-spacing: -1px;
 }
-
+.inputpalette > div{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 3px;
+}
+.inputpalette > div input{
+  display: none;
+}
+.inputpalette > div label{
+  height: 35px;
+  width: 35px;
+  display: inline-block;
+  border-radius: 8px;
+  position: relative;
+  border: 3px solid transparent;
+  padding: 0;
+  margin: -1.5px;
+}
+.inputpalette > div input[type="radio"]:checked+label{
+  border: 3px solid var(--VTTblue);
+}
+.inputpalette > div input[type="radio"]:checked+label::after{
+  font-family: 'Material Icons';
+  line-height: 1.25em;
+  text-align: center;
+  height: 1.25em;
+  width: 1.25em;
+  background: var(--VTTblue);
+  color: white;
+  border-top-right-radius: 40%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  content: 'check';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  border: 2px solid white;
+  z-index: -1;
+}
+.inputpalette > div label > div{
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  position: absolute;
+  border: 2px solid white;
+  overflow: hidden;
+  background-color: inherit;
+  border-radius: 5px;
+  z-index: -2;
+}

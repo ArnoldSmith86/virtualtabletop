@@ -5,7 +5,7 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
-import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo } from '../geometry.js';
+import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -26,6 +26,7 @@ export class Widget extends StateManaged {
     super();
     this.id = id;
     this.domElement = div;
+    this.dropShadowWidget = null;
     this.targetTransform = '';
     this.childArray = [];
     this.propertiesUsedInCSS = [];
@@ -65,6 +66,8 @@ export class Widget extends StateManaged {
       dragging: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
+      dropShadowOwner: null,
+      dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
 
@@ -76,7 +79,8 @@ export class Widget extends StateManaged {
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
-      globalUpdateRoutine: null
+      globalUpdateRoutine: null,
+      gameStartRoutine: null
     });
     this.domElement.timer = false
 
@@ -157,7 +161,9 @@ export class Widget extends StateManaged {
     let newParent = undefined;
     if(delta.parent !== undefined) {
       newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
-      fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
+      // If the widget wasn't newly created, transition from its previous location.
+      if (delta.id === undefined)
+        fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
     }
 
     this.applyCSS(delta);
@@ -348,6 +354,8 @@ export class Widget extends StateManaged {
       className += ' dragging';
     if(this.get('dragging') == playerName)
       className += ' draggingSelf';
+    if (this.get('dropShadowOwner'))
+      className += ' dragging-shadow';
 
     if(this.get('clickable'))
       className += ' clickable';
@@ -365,7 +373,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
+    return [ 'classes', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
@@ -384,6 +392,39 @@ export class Widget extends StateManaged {
     } else {
       return false;
     }
+  }
+
+  async clone(overrideProperties, recursive = false, problems = null, xOffset = 0, yOffset = 0) {
+    const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
+    const parent = clone.parent;
+    clone.clonedFrom = this.get('id');
+    if(widgets.has(clone.id)) {
+      delete clone.id;
+      if(problems && overrideProperties.id !== undefined)
+        problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
+    }
+    delete clone.parent;
+    const cWidget = widgets.get(await addWidgetLocal(clone));
+
+    // use moveToHolder so that CLONE triggers onEnter and similar features
+    cWidget.movedByButton = problems != null;
+    if(parent)
+      await cWidget.moveToHolder(widgets.get(parent));
+
+    // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
+    if(!parent || !widgets.get(parent).get('alignChildren')) {
+      await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
+      await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
+      await cWidget.updatePiles();
+    }
+    delete cWidget.movedByButton;
+
+    if (recursive) {
+      for (const w of this.childArray) {
+        await w.clone({parent: cWidget.get('id')}, true, problems);
+      }
+    }
+    return cWidget;
   }
 
   coordGlobalFromCoordLocal(coord) {
@@ -415,6 +456,20 @@ export class Widget extends StateManaged {
   coordParentFromCoordLocal(coord) {
     const transform = getElementTransform(this.domElement);
     return dehomogenize(transform.transformPoint(new DOMPoint(coord.x, coord.y)));
+  }
+
+  async createShadowWidget() {
+    if (this.get('dropShadowWidget'))
+      return;
+
+    // Use the top child if this is a pile widget.
+    const shadowWidget = this.get('type') == 'pile' ? this.children()[0] : this;
+    if (!shadowWidget)
+      return null;
+    await this.set('dropShadowWidget', (await shadowWidget.clone({
+        'movable': false,
+        'dropShadowOwner': playerName,
+        'parent': null}, true)).get('id'));
   }
 
   css() {
@@ -535,6 +590,13 @@ export class Widget extends StateManaged {
             result[field.variable] = 'on';
           } else {
             result[field.variable] = 'off';
+          }
+        } else if(field.type == 'palette') {
+          let thisresult = document.getElementsByName('INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
+          for (var i=0;i<thisresult.length;i++){
+            if ( thisresult[i].checked ) {
+              result[field.variable] = thisresult[i].value;
+            }
           }
         } else if(field.type == 'number') {
           let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
@@ -781,7 +843,9 @@ export class Widget extends StateManaged {
             problems.push('Routine parameter must refer to only one routine, first routine executed.');
           a.routine = a.routine[0]
         }
-        if(!a.routine.match(/Routine$/)) {
+        if (typeof a.routine != 'string') {
+          problems.push('Routine parameter must be a string');
+        } else if (!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
         } else if(this.isValidID(a.widget, problems)) {
           if(Array.isArray(a.widget))
@@ -901,39 +965,13 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CLONE') {
-        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
+        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, recursive: false, collection: 'DEFAULT' });
         const source = getCollection(a.source);
         if(source) {
           var c=[];
           for(const w of collections[source]) {
             for(let i=1; i<=a.count; ++i) {
-              const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
-              const parent = clone.parent;
-              clone.clonedFrom = w.get('id');
-
-              if(widgets.has(clone.id)) {
-                delete clone.id;
-                if(a.properties.id !== undefined)
-                  problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
-              }
-              delete clone.parent;
-              const cWidget = widgets.get(await addWidgetLocal(clone));
-
-              if(parent) {
-                // use moveToHolder so that CLONE triggers onEnter and similar features
-                cWidget.movedByButton = true;
-                await cWidget.moveToHolder(widgets.get(parent));
-                delete cWidget.movedByButton;
-              }
-
-              // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
-              if(!parent || !widgets.get(parent).get('alignChildren')) {
-                await cWidget.set('x', (a.properties.x !== undefined ? a.properties.x : w.get('x')) + a.xOffset * i);
-                await cWidget.set('y', (a.properties.y !== undefined ? a.properties.y : w.get('y')) + a.yOffset * i);
-                await cWidget.updatePiles();
-              }
-
-              c.push(cWidget);
+              c.push(await w.clone(a.properties, a.recursive, problems, a.xOffset * i, a.yOffset * i));
             }
           }
           collections[a.collection]=c;
@@ -1848,11 +1886,10 @@ export class Widget extends StateManaged {
     await this.bringToFront();
     await this.set('dragging', playerName);
 
-    if(!this.get('fixedParent')) {
+    if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('_ancestor'));
       this.hoverTarget = null;
-
       this.disablePileUpdateAfterParentChange = true;
       await this.set('parent', null);
       delete this.disablePileUpdateAfterParentChange;
@@ -1864,9 +1901,11 @@ export class Widget extends StateManaged {
 
   async move(coordGlobal, localAnchor) {
     const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
-    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), this.coordParentFromCoordLocal({x: 0, y: 0}));
-    let newX = Math.round(coordParent.x + offset.x);
-    let newY = Math.round(coordParent.y + offset.y);
+    const transformOrigin = getTransformOrigin(this.domElement);
+    let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
+    let newX = Math.round(coordParent.x + offset.x - transformOrigin.x);
+    let newY = Math.round(coordParent.y + offset.y - transformOrigin.y);
 
     //Keeps widget's top left corner within coordinates set by dragLimit object
     const limit = this.get('dragLimit');
@@ -1890,7 +1929,7 @@ export class Widget extends StateManaged {
     await this.setPosition(newX, newY, this.get('z'));
     await this.snapToGrid();
 
-    if(!this.get('fixedParent')) {
+    if(!this.get('fixedParent') && this.get('movable')) {
       await this.checkParent();
 
       const lastHoverTarget = this.hoverTarget;
@@ -1934,6 +1973,34 @@ export class Widget extends StateManaged {
         await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
         if(this.hoverTarget != this.currentParent)
           await this.checkParent(true);
+
+        // When the hover target changes we may need to create or remove the shadow widget.
+        // Only create a shadow widget if the holder is shared and doesn't already have one in it.
+        // Multiple shadows being positioned in the same holder can lead to conflicting updates.
+        if (!this.get('dropShadowWidget') && this.hoverTarget && this.hoverTarget.get('dropShadow') &&
+            (this.hoverTarget.get('childrenPerOwner') ||
+             this.hoverTarget.children().filter(c => c.get('dropShadowOwner') != null).length == 0)) {
+          await this.createShadowWidget();
+        } else if (!this.hoverTarget || !this.hoverTarget.get('dropShadow')) {
+          await this.hideShadowWidget();
+        }
+      }
+
+      // If we currently have a shadow widget, position it and place it in the holder.
+      if (this.hoverTarget && this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
+        const shadowWidget = widgets.get(this.get('dropShadowWidget'));
+        const globalPoint = {x: this.get('x'), y: this.get('y'), z: this.get('z')};
+        const shadowParentId = shadowWidget.get('parent');
+        if (shadowParentId != this.hoverTarget.get('id')) {
+          shadowWidget.currentParent = widgets.get(shadowParentId);
+          await shadowWidget.set('parent', null);
+          await shadowWidget.setPosition(globalPoint.x, globalPoint.y, globalPoint.z);
+          await shadowWidget.checkParent(true);
+          await shadowWidget.moveToHolder(this.hoverTarget);
+        } else {
+          await shadowWidget.setPosition(globalPoint.x, globalPoint.y, globalPoint.z);
+          await this.hoverTarget.onChildAddAlign(shadowWidget);
+        }
       }
     }
   }
@@ -1942,10 +2009,11 @@ export class Widget extends StateManaged {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
+    await this.hideShadowWidget();
     await this.set('dragging', null);
     await this.set('hoverTarget', null);
 
-    if(!this.get('fixedParent')) {
+    if(!this.get('fixedParent') && this.get('movable')) {
       for(const t of this.dropTargets)
         t.domElement.classList.remove('droppable');
 
@@ -1967,6 +2035,26 @@ export class Widget extends StateManaged {
       this.domElement.classList.remove('longtouch');
 
     await this.updatePiles();
+  }
+
+  async hideShadowWidget() {
+    if (!this.get('dropShadowWidget'))
+      return;
+    if (widgets.has(this.get('dropShadowWidget'))) {
+      const shadowWidget = widgets.get(this.get('dropShadowWidget'));
+      const holder = widgets.get(shadowWidget.get('parent'));
+      const preventRearrange = shadowWidget.get('parent') == this.get('hoverTarget');
+      shadowWidget.currentParent = holder;
+      if (preventRearrange)
+        holder.preventRearrangeDuringPileDrop = true;
+
+      await shadowWidget.set('parent', null);
+      await shadowWidget.checkParent(true);
+      await removeWidgetLocal(shadowWidget.get('id'));
+      if (preventRearrange)
+        delete holder.preventRearrangeDuringPileDrop;
+    }
+    await this.set('dropShadowWidget', null);
   }
 
   async onChildAdd(child, oldParentID) {
@@ -2225,7 +2313,7 @@ export class Widget extends StateManaged {
       return;
 
     const thisParent = this.get('parent');
-    if(this.isBeingRemoved || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
+    if(this.isBeingRemoved || this.get('dropShadowOwner') || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
       return;
 
     const thisX = this.get('x');
@@ -2241,7 +2329,7 @@ export class Widget extends StateManaged {
 
       // check if this widget is closer than 10px from another widget in the same parent
       if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
-        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
+        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowOwner') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it

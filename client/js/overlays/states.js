@@ -359,8 +359,8 @@ function sortStatesCallback(stateA, stateB) {
   if(sortBy == 'timePlayed' && stateB.timePlayed != stateA.timePlayed)
     return stateB.timePlayed - stateA.timePlayed;
   if(sortBy == 'similarName' && stateB.similarName != stateA.similarName)
-    return (stateA.similarName||stateA.name).localeCompare(stateB.similarName||stateB.name);
-  return stateA.name.localeCompare(stateB.name);
+    return String(stateA.similarName||stateA.name).localeCompare(String(stateB.similarName||stateB.name));
+  return String(stateA.name).localeCompare(String(stateB.name));
 }
 function resortStatesList() {
   for(const list of $a('#statesList .list')) {
@@ -450,7 +450,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
         updateSaveButton.style.display = 'inline-flex';
     }
 
-    $('img', entry).src = mapAssetURLs(state.image);
+    if(state.image)
+      $('img', entry).src = mapAssetURLs(state.image);
 
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
@@ -474,7 +475,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       }
     }
 
-    for(const mode of state.mode.split(/[,;] */))
+    for(const mode of String(state.mode).split(/[,;] */))
       modeOptions[mode] = true;
 
     if(hasVariants) {
@@ -696,8 +697,11 @@ function fillStateDetails(states, state, dom) {
         switchToActiveGame = loadNewState !== null;
       }
 
-      if(loadNewState)
-        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
+      if(loadNewState) {
+        if(!state.savePlayers)
+          triggerGameStartRoutineOnNextStateLoad = true;
+        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id, delayForGameStartRoutine: !state.savePlayers });
+      }
       showStatesOverlay(detailsOverlay);
       if(switchToActiveGame)
         $('#activeGameButton').click();
@@ -1074,14 +1078,18 @@ onLoad(function() {
     updateFilterOverflow();
   });
   document.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-    $('#statesButton').click();
+    if(e.dataTransfer.types.includes('Files')) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+      $('#statesButton').click();
+    }
   });
   document.addEventListener('drop', function(e) {
-    e.preventDefault();
-    loadJSZip();
-    for(const file of e.dataTransfer.files)
-      resolveStateCollections(file, addStateFile);
+    if(e.dataTransfer.files.length) {
+      e.preventDefault();
+      loadJSZip();
+      for(const file of e.dataTransfer.files)
+        resolveStateCollections(file, addStateFile);
+    }
   });
 });

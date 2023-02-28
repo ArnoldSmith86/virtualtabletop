@@ -55,6 +55,11 @@ export function getPointOnPlane(transform, x, y) {
   return new DOMPoint(p0.x + dir.x * t, p0.y + dir.y * t, p0.z + dir.z * t);
 }
 
+export function getTransformOrigin(elem) {
+  const lengths = parseLengths(getComputedStyle(elem).transformOrigin);
+  return {x: lengths[0], y: lengths[1]};
+}
+
 export function getElementTransform(elem) {
   let transform = new DOMMatrix();
   const computedStyle = getComputedStyle(elem);
@@ -105,7 +110,13 @@ export function getElementTransformRelativeTo(elem, parent) {
     destTransform.preMultiplySelf(getElementTransform(parent));
     parent = parent.offsetParent;
   }
-  const destTransformInverse = destTransform.inverse();
+  const transformOrigin = parseLengths(getComputedStyle(elem).transformOrigin);
+  let elemTransform = new DOMMatrix();
+  elemTransform.translateSelf(-transformOrigin[0], -transformOrigin[1]);
+  elemTransform.multiplySelf(destTransform);
+  elemTransform.translateSelf(transformOrigin[0], transformOrigin[1]);
+
+  const destTransformInverse = elemTransform.inverse();
   // If the matrix is not invertible its components are set to NaN.
   // We cannot produce a transform relative to this parent.
   if (isNaN(destTransformInverse.a))
