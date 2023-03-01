@@ -168,7 +168,7 @@ export default class Room {
       return;
 
     for(const usedAsset in this.getAssetListForState(id))
-      if(!fs.existsSync(Config.directory('assets') + '/' + usedAsset))
+      if(!Config.resolveAsset(usedAsset))
         throw new Logging.UserError(404, `Could not find asset /assets/${usedAsset} which is referenced in the state.`);
 
     const variantData = {};
@@ -1012,7 +1012,7 @@ export default class Room {
 
     for(const usedAsset in usedAssets)
       if(!savedAssets[usedAsset])
-        fs.copyFileSync(Config.directory('assets') + '/' + usedAsset, assetsDir + '/' + usedAsset);
+        fs.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
   }
 
   writePublicLibraryMetaToFilesystem(stateID, meta) {
