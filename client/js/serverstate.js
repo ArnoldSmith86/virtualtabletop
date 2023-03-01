@@ -176,6 +176,23 @@ function receiveDelta(delta) {
     editorReceiveDelta(delta);
 }
 
+function mergeDeltas(firstDelta, secondDelta) {
+  const merged = {};
+  for(const widgetID in firstDelta) {
+    if(firstDelta[widgetID] !== null && secondDelta[widgetID] !== null)
+      merged[widgetID] = Object.assign({}, firstDelta[widgetID], secondDelta[widgetID] || {});
+    else if(firstDelta[widgetID] === null && secondDelta[widgetID] !== undefined) {
+      console.log("merging failed", firstDelta[widgetID], secondDelta[widgetID]);
+      return null; // a widget was removed and then another one added with the same ID; a merged delta would have to know which properties the widget had before the first delta removed it in order to unset those
+    } else
+      merged[widgetID] = null;
+  }
+  for(const widgetID in secondDelta)
+    if(merged[widgetID] === undefined)
+      merged[widgetID] = secondDelta[widgetID];
+  return merged;
+}
+
 function addDeltaEntryToUndoProtocol(delta) {
   const undoDelta = {};
 
@@ -192,6 +209,18 @@ function addDeltaEntryToUndoProtocol(delta) {
         if(typeof undoDelta[widgetID][property] == 'undefined')
           undoDelta[widgetID][property] = null;
       }
+    }
+  }
+
+  // merge with previous delta if it's the same cause
+  if(undoProtocol.length && delta.c && delta.c === undoProtocol[undoProtocol.length-1].delta.c) {
+    const mergedUndoDelta = mergeDeltas(undoDelta, undoProtocol[undoProtocol.length-1].undoDelta);
+    const mergedRedoDelta = mergeDeltas(undoProtocol[undoProtocol.length-1].delta.s, delta.s);
+
+    if(mergedUndoDelta && mergedRedoDelta) {
+      undoProtocol[undoProtocol.length-1].undoDelta = mergedUndoDelta;
+      undoProtocol[undoProtocol.length-1].delta.s   = mergedRedoDelta;
+      return;
     }
   }
 
