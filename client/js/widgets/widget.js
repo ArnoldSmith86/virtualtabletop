@@ -1283,6 +1283,61 @@ export class Widget extends StateManaged {
         setDefaults(a, { count: 1, face: null });
         const count = a.count || 999999;
 
+        let fromCollection;
+        let toCollection;
+
+        if(a.toHolder !== undefined) {
+          if(fromCollection = getCollection(a.toHolder)) {
+            for(const destination of collections[fromCollection]){
+              if(a.fromHolder !== undefined) {
+                if(toCollection = getCollection(a.fromHolder)) {
+                  for(const origin of collections[toCollection]){
+                    if (origin.childrenTarget().length){
+                      for(const c of origin.childrenTarget().slice(0, a.count || 999999)){
+                        c.movedByButton = true;
+                        if(a.face !== null && c.flip){
+                          await c.flip(a.face);
+                        }
+                        await c.bringToFront()
+                        await c.moveToHolder(destination);
+                        delete c.movedByButton
+                      }
+                    } else {
+                      if (origin.get("type")=="seat") {
+                        problems.push(`the hand of ${origin.get("id")} is empty or does not exist`);
+                      } else{
+                        problems.push(`${origin.get("id")} is empty or does not exist`);
+                      }
+                    }
+                  }
+                }
+              } else if(collection = getCollection(a.target)) {
+                if(collections[collection].length) {
+                  for(const c of collections[collection].slice(0, a.count || 999999)){
+                    c.movedByButton = true;
+                    if(a.face !== null && c.flip){
+                      await c.flip(a.face);
+                    }
+                    await c.bringToFront()
+                    await c.moveToHolder(destination);
+                    delete c.movedByButton
+                  }
+                } else {
+                  problems.push(`Collection ${a.target} is empty.`);
+                }
+              }
+            }
+            if(jeRoutineLogging) {
+              if (a.fromHolder){
+                jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} from  '${a.fromHolder}' to '${a.toHolder}' ${a.face !== null ? 'and fliped to face '+a.face:''}`);
+              } else if (a.target) {
+                jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} from  '${a.target}' to '${a.toHolder}' ${a.face !== null ? 'and fliped to face '+a.face:''}`);
+              }
+            }
+          }
+        }
+
+        /*
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
             for(const c of source.children().slice(0, count).reverse()) {
@@ -1324,7 +1379,7 @@ export class Widget extends StateManaged {
             const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
             jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to '${a.to}'`)
           }
-        }
+        }*/
       }
 
       if(a.func == 'MOVEXY') {
