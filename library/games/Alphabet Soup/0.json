@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 11,
+    "version": 12,
     "info": {
       "name": "Alphabet Soup",
       "image": "/assets/-914344625_43565",
@@ -11,7 +11,7 @@
       "time": "10",
       "link": "",
       "attribution": "The room design and all game elements are by LawDawg96 are are released into the Public Domain as CC0.<div><br></div><div>The library image was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"black and white cube dice with letters on the sides in a plain white bowl\".&nbsp;</div><div><br></div>",
-      "lastUpdate": 1675478337036,
+      "lastUpdate": 1677730979097,
       "showName": true,
       "skill": "",
       "description": "Race against the timer to find the most words using letters on dice in a grid. Most points wins.",
@@ -3268,7 +3268,6 @@
       },
       "var bar = ${PROPERTY milliseconds} / ${PROPERTY start}",
       "var bar = ${bar} * 100",
-      "var bar = ${bar}/ ${PROPERTY width OF timerBar}",
       {
         "func": "SET",
         "property": "css",
