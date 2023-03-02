@@ -1287,11 +1287,11 @@ export class Widget extends StateManaged {
         let toCollection;
 
         if(a.toHolder !== undefined) {
-          if(fromCollection = getCollection(a.toHolder)) {
-            for(const destination of collections[fromCollection]){
+          if(toCollection = getCollection(a.toHolder)) {
+            for(const destination of collections[toCollection]){
               if(a.fromHolder !== undefined) {
-                if(toCollection = getCollection(a.fromHolder)) {
-                  for(const origin of collections[toCollection]){
+                if(fromCollection = getCollection(a.fromHolder)) {
+                  for(const origin of collections[fromCollection]){
                     if (origin.childrenTarget().length){
                       for(const c of origin.childrenTarget().slice(0, a.count || 999999)){
                         c.movedByButton = true;
@@ -1336,50 +1336,6 @@ export class Widget extends StateManaged {
             }
           }
         }
-
-        /*
-        if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
-          await w(a.from, async source=>await w(a.to, async target=>{
-            for(const c of source.children().slice(0, count).reverse()) {
-              const applyFlip = async function() {
-                if(a.face !== null && c.flip)
-                  await c.flip(a.face);
-              };
-              if(source == target) {
-                await applyFlip();
-                await c.bringToFront();
-              } else {
-                c.movedByButton = true;
-                if(target.get('type') == 'seat') {
-                  if(target.get('hand') && target.get('player')) {
-                    if(widgets.has(target.get('hand'))) {
-                      const targetHand = widgets.get(target.get('hand'));
-                      await applyFlip();
-                      c.targetPlayer = target.get('player')
-                      await c.moveToHolder(targetHand);
-                      delete c.targetPlayer
-                      c.bringToFront()
-                      if(targetHand.get('type') == 'holder')
-                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
-                    } else {
-                      problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
-                    }
-                  } else {
-                    problems.push(`Seat ${target.id} is empty or does not define a hand.`);
-                  }
-                } else {
-                  await applyFlip();
-                  await c.moveToHolder(target);
-                }
-                delete c.movedByButton;
-              }
-            }
-          }));
-          if(jeRoutineLogging) {
-            const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
-            jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to '${a.to}'`)
-          }
-        }*/
       }
 
       if(a.func == 'MOVEXY') {
