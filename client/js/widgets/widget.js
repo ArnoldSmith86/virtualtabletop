@@ -1869,8 +1869,6 @@ export class Widget extends StateManaged {
     if(this.inRemovalQueue)
       return;
 
-    this.movedByButton = true;
-
     await this.bringToFront();
     if(this.get('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.get('parent'));
@@ -1886,13 +1884,11 @@ export class Widget extends StateManaged {
         await this.set('parent', holder.get('hand'));
         delete this.targetPlayer
       } else {
-        delete this.movedByButton;
         return;
       }
     } else {
       await this.set('parent', holder.get('id'));
     }
-    delete this.movedByButton;
   }
 
   async moveStart() {
