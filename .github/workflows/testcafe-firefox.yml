@@ -14,8 +14,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        submodules: recursive
     - name: Install Node.js 16.x
       uses: actions/setup-node@v1
       with:
@@ -30,4 +28,4 @@ jobs:
     - name: Run TestCafe tests
       uses: DevExpress/testcafe-action@latest
       with:
-        args: "firefox:headless tests/testcafe/tests.js"
+        args: "firefox:headless tests/testcafe"

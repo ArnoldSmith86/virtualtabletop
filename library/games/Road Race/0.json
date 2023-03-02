@@ -1,0 +1,3375 @@
+{
+  "5381": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "SpareTire",
+    "id": "5381",
+    "z": 12564,
+    "parent": "ni77"
+  },
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Road Race",
+      "image": "/assets/-1007832093_74980",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/590/mille-bornes",
+      "year": "1954",
+      "mode": "vs",
+      "time": "45",
+      "players": "2-6",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "The room layout and game design is by LawDawg96 and released to the Public Domain by CC0.\n\nThe following card graphics are CC0 and available at:\n  - https://publicdomainvectors.org/en/free-clipart/Green-traffic-light-vector-clip-art/14778.html\n  - https://publicdomainvectors.org/en/free-clipart/Traffic-semaphore-red-light-vector-image/14777.html\n  - https://publicdomainvectors.org/en/free-clipart/Vector-clip-art-of-50-speed-limitation-traffic-sign/30266.html\n  - https://publicdomainvectors.org/en/free-clipart/Blank-warning-sign/74516.html\n  - https://publicdomainvectors.org/en/free-clipart/Yellow-bike/37866.html\n  - https://publicdomainvectors.org/en/free-clipart/Blue-scooter/62925.html\n  - https://publicdomainvectors.org/en/free-clipart/Cartoon-car-vector/2031.html\n  - https://publicdomainvectors.org/en/free-clipart/Convertible-sports-car-vector-graphics/5155.html\n  - https://publicdomainvectors.org/en/free-clipart/Red-Lamborghini-vector-drawing/8768.html\n  - https://publicdomainvectors.org/en/free-clipart/Police-car-vector-image/2563.html\n  - https://publicdomainvectors.org/en/free-clipart/Fuel-pipe/74433.html\n  - https://publicdomainvectors.org/en/free-clipart/Driving-wheel-vector-image/7352.html\n  - https://publicdomainvectors.org/en/free-clipart/Wheel-vector-graphics/4356.html\n  - https://publicdomainvectors.org/en/free-clipart/Car-crash-vector-image/72643.html\n  - https://publicdomainvectors.org/en/free-clipart/Tire-outer-tube-vector-image/18852.html\n  - https://publicdomainvectors.org/en/free-clipart/red-gas-can/65115.html\n  - https://publicdomainvectors.org/en/free-clipart/Vector-clip-art-of-mechanic-with-a-red-cap/29001.html\n  - https://publicdomainvectors.org/en/free-clipart/Illustration-of-car-wheels-from-different-perspectives/35044.html\n\nThe gas gauge graphic on the cards, the road background, and the library image are from Pixabay and are available under the Pixabay License at: \n  - https://pixabay.com/vectors/fuel-coffee-gas-drink-beverage-5215945/\n  - https://pixabay.com/photos/road-centerline-highway-asphalt-867991/\n  - https://pixabay.com/vectors/automobile-car-checkered-drive-1299522/",
+      "similarName": "Mille Bornes",
+      "description": "Play cards with various distance values until one player reaches exactly 1,000 kilometers. Play stop sign, accident, fuel, speed limit, and flat tire cards to limit opponents' travel and corresponding repair cards to resume your own travel. Highest score wins.",
+      "showName": true,
+      "helpText": "Players take seats. 2-3 can play solo. 4 players or 6 players are in teams of 2. Press play button. 5 specified cards are removed if less than 4 players. Each player will be dealt 6 cards and random player chosen to start. During player's turn, press +1 button to add one card to hand. Then play or discard one card. Turn indicator will update automatically, but press Next Turn button if it gets out of synch. Press small rotate button in safety area if coup conditions are met. Distance travelled and some score elements are tracked during the game. When the round is over, press Score / End Round button to complete scoring.",
+      "lastUpdate": 1652065010000
+    }
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 10,
+    "y": 637,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 28,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "css": {
+      "background-color": "#ffffff80"
+    }
+  },
+  "milesDeck": {
+    "type": "deck",
+    "id": "milesDeck",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "25": {
+        "image": "/assets/698691722_33812",
+        "text": 25,
+        "widthVal": 103,
+        "heightVal": 160,
+        "xVal": 0,
+        "yVal": "-30",
+        "textColor": "#c7ae06"
+      },
+      "50": {
+        "image": "/assets/903071938_84968",
+        "text": 50,
+        "widthVal": 83,
+        "heightVal": 140,
+        "xVal": 7,
+        "yVal": "-20",
+        "textColor": "#2554ab"
+      },
+      "75": {
+        "image": "/assets/733622979_12421",
+        "text": 75,
+        "widthVal": 93,
+        "heightVal": 150,
+        "xVal": 8,
+        "yVal": "-20",
+        "textColor": "#6c989f"
+      },
+      "100": {
+        "image": "/assets/2063693348_121056",
+        "text": 100,
+        "widthVal": 103,
+        "heightVal": 160,
+        "xVal": 0,
+        "yVal": "-30",
+        "textColor": "#4f46a5"
+      },
+      "200": {
+        "image": "/assets/-2036011823_464636",
+        "text": 200,
+        "widthVal": 103,
+        "heightVal": 160,
+        "xVal": 0,
+        "yVal": "-30",
+        "textColor": "#C82800"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "css": "background-image: linear-gradient(#B0C4DE,#87CEFA);border-radius:10%"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 20,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/assets/-1007832093_74980"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 10,
+            "width": 103,
+            "height": 80,
+            "css": "font-size:25px;text-align:center;line-height:0.8;font-family:faster_one;color:black",
+            "value": "Road\nRace"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "css": "background-image: linear-gradient(#FFEBCD,#FAEBD7);border-radius:10%"
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "width": 93,
+            "height": 150,
+            "color": "transparent",
+            "css": "border:2px solid black; border-radius:8px"
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "x": "xVal",
+              "y": "yVal",
+              "width": "widthVal",
+              "height": "heightVal"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 100,
+            "width": 103,
+            "height": 80,
+            "css": "font-weight:900;font-size:50px;text-align:center",
+            "dynamicProperties": {
+              "value": "text",
+              "color": "textColor"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "onPileCreation": {
+        "handleSize": 30
+      }
+    }
+  },
+  "mainDeck": {
+    "type": "deck",
+    "id": "mainDeck",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 71,
+    "cardTypes": {
+      "Go": {
+        "cssBorder": "border:2px solid green; border-radius:8px",
+        "image1": "/assets/1050111244_7189",
+        "widthVal1": 51,
+        "heightVal1": 80,
+        "xVal1": 25,
+        "yVal1": 50,
+        "cssText": "font-size:25px;text-align:center;color:black",
+        "textTop": "Go",
+        "css1": "border:5px solid black; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "green",
+        "image2": "/assets/803019825_7180",
+        "widthVal2": 25,
+        "heightVal2": 40,
+        "xVal2": 60,
+        "yVal2": 110,
+        "css2": "border:2px solid red; border-radius:8px;transform:rotate(15deg)",
+        "drop": "status"
+      },
+      "EndLimit": {
+        "cssBorder": "border:2px solid green; border-radius:8px",
+        "image1": "/assets/121407597_2981",
+        "widthVal1": 51,
+        "heightVal1": 80,
+        "xVal1": 27,
+        "yVal1": 25,
+        "cssText": "font-size:20px;text-align:center;color:black",
+        "textTop": "End Limit",
+        "css1": "border:none",
+        "backColor1": "transparent",
+        "image2": "/assets/-951513001_8162",
+        "widthVal2": 30,
+        "heightVal2": 45,
+        "xVal2": 58,
+        "yVal2": 104,
+        "css2": "border:2px solid red; border-radius:8px;transform:rotate(15deg)",
+        "drop": "limit"
+      },
+      "Gasoline": {
+        "cssBorder": "border:2px solid green; border-radius:8px",
+        "image1": "/assets/-436408882_19763",
+        "widthVal1": 51,
+        "heightVal1": 80,
+        "xVal1": 29,
+        "yVal1": 28,
+        "cssText": "font-size:20px;text-align:center;color:black",
+        "textTop": "Gasoline",
+        "css1": "border:5px solid green; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "transparent",
+        "image2": "/assets/-677600193_3685",
+        "widthVal2": 30,
+        "heightVal2": 40,
+        "xVal2": 58,
+        "yVal2": 104,
+        "css2": "border:2px solid red; border-radius:8px;transform:rotate(15deg)",
+        "drop": "status"
+      },
+      "Repairs": {
+        "cssBorder": "border:2px solid green; border-radius:8px",
+        "image1": "/assets/-679711400_154583",
+        "widthVal1": 61,
+        "heightVal1": 90,
+        "xVal1": 29,
+        "yVal1": 18,
+        "cssText": "font-size:20px;text-align:center;color:black",
+        "textTop": "Repairs",
+        "css1": "border:5px solid green; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "transparent",
+        "image2": "/assets/1817280389_8237",
+        "widthVal2": 50,
+        "heightVal2": 50,
+        "xVal2": 52,
+        "yVal2": 98,
+        "css2": "border:2px solid red; border-radius:8px;transform:rotate(15deg)",
+        "drop": "status"
+      },
+      "SpareTire": {
+        "cssBorder": "border:2px solid green; border-radius:8px",
+        "image1": "/assets/-1979222141_126421",
+        "widthVal1": 61,
+        "heightVal1": 90,
+        "xVal1": 24,
+        "yVal1": 28,
+        "cssText": "font-size:20px;text-align:center;color:black",
+        "textTop": "Spare Tire",
+        "css1": "border:5px solid green; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "transparent",
+        "image2": "/assets/540817966_76344",
+        "widthVal2": 50,
+        "heightVal2": 50,
+        "xVal2": 52,
+        "yVal2": 102,
+        "css2": "border:2px solid red; border-radius:8px;transform:rotate(15deg)",
+        "drop": "status"
+      },
+      "Stop": {
+        "cssBorder": "border:2px solid red; border-radius:8px",
+        "image1": "/assets/803019825_7180",
+        "widthVal1": 51,
+        "heightVal1": 80,
+        "xVal1": 25,
+        "yVal1": 50,
+        "cssText": "font-size:25px;text-align:center;color:black",
+        "textTop": "Stop",
+        "css1": "border:5px solid black; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "red",
+        "image2": "/assets/1050111244_7189",
+        "widthVal2": 25,
+        "heightVal2": 40,
+        "xVal2": 60,
+        "yVal2": 110,
+        "css2": "border:2px solid green; border-radius:8px;transform:rotate(15deg)",
+        "drop": "status"
+      },
+      "SpeedLimit": {
+        "cssBorder": "border:2px solid red; border-radius:8px",
+        "image1": "/assets/-951513001_8162",
+        "widthVal1": 51,
+        "heightVal1": 80,
+        "xVal1": 27,
+        "yVal1": 33,
+        "cssText": "font-size:20px;text-align:center;line-height:0.9;color:black",
+        "textTop": "Speed\nLimit",
+        "css1": "border:none",
+        "backColor1": "transparent",
+        "image2": "/assets/121407597_2981",
+        "widthVal2": 30,
+        "heightVal2": 42,
+        "xVal2": 58,
+        "yVal2": 104,
+        "css2": "border:2px solid green; border-radius:8px;transform:rotate(15deg)",
+        "drop": "limit"
+      },
+      "OutOfGas": {
+        "cssBorder": "border:2px solid red; border-radius:8px",
+        "image1": "/assets/-677600193_3685",
+        "widthVal1": 51,
+        "heightVal1": 80,
+        "xVal1": 29,
+        "yVal1": 28,
+        "cssText": "font-size:19px;text-align:center;color:black",
+        "textTop": "Out of Gas",
+        "css1": "border:5px solid red; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "transparent",
+        "image2": "/assets/-436408882_19763",
+        "widthVal2": 30,
+        "heightVal2": 40,
+        "xVal2": 58,
+        "yVal2": 104,
+        "css2": "border:2px solid green; border-radius:8px;transform:rotate(15deg)",
+        "drop": "status"
+      },
+      "Accident": {
+        "cssBorder": "border:2px solid red; border-radius:8px",
+        "image1": "/assets/1817280389_8237",
+        "widthVal1": 91,
+        "heightVal1": 120,
+        "xVal1": 4,
+        "yVal1": 7,
+        "cssText": "font-size:20px;text-align:center;color:black",
+        "textTop": "Accident",
+        "css1": "border:5px solid red; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "transparent",
+        "image2": "/assets/-679711400_154583",
+        "widthVal2": 45,
+        "heightVal2": 45,
+        "xVal2": 52,
+        "yVal2": 98,
+        "css2": "border:2px solid green; border-radius:8px;transform:rotate(15deg)",
+        "drop": "status"
+      },
+      "FlatTire": {
+        "cssBorder": "border:2px solid red; border-radius:8px",
+        "image1": "/assets/540817966_76344",
+        "widthVal1": 61,
+        "heightVal1": 90,
+        "xVal1": 24,
+        "yVal1": 28,
+        "cssText": "font-size:20px;text-align:center;color:black",
+        "textTop": "Flat Tire",
+        "css1": "border:5px solid red; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "transparent",
+        "image2": "/assets/-1979222141_126421",
+        "widthVal2": 50,
+        "heightVal2": 50,
+        "xVal2": 52,
+        "yVal2": 102,
+        "css2": "border:2px solid green; border-radius:8px;transform:rotate(15deg)",
+        "drop": "status"
+      },
+      "RightOfWay": {
+        "cssBorder": "border:2px solid #1e90ff; border-radius:8px",
+        "image1": "/assets/90089366_37513",
+        "widthVal1": 70,
+        "heightVal1": 70,
+        "xVal1": 15,
+        "yVal1": 40,
+        "cssText": "font-size:20px;text-align:center;line-height:0.9;color:black",
+        "textTop": "Right Of\nWay",
+        "css1": "border:5px solid #1e90ff; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "transparent",
+        "image2": "/assets/803019825_7180",
+        "widthVal2": 25,
+        "heightVal2": 40,
+        "xVal2": 60,
+        "yVal2": 110,
+        "css2": "border:2px solid red; border-radius:8px;transform:rotate(15deg)",
+        "image3": "/assets/-951513001_8162",
+        "widthVal3": 30,
+        "heightVal3": 40,
+        "xVal3": 12,
+        "yVal3": 105,
+        "css3": "border:2px solid red; border-radius:8px;transform:rotate(-15deg)",
+        "drop": "safety"
+      },
+      "ExtraTank": {
+        "cssBorder": "border:2px solid #1e90ff; border-radius:8px",
+        "image1": "/assets/-1160129501_19470",
+        "widthVal1": 75,
+        "heightVal1": 75,
+        "xVal1": 18,
+        "yVal1": 37,
+        "cssText": "font-size:20px;text-align:center;line-height:0.9;color:black",
+        "textTop": "Extra\nTank",
+        "css1": "border:5px solid #1e90ff; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "transparent",
+        "image2": "/assets/-677600193_3685",
+        "widthVal2": 30,
+        "heightVal2": 40,
+        "xVal2": 58,
+        "yVal2": 104,
+        "css2": "border:2px solid red; border-radius:8px;transform:rotate(15deg)",
+        "drop": "safety"
+      },
+      "DrivingAce": {
+        "cssBorder": "border:2px solid #1e90ff; border-radius:8px",
+        "image1": "/assets/-1251215968_15820",
+        "widthVal1": 61,
+        "heightVal1": 90,
+        "xVal1": 23,
+        "yVal1": 27,
+        "cssText": "font-size:20px;text-align:center;line-height:0.9;color:black",
+        "textTop": "Driving\nAce",
+        "css1": "border:5px solid #1e90ff; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "transparent",
+        "image2": "/assets/1817280389_8237",
+        "widthVal2": 50,
+        "heightVal2": 50,
+        "xVal2": 52,
+        "yVal2": 98,
+        "css2": "border:2px solid red; border-radius:8px;transform:rotate(15deg)",
+        "drop": "safety"
+      },
+      "PunctureProof": {
+        "cssBorder": "border:2px solid #1e90ff; border-radius:8px",
+        "image1": "/assets/-799382369_5482",
+        "widthVal1": 51,
+        "heightVal1": 70,
+        "xVal1": 29,
+        "yVal1": 40,
+        "cssText": "font-size:20px;text-align:center;line-height:0.9;color:black",
+        "textTop": "Puncture Proof",
+        "css1": "border:5px solid #1e90ff; border-radius:8px;transform:rotate(-30deg)",
+        "backColor1": "transparent",
+        "image2": "/assets/540817966_76344",
+        "widthVal2": 50,
+        "heightVal2": 50,
+        "xVal2": 52,
+        "yVal2": 102,
+        "css2": "border:2px solid red; border-radius:8px;transform:rotate(15deg)",
+        "drop": "safety"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "css": "background-image: linear-gradient(#B0C4DE,#87CEFA);border-radius:10%"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 20,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/assets/-1007832093_74980"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 10,
+            "width": 103,
+            "height": 80,
+            "css": "font-size:25px;text-align:center;line-height:0.8;font-family:faster_one;color:black",
+            "value": "Road\nRace"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "css": "background-image: linear-gradient(#FFEBCD,#FAEBD7);border-radius:10%"
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "width": 93,
+            "height": 150,
+            "color": "transparent",
+            "dynamicProperties": {
+              "css": "cssBorder"
+            }
+          },
+          {
+            "type": "image",
+            "x": 23,
+            "y": 45,
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "css": "css1",
+              "color": "backColor1"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image1",
+              "x": "xVal1",
+              "y": "yVal1",
+              "width": "widthVal1",
+              "height": "heightVal1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "width": 103,
+            "height": 20,
+            "dynamicProperties": {
+              "value": "textTop",
+              "css": "cssText"
+            }
+          },
+          {
+            "type": "image",
+            "x": 53,
+            "y": 105,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "dynamicProperties": {
+              "css": "css2"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image2",
+              "x": "xVal2",
+              "y": "yVal2",
+              "width": "widthVal2",
+              "height": "heightVal2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 105,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "dynamicProperties": {
+              "css": "css3"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image3",
+              "x": "xVal3",
+              "y": "yVal3",
+              "width": "widthVal3",
+              "height": "heightVal3"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "onPileCreation": {
+        "handleSize": 30
+      }
+    }
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 1072,
+    "layer": -6,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-1871428934_611981",
+    "css": {
+      "default": {
+        "opacity": 0.4
+      },
+      "@font-face": {
+        "font-family": "faster_one",
+        "src": "url(/assets/1227252222_45304) format('woff2')"
+      }
+    },
+    "x": -100
+  },
+  "area1": {
+    "id": "area1",
+    "width": 800,
+    "height": 340,
+    "borderRadius": 10,
+    "z": 17,
+    "css": {
+      "background-color": "#ffffff80"
+    },
+    "layer": -2,
+    "linkedToSeat": "seat1",
+    "x": 800,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "limits1": {
+    "type": "holder",
+    "id": "limits1",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": 6,
+    "y": 175,
+    "z": 3,
+    "movableInEdit": false,
+    "width": 103,
+    "height": 160,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "borderRadius": 12,
+    "dropTarget": {
+      "drop": "limit"
+    },
+    "css": {
+      "default": {
+        "background-color": "#ffffff80",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "font-size": "20px",
+        "color": "${PROPERTY textColor}"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "opacity": 0.4
+      }
+    },
+    "text": "Speed",
+    "textColor": "red",
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fromHand",
+        "variable": "fromHand"
+      },
+      {
+        "func": "IF",
+        "operand1": "${fromHand}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "TURN"
+          },
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "fromHand",
+            "value": null
+          }
+        ]
+      }
+    ]
+  },
+  "status1": {
+    "type": "holder",
+    "id": "status1",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": 128,
+    "inheritFrom": "limits1",
+    "dropTarget": {
+      "drop": "status"
+    },
+    "text": "Drive",
+    "textColor": "black"
+  },
+  "25s1": {
+    "type": "holder",
+    "id": "25s1",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": 250,
+    "inheritFrom": "limits1",
+    "dropTarget": {
+      "cardType": "25"
+    },
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "totalScore",
+        "routine": "liveScoreRoutine",
+        "arguments": {
+          "pID": "${PROPERTY pID}"
+        }
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fromHand",
+        "variable": "fromHand"
+      },
+      {
+        "func": "IF",
+        "operand1": "${fromHand}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "TURN"
+          },
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "fromHand",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "pID": 1,
+    "distance": 25,
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "widget": "totalScore",
+        "routine": "liveScoreRoutine",
+        "arguments": {
+          "pID": "${PROPERTY pID}"
+        }
+      }
+    ],
+    "text": "25",
+    "textColor": "#c7ae06"
+  },
+  "50s1": {
+    "type": "holder",
+    "id": "50s1",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": 360.25,
+    "inheritFrom": "25s1",
+    "dropTarget": {
+      "cardType": "50"
+    },
+    "distance": 50,
+    "text": "50",
+    "textColor": "#2554ab"
+  },
+  "75s1": {
+    "type": "holder",
+    "id": "75s1",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": 470.5,
+    "inheritFrom": "25s1",
+    "dropTarget": {
+      "cardType": "75"
+    },
+    "distance": 75,
+    "text": "75",
+    "textColor": "#6c989f"
+  },
+  "200s1": {
+    "type": "holder",
+    "id": "200s1",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": 691,
+    "inheritFrom": "25s1",
+    "dropTarget": {
+      "cardType": "200"
+    },
+    "distance": 200,
+    "dropLimit": 2,
+    "text": "200",
+    "textColor": "#C82800"
+  },
+  "100s1": {
+    "type": "holder",
+    "id": "100s1",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": 580.75,
+    "inheritFrom": "25s1",
+    "dropTarget": {
+      "cardType": "100"
+    },
+    "distance": 100,
+    "text": "100",
+    "textColor": "#4f46a5"
+  },
+  "safety1-1": {
+    "type": "holder",
+    "id": "safety1-1",
+    "parent": "area1",
+    "fixedParent": true,
+    "y": 5,
+    "z": 3,
+    "width": 160,
+    "height": 160,
+    "borderRadius": 12,
+    "movableInEdit": false,
+    "dropOffsetX": 28,
+    "dropOffsetY": 0,
+    "dropLimit": 1,
+    "dropTarget": {
+      "drop": "safety"
+    },
+    "onLeave": {
+      "rotation": 0
+    },
+    "x": 120,
+    "css": {
+      "default": {
+        "background-color": "#ffffff80",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "font-size": "20px",
+        "color": "#1e90ff"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "opacity": 0.4
+      }
+    },
+    "text": "Safety",
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "widget": "totalScore",
+        "routine": "liveScoreRoutine",
+        "arguments": {
+          "pID": "${PROPERTY pID}"
+        }
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "totalScore",
+        "routine": "liveScoreRoutine",
+        "arguments": {
+          "pID": "${PROPERTY pID}"
+        }
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fromHand",
+        "variable": "fromHand"
+      },
+      {
+        "func": "IF",
+        "operand1": "${fromHand}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "TURN"
+          },
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "fromHand",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "pID": 1
+  },
+  "rotate1-1": {
+    "type": "button",
+    "id": "rotate1-1",
+    "width": 27,
+    "height": 27,
+    "z": 2112,
+    "classes": "symbols",
+    "text": "rotate_right",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "GET",
+        "property": "rotation",
+        "variable": "cardRotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${cardRotation}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "ROTATE",
+            "angle": 90
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "rotate_right"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "status${PROPERTY pID}"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "discard"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "turn",
+            "value": false
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${playerName}"
+          },
+          {
+            "func": "TURN",
+            "source": "DEFAULT",
+            "turnCycle": "position",
+            "turn": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "ROTATE",
+            "angle": -90
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "rotate_left"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "totalScore",
+        "routine": "liveScoreRoutine",
+        "arguments": {
+          "pID": "${PROPERTY pID}"
+        }
+      }
+    ],
+    "fixedParent": true,
+    "parent": "safety1-1",
+    "css": {
+      "border-width": "3px",
+      "font-size": "20px"
+    },
+    "x": 134,
+    "y": 3,
+    "pID": 1
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "scale": 0.7,
+    "z": 6,
+    "fixedParent": true,
+    "parent": "area1",
+    "x": -22,
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat4"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat4"
+            ],
+            "property": "scale",
+            "value": 0.7
+          }
+        ]
+      }
+    ]
+  },
+  "kmLabel1": {
+    "id": "kmLabel1",
+    "x": 5,
+    "y": 55,
+    "width": 65,
+    "height": 20,
+    "z": 6,
+    "text": "Distance:",
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "area1"
+  },
+  "km1": {
+    "id": "km1",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": 73,
+    "y": 55,
+    "width": 40,
+    "height": 20,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": false,
+    "text": 0,
+    "css": {
+      "text-align": "right"
+    },
+    "pID": 1,
+    "textChangeRoutine": [
+      "var score = 'score' + ${PROPERTY pID}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 700,
+        "relation": ">=",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY shortRace OF totalScore}",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY 700Winner OF totalScore}",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "totalScore"
+                    ],
+                    "property": "700Winner",
+                    "value": "${score}"
+                  },
+                  {
+                    "func": "COUNT",
+                    "holder": "deckHolder"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "totalScore"
+                    ],
+                    "property": "cardsLeft",
+                    "value": "${COUNT}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 1000,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "totalScore"
+            ],
+            "property": "1000Winner",
+            "value": "${score}"
+          }
+        ]
+      }
+    ]
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "childrenPerOwner": true,
+    "y": 820,
+    "width": 755,
+    "height": 180,
+    "id": "hand",
+    "css": {
+      "background-color": "#ffffff80"
+    },
+    "stackOffsetX": 105,
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "fromHand",
+        "value": true
+      }
+    ]
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": -22,
+    "z": 6,
+    "movableInEdit": false,
+    "index": 4,
+    "y": 120,
+    "displayEmpty": "join team",
+    "scale": 0.7
+  },
+  "scoreLabel1": {
+    "id": "scoreLabel1",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": 5,
+    "y": 95,
+    "width": 65,
+    "height": 20,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": false,
+    "text": "Score:"
+  },
+  "score1": {
+    "id": "score1",
+    "parent": "area1",
+    "fixedParent": true,
+    "x": 73,
+    "y": 95,
+    "width": 40,
+    "height": 20,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "text-align": "right"
+    },
+    "text": 0,
+    "pID": 1
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "width": 50,
+    "height": 50,
+    "z": 2089,
+    "classes": "symbols",
+    "css": "font-size: 40px",
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting game...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Do you want to reset the game, including the scores?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "CALL",
+        "routine": "applySettingsRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score1",
+          "score2",
+          "score3"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat4",
+          "seat5",
+          "seat6"
+        ],
+        "property": "scale",
+        "value": 0.7
+      }
+    ],
+    "movableInEdit": false,
+    "x": 1550,
+    "y": 950,
+    "applySettingsRoutine": [
+      {
+        "func": "SELECT",
+        "property": "fromHand",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "fromHand",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "play"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "km1",
+          "km2",
+          "km3"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "totalScore"
+        ],
+        "property": "700Winner",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "totalScore"
+        ],
+        "property": "1000Winner",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "totalScore"
+        ],
+        "property": "cardsLeft",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 4,
+        "relation": "<",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "totalScore"
+            ],
+            "property": "shortRace",
+            "value": true
+          },
+          {
+            "func": "FOREACH",
+            "in": [
+              "Stop",
+              "SpeedLimit",
+              "Accident",
+              "OutOfGas",
+              "FlatTire"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "_ancestor",
+                "value": "deckHolder"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "type": "card",
+                "property": "cardType",
+                "value": "${value}",
+                "max": 1
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "offBoard"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "totalScore"
+            ],
+            "property": "shortRace",
+            "value": false
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "totalScore"
+            ],
+            "property": "shortRace",
+            "value": true
+          }
+        ]
+      }
+    ]
+  },
+  "area2": {
+    "id": "area2",
+    "width": 800,
+    "height": 340,
+    "borderRadius": 10,
+    "z": 17,
+    "css": {
+      "background-color": "#ffffff80"
+    },
+    "layer": -2,
+    "linkedToSeat": "seat2",
+    "movable": false,
+    "movableInEdit": false,
+    "y": 285
+  },
+  "limits2": {
+    "type": "holder",
+    "id": "limits2",
+    "parent": "area2",
+    "fixedParent": true,
+    "inheritFrom": "limits1"
+  },
+  "status2": {
+    "type": "holder",
+    "id": "status2",
+    "parent": "area2",
+    "fixedParent": true,
+    "x": 128,
+    "inheritFrom": "limits1",
+    "dropTarget": {
+      "drop": "status"
+    },
+    "text": "Drive",
+    "textColor": "black"
+  },
+  "25s2": {
+    "type": "holder",
+    "id": "25s2",
+    "parent": "area2",
+    "fixedParent": true,
+    "x": 250,
+    "inheritFrom": "25s1",
+    "dropTarget": {
+      "cardType": "25"
+    },
+    "pID": 2,
+    "distance": 25,
+    "text": "25",
+    "textColor": "#c7ae06"
+  },
+  "50s2": {
+    "type": "holder",
+    "id": "50s2",
+    "parent": "area2",
+    "fixedParent": true,
+    "x": 360.25,
+    "inheritFrom": "25s2",
+    "dropTarget": {
+      "cardType": "50"
+    },
+    "distance": 50,
+    "text": "50",
+    "textColor": "#2554ab"
+  },
+  "75s2": {
+    "type": "holder",
+    "id": "75s2",
+    "parent": "area2",
+    "fixedParent": true,
+    "x": 470.5,
+    "inheritFrom": "25s2",
+    "dropTarget": {
+      "cardType": "75"
+    },
+    "distance": 75,
+    "text": "75",
+    "textColor": "#6c989f"
+  },
+  "200s2": {
+    "type": "holder",
+    "id": "200s2",
+    "parent": "area2",
+    "fixedParent": true,
+    "x": 691,
+    "inheritFrom": "25s2",
+    "dropTarget": {
+      "cardType": "200"
+    },
+    "distance": 200,
+    "dropLimit": 2,
+    "text": "200",
+    "textColor": "#C82800"
+  },
+  "100s2": {
+    "type": "holder",
+    "id": "100s2",
+    "parent": "area2",
+    "fixedParent": true,
+    "x": 580.75,
+    "inheritFrom": "25s2",
+    "dropTarget": {
+      "cardType": "100"
+    },
+    "distance": 100,
+    "text": "100",
+    "textColor": "#4f46a5"
+  },
+  "safety2-2": {
+    "type": "holder",
+    "id": "safety2-2",
+    "x": 291,
+    "y": 5,
+    "inheritFrom": "safety2-1",
+    "parent": "area2"
+  },
+  "rotate2-2": {
+    "type": "button",
+    "id": "rotate2-2",
+    "parent": "safety2-2",
+    "inheritFrom": "rotate2-1",
+    "text": "rotate_left"
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "scale": 0.7,
+    "z": 6,
+    "fixedParent": true,
+    "parent": "area2",
+    "x": -22,
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat5"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat5"
+            ],
+            "property": "scale",
+            "value": 0.7
+          }
+        ]
+      }
+    ],
+    "index": 2,
+    "turn": true
+  },
+  "kmLabel2": {
+    "id": "kmLabel2",
+    "x": 5,
+    "y": 55,
+    "width": 65,
+    "height": 20,
+    "z": 6,
+    "text": "Distance:",
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "area2"
+  },
+  "km2": {
+    "id": "km2",
+    "parent": "area2",
+    "fixedParent": true,
+    "text": 0,
+    "pID": 2,
+    "inheritFrom": "km1"
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "parent": "area2",
+    "fixedParent": true,
+    "x": -22,
+    "z": 6,
+    "movableInEdit": false,
+    "index": 5,
+    "y": 120,
+    "displayEmpty": "join team",
+    "scale": 0.7
+  },
+  "scoreLabel2": {
+    "id": "scoreLabel2",
+    "parent": "area2",
+    "fixedParent": true,
+    "x": 5,
+    "y": 95,
+    "width": 65,
+    "height": 20,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": false,
+    "text": "Score:"
+  },
+  "score2": {
+    "id": "score2",
+    "parent": "area2",
+    "fixedParent": true,
+    "text": 0,
+    "safetyBonus": 0,
+    "safetyBonusFlag": false,
+    "inheritFrom": "score1",
+    "pID": 2
+  },
+  "area3": {
+    "id": "area3",
+    "width": 800,
+    "height": 340,
+    "borderRadius": 10,
+    "z": 17,
+    "css": {
+      "background-color": "#ffffff80"
+    },
+    "layer": -2,
+    "linkedToSeat": "seat3",
+    "x": 800,
+    "movable": false,
+    "movableInEdit": false,
+    "y": 590
+  },
+  "limits3": {
+    "type": "holder",
+    "id": "limits3",
+    "parent": "area3",
+    "fixedParent": true,
+    "inheritFrom": "limits1"
+  },
+  "status3": {
+    "type": "holder",
+    "id": "status3",
+    "parent": "area3",
+    "fixedParent": true,
+    "x": 128,
+    "inheritFrom": "limits1",
+    "dropTarget": {
+      "drop": "status"
+    },
+    "text": "Drive",
+    "textColor": "black"
+  },
+  "25s3": {
+    "type": "holder",
+    "id": "25s3",
+    "parent": "area3",
+    "fixedParent": true,
+    "x": 250,
+    "inheritFrom": "25s1",
+    "dropTarget": {
+      "cardType": "25"
+    },
+    "pID": 3,
+    "distance": 25,
+    "text": "25",
+    "textColor": "#c7ae06"
+  },
+  "50s3": {
+    "type": "holder",
+    "id": "50s3",
+    "parent": "area3",
+    "fixedParent": true,
+    "x": 360.25,
+    "inheritFrom": "25s3",
+    "dropTarget": {
+      "cardType": "50"
+    },
+    "distance": 50,
+    "text": "50",
+    "textColor": "#2554ab"
+  },
+  "75s3": {
+    "type": "holder",
+    "id": "75s3",
+    "parent": "area3",
+    "fixedParent": true,
+    "x": 470.5,
+    "inheritFrom": "25s3",
+    "dropTarget": {
+      "cardType": "75"
+    },
+    "distance": 75,
+    "text": "75",
+    "textColor": "#6c989f"
+  },
+  "200s3": {
+    "type": "holder",
+    "id": "200s3",
+    "parent": "area3",
+    "fixedParent": true,
+    "x": 691,
+    "inheritFrom": "25s3",
+    "dropTarget": {
+      "cardType": "200"
+    },
+    "distance": 200,
+    "dropLimit": 2,
+    "text": "200",
+    "textColor": "#C82800"
+  },
+  "100s3": {
+    "type": "holder",
+    "id": "100s3",
+    "parent": "area3",
+    "fixedParent": true,
+    "x": 580.75,
+    "inheritFrom": "25s3",
+    "dropTarget": {
+      "cardType": "100"
+    },
+    "distance": 100,
+    "text": "100",
+    "textColor": "#4f46a5"
+  },
+  "safety3-3": {
+    "type": "holder",
+    "id": "safety3-3",
+    "x": 462,
+    "y": 5,
+    "inheritFrom": "safety3-1",
+    "parent": "area3"
+  },
+  "rotate3-3": {
+    "type": "button",
+    "id": "rotate3-3",
+    "parent": "safety3-3",
+    "inheritFrom": "rotate3-1",
+    "text": "rotate_right"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "scale": 0.7,
+    "z": 6,
+    "fixedParent": true,
+    "parent": "area3",
+    "x": -22,
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat6"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat6"
+            ],
+            "property": "scale",
+            "value": 0.7
+          }
+        ]
+      }
+    ],
+    "index": 3
+  },
+  "kmLabel3": {
+    "id": "kmLabel3",
+    "x": 5,
+    "y": 55,
+    "width": 65,
+    "height": 20,
+    "z": 6,
+    "text": "Distance:",
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "area3"
+  },
+  "km3": {
+    "id": "km3",
+    "parent": "area3",
+    "fixedParent": true,
+    "text": 0,
+    "pID": 3,
+    "inheritFrom": "km1",
+    "activeFace": 0
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "parent": "area3",
+    "fixedParent": true,
+    "x": -22,
+    "z": 6,
+    "movableInEdit": false,
+    "index": 6,
+    "y": 120,
+    "displayEmpty": "join team",
+    "scale": 0.7
+  },
+  "scoreLabel3": {
+    "id": "scoreLabel3",
+    "parent": "area3",
+    "fixedParent": true,
+    "x": 5,
+    "y": 95,
+    "width": 65,
+    "height": 20,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": false,
+    "text": "Score:"
+  },
+  "score3": {
+    "id": "score3",
+    "parent": "area3",
+    "fixedParent": true,
+    "text": 0,
+    "safetyBonus": 1,
+    "safetyBonusFlag": false,
+    "inheritFrom": "score1",
+    "pID": 3
+  },
+  "safety1-2": {
+    "type": "holder",
+    "id": "safety1-2",
+    "parent": "area1",
+    "x": 291,
+    "y": 5,
+    "inheritFrom": "safety1-1"
+  },
+  "safety3-1": {
+    "type": "holder",
+    "id": "safety3-1",
+    "parent": "area3",
+    "fixedParent": true,
+    "inheritFrom": "safety1-1",
+    "pID": 3
+  },
+  "safety1-3": {
+    "type": "holder",
+    "id": "safety1-3",
+    "parent": "area1",
+    "x": 462,
+    "y": 5,
+    "inheritFrom": "safety1-1"
+  },
+  "safety1-4": {
+    "type": "holder",
+    "id": "safety1-4",
+    "parent": "area1",
+    "x": 633,
+    "y": 5,
+    "inheritFrom": "safety1-1"
+  },
+  "safety2-1": {
+    "type": "holder",
+    "id": "safety2-1",
+    "parent": "area2",
+    "fixedParent": true,
+    "inheritFrom": "safety1-1",
+    "pID": 2
+  },
+  "safety2-4": {
+    "type": "holder",
+    "id": "safety2-4",
+    "parent": "area2",
+    "x": 633,
+    "y": 5,
+    "inheritFrom": "safety2-1"
+  },
+  "safety3-2": {
+    "type": "holder",
+    "id": "safety3-2",
+    "parent": "area3",
+    "x": 291,
+    "y": 5,
+    "inheritFrom": "safety3-1"
+  },
+  "safety3-4": {
+    "type": "holder",
+    "id": "safety3-4",
+    "parent": "area3",
+    "x": 633,
+    "y": 5,
+    "inheritFrom": "safety3-1"
+  },
+  "safety2-3": {
+    "type": "holder",
+    "id": "safety2-3",
+    "parent": "area2",
+    "x": 462,
+    "y": 5,
+    "inheritFrom": "safety2-1"
+  },
+  "rotate3-4": {
+    "type": "button",
+    "id": "rotate3-4",
+    "parent": "safety3-4",
+    "inheritFrom": "rotate3-1",
+    "text": "rotate_left"
+  },
+  "rotate3-": {
+    "type": "button",
+    "id": "rotate3-",
+    "parent": "safety3-2",
+    "inheritFrom": "rotate3-1",
+    "text": "rotate_left"
+  },
+  "rotate2-4": {
+    "type": "button",
+    "id": "rotate2-4",
+    "parent": "safety2-4",
+    "inheritFrom": "rotate2-1",
+    "text": "rotate_left"
+  },
+  "rotate2-3": {
+    "type": "button",
+    "id": "rotate2-3",
+    "parent": "safety2-3",
+    "inheritFrom": "rotate2-1",
+    "text": "rotate_right",
+    "z": 2110,
+    "x": 133,
+    "y": 2
+  },
+  "rotate1-4": {
+    "type": "button",
+    "id": "rotate1-4",
+    "parent": "safety1-4",
+    "inheritFrom": "rotate1-1",
+    "text": "rotate_left"
+  },
+  "rotate1-3": {
+    "type": "button",
+    "id": "rotate1-3",
+    "parent": "safety1-3",
+    "inheritFrom": "rotate1-1",
+    "text": "rotate_right"
+  },
+  "rotate1-2": {
+    "type": "button",
+    "id": "rotate1-2",
+    "parent": "safety1-2",
+    "inheritFrom": "rotate1-1",
+    "text": "rotate_right"
+  },
+  "rotate2-1": {
+    "type": "button",
+    "id": "rotate2-1",
+    "parent": "safety2-1",
+    "fixedParent": true,
+    "text": "rotate_left",
+    "inheritFrom": "rotate1-1",
+    "pID": 2
+  },
+  "pu3m": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "pu3m",
+    "z": 12586,
+    "parent": "ni77"
+  },
+  "gtmo": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "gtmo",
+    "z": 12501,
+    "parent": "ni77"
+  },
+  "if00": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "if00",
+    "z": 12547,
+    "parent": "ni77"
+  },
+  "1evt": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "1evt",
+    "z": 12551,
+    "parent": "ni77"
+  },
+  "arf1": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "arf1",
+    "z": 12511,
+    "parent": "ni77"
+  },
+  "ga9s": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "ga9s",
+    "z": 12499,
+    "parent": "ni77"
+  },
+  "wvto": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "wvto",
+    "z": 12567,
+    "parent": "ni77"
+  },
+  "2jdq": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "2jdq",
+    "z": 12498,
+    "parent": "ni77"
+  },
+  "v94j": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "v94j",
+    "z": 12531,
+    "parent": "ni77"
+  },
+  "xnk8": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "xnk8",
+    "z": 12526,
+    "parent": "ni77"
+  },
+  "dkp0": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "dkp0",
+    "z": 12497,
+    "parent": "ni77"
+  },
+  "jqz0": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "jqz0",
+    "z": 12588,
+    "parent": "ni77"
+  },
+  "qefc": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "qefc",
+    "z": 12491,
+    "parent": "ni77"
+  },
+  "tt2o": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "tt2o",
+    "z": 12504,
+    "parent": "ni77"
+  },
+  "pyh4": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "pyh4",
+    "z": 12561,
+    "parent": "ni77"
+  },
+  "blvl": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "blvl",
+    "z": 12519,
+    "parent": "ni77"
+  },
+  "6pw1": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "6pw1",
+    "z": 12516,
+    "parent": "ni77"
+  },
+  "r639": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "r639",
+    "z": 12580,
+    "parent": "ni77"
+  },
+  "ofne": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "ofne",
+    "z": 12575,
+    "parent": "ni77"
+  },
+  "cses": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "cses",
+    "z": 12570,
+    "parent": "ni77"
+  },
+  "yopt": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "yopt",
+    "z": 12560,
+    "parent": "ni77"
+  },
+  "3l9e": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "3l9e",
+    "z": 12549,
+    "parent": "ni77"
+  },
+  "em2w": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "em2w",
+    "z": 12572,
+    "parent": "ni77"
+  },
+  "n24u": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "n24u",
+    "z": 12544,
+    "parent": "ni77"
+  },
+  "0syp": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "0syp",
+    "z": 12517,
+    "parent": "ni77"
+  },
+  "p0rh": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "p0rh",
+    "z": 12569,
+    "parent": "ni77"
+  },
+  "6orv": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "6orv",
+    "z": 12559,
+    "parent": "ni77"
+  },
+  "4f7h": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "4f7h",
+    "z": 12509,
+    "parent": "ni77"
+  },
+  "kp67": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "kp67",
+    "z": 12510,
+    "parent": "ni77"
+  },
+  "mbvr": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "mbvr",
+    "z": 12577,
+    "parent": "ni77"
+  },
+  "7zwr": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "7zwr",
+    "z": 12587,
+    "parent": "ni77"
+  },
+  "pjwv": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "pjwv",
+    "z": 12495,
+    "parent": "ni77"
+  },
+  "3co8": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "3co8",
+    "z": 12484,
+    "parent": "ni77"
+  },
+  "7iob": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "7iob",
+    "z": 12553,
+    "parent": "ni77"
+  },
+  "87ik": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "87ik",
+    "z": 12523,
+    "parent": "ni77"
+  },
+  "14vr": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "14vr",
+    "z": 12530,
+    "parent": "ni77"
+  },
+  "gji8": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "gji8",
+    "z": 12529,
+    "parent": "ni77"
+  },
+  "a655": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "a655",
+    "z": 12488,
+    "parent": "ni77"
+  },
+  "iakv": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "iakv",
+    "z": 12508,
+    "parent": "ni77"
+  },
+  "h5ux": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "h5ux",
+    "z": 12522,
+    "parent": "ni77"
+  },
+  "he68": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "he68",
+    "z": 12486,
+    "parent": "ni77"
+  },
+  "lsnv": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "lsnv",
+    "z": 12565,
+    "parent": "ni77"
+  },
+  "8rsl": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "200",
+    "id": "8rsl",
+    "z": 12550,
+    "parent": "ni77"
+  },
+  "y3jo": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "200",
+    "id": "y3jo",
+    "z": 12562,
+    "parent": "ni77"
+  },
+  "kn9o": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "200",
+    "id": "kn9o",
+    "z": 12536,
+    "parent": "ni77"
+  },
+  "egk9": {
+    "deck": "milesDeck",
+    "type": "card",
+    "cardType": "200",
+    "id": "egk9",
+    "z": 12512,
+    "parent": "ni77"
+  },
+  "vqhe": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "vqhe",
+    "z": 12538,
+    "parent": "ni77"
+  },
+  "dpqg": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "dpqg",
+    "z": 12546,
+    "parent": "ni77"
+  },
+  "j82d": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "j82d",
+    "z": 12493,
+    "parent": "ni77"
+  },
+  "h6vv": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "h6vv",
+    "z": 12541,
+    "parent": "ni77"
+  },
+  "zrmj": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "zrmj",
+    "z": 12581,
+    "parent": "ni77"
+  },
+  "g3q4": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "g3q4",
+    "z": 12573,
+    "parent": "ni77"
+  },
+  "orlg": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "orlg",
+    "z": 12556,
+    "parent": "ni77"
+  },
+  "iqx8": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "iqx8",
+    "z": 12533,
+    "parent": "ni77"
+  },
+  "xzfw": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "xzfw",
+    "z": 12487,
+    "parent": "ni77"
+  },
+  "0leu": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "0leu",
+    "z": 12579,
+    "parent": "ni77"
+  },
+  "9trl": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "9trl",
+    "z": 12585,
+    "parent": "ni77"
+  },
+  "2v89": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "2v89",
+    "z": 12507,
+    "parent": "ni77"
+  },
+  "u2yc": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "u2yc",
+    "z": 12543,
+    "parent": "ni77"
+  },
+  "fve7": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Go",
+    "id": "fve7",
+    "z": 12534,
+    "parent": "ni77"
+  },
+  "w0bk": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "EndLimit",
+    "id": "w0bk",
+    "z": 12525,
+    "parent": "ni77"
+  },
+  "3q4p": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "EndLimit",
+    "id": "3q4p",
+    "z": 12566,
+    "parent": "ni77"
+  },
+  "8i0e": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "EndLimit",
+    "id": "8i0e",
+    "z": 12528,
+    "parent": "ni77"
+  },
+  "ewzf": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "EndLimit",
+    "id": "ewzf",
+    "z": 12490,
+    "parent": "ni77"
+  },
+  "d1af": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "EndLimit",
+    "id": "d1af",
+    "z": 12539,
+    "parent": "ni77"
+  },
+  "uriy": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "EndLimit",
+    "id": "uriy",
+    "z": 12503,
+    "parent": "ni77"
+  },
+  "t7wb": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Gasoline",
+    "id": "t7wb",
+    "z": 12576,
+    "parent": "ni77"
+  },
+  "xzzj": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Gasoline",
+    "id": "xzzj",
+    "z": 12563,
+    "parent": "ni77"
+  },
+  "9f18": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Gasoline",
+    "id": "9f18",
+    "z": 12583,
+    "parent": "ni77"
+  },
+  "dw7s": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Gasoline",
+    "id": "dw7s",
+    "z": 12582,
+    "parent": "ni77"
+  },
+  "5k59": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Gasoline",
+    "id": "5k59",
+    "z": 12489,
+    "parent": "ni77"
+  },
+  "kww3": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Gasoline",
+    "id": "kww3",
+    "z": 12568,
+    "parent": "ni77"
+  },
+  "5hwv": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Repairs",
+    "id": "5hwv",
+    "z": 12513,
+    "parent": "ni77"
+  },
+  "jubl": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Repairs",
+    "id": "jubl",
+    "z": 12584,
+    "parent": "ni77"
+  },
+  "9b0g": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Repairs",
+    "id": "9b0g",
+    "z": 12521,
+    "parent": "ni77"
+  },
+  "3o8q": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Repairs",
+    "id": "3o8q",
+    "z": 12524,
+    "parent": "ni77"
+  },
+  "uv30": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Repairs",
+    "id": "uv30",
+    "z": 12548,
+    "parent": "ni77"
+  },
+  "tynz": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Repairs",
+    "id": "tynz",
+    "z": 12532,
+    "parent": "ni77"
+  },
+  "d5am": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "SpareTire",
+    "id": "d5am",
+    "z": 12518,
+    "parent": "ni77"
+  },
+  "hyb0": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "SpareTire",
+    "id": "hyb0",
+    "z": 12557,
+    "parent": "ni77"
+  },
+  "1gqk": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "SpareTire",
+    "id": "1gqk",
+    "z": 12506,
+    "parent": "ni77"
+  },
+  "grbj": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "SpareTire",
+    "id": "grbj",
+    "z": 12574,
+    "parent": "ni77"
+  },
+  "w9gx": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "SpareTire",
+    "id": "w9gx",
+    "z": 12535,
+    "parent": "ni77"
+  },
+  "9h2v": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Stop",
+    "id": "9h2v",
+    "z": 12505,
+    "parent": "ni77"
+  },
+  "d4vz": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Stop",
+    "id": "d4vz",
+    "z": 12502,
+    "parent": "ni77"
+  },
+  "pc0v": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Stop",
+    "id": "pc0v",
+    "z": 12514,
+    "parent": "ni77"
+  },
+  "es66": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Stop",
+    "id": "es66",
+    "z": 12520,
+    "parent": "k3ap"
+  },
+  "0vr7": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Stop",
+    "id": "0vr7",
+    "z": 12527,
+    "parent": "ni77"
+  },
+  "5o9z": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "SpeedLimit",
+    "id": "5o9z",
+    "z": 12552,
+    "parent": "ni77"
+  },
+  "n4jy": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "SpeedLimit",
+    "id": "n4jy",
+    "z": 12540,
+    "parent": "ni77"
+  },
+  "911p": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "SpeedLimit",
+    "id": "911p",
+    "z": 12589,
+    "parent": "k3ap"
+  },
+  "9l05": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "SpeedLimit",
+    "id": "9l05",
+    "z": 12515,
+    "parent": "ni77"
+  },
+  "pub7": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "OutOfGas",
+    "id": "pub7",
+    "z": 12494,
+    "parent": "ni77"
+  },
+  "0d7s": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "OutOfGas",
+    "id": "0d7s",
+    "z": 12591,
+    "parent": "k3ap"
+  },
+  "apn3": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "OutOfGas",
+    "id": "apn3",
+    "z": 12558,
+    "parent": "ni77"
+  },
+  "nggl": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Accident",
+    "id": "nggl",
+    "z": 12590,
+    "parent": "k3ap"
+  },
+  "czlw": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Accident",
+    "id": "czlw",
+    "z": 12542,
+    "parent": "ni77"
+  },
+  "q9mo": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "Accident",
+    "id": "q9mo",
+    "z": 12545,
+    "parent": "ni77"
+  },
+  "zd11": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "FlatTire",
+    "id": "zd11",
+    "z": 12496,
+    "parent": "ni77"
+  },
+  "783a": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "FlatTire",
+    "id": "783a",
+    "z": 12483,
+    "parent": "ni77"
+  },
+  "ui57": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "FlatTire",
+    "id": "ui57",
+    "z": 12592,
+    "parent": "k3ap"
+  },
+  "wm85": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "RightOfWay",
+    "id": "wm85",
+    "z": 12485,
+    "parent": "ni77"
+  },
+  "sl9k": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "ExtraTank",
+    "id": "sl9k",
+    "z": 12571,
+    "parent": "ni77"
+  },
+  "n9zq": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "DrivingAce",
+    "id": "n9zq",
+    "z": 12578,
+    "parent": "ni77"
+  },
+  "1aze": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "PunctureProof",
+    "id": "1aze",
+    "z": 12500,
+    "parent": "ni77"
+  },
+  "offBoard": {
+    "type": "holder",
+    "id": "offBoard",
+    "x": 1,
+    "z": 29,
+    "y": 1100
+  },
+  "play": {
+    "type": "button",
+    "id": "play",
+    "x": 600,
+    "y": 650,
+    "width": 150,
+    "height": 150,
+    "z": 2102,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "color": "white",
+    "css": "font-size: 133px",
+    "text": "rplay_arrow",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "reset",
+        "routine": "applySettingsRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4",
+          "seat5",
+          "seat6"
+        ],
+        "count": 6
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "seat4",
+          "seat5",
+          "seat6"
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "player",
+            "variable": "player"
+          },
+          {
+            "func": "IF",
+            "operand1": "${player}",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${value}"
+                ],
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "plus1": {
+    "type": "button",
+    "id": "plus1",
+    "x": 195,
+    "y": 685,
+    "z": 2105,
+    "css": "font-size: 35px; ",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "hand"
+      }
+    ],
+    "movableInEdit": false
+  },
+  "totalScore": {
+    "type": "button",
+    "id": "totalScore",
+    "x": 1350,
+    "y": 950,
+    "width": 150,
+    "height": 50,
+    "z": 2102,
+    "movableInEdit": false,
+    "color": "white",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Ending round...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Do you want to calculate the final score (including bonuses) and end the round?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      "// Determine race winner",
+      {
+        "func": "COUNT",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": "${PROPERTY cardsLeft}",
+        "thenRoutine": [
+          "var raceWinner = ${PROPERTY 700Winner}",
+          "var shortWinner = true"
+        ],
+        "elseRoutine": [
+          "var shortWinner = false"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY 1000Winner}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          "var raceWinner = ${PROPERTY 1000Winner}"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${raceWinner}"
+      },
+      {
+        "func": "GET",
+        "property": "pID",
+        "variable": "pID"
+      },
+      "// 400 point bonus to winner of race",
+      {
+        "func": "LABEL",
+        "label": [
+          "${raceWinner}"
+        ],
+        "mode": "inc",
+        "value": 400
+      },
+      "// 300 point bonus to winner if draw pile is empty",
+      {
+        "func": "COUNT",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": [
+              "${raceWinner}"
+            ],
+            "mode": "inc",
+            "value": 300
+          }
+        ]
+      },
+      "// 300 point bonus to winner if used no 200 cards",
+      "var 200Holder = '200s' + ${pID}",
+      {
+        "func": "COUNT",
+        "holder": "${200Holder}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": [
+              "${raceWinner}"
+            ],
+            "mode": "inc",
+            "value": 300
+          }
+        ]
+      },
+      "// 500 point bonus if win before other players use any distance cards",
+      {
+        "func": "GET",
+        "collection": [
+          "km1",
+          "km2",
+          "km3"
+        ],
+        "aggregation": "max",
+        "property": "text",
+        "variable": "maxKm"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "km1",
+          "km2",
+          "km3"
+        ],
+        "aggregation": "sum",
+        "property": "text",
+        "variable": "totalKm"
+      },
+      {
+        "func": "IF",
+        "operand1": "${totalKm}",
+        "relation": "==",
+        "operand2": "${maxKm}",
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": [
+              "${raceWinner}"
+            ],
+            "mode": "inc",
+            "value": 500
+          }
+        ]
+      },
+      "// 200 point extension bonus if playing with 2, 3, or 6 players and agree to go past 700",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY shortRace}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY 1000Winner}",
+            "operand2": "${PROPERTY 700Winner}",
+            "thenRoutine": [
+              {
+                "func": "LABEL",
+                "label": [
+                  "${raceWinner}"
+                ],
+                "mode": "inc",
+                "value": 200
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${shortWinner}",
+                "operand2": true,
+                "elseRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": [
+                      "score1",
+                      "score2",
+                      "score3"
+                    ],
+                    "mode": "inc",
+                    "value": 200
+                  },
+                  {
+                    "func": "LABEL",
+                    "label": [
+                      "${PROPERTY 700Winner}"
+                    ],
+                    "mode": "dec",
+                    "value": 200
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "// This keeps the score for the next round (overrides behavior of cards decreasing the score when they leave the holders).",
+      "var keepScore = []",
+      {
+        "func": "FOREACH",
+        "in": [
+          "score1",
+          "score2",
+          "score3"
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "aggregation": "array",
+            "collection": [
+              "${value}"
+            ],
+            "property": "text",
+            "variable": "tempScore"
+          },
+          "var keepScore = push ${tempScore}"
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "reset",
+        "routine": "applySettingsRoutine"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "score1",
+          "score2",
+          "score3"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "text",
+            "value": "${keepScore.$key}"
+          }
+        ]
+      }
+    ],
+    "text": "Score / End Round",
+    "shortRace": true,
+    "liveScoreRoutine": [
+      "var distanceArray = ${PROPERTY distanceArray}",
+      "var distanceScore = 0",
+      "var safetyScore = 0",
+      "var safetyBonus = 0",
+      "// Calculate score for distance cards",
+      {
+        "func": "FOREACH",
+        "in": [
+          "25s",
+          "50s",
+          "75s",
+          "100s",
+          "200s"
+        ],
+        "loopRoutine": [
+          "var holderID = ${value} + ${pID}",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "${holderID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "var partScore = ${COUNT} * ${distanceArray.$key}",
+          "var distanceScore = ${distanceScore} + ${partScore}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "km${pID}"
+        ],
+        "property": "text",
+        "value": "${distanceScore}"
+      },
+      "//Calculate score for safety cards, including bonus for all 4 and bonus for coup.",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          "var partScore = 0",
+          "var holderID = 'safety' + ${pID}",
+          "var holderID = ${holderID} + '-'",
+          "var holderID = ${holderID} + ${value}",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "${holderID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 1,
+            "thenRoutine": [
+              "var safetyBonus = ${safetyBonus} + 1",
+              "var partScore = ${COUNT} * 100",
+              {
+                "func": "GET",
+                "property": "rotation",
+                "variable": "cardRotation"
+              },
+              {
+                "func": "IF",
+                "operand1": "${cardRotation}",
+                "operand2": 90,
+                "thenRoutine": [
+                  "var partScore = ${partScore} + 300"
+                ]
+              }
+            ]
+          },
+          "var safetyScore = ${safetyScore} + ${partScore}",
+          {
+            "func": "IF",
+            "operand1": "${safetyBonus}",
+            "operand2": 4,
+            "thenRoutine": [
+              "var safetyScore = ${safetyScore} + 300"
+            ]
+          }
+        ]
+      },
+      "var liveScore = ${distanceScore} + ${safetyScore}",
+      {
+        "func": "SET",
+        "collection": [
+          "score${pID}"
+        ],
+        "property": "text",
+        "value": "${liveScore}"
+      }
+    ],
+    "distanceArray": [
+      25,
+      50,
+      75,
+      100,
+      200
+    ]
+  },
+  "rotate3-1": {
+    "type": "button",
+    "id": "rotate3-1",
+    "parent": "safety3-1",
+    "fixedParent": true,
+    "inheritFrom": "rotate1-1",
+    "text": "rotate_left",
+    "pID": 3
+  },
+  "ni77": {
+    "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "handleSize": 30,
+    "id": "ni77"
+  },
+  "nextTurn": {
+    "type": "button",
+    "id": "nextTurn",
+    "x": 1150,
+    "y": 950,
+    "width": 150,
+    "height": 50,
+    "z": 2102,
+    "movableInEdit": false,
+    "color": "white",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ],
+    "text": "Next Turn"
+  },
+  "discard": {
+    "type": "holder",
+    "id": "discard",
+    "x": 360,
+    "y": 637,
+    "z": 32,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background-color": "#ffffff80",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "opacity": 0.4
+      }
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "text": "Discard",
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fromHand",
+        "variable": "fromHand"
+      },
+      {
+        "func": "IF",
+        "operand1": "${fromHand}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "TURN"
+          },
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "fromHand",
+            "value": null
+          }
+        ]
+      }
+    ]
+  },
+  "k3ap": {
+    "type": "pile",
+    "parent": "offBoard",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "handleSize": 30,
+    "id": "k3ap"
+  }
+}

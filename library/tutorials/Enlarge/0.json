@@ -1,0 +1,222 @@
+{
+  "_meta": {
+    "version": 8,
+    "info": {
+      "name": "Enlarge",
+      "image": "/assets/-1439185659_4027",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "The pawn used in this variant is a VTT asset released to the public domain under CC0.",
+      "lastUpdate": 1672720696186,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "vzvp": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#23ca5b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 485,
+    "z": 10068,
+    "id": "vzvp",
+    "css": {
+      "#enlarged": {
+        "position": "relative",
+        "top": "calc(var(--scale)*-200px)",
+        "left": "calc(var(--scale)*-200px)"
+      }
+    },
+    "enlarge": 2,
+    "x": 730
+  },
+  "vzvp1": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e84242",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 425,
+    "y": 485,
+    "z": 10069,
+    "id": "vzvp1",
+    "css": {
+      "#enlarged": {
+        "top": "calc(var(--roomTop) + var(--scale)*350px)",
+        "left": "calc(var(--roomLeft) + var(--scale)*750px)",
+        "right": "unset",
+        "transform-origin": "top left"
+      }
+    },
+    "enlarge": 1
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Enlarge: Basic"
+  },
+  "406b": {
+    "id": "406b",
+    "x": 108,
+    "y": 114,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 125,
+    "css": "font-size: 25px; ",
+    "text": "Enlarge is a property that can be set on any widget type that will display an enlarged version of itself and its child widgets. Enlarge is either `false` or a number. The number is a scale, so a value of 2 means the enlarged version is twice as large as the original.  A value of 0.5 displays a version half as big as the original. In theory, negative values flip the enlarged widget around its horizontal axis, but this also changes the location so negative numbers should generally be avoided. Enlarge is activated when the widget is moused-over or when pressed for at least a half second on touch devices."
+  },
+  "pin": {
+    "id": "pin",
+    "x": 163,
+    "y": 442,
+    "width": 35.85,
+    "height": 43.83,
+    "z": 10071,
+    "classes": "pinPiece",
+    "color": "#bc5bee",
+    "enlarge": 2
+  },
+  "xk8t": {
+    "type": "spinner",
+    "value": 5,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": -103,
+    "y": 33,
+    "z": 571,
+    "id": "xk8t",
+    "parent": "pin",
+    "fixedParent": true,
+    "angle": 5331
+  },
+  "bm4j": {
+    "id": "bm4j",
+    "y": 600,
+    "width": 270,
+    "z": 10018,
+    "movable": false,
+    "text": "The pin above has an `enlarge` value of 2 set. The spinner is a child of the pin. Move your mouse over either widget and you see both widgets in the enlarged overlay. If you drag the pin back and forth between the left and right side of the screen, the overlay will swap positions.  Moving top to bottom has no effect. This is the default way in which `enlarge` works.",
+    "x": 20
+  },
+  "bm5j": {
+    "id": "bm5j",
+    "x": 325,
+    "y": 600,
+    "width": 270,
+    "z": 10059,
+    "movable": false,
+    "text": "Using CSS, it is possible to modify the default behavior of `enlarge`.  The red checker above displays an example of how to position the overlay in a set location. In this example, you can change the values '350' and '750' in the `top` and `left` properties to change where the checker appears.\n\nCSS variables `--roomTop` and `--roomLeft` are used in positioning the enlarged widget at a fixed point relative to the room area. Offsets from the top left need to be adjusted with `--scale` and the `transform-origin` should be set to `top left.`"
+  },
+  "bm6j": {
+    "id": "bm6j",
+    "y": 600,
+    "width": 270,
+    "z": 9732,
+    "movable": false,
+    "text": "The green checker above uses a similar technique as the red checker. However, by adding `position:relative`, the overlay now follows the cursor. This time, using negative values in `top` and `left`, the overlay appears above and to the left of the cursor.",
+    "x": 650
+  },
+  "bm7j": {
+    "id": "bm7j",
+    "x": 1275,
+    "y": 600,
+    "width": 270,
+    "z": 9732,
+    "movable": false,
+    "text": "Widgets are enlarged by first copying the html of the original widget. This means that by default, the widget will have the same relative dimensions and other properties. To change those values, you use CSS and not properties on the widget. The purple square above shows how to replace the square image with an image of a different size and shape. When you hover over the purple square, you will see an ace of spades card."
+  },
+  "ctrl": {
+    "id": "ctrl",
+    "x": 1352,
+    "y": 460,
+    "z": 10072,
+    "css": {
+      "default": {
+        "background": "purple"
+      },
+      "#enlarged": {
+        "background-image": "url('/i/cards-default/AS.svg')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent"
+      }
+    },
+    "enlarge": 4
+  },
+  "0kil": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 1030,
+    "y": 485,
+    "z": 10074,
+    "id": "0kil",
+    "css": {
+      "#enlarged": {
+        "left": "calc(var(--roomLeft) + (${PROPERTY x}px + ${PROPERTY width}px / 2 * (1 - ${PROPERTY enlarge})) * var(--scale))",
+        "top": "calc(var(--roomTop) + (${PROPERTY y}px + ${PROPERTY height}px / 2 * (1 - ${PROPERTY enlarge})) * var(--scale))",
+        "right": "unset",
+        "transform-origin": "top left"
+      }
+    },
+    "enlarge": 2
+  },
+  "bm8j": {
+    "id": "bm8j",
+    "y": 600,
+    "width": 270,
+    "z": 9732,
+    "movable": false,
+    "text": "The blue checker refines the concept even further my making the enlarged view appear directly over the widget. There is no shifting as the mouse is moved around. And the enlarged view tracks exactly with the widget when being dragged.",
+    "x": 950
+  }
+}

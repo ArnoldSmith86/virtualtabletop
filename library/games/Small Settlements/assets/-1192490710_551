@@ -1,0 +1,12 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200">
+	<title>Water Mill</title>
+	<style>
+		.s0 { fill: #ef3c29;stroke: #ffffff;stroke-width: 5 } 
+		.s1 { fill: #209da6;stroke: #ffffff;stroke-width: 5 } 
+		.s2 { fill: #fdbe3f;stroke: #ffffff;stroke-width: 5 } 
+	</style>
+	<path id="Brick" class="s0" d="m200 100h100v100h-100z"/>
+	<path id="Glass" class="s1" d="m100 100h100v100h-100z"/>
+	<path id="Brick" class="s0" d="m0 100h100v100h-100z"/>
+	<path id="Wheat" class="s2" d="m0 0h100v100h-100z"/>
+</svg>

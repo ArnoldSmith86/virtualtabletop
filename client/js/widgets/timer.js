@@ -9,7 +9,6 @@ export class Timer extends Widget {
       typeClasses: 'widget timer',
       layer: -1,
       movable: false,
-      clickable: true,
 
       milliseconds: 0,
       precision: 1000,
