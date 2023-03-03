@@ -66,7 +66,7 @@ publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36'
          [ ()=>Selector("#w_zpiece19"), ()=>Selector("#w_sq35") ],
          [ ()=>Selector("#w_zpiece08"), ()=>Selector("#w_sq53") ]
        ]);
-publicLibraryButtons('Reward',             0, '965cc73a5dc1048c3203ab23935b4abf', [
+publicLibraryButtons('Reward',             0, '2269ff3e3c72fec2eacb81be5fab3236', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', 'seat1', 'next'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, 'ab2a2638cdb61809a644c5ca73770f77', [ 'startMix', 'draw14' ]);
