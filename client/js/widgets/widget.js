@@ -574,6 +574,18 @@ export class Widget extends StateManaged {
     return [ 'rotation', 'scale', 'x', 'y' ];
   }
 
+  dragCorner(coordGlobal, localAnchor, parent = null) {
+    const coord = parent ?
+        parent.coordLocalFromCoordGlobal(coordGlobal) :
+        this.coordParentFromCoordGlobal(coordGlobal);
+    const transformOrigin = getTransformOrigin(this.domElement);
+    let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
+    let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
+    return parent ?
+        parent.coordGlobalFromCoordLocal(corner) : corner;
+  }
+
   evaluateInputOverlay(o, resolve, reject, go) {
     const result = {};
     if(go) {
@@ -1888,33 +1900,28 @@ export class Widget extends StateManaged {
   }
 
   async move(coordGlobal, localAnchor) {
-    const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
-    const transformOrigin = getTransformOrigin(this.domElement);
-    let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
-    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
-    let newX = Math.round(coordParent.x + offset.x - transformOrigin.x);
-    let newY = Math.round(coordParent.y + offset.y - transformOrigin.y);
+    let newCoord = this.dragCorner(coordGlobal, localAnchor);
 
     //Keeps widget's top left corner within coordinates set by dragLimit object
     const limit = this.get('dragLimit');
 
     if (limit.minX !== undefined) {
-      newX = Math.max(limit.minX, newX);
+      newCoord.x = Math.max(limit.minX, newCoord.x);
     }
     if (limit.maxX !== undefined) {
-      newX = Math.min(limit.maxX, newX);
+      newCoord.x = Math.min(limit.maxX, newCoord.x);
     }
     if (limit.minY !== undefined) {
-      newY = Math.max(limit.minY, newY);
+      newCoord.y = Math.max(limit.minY, newCoord.y);
     }
     if (limit.maxY !== undefined) {
-      newY = Math.min(limit.maxY, newY);
+      newCoord.y = Math.min(limit.maxY, newCoord.y);
     }
 
     if(tracingEnabled)
-      sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX, newY });
+      sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
 
-    await this.setPosition(newX, newY, this.get('z'));
+    await this.setPosition(newCoord.x, newCoord.y, this.get('z'));
     await this.snapToGrid();
 
     if(!this.get('fixedParent') && this.get('movable')) {
@@ -1977,7 +1984,8 @@ export class Widget extends StateManaged {
       // If we currently have a shadow widget, position it and place it in the holder.
       if (this.hoverTarget && this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
         const shadowWidget = widgets.get(this.get('dropShadowWidget'));
-        const globalPoint = {x: this.get('x'), y: this.get('y'), z: this.get('z')};
+
+        const globalPoint = this.dragCorner(coordGlobal, localAnchor, this.hoverTarget);
         const shadowParentId = shadowWidget.get('parent');
         if (shadowParentId != this.hoverTarget.get('id')) {
           shadowWidget.currentParent = widgets.get(shadowParentId);
@@ -1993,9 +2001,9 @@ export class Widget extends StateManaged {
     }
   }
 
-  async moveEnd(coord, localAnchor) {
+  async moveEnd(coordGlobal, localAnchor) {
     if(tracingEnabled)
-      sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
+      sendTraceEvent('moveEnd', { id: this.get('id'), coordGlobal, localAnchor });
 
     await this.hideShadowWidget();
     await this.set('dragging', null);
@@ -2008,9 +2016,7 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       if(this.hoverTarget) {
-        let coordNew = this.hoverTarget.coordLocalFromCoordClient({x: coord.clientX, y: coord.clientY});
-        const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
-        coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: Math.round(coordNew.x + offset.x), y: Math.round(coordNew.y + offset.y)});
+        let coordNew = this.dragCorner(coordGlobal, localAnchor, this.hoverTarget);
         this.setPosition(coordNew.x, coordNew.y, this.get('z'));
         await this.snapToGrid();
         await this.moveToHolder(this.hoverTarget);
