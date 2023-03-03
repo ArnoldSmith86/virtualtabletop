@@ -31,7 +31,7 @@ class BasicWidget extends Widget {
       }
 
       const face = this.faces()[this.get('activeFace')];
-      if(face !== undefined) {
+      if(face && typeof face == 'object') {
         this.applyDeltaToDOM(face);
         this.previouslyActiveFace = face;
       }
