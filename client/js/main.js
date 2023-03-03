@@ -58,7 +58,7 @@ function getValidDropTargets(widget) {
         break;
     }
 
-    if (getComputedStyle(t.domElement).getPropertyValue('--foreign') == 'true')
+    if (jeEnabled && getComputedStyle(t.domElement).getPropertyValue('--foreign') == 'true')
       continue;
 
     if(isValid)
