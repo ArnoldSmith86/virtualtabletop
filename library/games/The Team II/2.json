@@ -90,7 +90,21 @@
       }
     ],
     "css": "background-color: #243a4e88;border-color:white;color:white;",
-    "height": 40
+    "height": 40,
+    "gameStartRoutine": [
+      {
+        "func": "CALL",
+        "widget": "b0b2bf3c-50e3-4145-87cf-e9fb106d3983"
+      },
+      {
+        "func": "CALL",
+        "widget": "b0b2bf3c-50e3-4145-87cf-e9fb106d3982"
+      },
+      {
+        "func": "CALL",
+        "widget": "b0b2bf3c-50e3-4145-87cf-e9fb106d3981"
+      }
+    ]
   },
   "146344a4-f702-48c7-9acf-b10cf7da85f8": {
     "id": "146344a4-f702-48c7-9acf-b10cf7da85f8",
@@ -3312,7 +3326,7 @@
       "similarName": "The Crew: Mission Deep Sea",
       "description": "Cooperative trick taking card game. Work together on mission tasks to ensure that certain tricks are taken by certain players, all while not revealing your hand.",
       "showName": true,
-      "lastUpdate": 1629991441000
+      "lastUpdate": 1675964362161
     }
   },
   "3lcfP": {
