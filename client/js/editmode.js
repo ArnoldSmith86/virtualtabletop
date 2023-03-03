@@ -1425,6 +1425,7 @@ function populateAddWidgetOverlay() {
       {value:6,image:"/i/dice/cube-6-3.svg"},
       {value:6,image:"/i/dice/cube-6-4.svg"}
     ],
+    imageScale: 1,
     color: 'transparent',
     borderColor: 'transparent',
     svgReplaces: {
