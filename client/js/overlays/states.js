@@ -697,8 +697,11 @@ function fillStateDetails(states, state, dom) {
         switchToActiveGame = loadNewState !== null;
       }
 
-      if(loadNewState)
-        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
+      if(loadNewState) {
+        if(!state.savePlayers)
+          triggerGameStartRoutineOnNextStateLoad = true;
+        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id, delayForGameStartRoutine: !state.savePlayers });
+      }
       showStatesOverlay(detailsOverlay);
       if(switchToActiveGame)
         $('#activeGameButton').click();
@@ -1075,14 +1078,18 @@ onLoad(function() {
     updateFilterOverflow();
   });
   document.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-    $('#statesButton').click();
+    if(e.dataTransfer.types.includes('Files')) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+      $('#statesButton').click();
+    }
   });
   document.addEventListener('drop', function(e) {
-    e.preventDefault();
-    loadJSZip();
-    for(const file of e.dataTransfer.files)
-      resolveStateCollections(file, addStateFile);
+    if(e.dataTransfer.files.length) {
+      e.preventDefault();
+      loadJSZip();
+      for(const file of e.dataTransfer.files)
+        resolveStateCollections(file, addStateFile);
+    }
   });
 });
