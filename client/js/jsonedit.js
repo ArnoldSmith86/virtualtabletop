@@ -189,9 +189,10 @@ const jeCommands = [
     show: _=>jeStateNow,
     call: async function() {
       batchStart();
-      setDeltaCause(`${playerName} removed ${w.id} in editor`);
-      for(const id of jeSelectedIDs())
+      for(const id of jeSelectedIDs()) {
+        setDeltaCause(`${getPlayerDetails().playerName} removed ${id} in editor`);
         await removeWidgetLocal(id);
+      }
       batchEnd();
       jeEmpty();
     }
@@ -502,7 +503,7 @@ const jeCommands = [
       }
 
       batchStart();
-      setDeltaCause(`${playerName} imported CSV to ${jeStateNow.id} in editor`);
+      setDeltaCause(`${getPlayerDetails().playerName} imported CSV to ${jeStateNow.id} in editor`);
 
       for(const oldID of oldCardTypeIDs)
         if(!jeStateNow.cardTypes[oldID])
@@ -948,7 +949,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
   jeAddEnumCommands('^.*\\(AUDIO\\) ↦ type', [ 'audio/midi', 'audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/x-wav' ]);
-  jeAddEnumCommands('^.*\\(AUDIO\\) ↦ player', [ '${}', '${playerName}' ]);
+  jeAddEnumCommands('^.*\\(AUDIO\\) ↦ player', [ '${}', '${getPlayerDetails().playerName}' ]);
   jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
