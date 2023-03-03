@@ -61,7 +61,17 @@ test('Create game using edit mode', async t => {
     .click('#addSeatCounter')
     .click('#addButton')
     .click('#addScoreboard')
-    .click('#w_m06r');
+    .click('#w_m06r')
+    .click('#addButton')
+    .click('#add-dice2D0')
+    .typeText('#INPUT_\\;sides', '8', { replace: true })
+    .click('#buttonInputGo')
+    .click('#w_8sfj')
+    .click('#addButton')
+    .click('#add-dice3D0')
+    .typeText('#INPUT_\\;sides', '12', { replace: true })
+    .click('#buttonInputGo')
+    .click('#w_bldn');
   await t.resizeWindow(width,height);
-  await compareState(t, '90763067f59a7d65ca134cdc9266858c');
+  await compareState(t, '98fcb4082874abd0f47d516eb2258aa6');
 });

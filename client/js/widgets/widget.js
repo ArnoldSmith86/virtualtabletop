@@ -80,7 +80,9 @@ export class Widget extends StateManaged {
       enterRoutine: null,
       leaveRoutine: null,
       globalUpdateRoutine: null,
-      gameStartRoutine: null
+      gameStartRoutine: null,
+
+      animatePropertyChange: []
     });
     this.domElement.timer = false
 
@@ -110,10 +112,17 @@ export class Widget extends StateManaged {
       this.timer = null;
       this.domElement.classList.add('longtouch');
     }
+
+    this.animateTimeouts = {};
+    this.animateClasses = new Set;
   }
 
   absoluteCoord(coord) {
     return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
+  }
+
+  animateProperties() {
+    return asArray(JSON.parse(JSON.stringify(this.get('animatePropertyChange'))));
   }
 
   applyChildAdd(child) {
@@ -199,6 +208,32 @@ export class Widget extends StateManaged {
       }
     }
 
+    if(this.activateAnimation) {
+      this.animateProperties().forEach((prop)=>{
+        if(prop != null) {
+          const rule = (typeof prop == 'object')? prop : { property: prop };
+          if(delta[rule.property] !== undefined) {
+            if(rule.className == null)
+              rule.className = `animate_${escapeID(rule.property)}`;
+            rule.className = asArray(rule.className).join(' ').split(' ').filter(c=>c!='');
+            if(typeof rule.duration != 'number')
+              rule.duration = 1000;
+            rule.className.forEach(c => {
+              if(this.animateTimeouts[c])
+                clearTimeout(this.animateTimeouts[c]);
+              this.domElement.classList.add(c);
+              this.animateClasses.add(c);
+              this.animateTimeouts[c] = setTimeout(()=>{
+                if(this.classes(false).split(' ').indexOf(c) == -1)
+                  this.domElement.classList.remove(c);
+                this.animateClasses.delete(c);
+              },rule.duration);
+            });
+          }
+        }
+      });
+    }
+
     for(const key in delta) {
       const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
       if(isGlobalUpdateRoutine) {
@@ -254,6 +289,11 @@ export class Widget extends StateManaged {
       }
     }
     this.applyDeltaToDOM(delta);
+  }
+
+  applyInitialDelta(delta) {
+    super.applyInitialDelta(delta);
+    this.activateAnimation = true;
   }
 
   applyRemove() {
@@ -316,7 +356,7 @@ export class Widget extends StateManaged {
     }
   }
 
-  classes() {
+  classes(includeTemporary = true) {
     let className = this.get('typeClasses') + ' ' + this.get('classes');
 
     if(Array.isArray(this.get('owner')) && this.get('owner').indexOf(playerName) == -1)
@@ -364,6 +404,9 @@ export class Widget extends StateManaged {
 
     if(this.isHighlighted)
       className += ' selectedInEdit';
+
+    if(includeTemporary)
+      className += ' ' + Array.from(this.animateClasses.values()).join(' ');
 
     return className;
   }
@@ -1164,13 +1207,20 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'GET') {
-        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
+        const propertyPath = asArray(a.property || 'id');
+        const mainProperty = String(propertyPath.shift());
+
+        setDefaults(a, { variable: mainProperty, collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         const collection = getCollection(a.collection);
         if(collection) {
-          let c = collections[collection];
+
+          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>w.get(mainProperty))));
+          for(const subkey of propertyPath)
+            c = c.map(v=>v && typeof v == 'object' && v[subkey] || null);
+
           if (a.skipMissing)
-            c = c.filter(w=>w.get(String(a.property)) !== null && w.get(String(a.property)) !== undefined);
-          c = JSON.parse(JSON.stringify(c.map(w=>w.get(String(a.property)))));
+            c = c.filter(v=>v !== null && v !== undefined);
+
           if(c.length) {
             switch(a.aggregation) {
             case 'first':
@@ -1207,7 +1257,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${a.property}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
         }
       }
 
