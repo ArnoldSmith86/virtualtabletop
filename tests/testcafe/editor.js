@@ -11,7 +11,6 @@ test('Create game using edit mode', async t => {
   await setRoomState();
   await ClientFunction(prepareClient)();
   await setName(t);
-  debugger;
   await t
     .click('#addButton')
     .click('#add-spinner0')
