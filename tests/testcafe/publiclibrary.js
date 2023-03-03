@@ -86,6 +86,6 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
 ]);
 publicLibraryButtons('Functions - SCORE', 0, '88c8ef94e7d34f69bf8d0844acce2dfc', [ 'button2', 'button2', 'button7', 'button15', 'seat9', 'scorePlus', 'button17']);
 publicLibraryButtons('Scoreboard', 2, '458a8e4b7232bc38e151be7e4c7705bf', [ 'button1', 'button2', 'button3', 'button4']);
-;
+
 publicLibraryButtons('Dice', 0, '930cccc3d082ef55679b8108b1d5047e', [ 'dice3', 'dice4', 'dice5',]);
 publicLibraryButtons('Dice', 3, '6c8b3c92de5d5aaf2affd905ae948c29', [ 'dice2', 'dice1', 'button2', 'dice4']);
