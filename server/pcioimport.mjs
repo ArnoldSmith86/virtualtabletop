@@ -179,6 +179,8 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'gamePiece') {
       w.image = `https://playingcards.io/img/pieces/${widget.color}-${widget.pieceType}.svg`;
       addDimensions(w, widget);
+    } else if(widget.type == 'dice') {
+      w.type = 'dice';
     } else if(widget.type == 'hand') {
       if(widget.enabled === false)
         continue;
@@ -856,6 +858,15 @@ export default async function convertPCIO(content) {
             delete c.mode;
           if(c.value === 0)
             delete c.value;
+        }
+        if(c.func == 'ROLL_DICE') {
+          if(!c.args.dice)
+            continue;
+          c = {
+            note:       'Roll dice',
+            func:       'CLICK',
+            collection: c.args.dice.value
+          };
         }
         if(c.func == 'SPIN_SPINNER') {
           if(!c.args.spinners)
