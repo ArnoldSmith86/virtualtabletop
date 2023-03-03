@@ -3214,7 +3214,7 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "kg3w",
+        "label": "${PROPERTY parent}",
         "mode": "dec",
         "value": 1
       }
@@ -3234,7 +3234,7 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "kg3w",
+        "label": "${PROPERTY parent}",
         "mode": "inc",
         "value": 1
       }
@@ -3254,7 +3254,7 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "9wdk",
+        "label": "${PROPERTY parent}",
         "mode": "dec",
         "value": 1
       }
@@ -3274,7 +3274,7 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "9wdk",
+        "label": "${PROPERTY parent}",
         "mode": "inc",
         "value": 1
       }
@@ -3294,7 +3294,7 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "sjhi",
+        "label": "${PROPERTY parent}",
         "mode": "dec",
         "value": 1
       }
@@ -3314,7 +3314,7 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "sjhi",
+        "label": "${PROPERTY parent}",
         "mode": "inc",
         "value": 1
       }
@@ -3334,7 +3334,7 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "jypu",
+        "label": "${PROPERTY parent}",
         "mode": "dec",
         "value": 1
       }
@@ -3354,7 +3354,7 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "jypu",
+        "label": "${PROPERTY parent}",
         "mode": "inc",
         "value": 1
       }
@@ -8602,7 +8602,7 @@
       "description": "Place colored, shaped blocks into playing area to connect as many pieces as possible to earn points and block opponents. Highest score wins.",
       "showName": true,
       "helpText": "Players take seats. Click die at top of screen to choose random piece to play. Place piece on board. Press next icon button to indicate turn is over.",
-      "lastUpdate": 1677843576267,
+      "lastUpdate": 1677852951927,
       "skill": "",
       "similarImage": "",
       "similarAwards": "2012 Mensa Select Winner\n2011 Fall Parents' Choice Silver Honor Winner",
