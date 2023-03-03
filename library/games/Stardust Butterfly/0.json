@@ -8,7 +8,7 @@
     "parent": "2ifg"
   },
   "_meta": {
-    "version": 11,
+    "version": 12,
     "info": {
       "name": "Stardust Butterfly",
       "image": "/assets/1621426706_261001",
@@ -21,16 +21,16 @@
       "similarName": "Stardust Butterfly",
       "description": "Take turns drafting from 9 action cards. During play, use special power of action card and roll dice to purchase weapons cards, move location of ship, increase skills, and hunt wanted criminals. Play 6 rounds. Player with most points at end wins.",
       "showName": true,
-      "lastUpdate": 1674744122431,
+      "lastUpdate": 1677842870443,
       "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "3",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3"
     }
   },
   "4e3a393e-b245-41c4-818a-84b83c4fa823": {
@@ -3309,286 +3309,143 @@
     "id": "dice1",
     "x": 320,
     "y": 450,
-    "z": 4742,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "x": 320,
       "y": 450,
-      "text": "die_face_1",
-      "value": 1,
+      "activeFace": 0,
       "parent": null
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 1
+    }
   },
   "dice2": {
     "type": "dice",
     "id": "dice2",
     "x": 419,
     "y": 450,
-    "z": 4743,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "x": 419,
       "y": 450,
-      "text": "die_face_1",
-      "value": 1,
+      "activeFace": 0,
       "parent": null
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 1
+    }
   },
   "dice3": {
     "type": "dice",
     "id": "dice3",
     "x": 518,
     "y": 450,
-    "z": 4744,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "x": 518,
       "y": 450,
-      "text": "die_face_1",
-      "value": 1,
+      "activeFace": 0,
       "parent": null
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 1
+    }
   },
   "dice4": {
     "type": "dice",
     "id": "dice4",
     "x": 617,
     "y": 450,
-    "z": 4745,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "x": 617,
       "y": 450,
-      "text": "die_face_1",
-      "value": 1,
+      "activeFace": 0,
       "parent": null
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 1
+    }
   },
   "dice5": {
     "type": "dice",
     "id": "dice5",
     "x": 718,
     "y": 450,
-    "z": 4746,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "x": 718,
       "y": 450,
-      "text": "die_face_1",
-      "value": 1,
+      "activeFace": 0,
       "parent": null
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 1
+    }
   },
   "dice6": {
     "type": "dice",
     "id": "dice6",
     "x": 817,
     "y": 450,
-    "z": 4748,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "x": 817,
       "y": 450,
-      "text": "die_face_1",
-      "value": 1,
+      "activeFace": 0,
       "parent": null
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 1
+    }
   },
   "dice7": {
     "type": "dice",
     "id": "dice7",
     "x": 916,
     "y": 450,
-    "z": 4814,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "x": 916,
       "y": 450,
-      "text": "die_face_1",
-      "value": 1,
+      "activeFace": 0,
       "parent": null
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 2
+    }
   },
   "dice8": {
     "type": "dice",
     "id": "dice8",
     "x": 1016,
     "y": 450,
-    "z": 4805,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "x": 1016,
       "y": 450,
-      "text": "die_face_1",
-      "value": 1,
+      "activeFace": 0,
       "parent": null
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 1
+    }
   },
   "dice9": {
     "type": "dice",
     "id": "dice9",
-    "x": 1115,
+    "x": 1116,
     "y": 450,
-    "z": 4752,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
-      "x": 1115,
+      "x": 1116,
       "y": 450,
-      "text": "die_face_1",
-      "value": 1,
+      "activeFace": 0,
       "parent": null
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 1
+    }
   },
   "dice10": {
     "type": "dice",
     "id": "dice10",
     "x": 1215,
     "y": 450,
-    "z": 4755,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "x": 1215,
       "y": 450,
-      "text": "die_face_1",
-      "value": 1,
+      "activeFace": 0,
       "parent": null
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 1
+    }
   },
   "dice11": {
     "type": "dice",
     "id": "dice11",
     "x": 17,
     "y": 124,
-    "z": 4796,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "parent": "area1",
       "x": 17,
       "y": 124,
-      "text": "die_face_1",
-      "value": 1
+      "activeFace": 0
     },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 4,
     "parent": "area1"
   },
   "dice12": {
@@ -3596,26 +3453,13 @@
     "id": "dice12",
     "x": 17,
     "y": 184,
-    "z": 4806,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "parent": "area1",
       "x": 17,
       "y": 184,
-      "text": "die_face_1",
-      "value": 1
+      "activeFace": 0
     },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 4,
     "parent": "area1"
   },
   "dice13": {
@@ -3624,52 +3468,26 @@
     "parent": "area1",
     "x": 17,
     "y": 244,
-    "z": 4761,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "parent": "area1",
       "x": 17,
       "y": 244,
-      "text": "die_face_1",
-      "value": 1
-    },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 4
+      "activeFace": 0
+    }
   },
   "dice14": {
     "type": "dice",
     "id": "dice14",
     "x": 17,
     "y": 124,
-    "z": 4804,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "parent": "area2",
       "x": 17,
       "y": 124,
-      "text": "die_face_1",
-      "value": 1
+      "activeFace": 0
     },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 6,
     "parent": "area2"
   },
   "dice15": {
@@ -3677,26 +3495,13 @@
     "id": "dice15",
     "x": 17,
     "y": 184,
-    "z": 4812,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "parent": "area2",
       "x": 17,
       "y": 184,
-      "text": "die_face_1",
-      "value": 1
+      "activeFace": 0
     },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 6,
     "parent": "area2"
   },
   "dice16": {
@@ -3704,26 +3509,13 @@
     "id": "dice16",
     "x": 17,
     "y": 244,
-    "z": 4810,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "parent": "area2",
       "x": 17,
       "y": 244,
-      "text": "die_face_1",
-      "value": 1
+      "activeFace": 0
     },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 8,
     "parent": "area2"
   },
   "dice17": {
@@ -3731,26 +3523,13 @@
     "id": "dice17",
     "x": 47,
     "y": 124,
-    "z": 4800,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "parent": "area3",
-      "x": 47,
+      "x": 17,
       "y": 124,
-      "text": "die_face_1",
-      "value": 1
+      "activeFace": 0
     },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 3,
     "parent": "area3"
   },
   "dice18": {
@@ -3758,26 +3537,13 @@
     "id": "dice18",
     "x": 47,
     "y": 184,
-    "z": 4781,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "parent": "area3",
-      "x": 47,
+      "x": 17,
       "y": 184,
-      "text": "die_face_1",
-      "value": 1
+      "activeFace": 0
     },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 3,
     "parent": "area3"
   },
   "dice19": {
@@ -3785,26 +3551,13 @@
     "id": "dice19",
     "x": 47,
     "y": 244,
-    "z": 4782,
     "movable": true,
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
     "resetProperties": {
       "parent": "area3",
-      "x": 47,
+      "x": 17,
       "y": 244,
-      "text": "die_face_1",
-      "value": 1
+      "activeFace": 0
     },
-    "shape3D": false,
-    "text": "die_face_1",
-    "rollCount": 3,
     "parent": "area3"
   },
   "smd4": {
