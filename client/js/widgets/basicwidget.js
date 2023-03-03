@@ -24,7 +24,7 @@ class BasicWidget extends Widget {
     if(delta.activeFace !== undefined || delta.faces !== undefined) {
       let face = this.faces()[this.get('activeFace')];
       if(face !== undefined)
-        this.applyDelta(face);
+        this.applyDeltaToDOM(face);
     }
     if(delta.text !== undefined)
       setText(this.domElement, this.get('text'));
@@ -88,13 +88,13 @@ class BasicWidget extends Widget {
     }
   }
 
-  getDefaultValue(property) {
+  get(property) {
     if(property == 'faces' || property == 'activeFace' || !this.faces()[this.get('activeFace')])
-      return super.getDefaultValue(property);
+      return super.get(property);
     const d = this.faces()[this.get('activeFace')][property];
     if(d !== undefined)
       return d;
-    return super.getDefaultValue(property);
+    return super.get(property);
   }
 
   getImage() {
