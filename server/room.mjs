@@ -167,6 +167,10 @@ export default class Room {
     if(!Config.get('allowPublicLibraryEdits'))
       return;
 
+    for(const usedAsset in this.getAssetListForState(id))
+      if(!Config.resolveAsset(usedAsset))
+        throw new Logging.UserError(404, `Could not find asset /assets/${usedAsset} which is referenced in the state.`);
+
     const variantData = {};
     for(const variantID in this.state._meta.states[id].variants)
       variantData[variantID] = JSON.parse(fs.readFileSync(this.variantFilename(id, variantID)));
@@ -356,6 +360,14 @@ export default class Room {
     return [...new Set(JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [])];
   }
 
+  getAssetListForState(stateID) {
+    const usedAssets = {};
+    for(const vID in this.state._meta.states[stateID].variants)
+      for(const asset of this.getAssetList(JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)))))
+        usedAssets[asset.split('/')[2]] = true;
+    return usedAssets;
+  }
+
   getRedirection() {
     if(this.state._meta.redirectTo)
       return this.state._meta.redirectTo.url + '/' + this.id;
@@ -401,7 +413,7 @@ export default class Room {
     return Room.publicLibrary;
   }
 
-  async load(fileOrLink, player) {
+  async load(fileOrLink, player, delayForGameStartRoutine) {
     const emptyState = {
       _meta: {
         version: 1,
@@ -423,6 +435,7 @@ export default class Room {
       this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
 
       this.migrateOldPublicLibraryLinks();
+      this.migrateBrokenSaveWithoutVersion();
       await this.updateLinkedStates();
       this.removeInvalidPublicLibraryLinks(player);
 
@@ -442,10 +455,10 @@ export default class Room {
       }
       if(newState) {
         Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-        this.setState(newState);
+        this.setState(newState, player, delayForGameStartRoutine);
       } else {
         Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
-        this.setState(emptyState);
+        this.setState(emptyState, player, false);
         if(player)
           player.send('error', errorMessage);
       }
@@ -458,14 +471,14 @@ export default class Room {
       this.trace('init', { initialState: this.state });
   }
 
-  async loadState(player, stateID, variantID, linkSourceStateID) {
+  async loadState(player, stateID, variantID, linkSourceStateID, delayForGameStartRoutine) {
     const stateInfo = this.state._meta.states[stateID];
     const variantInfo = stateInfo.variants[variantID];
 
     if(variantInfo.link)
-      await this.load(variantInfo.link, player);
+      await this.load(variantInfo.link, player, delayForGameStartRoutine);
     else
-      await this.load(this.variantFilename(stateID, variantID), player);
+      await this.load(this.variantFilename(stateID, variantID), player, delayForGameStartRoutine);
 
     if(linkSourceStateID != stateID)
       this.state._meta.activeState = { linkStateID: linkSourceStateID, stateID, variantID };
@@ -477,6 +490,33 @@ export default class Room {
       this.state._meta.activeState = { stateID, variantID };
 
     this.sendMetaUpdate();
+  }
+
+  migrateBrokenSaveWithoutVersion() {
+    // a bug caused some savegames to be written to disk without file version
+    // this guesses and adds the missing version by looking at the save date and comparing it to the commit time of version bumps
+    if(this.state._meta.metaVersion < 2) {
+      this.state._meta.metaVersion = 2;
+      for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+        if(state.savePlayers) {
+          const content = JSON.parse(fs.readFileSync(this.variantFilename(id, 0)));
+          if(!content._meta || !content._meta.version) {
+            if(state.saveDate >= 1676062683000)
+              content._meta = { version: 12 };
+            else if(state.saveDate >= 1674097185000)
+              content._meta = { version: 11 };
+            else if(state.saveDate >= 1674011502000)
+              content._meta = { version: 10 };
+            else if(state.saveDate >= 1672556492000)
+              content._meta = { version: 9 };
+            else
+              content._meta = { version: 8 };
+            Logging.log(`setting missing file version to ${content._meta.version} for ${id} in room ${this.id}`);
+            fs.writeFileSync(this.variantFilename(id, 0), JSON.stringify(content));
+          }
+        }
+      }
+    }
   }
 
   migrateOldPublicLibraryLinks() {
@@ -624,7 +664,14 @@ export default class Room {
       }
     }
     delta.id = ++this.deltaID;
-    this.broadcast('delta', delta, player);
+
+    if(this.waitingForDeltaFromPlayer == player) {
+      delete this.waitingForDeltaFromPlayer;
+      this.broadcast('state', this.state, player);
+      this.sendMetaUpdate();
+    } else {
+      this.broadcast('delta', delta, player);
+    }
   }
 
   receiveInvalidDelta(player, delta, widgetID, property) {
@@ -741,7 +788,7 @@ export default class Room {
     if(updateCurrentSave) {
       const stateID = this.state._meta.activeState.saveStateID;
       const newContent = {...this.state};
-      delete newContent._meta;
+      newContent._meta = { version: this.state._meta.version };
       this.state._meta.states[stateID].saveDate = +new Date();
       fs.writeFileSync(this.variantFilename(stateID, 0), JSON.stringify(newContent));
       return this.sendMetaUpdate();
@@ -836,7 +883,7 @@ export default class Room {
     }
   }
 
-  setState(state) {
+  setState(state, player, delayForGameStartRoutine) {
     delete this.state._meta.activeState;
 
     this.trace('setState', { state });
@@ -845,6 +892,17 @@ export default class Room {
     if(this.state._meta)
       this.state = FileUpdater(this.state);
     this.state._meta = meta;
+
+    if(delayForGameStartRoutine) {
+      for(const [ id, w ] of Object.entries(state)) {
+        if(w.gameStartRoutine) {
+          this.waitingForDeltaFromPlayer = player;
+          player.send('state', state);
+          return;
+        }
+      }
+    }
+
     this.broadcast('state', state);
     this.sendMetaUpdate();
   }
@@ -901,7 +959,7 @@ export default class Room {
   }
 
   unload() {
-    if(this.state && this.state._meta) {
+    if(this.state && this.state._meta && this.state._meta.states && typeof this.state._meta.states == 'object' && this.state._meta.starred && typeof this.state._meta.starred == 'object') {
       const nonPLgames = Object.keys(this.state._meta.states).filter(i=>!i.match(/^PL:/));
       if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
         Logging.log(`unloading room ${this.id}`);
@@ -942,11 +1000,7 @@ export default class Room {
       return;
 
     const assetsDir = this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets');
-
-    const usedAssets = {};
-    for(const vID in this.state._meta.states[stateID].variants)
-      for(const asset of this.getAssetList(JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)))))
-        usedAssets[asset.split('/')[2]] = true;
+    const usedAssets = this.getAssetListForState(stateID);
 
     const savedAssets = {};
     for(const file of fs.readdirSync(assetsDir))
@@ -958,7 +1012,7 @@ export default class Room {
 
     for(const usedAsset in usedAssets)
       if(!savedAssets[usedAsset])
-        fs.copyFileSync(Config.directory('assets') + '/' + usedAsset, assetsDir + '/' + usedAsset);
+        fs.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
   }
 
   writePublicLibraryMetaToFilesystem(stateID, meta) {

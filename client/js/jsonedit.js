@@ -891,6 +891,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Card(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Deck(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Dice(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
@@ -904,7 +905,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
-  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
+  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
@@ -954,9 +955,10 @@ function jeAddCommands() {
   jeAddLimitCommand('maxY');
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
-  jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('variable', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('label', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('colors', 'palette', [ '#000000' ]);
   jeAddFieldCommand('min', 'number', 0);
   jeAddFieldCommand('max', 'number', 10);
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
@@ -972,7 +974,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
-  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'palette', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
