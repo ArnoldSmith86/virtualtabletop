@@ -1442,7 +1442,7 @@ function populateAddWidgetOverlay() {
   dice2DCube.domElement.addEventListener('click', async _=>{
     try {
       const result = await dice2DCube.showInputOverlay({
-        header: 'Choose piece color',
+        header: 'Choose die color',
         fields: [
           {
             type: 'color',
