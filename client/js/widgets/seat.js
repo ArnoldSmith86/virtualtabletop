@@ -52,8 +52,10 @@ class Seat extends Widget {
   }
 
   childrenTarget() {
-    let children = widgets.get(this.get("hand")).children().filter(c=>!c.get('owner') || c.get('owner')==this.get("player"));
     if (widgets.get(this.get("hand"))) {
+      let children = widgets.get(this.get("hand")).children().filter(c=>!c.get('owner') || c.get('owner')==this.get("player"));
+      
+      //this needs to be improoved so that it can support holders with multiple piles. (allignChildren = false)
       if(children.length == 1 && children[0].get('type') == 'pile')
         children = this.childrenFilter(children[0].children(), false);
       return children
