@@ -8602,7 +8602,7 @@
       "description": "Place colored, shaped blocks into playing area to connect as many pieces as possible to earn points and block opponents. Highest score wins.",
       "showName": true,
       "helpText": "Players take seats. Click die at top of screen to choose random piece to play. Place piece on board. Press next icon button to indicate turn is over.",
-      "lastUpdate": 1677542157691,
+      "lastUpdate": 1677843576267,
       "skill": "",
       "similarImage": "",
       "similarAwards": "2012 Mensa Select Winner\n2011 Fall Parents' Choice Silver Honor Winner",
@@ -8744,11 +8744,6 @@
     "width": 100,
     "height": 100,
     "z": 21872,
-    "css": {
-      "filter": "hue-rotate(50deg)",
-      "color": "purple"
-    },
-    "shape3D": false,
     "faces": [
       {
         "image": "/assets/1886300387_709",
@@ -8768,9 +8763,15 @@
         "imageScale": 0.55
       },
       {
-        "text": "?"
+        "text": "?",
+        "faceCSS": {
+          "color": "purple"
+        }
       }
     ],
+    "faceCSS": {
+      "filter": "hue-rotate(50deg)"
+    },
     "activeFace": 5
   }
 }
