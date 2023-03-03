@@ -2333,18 +2333,25 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
+          const parentWidget = widgets.get(this.get('parent'));
+          let rotation = 0;
+          if (parentWidget && parentWidget.get('childrenCounterRotate'))
+            rotation = -parentWidget.get('rotation');
+
           const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
             x: widget.get('x'),
             y: widget.get('y'),
             width: this.get('width'),
-            height: this.get('height')
+            height: this.get('height'),
+            rotation
           }, this.get('onPileCreation'));
           if(thisOwner !== null)
             pile.owner = thisOwner;
           const pileId = await addWidgetLocal(pile);
           await widget.set('parent', pileId);
+
           await this.bringToFront();
           await this.set('parent', pileId);
           break;
