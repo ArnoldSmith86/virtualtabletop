@@ -29,3 +29,10 @@ body.edit .seat {
 body.edit .seat.seated.turn {
   box-shadow: unset;
 }
+
+.seat.droppable.droptarget {
+  border-width: 7px !important;
+  border-style: solid !important;
+  border-color: var(--color) !important;
+  filter: brightness(80%);
+}
