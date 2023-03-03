@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" width="700" height="700" viewBox="-330 -330 660 660">
+  <rect x="-330" y="-330" width="660" height="660" style="fill:darkgrey; stroke:none;"/>
+  <g style="stroke:lightgrey; stroke-width:10; fill:none;">
+    <rect x="-300" y="-300" width="600" height="600"/>
+    <rect x="-200" y="-200" width="400" height="400"/>
+    <rect x="-100" y="-100" width="200" height="200"/>
+    <line x1="0" y1="-300" x2="0" y2="-100"/>
+    <line x1="0" y1=" 300" x2="0" y2=" 100"/>
+    <line x1="-300" y1="0" x2="-100" y2="0"/>
+    <line x1="300" y1=" 0" x2="100" y2=" 0"/>
+  </g>
+  <g style="stroke:none; fill:lightgrey;">
+    <circle cx="-300" cy="-300" r="15"/>
+    <circle cx="-300" cy="0" r="15"/>
+    <circle cx="-300" cy="300" r="15"/>
+    <circle cx="-200" cy="-200" r="15"/>
+    <circle cx="-200" cy="0" r="15"/>
+    <circle cx="-200" cy="200" r="15"/>
+    <circle cx="-100" cy="-100" r="15"/>
+    <circle cx="-100" cy="0" r="15"/>
+    <circle cx="-100" cy="100" r="15"/>
+    <circle cx="0" cy="-300" r="15"/>
+    <circle cx="0" cy="-200" r="15"/>
+    <circle cx="0" cy="-100" r="15"/>
+    <circle cx="0" cy="100" r="15"/>
+    <circle cx="0" cy="200" r="15"/>
+    <circle cx="0" cy="300" r="15"/>
+    <circle cx="100" cy="-100" r="15"/>
+    <circle cx="100" cy="0" r="15"/>
+    <circle cx="100" cy="100" r="15"/>
+    <circle cx="200" cy="-200" r="15"/>
+    <circle cx="200" cy="0" r="15"/>
+    <circle cx="200" cy="200" r="15"/>
+    <circle cx="300" cy="-300" r="15"/>
+    <circle cx="300" cy="0" r="15"/>
+    <circle cx="300" cy="300" r="15"/>
+  </g>
+</svg>

@@ -1,0 +1,539 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 675" width="375" height="675">
+	<title>Low-Poly-Chess-Pieces-svg</title>
+	<style>
+		.s0 { fill: #cb8e8e } 
+		.s1 { fill: #c68a8a } 
+		.s2 { fill: #a17070 } 
+		.s3 { fill: #c98d8d } 
+		.s4 { fill: #ca8d8d } 
+		.s5 { fill: #000000 } 
+		.s6 { fill: #c68b8b } 
+		.s7 { fill: #382727 } 
+		.s8 { fill: #a77575 } 
+		.s9 { fill: #2d2020 } 
+		.s10 { fill: #3c2a2a } 
+		.s11 { fill: #9d6e6e } 
+		.s12 { fill: #af7a7a } 
+		.s13 { fill: #745151 } 
+		.s14 { fill: #3c3c3c } 
+		.s15 { fill: #181010 } 
+		.s16 { fill: #a97676 } 
+		.s17 { fill: #775353 } 
+		.s18 { fill: #533a3a } 
+		.s19 { fill: #c88c8c } 
+		.s20 { fill: #473131 } 
+		.s21 { fill: #885f5f } 
+		.s22 { fill: #996b6b } 
+		.s23 { fill: #765252 } 
+		.s24 { fill: #b88080 } 
+		.s25 { fill: #ba8282 } 
+		.s26 { fill: #231818 } 
+		.s27 { fill: #a67474 } 
+		.s28 { fill: #a77474 } 
+		.s29 { fill: #9a6c6c } 
+		.s30 { fill: #7f5959 } 
+		.s31 { fill: #a47272 } 
+		.s32 { fill: #6c4c4c } 
+		.s33 { fill: #684949 } 
+		.s34 { fill: #9e6e6e } 
+		.s35 { fill: #835c5c } 
+		.s36 { fill: #5c4040 } 
+		.s37 { fill: #b57f7f } 
+		.s38 { fill: #ad7979 } 
+		.s39 { fill: #825b5b } 
+		.s40 { fill: #432f2f } 
+		.s41 { fill: #3f2c2c } 
+		.s42 { fill: #bc8383 } 
+		.s43 { fill: #1a1212 } 
+		.s44 { fill: #4d3636 } 
+		.s45 { fill: #7a5555 } 
+		.s46 { fill: #b37d7d } 
+		.s47 { fill: #535353 } 
+		.s48 { fill: #676767 } 
+		.s49 { fill: #ac7979 } 
+		.s50 { fill: #bd8484 } 
+		.s51 { fill: #111111 } 
+		.s52 { fill: #5f5f5f } 
+		.s53 { fill: #6d6d6d } 
+		.s54 { fill: #171010 } 
+		.s55 { fill: #ac7878 } 
+		.s56 { fill: #141414 } 
+		.s57 { fill: #b6b6b6 } 
+		.s58 { fill: #6d4c4c } 
+		.s59 { fill: #a07070 } 
+		.s60 { fill: #563c3c } 
+		.s61 { fill: #4b3434 } 
+		.s62 { fill: #bcbcbc } 
+		.s63 { fill: #ffaaaa } 
+		.s64 { fill: #553b3b } 
+		.s65 { fill: #c7c7c7 } 
+		.s66 { fill: #121212 } 
+		.s67 { fill: #bebebe } 
+		.s68 { fill: #eeaaaa } 
+		.s69 { fill: #bbbbbb } 
+		.s70 { fill: #4b3535 } 
+		.s71 { fill: #c1c1c1 } 
+		.s72 { fill: #ee9999 } 
+		.s73 { fill: #232323 } 
+		.s74 { fill: #845c5c } 
+		.s75 { fill: #3e2c2c } 
+		.s76 { fill: #865d5d } 
+		.s77 { fill: #6c4b4b } 
+		.s78 { fill: #724f4f } 
+		.s79 { fill: #473232 } 
+		.s80 { fill: #704e4e } 
+		.s81 { fill: #845d5d } 
+		.s82 { fill: #1c1313 } 
+		.s83 { fill: #604343 } 
+		.s84 { fill: #513939 } 
+		.s85 { fill: #898989 } 
+		.s86 { fill: #503838 } 
+		.s87 { fill: #201616 } 
+		.s88 { fill: #bc8484 } 
+		.s89 { fill: #cc8888 } 
+		.s90 { fill: #dddddd } 
+		.s91 { fill: #2a1e1e } 
+		.s92 { fill: #af7b7b } 
+		.s93 { fill: #281c1c } 
+		.s94 { fill: #251919 } 
+		.s95 { fill: #b57e7e } 
+		.s96 { fill: #dd9999 } 
+		.s97 { fill: #b98181 } 
+		.s98 { fill: #eeeeee } 
+		.s99 { fill: #696969 } 
+		.s100 { fill: #513838 } 
+		.s101 { fill: #3e2b2b } 
+		.s102 { fill: #453030 } 
+		.s103 { fill: #644646 } 
+		.s104 { fill: #412d2d } 
+		.s105 { fill: #4f3737 } 
+		.s106 { fill: #b3b3b3 } 
+		.s107 { fill: #2f2121 } 
+		.s108 { fill: #282828 } 
+		.s109 { fill: #241919 } 
+		.s110 { fill: #1f1515 } 
+		.s111 { fill: #bfbfbf } 
+		.s112 { fill: #b9b9b9 } 
+		.s113 { fill: #474747 } 
+		.s114 { fill: #101010 } 
+		.s115 { fill: #bababa } 
+		.s116 { fill: #2e2e2e } 
+		.s117 { fill: #939393 } 
+		.s118 { fill: #1b1313 } 
+		.s119 { fill: #251a1a } 
+		.s120 { fill: #1a1a1a } 
+		.s121 { fill: #434343 } 
+		.s122 { fill: #211717 } 
+		.s123 { fill: #313131 } 
+		.s124 { fill: #1f1616 } 
+		.s125 { fill: #583d3d } 
+		.s126 { fill: #323232 } 
+		.s127 { fill: #242424 } 
+		.s128 { fill: #c08686 } 
+		.s129 { fill: #2b2b2b } 
+		.s130 { fill: #131313 } 
+		.s131 { fill: #3d3d3d } 
+		.s132 { fill: #363636 } 
+		.s133 { fill: #2a2a2a } 
+		.s134 { fill: #454545 } 
+		.s135 { fill: #b78080 } 
+		.s136 { fill: #252525 } 
+		.s137 { fill: #191919 } 
+		.s138 { fill: #333333 } 
+		.s139 { fill: #1b1b1b } 
+		.s140 { fill: #6e6e6e } 
+		.s141 { fill: #1f1f1f } 
+		.s142 { fill: #5f4242 } 
+		.s143 { fill: #7d7d7d } 
+		.s144 { fill: #8c8c8c } 
+		.s145 { fill: #5a3f3f } 
+		.s146 { fill: #979797 } 
+		.s147 { fill: #383838 } 
+		.s148 { fill: #262626 } 
+		.s149 { fill: #808080 } 
+		.s150 { fill: #a5a5a5 } 
+		.s151 { fill: #c9c9c9 } 
+		.s152 { fill: #c2c2c2 } 
+		.s153 { fill: #575757 } 
+		.s154 { fill: #cbcbcb } 
+		.s155 { fill: #9e9e9e } 
+		.s156 { fill: #483232 } 
+		.s157 { fill: #ffbbbb } 
+		.s158 { fill: #444444 } 
+		.s159 { fill: #151515 } 
+		.s160 { fill: #181818 } 
+		.s161 { fill: #2f2f2f } 
+		.s162 { fill: #787878 } 
+		.s163 { fill: #797979 } 
+		.s164 { fill: #828282 } 
+		.s165 { fill: #161616 } 
+		.s166 { fill: #585858 } 
+		.s167 { fill: #4f4f4f } 
+		.s168 { fill: #2c2c2c } 
+		.s169 { fill: #272727 } 
+		.s170 { fill: #4d4d4d } 
+		.s171 { fill: #555555 } 
+		.s172 { fill: #9f9f9f } 
+		.s173 { fill: #666666 } 
+		.s174 { fill: #6c6c6c } 
+		.s175 { fill: #606060 } 
+		.s176 { fill: #b5b5b5 } 
+		.s177 { fill: #5e5e5e } 
+		.s178 { fill: #1d1414 } 
+		.s179 { fill: #4e4e4e } 
+		.s180 { fill: #4e3737 } 
+		.s181 { fill: #b4b4b4 } 
+		.s182 { fill: #aaaaaa } 
+		.s183 { fill: #3a3a3a } 
+		.s184 { fill: #515151 } 
+		.s185 { fill: #2b1e1e } 
+		.s186 { fill: #848484 } 
+		.s187 { fill: #7c7c7c } 
+		.s188 { fill: #afafaf } 
+		.s189 { fill: #ffffff } 
+		.s190 { fill: #525252 } 
+		.s191 { fill: #747474 } 
+		.s192 { fill: #4c4c4c } 
+		.s193 { fill: #484848 } 
+		.s194 { fill: #8f8f8f } 
+		.s195 { fill: #acacac } 
+		.s196 { fill: #212121 } 
+		.s197 { fill: #c0c0c0 } 
+		.s198 { fill: #959595 } 
+		.s199 { fill: #a1a1a1 } 
+		.s200 { fill: #bdbdbd } 
+		.s201 { fill: #b0b0b0 } 
+		.s202 { fill: #7f7f7f } 
+		.s203 { fill: #a8a8a8 } 
+		.s204 { fill: #6a6a6a } 
+		.s205 { fill: #adadad } 
+	</style>
+	<g id="Layer">
+		<path id="Layer" class="s0" d="m138.9 636.3l-5-38.7 124.3 7.9z"/>
+		<path id="Layer" class="s1" d="m186.4 571.8l-32.9-47.3 101.9 2.3z"/>
+		<path id="Layer" class="s2" d="m133.9 597.6l52.5-25.8 71.8 33.7z"/>
+		<path id="Layer" class="s3" d="m224.7 121.7l-3-67 12.7 1.8z"/>
+		<path id="Layer" class="s0" d="m163.1 20l58.6 34.7 3 67z"/>
+		<path id="Layer" class="s4" d="m221.7 54.7l-58.6-34.7 60.9-1z"/>
+		<path id="Layer" class="s5" d="m224.7 121.7l-62.9-65.9-2.5-3z"/>
+		<path id="Layer" class="s6" d="m163.1 20l61.6 101.7-65.4-68.9z"/>
+		<path id="Layer" class="s4" d="m161.8 55.8l-35.6 66.2 6.8-65.1z"/>
+		<path id="Layer" class="s3" d="m161.8 55.8l62.9 65.9-98.5 0.3z"/>
+		<path id="Layer" class="s7" d="m219.9 17.4l4.1 1.6-60.9 1z"/>
+		<path id="Layer" class="s8" d="m264.5 56.2l-39.8 65.5 9.7-65.2z"/>
+		<path id="Layer" class="s9" d="m264.5 56.2l-30.1 0.3-12.7-1.8z"/>
+		<path id="Layer" class="s10" d="m161.8 55.8l-28.8 1.1-15.8-2.3z"/>
+		<path id="Layer" class="s11" d="m126.2 122l-9-67.4 15.8 2.3z"/>
+		<path id="Layer" class="s12" d="m153.5 524.5l32.9 47.3-77.7-0.1z"/>
+		<path id="Layer" class="s13" d="m108.7 571.7l77.7 0.1-52.5 25.8z"/>
+		<path id="Layer" class="s14" d="m159.3 52.8l3.8-32.8 5.6-1.4z"/>
+		<path id="Layer" class="s15" d="m219.9 17.4l-56.8 2.6 5.6-1.4z"/>
+		<path id="Layer" class="s16" d="m255.4 526.8l57.8 1.4-11.4 42.1z"/>
+		<path id="Layer" class="s16" d="m186.4 571.8l69-45 46.4 43.5z"/>
+		<path id="Layer" class="s17" d="m301.8 570.3l-43.6 35.2-71.8-33.7z"/>
+		<path id="Layer" class="s18" d="m224.7 121.7l-42.5 14-56-13.7z"/>
+		<path id="Layer" class="s19" d="m185.7 216.3l-3.5-80.6 49.8 2.1z"/>
+		<path id="Layer" class="s20" d="m224.7 121.7l7.3 16.1-49.8-2.1z"/>
+		<path id="Layer" class="s21" d="m301.8 570.3l42.8 23.2-86.4 12z"/>
+		<path id="Layer" class="s22" d="m338.3 639.5l-80.1-34 86.4-12z"/>
+		<path id="Layer" class="s23" d="m258.2 605.5l80.1 34-199.4-3.2z"/>
+		<path id="Layer" class="s24" d="m223.4 397.2l-69.9 127.3 11.3-119.9z"/>
+		<path id="Layer" class="s25" d="m223.4 397.2l32 129.6-101.9-2.3z"/>
+		<path id="Layer" class="s0" d="m223.4 397.2l-37.7-180.9 46.3-78.5z"/>
+		<path id="Layer" class="s0" d="m164.8 404.6l20.9-188.3 37.7 180.9z"/>
+		<path id="Layer" class="s26" d="m127.9 18.2l-6.7 2.1-42-2.3z"/>
+		<path id="Layer" class="s16" d="m117.2 54.6l-38-36.6 42 2.3z"/>
+		<path id="Layer" class="s27" d="m117.2 54.6l9 67.4-47-104z"/>
+		<path id="Layer" class="s28" d="m108.7 571.7l-51.2-48.8 96 1.6z"/>
+		<path id="Layer" class="s29" d="m57.5 522.9l107.3-118.3-11.3 119.9z"/>
+		<path id="Layer" class="s30" d="m108.7 571.7l25.2 25.9-101.3 2z"/>
+		<path id="Layer" class="s31" d="m138.9 636.3l-106.3-36.7 101.3-2z"/>
+		<path id="Layer" class="s32" d="m249.2 18.1l17.7 28.4-2.4 9.7z"/>
+		<path id="Layer" class="s33" d="m264.5 18.7l2.4 27.8-17.7-28.4z"/>
+		<path id="Layer" class="s34" d="m69.5 121.6l9.7-103.6 47 104z"/>
+		<path id="Layer" class="s35" d="m309 54.5l-42.1-8-2.4-27.8z"/>
+		<path id="Layer" class="s36" d="m79.2 18l-9.7 103.6 1.5-65.9z"/>
+		<path id="Layer" class="s37" d="m332.9 107.5l-68.4-51.3 2.4-9.7z"/>
+		<path id="Layer" class="s38" d="m264.5 56.2l68.4 51.3-108.2 14.2z"/>
+		<path id="Layer" class="s39" d="m309 54.5l23.9 53-66-61z"/>
+		<path id="Layer" class="s40" d="m126.2 122l-11.3 13.4-45.4-13.8z"/>
+		<path id="Layer" class="s41" d="m182.2 135.7l-67.3-0.3 11.3-13.4z"/>
+		<path id="Layer" class="s42" d="m114.9 135.4l67.3 0.3 3.5 80.6z"/>
+		<path id="Layer" class="s43" d="m73.5 19.8l5.2-2.6 0.5 0.8z"/>
+		<path id="Layer" class="s44" d="m79.2 18l-8.2 37.7 2.5-35.9z"/>
+		<path id="Layer" class="s5" d="m295.7 17.6l-31.2 1.1-15.3-0.6z"/>
+		<path id="Layer" class="s45" d="m309 54.5l-44.5-35.8 31.2-1.1z"/>
+		<path id="Layer" class="s31" d="m255.4 526.8l-32-129.6 41.7-2.2z"/>
+		<path id="Layer" class="s11" d="m255.4 526.8l9.7-131.8 48.1 133.2z"/>
+		<path id="Layer" class="s46" d="m223.4 397.2l8.6-259.4 33.1 257.2z"/>
+		<path id="Layer" class="s14" d="m161.8 55.8l-2.5-3 32.4 0.7z"/>
+		<path id="Layer" class="s5" d="m161.8 55.8l-44.6-1.2 74.5-1.1z"/>
+		<path id="Layer" class="s47" d="m221.7 54.7l-30-1.2 32.3-34.5z"/>
+		<path id="Layer" class="s48" d="m191.7 53.5l28.2-36.1 4.1 1.6z"/>
+		<path id="Layer" class="s49" d="m114.9 135.4l70.8 80.9-68-35z"/>
+		<path id="Layer" class="s50" d="m164.8 404.6l-47.1-223.3 68 35z"/>
+		<path id="Layer" class="s51" d="m168.7 18.6l51.2-1.2-31.3 2.2z"/>
+		<path id="Layer" class="s52" d="m188.6 19.6l31.3-2.2-28.2 36.1z"/>
+		<path id="Layer" class="s52" d="m159.3 52.8l29.3-33.2 3.1 33.9z"/>
+		<path id="Layer" class="s47" d="m188.6 19.6l-29.3 33.2 9.4-34.2z"/>
+		<path id="Layer" class="s53" d="m78.7 17.2l23.6 2.3-28.8 0.3z"/>
+		<path id="Layer" class="s54" d="m78.7 17.2l23.6 2.3-23.1-1.5z"/>
+		<path id="Layer" class="s22" d="m108.5 409.4l56.3-4.8-107.3 118.3z"/>
+		<path id="Layer" class="s55" d="m117.7 181.3l47.1 223.3-56.3 4.8z"/>
+		<path id="Layer" class="s56" d="m260 19.1l-10.8-1 46.5-0.5z"/>
+		<path id="Layer" class="s57" d="m309 54.5l-49-35.4 35.7-1.5z"/>
+		<path id="Layer" class="s58" d="m351 525.2l-49.2 45.1 11.4-42.1z"/>
+		<path id="Layer" class="s59" d="m285.6 139.1l-20.5 255.9-33.1-257.2z"/>
+		<path id="Layer" class="s60" d="m332.9 107.5l-47.3 31.6-60.9-17.4z"/>
+		<path id="Layer" class="s61" d="m285.6 139.1l-53.6-1.3-7.3-16.1z"/>
+		<path id="Layer" class="s62" d="m260 19.1l49 35.4-71.5-1.1z"/>
+		<path id="Layer" class="s5" d="m264.5 56.2l-42.8-1.5 15.8-1.3z"/>
+		<path id="Layer" class="s63" d="m191.7 53.5l45.8-0.1-15.8 1.3z"/>
+		<path id="Layer" class="s64" d="m249.2 18.1l15.3 38.1-30.7-37.1z"/>
+		<path id="Layer" class="s44" d="m237.5 53.4l-3.7-34.3 30.7 37.1z"/>
+		<path id="Layer" class="s65" d="m233.8 19.1h26.2l-22.5 34.3z"/>
+		<path id="Layer" class="s66" d="m260 19.1h-26.2l15.4-1z"/>
+		<path id="Layer" class="s67" d="m71 55.7l2.5-35.9 74.3 33.9z"/>
+		<path id="Layer" class="s68" d="m147.8 53.7l43.9-0.2-74.5 1.1z"/>
+		<path id="Layer" class="s18" d="m121.2 20.3l6.7-2.1 19.9 35.5z"/>
+		<path id="Layer" class="s60" d="m121.2 20.3l26.6 33.4-30.6 0.9z"/>
+		<path id="Layer" class="s69" d="m102.3 19.5l45.5 34.2-74.3-33.9z"/>
+		<path id="Layer" class="s70" d="m147.8 53.7l-19.9-35.5 19.8-0.4z"/>
+		<path id="Layer" class="s71" d="m147.7 17.8l0.1 35.9-45.5-34.2z"/>
+		<path id="Layer" class="s72" d="m79.2 18l68.5-0.2-19.8 0.4z"/>
+		<path id="Layer" class="s73" d="m147.7 17.8l-45.4 1.7-23.1-1.5z"/>
+		<path id="Layer" class="s74" d="m332.9 107.5l-23.9-53 31.6 2.1z"/>
+		<path id="Layer" class="s54" d="m71 55.7l-16.6-1.9 93.4-0.1z"/>
+		<path id="Layer" class="s36" d="m71 55.7l-1.5 65.9-15.1-67.8z"/>
+		<path id="Layer" class="s23" d="m27.6 639.9l5-40.3 106.3 36.7z"/>
+		<path id="Layer" class="s5" d="m338.3 639.5l-310.7 0.4 111.3-3.6z"/>
+		<path id="Layer" class="s75" d="m339.1 54.9l1.5 1.7-31.6-2.1z"/>
+		<path id="Layer" class="s76" d="m69.5 121.6l-18.6-65 3.5-2.8z"/>
+		<path id="Layer" class="s77" d="m295.2 406.3l18 121.9-48.1-133.2z"/>
+		<path id="Layer" class="s21" d="m295.2 406.3l-30.1-11.3 20.5-255.9z"/>
+		<path id="Layer" class="s32" d="m351 525.2l-37.8 3-18-121.9z"/>
+		<path id="Layer" class="s78" d="m44.9 572.6l12.6-49.7 51.2 48.8z"/>
+		<path id="Layer" class="s79" d="m108.7 571.7l-76.1 27.9 12.3-27z"/>
+		<path id="Layer" class="s80" d="m53 21.2l-0.1 28.8-10.9-23.9z"/>
+		<path id="Layer" class="s81" d="m340 52l-12.4-30.6 18.1-1.6z"/>
+		<path id="Layer" class="s82" d="m327.6 21.4l-59.3-2.1 77.4 0.5z"/>
+		<path id="Layer" class="s83" d="m52.9 50l-11.3 70.8 0.4-94.7z"/>
+		<path id="Layer" class="s84" d="m69.5 121.6l-27.9-0.8 9.3-64.2z"/>
+		<path id="Layer" class="s85" d="m41.6 120.8l9.3-64.2 2-6.6z"/>
+		<path id="Layer" class="s86" d="m27.6 530.7l29.9-7.8-12.6 49.7z"/>
+		<path id="Layer" class="s60" d="m338.3 639.5l6.3-46 35.7 10.2z"/>
+		<path id="Layer" class="s87" d="m344.6 593.5l-42.8-23.2 78.5 33.4z"/>
+		<path id="Layer" class="s88" d="m327.6 21.4l-72.6 32.4 13.3-34.5z"/>
+		<path id="Layer" class="s88" d="m327.6 21.4l12.4 30.6-85 1.8z"/>
+		<path id="Layer" class="s89" d="m339.1 54.9l-30.1-0.4-54-0.7z"/>
+		<path id="Layer" class="s90" d="m309 54.5l-54-0.7-17.5-0.4z"/>
+		<path id="Layer" class="s55" d="m255 53.8l85-1.8-0.9 2.9z"/>
+		<path id="Layer" class="s91" d="m285.6 139.1l47.3-31.6-27.7 29.1z"/>
+		<path id="Layer" class="s92" d="m252.8 18.6l15.5 0.7-13.3 34.5z"/>
+		<path id="Layer" class="s93" d="m114.9 135.4l-30.6 2.6-14.8-16.4z"/>
+		<path id="Layer" class="s60" d="m84.3 138l30.6-2.6 2.8 45.9z"/>
+		<path id="Layer" class="s94" d="m69.5 121.6l14.8 16.4-42.7-17.2z"/>
+		<path id="Layer" class="s95" d="m53 21.2l17.6-3.9 60.5 0.9z"/>
+		<path id="Layer" class="s42" d="m53 21.2l78.1-3-78.2 31.8z"/>
+		<path id="Layer" class="s92" d="m128.8 53.3l-77.9 3.3 2-6.6z"/>
+		<path id="Layer" class="s96" d="m237.5 53.4l-45.8 0.1-62.9-0.2z"/>
+		<path id="Layer" class="s97" d="m128.8 53.3l-75.9-3.3 78.2-31.8z"/>
+		<path id="Layer" class="s98" d="m128.8 53.3l108.7 0.1 17.5 0.4z"/>
+		<path id="Layer" class="s68" d="m191.7 53.5l-43.9 0.2-19-0.4z"/>
+		<path id="Layer" class="s99" d="m50.9 56.6l3.5-2.8 74.4-0.5z"/>
+		<path id="Layer" class="s68" d="m128.8 53.3l19 0.4-93.4 0.1z"/>
+		<path id="Layer" class="s100" d="m351 525.2l-4.9 47-44.3-1.9z"/>
+		<path id="Layer" class="s101" d="m301.8 570.3l44.3 1.9 34.2 31.5z"/>
+		<path id="Layer" class="s102" d="m108.5 409.4l-19.7-14.3 28.9-213.8z"/>
+		<path id="Layer" class="s103" d="m88.8 395.1l-4.5-257.1 33.4 43.3z"/>
+		<path id="Layer" class="s104" d="m27.6 530.7l61.2-135.6-31.3 127.8z"/>
+		<path id="Layer" class="s105" d="m57.5 522.9l31.3-127.8 19.7 14.3z"/>
+		<path id="Layer" class="s5" d="m268.3 19.3l-15.5-0.7h18.6z"/>
+		<path id="Layer" class="s106" d="m252.8 18.6h18.6l-16.4 35.2z"/>
+		<path id="Layer" class="s5" d="m271.4 18.6l74.3 1.2-77.4-0.5z"/>
+		<path id="Layer" class="s60" d="m285.6 139.1l19.6-2.5-7.9 255.6z"/>
+		<path id="Layer" class="s107" d="m351 525.2l-55.8-118.9 2.1-14.1z"/>
+		<path id="Layer" class="s54" d="m295.2 406.3l-9.6-267.2 11.7 253.1z"/>
+		<path id="Layer" class="s5" d="m61.8 17.4l8.8-0.1-17.6 3.9z"/>
+		<path id="Layer" class="s90" d="m61.8 17.4l8.8-0.1 60.5 0.9z"/>
+		<path id="Layer" class="s5" d="m271.4 18.6l58.6-0.4 15.7 1.6z"/>
+		<path id="Layer" class="s108" d="m48.9 54.5l-7.3 66.3 0.4-94.7z"/>
+		<path id="Layer" class="s109" d="m346.1 572.2l4.9-47 10 2.5z"/>
+		<path id="Layer" class="s110" d="m361 527.7l-10-2.5-53.7-133z"/>
+		<path id="Layer" class="s111" d="m338.3 55.8l-66.9-37.2 58.6-0.4z"/>
+		<path id="Layer" class="s112" d="m271.4 18.6l66.9 37.2-83.3-2z"/>
+		<path id="Layer" class="s113" d="m330 18.2l15.7 1.6-7.4 36z"/>
+		<path id="Layer" class="s51" d="m53 21.2l-1.3 2.4-9.7 2.5z"/>
+		<path id="Layer" class="s114" d="m51.7 23.6l1.3-2.4 8.8-3.8z"/>
+		<path id="Layer" class="s115" d="m131.1 18.2l-2.3 35.1-77.1-29.7z"/>
+		<path id="Layer" class="s116" d="m51.7 23.6l-2.8 30.9-6.9-28.4z"/>
+		<path id="Layer" class="s117" d="m61.8 17.4l69.3 0.8-79.4 5.4z"/>
+		<path id="Layer" class="s69" d="m48.9 54.5l2.8-30.9 77.1 29.7z"/>
+		<path id="Layer" class="s118" d="m48.9 54.5l-7.3 66.3 6.7-65.9z"/>
+		<path id="Layer" class="s93" d="m27.6 639.9l-13.3-43.3 18.3 3z"/>
+		<path id="Layer" class="s119" d="m44.9 572.6l-12.3 27-18.3-3z"/>
+		<path id="Layer" class="s96" d="m238.3 53.6l16.7 0.2-126.2-0.5z"/>
+		<path id="Layer" class="s90" d="m128.8 53.3h18.3l-98.2 1.2z"/>
+		<path id="Layer" class="s120" d="m147.1 53.3l-98.8 1.6 0.6-0.4z"/>
+		<path id="Layer" class="s109" d="m346 113.7l-6-61.7 5.7-32.2z"/>
+		<path id="Layer" class="s121" d="m345.7 19.8l0.3 93.9-7.7-57.9z"/>
+		<path id="Layer" class="s122" d="m340.6 56.6l5.4 57.1-13.1-6.2z"/>
+		<path id="Layer" class="s123" d="m346 113.7l-6.9-58.8 1.5 1.7z"/>
+		<path id="Layer" class="s124" d="m332.9 107.5l13.1 6.2-40.8 22.9z"/>
+		<path id="Layer" class="s125" d="m346 113.7l-6.9-58.8 0.9-2.9z"/>
+		<path id="Layer" class="s126" d="m361 527.7l-68.6-128.2 4.9-7.3z"/>
+		<path id="Layer" class="s127" d="m294.3 136.7l3 255.5-4.9 7.3z"/>
+		<path id="Layer" class="s120" d="m294.3 136.7l51.7-23-40.8 22.9z"/>
+		<path id="Layer" class="s116" d="m297.3 392.2l-3-255.5 10.9-0.1z"/>
+		<path id="Layer" class="s128" d="m238.3 53.6l-1.9-35.3 52.5 1.8z"/>
+		<path id="Layer" class="s96" d="m147.1 53.3l45.3 0.3-63.6-0.3z"/>
+		<path id="Layer" class="s90" d="m128.8 53.3l109.5 0.3h-45.9z"/>
+		<path id="Layer" class="s43" d="m355.6 637.7l-17.3 1.8 42-35.8z"/>
+		<path id="Layer" class="s128" d="m147.1 53.3l-64.9-35.6 69.2 2z"/>
+		<path id="Layer" class="s129" d="m332.8 573.2l28.2-45.5-14.9 44.5z"/>
+		<path id="Layer" class="s130" d="m14.3 596.6l14.3 34.7-1 8.6z"/>
+		<path id="Layer" class="s131" d="m84.3 138l19.3-1.4-14.8 258.5z"/>
+		<path id="Layer" class="s131" d="m103.6 136.6l-0.8 257.4-14 1.1z"/>
+		<path id="Layer" class="s90" d="m48.3 54.9l98.8-1.6-91.2 1.6z"/>
+		<path id="Layer" class="s128" d="m62.6 19l19.6-1.3 64.9 35.6z"/>
+		<path id="Layer" class="s132" d="m88.8 395.1l14-1.1-62.4 133.3z"/>
+		<path id="Layer" class="s133" d="m27.6 530.7l12.8-3.4 4.5 45.3z"/>
+		<path id="Layer" class="s127" d="m88.8 395.1l-48.4 132.2-12.8 3.4z"/>
+		<path id="Layer" class="s134" d="m346 113.7l-21.3-58.5 13.6 0.6z"/>
+		<path id="Layer" class="s135" d="m317.7 18.8l7 36.4-35.8-35.1z"/>
+		<path id="Layer" class="s50" d="m238.3 53.6l50.6-33.5 35.8 35.1z"/>
+		<path id="Layer" class="s90" d="m324.7 55.2l-86.4-1.6 16.7 0.2z"/>
+		<path id="Layer" class="s72" d="m255 53.8l69.7 1.4 13.6 0.6z"/>
+		<path id="Layer" class="s116" d="m147.1 53.3l-87.5 2.9-3.7-1.3z"/>
+		<path id="Layer" class="s42" d="m62.6 19l84.5 34.3-87.5 2.9z"/>
+		<path id="Layer" class="s98" d="m135.2 19.5l-53-1.8 69.2 2z"/>
+		<path id="Layer" class="s136" d="m40.4 527.3l20.5 44.4-16 0.9z"/>
+		<path id="Layer" class="s137" d="m14.3 596.6l30.6-24 16-0.9z"/>
+		<path id="Layer" class="s138" d="m55.9 54.9l5.5 65.9-13.1-65.9z"/>
+		<path id="Layer" class="s138" d="m61.4 120.8h-19.8l6.7-65.9z"/>
+		<path id="Layer" class="s139" d="m61.4 120.8l22.9 17.2-42.7-17.2z"/>
+		<path id="Layer" class="s140" d="m55.9 54.9l3.7 1.3 1.8 64.6z"/>
+		<path id="Layer" class="s141" d="m61.4 120.8l42.2 15.8-19.3 1.4z"/>
+		<path id="Layer" class="s142" d="m192.4 53.6l-15.6-35.2 15.4-0.1z"/>
+		<path id="Layer" class="s143" d="m132.2 391.1l-91.8 136.2 62.4-133.3z"/>
+		<path id="Layer" class="s144" d="m103.6 136.6l28.6 254.5-29.4 2.9z"/>
+		<path id="Layer" class="s145" d="m209.4 17.7l-17 35.9-0.2-35.3z"/>
+		<path id="Layer" class="s72" d="m209.4 17.7l-17.2 0.6-15.4 0.1z"/>
+		<path id="Layer" class="s146" d="m247.8 238l46.5-101.3-1.9 262.8z"/>
+		<path id="Layer" class="s147" d="m355.6 637.7l-1.2-38.1 25.9 4.1z"/>
+		<path id="Layer" class="s136" d="m354.4 599.6l-8.3-27.4 34.2 31.5z"/>
+		<path id="Layer" class="s148" d="m346.1 572.2l8.3 27.4-21.6-26.4z"/>
+		<path id="Layer" class="s149" d="m292.4 399.5l-42.6 10.7-2-172.2z"/>
+		<path id="Layer" class="s150" d="m153.5 138.9l-21.3 252.2-28.6-254.5z"/>
+		<path id="Layer" class="s151" d="m182.5 306.7l65.3-68.7 2 172.2z"/>
+		<path id="Layer" class="s152" d="m153.5 138.9l29 167.8-50.3 84.4z"/>
+		<path id="Layer" class="s47" d="m325.7 527.7l-33.3-128.2 68.6 128.2z"/>
+		<path id="Layer" class="s143" d="m249.8 410.2l42.6-10.7 33.3 128.2z"/>
+		<path id="Layer" class="s153" d="m332.8 573.2l-7.1-45.5h35.3z"/>
+		<path id="Layer" class="s154" d="m153.5 138.9l74.3-0.9-45.3 168.7z"/>
+		<path id="Layer" class="s155" d="m294.3 136.7l-46.5 101.3-20-100z"/>
+		<path id="Layer" class="s152" d="m182.5 306.7l45.3-168.7 20 100z"/>
+		<path id="Layer" class="s156" d="m176.8 18.4l15.6 35.2-25.2-35.8z"/>
+		<path id="Layer" class="s5" d="m167.2 17.8l42.2-0.1-32.6 0.7z"/>
+		<path id="Layer" class="s63" d="m167.2 17.8l48.9-0.4-6.7 0.3z"/>
+		<path id="Layer" class="s157" d="m82.2 17.7l34.4 0.5 18.6 1.3z"/>
+		<path id="Layer" class="s106" d="m182.5 306.7l-1 108.8-49.3-24.4z"/>
+		<path id="Layer" class="s65" d="m181.5 415.5l1-108.8 67.3 103.5z"/>
+		<path id="Layer" class="s5" d="m317.7 18.8l-28.8 1.3 13.6-2.4z"/>
+		<path id="Layer" class="s158" d="m317.7 18.8l7 36.4-22.2-37.5z"/>
+		<path id="Layer" class="s121" d="m302.5 17.7l22.2 37.5 21.3 58.5z"/>
+		<path id="Layer" class="s5" d="m236.4 18.3l66.1-0.6-13.6 2.4z"/>
+		<path id="Layer" class="s159" d="m302.5 17.7l-57.2 1.6-8.9-1z"/>
+		<path id="Layer" class="s15" d="m245.3 19.3l19-1.9 38.2 0.3z"/>
+		<path id="Layer" class="s160" d="m302.5 17.7l-35.7 0.2-2.5-0.5z"/>
+		<path id="Layer" class="s161" d="m295.6 122.9l50.4-9.2-51.7 23z"/>
+		<path id="Layer" class="s126" d="m227.8 138l67.8-15.1-1.3 13.8z"/>
+		<path id="Layer" class="s162" d="m302.5 17.7l43.5 96-50.4 9.2z"/>
+		<path id="Layer" class="s163" d="m62.6 19l33.3 0.6-36.3 36.6z"/>
+		<path id="Layer" class="s164" d="m95.9 19.6l-34.5 101.2-1.8-64.6z"/>
+		<path id="Layer" class="s165" d="m116.6 18.2l-20.7 1.4-13.7-1.9z"/>
+		<path id="Layer" class="s165" d="m95.9 19.6l-33.3-0.6 19.6-1.3z"/>
+		<path id="Layer" class="s166" d="m28.6 631.3l-14.3-34.7 38.5 7.3z"/>
+		<path id="Layer" class="s167" d="m52.8 603.9l-38.5-7.3 46.6-24.9z"/>
+		<path id="Layer" class="s168" d="m95.9 19.6l20.7-1.4-4.6 1.7z"/>
+		<path id="Layer" class="s169" d="m302.5 17.7l-31.5 1.8-4.2-1.6z"/>
+		<path id="Layer" class="s170" d="m113.8 56.2l37.6-36.5-4.3 33.6z"/>
+		<path id="Layer" class="s171" d="m151.4 19.7l-37.6 36.5 21.4-36.7z"/>
+		<path id="Layer" class="s172" d="m95.9 19.6l15.8 31.5-50.3 69.7z"/>
+		<path id="Layer" class="s62" d="m95.9 19.6l16.1 0.3-0.3 31.2z"/>
+		<path id="Layer" class="s173" d="m116.6 18.2l-4.9 32.9 0.3-31.2z"/>
+		<path id="Layer" class="s174" d="m113.8 56.2l-2.1-5.1 23.5-31.6z"/>
+		<path id="Layer" class="s175" d="m135.2 19.5l-23.5 31.6 4.9-32.9z"/>
+		<path id="Layer" class="s176" d="m111.7 51.1l2.1 5.1-52.4 64.6z"/>
+		<path id="Layer" class="s90" d="m273.1 53.8l-80.7-0.2h45.9z"/>
+		<path id="Layer" class="s177" d="m269.9 55.9l-24.6-36.6 19-1.9z"/>
+		<path id="Layer" class="s158" d="m266.8 17.9l3.1 38-5.6-38.5z"/>
+		<path id="Layer" class="s167" d="m269.9 55.9l-3.1-38 4.2 1.6z"/>
+		<path id="Layer" class="s71" d="m302.5 17.7l-32.6 38.2 1.1-36.4z"/>
+		<path id="Layer" class="s178" d="m111.9 57.9l1.9-1.7-52.4 64.6z"/>
+		<path id="Layer" class="s58" d="m245.3 19.3l27.9 37.6-3.3-1z"/>
+		<path id="Layer" class="s179" d="m236.4 18.3l36.8 38.6-34.9-3.3z"/>
+		<path id="Layer" class="s180" d="m238.3 53.6l34.8 0.2 0.1 3.1z"/>
+		<path id="Layer" class="s181" d="m302.5 17.7l-6.9 105.2-22.4-66z"/>
+		<path id="Layer" class="s182" d="m269.9 55.9l32.6-38.2-29.2 39.2z"/>
+		<path id="Layer" class="s183" d="m273.3 56.9l-36.9-38.6 8.9 1z"/>
+		<path id="Layer" class="s143" d="m271.5 572.3l54.2-44.6 7.1 45.5z"/>
+		<path id="Layer" class="s184" d="m354.4 599.6l-82.9-27.3 61.3 0.9z"/>
+		<path id="Layer" class="s83" d="m154.2 21.2l13-3.4 25.2 35.8z"/>
+		<path id="Layer" class="s145" d="m230.8 21l-38.4 32.6 17-35.9z"/>
+		<path id="Layer" class="s185" d="m230.8 21l-21.4-3.3 6.7-0.3z"/>
+		<path id="Layer" class="s108" d="m230.8 21l-63.6-3.2 48.9-0.4z"/>
+		<path id="Layer" class="s186" d="m100.5 527.1l-39.6 44.6-20.5-44.4z"/>
+		<path id="Layer" class="s187" d="m132.2 391.1l-31.7 136-60.1 0.2z"/>
+		<path id="Layer" class="s188" d="m132.2 391.1l49.3 24.4-81 111.6z"/>
+		<path id="Layer" class="s159" d="m192.4 53.6l80.7 0.2-41.7 2.4z"/>
+		<path id="Layer" class="s125" d="m192.4 53.6l38.4-32.6 0.6 35.2z"/>
+		<path id="Layer" class="s189" d="m147.1 53.3l7.7 1.4-41 1.5z"/>
+		<path id="Layer" class="s190" d="m154.8 54.7l-42.9 3.2 1.9-1.7z"/>
+		<path id="Layer" class="s64" d="m154.2 21.2l38.2 32.4-37.6 1.1z"/>
+		<path id="Layer" class="s189" d="m154.8 54.7l-7.7-1.4 45.3 0.3z"/>
+		<path id="Layer" class="s191" d="m52.8 603.9l50.5 32.7-74.7-5.3z"/>
+		<path id="Layer" class="s139" d="m28.6 631.3l74.7 5.3-75.7 3.3z"/>
+		<path id="Layer" class="s172" d="m139.4 117.7l-78 3.1 50.5-62.9z"/>
+		<path id="Layer" class="s192" d="m103.6 136.6l35.8-18.9 14.1 21.2z"/>
+		<path id="Layer" class="s193" d="m61.4 120.8l78-3.1-35.8 18.9z"/>
+		<path id="Layer" class="s177" d="m153.5 138.9l-14.1-21.2 88.4 20.3z"/>
+		<path id="Layer" class="s67" d="m111.9 57.9l42.9-3.2-15.4 63z"/>
+		<path id="Layer" class="s173" d="m354.4 599.6l1.2 38.1-53.6-10.8z"/>
+		<path id="Layer" class="s194" d="m60.9 571.7l39.6-44.6 55.7 45.5z"/>
+		<path id="Layer" class="s67" d="m273.1 53.8l-46.6 67.9 4.9-65.5z"/>
+		<path id="Layer" class="s170" d="m139.4 117.7l87.1 4 1.3 16.3z"/>
+		<path id="Layer" class="s176" d="m273.3 56.9l22.3 66-69.1-1.2z"/>
+		<path id="Layer" class="s195" d="m273.1 53.8l0.1 3.1-46.7 64.8z"/>
+		<path id="Layer" class="s179" d="m227.8 138l-1.3-16.3 69.1 1.2z"/>
+		<path id="Layer" class="s62" d="m230.8 21l0.6 35.2-40.7-33.7z"/>
+		<path id="Layer" class="s196" d="m167.2 17.8l63.6 3.2-40.1 1.5z"/>
+		<path id="Layer" class="s127" d="m154.2 21.2l13-3.4 23.5 4.7z"/>
+		<path id="Layer" class="s69" d="m139.4 117.7l15.4-63 35.9-32.2z"/>
+		<path id="Layer" class="s154" d="m139.4 117.7l51.3-95.2 35.8 99.2z"/>
+		<path id="Layer" class="s112" d="m154.2 21.2l36.5 1.3-35.9 32.2z"/>
+		<path id="Layer" class="s197" d="m231.4 56.2l-4.9 65.5-35.8-99.2z"/>
+		<path id="Layer" class="s198" d="m249.8 410.2l75.9 117.5-68.2-2.8z"/>
+		<path id="Layer" class="s112" d="m271.5 572.3l-115.3 0.3 101.3-47.7z"/>
+		<path id="Layer" class="s199" d="m325.7 527.7l-54.2 44.6-14-47.4z"/>
+		<path id="Layer" class="s181" d="m257.5 524.9l-76-109.4 68.3-5.3z"/>
+		<path id="Layer" class="s200" d="m175 528.2l-18.8 44.4-55.7-45.5z"/>
+		<path id="Layer" class="s112" d="m257.5 524.9l-82.5 3.3 6.5-112.7z"/>
+		<path id="Layer" class="s201" d="m175 528.2l-74.5-1.1 81-111.6z"/>
+		<path id="Layer" class="s62" d="m175 528.2l82.5-3.3-101.3 47.7z"/>
+		<path id="Layer" class="s191" d="m255.1 595.1l-98.9-22.5 115.3-0.3z"/>
+		<path id="Layer" class="s199" d="m354.4 599.6l-52.4 27.3-46.9-31.8z"/>
+		<path id="Layer" class="s202" d="m354.4 599.6l-99.3-4.5 16.4-22.8z"/>
+		<path id="Layer" class="s69" d="m255.1 595.1l46.9 31.8-91.1 12.4z"/>
+		<path id="Layer" class="s147" d="m210.9 639.3l91.1-12.4 53.6 10.8z"/>
+		<path id="Layer" class="s98" d="m338.3 639.5l-127.4-0.2 144.7-1.6z"/>
+		<path id="Layer" class="s66" d="m103.3 636.6l107.6 2.7-183.3 0.6z"/>
+		<path id="Layer" class="s90" d="m27.6 639.9l183.3-0.6 127.4 0.2z"/>
+		<path id="Layer" class="s174" d="m136.9 598l-84.1 5.9 8.1-32.2z"/>
+		<path id="Layer" class="s117" d="m255.1 595.1l-118.2 2.9 19.3-25.4z"/>
+		<path id="Layer" class="s203" d="m136.9 598l-33.6 38.6-50.5-32.7z"/>
+		<path id="Layer" class="s154" d="m136.9 598l118.2-2.9-44.2 44.2z"/>
+		<path id="Layer" class="s204" d="m136.9 598l-76-26.3 95.3 0.9z"/>
+		<path id="Layer" class="s205" d="m210.9 639.3l-107.6-2.7 33.6-38.6z"/>
+	</g>
+</svg>

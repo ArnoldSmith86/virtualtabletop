@@ -88,9 +88,9 @@ export function showOverlay(id, forced) {
 
   if(id) {
     const style = $(`#${id}`).style;
-    style.display = !forced && style.display === 'flex' ? 'none' : 'flex';
-    $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
-    overlayActive = style.display === 'flex';
+    const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
+    style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
+    overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
 
@@ -100,10 +100,16 @@ export function showOverlay(id, forced) {
     }
     toServer('mouse',{inactive:true})
   } else {
-    $('#roomArea').className = '';
     vmEditOverlay.selectedWidget = {};
     overlayActive = false;
   }
+}
+
+export function showStatesOverlay(id) {
+  showOverlay(id);
+  if(id == 'statesOverlay')
+    updateFilterOverflow();
+  $('#statesButton').dataset.overlay = id;
 }
 
 function checkURLproperties(connected) {
@@ -112,7 +118,9 @@ function checkURLproperties(connected) {
     try {
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
-        if(playerParams) {
+        if(location.hash == '#tutorials') {
+          $('#filterByType').value = 'Tutorials';
+        } else if(playerParams) {
           urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
         } else {
           urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
@@ -154,7 +162,7 @@ function checkURLproperties(connected) {
   } else {
 
     if(urlProperties.color)
-      toServer('playerColor', { player: playerName, color: urlProperties.color });
+      toServer('playerColor', { player: playerName, color: toHex(urlProperties.color) });
 
   }
 }
@@ -175,23 +183,33 @@ function setScale() {
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
+  $('body').classList.remove('wideToolbar');
+  $('body').classList.remove('horizontalToolbar');
   if(w-scale*1600 + h-scale*1000 < 44) {
     $('body').classList.add('aspectTooGood');
     if(!$('body').className.match(/hiddenToolbar/))
       scale = (w-44)/1600;
   } else {
     $('body').classList.remove('aspectTooGood');
+    if(w - scale*1600 > 200)
+      $('body').classList.add('wideToolbar');
+    else if(w/h < 1600/1000)
+      $('body').classList.add('horizontalToolbar');
   }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
 
 export async function shuffleWidgets(collection) {
-  const shuffle = collection.map(widget => {
-    return {widget, rand:Math.random()};
-  }).sort((a, b)=> a.rand - b.rand);
-  for(let i of shuffle) {
-    await i.widget.bringToFront();
+  // Fisher–Yates shuffle
+  const len = collection.length;
+  let indexes = [...Array(len).keys()];
+  for (let i = len-1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i+1));
+    [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+  }
+  for (let i of indexes) {
+    await collection[i].bringToFront();
   }
 }
 
@@ -201,7 +219,7 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
     r.push(false);
   const k = asArray(keys).map((key, i, k) => {
     const keyObj = {
-      key, 
+      key,
       locales,
       options
     };
@@ -301,7 +319,7 @@ function getSVG(url, replaces, callback) {
 
   if(!svgCache[url]) {
     svgCache[url] = [];
-    fetch(url.replace(/^\//, '')).then(r=>r.text()).then(t=>{
+    fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
       for(const c of callbacks)
@@ -316,13 +334,43 @@ function getSVG(url, replaces, callback) {
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
-  on('.toolbarButton', 'click', function(e) {
-    const overlay = e.target.dataset.overlay;
-    if(overlay)
-      showOverlay(overlay);
+  on('#toolbar > img', 'click', e=>$('#statesButton').click());
+
+  on('.toolbarTab', 'click', function(e) {
+    if(e.currentTarget.classList.contains('active')) {
+      if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
+        showStatesOverlay('statesOverlay');
+      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display != 'none')
+        showOverlay();
+      e.stopImmediatePropagation();
+      return;
+    }
+    for(const tabButton of $a('.toolbarTab'))
+      toggleClass(tabButton, 'active', tabButton == e.currentTarget);
+
+    if(e.currentTarget == $('#editButton') || edit)
+      toggleEditMode();
   });
 
-  on('#muteButton', 'click', function(){
+  on('#addButton', 'click', function(e) {
+    if(!$a('#activeGameButton.active, #editButton.active').length)
+      $('#activeGameButton').click();
+  });
+
+  on('#activeGameButton', 'click', function() {
+    showOverlay();
+  });
+
+  on('.toolbarButton', 'click', function(e) {
+    const overlay = e.currentTarget.dataset.overlay;
+    if(overlay) {
+      showOverlay(overlay);
+      if(overlay == 'statesOverlay')
+        updateFilterOverflow();
+    }
+  });
+
+  on('#muteButton', 'click', function() {
     if(muted) {
       $('#volume').value = unmuteVol;
       $('#muteButton').classList.remove('muted');
@@ -376,7 +424,7 @@ onLoad(function() {
 
   if(Object.keys(config.betaServers).length) {
     for(const betaServerName in config.betaServers) {
-      const entry = domByTemplate('template-betaServerList-entry', 'tr');
+      const entry = domByTemplate('template-betaServerList-entry', {}, 'tr');
       $('button', entry).textContent = betaServerName;
       var thisstatus = config.betaServers[betaServerName].return ? 'check' : 'cancel';
       $('.return', entry).textContent = thisstatus;
@@ -385,7 +433,7 @@ onLoad(function() {
       $('#betaServerList').appendChild(entry);
     }
     on('#betaServerList button', 'click', function(e) {
-      toServer('setRedirect', e.target.textContent);
+      toServer('setRedirect', e.currentTarget.textContent);
     });
   } else {
     removeFromDOM($('#betaText'));
@@ -424,11 +472,12 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    if(overlayActive)
-      showOverlay();
-    else if(edit)
-      toggleEditMode();
-    else if(jeEnabled)
+    if(overlayActive || edit)
+      $('#activeGameButton').click();
+    else if(jeEnabled && jeDebugViewing) {
+      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
+      jeShowCommands();
+    } else if(jeEnabled)
       jeToggle();
   }
 }

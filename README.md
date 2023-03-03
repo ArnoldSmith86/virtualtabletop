@@ -10,7 +10,7 @@ This project is inspired by [playingcards.io](https://playingcards.io).
 
 This project aims to be able to import PCIO files and have them be immediately playable.
 
-Come join our [Discord server](https://discord.gg/xWxz9Gd) if you want to discuss the project.
+Come join our [Discord server](https://discord.gg/CEZz7wny9T) if you want to discuss the project.
 
 This project started after [a reddit post](https://www.reddit.com/r/PlayingCardsIO/comments/jiajth/mildly_ot_feature_requests_for_a_pcio_clone/) in our [playingcardsio subreddit](https://www.reddit.com/r/PlayingCardsIO/).
 
@@ -33,18 +33,18 @@ The games in the public library have their license information and attributions 
 This assumes a Debian based Linux. Find Node.js repositories for other Linux distributions at https://node.dev/node-binary. Consult your distribution's documentation for how to install the git and nodejs packages if your distribution does not use apt.
 
 ```
-curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -                         # adds a repository for Node.js v16
-sudo apt install -y git nodejs                                                          # installs the required software
-git clone --recurse-submodules https://github.com/ArnoldSmith86/virtualtabletop.git     # downloads everything in this repository
-cd virtualtabletop                                                                      # changes to the newly created directory
-npm install                                                                             # uses the Node.js package manager to install all dependencies
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -    # adds a repository for Node.js v16
+sudo apt install -y git nodejs                                     # installs the required software
+git clone https://github.com/ArnoldSmith86/virtualtabletop.git     # downloads everything in this repository
+cd virtualtabletop                                                 # changes to the newly created directory
+npm install                                                        # uses the Node.js package manager to install all dependencies
 ```
 
 ### MacOS
 Using [brew](https://brew.sh/):
 
     brew install node
-    git clone --recurse-submodules https://github.com/ArnoldSmith86/virtualtabletop.git
+    git clone https://github.com/ArnoldSmith86/virtualtabletop.git
     cd virtualtabletop
     npm install
 
@@ -52,7 +52,7 @@ Using [brew](https://brew.sh/):
 
 1. Install [Git](https://git-scm.com/download/win) and [Node.js](https://nodejs.org/en/download/current/).
 2. Open the command prompt and [cd](https://www.digitalcitizen.life/command-prompt-how-use-basic-commands/) to a directory where you want the project to live.
-3. Do `git clone --recurse-submodules https://github.com/ArnoldSmith86/virtualtabletop.git` which downloads the project.
+3. Do `git clone https://github.com/ArnoldSmith86/virtualtabletop.git` which downloads the project.
 4. Do `cd virtualtabletop` to get into the project directory git created.
 5. Do `npm install` so Node.js downloads all the dependencies of the project.
 

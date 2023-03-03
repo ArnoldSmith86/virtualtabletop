@@ -1,4 +1,4 @@
-export const VERSION = 7;
+export const VERSION = 12;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -7,54 +7,117 @@ export default function FileUpdater(state) {
   if(v > VERSION)
     throw Error(`File version ${v} is newer than the supported version ${VERSION}.`);
 
+  const globalProperties = computeGlobalProperties(state, v);
   for(const id in state)
-    updateProperties(state[id], v);
+    updateProperties(state[id], v, globalProperties);
 
   state._meta.version = VERSION;
   return state;
 }
 
-function updateProperties(properties, v) {
+function computeGlobalProperties(state, v) {
+  let globalProperties = {};
+  if (globalProperties.v12DropShadowAllowed = v < 10) {
+    for (const id in state) {
+      const properties = state[id];
+      if (properties.type == 'card' || properties.type == 'deck' || properties.type == 'pile') {
+        globalProperties.v12DropShadowAllowed = globalProperties.v12DropShadowAllowed &&
+            !hasPropertyCondition(properties, (properties) => {
+              return properties.parentChangeRoutine || properties.changeRoutine;
+            });
+      }
+      globalProperties.v12DropShadowAllowed = globalProperties.v12DropShadowAllowed &&
+          !hasPropertyCondition(properties, (properties) => {
+            return properties.parentGlobalUpdateRoutine || properties.globalUpdateRoutine;
+          });
+      if (!globalProperties.v12DropShadowAllowed)
+        break;
+    }
+  }
+  return globalProperties;
+}
+
+function hasPropertyCondition(properties, condition) {
+  if (properties == null || typeof properties != 'object')
+    return false;
+  if (condition(properties))
+    return true;
+  if (properties.type) {
+    for (const property of ['onPileCreation', 'onEnter', 'onLeave'])
+      if (hasPropertyCondition(properties[property], condition))
+        return true;
+    if (typeof properties.faces == 'object')
+      for (const face in properties.faces)
+        if (hasPropertyCondition(properties.faces[face], condition))
+          return true;
+    if (properties.type == 'deck') {
+      if (hasPropertyCondition(properties.cardDefaults, condition))
+        return true;
+      if (typeof properties.cardTypes == 'object')
+        for(const cardType in properties.cardTypes)
+          if (hasPropertyCondition(properties.cardTypes[cardType], condition))
+            return true;
+      if(typeof properties.faceTemplates == 'object')
+        for(const face in properties.faceTemplates)
+          if (typeof properties.faceTemplates[face] == 'object' &&
+              hasPropertyCondition(properties.faceTemplates[face].properties, condition))
+            return true;
+    }
+  }
+  return false;
+}
+
+function updateProperties(properties, v, globalProperties) {
   if(typeof properties != 'object')
     return;
 
-  if(!properties.type)
-    updateProperties(properties.faces, v);
+  if(!properties.type) {
+    if (typeof properties.faces == 'object') {
+      for (let face in properties.faces) {
+        updateProperties(properties.faces[face], v, globalProperties);
+      }
+    }
+  }
   if(properties.type == 'deck')
-    updateProperties(properties.cardDefaults, v);
+    updateProperties(properties.cardDefaults, v, globalProperties);
   if(properties.type == 'deck' && typeof properties.cardTypes == 'object')
     for(const cardType in properties.cardTypes)
-      updateProperties(properties.cardTypes[cardType], v);
+      updateProperties(properties.cardTypes[cardType], v, globalProperties);
 
   for(const property in properties)
     if(property.match(/Routine$/))
-      updateRoutine(properties[property], v);
+      updateRoutine(properties[property], v, globalProperties);
 
   v<4 && v4ModifyDropTargetEmptyArray(properties);
   v<5 && v5DynamicFaceProperties(properties);
   v<6 && v6cssPieces(properties);
   v<7 && v7HolderClickable(properties);
+  v<8 && v8HoverInheritVisibleForSeat(properties);
+  v<10 && v10GridOffset(properties);
+  v<12 && globalProperties.v12DropShadowAllowed && v12HandDropShadow(properties);
 }
 
-function updateRoutine(routine, v) {
+function updateRoutine(routine, v, globalProperties) {
   if(!Array.isArray(routine))
     return;
 
   for(const operation of routine) {
     if(operation.func == 'CLONE') {
-      updateProperties(operation.properties, v);
+      updateProperties(operation.properties, v, globalProperties);
     }
     if(operation.func == 'FOREACH') {
-      updateRoutine(operation.loopRoutine, v);
+      updateRoutine(operation.loopRoutine, v, globalProperties);
     }
     if(operation.func == 'IF') {
-      updateRoutine(operation.thenRoutine, v);
-      updateRoutine(operation.elseRoutine, v);
+      updateRoutine(operation.thenRoutine, v, globalProperties);
+      updateRoutine(operation.elseRoutine, v, globalProperties);
     }
   }
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
+  v<9 && v9NumericStringSort(routine);
+  v<11 && v11OwnerMOVEXY(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -324,5 +387,50 @@ function v6cssPieces(properties) {
 function v7HolderClickable(properties) {
   if (properties.clickRoutine && !properties.clickable && properties.type=='holder'){
     properties.clickable=false;
+  }
+}
+
+function v8HoverInheritVisibleForSeat(properties) {
+  if (properties.onlyVisibleForSeat)
+    properties.hoverInheritVisibleForSeat = false;
+}
+
+function v9NumericStringSort(routine) {
+  for(const key in routine)
+    if(typeof routine[key] === 'string')
+      routine[key] = routine[key].replace('numericSort', 'numericStringSort');
+}
+
+function v10GridOffset(properties) {
+  const grid = properties.grid;
+  if (!grid || typeof grid != 'object')
+    return;
+  for (let i in grid) {
+    if (!grid[i] || typeof grid[i] != 'object')
+      continue;
+    const xAdjustment = -grid[i].x*0.5;
+    const yAdjustment = -grid[i].y*0.5;
+    grid[i].offsetX = (grid[i].offsetX || 0) + xAdjustment;
+    grid[i].offsetY = (grid[i].offsetY || 0) + yAdjustment;
+    if (typeof grid[i].minX == 'number')
+      grid[i].minX += xAdjustment;
+    if (typeof grid[i].maxX == 'number')
+      grid[i].maxX += xAdjustment;
+    if (typeof grid[i].minY == 'number')
+      grid[i].minY += yAdjustment;
+    if (typeof grid[i].maxY == 'number')
+      grid[i].maxY += yAdjustment;
+  }
+}
+
+function v11OwnerMOVEXY(routine) {
+  for(const operation of routine)
+    if(operation.func == 'MOVEXY' && operation.resetOwner === undefined)
+      operation.resetOwner = false;
+}
+
+function v12HandDropShadow(properties) {
+  if (properties.type == 'holder' && properties.childrenPerOwner && !properties.enterRoutine && !properties.leaveRoutine && !properties.changeRoutine) {
+    properties.dropShadow = true;
   }
 }
