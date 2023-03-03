@@ -29,7 +29,7 @@ class Holder extends Widget {
 
   children() {
     let children = this.childrenFilter(super.children(), true);
-    if(children.length == 1 && children[0].get('type') == 'pile')
+    if(children.length == 1 && children[0].get('type') == 'pile') //this needs to be improoved so that it can support holders with multiple piles. (allignChildren = false)
       children = this.childrenFilter(children[0].children(), false);
     return children;
   }

@@ -164,6 +164,7 @@ class Pile extends Widget {
     if(this.children().length == 1) {
       const c = this.children()[0];
       const p = this.get('parent');
+      const o = this.get('owner');
       const x = this.get('x');
       const y = this.get('y');
 
@@ -172,7 +173,12 @@ class Pile extends Widget {
 
       await c.set('x', c.get('x') + x);
       await c.set('y', c.get('y') + y);
+      c.movedByButton = true
+      c.targetPlayer = o
+      await c.set('owner', o);
       await c.set('parent', p);
+      delete c.movedByButton
+      delete c.targetPlayer
 
       await removeWidgetLocal(this.get('id'));
     }

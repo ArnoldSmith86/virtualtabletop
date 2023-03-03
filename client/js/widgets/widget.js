@@ -305,6 +305,10 @@ export class Widget extends StateManaged {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
 
+  childrenTarget() {
+    return this.children()
+  }
+
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       await this.set('parent', null);
@@ -1291,46 +1295,57 @@ export class Widget extends StateManaged {
         setDefaults(a, { count: 1, face: null });
         const count = a.count || 999999;
 
-        if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
-          await w(a.from, async source=>await w(a.to, async target=>{
-            for(const c of source.children().slice(0, count).reverse()) {
-              const applyFlip = async function() {
-                if(a.face !== null && c.flip)
-                  await c.flip(a.face);
-              };
-              if(source == target) {
-                await applyFlip();
-                await c.bringToFront();
-              } else {
-                c.movedByButton = true;
-                if(target.get('type') == 'seat') {
-                  if(target.get('hand') && target.get('player')) {
-                    if(widgets.has(target.get('hand'))) {
-                      const targetHand = widgets.get(target.get('hand'));
-                      await applyFlip();
-                      c.targetPlayer = target.get('player')
-                      await c.moveToHolder(targetHand);
-                      delete c.targetPlayer
-                      c.bringToFront()
-                      if(targetHand.get('type') == 'holder')
-                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+        let fromCollection;
+        let toCollection;
+
+        if(a.toHolder !== undefined) {
+          if(toCollection = getCollection(a.toHolder)) {
+            for(const destination of collections[toCollection]){
+              if(a.fromHolder !== undefined) {
+                if(fromCollection = getCollection(a.fromHolder)) {
+                  for(const origin of collections[fromCollection]){
+                    if (origin.childrenTarget().length){
+                      for(const c of origin.childrenTarget().slice(0, a.count || 999999)){
+                        c.movedByButton = true;
+                        if(a.face !== null && c.flip){
+                          await c.flip(a.face);
+                        }
+                        await c.bringToFront()
+                        await c.moveToHolder(destination);
+                        delete c.movedByButton
+                      }
                     } else {
-                      problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
+                      if (origin.get("type")=="seat") {
+                        problems.push(`the hand of ${origin.get("id")} is empty or does not exist`);
+                      } else{
+                        problems.push(`${origin.get("id")} is empty or does not exist`);
+                      }
                     }
-                  } else {
-                    problems.push(`Seat ${target.id} is empty or does not define a hand.`);
+                  }
+                }
+              } else if(collection = getCollection(a.target)) {
+                if(collections[collection].length) {
+                  for(const c of collections[collection].slice(0, a.count || 999999)){
+                    c.movedByButton = true;
+                    if(a.face !== null && c.flip){
+                      await c.flip(a.face);
+                    }
+                    await c.bringToFront()
+                    await c.moveToHolder(destination);
+                    delete c.movedByButton
                   }
                 } else {
-                  await applyFlip();
-                  await c.moveToHolder(target);
+                  problems.push(`Collection ${a.target} is empty.`);
                 }
-                delete c.movedByButton;
               }
             }
-          }));
-          if(jeRoutineLogging) {
-            const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
-            jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to '${a.to}'`)
+            if(jeRoutineLogging) {
+              if (a.fromHolder){
+                jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} from  '${a.fromHolder}' to '${a.toHolder}' ${a.face !== null ? 'and fliped to face '+a.face:''}`);
+              } else if (a.target) {
+                jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} from  '${a.target}' to '${a.toHolder}' ${a.face !== null ? 'and fliped to face '+a.face:''}`);
+              }
+            }
           }
         }
       }
@@ -1382,27 +1397,35 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'ROTATE') {
-        setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        setDefaults(a, { count: 1, angle: 90, mode: 'add', target: 'DEFAULT' });
         let collection;
         const mode = a.mode == 'set' ? 'to' : 'by';
         if(a.holder !== undefined) {
-          if(this.isValidID(a.holder, problems)) {
-            await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
-                await c.rotate(a.angle, a.mode);
-            });
+          if(collection = getCollection(a.holder)) {
+            for(const w of collections[collection]){
+              if (w.childrenTarget().length){
+                for(const c of w.childrenTarget().slice(0, a.count || 999999))
+                  await c.rotate(a.angle, a.mode);
+              } else {
+                if (w.get("type")=="seat") {
+                  problems.push(`the hand of ${w.get("id")} is empty or does not exist`);
+                } else{
+                  problems.push(`${w.get("id")} is empty or does not exist`);
+                }
+              }
+            }
             if(jeRoutineLogging) {
               jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
             }
           }
-        } else if(collection = getCollection(a.collection)) {
+        } else if(collection = getCollection(a.target)) {
           if(collections[collection].length) {
             for(const c of collections[collection].slice(0, a.count || 999999))
               await c.rotate(a.angle, a.mode);
             if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
+              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.target}' ${mode} ${a.angle}`);
           } else {
-            problems.push(`Collection ${a.collection} is empty.`);
+            problems.push(`Collection ${a.target} is empty.`);
           }
         }
       }
@@ -1876,7 +1899,19 @@ export class Widget extends StateManaged {
       await this.checkParent(true);
 
     await this.set('owner',  null);
-    await this.set('parent', holder.get('id'));
+    
+    if (holder.get("type")=="seat"){
+      if (holder.get("hand") && holder.get("player")){
+        //seats become inactive when there is no player
+        this.targetPlayer = holder.get("player");
+        await this.set('parent', holder.get('hand'));
+        delete this.targetPlayer
+      } else {
+        return;
+      }
+    } else {
+      await this.set('parent', holder.get('id'));
+    }
   }
 
   async moveStart() {
