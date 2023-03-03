@@ -1,3 +1,16 @@
+// Compare the relative z order of two widgets with the same parent.
+function compareChildStackOrder(a, b) {
+  if (a == b)
+    return 0;
+  if (a.z != b.z)
+    return b.z - a.z;
+  let domOrder = a.domElement.compareDocumentPosition(b.domElement);
+  if (domOrder == Node.DOCUMENT_POSITION_PRECEDING) // (b preceeds a)
+    return -1;
+  else // Node.DOCUMENT_POSITION_FOLLOWING (b follows a)
+    return 1;
+}
+
 class Pile extends Widget {
   constructor(id) {
     super(id);
@@ -23,6 +36,9 @@ class Pile extends Widget {
 
     this.domElement.appendChild(this.handle);
     this.childCount = 0;
+    this.visibleChildren = new Set();
+    this.lowestVisibleChild = null;
+    this.visibleChildLimit = 5;
     this.updateText();
   }
 
@@ -30,12 +46,28 @@ class Pile extends Widget {
     super.applyChildAdd(child);
     ++this.childCount;
     this.updateText();
+    if(this.visibleChildren) {
+      if (!this.canOptimizeVisibility(child))
+        this.updateAllChildrenVisible();
+      else if(this.visibleChildren.size < this.visibleChildLimit || compareChildStackOrder(this.lowestVisibleChild, child) >= 0)
+        this.updateVisibleChildren();
+    }
+  }
+
+  applyChildZ(child, previousZ) {
+    super.applyChildZ(child, previousZ);
+    if (this.visibleChildren && this.visibleChildren.has(child))
+      this.updateVisibleChildren();
   }
 
   applyChildRemove(child) {
     super.applyChildRemove(child);
     --this.childCount;
     this.updateText();
+    if (this.visibleChildren && this.visibleChildren.has(child))
+      this.updateVisibleChildren();
+    else if (this.childCount == 0)
+      this.visibleChildren = new Set();
   }
 
   applyDeltaToDOM(delta) {
@@ -70,6 +102,28 @@ class Pile extends Widget {
         }
       }
     }
+  }
+
+  canOptimizeVisibility(child) {
+    // If a new child doesn't match all of the other children in the pile,
+    // we will stop hiding deeper children.
+    return this.lowestVisibleChild == null ||
+        ['x', 'y', 'width', 'height', 'rotation', 'scale', 'borderRadius'].reduce(
+            (matches, prop) => matches && child.get(prop) == this.lowestVisibleChild.get(prop), true);
+  }
+
+  childClasses(child) {
+    let classes = super.childClasses(child);
+    if (this.visibleChildren && this.visibleChildren.has(child))
+      classes += ' visible-in-pile';
+    return classes;
+  }
+
+  classes() {
+    let classes = super.classes();
+    if (this.visibleChildren)
+      classes += ' optimize-visibility';
+    return classes;
   }
 
   async click(mode='respect') {
@@ -196,6 +250,34 @@ class Pile extends Widget {
   updateText() {
     const text = this.get('text');
     this.handle.textContent = text === null ? this.childCount : text;
+  }
+
+  updateAllChildrenVisible() {
+    let modified = this.visibleChildren;
+    this.visibleChildren = null;
+    this.lowestVisibleChild = null;
+    this.updateClasses();
+    for (const child of modified) {
+      child.updateClasses();
+    }
+  }
+
+  updateVisibleChildren() {
+    let modified = this.visibleChildren;
+    this.visibleChildren = new Set();
+    this.lowestVisibleChild = null;
+    for(const child of this.childArray.sort(compareChildStackOrder).slice(0, this.visibleChildLimit)) {
+      this.visibleChildren.add(child);
+      this.lowestVisibleChild = child;
+      // If the child was previously visible, its state has not been modified.
+      if (modified.has(child))
+        modified.delete(child);
+      else
+        modified.add(child);
+    }
+    for (const child of modified) {
+      child.updateClasses();
+    }
   }
 
   validDropTargets() {
