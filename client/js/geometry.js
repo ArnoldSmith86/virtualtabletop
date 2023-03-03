@@ -20,12 +20,15 @@ export function getOffset(origin, target) {
 
 export function getScreenTransform(elem) {
   let transform = new DOMMatrix();
-  let t = new DOMPoint(10, 10);
   while (elem) {
     transform.preMultiplySelf(getElementTransform(elem));
     elem = elem.offsetParent;
   }
   return transform;
+}
+
+export function screenCoordFromLocalPoint(elem, coord) {
+  return getScreenTransform(elem).transformPoint(new DOMPoint(coord.x, coord.y));
 }
 
 function parseLengths(str) {
