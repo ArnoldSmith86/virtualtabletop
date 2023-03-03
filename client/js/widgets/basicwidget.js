@@ -22,9 +22,19 @@ class BasicWidget extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.activeFace !== undefined || delta.faces !== undefined) {
-      let face = this.faces()[this.get('activeFace')];
-      if(face !== undefined)
+      if(this.previouslyActiveFace !== undefined) {
+        const undoDelta = {};
+        for(const property in this.previouslyActiveFace)
+          undoDelta[property] = this.state[property] !== undefined ? this.state[property] : null;
+        this.applyDeltaToDOM(undoDelta);
+        delete this.previouslyActiveFace;
+      }
+
+      const face = this.faces()[this.get('activeFace')];
+      if(face !== undefined) {
         this.applyDeltaToDOM(face);
+        this.previouslyActiveFace = face;
+      }
     }
     if(delta.text !== undefined)
       setText(this.domElement, this.get('text'));
