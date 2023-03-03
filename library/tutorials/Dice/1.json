@@ -11,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1677542484399,
+      "lastUpdate": 1677861639106,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -382,7 +382,8 @@
     "z": 210,
     "id": "gfsr",
     "activeFace": 19,
-    "rollCount": 3
+    "rollCount": 3,
+    "imageScale": 1
   },
   "dice2": {
     "type": "dice",
@@ -519,7 +520,8 @@
     "cL": "#f66f6f",
     "cP": "#ffffff",
     "cR": "#ffa2a2",
-    "cT": "#c33c3c"
+    "cT": "#c33c3c",
+    "imageScale": 1
   },
   "dice4": {
     "type": "dice",
