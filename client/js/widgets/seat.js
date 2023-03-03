@@ -42,16 +42,7 @@ class Seat extends Widget {
     this.updateLinkedWidgets(true);
   }
 
-  childrenFilter(children, acceptPiles) {
-    return children.filter(w=>{
-      if(acceptPiles && w.get('type') == 'pile')
-        return true;
-
-      return compareDropTarget(w, this, true);
-    });
-  }
-
-  childrenTarget() {
+  children() {
     if (widgets.get(this.get("hand"))) {
       let children = widgets.get(this.get("hand")).children().filter(c=>!c.get('owner') || c.get('owner')==this.get("player"));
       
@@ -62,7 +53,15 @@ class Seat extends Widget {
     } else {
       return []
     }
-    
+  }
+
+  childrenFilter(children, acceptPiles) {
+    return children.filter(w=>{
+      if(acceptPiles && w.get('type') == 'pile')
+        return true;
+
+      return compareDropTarget(w, this, true);
+    });
   }
 
   classes() {

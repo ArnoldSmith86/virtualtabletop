@@ -305,10 +305,6 @@ export class Widget extends StateManaged {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
 
-  childrenTarget() {
-    return this.children()
-  }
-
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       await this.set('parent', null);
@@ -1292,8 +1288,8 @@ export class Widget extends StateManaged {
               if(a.fromHolder !== undefined) {
                 if(fromCollection = getCollection(a.fromHolder)) {
                   for(const origin of collections[fromCollection]){
-                    if (origin.childrenTarget().length){
-                      for(const c of origin.childrenTarget().slice(0, a.count || 999999)){
+                    if (origin.children().length){
+                      for(const c of origin.children().slice(0, a.count || 999999)){
                         c.movedByButton = true;
                         if(a.face !== null && c.flip){
                           await c.flip(a.face);
@@ -1391,8 +1387,8 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(collection = getCollection(a.holder)) {
             for(const w of collections[collection]){
-              if (w.childrenTarget().length){
-                for(const c of w.childrenTarget().slice(0, a.count || 999999))
+              if (w.children().length){
+                for(const c of w.children().slice(0, a.count || 999999))
                   await c.rotate(a.angle, a.mode);
               } else {
                 if (w.get("type")=="seat") {
