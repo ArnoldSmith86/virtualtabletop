@@ -42,8 +42,8 @@ class Seat extends Widget {
     this.updateLinkedWidgets(true);
   }
 
-  classes() {
-    let className = super.classes();
+  classes(includeTemporary=true) {
+    let className = super.classes(includeTemporary);
 
     if(this.get('player') != '')
       className += ' seated';

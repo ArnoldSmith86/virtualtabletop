@@ -167,6 +167,10 @@ export default class Room {
     if(!Config.get('allowPublicLibraryEdits'))
       return;
 
+    for(const usedAsset in this.getAssetListForState(id))
+      if(!Config.resolveAsset(usedAsset))
+        throw new Logging.UserError(404, `Could not find asset /assets/${usedAsset} which is referenced in the state.`);
+
     const variantData = {};
     for(const variantID in this.state._meta.states[id].variants)
       variantData[variantID] = JSON.parse(fs.readFileSync(this.variantFilename(id, variantID)));
@@ -354,6 +358,14 @@ export default class Room {
 
   getAssetList(state) {
     return [...new Set(JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [])];
+  }
+
+  getAssetListForState(stateID) {
+    const usedAssets = {};
+    for(const vID in this.state._meta.states[stateID].variants)
+      for(const asset of this.getAssetList(JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)))))
+        usedAssets[asset.split('/')[2]] = true;
+    return usedAssets;
   }
 
   getRedirection() {
@@ -988,11 +1000,7 @@ export default class Room {
       return;
 
     const assetsDir = this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets');
-
-    const usedAssets = {};
-    for(const vID in this.state._meta.states[stateID].variants)
-      for(const asset of this.getAssetList(JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)))))
-        usedAssets[asset.split('/')[2]] = true;
+    const usedAssets = this.getAssetListForState(stateID);
 
     const savedAssets = {};
     for(const file of fs.readdirSync(assetsDir))
@@ -1004,7 +1012,7 @@ export default class Room {
 
     for(const usedAsset in usedAssets)
       if(!savedAssets[usedAsset])
-        fs.copyFileSync(Config.directory('assets') + '/' + usedAsset, assetsDir + '/' + usedAsset);
+        fs.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
   }
 
   writePublicLibraryMetaToFilesystem(stateID, meta) {
