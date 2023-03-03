@@ -137,13 +137,13 @@ class Holder extends Widget {
       // Rotate all children counter to current rotation if property becomes true,
       // and remove that rotation if it becomes false.
       const sign = newValue ? -1 : 1;
-      for (let child of this.children()) {
+      for (let child of this.childArray) {
         await child.set('rotation', child.get('rotation') + sign * this.get('rotation'));
       }
     }
     if (property == 'rotation' && this.get('childrenCounterRotate')) {
       const extraRotation = oldValue - newValue;
-      for (let child of this.children()) {
+      for (let child of this.childArray) {
         await child.set('rotation', child.get('rotation') + extraRotation);
       }
     }
