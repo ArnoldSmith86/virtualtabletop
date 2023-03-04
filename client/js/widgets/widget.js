@@ -1281,6 +1281,7 @@ export class Widget extends StateManaged {
 
         let fromCollection;
         let toCollection;
+        let collection;
 
         if(a.toHolder !== undefined) {
           if(toCollection = getCollection(a.toHolder)) {
