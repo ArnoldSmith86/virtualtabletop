@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 11,
     "info": {
       "name": "Senet",
       "image": "/assets/-78804023_44226",
@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Room layout and design by LawDawg and released to the public domain by CC0.<br></div><div><br></div><div>Board symbols are available under the icons8 license at:</div><ul><li>Ankh: https://icons8.com/icon/10404/ankh</li><li>One: https://icons8.com/icon/zW3ft7PmEdvi/one</li><li>Two: https://icons8.com/icon/lPRNKrv0lpVq/two</li><li>Three: https://icons8.com/icon/7XoFCDZ9ju3f/three</li><li>Cross: https://icons8.com/icon/X6BDW9w3pZVf/taw</li><li>Circle with line: https://icons8.com/icon/NFWOf50Z3e64/waw</li></ul><div>Background image available under the Pixabay license at:&nbsp;https://pixabay.com/illustrations/hieroglyphics-egypt-egyptian-7448842/</div><div><br></div><div>Library image is in the public domain as CC0 from: https://commons.wikimedia.org/wiki/File:Gameboard_and_Gaming_Pieces_MET_DP310299.jpg</div>",
-      "lastUpdate": 1674139392094,
+      "lastUpdate": 1674862505856,
       "showName": true,
       "skill": "",
       "description": "Take turns throwing sticks and moving pieces around board. First player to remove all pieces from the board wins.",
@@ -63,7 +63,7 @@
         "holder": "${PROPERTY id}",
         "key": "z",
         "reverse": true
-       }
+      }
     ]
   },
   "house2": {
@@ -584,38 +584,6 @@
     "y": 10,
     "parent": "house10"
   },
-  "stick1": {
-    "id": "stick1",
-    "x": 680,
-    "y": 725,
-    "width": 40,
-    "height": 200,
-    "borderRadius": 15,
-    "z": 1,
-    "css": {
-      "background": "#fff"
-    },
-    "faces": [
-      {
-        "css": {
-          "background": "#444",
-          "border": "3px solid #fff",
-          "transition": "linear 0.2s"
-        }
-      },
-      {
-        "css": {
-          "background": "#fff",
-          "border": "3px solid #444",
-          "transition": "linear 0.2s"
-        }
-      }
-    ],
-    "resetProperties": {
-      "rotation": null,
-      "activeFace": 0
-    }
-  },
   "background": {
     "id": "background",
     "width": 1792,
@@ -628,113 +596,6 @@
     "image": "/assets/-2115246459_536956",
     "x": -96,
     "z": 1
-  },
-  "stick2": {
-    "id": "stick2",
-    "x": 743,
-    "y": 725,
-    "width": 40,
-    "height": 200,
-    "borderRadius": 15,
-    "z": 1,
-    "css": {
-      "background": "#444",
-      "border": "3px solid #fff",
-      "rotation": 90,
-      "transition": "linear 0.2s"
-    },
-    "faces": [
-      {
-        "css": {
-          "background": "#444",
-          "border": "3px solid #fff",
-          "transition": "linear 0.2s"
-        }
-      },
-      {
-        "css": {
-          "background": "#fff",
-          "border": "3px solid #444",
-          "transition": "linear 0.2s"
-        }
-      }
-    ],
-    "resetProperties": {
-      "rotation": null,
-      "activeFace": 1
-    },
-    "activeFace": 1
-  },
-  "stick3": {
-    "id": "stick3",
-    "x": 807,
-    "y": 725,
-    "width": 40,
-    "height": 200,
-    "borderRadius": 15,
-    "z": 1,
-    "css": {
-      "background": "#444",
-      "border": "3px solid #fff",
-      "rotation": 90,
-      "transition": "linear 0.2s"
-    },
-    "faces": [
-      {
-        "css": {
-          "background": "#444",
-          "border": "3px solid #fff",
-          "transition": "linear 0.2s"
-        }
-      },
-      {
-        "css": {
-          "background": "#fff",
-          "border": "3px solid #444",
-          "transition": "linear 0.2s"
-        }
-      }
-    ],
-    "resetProperties": {
-      "rotation": null,
-      "activeFace": 0
-    }
-  },
-  "stick4": {
-    "id": "stick4",
-    "x": 870,
-    "y": 725,
-    "width": 40,
-    "height": 200,
-    "borderRadius": 15,
-    "z": 1,
-    "css": {
-      "background": "#444",
-      "border": "3px solid #fff",
-      "rotation": 90,
-      "transition": "linear 0.2s"
-    },
-    "faces": [
-      {
-        "css": {
-          "background": "#444",
-          "border": "3px solid #fff",
-          "transition": "linear 0.2s"
-        }
-      },
-      {
-        "css": {
-          "background": "#fff",
-          "border": "3px solid #444",
-          "transition": "linear 0.2s"
-        }
-      }
-    ],
-    "resetProperties": {
-      "rotation": null,
-      "activeFace": 1
-    },
-    "activeFace": 1
   },
   "clicker": {
     "id": "clicker",
@@ -756,15 +617,17 @@
           "stick4"
         ],
         "loopRoutine": [
-          "var randomClick = randInt 1 2",
-          "var randomRot = randInt 0 359",
+          "var randomTransRot = randInt 10 18",
+          "var randomTransRot = ${randomTransRot} / 10",
+          "var randomTransFlip = randInt 15 22",
+          "var randomTransFlip = ${randomTransFlip} / 10",
+          "var randomRot = randInt 0 180",
           "var randomZ = randInt 1 4",
           {
             "func": "CLICK",
             "collection": [
               "${value}"
-            ],
-            "count": "${randomClick}"
+            ]
           },
           {
             "func": "SET",
@@ -781,6 +644,22 @@
             ],
             "property": "z",
             "value": "${randomZ}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "rotTrans",
+            "value": "${randomTransRot}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "flipTrans",
+            "value": "${randomTransFlip}"
           }
         ]
       },
@@ -795,11 +674,92 @@
           "stick4"
         ]
       },
+      "var a = ${PROPERTY state} + 1",
+      "var b = ${a} % 2",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "state",
+        "value": "${b}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${a}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "speed",
+            "value": 0.5
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "speed",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "speed",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "speed",
+            "value": 0.5
+          }
+        ]
+      },
       {
         "func": "SELECT",
         "source": "DEFAULT",
         "property": "activeFace",
-        "value": 1
+        "value": 0
       },
       {
         "func": "COUNT"
@@ -812,7 +772,8 @@
           {
             "func": "SET",
             "collection": [
-              "result"
+              "result1",
+              "result2"
             ],
             "property": "text",
             "value": "Move 5. Go again."
@@ -827,7 +788,8 @@
           {
             "func": "SET",
             "collection": [
-              "result"
+              "result1",
+              "result2"
             ],
             "property": "text",
             "value": "Move 1. Go again."
@@ -842,7 +804,8 @@
           {
             "func": "SET",
             "collection": [
-              "result"
+              "result1",
+              "result2"
             ],
             "property": "text",
             "value": "Move 2. Pass sticks."
@@ -857,7 +820,8 @@
           {
             "func": "SET",
             "collection": [
-              "result"
+              "result1",
+              "result2"
             ],
             "property": "text",
             "value": "Move 3. Pass sticks."
@@ -872,7 +836,8 @@
           {
             "func": "SET",
             "collection": [
-              "result"
+              "result1",
+              "result2"
             ],
             "property": "text",
             "value": "Move 4. Go again."
@@ -885,92 +850,8 @@
       "box-shadow": "2px 2px 15px inset",
       "opacity": 0.3
     },
-    "borderRadius": 4
-  },
-  "result": {
-    "id": "result",
-    "x": 560,
-    "y": 960,
-    "z": 1,
-    "text": "Click sticks to start.",
-    "height": 30,
-    "css": {
-      "font-size": "25px",
-      "text-align": "center"
-    },
-    "width": 480,
-    "movable": false,
-    "movableInEdit": false,
-    "resetProperties": {
-      "text": "Click sticks to start."
-    }
-  },
-  "dfcx": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Restarting ..."
-          },
-          {
-            "type": "subtitle",
-            "text": "Are you sure you want to restart the game?"
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "resetProperties",
-        "relation": "!=",
-        "value": null
-      },
-      {
-        "func": "FOREACH",
-        "loopRoutine": [
-          {
-            "func": "FOREACH",
-            "in": "${PROPERTY resetProperties OF $widgetID}",
-            "loopRoutine": [
-              {
-                "func": "SET",
-                "property": "${key}",
-                "value": "${value}"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "relation": "!=",
-        "value": null
-      },
-      {
-        "func": "SET",
-        "property": "z",
-        "value": 1
-      }
-    ],
-    "x": 1550,
-    "z": 1,
-    "id": "dfcx",
-    "width": 50,
-    "height": 50,
-    "classes": "symbols",
-    "text": "restart",
-    "css": {
-      "color": "#41727d",
-      "font-size": "40px",
-      "--wcMain": "#c7dde4",
-      "--wcBorder": "#93becc",
-      "--wcMainOH": "#93becc",
-      "--wcBorderOH": "#c7dde4"
-    },
-    "y": 1
+    "borderRadius": 4,
+    "state": 0
   },
   "house11": {
     "type": "holder",
@@ -1296,5 +1177,393 @@
       "x": 1500,
       "y": 100
     }
+  },
+  "stick1": {
+    "type": "dice",
+    "id": "stick1",
+    "x": 610,
+    "y": 800,
+    "width": 190,
+    "height": 40,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "#444",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s",
+        "--edgeColor": "grey"
+      }
+    },
+    "rollCount": 614,
+    "shape3d": "d2-flip",
+    "color1": "#fff",
+    "color2": "#444",
+    "resetProperties": {
+      "rotation": 90,
+      "activeFace": 0
+    },
+    "activeFaceChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#444"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#fff"
+          }
+        ]
+      }
+    ],
+    "rotation": 90,
+    "flipTrans": 1.8,
+    "rotTrans": 1.1,
+    "faces": [
+      {
+        "faceCSS": {
+          "--faceBorder": "1px solid #444",
+          "--backgroundColor": "#fff"
+        }
+      },
+      {
+        "faceCSS": {
+          "--faceBorder": "1px solid #fff",
+          "--backgroundColor": "#444"
+        }
+      }
+    ]
+  },
+  "stick2": {
+    "type": "dice",
+    "id": "stick2",
+    "x": 680,
+    "y": 800,
+    "width": 190,
+    "height": 40,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "#fff",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s",
+        "--edgeColor": "grey"
+      }
+    },
+    "rollCount": 614,
+    "shape3d": "d2-flip",
+    "color1": "#fff",
+    "color2": "#444",
+    "resetProperties": {
+      "rotation": 90,
+      "activeFace": 1
+    },
+    "activeFaceChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#444"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#fff"
+          }
+        ]
+      }
+    ],
+    "rotation": 90,
+    "flipTrans": 1.5,
+    "rotTrans": 1.4,
+    "faces": [
+      {
+        "faceCSS": {
+          "--faceBorder": "1px solid #444",
+          "--backgroundColor": "#fff"
+        }
+      },
+      {
+        "faceCSS": {
+          "--faceBorder": "1px solid #fff",
+          "--backgroundColor": "#444"
+        }
+      }
+    ],
+    "activeFace": 1
+  },
+  "stick3": {
+    "type": "dice",
+    "id": "stick3",
+    "x": 750,
+    "y": 800,
+    "width": 190,
+    "height": 40,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "#444",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s",
+        "--edgeColor": "grey"
+      }
+    },
+    "rollCount": 614,
+    "shape3d": "d2-flip",
+    "color1": "#fff",
+    "color2": "#444",
+    "resetProperties": {
+      "rotation": 90,
+      "activeFace": 0
+    },
+    "activeFaceChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#444"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#fff"
+          }
+        ]
+      }
+    ],
+    "rotation": 90,
+    "flipTrans": 2,
+    "rotTrans": 1.6,
+    "faces": [
+      {
+        "faceCSS": {
+          "--faceBorder": "1px solid #444",
+          "--backgroundColor": "#fff"
+        }
+      },
+      {
+        "faceCSS": {
+          "--faceBorder": "1px solid #fff",
+          "--backgroundColor": "#444"
+        }
+      }
+    ]
+  },
+  "stick4": {
+    "type": "dice",
+    "id": "stick4",
+    "x": 820,
+    "y": 800,
+    "width": 190,
+    "height": 40,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "#fff",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s",
+        "--edgeColor": "grey"
+      }
+    },
+    "rollCount": 614,
+    "shape3d": "d2-flip",
+    "color1": "#fff",
+    "color2": "#444",
+    "resetProperties": {
+      "rotation": 90,
+      "activeFace": 1
+    },
+    "activeFaceChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#444"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#fff"
+          }
+        ]
+      }
+    ],
+    "flipTrans": 1.8,
+    "rotTrans": 1,
+    "rotation": 90,
+    "faces": [
+      {
+        "faceCSS": {
+          "--faceBorder": "1px solid #444",
+          "--backgroundColor": "#fff"
+        }
+      },
+      {
+        "faceCSS": {
+          "--faceBorder": "1px solid #fff",
+          "--backgroundColor": "#444"
+        }
+      }
+    ],
+    "activeFace": 1
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "css": {
+      "color": "#41727d",
+      "font-size": "40px",
+      "--wcMain": "#c7dde4",
+      "--wcBorder": "#93becc",
+      "--wcMainOH": "#93becc",
+      "--wcBorderOH": "#c7dde4"
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ]
+  },
+  "result1": {
+    "id": "result1",
+    "x": 560,
+    "y": 960,
+    "width": 480,
+    "height": 30,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "transition": "linear ${PROPERTY speed}s",
+      "font-size": "25px",
+      "text-align": "center"
+    },
+    "text": "Click sticks to start.",
+    "resetProperties": {
+      "text": "Click sticks to start.",
+      "scale": 1
+    },
+    "speed": 0
+  },
+  "result2": {
+    "id": "result2",
+    "x": 560,
+    "y": 960,
+    "width": 480,
+    "height": 30,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "transition": "linear ${PROPERTY speed}s",
+      "font-size": "25px",
+      "text-align": "center"
+    },
+    "text": "Click sticks to start.",
+    "resetProperties": {
+      "text": "Click sticks to start.",
+      "scale": 0
+    },
+    "speed": 0.5,
+    "scale": 0
   }
 }

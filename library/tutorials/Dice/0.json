@@ -1,1018 +1,6 @@
 {
-  "9wxrP": {
-    "type": "pile",
-    "id": "9wxrP",
-    "parent": "9wxr",
-    "width": 103,
-    "height": 160
-  },
-  "9wxrAC": {
-    "id": "9wxrAC",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "AC",
-    "z": 1,
-    "activeFace": 1
-  },
-  "9wxr2C": {
-    "id": "9wxr2C",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "2C",
-    "z": 2,
-    "activeFace": 1
-  },
-  "9wxr3C": {
-    "id": "9wxr3C",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "3C",
-    "z": 3,
-    "activeFace": 1
-  },
-  "9wxr4C": {
-    "id": "9wxr4C",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "4C",
-    "z": 4,
-    "activeFace": 1
-  },
-  "9wxr5C": {
-    "id": "9wxr5C",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "5C",
-    "z": 5,
-    "activeFace": 1
-  },
-  "9wxr6C": {
-    "id": "9wxr6C",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "6C",
-    "z": 6,
-    "activeFace": 1
-  },
-  "9wxr7C": {
-    "id": "9wxr7C",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "7C",
-    "z": 7,
-    "activeFace": 1
-  },
-  "9wxr8C": {
-    "id": "9wxr8C",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "8C",
-    "z": 8,
-    "activeFace": 1
-  },
-  "9wxr9C": {
-    "id": "9wxr9C",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "9C",
-    "z": 9,
-    "activeFace": 1
-  },
-  "9wxrTC": {
-    "id": "9wxrTC",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "TC",
-    "z": 10,
-    "activeFace": 1
-  },
-  "9wxrJC": {
-    "id": "9wxrJC",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "JC",
-    "z": 11,
-    "activeFace": 1
-  },
-  "9wxrQC": {
-    "id": "9wxrQC",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "QC",
-    "z": 12,
-    "activeFace": 1
-  },
-  "9wxrKC": {
-    "id": "9wxrKC",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "KC",
-    "z": 13,
-    "activeFace": 1
-  },
-  "9wxrAD": {
-    "id": "9wxrAD",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "AD",
-    "z": 14,
-    "activeFace": 1
-  },
-  "9wxr2D": {
-    "id": "9wxr2D",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "2D",
-    "z": 15,
-    "activeFace": 1
-  },
-  "9wxr3D": {
-    "id": "9wxr3D",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "3D",
-    "z": 16,
-    "activeFace": 1
-  },
-  "9wxr4D": {
-    "id": "9wxr4D",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "4D",
-    "z": 17,
-    "activeFace": 1
-  },
-  "9wxr5D": {
-    "id": "9wxr5D",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "5D",
-    "z": 18,
-    "activeFace": 1
-  },
-  "9wxr6D": {
-    "id": "9wxr6D",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "6D",
-    "z": 19,
-    "activeFace": 1
-  },
-  "9wxr7D": {
-    "id": "9wxr7D",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "7D",
-    "z": 20,
-    "activeFace": 1
-  },
-  "9wxr8D": {
-    "id": "9wxr8D",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "8D",
-    "z": 21,
-    "activeFace": 1
-  },
-  "9wxr9D": {
-    "id": "9wxr9D",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "9D",
-    "z": 22,
-    "activeFace": 1
-  },
-  "9wxrTD": {
-    "id": "9wxrTD",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "TD",
-    "z": 23,
-    "activeFace": 1
-  },
-  "9wxrJD": {
-    "id": "9wxrJD",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "JD",
-    "z": 24,
-    "activeFace": 1
-  },
-  "9wxrQD": {
-    "id": "9wxrQD",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "QD",
-    "z": 25,
-    "activeFace": 1
-  },
-  "9wxrKD": {
-    "id": "9wxrKD",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "KD",
-    "z": 26,
-    "activeFace": 1
-  },
-  "9wxrAH": {
-    "id": "9wxrAH",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "AH",
-    "z": 27,
-    "activeFace": 1
-  },
-  "9wxr2H": {
-    "id": "9wxr2H",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "2H",
-    "z": 28,
-    "activeFace": 1
-  },
-  "9wxr3H": {
-    "id": "9wxr3H",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "3H",
-    "z": 29,
-    "activeFace": 1
-  },
-  "9wxr4H": {
-    "id": "9wxr4H",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "4H",
-    "z": 30,
-    "activeFace": 1
-  },
-  "9wxr5H": {
-    "id": "9wxr5H",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "5H",
-    "z": 31,
-    "activeFace": 1
-  },
-  "9wxr6H": {
-    "id": "9wxr6H",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "6H",
-    "z": 32,
-    "activeFace": 1
-  },
-  "9wxr7H": {
-    "id": "9wxr7H",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "7H",
-    "z": 33,
-    "activeFace": 1
-  },
-  "9wxr8H": {
-    "id": "9wxr8H",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "8H",
-    "z": 34,
-    "activeFace": 1
-  },
-  "9wxr9H": {
-    "id": "9wxr9H",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "9H",
-    "z": 35,
-    "activeFace": 1
-  },
-  "9wxrTH": {
-    "id": "9wxrTH",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "TH",
-    "z": 36,
-    "activeFace": 1
-  },
-  "9wxrJH": {
-    "id": "9wxrJH",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "JH",
-    "z": 37,
-    "activeFace": 1
-  },
-  "9wxrQH": {
-    "id": "9wxrQH",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "QH",
-    "z": 38,
-    "activeFace": 1
-  },
-  "9wxrKH": {
-    "id": "9wxrKH",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "KH",
-    "z": 39,
-    "activeFace": 1
-  },
-  "9wxrAS": {
-    "id": "9wxrAS",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "AS",
-    "z": 40,
-    "activeFace": 1
-  },
-  "9wxr2S": {
-    "id": "9wxr2S",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "2S",
-    "z": 41,
-    "activeFace": 1
-  },
-  "9wxr3S": {
-    "id": "9wxr3S",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "3S",
-    "z": 42,
-    "activeFace": 1
-  },
-  "9wxr4S": {
-    "id": "9wxr4S",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "4S",
-    "z": 43,
-    "activeFace": 1
-  },
-  "9wxr5S": {
-    "id": "9wxr5S",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "5S",
-    "z": 44,
-    "activeFace": 1
-  },
-  "9wxr6S": {
-    "id": "9wxr6S",
-    "parent": "9wxrP",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "6S",
-    "z": 45,
-    "activeFace": 1
-  },
-  "9wxr7S": {
-    "id": "9wxr7S",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "7S",
-    "z": 10284,
-    "activeFace": 1,
-    "parent": "9wxrP"
-  },
-  "9wxr8S": {
-    "id": "9wxr8S",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "8S",
-    "z": 10201,
-    "activeFace": 1,
-    "x": 360.5,
-    "y": 400
-  },
-  "9wxr9S": {
-    "id": "9wxr9S",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "9S",
-    "z": 10200,
-    "activeFace": 1,
-    "x": 360.5,
-    "y": 240
-  },
-  "9wxrTS": {
-    "id": "9wxrTS",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "TS",
-    "z": 10199,
-    "activeFace": 1,
-    "x": 257.5,
-    "y": 400
-  },
-  "9wxrJS": {
-    "id": "9wxrJS",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "JS",
-    "z": 10198,
-    "activeFace": 1,
-    "x": 257.5,
-    "y": 240
-  },
-  "9wxrQS": {
-    "id": "9wxrQS",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "QS",
-    "z": 10203,
-    "activeFace": 1,
-    "x": 154.5,
-    "y": 240
-  },
-  "9wxrKS": {
-    "id": "9wxrKS",
-    "deck": "9wxrD",
-    "type": "card",
-    "cardType": "KS",
-    "z": 10205,
-    "x": 154.5,
-    "y": 400,
-    "activeFace": 1
-  },
-  "moe3AC": {
-    "id": "moe3AC",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "AC",
-    "z": 19,
-    "activeFace": 1
-  },
-  "moe32C": {
-    "id": "moe32C",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "2C",
-    "z": 10263,
-    "activeFace": 1,
-    "rotation": 210,
-    "x": 1175,
-    "y": 303.1
-  },
-  "moe33C": {
-    "id": "moe33C",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "3C",
-    "z": 10279,
-    "activeFace": 1,
-    "rotation": 210,
-    "x": 1025,
-    "y": 216.60000000000002
-  },
-  "moe34C": {
-    "id": "moe34C",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "4C",
-    "z": 10271,
-    "activeFace": 1,
-    "rotation": 90,
-    "x": 950,
-    "y": 606.2
-  },
-  "moe35C": {
-    "id": "moe35C",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "5C",
-    "z": 9,
-    "parent": "73yz",
-    "activeFace": 1
-  },
-  "moe36C": {
-    "id": "moe36C",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "6C",
-    "z": 10252,
-    "activeFace": 1,
-    "rotation": 330,
-    "x": 875,
-    "y": 563
-  },
-  "moe37C": {
-    "id": "moe37C",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "7C",
-    "z": 22,
-    "activeFace": 1
-  },
-  "moe38C": {
-    "id": "moe38C",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "8C",
-    "z": 2,
-    "activeFace": 1
-  },
-  "moe39C": {
-    "id": "moe39C",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "9C",
-    "z": 10256,
-    "activeFace": 1,
-    "rotation": 330,
-    "x": 1025,
-    "y": 303.1
-  },
-  "moe3TC": {
-    "id": "moe3TC",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "TC",
-    "z": 8,
-    "activeFace": 1
-  },
-  "moe3JC": {
-    "id": "moe3JC",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "JC",
-    "z": 10269,
-    "activeFace": 1,
-    "rotation": 90,
-    "x": 950,
-    "y": 259.8
-  },
-  "moe3QC": {
-    "id": "moe3QC",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "QC",
-    "z": 10,
-    "activeFace": 1
-  },
-  "moe3KC": {
-    "id": "moe3KC",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "KC",
-    "z": 20,
-    "activeFace": 1
-  },
-  "moe3AD": {
-    "id": "moe3AD",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "AD",
-    "z": 13,
-    "activeFace": 1
-  },
-  "moe32D": {
-    "id": "moe32D",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "2D",
-    "z": 17,
-    "activeFace": 1
-  },
-  "moe33D": {
-    "id": "moe33D",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "3D",
-    "z": 10280,
-    "activeFace": 1,
-    "rotation": 90,
-    "x": 1100,
-    "y": 173.20000000000002
-  },
-  "moe34D": {
-    "id": "moe34D",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "4D",
-    "z": 12,
-    "activeFace": 1
-  },
-  "moe35D": {
-    "id": "moe35D",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "5D",
-    "z": 10270,
-    "activeFace": 1,
-    "rotation": 90,
-    "x": 950,
-    "y": 433
-  },
-  "moe36D": {
-    "id": "moe36D",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "6D",
-    "z": 14,
-    "activeFace": 1
-  },
-  "moe37D": {
-    "id": "moe37D",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "7D",
-    "z": 11,
-    "activeFace": 1
-  },
-  "moe38D": {
-    "id": "moe38D",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "8D",
-    "z": 5,
-    "activeFace": 1
-  },
-  "moe39D": {
-    "id": "moe39D",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "9D",
-    "z": 10275,
-    "activeFace": 1,
-    "rotation": 90,
-    "x": 1250,
-    "y": 259.8
-  },
-  "moe3TD": {
-    "id": "moe3TD",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "TD",
-    "z": 10260,
-    "rotation": 330,
-    "x": 1175,
-    "y": 563,
-    "activeFace": 1
-  },
-  "moe3JD": {
-    "id": "moe3JD",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "JD",
-    "z": 10276,
-    "activeFace": 1,
-    "rotation": 90,
-    "x": 1250,
-    "y": 433
-  },
-  "moe3QD": {
-    "id": "moe3QD",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "QD",
-    "z": 10250,
-    "activeFace": 1,
-    "rotation": 210,
-    "x": 875,
-    "y": 303.1
-  },
-  "moe3KD": {
-    "id": "moe3KD",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "KD",
-    "z": 10277,
-    "activeFace": 1,
-    "rotation": 90,
-    "x": 1100,
-    "y": 519.6
-  },
-  "moe3AH": {
-    "id": "moe3AH",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "AH",
-    "z": 10267,
-    "activeFace": 1,
-    "rotation": 210,
-    "x": 1325,
-    "y": 563
-  },
-  "moe32H": {
-    "id": "moe32H",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "2H",
-    "z": 10278,
-    "activeFace": 1,
-    "rotation": 90,
-    "x": 1100,
-    "y": 346.40000000000003
-  },
-  "moe33H": {
-    "id": "moe33H",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "3H",
-    "z": 10264,
-    "activeFace": 1,
-    "rotation": 330,
-    "x": 1325,
-    "y": 303.1
-  },
-  "moe34H": {
-    "id": "moe34H",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "4H",
-    "z": 3,
-    "activeFace": 1
-  },
-  "moe35H": {
-    "id": "moe35H",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "5H",
-    "z": 10281,
-    "activeFace": 1,
-    "rotation": 330,
-    "x": 1175,
-    "y": 216.60000000000002
-  },
-  "moe36H": {
-    "id": "moe36H",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "6H",
-    "z": 16,
-    "activeFace": 1
-  },
-  "moe37H": {
-    "id": "moe37H",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "7H",
-    "z": 1,
-    "activeFace": 1
-  },
-  "moe38H": {
-    "id": "moe38H",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "8H",
-    "z": 24,
-    "activeFace": 1
-  },
-  "moe39H": {
-    "id": "moe39H",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "9H",
-    "z": 10265,
-    "activeFace": 1,
-    "rotation": 210,
-    "x": 1325,
-    "y": 389.8
-  },
-  "moe3TH": {
-    "id": "moe3TH",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "TH",
-    "z": 10272,
-    "activeFace": 1,
-    "rotation": 90,
-    "x": 1250,
-    "y": 606.2
-  },
-  "moe3JH": {
-    "id": "moe3JH",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "JH",
-    "z": 7,
-    "activeFace": 1
-  },
-  "moe3QH": {
-    "id": "moe3QH",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "QH",
-    "z": 6,
-    "activeFace": 1
-  },
-  "moe3KH": {
-    "id": "moe3KH",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "KH",
-    "z": 10251,
-    "activeFace": 1,
-    "rotation": 210,
-    "x": 875,
-    "y": 476.3
-  },
-  "moe3AS": {
-    "id": "moe3AS",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "AS",
-    "z": 15,
-    "activeFace": 1
-  },
-  "moe32S": {
-    "id": "moe32S",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "2S",
-    "z": 10257,
-    "activeFace": 1,
-    "rotation": 210,
-    "x": 1025,
-    "y": 389.8
-  },
-  "moe33S": {
-    "id": "moe33S",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "3S",
-    "z": 10262,
-    "activeFace": 1,
-    "rotation": 330,
-    "x": 1175,
-    "y": 389.8
-  },
-  "moe34S": {
-    "id": "moe34S",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "4S",
-    "z": 4,
-    "activeFace": 1
-  },
-  "moe35S": {
-    "id": "moe35S",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "5S",
-    "z": 23,
-    "activeFace": 1
-  },
-  "moe36S": {
-    "id": "moe36S",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "6S",
-    "z": 21,
-    "activeFace": 1
-  },
-  "moe37S": {
-    "id": "moe37S",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "7S",
-    "z": 10259,
-    "rotation": 210,
-    "x": 1025,
-    "y": 563,
-    "activeFace": 1
-  },
-  "moe38S": {
-    "id": "moe38S",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "8S",
-    "z": 18,
-    "activeFace": 1
-  },
-  "moe39S": {
-    "id": "moe39S",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "9S",
-    "z": 10261,
-    "activeFace": 1,
-    "rotation": 210,
-    "x": 1175,
-    "y": 476.3
-  },
-  "moe3TS": {
-    "id": "moe3TS",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "TS",
-    "z": 10258,
-    "activeFace": 1,
-    "rotation": 330,
-    "x": 1025,
-    "y": 476.3
-  },
-  "moe3JS": {
-    "id": "moe3JS",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "JS",
-    "z": 10249,
-    "activeFace": 1,
-    "rotation": 330,
-    "x": 875,
-    "y": 389.8
-  },
-  "moe3QS": {
-    "id": "moe3QS",
-    "parent": "73yz",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "QS",
-    "z": 25,
-    "activeFace": 1
-  },
-  "moe3KS": {
-    "id": "moe3KS",
-    "deck": "moe3D",
-    "type": "card",
-    "cardType": "KS",
-    "z": 10274,
-    "activeFace": 1,
-    "rotation": 330,
-    "x": 1325,
-    "y": 476.3
-  },
-  "73yz": {
-    "type": "pile",
-    "parent": "moe3",
-    "x": 4,
-    "y": 4,
-    "width": 51,
-    "height": 80,
-    "id": "73yz"
-  },
   "_meta": {
-    "version": 5,
+    "version": 12,
     "info": {
       "name": "Dice",
       "image": "/assets/-1031725036_4176",
@@ -1021,967 +9,238 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The assets used in this tutorial are in the public domain by CC0 as described in the Assets - Dice file.",
+      "attribution": "",
       "showName": false,
-      "lastUpdate": 1638938699000
+      "lastUpdate": 1677861639105,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "2-Dimensional",
+      "language": "en-US",
+      "players": "1"
     }
   },
-  "8fr3": {
-    "text": "Dice",
-    "css": "font-size: 60px",
-    "height": 100,
-    "width": 1000,
-    "x": 706,
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "text": "Two-dimensional dice can be added from the Add Widget overlay. When adding a dice, you can pick the number of faces that are available. When clicked, they animate by shaking back and forth and changing faces a few times."
+  },
+  "title": {
+    "id": "title",
+    "width": 1600,
+    "height": 70,
     "z": 70,
-    "id": "8fr3",
-    "y": -5
-  },
-  "k055": {
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/-1823736991_24817"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-679890528_24889"
-      },
-      {
-        "value": 3,
-        "image": "/assets/1357148424_24970"
-      },
-      {
-        "value": 4,
-        "image": "/assets/-449446505_25047"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1188157433_25128"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-235086523_25208"
-      }
-    ],
-    "id": "k055",
-    "faceCycle": "random",
-    "y": 871,
-    "x": 69,
-    "z": 75332,
-    "value": 3,
-    "image": "/assets/1357148424_24970",
-    "centerX": 58,
-    "centerY": 861,
-    "jumpX": 69,
-    "jumpY": 871,
-    "rotation": 184,
-    "activeFace": 2
-  },
-  "n07y": {
-    "text": "A basic die is a generic widget that uses the faces property with separate images for each face.  Clicking the die rotates through the faces using the 'faceCycle':'random' property. The disadvantage of this simple approach is there are no visual clues that the die was 'rolled' if the same face is shown after clicking. It would be useful to assign each face a value, as you can see in this example json, if other room controls will use the value of the face for any type of automation or calculations.",
-    "id": "n07y",
-    "z": 763,
-    "x": 219,
-    "y": 89,
-    "width": 500
-  },
-  "fp2l": {
-    "text": "One solution to the problem of showing the die was actually clicked is to use dice with shaded sides and rotation.  In order to implement the rotation, however, a button control is needed.  So add a transparent button overlaying the die.  The button implements the rotation element in 90 degree increments and 'CLICK's the die to randomly choose a face. The covering button does make dragging the die difficult except for small areas in the corners.",
-    "z": 75274,
-    "x": 217,
-    "y": 273,
-    "width": 500,
-    "id": "fp2l"
-  },
-  "t8uu": {
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/1506690450_41837"
-      },
-      {
-        "value": 2,
-        "image": "/assets/1243081296_41375"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-944059949_45553"
-      },
-      {
-        "value": 4,
-        "image": "/assets/-221208910_42331"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-974591659_46583"
-      },
-      {
-        "value": 6,
-        "image": "/assets/119706058_45687"
-      }
-    ],
-    "z": 75275,
-    "x": 89,
-    "y": 281,
-    "value": 1,
-    "image": "/assets/1506690450_41837",
-    "faceCycle": "random",
-    "id": "t8uu",
+    "css": "font-size: 60px; text-align:center",
+    "text": "Dice: 2D",
     "movable": false,
-    "rotation": 2070
-  },
-  "hy65": {
-    "type": "button",
-    "text": "roll",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "t8uu"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "relation": "+",
-        "value": 90
-      }
-    ],
-    "x": 0,
-    "y": 0,
-    "id": "hy65",
-    "parent": "t8uu",
-    "movableInEdit": false,
-    "width": 100,
-    "height": 100,
-    "css": "opacity:0"
-  },
-  "vb17": {
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/-1452524924_1059"
-      },
-      {
-        "value": 2,
-        "image": "/assets/1385921799_1098"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-1124686643_1137"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1705210260_1176"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-716052491_1215"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1124435461_1254"
-      }
-    ],
-    "faceCycle": "random",
-    "y": 478,
-    "x": 60,
-    "value": 2,
-    "image": "/assets/1385921799_1098",
-    "z": 75328,
-    "css": "border-radius:25%;background-color:black",
-    "id": "vb17",
-    "rotation": 1994,
-    "activeFace": 1
-  },
-  "fusq": {
-    "type": "button",
-    "text": "roll",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "3ddd"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "GET",
-        "property": "jumpX"
-      },
-      {
-        "func": "GET",
-        "property": "x"
-      },
-      {
-        "func": "GET",
-        "property": "jumpY"
-      },
-      {
-        "func": "GET",
-        "property": "y"
-      },
-      "var sameX = ${x} == ${jumpX}",
-      "var sameY = ${y} == ${jumpY}",
-      "var movedByThis = ${sameX} && ${sameY}",
-      {
-        "func": "SET",
-        "property": "centerX",
-        "skip": "${movedByThis}",
-        "value": "${x}"
-      },
-      {
-        "func": "SET",
-        "property": "centerY",
-        "skip": "${movedByThis}",
-        "value": "${y}"
-      },
-      {
-        "func": "GET",
-        "property": "centerX"
-      },
-      {
-        "func": "GET",
-        "property": "centerY"
-      },
-      {
-        "func": "GET",
-        "property": "width"
-      },
-      "var max = ${width} / 10",
-      "var min = -1 * ${max}",
-      "var RANDOM = randInt ${min} ${max}",
-      "var COMPUTE = ${centerX} + ${RANDOM}",
-      {
-        "func": "SET",
-        "property": "x",
-        "value": "${COMPUTE}"
-      },
-      {
-        "func": "SET",
-        "property": "jumpX",
-        "value": "${COMPUTE}"
-      },
-      "var RANDOM = randInt ${min} ${max}",
-      "var COMPUTE = ${centerY} + ${RANDOM}",
-      {
-        "func": "SET",
-        "property": "y",
-        "value": "${COMPUTE}"
-      },
-      {
-        "func": "SET",
-        "property": "jumpY",
-        "value": "${COMPUTE}"
-      },
-      "var RANDOM = randInt -10 10",
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": "${RANDOM}"
-      }
-    ],
-    "id": "fusq",
-    "parent": "3ddd",
-    "movableInEdit": false,
-    "width": 80,
-    "height": 80,
-    "css": "opacity:0",
-    "z": 21605,
-    "debug": false,
-    "layer": 2,
-    "rotation": 45,
-    "x": 11,
-    "y": 9,
-    "movable": false
-  },
-  "5jlw": {
-    "text": "To enhance the visibility of the rotation effect, you can set the rotation to be in a random amount as in this example.",
-    "z": 75276,
-    "x": 212,
-    "y": 493,
-    "width": 500,
-    "id": "5jlw"
-  },
-  "lqo7": {
-    "text": "To make things look even more like a die rolling on the table, you can add randomness to the x,y coordinates.  This example use a static location around which the die can move (pre-defined x and y min and max values). If you move the die across the board, it will jump back here when clicked.",
-    "z": 75282,
-    "x": 214,
-    "y": 675,
-    "width": 500,
-    "id": "lqo7"
-  },
-  "k18u": {
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/-615055520_945"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-480703945_984"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-97339769_1023"
-      },
-      {
-        "value": 4,
-        "image": "/assets/165895662_1062"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-665230544_1101"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1034302627_1140"
-      }
-    ],
-    "id": "k18u",
-    "faceCycle": "random",
-    "y": 93,
-    "x": 63,
-    "z": 75317,
-    "value": 6,
-    "image": "/assets/1034302627_1140",
-    "css": "border-radius: 25%; background-color: white;",
-    "activeFace": 2
-  },
-  "f34a": {
-    "type": "button",
-    "text": "roll",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "k055"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "GET",
-        "property": "jumpX"
-      },
-      {
-        "func": "GET",
-        "property": "x"
-      },
-      {
-        "func": "GET",
-        "property": "jumpY"
-      },
-      {
-        "func": "GET",
-        "property": "y"
-      },
-      "var sameX = ${x} == ${jumpX}",
-      "var sameY = ${y} == ${jumpY}",
-      "var movedByThis = ${sameX} && ${sameY}",
-      {
-        "func": "SET",
-        "property": "centerX",
-        "skip": "${movedByThis}",
-        "value": "${x}"
-      },
-      {
-        "func": "SET",
-        "property": "centerY",
-        "skip": "${movedByThis}",
-        "value": "${y}"
-      },
-      {
-        "func": "GET",
-        "property": "centerX"
-      },
-      {
-        "func": "GET",
-        "property": "centerY"
-      },
-      {
-        "func": "GET",
-        "property": "width"
-      },
-      "var max = ${width} / 2",
-      "var min = -1 * ${max}",
-      "var RANDOM = randInt ${min} ${max}",
-      "var COMPUTE = ${centerX} + ${RANDOM}",
-      {
-        "func": "SET",
-        "property": "x",
-        "value": "${COMPUTE}"
-      },
-      {
-        "func": "SET",
-        "property": "jumpX",
-        "value": "${COMPUTE}"
-      },
-      "var RANDOM = randInt ${min} ${max}",
-      "var COMPUTE = ${centerY} + ${RANDOM}",
-      {
-        "func": "SET",
-        "property": "y",
-        "value": "${COMPUTE}"
-      },
-      {
-        "func": "SET",
-        "property": "jumpY",
-        "value": "${COMPUTE}"
-      },
-      {
-        "func": "GET",
-        "property": "rotation"
-      },
-      "var RANDOM = randInt 20 70",
-      "var COMPUTE = ${rotation} + ${RANDOM}",
-      "var COMPUTE = ${COMPUTE} % 360",
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": "${COMPUTE}"
-      }
-    ],
-    "id": "f34a",
-    "movableInEdit": false,
-    "width": 100,
-    "height": 100,
-    "css": "opacity:0",
-    "parent": "k055"
-  },
-  "efsm": {
-    "text": "This die takes the previous example to the next level by allowing the die to be moved.  The clickRoutine then adjusts the area for the die to move around based on its current coordinates. It also ensures at least 20 degrees of difference in rotation even if the face is fully symmetrical (1,4,5).",
-    "z": 75280,
-    "x": 216,
-    "y": 861,
-    "width": 500,
-    "id": "efsm"
-  },
-  "rdwe": {
-    "text": "For the 3D dice, only small rotation changes are appropriate.  Otherwise, it will be impossible to tell which face is 'up'.  This clickRoutine only makes rotation changes within plus or minus 10 around the original rotation value of 0. This variation also allows much smaller changes in x,y coords.",
-    "z": 75307,
-    "x": 883,
-    "y": 848,
-    "width": 500,
-    "id": "rdwe"
-  },
-  "3ddd": {
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/1925169679_31051"
-      },
-      {
-        "value": 1,
-        "image": "/assets/136562985_37299"
-      },
-      {
-        "value": 1,
-        "image": "/assets/1787376998_31661"
-      },
-      {
-        "value": 1,
-        "image": "/assets/1863200732_35303"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-788352442_40663"
-      },
-      {
-        "value": 2,
-        "image": "/assets/1697908701_40061"
-      },
-      {
-        "value": 2,
-        "image": "/assets/-2094267382_31585"
-      },
-      {
-        "value": 2,
-        "image": "/assets/780552644_31850"
-      },
-      {
-        "value": 3,
-        "image": "/assets/1289633700_46851"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-1917428665_37723"
-      },
-      {
-        "value": 3,
-        "image": "/assets/333445090_41919"
-      },
-      {
-        "value": 3,
-        "image": "/assets/6530566_31068"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1911681449_42037"
-      },
-      {
-        "value": 4,
-        "image": "/assets/405509001_39966"
-      },
-      {
-        "value": 4,
-        "image": "/assets/-281115846_49035"
-      },
-      {
-        "value": 4,
-        "image": "/assets/-1846208178_36781"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1197054393_48630"
-      },
-      {
-        "value": 5,
-        "image": "/assets/934061303_40710"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-1417464351_48233"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-169609716_36565"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1872203222_50118"
-      },
-      {
-        "value": 6,
-        "image": "/assets/-384500910_49989"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1384430480_41253"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1285703129_44251"
-      }
-    ],
-    "id": "3ddd",
-    "value": 4,
-    "image": "/assets/1911681449_42037",
-    "z": 75321,
-    "scale": 1,
-    "x": 1394,
-    "y": 835,
-    "faceCycle": "random",
-    "centerX": 1400,
-    "centerY": 839,
-    "jumpX": 1394,
-    "jumpY": 835,
-    "activeFace": 22,
-    "rotation": 5
-  },
-  "pmm1": {
-    "faces": [
-      {
-        "value": 1,
-        "image": "/assets/-1452524924_1059"
-      },
-      {
-        "value": 2,
-        "image": "/assets/1385921799_1098"
-      },
-      {
-        "value": 3,
-        "image": "/assets/-1124686643_1137"
-      },
-      {
-        "value": 4,
-        "image": "/assets/1705210260_1176"
-      },
-      {
-        "value": 5,
-        "image": "/assets/-716052491_1215"
-      },
-      {
-        "value": 6,
-        "image": "/assets/1124435461_1254"
-      }
-    ],
-    "faceCycle": "random",
-    "y": 669,
-    "x": 39,
-    "value": 3,
-    "image": "/assets/-1124686643_1137",
-    "z": 75335,
-    "css": "border-radius:25%;background-color:#70ad47",
-    "id": "pmm1",
-    "centerX": 1116,
-    "centerY": 419,
-    "jumpX": 1072,
-    "jumpY": 466,
-    "rotation": 174,
-    "activeFace": 3
-  },
-  "gghr": {
-    "type": "button",
-    "text": "roll",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "vb17"
-      },
-      {
-        "func": "CLICK"
-      },
-      "var RANDOM = randInt 15 75",
-      {
-        "func": "SET",
-        "property": "rotation",
-        "relation": "+",
-        "value": "${RANDOM}"
-      }
-    ],
-    "id": "gghr",
-    "parent": "vb17",
-    "movableInEdit": false,
-    "width": 100,
-    "height": 100,
-    "css": "opacity:0"
-  },
-  "dsfa": {
-    "type": "button",
-    "text": "roll",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "source": "all",
-        "property": "id",
-        "value": "pmm1",
-        "collection": "B2COLLECTION"
-      },
-      "var RANDOM = randInt 30 90",
-      {
-        "func": "SET",
-        "collection": "B2COLLECTION",
-        "property": "x",
-        "relation": "=",
-        "value": "${RANDOM}"
-      },
-      "var RANDOM = randInt 630 690",
-      {
-        "func": "SET",
-        "collection": "B2COLLECTION",
-        "property": "y",
-        "relation": "=",
-        "value": "${RANDOM}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "pmm1"
-      },
-      {
-        "func": "CLICK"
-      },
-      "var RANDOM = randInt -40 40",
-      {
-        "func": "SET",
-        "property": "rotation",
-        "relation": "+",
-        "value": "${RANDOM}"
-      }
-    ],
-    "id": "dsfa",
-    "movableInEdit": false,
-    "width": 100,
-    "height": 100,
-    "css": "opacity:0",
-    "z": 21605,
-    "parent": "pmm1"
-  },
-  "Classic Die": {
-    "id": "Classic Die",
-    "x": 1149,
-    "y": 79,
-    "z": 75358,
-    "backgroundColor": "white",
-    "css": "--size:100px; --rotX:-90deg; --rotY:0deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
-    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='100' height='100'%3E%3Cpath d='M1 1h100v100H1z' fill='b'/%3E%3Cuse xlink:href='%23A' fill='p1' x='20' y='20'/%3E%3Cuse xlink:href='%23A' fill='p2' x='20' y='50'/%3E%3Cuse xlink:href='%23A' fill='p3' x='20' y='80'/%3E%3Cuse xlink:href='%23A' fill='p4' x='50' y='20'/%3E%3Cuse xlink:href='%23A' fill='p5' x='50' y='50'/%3E%3Cuse xlink:href='%23A' fill='p6' x='50' y='80'/%3E%3Cuse xlink:href='%23A' fill='p7' x='80' y='20'/%3E%3Cuse xlink:href='%23A' fill='p8' x='80' y='50'/%3E%3Cuse xlink:href='%23A' fill='p9' x='80' y='80'/%3E%3Cdefs%3E%3Ccircle id='A' r='10'/%3E%3C/defs%3E%3C/svg%3E",
-    "pipColor": "black",
-    "updateRoutine": [
-      "var value = randInt 1 6",
-      "var valueX = ${PROPERTY xRotations} getIndex ${value}",
-      "var valueY = ${PROPERTY yRotations} getIndex ${value}",
-      "var randX = randInt 0 3",
-      "var randY = randInt 0 3",
-      "var randX = ${randX} * 360",
-      "var randY = ${randY} * 360",
-      "var sumX = ${randX} + ${valueX}",
-      "var sumY = ${randY} + ${valueY}",
-      "var css = '--size:' + ${PROPERTY width}",
-      "var css = ${css} + 'px; --rotX:'",
-      "var css = ${css} + ${sumX}",
-      "var css = ${css} + 'deg; --rotY:'",
-      "var css = ${css} + ${sumY}",
-      "var css = ${css} + 'deg; --rotZ:0deg; background: none !important; perspective: 1600px;'",
-      {
-        "func": "SET",
-        "property": "css",
-        "value": "${css}",
-        "collection": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "value",
-        "value": "${value}",
-        "collection": "thisButton"
-      }
-    ],
-    "value": 4,
-    "xRotations": [
-      0,
-      0,
-      0,
-      90,
-      -90,
-      0,
-      0
-    ],
-    "yRotations": [
-      0,
-      0,
-      90,
-      0,
-      0,
-      -90,
-      180
-    ]
-  },
-  "Base": {
-    "id": "Base",
-    "parent": "Classic Die",
-    "fixedParent": true,
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;transform-style: preserve-3d;  transform: translateZ(calc(var(--size) / -2)) rotateX(   var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ)) !important;  transition: transform 0.5s;"
-  },
-  "side1": {
-    "id": "side1",
-    "parent": "Base",
-    "fixedParent": true,
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movable": false,
-    "movableInEdit": true,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(  0deg) translateZ(calc(var(--size) / 2)) !important; ",
-    "inheritFrom": {
-      "Classic Die": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "backgroundColor",
-      "p2": "backgroundColor",
-      "p3": "backgroundColor",
-      "p4": "backgroundColor",
-      "p5": "pipColor",
-      "p6": "backgroundColor",
-      "p7": "backgroundColor",
-      "p8": "backgroundColor",
-      "p9": "backgroundColor"
-    }
-  },
-  "side2": {
-    "id": "side2",
-    "parent": "Base",
-    "fixedParent": true,
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movable": false,
-    "movableInEdit": true,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)) !important; ",
-    "inheritFrom": {
-      "Classic Die": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "backgroundColor",
-      "p4": "backgroundColor",
-      "p5": "backgroundColor",
-      "p6": "backgroundColor",
-      "p7": "backgroundColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "side3": {
-    "id": "side3",
-    "parent": "Base",
-    "fixedParent": true,
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movable": false,
-    "movableInEdit": true,
-    "activeFace": 0,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateX( -90deg) translateZ(calc(var(--size) / 2)) !important; ",
-    "inheritFrom": {
-      "Classic Die": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "backgroundColor",
-      "p4": "backgroundColor",
-      "p5": "pipColor",
-      "p6": "backgroundColor",
-      "p7": "backgroundColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "side4": {
-    "id": "side4",
-    "parent": "Base",
-    "fixedParent": true,
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movable": false,
-    "movableInEdit": true,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black; transform: rotateX( 90deg) translateZ(calc(var(--size) / 2)) !important; ",
-    "inheritFrom": {
-      "Classic Die": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "pipColor",
-      "p4": "backgroundColor",
-      "p5": "backgroundColor",
-      "p6": "backgroundColor",
-      "p7": "pipColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "side5": {
-    "id": "side5",
-    "parent": "Base",
-    "fixedParent": true,
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movable": false,
-    "movableInEdit": true,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY( 90deg) translateZ(calc(var(--size) / 2)) !important; ",
-    "inheritFrom": {
-      "Classic Die": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "pipColor",
-      "p4": "backgroundColor",
-      "p5": "pipColor",
-      "p6": "backgroundColor",
-      "p7": "pipColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "side6": {
-    "id": "side6",
-    "parent": "Base",
-    "fixedParent": true,
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movable": false,
-    "movableInEdit": true,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(180deg) translateZ(calc(var(--size) / 2)) !important; ",
-    "inheritFrom": {
-      "Classic Die": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "pipColor",
-      "p3": "pipColor",
-      "p4": "backgroundColor",
-      "p5": "backgroundColor",
-      "p6": "backgroundColor",
-      "p7": "pipColor",
-      "p8": "pipColor",
-      "p9": "pipColor"
-    }
-  },
-  "Cover": {
-    "id": "Cover",
-    "parent": "Classic Die",
-    "fixedParent": true,
-    "layer": 9,
-    "z": 1,
-    "movable": false,
-    "clickRoutine": [
-      {
-        "func": "CALL",
-        "widget": "${PROPERTY parent}",
-        "routine": "updateRoutine"
-      }
-    ],
-    "css": "width:var(--size) !important;height:var(--size) !important;",
     "movableInEdit": false
   },
-  "Label2": {
-    "id": "Label2",
-    "x": 897,
-    "y": 257,
-    "width": 600,
-    "height": 400,
-    "z": 75359,
+  "dice1": {
+    "type": "dice",
+    "id": "dice1",
+    "x": 170,
+    "y": 300,
+    "z": 187
+  },
+  "dice1text": {
+    "id": "dice1text",
+    "x": 50,
+    "y": 400,
+    "width": 300,
+    "z": 185,
     "movable": false,
-    "text": "The dice above consists of 9 separate widgets, each of which must be copied into the desired room. To customize the colors of these dice, go to the main widget 'Custom Die.' Change the 'backGroundColor' and 'pipColor' properties. Also, each side of the die needs to have the 'inheritFrom' property link to the main widget. So if you copy this or rename it, you'll have to change the 'inheritFrom' reference on all 6 sides.  To resize the die, simply change the width and height properties in the main widget. To see more examples of this, look in the Assets section of the library."
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "This is the default 2D dice. It has 6 faces and displays pips like most traditional dice. Each time the dice is clicked, the 'rollCount' property will increase by one."
+  },
+  "dice2text": {
+    "id": "dice2text",
+    "x": 400,
+    "y": 400,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "Dice with up to 9 faces will display pips by default. Values higher than 9 will display Arabic numerals. This dice has its 'color' and 'pipColor' properties changed."
+  },
+  "dice2": {
+    "type": "dice",
+    "id": "dice2",
+    "x": 520,
+    "y": 300,
+    "z": 187,
+    "color": "red",
+    "pipColor": "white",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "activeFace": 8,
+    "rollCount": 7
+  },
+  "dice3": {
+    "type": "dice",
+    "id": "dice3",
+    "x": 870,
+    "y": 300,
+    "z": 187,
+    "color": "black",
+    "faces": [
+      "One",
+      "2",
+      "Three",
+      "4"
+    ],
+    "faceCSS": {
+      "font-size": "16px",
+      "color": "white"
+    },
+    "rollCount": 6,
+    "activeFace": 1,
+    "pips": 0
+  },
+  "dice3text": {
+    "id": "dice3text",
+    "x": 750,
+    "y": 400,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "Dice can have any number of sides. Instead of pips, you can also display strings on the faces. To always displays Arabic numerals, put them in quotation marks (or set 'pips' to 0)."
+  },
+  "dice4text": {
+    "id": "dice4text",
+    "x": 1100,
+    "y": 400,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "Faces can also display images. If you want to change the color using svgReplaces, each face should have an svgReplaces property defined."
+  },
+  "dice4": {
+    "type": "dice",
+    "id": "dice4",
+    "x": 1220,
+    "y": 300,
+    "z": 188,
+    "faces": [
+      {
+        "image": "i/icons/poker_chip.svg",
+        "svgReplaces": {
+          "currentColor": "color1"
+        }
+      },
+      {
+        "image": "i/icons/pawn.svg",
+        "svgReplaces": {
+          "currentColor": "color2"
+        }
+      },
+      {
+        "image": "i/icons/color.svg",
+        "svgReplaces": {
+          "currentColor": "color3"
+        }
+      },
+      {
+        "image": "i/icons/hex_grid_horizontal.svg",
+        "svgReplaces": {
+          "currentColor": "color1"
+        }
+      },
+      {
+        "image": "i/icons/auto_awesome.svg",
+        "svgReplaces": {
+          "currentColor": "color2"
+        }
+      },
+      {
+        "image": "i/icons/link.svg",
+        "svgReplaces": {
+          "currentColor": "color3"
+        }
+      }
+    ],
+    "rollCount": 6,
+    "text": "Hi",
+    "color1": "red",
+    "color2": "green",
+    "color3": "blue",
+    "activeFace": 3,
+    "faceCSS": "font-family:VTT-Symbols"
+  },
+  "dice5": {
+    "type": "dice",
+    "id": "dice5",
+    "x": 170,
+    "z": 187,
+    "y": 650,
+    "rollTime": 1300,
+    "rollCount": 4
+  },
+  "dice5text": {
+    "id": "dice5text",
+    "x": 50,
+    "y": 725,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "The 'rollTime' property of this dice has been increased from the default of 800ms to 1300ms. This lengthens the time it takes to complete the animation, but there is no way to change the number of steps in the animation (so it appears to move slower)."
+  },
+  "dice6": {
+    "type": "dice",
+    "id": "dice6",
+    "x": 520,
+    "y": 650,
+    "z": 187,
+    "rollCount": 11,
+    "image": "/assets/539909737_29892",
+    "faces": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "activeFace": 2
+  },
+  "dice6text": {
+    "id": "dice6text",
+    "x": 400,
+    "y": 725,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "This dice uses the 'image' property to set a background that is used on all the faces. Using the object form of 'faces', you could also change the image per face."
   }
 }

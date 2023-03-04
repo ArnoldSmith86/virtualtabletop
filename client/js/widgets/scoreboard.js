@@ -35,8 +35,8 @@ class Scoreboard extends Widget {
     this.updateTable();
   }
 
-  classes() {
-    let className = super.classes();
+  classes(includeTemporary=true) {
+    let className = super.classes(includeTemporary);
 
     if(this.get('autosizeColumns'))
       className += ' equalWidth';
