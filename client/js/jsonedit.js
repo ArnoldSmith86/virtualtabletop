@@ -912,7 +912,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
   jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "OK", fields: [] } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
+  jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, fromHolder: null, toHolder: null, target: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, target: 'DEFAULT' });
@@ -987,9 +987,9 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
 
-  jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ (collection|target|holder)', collectionNames.slice(1));
-  jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
-  jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
+  jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ (target|holder|source|toHolder|fromHolder)', collectionNames.slice(1));
+  //jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1)); keeping this here because I don't know if clone can inpu 'all'
+  jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ collection', collectionNames); //this includes 'all' that cannot be an output
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
   jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
 
