@@ -1967,6 +1967,8 @@ export class Widget extends StateManaged {
     if (limit.maxY !== undefined) {
       newCoord.y = Math.min(limit.maxY, newCoord.y);
     }
+    newCoord.x = Math.round(newCoord.x);
+    newCoord.y = Math.round(newCoord.y);
 
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
