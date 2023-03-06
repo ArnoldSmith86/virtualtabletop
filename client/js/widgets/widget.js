@@ -624,7 +624,11 @@ export class Widget extends StateManaged {
     const transformOrigin = getTransformOrigin(this.domElement);
     let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
     const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
-    let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
+    let corner = {
+      x: Math.round(coord.x + offset.x - transformOrigin.x),
+      y: Math.round(coord.y + offset.y - transformOrigin.y),
+      z: this.get('z')
+  };
     return parent ?
         parent.coordGlobalFromCoordLocal(corner) : corner;
   }
@@ -1967,8 +1971,6 @@ export class Widget extends StateManaged {
     if (limit.maxY !== undefined) {
       newCoord.y = Math.min(limit.maxY, newCoord.y);
     }
-    newCoord.x = Math.round(newCoord.x);
-    newCoord.y = Math.round(newCoord.y);
 
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
