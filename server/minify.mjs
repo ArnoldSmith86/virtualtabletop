@@ -74,6 +74,7 @@ export default async function minifyHTML() {
   const editorCSS = await compressCSS([
     'client/css/editor/layout.css',
     'client/css/editor/toolbar.css',
+    'client/css/editor/dragtoolbar.css',
     'client/css/editor/sidebar.css',
     'client/css/editor/sidebarModules.css',
 
@@ -91,6 +92,8 @@ export default async function minifyHTML() {
     'client/js/editor/toolbar/click.js',
     'client/js/editor/toolbar/darkmode.js',
     'client/js/editor/toolbar/close.js',
+    'client/js/editor/dragButton.js',
+    'client/js/editor/dragbuttons/move.js',
     'client/js/editor/sidebarModule.js',
     'client/js/editor/sidebar/properties.js',
     'client/js/editor/sidebar/undo.js',

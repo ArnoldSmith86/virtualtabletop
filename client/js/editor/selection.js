@@ -5,10 +5,12 @@ let selectionRectangleActive = false;
 let selectionRectangleStart = null;
 let selectionRectangleEnd = null;
 
+let draggingDragButton = null;
 let widgetRectangles = null;
 
 export function editInputHandler(name, e) {
   const coords = eventCoords(name, e);
+  const wasDraggingDragButton = !!draggingDragButton;
 
   if(name == 'mousedown' || name == 'touchstart') {
     for(let target = e.target; target; target = target.parentNode)
@@ -24,14 +26,18 @@ export function editInputHandler(name, e) {
       hideSelectionRectangle();
       applySelectionRectangle(e.shiftKey);
     }
+    if(draggingDragButton)
+      draggingDragButton.mouseup(e);
   } else if (name == 'mousemove' || name == 'touchmove') {
     if(selectionRectangleActive) {
       selectionRectangleEnd = coords;
       showSelectionRectangle();
     }
+    if(draggingDragButton)
+      draggingDragButton.mousemove(e);
   }
 
-  if(selectionRectangleActive) {
+  if(selectionRectangleActive || wasDraggingDragButton) {
     e.preventDefault();
     return true;
   }
@@ -118,8 +124,19 @@ function setSelection(newSelectedWidgets) {
 
   for(const button of toolbarButtons)
     button.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
+  for(const button of dragToolbarButtons)
+    button.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
   for(const module of sidebarModules)
     module.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
+
+  if(selectedWidgets.length) {
+    const rects = selectedWidgets.map(w=>w.domElement.getBoundingClientRect());
+    $('#editorDragToolbar').classList.add('active');
+    $('#editorDragToolbar').style.top = (Math.max(...rects.map(r=>r.bottom)) + 10) + 'px';
+    $('#editorDragToolbar').style.right = (window.innerWidth - Math.max(...rects.map(r=>r.right))) + 'px';
+  } else {
+    $('#editorDragToolbar').classList.remove('active');
+  }
 }
 
 export function editClick(widget) {

@@ -1,4 +1,5 @@
 let toolbarButtons = null;
+let dragToolbarButtons = null;
 let sidebarModules = null;
 
 function initializeEditor() {
@@ -10,6 +11,10 @@ function initializeEditor() {
     new ClickButton(),
     new DarkModeButton(),
     new CloseButton()
+  ]);
+
+  renderDragToolbar(dragToolbarButtons = [
+    new MoveDragButton()
   ]);
 
   renderSidebar(sidebarModules = [
@@ -24,6 +29,11 @@ function initializeEditor() {
 function renderToolbar(buttons) {
   for(const button of buttons)
     button.render($('#editorToolbar'));
+}
+
+function renderDragToolbar(buttons) {
+  for(const button of buttons)
+    button.render($('#editorDragToolbar'));
 }
 
 function renderSidebar(modules) {

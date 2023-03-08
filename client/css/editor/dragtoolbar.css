@@ -1,0 +1,38 @@
+:root {
+  --editToolbarHeight: 36px;
+}
+
+#editorDragToolbar {
+  display: none;
+  position: absolute;
+  background: var(--VTTblue);
+  z-index: 3;
+}
+
+#editorDragToolbar.active {
+  display: flex;
+}
+
+#editorDragToolbar button {
+  padding: 5px;
+}
+
+#editorDragToolbar button::before {
+  margin: 0;
+}
+
+#editorDragToolbar button span {
+  display: none;
+  position: absolute;
+  top: calc(var(--editToolbarHeight) + 1px);
+  background: var(--VTTblueDark);
+  margin: 0;
+  margin-left: -5px;
+  padding: 10px;
+  border-radius: 5px;
+  text-transform: none;
+}
+
+#editorDragToolbar button:hover span {
+  display: block;
+}
