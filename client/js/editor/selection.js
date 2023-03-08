@@ -22,7 +22,7 @@ export function editInputHandler(name, e) {
   } else if (name == 'mouseup' || name == 'touchend' || name == 'touchcancel') {
     if(selectionRectangleActive) {
       hideSelectionRectangle();
-      applySelectionRectangle();
+      applySelectionRectangle(e.shiftKey);
     }
   } else if (name == 'mousemove' || name == 'touchmove') {
     if(selectionRectangleActive) {
@@ -80,16 +80,29 @@ function hideSelectionRectangle() {
   $('#editorSelection').classList.remove('active');
 }
 
-function applySelectionRectangle() {
+function applySelectionRectangle(addToSelection) {
   const s = getSelectionRectangle();
+
+  let newlySelected = [];
   if(s.right - s.left < 5 || s.bottom - s.top < 5) {
     const clicked = document.elementsFromPoint(s.left, s.top).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w);
     if(clicked.length)
-      setSelection([ clicked[0] ]);
-    else
-      setSelection([]);
+      newlySelected = [ clicked[0] ];
   } else {
-    setSelection(selectedWidgetsPreview);
+    newlySelected = selectedWidgetsPreview;
+  }
+
+  if(!addToSelection) {
+    setSelection(newlySelected);
+  } else {
+    let selectionToApply = [...selectedWidgets];
+    for(const widget of newlySelected) {
+      if(selectedWidgets.indexOf(widget) == -1)
+        selectionToApply.push(widget);
+      else
+        selectionToApply = selectionToApply.filter(w=>w!=widget);
+    }
+    setSelection(selectionToApply);
   }
 }
 
