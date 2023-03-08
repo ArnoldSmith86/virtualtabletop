@@ -57,13 +57,18 @@ function showSelectionRectangle() {
   $('#editorSelection').style.width  = s.right  - s.left + 'px';
   $('#editorSelection').style.height = s.bottom - s.top  + 'px';
 
+  for(const widget of selectedWidgetsPreview)
+    widget.domElement.classList.remove('selectedInEditPreview');
+
   selectedWidgetsPreview = [];
-  for(const [ widget, rect ] of widgetRectangles) {
-    const inSelection = rect.left >= s.left && rect.top >= s.top && rect.right <= s.right && rect.bottom <= s.bottom;
-    widget.domElement.classList.toggle('selectedInEditPreview', inSelection);
-    if(inSelection)
+  for(const [ widget, rect ] of widgetRectangles)
+    if(rect.left >= s.left && rect.top >= s.top && rect.right <= s.right && rect.bottom <= s.bottom)
       selectedWidgetsPreview.push(widget);
-  }
+
+  selectedWidgetsPreview = selectedWidgetsPreview.filter(w=>selectedWidgetsPreview.indexOf(widgets.get(w.get('parent'))) == -1);
+
+  for(const widget of selectedWidgetsPreview)
+    widget.domElement.classList.add('selectedInEditPreview');
 }
 
 function hideSelectionRectangle() {
