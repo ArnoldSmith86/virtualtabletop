@@ -1687,7 +1687,16 @@ function jeDisplayTree() {
   on('#jeWidgetSearchBox', 'click', jeDisplayFilteredWidgets);
 
   on('.jeTreeWidget', 'click', function(e) {
-    editClick(widgets.get($('.key', e.currentTarget).innerText));
+    const widget = widgets.get($('.key', e.currentTarget).innerText);
+
+    if(!e.shiftKey) {
+      setSelection([ widget ]);
+    } else if(selectedWidgets.indexOf(widget) == -1) {
+      setSelection(selectedWidgets.concat([ widget ]));
+    } else {
+      setSelection(selectedWidgets.filter(w=>w!=widget));
+    }
+
     e.stopPropagation();
   });
 }

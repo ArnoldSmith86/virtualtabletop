@@ -359,7 +359,8 @@ async function loadEditMode() {
       getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
-      toHex
+      toHex,
+      eventCoords
     });
     $('body').classList.add('loadingEditMode');
     const editmode = await import('./edit.js');

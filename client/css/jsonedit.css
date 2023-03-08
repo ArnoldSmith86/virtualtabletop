@@ -72,6 +72,7 @@
   overflow-y: auto;
   white-space: pre-wrap;
   font-family: monospace;
+  user-select: none;
 }
 
 #jeWidgetSearch {
@@ -201,19 +202,6 @@ i.null    { color: var(--textHighlightColor6); }
 i.default { color: var(--textDimColor1);       }
 i.variable{ color: var(--textHighlightColor7); }
 i.error   { color: var(--textHighlightColor3); font-weight: bold; }
-
-body.jsonEdit .selectedInEdit:not(.pile) {
-  box-shadow: 0px 0px 0px 5px yellow;
-}
-
-body.jsonEdit .selectedInEdit.pile .handle {
-  box-shadow: 0px 0px 0px 5px yellow;
-}
-
-body.jsonEdit:not(.edit) .selectedInEdit.deck {
-  visibility: visible;
-  font-size: 0;
-}
 
 /**** End color formatting ****/
 

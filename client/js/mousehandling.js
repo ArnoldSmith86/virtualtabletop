@@ -19,6 +19,9 @@ function eventCoords(name, e) {
 }
 
 async function inputHandler(name, e) {
+  if(edit && editInputHandler(name, e))
+    return;
+
   if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
 

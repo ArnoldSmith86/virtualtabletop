@@ -48,3 +48,34 @@ body.edit {
   --roomTop: var(--editModeRoomTop);
   --roomLeft: var(--editModeRoomLeft);
 }
+
+#editorSelection {
+  display: none;
+  box-shadow: 0px 0px 0px 5px green;
+  position: absolute;
+  z-index: 2;
+}
+#editorSelection.active {
+  display: block;
+}
+
+body.edit .widget.selectedInEdit:not(.pile) {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
+
+body.edit .widget.selectedInEdit.pile .handle {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
+
+body.edit .widget.selectedInEditPreview:not(.pile) {
+  box-shadow: 0px 0px 0px 5px red;
+}
+
+body.edit .widget.selectedInEditPreview.pile .handle {
+  box-shadow: 0px 0px 0px 5px red;
+}
+
+body.edit .widget.selectedInEdit.deck {
+  visibility: visible;
+  font-size: 0;
+}

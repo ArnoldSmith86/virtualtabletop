@@ -67,13 +67,9 @@ class DebugModule extends SidebarModule {
 
   onClose() {
     $('#jsonEditor').append($('#jeLog'));
-    //$('#jsonEditor').append($('#jeWidgetSearch'));
-    //$('#jsonEditor').append($('#jeWidgetSearchResults'));
   }
 
   renderModule(target) {
-    //target.append($('#jeWidgetSearch'));
-    //target.append($('#jeWidgetSearchResults'));
     target.append($('#jeLog'));
   }
 }
