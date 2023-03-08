@@ -624,13 +624,12 @@ export class Widget extends StateManaged {
     const transformOrigin = getTransformOrigin(this.domElement);
     let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
     const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
-    let corner = {
-      x: Math.round(coord.x + offset.x - transformOrigin.x),
-      y: Math.round(coord.y + offset.y - transformOrigin.y),
-      z: this.get('z')
-  };
-    return parent ?
-        parent.coordGlobalFromCoordLocal(corner) : corner;
+    let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
+    if (parent)
+      corner = parent.coordGlobalFromCoordLocal(corner);
+      corner.x = Math.round(corner.x);
+      corner.y = Math.round(corner.y);
+    return corner;
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
