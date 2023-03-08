@@ -6,6 +6,7 @@
   display: none;
   position: absolute;
   background: var(--VTTblue);
+  border-radius: 5px;
   z-index: 3;
 }
 
@@ -26,6 +27,7 @@
   position: absolute;
   top: calc(var(--editToolbarHeight) + 1px);
   background: var(--VTTblueDark);
+  width: 200px;
   margin: 0;
   margin-left: -5px;
   padding: 10px;
