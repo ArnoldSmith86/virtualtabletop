@@ -336,7 +336,7 @@ class Dice extends Widget {
     if(!s3d)
       return;
     function rotationMatrix(elem) {
-      if(!elem || !elem instanceof HTMLElement)
+      if(!(elem instanceof HTMLElement))
         return new DOMMatrix();
       const R = new DOMMatrix(getComputedStyle(elem).transform);
       // assumes no scale or skew transformations
@@ -344,7 +344,7 @@ class Dice extends Widget {
       return R
     }
     function axisAngle(matrix) {
-      if(!matrix || !matrix instanceof DOMMatrix)
+      if(!(matrix instanceof DOMMatrix))
         return '';
       const M = matrix.toFloat64Array();
       const Q = [M.slice(0,3),M.slice(4,7),M.slice(8,11)];
