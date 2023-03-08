@@ -1,9 +1,9 @@
 class MoveDragButton extends DragButton {
   constructor() {
-    super('control_camera', 'Move the selected widgets.');
+    super('control_camera', 'Drag to move the selected widgets.');
   }
 
-  dragStart() {
+  async dragStart() {
     this.dragStartCoords = selectedWidgets.map(w=>[ w, w.get('x'), w.get('y') ]);
   }
 

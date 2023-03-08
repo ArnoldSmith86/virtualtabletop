@@ -217,11 +217,11 @@ const jeCommands = [
     call: async function(options) {
       for(const id of jeSelectedIDs()) {
         const problems = [];
-        const clonedWidget = await duplicateWidget(widgets.get(id), options['Copy recursively'], options['Copy using inheritFrom'], options['Inherit properties'].split(',').map(e => e.trim()),options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems);
+        const clonedWidget = (await duplicateWidget(widgets.get(id), options['Copy recursively'], options['Copy using inheritFrom'], options['Inherit properties'].split(',').map(e => e.trim()),options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems))[0];
         if(problems.length)
           jeJSONerror = problems.join('\n');
         if(clonedWidget) {
-          jeSelectWidget(widgets.get(clonedWidget.id));
+          jeSelectWidget(clonedWidget);
           jeStateNow.id = '###SELECT ME###';
           jeSetAndSelect(clonedWidget.id);
           jeStateNow.id = clonedWidget.id;
@@ -1394,7 +1394,7 @@ export function jeApplyDelta(delta) {
   jeUpdateTree(delta.s);
 }
 
-function jeApplyState(state) {
+export function jeApplyState(state) {
   jeEmpty();
   jeDisplayTree();
 }

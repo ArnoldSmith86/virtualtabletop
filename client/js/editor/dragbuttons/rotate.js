@@ -1,9 +1,9 @@
 class RotateDragButton extends DragButton {
   constructor() {
-    super('settings_backup_restore', 'Rotate the selected widgets.');
+    super('settings_backup_restore', 'Drag to rotate the selected widgets.');
   }
 
-  dragStart() {
+  async dragStart() {
     this.dragStartRotations = selectedWidgets.map(w=>[ w, w.get('rotation') ]);
   }
 

@@ -1,18 +1,22 @@
 class DragButton extends ToolbarButton {
-  dragStart() {
+  async dragStart() {
   }
 
   async dragMove(dx, dy, dxViewport, dyViewport) {
   }
 
-  dragEnd() {
+  async dragEnd() {
   }
 
-  mousedown(e) {
+  async mousedown(e) {
     this.mousedownEvent = e;
     this.mousedownRect = this.domElement.parentElement.getBoundingClientRect();
     draggingDragButton = this;
-    this.dragStart();
+
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} used drag button ${this.icon} in editor`);
+    await this.dragStart();
+    batchEnd();
   }
 
   async mousemove(e) {
@@ -28,10 +32,14 @@ class DragButton extends ToolbarButton {
     batchEnd();
   }
 
-  mouseup(e) {
+  async mouseup(e) {
     this.mousedownEvent = e;
     draggingDragButton = null;
-    this.dragEnd();
+
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} used drag button ${this.icon} in editor`);
+    await this.dragEnd();
+    batchEnd();
   }
 
   render(target) {

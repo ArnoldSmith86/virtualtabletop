@@ -1,13 +1,13 @@
 class SpacingDragButton extends DragButton {
   constructor() {
-    super('format_line_spacing', 'Adjust spacing between selected widgets.');
+    super('format_line_spacing', 'Drag to adjust spacing between selected widgets.');
   }
 
-  dragStart() {
-    const minX = Math.min(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().left  ));
-    const minY = Math.min(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().top   ));
-    const maxX = Math.max(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().left ));
-    const maxY = Math.max(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().top));
+  async dragStart() {
+    const minX = Math.min(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().left));
+    const minY = Math.min(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().top ));
+    const maxX = Math.max(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().left));
+    const maxY = Math.max(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().top ));
     let i = 0;
     if(minX == maxX && minY == minY)
       this.dragStartOffsets = selectedWidgets.map(w=>[ w, w.get('x'), w.get('y'), i/(selectedWidgets.length-1), i++/(selectedWidgets.length-1) ]);

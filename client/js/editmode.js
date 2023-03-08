@@ -1551,17 +1551,18 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
     } else {
       const currentId = await addWidgetLocal(currentWidget);
 
+      const clonedWidgets = [ widgets.get(currentId) ];
       if(recursive)
         for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-          await clone(child, true, currentId, 0, 0);
+          clonedWidgets.push(...await clone(child, true, currentId, 0, 0));
 
-      if(currentId)
-        return currentWidget;
+      return clonedWidgets;
     }
   };
 
   const gridX = xCopies + 1;
   const gridY = yCopies + 1;
+  const clonedWidgets = [];
   for(let i=1; i<gridX*gridY; ++i) {
     let x = xOffset*(i%gridX);
     let y = yOffset*Math.floor(i/gridX);
@@ -1569,9 +1570,9 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
       x = xOffset;
       y = yOffset;
     }
-    var clonedWidget = await clone(widget, recursive, false, x, y);
+    clonedWidgets.push(...await clone(widget, recursive, false, x, y));
   }
-  return clonedWidget;
+  return clonedWidgets;
 }
 
 async function onClickDuplicateWidget() {
