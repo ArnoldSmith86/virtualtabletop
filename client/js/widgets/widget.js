@@ -627,8 +627,8 @@ export class Widget extends StateManaged {
     let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
     if (parent)
       corner = parent.coordGlobalFromCoordLocal(corner);
-      corner.x = Math.round(corner.x);
-      corner.y = Math.round(corner.y);
+    corner.x = Math.round(corner.x);
+    corner.y = Math.round(corner.y);
     return corner;
   }
 
