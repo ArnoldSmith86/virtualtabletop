@@ -15,6 +15,7 @@ function initializeEditor() {
 
   renderDragToolbar(dragToolbarButtons = [
     new SpacingDragButton(),
+    new RotateDragButton(),
     new MoveDragButton()
   ]);
 
