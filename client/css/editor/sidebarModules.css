@@ -1,3 +1,19 @@
+/* properties */
+
+.tune.editorModule .faceTemplateEdit {
+  margin-bottom: 40px;
+}
+
+.tune.editorModule .faceTemplateEdit > div {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.tune.editorModule .faceTemplateProperty {
+  margin-left: 20px;
+}
+
+
 /* undo */
 
 .undo.editorModule > div {

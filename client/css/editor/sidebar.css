@@ -187,6 +187,9 @@ body.darkMode #editorSidebar button.active {
   bottom: 10px;
 }
 
+.editorModule .widget {
+  position: unset;
+}
 
 body.draggingEditorSidebarModule #editorModules {
   display: grid;

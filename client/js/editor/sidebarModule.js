@@ -5,6 +5,12 @@ class SidebarModule {
     this.tooltip = tooltip;
   }
 
+  addHeader(text) {
+    const h = document.createElement('h1');
+    h.innerText = text;
+    this.moduleDOM.append(h);
+  }
+
   click(e) {
     let target = e.ctrlKey ? $('#editorModuleBottomLeft') : $('#editorModuleTopLeft');
     if(e.button == 2)
