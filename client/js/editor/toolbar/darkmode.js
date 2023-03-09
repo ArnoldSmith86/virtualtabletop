@@ -1,9 +1,9 @@
-class DarkModeButton extends ToolbarButton {
+class DarkModeButton extends ToolbarToggleButton {
   constructor() {
     super('dark_mode', 'Toggle between light and dark mode in the editor.');
   }
 
-  async click() {
-    $('body').classList.toggle('darkMode');
+  toggle(state) {
+    $('body').classList.toggle('darkMode', state);
   }
 }

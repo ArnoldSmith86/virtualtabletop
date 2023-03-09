@@ -21,3 +21,24 @@ class ToolbarButton {
     this.domElement.onclick = e=>this.click(e);
   }
 }
+
+class ToolbarToggleButton extends ToolbarButton {
+  click() {
+    this.active = !this.active;
+    this.domElement.classList.toggle('active');
+    this.toggle(this.active);
+    if(this.active)
+      this.activate();
+    else
+      this.deactivate();
+  }
+
+  toggle(state) {
+  }
+
+  activate() {
+  }
+
+  deactivate() {
+  }
+}

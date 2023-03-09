@@ -15,6 +15,10 @@
   padding: 5px;
 }
 
+#editorToolbar button.active {
+  background: var(--VTTblueDark);
+}
+
 #editorToolbar button::before {
   margin: 0;
 }
