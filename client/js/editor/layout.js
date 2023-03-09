@@ -8,7 +8,7 @@ function initializeEditor() {
   renderToolbar(toolbarButtons = [
     new NewButton(),
     new SaveButton(),
-    new ClickButton(),
+    new SelectModeButton(),
     new DarkModeButton(),
     new CloseButton()
   ]);

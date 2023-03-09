@@ -1,6 +1,7 @@
 let selectedWidgets = [];
 let selectedWidgetsPreview = [];
 
+let selectionModeActive = false;
 let selectionRectangleActive = false;
 let selectionRectangleStart = null;
 let selectionRectangleEnd = null;
@@ -9,6 +10,9 @@ let draggingDragButton = null;
 let widgetRectangles = null;
 
 export function editInputHandler(name, e) {
+  if(!selectionModeActive)
+    return;
+
   const coords = eventCoords(name, e);
   const wasDraggingDragButton = !!draggingDragButton;
 
@@ -21,14 +25,14 @@ export function editInputHandler(name, e) {
     selectionRectangleEnd = coords;
     widgetRectangles = [...widgets.values()].map(w=>[w,w.domElement.getBoundingClientRect()]);
     showSelectionRectangle();
-  } else if (name == 'mouseup' || name == 'touchend' || name == 'touchcancel') {
+  } else if(name == 'mouseup' || name == 'touchend' || name == 'touchcancel') {
     if(selectionRectangleActive) {
       hideSelectionRectangle();
       applySelectionRectangle(e.shiftKey);
     }
     if(draggingDragButton)
       draggingDragButton.mouseup(name, e);
-  } else if (name == 'mousemove' || name == 'touchmove') {
+  } else if(name == 'mousemove' || name == 'touchmove') {
     if(selectionRectangleActive) {
       selectionRectangleEnd = coords;
       showSelectionRectangle();
@@ -129,7 +133,7 @@ function setSelection(newSelectedWidgets) {
   for(const module of sidebarModules)
     module.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
 
-  if(selectedWidgets.length) {
+  if(selectedWidgets.length && selectionModeActive) {
     const rects = selectedWidgets.map(w=>w.domElement.getBoundingClientRect());
     $('#editorDragToolbar').classList.add('active');
     $('#editorDragToolbar').style.top = (Math.max(...rects.map(r=>r.bottom)) + 10) + 'px';
@@ -139,8 +143,13 @@ function setSelection(newSelectedWidgets) {
   }
 }
 
-export function editClick(widget) {
-  setSelection([ widget ]);
+export async function editClick(widget) {
+  if(selectedWidgets.indexOf(widget) == -1) {
+    setSelection([ widget ]);
+  } else {
+    setDeltaCause(`${getPlayerDetails().playerName} clicked ${widget.id} in editor`);
+    await widget.click();
+  }
 }
 
 export function editorReceiveDelta(delta) {
