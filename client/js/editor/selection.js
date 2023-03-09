@@ -27,14 +27,14 @@ export function editInputHandler(name, e) {
       applySelectionRectangle(e.shiftKey);
     }
     if(draggingDragButton)
-      draggingDragButton.mouseup(e);
+      draggingDragButton.mouseup(name, e);
   } else if (name == 'mousemove' || name == 'touchmove') {
     if(selectionRectangleActive) {
       selectionRectangleEnd = coords;
       showSelectionRectangle();
     }
     if(draggingDragButton)
-      draggingDragButton.mousemove(e);
+      draggingDragButton.mousemove(name, e);
   }
 
   if(selectionRectangleActive || wasDraggingDragButton) {

@@ -8,8 +8,8 @@ class DragButton extends ToolbarButton {
   async dragEnd() {
   }
 
-  async mousedown(e) {
-    this.mousedownEvent = e;
+  async mousedown(name, e) {
+    this.mousedownEvent = eventCoords(name, e);
     this.mousedownRect = this.domElement.parentElement.getBoundingClientRect();
     draggingDragButton = this;
 
@@ -19,9 +19,11 @@ class DragButton extends ToolbarButton {
     batchEnd();
   }
 
-  async mousemove(e) {
-    const dx = e.clientX - this.mousedownEvent.clientX;
-    const dy = e.clientY - this.mousedownEvent.clientY;
+  async mousemove(name, e) {
+    const coords = eventCoords(name, e);
+
+    const dx = coords.clientX - this.mousedownEvent.clientX;
+    const dy = coords.clientY - this.mousedownEvent.clientY;
 
     this.domElement.parentElement.style.right = (window.innerWidth-this.mousedownRect.right - dx) + 'px';
     this.domElement.parentElement.style.top   = (                  this.mousedownRect.top   + dy) + 'px';
@@ -32,8 +34,7 @@ class DragButton extends ToolbarButton {
     batchEnd();
   }
 
-  async mouseup(e) {
-    this.mousedownEvent = e;
+  async mouseup(name, e) {
     draggingDragButton = null;
 
     batchStart();
@@ -45,7 +46,7 @@ class DragButton extends ToolbarButton {
   render(target) {
     super.render(target);
 
-    this.domElement.onclick = e=>this.click(e);
-    this.domElement.onmousedown = e=>this.mousedown(e);
+    this.domElement.onmousedown  = e=>this.mousedown('mousedown', e);
+    this.domElement.ontouchstart = e=>this.mousedown('touchstart', e);
   }
 }
