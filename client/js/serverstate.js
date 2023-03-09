@@ -312,7 +312,7 @@ function receiveStateFromServer(args) {
     deferredChildren = {};
   }
 
-  if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
+  if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
     $('#statesButton').click();
     overlayShownForEmptyRoom = true;
   }
