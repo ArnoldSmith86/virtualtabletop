@@ -9,7 +9,6 @@ class RotateDragButton extends DragButton {
 
   async dragMove(dx, dy, dxViewport, dyViewport) {
     for(const [ widget, startRotation ] of this.dragStartRotations)
-      if(widget.get('movableInEdit'))
-        await widget.set('rotation', Math.floor(startRotation + (dx+dy)/2));
+      await widget.set('rotation', Math.floor(startRotation + (dx+dy)/2));
   }
 }

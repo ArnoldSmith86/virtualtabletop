@@ -9,10 +9,8 @@ class MoveDragButton extends DragButton {
 
   async dragMove(dx, dy, dxViewport, dyViewport) {
     for(const [ widget, startX, startY ] of this.dragStartCoords) {
-      if(widget.get('movableInEdit')) {
-        await widget.set('x', Math.floor(startX + dx));
-        await widget.set('y', Math.floor(startY + dy));
-      }
+      await widget.set('x', Math.floor(startX + dx));
+      await widget.set('y', Math.floor(startY + dy));
     }
   }
 }

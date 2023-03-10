@@ -21,10 +21,8 @@ class SpacingDragButton extends DragButton {
 
   async dragMove(dx, dy, dxViewport, dyViewport) {
     for(const [ widget, startX, startY, offsetX, offsetY ] of this.dragStartOffsets) {
-      if(widget.get('movableInEdit')) {
-        await widget.set('x', Math.floor(startX + offsetX*dx));
-        await widget.set('y', Math.floor(startY + offsetY*dy));
-      }
+      await widget.set('x', Math.floor(startX + offsetX*dx));
+      await widget.set('y', Math.floor(startY + offsetY*dy));
     }
   }
 }
