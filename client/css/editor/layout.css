@@ -67,10 +67,10 @@ body.edit:not(.dragToolbarDragging) .widget.selectedInEdit.pile .handle {
   box-shadow: 0px 0px 0px 5px yellow;
 }
 
-body.edit .widget.selectedInEditPreview:not(.pile) {
+body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview:not(.pile) {
   box-shadow: 0px 0px 0px 5px red;
 }
 
-body.edit .widget.selectedInEditPreview.pile .handle {
+body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview.pile .handle {
   box-shadow: 0px 0px 0px 5px red;
 }
