@@ -182,22 +182,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_removeWidget',
-    name: 'Remove widget',
-    icon: '[remove_circle]',
-    forceKey: 'R',
-    show: _=>jeStateNow,
-    call: async function() {
-      batchStart();
-      for(const id of jeSelectedIDs()) {
-        setDeltaCause(`${getPlayerDetails().playerName} removed ${id} in editor`);
-        await removeWidgetLocal(id);
-      }
-      batchEnd();
-      jeEmpty();
-    }
-  },
-  {
     id: 'je_duplicateWidget',
     name: 'Duplicate widget',
     icon: '[auto_awesome]',

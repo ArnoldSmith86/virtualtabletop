@@ -8,14 +8,23 @@ function initializeEditor() {
   renderToolbar(toolbarButtons = [
     new NewButton(),
     new SaveButton(),
-    new SelectModeButton(),
     new DarkModeButton(),
-    new CloseButton()
+    new CloseButton(),
+
+    new ToolbarDivider(),
+
+    new SelectModeButton(),
+
+    new ToolbarDivider(),
+
+    new DeleteButton()
   ]);
 
   renderDragToolbar(dragToolbarButtons = [
     new DragDragButton(),
+
     new ToolbarDivider(),
+
     new CloneDragButton(),
     new SpacingDragButton(),
     new RotateDragButton(),
