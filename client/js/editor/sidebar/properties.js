@@ -143,6 +143,8 @@ class PropertiesModule extends SidebarModule {
 
     widget.applyInitialDelta(state);
     target.appendChild(widget.domElement);
+    if(widget instanceof Card)
+      widget.deck.removeCard(widget);
   }
 
   renderModule(target) {
