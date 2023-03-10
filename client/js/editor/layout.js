@@ -18,7 +18,13 @@ function initializeEditor() {
 
     new ToolbarDivider(),
 
-    new DeleteButton()
+    new DeleteButton(),
+    new AlignToLeftButton(),
+    new AlignToCenterButton(),
+    new AlignToRightButton(),
+    new AlignToTopButton(),
+    new AlignToMiddleButton(),
+    new AlignToBottomButton()
   ]);
 
   renderDragToolbar(dragToolbarButtons = [
