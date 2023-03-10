@@ -94,8 +94,15 @@ function updateDragToolbar() {
   if(selectedWidgets.length && selectionModeActive) {
     const rects = selectedWidgets.map(w=>w.domElement.getBoundingClientRect());
     $('#editorDragToolbar').classList.add('active');
-    $('#editorDragToolbar').style.top = (Math.max(...rects.map(r=>r.bottom)) + 10) + 'px';
-    $('#editorDragToolbar').style.right = (window.innerWidth - Math.max(...rects.map(r=>r.right))) + 'px';
+
+    let top = Math.max(...rects.map(r=>r.bottom)) + 10;
+    top = Math.min(top, getRoomRectangle().bottom - $('#editorDragToolbar').clientHeight - 10);
+    $('#editorDragToolbar').style.top = top + 'px';
+
+    let right = window.innerWidth - Math.max(...rects.map(r=>r.right));
+    right = Math.min(right, window.innerWidth - getRoomRectangle().left - $('#editorDragToolbar').clientWidth - 10);
+    right = Math.max(right, window.innerWidth - getRoomRectangle().right                                      + 10);
+    $('#editorDragToolbar').style.right = right + 'px';
   } else {
     $('#editorDragToolbar').classList.remove('active');
   }
