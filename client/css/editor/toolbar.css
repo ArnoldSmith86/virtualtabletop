@@ -2,28 +2,31 @@
   --editToolbarHeight: 36px;
 }
 
-#editorToolbar {
+#editorToolbar, #editorDragToolbar {
   position: absolute;
-  display: flex;
   background: var(--VTTblue);
   z-index: 3;
+}
+
+#editorToolbar {
+  display: flex;
   left: 0;
   right: 0;
 }
 
-#editorToolbar button {
+#editorToolbar button, #editorDragToolbar button {
   padding: 5px;
 }
 
-#editorToolbar button.active {
+#editorToolbar button.active, #editorDragToolbar button.active {
   background: var(--VTTblueDark);
 }
 
-#editorToolbar button::before {
+#editorToolbar button::before, #editorDragToolbar button::before {
   margin: 0;
 }
 
-#editorToolbar button span {
+#editorToolbar button span, #editorDragToolbar button span {
   display: none;
   position: absolute;
   top: calc(var(--editToolbarHeight) + 1px);
@@ -35,6 +38,11 @@
   text-transform: none;
 }
 
-#editorToolbar button:hover span {
+#editorToolbar button:hover span, #editorDragToolbar button:hover span {
   display: block;
+}
+
+#editorToolbar .divider, #editorDragToolbar .divider {
+  border-left: 1px solid #fff8;
+  margin: 5px;
 }
