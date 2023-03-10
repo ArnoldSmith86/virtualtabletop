@@ -9,6 +9,8 @@ class DragButton extends ToolbarButton {
   }
 
   async mousedown(name, e) {
+    $('body').classList.add('dragToolbarDragging');
+
     this.mousedownEvent = eventCoords(name, e);
     this.mousedownRect = this.domElement.parentElement.getBoundingClientRect();
     draggingDragButton = this;
@@ -35,6 +37,8 @@ class DragButton extends ToolbarButton {
   }
 
   async mouseup(name, e) {
+    $('body').classList.remove('dragToolbarDragging');
+
     draggingDragButton = null;
 
     batchStart();
