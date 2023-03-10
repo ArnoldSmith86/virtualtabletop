@@ -90,6 +90,17 @@ function hideSelectionRectangle() {
   $('#editorSelection').classList.remove('active');
 }
 
+function updateDragToolbar() {
+  if(selectedWidgets.length && selectionModeActive) {
+    const rects = selectedWidgets.map(w=>w.domElement.getBoundingClientRect());
+    $('#editorDragToolbar').classList.add('active');
+    $('#editorDragToolbar').style.top = (Math.max(...rects.map(r=>r.bottom)) + 10) + 'px';
+    $('#editorDragToolbar').style.right = (window.innerWidth - Math.max(...rects.map(r=>r.right))) + 'px';
+  } else {
+    $('#editorDragToolbar').classList.remove('active');
+  }
+}
+
 function applySelectionRectangle(addToSelection) {
   const s = getSelectionRectangle();
 
@@ -133,14 +144,12 @@ function setSelection(newSelectedWidgets) {
   for(const module of sidebarModules)
     module.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
 
-  if(selectedWidgets.length && selectionModeActive) {
-    const rects = selectedWidgets.map(w=>w.domElement.getBoundingClientRect());
-    $('#editorDragToolbar').classList.add('active');
-    $('#editorDragToolbar').style.top = (Math.max(...rects.map(r=>r.bottom)) + 10) + 'px';
-    $('#editorDragToolbar').style.right = (window.innerWidth - Math.max(...rects.map(r=>r.right))) + 'px';
-  } else {
-    $('#editorDragToolbar').classList.remove('active');
-  }
+  updateDragToolbar();
+}
+
+export function scaleHasChanged(scale) {
+  if(selectedWidgets.length && selectionModeActive)
+    updateDragToolbar();
 }
 
 export async function editClick(widget) {

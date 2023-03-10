@@ -206,6 +206,8 @@ function setScale() {
   }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
+  if(edit)
+    scaleHasChanged(scale);
 }
 
 function getScale() {
