@@ -15,7 +15,7 @@ body.edit .deck {
   padding-top: 35px;
   text-align: center;
 
-  font-size: 200%;
+  font-size: 32px;
 }
 
 body.jsonEdit:not(.hitTest, .edit) .deck {
