@@ -2363,7 +2363,8 @@ export class Widget extends StateManaged {
     const thisX = this.get('x');
     const thisY = this.get('y');
     const thisOwner = this.get('owner');
-    const thisOnPileCreation = JSON.stringify(this.get('onPileCreation'));
+    const thisOnPileCreation = this.get('onPileCreation');
+    const thisOnPileCreationJSON = JSON.stringify(thisOnPileCreation);
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -2371,9 +2372,13 @@ export class Widget extends StateManaged {
       if(widgetType != 'card' && widgetType != 'pile')
         continue;
 
-      // check if this widget is closer than 10px from another widget in the same parent
-      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
-        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowOwner') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
+      // check if this widget is closer than the pileSnapRange from another widget in the same parent
+      let pileSnapRange = this.get('pileSnapRange');
+      if(thisType == 'card')
+        pileSnapRange = thisOnPileCreation && thisOnPileCreation.pileSnapRange !== undefined ? thisOnPileCreation.pileSnapRange : defaultPileSnapRange;
+
+      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < pileSnapRange && Math.abs(widget.get('y')-thisY) < pileSnapRange) {
+        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowOwner') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreationJSON)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
