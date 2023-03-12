@@ -1924,7 +1924,9 @@
     "z": 855,
     "x": 386,
     "y": -26,
-    "scale": 0.6
+    "scale": 0.6,
+    "movable": false,
+    "movableInEdit": false
   },
   "640k": {
     "image": "/assets/1699496124_3186",
@@ -1932,7 +1934,9 @@
     "z": 857,
     "x": 332,
     "scale": 0.6,
-    "y": -26
+    "y": -26,
+    "movable": false,
+    "movableInEdit": false
   },
   "isp2": {
     "type": "button",
@@ -1998,7 +2002,9 @@
     "z": 996,
     "x": 332,
     "y": 920,
-    "scale": 0.6
+    "scale": 0.6,
+    "movable": false,
+    "movableInEdit": false
   },
   "zxh1": {
     "image": "/assets/-914851433_2828",
@@ -2006,7 +2012,9 @@
     "z": 995,
     "x": 386,
     "y": 920,
-    "scale": 0.6
+    "scale": 0.6,
+    "movable": false,
+    "movableInEdit": false
   },
   "f73a": {
     "image": "/assets/-114178549_3507",
@@ -2014,7 +2022,9 @@
     "z": 1144,
     "x": 1167,
     "y": -26,
-    "scale": 0.6
+    "scale": 0.6,
+    "movable": false,
+    "movableInEdit": false
   },
   "3ofd": {
     "image": "/assets/-962907861_3568",
@@ -2022,7 +2032,9 @@
     "z": 1143,
     "x": 1112,
     "scale": 0.6,
-    "y": -26
+    "y": -26,
+    "movable": false,
+    "movableInEdit": false
   },
   "rj8v": {
     "image": "/assets/1326216368_3327",
@@ -2030,7 +2042,9 @@
     "z": 1231,
     "x": 1167,
     "y": 920,
-    "scale": 0.6
+    "scale": 0.6,
+    "movable": false,
+    "movableInEdit": false
   },
   "7p1q": {
     "image": "/assets/503244104_3367",
@@ -2038,7 +2052,9 @@
     "z": 1232,
     "x": 1112,
     "y": 920,
-    "scale": 0.6
+    "scale": 0.6,
+    "movable": false,
+    "movableInEdit": false
   },
   "bluetray-copy001": {
     "image": "/assets/-2145676693_61548",
@@ -8037,15 +8053,15 @@
       "description": "Place colored shapes onto board with corners touching. Fewest unit squares remaning wins.",
       "showName": true,
       "helpText": "Seats are optional. Use arrows to show or hide trays with colored pieces.",
-      "lastUpdate": 1678631304706,
+      "lastUpdate": 1678631384243,
       "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "2-4",
-      "similarImage": "",
-      "similarAwards": "",
-      "ruleText": ""
+      "players": "2-4"
     }
   },
   "recall_button": {
@@ -8959,15 +8975,13 @@
     "type": "seat",
     "id": "seat1",
     "x": 470,
-    "movableInEdit": false,
-    "hideWhenUnused": true
+    "movableInEdit": false
   },
   "seat2": {
     "type": "seat",
     "id": "seat2",
     "x": 965,
     "movableInEdit": false,
-    "hideWhenUnused": true,
     "index": 2
   },
   "seat3": {
@@ -8975,7 +8989,6 @@
     "id": "seat3",
     "x": 470,
     "movableInEdit": false,
-    "hideWhenUnused": true,
     "y": 945,
     "index": 3
   },
@@ -8984,7 +8997,6 @@
     "id": "seat4",
     "x": 965,
     "movableInEdit": false,
-    "hideWhenUnused": true,
     "index": 4,
     "y": 945
   }
