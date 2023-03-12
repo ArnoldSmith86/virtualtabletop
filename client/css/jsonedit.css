@@ -2,7 +2,7 @@
   --commandPaneWidth: 180px;
   --editorPaneWidth: 320px;
   white-space: pre-line;
-  font-family: monospace, Roboto;
+  font-family: monospace, 'Noto Color Emoji', 'VTT-Symbols', 'Material Icons';
   display: none;
   height: 100%;
   width: 100%;

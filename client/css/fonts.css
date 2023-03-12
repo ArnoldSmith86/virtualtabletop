@@ -1,10 +1,17 @@
 @font-face {
     font-family: "Roboto";
-    src: url("i/fonts/Roboto-Regular.otf") format("opentype");
+    src: url("i/fonts/Roboto-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: "Noto Color Emoji";
+    src: url("i/fonts/NotoColorEmoji-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+
 
 @font-face {
     font-family: "Roboto";
@@ -233,6 +240,7 @@
     font-style: normal;
     font-weight: 400;
     src: url("i/fonts/MaterialIcons-Regular.ttf") format("truetype");
+    size-adjust: 150%;
 }
 
 @font-face {
