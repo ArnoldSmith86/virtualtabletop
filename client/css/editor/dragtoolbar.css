@@ -12,3 +12,7 @@
 #editorDragToolbar button span {
   width: 200px;
 }
+
+body.edit.dragToolbarDragging #editorDragToolbar button:hover span {
+  display: none;
+}
