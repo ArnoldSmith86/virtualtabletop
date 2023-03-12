@@ -76,6 +76,8 @@ class CloneDragButton extends DragButton {
 
     this.lastGridX = gridX;
     this.lastGridY = gridY;
+
+    return `Grid: <i>${Math.abs(gridX)}</i> x <i>${Math.abs(gridY)}</i>`;
   }
 
   async dragEnd() {

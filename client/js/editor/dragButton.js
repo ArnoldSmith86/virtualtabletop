@@ -17,7 +17,7 @@ class DragButton extends ToolbarButton {
 
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} used drag button ${this.icon} in editor`);
-    await this.dragStart();
+    this.setFeedback(await this.dragStart());
     batchEnd();
   }
 
@@ -32,7 +32,7 @@ class DragButton extends ToolbarButton {
 
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} used drag button ${this.icon} in editor`);
-    await this.dragMove(dx/getScale(), dy/getScale(), dx, dy);
+    this.setFeedback(await this.dragMove(dx/getScale(), dy/getScale(), dx, dy));
     batchEnd();
   }
 
@@ -52,5 +52,10 @@ class DragButton extends ToolbarButton {
 
     this.domElement.onmousedown  = e=>this.mousedown('mousedown', e);
     this.domElement.ontouchstart = e=>this.mousedown('touchstart', e);
+  }
+
+  setFeedback(html) {
+    $('#editorDragToolbarFeedback').innerHTML = html;
+    $('#editorDragToolbarFeedback').classList.toggle('active', html || false);
   }
 }
