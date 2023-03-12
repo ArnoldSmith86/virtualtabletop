@@ -2,12 +2,13 @@
   --commandPaneWidth: 180px;
   --editorPaneWidth: 320px;
   white-space: pre-line;
-  font-family: monospace;
+  font-family: monospace, Roboto;
   display: none;
   height: 100%;
   width: 100%;
   z-index: 2;
   position: relative;
+  font-size: 0.75rem;
 }
 
 #jsonEditor.wide {
