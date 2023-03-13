@@ -7,6 +7,12 @@
 }
 
 @font-face {
+    font-family: "Roboto-Variable";
+    src: url("i/fonts/RobotoFlex-VariableFont-Symbols-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
     font-family: "Noto Color Emoji";
     src: url("i/fonts/NotoColorEmoji-Regular.ttf") format("truetype");
     font-display: swap;
@@ -38,6 +44,10 @@
 
 .standard_font, .font-standard, .font-roboto, .font-sans-serif {
     font-family: "Roboto";
+}
+
+.font-variable{
+    font-family: "Roboto-Variable";
 }
 
 @font-face {
