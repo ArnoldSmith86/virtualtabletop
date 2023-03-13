@@ -12,10 +12,9 @@
     font-display: swap;
 }
 
-
 @font-face {
     font-family: "Roboto";
-    src: url("i/fonts/Roboto-Bold.ttf") format("truetype");
+    src: url("i/fonts/Roboto-Symbols-Bold.ttf") format("truetype");
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -23,80 +22,16 @@
 
 @font-face {
     font-family: "Roboto";
-    src: url("i/fonts/Roboto-Italic.ttf") format("truetype");
-    font-weight: normal;
+    src: url("i/fonts/Roboto-Symbols-Italic.ttf") format("truetype");
+    font-weight: 400;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
     font-family: "Roboto";
-    src: url("i/fonts/Roboto-BoldItalic.ttf") format("truetype");
+    src: url("i/fonts/Roboto-Symbols-BoldItalic.ttf") format("truetype");
     font-weight: bold;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("i/fonts/Roboto-LightItalic.ttf") format("truetype");
-    font-weight: 300;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("i/fonts/Roboto-Black.ttf") format("truetype");
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("i/fonts/Roboto-Medium.ttf") format("truetype");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("i/fonts/Roboto-Light.ttf") format("truetype");
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("i/fonts/Roboto-BlackItalic.ttf") format("truetype");
-    font-weight: 900;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("i/fonts/Roboto-Thin.ttf") format("truetype");
-    font-weight: 100;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("i/fonts/Roboto-MediumItalic.ttf") format("truetype");
-    font-weight: 500;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("i/fonts/Roboto-ThinItalic.ttf") format("truetype");
-    font-weight: 100;
     font-style: italic;
     font-display: swap;
 }
