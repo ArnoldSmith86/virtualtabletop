@@ -305,7 +305,7 @@
 
 @font-face {
     font-family: "VTT-Symbols";
-    src: url("i/fonts/VTT-Symbols.woff?version=6") format("woff");
+    src: url("i/fonts/VTT-Symbols.ttf?version=6") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: block;
