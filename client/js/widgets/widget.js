@@ -579,13 +579,14 @@ export class Widget extends StateManaged {
   cssToStylesheet(css, usedProperties, nested = false) {
     let styleString = '';
     for(const key in css) {
-      let selector = key;
+      let usesVariables = false;
+      let selector = key.replace(/\$\{THIS\}/g, m => {usesVariables = true; return `#w_${escapeID(this.id)}`});
       if(!nested) {
         if(key == 'inline')
           continue;
         if(key == 'default')
           selector = '';
-        if(selector.charAt(0) != '@')
+        if(!usesVariables && selector.charAt(0) != '@')
           selector = `#w_${escapeID(this.id)}${selector}`;
       }
       styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], usedProperties, true), usedProperties))} }\n`;
