@@ -1,6 +1,6 @@
 class AlignToLeftButton extends ToolbarButton {
-  constructor(icon, tooltip) {
-    super(icon || 'align_horizontal_left', tooltip || 'Align the selected widgets to the left.');
+  constructor(icon, tooltip, hotkey) {
+    super(icon || 'align_horizontal_left', tooltip || 'Align the selected widgets to the left.', hotkey !== undefined ? hotkey : 'ArrowLeft');
   }
 
   async align(property, lowerBound, upperBound, factor) {
@@ -19,7 +19,7 @@ class AlignToLeftButton extends ToolbarButton {
 
 class AlignToCenterButton extends AlignToLeftButton {
   constructor() {
-    super('align_horizontal_center', 'Align the selected widgets to the center.');
+    super('align_horizontal_center', 'Align the selected widgets to the center.', false);
   }
 
   click() {
@@ -29,7 +29,7 @@ class AlignToCenterButton extends AlignToLeftButton {
 
 class AlignToRightButton extends AlignToLeftButton {
   constructor() {
-    super('align_horizontal_right', 'Align the selected widgets to the right.');
+    super('align_horizontal_right', 'Align the selected widgets to the right.', 'ArrowRight');
   }
 
   click() {
@@ -39,7 +39,7 @@ class AlignToRightButton extends AlignToLeftButton {
 
 class AlignToTopButton extends AlignToLeftButton {
   constructor() {
-    super('align_vertical_top', 'Align the selected widgets to the top.');
+    super('align_vertical_top', 'Align the selected widgets to the top.', 'ArrowUp');
   }
 
   click() {
@@ -49,7 +49,7 @@ class AlignToTopButton extends AlignToLeftButton {
 
 class AlignToMiddleButton extends AlignToLeftButton {
   constructor() {
-    super('align_vertical_center', 'Align the selected widgets to the middle.');
+    super('align_vertical_center', 'Align the selected widgets to the middle.', false);
   }
 
   click() {
@@ -59,10 +59,12 @@ class AlignToMiddleButton extends AlignToLeftButton {
 
 class AlignToBottomButton extends AlignToLeftButton {
   constructor() {
-    super('align_vertical_bottom', 'Align the selected widgets to the bottom.');
+    super('align_vertical_bottom', 'Align the selected widgets to the bottom.', 'ArrowDown');
   }
 
   click() {
     this.align('y', 'top', 'bottom', 1);
   }
 }
+
+// auto_awesome_motion for z correction

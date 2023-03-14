@@ -1,6 +1,6 @@
 class DeleteButton extends ToolbarButton {
   constructor() {
-    super('delete_forever', 'Delete the selected widgets.');
+    super('delete_forever', 'Delete the selected widgets.', 'Delete');
   }
 
   async click() {

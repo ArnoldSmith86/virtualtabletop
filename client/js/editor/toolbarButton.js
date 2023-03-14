@@ -1,10 +1,16 @@
 class ToolbarButton {
-  constructor(icon, tooltip) {
+  constructor(icon, tooltip, hotkey) {
     this.icon = icon;
     this.tooltip = tooltip;
+    this.hotkey = hotkey;
   }
 
   click() {
+  }
+
+  onKeyDown(e) {
+    if(e.key == this.hotkey)
+      this.click();
   }
 
   onSelectionChanged(newSelection, oldSelection) {
@@ -13,6 +19,9 @@ class ToolbarButton {
   render(target) {
     const tooltip = document.createElement('span');
     tooltip.innerText = this.tooltip;
+
+    if(this.hotkey)
+      tooltip.innerHTML += `<br><br>Hotkey: ${this.hotkey}`;
 
     this.domElement = document.createElement('button');
     this.domElement.setAttribute('icon', this.icon);

@@ -70,3 +70,11 @@ export function getAvailableRoomRectangle() {
     bottom: window.innerHeight
   };
 }
+
+
+window.addEventListener('keydown', function(e) {
+  if(!getEdit())
+    return;
+  for(const button of toolbarButtons)
+    button.onKeyDown(e);
+});
