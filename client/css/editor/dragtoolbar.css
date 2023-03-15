@@ -28,6 +28,7 @@ body.dragToolbarDragging #editorDragToolbar button:hover span {
   border-radius: inherit;
   padding: 10px;
   box-sizing: border-box;
+  user-select: none;
 }
 
 #editorDragToolbarFeedback i {
