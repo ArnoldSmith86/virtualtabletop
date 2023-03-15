@@ -154,11 +154,6 @@ function setSelection(newSelectedWidgets) {
   updateDragToolbar();
 }
 
-export function scaleHasChanged(scale) {
-  if(selectedWidgets.length && selectionModeActive)
-    updateDragToolbar();
-}
-
 export async function editClick(widget) {
   if(selectedWidgets.indexOf(widget) == -1) {
     setSelection([ widget ]);

@@ -55,3 +55,17 @@
   border-left: 1px solid #fff8;
   margin: 5px;
 }
+
+
+
+body.compactEditorToolbar #editorToolbar {
+  flex-wrap: wrap;
+}
+
+body.compactEditorToolbar #editorToolbar button {
+  padding: 1px;
+}
+
+body.compactEditorToolbar #editorToolbar button::before {
+  font-size: 20px;
+}

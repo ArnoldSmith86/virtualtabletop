@@ -2,6 +2,8 @@ let toolbarButtons = null;
 let dragToolbarButtons = null;
 let sidebarModules = null;
 
+let fullToolbarWidth = 0;
+
 function initializeEditor() {
   registerSelectionEventHandlers();
 
@@ -79,13 +81,23 @@ function hint(html) {
 
 export function getAvailableRoomRectangle() {
   return {
-    top: window.innerWidth/window.innerHeight > 1 || window.innerWidth < 700 ? 36 : window.innerHeight/2,
+    top: window.innerWidth/window.innerHeight > 1 || window.innerWidth < 700 ? $('#editorToolbar').getBoundingClientRect().bottom : window.innerHeight/2,
     right: (window.innerWidth/window.innerHeight > 1 && ($('#editor.moduleActive') || $('body.draggingEditorSidebarModule')) ? $('#editorModules') : $('#editorSidebar')).offsetLeft,
     left: 0,
     bottom: window.innerHeight
   };
 }
 
+
+export function scaleHasChanged(scale) {
+  if(selectedWidgets.length && selectionModeActive)
+    updateDragToolbar();
+
+  if(!fullToolbarWidth)
+    fullToolbarWidth = $('#editorToolbar > :last-child').getBoundingClientRect().right + 1;
+  $('body').classList.toggle('compactEditorToolbar', window.innerWidth < fullToolbarWidth);
+  document.documentElement.style.setProperty('--editToolbarHeight', $('#editorToolbar').getBoundingClientRect().bottom + 'px');
+}
 
 window.addEventListener('keydown', function(e) {
   if(!getEdit())
