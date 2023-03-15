@@ -860,6 +860,8 @@ button[icon]::before {
   font-size: 24px;
   font-weight: normal;
   line-height: 1;
+  width: 24px;
+  overflow: clip;
 }
 button[icon]:empty {
   padding: 5px;
