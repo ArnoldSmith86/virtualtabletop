@@ -3,6 +3,7 @@
 #editorDragToolbar {
   display: none;
   border-radius: 5px;
+  z-index: 1;
 }
 
 #editorDragToolbar.active {
