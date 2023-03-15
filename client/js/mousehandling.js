@@ -91,7 +91,7 @@ async function inputHandler(name, e) {
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
       if(ms.status != 'initial' && ms.moveTarget) {
         setDeltaCause(`${playerName} dragged ${widget.id}`);
-        await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
+        await ms.moveTarget.moveEnd(coords, ms.localAnchor);
       }
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(edit)

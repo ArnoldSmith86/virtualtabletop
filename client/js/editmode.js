@@ -1176,7 +1176,7 @@ function populateAddWidgetOverlay() {
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker2DSVG'), {
     x: 920,
-    y: 164,
+    y: 114,
     width: 73,
     height: 73,
 
@@ -1199,7 +1199,7 @@ function populateAddWidgetOverlay() {
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
     x: 920,
-    y: 257,
+    y: 207,
     width: 73,
     height: 73,
 
@@ -1224,16 +1224,16 @@ function populateAddWidgetOverlay() {
 
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 350, 2), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, 916, 350, 2))
+    for(const w of generateChipPileWidgets(id, 916, 300, 2))
       await addWidgetLocal(w);
     return id
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
     x: 1010,
-    y: 173,
+    y: 123,
     width: 75,
     height: 54.75,
 
@@ -1257,7 +1257,7 @@ function populateAddWidgetOverlay() {
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
     x: 1010,
-    y: 266,
+    y: 216,
     width: 75,
     height: 54.75,
 
@@ -1282,12 +1282,157 @@ function populateAddWidgetOverlay() {
     primaryColor: "#55bb66"
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 359, 3), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, 1010, 359, 3))
+    for(const w of generateChipPileWidgets(id, 1010, 309, 3))
       await addWidgetLocal(w);
     return id
   });
+
+  // Populate the dice. The real dice choosing happens in a popup.
+  const dice2D = new Dice('add-dice2D0');
+  const dice2DAttrs = {
+    type: 'dice',
+    x: 930,
+    y: 455
+  };
+  dice2D.applyInitialDelta(dice2DAttrs);
+  dice2D.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await dice2D.showInputOverlay({
+        header: 'Choose number of sides',
+        fields: [
+          {
+            type: 'number',
+            label: 'Sides',
+            value: 6,
+            variable: 'sides',
+            min: 2
+          }
+        ]
+      });
+      const sides = result.sides;
+      const toAdd = {...dice2DAttrs};
+      toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
+      toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
+      if(sides != 6)
+        toAdd.pipSymbols = false;
+
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  dice2D.domElement.id = dice2D.id;
+  $('#addOverlay').appendChild(dice2D.domElement);
+
+  const dice2DCube = new Dice('add-dice2DCube0');
+  const dice2DCubeAttrs = {
+    type: 'dice',
+    x: 930,
+    y: 525,
+    faces: [
+      {value:1,image:"/i/dice/cube-1-1.svg"},
+      {value:1,image:"/i/dice/cube-1-2.svg"},
+      {value:1,image:"/i/dice/cube-1-3.svg"},
+      {value:1,image:"/i/dice/cube-1-4.svg"},
+      {value:2,image:"/i/dice/cube-2-1.svg"},
+      {value:2,image:"/i/dice/cube-2-2.svg"},
+      {value:2,image:"/i/dice/cube-2-3.svg"},
+      {value:2,image:"/i/dice/cube-2-4.svg"},
+      {value:3,image:"/i/dice/cube-3-1.svg"},
+      {value:3,image:"/i/dice/cube-3-2.svg"},
+      {value:3,image:"/i/dice/cube-3-3.svg"},
+      {value:3,image:"/i/dice/cube-3-4.svg"},
+      {value:4,image:"/i/dice/cube-4-1.svg"},
+      {value:4,image:"/i/dice/cube-4-2.svg"},
+      {value:4,image:"/i/dice/cube-4-3.svg"},
+      {value:4,image:"/i/dice/cube-4-4.svg"},
+      {value:5,image:"/i/dice/cube-5-1.svg"},
+      {value:5,image:"/i/dice/cube-5-2.svg"},
+      {value:5,image:"/i/dice/cube-5-3.svg"},
+      {value:5,image:"/i/dice/cube-5-4.svg"},
+      {value:6,image:"/i/dice/cube-6-1.svg"},
+      {value:6,image:"/i/dice/cube-6-2.svg"},
+      {value:6,image:"/i/dice/cube-6-3.svg"},
+      {value:6,image:"/i/dice/cube-6-4.svg"}
+    ],
+    imageScale: 1,
+    color: 'transparent',
+    borderColor: 'transparent',
+    svgReplaces: {
+      'topColor': 'cT',
+      'leftColor': 'cL',
+      'rightColor': 'cR',
+      'pipColor': 'cP'
+    },
+    cT: '#ffffff',
+    cL: '#e8e8e8',
+    cR: '#dbdbdb',
+    cP: '#000000'
+  };
+  dice2DCube.applyInitialDelta(dice2DCubeAttrs);
+  dice2DCube.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await dice2DCube.showInputOverlay({
+        header: 'Choose die color',
+        fields: [
+          {
+            type: 'color',
+            value: '#ffffff',
+            variable: 'color'
+          }
+        ]
+      });
+      const toAdd = {...dice2DCubeAttrs};
+      toAdd.z = getMaxZ(dice2DCube.get('layer')) + 1;
+      toAdd.cT = result.color;
+      toAdd.cL = contrastAnyColor(result.color, 0.2);
+      toAdd.cR = contrastAnyColor(result.color, 0.4);
+      toAdd.cP = contrastAnyColor(result.color, 1);
+
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  dice2DCube.domElement.id = dice2DCube.id;
+  $('#addOverlay').appendChild(dice2DCube.domElement);
+
+  const dice3D = new Dice('add-dice3D0');
+  const dice3DAttrs = {
+    type: 'dice',
+    x: 1020,
+    y: 455,
+    shape3d: true,
+    faces: ['1','2','3','4','5','6','7','8']
+  };
+  dice3D.applyInitialDelta(dice3DAttrs);
+  dice3D.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await dice3D.showInputOverlay({
+        header: 'Choose number of sides',
+        fields: [
+          {
+            type: 'number',
+            select: 'Sides',
+            value: 8,
+            variable: 'sides',
+            min: 2
+          }
+        ]
+      });
+      const sides = result.sides;
+      const toAdd = {...dice3DAttrs};
+      toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
+      toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
+      if(sides != 6)
+        toAdd.pipSymbols = false;
+      toAdd.shape3d = sides == 2 ? 'd2-flip' : true;
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  dice3D.domElement.id = dice3D.id;
+  $('#addOverlay').appendChild(dice3D.domElement);
 
   // Populate the Interactive panel in the add widget overlay.
   // Note that the Add Canvas, Add Seat, and Add Scoreboard buttons are in room.html.

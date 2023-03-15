@@ -764,6 +764,10 @@ div[icon] .buttons {
   -moz-user-select: none;
 }
 
+.widget.foreign {
+  --foreign:true;
+}
+
 body:not(.jsonEdit) .widget.foreign {
   display: none !important;
 }

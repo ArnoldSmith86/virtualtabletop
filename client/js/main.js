@@ -61,6 +61,9 @@ function getValidDropTargets(widget) {
         break;
     }
 
+    if (jeEnabled && getComputedStyle(t.domElement).getPropertyValue('--foreign') == 'true')
+      continue;
+
     if(isValid)
       targets.push(t);
   }
@@ -360,8 +363,8 @@ async function loadEditMode() {
       generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
       getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter,
       formField,
-      Widget, BasicWidget, Button, Canvas, Card, Deck, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
-      toHex,
+      Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
+      toHex, contrastAnyColor,
       eventCoords
     });
     $('body').classList.add('loadingEditMode');
