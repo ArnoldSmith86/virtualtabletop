@@ -16,18 +16,18 @@
 
 /* undo */
 
-.undo.editorModule > div {
+.undo.editorModule > .undoEntry {
   padding: 2px;
   color: var(--textDimColor1);
   cursor: pointer;
 }
 
-.undo.editorModule > div.active {
+.undo.editorModule > .active.undoEntry {
   color: var(--textColor);
   background: var(--backgroundHighlightColor1);
   cursor: unset;
 }
 
-.undo.editorModule > div.active ~ div {
+.undo.editorModule > .active.undoEntry ~ div {
   color: var(--textColor);
 }

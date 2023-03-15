@@ -1,17 +1,18 @@
 class UndoModule extends SidebarModule {
   constructor() {
     super('undo', 'Undo', 'Undo changes from editing or playing.');
-    this.lastRenderedIndex = -1;
+    this.lastRenderedIndex = -2;
   }
 
   onClose() {
-    this.lastRenderedIndex = -1;
+    this.lastRenderedIndex = -2;
   }
 
   onDeltaReceivedWhileActive(delta) {
     if(!this.inUndoMode) {
       if(this.resetOnNextDelta) {
-        this.moduleDOM.innerHTML = '';
+        for(const entry of $a('.undoEntry', this.moduleDOM))
+          entry.remove();
         this.lastRenderedIndex = -1;
         this.resetOnNextDelta = false;
       }
@@ -35,6 +36,13 @@ class UndoModule extends SidebarModule {
   }
 
   renderModule(target) {
+    if(this.lastRenderedIndex == -2) {
+      this.addHeader('Undo Protocol');
+      const hintDiv = hint('This lists all the changes that were done to this room until you loaded the page.<br><br>You can click on any row to return the room to the state after the described action.<br><br>You can afterwards return to a future state by clicking that one but as soon as you make new changes after returning to a state in the past, you can no longer restore anything from the now parallel timeline.');
+      this.moduleDOM.append(hintDiv);
+      this.lastRenderedIndex = -1;
+    }
+
     this.protocol = [...getUndoProtocol()];
 
     for(let i=this.lastRenderedIndex+1; i<this.protocol.length; ++i) {
@@ -42,7 +50,8 @@ class UndoModule extends SidebarModule {
       const affectedWidgets = Object.keys(this.protocol[i].delta.s);
       div.innerText = `${i+1} - ${this.protocol[i].delta.c || 'unknown'} (${affectedWidgets.length} widget${affectedWidgets.length == 1 ? '' : 's'} changed)`;
       div.onclick = _=>this.onEntryClick(i, div);
-      this.moduleDOM.insertBefore(div, this.moduleDOM.firstChild);
+      div.className = 'undoEntry';
+      this.moduleDOM.insertBefore(div, $('.undoEntry', this.moduleDOM));
 
       if(i == this.protocol.length-1)
         this.setActiveIndex(i, div);

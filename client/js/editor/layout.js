@@ -69,6 +69,14 @@ function renderSidebar(modules) {
     module.renderButton($('#editorSidebar'));
 }
 
+function hint(html) {
+  const div = document.createElement('div');
+  div.className = 'hintUI';
+  div.innerHTML = `<button icon=help></button><span>${html}</span>`;
+  $('button', div).onclick = e=>div.classList.toggle('active');
+  return div;
+}
+
 export function getAvailableRoomRectangle() {
   return {
     top: window.innerWidth/window.innerHeight > 1 || window.innerWidth < 700 ? 36 : window.innerHeight/2,
