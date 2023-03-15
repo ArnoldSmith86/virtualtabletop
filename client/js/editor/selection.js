@@ -1,7 +1,7 @@
 let selectedWidgets = [];
 let selectedWidgetsPreview = [];
 
-let selectionModeActive = false;
+let selectionModeActive = true;
 let selectionRectangleActive = false;
 let selectionRectangleStart = null;
 let selectionRectangleEnd = null;

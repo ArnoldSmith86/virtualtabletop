@@ -59,6 +59,12 @@ class ToolbarToggleButton extends ToolbarButton {
 
   deactivate() {
   }
+
+  render(target) {
+    super.render(target);
+    if(this.active)
+      this.domElement.classList.add('active');
+  }
 }
 
 class ToolbarDivider extends ToolbarButton {
