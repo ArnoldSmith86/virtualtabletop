@@ -27,7 +27,11 @@ function initializeEditor() {
     new AlignToBottomButton(),
     new HorizontalDistributeButton(),
     new VerticalDistributeButton(),
-    new LayerOrderButton()
+    new LayerOrderButton(),
+
+    new ToolbarDivider(),
+
+    new GroupButton()
   ]);
 
   renderDragToolbar(dragToolbarButtons = [
