@@ -87,7 +87,8 @@ class CloneDragButton extends DragButton {
     const problems = [];
     for(const [ widget, html ] of this.dragStartHTML)
       newSelection.push(...await duplicateWidget(widget, true, false, [], 'Numbers', 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text'.split(','), this.x ? this.dx/getScale()*Math.sign(this.x) : 0, this.y ? this.dy/getScale()*Math.sign(this.y) : 0, Math.abs(this.x), Math.abs(this.y), problems));
-    setSelection(newSelection);
+
+    setSelection(newSelection.filter(w=>newSelection.indexOf(widgets.get(w.get('parent'))) == -1));
   }
 
   removeAllClones() {
