@@ -78,6 +78,10 @@ export function getAvailableRoomRectangle() {
 window.addEventListener('keydown', function(e) {
   if(!getEdit())
     return;
+
+  if([ 'TEXTAREA', 'INPUT' ].indexOf(e.target.tagName) != -1 || e.target.isContentEditable)
+    return;
+
   for(const button of toolbarButtons)
     button.onKeyDown(e);
 });
