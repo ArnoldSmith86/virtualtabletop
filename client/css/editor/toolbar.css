@@ -22,8 +22,17 @@
   background: var(--VTTblueDark);
 }
 
+#editorToolbar button:disabled, #editorDragToolbar button:disabled {
+  background: var(--VTTblue);
+  color: white;
+}
+
 #editorToolbar button::before, #editorDragToolbar button::before {
   margin: 0;
+}
+
+#editorToolbar button:disabled::before, #editorDragToolbar button:disabled::before {
+  opacity: 0.2;
 }
 
 #editorToolbar button span, #editorDragToolbar button span {

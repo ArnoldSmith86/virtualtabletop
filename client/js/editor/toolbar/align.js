@@ -1,6 +1,7 @@
 class AlignToLeftButton extends ToolbarButton {
   constructor(icon, tooltip, hotkey) {
     super(icon || 'align_horizontal_left', tooltip || 'Align the selected widgets to the left.', hotkey !== undefined ? hotkey : 'ArrowLeft');
+    this.setMinimumSelection(2);
   }
 
   async align(property, lowerBound, upperBound, factor) {
@@ -86,6 +87,7 @@ class AlignToBottomButton extends AlignToLeftButton {
 class HorizontalDistributeButton extends AlignToLeftButton {
   constructor() {
     super('horizontal_distribute', 'Equalize the spacing between the selected widgets horizontally.', 'h');
+    this.setMinimumSelection(3);
   }
 
   click() {
@@ -96,6 +98,7 @@ class HorizontalDistributeButton extends AlignToLeftButton {
 class VerticalDistributeButton extends AlignToLeftButton {
   constructor() {
     super('vertical_distribute', 'Equalize the spacing between the selected widgets vertically.', 'v');
+    this.setMinimumSelection(3);
   }
 
   click() {

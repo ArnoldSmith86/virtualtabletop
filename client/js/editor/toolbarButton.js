@@ -14,6 +14,7 @@ class ToolbarButton {
   }
 
   onSelectionChanged(newSelection, oldSelection) {
+    this.setMinimumSelection(this.minimumSelection);
   }
 
   render(target) {
@@ -28,6 +29,14 @@ class ToolbarButton {
     this.domElement.append(tooltip);
     target.append(this.domElement);
     this.domElement.onclick = e=>this.click(e);
+
+    this.setMinimumSelection(this.minimumSelection);
+  }
+
+  setMinimumSelection(count) {
+    this.minimumSelection = count;
+    if(this.domElement)
+      this.domElement.disabled = selectedWidgets.length < count;
   }
 }
 
