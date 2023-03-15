@@ -15,6 +15,8 @@ let deltaID = 0;
 let batchDepth = 0;
 let overlayShownForEmptyRoom = false;
 
+let triggerGameStartRoutineOnNextStateLoad = false;
+
 export function addWidget(widget, instance) {
   if(widget.parent && !widgets.has(widget.parent)) {
     if(!deferredChildren[widget.parent])
@@ -53,6 +55,8 @@ export function addWidget(widget, instance) {
     w = new Canvas(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
+  } else if(widget.type == 'dice') {
+    w = new Dice(id);
   } else if(widget.type == 'holder') {
     w = new Holder(id);
   } else if(widget.type == 'label') {
@@ -176,6 +180,17 @@ function receiveStateFromServer(args) {
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyState(args);
+
+  if(triggerGameStartRoutineOnNextStateLoad) {
+    triggerGameStartRoutineOnNextStateLoad = false;
+    (async function() {
+      batchStart();
+      for(const [ id, w ] of widgets)
+        if(w.get('gameStartRoutine'))
+          await w.evaluateRoutine('gameStartRoutine', { widgetID: id }, { widget: [ w ] });
+      batchEnd();
+    })();
+  }
 }
 
 function removeWidget(widgetID) {
