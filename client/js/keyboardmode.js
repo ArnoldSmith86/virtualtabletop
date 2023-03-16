@@ -20,7 +20,8 @@ function isClickable(widget) {
 }
 
 function isForeign(widget) {
-  return getComputedStyle(widget.domElement).getPropertyValue('--foreign') == 'true';
+  const style = getComputedStyle(widget.domElement);
+  return (style.display == "none") || (style.visibility == "hidden") || (style.getPropertyValue('--foreign') == 'true') || !overlap(widget.domElement, $('#roomArea'));
 }
 
 function allValidTargets() {
