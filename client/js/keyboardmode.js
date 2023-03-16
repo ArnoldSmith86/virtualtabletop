@@ -13,8 +13,6 @@ function isClickable(widget) {
     return true;
   if(widget.get('type') == 'card' && widgets.get(widget.get('deck')).get('faceTemplates').length > 1)
     return true;
-  if(widget.get('type') == 'card' && widgets.get(widget.get('deck')).get('faceTemplates').length > 1)
-    return true;
   if(!widget.get('type') && widget.faces().length > 1)
     return true;
   if([ 'dice', 'seat', 'spinner' ].indexOf(widget.get('type')) != -1)
