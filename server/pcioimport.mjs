@@ -351,7 +351,7 @@ export default async function convertPCIO(content) {
           for(const object of w.faceTemplates[i].objects) {
             if(object.valueType == 'dynamic') {
               object.valueType = 'static';
-              object.value = options[i][object.value];
+              object.value = options[i][object.value] ? mapName(options[i][object.value]) : '';
             }
           }
         }
