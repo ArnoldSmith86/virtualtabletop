@@ -357,6 +357,8 @@ export default async function convertPCIO(content) {
         }
         w.cardTypes = { chooser: {} };
         w.cardDefaults.movable = false;
+        w.cardDefaults.borderRadius = 12;
+        w.cardDefaults.css = 'border: 4px solid #dedede';
       }
 
       let sortingOrder = 0;
