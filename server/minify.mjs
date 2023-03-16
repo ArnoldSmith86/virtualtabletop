@@ -20,6 +20,7 @@ export default function minifyRoom() {
       input: [
         'client/css/layout.css',
 
+        'client/css/keyboardmode.css',
         'client/css/editmode.css',
         'client/css/jsonedit.css',
         'client/css/tracing.css',
@@ -64,6 +65,7 @@ export default function minifyRoom() {
           'client/js/jsonedit.js',
           'client/js/compute.js',
           'client/js/mousehandling.js',
+          'client/js/keyboardmode.js',
           'client/js/tracing.js',
           'client/js/statemanaged.js',
           'client/js/color.js',

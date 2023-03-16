@@ -1,0 +1,19 @@
+.widget.keyboardHighlight.ArrowUp {
+  box-shadow: 0px 0px 0px 5px red;
+}
+
+.widget.keyboardHighlight.ArrowRight {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
+
+.widget.keyboardHighlight.ArrowDown {
+  box-shadow: 0px 0px 0px 5px blue;
+}
+
+.widget.keyboardHighlight.ArrowLeft {
+  box-shadow: 0px 0px 0px 5px green;
+}
+
+.widget.keyboardHighlight.Enter {
+  box-shadow: 0px 0px 0px 5px purple;
+}
