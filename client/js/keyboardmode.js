@@ -37,6 +37,10 @@ function allValidTargets() {
   });
 }
 
+function allValidDropTargets(widget) {
+  return widget.validDropTargets().filter(w=>!isForeign(w));
+}
+
 function emulateAnchor(widget) {
   const rect = widget.domElement.getBoundingClientRect();
   return widget.coordLocalFromCoordClient({x: rect.left, y: rect.top});
@@ -75,9 +79,9 @@ async function widgetSelected(widget) {
 
   if(selectingDropTargetFor) {
     if(isClickable(widget))
-      showKeyboardHighlights(widget.validDropTargets(), widget);
+      showKeyboardHighlights(allValidDropTargets(widget), widget);
     else
-      showKeyboardHighlights(widget.validDropTargets());
+      showKeyboardHighlights(allValidDropTargets(widget));
   } else {
     showKeyboardHighlights(allValidTargets());
   }
