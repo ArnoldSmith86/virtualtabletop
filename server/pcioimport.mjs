@@ -347,7 +347,7 @@ export default async function convertPCIO(content) {
         const firstTemplate = JSON.parse(JSON.stringify(w.faceTemplates[0]));
         for(let i=0; i<options.length; ++i) {
           if(i)
-            w.faceTemplates.push(firstTemplate);
+            w.faceTemplates.push(JSON.parse(JSON.stringify(firstTemplate)));
           for(const object of w.faceTemplates[i].objects) {
             if(object.valueType == 'dynamic') {
               object.valueType = 'static';
