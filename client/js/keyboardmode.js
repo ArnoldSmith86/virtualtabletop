@@ -87,6 +87,37 @@ async function widgetSelected(widget) {
   }
 }
 
+async function moveWidget(widget, key) {
+  const coords = emulateCoords(widget);
+
+  if(key == 'ArrowLeft')
+    coords.x -= 20;
+
+  if(key == 'ArrowRight')
+    coords.x += 20;
+
+  if(key == 'ArrowUp')
+    coords.y -= 20;
+
+  if(key == 'ArrowDown')
+    coords.y += 20;
+
+  batchStart();
+  await widget.moveStart();
+  batchEnd();
+  batchStart();
+  await widget.move(coords, emulateAnchor(widget));
+  batchEnd();
+  batchStart();
+  await widget.move(coords, emulateAnchor(widget));
+  batchEnd();
+  batchStart();
+  await widget.moveEnd(coords, emulateAnchor(widget));
+  batchEnd();
+
+  showKeyboardHighlights(allValidDropTargets(widget));
+}
+
 function hideKeyboardHighlights() {
   for(const key of validKeys) {
     if(widgetsByKey[key]) {
@@ -159,6 +190,13 @@ window.addEventListener('keyup', function(e) {
         showKeyboardHighlights(widgetsByKey[e.key]);
       } else if(widgetsByKey[e.key].length) {
         widgetSelected(widgetsByKey[e.key][0]);
+      } else if(selectingDropTargetFor) {
+        if(e.key == 'Enter') {
+          showKeyboardHighlights(allValidTargets());
+          selectingDropTargetFor = null;
+        } else {
+          moveWidget(selectingDropTargetFor, e.key);
+        }
       }
     }
   }
