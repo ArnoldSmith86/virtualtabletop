@@ -26,7 +26,7 @@ function isForeign(widget) {
 }
 
 function allValidTargets() {
-  return widgetFilter(function(w) {
+  const valid = widgetFilter(function(w) {
     if(w.get('movable') || w.get('clickable')) {
       const isInPile = w.get('parent') && widgets.get(w.get('parent')).get('type') == 'pile';
       if(w.get('movable'))
@@ -35,6 +35,9 @@ function allValidTargets() {
     }
     return false;
   });
+  for(const pile of valid.filter(w=>w.get('type') == 'pile'))
+    valid.push(widgetFilter(w=>w.get('parent')==pile.id).sort((a,b)=>a.get('z')-b.get('z'))[0]);
+  return valid;
 }
 
 function allValidDropTargets(widget) {
