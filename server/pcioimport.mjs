@@ -341,19 +341,37 @@ export default async function convertPCIO(content) {
           value:     ''
         });
       }
+
+      if(widget.collectionType == 'choosers') {
+        const options = Object.values(w.cardTypes);
+        const firstTemplate = JSON.parse(JSON.stringify(w.faceTemplates[0]));
+        for(let i=0; i<options.length; ++i) {
+          if(i)
+            w.faceTemplates.push(firstTemplate);
+          for(const object of w.faceTemplates[i].objects) {
+            if(object.valueType == 'dynamic') {
+              object.valueType = 'static';
+              object.value = options[i][object.value];
+            }
+          }
+        }
+        w.cardTypes = { chooser: {} };
+        w.cardDefaults.movable = false;
+      }
+
       let sortingOrder = 0;
       for(const type in w.cardTypes) {
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
         w.cardTypes[type].sortingOrder = ++sortingOrder;
       }
-    } else if(widget.type == 'card' || widget.type == 'piece') {
+    } else if(widget.type == 'card' || widget.type == 'piece' || widget.type == 'chooser') {
       if(!byID[widget.deck]) // orphan card without deck
         continue;
 
       w.type = 'card';
       w.deck = widget.deck;
-      w.cardType = widget.cardType;
+      w.cardType = widget.type == 'chooser' ? 'chooser' : widget.cardType;
 
       if(pileOverlaps[widget.parent]) {
         w.x = (w.x || 0) - 4;
@@ -386,6 +404,8 @@ export default async function convertPCIO(content) {
 
       if(widget.faceup)
         w.activeFace = 1;
+      if(widget.type == 'chooser' && widget.chooserChoice)
+        w.activeFace = Object.keys(byID[widget.deck].cardTypes).indexOf(widget.chooserChoice);
       if(widget.owner)
         w.owner = widget.owner;
     } else if(widget.type == 'counter') {
