@@ -898,6 +898,20 @@ export default async function convertPCIO(content) {
           if(c.value === 0)
             delete c.value;
         }
+        if(c.func == 'CHANGE_CHOOSER') {
+          if(!c.args.choosers)
+            continue;
+          c = {
+            func: 'FLIP',
+            collection: c.args.choosers.value,
+            face: c.args.choice ? Object.keys(byID[byID[c.args.choosers.value[0]].deck].cardTypes).indexOf(c.args.choice.value) : null,
+            faceCycle: c.args.changeType == 'prev' ? 'backward' : null
+          };
+          if(c.face === null)
+            delete c.face;
+          if(c.faceCycle === null)
+            delete c.faceCycle;
+        }
         if(c.func == 'ROLL_DICE') {
           if(!c.args.dice)
             continue;
