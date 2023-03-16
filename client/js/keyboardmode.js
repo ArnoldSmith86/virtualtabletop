@@ -144,7 +144,13 @@ window.addEventListener('keyup', function(e) {
     else
       hideKeyboardHighlights();
   } else if(keyboardMode && !keyboardModeJustEnabled && enableCounter == 0) {
-    if(widgetsByKey[e.key]) {
+    if($('#activeGameButton').dataset.overlay == 'buttonInputOverlay') {
+      if(e.key == 'ArrowLeft')
+        $('#buttonInputCancel').click();
+      if(e.key == 'ArrowRight')
+        $('#buttonInputGo').click();
+      setTimeout(_=>showKeyboardHighlights(allValidTargets()), 0);
+    } else if(widgetsByKey[e.key]) {
       if(widgetsByKey[e.key].length > 1) {
         showKeyboardHighlights(widgetsByKey[e.key]);
       } else if(widgetsByKey[e.key].length) {
