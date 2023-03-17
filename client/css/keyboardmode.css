@@ -1,9 +1,9 @@
 .widget.keyboardHighlight.ArrowUp {
-  --highlightColor: red;
+  --highlightColor: yellow;
 }
 
 .widget.keyboardHighlight.ArrowRight {
-  --highlightColor: yellow;
+  --highlightColor: green;
 }
 
 .widget.keyboardHighlight.ArrowDown {
@@ -11,7 +11,7 @@
 }
 
 .widget.keyboardHighlight.ArrowLeft {
-  --highlightColor: green;
+  --highlightColor: red;
 }
 
 .widget.keyboardHighlight.Enter {
@@ -23,9 +23,8 @@
 }
 
 body.keyboardMode #buttonInputGo {
-  background: yellow;
-  color: black;
+  background: green;
 }
 body.keyboardMode #buttonInputCancel {
-  background: green;
+  background: red;
 }
