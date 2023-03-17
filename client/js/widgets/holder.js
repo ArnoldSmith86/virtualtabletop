@@ -16,6 +16,7 @@ class Holder extends Widget {
       dropShadow: false,
       alignChildren: true,
       preventPiles: false,
+      childrenCounterRotate: false,
       childrenPerOwner: false,
 
       onEnter: {},
@@ -70,6 +71,9 @@ class Holder extends Widget {
     if(this.get('childrenPerOwner'))
       await child.set('owner', child.targetPlayer||playerName);
 
+    if (this.get('childrenCounterRotate'))
+      await child.set('rotation', child.get('rotation') - this.get('rotation'));
+
     if(this != child.currentParent) { // FIXME: this isn't exactly pretty
       let toProcess = [ child ];
       if(child.get('type') == 'pile')
@@ -118,10 +122,30 @@ class Holder extends Widget {
       await this.receiveCard(child, [ child.get('x') - this.absoluteCoord('x'), child.get('y') - this.absoluteCoord('y') ]);
   }
 
+  async onChildRemove(child) {
+    await super.onChildRemove(child);
+    if (this.get('childrenCounterRotate'))
+      await child.set('rotation', child.get('rotation') + this.get('rotation'));
+  }
+
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
     if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') {
       await this.updateAfterShuffle();
+    }
+    if (property == 'childrenCounterRotate') {
+      // Rotate all children counter to current rotation if property becomes true,
+      // and remove that rotation if it becomes false.
+      const sign = newValue ? -1 : 1;
+      for (let child of this.childrenFilter(super.children(), true)) {
+        await child.set('rotation', child.get('rotation') + sign * this.get('rotation'));
+      }
+    }
+    if (property == 'rotation' && this.get('childrenCounterRotate')) {
+      const extraRotation = oldValue - newValue;
+      for (let child of this.childrenFilter(super.children(), true)) {
+        await child.set('rotation', child.get('rotation') + extraRotation);
+      }
     }
   }
 

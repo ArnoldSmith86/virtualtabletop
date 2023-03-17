@@ -624,8 +624,13 @@ export class Widget extends StateManaged {
         this.coordParentFromCoordGlobal(coordGlobal);
     const transformOrigin = getTransformOrigin(this.domElement);
     let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
-    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
-    let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
+    let offset = getOffset(positionCoord, this.coordParentFromCoordLocal(localAnchor));
+    if (parent && parent.get('childrenCounterRotate')) {
+      let transform = new DOMMatrix();
+      transform.rotateSelf(0, 0, -parent.get('rotation'));
+      offset = transform.transformPoint(offset);
+    }
+    let corner = {x: coord.x - offset.x - transformOrigin.x, y: coord.y - offset.y - transformOrigin.y, z: this.get('z')};
     return parent ?
         parent.coordGlobalFromCoordLocal(corner) : corner;
   }
@@ -2384,18 +2389,25 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
+          const parentWidget = widgets.get(this.get('parent'));
+          let rotation = 0;
+          if (parentWidget && parentWidget.get('childrenCounterRotate'))
+            rotation = -parentWidget.get('rotation');
+
           const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
             x: widget.get('x'),
             y: widget.get('y'),
             width: this.get('width'),
-            height: this.get('height')
+            height: this.get('height'),
+            rotation
           }, this.get('onPileCreation'));
           if(thisOwner !== null)
             pile.owner = thisOwner;
           const pileId = await addWidgetLocal(pile);
           await widget.set('parent', pileId);
+
           await this.bringToFront();
           await this.set('parent', pileId);
           break;
