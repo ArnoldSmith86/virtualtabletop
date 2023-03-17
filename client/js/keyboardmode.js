@@ -5,7 +5,8 @@ let enableCounter = 0;
 
 let selectingDropTargetFor = null;
 
-const validKeys = [ 'ArrowLeft', 'ArrowUp', 'Enter', 'ArrowDown', 'ArrowRight' ];
+const selectionZones = [ [ null, 'ArrowLeft', null ], [ 'ArrowUp', 'Enter', 'ArrowDown' ], [ null, 'ArrowRight', null ] ];
+const validKeys = selectionZones.flat().filter(key=>key);
 const widgetsByKey = {};
 
 function isClickable(widget) {
@@ -132,33 +133,46 @@ function hideKeyboardHighlights() {
   }
 }
 
-function sortByPosition(widgets) {
-  return widgets.sort((a,b)=>a.domElement.getBoundingClientRect().left-b.domElement.getBoundingClientRect().left || a.domElement.getBoundingClientRect().top-b.domElement.getBoundingClientRect().top);
-}
-
 function showKeyboardHighlights(widgets, widgetForEnter) {
   const countPerKey = Math.ceil(widgets.length / (validKeys.length - (widgetForEnter ? 1 : 0)));
 
+  const positions = widgetPositions(widgets);
+
   hideKeyboardHighlights();
 
-  let i = 0;
-  for(const widget of sortByPosition(widgets)) {
-    const key = validKeys[Math.floor(i/countPerKey)];
-    widget.domElement.classList.add('keyboardHighlight');
-    widget.domElement.classList.add(key);
-    widgetsByKey[key].push(widget);
-    ++i;
-    if(widgetForEnter && validKeys[Math.floor(i/countPerKey)] == 'Enter')
-      i += countPerKey;
-  }
-
   if(widgetForEnter) {
+    positions.splice(widgets.indexOf(widgetForEnter),1);
     widgetForEnter.domElement.classList.add('keyboardHighlight');
     widgetForEnter.domElement.classList.add('Enter');
     widgetsByKey['Enter'].push(widgetForEnter);
   }
 
-  console.log(widgetsByKey, i, countPerKey);
+  positions.sort((a,b)=> a.x-b.x || a.y-b.y);
+
+  for(const col of selectionZones) {
+    const colZones = col.filter(key=>key && !(key == 'Enter' && widgetForEnter));
+    const colWidgets = positions.splice(0,countPerKey * colZones.length).sort((a,b)=> a.y-b.y ).map((w)=>w.widget);
+    for(const key of colZones) {
+      widgetsByKey[key] = colWidgets.splice(0, countPerKey);
+      for(const widget of widgetsByKey[key]) {
+        widget.domElement.classList.add('keyboardHighlight');
+        widget.domElement.classList.add(key);
+      }
+    }
+  }
+
+  console.log(widgetsByKey, countPerKey);
+}
+
+function widgetPositions(widgets) {
+  return widgets.map((w)=>{
+    const rect = w.domElement.getBoundingClientRect();
+    return {
+      widget: w,
+      x: rect.x + rect.width/2,
+      y: rect.y + rect.height/2
+    }
+  });
 }
 
 window.addEventListener('keydown', function(e) {
