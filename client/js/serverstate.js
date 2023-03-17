@@ -55,6 +55,8 @@ export function addWidget(widget, instance) {
     w = new Canvas(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
+  } else if(widget.type == 'dice') {
+    w = new Dice(id);
   } else if(widget.type == 'holder') {
     w = new Holder(id);
   } else if(widget.type == 'label') {
@@ -106,7 +108,7 @@ export function batchEnd() {
 function receiveDelta(delta) {
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s) {
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID)) {
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined) {
       const domElement = widgets.get(widgetID).domElement;
       const topTransform = getElementTransformRelativeTo(domElement, $('#topSurface')) || 'none';
       $('#topSurface').appendChild(domElement);
