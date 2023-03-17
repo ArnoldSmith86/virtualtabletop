@@ -279,7 +279,7 @@ export default class Room {
 
     const renameVariantFile = (stateID, oldVariantID, newVariantID)=>{
       if(oldVariantID == player.name && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != player.name && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
-        fs.renameSync(this.variantFilename(stateID, oldVariantID), this.variantFilename(stateID, newVariantID));
+        this.moveFile(this.variantFilename(stateID, oldVariantID), this.variantFilename(stateID, newVariantID));
     };
 
     for(const o of variantOperationQueue) {
@@ -288,7 +288,7 @@ export default class Room {
         if(String(o.filenameSuffix).match(/^([0-9]+|[0-9a-z]{4})[0-9a-z]{4}$/)) {
           const prefix = `${Config.directory('save')}/states/${this.id}--TEMPSTATE--${o.filenameSuffix}--`;
           for(let i=0; fs.existsSync(`${prefix}${i}.json`); ++i) {
-            fs.renameSync(`${prefix}${i}.json`, this.variantFilename(id, o.operation == 'save' ? o.variantID : variants.length));
+            this.moveFile(`${prefix}${i}.json`, this.variantFilename(id, o.operation == 'save' ? o.variantID : variants.length));
             if(o.operation == 'create')
               variants.push({});
           }
@@ -628,7 +628,7 @@ export default class Room {
           if(variant.plStateID || variant.link) {
             newVariants.push(variant);
           } else if(fs.existsSync(this.variantFilename(id, variantID))) {
-            fs.renameSync(this.variantFilename(id, variantID), this.variantFilename(id, newVariants.length));
+            this.moveFile(this.variantFilename(id, variantID), this.variantFilename(id, newVariants.length));
             newVariants.push(variant);
           }
         }
@@ -641,6 +641,11 @@ export default class Room {
 
   mouseMove(player, mouseState) {
     this.broadcast('mouse', { player: player.name, mouseState });
+  }
+
+  moveFile(source, target) {
+    fs.copyFileSync(source, target);
+    fs.unlinkSync(source);
   }
 
   newPlayerColor() {
