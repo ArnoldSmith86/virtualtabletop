@@ -1823,7 +1823,7 @@
       },
       {
         "func": "SELECT",
-        "property": "parent",
+        "property": "_ancestor",
         "value": null,
         "source": "DEFAULT"
       },
@@ -2098,7 +2098,7 @@
         "image": "/assets/1711009953_4303",
         "Name": "Archer",
         "P1 T": "Active:",
-        "P1 L1": "Attack any troop exactly 2 tiles away.",       
+        "P1 L1": "Attack any troop exactly 2 tiles away.",
         "P2 T": "Passive:",
         "P2 L1": "Can't attack adjecent tiles.",
         "Count": "4"
@@ -3243,7 +3243,7 @@
       },
       {
         "func": "SELECT",
-        "property": "parent",
+        "property": "_ancestor",
         "value": null,
         "source": "DEFAULT"
       },
@@ -3332,8 +3332,7 @@
       "mode": "1v1; 2v2",
       "time": "30 min",
       "attribution": "<div>Implementation design by RaphaelAlvez with modifications by Ingegneus and released under CC0.</div><div>Assets license may vary.</div><div><br></div><div>Wood texture: https://unsplash.com/photos/J2gEgTPM_OA under the Unsplash license</div><div>Cloth texture: https://unsplash.com/photos/xTaOPMa6wAE under the Unsplash license</div><div><br></div><div>Celtic knot: https://www.vecteezy.com/vector-art/338646-celtic-symbols under the Vecteezy license</div><div>Troops assets modified from https://game-icons.net/ under the CC BY 3.0 license</div>",
-      "lastUpdate": 1676307258840,
-      "id": "yz4o",
+      "lastUpdate": 1677868291734,
       "showName": true,
       "skill": "",
       "description": "",

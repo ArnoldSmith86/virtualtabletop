@@ -16,7 +16,7 @@
       "similarName": "Liar's Dice",
       "description": "Make claims about value of rolled dice to bluff opponents and get them to challenge.  Lose dice if caught in a lie.  Last player with dice wins.",
       "showName": true,
-      "lastUpdate": 1669254070000
+      "lastUpdate": 1678099723000
     }
   },
   "table": {
@@ -97,7 +97,7 @@
     "playerChangeRoutine": []
   },
   "p1d5": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p1d5",
     "scale": 0.5,
     "z": 75740,
@@ -217,7 +217,7 @@
     "onlyVisibleForSeat": "p1"
   },
   "p1d1": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p1d1",
     "scale": 0.5,
     "z": 75733,
@@ -337,7 +337,7 @@
     "onlyVisibleForSeat": "p1"
   },
   "p1d2": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p1d2",
     "scale": 0.5,
     "z": 75738,
@@ -457,7 +457,7 @@
     "onlyVisibleForSeat": "p1"
   },
   "p1d3": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p1d3",
     "scale": 0.5,
     "z": 75633,
@@ -577,7 +577,7 @@
     "belongsToSeat": "p1"
   },
   "p1d4": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p1d4",
     "scale": 0.5,
     "z": 75631,
@@ -711,7 +711,7 @@
     },
     "dropTarget": [
       {
-        "type": "dice"
+        "customType": "dice"
       },
       {
         "task": "cupCover"
@@ -727,7 +727,7 @@
       },
       {
         "func": "GET",
-        "property": "type",
+        "property": "customType",
         "collection": "child",
         "variable": "childType"
       },
@@ -774,8 +774,13 @@
       {
         "func": "SELECT",
         "property": "parent",
-        "value": "${thisID}",
-        "type": "dice"
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "customType",
+        "value": "dice"
       },
       {
         "func": "COUNT",
@@ -5545,7 +5550,7 @@
     ]
   },
   "p8d1": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p8d1",
     "scale": 0.5,
     "z": 75722,
@@ -5665,7 +5670,7 @@
     "belongsToSeat": "p8"
   },
   "p8d2": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p8d2",
     "scale": 0.5,
     "z": 75436,
@@ -5785,7 +5790,7 @@
     "belongsToSeat": "p8"
   },
   "p8d4": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p8d4",
     "scale": 0.5,
     "z": 75712,
@@ -5905,7 +5910,7 @@
     "belongsToSeat": "p8"
   },
   "p8d3": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p8d3",
     "scale": 0.5,
     "z": 75724,
@@ -6025,7 +6030,7 @@
     "belongsToSeat": "p8"
   },
   "p8d5": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p8d5",
     "scale": 0.5,
     "z": 75720,
@@ -6145,7 +6150,7 @@
     "belongsToSeat": "p8"
   },
   "p2d1": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p2d1",
     "scale": 0.5,
     "z": 75382,
@@ -6265,7 +6270,7 @@
     "onlyVisibleForSeat": "p2"
   },
   "p2d2": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p2d2",
     "scale": 0.5,
     "z": 75440,
@@ -6384,7 +6389,7 @@
     "onlyVisibleForSeat": "p2"
   },
   "p2d3": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p2d3",
     "scale": 0.5,
     "z": 75442,
@@ -6504,7 +6509,7 @@
     "activeFace": 3
   },
   "p2d4": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p2d4",
     "scale": 0.5,
     "z": 75436,
@@ -6624,7 +6629,7 @@
     "activeFace": 17
   },
   "p2d5": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p2d5",
     "scale": 0.5,
     "z": 75424,
@@ -6744,7 +6749,7 @@
     "activeFace": 3
   },
   "p3d1": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p3d1",
     "scale": 0.5,
     "z": 75382,
@@ -6864,7 +6869,7 @@
     "activeFace": 21
   },
   "p3d5": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p3d5",
     "scale": 0.5,
     "z": 75672,
@@ -6984,7 +6989,7 @@
     "belongsToSeat": "p3"
   },
   "p3d4": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p3d4",
     "scale": 0.5,
     "z": 75442,
@@ -7104,7 +7109,7 @@
     "belongsToSeat": "p3"
   },
   "p3d3": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p3d3",
     "scale": 0.5,
     "z": 75424,
@@ -7224,7 +7229,7 @@
     "activeFace": 14
   },
   "p3d2": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p3d2",
     "scale": 0.5,
     "z": 75436,
@@ -7344,7 +7349,7 @@
     "activeFace": 5
   },
   "p4d1": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p4d1",
     "scale": 0.5,
     "z": 75382,
@@ -7464,7 +7469,7 @@
     "activeFace": 10
   },
   "p4d2": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p4d2",
     "scale": 0.5,
     "z": 75440,
@@ -7584,7 +7589,7 @@
     "activeFace": 18
   },
   "p4d3": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p4d3",
     "scale": 0.5,
     "z": 75442,
@@ -7704,7 +7709,7 @@
     "activeFace": 20
   },
   "p4d4": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p4d4",
     "scale": 0.5,
     "z": 75424,
@@ -7824,7 +7829,7 @@
     "onlyVisibleForSeat": "p4"
   },
   "p4d5": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p4d5",
     "scale": 0.5,
     "z": 75436,
@@ -7943,7 +7948,7 @@
     "onlyVisibleForSeat": "p4"
   },
   "p5d2": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p5d2",
     "scale": 0.5,
     "z": 75382,
@@ -8063,7 +8068,7 @@
     "activeFace": 8
   },
   "p5d5": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p5d5",
     "scale": 0.5,
     "z": 75440,
@@ -8183,7 +8188,7 @@
     "onlyVisibleForSeat": "p5"
   },
   "p5d3": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p5d3",
     "scale": 0.5,
     "z": 75424,
@@ -8303,7 +8308,7 @@
     "activeFace": 2
   },
   "p5d1": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p5d1",
     "scale": 0.5,
     "z": 75436,
@@ -8423,7 +8428,7 @@
     "activeFace": 19
   },
   "p5d4": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p5d4",
     "scale": 0.5,
     "z": 75442,
@@ -9731,7 +9736,7 @@
     "task": "diceButton"
   },
   "p6d2": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p6d2",
     "scale": 0.5,
     "z": 75526,
@@ -9851,7 +9856,7 @@
     "onlyVisibleForSeat": "p6"
   },
   "p6d3": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p6d3",
     "scale": 0.5,
     "z": 75440,
@@ -9971,7 +9976,7 @@
     "activeFace": 4
   },
   "p6d5": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p6d5",
     "scale": 0.5,
     "z": 75442,
@@ -10091,7 +10096,7 @@
     "onlyVisibleForSeat": "p6"
   },
   "p6d1": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p6d1",
     "scale": 0.5,
     "z": 75436,
@@ -10211,7 +10216,7 @@
     "belongsToSeat": "p6"
   },
   "p6d4": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p6d4",
     "scale": 0.5,
     "z": 75424,
@@ -10331,7 +10336,7 @@
     "onlyVisibleForSeat": "p6"
   },
   "p7d1": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p7d1",
     "scale": 0.5,
     "z": 75714,
@@ -10451,7 +10456,7 @@
     "belongsToSeat": "p7"
   },
   "p7d5": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p7d5",
     "scale": 0.5,
     "z": 75718,
@@ -10571,7 +10576,7 @@
     "belongsToSeat": "p7"
   },
   "p7d4": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p7d4",
     "scale": 0.5,
     "z": 75442,
@@ -10691,7 +10696,7 @@
     "belongsToSeat": "p7"
   },
   "p7d2": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p7d2",
     "scale": 0.5,
     "z": 75690,
@@ -10811,7 +10816,7 @@
     "belongsToSeat": "p7"
   },
   "p7d3": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p7d3",
     "scale": 0.5,
     "z": 75424,
@@ -11456,10 +11461,8 @@
       },
       {
         "func": "SELECT",
-        "property": "id",
-        "value": null,
-        "relation": "!=",
-        "type": "dice"
+        "property": "customType",
+        "value": "dice"
       },
       "var scale = 10 - ${nrMaxDice}",
       "var scale = ${scale} / 10",
@@ -11728,11 +11731,16 @@
         "property": "parent",
         "value": "commonPool",
         "relation": "!=",
-        "type": "dice",
         "sortBy": {
           "key": "id",
           "reverse": false
         }
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "customType",
+        "value": "dice"
       },
       {
         "func": "FOREACH",
@@ -11811,7 +11819,7 @@
     "clickRoutine": [
       {
         "func": "SELECT",
-        "property": "type",
+        "property": "customType",
         "value": "dice"
       },
       {
@@ -12047,8 +12055,13 @@
       {
         "func": "SELECT",
         "property": "parent",
-        "value": "${seat}DiceHolder",
-        "type": "dice"
+        "value": "${seat}DiceHolder"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "customType",
+        "value": "dice"
       },
       {
         "func": "GET",
@@ -12078,8 +12091,13 @@
       {
         "func": "SELECT",
         "property": "parent",
-        "value": "${seat}DiceHolder",
-        "type": "dice"
+        "value": "${seat}DiceHolder"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "customType",
+        "value": "dice"
       },
       {
         "func": "COUNT",
@@ -12118,10 +12136,8 @@
       },
       {
         "func": "SELECT",
-        "property": "id",
-        "value": null,
-        "relation": "!=",
-        "type": "dice"
+        "property": "customType",
+        "value": "dice"
       },
       {
         "func": "SET",
@@ -12191,7 +12207,7 @@
     "height": 300,
     "parent": "tableVignette",
     "dropTarget": {
-      "type": "dice"
+      "customType": "dice"
     },
     "css": {
       "background-color": "transparent",
@@ -12207,7 +12223,7 @@
     ]
   },
   "p1d6": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p1d6",
     "scale": 0.5,
     "z": 75740,
@@ -12349,7 +12365,7 @@
     "task": "diceButton"
   },
   "p2d6": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p2d6",
     "scale": 0.5,
     "z": 75424,
@@ -12493,7 +12509,7 @@
     "task": "diceButton"
   },
   "p3d6": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p3d6",
     "scale": 0.5,
     "z": 75672,
@@ -12637,7 +12653,7 @@
     "task": "diceButton"
   },
   "p4d6": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p4d6",
     "scale": 0.5,
     "z": 75436,
@@ -12864,7 +12880,7 @@
     "task": "diceButton"
   },
   "p5d6": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p5d6",
     "scale": 0.5,
     "z": 75440,
@@ -13008,7 +13024,7 @@
     "task": "diceButton"
   },
   "p6d6": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p6d6",
     "scale": 0.5,
     "z": 75442,
@@ -13152,7 +13168,7 @@
     "parent": "p6d6"
   },
   "p7d6": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p7d6",
     "scale": 0.5,
     "z": 75718,
@@ -13296,7 +13312,7 @@
     "parent": "p7d6"
   },
   "p8d6": {
-    "type": "dice",
+    "customType": "dice",
     "id": "p8d6",
     "scale": 0.5,
     "z": 75720,
