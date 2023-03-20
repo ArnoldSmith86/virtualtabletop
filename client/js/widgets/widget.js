@@ -1491,7 +1491,7 @@ export class Widget extends StateManaged {
           if(a.round > newScore.length)
             newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
           newScore[seatRound-1] = compute(relation, null, newScore[seatRound-1] || 0, a.value);
-          await seats[i].set(a.property, newScore);
+          await seats[i].set(String(a.property), newScore);
         }
 
         if(jeRoutineLogging) {
