@@ -644,7 +644,7 @@ export default class Room {
   }
 
   moveFile(source, target) {
-    fs.copyFileSync(source, target);
+    fs.copyFileSync(source, target, fs.constants.COPYFILE_FICLONE);
     fs.unlinkSync(source);
   }
 
