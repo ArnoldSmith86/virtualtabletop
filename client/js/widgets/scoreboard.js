@@ -71,6 +71,8 @@ class Scoreboard extends Widget {
       if(!players.length || !rounds.length)
         return;
 
+      const currentPlayer = players.find(player => player.text == playerName);
+
       try {
         const result = await this.showInputOverlay({
           header: this.get('editPaneTitle'),
@@ -80,7 +82,7 @@ class Scoreboard extends Widget {
               label: 'Player',
               options: players,
               variable: 'player',
-              value: players.find(player => player.text == playerName).value
+              value: currentPlayer? currentPlayer.value : undefined
             },
             {
               type: 'select',
