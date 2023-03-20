@@ -58,15 +58,16 @@ class Scoreboard extends Widget {
       if(Array.isArray(seats))
         players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') || '-' }; });
       else { // Teams
-        for (const team in seats) 
+        for (const team in seats)
           players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player') || '-'} (${team})` } }))
       }
 
       let rounds = this.getRounds(seats, scoreProperty, 1).map(function(r, i) { return { text: r, value: i+1 }; });
+      const everyPlayerFilledLatestRound = !seats.map(s=>(s.get(scoreProperty) || []).length != rounds.length - 1).reduce((a,b)=>a||b);
 
       if(this.totalsOnly)
         rounds = [{text: this.get('totalsLabel'), value: 0}];
-      
+
       if(!players.length || !rounds.length)
         return;
 
@@ -85,7 +86,8 @@ class Scoreboard extends Widget {
               type: 'select',
               label: this.get('roundLabel'),
               options: rounds,
-              variable: 'round'
+              variable: 'round',
+              value: everyPlayerFilledLatestRound ? rounds.length : rounds.length - 1
             },
             {
               type: 'number',
