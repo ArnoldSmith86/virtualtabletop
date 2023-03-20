@@ -78,7 +78,8 @@ class Scoreboard extends Widget {
               type: 'select',
               label: 'Player',
               options: players,
-              variable: 'player'
+              variable: 'player',
+              value: players.find(player => player.text == playerName).value
             },
             {
               type: 'select',
