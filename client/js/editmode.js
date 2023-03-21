@@ -19,16 +19,8 @@ async function addWidgetLocal(widget) {
 
   const isNewWidget = !widgets.has(widget.id);
   if(isNewWidget) {
-    // Ideally we'd pass these promises in and resolve them immediately.
-    let modifyDOM = new Promise((resolve) => {
-      setTimeout(resolve, 0);
-    });
-    let afterModify = new Promise((resolve) => {
-      modifyDOM.then(() => {
-        setTimeout(resolve, 0);
-      });
-    });
-    addWidget(widget, undefined, modifyDOM, afterModify);
+    // Resolve these promises immediately. Piles have to be created while a routine is still running to assure that following operations can interact with it.
+    addWidget(widget, undefined, Promise.resolve(), Promise.resolve());
   }
   sendPropertyUpdate(widget.id, widget);
   sendDelta();
