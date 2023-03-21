@@ -103,7 +103,9 @@ class Scoreboard extends Widget {
         } else
           scores = +result.score;
         await seat.set(scoreProperty, scores);
-      } catch(e) {}
+      } catch(e) {
+        console.log('The input overlay for the scoreboard failed to load.', e);
+      }
     }
   }
 
