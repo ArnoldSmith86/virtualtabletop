@@ -26,12 +26,16 @@ class BasicWidget extends Widget {
         const undoDelta = {};
         for(const property in this.previouslyActiveFace)
           undoDelta[property] = this.state[property] !== undefined ? this.state[property] : null;
+        delete undoDelta.faces;
+        delete undoDelta.activeFace;
         this.applyDeltaToDOM(undoDelta);
         delete this.previouslyActiveFace;
       }
 
       const face = this.faces()[this.get('activeFace')];
       if(face && typeof face == 'object') {
+        delete face.faces;
+        delete face.activeFace;
         this.applyDeltaToDOM(face);
         this.previouslyActiveFace = face;
       }
