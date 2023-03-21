@@ -773,17 +773,17 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     widgets.set(wi.id, w);
     w.applyInitialDelta(wi, Promise.resolve(), Promise.resolve());
     w.domElement.id = w.id;
-    if(!wi.parent) {
-      w.domElement.addEventListener('click', async _=>{
-        batchStart();
-        overlayDone(await onClick());
-        batchEnd();
-      });
-      $('#addOverlay').appendChild(w.domElement);
-    }
-  }
-  for(const wi of widgetsToAdd) {
-    widgets.delete(wi.id)
+    setTimeout(function() {
+      if(!wi.parent) {
+        w.domElement.addEventListener('click', async _=>{
+          batchStart();
+          overlayDone(await onClick());
+          batchEnd();
+        });
+        $('#addOverlay').appendChild(w.domElement);
+      }
+      widgets.delete(wi.id)
+    }, 0);
   }
 }
 
@@ -812,7 +812,7 @@ function addPieceToAddWidgetOverlay(w, wi) {
     } catch(e) {}
   });
   w.domElement.id = w.id;
-  $('#addOverlay').appendChild(w.domElement);
+  setTimeout(_=>$('#addOverlay').appendChild(w.domElement), 0);
 }
 
 function addWidgetToAddWidgetOverlay(w, wi) {
@@ -824,7 +824,7 @@ function addWidgetToAddWidgetOverlay(w, wi) {
     overlayDone(id);
   });
   w.domElement.id = w.id;
-  $('#addOverlay').appendChild(w.domElement);
+  setTimeout(_=>$('#addOverlay').appendChild(w.domElement), 0);
 }
 
 // Called by most routines that add widgets. If the widget add came from the JSON editor,
@@ -1396,7 +1396,7 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   spinner.domElement.id = spinner.id;
-  $('#addOverlay').appendChild(spinner.domElement);
+  setTimeout(_=>$('#addOverlay').appendChild(spinner.domElement), 0);
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',
@@ -1967,6 +1967,5 @@ onLoad(function() {
       $('#buttonImage').value = asset;
   }));
 
-  // TODO: Figure out why this crashes.
-  //populateAddWidgetOverlay();
+  populateAddWidgetOverlay();
 });
