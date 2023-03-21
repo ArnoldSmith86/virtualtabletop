@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 12,
     "info": {
       "name": "Timer",
       "image": "/assets/509206781_3477",
@@ -11,19 +11,18 @@
       "time": "",
       "attribution": "The clock face, by temas, is in the Public Domain under CC0, and is available at https://openclipart.org/detail/134335/diy-clock-face-by-temas-134335.\n\nThe stopwatch face is the based on the clock face, but the numbers were modified by LawDawg96.  It is released to the Public Domain under CC0.\n\nThe hour and minute hands are in the Public Domain under CC0, and are available at https://freesvg.org/minute-hand-mitchell-joh.",
       "showName": false,
-      "lastUpdate": 1638938699000,
-      "id": "PL:tutorials:Timer",
+      "lastUpdate": 1677731215884,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Appearance",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Appearance",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "glassTop": {
@@ -45,7 +44,8 @@
         "func": "CLICK"
       }
     ],
-    "layer": 0
+    "layer": 0,
+    "clickable": false
   },
   "timerBar": {
     "id": "timerBar",
@@ -83,7 +83,6 @@
       },
       "var bar = ${PROPERTY milliseconds} / ${PROPERTY start}",
       "var bar = ${bar} * 100",
-      "var bar = ${bar}/ ${PROPERTY width OF timerBar}",
       {
         "func": "SET",
         "property": "css",
@@ -231,7 +230,8 @@
       }
     ],
     "layer": 0,
-    "parent": "glassHolder"
+    "parent": "glassHolder",
+    "clickable": false
   },
   "glassHolder": {
     "id": "glassHolder",

@@ -891,6 +891,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Card(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Deck(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Dice(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
@@ -1795,6 +1796,7 @@ function jeUpdateTree(delta) {
 function jeDisplayFilteredWidgets(e) {
   const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
   const results = widgetFilter(o => o.get('id').toLowerCase().includes(subtext) ||
+          o.get('cardType') && o.get('cardType').toLowerCase().includes(subtext) ||
           o.get('type') && o.get('type').toLowerCase().includes(subtext) ||
           !o.get('type') && 'basic'.includes(subtext)).sort(
             function(a,b) {
