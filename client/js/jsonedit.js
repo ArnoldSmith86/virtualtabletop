@@ -173,15 +173,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_addNewWidget',
-    name: 'Add new widget',
-    icon: '[add_circle]',
-    forceKey: 'A',
-    call: async function() {
-      showOverlay("addOverlay")
-    }
-  },
-  {
     id: 'je_duplicateWidget',
     name: 'Duplicate widget',
     icon: '[auto_awesome]',

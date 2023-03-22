@@ -761,8 +761,8 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 // Called by most routines that add widgets. If the widget add came from the JSON editor,
 // call a routine in the JSON editor to clean up. Then hide the add widget overlay.
 function overlayDone(id) {
-  if(jeEnabled)
-    jeAddWidgetDone(id);
+  if(getEdit())
+    setSelection([ widgets.get(id) ]);
   showOverlay();
 }
 

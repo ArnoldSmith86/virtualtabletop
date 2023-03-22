@@ -117,6 +117,10 @@ export function showStatesOverlay(id) {
   $('#statesButton').dataset.overlay = id;
 }
 
+export function isOverlayActive() {
+  return overlayActive;
+}
+
 function checkURLproperties(connected) {
   if(!connected) {
 
@@ -361,7 +365,7 @@ async function loadEditMode() {
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,
       generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
-      getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter,
+      getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
@@ -414,11 +418,6 @@ onLoad(function() {
 
     if(e.currentTarget == $('#editButton') || edit)
       toggleEditMode();
-  });
-
-  on('#addButton', 'click', function(e) {
-    if(!$a('#activeGameButton.active, #editButton.active').length)
-      $('#activeGameButton').click();
   });
 
   on('#activeGameButton', 'click', function() {

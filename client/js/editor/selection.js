@@ -10,7 +10,7 @@ let draggingDragButton = null;
 let widgetRectangles = null;
 
 export function editInputHandler(name, e) {
-  if(!selectionModeActive)
+  if(!selectionModeActive || isOverlayActive())
     return;
 
   const coords = eventCoords(name, e);

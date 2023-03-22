@@ -20,7 +20,11 @@ function initializeEditor() {
 
     new ToolbarDivider(),
 
+    new AddButton(),
     new DeleteButton(),
+
+    new ToolbarDivider(),
+
     new AlignToLeftButton(),
     new AlignToCenterButton(),
     new AlignToRightButton(),
