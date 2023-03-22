@@ -454,8 +454,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
         updateSaveButton.style.display = 'inline-flex';
     }
 
-    if(state.image)
-      $('img', entry).src = mapAssetURLs(state.image);
+    if(state.image) {
+      $('img', entry).dataset.src = mapAssetURLs(state.image);
+      lazyImageObserver.observe($('img', entry));
+    }
 
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
@@ -1096,4 +1098,13 @@ onLoad(function() {
         resolveStateCollections(file, addStateFile);
     }
   });
+});
+
+const lazyImageObserver = new IntersectionObserver(entries => {
+  for(const entry of entries) {
+    if(entry.isIntersecting) {
+      entry.target.src = entry.target.dataset.src;
+      lazyImageObserver.unobserve(entry.target);
+    }
+  }
 });
