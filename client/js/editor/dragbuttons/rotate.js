@@ -1,6 +1,6 @@
 class RotateDragButton extends DragButton {
   constructor() {
-    super('settings_backup_restore', 'Drag to rotate the selected widgets.');
+    super('settings_backup_restore', 'Rotate', 'Drag to rotate the selected widgets.');
   }
 
   async dragStart() {

@@ -1,9 +1,9 @@
 class AddButton extends ToolbarButton {
   constructor() {
-    super('add', 'Add a new widget.', 'a');
+    super('add', 'Add widget', 'Add a new widget.', 'a');
   }
 
-  async click() {
+  click() {
     setSelection([]);
     showOverlay("addOverlay")
   }

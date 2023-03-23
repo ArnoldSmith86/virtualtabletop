@@ -1,6 +1,6 @@
 class GroupButton extends ToolbarButton {
   constructor() {
-    super('view_in_ar', 'Group the selected widgets by inserting an invisible parent widget.', 'g');
+    super('view_in_ar', 'Group widgets', 'Group the selected widgets by inserting an invisible parent widget.', 'g');
     this.setMinimumSelection(2);
   }
 

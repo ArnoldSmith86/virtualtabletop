@@ -16,7 +16,7 @@ class DragButton extends ToolbarButton {
     draggingDragButton = this;
 
     batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} used drag button ${this.icon} in editor`);
+    setDeltaCause(`${getPlayerDetails().playerName} used "${this.name}" in editor`);
     this.setFeedback(await this.dragStart());
     batchEnd();
   }
@@ -31,7 +31,7 @@ class DragButton extends ToolbarButton {
     this.domElement.parentElement.style.top   = (                  this.mousedownRect.top   + dy) + 'px';
 
     batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} used drag button ${this.icon} in editor`);
+    setDeltaCause(`${getPlayerDetails().playerName} used "${this.name}" in editor`);
     this.setFeedback(await this.dragMove(dx/getScale(), dy/getScale(), dx, dy));
     batchEnd();
   }
@@ -42,7 +42,7 @@ class DragButton extends ToolbarButton {
     draggingDragButton = null;
 
     batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} used drag button ${this.icon} in editor`);
+    setDeltaCause(`${getPlayerDetails().playerName} used "${this.name}" in editor`);
     await this.dragEnd();
     batchEnd();
   }

@@ -1,6 +1,6 @@
 class MoveDragButton extends DragButton {
   constructor() {
-    super('control_camera', 'Drag to move the selected widgets.');
+    super('control_camera', 'Move', 'Drag to move the selected widgets.');
   }
 
   async dragStart() {

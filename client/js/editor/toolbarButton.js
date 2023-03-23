@@ -1,16 +1,24 @@
 class ToolbarButton {
-  constructor(icon, tooltip, hotkey) {
+  constructor(icon, name, tooltip, hotkey) {
     this.icon = icon;
+    this.name = name;
     this.tooltip = tooltip;
     this.hotkey = hotkey;
   }
 
-  click() {
+  async click() {
+  }
+
+  async onClick() {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} used "${this.name}" in editor`);
+    await this.click();
+    batchEnd();
   }
 
   onKeyDown(e) {
     if(e.key == this.hotkey)
-      this.click();
+      this.onClick();
   }
 
   onSelectionChanged(newSelection, oldSelection) {
@@ -28,7 +36,7 @@ class ToolbarButton {
     this.domElement.setAttribute('icon', this.icon);
     this.domElement.append(tooltip);
     target.append(this.domElement);
-    this.domElement.onclick = e=>this.click(e);
+    this.domElement.onclick = e=>this.onClick();
 
     this.setMinimumSelection(this.minimumSelection);
   }

@@ -1,6 +1,6 @@
 class AlignToLeftButton extends ToolbarButton {
-  constructor(icon, tooltip, hotkey) {
-    super(icon || 'align_horizontal_left', tooltip || 'Align the selected widgets to the left.', hotkey !== undefined ? hotkey : 'ArrowLeft');
+  constructor(icon, name, tooltip, hotkey) {
+    super(icon || 'align_horizontal_left', name || 'Align to left', tooltip || 'Align the selected widgets to the left.', hotkey !== undefined ? hotkey : 'ArrowLeft');
     this.setMinimumSelection(2);
   }
 
@@ -29,86 +29,86 @@ class AlignToLeftButton extends ToolbarButton {
     }
   }
 
-  click() {
-    this.align('x', 'left', 'right', 0);
+  async click() {
+    await this.align('x', 'left', 'right', 0);
   }
 }
 
 class AlignToCenterButton extends AlignToLeftButton {
   constructor() {
-    super('align_horizontal_center', 'Align the selected widgets to the center.', false);
+    super('align_horizontal_center', 'Align to center', 'Align the selected widgets to the center.', false);
   }
 
-  click() {
-    this.align('x', 'left', 'right', 0.5);
+  async click() {
+    await this.align('x', 'left', 'right', 0.5);
   }
 }
 
 class AlignToRightButton extends AlignToLeftButton {
   constructor() {
-    super('align_horizontal_right', 'Align the selected widgets to the right.', 'ArrowRight');
+    super('align_horizontal_right', 'Align to right', 'Align the selected widgets to the right.', 'ArrowRight');
   }
 
-  click() {
-    this.align('x', 'left', 'right', 1);
+  async click() {
+    await this.align('x', 'left', 'right', 1);
   }
 }
 
 class AlignToTopButton extends AlignToLeftButton {
   constructor() {
-    super('align_vertical_top', 'Align the selected widgets to the top.', 'ArrowUp');
+    super('align_vertical_top', 'Align to top', 'Align the selected widgets to the top.', 'ArrowUp');
   }
 
-  click() {
-    this.align('y', 'top', 'bottom', 0);
+  async click() {
+    await this.align('y', 'top', 'bottom', 0);
   }
 }
 
 class AlignToMiddleButton extends AlignToLeftButton {
   constructor() {
-    super('align_vertical_center', 'Align the selected widgets to the middle.', false);
+    super('align_vertical_center', 'Align to middle', 'Align the selected widgets to the middle.', false);
   }
 
-  click() {
-    this.align('y', 'top', 'bottom', 0.5);
+  async click() {
+    await this.align('y', 'top', 'bottom', 0.5);
   }
 }
 
 class AlignToBottomButton extends AlignToLeftButton {
   constructor() {
-    super('align_vertical_bottom', 'Align the selected widgets to the bottom.', 'ArrowDown');
+    super('align_vertical_bottom', 'Align to bottom', 'Align the selected widgets to the bottom.', 'ArrowDown');
   }
 
-  click() {
-    this.align('y', 'top', 'bottom', 1);
+  async click() {
+    await this.align('y', 'top', 'bottom', 1);
   }
 }
 
 class HorizontalDistributeButton extends AlignToLeftButton {
   constructor() {
-    super('horizontal_distribute', 'Equalize the spacing between the selected widgets horizontally.', 'h');
+    super('horizontal_distribute', 'Equalize horizontal spacing', 'Equalize the spacing between the selected widgets horizontally.', 'h');
     this.setMinimumSelection(3);
   }
 
-  click() {
-    this.distribute('x', 'left', 'right');
+  async click() {
+    await this.distribute('x', 'left', 'right');
   }
 }
 
 class VerticalDistributeButton extends AlignToLeftButton {
   constructor() {
-    super('vertical_distribute', 'Equalize the spacing between the selected widgets vertically.', 'v');
+    super('vertical_distribute', 'Equalize vertical spacing', 'Equalize the spacing between the selected widgets vertically.', 'v');
     this.setMinimumSelection(3);
   }
 
-  click() {
-    this.distribute('y', 'top', 'bottom');
+  async click() {
+    await this.distribute('y', 'top', 'bottom');
   }
 }
 
 class LayerOrderButton extends AlignToLeftButton {
   constructor() {
-    super('auto_awesome_motion', 'Change the layering of the selected widgets so that the bottom and right most widgets are on top.', 'z');
+    super('auto_awesome_motion', 'Align layering', 'Change the layering of the selected widgets so that the bottom and right most widgets are on top.', 'z');
   }
 
   async click() {

@@ -1,6 +1,6 @@
 class NewButton extends ToolbarButton {
   constructor() {
-    super('note_add', 'Start with a new blank room.');
+    super('note_add', 'New room', 'Start with a new blank room.');
   }
 
   click() {

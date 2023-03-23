@@ -1,6 +1,6 @@
 class SpacingDragButton extends DragButton {
   constructor() {
-    super('format_line_spacing', 'Drag to adjust spacing between selected widgets.');
+    super('format_line_spacing', 'Spacing', 'Drag to adjust spacing between selected widgets.');
     this.setMinimumSelection(2);
   }
 

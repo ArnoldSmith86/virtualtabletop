@@ -1,6 +1,6 @@
 class CloneDragButton extends DragButton {
   constructor() {
-    super('content_copy', 'Drag to clone the selected widgets into a grid.');
+    super('content_copy', 'Clone', 'Drag to clone the selected widgets into a grid.');
     this.clones = [];
   }
 
