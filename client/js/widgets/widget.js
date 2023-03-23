@@ -1726,8 +1726,16 @@ export class Widget extends StateManaged {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
-        //copied from select
-        let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)]).filter(w=>w.get('type')=='seat');
+        let c = [];
+        if (a.source === 'all') {
+          c = Array.from(widgets.values());
+        } else {
+          let collection = collections[getCollection(a.source)];
+          if (Array.isArray(collection)) {
+            c = collection;
+          }   
+        }
+        c = c.filter(w => w.get('type') === 'seat');
 
         //this get the list of valid index
         const indexList = [];
