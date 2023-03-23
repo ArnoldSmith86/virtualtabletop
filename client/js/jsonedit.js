@@ -1740,6 +1740,7 @@ function jeUpdateTree(delta) {
 function jeDisplayFilteredWidgets(e) {
   const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
   const results = widgetFilter(o => o.get('id').toLowerCase().includes(subtext) ||
+          o.get('cardType') && o.get('cardType').toLowerCase().includes(subtext) ||
           o.get('type') && o.get('type').toLowerCase().includes(subtext) ||
           !o.get('type') && 'basic'.includes(subtext)).sort(
             function(a,b) {

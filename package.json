@@ -57,14 +57,14 @@
     "jszip": "^3.10.1",
     "node-fetch": "^2.6.9",
     "vue": "^3.2.47",
-    "ws": "^8.12.1"
+    "ws": "^8.13.0"
   },
   "devDependencies": {
-    "jest": "^29.4.3",
-    "jest-environment-jsdom": "^29.4.3",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "jest-environment-jsdom-global": "^4.0.0",
     "json-diff": "^1.0.3",
     "nodemon": "^2.0.21",
-    "testcafe": "^2.3.1"
+    "testcafe": "^2.4.0"
   }
 }
