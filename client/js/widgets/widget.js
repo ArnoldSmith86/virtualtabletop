@@ -1727,7 +1727,11 @@ export class Widget extends StateManaged {
           a.turnCycle = 'forward'
         }
         //copied from select
-        let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)]).filter(w=>w.get('type')=='seat');
+        let c = [];
+        try {
+          let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)]).filter(w=>w.get('type')=='seat');
+        } catch (error) {
+        }
 
         //this get the list of valid index
         const indexList = [];
