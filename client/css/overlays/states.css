@@ -264,6 +264,7 @@
 
 .roomState .star::before {
   font-size: 32px;
+  width: 32px;
 }
 
 .roomState > i {
@@ -485,6 +486,7 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 #mainDetails .star::before {
   font-size: 50px;
+  width: 50px;
 }
 #mainDetails #mainImage > i {
   top: unset;
