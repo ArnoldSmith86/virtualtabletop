@@ -37,7 +37,7 @@ class UndoModule extends SidebarModule {
 
   renderModule(target) {
     if(this.lastRenderedIndex == -2) {
-      this.addHeader('Undo Protocol');
+      this.addHeader('History');
       const hintDiv = hint('This lists all the changes that were done to this room until you loaded the page.<br><br>You can click on any row to return the room to the state after the described action.<br><br>You can afterwards return to a future state by clicking that one but as soon as you make new changes after returning to a state in the past, you can no longer restore anything from the now parallel timeline.');
       this.moduleDOM.append(hintDiv);
       this.lastRenderedIndex = -1;
