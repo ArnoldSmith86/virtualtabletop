@@ -32,7 +32,8 @@ class Scoreboard extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    this.updateTable();
+    if(Object.keys(delta).filter(k=>['x','y','z','dragging','rotation','parent'].indexOf(k)==-1).length)
+      this.updateTable();
   }
 
   classes(includeTemporary=true) {
@@ -58,7 +59,7 @@ class Scoreboard extends Widget {
       if(Array.isArray(seats))
         players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') || '-' }; });
       else { // Teams
-        for (const team in seats) 
+        for (const team in seats)
           players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player') || '-'} (${team})` } }))
       }
 
@@ -66,7 +67,7 @@ class Scoreboard extends Widget {
 
       if(this.totalsOnly)
         rounds = [{text: this.get('totalsLabel'), value: 0}];
-      
+
       if(!players.length || !rounds.length)
         return;
 
