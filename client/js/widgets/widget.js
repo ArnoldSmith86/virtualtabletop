@@ -626,8 +626,11 @@ export class Widget extends StateManaged {
     let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
     const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
     let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
-    return parent ?
-        parent.coordGlobalFromCoordLocal(corner) : corner;
+    if (parent)
+      corner = parent.coordGlobalFromCoordLocal(corner);
+    corner.x = Math.round(corner.x);
+    corner.y = Math.round(corner.y);
+    return corner;
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
@@ -1497,7 +1500,7 @@ export class Widget extends StateManaged {
           if(a.round > newScore.length)
             newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
           newScore[seatRound-1] = compute(relation, null, newScore[seatRound-1] || 0, a.value);
-          await seats[i].set(a.property, newScore);
+          await seats[i].set(String(a.property), newScore);
         }
 
         if(jeRoutineLogging) {
