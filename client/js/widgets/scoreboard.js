@@ -32,7 +32,22 @@ class Scoreboard extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(Object.keys(delta).filter(k=>['x','y','z','dragging','rotation','parent'].indexOf(k)==-1).length)
+    const updateTableProps = [
+      'showTotals',
+      'scoreProperty',
+      'sortField',
+      'totalsLabel',
+      'roundLabel',
+      'showPlayerColors',
+      'currentRound',
+      'playersInColumns',
+      'seats',
+      'showAllSeats',
+      'sortAscending',
+      'rounds',
+      'showAllRounds'
+    ]
+    if(Object.keys(delta).some(k=>updateTableProps.includes(k)))
       this.updateTable();
   }
 
@@ -209,6 +224,29 @@ class Scoreboard extends Widget {
     return asArray(x).reduce((partialSum, a) => partialSum + (parseFloat(a) || 0), 0)
   }
 
+  seatProperties(seatID) {
+    const seats = this.get('seats');
+    if((typeof seats == 'string' && seatID != seats))
+      return [];
+    if(Array.isArray(seats) && !(seats.includes(seatID)))
+      return [];
+    if(seats != null && typeof seats == 'object' && !(Object.keys(seats).some(team=>seats[team].includes(seatID))))
+      return [];
+    const props = ['player', this.get('scoreProperty')];
+    let sortField = this.get('sortField');
+    if(sortField == 'total') {
+      if(this.get('showTotals'))
+        sortField = null;
+      else
+        sortField = 'index';
+    }
+    if(sortField)
+      props.push(sortField);
+    if(this.get('showPlayerColors'))
+      props.push('color');
+    return props;
+  }
+  
   addRowToTable(parent, values) {
     const tr = parent.insertRow();
     const v = asArray(values);
