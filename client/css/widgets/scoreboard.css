@@ -33,6 +33,16 @@
   width: calc((100% - var(--firstColWidth)) / (var(--columns) - 1));
 }
 
+.scoreboard.verticalHeader > div.scoreboardIntermediate > table tbody tr:nth-child(1) td div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  writing-mode: tb-rl;
+  transform: rotate(180deg);
+}
+
 .scoreboard > div.scoreboardIntermediate > table tbody tr:nth-child(1) td:nth-child(1) {
   z-index: 2;
 }

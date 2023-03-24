@@ -16,6 +16,7 @@ class Scoreboard extends Widget {
       roundLabel: 'Round',
       totalsLabel: 'Totals',
       scoreProperty: 'score',
+      verticalHeader: false,
       seats: null,
       showAllRounds: false,
       showAllSeats: false,
@@ -41,12 +42,15 @@ class Scoreboard extends Widget {
     if(this.get('autosizeColumns'))
       className += ' equalWidth';
 
+    if(this.get('verticalHeader'))
+      className += ' verticalHeader';
+
     return className;
   }
 
   classesProperties() {
     const p = super.classesProperties();
-    p.push('autosizeColumns');
+    p.push('autosizeColumns', 'verticalHeader');
     return p;
   }
 
@@ -58,7 +62,7 @@ class Scoreboard extends Widget {
       if(Array.isArray(seats))
         players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') || '-' }; });
       else { // Teams
-        for (const team in seats) 
+        for (const team in seats)
           players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player') || '-'} (${team})` } }))
       }
 
@@ -66,7 +70,7 @@ class Scoreboard extends Widget {
 
       if(this.totalsOnly)
         rounds = [{text: this.get('totalsLabel'), value: 0}];
-      
+
       if(!players.length || !rounds.length)
         return;
 
@@ -208,12 +212,19 @@ class Scoreboard extends Widget {
     return asArray(x).reduce((partialSum, a) => partialSum + (parseFloat(a) || 0), 0)
   }
 
-  addRowToTable(parent, values) {
+  addRowToTable(parent, values, isFirst) {
     const tr = parent.insertRow();
     const v = asArray(values);
     tr.innerHTML = Array(values.length).fill('<td></td>').join('');
-    for (let i=0; i < values.length; i++)
-      $a('td', tr)[i].innerText = values[i];
+    for (let i=0; i < values.length; i++) {
+      if(isFirst && this.get('verticalHeader')) {
+        const div = document.createElement('div');
+        div.innerText = values[i];
+        $a('td', tr)[i].appendChild(div);
+      } else {
+        $a('td', tr)[i].innerText = values[i];
+      }
+    }
     return tr;
   }
 
@@ -316,7 +327,7 @@ class Scoreboard extends Widget {
       const names = pScores.map(x => x[0]);
       names.unshift(this.get('roundLabel'));
       this.tableDOM.innerHTML += '<tbody></tbody>';
-      const tr = this.addRowToTable($('tbody', this.tableDOM), names);
+      const tr = this.addRowToTable($('tbody', this.tableDOM), names, true);
       const defaultColor = window.getComputedStyle(tr.cells[0]).getPropertyValue('background-color');
       // Get player colors if needed
       if(showPlayerColors)
@@ -343,7 +354,7 @@ class Scoreboard extends Widget {
       numRows = pScores.length + 1;
 
       // First row contains round names
-      const tr = this.addRowToTable(this.tableDOM, rounds);
+      const tr = this.addRowToTable(this.tableDOM, rounds, true);
       const defaultColor = window.getComputedStyle(tr.cells[0]).getPropertyValue('background-color');
       // Remaining rows are one row per player.
       for( let r=0; r < pScores.length; r++) {
