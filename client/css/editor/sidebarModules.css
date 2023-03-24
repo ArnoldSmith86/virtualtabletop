@@ -1,4 +1,53 @@
+.editorModule h1 {
+  color: var(--VTTblue);
+  text-align: center;
+}
+
+.editorModule h2 {
+  color: white;
+  background: var(--VTTblue);
+  padding: 5px;
+  border-radius: 5px;
+  padding-left: 20px;
+}
+
 /* properties */
+
+.editorModule .widgetSelectionButton {
+  height: 150px;
+  width: 150px;
+  margin: 5px;
+  position: relative;
+  display: inline-flex;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), white;
+  background-position: 0px 0, 5px 5px;
+  background-size: 10px 10px, 10px 10px;
+  border-radius: 10px;
+  border: 3px solid #ccc;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.editorModule .widgetSelectionButton:hover, .editorModule .widgetSelectionButton.selected {
+  border: 3px solid var(--VTTblue);
+}
+.editorModule .widgetSelectionButton.selected::after {
+  font-family: 'Material Icons';
+  line-height: 1.25em;
+  text-align: center;
+  height: 1.25em;
+  width: 1.25em;
+  background: var(--VTTblue);
+  color: #fff;
+  border-top-right-radius: 40%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  content: 'check';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+}
 
 .tune.editorModule .faceTemplateEdit {
   margin-bottom: 40px;

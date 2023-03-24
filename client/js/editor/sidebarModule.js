@@ -11,6 +11,12 @@ class SidebarModule {
     this.moduleDOM.append(h);
   }
 
+  addSubHeader(text) {
+    const h = document.createElement('h2');
+    h.innerText = text;
+    this.moduleDOM.append(h);
+  }
+
   click(e) {
     let target = e.ctrlKey ? $('#editorModuleBottomLeft') : $('#editorModuleTopLeft');
     if(e.button == 2)

@@ -369,6 +369,7 @@ async function loadEditMode() {
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
+      asArray,
       eventCoords
     });
     $('body').classList.add('loadingEditMode');
