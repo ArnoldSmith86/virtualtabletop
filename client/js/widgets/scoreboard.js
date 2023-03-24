@@ -226,11 +226,11 @@ class Scoreboard extends Widget {
 
   seatProperties(seatID) {
     const seats = this.get('seats');
-    if((typeof seats == 'string' && seatID != seats))
+    if((typeof seats == 'string' && seats != seatID))
       return [];
     if(Array.isArray(seats) && !(seats.includes(seatID)))
       return [];
-    if(seats != null && typeof seats == 'object' && !(Object.keys(seats).some(team=>seats[team].includes(seatID))))
+    if(seats != null && typeof seats == 'object' && !(Object.keys(seats).some(team=>asArray(seats[team]).includes(seatID))))
       return [];
     const props = ['player', this.get('scoreProperty')];
     let sortField = this.get('sortField');
