@@ -22,15 +22,15 @@
       "description": "Collect and discard cards representing new businesses. Take cards in common market area for free or pay coins to take card from deck. Only the player with the most cards of each type collects coins at end. Play until deck is depeleted. Player with most coins at end wins.",
       "showName": true,
       "helpText": "Players take seats and press reset button to start play. 5 cards are removed from deck before dealing 3 to each player. Anti-monopoly tokens automatically move. Press \"Take\" button to take a card and victory point tokens from the market. Other cards will shift left automatically.  All other game actions must be done manually. Use \"Turn\" button to manually adjust turn indicator if needed. Victory point tokens can only be flipped to the \"3\" side when not in a pile. If playing multiple rounds, move chevron-shaped scoring tokens to area near player's name then press reset button and check the box. ",
-      "lastUpdate": 1679713770494,
+      "lastUpdate": 1679750519681,
       "skill": "",
+      "similarImage": "",
+      "similarAwards": "2018 Fairplay À la carte Runner-up",
+      "ruleText": "",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "3-7",
-      "similarImage": "",
-      "similarAwards": "",
-      "ruleText": ""
+      "players": "3-7"
     }
   },
   "hand": {
@@ -1210,7 +1210,7 @@
     "gameStartRoutine": [
       {
         "func": "SHUFFLE",
-        "holder": "deckHoler"
+        "holder": "deckHolder"
       }
     ]
   },
