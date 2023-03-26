@@ -1768,6 +1768,7 @@ export class Widget extends StateManaged {
           if(typeof nextTurnIndex != 'number' || !isFinite(nextTurnIndex))
             nextTurnIndex = 0;
             const turn = (typeof simulateTurn === 'number' && a.turnCycle == 'random') ? simulateTurn : indexList[mod(nextTurnIndex, indexList.length)];
+            variables.TURN = turn;
           simulateTurn = a.simulate ? turn : null;
 
           collections[a.collection] = [];
