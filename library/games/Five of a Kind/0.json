@@ -1,0 +1,3885 @@
+{
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Five of a Kind",
+      "image": "/assets/-337719674_582921",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/2243/yahtzee",
+      "year": "1956",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "The room design and other room elements are by RogerLipsett and are released to the Public Domain under CC0.\n\nThe library image is by AlbertHerring and is available under CC BY 2.0 from https://en.wikipedia.org/wiki/Yahtzee#/media/File:Yahtzee_game_example.jpg.",
+      "showName": true,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "Yahtzee",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "lastUpdate": 1677458727414,
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1-6"
+    }
+  },
+  "xprj": {
+    "id": "xprj",
+    "y": 15,
+    "z": 2,
+    "text": "Count and add\n   only Aces",
+    "height": 50,
+    "movable": false,
+    "width": 130,
+    "x": 130,
+    "parent": "h1"
+  },
+  "xprj1": {
+    "id": "xprj1",
+    "y": 85,
+    "z": 2,
+    "text": "Count and add\n    only Twos",
+    "height": 50,
+    "movable": false,
+    "width": 130,
+    "inheritFrom": {
+      "xprj": [
+        "x"
+      ]
+    },
+    "movableInEdit": true,
+    "parent": "h1"
+  },
+  "xprj2": {
+    "id": "xprj2",
+    "y": 155,
+    "z": 2,
+    "text": "Count and add\n  only Threes",
+    "height": 50,
+    "movable": false,
+    "width": 130,
+    "inheritFrom": {
+      "xprj": [
+        "x"
+      ]
+    },
+    "movableInEdit": true,
+    "parent": "h1"
+  },
+  "xprj3": {
+    "id": "xprj3",
+    "y": 225,
+    "z": 2,
+    "text": "Count and add\n   only Fours",
+    "height": 50,
+    "movable": false,
+    "width": 130,
+    "inheritFrom": {
+      "xprj": [
+        "x"
+      ]
+    },
+    "movableInEdit": true,
+    "parent": "h1"
+  },
+  "xprj4": {
+    "id": "xprj4",
+    "y": 295,
+    "z": 2,
+    "text": "Count and add\n   only Fives",
+    "height": 50,
+    "movable": false,
+    "width": 130,
+    "inheritFrom": {
+      "xprj": [
+        "x"
+      ]
+    },
+    "movableInEdit": true,
+    "parent": "h1"
+  },
+  "xprj5": {
+    "id": "xprj5",
+    "y": 365,
+    "z": 2,
+    "text": "Count and add\n   only Sixes",
+    "height": 50,
+    "movable": false,
+    "width": 130,
+    "inheritFrom": {
+      "xprj": [
+        "x"
+      ]
+    },
+    "movableInEdit": true,
+    "parent": "h1"
+  },
+  "xprj6": {
+    "id": "xprj6",
+    "x": 30,
+    "y": 455,
+    "z": 2,
+    "text": "Total Score",
+    "height": 50,
+    "movable": false,
+    "css": "font-size:16pt",
+    "width": 150,
+    "parent": "h1"
+  },
+  "xprj7": {
+    "id": "xprj7",
+    "x": 30,
+    "y": 510,
+    "z": 2,
+    "text": "Bonus (if score\n is 63 or more)",
+    "height": 50,
+    "width": 180,
+    "movable": false,
+    "css": "font-size:16pt",
+    "parent": "h1"
+  },
+  "xprj8": {
+    "id": "xprj8",
+    "x": 30,
+    "y": 580,
+    "z": 2,
+    "text": "Total of upper section",
+    "height": 50,
+    "width": 180,
+    "css": "font-weight:bold;font-size:16pt",
+    "parent": "h1"
+  },
+  "sggf": {
+    "text": "3 of a kind",
+    "id": "sggf",
+    "movable": false,
+    "x": 30,
+    "height": 30,
+    "y": 22,
+    "css": "font-size:14pt;font-weight:bold",
+    "parent": "h2"
+  },
+  "54hx": {
+    "text": "Add total of\n all dice",
+    "id": "54hx",
+    "movable": false,
+    "x": 185,
+    "y": 15,
+    "height": 50,
+    "parent": "h2"
+  },
+  "sggf1": {
+    "text": "4 of a kind",
+    "id": "sggf1",
+    "movable": false,
+    "x": 30,
+    "height": 30,
+    "y": 92,
+    "css": "font-size:14pt;font-weight:bold",
+    "parent": "h2"
+  },
+  "sggf2": {
+    "text": "Full House",
+    "id": "sggf2",
+    "movable": false,
+    "x": 30,
+    "height": 30,
+    "y": 162,
+    "css": "font-size:14pt;font-weight:bold",
+    "parent": "h2"
+  },
+  "sggf3": {
+    "text": "Small Straight",
+    "id": "sggf3",
+    "movable": false,
+    "x": 30,
+    "height": 30,
+    "y": 232,
+    "css": "font-size:14pt;font-weight:bold",
+    "width": 120,
+    "parent": "h2"
+  },
+  "sggf4": {
+    "text": "Large Straight",
+    "id": "sggf4",
+    "movable": false,
+    "x": 30,
+    "height": 30,
+    "y": 302,
+    "css": "font-size:14pt;font-weight:bold",
+    "width": 120,
+    "parent": "h2"
+  },
+  "sggf5": {
+    "text": "5 of a kind!",
+    "id": "sggf5",
+    "movable": false,
+    "x": 30,
+    "height": 30,
+    "y": 372,
+    "css": "font-size:14pt;font-weight:bold",
+    "parent": "h2"
+  },
+  "sggf6": {
+    "text": "Chance",
+    "id": "sggf6",
+    "movable": false,
+    "x": 30,
+    "height": 30,
+    "y": 442,
+    "css": "font-size:14pt;font-weight:bold",
+    "parent": "h2"
+  },
+  "55hx": {
+    "text": "Add total of\n all dice",
+    "id": "55hx",
+    "movable": false,
+    "x": 185,
+    "y": 85,
+    "height": 50,
+    "parent": "h2"
+  },
+  "56hx": {
+    "text": "Score 25",
+    "id": "56hx",
+    "movable": false,
+    "x": 185,
+    "y": 162,
+    "height": 50,
+    "parent": "h2"
+  },
+  "57hx": {
+    "text": "Score 30",
+    "id": "57hx",
+    "movable": false,
+    "x": 185,
+    "y": 232,
+    "height": 50,
+    "parent": "h2"
+  },
+  "58hx": {
+    "text": "Score 40",
+    "id": "58hx",
+    "movable": false,
+    "x": 185,
+    "y": 302,
+    "height": 50,
+    "parent": "h2"
+  },
+  "59hx": {
+    "text": "Score 50\nfor first",
+    "id": "59hx",
+    "movable": false,
+    "x": 185,
+    "y": 365,
+    "height": 50,
+    "parent": "h2"
+  },
+  "60hx": {
+    "text": "Add total of\n all dice",
+    "id": "60hx",
+    "movable": false,
+    "x": 185,
+    "y": 435,
+    "height": 50,
+    "parent": "h2"
+  },
+  "xprj9": {
+    "id": "xprj9",
+    "y": 505,
+    "z": 100,
+    "text": "Total of lower section",
+    "height": 50,
+    "width": 180,
+    "css": "font-weight:bold;font-size:16pt",
+    "movable": false,
+    "x": 30,
+    "parent": "h2"
+  },
+  "xprj10": {
+    "id": "xprj10",
+    "x": 30,
+    "y": 585,
+    "width": 180,
+    "height": 50,
+    "z": 100,
+    "movable": false,
+    "css": "font-weight:bold;font-size:20pt",
+    "text": "Grand Total",
+    "parent": "h2"
+  },
+  "table": {
+    "id": "table",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "default": {
+        "background-color": "lightgray"
+      },
+      ",#roomArea": {
+        "--btnColor": "green",
+        "--zeroColor": "yellow",
+        "--disabledBtnColor": "gray"
+      }
+    },
+    "unscoredBtnText": "",
+    "updateTotalsRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "pipScores"
+        ],
+        "property": "text",
+        "variable": "pipScores"
+      },
+      "var Bonus = 0",
+      {
+        "func": "IF",
+        "operand1": "${pipScores}",
+        "relation": ">=",
+        "operand2": 63,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "Bonus"
+            ],
+            "property": "text",
+            "value": 35
+          },
+          "var Bonus = 35"
+        ]
+      },
+      "var upperTotal = ${pipScores} + ${Bonus}",
+      {
+        "func": "IF",
+        "operand1": "${upperTotal}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          "var upperTotal = ''"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "upperTotal"
+        ],
+        "property": "text",
+        "value": "${upperTotal}"
+      },
+      "var grandTotal = ${upperTotal} + ${PROPERTY text OF lowerTotal}",
+      {
+        "func": "SET",
+        "collection": [
+          "grandTotal"
+        ],
+        "property": "text",
+        "value": "${grandTotal}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "player"
+      },
+      "var playerSummary = ${player} concat 'Summary'",
+      {
+        "func": "SET",
+        "collection": [
+          "${playerSummary}"
+        ],
+        "property": "text",
+        "value": "${grandTotal}"
+      }
+    ],
+    "changePlayerRoutine": [
+      "// Close the summary window if open",
+      {
+        "func": "CLICK",
+        "collection": [
+          "closeBrief"
+        ]
+      },
+      "// First, store the current player data",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true,
+        "collection": "currPlayer"
+      },
+      "var saved = []",
+      "var saved = push ${PROPERTY text OF u1}",
+      "var saved = push ${PROPERTY text OF u2}",
+      "var saved = push ${PROPERTY text OF u3}",
+      "var saved = push ${PROPERTY text OF u4}",
+      "var saved = push ${PROPERTY text OF u5}",
+      "var saved = push ${PROPERTY text OF u6}",
+      "var saved = push ${PROPERTY text OF 3k}",
+      "var saved = push ${PROPERTY text OF 4k}",
+      "var saved = push ${PROPERTY text OF fh}",
+      "var saved = push ${PROPERTY text OF ss}",
+      "var saved = push ${PROPERTY text OF ls}",
+      "var saved = push ${PROPERTY text OF 5k}",
+      "var saved = push ${PROPERTY text OF chance}",
+      {
+        "func": "SET",
+        "collection": "currPlayer",
+        "property": "saved",
+        "value": "${saved}"
+      },
+      {
+        "func": "SET",
+        "collection": "currPlayer",
+        "property": "savedUpper",
+        "value": "${PROPERTY text OF pipScores}"
+      },
+      {
+        "func": "SET",
+        "collection": "currPlayer",
+        "property": "savedLower",
+        "value": "${PROPERTY text OF lowerTotal}"
+      },
+      "// Advance the turn",
+      {
+        "func": "TURN",
+        "turn": 1,
+        "turnCycle": "forward"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetActiveBoardRoutine"
+      },
+      "// Increment move counter",
+      "var movesMade = 1 + ${PROPERTY movesMade}",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT",
+        "variable": "activePlayers"
+      },
+      "var maxMoves = 13 * ${activePlayers}",
+      {
+        "func": "IF",
+        "operand1": "${movesMade}",
+        "relation": "<",
+        "operand2": "${maxMoves}",
+        "thenRoutine": [
+          "// Remember that another move was made",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "movesMade",
+            "value": "${movesMade}"
+          },
+          "// Restore current (new) player data",
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "turn",
+            "value": true,
+            "collection": "newPlayer"
+          },
+          {
+            "func": "GET",
+            "collection": "newPlayer",
+            "property": "saved",
+            "variable": "saved"
+          },
+          "var i = 0",
+          {
+            "func": "FOREACH",
+            "in": [
+              "u1",
+              "u2",
+              "u3",
+              "u4",
+              "u5",
+              "u6",
+              "3k",
+              "4k",
+              "fh",
+              "ss",
+              "ls",
+              "5k",
+              "chance"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${value}"
+                ],
+                "property": "text",
+                "value": "${saved.$i}"
+              },
+              "var i = ${i} + 1"
+            ]
+          },
+          {
+            "func": "GET",
+            "collection": "newPlayer",
+            "property": "savedUpper",
+            "variable": "savedUpper"
+          },
+          {
+            "func": "GET",
+            "collection": "newPlayer",
+            "property": "savedLower",
+            "variable": "savedLower"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "pipScores"
+            ],
+            "property": "text",
+            "value": "${savedUpper}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "lowerTotal"
+            ],
+            "property": "text",
+            "value": "${savedLower}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "Bonus"
+            ],
+            "property": "text",
+            "value": ""
+          },
+          {
+            "func": "CALL",
+            "widget": "table",
+            "routine": "updateTotalsRoutine"
+          }
+        ],
+        "elseRoutine": [
+          "// Game over, make it so.",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "message"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": 600
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "Game Over"
+          },
+          {
+            "func": "TIMER",
+            "timer": "messageTimer",
+            "mode": "start"
+          },
+          {
+            "func": "CALL",
+            "widget": "playBtn",
+            "routine": "doEndGameRoutine"
+          }
+        ]
+      }
+    ],
+    "resetActiveBoardRoutine": [
+      "// Hide the dice etc.",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY x OF d1}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "keep1",
+              "keep2",
+              "keep3",
+              "keep4",
+              "keep5",
+              "d1",
+              "d2",
+              "d3",
+              "d4",
+              "d5"
+            ],
+            "property": "x",
+            "relation": "-",
+            "value": 1600
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "keep1",
+          "keep2",
+          "keep3",
+          "keep4",
+          "keep5"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "property": "kept",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "rollBtn"
+        ],
+        "property": "rollNum",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "rollBtn"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "CALL",
+        "widget": "rollBtn",
+        "routine": "setRollTextRoutine"
+      },
+      "// disable all squares",
+      {
+        "func": "CALL",
+        "widget": "rollBtn",
+        "routine": "disableRoutine",
+        "arguments": {
+          "widget": [
+            "u1",
+            "u2",
+            "u3",
+            "u4",
+            "u5",
+            "u6",
+            "3k",
+            "4k",
+            "fh",
+            "ss",
+            "ls",
+            "5k",
+            "chance"
+          ]
+        }
+      }
+    ],
+    "z": 1,
+    "movableInEdit": false,
+    "movesMade": 0
+  },
+  "rollBtn": {
+    "type": "button",
+    "id": "rollBtn",
+    "x": 1088,
+    "y": 920,
+    "width": 180,
+    "height": 50,
+    "z": 33,
+    "css": "background:gray;font-size:20pt",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY rollNum}",
+        "relation": "==",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "keep1",
+              "keep2",
+              "keep3",
+              "keep4",
+              "keep5",
+              "d1",
+              "d2",
+              "d3",
+              "d4",
+              "d5"
+            ],
+            "property": "x",
+            "relation": "+",
+            "value": 1600
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rollNum",
+        "relation": "+",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "routine": "setRollTextRoutine"
+      },
+      {
+        "func": "SELECT",
+        "source": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "collection": "dice"
+      },
+      {
+        "func": "SELECT",
+        "source": "dice",
+        "property": "kept",
+        "value": false,
+        "collection": "rollEm"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "rollEm",
+        "loopRoutine": [
+          {
+            "func": "CLICK",
+            "mode": "ignoreClickable"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "doScoreButtonsRoutine"
+      }
+    ],
+    "disableRoutine": [
+      {
+        "func": "SET",
+        "collection": "${widget}",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "${widget}",
+        "property": "borderRadius",
+        "value": "0px"
+      },
+      {
+        "func": "SET",
+        "collection": "${widget}",
+        "property": "css",
+        "value": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt"
+      }
+    ],
+    "enableRoutine": [
+      "// Do not enable widgets that have already been scored.",
+      {
+        "func": "SELECT",
+        "source": "${widget}",
+        "property": "text",
+        "relation": "==",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "zeroValue",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "property": "borderRadius",
+        "value": "15px"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": {
+          "default": {
+            "margin": "0px",
+            "font-size": "20px",
+            "padding": "15px",
+            "background-size": "200% auto",
+            "border": "none",
+            "color": "#FFF",
+            "box-shadow": "0 5px 5px rgba(0,0,0,0.12), 0 5px 5px rgba(0,0,0,0.24)",
+            "transition": "all 0.3s cubic-bezier(.25,.8,.25,1)",
+            "cursor": "pointer",
+            "display": "inline-block",
+            "background-image": "linear-gradient(to right, #00ff00 0%, #bbffbb 20%, #00ff00 100%)"
+          },
+          ":hover": {
+            "box-shadow": "0 12px 24px rgba(0,0,0,0.19), 0 12px 24px rgba(0,0,0,0.23)",
+            "margin": "-2px 0px 2px",
+            "background-position": "left center"
+          }
+        }
+      }
+    ],
+    "rollNum": 1,
+    "setRollTextRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY rollNum}",
+        "relation": ">",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "disableRollBtnRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Roll"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "enableRollBtnRoutine"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY rollNum}",
+            "relation": "==",
+            "operand2": 1,
+            "thenRoutine": [
+              "var rText = 'First Roll'"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY rollNum}",
+                "relation": "==",
+                "operand2": 2,
+                "thenRoutine": [
+                  "var rText = 'Second Roll'"
+                ],
+                "elseRoutine": [
+                  "var rText = 'Last Roll'"
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${rText}"
+          }
+        ]
+      }
+    ],
+    "text": "First Roll",
+    "doScoreButtonsRoutine": [
+      {
+        "func": "GET",
+        "collection": "dice",
+        "aggregation": "array",
+        "property": "value",
+        "variable": "dice"
+      },
+      "var counts = []",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "dice",
+            "property": "value",
+            "value": "${value}"
+          },
+          {
+            "func": "COUNT",
+            "variable": "count"
+          },
+          "var counts = push ${count}"
+        ]
+      },
+      "// Set all squares to zero-value color that don't already have entries",
+      {
+        "func": "CALL",
+        "routine": "zeroValueRoutine",
+        "arguments": {
+          "widget": [
+            "u1",
+            "u2",
+            "u3",
+            "u4",
+            "u5",
+            "u6",
+            "3k",
+            "4k",
+            "fh",
+            "ss",
+            "ls",
+            "5k"
+          ]
+        }
+      },
+      "// But Chance is always green",
+      "var w = 'u' concat ${value}",
+      {
+        "func": "CALL",
+        "routine": "enableRoutine",
+        "arguments": {
+          "widget": [
+            "chance"
+          ]
+        }
+      },
+      "// Now make upper section squares green as appropriate",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "loopRoutine": [
+          "var index = ${value} - 1",
+          "var yes = ${counts.$index} != 0",
+          {
+            "func": "IF",
+            "condition": "${yes}",
+            "thenRoutine": [
+              "var w = 'u' concat ${value}",
+              {
+                "func": "CALL",
+                "routine": "enableRoutine",
+                "arguments": {
+                  "widget": [
+                    "${w}"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "// Initialize the pending yahtzee flag to false.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "pendingYahtzee",
+        "value": false
+      },
+      "// Now go about figuring out what we've rolled.",
+      "var m5 = 5 in ${counts}",
+      "var m4 = 4 in ${counts}",
+      "var m3 = 3 in ${counts}",
+      {
+        "func": "IF",
+        "condition": "${m5}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "processYahtzeeRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${m4}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "enableRoutine",
+            "arguments": {
+              "widget": [
+                "3k",
+                "4k"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${m3}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "enableRoutine",
+            "arguments": {
+              "widget": [
+                "3k"
+              ]
+            }
+          },
+          "var fhsq = 2 in ${counts}",
+          {
+            "func": "IF",
+            "condition": "${fhsq}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "enableRoutine",
+                "arguments": {
+                  "widget": [
+                    "fh"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "var no5count = ! ${m5}",
+      "var no4count = ! ${m4}",
+      "var no3count = ! ${m3}",
+      "var no1 = ${counts.0} == 0 // Find the zeros",
+      "var no2 = ${counts.1} == 0",
+      "var no5 = ${counts.4} == 0",
+      "var no6 = ${counts.5} == 0",
+      "var sortedCounts = sort ${counts} // Note that this is a shallow copy, so it also changes the counts array!!!",
+      "var lastZero = ${sortedCounts} lastIndexOf 0",
+      "// If there are two zero counts, could be small straight",
+      {
+        "func": "IF",
+        "operand1": "${lastZero}",
+        "relation": "==",
+        "operand2": 1,
+        "thenRoutine": [
+          "// max = 2",
+          "var ends = ${no1} && ${no6}",
+          "var start = ${no1} && ${no2}",
+          "var last = ${no5} && ${no6}",
+          "var validSmall = ${ends} || ${start}",
+          "var validSmall = ${validSmall} || ${last}",
+          {
+            "func": "IF",
+            "condition": "${validSmall}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "enableRoutine",
+                "arguments": {
+                  "widget": [
+                    "ss"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "// If there is only one zero count, could be either straight",
+      {
+        "func": "IF",
+        "operand1": "${lastZero}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          "// max = 1",
+          "var validLarge = ${no1} || ${no6}",
+          "var validSmall = ${no2} || ${no5}",
+          {
+            "func": "IF",
+            "condition": "${validLarge}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "enableRoutine",
+                "arguments": {
+                  "widget": [
+                    "ss",
+                    "ls"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${validSmall}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "enableRoutine",
+                "arguments": {
+                  "widget": [
+                    "ss"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "zeroValueRoutine": [
+      "// Do not enable widgets that have already been scored.",
+      {
+        "func": "SELECT",
+        "source": "${widget}",
+        "property": "text",
+        "relation": "==",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "zeroValue",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "borderRadius",
+        "value": "15px"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": {
+          "default": {
+            "margin": "0px",
+            "font-size": "20px",
+            "padding": "15px",
+            "background-size": "200% auto",
+            "border": "none",
+            "color": "#FFF",
+            "box-shadow": "0 5px 5px rgba(0,0,0,0.12), 0 5px 5px rgba(0,0,0,0.24)",
+            "transition": "all 0.3s cubic-bezier(.25,.8,.25,1)",
+            "cursor": "pointer",
+            "display": "inline-block",
+            "background-image": "linear-gradient(to right, #ebeb15 0%, #ffffbb 51%, #ebeb15 100%)"
+          },
+          ":hover": {
+            "box-shadow": "0 12px 24px rgba(0,0,0,0.19), 0 12px 24px rgba(0,0,0,0.23)",
+            "margin": "-2px 0px 2px",
+            "background-position": "left center"
+          }
+        }
+      }
+    ],
+    "processYahtzeeRoutine": [
+      "// Do the work to handle 5 of a kind",
+      "var yTotal = ${PROPERTY text OF 5k}",
+      "var firstYahtzee = ${yTotal} == ''",
+      "// First handle the case of first Yahtzee - easy",
+      {
+        "func": "IF",
+        "condition": "${firstYahtzee}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "enableRoutine",
+            "arguments": {
+              "widget": [
+                "3k",
+                "4k",
+                "5k"
+              ]
+            }
+          }
+        ]
+      },
+      "// Now deal with subsequent Yahtzees",
+      {
+        "func": "IF",
+        "operand1": "${firstYahtzee}",
+        "relation": "!=",
+        "operand2": true,
+        "thenRoutine": [
+          "// If yahtzee square has a nonzero value, ",
+          "// there is a yahtzee pending; remember that.",
+          "// When the player presses a scoring button, the pending",
+          "// yahtzee will be processed.",
+          {
+            "func": "IF",
+            "operand1": "${yTotal}",
+            "relation": "!=",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "pendingYahtzee",
+                "value": true
+              }
+            ]
+          },
+          "// First disable all upper section boxes",
+          {
+            "func": "CALL",
+            "routine": "disableRoutine",
+            "arguments": {
+              "widget": [
+                "u1",
+                "u2",
+                "u3",
+                "u4",
+                "u5",
+                "u6"
+              ]
+            }
+          },
+          "var number = ${PROPERTY value OF d1}",
+          "var upper = 'u' concat ${number}",
+          "var upperValue = ${PROPERTY text OF $upper}",
+          "var upperSlotAvailable = ${upperValue} == ''",
+          {
+            "func": "SELECT",
+            "source": [
+              "3k",
+              "4k",
+              "fh",
+              "ss",
+              "ls",
+              "chance"
+            ],
+            "property": "text",
+            "relation": "==",
+            "value": ""
+          },
+          {
+            "func": "COUNT",
+            "variable": "lowerSlotsEmpty"
+          },
+          {
+            "func": "IF",
+            "condition": "${upperSlotAvailable}",
+            "thenRoutine": [
+              "// Upper square is available, force that one.",
+              {
+                "func": "CALL",
+                "routine": "enableRoutine",
+                "arguments": {
+                  "widget": [
+                    "${upper}"
+                  ]
+                }
+              },
+              {
+                "func": "CALL",
+                "routine": "disableRoutine",
+                "arguments": {
+                  "widget": [
+                    "3k",
+                    "4k",
+                    "fh",
+                    "ss",
+                    "ls",
+                    "5k",
+                    "chance"
+                  ]
+                }
+              }
+            ],
+            "elseRoutine": [
+              "// If upper section box taken, first check for",
+              "// empty lower section box",
+              {
+                "func": "IF",
+                "operand1": "${lowerSlotsEmpty}",
+                "relation": ">",
+                "operand2": 0,
+                "thenRoutine": [
+                  "// Upper section already taken, allow any lower section",
+                  {
+                    "func": "CALL",
+                    "routine": "enableRoutine",
+                    "arguments": {
+                      "widget": [
+                        "3k",
+                        "4k",
+                        "fh",
+                        "ss",
+                        "ls",
+                        "chance"
+                      ]
+                    }
+                  }
+                ],
+                "elseRoutine": [
+                  "// All lower section boxes full too, force zero in",
+                  "// open upper section box",
+                  {
+                    "func": "CALL",
+                    "routine": "enableRoutine",
+                    "arguments": {
+                      "widget": [
+                        "u1",
+                        "u2",
+                        "u3",
+                        "u4",
+                        "u5",
+                        "u6"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "disableRollBtnRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "background:gray;font-size:20pt"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      }
+    ],
+    "enableRollBtnRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "background:green;font-size:20pt"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": true
+      }
+    ],
+    "handlePendingYahtzeeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY pendingYahtzee}",
+        "thenRoutine": [
+          "// Add 100 points to yahtzee square total (and to lower total).",
+          "var yTotal = 100 + ${PROPERTY text OF 5k}",
+          "var lowerTotal = 100 + ${PROPERTY text OF lowerTotal}",
+          {
+            "func": "SET",
+            "collection": [
+              "5k"
+            ],
+            "property": "text",
+            "value": "${yTotal}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "lowerTotal"
+            ],
+            "property": "text",
+            "value": "${lowerTotal}"
+          }
+        ]
+      }
+    ],
+    "pendingYahtzee": false,
+    "clickable": false
+  },
+  "p1": {
+    "type": "seat",
+    "id": "p1",
+    "x": 72,
+    "y": 200,
+    "z": 16,
+    "saved": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "savedLower": "",
+    "savedUpper": "",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          "// Player sitting down",
+          "var playerPrefix = substr ${playerName} 0 5",
+          {
+            "func": "IF",
+            "operand1": "${playerPrefix}",
+            "operand2": "Guest",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Name",
+                    "variable": "playerName",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "color",
+                    "label": "Color",
+                    "variable": "playerColor",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "CALL",
+            "widget": "playBtn",
+            "routine": "enablePlayBtnRoutine"
+          },
+          {
+            "func": "CLICK",
+            "collection": "thisButton",
+            "mode": "ignoreClickRoutine"
+          }
+        ],
+        "elseRoutine": [
+          "// Player getting up, end game unless cancelled when game in progress",
+          {
+            "func": "IF",
+            "condition": "${PROPERTY gameInProgress OF playBtn}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "playBtn",
+                "routine": "endGameRoutine",
+                "variable": "ended"
+              }
+            ],
+            "elseRoutine": [
+              "var ended = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${ended}",
+            "thenRoutine": [
+              "var summary = ${PROPERTY id} concat 'Summary'",
+              {
+                "func": "SET",
+                "collection": [
+                  "${summary}"
+                ],
+                "property": "x",
+                "value": -400
+              },
+              {
+                "func": "CLICK",
+                "collection": "thisButton",
+                "mode": "ignoreClickRoutine"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT",
+        "variable": "numPlayers"
+      },
+      {
+        "func": "IF",
+        "operand1": "${numPlayers}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "playBtn",
+            "routine": "disablePlayBtnRoutine"
+          }
+        ]
+      }
+    ],
+    "hideWhenUnused": true,
+    "turn": true,
+    "hideTurn": true
+  },
+  "keep1": {
+    "type": "button",
+    "id": "keep1",
+    "y": 850,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "css": "font-size:40px;color:red;background-color:transparent; border:5px solid black;border-radius: 0px",
+    "clickRoutine": [
+      "var empty = ${PROPERTY text} == ''",
+      "var dieNum = ${PROPERTY id} substr 4 1",
+      "var die = 'd' concat ${dieNum}",
+      {
+        "func": "IF",
+        "condition": "${empty}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "check"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${die}"
+            ],
+            "property": "kept",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${die}"
+            ],
+            "property": "kept",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "x": -765,
+    "classes": "symbols"
+  },
+  "keep2": {
+    "type": "button",
+    "id": "keep2",
+    "x": -603,
+    "y": 850,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "font-size:40px;color:red;background-color:transparent; border:5px solid black;border-radius: 0px",
+    "inheritFrom": {
+      "keep1": [
+        "classes",
+        "clickRoutine"
+      ]
+    },
+    "text": ""
+  },
+  "keep3": {
+    "type": "button",
+    "id": "keep3",
+    "x": -442,
+    "y": 850,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": true,
+    "css": "font-size:40px;color:red;background-color:transparent; border:5px solid black;border-radius: 0px",
+    "inheritFrom": {
+      "keep1": [
+        "classes",
+        "clickRoutine"
+      ]
+    },
+    "text": ""
+  },
+  "keep4": {
+    "type": "button",
+    "id": "keep4",
+    "x": -281,
+    "y": 850,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": true,
+    "css": "font-size:40px;color:red;background-color:transparent; border:5px solid black;border-radius: 0px",
+    "inheritFrom": {
+      "keep1": [
+        "classes",
+        "clickRoutine"
+      ]
+    },
+    "text": ""
+  },
+  "keep5": {
+    "type": "button",
+    "id": "keep5",
+    "x": -119,
+    "y": 850,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": true,
+    "css": "font-size:40px;color:red;background-color:transparent; border:5px solid black;border-radius: 0px",
+    "inheritFrom": {
+      "keep1": [
+        "classes",
+        "clickRoutine"
+      ]
+    },
+    "text": ""
+  },
+  "h4": {
+    "type": "holder",
+    "id": "h4",
+    "x": 373,
+    "y": 489,
+    "width": 375,
+    "height": 162,
+    "z": 2,
+    "css": "background-color:#f0f0f0; border:4px solid black;border-radius:0px",
+    "parent": "mh1"
+  },
+  "u6": {
+    "type": "button",
+    "id": "u6",
+    "y": 360,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": false,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "inheritFrom": {
+      "u1": [
+        "x",
+        "width",
+        "height",
+        "clickRoutine"
+      ]
+    },
+    "text": "",
+    "parent": "h1",
+    "zeroValue": true,
+    "borderRadius": "0px"
+  },
+  "u5": {
+    "type": "button",
+    "id": "u5",
+    "y": 290,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": false,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "inheritFrom": {
+      "u1": [
+        "x",
+        "width",
+        "height",
+        "clickRoutine"
+      ]
+    },
+    "text": "",
+    "parent": "h1",
+    "zeroValue": false,
+    "borderRadius": "0px"
+  },
+  "u4": {
+    "type": "button",
+    "id": "u4",
+    "y": 220,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "inheritFrom": {
+      "u1": [
+        "x",
+        "width",
+        "height",
+        "clickRoutine"
+      ]
+    },
+    "text": "",
+    "parent": "h1",
+    "zeroValue": true,
+    "borderRadius": "0px"
+  },
+  "u3": {
+    "type": "button",
+    "id": "u3",
+    "y": 150,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": false,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "inheritFrom": {
+      "u1": [
+        "x",
+        "width",
+        "height",
+        "clickRoutine"
+      ]
+    },
+    "text": "",
+    "parent": "h1",
+    "zeroValue": true,
+    "borderRadius": "0px"
+  },
+  "u2": {
+    "type": "button",
+    "id": "u2",
+    "y": 80,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": false,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "inheritFrom": {
+      "u1": [
+        "x",
+        "width",
+        "height",
+        "clickRoutine"
+      ]
+    },
+    "text": "",
+    "parent": "h1",
+    "zeroValue": false,
+    "borderRadius": "0px"
+  },
+  "u1": {
+    "type": "button",
+    "id": "u1",
+    "y": 10,
+    "width": 60,
+    "height": 50,
+    "z": 6,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "rollBtn",
+        "routine": "handlePendingYahtzeeRoutine"
+      },
+      "var mul = ${PROPERTY id}",
+      "var mul = ${mul} substr 1 1",
+      "var mul = ${mul} + 0",
+      {
+        "func": "SELECT",
+        "source": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "property": "value",
+        "value": "${mul}"
+      },
+      {
+        "func": "COUNT",
+        "variable": "count"
+      },
+      "var count = ${count} * ${mul}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${count}"
+      },
+      {
+        "func": "CALL",
+        "widget": "rollBtn",
+        "routine": "disableRoutine",
+        "arguments": {
+          "widget": [
+            "${PROPERTY id}"
+          ]
+        }
+      },
+      "var newTotal = ${PROPERTY text OF pipScores} + ${count}",
+      {
+        "func": "SET",
+        "collection": [
+          "pipScores"
+        ],
+        "property": "text",
+        "value": "${newTotal}"
+      },
+      {
+        "func": "CALL",
+        "widget": "table",
+        "routine": "updateTotalsRoutine"
+      },
+      {
+        "func": "CALL",
+        "widget": "table",
+        "routine": "changePlayerRoutine"
+      }
+    ],
+    "parent": "h1",
+    "zeroValue": false,
+    "borderRadius": "0px",
+    "x": 290,
+    "clickable": false
+  },
+  "chance": {
+    "type": "button",
+    "id": "chance",
+    "y": 430,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": false,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "inheritFrom": {
+      "3k": [
+        "clickRoutine",
+        "x",
+        "width",
+        "height"
+      ]
+    },
+    "text": "",
+    "parent": "h2",
+    "zeroValue": false,
+    "borderRadius": "0px"
+  },
+  "5k": {
+    "type": "button",
+    "id": "5k",
+    "y": 360,
+    "z": 6,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "parent": "h2",
+    "zeroValue": true,
+    "cellValue": 50,
+    "clickable": false,
+    "text": "",
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "fh": [
+        "clickRoutine"
+      ],
+      "3k": [
+        "x",
+        "width",
+        "height"
+      ]
+    },
+    "borderRadius": "0px"
+  },
+  "ls": {
+    "type": "button",
+    "id": "ls",
+    "y": 290,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": false,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "inheritFrom": {
+      "fh": [
+        "clickRoutine"
+      ],
+      "3k": [
+        "x",
+        "width",
+        "height"
+      ]
+    },
+    "text": "",
+    "cellValue": 40,
+    "parent": "h2",
+    "zeroValue": true,
+    "borderRadius": "0px"
+  },
+  "ss": {
+    "type": "button",
+    "id": "ss",
+    "y": 220,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": false,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "inheritFrom": {
+      "fh": [
+        "clickRoutine"
+      ],
+      "3k": [
+        "x",
+        "width",
+        "height"
+      ]
+    },
+    "text": "",
+    "cellValue": 30,
+    "parent": "h2",
+    "zeroValue": true,
+    "borderRadius": "0px"
+  },
+  "4k": {
+    "type": "button",
+    "id": "4k",
+    "y": 80,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "clickable": false,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "inheritFrom": {
+      "3k": [
+        "clickRoutine",
+        "x",
+        "width",
+        "height"
+      ]
+    },
+    "text": "",
+    "parent": "h2",
+    "zeroValue": true,
+    "borderRadius": "0px"
+  },
+  "3k": {
+    "type": "button",
+    "id": "3k",
+    "x": 290,
+    "y": 10,
+    "width": 60,
+    "height": 50,
+    "z": 6,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "rollBtn",
+        "routine": "handlePendingYahtzeeRoutine"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "property": "value",
+        "aggregation": "sum",
+        "variable": "count"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY zeroValue}",
+        "thenRoutine": [
+          "var count = 0"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${count}"
+      },
+      {
+        "func": "CALL",
+        "widget": "rollBtn",
+        "routine": "disableRoutine",
+        "arguments": {
+          "widget": [
+            "${PROPERTY id}"
+          ]
+        }
+      },
+      "var newLower = ${PROPERTY text OF lowerTotal} + ${count}",
+      {
+        "func": "SET",
+        "collection": [
+          "lowerTotal"
+        ],
+        "property": "text",
+        "value": "${newLower}"
+      },
+      {
+        "func": "CALL",
+        "widget": "table",
+        "routine": "updateTotalsRoutine"
+      },
+      {
+        "func": "CALL",
+        "widget": "table",
+        "routine": "changePlayerRoutine"
+      }
+    ],
+    "parent": "h2",
+    "zeroValue": false,
+    "borderRadius": "0px",
+    "clickable": false
+  },
+  "fh": {
+    "type": "button",
+    "id": "fh",
+    "y": 150,
+    "z": 6,
+    "css": "background-color:var(--disabledBtnColor);border:1px solid black;font-size:24pt",
+    "cellValue": 25,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "rollBtn",
+        "routine": "handlePendingYahtzeeRoutine"
+      },
+      {
+        "func": "CALL",
+        "widget": "rollBtn",
+        "routine": "disableRoutine",
+        "arguments": {
+          "widget": [
+            "${PROPERTY id}"
+          ]
+        }
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY zeroValue}",
+        "thenRoutine": [
+          "var inc = 0"
+        ],
+        "elseRoutine": [
+          "var inc = ${PROPERTY cellValue}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${inc}"
+      },
+      "var newLower = ${PROPERTY text OF lowerTotal} + ${inc}",
+      {
+        "func": "SET",
+        "collection": [
+          "lowerTotal"
+        ],
+        "property": "text",
+        "value": "${newLower}"
+      },
+      {
+        "func": "CALL",
+        "widget": "table",
+        "routine": "updateTotalsRoutine"
+      },
+      {
+        "func": "CALL",
+        "widget": "table",
+        "routine": "changePlayerRoutine"
+      }
+    ],
+    "parent": "h2",
+    "zeroValue": true,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "3k": [
+        "x",
+        "width",
+        "height"
+      ]
+    },
+    "clickable": false,
+    "text": "",
+    "borderRadius": "0px"
+  },
+  "mh1": {
+    "type": "holder",
+    "id": "mh1",
+    "x": 805,
+    "y": 25,
+    "z": 4,
+    "width": 750,
+    "height": 651,
+    "classes": "transparent"
+  },
+  "h2": {
+    "type": "holder",
+    "id": "h2",
+    "parent": "mh1",
+    "x": 373,
+    "width": 375,
+    "height": 495,
+    "z": 3,
+    "css": "background-color:#f0f0f0; border:4px solid black;border-radius:0px"
+  },
+  "h3": {
+    "type": "holder",
+    "id": "h3",
+    "parent": "mh1",
+    "y": 431,
+    "width": 375,
+    "height": 220,
+    "z": 2,
+    "css": "border:4px solid black;background-color:#f0f0f0;border-radius:0"
+  },
+  "h1": {
+    "type": "holder",
+    "id": "h1",
+    "parent": "mh1",
+    "width": 375,
+    "height": 435,
+    "z": 3,
+    "css": "background-color:#f0f0f0; border:4px solid black;border-radius:0px"
+  },
+  "pipScores": {
+    "type": "label",
+    "id": "pipScores",
+    "parent": "h1",
+    "x": 300,
+    "y": 445,
+    "width": 50,
+    "height": 50,
+    "z": 5,
+    "css": "background-color:#f0f0f0;border:none;font-size:20pt;color:black;font-weight:bold"
+  },
+  "Bonus": {
+    "type": "label",
+    "id": "Bonus",
+    "parent": "h1",
+    "x": 300,
+    "y": 515,
+    "width": 50,
+    "height": 50,
+    "z": 5,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "pipScores": [
+        "css"
+      ]
+    },
+    "text": ""
+  },
+  "upperTotal": {
+    "type": "label",
+    "id": "upperTotal",
+    "parent": "h1",
+    "x": 300,
+    "y": 585,
+    "width": 50,
+    "height": 50,
+    "z": 5,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "pipScores": [
+        "css"
+      ]
+    },
+    "text": ""
+  },
+  "lowerTotal": {
+    "type": "label",
+    "id": "lowerTotal",
+    "parent": "h2",
+    "x": 300,
+    "y": 505,
+    "width": 50,
+    "height": 50,
+    "z": 5,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "pipScores": [
+        "css"
+      ]
+    },
+    "text": ""
+  },
+  "grandTotal": {
+    "type": "label",
+    "id": "grandTotal",
+    "parent": "h2",
+    "x": 300,
+    "y": 585,
+    "width": 50,
+    "height": 50,
+    "z": 5,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "pipScores": [
+        "css"
+      ]
+    },
+    "text": ""
+  },
+  "p2": {
+    "type": "seat",
+    "id": "p2",
+    "x": 72,
+    "y": 325,
+    "z": 16,
+    "index": 2,
+    "saved": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "savedLower": "",
+    "savedUpper": "",
+    "width": 150,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "p1": [
+        "clickRoutine"
+      ]
+    },
+    "color": "#999999",
+    "turn": false,
+    "hideWhenUnused": true,
+    "hideTurn": true
+  },
+  "p3": {
+    "type": "seat",
+    "id": "p3",
+    "x": 72,
+    "y": 450,
+    "z": 16,
+    "index": 3,
+    "saved": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "savedLower": "",
+    "savedUpper": "",
+    "width": 150,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "p1": [
+        "clickRoutine"
+      ]
+    },
+    "turn": false,
+    "hideWhenUnused": true,
+    "hideTurn": true
+  },
+  "p4": {
+    "type": "seat",
+    "id": "p4",
+    "x": 72,
+    "y": 575,
+    "z": 16,
+    "index": 4,
+    "saved": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "savedLower": "",
+    "savedUpper": "",
+    "width": 150,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "p1": [
+        "clickRoutine"
+      ]
+    },
+    "color": "#999999",
+    "turn": false,
+    "hideWhenUnused": true,
+    "hideTurn": true
+  },
+  "p5": {
+    "type": "seat",
+    "id": "p5",
+    "x": 72,
+    "y": 700,
+    "z": 16,
+    "index": 5,
+    "saved": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "savedLower": "",
+    "savedUpper": "",
+    "turn": false,
+    "width": 150,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "p1": [
+        "clickRoutine"
+      ]
+    },
+    "color": "#999999",
+    "hideWhenUnused": true,
+    "hideTurn": true
+  },
+  "p6": {
+    "type": "seat",
+    "id": "p6",
+    "x": 72,
+    "y": 825,
+    "z": 16,
+    "index": 6,
+    "saved": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "savedLower": "",
+    "savedUpper": "",
+    "width": 150,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "p1": [
+        "clickRoutine"
+      ]
+    },
+    "turn": false,
+    "hideWhenUnused": true,
+    "hideTurn": true
+  },
+  "p1Summary": {
+    "type": "button",
+    "id": "p1Summary",
+    "x": -400,
+    "y": 200,
+    "width": 70,
+    "height": 50,
+    "z": 6,
+    "css": {
+      "default": {
+        "background-color": "white",
+        "color": "black",
+        "font-size": "20pt",
+        "font-weight": "bold",
+        "background-size": "200% auto",
+        "border": "4px solid black",
+        "box-shadow": "0 5px 5px rgba(0,0,0,0.12), 0 10px 10px rgba(0,0,0,0.4)",
+        "transition": "all 0.3s cubic-bezier(.25,.8,.25,1)",
+        "cursor": "pointer"
+      },
+      ":hover": {
+        "box-shadow": "0 8px 16px rgba(0,0,0,0.19), 0 16px 16px rgba(0,0,0,0.5)",
+        "margin": "-2px 0px 2px"
+      }
+    },
+    "clickRoutine": [
+      "var seat = ${PROPERTY id} substr 0 2",
+      {
+        "func": "SET",
+        "collection": [
+          "brief"
+        ],
+        "property": "x",
+        "relation": "=",
+        "value": 490
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${seat}"
+        ],
+        "property": "saved",
+        "variable": "saved"
+      },
+      "var i = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          "su1",
+          "su2",
+          "su3",
+          "su4",
+          "su5",
+          "su6",
+          "s3k",
+          "s4k",
+          "sfh",
+          "sss",
+          "sls",
+          "s5k",
+          "schance"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "text",
+            "value": "${saved.$i}"
+          },
+          "var i = ${i} + 1"
+        ]
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${seat}"
+        ],
+        "property": "savedUpper",
+        "variable": "savedUpper"
+      },
+      "var savedUpper = 0 + ${savedUpper}",
+      "var bonus = 0",
+      {
+        "func": "IF",
+        "operand1": "${savedUpper}",
+        "relation": ">=",
+        "operand2": 63,
+        "thenRoutine": [
+          "var bonus = 35"
+        ]
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${seat}"
+        ],
+        "property": "savedLower",
+        "variable": "savedLower"
+      },
+      "var savedLower = 0 + ${savedLower}",
+      "var upperTotal = ${savedUpper} + ${bonus}",
+      "var upperText = ${savedUpper} + ' + '",
+      "var upperText = ${upperText} + ${bonus}",
+      "var upperText = ${upperText} + ' = '",
+      "var upperText = ${upperText} + ${upperTotal}",
+      {
+        "func": "SET",
+        "collection": [
+          "sUpper"
+        ],
+        "property": "text",
+        "value": "${upperText}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "sLower"
+        ],
+        "property": "text",
+        "value": "${savedLower}"
+      },
+      "var grandTotal = ${upperTotal} + ${savedLower}",
+      "var title = ${PROPERTY player OF $seat} concat ': '",
+      "var title = ${title} concat ${grandTotal}",
+      {
+        "func": "SET",
+        "collection": [
+          "sName"
+        ],
+        "property": "text",
+        "value": "${title}"
+      }
+    ],
+    "borderRadius": "15px"
+  },
+  "p2Summary": {
+    "inheritFrom": {
+      "p1Summary": [
+        "!text"
+      ]
+    },
+    "id": "p2Summary",
+    "type": "button",
+    "x": -400,
+    "y": 325,
+    "text": ""
+  },
+  "p3Summary": {
+    "inheritFrom": {
+      "p1Summary": [
+        "!text"
+      ]
+    },
+    "id": "p3Summary",
+    "type": "button",
+    "x": -400,
+    "y": 450,
+    "text": ""
+  },
+  "p4Summary": {
+    "inheritFrom": {
+      "p1Summary": [
+        "!text"
+      ]
+    },
+    "id": "p4Summary",
+    "type": "button",
+    "x": -400,
+    "y": 575,
+    "text": ""
+  },
+  "p5Summary": {
+    "inheritFrom": {
+      "p1Summary": [
+        "!text"
+      ]
+    },
+    "id": "p5Summary",
+    "type": "button",
+    "x": -400,
+    "y": 700,
+    "text": ""
+  },
+  "p6Summary": {
+    "inheritFrom": {
+      "p1Summary": [
+        "!text"
+      ]
+    },
+    "id": "p6Summary",
+    "type": "button",
+    "x": -400,
+    "y": 825,
+    "text": ""
+  },
+  "7yu7": {
+    "id": "7yu7",
+    "x": 10,
+    "width": 30,
+    "height": 30,
+    "z": 796,
+    "movable": false,
+    "css": "border-radius: 25%; background-color:#ffffff",
+    "image": "/assets/-615055520_945",
+    "parent": "brief",
+    "y": 90
+  },
+  "brief": {
+    "type": "holder",
+    "id": "brief",
+    "y": 188,
+    "width": 278,
+    "height": 460,
+    "z": 7,
+    "css": "border:4px solid gray;border-radius:0",
+    "x": -1000
+  },
+  "7yu8": {
+    "id": "7yu8",
+    "x": 10,
+    "y": 140,
+    "width": 30,
+    "height": 30,
+    "z": 796,
+    "movable": false,
+    "css": "border-radius: 25%; background-color:#ffffff",
+    "image": "/assets/-480703945_984",
+    "parent": "brief",
+    "movableInEdit": true,
+    "inheritFrom": {
+      "7yu7": [
+        "css",
+        "x",
+        "movable"
+      ]
+    }
+  },
+  "7yu10": {
+    "id": "7yu10",
+    "x": 10,
+    "y": 190,
+    "width": 30,
+    "height": 30,
+    "z": 796,
+    "movable": false,
+    "css": "border-radius: 25%; background-color:#ffffff",
+    "image": "/assets/-97339769_1023",
+    "parent": "brief"
+  },
+  "7yu12": {
+    "id": "7yu12",
+    "x": 10,
+    "width": 30,
+    "height": 30,
+    "z": 796,
+    "movable": false,
+    "css": "border-radius: 25%; background-color:#ffffff",
+    "image": "/assets/165895662_1062",
+    "parent": "brief",
+    "y": 240
+  },
+  "7yu14": {
+    "id": "7yu14",
+    "x": 10,
+    "y": 290,
+    "width": 30,
+    "height": 30,
+    "z": 796,
+    "movable": false,
+    "css": "border-radius: 25%; background-color:#ffffff",
+    "image": "/assets/-665230544_1101",
+    "parent": "brief"
+  },
+  "7yu16": {
+    "id": "7yu16",
+    "x": 10,
+    "width": 30,
+    "height": 30,
+    "z": 796,
+    "movable": false,
+    "css": "border-radius: 25%; background-color:#ffffff",
+    "image": "/assets/1034302627_1140",
+    "parent": "brief",
+    "y": 340
+  },
+  "76kl": {
+    "type": "holder",
+    "x": 139,
+    "z": 8,
+    "id": "76kl",
+    "css": "border-style: none solid none none; border-right:3px solid gray;border-radius:0",
+    "parent": "brief",
+    "height": 395,
+    "y": 61,
+    "width": 3
+  },
+  "77kl": {
+    "type": "holder",
+    "x": 1,
+    "z": 8,
+    "id": "77kl",
+    "css": "border-style: solid none none none; border-top:3px solid gray;border-radius:0",
+    "parent": "brief",
+    "height": 3,
+    "y": 390,
+    "width": 273
+  },
+  "yh2y": {
+    "type": "label",
+    "text": "3",
+    "x": 163,
+    "y": 93,
+    "z": 6,
+    "id": "yh2y",
+    "parent": "brief",
+    "width": 30,
+    "css": "font-size:14pt;font-weight:bold;color:black"
+  },
+  "yh3y": {
+    "type": "label",
+    "text": "4",
+    "y": 135,
+    "id": "yh3y",
+    "parent": "brief",
+    "height": 20,
+    "inheritFrom": "yh2y"
+  },
+  "yh4y": {
+    "type": "label",
+    "y": 177,
+    "id": "yh4y",
+    "parent": "brief",
+    "text": "FH",
+    "height": 20,
+    "inheritFrom": "yh2y"
+  },
+  "yh5y": {
+    "type": "label",
+    "y": 219,
+    "id": "yh5y",
+    "parent": "brief",
+    "text": "SS",
+    "inheritFrom": "yh2y"
+  },
+  "yh6y": {
+    "type": "label",
+    "y": 261,
+    "id": "yh6y",
+    "parent": "brief",
+    "text": "LS",
+    "inheritFrom": "yh2y"
+  },
+  "yh7y": {
+    "type": "label",
+    "y": 303,
+    "id": "yh7y",
+    "parent": "brief",
+    "text": "5",
+    "inheritFrom": "yh2y"
+  },
+  "yh8y": {
+    "type": "label",
+    "y": 345,
+    "id": "yh8y",
+    "parent": "brief",
+    "text": "C",
+    "inheritFrom": "yh2y"
+  },
+  "su1": {
+    "id": "su1",
+    "parent": "brief",
+    "x": 70,
+    "y": 93,
+    "width": 40,
+    "height": 24,
+    "z": 6,
+    "movable": false,
+    "clickable": false,
+    "css": "background-color:lightgray;border-radius:0px;border:1px solid black;font-size:16pt;color:black;text-align:center"
+  },
+  "su2": {
+    "inheritFrom": {
+      "su1": [
+        "!text"
+      ]
+    },
+    "id": "su2",
+    "x": 70,
+    "y": 143,
+    "parent": "brief",
+    "text": 8
+  },
+  "su3": {
+    "inheritFrom": {
+      "su1": [
+        "!text"
+      ]
+    },
+    "id": "su3",
+    "x": 70,
+    "y": 193,
+    "parent": "brief",
+    "text": ""
+  },
+  "su4": {
+    "inheritFrom": {
+      "su1": [
+        "!text"
+      ]
+    },
+    "id": "su4",
+    "x": 70,
+    "y": 243,
+    "parent": "brief",
+    "text": ""
+  },
+  "su5": {
+    "inheritFrom": {
+      "su1": [
+        "!text"
+      ]
+    },
+    "id": "su5",
+    "x": 70,
+    "y": 293,
+    "parent": "brief",
+    "text": ""
+  },
+  "su6": {
+    "inheritFrom": {
+      "su1": [
+        "!text"
+      ]
+    },
+    "id": "su6",
+    "x": 70,
+    "y": 343,
+    "parent": "brief",
+    "text": ""
+  },
+  "s3k": {
+    "id": "s3k",
+    "parent": "brief",
+    "x": 220,
+    "y": 93,
+    "text": "",
+    "inheritFrom": {
+      "su1": [
+        "!text"
+      ]
+    }
+  },
+  "s4k": {
+    "id": "s4k",
+    "parent": "brief",
+    "y": 135,
+    "inheritFrom": {
+      "s3k": [
+        "!text"
+      ]
+    },
+    "text": ""
+  },
+  "sfh": {
+    "id": "sfh",
+    "parent": "brief",
+    "y": 177,
+    "inheritFrom": {
+      "s3k": [
+        "!text"
+      ]
+    },
+    "text": ""
+  },
+  "sss": {
+    "id": "sss",
+    "parent": "brief",
+    "y": 219,
+    "inheritFrom": {
+      "s3k": [
+        "!text"
+      ]
+    },
+    "text": ""
+  },
+  "sls": {
+    "id": "sls",
+    "parent": "brief",
+    "y": 261,
+    "inheritFrom": {
+      "s3k": [
+        "!text"
+      ]
+    },
+    "text": ""
+  },
+  "s5k": {
+    "id": "s5k",
+    "parent": "brief",
+    "y": 303,
+    "inheritFrom": {
+      "s3k": [
+        "!text"
+      ]
+    },
+    "text": ""
+  },
+  "schance": {
+    "id": "schance",
+    "parent": "brief",
+    "y": 345,
+    "inheritFrom": {
+      "s3k": [
+        "!text"
+      ]
+    },
+    "text": ""
+  },
+  "78kl": {
+    "type": "holder",
+    "x": 1,
+    "z": 8,
+    "id": "78kl",
+    "css": "border-style: solid none none none; border-top:3px solid gray;border-radius:0",
+    "parent": "brief",
+    "height": 3,
+    "width": 273,
+    "y": 60
+  },
+  "sName": {
+    "type": "label",
+    "id": "sName",
+    "x": 39,
+    "z": 7,
+    "text": "Mike: 8",
+    "parent": "brief",
+    "y": 15,
+    "css": "text-align:center;font-size:20pt;color:black",
+    "width": 200
+  },
+  "closeBrief": {
+    "type": "button",
+    "id": "closeBrief",
+    "parent": "brief",
+    "x": 250,
+    "y": -13,
+    "width": 30,
+    "height": 30,
+    "z": 20,
+    "css": "background-color:white;color:black;border:1px solid black",
+    "text": "X",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "brief"
+        ],
+        "property": "x",
+        "relation": "=",
+        "value": -1000
+      }
+    ]
+  },
+  "dice": {
+    "type": "deck",
+    "id": "dice",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "white/black": {},
+      "white/red": {
+        "pip": "red"
+      },
+      "white/orange": {
+        "pip": "orange"
+      },
+      "white/yellow": {
+        "pip": "yellow"
+      },
+      "white/green": {
+        "pip": "green"
+      },
+      "white/cyan": {
+        "pip": "cyan"
+      },
+      "white/blue": {
+        "pip": "blue"
+      },
+      "white/purple": {
+        "pip": "#404"
+      },
+      "black/white": {
+        "die": "black",
+        "pip": "white"
+      },
+      "red/white": {
+        "die": "red",
+        "pip": "white"
+      },
+      "orange/white": {
+        "die": "orange",
+        "pip": "white"
+      },
+      "yellow/white": {
+        "die": "yellow",
+        "pip": "white"
+      },
+      "green/white": {
+        "die": "green",
+        "pip": "white"
+      },
+      "cyan/white": {
+        "die": "cyan",
+        "pip": "white"
+      },
+      "blue/white": {
+        "die": "blue",
+        "pip": "white"
+      },
+      "purple/white": {
+        "die": "#404",
+        "pip": "white"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/134606928_2155",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "die"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/1412014301_1300",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "pip"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/134606928_2155",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "die"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/-839764074_1336",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "pip"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/134606928_2155",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "die"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/-1081480301_1372",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "pip"
+            }
+          }
+        ],
+        "radius": 1
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/134606928_2155",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "die"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/-1873595168_1408",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "pip"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/134606928_2155",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "die"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/1107834355_1444",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "pip"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/134606928_2155",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "die"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/assets/1334943655_1480",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "pip"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "die": "white",
+      "pip": "black",
+      "clickRoutine": [],
+      "rollRoutine": [
+        {
+          "func": "SELECT",
+          "source": "thisButton"
+        },
+        {
+          "func": "FLIP",
+          "faceCycle": "random"
+        },
+        "var value = ${PROPERTY activeFace} + 1",
+        {
+          "func": "SET",
+          "property": "value",
+          "value": "${value}"
+        },
+        "var RANDOM = randInt 20 70",
+        {
+          "func": "SET",
+          "property": "rotation",
+          "relation": "+",
+          "value": "${RANDOM}"
+        },
+        "var sameX = ${PROPERTY x} == ${PROPERTY jumpX}",
+        "var sameY = ${PROPERTY y} == ${PROPERTY jumpY}",
+        "var movedByThis = ${sameX} && ${sameY}",
+        {
+          "func": "SET",
+          "property": "centerX",
+          "skip": "${movedByThis}",
+          "value": "${PROPERTY x}"
+        },
+        {
+          "func": "SET",
+          "property": "centerY",
+          "skip": "${movedByThis}",
+          "value": "${PROPERTY y}"
+        },
+        "var max = ${PROPERTY width} / 5",
+        "var min = -1 * ${max}",
+        "var RANDOM = randInt ${min} ${max}",
+        "var COMPUTE = ${PROPERTY centerX} + ${RANDOM}",
+        {
+          "func": "SET",
+          "property": "x",
+          "value": "${COMPUTE}"
+        },
+        {
+          "func": "SET",
+          "property": "jumpX",
+          "value": "${COMPUTE}"
+        },
+        "var RANDOM = randInt ${min} ${max}",
+        "var COMPUTE = ${PROPERTY centerY} + ${RANDOM}",
+        {
+          "func": "SET",
+          "property": "y",
+          "value": "${COMPUTE}"
+        },
+        {
+          "func": "SET",
+          "property": "jumpY",
+          "value": "${COMPUTE}"
+        }
+      ],
+      "faceCycle": "random",
+      "width": 100,
+      "height": 100
+    }
+  },
+  "sUpper": {
+    "type": "label",
+    "id": "sUpper",
+    "parent": "brief",
+    "y": 410,
+    "z": 8,
+    "css": "text-align:center;font-size:16pt;color:black",
+    "text": "8 + 0 = 8",
+    "width": 120,
+    "x": 10
+  },
+  "sLower": {
+    "type": "label",
+    "id": "sLower",
+    "parent": "brief",
+    "x": 159,
+    "y": 410,
+    "z": 8,
+    "css": "text-align:center;font-size:16pt;color:black",
+    "text": "0"
+  },
+  "z321": {
+    "type": "label",
+    "text": "Five of a Kind",
+    "css": "font-size: 48pt;color:black;border:5px solid black;background-color:white",
+    "height": 68,
+    "width": 400,
+    "x": 202,
+    "y": 42,
+    "z": 14,
+    "id": "z321"
+  },
+  "playBtn": {
+    "type": "button",
+    "id": "playBtn",
+    "x": 312,
+    "y": 920,
+    "width": 180,
+    "height": 50,
+    "z": 24,
+    "text": "Start Game",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY gameInProgress}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "endGameRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "startGameRoutine"
+          }
+        ]
+      }
+    ],
+    "css": "background:gray;font-size:20pt",
+    "startGameRoutine": [
+      "// Change label to End Game and note that there is a game going",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "End Game"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "gameInProgress",
+        "value": true
+      },
+      "// Set move counter to 0",
+      {
+        "func": "SET",
+        "collection": [
+          "table"
+        ],
+        "property": "movesMade",
+        "value": 0
+      },
+      "// Show summary buttons for active players",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "active"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "p1Summary",
+          "p2Summary",
+          "p3Summary",
+          "p4Summary",
+          "p5Summary",
+          "p6Summary"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "p1Summary",
+          "p2Summary",
+          "p3Summary",
+          "p4Summary",
+          "p5Summary",
+          "p6Summary"
+        ],
+        "property": "x",
+        "value": -400
+      },
+      {
+        "func": "FOREACH",
+        "collection": "active",
+        "loopRoutine": [
+          "var summary = ${widgetID} concat 'Summary'",
+          {
+            "func": "SET",
+            "collection": [
+              "${summary}"
+            ],
+            "property": "x",
+            "value": 400
+          }
+        ]
+      },
+      "// Choose first player and re-enable glow",
+      {
+        "func": "SELECT",
+        "source": "all",
+        "type": "seat",
+        "collection": "seats"
+      },
+      {
+        "func": "SET",
+        "collection": "seats",
+        "property": "hideTurn",
+        "value": false
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      "// Reset saved data for all players",
+      {
+        "func": "SET",
+        "collection": "seats",
+        "property": "saved",
+        "value": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "seats",
+        "property": "savedLower",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": "seats",
+        "property": "savedUpper",
+        "value": ""
+      },
+      "// Enable the roll button",
+      {
+        "func": "CALL",
+        "widget": "rollBtn",
+        "routine": "enableRollBtnRoutine"
+      }
+    ],
+    "endGameRoutine": [
+      "var result = false",
+      {
+        "func": "INPUT",
+        "confirmButtonIcon": "check",
+        "confirmButtonText": "Do it",
+        "cancelButtonIcon": "close",
+        "cancelButtonText": "Cancel",
+        "css": "--neutralInput:red; border:2px solid green",
+        "fields": [
+          {
+            "type": "title",
+            "text": "End game",
+            "css": "background:green"
+          },
+          {
+            "type": "text",
+            "text": "This will end the current game. Are you sure?",
+            "css": "font-size: 24px"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "doEndGameRoutine"
+      }
+    ],
+    "gameInProgress": false,
+    "disablePlayBtnRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "background:gray;font-size:20pt"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      }
+    ],
+    "enablePlayBtnRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "background:green;font-size:20pt"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": true
+      }
+    ],
+    "doEndGameRoutine": [
+      "var result = true // Indicate to caller that game was ended",
+      "// Set label to Start Game and note that game has ended",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "Start Game"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "gameInProgress",
+        "value": false
+      },
+      "// Remove kept property on dice",
+      {
+        "func": "SET",
+        "collection": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "property": "kept",
+        "value": false
+      },
+      "// Set all possible boxes to empty value",
+      {
+        "func": "SET",
+        "collection": [
+          "keep1",
+          "keep2",
+          "keep3",
+          "keep4",
+          "keep5",
+          "u1",
+          "u2",
+          "u3",
+          "u4",
+          "u5",
+          "u6",
+          "3k",
+          "4k",
+          "fh",
+          "ss",
+          "ls",
+          "5k",
+          "chance",
+          "Bonus",
+          "pipScores",
+          "lowerTotal",
+          "grandTotal",
+          "upperTotal"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "CALL",
+        "widget": "table",
+        "routine": "resetActiveBoardRoutine"
+      },
+      "// Disable the roll button (Note: this must come after the",
+      "// call to resetActiveBoardRoutine",
+      {
+        "func": "CALL",
+        "widget": "rollBtn",
+        "routine": "disableRollBtnRoutine"
+      },
+      "// Remove turn glow",
+      {
+        "func": "SELECT",
+        "source": "all",
+        "type": "seat",
+        "collection": "seats"
+      },
+      {
+        "func": "SET",
+        "collection": "seats",
+        "property": "hideTurn",
+        "value": true
+      }
+    ],
+    "clickable": false
+  },
+  "message": {
+    "type": "label",
+    "id": "message",
+    "x": 1700,
+    "y": 465,
+    "width": 500,
+    "height": 70,
+    "css": "background-color:white; border-color:black; border:5px solid black; filter: drop-shadow(1px 2px 10px #000) !important;text-align:center; font-size:60px; color:red",
+    "text": "Game Over"
+  },
+  "vm6aP": {
+    "fixedParent": true,
+    "id": "vm6aP",
+    "x": 120,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}"
+      }
+    ],
+    "image": "/i/button-icons/White-Play_Pause.svg",
+    "css": "background-size: 75% 75%",
+    "parent": "messageTimer"
+  },
+  "vm6aR": {
+    "fixedParent": true,
+    "id": "vm6aR",
+    "x": 80,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}",
+        "mode": "reset"
+      }
+    ],
+    "image": "/i/button-icons/White-Reset.svg",
+    "css": "background-size: 80% 80%",
+    "parent": "messageTimer"
+  },
+  "messageTimer": {
+    "type": "timer",
+    "id": "messageTimer",
+    "x": 1668,
+    "y": 386,
+    "z": 30,
+    "milliseconds": 324000,
+    "precision": 2000,
+    "millisecondsChangeRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "messageTimer",
+        "mode": "pause"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "message"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1700
+      }
+    ]
+  },
+  "7yu1": {
+    "type": "dice",
+    "id": "7yu1",
+    "parent": "h1",
+    "x": 30,
+    "y": 10,
+    "z": 805,
+    "shape3d": true,
+    "movableInEdit": false,
+    "clickable": false,
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    }
+  },
+  "7yu2": {
+    "inheritFrom": "7yu1",
+    "id": "7yu2",
+    "type": "dice",
+    "x": 30,
+    "y": 80,
+    "activeFace": 1
+  },
+  "7yu3": {
+    "inheritFrom": "7yu1",
+    "id": "7yu3",
+    "type": "dice",
+    "x": 30,
+    "y": 150,
+    "activeFace": 2
+  },
+  "7yu4": {
+    "inheritFrom": "7yu1",
+    "id": "7yu4",
+    "type": "dice",
+    "x": 30,
+    "y": 220,
+    "activeFace": 3
+  },
+  "7yu5": {
+    "inheritFrom": "7yu1",
+    "id": "7yu5",
+    "type": "dice",
+    "x": 30,
+    "y": 290,
+    "activeFace": 4
+  },
+  "7yu6": {
+    "inheritFrom": "7yu1",
+    "id": "7yu6",
+    "type": "dice",
+    "x": 30,
+    "y": 360,
+    "activeFace": 5
+  },
+  "d1": {
+    "type": "dice",
+    "id": "d1",
+    "x": -790,
+    "y": 725,
+    "width": 90,
+    "height": 90,
+    "z": 813,
+    "shape3d": true,
+    "kept": false
+  },
+  "d2": {
+    "type": "dice",
+    "id": "d2",
+    "x": -630,
+    "y": 725,
+    "width": 90,
+    "height": 90,
+    "z": 813,
+    "shape3d": true,
+    "kept": false
+  },
+  "d3": {
+    "type": "dice",
+    "id": "d3",
+    "x": -470,
+    "y": 725,
+    "width": 90,
+    "height": 90,
+    "z": 813,
+    "shape3d": true,
+    "kept": false
+  },
+  "d4": {
+    "type": "dice",
+    "id": "d4",
+    "x": -310,
+    "y": 725,
+    "width": 90,
+    "height": 90,
+    "z": 813,
+    "shape3d": true,
+    "kept": false
+  },
+  "d5": {
+    "type": "dice",
+    "id": "d5",
+    "x": -150,
+    "y": 725,
+    "width": 90,
+    "height": 90,
+    "z": 813,
+    "shape3d": true,
+    "kept": false
+  }
+}

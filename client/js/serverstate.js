@@ -1,18 +1,21 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID } from './domhelpers.js';
+import { getElementTransformRelativeTo } from './geometry.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
 
 export const widgets = new Map();
 
-const deferredCards = {};
-const deferredChildren = {};
+let deferredCards = {};
+let deferredChildren = {};
 
 let delta = { s: {} };
 let deltaChanged = false;
 let deltaID = 0;
 let batchDepth = 0;
 let overlayShownForEmptyRoom = false;
+
+let triggerGameStartRoutineOnNextStateLoad = false;
 
 export function addWidget(widget, instance) {
   if(widget.parent && !widgets.has(widget.parent)) {
@@ -46,24 +49,28 @@ export function addWidget(widget, instance) {
       deferredCards[widget.deck].push(widget);
       return;
     }
-  } else if(widget.type == 'pile') {
-    w = new Pile(id);
+  } else if(widget.type == 'button') {
+    w = new Button(id);
   } else if(widget.type == 'canvas') {
     w = new Canvas(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
+  } else if(widget.type == 'dice') {
+    w = new Dice(id);
   } else if(widget.type == 'holder') {
     w = new Holder(id);
-  } else if(widget.type == 'spinner') {
-    w = new Spinner(id);
-  } else if(widget.type == 'seat') {
-    w = new Seat(id);
-  } else if(widget.type == 'timer') {
-    w = new Timer(id);
   } else if(widget.type == 'label') {
     w = new Label(id);
-  } else if(widget.type == 'button') {
-    w = new Button(id);
+  } else if(widget.type == 'pile') {
+    w = new Pile(id);
+  } else if(widget.type == 'scoreboard') {
+    w = new Scoreboard(id);
+  } else if(widget.type == 'seat') {
+    w = new Seat(id);
+  } else if(widget.type == 'spinner') {
+    w = new Spinner(id);
+  } else if(widget.type == 'timer') {
+    w = new Timer(id);
   } else {
     w = new BasicWidget(id);
   }
@@ -100,9 +107,14 @@ export function batchEnd() {
 
 function receiveDelta(delta) {
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
-  for(const widgetID in delta.s)
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID))
-      $('#topSurface').appendChild(widgets.get(widgetID).domElement);
+  for(const widgetID in delta.s) {
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined) {
+      const domElement = widgets.get(widgetID).domElement;
+      const topTransform = getElementTransformRelativeTo(domElement, $('#topSurface')) || 'none';
+      $('#topSurface').appendChild(domElement);
+      domElement.style.transform = topTransform;
+    }
+  }
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
@@ -128,8 +140,8 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  for(const el of $a('[id^=w_]'))
-    widgets.get(unescapeID(el.id.slice(2))).applyRemove();
+  for(const widget of widgetFilter(w=>w.get('parent')===null))
+    widget.applyRemoveRecursive();
   widgets.clear();
   dropTargets.clear();
   maxZ = {};
@@ -138,18 +150,47 @@ function receiveStateFromServer(args) {
   let isEmpty = true;
   for(const widgetID in args) {
     if(widgetID != '_meta') {
+      if(widgetID != args[widgetID].id) {
+        console.error(`Could not add widget!`, widgetID, args[widgetID], 'ID does not equal key in state');
+        continue;
+      }
       addWidget(args[widgetID]);
       isEmpty = false;
     }
   }
+
+  if(Object.keys(deferredCards).length) {
+    for(const [ deckID, widgets ] of Object.entries(deferredCards))
+      for(const widget of widgets)
+        console.error(`Could not add card "${widget.id}" because its deck "${deckID}" does not exist!`);
+    deferredCards = {};
+  }
+  if(Object.keys(deferredChildren).length) {
+    for(const [ deckID, widgets ] of Object.entries(deferredChildren))
+      for(const widget of widgets)
+        console.error(`Could not add widget "${widget.id}" because its parent "${deckID}" does not exist!`);
+    deferredChildren = {};
+  }
+
   if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-    showOverlay('statesOverlay');
+    $('#statesButton').click();
     overlayShownForEmptyRoom = true;
   }
   toServer('confirm');
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyState(args);
+
+  if(triggerGameStartRoutineOnNextStateLoad) {
+    triggerGameStartRoutineOnNextStateLoad = false;
+    (async function() {
+      batchStart();
+      for(const [ id, w ] of widgets)
+        if(w.get('gameStartRoutine'))
+          await w.evaluateRoutine('gameStartRoutine', { widgetID: id }, { widget: [ w ] });
+      batchEnd();
+    })();
+  }
 }
 
 function removeWidget(widgetID) {

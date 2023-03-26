@@ -1,0 +1,11 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 21" width="18" height="21">
+	<title>hand</title>
+	<style>
+		.s0 { fill: #000000;stroke: #000000;stroke-width: 0 } 
+		.s1 { fill: #ffffff;stroke: #000000;stroke-width: 0 } 
+	</style>
+	<g id="svg hand">
+		<path id="hand black" class="s0" d="m3 10v1h1v1h1v-10h1v-1h2v-1h3v1h1v1h2v1h1v3h2v1h1v10h-1v2h-1v1h-1v1h-9v-1h-1v-1h-1v-2h-1v-2h-1v-1h-1v-1h-1v-3z"/>
+		<path id="hand white" class="s1" d="m3 11v1h1v1h1v-1h1v-10h2v8h1v-9h2v10h1v-8h2v9h1v-5h2v10h-1v2h-1v1h-9v-1h-1v-2h-1v-2h-1v-1h-1v-1h-1v-2z"/>
+	</g>
+</svg>

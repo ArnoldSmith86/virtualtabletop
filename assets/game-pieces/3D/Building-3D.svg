@@ -1,0 +1,38 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69 77" width="69" height="77">
+	<title>Building-3D-svg</title>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #primaryColor; stroke: #borderColor; stroke-width:#borderWidth; }
+		.shp1 { mix-blend-mode: multiply;fill: #000000 }
+		.shp2 { fill: none;stroke: #ffffff;stroke-linejoin:round;stroke-width: 0.25 }
+	</style>
+	<path id="baseFill" class="shp0" d="M47.81 29.41L66.18 40.02L66.12 62.37L44.97 74.66L2.82 50.32L2.84 44.99L2.88 27.97L2.91 18.44L24.05 6.15L35.98 2.34L47.84 19.88L47.81 29.41L47.81 29.41Z" />
+	<g id="shading">
+		<g id="Layer" style="opacity: 0.102">
+			<path id="Layer" class="shp1" d="M2.59 18.23L23.95 5.82L35.99 1.98L14.64 14.39L2.59 18.23L2.59 18.23Z" />
+		</g>
+		<g id="Layer" style="opacity: 0.102">
+			<path id="Layer" class="shp1" d="M26.61 32.1L47.97 19.69L47.95 29.32L26.59 41.73L26.61 32.1L26.61 32.1Z" />
+		</g>
+		<g id="Layer" style="opacity: 0">
+			<path id="Layer" class="shp1" d="M14.64 14.39L35.99 1.98L47.97 19.69L26.61 32.1L14.64 14.39L14.64 14.39Z" />
+		</g>
+		<g id="Layer" style="opacity: 0.102">
+			<path id="Layer" class="shp1" d="M45.14 52.44L66.5 40.03L66.44 62.61L45.08 75.02L45.14 52.44L45.14 52.44Z" />
+		</g>
+		<g id="Layer" style="opacity: 0">
+			<path id="Layer" class="shp1" d="M26.59 41.73L47.95 29.32L66.5 40.03L45.14 52.44L26.59 41.73L26.59 41.73Z" />
+		</g>
+		<g id="Layer" style="opacity: 0.302">
+			<path id="Layer" class="shp1" d="M14.64 14.39L26.61 32.1L26.59 41.73L45.14 52.44L45.08 75.02L2.5 50.44L2.51 45.05L2.56 27.86L2.59 18.23L14.64 14.39L14.64 14.39Z" />
+		</g>
+	</g>
+	<g id="edgeLines">
+		<path id="Layer" class="shp2" d="M26.69 32.17L47.84 19.88" />
+		<path id="Layer" class="shp2" d="M47.81 29.41L26.67 41.7" />
+		<path id="Layer" class="shp2" d="M14.84 14.63L35.98 2.34" />
+		<path id="Layer" class="shp2" d="M66.18 40.02L45.04 52.3" />
+		<path id="Layer" class="shp2" d="M26.67 41.7L47.81 29.41" />
+		<path id="Layer" class="shp2" d="M2.91 18.44L14.84 14.63L26.69 32.17L26.67 41.7L45.03 52.3L44.97 74.66" />
+	</g>
+</svg>

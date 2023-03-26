@@ -6,7 +6,6 @@ class Card extends Widget {
       width: 103,
       height: 160,
       typeClasses: 'widget card',
-      clickable: true,
 
       faceCycle: 'forward',
       activeFace: 0,
@@ -38,12 +37,16 @@ class Card extends Widget {
           this.domElement.appendChild(child);
     }
 
-    if(delta.cardType !== undefined && this.deck) {
-      const applyForCardType = {};
-      for(const [ k, v ] of Object.entries(this.deck.get('cardTypes')[this.get('cardType')] || {}))
+    if((delta.cardType !== undefined || delta.deck !== undefined) && this.deck) {
+      const defaultsFromDeck = {}
+      const applyDefaultsFromDeck = {};
+      if(delta.deck !== undefined)
+        Object.assign(defaultsFromDeck, this.deck.get('cardDefaults') || {});
+      Object.assign(defaultsFromDeck, this.deck.get('cardTypes')[this.get('cardType')] || {});
+      for(const [ k, v ] of Object.entries(defaultsFromDeck))
         if(this.state[k] === undefined)
-          applyForCardType[k] = v;
-      this.applyDeltaToDOM(applyForCardType);
+          applyDefaultsFromDeck[k] = v;
+      this.applyDeltaToDOM(applyDefaultsFromDeck);
     }
 
     if(delta.deck !== undefined || delta.activeFace !== undefined) {
@@ -98,17 +101,18 @@ class Card extends Widget {
 
       faceDiv.classList.add('cardFace');
       if(face.css !== undefined)
-        faceDiv.style.cssText = mapAssetURLs(this.cssAsText(face.css,true));
+        faceDiv.style.cssText = mapAssetURLs(this.cssAsText(face.css,null,true));
       if(face.classes !== undefined)
         faceDiv.classList.add(face.classes);
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
       for(const original of face.objects) {
-        const objectDiv = document.createElement('div');
+        const objectDiv = document.createElement(original.type == 'html' ? 'iframe' : 'div');
         objectDiv.classList.add('cardFaceObject');
 
         const setValue = _=>{
+          const usedProperties = new Set();
           const object = JSON.parse(JSON.stringify(original));
 
           if(typeof object.dynamicProperties == 'object')
@@ -118,7 +122,7 @@ class Card extends Widget {
 
           const x = face.border ? object.x-face.border : object.x;
           const y = face.border ? object.y-face.border : object.y;
-          let css = object.css ? this.cssAsText(object.css,true) + '; ' : '';
+          let css = object.css ? this.cssAsText(object.css,usedProperties,true) + '; ' : '';
           css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
           css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
           objectDiv.style.cssText = mapAssetURLs(css);
@@ -131,30 +135,56 @@ class Card extends Widget {
                 const replaces = { ...object.svgReplaces };
                 for(const key in replaces)
                   replaces[key] = this.get(replaces[key]);
-                object.value = getSVG(object.value, replaces, _=>this.applyDeltaToDOM({ deck:this.get('deck') }));
+                const svgResult = getSVG(object.value, replaces, _=>{
+                  objectDiv.style.backgroundImage = `url("${getSVG(object.value, replaces)}")`;
+                });
+                objectDiv.style.backgroundImage = `url("${svgResult}")`;
+              } else {
+                objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
               }
-              objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
             }
             objectDiv.style.backgroundColor = object.color || 'white';
+          } else if (object.type == 'html') {
+            // Prevent input from going to frame.
+            objectDiv.style.pointerEvents = 'none';
+            objectDiv.setAttribute('sandbox', 'allow-same-origin');
+            objectDiv.setAttribute('width', object.width);
+            objectDiv.setAttribute('height', object.height);
+            objectDiv.setAttribute('allow', 'autoplay');
+            const content = object.value.replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {
+              usedProperties.add(n);
+              return this.get(n) || '';
+            });
+            // Applies a template which fills available space, uses the same classes and applies
+            // nested CSS style rules.
+            const css = object['css'];
+            const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, usedProperties, true) : '';
+            const html = `<!DOCTYPE html>\n` +
+                `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
+                `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
+            objectDiv.srcdoc = html;
           } else {
             objectDiv.textContent = object.value;
             objectDiv.style.color = object.color;
           }
+          return usedProperties;
         }
 
         // add a callback that makes sure dynamic property changes are reflected on the DOM
-        const properties = original.svgReplaces ? Object.values(original.svgReplaces) : [];
+        const properties = setValue();
+        if (original.svgReplaces)
+          for (const property of Object.values(original.svgReplaces))
+            properties.add(property);
         if(typeof original.dynamicProperties == 'object')
           for(const dp of Object.keys(original.dynamicProperties))
             if(original[dp] === undefined)
-              properties.push(original.dynamicProperties[dp]);
+              properties.add(original.dynamicProperties[dp]);
         for(const p of properties) {
           if(!this.dynamicProperties[p])
             this.dynamicProperties[p] = [];
           this.dynamicProperties[p].push(setValue);
         }
 
-        setValue();
         faceDiv.appendChild(objectDiv);
       }
       this.domElement.appendChild(faceDiv);

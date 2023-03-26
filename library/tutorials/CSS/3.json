@@ -1,0 +1,715 @@
+{
+  "8053": {
+    "deck": "thvyD",
+    "type": "card",
+    "cardType": "cherry",
+    "id": "8053",
+    "z": 7803,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "thvy"
+  },
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "CSS",
+      "image": "/assets/-1069925580_4501",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1676865317863,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Cards",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "x": 400,
+    "text": "CSS: Cards"
+  },
+  "406b": {
+    "id": "406b",
+    "x": 109,
+    "y": 100,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 2717,
+    "css": "font-size: 23px; ",
+    "text": "This room shows how to build cards using css.  The css can go in two places: 'cardTypes' and 'faceTemplates'.  Use `faceTemplates` to create standard properties that will exist across all cards on a given face. The effects can be layered so list them in the object portion of the `faceTemplate` as they will be used from the bottom up. Use `cardTypes` to alter the specific properties on each unique card. Note that as of now, you must use the string form of css in the `faceTemplates` area, but can use string or object form in `cardTypes`."
+  },
+  "bm4j": {
+    "text": "On the front face of each of these cards are three dynamic text objects. The details in the `faceTemplate` identify the size, location, and alignment for each of the three numbers that appear on the card. The white color for the two numbers is also specified because it is the same for all cards. The background color and the large number in the middle is set using css in the 'cardTypes' area. For more examples from this deck, see the Dix Cards game in the public library.",
+    "id": "bm4j",
+    "x": 60,
+    "y": 700,
+    "z": 10659,
+    "width": 300,
+    "movable": false
+  },
+  "fzoqB": {
+    "id": "fzoqB",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "parent": "cardHolder"
+  },
+  "fzoqD": {
+    "type": "deck",
+    "id": "fzoqD",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "1",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "2",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "3",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "4",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "5",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "6",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      }
+    ],
+    "parent": "cardHolder"
+  },
+  "bm5j": {
+    "text": "The `faceTemplates` portion of this card creates the large background shaded area, but references the css that is contained in the `cardTypes`. The grey box is created entirely in 'faceTemplates' as is the bottom black text. The colored text in the grey box is created in 'faceTemplates' but the color details are specified in 'cardTypes'. For more examples from this deck, see the Tutti Fruitti game in the public library.",
+    "id": "bm5j",
+    "x": 410,
+    "y": 700,
+    "z": 121,
+    "width": 300,
+    "movable": false
+  },
+  "bm6j": {
+    "id": "bm6j",
+    "x": 808,
+    "y": 700,
+    "z": 9732,
+    "width": 500,
+    "text": "This deck uses the sprite image to right to build the card layer by layer. In VTT's implementation of css, you can use 'var(--abc)' and the value in the css will be filled by the value in 'abc'. Note that 'abc' must be defined within the css string or object as it will not look for VTT variables or widget properties. You can also perform simple calcuations in the css by using 'calc'. Both of those concepts are illustrated in the deck above. For more examples from this deck, see the Lost Temples game in the public library.  The public library game Cities also uses a similar structure. The https://virtualtabletop.io/DemoLibrary room also has a variant called Tile Generator which was used to create the css strings.",
+    "movable": false
+  },
+  "cardHolder": {
+    "type": "holder",
+    "id": "cardHolder",
+    "x": 104.5,
+    "y": 1087,
+    "z": 127,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "z044": {
+    "type": "holder",
+    "id": "z044",
+    "x": 145,
+    "y": 430,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 2720
+  },
+  "z044B": {
+    "id": "z044B",
+    "parent": "z044",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "z044D": {
+    "type": "deck",
+    "id": "z044D",
+    "parent": "z044",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "Red 1": {
+        "text1": "\n1",
+        "text2": " 1",
+        "text3": " 1",
+        "cardPoints": 5,
+        "sortColor": "red",
+        "sortNum": 1,
+        "css": {
+          "color": "red",
+          "background": "linear-gradient(135deg, red 5%, #fcc4c9, red 95%)",
+          "border-radius": "15px"
+        }
+      },
+      "Blue 9": {
+        "text1": "\n9",
+        "text2": " 9",
+        "text3": " 9",
+        "cardPoints": 5,
+        "sortColor": "blue",
+        "sortNum": 9,
+        "css": "color:blue;background: linear-gradient(135deg, blue 15%, #c4cdfc, blue 85%); border-radius: 15px"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": true,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": true,
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "css": "font-size: 45px;text-align:center; text-shadow: 1px 1px 3px black;",
+            "dynamicProperties": {
+              "value": "text1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 3,
+            "y": 0,
+            "css": "font-size: 23px;color:white",
+            "dynamicProperties": {
+              "value": "text2"
+            }
+          },
+          {
+            "type": "text",
+            "x": 77,
+            "y": 125,
+            "css": "font-size: 23px;color:white",
+            "dynamicProperties": {
+              "value": "text3"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "mf5a": {
+    "deck": "z044D",
+    "type": "card",
+    "cardType": "Red 1",
+    "id": "mf5a",
+    "z": 7797,
+    "y": 4,
+    "activeFace": 1,
+    "x": 4,
+    "parent": "z044"
+  },
+  "8t2u": {
+    "deck": "z044D",
+    "type": "card",
+    "cardType": "Blue 9",
+    "id": "8t2u",
+    "z": 3097,
+    "x": 149,
+    "y": 260,
+    "activeFace": 1
+  },
+  "thvy": {
+    "type": "holder",
+    "id": "thvy",
+    "x": 495,
+    "y": 430,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 2721
+  },
+  "thvyB": {
+    "id": "thvyB",
+    "parent": "thvy",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "thvyD": {
+    "type": "deck",
+    "id": "thvyD",
+    "parent": "thvy",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "yogurt": {
+        "image": "/assets/-32936487_30820",
+        "item": "Yogurt",
+        "shading": "background-image: linear-gradient(#a6d000,#7d9d00)",
+        "cssText": "color:#678300",
+        "score": "Next Berry x3"
+      },
+      "cherry": {
+        "image": "/assets/-1442338337_70349",
+        "item": "Cherry",
+        "shading": "background-image: linear-gradient(#ff4f4f,#f53d3d)",
+        "cssText": "color:#c60505",
+        "score": "x2 = 5"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 2,
+        "radius": 8,
+        "properties": {
+          "enlarge": 2.5
+        },
+        "objects": [
+          {
+            "type": "image",
+            "x": -1,
+            "y": 0,
+            "width": 104,
+            "height": 125,
+            "color": "transparent",
+            "dynamicProperties": {
+              "css": "shading"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 120,
+            "width": 103,
+            "height": 55,
+            "color": "transparent",
+            "css": "background-image: linear-gradient(#b6b6b6,#dcdcdc);border-radius:10%"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 128,
+            "width": 103,
+            "fontSize": "12",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "item",
+              "css": "cssText"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 142,
+            "width": 103,
+            "fontSize": "12",
+            "css": "color:black",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "score"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "awmk": {
+    "deck": "thvyD",
+    "type": "card",
+    "cardType": "yogurt",
+    "id": "awmk",
+    "z": 3113,
+    "x": 499,
+    "y": 260,
+    "activeFace": 1
+  },
+  "m2iu": {
+    "type": "holder",
+    "id": "m2iu",
+    "x": 895,
+    "y": 430,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 2722
+  },
+  "m2iuB": {
+    "id": "m2iuB",
+    "parent": "m2iu",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "m2iuD": {
+    "type": "deck",
+    "id": "m2iuD",
+    "parent": "m2iu",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "3": {
+        "css": "--x1:0;--y1:3;--r1:2;--x2:1;--y2:1;--x3:4;--y3:0;--r3:1;--x4:4;--y4:0;--r4:2;--x5:3;--y5:1",
+        "cardNumber": " 3"
+      },
+      "32": {
+        "css": "--x1:0;--y1:3;--r1:2; --x2:1;--y2:1; --x3:2;--y3:0; --x4:3;--y4:3",
+        "cardNumber": "32"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 100,
+            "height": 100,
+            "css": "background-size:auto;background-position:calc(var(--x1) * -100px) calc(var(--y1) * -100px);transform:rotate(calc(var(--r1) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 100,
+            "height": 100,
+            "css": "background-size:auto;background-position:calc(var(--x2) * -100px) calc(var(--y2) * -100px);transform:rotate(calc(var(--r2) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 100,
+            "height": 100,
+            "css": "background-size:auto;background-position:calc(var(--x3) * -100px) calc(var(--y3) * -100px);transform:rotate(calc(var(--r3) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 100,
+            "height": 100,
+            "css": "background-size:auto;background-position:calc(var(--x4) * -100px) calc(var(--y4) * -100px);transform:rotate(calc(var(--r4) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 100,
+            "height": 100,
+            "css": "background-size:auto;background-position:calc(var(--x5) * -100px) calc(var(--y5) * -100px);transform:rotate(calc(var(--r5) * 90deg))",
+            "dynamicProperties": {
+              "value": "i"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 5,
+            "fontSize": 14,
+            "width": 100,
+            "css": "color:black",
+            "dynamicProperties": {
+              "value": "cardNumber"
+            }
+          }
+        ],
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "i": "/assets/-1974371235_285680",
+      "height": 100,
+      "width": 100
+    }
+  },
+  "adl9": {
+    "deck": "m2iuD",
+    "type": "card",
+    "cardType": "3",
+    "id": "adl9",
+    "z": 7801,
+    "x": 899,
+    "y": 318
+  },
+  "leno": {
+    "id": "leno",
+    "z": 10663,
+    "x": 1157,
+    "y": 262,
+    "image": "/assets/-1974371235_285680",
+    "width": 400,
+    "height": 400,
+    "movable": false
+  },
+  "3zix": {
+    "deck": "m2iuD",
+    "type": "card",
+    "cardType": "32",
+    "id": "3zix",
+    "z": 7805,
+    "parent": "m2iu",
+    "x": 4,
+    "y": 4
+  }
+}

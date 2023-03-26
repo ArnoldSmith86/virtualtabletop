@@ -58,6 +58,9 @@ function getValidDropTargets(widget) {
         break;
     }
 
+    if (jeEnabled && getComputedStyle(t.domElement).getPropertyValue('--foreign') == 'true')
+      continue;
+
     if(isValid)
       targets.push(t);
   }
@@ -88,9 +91,9 @@ export function showOverlay(id, forced) {
 
   if(id) {
     const style = $(`#${id}`).style;
-    style.display = !forced && style.display === 'flex' ? 'none' : 'flex';
-    $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
-    overlayActive = style.display === 'flex';
+    const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
+    style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
+    overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
 
@@ -100,10 +103,16 @@ export function showOverlay(id, forced) {
     }
     toServer('mouse',{inactive:true})
   } else {
-    $('#roomArea').className = '';
     vmEditOverlay.selectedWidget = {};
     overlayActive = false;
   }
+}
+
+export function showStatesOverlay(id) {
+  showOverlay(id);
+  if(id == 'statesOverlay')
+    updateFilterOverflow();
+  $('#statesButton').dataset.overlay = id;
 }
 
 function checkURLproperties(connected) {
@@ -112,7 +121,9 @@ function checkURLproperties(connected) {
     try {
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
-        if(playerParams) {
+        if(location.hash == '#tutorials') {
+          $('#filterByType').value = 'Tutorials';
+        } else if(playerParams) {
           urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
         } else {
           urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
@@ -154,7 +165,7 @@ function checkURLproperties(connected) {
   } else {
 
     if(urlProperties.color)
-      toServer('playerColor', { player: playerName, color: urlProperties.color });
+      toServer('playerColor', { player: playerName, color: toHex(urlProperties.color) });
 
   }
 }
@@ -175,15 +186,95 @@ function setScale() {
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
+  $('body').classList.remove('wideToolbar');
+  $('body').classList.remove('horizontalToolbar');
   if(w-scale*1600 + h-scale*1000 < 44) {
     $('body').classList.add('aspectTooGood');
     if(!$('body').className.match(/hiddenToolbar/))
       scale = (w-44)/1600;
   } else {
     $('body').classList.remove('aspectTooGood');
+    if(w - scale*1600 > 200)
+      $('body').classList.add('wideToolbar');
+    else if(w/h < 1600/1000)
+      $('body').classList.add('horizontalToolbar');
   }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
+}
+
+export async function shuffleWidgets(collection) {
+  // Fisher–Yates shuffle
+  const len = collection.length;
+  let indexes = [...Array(len).keys()];
+  for (let i = len-1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i+1));
+    [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+  }
+  for (let i of indexes) {
+    await collection[i].bringToFront();
+  }
+}
+
+export async function sortWidgets(collection, keys, reverse, locales, options, rearrange) {
+  const r = asArray(reverse);
+  if(r.length == 0)
+    r.push(false);
+  const k = asArray(keys).map((key, i, k) => {
+    const keyObj = {
+      key,
+      locales,
+      options
+    };
+    if(typeof(key) == 'object') {
+      return Object.assign(keyObj, key)
+    } else {
+      return keyObj
+    }
+  });
+  if(rearrange)
+    k.push({
+      key:"z"
+    });
+  collection.sort((w1,w2)=>{
+    let comp = 0;
+    for(const keyObj of k) {
+      const key1 = w1.get(keyObj.key);
+      const key2 = w2.get(keyObj.key);
+      if(key1 === key2)
+        continue;
+      let i1 = -1;
+      let i2 = -1;
+      if(Array.isArray(keyObj.order)) {
+        const o = keyObj.order.slice().reverse();
+        i1 = o.lastIndexOf(key1);
+        i2 = o.lastIndexOf(key2);
+      }
+      if(i1 > -1 || i2 > -1)
+        comp = i2 - i1;
+      else if(typeof key1 == 'number')
+        comp = key1 - key2;
+      else if(key1 === null)
+        comp = key2 === null ?  0 : -1;
+      else if(key2 === null)
+        comp = 1;
+      else
+        comp = key1.localeCompare(key2, keyObj.locales, keyObj.options);
+      if(comp != 0) {
+        return keyObj.reverse ? -comp : comp;
+      }
+    }
+    return 0;
+  });
+  if(reverse) {
+    collection.reverse();
+  }
+  if(rearrange) {
+    let z = 1;
+    for(const w of collection) {
+      await w.set('z', ++z);
+    }
+  }
 }
 
 async function uploadAsset(multipleCallback) {
@@ -218,15 +309,20 @@ async function _uploadAsset(file) {
 const svgCache = {};
 function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
+    const cacheKey = url + JSON.stringify(replaces);
+    if(svgCache[cacheKey])
+      return svgCache[cacheKey];
+
     let svg = svgCache[url];
     for(const replace in replaces)
       svg = svg.split(replace).join(replaces[replace]);
-    return 'data:image/svg+xml,'+encodeURIComponent(svg);
+    svgCache[cacheKey] = 'data:image/svg+xml,'+encodeURIComponent(svg);
+    return svgCache[cacheKey];
   }
 
   if(!svgCache[url]) {
     svgCache[url] = [];
-    fetch(url.replace(/^\//, '')).then(r=>r.text()).then(t=>{
+    fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
       for(const c of callbacks)
@@ -241,13 +337,43 @@ function getSVG(url, replaces, callback) {
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
-  on('.toolbarButton', 'click', function(e) {
-    const overlay = e.target.dataset.overlay;
-    if(overlay)
-      showOverlay(overlay);
+  on('#toolbar > img', 'click', e=>$('#statesButton').click());
+
+  on('.toolbarTab', 'click', function(e) {
+    if(e.currentTarget.classList.contains('active')) {
+      if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
+        showStatesOverlay('statesOverlay');
+      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display != 'none')
+        showOverlay();
+      e.stopImmediatePropagation();
+      return;
+    }
+    for(const tabButton of $a('.toolbarTab'))
+      toggleClass(tabButton, 'active', tabButton == e.currentTarget);
+
+    if(e.currentTarget == $('#editButton') || edit)
+      toggleEditMode();
   });
 
-  on('#muteButton', 'click', function(){
+  on('#addButton', 'click', function(e) {
+    if(!$a('#activeGameButton.active, #editButton.active').length)
+      $('#activeGameButton').click();
+  });
+
+  on('#activeGameButton', 'click', function() {
+    showOverlay();
+  });
+
+  on('.toolbarButton', 'click', function(e) {
+    const overlay = e.currentTarget.dataset.overlay;
+    if(overlay) {
+      showOverlay(overlay);
+      if(overlay == 'statesOverlay')
+        updateFilterOverflow();
+    }
+  });
+
+  on('#muteButton', 'click', function() {
     if(muted) {
       $('#volume').value = unmuteVol;
       $('#muteButton').classList.remove('muted');
@@ -301,7 +427,7 @@ onLoad(function() {
 
   if(Object.keys(config.betaServers).length) {
     for(const betaServerName in config.betaServers) {
-      const entry = domByTemplate('template-betaServerList-entry', 'tr');
+      const entry = domByTemplate('template-betaServerList-entry', {}, 'tr');
       $('button', entry).textContent = betaServerName;
       var thisstatus = config.betaServers[betaServerName].return ? 'check' : 'cancel';
       $('.return', entry).textContent = thisstatus;
@@ -310,7 +436,7 @@ onLoad(function() {
       $('#betaServerList').appendChild(entry);
     }
     on('#betaServerList button', 'click', function(e) {
-      toServer('setRedirect', e.target.textContent);
+      toServer('setRedirect', e.currentTarget.textContent);
     });
   } else {
     removeFromDOM($('#betaText'));
@@ -349,11 +475,12 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    if(overlayActive)
-      showOverlay();
-    else if(edit)
-      toggleEditMode();
-    else if(jeEnabled)
+    if(overlayActive || edit)
+      $('#activeGameButton').click();
+    else if(jeEnabled && jeDebugViewing) {
+      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
+      jeShowCommands();
+    } else if(jeEnabled)
       jeToggle();
   }
 }
