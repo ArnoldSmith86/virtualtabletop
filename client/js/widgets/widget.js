@@ -6,6 +6,8 @@ import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
 
+let simulateTurn;
+
 const readOnlyProperties = new Set([
   '_absoluteRotation',
   '_absoluteScale',
@@ -1453,7 +1455,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'TURN') {
-        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN', readOnly: false });
+        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN', simulate: false });
         if([ 'forward', 'backward', 'random', 'position' ].indexOf(a.turnCycle) == -1) {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
@@ -1486,7 +1488,8 @@ export class Widget extends StateManaged {
               nextTurnIndex = a.turn;
             }
           } else if(a.turnCycle == 'random') {
-            nextTurnIndex = Math.floor(Math.random() * indexList.length);
+            nextTurnIndex = !a.simulate && simulateTurn ? simulateTurn : Math.floor(Math.random() * indexList.length + 1);
+            if (a.simulate) simulateTurn = nextTurnIndex;
           } else {
             const turnIndexOffset = a.turnCycle == 'forward' ? a.turn : -a.turn;
             nextTurnIndex = indexList.indexOf(previousTurn) + turnIndexOffset;
@@ -1496,12 +1499,12 @@ export class Widget extends StateManaged {
           nextTurnIndex = Math.floor(nextTurnIndex);
           if(typeof nextTurnIndex != 'number' || !isFinite(nextTurnIndex))
             nextTurnIndex = 0;
-          const turn = indexList[mod(nextTurnIndex, indexList.length)];
-          variables.TURN = turn;
+            const turn = (typeof simulateTurn === 'number' && a.turnCycle == 'random') ? simulateTurn : indexList[mod(nextTurnIndex, indexList.length)];
+          simulateTurn = a.simulate ? turn : null;
 
           collections[a.collection] = [];
 
-          if(!a.readOnly) {
+          if(!a.simulate) {
             //saves turn into all seats and creates output collection with turn seats
             for(const w of c) {
               await w.set('turn', w.get('index') == turn);
