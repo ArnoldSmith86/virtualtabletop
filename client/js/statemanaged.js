@@ -33,9 +33,10 @@ export class StateManaged {
   }
 
   getDefaultValue(key) {
-    for(const [ id, properties ] of Object.entries(this.inheritFrom()))
-      if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
-        return widgets.get(id).get(key);
+    if(this.inheritedProperties)
+      for(const [ id, properties ] of Object.entries(this.inheritFrom()))
+        if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
+          return widgets.get(id).get(key);
     return this.defaults[key];
   }
 
