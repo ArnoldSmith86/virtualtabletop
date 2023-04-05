@@ -1362,12 +1362,12 @@ export class Widget extends StateManaged {
                     if(widgets.has(target.get('hand'))) {
                       const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
-                      c.targetPlayer = target.get('player')
+                      c.targetPlayer = target.get('player');
                       await c.moveToHolder(targetHand);
-                      delete c.targetPlayer
-                      c.bringToFront()
+                      delete c.targetPlayer;
+                      await c.bringToFront();
                       if(targetHand.get('type') == 'holder')
-                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                        await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                     } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
