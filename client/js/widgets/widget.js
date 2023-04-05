@@ -1423,7 +1423,7 @@ export class Widget extends StateManaged {
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
                 if(!a.inHolder)
-                  cards = cards.filter(c=>!c.get('parent'));
+                  cards = cards.filter(c=>!c.get('_ancestor'));
                 for(const c of cards)
                   await c.moveToHolder(widgets.get(holder));
               }
