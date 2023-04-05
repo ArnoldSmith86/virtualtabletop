@@ -1413,7 +1413,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true });
+        setDefaults(a, { owned: true, inHolder: true });
         if(this.isValidID(a.holder, problems)) {
           for(const holder of asArray(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
@@ -1422,6 +1422,8 @@ export class Widget extends StateManaged {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
+                if(!a.inHolder)
+                  cards = cards.filter(c=>!c.get('parent'));
                 for(const c of cards)
                   await c.moveToHolder(widgets.get(holder));
               }

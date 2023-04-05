@@ -838,14 +838,17 @@ export default async function convertPCIO(content) {
           const holders = c.args.decks.value.map(d=>byID[d].parent);
           const flip = c.args.flip;
           c = {
-            func:   'RECALL',
-            holder: holders,
-            owned:  c.args.includeHands && c.args.includeHands.value == 'hands' || false
+            func:     'RECALL',
+            holder:   holders,
+            owned:      c.args.includeHands   && c.args.includeHands.value   == 'hands'  || false,
+            inHolder: !(c.args.includeHolders && c.args.includeHolders.value == 'normal' || false)
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
           if(c.owned)
             delete c.owned;
+          if(c.inHolder)
+            delete c.inHolder;
           if(!flip || flip.value != 'none') {
             w.clickRoutine.push(c);
             c = {
