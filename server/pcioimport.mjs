@@ -456,7 +456,17 @@ export default async function convertPCIO(content) {
       const weight = widget.bold ? 'bold' : 'normal';
       w.type = 'label';
       w.text = widget.labelContent;
-      w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
+      w.css = {
+        default: {
+          'line-height': `${widget.textSize}px`,
+          'font-size':   `${widget.textSize}px`,
+          'font-weight': weight,
+          'text-align':  widget.textAlign
+        },
+        ' textarea': {
+          'letter-spacing': '-1px'
+        }
+      };
       addDimensions(w, widget, 100, 20);
       w.height = widget.textSize * 3.5;
     } else if(widget.type == 'separator') {
