@@ -190,8 +190,8 @@ export default async function convertPCIO(content) {
       if(pileTransparent[w.id])
         w.classes = 'transparent';
       if(widget.id == 'hand') {
-        w.dropOffsetX = 10;
-        w.dropOffsetY = 14;
+        w.dropOffsetX = 6;
+        w.dropOffsetY = 6;
         w.stackOffsetX = 40;
       } else {
         w.alignChildren = false;
