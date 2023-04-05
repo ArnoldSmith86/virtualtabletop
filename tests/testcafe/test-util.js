@@ -10,7 +10,7 @@ fs.mkdirSync(referenceDir, { recursive: true });
 let server = null;
 
 export function setupTestEnvironment() {
-  server = process.env.REFERENCE ? `http://212.47.248.129:${process.env.REFERENCE}` : 'http://localhost:8272';
+  server = process.env.REFERENCE ? `https://test.virtualtabletop.io/PR-${process.env.REFERENCE}` : 'http://localhost:8272';
   fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(_=>setRoomState()).after(_=>setRoomState());
 }
 
