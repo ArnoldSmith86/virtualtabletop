@@ -207,24 +207,25 @@ export default async function convertPCIO(content) {
         w.classes = 'transparent';
       addDimensions(w, widget, 111, 168);
 
+      let dropOffsetX = 100;
+      let dropOffsetY = 100;
+
       if(widget.allowedDecks) {
         w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
         if(pileHasDeck[widget.id] && widget.allowedDecks.indexOf(pileHasDeck[widget.id].id) == -1)
           w.dropTarget.push({ deck: pileHasDeck[widget.id].id });
+
+        for(const allowed of w.dropTarget) {
+          if(byID[allowed.deck]) {
+            dropOffsetX = Math.round(Math.min(dropOffsetX, (widget.width  - (byID[allowed.deck].cardWidth  || 103))/2));
+            dropOffsetY = Math.round(Math.min(dropOffsetY, (widget.height - (byID[allowed.deck].cardHeight || 160))/2));
+          }
+        }
       }
       if(widget.hideStackTab)
         w.preventPiles = true;
       if(widget.layoutType == 'freeform')
         w.alignChildren = false;
-
-      if(pileOverlaps[w.id]) {
-        w.x += 4;
-        w.y += 4;
-        w.width = (w.width || 111) - 8;
-        w.height = (w.height || 168) - 8;
-        w.dropOffsetX = 0;
-        w.dropOffsetY = 0;
-      }
 
       if(widget.layoutType == 'spread') {
         if(widget.spreadDirection == 'down') {
@@ -237,6 +238,20 @@ export default async function convertPCIO(content) {
           w.stackOffsetX = -111;
         } else {
           w.stackOffsetX = 111;
+        }
+      } else {
+        if(dropOffsetX != 100)
+          w.dropOffsetX = dropOffsetX;
+        if(dropOffsetY != 100)
+          w.dropOffsetY = dropOffsetY;
+
+        if(pileOverlaps[w.id]) {
+          w.x += 4;
+          w.y += 4;
+          w.width = (w.width || 111) - 8;
+          w.height = (w.height || 168) - 8;
+          w.dropOffsetX = 0;
+          w.dropOffsetY = 0;
         }
       }
 
