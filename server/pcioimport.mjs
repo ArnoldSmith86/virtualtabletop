@@ -850,7 +850,35 @@ export default async function convertPCIO(content) {
         if(c.func == 'RECALL_CARDS') {
           if(!c.args.decks)
             continue;
-          const holders = c.args.decks.value.map(d=>byID[d].parent);
+
+          for(const deckID of c.args.decks.value) {
+            if(!byID[deckID].parent) {
+              output.tempHolderForDeckRecall = {
+                id: 'tempHolderForDeckRecall',
+                type: 'holder',
+                x: -200
+              };
+              w.clickRoutine.push({
+                func: 'SELECT',
+                property: 'deck',
+                value: deckID
+              });
+              w.clickRoutine.push({
+                func: 'SET',
+                property: 'parent',
+                value: 'tempHolderForDeckRecall'
+              });
+              w.clickRoutine.push({
+                func: 'MOVEXY',
+                from: 'tempHolderForDeckRecall',
+                x: byID[deckID].x + (86-(byID[deckID].cardWidth ||103))/2,
+                y: byID[deckID].y + (86-(byID[deckID].cardHeight||160))/2,
+                count: 0
+              });
+            }
+          }
+
+          const holders = c.args.decks.value.map(d=>byID[d].parent).filter(d=>d);
           const flip = c.args.flip;
           c = {
             func:     'RECALL',
