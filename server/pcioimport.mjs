@@ -813,9 +813,10 @@ export default async function convertPCIO(content) {
         if(c.func == 'SHUFFLE_CARDS') {
           if(!c.args.holders)
             continue;
+          const holders = c.args.holders.value.map(id=>byID[id].type == 'seat' ? 'hand' : id);
           c = {
             func:   'SHUFFLE',
-            holder: c.args.holders.value
+            holder: holders
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
@@ -823,9 +824,10 @@ export default async function convertPCIO(content) {
         if(c.func == 'SORT_CARDS') {
           if(!c.args.sources)
             continue;
+          const holders = c.args.sources.value.map(id=>byID[id].type == 'seat' ? 'hand' : id);
           c = {
             func:   'SORT',
-            holder: c.args.sources.value,
+            holder: holders,
             key:    'sortingOrder',
             reverse: !c.args.direction || c.args.direction.value != 'za'
           };
