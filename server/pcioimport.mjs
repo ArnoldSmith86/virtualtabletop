@@ -102,7 +102,7 @@ export default async function convertPCIO(content) {
 
   const cardsPerCoordinates = {};
   for(const widget of widgets) {
-    if(widget.type == 'card') {
+    if(widget.type == 'card' || widget.type == 'piece') {
       const index = widget.x + ',' + widget.y + ',' + (widget.parent || "") + ',' + (widget.owner || "");
       if(!widget.parent || !byID[widget.parent] || !byID[widget.parent].hideStackTab)
         cardsPerCoordinates[index] = (cardsPerCoordinates[index] || 0) + 1;
