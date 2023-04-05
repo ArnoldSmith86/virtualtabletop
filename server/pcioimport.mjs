@@ -342,6 +342,51 @@ export default async function convertPCIO(content) {
         });
       }
 
+      if(widget.collectionType == 'pieces') {
+        for(const cardType of Object.values(w.cardTypes)) {
+          for(const [ key, value ] of Object.entries(cardType)) {
+            const pieceMatch = String(value).match(/^\/img\/pieces\/(pegs|pins|marbles|checkers|pucks|chips)\/(white|red|blue|green|black|purple|yellow|orange|peach|teal|pink|brown)(-kinged)?\.svg$/);
+            if(pieceMatch) {
+              const urls = {
+                pegs:              '/i/game-pieces/3D/Pawn-3D.svg',
+                pins:              '/i/game-pieces/3D/Pin-3D.svg',
+                marbles:           '/i/game-pieces/3D/Marble-3D.svg',
+                checkers:          '/i/game-pieces/2D/Checkers-2D.svg',
+                'checkers-kinged': '/i/game-pieces/2D/Crowned-Checkers-2D.svg',
+                pucks:             '/i/game-pieces/2D/Poker-2D.svg',
+                chips:             '/i/game-pieces/2D/Poker-2D.svg'
+              };
+              const colors = {
+                white:  '#dae0df',
+                red:    '#ed1b43',
+                blue:   '#5894f4',
+                green:  '#69d83a',
+                black:  '#666565',
+                purple: '#9458f4',
+                yellow: '#ffce00',
+                orange: '#ff7b23',
+                peach:  '#f2948c',
+                teal:   '#2fd1cd',
+                pink:   '#ff69b3',
+                brown:  '#a8570e'
+              };
+
+              cardType[key] = urls[pieceMatch[1] + (pieceMatch[3] || '')];
+              if(pieceMatch[1] == 'chips')
+                cardType[`${key}LabelColor`] = '#fff8';
+              if(pieceMatch[1] == 'pucks')
+                cardType[`${key}LabelColor`] = colors[pieceMatch[2]];
+              cardType[`${key}Color`] = colors[pieceMatch[2]];
+
+              for(const faceTemplate of w.faceTemplates)
+                for(const object of faceTemplate.objects)
+                  if(object.valueType == 'dynamic' && object.value == key)
+                    object.svgReplaces = { '#primaryColor': `${key}Color`, '#labelColor': `${key}LabelColor` };
+            }
+          }
+        }
+      }
+
       if(widget.collectionType == 'choosers') {
         const options = Object.values(w.cardTypes);
         const firstTemplate = JSON.parse(JSON.stringify(w.faceTemplates[0]));
