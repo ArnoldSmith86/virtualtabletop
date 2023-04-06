@@ -66,8 +66,25 @@ function centerElementInClientRect(element, boundingClientRect) {
   element.style.transform = `translate(${translateX}px, ${translateY}px) ${element.style.transform}`;
 }
 
+function parseRankRange(rankRange) {
+  const rankArray = [];
+  const rankElements = rankRange.split(',');
+
+  rankElements.forEach(rankElement => {
+    if(rankElement.match(/-?[0-9]+--?[0-9]+/)) {
+      const [start, end] = rankElement.split('-').map(Number);
+      for(let i = start; i <= end; i++)
+        rankArray.push(i);
+    } else {
+      rankArray.push(rankElement);
+    }
+  });
+
+  return rankArray;
+}
 
 /* end helper functions */
+
 
 class PropertiesModule extends SidebarModule {
   constructor() {
@@ -150,6 +167,529 @@ class PropertiesModule extends SidebarModule {
         }
       }
     }
+
+    if(!newSelection.length)
+      this.deckGenerator();
+  }
+
+  deckGenerator() {
+    const deckTemplates = [ this.deckTemplate_standard, this.deckTemplate_simple, this.deckTemplate_skinny, this.deckTemplate_transparent ];
+
+    const defaultRanks = [ 'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades' ];
+
+    const suitDivs = {};
+    const colors = {};
+    const ranks = {};
+
+    this.addSubHeader('Suit symbols');
+
+    const suitCustomizeDiv = document.createElement('div');
+    suitCustomizeDiv.innerHTML = '<h2>Suit properties</h2>';
+
+    const linkedRanksToggleDiv = document.createElement('div');
+    const linkedRanksLabel = document.createElement('label');
+    linkedRanksLabel.textContent = 'Same ranks for each suit:';
+    const linkedRanksToggle = document.createElement('input');
+    linkedRanksToggle.type = 'checkbox';
+    linkedRanksToggle.checked = true;
+    linkedRanksLabel.htmlFor = linkedRanksToggle.id = 'sameRanksToggle';
+
+    linkedRanksToggleDiv.appendChild(linkedRanksLabel);
+    linkedRanksToggleDiv.appendChild(linkedRanksToggle);
+    suitCustomizeDiv.append(linkedRanksToggleDiv);
+
+    const updateLinkedRanks = (symbol, newRanks) => {
+      for(const otherSymbol in ranks)
+        if(linkedRanksToggle.checked && otherSymbol !== symbol)
+          $('.ranks input', suitDivs[otherSymbol]).value = ranks[otherSymbol] = newRanks;
+    };
+    const designSelectionDiv = document.createElement('div');
+    const updateDesignPreview = _=>{
+      for(const button of $a('.deckTemplateButton', this.moduleDOM))
+        button.remove();
+
+      if(Object.keys(colors).length == 0) {
+        createButton.disabled = true;
+        return;
+      }
+
+      const deck = getDeckDefinition();
+      for(const [ index, deckTemplate ] of Object.entries(deckTemplates)) {
+        const templateButton = this.renderWidgetButton(new Deck(deck.id), deckTemplate(deck), designSelectionDiv);
+        templateButton.classList.add('deckTemplateButton');
+        templateButton.dataset.index = index;
+        templateButton.onclick = e=>{
+          for(const button of $a('.deckTemplateButton', this.moduleDOM))
+            if(button != templateButton)
+              button.classList.remove('selected');
+          templateButton.classList.toggle('selected');
+          createButton.disabled = false;
+        };
+        deck.id = generateUniqueWidgetID();
+      }
+    };
+
+    for(const symbol of [ 'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades', 'delapouite/round-star', 'delapouite/flower-emblem', 'delapouite/plain-circle', 'lorc/biohazard', 'lorc/fluffy-trefoil' ]) {
+      const symbolButton = this.renderWidgetButton(new BasicWidget(), {
+        image: `/i/game-icons.net/${symbol}.svg`,
+        color: '#000',
+        svgReplaces: { '#000': 'color' }
+      }, this.moduleDOM);
+      symbolButton.dataset.symbol = symbol;
+      symbolButton.classList.add('deckGeneratorSymbol');
+      symbolButton.onclick = async e=>{
+        symbolButton.classList.toggle('selected');
+        if(symbolButton.classList.contains('selected')) {
+          colors[symbol] = [ 'skoll/diamonds', 'skoll/hearts' ].includes(symbol) ? '#e50932' : '#000000';
+          ranks[symbol] = '2-10,J,Q,K,A';
+
+          suitDivs[symbol] = document.createElement('div');
+          suitDivs[symbol].classList.add('suitProperties');
+          const suitWidget = new BasicWidget();
+          this.renderWidgetButton(suitWidget, {
+            image: `/i/game-icons.net/${symbol}.svg`,
+            color: colors[symbol],
+            svgReplaces: { '#000': 'color' }
+          }, suitDivs[symbol]);
+
+          const colorPickerDiv = document.createElement('div');
+          const colorPickerLabel = document.createElement('label');
+          colorPickerLabel.textContent = 'Color:';
+          const colorPicker = document.createElement('input');
+          colorPicker.type = 'color';
+          colorPicker.value = colors[symbol];
+          colorPicker.onchange = e=>{
+            colors[symbol] = colorPicker.value;
+            suitWidget.applyDelta({ color: colorPicker.value });
+            updateDesignPreview();
+          };
+          colorPickerDiv.appendChild(colorPickerLabel);
+          colorPickerDiv.appendChild(colorPicker);
+          suitDivs[symbol].append(colorPickerDiv);
+
+          const rankInputDiv = document.createElement('div');
+          const rankInputLabel = document.createElement('label');
+          rankInputDiv.classList.add('ranks');
+          rankInputLabel.textContent = 'Ranks:';
+          const rankInput = document.createElement('input');
+          rankInput.value = ranks[symbol];
+
+          rankInput.onkeyup = e => {
+            updateLinkedRanks(symbol, ranks[symbol] = rankInput.value);
+            updateDesignPreview();
+          };
+
+          rankInputDiv.appendChild(rankInputLabel);
+          rankInputDiv.appendChild(rankInput);
+          suitDivs[symbol].append(rankInputDiv);
+
+          suitCustomizeDiv.append(suitDivs[symbol]);
+        } else {
+          suitDivs[symbol].remove();
+          delete suitDivs[symbol];
+          delete colors[symbol];
+          delete ranks[symbol];
+        }
+        updateDesignPreview();
+      };
+
+      if(defaultRanks.includes(symbol))
+        symbolButton.click();
+    }
+    this.moduleDOM.append(suitCustomizeDiv);
+
+    function getDeckDefinition() {
+      const id = generateUniqueWidgetID();
+      const cardTypes = {};
+      let suitIndex = 0;
+
+      for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
+        const suitURL = `/i/game-icons.net/${suitSymbol}.svg`;
+        for(const rank of parseRankRange(ranks[suitSymbol])) {
+          const cT = `${rank} of ${suitSymbol.replace(/.*\//, '')}`;
+          cardTypes[cT] = {
+            suit: suitURL,
+            suitColor,
+            rank
+          };
+          const setCardTypes = (conditions, cardTypesKeys) => {
+            if(conditions)
+              for(const key of cardTypesKeys)
+                cardTypes[cT][`suit-${key}`] = suitURL;
+          };
+          if(String(rank).match(/^[0-9]+$/) && rank <= 21) {
+            setCardTypes(rank     >=  4,                           ['P11', 'P13', 'P51', 'P53']);
+            setCardTypes(rank     >= 12 || rank == 2 || rank == 3, ['P12', 'P52']);
+            setCardTypes(rank     ==  7 || rank == 8,              ['P22']);
+            setCardTypes(rank     >= 16 || rank >= 6 && rank <= 8, ['P31', 'P33']);
+            setCardTypes(rank % 2 ==  1 && rank != 7,              ['P32']);
+            setCardTypes(rank     ==  8,                           ['P42']);
+
+            setCardTypes(rank >= 9,                                                          ['S21', 'S23', 'S31', 'S33']);
+            setCardTypes(rank >= 20 || rank == 10 || rank == 11 || rank >= 14 && rank <= 17, ['S12', 'S42']);
+            setCardTypes(rank >= 12,                                                         ['S22', 'S32']);
+            setCardTypes(rank >= 18,                                                         ['S11', 'S13', 'S41', 'S43']);
+          }
+          if('JQK'.includes(rank)) {
+            let defaultRanksuit = defaultRanks[suitIndex % 4].substr(6, 1).toUpperCase();
+            if(defaultRanks.includes(suitSymbol))
+              defaultRanksuit = suitSymbol.substr(6, 1).toUpperCase();
+            cardTypes[cT].rankImage = `/i/cards-default/${rank}${defaultRanksuit}-face.svg`;
+          } else if(!String(rank).match(/^[0-9]+$/) || rank > 21) {
+            cardTypes[cT].rankImage = `/i/game-icons.net/${suitSymbol}.svg`;
+          }
+        }
+        suitIndex += 1;
+      }
+
+      return {
+        type: 'deck',
+        id,
+        cardTypes
+      };
+    }
+
+    const createButton = document.createElement('button');
+    createButton.innerText = 'Add to game';
+    createButton.disabled = true;
+    createButton.setAttribute('icon', 'add');
+    createButton.onclick = async e=>{
+      batchStart();
+      const deck = getDeckDefinition();
+      await addWidgetLocal(deckTemplates[$('.selected.deckTemplateButton', this.moduleDOM).dataset.index](deck));
+
+      let suitIndex = 0;
+      for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
+        let x = 0;
+        for(const rank of parseRankRange(ranks[suitSymbol])) {
+          const cT = `${rank} of ${suitSymbol.replace(/.*\//, '')}`;
+          await addWidgetLocal({
+            type: 'card',
+            id: `${deck.id} ${cT}`,
+            deck: deck.id,
+            cardType: cT,
+            x,
+            y: suitIndex * 160,
+            activeFace: 1
+          });
+          x += 103;
+        }
+        suitIndex += 1;
+      }
+
+      batchEnd();
+    };
+
+    this.moduleDOM.append(suitCustomizeDiv);
+
+    this.addSubHeader('Card design');
+    this.moduleDOM.append(designSelectionDiv);
+    updateDesignPreview();
+    this.moduleDOM.append(createButton);
+  }
+
+  deckTemplate_simple(deck) {
+    deck.cardDefaults = {
+      white: "#fff4\" stroke=\"#fff4\" stroke-width=\"20"
+    };
+    deck.faceTemplates = [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 70,
+            "width": 83,
+            "height": 83,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "white"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 0,
+            "fontSize": 60,
+            "textAlign": "center",
+            "color": "white",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ];
+    return deck;
+  }
+
+  deckTemplate_skinny(deck) {
+    deck.cardDefaults = {
+      width: 80,
+      height: 160
+    };
+    deck.faceTemplates = [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-skinny/1B.svg"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 80,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 10,
+            "fontSize": 60,
+            "textAlign": "center",
+            "width": 80,
+            "dynamicProperties": {
+              "color": "suitColor",
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ];
+    return deck;
+  }
+
+  deckTemplate_transparent(deck) {
+    deck.cardDefaults = {
+      width: 80,
+      height: 80
+    };
+    deck.faceTemplates = [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "color": "white",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 18,
+            "fontSize": 40,
+            "textAlign": "center",
+            "color": "white",
+            "width": 80,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ];
+    return deck;
+  }
+
+  deckTemplate_standard(deck) {
+    deck.faceTemplates = [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 6,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 25,
+            "width": 53,
+            "height": 110,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rankImage"
+            },
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "css": {
+              "background-size": "100% 100%"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": -2,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 127,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 28,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "image",
+            "x": 79,
+            "y": 110,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            },
+            "rotation": 180
+          }
+        ]
+      }
+    ];
+
+    const commonProperties = {
+      type: 'image',
+      width: 16,
+      height: 16,
+      color: 'transparent',
+      svgReplaces: {
+        '#000': 'suitColor'
+      }
+    }
+    for(let row = 0; row < 5; row++) {
+      for(let col = 0; col < 3; col++) {
+        const x = 25 + col * 18.5;
+        const y = 25 + row * 23.5;
+        deck.faceTemplates[1].objects.push(Object.assign({}, commonProperties, {
+          x, y,
+          dynamicProperties: {
+            value: `suit-P${row + 1}${col + 1}`
+          }
+        }));
+      }
+    }
+
+    for(let row = 0; row < 4; row++) {
+      for(let col = 0; col < 3; col++) {
+        const x = 25 + col * 18.5;
+        const y = 40.6 + (row > 1 ? row + 1 : row) * 15.6;
+        deck.faceTemplates[1].objects.push(Object.assign({}, commonProperties, {
+          x, y,
+          dynamicProperties: {
+            value: `suit-S${row + 1}${col + 1}`
+          }
+        }));
+      }
+    }
+    return deck;
   }
 
   faceObjectInputValueUpdated(deck, face, object, property, value, card, removeObjects) {
@@ -332,8 +872,13 @@ class PropertiesModule extends SidebarModule {
     button.className = 'widgetSelectionButton';
     target.appendChild(button);
 
+    let deckDOM = null;
+    if(widget instanceof Deck && widget.get('type') != 'deck')
+      deckDOM = this.renderWidget(widget, state, button);
+
     if(widget.get('type') == 'deck') {
       const parent = this.renderWidget(new BasicWidget(), {}, button);
+      widgets.set(widget.id, widget);
       for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
         this.renderWidget(new Card(), Object.assign({
           deck: widget.id,
@@ -341,10 +886,14 @@ class PropertiesModule extends SidebarModule {
           activeFace: widget.get('faceTemplates').length > 1 ? 1 : 0
         }, state), parent);
       }
+      widgets.delete(widget.id, widget);
       positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
     } else {
       this.renderWidget(widget, state, button);
     }
+
+    if(deckDOM)
+      deckDOM.remove();
 
     const rect = getBoundingClientRectWithAbsoluteChildren(button.children[0]);
     if(Math.max(rect.width, rect.height) > 140)

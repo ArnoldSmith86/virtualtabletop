@@ -16,7 +16,7 @@
 .editorModule .widgetSelectionButton {
   height: 150px;
   width: 150px;
-  margin: 5px;
+  margin: 3px;
   position: relative;
   display: inline-flex;
   background: linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), white;
@@ -60,6 +60,24 @@
 
 .tune.editorModule .faceTemplateProperty {
   margin-left: 20px;
+}
+
+
+.tune.editorModule .suitProperties {
+  height: 160px;
+}
+
+.tune.editorModule .suitProperties > button.widgetSelectionButton {
+  position: absolute;
+}
+
+.tune.editorModule .suitProperties > div {
+  margin-left: 170px;
+}
+
+.tune.editorModule .suitProperties label {
+  display: inline-block;
+  width: 60px;
 }
 
 
