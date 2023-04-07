@@ -475,7 +475,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/assets/607202618_223159",
             "color": ""
           }
@@ -491,25 +490,28 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "text1",
-            "css": "font-size: 45px;text-align:center; text-shadow: 1px 1px 3px black;"
+            "css": "font-size: 45px;text-align:center; text-shadow: 1px 1px 3px black;",
+            "dynamicProperties": {
+              "value": "text1"
+            }
           },
           {
             "type": "text",
             "x": 3,
             "y": 0,
-            "valueType": "dynamic",
-            "value": "text2",
-            "css": "font-size: 23px;color:white"
+            "css": "font-size: 23px;color:white",
+            "dynamicProperties": {
+              "value": "text2"
+            }
           },
           {
             "type": "text",
             "x": 77,
             "y": 125,
-            "valueType": "dynamic",
-            "value": "text3",
-            "css": "font-size: 23px;color:white"
+            "css": "font-size: 23px;color:white",
+            "dynamicProperties": {
+              "value": "text3"
+            }
           }
         ]
       }
@@ -1417,7 +1419,7 @@
     }
   },
   "_meta": {
-    "version": 3,
+    "version": 12,
     "info": {
       "name": "Dix Cards",
       "image": "/assets/-71946515_149917",
@@ -1426,14 +1428,20 @@
       "year": "1982",
       "mode": "vs",
       "time": "45",
-      "players": "2-6",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The game layout, images and library image are by LawDawg96 are are released to the Public Domain under CC0.\n\nThe background picture by Dawn Hudson is in the Public Domain under CC0 and is available at https://publicdomainpictures.net/en/view-image.php?image=71643&picture=colourful-flame-background.  It has been cropped and the colors modified.",
+      "attribution": "The game layout, images and library image are by LawDawg96 are are released to the Public Domain under CC0.\n\nThe background picture by Dawn Hudson is in the Public Domain under CC0 and is available at https://publicdomainpictures.net/en/view-image.php?image=71643&amp;picture=colourful-flame-background.  It has been cropped and the colors modified.",
       "similarName": "Phase 10",
-      "description": "Complete a series of levels by laying down cards in runs, sets, or colors.  First to complete 10 levels wins.",
+      "description": "Complete a series of levels by laying down cards in runs, sets, or colors. First to complete 10 levels wins.",
       "showName": true,
-      "lastUpdate": 1624554755000
+      "lastUpdate": 1680910215789,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-6",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "theDeck": {
