@@ -173,7 +173,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   deckGenerator() {
-    const deckTemplates = [ this.deckTemplate_standard, this.deckTemplate_simple, this.deckTemplate_skinny, this.deckTemplate_transparent ];
+    const deckTemplates = [ this.deckTemplate_standard, this.deckTemplate_colors, this.deckTemplate_simple, this.deckTemplate_skinny, this.deckTemplate_transparent ];
 
     const defaultRanks = [ 'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades' ];
 
@@ -386,6 +386,103 @@ class PropertiesModule extends SidebarModule {
     this.moduleDOM.append(designSelectionDiv);
     updateDesignPreview();
     this.moduleDOM.append(createButton);
+  }
+
+  deckTemplate_colors(deck) {
+    deck.cardDefaults = {
+      outline: '<path stroke="#1f1f1f" stroke-width="8" '
+    };
+    deck.faceTemplates = [
+      {
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "#fff"
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "width": 93,
+            "height": 150,
+            "css": "border-radius:10px; background: linear-gradient(90deg, rgba(213,94,0,1) 14.3%, rgba(230,159,0,1) 14.4%, rgba(230,159,0,1) 28.6%, rgba(240,228,66,1) 28.7%, rgba(240,228,66,1) 42.8%, rgba(0,158,155,1) 42.9%, rgba(0,141,164,1) 57.1%, rgba(0,114,178,1) 57.2%, rgba(0,114,178,1) 71.4%, rgba(86,180,233,1) 71.5%, rgba(86,180,233,1) 85.7%, rgba(204,121,167,1) 85.8%, rgba(204,121,167,1) 100%);"
+          }
+        ],
+        "border": 1
+      },
+      {
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "#fff"
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "width": 93,
+            "height": 150,
+            "dynamicProperties": {
+              "color": "suitColor"
+            },
+            "css": "border-radius:7px"
+          },
+          {
+            "type": "image",
+            "x": 21.5,
+            "y": 50,
+            "width": 60,
+            "height": 60,
+            "color": "#fff",
+            "css": "border-radius:100%; border:1px solid #444; background-size: 80%",
+            "dynamicProperties": {
+              "value": "suit"
+            },
+            "svgReplaces": {
+              "#000": "suitColor",
+              "<path ": "outline"
+            }
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 10,
+            "textAlign": "center",
+            "width": 30,
+            "height": 30,
+            "fontSize": 25,
+            "color": "black",
+            "dynamicProperties": {
+              "value": "rank"
+            },
+            "css": "font-weight: bold !important; display: flex;justify-content: center; align-items: center;text-align: center;  border:1px solid black; border-radius:5px; background-color: #fff; letter-spacing: -1px"
+          },
+          {
+            "type": "text",
+            "x": 63,
+            "y": 120,
+            "textAlign": "center",
+            "width": 30,
+            "height": 30,
+            "fontSize": 25,
+            "color": "black",
+            "dynamicProperties": {
+              "value": "rank"
+            },
+            "css": "font-weight: bold !important; display: flex;justify-content: center; align-items: center;text-align: center;  border:1px solid black; border-radius:5px; background-color: #fff; letter-spacing: -1px",
+            "rotation": 0
+          }
+        ],
+        "border": 1
+      }
+    ];
+    return deck;
   }
 
   deckTemplate_simple(deck) {
