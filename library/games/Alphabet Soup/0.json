@@ -1,0 +1,3933 @@
+{
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Alphabet Soup",
+      "image": "/assets/-914344625_43565",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/1293/boggle",
+      "year": "1971",
+      "mode": "vs",
+      "time": "10",
+      "link": "",
+      "attribution": "The room design and all game elements are by LawDawg96 are are released into the Public Domain as CC0.<div><br></div><div>The library image was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"black and white cube dice with letters on the sides in a plain white bowl\".&nbsp;</div><div><br></div>",
+      "lastUpdate": 1677730979097,
+      "showName": true,
+      "skill": "",
+      "description": "Race against the timer to find the most words using letters on dice in a grid. Most points wins.",
+      "similarImage": "",
+      "similarName": "Boggle",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Players sit in seats. Press the restart button at the bottom to choose options. Click start button at top to begin. Players type words into the space below their seat and press Enter key. Words form a list below the player's seat that only that player can see. That list can be edited in case of a mistake.<div><br></div><div>When the timer ends, all player lists are displayed. You can click on any player's list to see possible misspellings indicated using the browser's built-in spell checker. A \"Validate\" button will appear to give you the option to automatically remove all duplicates, all words shorter than the value set in the options menu, and alphabetize the lists so it is easier to compare.</div><div><br></div><div>Manually calculate scores and click on the scoreboard to enter the scores.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1-8"
+    }
+  },
+  "base": {
+    "id": "base",
+    "y": 46,
+    "width": 200,
+    "height": 200,
+    "z": 44821,
+    "css": {
+      "border": "1px solid black"
+    },
+    "borderRadius": 10,
+    "movable": false,
+    "x": 700
+  },
+  "row1": {
+    "type": "holder",
+    "id": "row1",
+    "z": 2,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "stackOffsetX": 50,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "width": 300,
+    "height": 50,
+    "fixedParent": true,
+    "parent": "base",
+    "movableInEdit": false,
+    "classes": "transparent",
+    "css": {
+      "border": "transparent !important"
+    }
+  },
+  "row2": {
+    "inheritFrom": {
+      "row1": "*"
+    },
+    "type": "holder",
+    "id": "row2",
+    "x": 0,
+    "y": 50
+  },
+  "row3": {
+    "inheritFrom": {
+      "row1": "*"
+    },
+    "type": "holder",
+    "id": "row3",
+    "x": 0,
+    "y": 100
+  },
+  "dice1": {
+    "type": "dice",
+    "id": "dice1",
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    },
+    "faces": "AACIOT",
+    "group": 1,
+    "resetProperties": {
+      "parent": "holder1",
+      "x": 0,
+      "y": 0,
+      "activeFace": 0
+    },
+    "shape3d": true,
+    "parent": "holder1",
+    "z": 54121,
+    "clickable": false
+  },
+  "dice2": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice2",
+    "x": 0,
+    "y": 0,
+    "faces": "ABILTY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54123,
+    "clickable": false
+  },
+  "dice3": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice3",
+    "x": 0,
+    "y": 0,
+    "faces": "ABJMOQ",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54116,
+    "clickable": false
+  },
+  "dice4": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice4",
+    "x": 0,
+    "y": 0,
+    "faces": "ACDEMP",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54124,
+    "clickable": false
+  },
+  "dice5": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice5",
+    "x": 0,
+    "y": 0,
+    "faces": "ACELRS",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54114,
+    "clickable": false
+  },
+  "dice6": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice6",
+    "x": 0,
+    "y": 0,
+    "faces": "ADENVZ",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54115,
+    "clickable": false
+  },
+  "dice7": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice7",
+    "x": 0,
+    "y": 0,
+    "faces": "AHMORS",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54113,
+    "clickable": false
+  },
+  "dice8": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice8",
+    "x": 0,
+    "y": 0,
+    "faces": "BIFORX",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54122,
+    "clickable": false
+  },
+  "dice9": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice9",
+    "x": 0,
+    "y": 0,
+    "faces": "DENOSW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54125,
+    "clickable": false
+  },
+  "dice10": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice10",
+    "x": 0,
+    "y": 0,
+    "faces": "DKNOTU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54126,
+    "clickable": false
+  },
+  "dice11": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice11",
+    "x": 0,
+    "y": 0,
+    "faces": "EEFHIY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54119,
+    "clickable": false
+  },
+  "dice12": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice12",
+    "x": 0,
+    "y": 0,
+    "faces": "EGKLUY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54127,
+    "clickable": false
+  },
+  "dice13": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice13",
+    "x": 0,
+    "y": 0,
+    "faces": "EGINTV",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54112,
+    "clickable": false
+  },
+  "dice14": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice14",
+    "x": 0,
+    "y": 0,
+    "faces": "EHINPS",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54117,
+    "clickable": false
+  },
+  "dice15": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice15",
+    "x": 0,
+    "y": 0,
+    "faces": "ELPSTU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54120,
+    "clickable": false
+  },
+  "dice16": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice16",
+    "x": 0,
+    "y": 0,
+    "faces": "GILRUW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder1",
+    "z": 54118,
+    "clickable": false
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "y": -100,
+    "z": 5,
+    "width": 50,
+    "height": 50,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "row5": {
+    "inheritFrom": {
+      "row1": "*"
+    },
+    "type": "holder",
+    "id": "row5",
+    "x": 0,
+    "y": 200
+  },
+  "row6": {
+    "inheritFrom": {
+      "row1": "*"
+    },
+    "type": "holder",
+    "id": "row6",
+    "x": 0,
+    "y": 250
+  },
+  "row4": {
+    "inheritFrom": {
+      "row1": "*"
+    },
+    "type": "holder",
+    "id": "row4",
+    "x": 0,
+    "y": 150
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "z": 882,
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting game ... "
+          },
+          {
+            "type": "select",
+            "label": "Choose grid size and version",
+            "value": "${PROPERTY group}",
+            "variable": "group",
+            "options": [
+              {
+                "value": 1,
+                "text": "4x4 Classic"
+              },
+              {
+                "value": 2,
+                "text": "4x4 New"
+              },
+              {
+                "value": 3,
+                "text": "5x5 Big Original"
+              },
+              {
+                "value": 4,
+                "text": "5x5 Big Challenge"
+              },
+              {
+                "value": 5,
+                "text": "5x5 Big Deluxe"
+              },
+              {
+                "value": 6,
+                "text": "5x5 Big 2012"
+              },
+              {
+                "value": 7,
+                "text": "6x6 Super Big"
+              }
+            ]
+          },
+          {
+            "type": "number",
+            "label": "Choose length of timer (in minutes)",
+            "min": 1,
+            "value": "${PROPERTY timerLength}",
+            "variable": "timerLength"
+          },
+          {
+            "type": "number",
+            "label": "Choose minimum allowable word length",
+            "min": 2,
+            "value": "${PROPERTY wordLength}",
+            "variable": "wordLength"
+          },
+          {
+            "type": "checkbox",
+            "label": "Reset scores?",
+            "value": "${PROPERTY scores}",
+            "variable": "scores"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "group",
+        "value": "${group}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "timerLength",
+        "value": "${timerLength}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "wordLength",
+        "value": "${wordLength}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scores",
+        "value": "${scores}"
+      },
+      "var timerLength = ${timerLength} * 60000",
+      {
+        "func": "SET",
+        "collection": [
+          "theTimer"
+        ],
+        "property": "start",
+        "value": "${timerLength}"
+      },
+      {
+        "func": "TIMER",
+        "timer": "theTimer",
+        "mode": "reset"
+      },
+      {
+        "func": "CALL",
+        "routine": "recallRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "resizeRoutine"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY scores}",
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "range": 8,
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "seat${value}"
+                ],
+                "property": "score",
+                "value": []
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "entry${value}"
+                ],
+                "property": "text",
+                "value": ""
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "list${value}"
+                ],
+                "property": "text",
+                "value": ""
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "entry${value}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": "seat${value}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "list${value}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": "seat${value}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "entry${value}"
+                ],
+                "property": "spellCheck",
+                "value": false
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "list${value}"
+                ],
+                "property": "spellCheck",
+                "value": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "dice"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "rollCount",
+        "value": 0
+      }
+    ],
+    "groupChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY group}",
+        "relation": "<=",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rows",
+            "value": 4
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY group}",
+            "relation": "<=",
+            "operand2": 6,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "rows",
+                "value": 5
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "rows",
+                "value": 6
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rows": 4,
+    "group": "1",
+    "classes": "symbols",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "font-size": "45px"
+    },
+    "y": 950,
+    "x": 775,
+    "scores": true,
+    "recallRoutine": [
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4",
+          "holder5",
+          "holder6",
+          "holder7"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "validate"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "duplicates"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dupes"
+        ],
+        "property": "y",
+        "value": -450
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dupes"
+        ],
+        "property": "text",
+        "value": ""
+      }
+    ],
+    "resizeRoutine": [
+      "var newSize = ${PROPERTY rows} * 50",
+      "var newY = ${newSize} + 5",
+      "var newX = ${newSize} / 2",
+      "var newXRoll = ${newX} - 50",
+      "var newXTimer = ${newX} - 27",
+      "var newXBase = 800 - ${newX}",
+      {
+        "func": "SET",
+        "collection": [
+          "base"
+        ],
+        "property": "width",
+        "value": "${newSize}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "base"
+        ],
+        "property": "x",
+        "value": "${newXBase}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "base"
+        ],
+        "property": "height",
+        "value": "${newSize}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "roll"
+        ],
+        "property": "x",
+        "value": "${newXRoll}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "theTimer"
+        ],
+        "property": "x",
+        "value": "${newXTimer}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "timerBar"
+        ],
+        "property": "y",
+        "value": "${newY}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "timerBar"
+        ],
+        "property": "width",
+        "value": "${newSize}"
+      }
+    ],
+    "timerLength": "3",
+    "wordLength": "4"
+  },
+  "roll": {
+    "type": "button",
+    "id": "roll",
+    "y": -45,
+    "z": 879,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Rolling the dice ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to roll the dice and start the timer?"
+          }
+        ],
+        "cancelButtonText": "Cancel. Do NOT roll.",
+        "confirmButtonText": "Yes. Roll."
+      },
+      {
+        "func": "FOREACH",
+        "range": 8,
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "entry${value}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "seat${value}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "list${value}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "seat${value}"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "recallRoutine",
+        "widget": "restart"
+      },
+      "var group = ${PROPERTY group OF restart}",
+      "var rows = ${PROPERTY rows OF restart}",
+      {
+        "func": "FOREACH",
+        "range": "${rows}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder${group}",
+            "to": "row${value}",
+            "count": "${rows}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "row1",
+          "row2",
+          "row3",
+          "row4",
+          "row5",
+          "row6"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "TIMER",
+        "timer": "theTimer",
+        "mode": "reset"
+      },
+      {
+        "func": "TIMER",
+        "timer": "theTimer",
+        "mode": "start"
+      }
+    ],
+    "css": {
+      "font-size": "25px"
+    },
+    "height": 40,
+    "fixedParent": true,
+    "parent": "base",
+    "width": 100,
+    "x": 50,
+    "movableInEdit": false,
+    "text": "Start"
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 50,
+    "y": -100,
+    "z": 5,
+    "width": 50,
+    "height": 50,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "dice17": {
+    "type": "dice",
+    "id": "dice17",
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    },
+    "faces": "AAEEGN",
+    "group": 2,
+    "resetProperties": {
+      "parent": "holder2",
+      "x": 0,
+      "y": 0,
+      "activeFace": 0
+    },
+    "shape3d": true,
+    "parent": "holder2",
+    "z": 54135
+  },
+  "dice18": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice18",
+    "x": 0,
+    "y": 0,
+    "faces": "ABBJOO",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54128,
+    "clickable": true
+  },
+  "dice19": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice19",
+    "x": 0,
+    "y": 0,
+    "faces": "ACHOPS",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54140,
+    "clickable": true
+  },
+  "dice20": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice20",
+    "x": 0,
+    "y": 0,
+    "faces": "AFFKPS",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54129,
+    "clickable": true
+  },
+  "dice21": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice21",
+    "x": 0,
+    "y": 0,
+    "faces": "AOOTTW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54139,
+    "clickable": true
+  },
+  "dice22": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice22",
+    "x": 0,
+    "y": 0,
+    "faces": "CIMOTU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54134,
+    "clickable": true
+  },
+  "dice23": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice23",
+    "x": 0,
+    "y": 0,
+    "faces": "DEILRX",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54141,
+    "clickable": true
+  },
+  "dice24": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice24",
+    "x": 0,
+    "y": 0,
+    "faces": "DELRVY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54136,
+    "clickable": true
+  },
+  "dice25": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice25",
+    "x": 0,
+    "y": 0,
+    "faces": "DISTTY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54143,
+    "clickable": true
+  },
+  "dice26": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice26",
+    "x": 0,
+    "y": 0,
+    "faces": "EEGHNW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54142,
+    "clickable": true
+  },
+  "dice27": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice27",
+    "x": 0,
+    "y": 0,
+    "faces": "EEINSU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54133,
+    "clickable": true
+  },
+  "dice28": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice28",
+    "x": 0,
+    "y": 0,
+    "faces": "EHRTVW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54130,
+    "clickable": true
+  },
+  "dice29": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice29",
+    "x": 0,
+    "y": 0,
+    "faces": "EIOSST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54138,
+    "clickable": true
+  },
+  "dice30": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice30",
+    "x": 0,
+    "y": 0,
+    "faces": "ELRTTY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54132,
+    "clickable": true
+  },
+  "dice31": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice31",
+    "x": 0,
+    "y": 0,
+    "faces": "HIMNUQ",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54137,
+    "clickable": true
+  },
+  "dice32": {
+    "inheritFrom": {
+      "dice17": "*"
+    },
+    "type": "dice",
+    "id": "dice32",
+    "x": 0,
+    "y": 0,
+    "faces": "HLNNRZ",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder2",
+    "z": 54131,
+    "clickable": true
+  },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 100,
+    "y": -100,
+    "z": 5,
+    "width": 50,
+    "height": 50,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "dice33": {
+    "type": "dice",
+    "id": "dice33",
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    },
+    "faces": "AAAFRS",
+    "group": 3,
+    "resetProperties": {
+      "parent": "holder3",
+      "x": 0,
+      "y": 0,
+      "activeFace": 0
+    },
+    "shape3d": true,
+    "parent": "holder3",
+    "z": 54162
+  },
+  "dice34": {
+    "inheritFrom": {
+      "dice33": "*"
+    },
+    "type": "dice",
+    "id": "dice34",
+    "x": 0,
+    "y": 0,
+    "parent": "holder3",
+    "faces": "AAEEEE",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54146
+  },
+  "dice35": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice35",
+    "x": 0,
+    "y": 0,
+    "faces": "AAFIRS",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54154
+  },
+  "dice36": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice36",
+    "x": 0,
+    "y": 0,
+    "faces": "ADENNN",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54152
+  },
+  "dice37": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice37",
+    "x": 0,
+    "y": 0,
+    "faces": "AEEEEM",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54157
+  },
+  "dice38": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice38",
+    "x": 0,
+    "y": 0,
+    "faces": "AEEGMU",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54164
+  },
+  "dice39": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice39",
+    "x": 0,
+    "y": 0,
+    "faces": "AEGMNN",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54165
+  },
+  "dice40": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice40",
+    "x": 0,
+    "y": 0,
+    "faces": "AFIRSY",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54150
+  },
+  "dice41": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice41",
+    "x": 0,
+    "y": 0,
+    "faces": "BJKQXZ",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54148
+  },
+  "dice42": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice42",
+    "x": 0,
+    "y": 0,
+    "faces": "CCENST",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54159
+  },
+  "dice43": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice43",
+    "x": 0,
+    "y": 0,
+    "faces": "CEIILT",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54151
+  },
+  "dice44": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice44",
+    "x": 0,
+    "y": 0,
+    "faces": "CEIPST",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54167
+  },
+  "dice45": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice45",
+    "x": 0,
+    "y": 0,
+    "faces": "DDHNOT",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54144
+  },
+  "dice46": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice46",
+    "x": 0,
+    "y": 0,
+    "faces": "DHHLOR",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54166
+  },
+  "dice47": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice47",
+    "x": 0,
+    "y": 0,
+    "faces": "DHHLOR",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54160
+  },
+  "dice48": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice48",
+    "x": 0,
+    "y": 0,
+    "faces": "DHLNOR",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54145
+  },
+  "dice49": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice49",
+    "x": 0,
+    "y": 0,
+    "faces": "EIIITT",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54168
+  },
+  "dice50": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice50",
+    "x": 0,
+    "y": 0,
+    "faces": "CEILPT",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54147
+  },
+  "dice51": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice51",
+    "x": 0,
+    "y": 0,
+    "faces": "EMOTTT",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54158
+  },
+  "dice52": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice52",
+    "x": 0,
+    "y": 0,
+    "faces": "ENSSSU",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54161
+  },
+  "dice53": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice53",
+    "x": 0,
+    "y": 0,
+    "faces": "FIPRSY",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54155
+  },
+  "dice54": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice54",
+    "x": 0,
+    "y": 0,
+    "faces": "GORRVW",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54163
+  },
+  "dice55": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice55",
+    "x": 0,
+    "y": 0,
+    "faces": "IPRRRY",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54153
+  },
+  "dice56": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice56",
+    "x": 0,
+    "y": 0,
+    "faces": "NOOTUW",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54149
+  },
+  "dice57": {
+    "inheritFrom": {
+      "dice34": "*"
+    },
+    "type": "dice",
+    "id": "dice57",
+    "x": 0,
+    "y": 0,
+    "faces": "OOOTTU",
+    "parent": "holder3",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54156
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 150,
+    "y": -100,
+    "z": 5,
+    "width": 50,
+    "height": 50,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "dice58": {
+    "type": "dice",
+    "id": "dice58",
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    },
+    "faces": "AAAFRS",
+    "group": 4,
+    "resetProperties": {
+      "parent": "holder4",
+      "x": 0,
+      "y": 0,
+      "activeFace": 0
+    },
+    "shape3d": true,
+    "parent": "holder4",
+    "z": 54186
+  },
+  "dice59": {
+    "inheritFrom": {
+      "dice58": "*"
+    },
+    "type": "dice",
+    "id": "dice59",
+    "x": 0,
+    "y": 0,
+    "faces": "AAEEEE",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54174
+  },
+  "dice60": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice60",
+    "x": 0,
+    "y": 0,
+    "faces": "AAFIRS",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54179
+  },
+  "dice61": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice61",
+    "x": 0,
+    "y": 0,
+    "faces": "ADENNN",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54173
+  },
+  "dice62": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice62",
+    "x": 0,
+    "y": 0,
+    "faces": "AEEEEM",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54172
+  },
+  "dice63": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice63",
+    "x": 0,
+    "y": 0,
+    "faces": "AEEGMU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54192
+  },
+  "dice64": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice64",
+    "x": 0,
+    "y": 0,
+    "faces": "AEGMNN",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54176
+  },
+  "dice65": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice65",
+    "x": 0,
+    "y": 0,
+    "faces": "AFIRSY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54178
+  },
+  "dice66": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice66",
+    "x": 0,
+    "y": 0,
+    "faces": "BJKQXZ",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54183
+  },
+  "dice67": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice67",
+    "x": 0,
+    "y": 0,
+    "faces": "CCENST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54182
+  },
+  "dice68": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice68",
+    "x": 0,
+    "y": 0,
+    "faces": "CEIILT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54170
+  },
+  "dice69": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice69",
+    "x": 0,
+    "y": 0,
+    "faces": "CEIPST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54189
+  },
+  "dice70": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice70",
+    "x": 0,
+    "y": 0,
+    "faces": "DDHNOT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54193
+  },
+  "dice71": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice71",
+    "x": 0,
+    "y": 0,
+    "faces": "DHHLOR",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54171
+  },
+  "dice72": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice72",
+    "x": 0,
+    "y": 0,
+    "faces": "IKLMQU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54185
+  },
+  "dice73": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice73",
+    "x": 0,
+    "y": 0,
+    "faces": "DHLNOR",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54191
+  },
+  "dice74": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice74",
+    "x": 0,
+    "y": 0,
+    "faces": "EIIITT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54180
+  },
+  "dice75": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice75",
+    "x": 0,
+    "y": 0,
+    "faces": "CEILPT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54181
+  },
+  "dice76": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice76",
+    "x": 0,
+    "y": 0,
+    "faces": "EMOTTT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54190
+  },
+  "dice77": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice77",
+    "x": 0,
+    "y": 0,
+    "faces": "ENSSSU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54184
+  },
+  "dice78": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice78",
+    "x": 0,
+    "y": 0,
+    "faces": "FIPRSY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54187
+  },
+  "dice79": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice79",
+    "x": 0,
+    "y": 0,
+    "faces": "GORRVW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54169
+  },
+  "dice80": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice80",
+    "x": 0,
+    "y": 0,
+    "faces": "IPRRRY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54175
+  },
+  "dice81": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice81",
+    "x": 0,
+    "y": 0,
+    "faces": "NOOTUW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54177
+  },
+  "dice82": {
+    "inheritFrom": {
+      "dice59": "*"
+    },
+    "type": "dice",
+    "id": "dice82",
+    "x": 0,
+    "y": 0,
+    "faces": "OOOTTU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder4",
+    "z": 54188
+  },
+  "holder5": {
+    "type": "holder",
+    "id": "holder5",
+    "x": 200,
+    "y": -100,
+    "z": 5,
+    "width": 50,
+    "height": 50,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "dice83": {
+    "type": "dice",
+    "id": "dice83",
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    },
+    "faces": "AAAFRS",
+    "group": 5,
+    "resetProperties": {
+      "parent": "holder5",
+      "x": 0,
+      "y": 0,
+      "activeFace": 0
+    },
+    "shape3d": true,
+    "parent": "holder5",
+    "z": 54206
+  },
+  "dice84": {
+    "inheritFrom": {
+      "dice83": "*"
+    },
+    "type": "dice",
+    "id": "dice84",
+    "x": 0,
+    "y": 0,
+    "faces": "AAEEEE",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54194
+  },
+  "dice85": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice85",
+    "x": 0,
+    "y": 0,
+    "faces": "AAFIRS",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54213
+  },
+  "dice86": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice86",
+    "x": 0,
+    "y": 0,
+    "faces": "ADENNN",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54212
+  },
+  "dice87": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice87",
+    "x": 0,
+    "y": 0,
+    "faces": "AEEEEM",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54217
+  },
+  "dice88": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice88",
+    "x": 0,
+    "y": 0,
+    "faces": "AEEGMU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54210
+  },
+  "dice89": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice89",
+    "x": 0,
+    "y": 0,
+    "faces": "AEGMNN",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54218
+  },
+  "dice90": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice90",
+    "x": 0,
+    "y": 0,
+    "faces": "AFIRSY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54197
+  },
+  "dice91": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice91",
+    "x": 0,
+    "y": 0,
+    "faces": "BJKQXZ",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54205
+  },
+  "dice92": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice92",
+    "x": 0,
+    "y": 0,
+    "faces": "CCNSTW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54200
+  },
+  "dice93": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice93",
+    "x": 0,
+    "y": 0,
+    "faces": "CEIILT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54198
+  },
+  "dice94": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice94",
+    "x": 0,
+    "y": 0,
+    "faces": "CEIPST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54215
+  },
+  "dice95": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice95",
+    "x": 0,
+    "y": 0,
+    "faces": "DDLNOR",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54204
+  },
+  "dice96": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice96",
+    "x": 0,
+    "y": 0,
+    "faces": "DHHLOR",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54199
+  },
+  "dice97": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice97",
+    "x": 0,
+    "y": 0,
+    "faces": "DHHNOT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54207
+  },
+  "dice98": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice98",
+    "x": 0,
+    "y": 0,
+    "faces": "DHLNOR",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54203
+  },
+  "dice99": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice99",
+    "x": 0,
+    "y": 0,
+    "faces": "EIIITT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54209
+  },
+  "dice100": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice100",
+    "x": 0,
+    "y": 0,
+    "faces": "CEILPT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54201
+  },
+  "dice101": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice101",
+    "x": 0,
+    "y": 0,
+    "faces": "EMOTTT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54211
+  },
+  "dice102": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice102",
+    "x": 0,
+    "y": 0,
+    "faces": "ENSSSU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54196
+  },
+  "dice103": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice103",
+    "x": 0,
+    "y": 0,
+    "faces": "FIPRSY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54214
+  },
+  "dice104": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice104",
+    "x": 0,
+    "y": 0,
+    "faces": "GORRVW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54195
+  },
+  "dice105": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice105",
+    "x": 0,
+    "y": 0,
+    "faces": "IPRRRY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54208
+  },
+  "dice106": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice106",
+    "x": 0,
+    "y": 0,
+    "faces": "NOOTUW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54202
+  },
+  "dice107": {
+    "inheritFrom": {
+      "dice84": "*"
+    },
+    "type": "dice",
+    "id": "dice107",
+    "x": 0,
+    "y": 0,
+    "faces": "OOOTTU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder5",
+    "z": 54216
+  },
+  "holder6": {
+    "type": "holder",
+    "id": "holder6",
+    "x": 250,
+    "y": -100,
+    "z": 5,
+    "width": 50,
+    "height": 50,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "dice108": {
+    "type": "dice",
+    "id": "dice108",
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    },
+    "faces": "AAAFRS",
+    "group": 6,
+    "resetProperties": {
+      "parent": "holder6",
+      "x": 0,
+      "y": 0,
+      "activeFace": 0
+    },
+    "shape3d": true,
+    "z": 54233,
+    "parent": "holder6"
+  },
+  "dice109": {
+    "inheritFrom": {
+      "dice108": "*"
+    },
+    "type": "dice",
+    "id": "dice109",
+    "x": 0,
+    "y": 0,
+    "faces": "AAEEEE",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54243,
+    "parent": "holder6"
+  },
+  "dice110": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice110",
+    "x": 0,
+    "y": 0,
+    "faces": "AAFIRS",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54241,
+    "parent": "holder6"
+  },
+  "dice111": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice111",
+    "x": 0,
+    "y": 0,
+    "faces": "ADENNN",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54237,
+    "parent": "holder6"
+  },
+  "dice112": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice112",
+    "x": 0,
+    "y": 0,
+    "faces": "AEEEEM",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54238,
+    "parent": "holder6"
+  },
+  "dice113": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice113",
+    "x": 0,
+    "y": 0,
+    "faces": "AEEGMU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54227,
+    "parent": "holder6"
+  },
+  "dice114": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice114",
+    "x": 0,
+    "y": 0,
+    "faces": "AEGMNN",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54223,
+    "parent": "holder6"
+  },
+  "dice115": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice115",
+    "x": 0,
+    "y": 0,
+    "faces": "AFIRSY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54242,
+    "parent": "holder6"
+  },
+  "dice116": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice116",
+    "x": 0,
+    "y": 0,
+    "faces": "BBJKXZ",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54228,
+    "parent": "holder6"
+  },
+  "dice117": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice117",
+    "x": 0,
+    "y": 0,
+    "faces": "CCENST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54229,
+    "parent": "holder6"
+  },
+  "dice118": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice118",
+    "x": 0,
+    "y": 0,
+    "faces": "EIILST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54232,
+    "parent": "holder6"
+  },
+  "dice119": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice119",
+    "x": 0,
+    "y": 0,
+    "faces": "CEIPST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54225,
+    "parent": "holder6"
+  },
+  "dice120": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice120",
+    "x": 0,
+    "y": 0,
+    "faces": "DDHNOT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54220,
+    "parent": "holder6"
+  },
+  "dice121": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice121",
+    "x": 0,
+    "y": 0,
+    "faces": "DHHLOR",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54230,
+    "parent": "holder6"
+  },
+  "dice122": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice122",
+    "x": 0,
+    "y": 0,
+    "faces": "DHHNOW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54224,
+    "parent": "holder6"
+  },
+  "dice123": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice123",
+    "x": 0,
+    "y": 0,
+    "faces": "DHLNOR",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54222,
+    "parent": "holder6"
+  },
+  "dice124": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice124",
+    "x": 0,
+    "y": 0,
+    "faces": "EIIITT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54234,
+    "parent": "holder6"
+  },
+  "dice125": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice125",
+    "x": 0,
+    "y": 0,
+    "faces": "EILPST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54226,
+    "parent": "holder6"
+  },
+  "dice126": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice126",
+    "x": 0,
+    "y": 0,
+    "faces": "EMOTTT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54236,
+    "parent": "holder6"
+  },
+  "dice127": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice127",
+    "x": 0,
+    "y": 0,
+    "faces": "ENSSSU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54235,
+    "parent": "holder6"
+  },
+  "dice128": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice128",
+    "x": 0,
+    "y": 0,
+    "activeFace": 0,
+    "rollCount": 0,
+    "faces": [
+      "Qu",
+      "In",
+      "Th",
+      "Er",
+      "He",
+      "An"
+    ],
+    "faceCSS": {
+      "font-size": "35px"
+    },
+    "z": 54221,
+    "parent": "holder6"
+  },
+  "dice129": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice129",
+    "x": 0,
+    "y": 0,
+    "faces": "GORRVW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54239,
+    "parent": "holder6"
+  },
+  "dice130": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice130",
+    "x": 0,
+    "y": 0,
+    "faces": "IPRSYY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54231,
+    "parent": "holder6"
+  },
+  "dice131": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice131",
+    "x": 0,
+    "y": 0,
+    "faces": "NOOTUW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54219,
+    "parent": "holder6"
+  },
+  "dice132": {
+    "inheritFrom": {
+      "dice109": "*"
+    },
+    "type": "dice",
+    "id": "dice132",
+    "x": 0,
+    "y": 0,
+    "faces": "OOOTTU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "z": 54240,
+    "parent": "holder6"
+  },
+  "holder7": {
+    "type": "holder",
+    "id": "holder7",
+    "x": 300,
+    "y": -100,
+    "z": 5,
+    "width": 50,
+    "height": 50,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "dice133": {
+    "type": "dice",
+    "id": "dice133",
+    "animatePropertyChange": [
+      {
+        "property": "rollCount",
+        "className": "rolling",
+        "duration": 500
+      }
+    ],
+    "css": {
+      "default": {
+        "overflow": "clip"
+      },
+      ">.diceFaces>.diceFace": {
+        "border-radius": "${PROPERTY borderRadius}"
+      },
+      ".rolling": {
+        "overflow": "visible"
+      }
+    },
+    "faces": "AAAFRS",
+    "group": 7,
+    "resetProperties": {
+      "parent": "holder7",
+      "x": 0,
+      "y": 0,
+      "activeFace": 0
+    },
+    "shape3d": true,
+    "parent": "holder7",
+    "z": 54270
+  },
+  "dice134": {
+    "inheritFrom": {
+      "dice133": "*"
+    },
+    "type": "dice",
+    "id": "dice134",
+    "x": 0,
+    "y": 0,
+    "faces": "AAEEEE",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54250
+  },
+  "dice135": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice135",
+    "x": 0,
+    "y": 0,
+    "faces": "AAEEOO",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54266
+  },
+  "dice136": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice136",
+    "x": 0,
+    "y": 0,
+    "faces": "AAFIRS",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54268
+  },
+  "dice137": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice137",
+    "x": 0,
+    "y": 0,
+    "faces": "ABDEIO",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54251
+  },
+  "dice138": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice138",
+    "x": 0,
+    "y": 0,
+    "faces": "ADENNN",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54271
+  },
+  "dice139": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice139",
+    "x": 0,
+    "y": 0,
+    "faces": "AEEEEM",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54278
+  },
+  "dice140": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice140",
+    "x": 0,
+    "y": 0,
+    "faces": "AEEGMU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54267
+  },
+  "dice141": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice141",
+    "x": 0,
+    "y": 0,
+    "faces": "AEGMNN",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54258
+  },
+  "dice142": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice142",
+    "x": 0,
+    "y": 0,
+    "faces": "AEILMN",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54259
+  },
+  "dice143": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice143",
+    "x": 0,
+    "y": 0,
+    "faces": "AEINOU",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54262
+  },
+  "dice144": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice144",
+    "x": 0,
+    "y": 0,
+    "faces": "AFIRSY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54245
+  },
+  "dice145": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice145",
+    "x": 0,
+    "y": 0,
+    "faces": [
+      "Qu",
+      "In",
+      "Th",
+      "Er",
+      "He",
+      "An"
+    ],
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54246,
+    "faceCSS": {
+      "font-size": "35px"
+    }
+  },
+  "dice146": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice146",
+    "x": 0,
+    "y": 0,
+    "faces": "BBJKXZ",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54255
+  },
+  "dice147": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice147",
+    "x": 0,
+    "y": 0,
+    "faces": "CCENST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54264
+  },
+  "dice148": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice148",
+    "x": 0,
+    "y": 0,
+    "faces": "CDDLNN",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54274
+  },
+  "dice149": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice149",
+    "x": 0,
+    "y": 0,
+    "faces": "CEIITT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54260
+  },
+  "dice150": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice150",
+    "x": 0,
+    "y": 0,
+    "faces": "CEIPST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54247
+  },
+  "dice151": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice151",
+    "x": 0,
+    "y": 0,
+    "faces": "CFGNUY",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54269
+  },
+  "dice152": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice152",
+    "x": 0,
+    "y": 0,
+    "faces": "DDHNOT",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54253
+  },
+  "dice153": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice153",
+    "x": 0,
+    "y": 0,
+    "activeFace": 0,
+    "rollCount": 0,
+    "faces": "DHHLOR",
+    "parent": "holder7",
+    "z": 54257
+  },
+  "dice154": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice154",
+    "x": 0,
+    "y": 0,
+    "faces": "DHHNOW",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54272
+  },
+  "dice155": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice155",
+    "x": 0,
+    "y": 0,
+    "faces": "DHLNOR",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54279
+  },
+  "dice156": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice156",
+    "x": 0,
+    "y": 0,
+    "faces": "EHILRS",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54248
+  },
+  "dice157": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice157",
+    "x": 0,
+    "y": 0,
+    "faces": "EIILST",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "z": 54265
+  },
+  "dice158": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice158",
+    "x": 0,
+    "y": 0,
+    "faces": "EILPST",
+    "parent": "holder7",
+    "z": 54273,
+    "activeFace": 0,
+    "rollCount": 0
+  },
+  "dice159": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice159",
+    "faces": "EIO___",
+    "activeFace": 0,
+    "rollCount": 0,
+    "parent": "holder7",
+    "x": 0,
+    "y": 0,
+    "z": 54244
+  },
+  "dice160": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice160",
+    "x": 0,
+    "y": 0,
+    "faces": "EMTTTO",
+    "parent": "holder7",
+    "z": 54254,
+    "activeFace": 0,
+    "rollCount": 0
+  },
+  "dice161": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice161",
+    "x": 0,
+    "y": 0,
+    "faces": "ENSSSU",
+    "parent": "holder7",
+    "z": 54256,
+    "activeFace": 0,
+    "rollCount": 0
+  },
+  "dice162": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice162",
+    "x": 0,
+    "y": 0,
+    "faces": "GORRVW",
+    "parent": "holder7",
+    "z": 54276,
+    "activeFace": 0,
+    "rollCount": 0
+  },
+  "dice163": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice163",
+    "x": 0,
+    "y": 0,
+    "faces": "HIRSTV",
+    "parent": "holder7",
+    "z": 54252,
+    "activeFace": 0,
+    "rollCount": 0
+  },
+  "dice164": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice164",
+    "x": 0,
+    "y": 0,
+    "faces": "HOPRST",
+    "parent": "holder7",
+    "z": 54275,
+    "activeFace": 0,
+    "rollCount": 0
+  },
+  "dice165": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice165",
+    "x": 0,
+    "y": 0,
+    "faces": "IPRSYY",
+    "parent": "holder7",
+    "z": 54277,
+    "activeFace": 0,
+    "rollCount": 0
+  },
+  "dice166": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice166",
+    "x": 0,
+    "y": 0,
+    "faces": "JKQWXZ",
+    "parent": "holder7",
+    "z": 54249,
+    "activeFace": 0,
+    "rollCount": 0
+  },
+  "dice167": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice167",
+    "x": 0,
+    "y": 0,
+    "faces": "NOOTUW",
+    "parent": "holder7",
+    "z": 54263,
+    "activeFace": 0,
+    "rollCount": 0
+  },
+  "dice168": {
+    "inheritFrom": {
+      "dice134": "*"
+    },
+    "type": "dice",
+    "id": "dice168",
+    "x": 0,
+    "y": 0,
+    "faces": "OOOTTU",
+    "parent": "holder7",
+    "z": 54261,
+    "activeFace": 0,
+    "rollCount": 0
+  },
+  "timerBar": {
+    "id": "timerBar",
+    "y": 205,
+    "width": 200,
+    "height": 25,
+    "z": 23185,
+    "movable": false,
+    "fixedParent": true,
+    "parent": "base",
+    "borderRadius": 10,
+    "css": "border: 2px solid black; background-image: linear-gradient(to right, red, 100%, grey -100%)",
+    "x": -2,
+    "movableInEdit": false
+  },
+  "theTimer": {
+    "type": "timer",
+    "id": "theTimer",
+    "parent": "timerBar",
+    "x": 73,
+    "y": -3,
+    "z": 876,
+    "movableInEdit": false,
+    "countdown": true,
+    "css": "color:white",
+    "precision": 100,
+    "start": 180000,
+    "millisecondsChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "timerBar"
+      },
+      "var bar = ${PROPERTY milliseconds} / ${PROPERTY start}",
+      "var bar = ${bar} * 100",
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "border: 2px solid black; background-image: linear-gradient(to right, red, ${bar}%, grey -100%)"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "relation": "<=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "TIMER",
+            "timer": "theTimer",
+            "mode": "pause"
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "finish"
+            ]
+          }
+        ]
+      }
+    ],
+    "width": 50,
+    "milliseconds": 180000
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "y": 5,
+    "z": 885,
+    "score": [],
+    "movableInEdit": false
+  },
+  "scoreboard": {
+    "type": "scoreboard",
+    "id": "scoreboard",
+    "x": 649,
+    "y": 386,
+    "height": 540,
+    "z": 884,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-size": "20px"
+      },
+      ".scoreboard": {
+        "background": "transparent"
+      },
+      ".scoreboard div": {
+        "border": "none"
+      },
+      ".scoreboard tbody td": {
+        "border-bottom": "1px solid gray"
+      },
+      " tr": {
+        "height": "60px",
+        "background": "white"
+      }
+    },
+    "playersInColumns": false
+  },
+  "entry1": {
+    "type": "label",
+    "id": "entry1",
+    "x": 10,
+    "y": 55,
+    "z": 3,
+    "editable": true,
+    "css": {
+      "font-size": "20px",
+      "background": "white",
+      "border": "1px solid black",
+      "color": "black"
+    },
+    "height": 25,
+    "borderRadius": 3,
+    "width": 130,
+    "fixedParent": true,
+    "parent": "seat1",
+    "movableInEdit": false,
+    "changeRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "thisText"
+      },
+      "var isCR = ${thisText} includes '\\u000a'",
+      {
+        "func": "IF",
+        "condition": "${isCR}",
+        "thenRoutine": [
+          "var thisText = ${thisText} toLocaleUpperCase",
+          {
+            "func": "GET",
+            "collection": [
+              "list${PROPERTY PID}"
+            ],
+            "property": "text",
+            "variable": "listText"
+          },
+          "var listText = ${thisText} concat ${listText}",
+          {
+            "func": "SET",
+            "collection": [
+              "list${PROPERTY PID}"
+            ],
+            "property": "text",
+            "value": "${listText}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "PID": 1,
+    "onlyVisibleForSeat": "seat1"
+  },
+  "list1": {
+    "type": "label",
+    "id": "list1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": 10,
+    "y": 100,
+    "width": 130,
+    "height": 860,
+    "z": 34790,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "20px",
+      "text-align": "left",
+      "color": "black"
+    },
+    "editable": true,
+    "onlyVisibleForSeat": "seat1"
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 160,
+    "score": [],
+    "z": 885,
+    "movableInEdit": false,
+    "y": 5
+  },
+  "entry2": {
+    "inheritFrom": {
+      "entry1": "*"
+    },
+    "type": "label",
+    "id": "entry2",
+    "parent": "seat2",
+    "text": "",
+    "PID": 2,
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat2"
+  },
+  "list2": {
+    "inheritFrom": {
+      "list1": "*"
+    },
+    "type": "label",
+    "id": "list2",
+    "parent": "seat2",
+    "text": "",
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat2"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "x": 320,
+    "score": [],
+    "z": 885,
+    "movableInEdit": false,
+    "y": 5
+  },
+  "entry3": {
+    "inheritFrom": {
+      "entry1": "*"
+    },
+    "type": "label",
+    "id": "entry3",
+    "parent": "seat3",
+    "text": "",
+    "PID": 3,
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat3"
+  },
+  "list3": {
+    "inheritFrom": {
+      "list1": "*"
+    },
+    "type": "label",
+    "id": "list3",
+    "parent": "seat3",
+    "text": "",
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat3"
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": 480,
+    "score": [],
+    "z": 885,
+    "movableInEdit": false,
+    "y": 5
+  },
+  "entry4": {
+    "inheritFrom": {
+      "entry1": "*"
+    },
+    "type": "label",
+    "id": "entry4",
+    "parent": "seat4",
+    "text": "",
+    "PID": 4,
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat4"
+  },
+  "list4": {
+    "inheritFrom": {
+      "list1": "*"
+    },
+    "type": "label",
+    "id": "list4",
+    "parent": "seat4",
+    "text": "",
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat4"
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "index": 5,
+    "x": 955,
+    "score": [],
+    "z": 885,
+    "movableInEdit": false,
+    "y": 5
+  },
+  "entry5": {
+    "inheritFrom": {
+      "entry1": "*"
+    },
+    "type": "label",
+    "id": "entry5",
+    "parent": "seat5",
+    "text": "",
+    "PID": 5,
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat5"
+  },
+  "list5": {
+    "inheritFrom": {
+      "list1": "*"
+    },
+    "type": "label",
+    "id": "list5",
+    "parent": "seat5",
+    "text": "",
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat5"
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "index": 6,
+    "x": 1115,
+    "score": [],
+    "z": 885,
+    "movableInEdit": false,
+    "y": 5
+  },
+  "entry6": {
+    "inheritFrom": {
+      "entry1": "*"
+    },
+    "type": "label",
+    "id": "entry6",
+    "parent": "seat6",
+    "text": "",
+    "PID": 6,
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat6"
+  },
+  "list6": {
+    "inheritFrom": {
+      "list1": "*"
+    },
+    "type": "label",
+    "id": "list6",
+    "parent": "seat6",
+    "text": "",
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat6"
+  },
+  "seat7": {
+    "type": "seat",
+    "id": "seat7",
+    "index": 7,
+    "x": 1275,
+    "score": [],
+    "z": 885,
+    "movableInEdit": false,
+    "y": 5
+  },
+  "entry7": {
+    "inheritFrom": {
+      "entry1": "*"
+    },
+    "type": "label",
+    "id": "entry7",
+    "parent": "seat7",
+    "text": "",
+    "PID": 7,
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat7"
+  },
+  "list7": {
+    "inheritFrom": {
+      "list1": "*"
+    },
+    "type": "label",
+    "id": "list7",
+    "parent": "seat7",
+    "text": "",
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat7"
+  },
+  "seat8": {
+    "type": "seat",
+    "id": "seat8",
+    "index": 8,
+    "x": 1435,
+    "score": [],
+    "z": 885,
+    "movableInEdit": false,
+    "y": 5
+  },
+  "entry8": {
+    "inheritFrom": {
+      "entry1": "*"
+    },
+    "type": "label",
+    "id": "entry8",
+    "parent": "seat8",
+    "text": "",
+    "PID": 8,
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat8"
+  },
+  "list8": {
+    "inheritFrom": {
+      "list1": "*"
+    },
+    "type": "label",
+    "id": "list8",
+    "parent": "seat8",
+    "text": "",
+    "spellCheck": false,
+    "onlyVisibleForSeat": "seat8"
+  },
+  "finish": {
+    "type": "button",
+    "id": "finish",
+    "x": 760,
+    "y": 1050,
+    "z": 890,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "validate"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "FOREACH",
+        "range": 8,
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "entry${value}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "list${value}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "entry${value}"
+            ],
+            "property": "spellCheck",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "list${value}"
+            ],
+            "property": "spellCheck",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "text": "Finish"
+  },
+  "validate": {
+    "type": "button",
+    "id": "validate",
+    "x": 650,
+    "y": 960,
+    "height": 40,
+    "z": 914,
+    "movableInEdit": false,
+    "text": "Validate",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Cleaning up word lists ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Press OK to take the following actions on all word lists: remove all numerals, remove words shorter than the pre-set minimum length, remove words duplicated on any list, and rearrange the lists into alphabetical order. Duplicate words that are removed can be displayed separately using another button."
+          }
+        ]
+      },
+      "var completeArray = []",
+      {
+        "func": "FOREACH",
+        "range": 8,
+        "loopRoutine": [
+          "//Do this loop for all 8 players, but only if there is text is in the list.",
+          "var listID = 'list' + ${value}",
+          "var PID = ${value}",
+          "var listArray = []",
+          "var listArray2 = []",
+          "var noDup = []",
+          "var text = ${PROPERTY text OF $listID}",
+          {
+            "func": "FOREACH",
+            "range": [
+              0,
+              9
+            ],
+            "loopRoutine": [
+              "//Remove numbers to avoid conflicts with separator",
+              "var text = ${text} replaceAll ${value} ''"
+            ]
+          },
+          "var listArray = ${text} split '\\u000a' //Convert text string to array",
+          "var listArray2 = []",
+          {
+            "func": "FOREACH",
+            "in": "${listArray}",
+            "loopRoutine": [
+              "//Build new array to avoid shallow copy problems",
+              "var listArray2 = push ${value}"
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "in": "${listArray}",
+            "loopRoutine": [
+              "//Remove words less than allowable length",
+              "var wordLen = length ${value}",
+              {
+                "func": "IF",
+                "operand1": "${wordLen}",
+                "relation": "<",
+                "operand2": "${PROPERTY wordLength OF restart}",
+                "thenRoutine": [
+                  "var position = indexOf ${listArray2} ${value}",
+                  "var listArray2 = remove ${position}"
+                ]
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "in": "${listArray2}",
+            "loopRoutine": [
+              "//Remove duplicate values in this list",
+              "var firstIndex = ${listArray2} indexOf ${value}",
+              {
+                "func": "IF",
+                "operand1": "${key}",
+                "relation": "==",
+                "operand2": "${firstIndex}",
+                "thenRoutine": [
+                  "var noDup = push ${value}"
+                ]
+              }
+            ]
+          },
+          "var noDup = sort ${noDup} // Arrange alphabetically",
+          "var noDup = push ${PID} // Add PID to end for separator",
+          "var completeArray = ${completeArray} concatArray ${noDup}"
+        ]
+      },
+      "var noDupComplete = []",
+      "var dupList = []",
+      {
+        "func": "FOREACH",
+        "in": "${completeArray}",
+        "loopRoutine": [
+          "//Remove duplicate values across all lists",
+          "var firstIndex = ${completeArray} indexOf ${value}",
+          {
+            "func": "IF",
+            "operand1": "${key}",
+            "relation": "==",
+            "operand2": "${firstIndex}",
+            "thenRoutine": [
+              "var noDupComplete = push ${value}"
+            ],
+            "elseRoutine": [
+              "var dupSpace = ${value} + ' '",
+              "var dupList = push ${dupSpace}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": "${dupList}",
+        "loopRoutine": [
+          "//Compare the duplicate list to the array a final time.",
+          "var position = ${noDupComplete} indexOf ${value}",
+          {
+            "func": "IF",
+            "operand1": "${position}",
+            "relation": ">=",
+            "operand2": 0,
+            "thenRoutine": [
+              "var noDupComplete = remove ${position}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": 8,
+        "loopRoutine": [
+          "var thisIndex = ${noDupComplete} indexOf ${value}",
+          "var tempArray = ${noDupComplete} slice 0 ${thisIndex}",
+          "var nextIndex = ${thisIndex} + 1",
+          "var noDupComplete = remove 0 ${nextIndex}",
+          "var listString = ''",
+          "var listString = ${tempArray} join '\\u000a' //Convert array back to string text",
+          {
+            "func": "SET",
+            "collection": [
+              "list${value}"
+            ],
+            "property": "text",
+            "value": "${listString}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "duplicates"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dupes"
+        ],
+        "property": "text",
+        "value": "${dupList}"
+      }
+    ],
+    "scale": 0
+  },
+  "dupes": {
+    "id": "dupes",
+    "x": 648,
+    "y": -450,
+    "z": 46751,
+    "css": {
+      "background": "black",
+      "color": "white",
+      "padding": "2px",
+      "border": "1px solid white"
+    },
+    "width": 298,
+    "height": 298,
+    "borderRadius": 8,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "duplicates": {
+    "type": "button",
+    "id": "duplicates",
+    "x": 870,
+    "y": 960,
+    "height": 40,
+    "z": 913,
+    "movableInEdit": false,
+    "text": "Duplicates",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY y OF dupes}",
+        "operand2": -450,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "dupes"
+            ],
+            "property": "y",
+            "value": 45
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "dupes"
+            ],
+            "property": "y",
+            "value": -450
+          }
+        ]
+      }
+    ],
+    "scale": 0
+  }
+}

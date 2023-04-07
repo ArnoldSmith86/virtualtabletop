@@ -1,0 +1,8777 @@
+{
+  "b013": {
+    "id": "b013",
+    "z": 3078,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue2": true,
+    "x": -40,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/2084312176_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/197667142_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "image": "/assets/197667142_286",
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "parent": "b02h"
+  },
+  "b014": {
+    "id": "b014",
+    "z": 3127,
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue1": true,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-815347245_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1096983875_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "image": "/assets/-1096983875_300",
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "parent": "b01h"
+  },
+  "b015": {
+    "image": "/assets/2128556685_283",
+    "id": "b015",
+    "z": 3138,
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue5": true,
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "parent": "b05h"
+  },
+  "b016": {
+    "image": "/assets/1888803430_289",
+    "id": "b016",
+    "z": 2871,
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue4": true,
+    "parent": "b04h"
+  },
+  "b017": {
+    "image": "/assets/-959545321_287",
+    "id": "b017",
+    "z": 3141,
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "parent": "b03h"
+  },
+  "r013": {
+    "id": "r013",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "z": 3175,
+    "red2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-631785285_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/603894606_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/603894606_286",
+    "clicks": 0,
+    "parent": "r02h"
+  },
+  "r014": {
+    "id": "r014",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 3120,
+    "red1": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1881623880_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/1690131478_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "clicks": 0,
+    "image": "/assets/1690131478_300",
+    "parent": "r01h"
+  },
+  "r015": {
+    "image": "/assets/-27369167_283",
+    "id": "r015",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 3157,
+    "red5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "parent": "r05h"
+  },
+  "r016": {
+    "image": "/assets/997493833_247",
+    "id": "r016",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 2395,
+    "red4": true,
+    "parent": "r04h"
+  },
+  "r017": {
+    "image": "/assets/-935510337_287",
+    "id": "r017",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 3160,
+    "red3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "parent": "r03h"
+  },
+  "g013": {
+    "id": "g013",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "z": 3169,
+    "green2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1295833960_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1723773_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/-1723773_286",
+    "clicks": 0,
+    "parent": "g02h"
+  },
+  "g014": {
+    "id": "g014",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 3130,
+    "activeFace": 1,
+    "green1": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-2041837987_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1261117867_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "rotation": 90,
+    "image": "/assets/-1261117867_300",
+    "parent": "g01h"
+  },
+  "g015": {
+    "image": "/assets/-560449934_283",
+    "id": "g015",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 3144,
+    "green5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "parent": "g05h"
+  },
+  "g016": {
+    "image": "/assets/1542464366_247",
+    "id": "g016",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 21854,
+    "green4": true,
+    "parent": "g04h"
+  },
+  "g017": {
+    "image": "/assets/758422451_287",
+    "id": "g017",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 3147,
+    "green3": true,
+    "activeFace": 1,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "parent": "g03h"
+  },
+  "y013": {
+    "id": "y013",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "z": 3178,
+    "yellow2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/991248569_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1773863028_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/-1773863028_286",
+    "clicks": 0,
+    "parent": "y02h"
+  },
+  "y014": {
+    "id": "y014",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 3133,
+    "yellow1": true,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/317796164_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-802436164_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "image": "/assets/-802436164_300",
+    "clicks": 0,
+    "parent": "y01h"
+  },
+  "y015": {
+    "image": "/assets/-304736747_283",
+    "id": "y015",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 3151,
+    "yellow5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "parent": "y05h"
+  },
+  "y016": {
+    "image": "/assets/-942534448_247",
+    "id": "y016",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 2626,
+    "yellow4": true,
+    "parent": "y04h"
+  },
+  "y017": {
+    "image": "/assets/-1109252241_287",
+    "id": "y017",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 3154,
+    "yellow3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "parent": "y03h"
+  },
+  "recall_button": {
+    "id": "recall_button",
+    "width": 40,
+    "height": 40,
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "New game..."
+          },
+          {
+            "type": "text",
+            "text": "Start new game?"
+          }
+        ],
+        "confirmButtonIcon": "check",
+        "cancelButtonIcon": "close"
+      },
+      {
+        "func": "SELECT",
+        "property": "blue1",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "b01h"
+      },
+      {
+        "func": "SELECT",
+        "property": "blue2",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "b02h"
+      },
+      {
+        "func": "SELECT",
+        "property": "blue3",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "b03h"
+      },
+      {
+        "func": "SELECT",
+        "property": "blue4",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "b04h"
+      },
+      {
+        "func": "SELECT",
+        "property": "blue5",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "b05h"
+      },
+      {
+        "func": "SELECT",
+        "property": "red1",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "r01h"
+      },
+      {
+        "func": "SELECT",
+        "property": "red2",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "r02h"
+      },
+      {
+        "func": "SELECT",
+        "property": "red3",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "r03h"
+      },
+      {
+        "func": "SELECT",
+        "property": "red4",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "r04h"
+      },
+      {
+        "func": "SELECT",
+        "property": "red5",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "r05h"
+      },
+      {
+        "func": "SELECT",
+        "property": "green1",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "g01h"
+      },
+      {
+        "func": "SELECT",
+        "property": "green2",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "g02h"
+      },
+      {
+        "func": "SELECT",
+        "property": "green3",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "g03h"
+      },
+      {
+        "func": "SELECT",
+        "property": "green4",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "g04h"
+      },
+      {
+        "func": "SELECT",
+        "property": "green5",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "g05h"
+      },
+      {
+        "func": "SELECT",
+        "property": "yellow1",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "y01h"
+      },
+      {
+        "func": "SELECT",
+        "property": "yellow2",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "y02h"
+      },
+      {
+        "func": "SELECT",
+        "property": "yellow3",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "y03h"
+      },
+      {
+        "func": "SELECT",
+        "property": "yellow4",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "y04h"
+      },
+      {
+        "func": "SELECT",
+        "property": "yellow5",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "y05h"
+      },
+      {
+        "func": "SELECT",
+        "property": "score",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": 0
+      }
+    ],
+    "x": 1560,
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black;font-size:30px",
+    "z": 2100,
+    "color": "white",
+    "y": -2,
+    "classes": "symbols",
+    "text": "restart"
+  },
+  "0ko6": {
+    "image": "/assets/1888803430_289",
+    "z": 2875,
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue4": true,
+    "id": "0ko6",
+    "parent": "b04h"
+  },
+  "59rt": {
+    "image": "/assets/1888803430_289",
+    "z": 2869,
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue4": true,
+    "id": "59rt",
+    "parent": "b04h"
+  },
+  "tun5": {
+    "image": "/assets/1888803430_289",
+    "z": 2873,
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue4": true,
+    "id": "tun5",
+    "parent": "b04h"
+  },
+  "7cs5": {
+    "image": "/assets/1888803430_289",
+    "z": 21866,
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue4": true,
+    "id": "7cs5",
+    "parent": "b04h"
+  },
+  "b01h": {
+    "type": "holder",
+    "x": 260,
+    "y": 132,
+    "z": 1262,
+    "dropTarget": {
+      "blue1": true
+    },
+    "width": 40,
+    "height": 80,
+    "onEnter": {
+      "rotation": 90,
+      "image": "/assets/-1096983875_300",
+      "clicks": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetX": -40,
+    "id": "b01h",
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "b01c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "b04h": {
+    "type": "holder",
+    "x": 43,
+    "y": 131,
+    "z": 1265,
+    "dropTarget": {
+      "blue4": true
+    },
+    "width": 80,
+    "height": 80,
+    "layer": 2,
+    "classes": "transparent",
+    "id": "b04h",
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "b04c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "b05h": {
+    "type": "holder",
+    "x": 458,
+    "y": 208,
+    "z": 1263,
+    "dropTarget": {
+      "blue5": true
+    },
+    "width": 40,
+    "height": 160,
+    "onEnter": {
+      "rotation": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "id": "b05h",
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "b05c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "b02h": {
+    "type": "holder",
+    "x": 44,
+    "y": 303,
+    "z": 1252,
+    "dropTarget": {
+      "blue2": true
+    },
+    "width": 40,
+    "height": 120,
+    "onEnter": {
+      "rotation": 90,
+      "image": "/assets/197667142_286",
+      "clicks": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetX": -40,
+    "id": "b02h",
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "b02c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "b03h": {
+    "type": "holder",
+    "x": 221,
+    "y": 383,
+    "z": 1267,
+    "dropTarget": {
+      "blue3": true
+    },
+    "width": 120,
+    "height": 40,
+    "onEnter": {
+      "rotation": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetY": -40,
+    "id": "b03h",
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "b03c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "b04c": {
+    "text": 5,
+    "id": "b04c",
+    "z": 2003,
+    "y": 228,
+    "x": 76,
+    "css": "font-size:20px",
+    "movable": false,
+    "width": 30,
+    "height": 30
+  },
+  "b01c": {
+    "text": 5,
+    "z": 2016,
+    "y": 231,
+    "x": 274,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "b01c",
+    "width": 30,
+    "height": 30
+  },
+  "b05c": {
+    "text": 5,
+    "z": 2020,
+    "y": 400,
+    "x": 476,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "b05c",
+    "width": 30,
+    "height": 30
+  },
+  "b03c": {
+    "text": 5,
+    "z": 2227,
+    "y": 442,
+    "x": 277,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "b03c",
+    "editable": true,
+    "width": 30,
+    "height": 30
+  },
+  "b02c": {
+    "text": 5,
+    "z": 2004,
+    "y": 443,
+    "x": 66,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "b02c",
+    "width": 30,
+    "height": 30
+  },
+  "r04h": {
+    "type": "holder",
+    "x": 54,
+    "y": 624,
+    "dropTarget": {
+      "red4": true
+    },
+    "width": 80,
+    "height": 80,
+    "layer": 2,
+    "classes": "transparent",
+    "id": "r04h",
+    "z": 2364,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "r04c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "r04c": {
+    "text": 5,
+    "id": "r04c",
+    "y": 721,
+    "x": 87,
+    "css": "font-size:20px",
+    "movable": false,
+    "z": 2368,
+    "width": 30,
+    "height": 30
+  },
+  "r01h": {
+    "type": "holder",
+    "x": 271,
+    "y": 625,
+    "dropTarget": {
+      "red1": true
+    },
+    "width": 40,
+    "height": 80,
+    "onEnter": {
+      "rotation": 90,
+      "image": "/assets/1690131478_300",
+      "clicks": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetX": -40,
+    "id": "r01h",
+    "z": 2363,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "r01c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "r01c": {
+    "text": 5,
+    "y": 724,
+    "x": 285,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "r01c",
+    "z": 2369,
+    "width": 30,
+    "height": 30
+  },
+  "r05h": {
+    "type": "holder",
+    "x": 469,
+    "y": 701,
+    "dropTarget": {
+      "red5": true
+    },
+    "width": 40,
+    "height": 160,
+    "onEnter": {
+      "rotation": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "id": "r05h",
+    "z": 2365,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "r05c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "r05c": {
+    "text": 5,
+    "y": 893,
+    "x": 487,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "r05c",
+    "z": 2370,
+    "width": 30,
+    "height": 30
+  },
+  "r03h": {
+    "type": "holder",
+    "x": 232,
+    "y": 876,
+    "dropTarget": {
+      "red3": true
+    },
+    "width": 120,
+    "height": 40,
+    "onEnter": {
+      "rotation": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetY": -40,
+    "id": "r03h",
+    "z": 2367,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "r03c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "r03c": {
+    "text": 5,
+    "y": 935,
+    "x": 288,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "r03c",
+    "z": 2371,
+    "width": 30,
+    "height": 30
+  },
+  "r02h": {
+    "type": "holder",
+    "x": 55,
+    "y": 796,
+    "dropTarget": {
+      "red2": true
+    },
+    "width": 40,
+    "height": 120,
+    "onEnter": {
+      "rotation": 90,
+      "image": "/assets/603894606_286",
+      "clicks": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetX": -40,
+    "id": "r02h",
+    "z": 2366,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "r02c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "r02c": {
+    "text": 5,
+    "y": 936,
+    "x": 77,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "r02c",
+    "z": 2372,
+    "width": 30,
+    "height": 30
+  },
+  "mu7k": {
+    "image": "/assets/997493833_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 21805,
+    "red4": true,
+    "id": "mu7k",
+    "parent": "r04h"
+  },
+  "7e6c": {
+    "image": "/assets/997493833_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 2401,
+    "red4": true,
+    "id": "7e6c",
+    "parent": "r04h"
+  },
+  "qkwg": {
+    "image": "/assets/997493833_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 2399,
+    "red4": true,
+    "id": "qkwg",
+    "parent": "r04h"
+  },
+  "iyzx": {
+    "image": "/assets/997493833_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 2397,
+    "red4": true,
+    "id": "iyzx",
+    "parent": "r04h"
+  },
+  "g05h": {
+    "type": "holder",
+    "x": 1482,
+    "y": 209,
+    "dropTarget": {
+      "green5": true
+    },
+    "width": 40,
+    "height": 160,
+    "onEnter": {
+      "rotation": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "id": "g05h",
+    "z": 2463,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "g05c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "g05c": {
+    "text": 5,
+    "y": 403,
+    "x": 1497,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "g05c",
+    "z": 2463,
+    "width": 30,
+    "height": 30
+  },
+  "g01h": {
+    "type": "holder",
+    "x": 1281,
+    "y": 135,
+    "dropTarget": {
+      "green1": true
+    },
+    "width": 40,
+    "height": 80,
+    "onEnter": {
+      "rotation": 90,
+      "image": "/assets/-1261117867_300",
+      "clicks": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetX": -40,
+    "id": "g01h",
+    "z": 2456,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "g01c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "g01c": {
+    "text": 5,
+    "y": 234,
+    "x": 1295,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "g01c",
+    "z": 2462,
+    "width": 30,
+    "height": 30
+  },
+  "g03h": {
+    "type": "holder",
+    "x": 1242,
+    "y": 386,
+    "dropTarget": {
+      "green3": true
+    },
+    "width": 120,
+    "height": 40,
+    "onEnter": {
+      "rotation": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetY": -40,
+    "id": "g03h",
+    "z": 2460,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "g03c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "g03c": {
+    "text": 5,
+    "y": 445,
+    "x": 1298,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "g03c",
+    "z": 2464,
+    "width": 30,
+    "height": 30
+  },
+  "g04h": {
+    "type": "holder",
+    "x": 1064,
+    "y": 134,
+    "dropTarget": {
+      "green4": true
+    },
+    "width": 80,
+    "height": 80,
+    "layer": 2,
+    "classes": "transparent",
+    "id": "g04h",
+    "z": 2457,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "g04c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "g04c": {
+    "text": 5,
+    "id": "g04c",
+    "y": 231,
+    "x": 1097,
+    "css": "font-size:20px",
+    "movable": false,
+    "z": 2461,
+    "width": 30,
+    "height": 30
+  },
+  "g02h": {
+    "type": "holder",
+    "x": 1065,
+    "y": 306,
+    "dropTarget": {
+      "green2": true
+    },
+    "width": 40,
+    "height": 120,
+    "onEnter": {
+      "rotation": 90,
+      "image": "/assets/-1723773_286",
+      "clicks": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetX": -40,
+    "id": "g02h",
+    "z": 2459,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "g02c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "g02c": {
+    "text": 5,
+    "y": 446,
+    "x": 1087,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "g02c",
+    "z": 2465,
+    "width": 30,
+    "height": 30
+  },
+  "1ka7": {
+    "image": "/assets/1542464366_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 21853,
+    "green4": true,
+    "id": "1ka7",
+    "parent": "g04h"
+  },
+  "2v4g": {
+    "image": "/assets/1542464366_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 21852,
+    "green4": true,
+    "id": "2v4g",
+    "parent": "g04h"
+  },
+  "9eqk": {
+    "image": "/assets/1542464366_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 21843,
+    "green4": true,
+    "id": "9eqk",
+    "parent": "g04h"
+  },
+  "uws5": {
+    "image": "/assets/1542464366_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 21849,
+    "green4": true,
+    "id": "uws5",
+    "parent": "g04h"
+  },
+  "y04h": {
+    "type": "holder",
+    "x": 1069,
+    "y": 630,
+    "dropTarget": {
+      "yellow4": true
+    },
+    "width": 80,
+    "height": 80,
+    "layer": 2,
+    "classes": "transparent",
+    "id": "y04h",
+    "z": 2589,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "y04c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "y04c": {
+    "text": 5,
+    "id": "y04c",
+    "y": 727,
+    "x": 1102,
+    "css": "font-size:20px",
+    "movable": false,
+    "z": 2593,
+    "width": 30,
+    "height": 30
+  },
+  "y01h": {
+    "type": "holder",
+    "x": 1286,
+    "y": 631,
+    "dropTarget": {
+      "yellow1": true
+    },
+    "width": 40,
+    "height": 80,
+    "onEnter": {
+      "rotation": 90,
+      "image": "/assets/-802436164_300",
+      "clicks": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetX": -40,
+    "id": "y01h",
+    "z": 2588,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "y01c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "y01c": {
+    "text": 5,
+    "y": 730,
+    "x": 1300,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "y01c",
+    "z": 2598,
+    "width": 30,
+    "height": 30
+  },
+  "y05h": {
+    "type": "holder",
+    "x": 1484,
+    "y": 707,
+    "dropTarget": {
+      "yellow5": true
+    },
+    "width": 40,
+    "height": 160,
+    "onEnter": {
+      "rotation": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "id": "y05h",
+    "z": 2590,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "y05c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "y05c": {
+    "text": 5,
+    "y": 899,
+    "x": 1502,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "y05c",
+    "z": 2595,
+    "width": 30,
+    "height": 30
+  },
+  "y02h": {
+    "type": "holder",
+    "x": 1070,
+    "y": 802,
+    "dropTarget": {
+      "yellow2": true
+    },
+    "width": 40,
+    "height": 120,
+    "onEnter": {
+      "rotation": 90,
+      "image": "/assets/-1773863028_286",
+      "clicks": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetX": -40,
+    "id": "y02h",
+    "z": 2591,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "y02c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "y02c": {
+    "text": 5,
+    "y": 942,
+    "x": 1092,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "y02c",
+    "z": 2597,
+    "width": 30,
+    "height": 30
+  },
+  "y03h": {
+    "type": "holder",
+    "x": 1247,
+    "y": 882,
+    "dropTarget": {
+      "yellow3": true
+    },
+    "width": 120,
+    "height": 40,
+    "onEnter": {
+      "rotation": 0
+    },
+    "layer": 2,
+    "classes": "transparent",
+    "dropOffsetY": -40,
+    "id": "y03h",
+    "z": 2592,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "y03c"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "y03c": {
+    "text": 5,
+    "y": 941,
+    "x": 1303,
+    "css": "font-size:20px",
+    "movable": false,
+    "id": "y03c",
+    "z": 2596,
+    "width": 30,
+    "height": 30
+  },
+  "5yvv": {
+    "image": "/assets/-942534448_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 21813,
+    "yellow4": true,
+    "id": "5yvv",
+    "parent": "y04h"
+  },
+  "75ta": {
+    "image": "/assets/-942534448_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 21845,
+    "yellow4": true,
+    "id": "75ta",
+    "parent": "y04h"
+  },
+  "5bp3": {
+    "image": "/assets/-942534448_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 2630,
+    "yellow4": true,
+    "id": "5bp3",
+    "parent": "y04h"
+  },
+  "em24": {
+    "image": "/assets/-942534448_247",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "z": 2628,
+    "yellow4": true,
+    "id": "em24",
+    "parent": "y04h"
+  },
+  "kg3wD": {
+    "id": "kg3wD",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#96BFE1; color:blue; border: 3px solid blue",
+    "parent": "score1"
+  },
+  "kg3wU": {
+    "id": "kg3wU",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#96BFE1; color:blue; border: 3px solid blue",
+    "parent": "score1"
+  },
+  "9wdkD": {
+    "id": "9wdkD",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#F7C8C8; color:red; border: 3px solid red",
+    "parent": "score2"
+  },
+  "9wdkU": {
+    "id": "9wdkU",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#F7C8C8; color:red; border: 3px solid red",
+    "parent": "score2"
+  },
+  "sjhiD": {
+    "id": "sjhiD",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#CEFBD8; color:green; border: 3px solid green",
+    "parent": "score3"
+  },
+  "sjhiU": {
+    "id": "sjhiU",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#CEFBD8; color:green; border: 3px solid green",
+    "parent": "score3"
+  },
+  "jypuD": {
+    "id": "jypuD",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#FBFBCE; color:orange; border: 3px solid orange",
+    "parent": "score4"
+  },
+  "jypuU": {
+    "id": "jypuU",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#FBFBCE; color:orange; border: 3px solid orange",
+    "parent": "score4"
+  },
+  "b014-copy001": {
+    "id": "b014-copy001",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue1": true,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-815347245_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1096983875_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "image": "/assets/-1096983875_300",
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "z": 21804,
+    "parent": "b01h"
+  },
+  "b014-copy002": {
+    "id": "b014-copy002",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue1": true,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-815347245_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1096983875_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "image": "/assets/-1096983875_300",
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "z": 21773,
+    "parent": "b01h"
+  },
+  "b014-copy003": {
+    "id": "b014-copy003",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue1": true,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-815347245_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1096983875_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "image": "/assets/-1096983875_300",
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "z": 21771,
+    "parent": "b01h"
+  },
+  "b014-copy004": {
+    "id": "b014-copy004",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue1": true,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-815347245_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1096983875_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "image": "/assets/-1096983875_300",
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "z": 21769,
+    "parent": "b01h"
+  },
+  "b015-copy001": {
+    "image": "/assets/2128556685_283",
+    "id": "b015-copy001",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue5": true,
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "z": 21864,
+    "parent": "b05h",
+    "css": {}
+  },
+  "b015-copy002": {
+    "image": "/assets/2128556685_283",
+    "id": "b015-copy002",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue5": true,
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "z": 21701,
+    "parent": "b05h"
+  },
+  "b015-copy003": {
+    "image": "/assets/2128556685_283",
+    "id": "b015-copy003",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue5": true,
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "z": 21699,
+    "parent": "b05h"
+  },
+  "b015-copy004": {
+    "image": "/assets/2128556685_283",
+    "id": "b015-copy004",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue5": true,
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "z": 21697,
+    "parent": "b05h"
+  },
+  "b013-copy001": {
+    "id": "b013-copy001",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue2": true,
+    "x": -40,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/2084312176_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/197667142_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "image": "/assets/197667142_286",
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "z": 21802,
+    "parent": "b02h"
+  },
+  "b013-copy002": {
+    "id": "b013-copy002",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue2": true,
+    "x": -40,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/2084312176_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/197667142_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "image": "/assets/197667142_286",
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "z": 21781,
+    "parent": "b02h"
+  },
+  "b013-copy003": {
+    "id": "b013-copy003",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue2": true,
+    "x": -40,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/2084312176_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/197667142_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "image": "/assets/197667142_286",
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "z": 21779,
+    "parent": "b02h"
+  },
+  "b013-copy004": {
+    "id": "b013-copy004",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue2": true,
+    "x": -40,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/2084312176_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/197667142_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "image": "/assets/197667142_286",
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "z": 21777,
+    "parent": "b02h"
+  },
+  "b017-copy001": {
+    "image": "/assets/-959545321_287",
+    "id": "b017-copy001",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21856,
+    "parent": "b03h"
+  },
+  "b017-copy002": {
+    "image": "/assets/-959545321_287",
+    "id": "b017-copy002",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21765,
+    "parent": "b03h"
+  },
+  "b017-copy003": {
+    "image": "/assets/-959545321_287",
+    "id": "b017-copy003",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21763,
+    "parent": "b03h"
+  },
+  "b017-copy004": {
+    "image": "/assets/-959545321_287",
+    "id": "b017-copy004",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "blue3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21761,
+    "parent": "b03h"
+  },
+  "r014-copy001": {
+    "id": "r014-copy001",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red1": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1881623880_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/1690131478_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "clicks": 0,
+    "image": "/assets/1690131478_300",
+    "z": 21806,
+    "parent": "r01h"
+  },
+  "r014-copy002": {
+    "id": "r014-copy002",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red1": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1881623880_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/1690131478_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "clicks": 0,
+    "image": "/assets/1690131478_300",
+    "z": 21807,
+    "parent": "r01h"
+  },
+  "r014-copy003": {
+    "id": "r014-copy003",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red1": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1881623880_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/1690131478_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "clicks": 0,
+    "image": "/assets/1690131478_300",
+    "z": 21755,
+    "parent": "r01h"
+  },
+  "r014-copy004": {
+    "id": "r014-copy004",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red1": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1881623880_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/1690131478_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "clicks": 0,
+    "image": "/assets/1690131478_300",
+    "z": 21753,
+    "parent": "r01h"
+  },
+  "r015-copy001": {
+    "image": "/assets/-27369167_283",
+    "id": "r015-copy001",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21808,
+    "parent": "r05h"
+  },
+  "r015-copy002": {
+    "image": "/assets/-27369167_283",
+    "id": "r015-copy002",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21809,
+    "parent": "r05h"
+  },
+  "r015-copy003": {
+    "image": "/assets/-27369167_283",
+    "id": "r015-copy003",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21747,
+    "parent": "r05h"
+  },
+  "r015-copy004": {
+    "image": "/assets/-27369167_283",
+    "id": "r015-copy004",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21745,
+    "parent": "r05h"
+  },
+  "r017-copy001": {
+    "image": "/assets/-935510337_287",
+    "id": "r017-copy001",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21810,
+    "parent": "r03h"
+  },
+  "r017-copy002": {
+    "image": "/assets/-935510337_287",
+    "id": "r017-copy002",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21797,
+    "parent": "r03h"
+  },
+  "r017-copy003": {
+    "image": "/assets/-935510337_287",
+    "id": "r017-copy003",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21795,
+    "parent": "r03h"
+  },
+  "r017-copy004": {
+    "image": "/assets/-935510337_287",
+    "id": "r017-copy004",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21793,
+    "parent": "r03h"
+  },
+  "r013-copy001": {
+    "id": "r013-copy001",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "red2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-631785285_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/603894606_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/603894606_286",
+    "clicks": 0,
+    "z": 21811,
+    "x": -40,
+    "parent": "r02h"
+  },
+  "r013-copy002": {
+    "id": "r013-copy002",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "red2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-631785285_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/603894606_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/603894606_286",
+    "clicks": 0,
+    "z": 21789,
+    "parent": "r02h"
+  },
+  "r013-copy003": {
+    "id": "r013-copy003",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "red2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-631785285_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/603894606_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/603894606_286",
+    "clicks": 0,
+    "z": 21787,
+    "parent": "r02h"
+  },
+  "r013-copy004": {
+    "id": "r013-copy004",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "red2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-631785285_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/603894606_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/603894606_286",
+    "clicks": 0,
+    "z": 21785,
+    "parent": "r02h"
+  },
+  "g014-copy001": {
+    "id": "g014-copy001",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "activeFace": 1,
+    "green1": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-2041837987_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1261117867_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "rotation": 90,
+    "image": "/assets/-1261117867_300",
+    "z": 21829,
+    "parent": "g01h"
+  },
+  "g014-copy002": {
+    "id": "g014-copy002",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "activeFace": 1,
+    "green1": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-2041837987_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1261117867_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "rotation": 90,
+    "image": "/assets/-1261117867_300",
+    "z": 21855,
+    "parent": "g01h"
+  },
+  "g014-copy003": {
+    "id": "g014-copy003",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "activeFace": 1,
+    "green1": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-2041837987_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1261117867_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "rotation": 90,
+    "image": "/assets/-1261117867_300",
+    "z": 21707,
+    "parent": "g01h"
+  },
+  "g014-copy004": {
+    "id": "g014-copy004",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "activeFace": 1,
+    "green1": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-2041837987_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1261117867_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "clicks": 0,
+    "rotation": 90,
+    "image": "/assets/-1261117867_300",
+    "z": 21705,
+    "parent": "g01h"
+  },
+  "g015-copy001": {
+    "image": "/assets/-560449934_283",
+    "id": "g015-copy001",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "green5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21847,
+    "parent": "g05h"
+  },
+  "g015-copy002": {
+    "image": "/assets/-560449934_283",
+    "id": "g015-copy002",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "green5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21674,
+    "parent": "g05h"
+  },
+  "g015-copy003": {
+    "image": "/assets/-560449934_283",
+    "id": "g015-copy003",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "green5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21672,
+    "parent": "g05h"
+  },
+  "g015-copy004": {
+    "image": "/assets/-560449934_283",
+    "id": "g015-copy004",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "green5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21670,
+    "parent": "g05h"
+  },
+  "g017-copy001": {
+    "image": "/assets/758422451_287",
+    "id": "g017-copy001",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "green3": true,
+    "activeFace": 1,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21851,
+    "parent": "g03h"
+  },
+  "g017-copy002": {
+    "image": "/assets/758422451_287",
+    "id": "g017-copy002",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "green3": true,
+    "activeFace": 1,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21717,
+    "parent": "g03h"
+  },
+  "g017-copy003": {
+    "image": "/assets/758422451_287",
+    "id": "g017-copy003",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "green3": true,
+    "activeFace": 1,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21715,
+    "parent": "g03h"
+  },
+  "g017-copy004": {
+    "image": "/assets/758422451_287",
+    "id": "g017-copy004",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "green3": true,
+    "activeFace": 1,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21713,
+    "parent": "g03h"
+  },
+  "g013-copy001": {
+    "id": "g013-copy001",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "green2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1295833960_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1723773_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/-1723773_286",
+    "clicks": 0,
+    "z": 21848,
+    "parent": "g02h"
+  },
+  "g013-copy002": {
+    "id": "g013-copy002",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "green2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1295833960_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1723773_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/-1723773_286",
+    "clicks": 0,
+    "z": 21850,
+    "parent": "g02h"
+  },
+  "g013-copy003": {
+    "id": "g013-copy003",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "green2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1295833960_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1723773_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/-1723773_286",
+    "clicks": 0,
+    "z": 21844,
+    "parent": "g02h"
+  },
+  "g013-copy004": {
+    "id": "g013-copy004",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "green2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1295833960_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1723773_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/-1723773_286",
+    "clicks": 0,
+    "z": 21721,
+    "parent": "g02h"
+  },
+  "y014-copy001": {
+    "id": "y014-copy001",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow1": true,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/317796164_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-802436164_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "image": "/assets/-802436164_300",
+    "clicks": 0,
+    "z": 21846,
+    "parent": "y01h"
+  },
+  "y014-copy002": {
+    "id": "y014-copy002",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow1": true,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/317796164_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-802436164_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "image": "/assets/-802436164_300",
+    "clicks": 0,
+    "z": 21733,
+    "parent": "y01h"
+  },
+  "y014-copy003": {
+    "id": "y014-copy003",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow1": true,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/317796164_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-802436164_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "image": "/assets/-802436164_300",
+    "clicks": 0,
+    "z": 21731,
+    "parent": "y01h"
+  },
+  "y014-copy004": {
+    "id": "y014-copy004",
+    "x": -40,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow1": true,
+    "rotation": 90,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/317796164_299"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-802436164_300"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "image": "/assets/-802436164_300",
+    "clicks": 0,
+    "z": 21729,
+    "parent": "y01h"
+  },
+  "y015-copy001": {
+    "image": "/assets/-304736747_283",
+    "id": "y015-copy001",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21817,
+    "parent": "y05h"
+  },
+  "y015-copy002": {
+    "image": "/assets/-304736747_283",
+    "id": "y015-copy002",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21693,
+    "parent": "y05h"
+  },
+  "y015-copy003": {
+    "image": "/assets/-304736747_283",
+    "id": "y015-copy003",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21691,
+    "parent": "y05h"
+  },
+  "y015-copy004": {
+    "image": "/assets/-304736747_283",
+    "id": "y015-copy004",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow5": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21689,
+    "parent": "y05h"
+  },
+  "y017-copy001": {
+    "image": "/assets/-1109252241_287",
+    "id": "y017-copy001",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21685,
+    "parent": "y03h"
+  },
+  "y017-copy002": {
+    "image": "/assets/-1109252241_287",
+    "id": "y017-copy002",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21815,
+    "parent": "y03h"
+  },
+  "y017-copy003": {
+    "image": "/assets/-1109252241_287",
+    "id": "y017-copy003",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21814,
+    "parent": "y03h"
+  },
+  "y017-copy004": {
+    "image": "/assets/-1109252241_287",
+    "id": "y017-copy004",
+    "x": 4,
+    "y": -40,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "yellow3": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "z": 21678,
+    "parent": "y03h"
+  },
+  "y013-copy001": {
+    "id": "y013-copy001",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "yellow2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/991248569_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1773863028_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/-1773863028_286",
+    "clicks": 0,
+    "z": 21835,
+    "parent": "y02h"
+  },
+  "y013-copy002": {
+    "id": "y013-copy002",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "yellow2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/991248569_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1773863028_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/-1773863028_286",
+    "clicks": 0,
+    "z": 21741,
+    "parent": "y02h"
+  },
+  "y013-copy003": {
+    "id": "y013-copy003",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "yellow2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/991248569_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1773863028_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/-1773863028_286",
+    "clicks": 0,
+    "z": 21739,
+    "parent": "y02h"
+  },
+  "y013-copy004": {
+    "id": "y013-copy004",
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "grid": [
+      {
+        "x": 40,
+        "y": 40,
+        "minX": 540,
+        "maxX": 940,
+        "minY": 120,
+        "offsetX": 3,
+        "offsetY": -12
+      }
+    ],
+    "x": -40,
+    "yellow2": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      "var rotation = ${PROPERTY rotation} + 90",
+      "var clicks = ${PROPERTY clicks} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${rotation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clicks",
+        "value": "${clicks}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/991248569_289"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${clicks}",
+        "relation": "==",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "image",
+            "value": "/assets/-1773863028_286"
+          },
+          "var rotation = ${PROPERTY rotation} - 90",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": "${rotation}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clicks",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "rotation": 90,
+    "image": "/assets/-1773863028_286",
+    "clicks": 0,
+    "z": 21737,
+    "parent": "y02h"
+  },
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Connex",
+      "image": "/assets/235872186_124592",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/93185/tetris-link",
+      "year": "2011",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "The game layout, board, piece designs, and library image were done by LawDawg and are released to the Public Domain under CC0.",
+      "similarName": "Tetris Link",
+      "description": "Place colored, shaped blocks into playing area to connect as many pieces as possible to earn points and block opponents. Highest score wins.",
+      "showName": true,
+      "helpText": "Players take seats. Click die at top of screen to choose random piece to play. Place piece on board. Press next icon button to indicate turn is over.",
+      "lastUpdate": 1677852951927,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "2012 Mensa Select Winner\n2011 Fall Parents' Choice Silver Honor Winner",
+      "ruleText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-4"
+    }
+  },
+  "score1": {
+    "type": "label",
+    "id": "score1",
+    "x": 198,
+    "y": 80,
+    "width": 140,
+    "height": 44,
+    "z": 1,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "score": true,
+    "text": 0,
+    "movableInEdit": false
+  },
+  "score4": {
+    "type": "label",
+    "id": "score4",
+    "x": 1235,
+    "y": 575,
+    "width": 140,
+    "height": 44,
+    "z": 4,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "score": true,
+    "text": 0
+  },
+  "score3": {
+    "type": "label",
+    "id": "score3",
+    "x": 1233,
+    "y": 80,
+    "width": 140,
+    "height": 44,
+    "z": 3,
+    "movableInEdit": false,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "score": true,
+    "text": 0
+  },
+  "score2": {
+    "type": "label",
+    "id": "score2",
+    "x": 212,
+    "y": 575,
+    "width": 140,
+    "height": 44,
+    "z": 2,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "score": true,
+    "text": 0
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 190,
+    "y": 16,
+    "z": 2097,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1225,
+    "y": 510,
+    "z": 2098,
+    "index": 4,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "next": {
+    "type": "button",
+    "id": "next",
+    "y": 135,
+    "z": 2099,
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "color": "none",
+    "classes": "material-icons",
+    "text": "skip_next",
+    "width": 50,
+    "height": 50,
+    "x": 780,
+    "movableInEdit": false,
+    "css": "font-size: 40px; "
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "index": 2,
+    "x": 199,
+    "y": 510,
+    "z": 2097,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 3,
+    "x": 1225,
+    "y": 16,
+    "z": 2097,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-1980769904_526218"
+  },
+  "dice": {
+    "type": "dice",
+    "id": "dice",
+    "x": 755,
+    "y": 7,
+    "width": 100,
+    "height": 100,
+    "z": 21872,
+    "faces": [
+      {
+        "image": "/assets/1886300387_709",
+        "imageScale": 0.25
+      },
+      {
+        "image": "/assets/396007568_552"
+      },
+      {
+        "image": "/assets/-1078270359_518"
+      },
+      {
+        "image": "/assets/-1521775494_527"
+      },
+      {
+        "image": "/assets/1801172227_577",
+        "imageScale": 0.55
+      },
+      {
+        "text": "?",
+        "faceCSS": {
+          "color": "purple"
+        }
+      }
+    ],
+    "faceCSS": {
+      "filter": "hue-rotate(50deg)"
+    },
+    "activeFace": 5
+  }
+}

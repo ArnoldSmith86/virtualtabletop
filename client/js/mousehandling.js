@@ -40,6 +40,7 @@ async function inputHandler(name, e) {
     target = target.parentNode;
 
   const coords = eventCoords(name, e);
+  mouseCoords = [Math.round(coords.x), Math.round(coords.y)];
   if(name == 'mousedown')
     mouseTarget = target;
   else if(name == 'mousemove' || name == 'mouseup')
@@ -83,7 +84,7 @@ async function inputHandler(name, e) {
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
       if(ms.status != 'initial' && ms.moveTarget)
-        await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
+        await ms.moveTarget.moveEnd(coords, ms.localAnchor);
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(typeof jeEnabled == 'boolean' && jeEnabled)
           await jeClick(widget, e);

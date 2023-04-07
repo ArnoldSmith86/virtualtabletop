@@ -1,0 +1,418 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "CSS",
+      "image": "/assets/-1069925580_4501",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1676865317860,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "x": 400,
+    "text": "CSS: Basic"
+  },
+  "406b": {
+    "id": "406b",
+    "x": 108,
+    "y": 100,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 139,
+    "css": "font-size: 23px; ",
+    "text": "This tutorial shows examples of how to use some of the most common CSS elements in a VTT room. A full CSS tutorial is beyond the scope of VTT. There are many available on the web, including a good one at https://www.w3schools.com/css/default.asp. For other examples of how to use CSS to customize the apperance of buttons (or really any widget), look at the Button Appearance tutorial."
+  },
+  "bm4j": {
+    "text": "The buttons above show how css can be incorporated using a simple string or by making css a simple object. Until PR951, the 'old' string version was the only option, so most public library games use that. The css in both buttons is the same; it is just more easily readable in the bottom example.",
+    "id": "bm4j",
+    "x": 60,
+    "y": 700,
+    "z": 9735,
+    "width": 300,
+    "movable": false
+  },
+  "fzoqB": {
+    "id": "fzoqB",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "parent": "cardHolder"
+  },
+  "fzoqD": {
+    "type": "deck",
+    "id": "fzoqD",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "1",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "2",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "3",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "4",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "5",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "6",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      }
+    ],
+    "parent": "cardHolder"
+  },
+  "bm5j": {
+    "text": "The widgets above just show different ways of changing the location, size, and orientation of text, as well as modifications to border styles, and border radius values. These are very common types of things for which css is used.",
+    "id": "bm5j",
+    "x": 410,
+    "y": 700,
+    "z": 121,
+    "width": 300,
+    "movable": false
+  },
+  "bm6j": {
+    "id": "bm6j",
+    "x": 808,
+    "y": 700,
+    "z": 9732,
+    "width": 300,
+    "text": "The button above cycles through several colors. The css is changed by using {PROPERTY backgroundColor}. The button works by changing the custom property 'backgroundColor' each time the button is clicked and the css property reads and applies that new value. Note that {PROPERTY xyz OF anotherWidget} does not work and neither do variables.",
+    "movable": false
+  },
+  "jkmt": {
+    "type": "button",
+    "x": 151,
+    "y": 250,
+    "z": 10,
+    "id": "jkmt",
+    "text": "Old",
+    "css": "border-radius: 5px;box-shadow: 12px 12px 5px grey;font-size:30px;color:orange;background: grey;"
+  },
+  "cardHolder": {
+    "type": "holder",
+    "id": "cardHolder",
+    "x": 104.5,
+    "y": 1087,
+    "z": 127,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "bm7j": {
+    "id": "bm7j",
+    "x": 1188,
+    "y": 700,
+    "z": 9732,
+    "width": 300,
+    "text": "The image above is added to the widget through the css 'url' property. For some widgets, the 'image' property can do the same thing, but some widget types do not have an 'image' property and 'css' is the only way to incorporate an image.",
+    "movable": false
+  },
+  "jkmt4": {
+    "type": "button",
+    "x": 151,
+    "y": 400,
+    "z": 12,
+    "id": "jkmt4",
+    "css": {
+      "border-radius": "5px",
+      "box-shadow": "12px 12px 5px grey",
+      "font-size": "30px",
+      "color": "orange",
+      "background": "grey"
+    },
+    "text": "New"
+  },
+  "mrx8": {
+    "id": "mrx8",
+    "z": 9745,
+    "x": 420,
+    "y": 225,
+    "css": {
+      "border": "1px solid black",
+      "text-align": "center",
+      "font-size": "25px"
+    },
+    "text": "Center",
+    "movable": false
+  },
+  "mrx9": {
+    "id": "mrx9",
+    "z": 9749,
+    "x": 550,
+    "y": 225,
+    "css": {
+      "border": "2px dashed red",
+      "text-align": "right",
+      "border-radius": "15px"
+    },
+    "text": "Right",
+    "movable": false
+  },
+  "mrx10": {
+    "id": "mrx10",
+    "z": 9743,
+    "x": 420,
+    "y": 344,
+    "css": {
+      "border": "5px dotted #0f0f0f",
+      "padding-top": "7px"
+    },
+    "height": 30,
+    "text": "Padding",
+    "movable": false
+  },
+  "mrx11": {
+    "id": "mrx11",
+    "z": 9744,
+    "x": 550,
+    "y": 350,
+    "css": {
+      "border": "1px solid black",
+      "text-align": "center",
+      "line-height": "30px",
+      "border-radius": "40%"
+    },
+    "height": 30,
+    "text": "Line Height",
+    "movable": false
+  },
+  "mrx12": {
+    "id": "mrx12",
+    "z": 9748,
+    "x": 526,
+    "y": 400,
+    "css": {
+      "border": "1px solid black",
+      "writing-mode": "vertical-lr",
+      "text-orientation": "upright"
+    },
+    "text": "Vertical",
+    "width": 20,
+    "height": 180,
+    "movable": false
+  },
+  "6w7k": {
+    "type": "button",
+    "clickRoutine": [
+      "var a = ${PROPERTY currentState} + 1",
+      "var b = ${a} % 6",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "currentState",
+        "value": "${b}"
+      },
+      "var backgroundArray = ${PROPERTY backgroundArray}",
+      "var backgroundColor = ${backgroundArray.$b}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "backgroundColor",
+        "value": "${backgroundColor}"
+      }
+    ],
+    "x": 900,
+    "y": 350,
+    "z": 20,
+    "id": "6w7k",
+    "text": "PROPERTY",
+    "width": 100,
+    "height": 100,
+    "css": {
+      "background": "${PROPERTY backgroundColor}"
+    },
+    "backgroundArray": [
+      "red",
+      "orange",
+      "yellow",
+      "green",
+      "blue",
+      "purple"
+    ],
+    "currentState": 0,
+    "backgroundColor": "red"
+  },
+  "qk6q": {
+    "id": "qk6q",
+    "type": "button",
+    "x": 1280,
+    "y": 360,
+    "z": 9788,
+    "image": "/assets/1595941972_27102",
+    "css": {
+      "note": "The image in this widget is from the VTT assets 'Crystals'. Also note that the background-size, repeat, and position properties are not required in this instance, but you might use those to alter how an image looks in your room.",
+      "background-image": "url('/assets/1595941972_27102')",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center"
+    }
+  }
+}

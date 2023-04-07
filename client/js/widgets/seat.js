@@ -33,17 +33,17 @@ class Seat extends Widget {
       displayedText = displayedText.replaceAll('playerName',this.get('player'))
       setText(this.domElement, displayedText);
     }
-    if(delta.player !== undefined)
-      this.updateLinkedWidgets();
+
+    this.updateLinkedWidgets(delta.player !== undefined);
   }
 
   applyInitialDelta(delta) {
     super.applyInitialDelta(delta);
-    this.updateLinkedWidgets();
+    this.updateLinkedWidgets(true);
   }
 
-  classes() {
-    let className = super.classes();
+  classes(includeTemporary=true) {
+    let className = super.classes(includeTemporary);
 
     if(this.get('player') != '')
       className += ' seated';
@@ -92,7 +92,12 @@ class Seat extends Widget {
     }
   }
 
-  updateLinkedWidgets() {
-    widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
+  updateLinkedWidgets(playerChanged) {
+    const scoreboard = widgetFilter(w => w.get('type') == 'scoreboard');
+    for(const board of scoreboard)
+      board.updateTable();
+
+    if(playerChanged)
+      widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
   }
 }
