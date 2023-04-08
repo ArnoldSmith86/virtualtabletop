@@ -1800,834 +1800,82 @@
   "P2": {
     "type": "button",
     "id": "P2",
-    "x": 10,
     "y": 144,
-    "width": 191,
-    "height": 40,
     "z": 4061,
-    "cancelOtherStuffRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${startBtn}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": -1000
-      },
-      {
-        "func": "SET",
-        "property": "playingNow",
-        "value": false
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "clickable",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "backgroundColor",
-        "value": null
-      }
-    ],
-    "clickRoutine": [
-      "var thisPlayer = ${PROPERTY playerInSeat} == ${playerName}",
-      "var emptySeat = ${PROPERTY playerInSeat} == ''",
-      "var skipConfirm = ${thisPlayer} || ${emptySeat}",
-      "var guest = ${playerName} substr 0 5",
-      "var runHolder = 'run' + ${thisID}",
-      "var setHolder = 'set' + ${thisID}",
-      "var startBtn = 'start' + ${thisID}",
-      {
-        "func": "IF",
-        "operand1": "${emptySeat}",
-        "relation": "!=",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "INPUT",
-            "header": "Remove Player ${PROPERTY playerInSeat} from seat?",
-            "fields": [],
-            "skip": "${skipConfirm}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "playerInSeat",
-            "value": ""
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "CALL",
-            "routine": "cancelOtherStuffRoutine"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "IF",
-            "operand1": "${guest}",
-            "operand2": "Guest",
-            "thenRoutine": [
-              {
-                "func": "INPUT",
-                "fields": [
-                  {
-                    "type": "string",
-                    "label": "What name do you want to use?",
-                    "variable": "pName",
-                    "value": ""
-                  }
-                ]
-              },
-              "var playerName = ${pName}"
-            ]
-          },
-          {
-            "func": "SELECT",
-            "property": "playerInSeat",
-            "relation": "==",
-            "value": "${playerName}"
-          },
-          {
-            "func": "COUNT"
-          },
-          "var notSeated = ${COUNT} == 0",
-          {
-            "func": "INPUT",
-            "header": "Change Seats?",
-            "fields": [],
-            "skip": "${notSeated}"
-          },
-          {
-            "func": "SET",
-            "property": "playerInSeat",
-            "value": ""
-          },
-          {
-            "func": "SET",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "playerInSeat",
-            "value": "${playerName}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "${playerName}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "backgroundColor",
-            "value": "${playerColor}"
-          },
-          {
-            "func": "CALL",
-            "routine": "doOtherStuffRoutine"
-          }
-        ]
-      }
-    ],
-    "doOtherStuffRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${startBtn}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 230
-      }
-    ],
+    "inheritFrom": {
+      "P1": [
+        "x",
+        "width",
+        "height",
+        "cancelOtherStuffRoutine",
+        "clickRoutine",
+        "doOtherStuffRoutine",
+        "playerInSeatChangeRoutine",
+        "seatBtn"
+      ]
+    },
     "playerInSeat": "",
-    "seatBtn": true,
-    "text": "empty seat",
-    "playerInSeatChangeRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY playerInSeat}",
-        "operand2": "",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "backgroundColor",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "clickable",
-            "value": true
-          },
-          {
-            "func": "SELECT",
-            "property": "pHolder",
-            "value": true
-          },
-          {
-            "func": "SET",
-            "property": "x",
-            "value": -1500
-          },
-          {
-            "func": "SELECT",
-            "property": "startBtn",
-            "value": true
-          },
-          {
-            "func": "SET",
-            "property": "x",
-            "value": -1000
-          }
-        ]
-      }
-    ]
+    "text": "empty seat"
   },
   "P3": {
     "type": "button",
     "id": "P3",
-    "x": 10,
     "y": 280,
-    "width": 191,
-    "height": 40,
     "z": 604,
-    "cancelOtherStuffRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${startBtn}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": -1000
-      },
-      {
-        "func": "SET",
-        "property": "playingNow",
-        "value": false
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "clickable",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "backgroundColor",
-        "value": null
-      }
-    ],
-    "clickRoutine": [
-      "var thisPlayer = ${PROPERTY playerInSeat} == ${playerName}",
-      "var emptySeat = ${PROPERTY playerInSeat} == ''",
-      "var skipConfirm = ${thisPlayer} || ${emptySeat}",
-      "var guest = ${playerName} substr 0 5",
-      "var runHolder = 'run' + ${thisID}",
-      "var setHolder = 'set' + ${thisID}",
-      "var startBtn = 'start' + ${thisID}",
-      {
-        "func": "IF",
-        "operand1": "${emptySeat}",
-        "relation": "!=",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "INPUT",
-            "header": "Remove Player ${PROPERTY playerInSeat} from seat?",
-            "fields": [],
-            "skip": "${skipConfirm}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "playerInSeat",
-            "value": ""
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "CALL",
-            "routine": "cancelOtherStuffRoutine"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "IF",
-            "operand1": "${guest}",
-            "operand2": "Guest",
-            "thenRoutine": [
-              {
-                "func": "INPUT",
-                "fields": [
-                  {
-                    "type": "string",
-                    "label": "What name do you want to use?",
-                    "variable": "pName",
-                    "value": ""
-                  }
-                ]
-              },
-              "var playerName = ${pName}"
-            ]
-          },
-          {
-            "func": "SELECT",
-            "property": "playerInSeat",
-            "relation": "==",
-            "value": "${playerName}"
-          },
-          {
-            "func": "COUNT"
-          },
-          "var notSeated = ${COUNT} == 0",
-          {
-            "func": "INPUT",
-            "header": "Change Seats?",
-            "fields": [],
-            "skip": "${notSeated}"
-          },
-          {
-            "func": "SET",
-            "property": "playerInSeat",
-            "value": ""
-          },
-          {
-            "func": "SET",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "playerInSeat",
-            "value": "${playerName}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "${playerName}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "backgroundColor",
-            "value": "${playerColor}"
-          },
-          {
-            "func": "CALL",
-            "routine": "doOtherStuffRoutine"
-          }
-        ]
-      }
-    ],
-    "doOtherStuffRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${startBtn}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 230
-      }
-    ],
+    "inheritFrom": {
+      "P1": [
+        "x",
+        "width",
+        "height",
+        "cancelOtherStuffRoutine",
+        "clickRoutine",
+        "doOtherStuffRoutine",
+        "playerInSeatChangeRoutine",
+        "seatBtn"
+      ]
+    },
     "playerInSeat": "",
-    "seatBtn": true,
-    "text": "empty seat",
-    "playerInSeatChangeRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY playerInSeat}",
-        "operand2": "",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "backgroundColor",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "clickable",
-            "value": true
-          },
-          {
-            "func": "SELECT",
-            "property": "pHolder",
-            "value": true
-          },
-          {
-            "func": "SET",
-            "property": "x",
-            "value": -1500
-          },
-          {
-            "func": "SELECT",
-            "property": "startBtn",
-            "value": true
-          },
-          {
-            "func": "SET",
-            "property": "x",
-            "value": -1000
-          }
-        ]
-      }
-    ]
+    "text": "empty seat"
   },
   "P5": {
     "type": "button",
     "id": "P5",
-    "x": 10,
     "y": 552,
-    "width": 191,
-    "height": 40,
     "z": 4067,
-    "cancelOtherStuffRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${startBtn}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": -1000
-      },
-      {
-        "func": "SET",
-        "property": "playingNow",
-        "value": false
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "clickable",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "backgroundColor",
-        "value": null
-      }
-    ],
-    "clickRoutine": [
-      "var thisPlayer = ${PROPERTY playerInSeat} == ${playerName}",
-      "var emptySeat = ${PROPERTY playerInSeat} == ''",
-      "var skipConfirm = ${thisPlayer} || ${emptySeat}",
-      "var guest = ${playerName} substr 0 5",
-      "var runHolder = 'run' + ${thisID}",
-      "var setHolder = 'set' + ${thisID}",
-      "var startBtn = 'start' + ${thisID}",
-      {
-        "func": "IF",
-        "operand1": "${emptySeat}",
-        "relation": "!=",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "INPUT",
-            "header": "Remove Player ${PROPERTY playerInSeat} from seat?",
-            "fields": [],
-            "skip": "${skipConfirm}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "playerInSeat",
-            "value": ""
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "CALL",
-            "routine": "cancelOtherStuffRoutine"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "IF",
-            "operand1": "${guest}",
-            "operand2": "Guest",
-            "thenRoutine": [
-              {
-                "func": "INPUT",
-                "fields": [
-                  {
-                    "type": "string",
-                    "label": "What name do you want to use?",
-                    "variable": "pName",
-                    "value": ""
-                  }
-                ]
-              },
-              "var playerName = ${pName}"
-            ]
-          },
-          {
-            "func": "SELECT",
-            "property": "playerInSeat",
-            "relation": "==",
-            "value": "${playerName}"
-          },
-          {
-            "func": "COUNT"
-          },
-          "var notSeated = ${COUNT} == 0",
-          {
-            "func": "INPUT",
-            "header": "Change Seats?",
-            "fields": [],
-            "skip": "${notSeated}"
-          },
-          {
-            "func": "SET",
-            "property": "playerInSeat",
-            "value": ""
-          },
-          {
-            "func": "SET",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "playerInSeat",
-            "value": "${playerName}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "${playerName}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "backgroundColor",
-            "value": "${playerColor}"
-          },
-          {
-            "func": "CALL",
-            "routine": "doOtherStuffRoutine"
-          }
-        ]
-      }
-    ],
-    "doOtherStuffRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${startBtn}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 230
-      }
-    ],
+    "inheritFrom": {
+      "P1": [
+        "x",
+        "width",
+        "height",
+        "cancelOtherStuffRoutine",
+        "clickRoutine",
+        "doOtherStuffRoutine",
+        "playerInSeatChangeRoutine",
+        "seatBtn"
+      ]
+    },
     "playerInSeat": "",
-    "seatBtn": true,
-    "text": "empty seat",
-    "playerInSeatChangeRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY playerInSeat}",
-        "operand2": "",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "backgroundColor",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "clickable",
-            "value": true
-          },
-          {
-            "func": "SELECT",
-            "property": "pHolder",
-            "value": true
-          },
-          {
-            "func": "SET",
-            "property": "x",
-            "value": -1500
-          },
-          {
-            "func": "SELECT",
-            "property": "startBtn",
-            "value": true
-          },
-          {
-            "func": "SET",
-            "property": "x",
-            "value": -1000
-          }
-        ]
-      }
-    ]
+    "text": "empty seat"
   },
   "P6": {
     "type": "button",
     "id": "P6",
-    "x": 10,
     "y": 692,
-    "width": 191,
-    "height": 40,
     "z": 598,
-    "cancelOtherStuffRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${startBtn}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": -1000
-      },
-      {
-        "func": "SET",
-        "property": "playingNow",
-        "value": false
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "clickable",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "backgroundColor",
-        "value": null
-      }
-    ],
-    "clickRoutine": [
-      "var thisPlayer = ${PROPERTY playerInSeat} == ${playerName}",
-      "var emptySeat = ${PROPERTY playerInSeat} == ''",
-      "var skipConfirm = ${thisPlayer} || ${emptySeat}",
-      "var guest = ${playerName} substr 0 5",
-      "var runHolder = 'run' + ${thisID}",
-      "var setHolder = 'set' + ${thisID}",
-      "var startBtn = 'start' + ${thisID}",
-      {
-        "func": "IF",
-        "operand1": "${emptySeat}",
-        "relation": "!=",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "INPUT",
-            "header": "Remove Player ${PROPERTY playerInSeat} from seat?",
-            "fields": [],
-            "skip": "${skipConfirm}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "playerInSeat",
-            "value": ""
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "CALL",
-            "routine": "cancelOtherStuffRoutine"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "IF",
-            "operand1": "${guest}",
-            "operand2": "Guest",
-            "thenRoutine": [
-              {
-                "func": "INPUT",
-                "fields": [
-                  {
-                    "type": "string",
-                    "label": "What name do you want to use?",
-                    "variable": "pName",
-                    "value": ""
-                  }
-                ]
-              },
-              "var playerName = ${pName}"
-            ]
-          },
-          {
-            "func": "SELECT",
-            "property": "playerInSeat",
-            "relation": "==",
-            "value": "${playerName}"
-          },
-          {
-            "func": "COUNT"
-          },
-          "var notSeated = ${COUNT} == 0",
-          {
-            "func": "INPUT",
-            "header": "Change Seats?",
-            "fields": [],
-            "skip": "${notSeated}"
-          },
-          {
-            "func": "SET",
-            "property": "playerInSeat",
-            "value": ""
-          },
-          {
-            "func": "SET",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "playerInSeat",
-            "value": "${playerName}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "${playerName}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "backgroundColor",
-            "value": "${playerColor}"
-          },
-          {
-            "func": "CALL",
-            "routine": "doOtherStuffRoutine"
-          }
-        ]
-      }
-    ],
-    "doOtherStuffRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${startBtn}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 230
-      }
-    ],
+    "inheritFrom": {
+      "P1": [
+        "x",
+        "width",
+        "height",
+        "cancelOtherStuffRoutine",
+        "clickRoutine",
+        "doOtherStuffRoutine",
+        "playerInSeatChangeRoutine",
+        "seatBtn"
+      ]
+    },
     "playerInSeat": "",
-    "seatBtn": true,
-    "text": "empty seat",
-    "playerInSeatChangeRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY playerInSeat}",
-        "operand2": "",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "empty seat"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "backgroundColor",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "clickable",
-            "value": true
-          },
-          {
-            "func": "SELECT",
-            "property": "pHolder",
-            "value": true
-          },
-          {
-            "func": "SET",
-            "property": "x",
-            "value": -1500
-          },
-          {
-            "func": "SELECT",
-            "property": "startBtn",
-            "value": true
-          },
-          {
-            "func": "SET",
-            "property": "x",
-            "value": -1000
-          }
-        ]
-      }
-    ]
+    "text": "empty seat"
   },
   "restart": {
     "type": "button",
@@ -3835,319 +3083,89 @@
     "id": "startP2",
     "x": -1000,
     "y": 165,
-    "width": 300,
     "z": 4065,
-    "clickRoutine": [
-      "var runHolder = 'run' + ${PROPERTY pID}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${runHolder}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 215
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "x",
-        "value": -1000
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "playingNow",
-        "value": true
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${PROPERTY pID}"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false
-      },
-      {
-        "func": "MOVE",
-        "from": "theDeck",
-        "to": "theHand",
-        "count": 10
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "startBtn"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 1175
-      }
-    ],
-    "css": "border-radius: 30%;font-size:30px",
+    "inheritFrom": {
+      "startP1": [
+        "width",
+        "clickRoutine",
+        "css",
+        "startBtn",
+        "text"
+      ]
+    },
     "pID": "P2",
-    "startBtn": true,
-    "playingNow": false,
-    "text": "+10 Cards to Hand"
+    "playingNow": false
   },
   "startP3": {
     "type": "button",
     "id": "startP3",
     "x": -1000,
-    "width": 300,
+    "y": 303,
     "z": 4065,
-    "clickRoutine": [
-      "var runHolder = 'run' + ${PROPERTY pID}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${runHolder}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 215
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "x",
-        "value": -1000
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "playingNow",
-        "value": true
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${PROPERTY pID}"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false
-      },
-      {
-        "func": "MOVE",
-        "from": "theDeck",
-        "to": "theHand",
-        "count": 10
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "startBtn"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 1175
-      }
-    ],
-    "css": "border-radius: 30%;font-size:30px",
+    "inheritFrom": {
+      "startP1": [
+        "width",
+        "clickRoutine",
+        "css",
+        "startBtn",
+        "text"
+      ]
+    },
     "pID": "P3",
-    "startBtn": true,
-    "playingNow": false,
-    "text": "+10 Cards to Hand",
-    "y": 303
+    "playingNow": false
   },
   "startP4": {
     "type": "button",
     "id": "startP4",
     "x": -1000,
     "y": 440,
-    "width": 300,
     "z": 4065,
-    "clickRoutine": [
-      "var runHolder = 'run' + ${PROPERTY pID}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${runHolder}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 215
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "x",
-        "value": -1000
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "playingNow",
-        "value": true
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${PROPERTY pID}"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false
-      },
-      {
-        "func": "MOVE",
-        "from": "theDeck",
-        "to": "theHand",
-        "count": 10
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "startBtn"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 1175
-      }
-    ],
-    "css": "border-radius: 30%;font-size:30px",
+    "inheritFrom": {
+      "startP1": [
+        "width",
+        "clickRoutine",
+        "css",
+        "startBtn",
+        "text"
+      ]
+    },
     "pID": "P4",
-    "startBtn": true,
-    "playingNow": false,
-    "text": "+10 Cards to Hand"
+    "playingNow": false
   },
   "startP5": {
     "type": "button",
     "id": "startP5",
     "x": -1000,
     "y": 575,
-    "width": 300,
     "z": 4065,
-    "clickRoutine": [
-      "var runHolder = 'run' + ${PROPERTY pID}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${runHolder}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 215
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "x",
-        "value": -1000
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "playingNow",
-        "value": true
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${PROPERTY pID}"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false
-      },
-      {
-        "func": "MOVE",
-        "from": "theDeck",
-        "to": "theHand",
-        "count": 10
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "startBtn"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 1175
-      }
-    ],
-    "css": "border-radius: 30%;font-size:30px",
+    "inheritFrom": {
+      "startP1": [
+        "width",
+        "clickRoutine",
+        "css",
+        "startBtn",
+        "text"
+      ]
+    },
     "pID": "P5",
-    "startBtn": true,
-    "playingNow": false,
-    "text": "+10 Cards to Hand"
+    "playingNow": false
   },
   "startP6": {
     "type": "button",
     "id": "startP6",
     "x": -1000,
     "y": 715,
-    "width": 300,
     "z": 4065,
-    "clickRoutine": [
-      "var runHolder = 'run' + ${PROPERTY pID}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${runHolder}"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 215
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "x",
-        "value": -1000
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "playingNow",
-        "value": true
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${PROPERTY pID}"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false
-      },
-      {
-        "func": "MOVE",
-        "from": "theDeck",
-        "to": "theHand",
-        "count": 10
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "startBtn"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 1175
-      }
-    ],
-    "css": "border-radius: 30%;font-size:30px",
-    "pID": "P6",
-    "startBtn": true,
-    "playingNow": false,
-    "text": "+10 Cards to Hand"
+    "inheritFrom": {
+      "startP1": [
+        "width",
+        "clickRoutine",
+        "css",
+        "startBtn",
+        "text"
+      ]
+    },
+   "pID": "P6",
+    "playingNow": false
   }
 }
