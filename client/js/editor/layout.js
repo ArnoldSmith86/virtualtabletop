@@ -5,6 +5,8 @@ let sidebarModules = null;
 let fullToolbarWidth = 0;
 
 function initializeEditor() {
+  setJEroutineLogging(jeRoutineLogging = true);
+
   registerSelectionEventHandlers();
 
   renderToolbar(toolbarButtons = [
@@ -58,6 +60,15 @@ function initializeEditor() {
     new TreeModule(),
     new DebugModule()
   ]);
+}
+
+function deinitializeEditor() {
+  setJEroutineLogging(jeRoutineLogging = false);
+
+  for(const button of $a('#editorSidebar button.active'))
+    button.click();
+  $('#activeGameButton').click();
+  setScale();
 }
 
 function renderToolbar(buttons) {

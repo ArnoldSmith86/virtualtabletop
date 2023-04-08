@@ -2348,8 +2348,6 @@ export function jeToggle() {
   }
   jeEnabled = !jeEnabled;
   setJEenabled(jeEnabled);
-  jeRoutineLogging = jeEnabled;
-  setJEroutineLogging(jeEnabled);
   jeLoggingHTML = '';
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
