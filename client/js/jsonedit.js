@@ -2513,7 +2513,7 @@ function jeInitEventListeners() {
     e.preventDefault();
   });
 
-  on('#jsonEditor', 'keydown', function(e) {
+  on('#jeText', 'keydown', function(e) {
     if(e.key == 'Enter') {
       jeNewline();
       e.preventDefault();
