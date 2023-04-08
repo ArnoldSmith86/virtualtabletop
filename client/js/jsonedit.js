@@ -196,7 +196,7 @@ const jeCommands = [
         if(problems.length)
           jeJSONerror = problems.join('\n');
         if(clonedWidget) {
-          jeSelectWidget(clonedWidget);
+          setSelection([ clonedWidget ]);
           jeStateNow.id = '###SELECT ME###';
           jeSetAndSelect(clonedWidget.id);
           jeStateNow.id = clonedWidget.id;
@@ -211,7 +211,7 @@ const jeCommands = [
     forceKey: 'ArrowUp',
     show: _=>jeStateNow && widgets.has(jeStateNow.parent),
     call: async function() {
-      jeSelectWidget(widgets.get(jeStateNow.parent));
+      setSelection([ widgets.get(jeStateNow.parent) ]);
     }
   },
   {
@@ -266,7 +266,7 @@ const jeCommands = [
     context: '.*"([^"]+)"',
     call: async function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
-      jeSelectWidget(widgets.get(m[1]));
+      setSelection([ widgets.get(m[1]) ]);
     },
     show: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
@@ -728,7 +728,7 @@ const jeCommands = [
     context: '^card',
     show: _=>widgets.has(jeStateNow.deck),
     call: async function() {
-      jeSelectWidget(widgets.get(jeStateNow.deck));
+      setSelection([ widgets.get(jeStateNow.deck) ]);
     }
   },
   {
@@ -1275,7 +1275,7 @@ function jeAddWidgetPropertyCommand(object, widgetBase, property) {
 
 // Called from overlayDone in editmode.js to finish up add widget processing in the JSON editor.
 function jeAddWidgetDone(id) {
-  jeSelectWidget(widgets.get(id));
+  setSelection([ widgets.get(id) ]);
   jeStateNow.id = '###SELECT ME###';
   jeSetAndSelect(id);
   jeGetContext();
