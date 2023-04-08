@@ -1432,7 +1432,7 @@
       "similarName": "Phase 10",
       "description": "Complete a series of levels by laying down cards in runs, sets, or colors. First to complete 10 levels wins.",
       "showName": true,
-      "lastUpdate": 1680910215789,
+      "lastUpdate": 1680910108288,
       "skill": "",
       "variantImage": "",
       "variant": "",
@@ -3691,8 +3691,10 @@
       {
         "func": "FOREACH",
         "loopRoutine": [
-          "var pScore = 'score' + ${PROPERTY id OF $widgetID}",
-          "var pLevel = 'level' + ${PROPERTY id OF $widgetID}",
+          "var pScore = 'score' + ${widgetID}",
+          "var pLevel = 'level' + ${widgetID}",
+          "var pRun =  'run' + ${widgetID}",
+          "var pSet =  'set' + ${widgetID}",
           "var levelIndex = ${PROPERTY levelIndex OF $pLevel}",
           {
             "func": "GET",
@@ -3761,9 +3763,26 @@
             "mode": "inc"
           },
           {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${pRun}"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${pSet}",
+            "mode": "add"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
             "func": "IF",
-            "operand1": "${sumScore}",
+            "operand1": "${COUNT}",
             "operand2": 0,
+            "relation": "!=",
             "thenRoutine": [
               "var levelIndex = ${levelIndex} + 1",
               {
