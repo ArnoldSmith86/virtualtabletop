@@ -2297,7 +2297,9 @@ function jeShowCommands() {
     commandText += `\n<i class=error>Last command failed: ${html(String(jeCommandError))}</i>\n`;
   if(jeSecondaryWidget)
     commandText += `\n\n${html(jeSecondaryWidget)}\n`;
+  const layersDiv = $('#jeWidgetLayers');
   $('#jeCommands').innerHTML = commandText;
+  $('#jeCommands').insertBefore(layersDiv, $('#jeTopButtons').nextSibling);
   on('#jeCommands button', 'click', clickButton);
 
   on('#var_search', 'input', displayComputeOps);
@@ -2501,8 +2503,10 @@ function jeInitEventListeners() {
         if(jeContext[jeContext.length-1] == '"null"')
           id = `"${id}"`;
         jePasteText(id, true);
+      } else if(e.shiftKey) {
+        setSelection([ jeWidgetLayers[+functionKey[1]] ].concat(selectedWidgets));
       } else {
-        jeSelectWidget(jeWidgetLayers[+functionKey[1]], false, e.shiftKey);
+        setSelection([ jeWidgetLayers[+functionKey[1]] ]);
       }
     }
   });
