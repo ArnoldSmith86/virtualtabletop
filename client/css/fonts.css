@@ -234,6 +234,7 @@
     font-weight: 400;
     font-display: block;
     src: url("i/fonts/MaterialIcons-Regular.ttf") format("truetype");
+    font-display: block;
 }
 
 @font-face {
@@ -241,6 +242,7 @@
     font-style: normal;
     font-weight: 400;
     src: url("i/fonts/MaterialIconsOutlined-Regular.otf") format("opentype");
+    font-display: block;
 }
 
 @font-face {
@@ -248,6 +250,7 @@
     font-style: normal;
     font-weight: 400;
     src: url("i/fonts/MaterialIconsRound-Regular.otf") format("opentype");
+    font-display: block;
 }
 
 @font-face {
@@ -255,6 +258,7 @@
     font-style: normal;
     font-weight: 400;
     src: url("i/fonts/MaterialIconsSharp-Regular.otf") format("opentype");
+    font-display: block;
 }
 
 @font-face {
@@ -262,6 +266,7 @@
     font-style: normal;
     font-weight: 400;
     src: url("i/fonts/MaterialIconsTwoTone-Regular.otf") format("opentype");
+    font-display: block;
 }
 
 .material-icons, .material-icons-outlined, .material-icons-round, .material-icons-sharp, .material-icons-twotone, .font-material-icons {
@@ -306,7 +311,7 @@
 
 @font-face {
     font-family: "VTT-Symbols";
-    src: url("i/fonts/VTT-Symbols.woff?version=6") format("woff");
+    src: url("i/fonts/VTT-Symbols.ttf?version=6") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: block;
