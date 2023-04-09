@@ -75,29 +75,6 @@
   user-select: none;
 }
 
-#jeWidgetSearch {
-  grid-column: 1 / span 2;
-  grid-row: 2;
-}
-
-#jeWidgetSearchResults {
-  grid-column: 1 / span 2;
-  grid-row: 3;
-  overflow: hidden auto;
-  display: none;
-  height: 100%;
-  background-color: var(--backgroundHighlightColor1);
-}
-
-#jeResize {
-  content: '';
-  grid-column: 1 / span 2;
-  grid-row: 4 / span 1;
-  cursor: ns-resize;
-  background-color: #b8c6db;
-  background-image: linear-gradient(#b8c6db 0%, #f5f7fa 20%, #b8c6db 80%);
-}
-
 #jeText, #jeTextHighlight {
   position: absolute;
   top: 0;
@@ -124,6 +101,13 @@
 
 .jeInSearchWindow, .jeTreeWidget {
   cursor: pointer;
+}
+
+#jeTree li.filterNotIncluded:not(.filterChildIncluded) {
+  display: none;
+}
+#jeTree li.filterNotIncluded.filterChildIncluded > span {
+  opacity: 0.2;
 }
 
 /* Style the caret/arrow */
@@ -154,7 +138,7 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 }
 
 /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.jeNestedTree.active, .jeLogNested.active {
+.jeNestedTree.active, .jeNestedTree.filterChildIncluded, .jeLogNested.active {
   display: block;
 }
 
@@ -172,8 +156,8 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 
 /*** CSS to handle search box for tree widget ***/
 #jeWidgetSearchBox {
-  margin-top: 1px;
-  width: 50%;
+  margin-bottom: 10px;
+  width: 80%;
 }
 
 #jeSearchTable {

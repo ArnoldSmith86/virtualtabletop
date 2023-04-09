@@ -1643,7 +1643,7 @@ function jeColorize() {
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
-  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, jeSelectedIDs()) + '</ul>';
+  $('#jeTree').innerHTML = '<input id="jeWidgetSearchBox" placeholder="🔍 Filter"><ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, jeSelectedIDs()) + '</ul>';
 
   treeNodes = {};
   for(const dom of $a('#jeTree .key'))
@@ -1660,7 +1660,6 @@ function jeDisplayTree() {
 
   // Add handler to search box to display widget list
   on('#jeWidgetSearchBox', 'input', jeDisplayFilteredWidgets);
-  on('#jeWidgetSearchBox', 'click', jeDisplayFilteredWidgets);
 
   on('.jeTreeWidget', 'click', function(e) {
     const widget = widgets.get($('.key', e.currentTarget).innerText);
@@ -1686,11 +1685,12 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
     const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), selectedIDs);
     const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
+    const filterText = `data-filter="${html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase()}"`;
 
     if(children)
-      result += `<li class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${(widget.get('type')=='pile') ? '' : 'jeTreeExpander-down'}">`;
+      result += `<li ${filterText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${(widget.get('type')=='pile') ? '' : 'jeTreeExpander-down'}">`;
     else
-      result += `<li class="jeTreeWidget ${isSelected}">`;
+      result += `<li ${filterText} class="jeTreeWidget ${isSelected}">`;
 
     result += jeTreeGetWidgetHTML(widget);
 
@@ -1739,30 +1739,15 @@ function jeUpdateTree(delta) {
 
 function jeDisplayFilteredWidgets(e) {
   const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
-  const results = widgetFilter(o => o.get('id').toLowerCase().includes(subtext) ||
-          o.get('cardType') && o.get('cardType').toLowerCase().includes(subtext) ||
-          o.get('type') && o.get('type').toLowerCase().includes(subtext) ||
-          !o.get('type') && 'basic'.includes(subtext)).sort(
-            function(a,b) {
-              const na = a.get('id').toLowerCase();
-              const nb = b.get('id').toLowerCase();
-              return na < nb ? -1 : na > nb ? 1 : 0
-            }
-          );
-  let resultTable = '<table id="jeSearchTable">';
-  for(const w of results)
-    resultTable += '<tr valign=top><td class="jeInSearchWindow"><i class=key>' + html(w.get('id')) + '</i> - <i class=string>' + html(w.get('type') || 'basic') + '</i></td></tr>';
-  resultTable += '</table>';
-  $('#jeWidgetSearchResults').innerHTML = resultTable;
-  $('#jeWidgetSearchResults').style.display = 'block';
-
-  on('.jeInSearchWindow', 'click', function(e) {
-    jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText), false, e.shiftKey);
-    if(e.shiftKey)
-      e.stopPropagation();
-  });
-
-  e.stopPropagation();
+  for(const previousParent of $a('#jeTree .filterChildIncluded'))
+    previousParent.classList.remove('filterChildIncluded');
+  for(const node of $a('#jeTree .jeTreeWidget')) {
+    node.classList.toggle('filterIncluded', subtext && node.dataset.filter && node.dataset.filter.includes(subtext))
+    node.classList.toggle('filterNotIncluded', subtext && node.dataset.filter && !node.dataset.filter.includes(subtext))
+    for(let parent=node.parentElement; parent.classList.contains('jeTreeWidget') || parent.classList.contains('jeNestedTree'); parent=parent.parentElement)
+      if(node.dataset.filter && subtext && node.dataset.filter.includes(subtext))
+        parent.classList.add('filterChildIncluded');
+  }
 }
 
 /* End of tree subpane control */
