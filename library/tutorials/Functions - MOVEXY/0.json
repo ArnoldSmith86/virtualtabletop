@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 10,
     "info": {
       "name": "Functions - MOVEXY",
       "image": "/assets/-727329285_8844",
@@ -8,13 +8,21 @@
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
-      "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "",
+      "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1640810266000
+      "lastUpdate": 1673631707474,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "8fr3": {
@@ -66,7 +74,7 @@
     "x": 808,
     "z": 75,
     "width": 300,
-    "text": "This button moves all the cards to x,y coordinates to the right of the holder. There is no setting for 'all' cards, so use 0 (or a high count value, such as 999) to ensure they are all moved. This also sets the the cards to be face up using the 'face' parameter. Note that the pile is not flipped as you would with a physical deck. The order of the cards is unchanged. They are each turned face up and remain in the same order.",
+    "text": "This button moves all the cards to x,y coordinates to the right of the holder. This also sets the the cards to be face up using the 'face' parameter. Note that the pile is not flipped as you would with a physical deck. The order of the cards is unchanged. They are each turned face up and remain in the same order.",
     "movable": false,
     "y": 530,
     "movableInEdit": false
@@ -96,7 +104,7 @@
         "x": 975,
         "y": 225,
         "face": 1,
-        "count": 0
+        "count": "all"
       }
     ],
     "x": 900,

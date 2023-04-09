@@ -1,4 +1,4 @@
-export const VERSION = 12;
+export const VERSION = 13;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -118,6 +118,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
   v<9 && v9NumericStringSort(routine);
   v<11 && v11OwnerMOVEXY(routine);
+  v<13 && v13UpdateCountParameter(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -432,5 +433,26 @@ function v11OwnerMOVEXY(routine) {
 function v12HandDropShadow(properties) {
   if (properties.type == 'holder' && properties.childrenPerOwner && !properties.enterRoutine && !properties.leaveRoutine && !properties.changeRoutine) {
     properties.dropShadow = true;
+
   }
 }
+
+function v13UpdateCountParameter(routine) {
+  for(const key in routine) {
+    if(routine[key] && [ 'FLIP', 'MOVE', 'MOVEXY', 'ROTATE' ].indexOf(routine[key].func) != -1 && typeof routine[key].count != 'undefined') {
+      if(!routine[key].count) {
+        routine[key].count = 'all';
+      } else if(typeof routine[key].count == 'string' && routine[key].count.includes('$')) {
+        routine[key] = {
+          note: `This was added by the automatic file migration because the behavior of ${routine[key].func} with count=0 changed.`,
+          func: 'IF',
+          condition: routine[key].count,
+          thenRoutine: [
+            {...routine[key]}
+          ],
+          elseRoutine: [
+            Object.assign({}, routine[key], { count: 'all' })
+          ]
+        };
+      }
+    }
