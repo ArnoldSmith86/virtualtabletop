@@ -2507,13 +2507,6 @@ function jeInitEventListeners() {
     }
   });
 
-  window.addEventListener('click', function(e) {
-    if(jeEnabled && e.target != $('#jeWidgetSearchResults')) {
-      $('#jeWidgetSearchBox').value = '';
-      $('#jeWidgetSearchResults').style.display = 'none';
-    }
-  });
-
   window.addEventListener('keydown', function(e) {
     if(!jeEnabled)
       return;
