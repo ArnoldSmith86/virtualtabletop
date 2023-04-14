@@ -58,15 +58,19 @@ class Scoreboard extends Widget {
     if(!await super.click(mode)) {
       const scoreProperty = this.get('scoreProperty');
       const seats = this.getIncludedSeats();
+      const seatsArray = Array.isArray(seats)? seats : [];
       let players = [];
       if(Array.isArray(seats))
-        players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') || '-' }; });
+        players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') || '-', selected: s.get('player') == playerName }; });
       else { // Teams
-        for (const team in seats)
-          players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player') || '-'} (${team})` } }))
+        for (const team in seats) {
+          players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player') || '-'} (${team})`, selected: s.get('player') == playerName } }));
+          seatsArray.push(...seats[team]);
+        }
       }
 
       let rounds = this.getRounds(seats, scoreProperty, 1).map(function(r, i) { return { text: r, value: i+1 }; });
+      const everyPlayerFilledLatestRound = !seatsArray.map(s=>(s.get(scoreProperty) || []).length != rounds.length - 1).reduce((a,b)=>a||b, false);
 
       if(this.totalsOnly)
         rounds = [{text: this.get('totalsLabel'), value: 0}];
@@ -82,13 +86,14 @@ class Scoreboard extends Widget {
               type: 'select',
               label: 'Player',
               options: players,
-              variable: 'player'
+              variable: 'player',
             },
             {
               type: 'select',
               label: this.get('roundLabel'),
               options: rounds,
-              variable: 'round'
+              variable: 'round',
+              value: everyPlayerFilledLatestRound ? rounds.length : rounds.length - 1
             },
             {
               type: 'number',
@@ -105,7 +110,9 @@ class Scoreboard extends Widget {
         } else
           scores = +result.score;
         await seat.set(scoreProperty, scores);
-      } catch(e) {}
+      } catch(e) {
+        console.log('The input overlay for the scoreboard failed to load.', e);
+      }
     }
   }
 
