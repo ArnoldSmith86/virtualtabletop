@@ -78,21 +78,9 @@ class Pile extends Widget {
   async click(mode='respect') {
     if(!await super.click(mode)) {
 
-
-//       const modalDiv = document.createElement('div');
-//       modalDiv.classList.add = 'modal';
-//       $('#pileOverlay')
-//
-//       const modalTitle = document.createElement('div');
-//       modalTitle.classList.add = 'inputtitle';
-//       var thisField = { type: 'title',text: ${this.handle.textContent} cards+' cards' };
-//       formField(thisField, modalTitle, 'pileTitle')
-//       modalDiv.appendChild(modalTitle);
-
-
-
       const childCount = this.children().length;
       $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${childCount} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
+
 
       const buttonBar1 = document.createElement('div');
       buttonBar1.className = 'button-bar';
@@ -114,11 +102,6 @@ class Pile extends Widget {
       });
       buttonBar1.appendChild(flipButton);
 
-      const or1label = document.createElement('div');
-      or1label.className = 'inputtext optiontext';
-      const thisOr1Field = { type: 'text',text:'-OR-' };
-      formField(thisOr1Field, or1label, 'pileTitle')
-      $('#pileOverlay > .modal').appendChild(or1label);
 
       const buttonBar2 = document.createElement('div');
       buttonBar2.className = 'button-bar';
@@ -137,13 +120,6 @@ class Pile extends Widget {
 
 
 
-
-      const splitLabel = document.createElement('div');
-      splitLabel.className = 'inputtext optiontext';
-      const thisField = { type: 'text',text:'-OR-' };
-      formField(thisField, splitLabel, 'pileTitle')
-      $('#pileOverlay > .modal').appendChild(splitLabel);
-
       const countDiv = document.createElement('div');
       countDiv.className = 'countInput';
 
@@ -154,9 +130,6 @@ class Pile extends Widget {
       splitInput.value = Math.floor(childCount/2);
       splitInput.min = 1;
       splitInput.max = childCount - 1;
-      splitInput.setAttribute("aria-valuemin", 0);
-      splitInput.setAttribute("aria-valuemax", childCount);
-      splitInput.setAttribute("aria-valuenow", splitInput.value);
       splitInput.addEventListener('input', async e=>{
         if(splitInput.value > (childCount - 1)){
           splitInput.value = childCount - 1;
@@ -174,9 +147,6 @@ class Pile extends Widget {
       splitInputSlider.value = Math.floor(childCount/2);
       splitInputSlider.min = 1;
       splitInputSlider.max = childCount - 1;
-      splitInputSlider.setAttribute("aria-valuemin", 0);
-      splitInputSlider.setAttribute("aria-valuemax", childCount);
-      splitInputSlider.setAttribute("aria-valuenow", splitInputSlider.value);
       splitInputSlider.addEventListener('input', async e=>{
         splitInput.value = splitInputSlider.value;
         denominatorInput.value = childCount - splitInput.value;
@@ -188,9 +158,6 @@ class Pile extends Widget {
       denominatorInput.type = 'number';
       denominatorInput.min = 1;
       denominatorInput.max = childCount - 1;
-      denominatorInput.setAttribute("aria-valuemin", 0);
-      denominatorInput.setAttribute("aria-valuemax", childCount);
-      denominatorInput.setAttribute("aria-valuenow", denominatorInput.value);
       denominatorInput.addEventListener('input', async e=>{
         if(denominatorInput.value > (childCount - 1)){
           denominatorInput.value = childCount - 1;
@@ -225,6 +192,7 @@ class Pile extends Widget {
       splitButton.className = 'ui-button';
       buttonBar3.appendChild(splitButton);
 
+
       const buttonBar4 = document.createElement('div');
       buttonBar4.className = 'button-bar';
       $('#pileOverlay > .modal').appendChild(buttonBar4);
@@ -236,6 +204,7 @@ class Pile extends Widget {
       });
       cancelButton.className = 'ui-button pilecancelbutton material-icons';
       buttonBar4.appendChild(cancelButton);
+
 
       showOverlay('pileOverlay');
     }
