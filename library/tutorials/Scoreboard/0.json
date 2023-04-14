@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 12,
     "info": {
       "name": "Scoreboard",
       "image": "/assets/-751946941_5803",
@@ -18,7 +18,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1673742960397,
+      "lastUpdate": 1679681162807,
       "variantImage": "",
       "variant": "Basic",
       "language": "en-US",
@@ -344,7 +344,8 @@
     "movable": false,
     "sortAscending": false,
     "sortField": "total",
-    "clickable": false
+    "clickable": false,
+    "verticalHeader": true
   },
   "comment7": {
     "id": "comment7",
@@ -363,7 +364,7 @@
     "width": 300,
     "z": 10075,
     "movable": false,
-    "text": "This scoreboard sets the 'sortField' property to 'total' and 'sortAscending' to false. This will sort the columns by highest to lowest score. 'sortField' defaults to show alphabetical player names, but can be any property of the seat or 'total'.",
+    "text": "This scoreboard sets the 'sortField' property to 'total' and 'sortAscending' to false. This will sort the columns by highest to lowest score. 'sortField' defaults to show alphabetical player names, but can be any property of the seat or 'total'. It also displayes the header line vertically or rotated using 'verticalHeader'",
     "layer": -2
   },
   "highlight1": {
@@ -415,7 +416,8 @@
     "movable": false,
     "css": {
       "background": "#f668b580"
-    }
+    },
+    "layer": -2
   },
   "highlight5": {
     "id": "highlight5",
@@ -540,6 +542,19 @@
     "y": 904,
     "height": 20,
     "z": 86,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight12": {
+    "id": "highlight12",
+    "x": 1075,
+    "y": 959,
+    "width": 110,
+    "height": 20,
+    "z": 90,
     "movable": false,
     "css": {
       "background": "#f668b580"
