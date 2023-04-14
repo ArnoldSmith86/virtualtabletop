@@ -144,9 +144,9 @@ class Pile extends Widget {
 
       const splitInputSlider = document.createElement('input');
       splitInputSlider.type = 'range';
-      splitInputSlider.value = Math.floor(childCount/2);
       splitInputSlider.min = 1;
       splitInputSlider.max = childCount - 1;
+      splitInputSlider.value = Math.floor(childCount/2);
       splitInputSlider.addEventListener('input', async e=>{
         splitInput.value = splitInputSlider.value;
         denominatorInput.value = childCount - splitInput.value;
