@@ -1,0 +1,24 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 225 80" width="225" height="80">
+	<title>New Project</title>
+	<style>
+		tspan { white-space:pre } 
+		.t0 { font-size: 16px;fill: #000000;font-weight: 400;font-family: "Roboto-Regular", "Roboto" } 
+		.t1 { font-size: 22px;fill: #000000;font-weight: 400;font-family: "Roboto-Regular", "Roboto" } 
+	</style>
+	<text id="Pieces: 1     2     3" style="transform: matrix(.941,0,0,1.154,-0.941,58.846)" >
+		<tspan x="0" y="0" class="t0">P</tspan><tspan  y="0" class="t0">i</tspan><tspan  y="0" class="t0">e</tspan><tspan  y="0" class="t0">c</tspan><tspan  y="0" class="t0">e</tspan><tspan  y="0" class="t0">s</tspan><tspan  y="0" class="t0">:</tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0">1</tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0">2</tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0">3</tspan><tspan  y="0" class="t0">
+</tspan>
+	</text>
+	<text id="? ? ?" style="transform: matrix(1,0,0,1,91,27)" >
+		<tspan x="0" y="0" class="t1">?</tspan><tspan  y="0" class="t1"> </tspan><tspan  y="0" class="t1">?</tspan><tspan  y="0" class="t1"> </tspan><tspan  y="0" class="t1">?
+</tspan>
+	</text>
+	<text id="Points: 2     4     6" style="transform: matrix(.902,0,0,1.154,4.552,79.385)" >
+		<tspan x="0" y="0" class="t0">P</tspan><tspan  y="0" class="t0">o</tspan><tspan  y="0" class="t0">i</tspan><tspan  y="0" class="t0">n</tspan><tspan  y="0" class="t0">t</tspan><tspan  y="0" class="t0">s</tspan><tspan  y="0" class="t0">:</tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0">2</tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0">4</tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0">6</tspan><tspan  y="0" class="t0">
+</tspan>
+	</text>
+	<text id="+ Chess Bonus" style="transform: matrix(.902,0,0,1.154,123.552,69.385)" >
+		<tspan x="0" y="0" class="t0">+</tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0">C</tspan><tspan  y="0" class="t0">h</tspan><tspan  y="0" class="t0">e</tspan><tspan  y="0" class="t0">s</tspan><tspan  y="0" class="t0">s</tspan><tspan  y="0" class="t0"> </tspan><tspan  y="0" class="t0">B</tspan><tspan  y="0" class="t0">o</tspan><tspan  y="0" class="t0">n</tspan><tspan  y="0" class="t0">u</tspan><tspan  y="0" class="t0">s
+</tspan>
+	</text>
+</svg>

@@ -6,11 +6,11 @@ class UserError extends Error {
 }
 
 function log(message) {
-  console.log(new Date().toISOString(), message);
+  console.log(new Date().toISOString(), String(message).replace(/\n/g, '\\n'));
 }
 
 function logError(message, e) {
-  log(`ERROR - ${message} - ${e.stack.replace(/\n/g, '\\n')}`);
+  log(`ERROR - ${message} - ${e.stack}`);
 }
 
 function userErrorHandler(err, req, res, next) {

@@ -24,6 +24,7 @@ export default function minifyRoom() {
         'client/css/jsonedit.css',
         'client/css/tracing.css',
 
+        'client/css/overlays/misc.css',
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
         'client/css/overlays/connectionlost.css',
@@ -35,14 +36,17 @@ export default function minifyRoom() {
         'client/css/widgets/card.css',
         'client/css/widgets/classes.css',
         'client/css/widgets/deck.css',
+        'client/css/widgets/dice.css',
         'client/css/widgets/holder.css',
         'client/css/widgets/label.css',
         'client/css/widgets/pile.css',
+        'client/css/widgets/scoreboard.css',
         'client/css/widgets/seat.css',
         'client/css/widgets/spinner.css',
         'client/css/widgets/timer.css',
 
         'client/css/fonts.css',
+        'client/css/custom.css',
       ],
       output: os.tmpdir() + '/out.css'
     }).then(function(min) {
@@ -50,6 +54,8 @@ export default function minifyRoom() {
       return minify({
         compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
         input: [
+          'node_modules/dompurify/dist/purify.js',
+
           'client/js/domhelpers.js',
           'client/js/connection.js',
           'client/js/serverstate.js',
@@ -60,6 +66,7 @@ export default function minifyRoom() {
           'client/js/mousehandling.js',
           'client/js/tracing.js',
           'client/js/statemanaged.js',
+          'client/js/color.js',
 
           'client/js/overlays/players.js',
           'client/js/overlays/states.js',
@@ -70,9 +77,11 @@ export default function minifyRoom() {
           'client/js/widgets/canvas.js',
           'client/js/widgets/card.js',
           'client/js/widgets/deck.js',
+          'client/js/widgets/dice.js',
           'client/js/widgets/holder.js',
           'client/js/widgets/label.js',
           'client/js/widgets/pile.js',
+          'client/js/widgets/scoreboard.js',
           'client/js/widgets/seat.js',
           'client/js/widgets/spinner.js',
           'client/js/widgets/timer.js',

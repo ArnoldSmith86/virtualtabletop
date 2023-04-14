@@ -11,6 +11,7 @@ let jeCommandError = null;
 let jeCommandWithOptions = null;
 let jeFKeyOrderDescending = 1;
 let jeWidgetHighlighting = true;
+let jeDebugViewing = null;
 let jeInMacroExecution = false;
 let jeContext = null;
 let jeSecondaryWidget = null;
@@ -38,28 +39,250 @@ const jeMacroPreset = `
 // EXAMPLES
 
 // add a property to all cards of a deck
-// if(w.deck == "deckName")
-//   w.customVariable = true;
+/*
+if(w.deck == "deckName")
+  w.customVariable = true;
+*/
 
 // change ID of matching widgets
-// var match = w.id.match(/^Player 3 - ((First|Second).*)$/)
-// if(match)
-//   w.id = "Player 5 - "+match[1]
+/*
+var match = w.id.match(/^Player 3 - ((First|Second).*)$/)
+if(match)
+  w.id = "Player 5 - "+match[1]
+*/
 
 // move matching widgets to the left
-// if(w.id.match(/^Player [13] - (Score|Seat)/))
-//   w.x -= 20;
+/*
+if(w.id.match(/^Player [13] - (Score|Seat)/))
+  w.x -= 20;
+*/
 
 // change all widget IDs to a counter prefixed by "w"
-// if(!v.i)
-//   v.i = 1
-// w.id = "w"+v.i
-// v.i++
+/*
+if(!v.i)
+  v.i = 1
+w.id = "w"+v.i
+v.i++
+*/
+
+// Adds pseudo players to seats
+/*
+if (w.type=="seat" && w.player==null) {
+  w.player = "player " + (w.index||1)
+  w.color = "hsl("+Math.floor(Math.random() * 360)+", 100%, 50%)"
+}
+*/
 `;
 
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
 const jeCommands = [
+  /* Just for editing convenience, the top (command) buttons are listed first */
+  {
+    id: 'je_toggleZoom',
+    name: 'Toggle zoom',
+    icon: '[zoom_in]',
+    forceKey: 'Z',
+    classes: _=>jeZoomOut ? 'onState' : '',
+    call: async function() {
+      jeZoomOut = !jeZoomOut;
+      if(jeZoomOut) {
+        $('body').classList.add('jeZoomOut');
+      } else {
+        $('body').classList.remove('jeZoomOut');
+      }
+      setScale();
+    }
+  },
+  {
+    id: 'je_copyState',
+    name: 'Copy state from another room/server',
+    icon: '[import_room]',
+    forceKey: 'C',
+    options: [ { type: 'string', label: 'URL' } ],
+    call: async function(options) {
+      const sourceURL = options.URL.replace(/\/[^\/]+$/, a=>`/state${a}`);
+      const targetURL = location.href.replace(/\/[^\/]+$/, a=>`/state${a}`);
+      fetch(sourceURL).then(r=>r.text()).then(t=>{
+        fetch(targetURL,{
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: t
+        })
+      });
+    }
+  },
+  {
+    id: 'je_callMacro',
+    name: _=>jeMode == 'macro' ? 'Call' : 'Macro',
+    icon: _=>jeMode == 'macro' ? '[play_arrow]' : '[routine]',
+    forceKey: 'M',
+    call: async function() {
+      if(jeMode != 'macro') {
+        jeWidget = null;
+        jeMode = 'macro';
+        jeSetEditorContent(jeMacroPreset);
+        jeColorize();
+        editPanel.style.setProperty('--treeHeight', "20%");
+      } else {
+        jeJSONerror = null;
+        jeInMacroExecution = true;
+        try {
+          const macro = new Function(`"use strict";return (function(w, v) {${jeGetEditorContent()}})`)();
+          const variableState = {};
+          for(const w of [...widgets.values()]) { // shallow copy because we might create new widgets by changing the id
+            const s = JSON.stringify(w.state);
+            const newState = JSON.parse(s);
+            macro(newState, variableState);
+            await updateWidget(JSON.stringify(newState), s);
+          }
+        } catch(e) {
+          jeJSONerror = e;
+        }
+        jeDisplayTree();
+        jeInMacroExecution = false;
+      }
+      jeShowCommands();
+    }
+  },
+  {
+    id: 'je_showWidget',
+    name: 'Show this widget below',
+    icon: '[visibility]',
+    forceKey: 'S',
+    call: async function() {
+      if(jeMode == 'multi')
+        jeSecondaryWidget = jeGetEditorContent();
+      else if(jeWidget !== undefined && jeWidget && (jeSecondaryWidget === null || jeStateNow.id != JSON.parse(jeSecondaryWidget).id))
+        jeSecondaryWidget = JSON.stringify(jeWidget.state, null, '  ');
+      else
+        jeSecondaryWidget = null;
+      jeShowCommands();
+    }
+  },
+  {
+    id: 'je_reverseFkeys',
+    name: 'Reverse order of F-key shortcuts',
+    icon:  _=>jeFKeyOrderDescending ==1 ? '[arrow_down]' : '[arrow_up]',
+    forceKey: 'K',
+    call: async function() {
+      jeFKeyOrderDescending = -jeFKeyOrderDescending;
+      jeShowCommands();
+    }
+  },
+  {
+    id: 'je_addNewWidget',
+    name: 'Add new widget',
+    icon: '[add_circle]',
+    forceKey: 'A',
+    call: async function() {
+      showOverlay("addOverlay")
+    }
+  },
+  {
+    id: 'je_removeWidget',
+    name: 'Remove widget',
+    icon: '[remove_circle]',
+    forceKey: 'R',
+    show: _=>jeStateNow,
+    call: async function() {
+      batchStart();
+      for(const id of jeSelectedIDs())
+        await removeWidgetLocal(id);
+      batchEnd();
+      jeEmpty();
+    }
+  },
+  {
+    id: 'je_duplicateWidget',
+    name: 'Duplicate widget',
+    icon: '[auto_awesome]',
+    forceKey: 'D',
+    show: _=>jeStateNow,
+    options: [
+      { label: 'Increment IDs',          type: 'select', options: [ { value: 'Numbers', text: 'Numbers' }, { value: 'Letters', text: 'Letters' }, { value: '', text: 'None'  } ] },
+      { label: 'Increment In',           type: 'string',   value: 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text' },
+      { label: 'Copy using inheritFrom', type: 'checkbox', value: false },
+      { label: 'Inherit properties',     type: 'string', value: '' },
+      { label: 'Copy recursively',       type: 'checkbox', value: true  },
+      { label: 'X offset',               type: 'number',   value: 0,   min: -1600, max: 1600 },
+      { label: 'Y offset',               type: 'number',   value: 0,   min: -1000, max: 1000 },
+      { label: '# Copies X',             type: 'number',   value: 1,   min:     0, max:  100 },
+      { label: '# Copies Y',             type: 'number',   value: 0,   min:     0, max:  100 }
+    ],
+    call: async function(options) {
+      for(const id of jeSelectedIDs()) {
+        const problems = [];
+        const clonedWidget = await duplicateWidget(widgets.get(id), options['Copy recursively'], options['Copy using inheritFrom'], options['Inherit properties'].split(',').map(e => e.trim()),options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems);
+        if(problems.length)
+          jeJSONerror = problems.join('\n');
+        if(clonedWidget) {
+          jeSelectWidget(widgets.get(clonedWidget.id));
+          jeStateNow.id = '###SELECT ME###';
+          jeSetAndSelect(clonedWidget.id);
+          jeStateNow.id = clonedWidget.id;
+        }
+      }
+    }
+  },
+  {
+    id: 'je_editMode',
+    name: 'Edit mode',
+    icon: '[edit]',
+    forceKey: 'F',
+    classes: _=>edit ? 'onState' : '',
+    call: async function() {
+      toggleEditMode();
+    }
+  },
+  {
+    id: 'je_openParent',
+    name: 'Open parent',
+    icon: '[up_one_level]',
+    forceKey: 'ArrowUp',
+    show: _=>jeStateNow && widgets.has(jeStateNow.parent),
+    call: async function() {
+      jeSelectWidget(widgets.get(jeStateNow.parent));
+    }
+  },
+  {
+    id: 'je_toggleWide',
+    name: 'Toggle wide editor',
+    icon: '[width]',
+    forceKey: 'ArrowRight',
+    classes: _=> $('#jsonEditor').classList.contains('wide') ? 'onState' : '',
+    call: async function() {
+      $('#jsonEditor').classList.toggle('wide');
+      setScale();
+      $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
+      jeDisplayTree();
+    }
+  },
+  {
+    id: 'je_toggleHighlight',
+    name: 'Toggle widget highlighting',
+    icon: 'flashlight_on',
+    forceKey: 'H',
+    classes: _=> jeWidgetHighlighting ? ' onState' : '',
+    call: async function() {
+      jeWidgetHighlighting = ! jeWidgetHighlighting;
+      jeShowCommands();
+      jeHighlightWidgets();
+    }
+  },
+  {
+    id: 'je_toggleDebug',
+    name: 'Toggle debug information',
+    icon: 'pest_control',
+    forceKey: 'B',
+    classes: _=> jeDebugViewing ? 'onState' : '',
+    show: _=>jeDebugViewing != null,
+    call: async function() {
+      jeDebugViewing = ! jeDebugViewing;
+      $('#jeLog').classList.toggle('active');
+    }
+  },
+  /* Now the context-dependent stuff */
   {
     id: 'je_toggleBoolean',
     name: 'toggle boolean',
@@ -190,6 +413,140 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_exportCSV',
+    name: 'export to CSV',
+    options: [
+      { label: 'separator',    type: 'select',    options: [ { value: ',', text: ',' }, { value: ';', text: ';' } ] }
+    ],
+    context: '^deck ↦ cardTypes',
+    call: async function(options) {
+
+      function downloadCSV(csv, filename) {
+        const csvFile = new Blob([csv], {type:"text/csv"});
+        const downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        downloadLink.remove();
+      }
+
+      function escapeField(v) {
+        if(v === undefined)
+          return '';
+        if(typeof v == 'number')
+          return v.toString();
+
+        return typeof v == 'string' && !v.match(/^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$|^JSON:/) ? `"${v.replace(/"/g, '""')}"` : `"JSON:${JSON.stringify(v).replace(/"/g, '""')}"`;
+      }
+
+      const allProperties = [...new Set(Object.values(jeStateNow.cardTypes).reduce((a,t)=>a.concat(...Object.keys(t)), []))];
+      let csvText = `id::INTERNAL${options["separator"]}${allProperties.map(escapeField).join(options["separator"])}${options["separator"]}cardCount::INTERNAL\n`;
+      for(const [ id, type ] of Object.entries(jeStateNow.cardTypes)) {
+        const cardCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
+        csvText += `${escapeField(id)}${options["separator"]}${allProperties.map(p=>escapeField(type[p])).join(options["separator"])}${options["separator"]}${cardCount}\n`;
+      }
+      downloadCSV(csvText, `${jeStateNow.id} cardTypes.csv`);
+    }
+  },
+  {
+    id: 'je_importCSV',
+    name: 'import from CSV',
+    options: [
+      { label: 'mode',    type: 'select',    options: [ { value: 'set', text: 'set' }, { value: 'add', text: 'add' } ] }
+    ],
+    context: '^deck ↦ cardTypes',
+    call: async function(options) {
+
+      let csv = await selectFile('TEXT')
+
+      //source : https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data/41563966#41563966
+
+      function csvToArray(text, delimiter) {
+        let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
+        for (l of text) {
+            if ('"' === l) {
+                if (s && l === p) row[i] += l;
+                s = !s;
+            } else if (delimiter === l && s) l = row[++i] = '';
+            else if ('\n' === l && s) {
+                if ('\r' === p) row[i] = row[i].slice(0, -1);
+                row = ret[++r] = [l = '']; i = 0;
+            } else row[i] += l;
+            p = l;
+        }
+        return ret;
+      };
+
+      function unescapeField(v) {
+        try {
+          if(v.match(/^JSON:/))
+            return JSON.parse(v.substr(5));
+          else if(v && v.match(/^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$/))
+            return parseFloat(v);
+          else if(v)
+            return v;
+        } catch(e) {
+          return e.toString();
+        }
+      }
+
+      const oldCardTypeIDs = Object.keys(jeStateNow.cardTypes);
+
+      if(options["mode"]== "set")
+        jeStateNow.cardTypes = {};
+
+      const lines=csvToArray(csv.content, csv.content.split(';').length > csv.content.split(',').length ? ';' : ',');
+      const headers=lines[0].map(unescapeField);
+      const targetCounts = {};
+
+      for(let i=1;i<lines.length;i++){
+
+        const obj = {};
+        const currentline=lines[i]
+
+        if(lines[i].length == 1 && !lines[i][0])
+          continue;
+
+        for(let j=0;j<Math.min(headers.length, currentline.length);j++)
+          obj[headers[j]] = unescapeField(currentline[j]);
+
+        const cardTypeID = obj['id::INTERNAL'] || generateUniqueWidgetID();
+        delete obj['id::INTERNAL'];
+
+        targetCounts[cardTypeID] = obj['cardCount::INTERNAL'];
+        delete obj['cardCount::INTERNAL'];
+
+        jeStateNow.cardTypes[cardTypeID] = obj;
+      }
+
+      batchStart();
+
+      for(const oldID of oldCardTypeIDs)
+        if(!jeStateNow.cardTypes[oldID])
+          for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==oldID))
+            await removeWidgetLocal(card.get('id'));
+
+      jeSetAndSelect();
+      jeApplyChanges();
+
+      for(const [ id, targetCount ] of Object.entries(targetCounts)) {
+        const currentCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
+        for(let i=0; i<targetCount-currentCount; ++i) {
+          const cardId = await addWidgetLocal({ deck:jeStateNow.id, type:'card', cardType:id });
+          if(jeStateNow.parent)
+            await widgets.get(cardId).moveToHolder(widgets.get(jeStateNow.parent));
+        }
+        for(let i=0; i<currentCount-targetCount; ++i) {
+          const card = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id)[0];
+          await removeWidgetLocal(card.get('id'));
+        }
+      }
+
+      batchEnd();
+    }
+  },
+  {
     id: 'je_faceTemplate',
     name: 'face template',
     context: '^deck ↦ faceTemplates',
@@ -203,7 +560,7 @@ const jeCommands = [
   {
     id: 'je_grid',
     name: 'grid element',
-    context: '^.* ↦ grid',
+    context: '^[^ ]* ↦ grid',
     call: async function() {
       const w = widgets.get(jeStateNow.id);
       jeStateNow.grid.push({
@@ -269,7 +626,7 @@ const jeCommands = [
         const selectedKey = elements[0];
         elements[0] = "###SELECT ME###";
         jeStateNow[cssKind] = {};
-        for( let i=0; i<Math.floor(elements.length/2); i++) 
+        for( let i=0; i<Math.floor(elements.length/2); i++)
           jeStateNow[cssKind][elements[2*i].trim()] = elements[2*i+1].trim();
         jeSetAndSelect(selectedKey.trim())
       } else {
@@ -386,97 +743,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_toggleZoom',
-    name: 'Toggle zoom',
-    icon: '[zoom_in]',
-    forceKey: 'Z',
-    call: async function() {
-      jeZoomOut = !jeZoomOut;
-      if(jeZoomOut) {
-        $('body').classList.add('jeZoomOut');
-      } else {
-        $('body').classList.remove('jeZoomOut');
-      }
-      setScale();
-    }
-  },
-  {
-    id: 'je_copyState',
-    name: 'Copy state from another room/server',
-    icon: '[import_room]',
-    forceKey: 'C',
-    options: [ { type: 'string', label: 'URL' } ],
-    call: async function(options) {
-      const sourceURL = options.URL.replace(/\/[^\/]+$/, a=>`/state${a}`);
-      const targetURL = location.href.replace(/\/[^\/]+$/, a=>`/state${a}`);
-      fetch(sourceURL).then(r=>r.text()).then(t=>{
-        fetch(targetURL,{
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: t
-        })
-      });
-    }
-  },
-  {
-    id: 'je_callMacro',
-    name: _=>jeMode == 'macro' ? 'Call' : 'Macro',
-    icon: _=>jeMode == 'macro' ? '[play_arrow]' : '[routine]',
-    forceKey: 'M',
-    call: async function() {
-      if(jeMode != 'macro') {
-        jeWidget = null;
-        jeMode = 'macro';
-        jeSetEditorContent(jeMacroPreset);
-        jeColorize();
-        editPanel.style.setProperty('--treeHeight', "20%");
-      } else {
-        jeJSONerror = null;
-        jeInMacroExecution = true;
-        try {
-          const macro = new Function(`"use strict";return (function(w, v) {${jeGetEditorContent()}})`)();
-          const variableState = {};
-          for(const w of [...widgets.values()]) { // shallow copy because we might create new widgets by changing the id
-            const s = JSON.stringify(w.state);
-            const newState = JSON.parse(s);
-            macro(newState, variableState);
-            await updateWidget(JSON.stringify(newState), s);
-          }
-        } catch(e) {
-          jeJSONerror = e;
-        }
-        jeDisplayTree();
-        jeInMacroExecution = false;
-      }
-      jeShowCommands();
-    }
-  },
-  {
-    id: 'je_showWidget',
-    name: 'Show this widget below',
-    icon: '[visibility]',
-    forceKey: 'S',
-    call: async function() {
-      if(jeMode == 'multi')
-        jeSecondaryWidget = jeGetEditorContent();
-      else if(jeWidget !== undefined && jeWidget && (jeSecondaryWidget === null || jeStateNow.id != JSON.parse(jeSecondaryWidget).id))
-        jeSecondaryWidget = JSON.stringify(jeWidget.state, null, '  ');
-      else
-        jeSecondaryWidget = null;
-      jeShowCommands();
-    }
-  },
-  {
-    id: 'je_reverseFkeys',
-    name: 'Reverse order of F-key shortcuts',
-    icon:  _=>jeFKeyOrderDescending ==1 ? '[arrow_down]' : '[arrow_up]',
-    forceKey: 'K',
-    call: async function() {
-      jeFKeyOrderDescending = -jeFKeyOrderDescending;
-      jeShowCommands();
-    }
-  },
-  {
     id: 'je_removeProperty',
     name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
     context: ' ↦ (?=[^"]+$)',
@@ -497,68 +763,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_addNewWidget',
-    name: 'Add new widget',
-    icon: '[add_circle]',
-    forceKey: 'A',
-    call: async function() {
-      showOverlay("addOverlay")
-    }
-  },
-  {
-    id: 'je_removeWidget',
-    name: 'Remove widget',
-    icon: '[remove_circle]',
-    forceKey: 'R',
-    show: _=>jeStateNow,
-    call: async function() {
-      for(const id of jeSelectedIDs())
-        await removeWidgetLocal(id);
-      jeEmpty();
-    }
-  },
-  {
-    id: 'je_duplicateWidget',
-    name: 'Duplicate widget',
-    icon: '[auto_awesome]',
-    forceKey: 'D',
-    show: _=>jeStateNow,
-    options: [
-      { label: 'Increment IDs',          type: 'select', options: [ { value: 'Numbers', text: 'Numbers' }, { value: 'Letters', text: 'Letters' }, { value: '', text: 'None'  } ] },
-      { label: 'Increment In',           type: 'string',   value: 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text' },
-      { label: 'Copy using inheritFrom', type: 'checkbox', value: false },
-      { label: 'Inherit properties',     type: 'string', value: '' },
-      { label: 'Copy recursively',       type: 'checkbox', value: true  },
-      { label: 'X offset',               type: 'number',   value: 0,   min: -1600, max: 1600 },
-      { label: 'Y offset',               type: 'number',   value: 0,   min: -1000, max: 1000 },
-      { label: '# Copies X',             type: 'number',   value: 1,   min:     0, max:  100 },
-      { label: '# Copies Y',             type: 'number',   value: 0,   min:     0, max:  100 }
-    ],
-    call: async function(options) {
-      for(const id of jeSelectedIDs()) {
-        const problems = [];
-        const clonedWidget = await duplicateWidget(widgets.get(id), options['Copy recursively'], options['Copy using inheritFrom'], options['Inherit properties'].split(',').map(e => e.trim()),options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems);
-        if(problems.length)
-          jeJSONerror = problems.join('\n');
-        if(clonedWidget) {
-          jeSelectWidget(widgets.get(clonedWidget.id));
-          jeStateNow.id = '###SELECT ME###';
-          jeSetAndSelect(clonedWidget.id);
-          jeStateNow.id = clonedWidget.id;
-        }
-      }
-    }
-  },
-  {
-    id: 'je_editMode',
-    name: 'Edit mode',
-    icon: '[edit]',
-    forceKey: 'F',
-    call: async function() {
-      toggleEditMode();
-    }
-  },
-  {
     id: 'je_openDeck',
     name: 'Open deck',
     icon: '[deck]',
@@ -567,39 +771,6 @@ const jeCommands = [
     show: _=>widgets.has(jeStateNow.deck),
     call: async function() {
       jeSelectWidget(widgets.get(jeStateNow.deck));
-    }
-  },
-  {
-    id: 'je_openParent',
-    name: 'Open parent',
-    icon: '[up_one_level]',
-    forceKey: 'ArrowUp',
-    show: _=>jeStateNow && widgets.has(jeStateNow.parent),
-    call: async function() {
-      jeSelectWidget(widgets.get(jeStateNow.parent));
-    }
-  },
-  {
-    id: 'je_toggleWide',
-    name: 'Toggle wide editor',
-    icon: '[width]',
-    forceKey: 'ArrowRight',
-    call: async function() {
-      $('#jsonEditor').classList.toggle('wide');
-      setScale();
-      $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
-      jeDisplayTree();
-    }
-  },
-  {
-    id: 'je_toggleHighlight',
-    name: 'Toggle widget highlighting',
-    icon: _=>jeWidgetHighlighting ? 'flashlight_on' : 'flashlight_off',
-    forceKey: 'H',
-    call: async function() {
-      jeWidgetHighlighting = ! jeWidgetHighlighting;
-      jeShowCommands();
-      jeHighlightWidgets();
     }
   },
   {
@@ -687,7 +858,6 @@ function jeAddRoutineOperationCommands(command, defaults) {
     show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
   });
 
-  defaults.skip = false;
   for(const property in defaults) {
     jeCommands.push({
       id: 'default_' + command + '_' + property,
@@ -713,37 +883,41 @@ function jeAddRoutineOperationCommands(command, defaults) {
 
 function jeAddCommands() {
   const widgetTypes = [ 'all' ];
-  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget' ];
+  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats' ];
 
-  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Button()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Card()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
+  const widgetBase = new Widget();
+  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Button(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Card(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Dice(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
-  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
-  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
+  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
+  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
   jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "OK", fields: [] } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
-  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###'});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
@@ -764,16 +938,27 @@ function jeAddCommands() {
 
   jeAddGridCommand('x', 0);
   jeAddGridCommand('y', 0);
+  jeAddGridCommand('maxX', 0);
+  jeAddGridCommand('maxY', 0);
   jeAddGridCommand('minX', 0);
   jeAddGridCommand('minY', 0);
+  jeAddGridCommand('alignX', 0);
+  jeAddGridCommand('alignY', 0);
   jeAddGridCommand('offsetX', 0);
   jeAddGridCommand('offsetY', 0);
   jeAddGridCommand('rotation', 0);
 
+  jeAddLimitCommand('minX', 0);
+  jeAddLimitCommand('minY', 0);
+  // Default max limits are computed dynamically.
+  jeAddLimitCommand('maxX');
+  jeAddLimitCommand('maxY');
+
   jeAddFieldCommand('text', 'subtitle|title|text', '');
-  jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('variable', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('label', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('colors', 'palette', [ '#000000' ]);
   jeAddFieldCommand('min', 'number', 0);
   jeAddFieldCommand('max', 'number', 10);
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
@@ -789,10 +974,11 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
-  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'palette', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
+  jeAddEnumCommands('^.*\\(SCORE\\) ↦ mode', [ 'set', 'inc', 'dec' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add', 'remove', 'intersect' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
@@ -805,6 +991,8 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ collection', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
+  jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
+  jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
@@ -1036,11 +1224,30 @@ function jeAddGridCommand(key, value) {
   jeCommands.push({
     id: 'grid_' + key,
     name: key,
-    context: '^.* ↦ grid ↦ [0-9]+',
+    context: '^[^ ]* ↦ grid ↦ [0-9]+',
     show: _=>!(key in jeStateNow.grid[+jeContext[2]]),
     call: async function() {
       jeStateNow.grid[+jeContext[2]][key] = '###SELECT ME###';
       jeSetAndSelect(value);
+    }
+  });
+}
+
+function jeAddLimitCommand(key, value) {
+  jeCommands.push({
+    id: 'limit_' + key,
+    name: key,
+    context: '^[^ ]* ↦ dragLimit',
+    show: _=>!(key in jeStateNow.dragLimit),
+    call: async function() {
+      const w = widgets.get(jeStateNow.id);
+      jeStateNow.dragLimit[key] = '###SELECT ME###';
+      let limit = value;
+      if (key == 'maxX')
+        limit = 1600 - w.get('width');
+      else if (key == 'maxY')
+        limit = 1000 - w.get('height');
+      jeSetAndSelect(limit);
     }
   });
 }
@@ -1060,22 +1267,23 @@ function jeAddNumberCommand(name, key, callback) {
   });
 }
 
-function jeAddWidgetPropertyCommands(object) {
+function jeAddWidgetPropertyCommands(object, widgetBase) {
   for(const property in object.defaults)
     if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
-      jeAddWidgetPropertyCommand(object, property);
+      jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
 }
 
 const buttonColorProperties = ['backgroundColor', 'borderColor', 'textColor', 'backgroundColorOH', 'borderColorOH', 'textColorOH'];
 
-function jeAddWidgetPropertyCommand(object, property) {
+function jeAddWidgetPropertyCommand(object, widgetBase, property) {
   jeCommands.push({
     id: 'widget_' + object.getDefaultValue('typeClasses').replace('widget ', '') + '_' + property,
     name: property,
     class: 'property',
     context: `^${object.getDefaultValue('typeClasses').replace('widget ', '')}`,
+    isTypeSpecific: JSON.stringify(widgetBase.getDefaultValue(property)) !== JSON.stringify(object.getDefaultValue(property)),
     call: property=='dropTarget'? // Special case for dropTarget, faces, and spinner options
             async function() {
               jeStateNow.dropTarget = {
@@ -1202,7 +1410,6 @@ function jeApplyDelta(delta) {
   }
 
   jeUpdateTree(delta.s);
-  widgetCoordCache = null;
 }
 
 function jeApplyState(state) {
@@ -1501,7 +1708,7 @@ document.addEventListener("mouseup", function(){
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
-  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
+  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, jeSelectedIDs()) + '</ul>';
 
   treeNodes = {};
   for(const dom of $a('#jeTree .key'))
@@ -1526,15 +1733,14 @@ function jeDisplayTree() {
   });
 }
 
-function jeDisplayTreeAddWidgets(allWidgets, parent) {
+function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
   function colored(str, kind) {
     return `<i class=${kind}>${html(str)}</i>`
   }
   let result = '';
 
-  const selectedIDs = jeSelectedIDs();
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
-    const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'));
+    const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), selectedIDs);
     const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
 
     if(children)
@@ -1590,6 +1796,7 @@ function jeUpdateTree(delta) {
 function jeDisplayFilteredWidgets(e) {
   const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
   const results = widgetFilter(o => o.get('id').toLowerCase().includes(subtext) ||
+          o.get('cardType') && o.get('cardType').toLowerCase().includes(subtext) ||
           o.get('type') && o.get('type').toLowerCase().includes(subtext) ||
           !o.get('type') && 'basic'.includes(subtext)).sort(
             function(a,b) {
@@ -1787,6 +1994,12 @@ function jeLoggingRoutineEnd(variables, collections) {
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
+    // Enable the je_toggleDebug button the first time a routine is executed.
+    if ( jeDebugViewing == null) {
+      jeDebugViewing = false;
+      jeShowCommands()
+    }
+
     // Make it so clicking on the arrows expands the subtree
     const expanders = document.getElementsByClassName('jeExpander');
     let i;
@@ -1800,8 +2013,8 @@ function jeLoggingRoutineEnd(variables, collections) {
     const problems = document.getElementsByClassName('jeLogHasProblems');
     for (i=0; i<problems.length; i++) {
       let node = problems[i];
-      while (node && !node.classList.contains('jeLog')) {
-        if(node.classList.contains('jeLogOperation')) {
+      while (node && node.id != 'jeLog') {
+        if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
           node.firstElementChild.classList.remove('jeExpander');
           node.firstElementChild.classList.add('jeRedExpander')
         }
@@ -1866,7 +2079,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 
   jeLoggingHTML =  `
     ${savedHTML[0]}
-    <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
+    <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
       <div class="jeExpander">
         <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
       </div>
@@ -2071,8 +2284,9 @@ function jeShowCommands() {
     if(command.context == undefined) {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
-      const isMaterial = String(icon).match(/^[^[]/) ? 'material' : '';
-      commandText += `<button class='top ${isMaterial}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
+      const material = String(icon).match(/^[^[]/) ? 'material' : '';
+      const classes = typeof command.classes == 'function' ? command.classes() : command.classes || '';
+      commandText += `<button class='top ${material} ${classes}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
     }
   }
   commandText += `</div>`;
@@ -2084,9 +2298,10 @@ function jeShowCommands() {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
     if(contextMatch && contextMatch[0]!= "" && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
-      if(activeCommands[contextMatch[0]] === undefined)
-        activeCommands[contextMatch[0]] = [];
-      activeCommands[contextMatch[0]].push(command);
+      const title = command.isTypeSpecific || command.isTypeSpecific === undefined ? contextMatch[0] : 'widget';
+      if(activeCommands[title] === undefined)
+        activeCommands[title] = [];
+      activeCommands[title].push(command);
     };
   }
 
@@ -2108,7 +2323,7 @@ function jeShowCommands() {
       return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
     }
 
-    for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
+    for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length).sort((a,b)=>a==='widget'?1:(b==='widget'?-1:0)))) {
       commandText += `\n  <div class="context">${html(contextMatch)}</div>\n`;
       for(const command of activeCommands[contextMatch].sort(sortByName)) {
         try {
@@ -2168,10 +2383,15 @@ function jeToggle() {
   jeRoutineLogging = jeEnabled;
   jeLoggingHTML = '';
   if(jeEnabled) {
+    $('#activeGameButton').click();
     $('body').classList.add('jsonEdit');
-    jeDisplayTree();
     if(jeWidget && !widgets.has(jeWidget.id))
       jeEmpty();
+    if(jeDebugViewing) {
+      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
+      jeShowCommands()
+    }
+    jeDisplayTree();
   } else {
     $('body').classList.remove('jsonEdit');
   }
@@ -2185,7 +2405,6 @@ function jeEmpty() {
   jeWidget = null;
 
   jeSet('');
-  jeDisplayTree();
   jeShowCommands();
 }
 
@@ -2200,7 +2419,6 @@ const clickButton = async function(event) {
   }
 }
 
-let widgetCoordCache = null;
 window.addEventListener('mousemove', function(e) {
   if(!jeEnabled)
     return;
@@ -2210,24 +2428,15 @@ window.addEventListener('mousemove', function(e) {
   if(!jeZoomOut && x > 1600 || jeMouseButtonIsDown)
     return;
 
-  if(!widgetCoordCache) {
-    widgetCoordCache = [];
-    for(const widget of widgets.values()) {
-      const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
-      coords.r = coords.x + widget.get('width');
-      coords.b = coords.y + widget.get('height');
-      coords.widget = widget;
-      widgetCoordCache.push(coords);
-    }
-  }
-
-  const hoveredWidgets = widgetCoordCache.filter(c=>x>=c.x && x<=c.r && y>=c.y && y<=c.b).map(c=>c.widget);
+  // Adding hitTest makes foreign elements temporarily hittable.
+  document.body.classList.add('hitTest');
+  let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
+  document.body.classList.remove('hitTest');
 
   hoveredWidgets.sort(function(w1,w2) {
     const hiddenParent =  function(widget) {
       return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
     };
-
     const w1card = w1.get('type') == 'card';
     const w2card = w2.get('type') == 'card';
     const w1foreign = !w1card && hiddenParent(w1);

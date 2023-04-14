@@ -7,6 +7,7 @@
   --toolbarSize: 44px;
   --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
+  --overlayFontColor: #222326;
   --VTTblue: #1f5ca6;
   --VTTblueDark: #0d2f5e;
   --VTTblueLight: #a9c6e8;
@@ -33,42 +34,9 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-button {
-  border: 5px;
-  color: white;
-  background-color: var(--VTTblue);
-  padding: 5px;
-  border-radius: 5px;
-  background-repeat: no-repeat;
-  margin: 1px;
-}
-
-button:hover {
-  background-color: var(--VTTblueDark);
-}
-
-#toolbar {
-  background: var(--VTTblue);
-  height: var(--toolbarSize);
-  width: 100%;
-  position: fixed;
-
-  top: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 + var(--roomHeight) * var(--scale) - var(--toolbarSize) / 2 - 1px);
-
-  left: 0;
-  width: 100%;
-  height: var(--toolbarSize);
-  z-index: 2;
-  display: flex;
-  align-content: center;
-  gap: 2px;
-  padding: 2px;
-  box-sizing: border-box;
-}
-
 #roomArea {
   position: fixed;
-  overflow: hidden;
+  overflow: clip;
   width: calc(var(--roomWidth) * var(--scale));
   height: calc(var(--roomHeight) * var(--scale));
   top: var(--roomTop);
@@ -76,258 +44,11 @@ button:hover {
   z-index: 1;
 }
 
-#toolbar .divider {
-  border-left: 1px solid #ffffff44;
-  height: calc(var(--toolbarSize) - 14px);
-  max-width: 0px;
-  font-size: 0px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin: 7px 3px;
-}
-
-#toolbar .spacer {
-  background: none;
-  font-size: 0px;
-  flex-grow: 1;
-}
-
-.toolbarButton {
-  flex-grow: 0;
-  flex-shrink: 0;
-  position: relative;
-  width: auto;
-  height: calc(var(--toolbarSize) - 4px);
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 4px;
-  background: none;
-  font-size: calc(var(--toolbarSize) - 12px);
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background-size: 80% 80%;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.toolbarButton::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: calc(var(--toolbarSize) - 4px);
-  height: calc(var(--toolbarSize) - 4px);
-  font-size: calc(var(--toolbarSize) - 12px);
-  line-height: calc(var(--toolbarSize) - 4px);
-}
-
-.toolbarButton:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.toolbarButton:focus {
-  outline-style: none;
-  box-shadow: none;
-  border-color: transparent;
-}
-
-.toolbarButton .tooltip {
-  font-family: 'Roboto';
-  display: inline-block;
-  position: relative;
-  padding: 2px 8px 2px 2px;
-  margin-left: calc(var(--toolbarSize) - 4px);
-  font-size: 14px;
-  line-height: calc(var(--toolbarSize) - 4px);
-  color: white;
-  border-radius: 4px;
-  width: auto;
-  height: calc(var(--toolbarSize) - 4px);
-  white-space: nowrap;
-  pointer-events: none;
-  font-weight: 500;
-}
-
-.toolbarButton:hover .tooltip {
-  display: block;
-}
-
-.toolbarButton::before,
-.ui-button::before,
-.prettyButton::before,
-.prettyButton-icon,
-.symbols {
-  font-family: 'VTT-Symbols' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-
-  letter-spacing: 0;
-  -webkit-font-feature-settings: "liga";
-  -moz-font-feature-settings: "liga=1";
-  -moz-font-feature-settings: "liga";
-  -ms-font-feature-settings: "liga"1;
-  font-feature-settings: "liga";
-  -webkit-font-variant-ligatures: discretionary-ligatures;
-  font-variant-ligatures: discretionary-ligatures;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-#options {
-  left: 0px;
-  display: inline-flex;
-  padding: 2px;
-  border-radius: 4px;
-  top: -82px;
-  transform: translateY(45px) translateX(564px);
-  position: absolute;
-  background:var(--VTTblue);
-  box-shadow: 0 0 5px #00000055;
-}
-
-#volume {
-  top: 50%;
-  transform: translateY(50%);
-  -moz-transform: translateY(25%);
-}
-
 @media (min-aspect-ratio: 1600/1000) {
-  .toolbarButton {
-    width: calc(var(--toolbarSize) - 4px);
-  }
-
-  #toolbar {
-    top: 0;
-    left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
-    width: var(--toolbarSize);
-    height: 100%;
-    flex-direction: column;
-  }
-
-  #options {
-    transform: translateY(273px) translateX(46px);
-  }
-
-  #toolbar .divider{
-    border-top: 1px solid #ffffff44;
-    height: 0px;
-    max-height: 0px;
-    font-size: 0px;
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin: 3px 5px;
-    max-width: 75px;
-  }
-
-  .toolbarButton .tooltip {
-    display: none;
-    position: absolute;
-    padding: 2px 12px;
-    font-size: 14px;
-    line-height: 14px;
-    color: white;
-    background: var(--VTTblue);
-    border-radius: 4px;
-    width: auto;
-    height: auto;
-    box-shadow: 0 0 5px #00000055;
-    white-space: nowrap;
-    top: 10px;
-    right: unset;
-    left: 4px;
-    line-height: 14px;
-    min-height: 16px;
-  }
-
-  :root {
+  body {
     --roomTop: 0px;
     --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
   }
-}
-
-@media only screen and (max-width: 1000px) {
-  .toolbarButton .tooltip {
-    display: none;
-    position: absolute;
-    padding: 2px 12px;
-    font-size: 14px;
-    line-height: 14px;
-    color: white;
-    background: var(--VTTblue);
-    border-radius: 4px;
-    width: auto;
-    height: auto;
-    box-shadow: 0 0 5px #00000055;
-    white-space: nowrap;
-    bottom: calc(var(--toolbarSize) + 4px);
-    right: unset;
-    left: 4px;
-    line-height: 14px;
-    min-height: 16px;
-    left: 0;
-    margin: 0;
-  }
-
-  #aboutButton > .tooltip{
-    left: unset;
-    right: 0;
-  }
-
-  .toolbarButton {
-    width: calc(var(--toolbarSize) - 4px);
-  }
-
-  #options {
-    transform: translateY(44px) translateX(188px);
-    background:var(--VTTblue);
-  }
-}
-
-body.aspectTooGood #toolbar {
-  top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
-  left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
-  width: var(--toolbarSize);
-  height: calc(var(--scale) * var(--roomHeight));
-  flex-direction: column;
-}
-
-body.aspectTooGood .toolbarButton .tooltip {
-  display: none;
-  position: absolute;
-  padding: 2px 12px;
-  font-size: 14px;
-  line-height: 14px;
-  color: white;
-  background: var(--VTTblue);
-  border-radius: 4px;
-  width: auto;
-  height: auto;
-  box-shadow: 0 0 5px #00000055;
-  white-space: nowrap;
-  top: 10px;
-  right: unset;
-  left: 4px;
-  line-height: 14px;
-  min-height: 16px;
-}
-
-body.aspectTooGood .toolbarButton:hover .tooltip {
-  display: block;
-}
-
-body.aspectTooGood #toolbar .divider {
-  border-top: 1px solid #ffffff44;
-  height: 0px;
-  max-height: 0px;
-  font-size: 0px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin: 3px 5px;
-  max-width: 75px;
 }
 
 body.aspectTooGood {
@@ -335,46 +56,505 @@ body.aspectTooGood {
   --roomLeft: var(--toolbarSize);
 }
 
-body #hideToolbarButton,
-body.aspectTooGood.hiddenToolbar #toolbar {
-  display: none;
-}
-
 body.aspectTooGood.hiddenToolbar {
   --roomLeft: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
 }
 
-body.aspectTooGood #hideToolbarButton {
-  display: inline-flex;
+@media (orientation: portrait) {
+  body:not(.lightsOff,.jsonEdit) {
+    background-image: linear-gradient(0deg, #484848e8, #484848e8), url(i/branding/logo.svg);
+    background-size: calc(100% - 40px) calc(var(--roomTop) - 40px);
+    background-repeat: no-repeat;
+    background-position: 20px 20px;
+    height: 100vh;
+  }
+  body:not(.lightsOff,.jsonEdit)::after {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    bottom: 0;
+    height: calc(var(--roomTop) - 40px);
+    width: calc(100vw - 40px);
+
+    content: "Please rotate your device to landscape orientation and switch to fullscreen.";
+    margin: 20px;
+    font-size: 20px;
+    color: #fff2;
+  }
 }
 
-body.aspectTooGood #options {
-  transform: translateY(273px) translateX(46px);
-}
 
-body.lightsOff, body.lightsOff #toolbar, body.lightsOff #toolbar .tooltip {
-  background: black;
-}
-body.lightsOff #toolbar {
-  opacity: 0.1;
-}
-body.lightsOff #toolbar:hover {
-  opacity: 1;
-}
+/* toolbar */
 
-#options.hidden {
-  visibility: hidden;
-}
+
+  /* main */
+
+    #toolbar {
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      position: fixed;
+      box-sizing: border-box;
+      z-index: 2;
+
+      top: 0;
+      left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
+      width: var(--toolbarSize);
+      height: 100%;
+
+      --toolbarColor: var(--VTTblue);
+      background: var(--toolbarColor);
+      padding: 20px 0 10px 0;
+    }
+
+    #toolbar > img {
+      display: none;
+    }
+
+    body.wideToolbar {
+      --toolbarSize: 200px;
+    }
+
+    body.aspectTooGood #toolbar {
+      top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
+      height: calc(var(--scale) * var(--roomHeight));
+    }
+
+    body.horizontalToolbar #toolbar {
+      flex-direction: row;
+
+      top: calc((var(--vh, 1vh) * 100 - var(--roomHeight) * var(--scale)) / 2 + var(--roomHeight) * var(--scale) - var(--toolbarSize) / 2 - 1px);
+      left: 0;
+      width: 100%;
+      height: var(--toolbarSize);
+
+      padding: 0 10px 0 20px;
+    }
+
+    body.aspectTooGood.hiddenToolbar #toolbar {
+      display: none;
+    }
+
+    @media (min-height: 440px) {
+      body.wideToolbar #toolbar > img {
+        display: block;
+        margin: 10px 20px 3px 20px;
+        height: 52px;
+      }
+      body.wideToolbar #toolbar .divider:nth-child(2) {
+        display: block;
+        margin: 20px 10%;
+      }
+    }
+
+  /* dividers */
+
+    #toolbar .divider {
+      border-top: 1px solid #fff8;
+      margin: 10px 10%;
+    }
+
+    #toolbar .divider:nth-child(2) {
+      display: none;
+    }
+
+    #toolbar .spacer {
+      flex-grow: 1;
+    }
+
+    body.horizontalToolbar #toolbar .divider {
+      border-left: 1px solid #fff8;
+      height: 80%;
+      margin: auto 10px;
+    }
+
+  /* buttons */
+
+    .toolbarButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2px;
+      background: var(--toolbarColor);
+    }
+
+    .toolbarButton::before,
+    .ui-button::before,
+    .prettyButton::before,
+    .prettyButton-icon,
+    .symbols {
+      font-family: 'VTT-Symbols' !important;
+
+      letter-spacing: 0;
+      font-feature-settings: "liga";
+      font-variant-ligatures: discretionary-ligatures;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .toolbarButton::before {
+      font-size: 20px;
+    }
+
+    .toolbarButton:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .toolbarButton:focus {
+      outline-style: none;
+      box-shadow: none;
+      border-color: transparent;
+    }
+
+    body.wideToolbar .toolbarButton {
+      justify-content: left;
+      padding-left: 10%;
+    }
+
+    body.horizontalToolbar .toolbarButton:not(.toolbarTab) {
+      justify-content: flex-end;
+    }
+
+  /* tabs */
+
+    .toolbarTab {
+      width: 90%;
+      border-radius: 0 20px 20px 0;
+      margin-left: 0;
+      height: 40px;
+    }
+
+    .toolbarTab::before {
+      font-size: 32px;
+    }
+
+    .toolbarTab.active {
+      background-color: white;
+      color: var(--toolbarColor);
+    }
+
+    body.wideToolbar .toolbarTab::before {
+      font-size: 24px;
+    }
+
+    body.horizontalToolbar .toolbarTab {
+      border-radius: 20px 20px 0 0;
+      margin: auto 2px 0 2px;
+      padding: 0 16px;
+      width: unset;
+    }
+
+    @media (min-width: 760px) {
+      body.horizontalToolbar .toolbarTab::before {
+        font-size: 24px;
+      }
+    }
+
+  /* button tooltips */
+
+    .toolbarButton .tooltip, #options {
+      display: none;
+      position: absolute;
+      left: 46px;
+      padding: 2px 12px;
+      font-size: 14px;
+      border-radius: 4px;
+      white-space: nowrap;
+      color: #fff;
+      background: var(--toolbarColor);
+      box-shadow: 0 0 5px #0005;
+      pointer-events: none;
+    }
+
+    .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
+      display: block;
+    }
+
+    body.wideToolbar .toolbarButton .tooltip {
+      box-shadow: unset;
+      background: none;
+    }
+
+    body.wideToolbar .toolbarButton .tooltip {
+      margin-left: -4px;
+      font-size: 12px;
+    }
+
+    body.wideToolbar .toolbarTab .tooltip {
+      font-size: 20px;
+    }
+
+    body.wideToolbar .active.toolbarTab .tooltip {
+      color: var(--toolbarColor);
+    }
+
+    body.horizontalToolbar .toolbarButton .tooltip {
+      left: unset;
+      bottom: 46px;
+    }
+
+    @media (min-width: 760px) {
+      body.horizontalToolbar .toolbarTab .tooltip {
+        box-shadow: unset;
+        background: none;
+      }
+
+      body.horizontalToolbar .toolbarButton .tooltip {
+        margin-left: -4px;
+        font-size: 12px;
+      }
+
+      body.horizontalToolbar .toolbarTab .tooltip {
+        font-size: 20px;
+      }
+
+      body.horizontalToolbar .active.toolbarTab .tooltip {
+        color: var(--toolbarColor);
+      }
+
+      body.horizontalToolbar .toolbarTab .tooltip {
+        display: block;
+        position: static;
+        padding-right: 0;
+      }
+    }
+
+  /* button specific styles */
+
+    #activeGameButton::before {
+      content: '[play_arrow]';
+    }
+
+    #statesButton::before {
+      content: '[library]';
+    }
+
+    #playersButton::before {
+      content: '[users_settings]';
+    }
+
+    #editButton::before {
+      content: '[edit_mode]';
+    }
+
+    #addButton::before {
+      content: '[widget_add]';
+    }
+
+    #optionsButton::before {
+      content: '[volume_up]';
+    }
+
+    html:not(:fullscreen) #fullscreenButton::before {
+      content: '[enter_fullscreen]';
+    }
+
+    html:fullscreen #fullscreenButton::before {
+      content: '[exit_fullscreen]';
+    }
+
+    html:not(:fullscreen) #fullscreenButton .tooltip::before {
+      content: '';
+    }
+
+    html:fullscreen #fullscreenButton .tooltip::before {
+      content: 'Exit ';
+    }
+
+    html:not(:-webkit-full-screen) #fullscreenButton::before {
+      content: '[enter_fullscreen]';
+    }
+
+    html:-webkit-full-screen #fullscreenButton::before {
+      content: '[exit_fullscreen]';
+    }
+
+    html:not(:-webkit-full-screen) #fullscreenButton .tooltip::before {
+      content: '';
+    }
+
+    html:-webkit-full-screen #fullscreenButton .tooltip::before {
+      content: 'Exit ';
+    }
+
+    #lightsButton::before {
+      content: '[auto_awesome]';
+    }
+
+    #hideToolbarButton::before {
+      content: '[hide_side_bar]';
+    }
+
+    #aboutButton::before {
+      content: '[vtt_logo]';
+    }
+
+    body:not(.aspectTooGood) #hideToolbarButton {
+      display: none;
+    }
+
+    @media (max-height: 520px) {
+      body.wideToolbar #editButton, body.wideToolbar #addButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body.aspectTooGood #editButton, body.aspectTooGood #addButton {
+        display: none;
+      }
+    }
+
+    @media (max-height: 420px) {
+      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #editButton, body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #addButton {
+        display: none;
+      }
+    }
+
+    @media (max-height: 340px) {
+      body:not(.horizontalToolbar,.aspectTooGood) .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 630px) {
+      body.aspectTooGood .divider, body.aspectTooGood #optionsButton, body.aspectTooGood #lightsButton {
+        display: none;
+      }
+    }
+
+    @media (max-height: 240px) {
+      body:not(.horizontalToolbar) #aboutButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 490px) {
+      body.aspectTooGood #aboutButton {
+        display: none;
+      }
+    }
+
+    @media (max-height: 200px) {
+      body:not(.horizontalToolbar) #playersButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 420px) {
+      body.aspectTooGood #playersButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 350px) {
+      body.aspectTooGood #hideToolbarButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 960px) {
+      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 759px) {
+      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 530px) {
+      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 430px) {
+      body.horizontalToolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 340px) {
+      body.horizontalToolbar #aboutButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 270px) {
+      body.horizontalToolbar #playersButton {
+        display: none;
+      }
+    }
+
+  /* sound settings */
+
+    #optionsAnchor {
+      position: relative;
+    }
+
+    #options {
+      display: flex;
+      left: calc(var(--toolbarSize) + 4px);
+      top: -2px;
+      padding: 2px;
+      pointer-events: unset;
+    }
+
+    #options.hidden {
+      display: none;
+    }
+
+    #muteButton {
+      padding: 5px;
+    }
+
+    #muteButton::before {
+      content: '[volume_up]';
+    }
+
+    #muteButton.muted::before {
+      content: '[volume_off]';
+    }
+
+    body.horizontalToolbar #options {
+      top: -42px;
+      left: unset;
+      right: -32px;
+    }
+
+  /* lights off */
+
+    body.lightsOff, body.lightsOff #toolbar {
+      --toolbarColor: black;
+      background-color: black;
+    }
+
+    body.lightsOff #toolbar {
+      opacity: 0.1;
+    }
+
+    body.lightsOff #toolbar:hover {
+      opacity: 1;
+    }
+
+
+/* misc */
+
 
 .overlay {
-  color: white;
+  color: var(--VTTblue);
   display: none;
   position: absolute;
   left: 0;
   top: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.75);
+  background: white;
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
@@ -386,7 +566,7 @@ body.lightsOff #toolbar:hover {
 }
 
 .overlay a {
-  color: white;
+  color: var(--VTTblue);
   font-weight: bold;
 }
 
@@ -394,13 +574,47 @@ body.lightsOff #toolbar:hover {
   background: #00000022;
 }
 
+div[icon] {
+  background: var(--roomColor);
+  position: relative;
+  padding: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  color: var(--overlayFontColor);
+}
+
+div[icon]::before {
+  content: attr(icon);
+  font-family: "Material Icons";
+  color: #f8f8f8;
+  font-size: 250px;
+  line-height: 250px;
+  position: absolute;
+  right: -40px;
+  top: -10px;
+}
+
+div[icon] * {
+  position: relative;
+}
+
+div[icon] > :nth-child(1) {
+  margin-top: 0;
+}
+
+div[icon] a, div[icon] input, div[icon] select {
+  color: var(--overlayFontColor);
+}
+
+div[icon] .buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 #room {
   transform: scale(var(--scale));
   transform-origin: left top;
-}
-
-#roomArea.hasOverlay #room {
-  filter: blur(5px);
 }
 
 ::-webkit-scrollbar {
@@ -445,7 +659,21 @@ body.lightsOff #toolbar:hover {
 }
 
 .widget.foreign {
+  --foreign:true;
+}
+
+body:not(.jsonEdit) .widget.foreign {
   display: none !important;
+}
+
+body.jsonEdit:not(.hitTest) .widget.foreign {
+  /* Edit mode uses elementsFromPoint to determine widgets under the cursor, so
+     we hide and pass pointer events through the element but don't use display: none here
+     to prevent invalidating all layout every time the mouse moves. When hit testing
+     the foreign layers are temporarily visible (but the class is removed before a frame
+     is presented to the user). */
+  visibility: hidden;
+  pointer-events: none;
 }
 
 #clientPointer {
@@ -485,87 +713,57 @@ body.lightsOff #toolbar:hover {
   visibility: hidden;
 }
 
-#statesButton::before {
-  content: '[library]';
-}
-
-#statesButton .tooltip {
-  font-weight: 900;
-}
-
-#playersButton::before {
-  content: '[users_settings]';
-}
-
-#editButton::before {
-  content: '[edit_mode]';
-}
-
-#addButton::before {
-  content: '[widget_add]';
-}
-
-html:not(:fullscreen) #fullscreenButton::before {
-  content: '[enter_fullscreen]';
-}
-
-html:fullscreen #fullscreenButton::before {
-  content: '[exit_fullscreen]';
-}
-
-html:not(:fullscreen) #fullscreenButton .tooltip::before {
-  content: '';
-}
-
-html:fullscreen #fullscreenButton .tooltip::before {
-  content: 'Exit ';
-}
-
-html:not(:-webkit-full-screen) #fullscreenButton::before {
-  content: '[enter_fullscreen]';
-}
-
-html:-webkit-full-screen #fullscreenButton::before {
-  content: '[exit_fullscreen]';
-}
-
-html:not(:-webkit-full-screen) #fullscreenButton .tooltip::before {
-  content: '';
-}
-
-html:-webkit-full-screen #fullscreenButton .tooltip::before {
-  content: 'Exit ';
-}
-
-#lightsButton::before {
-  content: '[auto_awesome]';
-}
-
-#hideToolbarButton::before {
-  content: '[hide_side_bar]';
-}
-
-#aboutButton::before {
-  content: '[vtt_logo]';
-}
-
-#optionsButton {
-  background-size: 28px 28px;
-  background-position: 6px 6px;
-  background-image:url(i/icons-white/mute-svg.svg);
-}
-
-#muteButton {
-  background-image:url(i/icons-white/mute-svg.svg);
-  width: calc(var(--toolbarSize) - 12px);
-  height: calc(var(--toolbarSize) - 12px);
-}
-
-#muteButton.toolbarButton.muted {
-  background-image:url(i/icons-white/unmute-svg.svg);
-}
-
 /*Buttons css*/
+
+button {
+  border: 5px;
+  color: white;
+  background-color: var(--VTTblue);
+  padding: 5px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  margin: 1px;
+}
+
+button:hover {
+  background-color: var(--VTTblueDark);
+}
+
+button[icon] {
+  display: flex;
+  align-items: center;
+  padding-right: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  overflow-wrap: normal; /* fixes richtext controls in older Chrome (85) */
+}
+button[icon]::before {
+  content: attr(icon);
+  font-family: "Material Icons";
+  text-transform: lowercase;
+  margin-right: .25rem;
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 1;
+}
+button[icon]:empty {
+  padding: 5px;
+}
+button[icon]:empty::before {
+  margin: 0;
+}
+button[icon].red {
+  background-color: darkred;
+}
+button[icon].red:hover {
+  background-color: #580000;
+}
+button[icon].green {
+  background-color: darkgreen;
+}
+button[icon].green:hover {
+  background-color: #004f00;
+}
 
 .prettyButton {
   border: 5px;
@@ -591,6 +789,57 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
   height: 18px;
   font-size: 24px;
   line-height: 18px;
+}
+
+.richtext-controls {
+  position: sticky;
+  top: 10px;
+  background: var(--VTTblue);
+  margin: 4px;
+  border-radius: 4px;
+  padding: 2px;
+  font-size: 0;
+}
+
+.richtext-controls button {
+  display: inline-flex;
+  padding: 2px;
+}
+
+.richtext-controls button:empty {
+  padding: 2px;
+}
+
+.richtext-controls .divider {
+  border-left: 1px solid #fff6;
+  margin: 2px 4px;
+  display: inline-block;
+  height: 20px;
+}
+
+.richtextAsset {
+  max-width: 80%;
+  display: block;
+  margin: 20px auto;
+}
+
+.floating.richtextAsset {
+  max-width: 50%;
+  float: left;
+  margin: 0 20px 20px 0;
+}
+
+.richtextSymbol.richtextSymbol {
+  font-size: 18px;
+  position: relative;
+  line-height: 10px;
+  font-style: normal;
+}
+.richtextSymbol.symbols {
+  top: 2px;
+}
+.richtextSymbol.material-icons {
+  top: 4px;
 }
 
 .symbols {
@@ -650,10 +899,6 @@ body.edit::before {
   content: '[book_open]';
 }
 
-.play::before {
-  content: '[play_arrow]';
-}
-
 .save::before,
 .saveProgress::before {
   content: '[save]';
@@ -706,6 +951,7 @@ button:disabled:hover {
   gap: 8px;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
+  margin: 8px;
 }
 
 .ui-button::before {
@@ -733,6 +979,7 @@ button:disabled:hover {
   justify-content: center;
   align-items: center;
   padding: 10px;
+  background: #0008;
 }
 #buttonInputOverlay h1{
   display: none;
@@ -831,6 +1078,9 @@ button:disabled:hover {
 }
 .modal .footer > button label{
   font-size: 1rem;
+}
+.modal .footer > button *{
+  cursor: pointer;
 }
 
 
@@ -956,7 +1206,8 @@ button:disabled:hover {
 }
 .inputnumber,
 .inputstring,
-.inputselect{
+.inputselect,
+.inputpalette{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -965,7 +1216,8 @@ button:disabled:hover {
 
 .inputnumber label,
 .inputstring label,
-.inputselect label{
+.inputselect label,
+.inputpalette label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1221,4 +1473,59 @@ input:invalid+span:after {
   font-size: 1.5rem;
   color: red;
   letter-spacing: -1px;
+}
+.inputpalette > div{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 3px;
+}
+.inputpalette > div input{
+  display: none;
+}
+.inputpalette > div label{
+  height: 35px;
+  width: 35px;
+  display: inline-block;
+  border-radius: 8px;
+  position: relative;
+  border: 3px solid transparent;
+  padding: 0;
+  margin: -1.5px;
+}
+.inputpalette > div input[type="radio"]:checked+label{
+  border: 3px solid var(--VTTblue);
+}
+.inputpalette > div input[type="radio"]:checked+label::after{
+  font-family: 'Material Icons';
+  line-height: 1.25em;
+  text-align: center;
+  height: 1.25em;
+  width: 1.25em;
+  background: var(--VTTblue);
+  color: white;
+  border-top-right-radius: 40%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  content: 'check';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  border: 2px solid white;
+  z-index: -1;
+}
+.inputpalette > div label > div{
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  position: absolute;
+  border: 2px solid white;
+  overflow: hidden;
+  background-color: inherit;
+  border-radius: 5px;
+  z-index: -2;
 }

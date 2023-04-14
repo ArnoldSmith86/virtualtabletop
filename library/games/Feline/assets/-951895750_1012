@@ -1,0 +1,13 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 728 673" width="728" height="673">
+	<title>cat_line_art_pitr_Kitty_icon-svg</title>
+	<style>
+		.s0 { fill: outlineColor;stroke: #000000;stroke-linecap: round;stroke-linejoin: round;stroke-width: 40.9 } 
+		.s1 { fill: fillColor;stroke: #000000;stroke-linecap: round;stroke-linejoin: round;stroke-width: 27.1 }
+	</style>
+	<g id="layer1">
+		<g id="g3612">
+			<path id="path3612" class="s0" d="m170.6 86.7c55-33.7 121.4-53.5 192.9-53.5 73.6 0 142 21.2 197.9 56.8l140.3-65.1-33.2 176.3c24.2 42.4 38.3 90.5 38.3 141.5 0 170.7-153.9 309.1-343.3 309.1-189.4 0-343-138.4-343-309.1 0-52.7 14.6-102.3 40.4-145.7l-33.3-176.5c0 0 143 66.2 143 66.2z"/>
+			<path id="path3478" class="s1" d="m170.6 86.7c55-33.7 121.4-53.5 192.9-53.5 73.6 0 142 21.2 197.9 56.8l140.3-65.1-33.2 176.3c24.2 42.4 38.3 90.5 38.3 141.5 0 170.7-153.9 309.1-343.3 309.1-189.4 0-343-138.4-343-309.1 0-52.7 14.6-102.3 40.4-145.7l-33.3-176.5c0 0 143 66.2 143 66.2z"/>
+		</g>
+	</g>
+</svg>

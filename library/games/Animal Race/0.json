@@ -1,0 +1,3566 @@
+{
+  "f9ym": {
+    "type": "deck",
+    "id": "f9ym",
+    "cardTypes": {
+      "1": {
+        "smalltext": "1\n5 6"
+      },
+      "2": {
+        "text": "2"
+      },
+      "3": {
+        "text": "3"
+      },
+      "4": {
+        "text": "4"
+      },
+      "carrots": {
+        "image": "/assets/1112409928_3507"
+      },
+      "cabbage": {
+        "image": "/assets/-1886119285_3765"
+      },
+      "hare": {
+        "image": "/assets/1451258073_2960"
+      },
+      "hedgehog": {
+        "image": "/assets/425961551_3877"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#af7f46",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 80,
+            "height": 80,
+            "css": "background-size: cover"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 70,
+            "valueType": "dynamic",
+            "value": "text",
+            "textAlign": "center",
+            "width": 80,
+            "css": "color: #185011"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 2,
+            "fontSize": 32,
+            "valueType": "dynamic",
+            "value": "smalltext",
+            "textAlign": "center",
+            "width": 80,
+            "css": "color: #185011; font-weight: bold"
+          }
+        ],
+        "radius": 10,
+        "border": 1
+      }
+    ],
+    "cardDefaults": {
+      "width": 80,
+      "height": 80,
+      "grid": [
+        {
+          "x": 40,
+          "y": 40
+        }
+      ],
+      "movable": false,
+      "image": "/assets/-1347036574_2696"
+    }
+  },
+  "477u": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "477u",
+    "z": 135,
+    "y": 540,
+    "x": 660,
+    "parent": "Board"
+  },
+  "fyb5": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hedgehog",
+    "id": "fyb5",
+    "z": 142,
+    "y": 860,
+    "x": 460,
+    "parent": "Board"
+  },
+  "qmo0": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "1",
+    "id": "qmo0",
+    "z": 183,
+    "y": 580,
+    "x": 1220,
+    "parent": "Board"
+  },
+  "ej30": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "2",
+    "id": "ej30",
+    "z": 197,
+    "x": 820,
+    "y": 820,
+    "parent": "Board"
+  },
+  "1ivv": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "3",
+    "id": "1ivv",
+    "z": 187,
+    "x": 1260,
+    "y": 820,
+    "parent": "Board"
+  },
+  "lorl": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "4",
+    "id": "lorl",
+    "z": 189,
+    "x": 1140,
+    "y": 780,
+    "parent": "Board"
+  },
+  "skm5": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "skm5",
+    "z": 199,
+    "y": 660,
+    "x": 820,
+    "parent": "Board"
+  },
+  "d7w2": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "d7w2",
+    "z": 196,
+    "x": 900,
+    "y": 860,
+    "parent": "Board"
+  },
+  "r8ts": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "r8ts",
+    "z": 190,
+    "y": 700,
+    "x": 1100,
+    "parent": "Board"
+  },
+  "wgfc": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "wgfc",
+    "z": 184,
+    "x": 1300,
+    "y": 580,
+    "parent": "Board"
+  },
+  "vpzv": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "vpzv",
+    "z": 175,
+    "x": 1260,
+    "y": 140,
+    "parent": "Board"
+  },
+  "5wxo": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "5wxo",
+    "z": 173,
+    "x": 1140,
+    "y": 60,
+    "parent": "Board"
+  },
+  "c0rs": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "c0rs",
+    "z": 168,
+    "x": 860,
+    "y": 100,
+    "parent": "Board"
+  },
+  "nr2f": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "nr2f",
+    "z": 160,
+    "x": 420,
+    "y": 60,
+    "parent": "Board"
+  },
+  "3y47": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "3y47",
+    "z": 155,
+    "x": 180,
+    "y": 300,
+    "parent": "Board"
+  },
+  "0y8r": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "0y8r",
+    "z": 147,
+    "x": 180,
+    "y": 660,
+    "parent": "Board"
+  },
+  "gyas": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "gyas",
+    "z": 139,
+    "x": 620,
+    "y": 740,
+    "parent": "Board"
+  },
+  "0pmm": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "0pmm",
+    "z": 136,
+    "x": 580,
+    "y": 540,
+    "parent": "Board"
+  },
+  "41h3": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "41h3",
+    "z": 194,
+    "x": 980,
+    "y": 780,
+    "parent": "Board"
+  },
+  "fjjg": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "fjjg",
+    "z": 177,
+    "x": 1300,
+    "y": 300,
+    "parent": "Board"
+  },
+  "3be8": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "3be8",
+    "z": 156,
+    "x": 180,
+    "y": 220,
+    "parent": "Board"
+  },
+  "no91": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "no91",
+    "z": 141,
+    "x": 540,
+    "y": 820,
+    "parent": "Board"
+  },
+  "gmd7": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "gmd7",
+    "z": 200,
+    "y": 580,
+    "x": 820,
+    "parent": "Board"
+  },
+  "8q2q": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "8q2q",
+    "z": 198,
+    "x": 820,
+    "y": 740,
+    "parent": "Board"
+  },
+  "r4yf": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "r4yf",
+    "z": 195,
+    "y": 860,
+    "x": 980,
+    "parent": "Board"
+  },
+  "39hf": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "39hf",
+    "z": 186,
+    "x": 1300,
+    "y": 740,
+    "parent": "Board"
+  },
+  "nmr0": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "nmr0",
+    "z": 181,
+    "y": 500,
+    "x": 1140,
+    "parent": "Board"
+  },
+  "kxso": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "kxso",
+    "z": 174,
+    "x": 1220,
+    "y": 60,
+    "parent": "Board"
+  },
+  "3az5": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "3az5",
+    "z": 201,
+    "x": 860,
+    "y": 180,
+    "parent": "Board"
+  },
+  "4uhc": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "4uhc",
+    "z": 166,
+    "x": 700,
+    "y": 100,
+    "parent": "Board"
+  },
+  "n3d2": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "n3d2",
+    "z": 159,
+    "x": 340,
+    "y": 60,
+    "parent": "Board"
+  },
+  "6pnx": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "6pnx",
+    "z": 148,
+    "x": 180,
+    "y": 580,
+    "parent": "Board"
+  },
+  "82b8": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "82b8",
+    "z": 140,
+    "x": 620,
+    "y": 820,
+    "parent": "Board"
+  },
+  "9zfp": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hare",
+    "id": "9zfp",
+    "z": 137,
+    "x": 540,
+    "y": 620,
+    "parent": "Board"
+  },
+  "luxe": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hedgehog",
+    "id": "luxe",
+    "z": 145,
+    "x": 220,
+    "y": 820,
+    "parent": "Board"
+  },
+  "uj6a": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hedgehog",
+    "id": "uj6a",
+    "z": 191,
+    "x": 1020,
+    "y": 700,
+    "parent": "Board"
+  },
+  "dt9c": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hedgehog",
+    "id": "dt9c",
+    "z": 185,
+    "x": 1300,
+    "y": 660,
+    "parent": "Board"
+  },
+  "o4f4": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hedgehog",
+    "id": "o4f4",
+    "z": 178,
+    "x": 1300,
+    "y": 380,
+    "parent": "Board"
+  },
+  "kc1p": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hedgehog",
+    "id": "kc1p",
+    "z": 172,
+    "x": 1060,
+    "y": 60,
+    "parent": "Board"
+  },
+  "vq4x": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hedgehog",
+    "id": "vq4x",
+    "z": 165,
+    "y": 100,
+    "x": 620,
+    "parent": "Board"
+  },
+  "n72d": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hedgehog",
+    "id": "n72d",
+    "z": 158,
+    "y": 60,
+    "x": 260,
+    "parent": "Board"
+  },
+  "erpj": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hedgehog",
+    "id": "erpj",
+    "z": 153,
+    "x": 260,
+    "y": 420,
+    "parent": "Board"
+  },
+  "4nl8": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "hedgehog",
+    "id": "4nl8",
+    "z": 149,
+    "x": 260,
+    "y": 580,
+    "parent": "Board"
+  },
+  "8l5d": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "1",
+    "id": "8l5d",
+    "z": 167,
+    "x": 780,
+    "y": 100,
+    "parent": "Board"
+  },
+  "4nw4": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "1",
+    "id": "4nw4",
+    "z": 150,
+    "y": 580,
+    "x": 340,
+    "parent": "Board"
+  },
+  "vrpb": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "2",
+    "id": "vrpb",
+    "z": 188,
+    "x": 1180,
+    "y": 860,
+    "parent": "Board"
+  },
+  "stkh": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "2",
+    "id": "stkh",
+    "z": 182,
+    "x": 1140,
+    "y": 580,
+    "parent": "Board"
+  },
+  "nwhs": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "2",
+    "id": "nwhs",
+    "z": 176,
+    "x": 1300,
+    "y": 220,
+    "parent": "Board"
+  },
+  "7yhg": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "2",
+    "id": "7yhg",
+    "z": 170,
+    "x": 940,
+    "y": 180,
+    "parent": "Board"
+  },
+  "iu2v": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "2",
+    "id": "iu2v",
+    "z": 164,
+    "y": 180,
+    "x": 620,
+    "parent": "Board"
+  },
+  "175c": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "2",
+    "id": "175c",
+    "z": 157,
+    "x": 220,
+    "y": 140,
+    "parent": "Board"
+  },
+  "dpyb": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "2",
+    "id": "dpyb",
+    "z": 151,
+    "x": 340,
+    "y": 500,
+    "parent": "Board"
+  },
+  "ypux": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "2",
+    "id": "ypux",
+    "z": 144,
+    "x": 300,
+    "y": 860,
+    "parent": "Board"
+  },
+  "umy2": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "3",
+    "id": "umy2",
+    "z": 179,
+    "y": 420,
+    "x": 1220,
+    "parent": "Board"
+  },
+  "efkr": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "3",
+    "id": "efkr",
+    "z": 201,
+    "x": 1020,
+    "y": 140,
+    "parent": "Board"
+  },
+  "vr3w": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "3",
+    "id": "vr3w",
+    "z": 163,
+    "x": 540,
+    "y": 180,
+    "parent": "Board"
+  },
+  "pufu": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "3",
+    "id": "pufu",
+    "z": 154,
+    "x": 180,
+    "y": 380,
+    "parent": "Board"
+  },
+  "caw0": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "3",
+    "id": "caw0",
+    "z": 146,
+    "x": 180,
+    "y": 740,
+    "parent": "Board"
+  },
+  "9k01": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "3",
+    "id": "9k01",
+    "z": 138,
+    "x": 540,
+    "y": 700,
+    "parent": "Board"
+  },
+  "wij6": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "4",
+    "id": "wij6",
+    "z": 180,
+    "x": 1140,
+    "y": 420,
+    "parent": "Board"
+  },
+  "63st": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "4",
+    "id": "63st",
+    "z": 161,
+    "x": 460,
+    "y": 140,
+    "parent": "Board"
+  },
+  "2jvu": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "4",
+    "id": "2jvu",
+    "z": 152,
+    "x": 340,
+    "y": 420,
+    "parent": "Board"
+  },
+  "nr1r": {
+    "deck": "f9ym",
+    "type": "card",
+    "cardType": "4",
+    "id": "nr1r",
+    "z": 143,
+    "x": 380,
+    "y": 860,
+    "parent": "Board"
+  },
+  "9dhj": {
+    "color": "#bc5bee",
+    "width": 60,
+    "height": 60,
+    "x": 40,
+    "y": 20,
+    "z": 5,
+    "id": "9dhj",
+    "classes": "checkersPiece",
+    "parent": "Start"
+  },
+  "l1pk": {
+    "color": "#4c5fea",
+    "width": 60,
+    "height": 60,
+    "z": 4,
+    "id": "l1pk",
+    "classes": "checkersPiece",
+    "parent": "Start",
+    "x": 30,
+    "y": 15
+  },
+  "l544": {
+    "color": "#23ca5b",
+    "width": 60,
+    "height": 60,
+    "x": 20,
+    "y": 10,
+    "z": 3,
+    "id": "l544",
+    "classes": "checkersPiece",
+    "parent": "Start"
+  },
+  "vn5q": {
+    "color": "#e0cb0b",
+    "width": 60,
+    "height": 60,
+    "z": 2,
+    "id": "vn5q",
+    "classes": "checkersPiece",
+    "parent": "Start",
+    "x": 10,
+    "y": 5
+  },
+  "oglk": {
+    "color": "#e2a633",
+    "width": 60,
+    "height": 60,
+    "z": 6,
+    "id": "oglk",
+    "classes": "checkersPiece",
+    "x": 50,
+    "y": 25,
+    "parent": "Start"
+  },
+  "e1zi": {
+    "color": "#e84242",
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "id": "e1zi",
+    "classes": "checkersPiece",
+    "parent": "Start"
+  },
+  "Carrot Deck": {
+    "type": "deck",
+    "id": "Carrot Deck",
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "tan",
+            "valueType": "static",
+            "value": "/assets/-2005389307_6611",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 18,
+            "fontSize": 28,
+            "valueType": "dynamic",
+            "value": "value",
+            "textAlign": "center",
+            "width": 80,
+            "css": "color: white; font-weight: bold"
+          }
+        ],
+        "radius": 10
+      }
+    ],
+    "cardDefaults": {
+      "height": 160,
+      "width": 80
+    },
+    "cardTypes": {
+      "1": {
+        "value": 1
+      },
+      "5": {
+        "value": 5
+      },
+      "10": {
+        "value": 10
+      },
+      "15": {
+        "value": 15
+      },
+      "30": {
+        "value": 30
+      },
+      "60": {
+        "value": 60
+      }
+    }
+  },
+  "fmgv": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "fmgv",
+    "parent": "715a",
+    "z": 16287
+  },
+  "f7dn": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "f7dn",
+    "z": 16311,
+    "parent": "zlsk"
+  },
+  "agu5": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "agu5",
+    "z": 16329,
+    "parent": "vi68"
+  },
+  "fz6t": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "fz6t",
+    "z": 16341,
+    "parent": "tkf5"
+  },
+  "f3by": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "f3by",
+    "z": 16353,
+    "parent": "dtmi"
+  },
+  "5tpb": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "5tpb",
+    "z": 16365,
+    "parent": "7wu3"
+  },
+  "13k4": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "13k4",
+    "z": 16288,
+    "parent": "715a"
+  },
+  "6ewc": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "6ewc",
+    "z": 16312,
+    "parent": "zlsk"
+  },
+  "0u2u": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "0u2u",
+    "z": 16330,
+    "parent": "vi68"
+  },
+  "ggrl": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "ggrl",
+    "z": 16342,
+    "parent": "tkf5"
+  },
+  "3x1s": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "3x1s",
+    "z": 16354,
+    "parent": "dtmi"
+  },
+  "61ph": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "61ph",
+    "z": 16366,
+    "parent": "7wu3"
+  },
+  "dhxz": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "dhxz",
+    "z": 16289,
+    "parent": "715a"
+  },
+  "59si": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "59si",
+    "z": 16313,
+    "parent": "zlsk"
+  },
+  "odfb": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "odfb",
+    "z": 16331,
+    "parent": "vi68"
+  },
+  "736o": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "736o",
+    "z": 16343,
+    "parent": "tkf5"
+  },
+  "qm3a": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "qm3a",
+    "z": 16355,
+    "parent": "dtmi"
+  },
+  "mzcb": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "mzcb",
+    "z": 16367,
+    "parent": "7wu3"
+  },
+  "arkq": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "arkq",
+    "z": 16290,
+    "parent": "715a"
+  },
+  "3yp7": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "3yp7",
+    "z": 16314,
+    "parent": "zlsk"
+  },
+  "5dso": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "5dso",
+    "z": 16332,
+    "parent": "vi68"
+  },
+  "nzbp": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "nzbp",
+    "z": 16344,
+    "parent": "tkf5"
+  },
+  "6m8q": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "6m8q",
+    "z": 16356,
+    "parent": "dtmi"
+  },
+  "98m7": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "98m7",
+    "z": 16368,
+    "parent": "7wu3"
+  },
+  "pdqb": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "pdqb",
+    "z": 16291,
+    "parent": "715a"
+  },
+  "q57a": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "q57a",
+    "z": 16315,
+    "parent": "zlsk"
+  },
+  "yrk3": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "yrk3",
+    "z": 16333,
+    "parent": "vi68"
+  },
+  "r9ow": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "r9ow",
+    "z": 16345,
+    "parent": "tkf5"
+  },
+  "hbu8": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "hbu8",
+    "z": 16357,
+    "parent": "dtmi"
+  },
+  "ii1w": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "ii1w",
+    "z": 16369,
+    "parent": "7wu3"
+  },
+  "zxmk": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "zxmk",
+    "z": 16292,
+    "parent": "715a"
+  },
+  "sb3c": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "sb3c",
+    "z": 16316,
+    "parent": "zlsk"
+  },
+  "y3qu": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "y3qu",
+    "z": 16334,
+    "parent": "vi68"
+  },
+  "drcs": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "drcs",
+    "z": 16346,
+    "parent": "tkf5"
+  },
+  "nove": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "nove",
+    "z": 16358,
+    "parent": "dtmi"
+  },
+  "yti8": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "yti8",
+    "z": 16370,
+    "parent": "7wu3"
+  },
+  "20z2": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "20z2",
+    "z": 16293,
+    "parent": "715a"
+  },
+  "iom3": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "iom3",
+    "z": 16317,
+    "parent": "zlsk"
+  },
+  "7noz": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "7noz",
+    "z": 16335,
+    "parent": "vi68"
+  },
+  "vd3m": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "vd3m",
+    "z": 16347,
+    "parent": "tkf5"
+  },
+  "lidd": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "lidd",
+    "z": 16359,
+    "parent": "dtmi"
+  },
+  "ukb1": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "ukb1",
+    "z": 16371,
+    "parent": "7wu3"
+  },
+  "ihxm": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "ihxm",
+    "z": 16294,
+    "parent": "715a"
+  },
+  "4akh": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "4akh",
+    "z": 16318,
+    "parent": "zlsk"
+  },
+  "55yl": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "55yl",
+    "z": 16336,
+    "parent": "vi68"
+  },
+  "7co6": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "7co6",
+    "z": 16348,
+    "parent": "tkf5"
+  },
+  "hzxb": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "hzxb",
+    "z": 16360,
+    "parent": "dtmi"
+  },
+  "bdlu": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "bdlu",
+    "z": 16372,
+    "parent": "7wu3"
+  },
+  "59mv": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "59mv",
+    "z": 16295,
+    "parent": "715a"
+  },
+  "vndk": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "vndk",
+    "z": 16319,
+    "parent": "zlsk"
+  },
+  "ig4h": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "ig4h",
+    "z": 16337,
+    "parent": "vi68"
+  },
+  "5al6": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "5al6",
+    "z": 16349,
+    "parent": "tkf5"
+  },
+  "jacz": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "jacz",
+    "z": 16361,
+    "parent": "dtmi"
+  },
+  "uxww": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "uxww",
+    "z": 16373,
+    "parent": "7wu3"
+  },
+  "ctzt": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "ctzt",
+    "z": 16296,
+    "parent": "715a"
+  },
+  "bd64": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "bd64",
+    "z": 16320,
+    "parent": "zlsk"
+  },
+  "n9s2": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "n9s2",
+    "z": 16338,
+    "parent": "vi68"
+  },
+  "o9gg": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "o9gg",
+    "z": 16350,
+    "parent": "tkf5"
+  },
+  "aqe9": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "aqe9",
+    "z": 16362,
+    "parent": "dtmi"
+  },
+  "u3wb": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "u3wb",
+    "z": 16374,
+    "parent": "7wu3"
+  },
+  "jvdb": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "jvdb",
+    "z": 16297,
+    "parent": "715a"
+  },
+  "m468": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "m468",
+    "z": 16321,
+    "parent": "zlsk"
+  },
+  "k2df": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "k2df",
+    "z": 16339,
+    "parent": "vi68"
+  },
+  "3qit": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "3qit",
+    "z": 16351,
+    "parent": "tkf5"
+  },
+  "wq5r": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "wq5r",
+    "z": 16363,
+    "parent": "dtmi"
+  },
+  "2aja": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "2aja",
+    "z": 16375,
+    "parent": "7wu3"
+  },
+  "1yod": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "1yod",
+    "z": 16298,
+    "parent": "715a"
+  },
+  "9pku": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "9pku",
+    "z": 16322,
+    "parent": "zlsk"
+  },
+  "7jrx": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "7jrx",
+    "z": 16340,
+    "parent": "vi68"
+  },
+  "mt2o": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "mt2o",
+    "z": 16352,
+    "parent": "tkf5"
+  },
+  "wblp": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "wblp",
+    "z": 16364,
+    "parent": "dtmi"
+  },
+  "m96o": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "60",
+    "id": "m96o",
+    "z": 16376,
+    "parent": "7wu3"
+  },
+  "au0z": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "au0z",
+    "z": 16323,
+    "parent": "zlsk"
+  },
+  "96qz": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "96qz",
+    "z": 16324,
+    "parent": "zlsk"
+  },
+  "3icc": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "3icc",
+    "z": 16325,
+    "parent": "zlsk"
+  },
+  "do2f": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "do2f",
+    "z": 16326,
+    "parent": "zlsk"
+  },
+  "wae9": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "wae9",
+    "z": 16327,
+    "parent": "zlsk"
+  },
+  "9mdi": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "9mdi",
+    "z": 16328,
+    "parent": "zlsk"
+  },
+  "x8nc": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "x8nc",
+    "z": 16299,
+    "parent": "715a"
+  },
+  "t5ij": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "t5ij",
+    "z": 16300,
+    "parent": "715a"
+  },
+  "t571": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "t571",
+    "z": 16301,
+    "parent": "715a"
+  },
+  "gb6q": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "gb6q",
+    "z": 16302,
+    "parent": "715a"
+  },
+  "m3hj": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "m3hj",
+    "z": 16303,
+    "parent": "715a"
+  },
+  "oxqb": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "oxqb",
+    "z": 16304,
+    "parent": "715a"
+  },
+  "pi4a": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "pi4a",
+    "z": 16305,
+    "parent": "715a"
+  },
+  "y9aw": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "y9aw",
+    "z": 16306,
+    "parent": "715a"
+  },
+  "8pxc": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "8pxc",
+    "z": 16307,
+    "parent": "715a"
+  },
+  "ell4": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "ell4",
+    "z": 16308,
+    "parent": "715a"
+  },
+  "be1e": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "be1e",
+    "z": 16309,
+    "parent": "715a"
+  },
+  "dwot": {
+    "deck": "Carrot Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "dwot",
+    "z": 16439,
+    "parent": "715a"
+  },
+  "Carrots 1": {
+    "type": "holder",
+    "id": "Carrots 1",
+    "x": 441,
+    "y": 319,
+    "width": 88,
+    "rotation": -15,
+    "z": 9,
+    "parent": "Board",
+    "css": "background-color: #ffffff44",
+    "dropTarget": {
+      "deck": "Carrot Deck"
+    }
+  },
+  "Carrots 5": {
+    "type": "holder",
+    "id": "Carrots 5",
+    "x": 559,
+    "y": 293,
+    "width": 88,
+    "rotation": -10,
+    "z": 10,
+    "parent": "Board",
+    "css": "background-color: #ffffff44",
+    "dropTarget": {
+      "deck": "Carrot Deck"
+    }
+  },
+  "Carrots 10": {
+    "type": "holder",
+    "id": "Carrots 10",
+    "x": 679,
+    "y": 277,
+    "width": 88,
+    "rotation": -5,
+    "z": 4,
+    "parent": "Board",
+    "css": "background-color: #ffffff44",
+    "dropTarget": {
+      "deck": "Carrot Deck"
+    }
+  },
+  "Carrots 15": {
+    "type": "holder",
+    "id": "Carrots 15",
+    "x": 795,
+    "y": 276,
+    "width": 88,
+    "rotation": 5,
+    "z": 11,
+    "parent": "Board",
+    "css": "background-color: #ffffff44",
+    "dropTarget": {
+      "deck": "Carrot Deck"
+    }
+  },
+  "Carrots 30": {
+    "type": "holder",
+    "id": "Carrots 30",
+    "x": 916,
+    "y": 292,
+    "width": 88,
+    "rotation": 10,
+    "z": 12,
+    "parent": "Board",
+    "css": "background-color: #ffffff44",
+    "dropTarget": {
+      "deck": "Carrot Deck"
+    }
+  },
+  "Carrots 60": {
+    "type": "holder",
+    "id": "Carrots 60",
+    "x": 1038,
+    "y": 319,
+    "width": 88,
+    "rotation": 15,
+    "z": 13,
+    "parent": "Board",
+    "css": "background-color: #ffffff44",
+    "dropTarget": {
+      "deck": "Carrot Deck"
+    }
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "x": 1510,
+    "y": 8,
+    "z": 2,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "Carrot Deck",
+        "collection": "carrots"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "1",
+          "5",
+          "10",
+          "15",
+          "30",
+          "60"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "carrots",
+            "property": "cardType",
+            "value": "${value}"
+          },
+          {
+            "func": "SET",
+            "value": null,
+            "property": "owner"
+          },
+          {
+            "func": "SET",
+            "value": "Carrots ${value}"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "Cabbage",
+          "Hare Cards Draw"
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Hare Cards Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Hare Cards Draw",
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "classes",
+        "value": "checkersPiece"
+      },
+      {
+        "func": "SET",
+        "value": "Start"
+      }
+    ],
+    "text": "Reset",
+    "height": 40
+  },
+  "7wu3": {
+    "type": "pile",
+    "width": 80,
+    "height": 160,
+    "id": "7wu3",
+    "z": 13824,
+    "parent": "Carrots 60"
+  },
+  "Cabbage Deck": {
+    "type": "deck",
+    "id": "Cabbage Deck",
+    "cardDefaults": {
+      "height": 160,
+      "width": 80
+    },
+    "cardTypes": {
+      "cabbage": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "green",
+            "valueType": "static",
+            "value": "/assets/-1886119285_3765",
+            "width": 80,
+            "height": 160,
+            "css": "background-size: cover"
+          }
+        ],
+        "radius": 10
+      }
+    ],
+    "parent": "Cabbage"
+  },
+  "i6l0": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "i6l0",
+    "parent": "23b5",
+    "z": 16378
+  },
+  "fsl4": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "fsl4",
+    "z": 16380,
+    "parent": "23b5"
+  },
+  "bf7o": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "bf7o",
+    "z": 16382,
+    "parent": "23b5"
+  },
+  "6jxn": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "6jxn",
+    "z": 16384,
+    "parent": "23b5"
+  },
+  "qi8f": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "qi8f",
+    "z": 16386,
+    "parent": "23b5"
+  },
+  "njhn": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "njhn",
+    "z": 16388,
+    "parent": "23b5"
+  },
+  "lp83": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "lp83",
+    "z": 16390,
+    "parent": "23b5"
+  },
+  "m4eu": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "m4eu",
+    "z": 16392,
+    "parent": "23b5"
+  },
+  "1cbc": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "1cbc",
+    "z": 16394,
+    "parent": "23b5"
+  },
+  "9vue": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "9vue",
+    "z": 16396,
+    "parent": "23b5"
+  },
+  "k6zk": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "k6zk",
+    "z": 16398,
+    "parent": "23b5"
+  },
+  "lytz": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "lytz",
+    "z": 16400,
+    "parent": "23b5"
+  },
+  "kmsj": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "kmsj",
+    "z": 16402,
+    "parent": "23b5"
+  },
+  "lu5y": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "lu5y",
+    "z": 16404,
+    "parent": "23b5"
+  },
+  "pcho": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "pcho",
+    "z": 16406,
+    "parent": "23b5"
+  },
+  "khdb": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "khdb",
+    "z": 16408,
+    "parent": "23b5"
+  },
+  "75ne": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "75ne",
+    "z": 16410,
+    "parent": "23b5"
+  },
+  "byqj": {
+    "deck": "Cabbage Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "byqj",
+    "z": 16412,
+    "parent": "23b5"
+  },
+  "Cabbage": {
+    "type": "holder",
+    "id": "Cabbage",
+    "x": 1176,
+    "y": 236,
+    "width": 88,
+    "z": 17,
+    "parent": "Board",
+    "css": "background-color: #ffffff44",
+    "dropTarget": {
+      "deck": "Cabbage Deck"
+    }
+  },
+  "Cabbage Deck1": {
+    "type": "deck",
+    "id": "Cabbage Deck1",
+    "cardDefaults": {
+      "height": 160,
+      "width": 80
+    },
+    "cardTypes": {
+      "cabbage": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "green",
+            "valueType": "static",
+            "value": "https://cdn.pixabay.com/photo/2019/09/29/15/45/cabbage-4513641_960_720.jpg",
+            "width": 80,
+            "height": 160
+          }
+        ],
+        "radius": 5
+      }
+    ],
+    "parent": "Hare Cards Draw"
+  },
+  "Hare Cards Draw": {
+    "type": "holder",
+    "id": "Hare Cards Draw",
+    "x": 330,
+    "y": 676,
+    "width": 88,
+    "z": 2,
+    "parent": "Board",
+    "css": "background-color: #ffffff44",
+    "dropTarget": {
+      "deck": "Hare Deck"
+    }
+  },
+  "Hare Cards Discard": {
+    "type": "holder",
+    "id": "Hare Cards Discard",
+    "x": 422,
+    "y": 676,
+    "width": 88,
+    "z": 1,
+    "parent": "Board",
+    "css": "background-color: #ffffff44",
+    "dropTarget": {
+      "deck": "Hare Deck"
+    }
+  },
+  "Board": {
+    "id": "Board",
+    "width": 1600,
+    "height": 1000,
+    "layer": -5,
+    "z": 5,
+    "movable": false,
+    "image": "/assets/-2073852888_681259",
+    "x": 161
+  },
+  "Hare Deck": {
+    "type": "deck",
+    "id": "Hare Deck",
+    "parent": "Hare Cards Draw",
+    "cardDefaults": {
+      "width": 80,
+      "height": 160,
+      "enlarge": 3
+    },
+    "cardTypes": {
+      "forward": {
+        "text": "Advance one position!"
+      },
+      "skip": {
+        "text": "Skip your next turn!"
+      },
+      "costs": {
+        "text": "Your last turn is free of charge!"
+      },
+      "carrots": {
+        "text": "You may draw or discard 10 carrots!"
+      },
+      "previous-carrots": {
+        "text": "Fall back to the last carrot field!"
+      },
+      "backward": {
+        "text": "Fall back one position!"
+      },
+      "again": {
+        "text": "Take another turn!"
+      },
+      "next-carrots": {
+        "text": "Advance to the next carrot field!"
+      },
+      "cabbage": {
+        "text": "Eat a cabbage!"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "green",
+            "valueType": "static",
+            "value": "/assets/18657447_4846",
+            "width": 80,
+            "height": 160
+          }
+        ],
+        "radius": 10
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "green",
+            "valueType": "static",
+            "value": "/assets/18657447_4846",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "color": "#00000080",
+            "valueType": "static",
+            "value": "",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "x": 5,
+            "y": 40,
+            "fontSize": 16,
+            "value": "text",
+            "textAlign": "center",
+            "width": 70,
+            "css": "color: white"
+          }
+        ],
+        "radius": 10
+      }
+    ]
+  },
+  "ikdp": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "forward",
+    "id": "ikdp",
+    "z": 7133,
+    "parent": "ljzj"
+  },
+  "y1k2": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "skip",
+    "id": "y1k2",
+    "z": 6618,
+    "parent": "ljzj"
+  },
+  "1k0x": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "costs",
+    "id": "1k0x",
+    "z": 3943,
+    "parent": "ljzj"
+  },
+  "cn6v": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "cn6v",
+    "z": 2609,
+    "parent": "ljzj"
+  },
+  "n4wm": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "previous-carrots",
+    "id": "n4wm",
+    "z": 7011,
+    "parent": "ljzj"
+  },
+  "rqgx": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "backward",
+    "id": "rqgx",
+    "z": 7189,
+    "parent": "ljzj"
+  },
+  "eeli": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "again",
+    "id": "eeli",
+    "z": 381,
+    "parent": "ljzj"
+  },
+  "rg51": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "next-carrots",
+    "id": "rg51",
+    "z": 7529,
+    "parent": "ljzj"
+  },
+  "iw7z": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "cabbage",
+    "id": "iw7z",
+    "z": 4838,
+    "parent": "ljzj"
+  },
+  "yvf4": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "costs",
+    "id": "yvf4",
+    "z": 7509,
+    "parent": "ljzj"
+  },
+  "2oey": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "carrots",
+    "id": "2oey",
+    "z": 317,
+    "parent": "ljzj"
+  },
+  "9ha7": {
+    "deck": "Hare Deck",
+    "type": "card",
+    "cardType": "backward",
+    "id": "9ha7",
+    "z": 1358,
+    "parent": "ljzj"
+  },
+  "tkf5": {
+    "type": "pile",
+    "width": 80,
+    "height": 160,
+    "id": "tkf5",
+    "z": 12320,
+    "parent": "Carrots 15"
+  },
+  "Fields": {
+    "id": "Fields",
+    "x": 42,
+    "width": 50,
+    "height": 992,
+    "z": 28,
+    "css": "text-align: right; font-size: 18px; color: white; font-weight: bold",
+    "text": "Fields\n1\n2\n3\n4\n5\n\n6\n7\n8\n9\n10\n\n11\n12\n13\n14\n15\n\n16\n17\n18\n19\n20\n\n21\n22\n23\n24\n25\n\n26\n27\n28\n29\n30\n\n31\n32\n33\n34\n35\n\n36\n37\n38\n39\n40\n\n41\n42\n43\n44",
+    "movable": false,
+    "y": 4,
+    "layer": -1
+  },
+  "Cost": {
+    "id": "Cost",
+    "x": 97,
+    "y": 4,
+    "width": 50,
+    "height": 992,
+    "z": 229,
+    "css": "text-align: right; font-size: 18px; color: white; font-weight: bold",
+    "text": "Cost\n1\n3\n6\n10\n15\n\n21\n28\n36\n45\n55\n\n66\n78\n91\n105\n120\n\n136\n153\n171\n190\n210\n\n231\n253\n276\n300\n325\n\n351\n378\n406\n435\n465\n\n496\n528\n561\n595\n630\n\n666\n703\n741\n780\n820\n\n861\n903\n946\n990",
+    "movable": false,
+    "layer": -1
+  },
+  "Carrot Hand": {
+    "type": "holder",
+    "id": "Carrot Hand",
+    "x": 181,
+    "y": 188,
+    "width": 88,
+    "height": 802,
+    "z": 20,
+    "stackOffsetY": 46,
+    "childrenPerOwner": true,
+    "dropTarget": {
+      "deck": "Carrot Deck"
+    }
+  },
+  "Cabbage Hand": {
+    "type": "holder",
+    "id": "Cabbage Hand",
+    "x": 181,
+    "y": 10,
+    "width": 88,
+    "z": 21,
+    "childrenPerOwner": true,
+    "dropTarget": {
+      "deck": "Cabbage Deck"
+    }
+  },
+  "2P": {
+    "type": "button",
+    "id": "2P",
+    "x": 9,
+    "y": 11,
+    "height": 40,
+    "z": 3,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Cabbage",
+        "to": "Cabbage Hand",
+        "count": 5
+      },
+      {
+        "func": "MOVE",
+        "from": "Carrots 1",
+        "to": "Carrot Hand",
+        "count": 3
+      },
+      {
+        "func": "MOVE",
+        "from": "Carrots 5",
+        "to": "Carrot Hand",
+        "count": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "Carrots 10",
+          "Carrots 15"
+        ],
+        "to": "Carrot Hand"
+      },
+      {
+        "func": "MOVE",
+        "from": "Carrots 30",
+        "to": "Carrot Hand",
+        "count": 2
+      }
+    ],
+    "text": "2P",
+    "parent": "Cabbage Hand",
+    "width": 70
+  },
+  "3-4P": {
+    "type": "button",
+    "id": "3-4P",
+    "parent": "Cabbage Hand",
+    "x": 9,
+    "y": 64,
+    "width": 70,
+    "height": 40,
+    "z": 3,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Cabbage",
+        "to": "Cabbage Hand",
+        "count": 3
+      },
+      {
+        "func": "MOVE",
+        "from": "Carrots 1",
+        "to": "Carrot Hand",
+        "count": 3
+      },
+      {
+        "func": "MOVE",
+        "from": "Carrots 5",
+        "to": "Carrot Hand",
+        "count": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "Carrots 10",
+          "Carrots 15",
+          "Carrots 30"
+        ],
+        "to": "Carrot Hand"
+      }
+    ],
+    "text": "3-4P"
+  },
+  "5-6P": {
+    "type": "button",
+    "id": "5-6P",
+    "parent": "Cabbage Hand",
+    "x": 9,
+    "y": 117,
+    "width": 70,
+    "height": 40,
+    "z": 3,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Cabbage",
+        "to": "Cabbage Hand",
+        "count": 3
+      },
+      {
+        "func": "MOVE",
+        "from": "Carrots 1",
+        "to": "Carrot Hand",
+        "count": 3
+      },
+      {
+        "func": "MOVE",
+        "from": "Carrots 5",
+        "to": "Carrot Hand",
+        "count": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "Carrots 10",
+          "Carrots 15"
+        ],
+        "to": "Carrot Hand"
+      },
+      {
+        "func": "MOVE",
+        "from": "Carrots 30",
+        "to": "Carrot Hand",
+        "count": 2
+      }
+    ],
+    "text": "5-6P"
+  },
+  "715a": {
+    "type": "pile",
+    "width": 80,
+    "height": 160,
+    "id": "715a",
+    "z": 14731,
+    "parent": "Carrots 1"
+  },
+  "zlsk": {
+    "type": "pile",
+    "parent": "Carrots 5",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "id": "zlsk"
+  },
+  "dtmi": {
+    "type": "pile",
+    "width": 80,
+    "height": 160,
+    "id": "dtmi",
+    "z": 13827,
+    "parent": "Carrots 30"
+  },
+  "Shuffle": {
+    "type": "button",
+    "id": "Shuffle",
+    "parent": "Hare Cards Draw",
+    "x": 9,
+    "y": 64,
+    "width": 70,
+    "height": 40,
+    "z": 3,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "Hare Cards Draw"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Hare Cards Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Hare Cards Draw",
+        "face": 0
+      }
+    ],
+    "text": "Shuffle"
+  },
+  "23b5": {
+    "type": "pile",
+    "parent": "Cabbage",
+    "width": 80,
+    "height": 160,
+    "id": "23b5"
+  },
+  "Board Dimmed": {
+    "id": "Board Dimmed",
+    "width": 1600,
+    "height": 1000,
+    "layer": -5,
+    "movable": false,
+    "css": "background: #00000060",
+    "parent": "Board"
+  },
+  "sylh": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "sylh",
+    "z": 22,
+    "parent": "477u"
+  },
+  "sgnf": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "sgnf",
+    "z": 23,
+    "parent": "fyb5"
+  },
+  "1um3": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "1um3",
+    "z": 24,
+    "parent": "qmo0"
+  },
+  "4fk4": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "4fk4",
+    "z": 25,
+    "parent": "ej30"
+  },
+  "1yue": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "1yue",
+    "z": 26,
+    "parent": "1ivv"
+  },
+  "hr4y": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "hr4y",
+    "z": 27,
+    "parent": "lorl"
+  },
+  "914s": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "914s",
+    "z": 28,
+    "parent": "skm5"
+  },
+  "84zz": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "84zz",
+    "z": 29,
+    "parent": "d7w2"
+  },
+  "6j57": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "6j57",
+    "z": 30,
+    "parent": "r8ts"
+  },
+  "oh8w": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "oh8w",
+    "z": 31,
+    "parent": "wgfc"
+  },
+  "wb45": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "wb45",
+    "z": 32,
+    "parent": "vpzv"
+  },
+  "5ca5": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "5ca5",
+    "z": 33,
+    "parent": "5wxo"
+  },
+  "6vhe": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "6vhe",
+    "z": 34,
+    "parent": "c0rs"
+  },
+  "guf9": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "guf9",
+    "z": 35,
+    "parent": "nr2f"
+  },
+  "1vip": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "1vip",
+    "z": 36,
+    "parent": "3y47"
+  },
+  "vwqa": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "vwqa",
+    "z": 37,
+    "parent": "0y8r"
+  },
+  "s4pl": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "s4pl",
+    "z": 38,
+    "parent": "gyas"
+  },
+  "y7vg": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "y7vg",
+    "z": 39,
+    "parent": "0pmm"
+  },
+  "942b": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "942b",
+    "z": 40,
+    "parent": "41h3"
+  },
+  "grwy": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "grwy",
+    "z": 41,
+    "parent": "fjjg"
+  },
+  "47nv": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "47nv",
+    "z": 42,
+    "parent": "3be8"
+  },
+  "2po0": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "2po0",
+    "z": 43,
+    "parent": "no91"
+  },
+  "9e2l": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "9e2l",
+    "z": 44,
+    "parent": "gmd7"
+  },
+  "ubhe": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "ubhe",
+    "z": 45,
+    "parent": "8q2q"
+  },
+  "rvss": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "rvss",
+    "z": 46,
+    "parent": "r4yf"
+  },
+  "qdjz": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "qdjz",
+    "z": 47,
+    "parent": "39hf"
+  },
+  "1xkx": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "1xkx",
+    "z": 48,
+    "parent": "nmr0"
+  },
+  "7xes": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "7xes",
+    "z": 49,
+    "parent": "kxso"
+  },
+  "19sq": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "19sq",
+    "z": 50,
+    "parent": "3az5"
+  },
+  "kd2q": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "kd2q",
+    "z": 51,
+    "parent": "4uhc"
+  },
+  "qcmu": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "qcmu",
+    "z": 52,
+    "parent": "n3d2"
+  },
+  "4aor": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "4aor",
+    "z": 53,
+    "parent": "6pnx"
+  },
+  "ma8f": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "ma8f",
+    "z": 54,
+    "parent": "82b8"
+  },
+  "p0mx": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "p0mx",
+    "z": 55,
+    "parent": "9zfp"
+  },
+  "rtsa": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "rtsa",
+    "z": 56,
+    "parent": "luxe"
+  },
+  "cbpw": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "cbpw",
+    "z": 57,
+    "parent": "uj6a"
+  },
+  "jljh": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "jljh",
+    "z": 58,
+    "parent": "dt9c"
+  },
+  "16ve": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "16ve",
+    "z": 59,
+    "parent": "o4f4"
+  },
+  "6cmb": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "6cmb",
+    "z": 60,
+    "parent": "kc1p"
+  },
+  "rhuf": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "rhuf",
+    "z": 61,
+    "parent": "vq4x"
+  },
+  "9lov": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "9lov",
+    "z": 62,
+    "parent": "n72d"
+  },
+  "x8ng": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "x8ng",
+    "z": 63,
+    "parent": "erpj"
+  },
+  "9z11": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "9z11",
+    "z": 64,
+    "parent": "4nl8"
+  },
+  "2mlq": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "2mlq",
+    "z": 65,
+    "parent": "8l5d"
+  },
+  "32x6": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "32x6",
+    "z": 66,
+    "parent": "4nw4"
+  },
+  "rkj3": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "rkj3",
+    "z": 67,
+    "parent": "vrpb"
+  },
+  "cq5q": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "cq5q",
+    "z": 68,
+    "parent": "stkh"
+  },
+  "y38y": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "y38y",
+    "z": 69,
+    "parent": "nwhs"
+  },
+  "9nvg": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "9nvg",
+    "z": 70,
+    "parent": "7yhg"
+  },
+  "uzym": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "uzym",
+    "z": 71,
+    "parent": "iu2v"
+  },
+  "4uta": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "4uta",
+    "z": 72,
+    "parent": "175c"
+  },
+  "28rd": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "28rd",
+    "z": 73,
+    "parent": "dpyb"
+  },
+  "igoq": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "igoq",
+    "z": 74,
+    "parent": "ypux"
+  },
+  "hjsg": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "hjsg",
+    "z": 75,
+    "parent": "umy2"
+  },
+  "pxg3": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "pxg3",
+    "z": 76,
+    "parent": "efkr"
+  },
+  "5t0z": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "5t0z",
+    "z": 77,
+    "parent": "vr3w"
+  },
+  "5mep": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "5mep",
+    "z": 78,
+    "parent": "pufu"
+  },
+  "ng20": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "ng20",
+    "z": 79,
+    "parent": "caw0"
+  },
+  "so6j": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "so6j",
+    "z": 80,
+    "parent": "9k01"
+  },
+  "7ynm": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "7ynm",
+    "z": 81,
+    "parent": "wij6"
+  },
+  "3sf2": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "3sf2",
+    "z": 82,
+    "parent": "63st"
+  },
+  "4grv": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "4grv",
+    "z": 83,
+    "parent": "2jvu"
+  },
+  "o0d6": {
+    "type": "holder",
+    "width": 80,
+    "height": 80,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "classes": "transparent",
+    "stackOffsetX": 5,
+    "stackOffsetY": 5,
+    "id": "o0d6",
+    "z": 84,
+    "parent": "nr1r"
+  },
+  "Start": {
+    "type": "holder",
+    "id": "Start",
+    "parent": "Board",
+    "x": 680,
+    "y": 460,
+    "width": 110,
+    "height": 85,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "stackOffsetX": 10,
+    "stackOffsetY": 5
+  },
+  "Goal": {
+    "type": "holder",
+    "id": "Goal",
+    "parent": "Board",
+    "x": 880,
+    "width": 110,
+    "height": 85,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "classes": "checkersPiece"
+    },
+    "stackOffsetX": 10,
+    "stackOffsetY": 5,
+    "y": 500
+  },
+  "Sidebar": {
+    "id": "Sidebar",
+    "width": 300,
+    "height": 1040,
+    "layer": -4,
+    "css": "filter: blur(10px);background:linear-gradient(          rgba(0, 0, 0, 0.75),           rgba(0, 0, 0, 0.75)        ),url(/assets/-2073852888_681259);background-size: cover",
+    "x": -20,
+    "y": -20,
+    "movable": false
+  },
+  "6hdh": {
+    "classes": "pinPiece",
+    "color": "#4c5fea",
+    "width": 35.85,
+    "height": 43.83,
+    "x": 15.075,
+    "y": 413.702,
+    "id": "6hdh",
+    "movable": false,
+    "layer": -1,
+    "z": 232
+  },
+  "6fbf": {
+    "classes": "pinPiece",
+    "color": "#23ca5b",
+    "width": 35.85,
+    "height": 43.83,
+    "x": 15.075,
+    "y": 542.468,
+    "id": "6fbf",
+    "movable": false,
+    "layer": -1,
+    "z": 233
+  },
+  "qif9": {
+    "classes": "pinPiece",
+    "color": "#e0cb0b",
+    "width": 35.85,
+    "height": 43.83,
+    "x": 15.075,
+    "y": 671.234,
+    "id": "qif9",
+    "movable": false,
+    "layer": -1,
+    "z": 234
+  },
+  "xs95": {
+    "classes": "pinPiece",
+    "color": "#e84242",
+    "width": 35.85,
+    "height": 43.83,
+    "x": 15.075,
+    "y": 800,
+    "id": "xs95",
+    "movable": false,
+    "layer": -1,
+    "z": 235
+  },
+  "vi68": {
+    "type": "pile",
+    "parent": "Carrots 10",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "id": "vi68"
+  },
+  "dxfl": {
+    "classes": "pinPiece",
+    "color": "#bc5bee",
+    "width": 35.85,
+    "height": 43.83,
+    "x": 15.075,
+    "y": 284.936,
+    "id": "dxfl",
+    "movable": false,
+    "layer": -1,
+    "z": 231
+  },
+  "dxi1": {
+    "classes": "pinPiece",
+    "color": "#e2a633",
+    "width": 35.85,
+    "height": 43.83,
+    "x": 15.075,
+    "y": 156.17,
+    "id": "dxi1",
+    "movable": false,
+    "layer": -1,
+    "z": 230
+  },
+  "ljzj": {
+    "type": "pile",
+    "parent": "Hare Cards Draw",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 160,
+    "id": "ljzj"
+  },
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Animal Race",
+      "image": "/assets/882185853_14331",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/361/hare-tortoise",
+      "year": "1973",
+      "mode": "vs",
+      "time": "45",
+      "players": "2-6",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/fields-path-farm-house-wooden-house-5680966/\nhttps://pixabay.com/photos/cabbage-kale-vegetables-healthy-4513641/\nhttps://pixabay.com/photos/carrots-carrot-tops-vegetable-1112020/\nhttps://pixabay.com/photos/young-hare-leveret-hare-baby-hare-5374701/\nhttps://pixabay.com/photos/hedgehog-garden-nature-autumn-cute-5476447/",
+      "similarName": "Hare & Tortoise",
+      "description": "Move around board by collecting and spending carrots and lettuce.  First around the board having depleted all lettuce and all but 10 carrots wins.",
+      "showName": true,
+      "lastUpdate": 1679045125000
+    }
+  }
+}

@@ -2,12 +2,20 @@
   display: none;
 }
 
-body.edit .deck {
+body.jsonEdit .deck, body.edit .deck {
   display: block;
+}
+
+body.edit .deck {
   padding-top: 40px;
   text-align: center;
 
   font-size: 200%;
+}
+
+body.jsonEdit:not(.hitTest, .edit) .deck {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 body.edit .deck::before, body.edit .deck::after {

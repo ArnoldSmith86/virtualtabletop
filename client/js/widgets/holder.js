@@ -13,6 +13,7 @@ class Holder extends Widget {
       dropOffsetX: 4,
       dropOffsetY: 4,
       dropLimit: -1,
+      dropShadow: false,
       alignChildren: true,
       preventPiles: false,
       childrenPerOwner: false,
@@ -115,6 +116,13 @@ class Holder extends Widget {
       await this.receiveCard(child, [ this.get('stackOffsetX')*999999, this.get('stackOffsetY')*999999 ]);
     else
       await this.receiveCard(child, [ child.get('x') - this.absoluteCoord('x'), child.get('y') - this.absoluteCoord('y') ]);
+  }
+
+  async onPropertyChange(property, oldValue, newValue) {
+    await super.onPropertyChange(property, oldValue, newValue);
+    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') {
+      await this.updateAfterShuffle();
+    }
   }
 
   async receiveCard(card, pos) {

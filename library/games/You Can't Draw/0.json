@@ -1,0 +1,5385 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "You Can't Draw",
+      "image": "/assets/-69981097_21906",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/2281/pictionary",
+      "year": "1985",
+      "mode": "teams",
+      "time": "90",
+      "players": "4-16",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "If a piece lands on an All Play space, the next drawer in turn for each time will be highlighted. When the draw button is pressed, all teams draw at the same time. Guessing players can see a small image of each team's drawing on the right.\n\nThere is no need to press anything on the timer, but if needed due to some game glitch, you can reset and restart the 1 minute timer by using the small reset button.\n\nNote to frequent players: If you save the game room state after playing, the word list will be saved as is. This means you will not get repeat words within each category until the word list for that category is exhausted and starts back over.\n\nThe game room, game design, and library image are by LawDawg and are released to the Public Domain under CC0. \n\nThe wood grain background is from Pixabay and is available under the Pixabay license: https://pixabay.com/photos/wood-structure-fund-nature-grain-186304/.\n\nThe word lists are variously sourced from the following locations and are available for use under the terms of each website. Each category list has been edited and somewhat curated by LawDawg:\n\n- https://https://randomwordgenerator.com/verb.php\n- https://randomwordgenerator.com/noun.php\n- https://www.thegamegal.com/printables/#word-lists\n- https://www.randomlists.com/nouns\n- https://jimpix.co.uk/words/word-generator.asp\n- https://github.com/Alamantus/fun-word-list",
+      "similarName": "Pictionary",
+      "description": "Teams take turns assigning player to draw a word. Other team members have one minute to guess what player is drawing. If guess correct, roll dice and move around board. If guess wrong, next team draws. First team to reach end of board wins.",
+      "showName": true,
+      "helpText": "Players choose a team and click on button to be added or removed from team roster. Players will draw in order listed from top to bottom. Click play button to start. Random team chosen to start. Press draw button to begin. Board will move offscreen and the word will be displayed for the drawer. The category is displayed for all other players. After a few seconds, a 5 second countdown will begin. Designated drawing player draws. Players have one minute to guess. If a correct guess is made, click the green Correct button. The board will reappear and the team clicks the spinner. Pieces are moved automatically. The next player on the team begins the draw phase. If an incorrect guess is made, click the red Incorrect button. The board will reappear and the next team begins their turn.",
+      "lastUpdate": 1652065010000
+    }
+  },
+  "canvas1": {
+    "type": "canvas",
+    "id": "canvas1",
+    "x": 50,
+    "y": 190,
+    "width": 800,
+    "height": 800,
+    "z": 13,
+    "resolution": 400,
+    "movable": false,
+    "movableInEdit": false,
+    "activeColor": 2,
+    "owner": []
+  },
+  "canvasCopy2": {
+    "type": "canvas",
+    "id": "canvasCopy2",
+    "x": 1012,
+    "y": -30,
+    "scale": 0.45,
+    "z": 9,
+    "clickable": false,
+    "inheritFrom": {
+      "canvas2": [
+        "!owner"
+      ]
+    },
+    "css": {
+      "default": {
+        "border": "4px solid blue"
+      },
+      "#enlarged": {
+        "top": "calc(var(--roomTop) + var(--scale)*190px)",
+        "left": "calc(var(--roomLeft) + var(--scale)*50px)",
+        "right": "unset",
+        "transform-origin": "top left"
+      }
+    },
+    "enlarge": 1
+  },
+  "canvasCopy1": {
+    "type": "canvas",
+    "id": "canvasCopy1",
+    "x": 642,
+    "y": -30,
+    "scale": 0.45,
+    "z": 9,
+    "clickable": false,
+    "inheritFrom": {
+      "canvas1": [
+        "!owner"
+      ]
+    },
+    "css": {
+      "default": {
+        "border": "4px solid red"
+      },
+      "#enlarged": {
+        "top": "calc(var(--roomTop) + var(--scale)*190px)",
+        "left": "calc(var(--roomLeft) + var(--scale)*50px)",
+        "right": "unset",
+        "transform-origin": "top left"
+      }
+    },
+    "enlarge": 1
+  },
+  "canvasCopy3": {
+    "type": "canvas",
+    "id": "canvasCopy3",
+    "scale": 0.45,
+    "z": 9,
+    "clickable": false,
+    "inheritFrom": {
+      "canvas3": [
+        "!owner"
+      ]
+    },
+    "css": {
+      "default": {
+        "border": "4px solid orange"
+      },
+      "#enlarged": {
+        "top": "calc(var(--roomTop) + var(--scale)*190px)",
+        "left": "calc(var(--roomLeft) + var(--scale)*50px)",
+        "right": "unset",
+        "transform-origin": "top left"
+      }
+    },
+    "x": 642,
+    "y": 410,
+    "enlarge": 1
+  },
+  "canvasCopy4": {
+    "type": "canvas",
+    "id": "canvasCopy4",
+    "x": 1012,
+    "y": 410,
+    "scale": 0.45,
+    "z": 9,
+    "clickable": false,
+    "inheritFrom": {
+      "canvas4": [
+        "!owner"
+      ]
+    },
+    "css": {
+      "default": {
+        "border": "4px solid green"
+      },
+      "#enlarged": {
+        "top": "calc(var(--roomTop) + var(--scale)*190px)",
+        "left": "calc(var(--roomLeft) + var(--scale)*50px)",
+        "right": "unset",
+        "transform-origin": "top left"
+      }
+    },
+    "enlarge": 1
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 50,
+    "y": 5,
+    "z": 3,
+    "colorEmpty": "red",
+    "color": "red",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      "var playerList = ${PROPERTY playerList}",
+      "var thisPlayer = ${playerList} indexOf ${playerName}",
+      "var length = ${playerList} length",
+      {
+        "func": "IF",
+        "operand1": "${thisPlayer}",
+        "operand2": -1,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${length}",
+            "relation": "<=",
+            "operand2": 3,
+            "thenRoutine": [
+              "var playerList = push ${playerName}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "playerList",
+                "value": "${playerList}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "canvas${PROPERTY index}"
+                ],
+                "property": "owner",
+                "value": "${playerList}"
+              },
+              {
+                "func": "CALL",
+                "widget": "calls",
+                "routine": "setListRoutine",
+                "arguments": {
+                  "seatIndex": "${PROPERTY index}"
+                }
+              },
+              "var length = ${length} + 1",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "playerCount",
+                "value": "${length}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "var playerList = remove ${thisPlayer} 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "playerList",
+            "value": "${playerList}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "canvas${PROPERTY index}"
+            ],
+            "property": "owner",
+            "value": "${playerList}"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "setListRoutine",
+            "arguments": {
+              "seatIndex": "${PROPERTY index}"
+            }
+          },
+          "var length = ${length} - 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "playerCount",
+            "value": "${length}"
+          }
+        ]
+      }
+    ],
+    "playerList": [],
+    "css": {
+      "font-size": "25px",
+      "line-height": 1
+    },
+    "movableInEdit": false,
+    "cycleRoutine": [
+      "var a = ${PROPERTY playerIndex} + 1",
+      "var b = ${a} % ${PROPERTY playerCount}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "playerIndex",
+        "value": "${b}"
+      },
+      "var b = ${b} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "pName${PROPERTY index}-1",
+          "pName${PROPERTY index}-2",
+          "pName${PROPERTY index}-3",
+          "pName${PROPERTY index}-4"
+        ],
+        "property": "backgroundColor",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pName${PROPERTY index}-${b}"
+        ],
+        "property": "backgroundColor",
+        "value": "#afeeee"
+      }
+    ],
+    "playerCount": 0,
+    "playerIndex": -1,
+    "displayEmpty": "join team",
+    "playerCountChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY playerCount}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "piece1"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": "Red Team"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "piece1"
+            ],
+            "property": "scale",
+            "value": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "calls": {
+    "id": "calls",
+    "x": 405,
+    "y": 1034,
+    "z": 900,
+    "css": "background: white; ",
+    "text": "Calls",
+    "setListRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "pName${seatIndex}-1",
+          "pName${seatIndex}-2",
+          "pName${seatIndex}-3",
+          "pName${seatIndex}-4"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      "var i = 1",
+      {
+        "func": "FOREACH",
+        "in": "${playerList}",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "pName${seatIndex}-${i}"
+            ],
+            "property": "text",
+            "value": "${value}"
+          },
+          "var i = ${i} + 1"
+        ]
+      }
+    ]
+  },
+  "pName1-1": {
+    "id": "pName1-1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -5,
+    "y": 55,
+    "width": 160,
+    "height": 30,
+    "z": 4,
+    "css": {
+      "border": "1px solid black",
+      "font-size": "25px",
+      "text-align": "left",
+      "line-height": "1.2",
+      "font-weight": "normal",
+      "background": "${PROPERTY backgroundColor}"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "backgroundColor": "",
+    "playerLabel": true,
+    "backgroundColorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "pName1-2": {
+    "inheritFrom": "pName1-1",
+    "id": "pName1-2",
+    "x": -5,
+    "y": 85,
+    "parent": "seat1",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName1-3": {
+    "inheritFrom": "pName1-1",
+    "id": "pName1-3",
+    "x": -5,
+    "y": 115,
+    "parent": "seat1",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName1-4": {
+    "inheritFrom": "pName1-1",
+    "id": "pName1-4",
+    "x": -5,
+    "y": 145,
+    "parent": "seat1",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "seat2": {
+    "inheritFrom": "seat1",
+    "id": "seat2",
+    "type": "seat",
+    "x": 262,
+    "y": 5,
+    "color": "blue",
+    "colorEmpty": "blue",
+    "player": "",
+    "playerList": [],
+    "index": 2,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      "var playerList = ${PROPERTY playerList}",
+      "var thisPlayer = ${playerList} indexOf ${playerName}",
+      "var length = ${playerList} length",
+      {
+        "func": "IF",
+        "operand1": "${thisPlayer}",
+        "operand2": -1,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${length}",
+            "relation": "<=",
+            "operand2": 3,
+            "thenRoutine": [
+              "var playerList = push ${playerName}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "playerList",
+                "value": "${playerList}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "canvas${PROPERTY index}"
+                ],
+                "property": "owner",
+                "value": "${playerList}"
+              },
+              {
+                "func": "CALL",
+                "widget": "calls",
+                "routine": "setListRoutine",
+                "arguments": {
+                  "seatIndex": "${PROPERTY index}"
+                }
+              },
+              "var length = ${length} + 1",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "playerCount",
+                "value": "${length}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "var playerList = remove ${thisPlayer} 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "playerList",
+            "value": "${playerList}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "canvas${PROPERTY index}"
+            ],
+            "property": "owner",
+            "value": "${playerList}"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "setListRoutine",
+            "arguments": {
+              "seatIndex": "${PROPERTY index}"
+            }
+          },
+          "var length = ${length} - 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "playerCount",
+            "value": "${length}"
+          }
+        ]
+      }
+    ],
+    "cycleRoutine": [
+      "var a = ${PROPERTY playerIndex} + 1",
+      "var b = ${a} % ${PROPERTY playerCount}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "playerIndex",
+        "value": "${b}"
+      },
+      "var b = ${b} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "pName${PROPERTY index}-1",
+          "pName${PROPERTY index}-2",
+          "pName${PROPERTY index}-3",
+          "pName${PROPERTY index}-4"
+        ],
+        "property": "backgroundColor",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pName${PROPERTY index}-${b}"
+        ],
+        "property": "backgroundColor",
+        "value": "#afeeee"
+      }
+    ],
+    "playerCount": 0,
+    "playerIndex": -1,
+    "turn": false,
+    "playerCountChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY playerCount}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "piece2"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": "Blue Team"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "piece2"
+            ],
+            "property": "scale",
+            "value": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "seat3": {
+    "inheritFrom": "seat1",
+    "id": "seat3",
+    "type": "seat",
+    "x": 475,
+    "y": 5,
+    "index": 3,
+    "color": "Orange",
+    "playerList": [],
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      "var playerList = ${PROPERTY playerList}",
+      "var thisPlayer = ${playerList} indexOf ${playerName}",
+      "var length = ${playerList} length",
+      {
+        "func": "IF",
+        "operand1": "${thisPlayer}",
+        "operand2": -1,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${length}",
+            "relation": "<=",
+            "operand2": 3,
+            "thenRoutine": [
+              "var playerList = push ${playerName}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "playerList",
+                "value": "${playerList}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "canvas${PROPERTY index}"
+                ],
+                "property": "owner",
+                "value": "${playerList}"
+              },
+              {
+                "func": "CALL",
+                "widget": "calls",
+                "routine": "setListRoutine",
+                "arguments": {
+                  "seatIndex": "${PROPERTY index}"
+                }
+              },
+              "var length = ${length} + 1",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "playerCount",
+                "value": "${length}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "var playerList = remove ${thisPlayer} 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "playerList",
+            "value": "${playerList}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "canvas${PROPERTY index}"
+            ],
+            "property": "owner",
+            "value": "${playerList}"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "setListRoutine",
+            "arguments": {
+              "seatIndex": "${PROPERTY index}"
+            }
+          },
+          "var length = ${length} - 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "playerCount",
+            "value": "${length}"
+          }
+        ]
+      }
+    ],
+    "cycleRoutine": [
+      "var a = ${PROPERTY playerIndex} + 1",
+      "var b = ${a} % ${PROPERTY playerCount}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "playerIndex",
+        "value": "${b}"
+      },
+      "var b = ${b} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "pName${PROPERTY index}-1",
+          "pName${PROPERTY index}-2",
+          "pName${PROPERTY index}-3",
+          "pName${PROPERTY index}-4"
+        ],
+        "property": "backgroundColor",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pName${PROPERTY index}-${b}"
+        ],
+        "property": "backgroundColor",
+        "value": "#afeeee"
+      }
+    ],
+    "playerCount": 0,
+    "playerIndex": -1,
+    "turn": false,
+    "player": "",
+    "colorEmpty": "Orange",
+    "foobar": true,
+    "playerCountChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY playerCount}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "piece3"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": "Orange Team"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "piece3"
+            ],
+            "property": "scale",
+            "value": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "seat4": {
+    "inheritFrom": "seat1",
+    "id": "seat4",
+    "type": "seat",
+    "x": 688,
+    "y": 5,
+    "index": 4,
+    "color": "green",
+    "playerList": [],
+    "colorEmpty": "green",
+    "player": "",
+    "playerCount": 0,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      "var playerList = ${PROPERTY playerList}",
+      "var thisPlayer = ${playerList} indexOf ${playerName}",
+      "var length = ${playerList} length",
+      {
+        "func": "IF",
+        "operand1": "${thisPlayer}",
+        "operand2": -1,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${length}",
+            "relation": "<=",
+            "operand2": 3,
+            "thenRoutine": [
+              "var playerList = push ${playerName}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "playerList",
+                "value": "${playerList}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "canvas${PROPERTY index}"
+                ],
+                "property": "owner",
+                "value": "${playerList}"
+              },
+              {
+                "func": "CALL",
+                "widget": "calls",
+                "routine": "setListRoutine",
+                "arguments": {
+                  "seatIndex": "${PROPERTY index}"
+                }
+              },
+              "var length = ${length} + 1",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "playerCount",
+                "value": "${length}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "var playerList = remove ${thisPlayer} 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "playerList",
+            "value": "${playerList}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "canvas${PROPERTY index}"
+            ],
+            "property": "owner",
+            "value": "${playerList}"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "setListRoutine",
+            "arguments": {
+              "seatIndex": "${PROPERTY index}"
+            }
+          },
+          "var length = ${length} - 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "playerCount",
+            "value": "${length}"
+          }
+        ]
+      }
+    ],
+    "cycleRoutine": [
+      "var a = ${PROPERTY playerIndex} + 1",
+      "var b = ${a} % ${PROPERTY playerCount}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "playerIndex",
+        "value": "${b}"
+      },
+      "var b = ${b} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "pName${PROPERTY index}-1",
+          "pName${PROPERTY index}-2",
+          "pName${PROPERTY index}-3",
+          "pName${PROPERTY index}-4"
+        ],
+        "property": "backgroundColor",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pName${PROPERTY index}-${b}"
+        ],
+        "property": "backgroundColor",
+        "value": "#afeeee"
+      }
+    ],
+    "playerIndex": -1,
+    "turn": false,
+    "playerCountChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY playerCount}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "piece4"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": "Green Team"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "piece4"
+            ],
+            "property": "scale",
+            "value": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "pName2-1": {
+    "id": "pName2-1",
+    "parent": "seat2",
+    "inheritFrom": "pName1-1",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName2-2": {
+    "id": "pName2-2",
+    "parent": "seat2",
+    "inheritFrom": "pName1-2",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName2-3": {
+    "id": "pName2-3",
+    "parent": "seat2",
+    "inheritFrom": "pName1-3",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName2-4": {
+    "id": "pName2-4",
+    "parent": "seat2",
+    "inheritFrom": "pName1-4",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName3-1": {
+    "id": "pName3-1",
+    "parent": "seat3",
+    "inheritFrom": "pName1-1",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName3-2": {
+    "id": "pName3-2",
+    "parent": "seat3",
+    "inheritFrom": "pName1-2",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName3-3": {
+    "id": "pName3-3",
+    "parent": "seat3",
+    "inheritFrom": "pName1-3",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName3-4": {
+    "id": "pName3-4",
+    "parent": "seat3",
+    "inheritFrom": "pName1-4",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName4-1": {
+    "id": "pName4-1",
+    "parent": "seat4",
+    "inheritFrom": "pName1-1",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName4-2": {
+    "id": "pName4-2",
+    "parent": "seat4",
+    "inheritFrom": "pName1-2",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName4-3": {
+    "id": "pName4-3",
+    "parent": "seat4",
+    "inheritFrom": "pName1-3",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "pName4-4": {
+    "id": "pName4-4",
+    "parent": "seat4",
+    "inheritFrom": "pName1-4",
+    "text": "",
+    "backgroundColor": ""
+  },
+  "board": {
+    "id": "board",
+    "x": 852,
+    "width": 737,
+    "height": 737,
+    "z": 295,
+    "css": {
+      "background": "#480051",
+      "border": "6px solid black",
+      "transition": "linear 0.8s"
+    },
+    "borderRadius": 8,
+    "movable": false,
+    "movableInEdit": false,
+    "layer": 5,
+    "y": 190
+  },
+  "square1": {
+    "type": "holder",
+    "id": "square1",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 248,
+    "y": 496,
+    "width": 107,
+    "height": 107,
+    "borderRadius": 0,
+    "z": 16,
+    "movableInEdit": false,
+    "css": {
+      "background": "${PROPERTY squareColor}"
+    },
+    "dropOffsetX": -12,
+    "dropOffsetY": -10,
+    "dropTarget": {
+      "classes": "classicPiece"
+    },
+    "squareColor": "#F5F000",
+    "stackOffsetX": 17,
+    "space": 1,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "space",
+        "value": "${PROPERTY space}"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "question",
+        "value": "${PROPERTY question}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "theWordBack"
+        ],
+        "property": "question",
+        "value": "${PROPERTY question}"
+      }
+    ],
+    "question": "person"
+  },
+  "piece1": {
+    "id": "piece1",
+    "x": -12,
+    "y": -10,
+    "width": 56,
+    "height": 84,
+    "scale": 0,
+    "z": 1,
+    "classes": "classicPiece",
+    "color": "red",
+    "space": 1,
+    "question": "person",
+    "layer": 8,
+    "parent": "square1"
+  },
+  "piece2": {
+    "id": "piece2",
+    "x": 5,
+    "y": -10,
+    "width": 56,
+    "height": 84,
+    "scale": 0,
+    "z": 2,
+    "classes": "classicPiece",
+    "color": "blue",
+    "space": 1,
+    "question": "person",
+    "layer": 8,
+    "parent": "square1"
+  },
+  "square2": {
+    "id": "square2",
+    "type": "holder",
+    "parent": "board",
+    "x": 268,
+    "y": 603,
+    "width": 67,
+    "height": 67,
+    "inheritFrom": "square1",
+    "squareColor": "#51b333",
+    "space": 2,
+    "question": "difficult"
+  },
+  "square3": {
+    "id": "square3",
+    "type": "holder",
+    "parent": "board",
+    "x": 268,
+    "y": 670,
+    "width": 67,
+    "height": 67,
+    "inheritFrom": "square1",
+    "squareColor": "#ee4094",
+    "space": 3,
+    "question": "action"
+  },
+  "square4": {
+    "id": "square4",
+    "type": "holder",
+    "parent": "board",
+    "x": 201,
+    "y": 670,
+    "width": 67,
+    "height": 67,
+    "inheritFrom": "square1",
+    "squareColor": "#F5F000",
+    "space": 4,
+    "question": "person"
+  },
+  "square5": {
+    "id": "square5",
+    "type": "holder",
+    "parent": "board",
+    "x": 134,
+    "y": 670,
+    "width": 67,
+    "height": 67,
+    "inheritFrom": "square1",
+    "squareColor": "#52abd5",
+    "space": 5,
+    "question": "object"
+  },
+  "square6": {
+    "id": "square6",
+    "type": "holder",
+    "parent": "board",
+    "x": 67,
+    "y": 670,
+    "width": 67,
+    "height": 67,
+    "inheritFrom": "square1",
+    "space": 6,
+    "question": "all",
+    "squareColor": "#f95f17"
+  },
+  "square7": {
+    "id": "square7",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 670,
+    "inheritFrom": "square2",
+    "space": 7
+  },
+  "square8": {
+    "id": "square8",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 603,
+    "inheritFrom": "square3",
+    "space": 8
+  },
+  "square9": {
+    "id": "square9",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 536,
+    "inheritFrom": "square4",
+    "space": 9
+  },
+  "square10": {
+    "id": "square10",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 469,
+    "inheritFrom": "square5",
+    "space": 10
+  },
+  "square11": {
+    "id": "square11",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 402,
+    "inheritFrom": "square6",
+    "space": 11
+  },
+  "square12": {
+    "id": "square12",
+    "type": "holder",
+    "parent": "board",
+    "x": 67,
+    "y": 402,
+    "inheritFrom": "square2",
+    "space": 12
+  },
+  "square13": {
+    "id": "square13",
+    "type": "holder",
+    "parent": "board",
+    "x": 134,
+    "y": 402,
+    "inheritFrom": "square3",
+    "space": 13
+  },
+  "square14": {
+    "id": "square14",
+    "type": "holder",
+    "parent": "board",
+    "x": 134,
+    "y": 335,
+    "inheritFrom": "square4",
+    "space": 14
+  },
+  "square15": {
+    "id": "square15",
+    "type": "holder",
+    "parent": "board",
+    "x": 134,
+    "y": 268,
+    "inheritFrom": "square5",
+    "space": 15
+  },
+  "square16": {
+    "id": "square16",
+    "type": "holder",
+    "parent": "board",
+    "x": 67,
+    "y": 268,
+    "inheritFrom": "square6",
+    "space": 16
+  },
+  "square17": {
+    "id": "square17",
+    "parent": "board",
+    "type": "holder",
+    "x": 0,
+    "y": 268,
+    "inheritFrom": "square2",
+    "space": 17
+  },
+  "square18": {
+    "id": "square18",
+    "parent": "board",
+    "type": "holder",
+    "x": 0,
+    "y": 201,
+    "inheritFrom": "square3",
+    "space": 18
+  },
+  "square19": {
+    "id": "square19",
+    "parent": "board",
+    "type": "holder",
+    "x": 0,
+    "y": 134,
+    "inheritFrom": "square4",
+    "space": 19
+  },
+  "square20": {
+    "id": "square20",
+    "parent": "board",
+    "type": "holder",
+    "x": 0,
+    "y": 67,
+    "inheritFrom": "square5",
+    "space": 20
+  },
+  "square21": {
+    "id": "square21",
+    "parent": "board",
+    "type": "holder",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "square6",
+    "space": 21
+  },
+  "square22": {
+    "id": "square22",
+    "parent": "board",
+    "type": "holder",
+    "x": 67,
+    "y": 0,
+    "inheritFrom": "square2",
+    "space": 22
+  },
+  "square23": {
+    "id": "square23",
+    "parent": "board",
+    "type": "holder",
+    "x": 134,
+    "y": 0,
+    "inheritFrom": "square3",
+    "space": 23
+  },
+  "square24": {
+    "id": "square24",
+    "parent": "board",
+    "type": "holder",
+    "x": 201,
+    "y": 0,
+    "inheritFrom": "square4",
+    "space": 24
+  },
+  "square25": {
+    "id": "square25",
+    "parent": "board",
+    "type": "holder",
+    "x": 268,
+    "y": 0,
+    "inheritFrom": "square5",
+    "space": 25
+  },
+  "square26": {
+    "id": "square26",
+    "parent": "board",
+    "type": "holder",
+    "x": 268,
+    "y": 67,
+    "inheritFrom": "square6",
+    "space": 26
+  },
+  "square27": {
+    "id": "square27",
+    "parent": "board",
+    "type": "holder",
+    "x": 268,
+    "y": 134,
+    "inheritFrom": "square2",
+    "space": 27
+  },
+  "square28": {
+    "id": "square28",
+    "type": "holder",
+    "parent": "board",
+    "x": 335,
+    "y": 134,
+    "inheritFrom": "square3",
+    "space": 28
+  },
+  "square29": {
+    "id": "square29",
+    "type": "holder",
+    "parent": "board",
+    "x": 402,
+    "y": 134,
+    "inheritFrom": "square4",
+    "space": 29
+  },
+  "square30": {
+    "id": "square30",
+    "type": "holder",
+    "parent": "board",
+    "x": 402,
+    "y": 67,
+    "inheritFrom": "square5",
+    "space": 30
+  },
+  "square31": {
+    "id": "square31",
+    "type": "holder",
+    "parent": "board",
+    "x": 402,
+    "y": 0,
+    "inheritFrom": "square6",
+    "space": 31
+  },
+  "square32": {
+    "id": "square32",
+    "type": "holder",
+    "parent": "board",
+    "x": 469,
+    "y": 0,
+    "inheritFrom": "square2",
+    "space": 32
+  },
+  "square33": {
+    "id": "square33",
+    "type": "holder",
+    "parent": "board",
+    "x": 536,
+    "y": 0,
+    "inheritFrom": "square3",
+    "space": 33
+  },
+  "square34": {
+    "id": "square34",
+    "type": "holder",
+    "parent": "board",
+    "x": 603,
+    "y": 0,
+    "inheritFrom": "square4",
+    "space": 34
+  },
+  "square35": {
+    "id": "square35",
+    "type": "holder",
+    "parent": "board",
+    "x": 670,
+    "y": 0,
+    "inheritFrom": "square5",
+    "space": 35
+  },
+  "square36": {
+    "id": "square36",
+    "type": "holder",
+    "parent": "board",
+    "x": 670,
+    "y": 67,
+    "inheritFrom": "square6",
+    "space": 36
+  },
+  "square37": {
+    "id": "square37",
+    "type": "holder",
+    "parent": "board",
+    "x": 670,
+    "y": 134,
+    "inheritFrom": "square2",
+    "space": 37
+  },
+  "square38": {
+    "id": "square38",
+    "type": "holder",
+    "parent": "board",
+    "x": 670,
+    "y": 201,
+    "inheritFrom": "square3",
+    "space": 38
+  },
+  "square39": {
+    "id": "square39",
+    "type": "holder",
+    "parent": "board",
+    "x": 670,
+    "y": 268,
+    "inheritFrom": "square4",
+    "space": 39
+  },
+  "square40": {
+    "id": "square40",
+    "type": "holder",
+    "parent": "board",
+    "x": 603,
+    "y": 268,
+    "inheritFrom": "square5",
+    "space": 40
+  },
+  "square41": {
+    "id": "square41",
+    "type": "holder",
+    "parent": "board",
+    "x": 536,
+    "y": 268,
+    "inheritFrom": "square6",
+    "space": 41
+  },
+  "square42": {
+    "id": "square42",
+    "type": "holder",
+    "parent": "board",
+    "x": 536,
+    "y": 335,
+    "inheritFrom": "square2",
+    "space": 42
+  },
+  "square43": {
+    "id": "square43",
+    "type": "holder",
+    "parent": "board",
+    "x": 536,
+    "y": 402,
+    "inheritFrom": "square3",
+    "space": 43
+  },
+  "square44": {
+    "id": "square44",
+    "type": "holder",
+    "parent": "board",
+    "x": 603,
+    "y": 402,
+    "inheritFrom": "square4",
+    "space": 44
+  },
+  "square45": {
+    "id": "square45",
+    "type": "holder",
+    "parent": "board",
+    "x": 670,
+    "y": 402,
+    "inheritFrom": "square5",
+    "space": 45
+  },
+  "square46": {
+    "id": "square46",
+    "type": "holder",
+    "parent": "board",
+    "x": 670,
+    "y": 469,
+    "inheritFrom": "square6",
+    "space": 46
+  },
+  "square47": {
+    "id": "square47",
+    "type": "holder",
+    "parent": "board",
+    "x": 670,
+    "y": 536,
+    "inheritFrom": "square2",
+    "space": 47
+  },
+  "square48": {
+    "id": "square48",
+    "type": "holder",
+    "parent": "board",
+    "x": 670,
+    "y": 603,
+    "inheritFrom": "square3",
+    "space": 48
+  },
+  "square49": {
+    "id": "square49",
+    "type": "holder",
+    "parent": "board",
+    "x": 670,
+    "y": 670,
+    "inheritFrom": "square4",
+    "space": 49
+  },
+  "square50": {
+    "id": "square50",
+    "type": "holder",
+    "parent": "board",
+    "x": 603,
+    "y": 670,
+    "inheritFrom": "square5",
+    "space": 50
+  },
+  "square51": {
+    "id": "square51",
+    "type": "holder",
+    "parent": "board",
+    "x": 536,
+    "y": 670,
+    "inheritFrom": "square6",
+    "space": 51
+  },
+  "square52": {
+    "id": "square52",
+    "type": "holder",
+    "parent": "board",
+    "x": 469,
+    "y": 670,
+    "inheritFrom": "square2",
+    "space": 52
+  },
+  "square53": {
+    "id": "square53",
+    "type": "holder",
+    "parent": "board",
+    "x": 402,
+    "y": 670,
+    "inheritFrom": "square3",
+    "space": 53
+  },
+  "square54": {
+    "id": "square54",
+    "type": "holder",
+    "parent": "board",
+    "x": 402,
+    "y": 603,
+    "inheritFrom": "square4",
+    "space": 54
+  },
+  "square55": {
+    "id": "square55",
+    "type": "holder",
+    "parent": "board",
+    "x": 382,
+    "y": 496,
+    "width": 107,
+    "height": 107,
+    "inheritFrom": "square6",
+    "space": 55
+  },
+  "piece3": {
+    "id": "piece3",
+    "x": 39,
+    "width": 56,
+    "height": 84,
+    "z": 4,
+    "classes": "classicPiece",
+    "color": "orange",
+    "y": -10,
+    "space": 1,
+    "question": "person",
+    "layer": 8,
+    "parent": "square1",
+    "scale": 0
+  },
+  "piece4": {
+    "id": "piece4",
+    "x": 22,
+    "width": 56,
+    "height": 84,
+    "scale": 0,
+    "z": 3,
+    "classes": "classicPiece",
+    "color": "green",
+    "y": -10,
+    "space": 1,
+    "question": "person",
+    "layer": 8,
+    "parent": "square1"
+  },
+  "label1": {
+    "id": "label1",
+    "parent": "square1",
+    "fixedParent": true,
+    "y": 70,
+    "width": 107,
+    "height": 30,
+    "z": 287,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px",
+      "text-align": "center"
+    },
+    "text": "Start",
+    "question": "all"
+  },
+  "label2": {
+    "id": "label2",
+    "parent": "square55",
+    "fixedParent": true,
+    "y": 70,
+    "width": 107,
+    "height": 30,
+    "z": 287,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px",
+      "text-align": "center"
+    },
+    "text": "Finish"
+  },
+  "guide1": {
+    "id": "guide1",
+    "x": 272,
+    "height": 30,
+    "z": 292,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "border": "1px solid black",
+      "font-size": "19px",
+      "text-align": "center",
+      "line-height": "1.5",
+      "font-weight": "normal",
+      "background": "${PROPERTY backgroundColor}"
+    },
+    "width": 190,
+    "text": "All Play",
+    "backgroundColor": "#f95f17",
+    "fixedParent": true,
+    "parent": "board",
+    "y": 280
+  },
+  "guide2": {
+    "inheritFrom": "guide1",
+    "id": "guide2",
+    "x": -1,
+    "y": 31,
+    "backgroundColor": "#51b333",
+    "text": "Difficult",
+    "fixedParent": true,
+    "parent": "guide1",
+    "z": 292
+  },
+  "guide3": {
+    "inheritFrom": "guide1",
+    "id": "guide3",
+    "x": -1,
+    "y": 62,
+    "backgroundColor": "#ee4094",
+    "text": "Action",
+    "fixedParent": true,
+    "parent": "guide1",
+    "z": 292
+  },
+  "guide4": {
+    "inheritFrom": "guide1",
+    "id": "guide4",
+    "x": -1,
+    "y": 93,
+    "backgroundColor": "#F5F000",
+    "text": "Person/Place/Animal",
+    "fixedParent": true,
+    "parent": "guide1",
+    "z": 292
+  },
+  "guide5": {
+    "inheritFrom": "guide1",
+    "id": "guide5",
+    "x": -1,
+    "y": 124,
+    "backgroundColor": "#52abd5",
+    "text": "Object",
+    "fixedParent": true,
+    "parent": "guide1",
+    "z": 292
+  },
+  "spinner": {
+    "type": "spinner",
+    "id": "spinner",
+    "x": 110,
+    "y": 110,
+    "z": 19,
+    "angle": 166822,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": 3,
+    "fixedParent": true,
+    "parent": "board",
+    "movable": false,
+    "movableInEdit": false,
+    "scale": 0
+  },
+  "spinnerControl": {
+    "type": "button",
+    "id": "spinnerControl",
+    "parent": "spinner",
+    "fixedParent": true,
+    "width": 110,
+    "height": 110,
+    "layer": 4,
+    "z": 6,
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "spinner"
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "moveRoutine"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "resetCanvas1",
+          "resetCanvas2",
+          "resetCanvas3",
+          "resetCanvas4"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "incorrect"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "moveRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "seatIndex"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "seatIndex",
+        "value": "${seatIndex}"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "spinner"
+        ],
+        "property": "value",
+        "variable": "rolled"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "piece${seatIndex}"
+        ],
+        "property": "space",
+        "variable": "space"
+      },
+      "var newSpace = ${space} + ${rolled}",
+      "var squareID = 'square' + ${newSpace}",
+      {
+        "func": "IF",
+        "operand1": "${newSpace}",
+        "relation": ">=",
+        "operand2": 55,
+        "thenRoutine": [
+          "var squareID = 'square55'"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "piece${seatIndex}"
+        ],
+        "property": "parent",
+        "value": "${squareID}"
+      }
+    ],
+    "movableInEdit": false,
+    "seatIndex": 1
+  },
+  "theWord": {
+    "id": "theWord",
+    "x": 865,
+    "y": 559,
+    "width": 725,
+    "height": 62,
+    "z": 305,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "45px",
+      "text-align": "center",
+      "line-height": "1.4",
+      "background": "#f0f0f0"
+    },
+    "borderRadius": 8,
+    "layer": 4,
+    "owner": [
+      "LawDawg"
+    ],
+    "text": "action3"
+  },
+  "glassHolder": {
+    "id": "glassHolder",
+    "x": 875,
+    "width": 80,
+    "height": 191,
+    "scale": 0.75,
+    "z": 920,
+    "movable": false,
+    "css": "background:transparent; border:7px solid black",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "theTimer2"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "layer": 4,
+    "y": 4
+  },
+  "glassTop": {
+    "type": "holder",
+    "id": "glassTop",
+    "parent": "glassHolder",
+    "width": 80,
+    "height": 80,
+    "rotation": 45,
+    "layer": 0,
+    "z": 6,
+    "css": "border-radius: 50px 50px 0px; border: 2px solid black; background-image: linear-gradient(to top left, black, 100%, white -100%)",
+    "movableInEdit": false
+  },
+  "glassBottom": {
+    "type": "holder",
+    "id": "glassBottom",
+    "parent": "glassHolder",
+    "y": 111,
+    "width": 80,
+    "height": 80,
+    "rotation": 225,
+    "layer": 0,
+    "z": 8,
+    "css": "border-radius: 50px 50px 0px; border: 2px solid black; background-image: linear-gradient(to top left, white, 100%, black -100%)",
+    "movableInEdit": false
+  },
+  "reset2": {
+    "type": "button",
+    "id": "reset2",
+    "parent": "glassHolder",
+    "y": 77,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "backgroundColor": "black",
+    "backgroundColorOH": "grey",
+    "css": "background-size: 80% 80%",
+    "image": "/i/button-icons/White-Reset.svg",
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "theTimer2",
+        "mode": "reset"
+      },
+      {
+        "func": "TIMER",
+        "timer": "theTimer2",
+        "mode": "start"
+      }
+    ],
+    "x": 90
+  },
+  "theTimer2": {
+    "type": "timer",
+    "id": "theTimer2",
+    "y": -60,
+    "z": 883,
+    "countdown": true,
+    "css": {
+      "color": "black",
+      "font-size": "50px"
+    },
+    "precision": 100,
+    "start": 60000,
+    "yMove": true,
+    "millisecondsChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "glassTop"
+      },
+      "var bar = ${PROPERTY milliseconds} / ${PROPERTY start}",
+      "var bar = ${bar} * 100",
+      "var bar = ${bar}/ ${PROPERTY width OF glassTop}",
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "border-radius: 50px 50px 0px; border: 2px solid black; background-image: linear-gradient(to top left, black, ${bar}%, white -100%)"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "glassBottom"
+      },
+      "var bar = ${PROPERTY milliseconds} / ${PROPERTY start}",
+      "var bar = ${bar} * 100",
+      "var bar = ${bar}/ ${PROPERTY width OF glassBottom}",
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "border-radius: 50px 50px 0px; border: 2px solid black; background-image: linear-gradient(to top left, white, ${bar}%, black -100%)"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "yMove",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "sand"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY yMove}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 90
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 105
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "relation": "==",
+        "operand2": 60000,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "sand"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "relation": "<=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "TIMER",
+            "timer": "theTimer2",
+            "mode": "paused"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "canvasCover"
+            ],
+            "property": "owner",
+            "value": []
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "incorrect"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "glassHolder",
+    "x": -15,
+    "clickRoutine": [],
+    "milliseconds": 60000
+  },
+  "sand": {
+    "id": "sand",
+    "parent": "glassHolder",
+    "x": 38,
+    "y": 1,
+    "width": 0,
+    "height": 85,
+    "z": 231,
+    "css": "border:2px dotted black; transition: linear 0.2s",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "theWordBack": {
+    "id": "theWordBack",
+    "x": 866,
+    "y": 560,
+    "width": 724,
+    "height": 60,
+    "borderRadius": 8,
+    "z": 305,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "45px",
+      "text-align": "center",
+      "line-height": "1.4",
+      "background": "${PROPERTY backgroundColor}"
+    },
+    "text": "Person/Place/Animal",
+    "backgroundColor": "#F5F000",
+    "layer": 3,
+    "questionChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY question}",
+        "operand2": "all",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "#f95f17"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "All Play"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY question}",
+        "operand2": "difficult",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "#51b333"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Difficult"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY question}",
+        "operand2": "action",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "#ee4094"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Action"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY question}",
+        "operand2": "person",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "#F5F000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Person/Place/Animal"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY question}",
+        "operand2": "object",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "#52abd5"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Object"
+          }
+        ]
+      }
+    ],
+    "question": "person"
+  },
+  "resetCanvas1": {
+    "type": "button",
+    "id": "resetCanvas1",
+    "parent": "canvas1",
+    "fixedParent": true,
+    "x": -50,
+    "width": 50,
+    "height": 50,
+    "borderRadius": "50% 0% 0% 0%",
+    "movableInEdit": false,
+    "css": "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+    "text": "Reset",
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "canvas": "${PROPERTY parent}",
+        "mode": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "activeColor",
+        "value": 2
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "colorCanvas${PROPERTY canvas}"
+        ],
+        "property": "color",
+        "value": "#000000"
+      }
+    ],
+    "canvas": 1
+  },
+  "colorCanvas1": {
+    "type": "button",
+    "id": "colorCanvas1",
+    "parent": "canvas1",
+    "fixedParent": true,
+    "x": -50,
+    "y": 50,
+    "width": 50,
+    "height": 50,
+    "borderRadius": "0% 0% 0% 50%",
+    "movableInEdit": false,
+    "color": "#000000",
+    "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      {
+        "func": "CANVAS",
+        "canvas": "${parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      }
+    ]
+  },
+  "canvas2": {
+    "type": "canvas",
+    "id": "canvas2",
+    "x": 50,
+    "y": 190,
+    "width": 800,
+    "height": 800,
+    "z": 13,
+    "resolution": 200,
+    "movable": false,
+    "movableInEdit": false,
+    "owner": [],
+    "activeColor": 2
+  },
+  "resetCanvas2": {
+    "type": "button",
+    "id": "resetCanvas2",
+    "parent": "canvas2",
+    "fixedParent": true,
+    "x": -50,
+    "width": 50,
+    "height": 50,
+    "borderRadius": "50% 0% 0% 0%",
+    "movableInEdit": false,
+    "css": "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+    "text": "Reset",
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "canvas": "${PROPERTY parent}",
+        "mode": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "activeColor",
+        "value": 2
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "colorCanvas${PROPERTY canvas}"
+        ],
+        "property": "color",
+        "value": "#000000"
+      }
+    ],
+    "canvas": 2
+  },
+  "colorCanvas2": {
+    "type": "button",
+    "id": "colorCanvas2",
+    "parent": "canvas2",
+    "fixedParent": true,
+    "x": -50,
+    "y": 50,
+    "width": 50,
+    "height": 50,
+    "borderRadius": "0% 0% 0% 50%",
+    "movableInEdit": false,
+    "color": "#000000",
+    "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      {
+        "func": "CANVAS",
+        "canvas": "${parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      }
+    ]
+  },
+  "canvas3": {
+    "type": "canvas",
+    "id": "canvas3",
+    "x": 50,
+    "y": 190,
+    "width": 800,
+    "height": 800,
+    "z": 13,
+    "resolution": 400,
+    "movable": false,
+    "movableInEdit": false,
+    "owner": [],
+    "activeColor": 2
+  },
+  "resetCanvas3": {
+    "type": "button",
+    "id": "resetCanvas3",
+    "parent": "canvas3",
+    "fixedParent": true,
+    "x": -50,
+    "width": 50,
+    "height": 50,
+    "borderRadius": "50% 0% 0% 0%",
+    "movableInEdit": false,
+    "css": "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+    "text": "Reset",
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "canvas": "${PROPERTY parent}",
+        "mode": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "activeColor",
+        "value": 2
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "colorCanvas${PROPERTY canvas}"
+        ],
+        "property": "color",
+        "value": "#000000"
+      }
+    ],
+    "canvas": 3
+  },
+  "colorCanvas3": {
+    "type": "button",
+    "id": "colorCanvas3",
+    "parent": "canvas3",
+    "fixedParent": true,
+    "x": -50,
+    "y": 50,
+    "width": 50,
+    "height": 50,
+    "borderRadius": "0% 0% 0% 50%",
+    "movableInEdit": false,
+    "color": "#000000",
+    "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      {
+        "func": "CANVAS",
+        "canvas": "${parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      }
+    ]
+  },
+  "canvas4": {
+    "type": "canvas",
+    "id": "canvas4",
+    "x": 50,
+    "y": 190,
+    "width": 800,
+    "height": 800,
+    "z": 13,
+    "resolution": 400,
+    "movable": false,
+    "movableInEdit": false,
+    "activeColor": 2,
+    "owner": []
+  },
+  "resetCanvas4": {
+    "type": "button",
+    "id": "resetCanvas4",
+    "parent": "canvas4",
+    "fixedParent": true,
+    "x": -50,
+    "width": 50,
+    "height": 50,
+    "borderRadius": "50% 0% 0% 0%",
+    "movableInEdit": false,
+    "css": "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+    "text": "Reset",
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "canvas": "${PROPERTY parent}",
+        "mode": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "activeColor",
+        "value": 2
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "colorCanvas${PROPERTY canvas}"
+        ],
+        "property": "color",
+        "value": "#000000"
+      }
+    ],
+    "canvas": 4
+  },
+  "colorCanvas4": {
+    "type": "button",
+    "id": "colorCanvas4",
+    "parent": "canvas4",
+    "fixedParent": true,
+    "x": -50,
+    "y": 50,
+    "width": 50,
+    "height": 50,
+    "borderRadius": "0% 0% 0% 50%",
+    "movableInEdit": false,
+    "color": "#000000",
+    "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      {
+        "func": "CANVAS",
+        "canvas": "${parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      }
+    ]
+  },
+  "canvasCover": {
+    "id": "canvasCover",
+    "layer": 3,
+    "css": {
+      "font-size": "300px",
+      "text-align": "center",
+      "line-height": "2.5"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "y": 193,
+    "width": 855,
+    "height": 805,
+    "owner": []
+  },
+  "q6pzP": {
+    "fixedParent": true,
+    "id": "q6pzP",
+    "x": 120,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}"
+      }
+    ],
+    "image": "/i/button-icons/White-Play_Pause.svg",
+    "css": "background-size: 75% 75%",
+    "parent": "coverTimer"
+  },
+  "q6pzR": {
+    "fixedParent": true,
+    "id": "q6pzR",
+    "x": 80,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}",
+        "mode": "reset"
+      }
+    ],
+    "image": "/i/button-icons/White-Reset.svg",
+    "css": "background-size: 80% 80%",
+    "parent": "coverTimer"
+  },
+  "coverTimer": {
+    "type": "timer",
+    "id": "coverTimer",
+    "y": 1061,
+    "countdown": true,
+    "layer": 4,
+    "start": 8000,
+    "millisecondsChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "relation": "<=",
+        "operand2": 5000,
+        "thenRoutine": [
+          "var time = ${PROPERTY milliseconds} / 1000",
+          {
+            "func": "SET",
+            "collection": [
+              "canvasCover"
+            ],
+            "property": "text",
+            "value": "${time}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "relation": "<=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "TIMER",
+            "timer": "coverTimer",
+            "mode": "reset"
+          },
+          {
+            "func": "SELECT",
+            "property": "playerLabel",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "backgroundColor",
+            "relation": "!=",
+            "value": "#afeeee"
+          },
+          {
+            "func": "GET",
+            "aggregation": "array",
+            "property": "text",
+            "variable": "noDrawList"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "canvasCover"
+            ],
+            "property": "owner",
+            "value": "${noDrawList}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "canvasCover"
+            ],
+            "property": "text",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "correct"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "correct"
+            ],
+            "property": "clickable",
+            "value": true
+          },
+          {
+            "func": "TIMER",
+            "timer": "theTimer2",
+            "mode": "start"
+          }
+        ]
+      }
+    ],
+    "z": 922,
+    "x": 80,
+    "milliseconds": 8000
+  },
+  "draw": {
+    "type": "button",
+    "id": "draw",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 500,
+    "y": 140,
+    "width": 140,
+    "height": 50,
+    "z": 880,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "28px"
+    },
+    "text": "Draw",
+    "activeDrawerRoutine": [
+      {
+        "func": "SELECT",
+        "property": "playerLabel",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "backgroundColor",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "seatIndex"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "piece${seatIndex}"
+      },
+      {
+        "func": "GET",
+        "property": "question",
+        "variable": "question"
+      },
+      "var thisList = ${question} + 'Array'",
+      {
+        "func": "CALL",
+        "widget": "words",
+        "routine": "getWordRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY question OF theWordBack}",
+        "operand2": "all",
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "in": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "loopRoutine": [
+              {
+                "func": "CALL",
+                "routine": "cycleRoutine",
+                "widget": "seat${value}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "cycleRoutine",
+            "widget": "seat${seatIndex}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "playerLabel",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "backgroundColor",
+        "value": "#afeeee"
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "text",
+        "variable": "drawList"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "theWord"
+        ],
+        "property": "owner",
+        "value": "${drawList}"
+      },
+      {
+        "func": "TIMER",
+        "timer": "coverTimer",
+        "mode": "start"
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "board"
+        ],
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "CALL",
+        "widget": "draw",
+        "routine": "activeDrawerRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvasCover"
+        ],
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "incorrect"
+        ],
+        "property": "clickable",
+        "value": true
+      }
+    ],
+    "scale": 0
+  },
+  "correct": {
+    "type": "button",
+    "id": "correct",
+    "x": 1033,
+    "y": 63,
+    "width": 150,
+    "height": 60,
+    "z": 882,
+    "movableInEdit": false,
+    "backgroundColor": "green",
+    "backgroundColorOH": "lightgreen",
+    "css": {
+      "font-size": "26px"
+    },
+    "text": "Correct Guess",
+    "textColorOH": "black",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY question OF theWordBack}",
+        "operand2": "all",
+        "thenRoutine": [
+          "var seat1Val = ' '",
+          "var seat2Val = ' '",
+          "var seat3Val = ' '",
+          "var seat4Val = ' '",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY playerCount OF seat1}",
+            "relation": "!=",
+            "operand2": 0,
+            "thenRoutine": [
+              "var seat1Val = 'Red Team'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY playerCount OF seat2}",
+            "relation": "!=",
+            "operand2": 0,
+            "thenRoutine": [
+              "var seat2Val = 'Blue Team'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY playerCount OF seat3}",
+            "relation": "!=",
+            "operand2": 0,
+            "thenRoutine": [
+              "var seat3Val = 'Orange Team'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY playerCount OF seat4}",
+            "relation": "!=",
+            "operand2": 0,
+            "thenRoutine": [
+              "var seat4Val = 'Green Team'"
+            ]
+          },
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Choose team that guessed correctly first"
+              },
+              {
+                "type": "select",
+                "variable": "winner",
+                "options": [
+                  {
+                    "value": "seat1",
+                    "text": "${seat1Val}"
+                  },
+                  {
+                    "value": "seat2",
+                    "text": "${seat2Val}"
+                  },
+                  {
+                    "value": "seat3",
+                    "text": "${seat3Val}"
+                  },
+                  {
+                    "value": "seat4",
+                    "text": "${seat4Val}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "turn",
+            "value": false
+          },
+          {
+            "func": "IF",
+            "operand1": "${winner}",
+            "operand2": "seat1",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "seat1"
+                ],
+                "property": "turn",
+                "value": true
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${winner}",
+            "operand2": "seat2",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "seat2"
+                ],
+                "property": "turn",
+                "value": true
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${winner}",
+            "operand2": "seat3",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "seat3"
+                ],
+                "property": "turn",
+                "value": true
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${winner}",
+            "operand2": "seat4",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "seat4"
+                ],
+                "property": "turn",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "TIMER",
+        "timer": "theTimer2",
+        "mode": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "board"
+        ],
+        "property": "x",
+        "value": 852
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "spinnerControl"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "spinner"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvasCover"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvasCover"
+        ],
+        "property": "owner",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "incorrect"
+        ],
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "incorrect"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "scale": 0
+  },
+  "incorrect": {
+    "type": "button",
+    "id": "incorrect",
+    "x": 1273,
+    "y": 63,
+    "width": 150,
+    "height": 60,
+    "z": 882,
+    "movableInEdit": false,
+    "backgroundColor": "red",
+    "backgroundColorOH": "pink",
+    "css": {
+      "font-size": "26px"
+    },
+    "text": "Incorrect Guess",
+    "textColorOH": "black",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "board"
+        ],
+        "property": "x",
+        "value": 852
+      },
+      {
+        "func": "TIMER",
+        "timer": "theTimer2",
+        "mode": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "spinnerControl"
+        ],
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "spinner"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvasCover"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvasCover"
+        ],
+        "property": "owner",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "correct"
+        ],
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "correct"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "TURN"
+      }
+    ],
+    "scale": 0
+  },
+  "play": {
+    "type": "button",
+    "id": "play",
+    "x": 1035,
+    "z": 887,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "board"
+        ],
+        "property": "x",
+        "value": 852
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "resetCanvas1",
+          "resetCanvas2",
+          "resetCanvas3",
+          "resetCanvas4"
+        ]
+      }
+    ],
+    "width": 400,
+    "height": 60,
+    "borderRadius": 8,
+    "layer": 5,
+    "movableInEdit": false,
+    "text": "Start Game",
+    "css": "font-size: 60px; ",
+    "y": 70
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "width": 50,
+    "height": 50,
+    "z": 890,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 40px; ",
+    "text": "_restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting board ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will reset the board. Are you sure?"
+          },
+          {
+            "type": "checkbox",
+            "label": "Would you like to continue playing with the same players and teams?",
+            "value": true,
+            "variable": "teams"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${teams}",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerLabel",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": ""
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "seat1",
+              "seat2",
+              "seat3",
+              "seat4"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "player",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "property": "playerList",
+            "value": []
+          },
+          {
+            "func": "SET",
+            "property": "playerCount",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "play"
+        ],
+        "property": "y",
+        "value": 70
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "property": "playerIndex",
+        "value": -1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "board"
+        ],
+        "property": "x",
+        "value": 852
+      },
+      {
+        "func": "SELECT",
+        "property": "playerLabel",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "backgroundColor",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "correct"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "correct"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "incorrect"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "incorrect"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "spinner"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "spinnerControl"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "TIMER",
+        "timer": "theTimer2",
+        "mode": "reset"
+      },
+      {
+        "func": "TIMER",
+        "timer": "coverTimer",
+        "mode": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvasCover"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvasCover"
+        ],
+        "property": "owner",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "piece1",
+          "piece2",
+          "piece3",
+          "piece4"
+        ],
+        "property": "parent",
+        "value": "square1"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "resetCanvas1",
+          "resetCanvas2",
+          "resetCanvas3",
+          "resetCanvas4"
+        ]
+      }
+    ]
+  },
+  "woodBackground": {
+    "id": "woodBackground",
+    "x": -30,
+    "width": 1700,
+    "height": 1100,
+    "layer": -6,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/1883647394_976053"
+  },
+  "words": {
+    "id": "words",
+    "x": 271,
+    "y": 1033,
+    "z": 907,
+    "css": "background: white; ",
+    "text": "Words",
+    "actionArray": [
+      "abuse",
+      "accuse",
+      "adapt",
+      "administer",
+      "admire",
+      "affect",
+      "aid",
+      "allege",
+      "allocate",
+      "allow",
+      "amend",
+      "amount",
+      "announce",
+      "approve",
+      "argue",
+      "arouse",
+      "arrange",
+      "arrest",
+      "arrive",
+      "ask",
+      "assert",
+      "assess",
+      "assure",
+      "attack",
+      "attend",
+      "attract",
+      "attribute",
+      "award",
+      "back",
+      "bear",
+      "beat",
+      "bind",
+      "bloom",
+      "book",
+      "born",
+      "borrow",
+      "bother",
+      "bow",
+      "brainstorm",
+      "breathe",
+      "bring",
+      "bury",
+      "cast",
+      "challenge",
+      "change",
+      "characterise",
+      "chase",
+      "cheer",
+      "classify",
+      "clean",
+      "cling",
+      "close",
+      "coincide",
+      "commence",
+      "compel",
+      "compensate",
+      "compete",
+      "condemn",
+      "conduct",
+      "confine",
+      "conform",
+      "confront",
+      "contrast",
+      "convict",
+      "counter",
+      "cover",
+      "criticize",
+      "debate",
+      "decide",
+      "demonstrate",
+      "depart",
+      "deprive",
+      "descend",
+      "describe",
+      "determine",
+      "differ",
+      "dig",
+      "dip",
+      "direct",
+      "disappear",
+      "discuss",
+      "dominate",
+      "draft",
+      "dream",
+      "dress",
+      "drive",
+      "eat",
+      "echo",
+      "educate",
+      "eliminate",
+      "emphasise",
+      "employ",
+      "ensure",
+      "escape",
+      "exceed",
+      "execute",
+      "exercise",
+      "exist",
+      "exploit",
+      "explore",
+      "express",
+      "face",
+      "feed",
+      "fight",
+      "figure",
+      "fire",
+      "flash",
+      "fling",
+      "flood",
+      "fly",
+      "follow",
+      "forbid",
+      "force",
+      "forget",
+      "found",
+      "freeze",
+      "frighten",
+      "frown",
+      "gasp",
+      "get",
+      "give",
+      "going",
+      "greet",
+      "grin",
+      "guard",
+      "hand",
+      "hate",
+      "hear",
+      "highlight",
+      "hold",
+      "hope",
+      "hurry",
+      "identify",
+      "imagine",
+      "implement",
+      "import",
+      "incorporate",
+      "indicate",
+      "initiate",
+      "insist",
+      "interrupt",
+      "intervene",
+      "introduce",
+      "investigate",
+      "isolate",
+      "issue",
+      "judge",
+      "kick",
+      "kill",
+      "kiss",
+      "knock",
+      "leave",
+      "limit",
+      "locate",
+      "look",
+      "lose",
+      "manufacture",
+      "marry",
+      "mean",
+      "measure",
+      "melt",
+      "mention",
+      "mind",
+      "modify",
+      "multiply",
+      "murder",
+      "murmur",
+      "need",
+      "neglect",
+      "negotiate",
+      "nod",
+      "note",
+      "notice",
+      "obey",
+      "occupy",
+      "opt",
+      "order",
+      "organise",
+      "originate",
+      "overcome",
+      "owe",
+      "pack",
+      "participate",
+      "peer",
+      "perceive",
+      "plead",
+      "pray",
+      "precede",
+      "preserve",
+      "progress",
+      "promote",
+      "provide",
+      "pursue",
+      "qualify",
+      "realize",
+      "reassure",
+      "rebuild",
+      "recall",
+      "receive",
+      "recommend",
+      "refuse",
+      "register",
+      "regret",
+      "relax",
+      "remain",
+      "remember",
+      "repeat",
+      "represent",
+      "resemble",
+      "respect",
+      "respond",
+      "restrict",
+      "result",
+      "retire",
+      "return",
+      "risk",
+      "rub",
+      "rush",
+      "save",
+      "scatter",
+      "seem",
+      "separate",
+      "shake",
+      "shape",
+      "shoot",
+      "shout",
+      "sigh",
+      "signal",
+      "sink",
+      "slam",
+      "slow",
+      "smash",
+      "spell",
+      "split",
+      "spoil",
+      "stare",
+      "state",
+      "stay",
+      "strengthen",
+      "stress",
+      "stretch",
+      "subject",
+      "sum",
+      "supplement",
+      "sweep",
+      "tax",
+      "think",
+      "top",
+      "transport",
+      "travel",
+      "treat",
+      "undertake",
+      "unite",
+      "update",
+      "use",
+      "wake",
+      "wash",
+      "wave",
+      "widen",
+      "wipe",
+      "withdraw",
+      "witness"
+    ],
+    "allArray": [
+      "accident",
+      "account",
+      "act",
+      "actor",
+      "affair",
+      "afternoon",
+      "afterthought",
+      "agency",
+      "agreement",
+      "air",
+      "airline",
+      "airport",
+      "alcohol",
+      "amount",
+      "analysis",
+      "analyst",
+      "anxiety",
+      "apartment",
+      "appliance",
+      "arch",
+      "area",
+      "arithmetic",
+      "arrival",
+      "art",
+      "article",
+      "aside",
+      "assignment",
+      "atmosphere",
+      "attack",
+      "attitude",
+      "authority",
+      "balance",
+      "basin",
+      "basis",
+      "bath",
+      "beer",
+      "beginning",
+      "belief",
+      "bell",
+      "benefit",
+      "berry",
+      "beyond",
+      "blame",
+      "blood",
+      "bone",
+      "bonus",
+      "border",
+      "boss",
+      "bother",
+      "boundary",
+      "box",
+      "boyfriend",
+      "brake",
+      "breakfast",
+      "breath",
+      "brother",
+      "butter",
+      "buyer",
+      "cactus",
+      "camp",
+      "campaign",
+      "canvas",
+      "card",
+      "career",
+      "cast",
+      "celebration",
+      "celery",
+      "cemetery",
+      "cent",
+      "championship",
+      "chance",
+      "channel",
+      "character",
+      "cherry",
+      "childhood",
+      "chocolate",
+      "church",
+      "circle",
+      "class",
+      "client",
+      "closet",
+      "clothes",
+      "clue",
+      "coast",
+      "cobweb",
+      "collection",
+      "commercial",
+      "commission",
+      "committee",
+      "communication",
+      "community",
+      "competition",
+      "complaint",
+      "concert",
+      "conclusion",
+      "confidence",
+      "conflict",
+      "confusion",
+      "connection",
+      "construction",
+      "contest",
+      "contract",
+      "copper",
+      "country",
+      "county",
+      "courage",
+      "court",
+      "cousin",
+      "crack",
+      "cream",
+      "creature",
+      "criticism",
+      "crook",
+      "cub",
+      "currency",
+      "curtain",
+      "cushion",
+      "customer",
+      "data",
+      "day",
+      "debt",
+      "decision",
+      "definition",
+      "degree",
+      "delivery",
+      "department",
+      "deposit",
+      "depression",
+      "depth",
+      "desire",
+      "destruction",
+      "device",
+      "diamond",
+      "dime",
+      "direction",
+      "disaster",
+      "discipline",
+      "discount",
+      "discussion",
+      "district",
+      "doctor",
+      "downtown",
+      "drain",
+      "drama",
+      "drawer",
+      "drawing",
+      "drink",
+      "driver",
+      "economy",
+      "edge",
+      "elbow",
+      "election",
+      "emergency",
+      "emotion",
+      "employee",
+      "employer",
+      "engine",
+      "entrance",
+      "error",
+      "essay",
+      "establishment",
+      "estate",
+      "examination",
+      "exit",
+      "experience",
+      "fact",
+      "family",
+      "father",
+      "fear",
+      "fee",
+      "feedback",
+      "feeling",
+      "final",
+      "finish",
+      "flame",
+      "flesh",
+      "floor",
+      "flower",
+      "fork",
+      "fortune",
+      "foundation",
+      "frame",
+      "freedom",
+      "friendship",
+      "front",
+      "fruit",
+      "funeral",
+      "ghost",
+      "girl",
+      "girlfriend",
+      "glad",
+      "glass",
+      "god",
+      "government",
+      "grain",
+      "grandmother",
+      "guest",
+      "guitar",
+      "guy",
+      "hair",
+      "hand",
+      "head",
+      "historian",
+      "history",
+      "hole",
+      "holiday",
+      "homework",
+      "honey",
+      "hose",
+      "hour",
+      "income",
+      "individual",
+      "inflation",
+      "initiative",
+      "injury",
+      "insect",
+      "inspector",
+      "insurance",
+      "interview",
+      "investment",
+      "joint",
+      "judgment",
+      "juice",
+      "jury",
+      "kid",
+      "lace",
+      "lady",
+      "language",
+      "laugh",
+      "layer",
+      "leader",
+      "leg",
+      "lesson",
+      "lettuce",
+      "level",
+      "line",
+      "literature",
+      "loaf",
+      "manager",
+      "manner",
+      "manufacturer",
+      "mark",
+      "marriage",
+      "math",
+      "meal",
+      "measurement",
+      "meat",
+      "medicine",
+      "member",
+      "men",
+      "menu",
+      "metal",
+      "middle",
+      "mind",
+      "mint",
+      "mist",
+      "mistake",
+      "mixture",
+      "mom",
+      "month",
+      "mood",
+      "moon",
+      "mortgage",
+      "movie",
+      "mud",
+      "nation",
+      "needle",
+      "news",
+      "obligation",
+      "observation",
+      "occasion",
+      "oil",
+      "opening",
+      "operation",
+      "opinion",
+      "organization",
+      "outcome",
+      "oven",
+      "owner",
+      "page",
+      "pail",
+      "painting",
+      "pan",
+      "pancake",
+      "party",
+      "passenger",
+      "path",
+      "payment",
+      "pen",
+      "penalty",
+      "pension",
+      "people",
+      "percentage",
+      "performance",
+      "person",
+      "personality",
+      "pest",
+      "pet",
+      "philosophy",
+      "phone",
+      "phrase",
+      "pickle",
+      "picture",
+      "pin",
+      "place",
+      "plantation",
+      "platform",
+      "playground",
+      "poem",
+      "poet",
+      "point",
+      "policy",
+      "pollution",
+      "population",
+      "powder",
+      "power",
+      "president",
+      "price",
+      "priest",
+      "problem",
+      "procedure",
+      "produce",
+      "profession",
+      "professor",
+      "profit",
+      "promotion",
+      "property",
+      "proposal",
+      "prose",
+      "protection",
+      "pump",
+      "question",
+      "quicksand",
+      "ratio",
+      "reaction",
+      "reception",
+      "recording",
+      "reference",
+      "reflection",
+      "refrigerator",
+      "region",
+      "relationship",
+      "rent",
+      "replacement",
+      "representative",
+      "republic",
+      "requirement",
+      "resident",
+      "resolution",
+      "revenue",
+      "review",
+      "revolution",
+      "reward",
+      "rice",
+      "rock",
+      "rod",
+      "root",
+      "rule",
+      "rust",
+      "salad",
+      "salary",
+      "sale",
+      "sample",
+      "scene",
+      "schedule",
+      "screw",
+      "sea",
+      "season",
+      "secretary",
+      "security",
+      "seed",
+      "sentence",
+      "series",
+      "setting",
+      "shake",
+      "shape",
+      "sheet",
+      "shine",
+      "ship",
+      "shoe",
+      "show",
+      "sidewalk",
+      "sign",
+      "silk",
+      "silver",
+      "singer",
+      "sister",
+      "skill",
+      "smell",
+      "snail",
+      "snake",
+      "sock",
+      "son",
+      "soup",
+      "space",
+      "spade",
+      "spark",
+      "specialist",
+      "stamp",
+      "star",
+      "steam",
+      "steel",
+      "step",
+      "stocking",
+      "storage",
+      "story",
+      "stranger",
+      "struggle",
+      "suggestion",
+      "survey",
+      "system",
+      "tank",
+      "task",
+      "tax",
+      "teacher",
+      "television",
+      "tennis",
+      "test",
+      "texture",
+      "thanks",
+      "theme",
+      "thing",
+      "throat",
+      "thumb",
+      "tin",
+      "title",
+      "tomorrow",
+      "tone",
+      "tonight",
+      "toothbrush",
+      "trade",
+      "traffic",
+      "trick",
+      "trousers",
+      "truth",
+      "tub",
+      "tune",
+      "uncle",
+      "union",
+      "unit",
+      "upstairs",
+      "usual",
+      "value",
+      "veil",
+      "video",
+      "virus",
+      "visitor",
+      "wall",
+      "wash",
+      "week",
+      "weekend",
+      "wife",
+      "window",
+      "wine",
+      "witness",
+      "woman",
+      "worker",
+      "world",
+      "writing",
+      "year",
+      "yesterday"
+    ],
+    "difficultArray": [
+      "acne",
+      "aircraft",
+      "alarm",
+      "alarm clock",
+      "artist",
+      "astronaut",
+      "aunt",
+      "baby-sitter",
+      "backbone",
+      "banana peel",
+      "base",
+      "baseball",
+      "battery",
+      "bear",
+      "bedbug",
+      "bedspread",
+      "beehive",
+      "bell pepper",
+      "bib",
+      "birthday",
+      "bite",
+      "blind",
+      "blowfish",
+      "bobsled",
+      "bomb",
+      "bonnet",
+      "boot",
+      "bottle",
+      "braid",
+      "brain",
+      "brass",
+      "bubble",
+      "bud",
+      "bunk",
+      "cab",
+      "cake",
+      "campsite",
+      "candlestick",
+      "cape",
+      "ceiling",
+      "cello",
+      "chalk",
+      "cheek",
+      "cheeseburger",
+      "chin",
+      "Christmas carolers",
+      "circus",
+      "clam",
+      "claw",
+      "clock",
+      "coach",
+      "coal",
+      "coconut",
+      "corner",
+      "cowboy",
+      "crumb",
+      "dance",
+      "date",
+      "dentist",
+      "dominoes",
+      "door",
+      "earache",
+      "earthquake",
+      "easel",
+      "electricity",
+      "elf",
+      "face",
+      "fan",
+      "fang",
+      "fetch",
+      "fiddle",
+      "firefighter",
+      "fishing pole",
+      "fist",
+      "flagpole",
+      "flashlight",
+      "flock",
+      "flute",
+      "fly",
+      "foil",
+      "fur",
+      "garbage",
+      "gate",
+      "gingerbread man",
+      "glue stick",
+      "goblin",
+      "grandfather",
+      "grill",
+      "gumball",
+      "happy",
+      "headache",
+      "hockey",
+      "hook",
+      "hopscotch",
+      "hot dog",
+      "huddle",
+      "hula hoop",
+      "hurdle",
+      "ice",
+      "Internet",
+      "key",
+      "kiss",
+      "knee",
+      "lamp",
+      "lawn mower",
+      "light bulb",
+      "lighthouse",
+      "lightsaber",
+      "lipstick",
+      "log",
+      "magic",
+      "mail",
+      "matchstick",
+      "mattress",
+      "mitten",
+      "money",
+      "monster",
+      "mop",
+      "music",
+      "mute",
+      "nail",
+      "nature",
+      "nightmare",
+      "outer space",
+      "outside",
+      "ovation",
+      "pajamas",
+      "paperback",
+      "park",
+      "password",
+      "pawn",
+      "peach",
+      "peanut",
+      "pencil",
+      "photographer",
+      "piece",
+      "pigpen",
+      "pineapple",
+      "pinwheel",
+      "pirate",
+      "plate",
+      "plumber",
+      "pogo stick",
+      "poodle",
+      "popsicle",
+      "potato",
+      "prize",
+      "puppet",
+      "puzzle",
+      "queen",
+      "radish",
+      "rain",
+      "rainbow",
+      "rattle",
+      "recycle",
+      "rib",
+      "ring",
+      "robe",
+      "robot",
+      "rocket",
+      "rollerblades",
+      "roof",
+      "round",
+      "rug",
+      "saddle",
+      "sailboat",
+      "salt and pepper",
+      "salute",
+      "seashell",
+      "seesaw",
+      "shallow",
+      "shelf",
+      "shipwreck",
+      "shopping cart",
+      "skate",
+      "skis",
+      "smog",
+      "sneeze",
+      "snowball",
+      "snowflake",
+      "soda",
+      "song",
+      "spine",
+      "spool",
+      "spoon",
+      "spring",
+      "sprinkler",
+      "spy",
+      "standing",
+      "state",
+      "stingray",
+      "stomach",
+      "stoplight",
+      "storm",
+      "stove",
+      "stripe",
+      "suitcase",
+      "sunburn",
+      "sunflower",
+      "swimming pool",
+      "swing",
+      "taxi",
+      "teapot",
+      "telephone",
+      "thief",
+      "throne",
+      "ticket",
+      "tiptoe",
+      "toe",
+      "tool",
+      "top hat",
+      "treasure",
+      "tree",
+      "trip",
+      "trumpet",
+      "tusk",
+      "twig",
+      "violin",
+      "waist",
+      "wedding ring",
+      "whisk",
+      "whisper",
+      "whistle",
+      "wristwatch",
+      "yo-yo",
+      "applause",
+      "avocado",
+      "baby-sitter",
+      "baggage",
+      "baguette",
+      "bald",
+      "banister",
+      "barber",
+      "bargain",
+      "baseboards",
+      "beanstalk",
+      "bedbug",
+      "birthday",
+      "biscuit",
+      "bleach",
+      "bobsled",
+      "bonnet",
+      "bookend",
+      "brand",
+      "bride",
+      "bruise",
+      "cabin",
+      "cape",
+      "cardboard",
+      "catalog",
+      "cell phone charger",
+      "cheerleader",
+      "chef",
+      "chess",
+      "chestnut",
+      "chime",
+      "cliff",
+      "cloak",
+      "clog",
+      "coach",
+      "comfortable",
+      "commercial",
+      "crow's nest",
+      "cruise",
+      "crust",
+      "darkness",
+      "darts",
+      "dashboard",
+      "deep",
+      "dent",
+      "dentist",
+      "diagonal",
+      "ditch",
+      "dizzy",
+      "double",
+      "download",
+      "drain",
+      "drawback",
+      "dream",
+      "drip",
+      "dripping",
+      "drought",
+      "dryer sheets",
+      "dust bunny",
+      "eraser",
+      "exercise",
+      "extension cord",
+      "fabric",
+      "firefighter",
+      "fireside",
+      "fizz",
+      "fog",
+      "foil",
+      "full",
+      "gasoline",
+      "glitter",
+      "goblin",
+      "gold",
+      "grandpa",
+      "hail",
+      "half",
+      "handle",
+      "honk",
+      "hot tub",
+      "houseboat",
+      "hurdle",
+      "husband",
+      "hut",
+      "hydrogen",
+      "important",
+      "Internet",
+      "ivy",
+      "jazz",
+      "jungle",
+      "kneel",
+      "knight",
+      "koala",
+      "lace",
+      "landscape",
+      "lap",
+      "laser",
+      "leak",
+      "letter opener",
+      "lie",
+      "logo",
+      "loveseat",
+      "macaroni",
+      "macho",
+      "mascot",
+      "mast",
+      "migrate",
+      "mime",
+      "mirror",
+      "mold",
+      "moth",
+      "myth",
+      "neighborhood",
+      "newsletter",
+      "nightmare",
+      "oar",
+      "orbit",
+      "pail",
+      "password",
+      "peasant",
+      "pharmacist",
+      "picnic",
+      "pigpen",
+      "pilot",
+      "ping pong",
+      "pizza sauce",
+      "plank",
+      "plow",
+      "pocket",
+      "point",
+      "post office",
+      "professor",
+      "punk",
+      "puppet",
+      "quicksand",
+      "raft",
+      "recycle",
+      "retail",
+      "rib",
+      "rim",
+      "ringleader",
+      "runt",
+      "safe",
+      "salmon",
+      "sandbox",
+      "scream",
+      "season",
+      "shampoo",
+      "sheep dog",
+      "shower curtain",
+      "shrew",
+      "ski goggles",
+      "sleep",
+      "s'mores",
+      "snag",
+      "sneeze",
+      "speakers",
+      "sponge",
+      "sunburn",
+      "sushi",
+      "swamp",
+      "swarm",
+      "think",
+      "time machine",
+      "tiptoe",
+      "vegetarian",
+      "vitamin",
+      "wag",
+      "water buffalo",
+      "wax",
+      "wedding cake",
+      "welder",
+      "wig",
+      "wobble",
+      "wooly mammoth",
+      "world",
+      "yardstick",
+      "yolk",
+      "zipper",
+      "zoo"
+    ],
+    "objectArray": [
+      "ballpoint pen",
+      "banister",
+      "baseboards",
+      "basket",
+      "bathroom",
+      "bathroom scale",
+      "batteries",
+      "bed",
+      "bicycle",
+      "blue jeans",
+      "books",
+      "boots",
+      "bowtie",
+      "broom",
+      "button",
+      "calendar",
+      "camera",
+      "candle",
+      "ceiling fan",
+      "cell phone",
+      "cell phone charger",
+      "chimney",
+      "cleaning spray",
+      "computer",
+      "crayons",
+      "crib",
+      "curtains",
+      "desk",
+      "dog leash",
+      "door knob",
+      "doormat",
+      "doorway",
+      "dress shirt",
+      "dryer sheets",
+      "dustpan",
+      "electrical outlet",
+      "eraser",
+      "fake flowers",
+      "flowers",
+      "front porch",
+      "garage",
+      "garden hose",
+      "hair dryer",
+      "hairspray",
+      "hand lotion",
+      "hand soap",
+      "headband",
+      "hot water",
+      "iron",
+      "ironing board",
+      "jewelry",
+      "junk drawer",
+      "kitchen knife",
+      "kitchen laundry",
+      "ladder",
+      "laundry detergent",
+      "letter",
+      "light switch",
+      "living room",
+      "loveseat",
+      "lunchbox",
+      "magazine",
+      "magnets",
+      "mailbox",
+      "markers",
+      "mini blinds",
+      "mirror",
+      "necktie",
+      "newspaper",
+      "opener bedroom",
+      "paint",
+      "pantry",
+      "paperclip",
+      "photograph",
+      "piano",
+      "picture frame",
+      "pillowcase",
+      "porch swing",
+      "printer paper",
+      "purse",
+      "quilt",
+      "rocking chair",
+      "scarf",
+      "scissors",
+      "shampoo",
+      "shoes",
+      "shovel",
+      "shower curtain",
+      "silverware",
+      "skateboard",
+      "skirt",
+      "socks",
+      "sofa",
+      "speakers",
+      "spice rack",
+      "sponge",
+      "stairs",
+      "stamps",
+      "stapler",
+      "stationery",
+      "sunglasses",
+      "sweater",
+      "tennis shoes",
+      "toilet paper",
+      "towel",
+      "trash can",
+      "t-shirt",
+      "TV",
+      "umbrella",
+      "vase",
+      "vest",
+      "video camera",
+      "wallet",
+      "washing machine",
+      "watering can",
+      "alfredo sauce",
+      "apple",
+      "apple pie",
+      "artichoke",
+      "avocado",
+      "bagel",
+      "baked Alaska",
+      "baking soda",
+      "balsamic vinegar",
+      "banana",
+      "banana bread",
+      "banana split",
+      "basil",
+      "Bavarian cream",
+      "beef",
+      "beef jerky",
+      "black beans",
+      "blackberry",
+      "boiled egg",
+      "bread",
+      "broth",
+      "Canadian bacon",
+      "caviar",
+      "cheese",
+      "chicken pot pie",
+      "chocolate cake",
+      "cinnamon rolls",
+      "corn",
+      "cornbread",
+      "crepe",
+      "cupcakes",
+      "doughnuts",
+      "egg",
+      "egg nog",
+      "egg salad",
+      "fruit salad",
+      "fruit smoothie",
+      "granola bar",
+      "grape",
+      "guacamole",
+      "hot dogs",
+      "ice cream sundae",
+      "jellybeans",
+      "key lime pie",
+      "kumquat",
+      "lasagna",
+      "mac and cheese",
+      "marinade",
+      "meatballs",
+      "milk",
+      "muffin",
+      "mushroom",
+      "noodles",
+      "pancakes",
+      "pear",
+      "pizza",
+      "popcorn",
+      "pork",
+      "potato chips",
+      "poultry",
+      "pretzel",
+      "salt",
+      "sandwich",
+      "sea salt",
+      "Shish kabob",
+      "s'mores",
+      "soup de jour",
+      "spinach",
+      "sun-dried tomatoes",
+      "sushi",
+      "sweet potatoes",
+      "taco",
+      "tempura",
+      "toast",
+      "vanilla extract",
+      "waffles"
+    ],
+    "personArray": [
+      "aardvark",
+      "albatross",
+      "alligator",
+      "ape",
+      "armadillo",
+      "bat",
+      "beaver",
+      "bird",
+      "buffalo",
+      "calf",
+      "camel",
+      "caterpillar",
+      "catfish",
+      "chameleon",
+      "chicken",
+      "chimpanzee",
+      "chinchilla",
+      "chipmunk",
+      "cougar",
+      "cow",
+      "crab",
+      "cricket",
+      "crocodile",
+      "crow",
+      "deer",
+      "doe",
+      "dog",
+      "dolphin",
+      "donkey",
+      "dove",
+      "dragon",
+      "duck",
+      "duckling",
+      "eagle",
+      "elk",
+      "ewe",
+      "fish",
+      "fox",
+      "frog",
+      "gila monster",
+      "giraffe",
+      "goose",
+      "gopher",
+      "groundhog",
+      "guinea pig",
+      "hamster",
+      "hedgehog",
+      "hippopotamus",
+      "horse",
+      "housecat",
+      "hyena",
+      "jellyfish",
+      "joey",
+      "kitten",
+      "koala bear",
+      "komodo dragon",
+      "ladybug",
+      "lamb",
+      "leopard",
+      "lion",
+      "llama",
+      "lobster",
+      "moose",
+      "moth",
+      "mouse",
+      "otter",
+      "owl",
+      "panda",
+      "panther",
+      "parakeet",
+      "partridge",
+      "pelican",
+      "platypus",
+      "pony",
+      "porcupine",
+      "prairie dog",
+      "puppy",
+      "rabbit",
+      "rat",
+      "reindeer",
+      "robin",
+      "salamander",
+      "sea lion",
+      "sea turtle",
+      "seagull",
+      "seahorse",
+      "shark",
+      "sheep",
+      "shrimp",
+      "skunk",
+      "sloth",
+      "spider",
+      "squirrel",
+      "stallion",
+      "swordfish",
+      "tiger",
+      "toad",
+      "tortoise",
+      "toucan",
+      "tuna",
+      "turtle",
+      "unicorn",
+      "walrus",
+      "warthog",
+      "wasp",
+      "weasel",
+      "whale",
+      "wildebeest",
+      "wolf",
+      "wombat",
+      "worm",
+      "zebra",
+      "Abraham Lincoln",
+      "Albert Einstein",
+      "Amelia Earhart",
+      "Anakin Skywalker",
+      "Andy Warhol",
+      "Audrey Hepburn",
+      "Babe Ruth",
+      "Barbie",
+      "Batman",
+      "Beethoven",
+      "Benjamin Franklin",
+      "Betsy Ross",
+      "Bill Cosby",
+      "Bill Gates",
+      "Billy the Kid",
+      "Brad Pitt",
+      "Bruce Willis",
+      "Bugs Bunny",
+      "Buzz Lightyear",
+      "C. S. Lewis",
+      "C-3P0",
+      "Captain Hook",
+      "Captain Kirk",
+      "Celine Dion",
+      "Charles Darwin",
+      "Charles Dickens",
+      "Cinderella",
+      "Clark Kent",
+      "Cleopatra",
+      "Darth Vader",
+      "David Beckham",
+      "Davy Crockett",
+      "Dennis the Menace",
+      "Denzel Washington",
+      "Dr. Seuss",
+      "Dracula",
+      "Dumbledore",
+      "E.T.",
+      "Ebenezer Scrooge",
+      "Eli Whitney",
+      "Elvis Presley",
+      "Frankenstein",
+      "Franklin D. Roosevelt",
+      "Frodo",
+      "Garfield",
+      "Genghis Khan",
+      "George Lucas",
+      "George Washington",
+      "Gilligan",
+      "Grace Kelly",
+      "Hamlet",
+      "Han Solo",
+      "Harrison Ford",
+      "Harry Houdini",
+      "Harry Potter",
+      "Helen Keller",
+      "Henry Ford",
+      "Indiana Jones",
+      "Isaac Newton",
+      "Jackson Pollock",
+      "James Bond",
+      "James Earl Jones",
+      "James Madison",
+      "Jim Henson",
+      "Jimmy Stewart",
+      "John Hancock",
+      "John Williams",
+      "Justin Beiber",
+      "Lance Armstrong",
+      "Leonardo Da Vinci",
+      "Louis Armstrong",
+      "Lucille Ball",
+      "Luke Skywalker",
+      "Mahatma Gandhi",
+      "Mario",
+      "Mark Twain",
+      "Marty McFly",
+      "Mary Poppins",
+      "Michael Phelps",
+      "Michelangelo",
+      "Mother Teresa",
+      "Mr. Rogers",
+      "Mufasa",
+      "Neil Armstrong",
+      "Oprah Winfrey",
+      "Pablo Piccaso",
+      "Peter Pan",
+      "Pocahontas",
+      "Rapunzel",
+      "Robin Hood",
+      "Rocky",
+      "Sacajawea",
+      "Salvador Dali",
+      "Santa Claus",
+      "Scooby Doo",
+      "Sean Connery",
+      "Shakespeare",
+      "Sherlock Holmes",
+      "Sirius Black",
+      "Spider Man",
+      "the Cowardly Lion",
+      "Thomas Edison",
+      "Tony Hawk",
+      "Voldermort",
+      "Walt Disney",
+      "Willy Wonka",
+      "Winnie the Pooh",
+      "abbey",
+      "aircraft carrier",
+      "airplane",
+      "alcove",
+      "alley",
+      "altar",
+      "amusement park",
+      "apartment complex",
+      "archaeological dig",
+      "archipelago",
+      "assylum",
+      "attic",
+      "Australia",
+      "Austria",
+      "badminton court",
+      "bakery",
+      "balcony",
+      "barn",
+      "barracks",
+      "baseball field",
+      "basement",
+      "basketball court",
+      "bathroom",
+      "battlefield",
+      "bazaar",
+      "beach",
+      "bedroom",
+      "Beijing",
+      "Belize",
+      "Brussels",
+      "Budapest",
+      "Buenos Aires",
+      "cabana",
+      "cabin",
+      "cabinet",
+      "cafe",
+      "cafeteria",
+      "cage",
+      "Cairo",
+      "Canberra",
+      "cannery",
+      "canyon",
+      "Cape Town",
+      "car",
+      "cardboard box",
+      "carriage",
+      "castle",
+      "cathedral",
+      "cave",
+      "cellar",
+      "cemetary",
+      "chamber",
+      "chapel",
+      "cinema",
+      "cistern",
+      "city",
+      "classroom",
+      "cliff",
+      "cloud",
+      "clown school",
+      "cockpit",
+      "colony",
+      "compound",
+      "concert hall",
+      "Copenhagen",
+      "corral",
+      "correctional facility",
+      "Costa Rica",
+      "courthouse",
+      "courtyard",
+      "cove",
+      "crater",
+      "crawlspace",
+      "crevasse",
+      "crypt",
+      "cubby",
+      "cubicle",
+      "cupboard",
+      "deck",
+      "den",
+      "Denmark",
+      "department store",
+      "desert",
+      "ditch",
+      "dock",
+      "doghouse",
+      "dollhouse",
+      "dormitory",
+      "drugstore",
+      "dugout",
+      "dump",
+      "dungeon",
+      "elevator",
+      "erupting volcano",
+      "farm",
+      "Finland",
+      "fish pond",
+      "forest",
+      "fort",
+      "fountain",
+      "freeway",
+      "funeral home",
+      "furnace",
+      "gallery",
+      "garage",
+      "garden",
+      "Germany",
+      "glacier",
+      "grassland",
+      "graveyard",
+      "greenhouse",
+      "grocery store",
+      "grove",
+      "guardhouse",
+      "gulf",
+      "gully",
+      "gutter",
+      "gym",
+      "hall",
+      "hangar",
+      "harbor",
+      "hideaway",
+      "hideout",
+      "high school",
+      "highway",
+      "hill",
+      "hospital",
+      "hot tub",
+      "hotel",
+      "house",
+      "hovel",
+      "inn",
+      "Iraq",
+      "island",
+      "isle",
+      "Italy",
+      "jail",
+      "jukebox",
+      "jungle",
+      "junkyard",
+      "Kinshasa",
+      "kitchen",
+      "laboratory",
+      "labyrinth",
+      "lagoon",
+      "lake",
+      "lavatory",
+      "Lebanon",
+      "library",
+      "living room",
+      "locker room",
+      "lodge",
+      "lookout tower",
+      "Los Angeles",
+      "lounge",
+      "Mali",
+      "mall",
+      "market",
+      "maze",
+      "meadow",
+      "Mexico",
+      "mineshaft",
+      "Monaco",
+      "monastery",
+      "mosque",
+      "motel",
+      "mountain",
+      "museum",
+      "Nassau",
+      "Nepal",
+      "nest",
+      "New York",
+      "newsstand",
+      "nightclub",
+      "nursery",
+      "ocean",
+      "office",
+      "Oman",
+      "orchard",
+      "orphanage",
+      "Ottawa",
+      "outpost",
+      "pagoda",
+      "palace",
+      "Paris",
+      "parking lot",
+      "peninsula",
+      "penthouse",
+      "pet store",
+      "pharmasy",
+      "pier",
+      "pipeline",
+      "pit",
+      "planetarium",
+      "plateau",
+      "playroom",
+      "plaza",
+      "police department",
+      "pond",
+      "power plant",
+      "Prague",
+      "prison",
+      "produce aisle",
+      "pub",
+      "pulpit",
+      "pyramid",
+      "quarry",
+      "racetrack",
+      "railroad",
+      "rehab center",
+      "resort",
+      "restaurant",
+      "river",
+      "road",
+      "Rome",
+      "room",
+      "runway",
+      "salon",
+      "saloon",
+      "sawmill",
+      "school",
+      "sculpture",
+      "sewer",
+      "shack",
+      "shop",
+      "shower",
+      "South Korea",
+      "Spain",
+      "stable",
+      "stadium",
+      "stage",
+      "storehouse",
+      "storeroom",
+      "street",
+      "studio",
+      "suburb",
+      "subway",
+      "supermarket",
+      "swamp",
+      "Switzerland",
+      "synagogue",
+      "Tokyo",
+      "tomb",
+      "tower",
+      "town",
+      "trash can",
+      "valley",
+      "Vienna",
+      "Vietnam",
+      "village",
+      "vineyard",
+      "volcano",
+      "warehouse",
+      "warzone",
+      "Washington, D.C.",
+      "wasteland",
+      "windmill",
+      "yard",
+      "zeppelin"
+    ],
+    "getWordRoutine": [
+      "var wordsArray = ${PROPERTY $thisList}",
+      "var backup = 'backup' + ${thisList}",
+      "var backupArray = ${PROPERTY $backup}",
+      "var length = ${wordsArray} length",
+      {
+        "func": "IF",
+        "operand1": "${length}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "${thisList}",
+            "value": "${backupArray}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "${backup}",
+            "value": []
+          },
+          "var wordsArray = ${PROPERTY $thisList}",
+          "var backup = 'backup' + ${thisList}",
+          "var backupArray = ${PROPERTY $backup}",
+          "var length = ${wordsArray} length"
+        ]
+      },
+      "var length = ${length} - 1",
+      "var random = randInt 0 ${length}",
+      "var theWord = ${wordsArray} getIndex ${random}",
+      {
+        "func": "SET",
+        "collection": [
+          "theWord"
+        ],
+        "property": "text",
+        "value": "${theWord}"
+      },
+      "var backupArray = push ${theWord}",
+      "var wordsArray = remove ${random} 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "${thisList}",
+        "value": "${wordsArray}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "${backup}",
+        "value": "${backupArray}"
+      }
+    ],
+    "backupactionArray": [],
+    "backupallArray": [],
+    "backupdifficultArray": [],
+    "backupobjectArray": [],
+    "backuppersonArray": []
+  }
+}
