@@ -5,6 +5,9 @@ import { compareState, prepareClient, setName, setRoomState, setupTestEnvironmen
 setupTestEnvironment();
 
 test('Create game using edit mode', async t => {
+  const [width,height] = await t.eval(() => [window.innerWidth,window.innerHeight]);
+  if(width<=960||height<=520)
+    await t.resizeWindow(width>960?width:980,height>520?height:540);
   await setRoomState();
   await ClientFunction(prepareClient)();
   await setName(t);
@@ -28,14 +31,14 @@ test('Create game using edit mode', async t => {
     .click('#add-deck_K_S')
     .click('#w_9ee9B')
     .click('#w_9ee9P > .handle')
-    .click('#pileOverlay > button:nth-of-type(3)')
+    .click('#pileOverlay .modal > div:nth-of-type(6) > button')
+    .click('#w_b86p > .handle')
+    .click('#pileOverlay .modal > div:nth-of-type(3) > button')
+    .click('#w_b86p > .handle')
+    .click('#pileOverlay .modal > div:nth-of-type(6) > button')
     .click('#w_5ip4 > .handle')
-    .click('#pileOverlay > button:nth-of-type(1)')
-    .click('#w_5ip4 > .handle')
-    .click('#pileOverlay > button:nth-of-type(3)')
-    .click('#w_oklb > .handle')
-    .click('#pileOverlay > button:nth-of-type(2)')
-    .dragToElement('#w_oklb > .handle', '#w_hand')
+    .click('#pileOverlay .modal > div:nth-of-type(4) > button')
+    .dragToElement('#w_5ip4 > .handle', '#w_hand')
     .click('#editButton')
     .click('#w_2ng4')
     .click('#duplicateWidget')
@@ -51,13 +54,24 @@ test('Create game using edit mode', async t => {
     .click('#add-2D-chips')
     .click('#addButton')
     .click('#EmptyPoker3DSVG')
-    .click('#w_3fseC1')
+    .click('#w_es5b')
     .click('#addButton')
     .click('#addSeat')
     .click('#addButton')
     .click('#addSeatCounter')
     .click('#addButton')
     .click('#addScoreboard')
-    .click('#w_9972');
-  await compareState(t, 'e02bf9c6e248299f20d145c58b047990');
+    .click('#w_m06r')
+    .click('#addButton')
+    .click('#add-dice2D0')
+    .typeText('#INPUT_\\;sides', '8', { replace: true })
+    .click('#buttonInputGo')
+    .click('#w_8sfj')
+    .click('#addButton')
+    .click('#add-dice3D0')
+    .typeText('#INPUT_\\;sides', '12', { replace: true })
+    .click('#buttonInputGo')
+    .click('#w_bldn');
+  await t.resizeWindow(width,height);
+  await compareState(t, '98fcb4082874abd0f47d516eb2258aa6');
 });

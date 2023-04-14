@@ -265,13 +265,17 @@ function updateLibraryFilter() {
 
   function applyFilters(filters, callback) {
     for(const [ dom, dataset ] of states) {
-      const textMatch     = dataset.text.match(filters.text);
-      const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
-      const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
-      const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
-      const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
-      const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
-      callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
+      if(dom.classList.contains('uploading')) {
+        callback(dom, true);
+      } else {
+        const textMatch     = dataset.text.match(filters.text);
+        const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
+        const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
+        const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
+        const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
+        const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
+        callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
+      }
     }
   }
 
@@ -359,8 +363,8 @@ function sortStatesCallback(stateA, stateB) {
   if(sortBy == 'timePlayed' && stateB.timePlayed != stateA.timePlayed)
     return stateB.timePlayed - stateA.timePlayed;
   if(sortBy == 'similarName' && stateB.similarName != stateA.similarName)
-    return (stateA.similarName||stateA.name).localeCompare(stateB.similarName||stateB.name);
-  return stateA.name.localeCompare(stateB.name);
+    return String(stateA.similarName||stateA.name).localeCompare(String(stateB.similarName||stateB.name));
+  return String(stateA.name).localeCompare(String(stateB.name));
 }
 function resortStatesList() {
   for(const list of $a('#statesList .list')) {
@@ -450,7 +454,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
         updateSaveButton.style.display = 'inline-flex';
     }
 
-    $('img', entry).src = mapAssetURLs(state.image);
+    if(state.image) {
+      $('img', entry).dataset.src = mapAssetURLs(state.image);
+      lazyImageObserver.observe($('img', entry));
+    }
 
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
@@ -474,7 +481,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       }
     }
 
-    for(const mode of state.mode.split(/[,;] */))
+    for(const mode of String(state.mode).split(/[,;] */))
       modeOptions[mode] = true;
 
     if(hasVariants) {
@@ -696,8 +703,11 @@ function fillStateDetails(states, state, dom) {
         switchToActiveGame = loadNewState !== null;
       }
 
-      if(loadNewState)
-        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
+      if(loadNewState) {
+        if(!state.savePlayers)
+          triggerGameStartRoutineOnNextStateLoad = true;
+        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id, delayForGameStartRoutine: !state.savePlayers });
+      }
       showStatesOverlay(detailsOverlay);
       if(switchToActiveGame)
         $('#activeGameButton').click();
@@ -1074,14 +1084,27 @@ onLoad(function() {
     updateFilterOverflow();
   });
   document.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-    $('#statesButton').click();
+    if(e.dataTransfer.types.includes('Files')) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+      $('#statesButton').click();
+    }
   });
   document.addEventListener('drop', function(e) {
-    e.preventDefault();
-    loadJSZip();
-    for(const file of e.dataTransfer.files)
-      resolveStateCollections(file, addStateFile);
+    if(e.dataTransfer.files.length) {
+      e.preventDefault();
+      loadJSZip();
+      for(const file of e.dataTransfer.files)
+        resolveStateCollections(file, addStateFile);
+    }
   });
+});
+
+const lazyImageObserver = new IntersectionObserver(entries => {
+  for(const entry of entries) {
+    if(entry.isIntersecting) {
+      entry.target.src = entry.target.dataset.src;
+      lazyImageObserver.unobserve(entry.target);
+    }
+  }
 });

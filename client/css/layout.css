@@ -141,6 +141,7 @@ body.aspectTooGood.hiddenToolbar {
       body.wideToolbar #toolbar > img {
         display: block;
         margin: 10px 20px 3px 20px;
+        height: 52px;
       }
       body.wideToolbar #toolbar .divider:nth-child(2) {
         display: block;
@@ -658,7 +659,21 @@ div[icon] .buttons {
 }
 
 .widget.foreign {
+  --foreign:true;
+}
+
+body:not(.jsonEdit) .widget.foreign {
   display: none !important;
+}
+
+body.jsonEdit:not(.hitTest) .widget.foreign {
+  /* Edit mode uses elementsFromPoint to determine widgets under the cursor, so
+     we hide and pass pointer events through the element but don't use display: none here
+     to prevent invalidating all layout every time the mouse moves. When hit testing
+     the foreign layers are temporarily visible (but the class is removed before a frame
+     is presented to the user). */
+  visibility: hidden;
+  pointer-events: none;
 }
 
 #clientPointer {
@@ -957,7 +972,13 @@ button:disabled:hover {
 .ui-button.blue {
   background-color: var(--neutralInput);
 }
-
+#pileOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
 #buttonInputOverlay{
   justify-content: center;
   align-items: center;
@@ -979,9 +1000,10 @@ button:disabled:hover {
   border-radius: 8px;
   border-top: 3px solid var(--VTTblue);
   border-bottom: 3px solid var(--VTTblue);
+  position: relative;
 }
 
-.modal h1{
+.modal h1 {
   margin: 0;
   padding: 4px 8px;
   text-align: left;
@@ -999,21 +1021,21 @@ button:disabled:hover {
 }
 
 .modal h1:after {
-    content: '';
-    position: absolute;
-    background-color: var(--modalBorderColor);
-    display: block;
-    z-index: 15;
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    width: 100%;
+  content: '';
+  position: absolute;
+  background-color: var(--modalBorderColor);
+  display: block;
+  z-index: 15;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
 }
 
-.modal .footer{
- margin-top: 16px;
+.modal .footer {
+  margin-top: 16px;
   padding: 4px;
   position: relative;
   box-sizing: border-box;
@@ -1039,7 +1061,7 @@ button:disabled:hover {
 }
 
 
-.modal .footer > button{
+.modal .footer > button {
   font-family: 'Roboto';
   display: flex;
   height: 32px;
@@ -1056,12 +1078,11 @@ button:disabled:hover {
   font-weight: 500;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
-
 }
-.modal .footer > button label{
+.modal .footer > button label {
   font-size: 1rem;
 }
-.modal .footer > button *{
+.modal .footer > button * {
   cursor: pointer;
 }
 
@@ -1188,7 +1209,8 @@ button:disabled:hover {
 }
 .inputnumber,
 .inputstring,
-.inputselect{
+.inputselect,
+.inputpalette{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -1197,7 +1219,8 @@ button:disabled:hover {
 
 .inputnumber label,
 .inputstring label,
-.inputselect label{
+.inputselect label,
+.inputpalette label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1337,6 +1360,114 @@ input.switchbox[type="checkbox"]:checked + .switchbox::before {
 input.switchbox[type="checkbox"]:checked + .switchbox{
   background-color: var(--VTTblue);
 }
+.modal input[type=range] {
+  -webkit-appearance: none;
+  margin: 0;
+  width: 100%;
+  background: none;
+  height: 42px;
+}
+.modal input[type=range]:focus {
+  border-radius: 100px;
+}
+.modal input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 42px;
+  cursor: pointer;
+  background: #3071a9;
+  border-radius: 42px;
+  margin: 0;
+  overflow: hidden;
+  padding: 2px;
+}
+.modal input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0 0px 3px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 38px;
+  width: 38px;
+  border-radius: 42px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+.modal input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+.modal input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 38px;
+  cursor: pointer;
+  background: #3071a9;
+  border-radius: 42px;
+  margin: 0;
+  overflow: hidden;
+  padding: 2px;
+}
+.modal input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0px 3px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 36px;
+  border-radius: 36px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+.countInput{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  line-height: 42px;
+  padding: 8px 8px 0;
+
+}
+.countInput input[type=number]{
+  font-size: 1.5rem;
+  text-align: center;
+  width: 3ch;
+  padding: 0 5px;
+  border: 0px none transparent;
+  background: transparent;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
+}
+.countInput input[type=number]::-webkit-inner-spin-button,
+.countInput input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+}
+#pileOverlay .modal{
+  width: 200px;
+}
+#pileOverlay > .modal button.ui-button{
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+/* .inputtext.optiontext label{
+  text-align: center;
+} */
+#pileOverlay > .modal .inputtext.optiontext{
+  display: none;
+}
+.modal .button-bar{
+  box-sizing: border-box;
+  padding: 8px 32px;
+}
+.modal .button-bar button {
+  margin-left: 0;
+  margin-right: 0;
+}
+.pilecancelbutton{
+  position: absolute;
+  height: 38px;
+  width: auto!important;
+  top: -5px;
+  right: 5px;
+  background-color: black;
+}
 input:invalid{
   color: red;
 }
@@ -1350,4 +1481,58 @@ input:invalid+span:after {
   color: red;
   letter-spacing: -1px;
 }
-
+.inputpalette > div{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 3px;
+}
+.inputpalette > div input{
+  display: none;
+}
+.inputpalette > div label{
+  height: 35px;
+  width: 35px;
+  display: inline-block;
+  border-radius: 8px;
+  position: relative;
+  border: 3px solid transparent;
+  padding: 0;
+  margin: -1.5px;
+}
+.inputpalette > div input[type="radio"]:checked+label{
+  border: 3px solid var(--VTTblue);
+}
+.inputpalette > div input[type="radio"]:checked+label::after{
+  font-family: 'Material Icons';
+  line-height: 1.25em;
+  text-align: center;
+  height: 1.25em;
+  width: 1.25em;
+  background: var(--VTTblue);
+  color: white;
+  border-top-right-radius: 40%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  content: 'check';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  border: 2px solid white;
+  z-index: -1;
+}
+.inputpalette > div label > div{
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  position: absolute;
+  border: 2px solid white;
+  overflow: hidden;
+  background-color: inherit;
+  border-radius: 5px;
+  z-index: -2;
+}

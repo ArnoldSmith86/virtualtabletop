@@ -883,27 +883,29 @@ function jeAddRoutineOperationCommands(command, defaults) {
 
 function jeAddCommands() {
   const widgetTypes = [ 'all' ];
-  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget' ];
+  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats' ];
 
-  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Button()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Card()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
+  const widgetBase = new Widget();
+  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Button(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Card(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Dice(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
-  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
+  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
@@ -953,9 +955,10 @@ function jeAddCommands() {
   jeAddLimitCommand('maxY');
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
-  jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('variable', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('label', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('colors', 'palette', [ '#000000' ]);
   jeAddFieldCommand('min', 'number', 0);
   jeAddFieldCommand('max', 'number', 10);
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
@@ -971,7 +974,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
-  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'palette', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
@@ -1264,22 +1267,23 @@ function jeAddNumberCommand(name, key, callback) {
   });
 }
 
-function jeAddWidgetPropertyCommands(object) {
+function jeAddWidgetPropertyCommands(object, widgetBase) {
   for(const property in object.defaults)
     if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
-      jeAddWidgetPropertyCommand(object, property);
+      jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
 }
 
 const buttonColorProperties = ['backgroundColor', 'borderColor', 'textColor', 'backgroundColorOH', 'borderColorOH', 'textColorOH'];
 
-function jeAddWidgetPropertyCommand(object, property) {
+function jeAddWidgetPropertyCommand(object, widgetBase, property) {
   jeCommands.push({
     id: 'widget_' + object.getDefaultValue('typeClasses').replace('widget ', '') + '_' + property,
     name: property,
     class: 'property',
     context: `^${object.getDefaultValue('typeClasses').replace('widget ', '')}`,
+    isTypeSpecific: JSON.stringify(widgetBase.getDefaultValue(property)) !== JSON.stringify(object.getDefaultValue(property)),
     call: property=='dropTarget'? // Special case for dropTarget, faces, and spinner options
             async function() {
               jeStateNow.dropTarget = {
@@ -1406,7 +1410,6 @@ function jeApplyDelta(delta) {
   }
 
   jeUpdateTree(delta.s);
-  widgetCoordCache = null;
 }
 
 function jeApplyState(state) {
@@ -1793,6 +1796,7 @@ function jeUpdateTree(delta) {
 function jeDisplayFilteredWidgets(e) {
   const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
   const results = widgetFilter(o => o.get('id').toLowerCase().includes(subtext) ||
+          o.get('cardType') && o.get('cardType').toLowerCase().includes(subtext) ||
           o.get('type') && o.get('type').toLowerCase().includes(subtext) ||
           !o.get('type') && 'basic'.includes(subtext)).sort(
             function(a,b) {
@@ -2294,9 +2298,10 @@ function jeShowCommands() {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
     if(contextMatch && contextMatch[0]!= "" && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
-      if(activeCommands[contextMatch[0]] === undefined)
-        activeCommands[contextMatch[0]] = [];
-      activeCommands[contextMatch[0]].push(command);
+      const title = command.isTypeSpecific || command.isTypeSpecific === undefined ? contextMatch[0] : 'widget';
+      if(activeCommands[title] === undefined)
+        activeCommands[title] = [];
+      activeCommands[title].push(command);
     };
   }
 
@@ -2318,7 +2323,7 @@ function jeShowCommands() {
       return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
     }
 
-    for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
+    for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length).sort((a,b)=>a==='widget'?1:(b==='widget'?-1:0)))) {
       commandText += `\n  <div class="context">${html(contextMatch)}</div>\n`;
       for(const command of activeCommands[contextMatch].sort(sortByName)) {
         try {
@@ -2414,7 +2419,6 @@ const clickButton = async function(event) {
   }
 }
 
-let widgetCoordCache = null;
 window.addEventListener('mousemove', function(e) {
   if(!jeEnabled)
     return;
@@ -2424,24 +2428,15 @@ window.addEventListener('mousemove', function(e) {
   if(!jeZoomOut && x > 1600 || jeMouseButtonIsDown)
     return;
 
-  if(!widgetCoordCache) {
-    widgetCoordCache = [];
-    for(const widget of widgets.values()) {
-      const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
-      coords.r = coords.x + widget.get('width');
-      coords.b = coords.y + widget.get('height');
-      coords.widget = widget;
-      widgetCoordCache.push(coords);
-    }
-  }
-
-  const hoveredWidgets = widgetCoordCache.filter(c=>x>=c.x && x<=c.r && y>=c.y && y<=c.b).map(c=>c.widget);
+  // Adding hitTest makes foreign elements temporarily hittable.
+  document.body.classList.add('hitTest');
+  let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
+  document.body.classList.remove('hitTest');
 
   hoveredWidgets.sort(function(w1,w2) {
     const hiddenParent =  function(widget) {
       return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
     };
-
     const w1card = w1.get('type') == 'card';
     const w2card = w2.get('type') == 'card';
     const w1foreign = !w1card && hiddenParent(w1);

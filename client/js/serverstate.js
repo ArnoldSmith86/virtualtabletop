@@ -15,6 +15,8 @@ let deltaID = 0;
 let batchDepth = 0;
 let overlayShownForEmptyRoom = false;
 
+let triggerGameStartRoutineOnNextStateLoad = false;
+
 export function addWidget(widget, instance) {
   if(widget.parent && !widgets.has(widget.parent)) {
     if(!deferredChildren[widget.parent])
@@ -53,6 +55,8 @@ export function addWidget(widget, instance) {
     w = new Canvas(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
+  } else if(widget.type == 'dice') {
+    w = new Dice(id);
   } else if(widget.type == 'holder') {
     w = new Holder(id);
   } else if(widget.type == 'label') {
@@ -104,7 +108,7 @@ export function batchEnd() {
 function receiveDelta(delta) {
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s) {
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID)) {
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined) {
       const domElement = widgets.get(widgetID).domElement;
       const topTransform = getElementTransformRelativeTo(domElement, $('#topSurface')) || 'none';
       $('#topSurface').appendChild(domElement);
@@ -176,6 +180,17 @@ function receiveStateFromServer(args) {
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyState(args);
+
+  if(triggerGameStartRoutineOnNextStateLoad) {
+    triggerGameStartRoutineOnNextStateLoad = false;
+    (async function() {
+      batchStart();
+      for(const [ id, w ] of widgets)
+        if(w.get('gameStartRoutine'))
+          await w.evaluateRoutine('gameStartRoutine', { widgetID: id }, { widget: [ w ] });
+      batchEnd();
+    })();
+  }
 }
 
 function removeWidget(widgetID) {

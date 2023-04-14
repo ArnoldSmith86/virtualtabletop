@@ -8,7 +8,7 @@
     "parent": "kwa7"
   },
   "_meta": {
-    "version": 6,
+    "version": 12,
     "info": {
       "name": "Investors",
       "image": "/assets/1477591612_47888",
@@ -17,15 +17,20 @@
       "year": "2017",
       "mode": "vs",
       "time": "20",
-      "players": "3-7",
-      "language": "en-US",
-      "variant": "",
       "attribution": "The widget design, game layout, and game room are by LawDawg96 and are released to the public domain under CC0.\n\nCard, card back, and background images are available under the Pixabay license:\n\n - Summer Cafe https://pixabay.com/vectors/butterfly-icon-butterfly-icon-5585362/\n - Urban Tech https://pixabay.com/vectors/penrose-triangle-1217454/\n - Meow Wear https://pixabay.com/vectors/cat-colorful-feline-head-lion-1298141/\n - Star Tours https://pixabay.com/vectors/logo-tape-design-devoured-plastic-2078018/\n - Penguin Autos https://pixabay.com/vectors/tux-penguin-animal-cute-linux-158547/\n - Abstract Games https://pixabay.com/vectors/geometric-shape-3d-shape-logo-7156506/\n - https://pixabay.com/illustrations/stock-exchange-world-economy-bull-913982/\n - https://pixabay.com/photos/wood-boards-texture-wooden-brown-1846849/",
       "similarName": "Startups",
       "description": "Collect and discard cards representing new businesses. Take cards in common market area for free or pay coins to take card from deck. Only the player with the most cards of each type collects coins at end. Play until deck is depeleted. Player with most coins at end wins.",
       "showName": true,
       "helpText": "Players take seats and press reset button to start play. 5 cards are removed from deck before dealing 3 to each player. Anti-monopoly tokens automatically move. Press \"Take\" button to take a card and victory point tokens from the market. Other cards will shift left automatically.  All other game actions must be done manually. Use \"Turn\" button to manually adjust turn indicator if needed. Victory point tokens can only be flipped to the \"3\" side when not in a pile. If playing multiple rounds, move chevron-shaped scoring tokens to area near player's name then press reset button and check the box. ",
-      "lastUpdate": 1656358260000
+      "lastUpdate": 1679750519681,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "2018 Fairplay À la carte Runner-up",
+      "ruleText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-7"
     }
   },
   "hand": {
@@ -64,7 +69,10 @@
         "property": "takeFlag",
         "value": false
       }
-    ]
+    ],
+    "onLeave": {
+      "activeFace": 0
+    }
   },
   "deckHolder": {
     "type": "holder",
@@ -1198,7 +1206,13 @@
       }
     ],
     "rounds": false,
-    "takeFlag": false
+    "takeFlag": false,
+    "gameStartRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      }
+    ]
   },
   "antiHome5": {
     "type": "holder",
@@ -1617,7 +1631,7 @@
     "type": "card",
     "cardType": "7",
     "id": "81ng",
-    "z": 18930,
+    "z": 18940,
     "parent": "kwa7"
   },
   "wqgw": {

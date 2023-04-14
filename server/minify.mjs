@@ -36,6 +36,7 @@ export default function minifyRoom() {
         'client/css/widgets/card.css',
         'client/css/widgets/classes.css',
         'client/css/widgets/deck.css',
+        'client/css/widgets/dice.css',
         'client/css/widgets/holder.css',
         'client/css/widgets/label.css',
         'client/css/widgets/pile.css',
@@ -45,6 +46,7 @@ export default function minifyRoom() {
         'client/css/widgets/timer.css',
 
         'client/css/fonts.css',
+        'client/css/custom.css',
       ],
       output: os.tmpdir() + '/out.css'
     }).then(function(min) {
@@ -75,6 +77,7 @@ export default function minifyRoom() {
           'client/js/widgets/canvas.js',
           'client/js/widgets/card.js',
           'client/js/widgets/deck.js',
+          'client/js/widgets/dice.js',
           'client/js/widgets/holder.js',
           'client/js/widgets/label.js',
           'client/js/widgets/pile.js',

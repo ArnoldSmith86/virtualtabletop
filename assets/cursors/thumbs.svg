@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14" width="20" height="14">
+	<title>thumbs</title>
+	<style>
+		.s0 { fill: #000000;stroke: #000000;stroke-width: 0 } 
+		.s1 { fill: #ffffff;stroke: #000000;stroke-width: 0 } 
+	</style>
+	<path id="Shape 13" class="s0" d="m1 5v-1h5v1h1v-4h1v-1h2v1h3v1h3v1h3v1h1v6h-1v2h-1v1h-1v1h-9v-1h-1v-1h-1v-2h-1v-1h-2v-1h-2v-1h-1v-2z"/>
+	<path id="Layer 15" class="s1" d="m6 5v1h1v-1h1v-4h2v3h1v-2h2v3h1v-2h2v3h1v-2h2v6h-1v2h-1v1h-9v-1h-1v-2h-1v-1h-1v-1h-2v-1h-2v-2z"/>
+</svg>

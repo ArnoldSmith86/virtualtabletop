@@ -179,6 +179,8 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'gamePiece') {
       w.image = `https://playingcards.io/img/pieces/${widget.color}-${widget.pieceType}.svg`;
       addDimensions(w, widget);
+    } else if(widget.type == 'dice') {
+      w.type = 'dice';
     } else if(widget.type == 'hand') {
       if(widget.enabled === false)
         continue;
@@ -205,10 +207,15 @@ export default async function convertPCIO(content) {
         w.classes = 'transparent';
       addDimensions(w, widget, 111, 168);
 
-      if(widget.allowedDecks)
+      if(widget.allowedDecks) {
         w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
+        if(pileHasDeck[widget.id] && widget.allowedDecks.indexOf(pileHasDeck[widget.id].id) == -1)
+          w.dropTarget.push({ deck: pileHasDeck[widget.id].id });
+      }
       if(widget.hideStackTab)
         w.preventPiles = true;
+      if(widget.layoutType == 'freeform')
+        w.alignChildren = false;
 
       if(pileOverlaps[w.id]) {
         w.x += 4;
@@ -217,6 +224,20 @@ export default async function convertPCIO(content) {
         w.height = (w.height || 168) - 8;
         w.dropOffsetX = 0;
         w.dropOffsetY = 0;
+      }
+
+      if(widget.layoutType == 'spread') {
+        if(widget.spreadDirection == 'down') {
+          w.stackOffsetY = 168;
+        } else if(widget.spreadDirection == 'down') {
+          w.dropOffsetY = (w.height || 168) - 168;
+          w.stackOffsetY = -168;
+        } else if(widget.spreadDirection == 'left') {
+          w.dropOffsetX = (w.width || 111) - 111;
+          w.stackOffsetX = -111;
+        } else {
+          w.stackOffsetX = 111;
+        }
       }
 
       if(widget.label) {
@@ -320,19 +341,39 @@ export default async function convertPCIO(content) {
           value:     ''
         });
       }
+
+      if(widget.collectionType == 'choosers') {
+        const options = Object.values(w.cardTypes);
+        const firstTemplate = JSON.parse(JSON.stringify(w.faceTemplates[0]));
+        for(let i=0; i<options.length; ++i) {
+          if(i)
+            w.faceTemplates.push(JSON.parse(JSON.stringify(firstTemplate)));
+          for(const object of w.faceTemplates[i].objects) {
+            if(object.valueType == 'dynamic') {
+              object.valueType = 'static';
+              object.value = options[i][object.value] ? mapName(options[i][object.value]) : '';
+            }
+          }
+        }
+        w.cardTypes = { chooser: {} };
+        w.cardDefaults.movable = false;
+        w.cardDefaults.borderRadius = 12;
+        w.cardDefaults.css = 'border: 4px solid #dedede';
+      }
+
       let sortingOrder = 0;
       for(const type in w.cardTypes) {
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
         w.cardTypes[type].sortingOrder = ++sortingOrder;
       }
-    } else if(widget.type == 'card' || widget.type == 'piece') {
+    } else if(widget.type == 'card' || widget.type == 'piece' || widget.type == 'chooser') {
       if(!byID[widget.deck]) // orphan card without deck
         continue;
 
       w.type = 'card';
       w.deck = widget.deck;
-      w.cardType = widget.cardType;
+      w.cardType = widget.type == 'chooser' ? 'chooser' : widget.cardType;
 
       if(pileOverlaps[widget.parent]) {
         w.x = (w.x || 0) - 4;
@@ -365,6 +406,8 @@ export default async function convertPCIO(content) {
 
       if(widget.faceup)
         w.activeFace = 1;
+      if(widget.type == 'chooser' && widget.chooserChoice)
+        w.activeFace = Object.keys(byID[widget.deck].cardTypes).indexOf(widget.chooserChoice);
       if(widget.owner)
         w.owner = widget.owner;
     } else if(widget.type == 'counter') {
@@ -856,6 +899,29 @@ export default async function convertPCIO(content) {
             delete c.mode;
           if(c.value === 0)
             delete c.value;
+        }
+        if(c.func == 'CHANGE_CHOOSER') {
+          if(!c.args.choosers)
+            continue;
+          c = {
+            func: 'FLIP',
+            collection: c.args.choosers.value,
+            face: c.args.choice ? Object.keys(byID[byID[c.args.choosers.value[0]].deck].cardTypes).indexOf(c.args.choice.value) : null,
+            faceCycle: c.args.changeType == 'prev' ? 'backward' : null
+          };
+          if(c.face === null)
+            delete c.face;
+          if(c.faceCycle === null)
+            delete c.faceCycle;
+        }
+        if(c.func == 'ROLL_DICE') {
+          if(!c.args.dice)
+            continue;
+          c = {
+            note:       'Roll dice',
+            func:       'CLICK',
+            collection: c.args.dice.value
+          };
         }
         if(c.func == 'SPIN_SPINNER') {
           if(!c.args.spinners)
