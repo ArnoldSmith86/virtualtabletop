@@ -1721,7 +1721,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'TURN') {
-        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN', readOnly: false });
+        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN', simulate: false });
         if([ 'forward', 'backward', 'random', 'position' ].indexOf(a.turnCycle) == -1) {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
@@ -1769,7 +1769,7 @@ export class Widget extends StateManaged {
 
           collections[a.collection] = [];
 
-          if(!a.readOnly) {
+          if(!a.simulate) {
             //saves turn into all seats and creates output collection with turn seats
             for(const w of c) {
               await w.set('turn', w.get('index') == turn);
