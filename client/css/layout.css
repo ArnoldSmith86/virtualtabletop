@@ -974,6 +974,10 @@ button:disabled:hover {
 }
 #pileOverlay{
   color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
 }
 #buttonInputOverlay{
   justify-content: center;
@@ -999,7 +1003,7 @@ button:disabled:hover {
   position: relative;
 }
 
-.modal h1{
+.modal h1 {
   margin: 0;
   padding: 4px 8px;
   text-align: left;
@@ -1017,21 +1021,21 @@ button:disabled:hover {
 }
 
 .modal h1:after {
-    content: '';
-    position: absolute;
-    background-color: var(--modalBorderColor);
-    display: block;
-    z-index: 15;
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    width: 100%;
+  content: '';
+  position: absolute;
+  background-color: var(--modalBorderColor);
+  display: block;
+  z-index: 15;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
 }
 
-.modal .footer{
- margin-top: 16px;
+.modal .footer {
+  margin-top: 16px;
   padding: 4px;
   position: relative;
   box-sizing: border-box;
@@ -1057,7 +1061,7 @@ button:disabled:hover {
 }
 
 
-.modal .footer > button{
+.modal .footer > button {
   font-family: 'Roboto';
   display: flex;
   height: 32px;
@@ -1074,12 +1078,11 @@ button:disabled:hover {
   font-weight: 500;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
-
 }
-.modal .footer > button label{
+.modal .footer > button label {
   font-size: 1rem;
 }
-.modal .footer > button *{
+.modal .footer > button * {
   cursor: pointer;
 }
 
@@ -1453,12 +1456,16 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   box-sizing: border-box;
   padding: 8px 32px;
 }
+.modal .button-bar button {
+  margin-left: 0;
+  margin-right: 0;
+}
 .pilecancelbutton{
   position: absolute;
   height: 38px;
   width: auto!important;
-  top: 0;
-  right: 3px;
+  top: -5px;
+  right: 5px;
   background-color: black;
 }
 input:invalid{
