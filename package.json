@@ -52,7 +52,7 @@
     "@node-minify/no-compress": "^8.0.5",
     "@node-minify/uglify-es": "^8.0.5",
     "crc-32": "^1.2.2",
-    "dompurify": "^3.0.1",
+    "dompurify": "^3.0.2",
     "express": "^4.18.2",
     "jszip": "^3.10.1",
     "node-fetch": "^2.6.9",
