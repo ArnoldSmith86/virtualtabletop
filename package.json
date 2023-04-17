@@ -48,7 +48,7 @@
   "dependencies": {
     "@node-minify/clean-css": "^8.0.5",
     "@node-minify/core": "^8.0.5",
-    "@node-minify/html-minifier": "^8.0.5",
+    "@node-minify/html-minifier": "^8.0.6",
     "@node-minify/no-compress": "^8.0.5",
     "@node-minify/uglify-es": "^8.0.5",
     "crc-32": "^1.2.2",
