@@ -8,7 +8,7 @@
     "parent": "greenHolder"
   },
   "_meta": {
-    "version": 6,
+    "version": 13,
     "info": {
       "name": "Flatten the Curve",
       "image": "/assets/1461147320_152461",
@@ -17,15 +17,20 @@
       "year": "2008",
       "mode": "coop",
       "time": "45",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
       "attribution": "The game layout, game board, and library image were done by LawDawg and are released to the Public Domain by CC0.\n\nThe research station was was done by mousewax and is released to the Public Domain by CC0.\n\nThe map was made using the tools at https://mapchart.net/world.html and is available under CC BY-SA 4.0.\n\nThe bacteria icons are available under the Vecteezy license from: https://www.vecteezy.com/vector-art/149324-free-bacteria-icon-vector.",
       "similarName": "Pandemic",
       "description": "Cooperative game where players move around board to eliminate diseases. Players win by curing all four diseases and lose if diseases spread too far or cures take too long.",
       "showName": true,
       "helpText": "Players choose seats. Select options using gear icon. Press restart icon to begin (and to automatically set up board if that option is chosen). After play begins, all disease markers are moved by players. To automatically move disease markers of that city color, click on that city holder. To return disease marker to holder, click on marker. Cities only hold 3 markers; manually place other markers nearby. To change outbreak counter, just click on it. If a card needs to be removed from the board, drag it to the trash can holder in the bottom right.",
-      "lastUpdate": 1647839274000
+      "lastUpdate": 1681786844477,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
     }
   },
   "map": {
@@ -865,7 +870,8 @@
         "from": "yellowHolder",
         "to": "${thisID}"
       }
-    ]
+    ],
+    "clickable": false
   },
   "virus1": {
     "id": "virus1",
@@ -985,7 +991,8 @@
         "from": "blackHolder",
         "to": "${thisID}"
       }
-    ]
+    ],
+    "clickable": false
   },
   "virus3": {
     "id": "virus3",
@@ -1062,7 +1069,8 @@
         "from": "redHolder",
         "to": "${thisID}"
       }
-    ]
+    ],
+    "clickable": false
   },
   "label16": {
     "inheritFrom": "label13",
@@ -2742,7 +2750,14 @@
       }
     ],
     "color": "white",
-    "css": "font-size: 31px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "css": {
+      "font-size": "31px",
+      "--wcMain": "black",
+      "--wcBorder": "white",
+      "--wcMainOH": "grey",
+      "--wcBorderOH": "black",
+      "line-height": "1.3"
+    },
     "text": "settings",
     "highlight": true,
     "allRoles": true,
@@ -2818,7 +2833,8 @@
     "layer": 2,
     "movableInEdit": false,
     "childrenPerOwner": "",
-    "onlyVisibleForSeat": "seat1"
+    "onlyVisibleForSeat": "seat1",
+    "hoverInheritVisibleForSeat": false
   },
   "playerCardsHolder": {
     "type": "holder",
@@ -2911,7 +2927,8 @@
     "y": 105,
     "linkedToSeat": "seat2",
     "childrenPerOwner": "",
-    "onlyVisibleForSeat": "seat2"
+    "onlyVisibleForSeat": "seat2",
+    "hoverInheritVisibleForSeat": false
   },
   "handSeat3": {
     "inheritFrom": "handSeat1",
@@ -2922,7 +2939,8 @@
     "linkedToSeat": "seat3",
     "z": 12336,
     "childrenPerOwner": "",
-    "onlyVisibleForSeat": "seat3"
+    "onlyVisibleForSeat": "seat3",
+    "hoverInheritVisibleForSeat": false
   },
   "handSeat4": {
     "inheritFrom": "handSeat1",
@@ -2932,7 +2950,8 @@
     "y": 650,
     "linkedToSeat": "seat4",
     "childrenPerOwner": "",
-    "onlyVisibleForSeat": "seat4"
+    "onlyVisibleForSeat": "seat4",
+    "hoverInheritVisibleForSeat": false
   },
   "roleHolder": {
     "type": "holder",
@@ -5682,149 +5701,8 @@
         "cancelButtonText": "No"
       },
       {
-        "func": "RECALL",
-        "holder": [
-          "playerCardsHolder",
-          "roleHolder",
-          "infectionHolder",
-          "greenHolder",
-          "yellowHolder",
-          "blackHolder",
-          "redHolder"
-        ]
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": [
-          "playerCardsHolder",
-          "roleHolder",
-          "infectionHolder"
-        ]
-      },
-      {
-        "func": "FLIP",
-        "holder": [
-          "playerCardsHolder",
-          "roleHolder",
-          "infectionHolder"
-        ],
-        "face": 0
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "pin1",
-          "pin2",
-          "pin3",
-          "pin4",
-          "pin5",
-          "pin6",
-          "pin7"
-        ],
-        "property": "parent",
-        "value": "pinHolder"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "outbreakCounter"
-        ],
-        "property": "text",
-        "value": 1
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "infectionToken"
-        ],
-        "property": "parent",
-        "value": "infection1"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "virus1",
-          "virus2",
-          "virus3",
-          "virus4"
-        ],
-        "property": "text",
-        "value": ""
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "virus1"
-        ],
-        "property": "parent",
-        "value": "active1"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "virus2"
-        ],
-        "property": "parent",
-        "value": "active2"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "virus3"
-        ],
-        "property": "parent",
-        "value": "active3"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "virus4"
-        ],
-        "property": "parent",
-        "value": "active4"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "research1",
-          "research2",
-          "research3",
-          "research4",
-          "research5",
-          "research6"
-        ],
-        "property": "parent",
-        "value": "researchHolder"
-      },
-      {
         "func": "CALL",
-        "routine": "rolesRoutine"
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY setup OF settings}",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "CALL",
-            "routine": "cardsRoutine"
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY setup OF settings}",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "CALL",
-            "routine": "infectionRoutine"
-          }
-        ]
-      },
-      {
-        "func": "CALL",
-        "routine": "privateRoutine"
+        "routine": "setupRoutine"
       }
     ],
     "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black; font-size:35px;padding-bottom:3px",
@@ -6256,6 +6134,153 @@
           }
         ]
       }
+    ],
+    "setupRoutine": [
+      {
+        "func": "RECALL",
+        "holder": [
+          "playerCardsHolder",
+          "roleHolder",
+          "infectionHolder",
+          "greenHolder",
+          "yellowHolder",
+          "blackHolder",
+          "redHolder"
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "playerCardsHolder",
+          "roleHolder",
+          "infectionHolder"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "playerCardsHolder",
+          "roleHolder",
+          "infectionHolder"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pin1",
+          "pin2",
+          "pin3",
+          "pin4",
+          "pin5",
+          "pin6",
+          "pin7"
+        ],
+        "property": "parent",
+        "value": "pinHolder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "outbreakCounter"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "infectionToken"
+        ],
+        "property": "parent",
+        "value": "infection1"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "virus1",
+          "virus2",
+          "virus3",
+          "virus4"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "virus1"
+        ],
+        "property": "parent",
+        "value": "active1"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "virus2"
+        ],
+        "property": "parent",
+        "value": "active2"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "virus3"
+        ],
+        "property": "parent",
+        "value": "active3"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "virus4"
+        ],
+        "property": "parent",
+        "value": "active4"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "research1",
+          "research2",
+          "research3",
+          "research4",
+          "research5",
+          "research6"
+        ],
+        "property": "parent",
+        "value": "researchHolder"
+      },
+      {
+        "func": "CALL",
+        "routine": "rolesRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY setup OF settings}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "cardsRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY setup OF settings}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "infectionRoutine"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "privateRoutine"
+      }
     ]
   },
   "pinHolder": {
@@ -6445,7 +6470,7 @@
                 "func": "SET",
                 "collection": "thisButton",
                 "property": "text",
-                "value": 1
+                "value": 0
               }
             ],
             "elseRoutine": [
@@ -6468,7 +6493,7 @@
       "text-align": "center",
       "line-height": "0.9"
     },
-    "text": 1,
+    "text": 0,
     "fixedParent": true,
     "parent": "outbreakLabel",
     "y": 40,
