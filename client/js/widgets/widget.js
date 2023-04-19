@@ -1362,12 +1362,12 @@ export class Widget extends StateManaged {
                     if(widgets.has(target.get('hand'))) {
                       const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
-                      c.targetPlayer = target.get('player')
+                      c.targetPlayer = target.get('player');
                       await c.moveToHolder(targetHand);
-                      delete c.targetPlayer
-                      c.bringToFront()
+                      delete c.targetPlayer;
+                      await c.bringToFront();
                       if(targetHand.get('type') == 'holder')
-                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                        await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                     } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
@@ -1413,7 +1413,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true });
+        setDefaults(a, { owned: true, inHolder: true });
         if(this.isValidID(a.holder, problems)) {
           for(const holder of asArray(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
@@ -1422,6 +1422,8 @@ export class Widget extends StateManaged {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
+                if(!a.inHolder)
+                  cards = cards.filter(c=>!c.get('_ancestor'));
                 for(const c of cards)
                   await c.moveToHolder(widgets.get(holder));
               }
