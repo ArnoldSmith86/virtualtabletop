@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 12,
+    "version": 13,
     "info": {
       "name": "Five of a Kind",
       "image": "/assets/-337719674_582921",
@@ -18,7 +18,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1677458727414,
+      "lastUpdate": 1682279750595,
       "variantImage": "",
       "variant": "",
       "language": "en-US",
@@ -3372,9 +3372,18 @@
     "text": "0"
   },
   "z321": {
-    "type": "label",
+    "type": "",
     "text": "Five of a Kind",
-    "css": "font-size: 48pt;color:black;border:5px solid black;background-color:white",
+    "css": {
+      "font-size": "48pt",
+      "color": "black",
+      "border": "5px solid black",
+      "background-color": "white",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
     "height": 68,
     "width": 400,
     "x": 202,
@@ -3767,25 +3776,7 @@
     "z": 805,
     "shape3d": true,
     "movableInEdit": false,
-    "clickable": false,
-    "animatePropertyChange": [
-      {
-        "property": "rollCount",
-        "className": "rolling",
-        "duration": 500
-      }
-    ],
-    "css": {
-      "default": {
-        "overflow": "clip"
-      },
-      ">.diceFaces>.diceFace": {
-        "border-radius": "${PROPERTY borderRadius}"
-      },
-      ".rolling": {
-        "overflow": "visible"
-      }
-    }
+    "clickable": false
   },
   "7yu2": {
     "inheritFrom": "7yu1",
@@ -3836,7 +3827,8 @@
     "height": 90,
     "z": 813,
     "shape3d": true,
-    "kept": false
+    "kept": false,
+    "clickable": false
   },
   "d2": {
     "type": "dice",
@@ -3847,7 +3839,8 @@
     "height": 90,
     "z": 813,
     "shape3d": true,
-    "kept": false
+    "kept": false,
+    "clickable": false
   },
   "d3": {
     "type": "dice",
@@ -3858,7 +3851,8 @@
     "height": 90,
     "z": 813,
     "shape3d": true,
-    "kept": false
+    "kept": false,
+    "clickable": false
   },
   "d4": {
     "type": "dice",
@@ -3869,7 +3863,8 @@
     "height": 90,
     "z": 813,
     "shape3d": true,
-    "kept": false
+    "kept": false,
+    "clickable": false
   },
   "d5": {
     "type": "dice",
@@ -3880,6 +3875,7 @@
     "height": 90,
     "z": 813,
     "shape3d": true,
-    "kept": false
+    "kept": false,
+    "clickable": false
   }
 }
