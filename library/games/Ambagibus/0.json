@@ -4,8 +4,8 @@
     "type": "card",
     "cardType": "type15",
     "id": "2611",
-    "z": 14884,
-    "parent": "6ge1"
+    "z": 15976,
+    "parent": "ws38"
   },
   "_meta": {
     "version": 13,
@@ -18,8 +18,7 @@
       "mode": "solo; vs",
       "time": "15",
       "attribution": "<font face=\"proxima-nova, Arial, sans-serif\"><span style=\"font-size: 15px; font-weight: 400;\">Game and card design and text of the rules by P.D. Magnus.&nbsp; Ambagibus is available as CC BY-NC-SA 3.0. Originally adapted for playingcards.io by uberdante.&nbsp; Adapted to VTT by garrulousHyena and LawDawg.</span></font>",
-      "lastUpdate": 1682562023458,
-      "id": "xew8",
+      "lastUpdate": 1682562759112,
       "showName": true,
       "skill": "",
       "description": "Build a catacomb with no way out!",
@@ -260,6 +259,9 @@
     "y": 4,
     "z": 1,
     "cardDefaults": {
+      "onPileCreation": {
+        "deck1": true
+      },
       "shift": true,
       "width": 100,
       "height": 100,
@@ -504,104 +506,104 @@
     "type": "card",
     "cardType": "type1",
     "id": "vc2c",
-    "z": 14760,
-    "parent": "7h34"
+    "z": 16142,
+    "parent": "qtkr"
   },
   "3zx0": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type2",
     "id": "3zx0",
-    "z": 14755,
-    "parent": "7h34"
+    "z": 16182,
+    "parent": "qtkr"
   },
   "w3z9": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type3",
     "id": "w3z9",
-    "z": 14781,
-    "parent": "7h34"
+    "z": 16176,
+    "parent": "qtkr"
   },
   "a23s": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type4",
     "id": "a23s",
-    "z": 14767,
-    "parent": "7h34"
+    "z": 16138,
+    "parent": "qtkr"
   },
   "z7tk": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type5",
     "id": "z7tk",
-    "z": 14756,
-    "parent": "7h34"
+    "z": 16172,
+    "parent": "qtkr"
   },
   "h2ze": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type6",
     "id": "h2ze",
-    "z": 14766,
-    "parent": "7h34"
+    "z": 16144,
+    "parent": "qtkr"
   },
   "27iv": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type7",
     "id": "27iv",
-    "z": 14753,
-    "parent": "7h34"
+    "z": 16154,
+    "parent": "qtkr"
   },
   "wvgf": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type8",
     "id": "wvgf",
-    "z": 14785,
-    "parent": "7h34"
+    "z": 16158,
+    "parent": "qtkr"
   },
   "zsp7": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type9",
     "id": "zsp7",
-    "z": 14759,
-    "parent": "7h34"
+    "z": 16208,
+    "parent": "qtkr"
   },
   "jocb": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type10",
     "id": "jocb",
-    "z": 14787,
-    "parent": "7h34"
+    "z": 16204,
+    "parent": "qtkr"
   },
   "3pun": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type11",
     "id": "3pun",
-    "z": 14757,
-    "parent": "7h34"
+    "z": 16200,
+    "parent": "qtkr"
   },
   "wkfj": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type12",
     "id": "wkfj",
-    "z": 14777,
-    "parent": "7h34"
+    "z": 16170,
+    "parent": "qtkr"
   },
   "vnjp": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type13",
     "id": "vnjp",
-    "z": 14762,
-    "parent": "7h34",
+    "z": 16146,
+    "parent": "qtkr",
     "rotation": 90
   },
   "g591": {
@@ -609,216 +611,216 @@
     "type": "card",
     "cardType": "type14",
     "id": "g591",
-    "z": 14752,
-    "parent": "7h34"
+    "z": 16190,
+    "parent": "qtkr"
   },
   "esiv": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type15",
     "id": "esiv",
-    "z": 14761,
-    "parent": "7h34"
+    "z": 16134,
+    "parent": "qtkr"
   },
   "ff7c": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type16",
     "id": "ff7c",
-    "z": 14775,
-    "parent": "7h34"
+    "z": 16150,
+    "parent": "qtkr"
   },
   "cwja": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type17",
     "id": "cwja",
-    "z": 14790,
-    "parent": "7h34"
+    "z": 16148,
+    "parent": "qtkr"
   },
   "g3n5": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type18",
     "id": "g3n5",
-    "z": 14789,
-    "parent": "7h34"
+    "z": 16156,
+    "parent": "qtkr"
   },
   "u1kg": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type19",
     "id": "u1kg",
-    "z": 14771,
-    "parent": "7h34"
+    "z": 16136,
+    "parent": "qtkr"
   },
   "3pu3": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type20",
     "id": "3pu3",
-    "z": 14772,
-    "parent": "7h34"
+    "z": 16168,
+    "parent": "qtkr"
   },
   "cpl8": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type21",
     "id": "cpl8",
-    "z": 14784,
-    "parent": "7h34"
+    "z": 16162,
+    "parent": "qtkr"
   },
   "9o5e": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type22",
     "id": "9o5e",
-    "z": 14778,
-    "parent": "7h34"
+    "z": 16174,
+    "parent": "qtkr"
   },
   "7fih": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type23",
     "id": "7fih",
-    "z": 14770,
-    "parent": "7h34"
+    "z": 16198,
+    "parent": "qtkr"
   },
   "dmo1": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type24",
     "id": "dmo1",
-    "z": 14788,
-    "parent": "7h34"
+    "z": 16160,
+    "parent": "qtkr"
   },
   "jvzp": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type25",
     "id": "jvzp",
-    "z": 14774,
-    "parent": "7h34"
+    "z": 16188,
+    "parent": "qtkr"
   },
   "4eib": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type26",
     "id": "4eib",
-    "z": 14768,
-    "parent": "7h34"
+    "z": 16152,
+    "parent": "qtkr"
   },
   "xpw3": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type27",
     "id": "xpw3",
-    "z": 14780,
-    "parent": "7h34"
+    "z": 16196,
+    "parent": "qtkr"
   },
   "c0z3": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type28",
     "id": "c0z3",
-    "z": 14779,
-    "parent": "7h34"
+    "z": 16180,
+    "parent": "qtkr"
   },
   "cvqz": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type29",
     "id": "cvqz",
-    "z": 14765,
-    "parent": "7h34"
+    "z": 16202,
+    "parent": "qtkr"
   },
   "zvpf": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type30",
     "id": "zvpf",
-    "z": 14776,
-    "parent": "7h34"
+    "z": 16140,
+    "parent": "qtkr"
   },
   "fktb": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type31",
     "id": "fktb",
-    "z": 14751,
-    "parent": "7h34"
+    "z": 16206,
+    "parent": "qtkr"
   },
   "qazp": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type32",
     "id": "qazp",
-    "z": 14763,
-    "parent": "7h34"
+    "z": 16186,
+    "parent": "qtkr"
   },
   "0hgq": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type33",
     "id": "0hgq",
-    "z": 14773,
-    "parent": "7h34"
+    "z": 16192,
+    "parent": "qtkr"
   },
   "s20d": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type34",
     "id": "s20d",
-    "z": 14769,
-    "parent": "7h34"
+    "z": 16166,
+    "parent": "qtkr"
   },
   "id37": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type35",
     "id": "id37",
-    "z": 14758,
-    "parent": "7h34"
+    "z": 16184,
+    "parent": "qtkr"
   },
   "nvap": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type36",
     "id": "nvap",
-    "z": 14786,
-    "parent": "7h34"
+    "z": 16164,
+    "parent": "qtkr"
   },
   "lttp": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type37",
     "id": "lttp",
-    "z": 14754,
-    "parent": "7h34"
+    "z": 16130,
+    "parent": "qtkr"
   },
   "jly1": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type38",
     "id": "jly1",
-    "z": 14782,
-    "parent": "7h34"
+    "z": 16194,
+    "parent": "qtkr"
   },
   "3frh": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type39",
     "id": "3frh",
-    "z": 14783,
-    "parent": "7h34"
+    "z": 16178,
+    "parent": "qtkr"
   },
   "ylo3": {
     "deck": "deck1",
     "type": "card",
     "cardType": "type40",
     "id": "ylo3",
-    "z": 14764,
-    "parent": "7h34"
+    "z": 16132,
+    "parent": "qtkr"
   },
   "tempHolder": {
     "type": "holder",
@@ -890,6 +892,9 @@
     "y": 4,
     "z": 2,
     "cardDefaults": {
+      "onPileCreation": {
+        "deck2": true
+      },
       "shift": true,
       "css": {
         "filter": "hue-rotate(90deg)"
@@ -1195,6 +1200,9 @@
     "y": 4,
     "z": 3,
     "cardDefaults": {
+      "onPileCreation": {
+        "deck3": true
+      },
       "shift": true,
       "css": {
         "filter": "hue-rotate(180deg)"
@@ -1500,6 +1508,9 @@
     "y": 4,
     "z": 4,
     "cardDefaults": {
+      "onPileCreation": {
+        "deck4": true
+      },
       "shift": true,
       "css": {
         "filter": "hue-rotate(270deg)"
@@ -1927,513 +1938,513 @@
     "type": "card",
     "cardType": "type1",
     "id": "76kr",
-    "z": 14812,
+    "z": 15360,
     "rotation": 90,
-    "parent": "2aui"
+    "parent": "bjis"
   },
   "o1sw": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type2",
     "id": "o1sw",
-    "z": 14830,
-    "parent": "2aui"
+    "z": 15344,
+    "parent": "bjis"
   },
   "t3g4": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type3",
     "id": "t3g4",
-    "z": 14828,
-    "parent": "2aui"
+    "z": 15350,
+    "parent": "bjis"
   },
   "u8er": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type4",
     "id": "u8er",
-    "z": 14794,
-    "parent": "2aui"
+    "z": 15370,
+    "parent": "bjis"
   },
   "jees": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type5",
     "id": "jees",
-    "z": 14809,
-    "parent": "2aui"
+    "z": 15352,
+    "parent": "bjis"
   },
   "r4j5": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type6",
     "id": "r4j5",
-    "z": 14815,
-    "parent": "2aui"
+    "z": 15340,
+    "parent": "bjis"
   },
   "7ele": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type7",
     "id": "7ele",
-    "z": 14817,
-    "parent": "2aui"
+    "z": 15390,
+    "parent": "bjis"
   },
   "yg6o": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type8",
     "id": "yg6o",
-    "z": 14796,
-    "parent": "2aui"
+    "z": 15348,
+    "parent": "bjis"
   },
   "79zk": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type9",
     "id": "79zk",
-    "z": 14822,
-    "parent": "2aui"
+    "z": 15382,
+    "parent": "bjis"
   },
   "fdqq": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type10",
     "id": "fdqq",
-    "z": 14819,
-    "parent": "2aui"
+    "z": 15336,
+    "parent": "bjis"
   },
   "k001": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type11",
     "id": "k001",
-    "z": 14803,
-    "parent": "2aui"
+    "z": 15396,
+    "parent": "bjis"
   },
   "tjyh": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type12",
     "id": "tjyh",
-    "z": 14792,
-    "parent": "2aui"
+    "z": 15372,
+    "parent": "bjis"
   },
   "3nxe": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type13",
     "id": "3nxe",
-    "z": 14823,
-    "parent": "2aui"
+    "z": 15374,
+    "parent": "bjis"
   },
   "ro96": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type14",
     "id": "ro96",
-    "z": 14814,
-    "parent": "2aui"
+    "z": 15342,
+    "parent": "bjis"
   },
   "fnta": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type15",
     "id": "fnta",
-    "z": 14806,
-    "parent": "2aui"
+    "z": 15392,
+    "parent": "bjis"
   },
   "upn0": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type16",
     "id": "upn0",
-    "z": 14824,
-    "parent": "2aui"
+    "z": 15326,
+    "parent": "bjis"
   },
   "lgxu": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type17",
     "id": "lgxu",
-    "z": 14821,
-    "parent": "2aui"
+    "z": 15380,
+    "parent": "bjis"
   },
   "mp4b": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type18",
     "id": "mp4b",
-    "z": 14805,
-    "parent": "2aui"
+    "z": 15378,
+    "parent": "bjis"
   },
   "z3nl": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type19",
     "id": "z3nl",
-    "z": 14818,
-    "parent": "2aui"
+    "z": 15320,
+    "parent": "bjis"
   },
   "2ham": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type20",
     "id": "2ham",
-    "z": 14811,
-    "parent": "2aui"
+    "z": 15364,
+    "parent": "bjis"
   },
   "a68i": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type21",
     "id": "a68i",
-    "z": 14820,
-    "parent": "2aui"
+    "z": 15368,
+    "parent": "bjis"
   },
   "hhh0": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type22",
     "id": "hhh0",
-    "z": 14807,
-    "parent": "2aui"
+    "z": 15328,
+    "parent": "bjis"
   },
   "uj05": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type23",
     "id": "uj05",
-    "z": 14795,
-    "parent": "2aui"
+    "z": 15384,
+    "parent": "bjis"
   },
   "2i1w": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type24",
     "id": "2i1w",
-    "z": 14802,
-    "parent": "2aui"
+    "z": 15356,
+    "parent": "bjis"
   },
   "yj55": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type25",
     "id": "yj55",
-    "z": 14827,
-    "parent": "2aui"
+    "z": 15332,
+    "parent": "bjis"
   },
   "tkd2": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type26",
     "id": "tkd2",
-    "z": 14813,
-    "parent": "2aui"
+    "z": 15366,
+    "parent": "bjis"
   },
   "d1zs": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type27",
     "id": "d1zs",
-    "z": 14798,
-    "parent": "2aui"
+    "z": 15376,
+    "parent": "bjis"
   },
   "nj1w": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type28",
     "id": "nj1w",
-    "z": 14808,
-    "parent": "2aui"
+    "z": 15354,
+    "parent": "bjis"
   },
   "se50": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type29",
     "id": "se50",
-    "z": 14797,
-    "parent": "2aui"
+    "z": 15322,
+    "parent": "bjis"
   },
   "9hhu": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type30",
     "id": "9hhu",
-    "z": 14791,
-    "parent": "2aui"
+    "z": 15362,
+    "parent": "bjis"
   },
   "k6dt": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type31",
     "id": "k6dt",
-    "z": 14826,
-    "parent": "2aui"
+    "z": 15386,
+    "parent": "bjis"
   },
   "vwit": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type32",
     "id": "vwit",
-    "z": 14825,
-    "parent": "2aui"
+    "z": 15394,
+    "parent": "bjis"
   },
   "5dhm": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type33",
     "id": "5dhm",
-    "z": 14800,
-    "parent": "2aui"
+    "z": 15338,
+    "parent": "bjis"
   },
   "ypz1": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type34",
     "id": "ypz1",
-    "z": 14801,
-    "parent": "2aui"
+    "z": 15388,
+    "parent": "bjis"
   },
   "njv9": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type35",
     "id": "njv9",
-    "z": 14804,
-    "parent": "2aui"
+    "z": 15346,
+    "parent": "bjis"
   },
   "1iol": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type36",
     "id": "1iol",
-    "z": 14799,
-    "parent": "2aui"
+    "z": 15330,
+    "parent": "bjis"
   },
   "uo0i": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type37",
     "id": "uo0i",
-    "z": 14793,
-    "parent": "2aui"
+    "z": 15358,
+    "parent": "bjis"
   },
   "flej": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type38",
     "id": "flej",
-    "z": 14816,
-    "parent": "2aui"
+    "z": 15324,
+    "parent": "bjis"
   },
   "t4lr": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type39",
     "id": "t4lr",
-    "z": 14829,
-    "parent": "2aui"
+    "z": 15318,
+    "parent": "bjis"
   },
   "i5ui": {
     "deck": "deck2",
     "type": "card",
     "cardType": "type40",
     "id": "i5ui",
-    "z": 14810,
-    "parent": "2aui"
+    "z": 15334,
+    "parent": "bjis"
   },
   "f70c": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type1",
     "id": "f70c",
-    "z": 14844,
-    "parent": "u8qk"
+    "z": 15830,
+    "parent": "8o1k"
   },
   "mrch": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type2",
     "id": "mrch",
-    "z": 14868,
-    "parent": "u8qk"
+    "z": 15888,
+    "parent": "8o1k"
   },
   "rut7": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type3",
     "id": "rut7",
-    "z": 14835,
-    "parent": "u8qk"
+    "z": 15826,
+    "parent": "8o1k"
   },
   "dd0a": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type4",
     "id": "dd0a",
-    "z": 14867,
-    "parent": "u8qk"
+    "z": 15884,
+    "parent": "8o1k"
   },
   "q1j0": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type5",
     "id": "q1j0",
-    "z": 14862,
-    "parent": "u8qk"
+    "z": 15846,
+    "parent": "8o1k"
   },
   "nl7j": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type6",
     "id": "nl7j",
-    "z": 14856,
-    "parent": "u8qk"
+    "z": 15834,
+    "parent": "8o1k"
   },
   "iuo4": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type7",
     "id": "iuo4",
-    "z": 14839,
-    "parent": "u8qk"
+    "z": 15840,
+    "parent": "8o1k"
   },
   "2nkm": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type8",
     "id": "2nkm",
-    "z": 14855,
-    "parent": "u8qk"
+    "z": 15864,
+    "parent": "8o1k"
   },
   "qog2": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type9",
     "id": "qog2",
-    "z": 14837,
-    "parent": "u8qk"
+    "z": 15850,
+    "parent": "8o1k"
   },
   "7b28": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type10",
     "id": "7b28",
-    "z": 14847,
-    "parent": "u8qk"
+    "z": 15880,
+    "parent": "8o1k"
   },
   "f4ox": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type11",
     "id": "f4ox",
-    "z": 14858,
-    "parent": "u8qk"
+    "z": 15836,
+    "parent": "8o1k"
   },
   "fli3": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type12",
     "id": "fli3",
-    "z": 14851,
-    "parent": "u8qk"
+    "z": 15862,
+    "parent": "8o1k"
   },
   "i7mk": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type13",
     "id": "i7mk",
-    "z": 14852,
-    "parent": "u8qk"
+    "z": 15838,
+    "parent": "8o1k"
   },
   "vd1j": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type14",
     "id": "vd1j",
-    "z": 14870,
-    "parent": "u8qk"
+    "z": 15882,
+    "parent": "8o1k"
   },
   "ltu4": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type15",
     "id": "ltu4",
-    "z": 14853,
-    "parent": "u8qk"
+    "z": 15874,
+    "parent": "8o1k"
   },
   "stl0": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type16",
     "id": "stl0",
-    "z": 14834,
-    "parent": "u8qk"
+    "z": 15860,
+    "parent": "8o1k"
   },
   "2a3j": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type17",
     "id": "2a3j",
-    "z": 14843,
-    "parent": "u8qk"
+    "z": 15822,
+    "parent": "8o1k"
   },
   "1r17": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type18",
     "id": "1r17",
-    "z": 14857,
-    "parent": "u8qk"
+    "z": 15876,
+    "parent": "8o1k"
   },
   "d3ls": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type19",
     "id": "d3ls",
-    "z": 14836,
-    "parent": "u8qk"
+    "z": 15810,
+    "parent": "8o1k"
   },
   "snmw": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type20",
     "id": "snmw",
-    "z": 14850,
-    "parent": "u8qk"
+    "z": 15868,
+    "parent": "8o1k"
   },
   "ifkp": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type21",
     "id": "ifkp",
-    "z": 14865,
-    "parent": "u8qk"
+    "z": 15824,
+    "parent": "8o1k"
   },
   "rim4": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type22",
     "id": "rim4",
-    "z": 14840,
-    "parent": "u8qk"
+    "z": 15878,
+    "parent": "8o1k"
   },
   "7hlv": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type23",
     "id": "7hlv",
-    "z": 14838,
-    "parent": "u8qk"
+    "z": 15872,
+    "parent": "8o1k"
   },
   "7k3n": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type24",
     "id": "7k3n",
-    "z": 14848,
-    "parent": "u8qk",
+    "z": 15886,
+    "parent": "8o1k",
     "rotation": 180
   },
   "sjgm": {
@@ -2441,440 +2452,440 @@
     "type": "card",
     "cardType": "type25",
     "id": "sjgm",
-    "z": 14863,
-    "parent": "u8qk"
+    "z": 15852,
+    "parent": "8o1k"
   },
   "hl4t": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type26",
     "id": "hl4t",
-    "z": 14859,
-    "parent": "u8qk"
+    "z": 15820,
+    "parent": "8o1k"
   },
   "ywdl": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type27",
     "id": "ywdl",
-    "z": 14832,
-    "parent": "u8qk"
+    "z": 15828,
+    "parent": "8o1k"
   },
   "etfc": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type28",
     "id": "etfc",
-    "z": 14833,
-    "parent": "u8qk"
+    "z": 15818,
+    "parent": "8o1k"
   },
   "afgt": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type29",
     "id": "afgt",
-    "z": 14866,
-    "parent": "u8qk"
+    "z": 15866,
+    "parent": "8o1k"
   },
   "giwb": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type30",
     "id": "giwb",
-    "z": 14864,
-    "parent": "u8qk"
+    "z": 15848,
+    "parent": "8o1k"
   },
   "k86m": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type31",
     "id": "k86m",
-    "z": 14846,
-    "parent": "u8qk"
+    "z": 15812,
+    "parent": "8o1k"
   },
   "s6uk": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type32",
     "id": "s6uk",
-    "z": 14860,
-    "parent": "u8qk"
+    "z": 15858,
+    "parent": "8o1k"
   },
   "r5ra": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type33",
     "id": "r5ra",
-    "z": 14841,
-    "parent": "u8qk"
+    "z": 15816,
+    "parent": "8o1k"
   },
   "jbpz": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type34",
     "id": "jbpz",
-    "z": 14845,
-    "parent": "u8qk"
+    "z": 15854,
+    "parent": "8o1k"
   },
   "c2cu": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type35",
     "id": "c2cu",
-    "z": 14854,
-    "parent": "u8qk"
+    "z": 15856,
+    "parent": "8o1k"
   },
   "wm8e": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type36",
     "id": "wm8e",
-    "z": 14869,
-    "parent": "u8qk"
+    "z": 15842,
+    "parent": "8o1k"
   },
   "al76": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type37",
     "id": "al76",
-    "z": 14861,
-    "parent": "u8qk"
+    "z": 15844,
+    "parent": "8o1k"
   },
   "gai0": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type38",
     "id": "gai0",
-    "z": 14842,
-    "parent": "u8qk"
+    "z": 15832,
+    "parent": "8o1k"
   },
   "b7fb": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type39",
     "id": "b7fb",
-    "z": 14831,
-    "parent": "u8qk"
+    "z": 15870,
+    "parent": "8o1k"
   },
   "9jqr": {
     "deck": "deck3",
     "type": "card",
     "cardType": "type40",
     "id": "9jqr",
-    "z": 14849,
-    "parent": "u8qk"
+    "z": 15814,
+    "parent": "8o1k"
   },
   "fjrw": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type1",
     "id": "fjrw",
-    "z": 14904,
-    "parent": "6ge1"
+    "z": 16028,
+    "parent": "ws38"
   },
   "xye2": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type2",
     "id": "xye2",
-    "z": 14882,
-    "parent": "6ge1"
+    "z": 16008,
+    "parent": "ws38"
   },
   "ckat": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type3",
     "id": "ckat",
-    "z": 14873,
-    "parent": "6ge1"
+    "z": 16034,
+    "parent": "ws38"
   },
   "hlgi": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type4",
     "id": "hlgi",
-    "z": 14902,
-    "parent": "6ge1"
+    "z": 15972,
+    "parent": "ws38"
   },
   "wk8q": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type5",
     "id": "wk8q",
-    "z": 14890,
-    "parent": "6ge1"
+    "z": 15974,
+    "parent": "ws38"
   },
   "28qq": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type6",
     "id": "28qq",
-    "z": 14893,
-    "parent": "6ge1"
+    "z": 16026,
+    "parent": "ws38"
   },
   "ndcg": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type7",
     "id": "ndcg",
-    "z": 14891,
-    "parent": "6ge1"
+    "z": 16022,
+    "parent": "ws38"
   },
   "gimf": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type8",
     "id": "gimf",
-    "z": 14874,
-    "parent": "6ge1"
+    "z": 16042,
+    "parent": "ws38"
   },
   "oy2s": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type9",
     "id": "oy2s",
-    "z": 14909,
-    "parent": "6ge1"
+    "z": 15970,
+    "parent": "ws38"
   },
   "q8c3": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type10",
     "id": "q8c3",
-    "z": 14875,
-    "parent": "6ge1"
+    "z": 16024,
+    "parent": "ws38"
   },
   "vlqr": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type11",
     "id": "vlqr",
-    "z": 14876,
-    "parent": "6ge1"
+    "z": 16044,
+    "parent": "ws38"
   },
   "suko": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type12",
     "id": "suko",
-    "z": 14907,
-    "parent": "6ge1"
+    "z": 16020,
+    "parent": "ws38"
   },
   "88ih": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type13",
     "id": "88ih",
-    "z": 14879,
-    "parent": "6ge1"
+    "z": 16018,
+    "parent": "ws38"
   },
   "qcg2": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type14",
     "id": "qcg2",
-    "z": 14894,
-    "parent": "6ge1"
+    "z": 15980,
+    "parent": "ws38"
   },
   "7agx": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type16",
     "id": "7agx",
-    "z": 14887,
-    "parent": "6ge1"
+    "z": 15984,
+    "parent": "ws38"
   },
   "rswh": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type17",
     "id": "rswh",
-    "z": 14880,
-    "parent": "6ge1"
+    "z": 16012,
+    "parent": "ws38"
   },
   "503d": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type18",
     "id": "503d",
-    "z": 14901,
-    "parent": "6ge1"
+    "z": 15988,
+    "parent": "ws38"
   },
   "af00": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type19",
     "id": "af00",
-    "z": 14872,
-    "parent": "6ge1"
+    "z": 16000,
+    "parent": "ws38"
   },
   "kmy7": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type20",
     "id": "kmy7",
-    "z": 14885,
-    "parent": "6ge1"
+    "z": 15986,
+    "parent": "ws38"
   },
   "x3mr": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type21",
     "id": "x3mr",
-    "z": 14910,
-    "parent": "6ge1"
+    "z": 16014,
+    "parent": "ws38"
   },
   "bxo6": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type22",
     "id": "bxo6",
-    "z": 14881,
-    "parent": "6ge1"
+    "z": 16030,
+    "parent": "ws38"
   },
   "ubk8": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type23",
     "id": "ubk8",
-    "z": 14886,
-    "parent": "6ge1"
+    "z": 16002,
+    "parent": "ws38"
   },
   "jk0m": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type24",
     "id": "jk0m",
-    "z": 14878,
-    "parent": "6ge1"
+    "z": 16006,
+    "parent": "ws38"
   },
   "0ugn": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type25",
     "id": "0ugn",
-    "z": 14899,
-    "parent": "6ge1"
+    "z": 15990,
+    "parent": "ws38"
   },
   "5b44": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type26",
     "id": "5b44",
-    "z": 14883,
-    "parent": "6ge1"
+    "z": 15982,
+    "parent": "ws38"
   },
   "k616": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type27",
     "id": "k616",
-    "z": 14895,
-    "parent": "6ge1"
+    "z": 16004,
+    "parent": "ws38"
   },
   "jgxp": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type28",
     "id": "jgxp",
-    "z": 14877,
-    "parent": "6ge1"
+    "z": 16038,
+    "parent": "ws38"
   },
   "4ee5": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type29",
     "id": "4ee5",
-    "z": 14905,
-    "parent": "6ge1"
+    "z": 16048,
+    "parent": "ws38"
   },
   "fvbo": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type30",
     "id": "fvbo",
-    "z": 14871,
-    "parent": "6ge1"
+    "z": 15998,
+    "parent": "ws38"
   },
   "lb9q": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type31",
     "id": "lb9q",
-    "z": 14896,
-    "parent": "6ge1"
+    "z": 15996,
+    "parent": "ws38"
   },
   "vz2b": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type32",
     "id": "vz2b",
-    "z": 14898,
-    "parent": "6ge1"
+    "z": 16010,
+    "parent": "ws38"
   },
   "83sd": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type33",
     "id": "83sd",
-    "z": 14897,
-    "parent": "6ge1"
+    "z": 16040,
+    "parent": "ws38"
   },
   "y42n": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type34",
     "id": "y42n",
-    "z": 14889,
-    "parent": "6ge1"
+    "z": 16016,
+    "parent": "ws38"
   },
   "vnyz": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type35",
     "id": "vnyz",
-    "z": 14903,
-    "parent": "6ge1"
+    "z": 15994,
+    "parent": "ws38"
   },
   "nj37": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type36",
     "id": "nj37",
-    "z": 14892,
-    "parent": "6ge1"
+    "z": 16046,
+    "parent": "ws38"
   },
   "5csp": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type37",
     "id": "5csp",
-    "z": 14908,
-    "parent": "6ge1"
+    "z": 15978,
+    "parent": "ws38"
   },
   "k7v7": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type38",
     "id": "k7v7",
-    "z": 14888,
-    "parent": "6ge1"
+    "z": 15992,
+    "parent": "ws38"
   },
   "aqrw": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type39",
     "id": "aqrw",
-    "z": 14906,
-    "parent": "6ge1"
+    "z": 16032,
+    "parent": "ws38"
   },
   "6nhi": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type40",
     "id": "6nhi",
-    "z": 14900,
-    "parent": "6ge1"
+    "z": 16036,
+    "parent": "ws38"
   },
   "shiftup": {
     "id": "shiftup",
@@ -2906,7 +2917,7 @@
         "func": "SET",
         "property": "y",
         "relation": "-",
-        "value": 50
+        "value": 100
       }
     ]
   },
@@ -2940,7 +2951,7 @@
         "func": "SET",
         "property": "x",
         "relation": "+",
-        "value": 50
+        "value": 100
       }
     ]
   },
@@ -2974,7 +2985,7 @@
         "func": "SET",
         "property": "y",
         "relation": "+",
-        "value": 50
+        "value": 100
       }
     ]
   },
@@ -3008,7 +3019,7 @@
         "func": "SET",
         "property": "x",
         "relation": "-",
-        "value": 50
+        "value": 100
       }
     ]
   },
@@ -3067,15 +3078,6 @@
       "shift": true
     }
   },
-  "7h34": {
-    "type": "pile",
-    "parent": "holder1",
-    "x": 4,
-    "y": 4,
-    "width": 100,
-    "height": 100,
-    "id": "7h34"
-  },
   "1nj9B": {
     "id": "1nj9B",
     "y": 830,
@@ -3091,31 +3093,44 @@
     "x": 1530,
     "text": "Turn"
   },
-  "2aui": {
+  "bjis": {
     "type": "pile",
     "parent": "holder2",
     "x": 4,
     "y": 4,
     "width": 100,
     "height": 100,
-    "id": "2aui"
+    "deck2": true,
+    "id": "bjis"
   },
-  "u8qk": {
+  "8o1k": {
     "type": "pile",
     "parent": "holder3",
     "x": 4,
     "y": 4,
     "width": 100,
     "height": 100,
-    "id": "u8qk"
+    "deck3": true,
+    "id": "8o1k"
   },
-  "6ge1": {
+  "ws38": {
     "type": "pile",
     "parent": "holder4",
     "x": 4,
     "y": 4,
     "width": 100,
     "height": 100,
-    "id": "6ge1"
+    "deck4": true,
+    "id": "ws38"
+  },
+  "qtkr": {
+    "type": "pile",
+    "parent": "holder1",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "deck1": true,
+    "id": "qtkr"
   }
 }
