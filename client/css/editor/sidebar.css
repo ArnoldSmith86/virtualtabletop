@@ -255,13 +255,13 @@ body.lightsOff #editorModules {
 @media (orientation: portrait) and (min-width: 1000px), (max-aspect-ratio: 16/20) {
   body.edit {
     --editSidebarWidth: 36px;
-    --roomTop: calc(100vh - 1000px * var(--scale));
+    --roomTop: calc(100 * var(--vh) - 1000px * var(--scale) / var(--roomZoom) + (1 - var(--roomZoom)) / 2 * 1000px * var(--scale) / var(--roomZoom));
   }
   #editorModules {
     left: 0;
     top: var(--editToolbarHeight);
     right: var(--editSidebarWidth);
-    bottom: calc(1000px * var(--scale));
+    bottom: calc(1000px * var(--scale) / var(--roomZoom));
     width: unset !important;
     min-width: unset !important;
     height: unset;

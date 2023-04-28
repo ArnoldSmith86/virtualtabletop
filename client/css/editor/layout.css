@@ -49,6 +49,10 @@ body.edit {
   --roomLeft: var(--editModeRoomLeft);
 }
 
+body.edit.zoomedOut #roomArea, body.edit.zoomedOut #topSurface {
+  overflow: visible;
+}
+
 #editorSelection {
   display: none;
   box-shadow: 0px 0px 0px 5px green;

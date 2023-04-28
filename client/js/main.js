@@ -11,7 +11,8 @@ let optionsHidden = true;
 
 let edit = null;
 export let jeEnabled = null;
-let jeZoomOut = false;
+let zoom = 1;
+let offset = [ 0, 0 ];
 let jeRoutineLogging = false;
 
 let urlProperties = {};
@@ -175,26 +176,37 @@ function checkURLproperties(connected) {
   }
 }
 
+function setZoomAndOffset(newZoom, xOffset, yOffset) {
+  zoom = newZoom;
+  offset = [ xOffset, yOffset ];
+  setScale();
+}
+
 function setScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
   if(edit || jeEnabled) {
-    const targetWidth = jeZoomOut ? 3200 : 1600;
-    const targetHeight = jeZoomOut ? 2000 : 1000;
+    const targetWidth = 1600 / zoom;
+    const targetHeight = 1000 / zoom;
     const availableRect = getAvailableRoomRectangle();
     const availableWidth = availableRect.right-availableRect.left;
     const availableHeight = availableRect.bottom-availableRect.top;
+
+    scale = availableWidth/availableHeight < 1600/1000 ? availableWidth/targetWidth : availableHeight/targetHeight;
+
+    const offsetX = offset[0] + (1-zoom)/2*1600*scale/zoom;
+    const offsetY = offset[1] + (1-zoom)/2*1000*scale/zoom;
+
     if(availableWidth/availableHeight < 1600/1000) {
-      scale = availableWidth/targetWidth;
-      document.documentElement.style.setProperty('--editModeRoomLeft', availableRect.left + 'px');
-      document.documentElement.style.setProperty('--editModeRoomTop', (availableRect.top + (availableHeight-scale*targetHeight)/2) + 'px');
+      document.documentElement.style.setProperty('--editModeRoomLeft', (offsetX + availableRect.left) + 'px');
+      document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top + (availableHeight-scale*targetHeight)/2) + 'px');
     } else {
-      scale = availableHeight/targetHeight;
-      document.documentElement.style.setProperty('--editModeRoomLeft', (availableRect.left + (availableWidth-scale*targetWidth)/2) + 'px');
-      document.documentElement.style.setProperty('--editModeRoomTop', availableRect.top + 'px');
+      document.documentElement.style.setProperty('--editModeRoomLeft', (offsetX + availableRect.left + (availableWidth-scale*targetWidth)/2) + 'px');
+      document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top) + 'px');
     }
+    document.documentElement.style.setProperty('--roomZoom', zoom);
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
@@ -361,7 +373,7 @@ async function loadEditMode() {
     edit = false;
     Object.assign(window, {
       $, $a, div, on, onMessage, showOverlay,
-      setJEenabled, setJEroutineLogging, setJEzoomOut, toggleEditMode, getEdit,
+      setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,
       generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
@@ -546,10 +558,6 @@ function getEdit() {
 
 function setJEenabled(v) {
   jeEnabled = v;
-}
-
-function setJEzoomOut(v) {
-  jeZoomOut = v;
 }
 
 function setJEroutineLogging(v) {

@@ -253,14 +253,6 @@ body.jsonEdit #toolbar {
   display: none;
 }
 
-body.jsonEdit.jeZoomOut #roomArea {
-  overflow: visible;
-}
-
-body.jsonEdit.jeZoomOut #topSurface {
-  overflow: visible;
-}
-
 #jeLogWrapper {
   position: fixed;
   bottom: 0;

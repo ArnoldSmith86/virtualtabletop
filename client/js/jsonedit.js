@@ -1,6 +1,5 @@
 let jeEnabled = null;
 let jeRoutineLogging = false;
-let jeZoomOut = false;
 let jeMode = null;
 let jeWidget = null;
 let jePlainWidget = null;
@@ -79,23 +78,6 @@ const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'i
 
 const jeCommands = [
   /* Just for editing convenience, the top (command) buttons are listed first */
-  {
-    id: 'je_toggleZoom',
-    name: 'Toggle zoom',
-    icon: '[zoom_in]',
-    forceKey: 'Z',
-    classes: _=>jeZoomOut ? 'onState' : '',
-    call: async function() {
-      jeZoomOut = !jeZoomOut;
-      setJEzoomOut(jeZoomOut);
-      if(jeZoomOut) {
-        $('body').classList.add('jeZoomOut');
-      } else {
-        $('body').classList.remove('jeZoomOut');
-      }
-      setScale();
-    }
-  },
   {
     id: 'je_copyState',
     name: 'Copy state from another room/server',
@@ -2378,7 +2360,7 @@ function jeInitEventListeners() {
     const x = jeState.mouseX = Math.floor((e.clientX - getRoomRectangle().left) / getScale());
     const y = jeState.mouseY = Math.floor((e.clientY - getRoomRectangle().top ) / getScale());
 
-    if(!jeZoomOut && x > 1600 || jeMouseButtonIsDown)
+    if(jeMouseButtonIsDown)
       return;
 
     if(!widgetCoordCache) {
@@ -2425,7 +2407,7 @@ function jeInitEventListeners() {
       }
     }
 
-    if((getRoomRectangle().left <= e.clientX && e.clientX <= getRoomRectangle().right && getRoomRectangle().top <= e.clientY && e.clientY <= getRoomRectangle().bottom) || jeZoomOut) {
+    if((getRoomRectangle().left <= e.clientX && e.clientX <= getRoomRectangle().right && getRoomRectangle().top <= e.clientY && e.clientY <= getRoomRectangle().bottom)) {
       $('#jeMouseCoords').innerHTML = "(" + jeState.mouseX + ", " + jeState.mouseY + ")";
     } else {
       $('#jeMouseCoords').innerHTML = ""

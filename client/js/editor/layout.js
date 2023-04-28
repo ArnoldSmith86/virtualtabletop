@@ -19,6 +19,7 @@ function initializeEditor() {
     new ToolbarDivider(),
 
     new SelectModeButton(),
+    new ZoomOutButton(),
 
     new ToolbarDivider(),
 
