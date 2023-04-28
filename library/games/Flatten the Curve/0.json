@@ -22,15 +22,15 @@
       "description": "Cooperative game where players move around board to eliminate diseases. Players win by curing all four diseases and lose if diseases spread too far or cures take too long.",
       "showName": true,
       "helpText": "Players choose seats. Select options using gear icon. Press restart icon to begin (and to automatically set up board if that option is chosen). After play begins, all disease markers are moved by players. To automatically move disease markers of that city color, click on that city holder. To return disease marker to holder, click on marker. Cities only hold 3 markers; manually place other markers nearby. To change outbreak counter, just click on it. If a card needs to be removed from the board, drag it to the trash can holder in the bottom right.",
-      "lastUpdate": 1681786844477,
+      "lastUpdate": 1682703517879,
       "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2-4",
-      "similarImage": "",
-      "similarAwards": "",
-      "ruleText": ""
+      "players": "2-4"
     }
   },
   "map": {
@@ -7029,7 +7029,6 @@
     "movable": false,
     "css": "font-weight:normal;background: #3772ce;color:black;text-align:left;padding-left:5px;border:2px solid white",
     "text": "1. Quiet: Skip next infect cities step and do not flip over cards.\n2. Airlift: Move any 1 pawn to any city.\n3. Forecast: Draw, look at, rearrange, and return top 6 infection cards.\n4. Resilient: Remove any 1 card from infection discard pile from game.\n5. Grant: Add 1 research station to any 1 city without using a city card.",
-    "x": -200,
     "borderRadius": 8,
     "movableInEdit": false
   },
