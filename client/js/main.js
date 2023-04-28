@@ -360,7 +360,7 @@ async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, on, onMessage, showOverlay,
+      $, $a, div, on, onMessage, showOverlay,
       setJEenabled, setJEroutineLogging, setJEzoomOut, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,

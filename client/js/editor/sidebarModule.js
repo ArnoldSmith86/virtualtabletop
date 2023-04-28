@@ -5,16 +5,16 @@ class SidebarModule {
     this.tooltip = tooltip;
   }
 
-  addHeader(text) {
+  addHeader(text, target) {
     const h = document.createElement('h1');
     h.innerText = text;
-    this.moduleDOM.append(h);
+    (target || this.moduleDOM).append(h);
   }
 
-  addSubHeader(text) {
+  addSubHeader(text, target) {
     const h = document.createElement('h2');
     h.innerText = text;
-    this.moduleDOM.append(h);
+    (target || this.moduleDOM).append(h);
   }
 
   click(e) {

@@ -11,6 +11,14 @@
   padding-left: 20px;
 }
 
+.editorModule .buttonBar {
+  text-align: right;
+}
+
+.editorModule .buttonBar button {
+  display: inline-flex;
+}
+
 /* properties */
 
 .editorModule .widgetSelectionButton {
@@ -78,6 +86,21 @@
 .tune.editorModule .suitProperties label {
   display: inline-block;
   width: 60px;
+}
+
+
+.tune.editorModule .cardFrontPreview {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .cardFrontPreview > div {
+  flex-grow: 1;
+}
+
+.tune.editorModule .cardFrontPreview [type=number] {
+  vertical-align: super;
+  width: 50px;
 }
 
 

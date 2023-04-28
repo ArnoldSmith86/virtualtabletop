@@ -6,6 +6,17 @@ export function $a(selector, parent) {
   return (parent || document).querySelectorAll(selector);
 }
 
+export function div(parent, className, html) {
+  const div = document.createElement('div');
+  if(className)
+    div.className = className;
+  if(html)
+    div.innerHTML = html;
+  if(parent)
+    parent.append(div);
+  return div;
+}
+
 const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
 
 export function regexEscape(string) {

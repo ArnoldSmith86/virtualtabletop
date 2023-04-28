@@ -104,3 +104,11 @@ body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview.pile .handle {
 .active.hintUI > span {
   display: block;
 }
+
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

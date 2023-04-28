@@ -169,10 +169,60 @@ class PropertiesModule extends SidebarModule {
     }
 
     if(!newSelection.length)
-      this.deckGenerator();
+      this.addDeck();
   }
 
-  deckGenerator() {
+  addDeck() {
+    this.addHeader('Add deck');
+
+    function createRadioButtons(target, name, options, callback) {
+      let html = '';
+      Object.keys(options).forEach((key, index) => {
+        const option = options[key];
+        html += `
+          <div>
+            <input type="radio" id="${name}${index}" name="${name}" value="${key}">
+            <label for="${name}${index}"><strong>${option.header}</strong><div>${option.description}</div></label>
+          </div>
+        `;
+      });
+
+      const radioButtonsHTML = `<div class=headerRadioButtons>${html}</div>`;
+      const container = document.createElement('div');
+      container.innerHTML = radioButtonsHTML;
+      target.append(container);
+
+      Object.keys(options).forEach((_, index) => {
+        const radioButton = container.querySelector(`#${name}${index}`);
+        radioButton.addEventListener('change', (event) => {
+          callback(event.target.value);
+        });
+      });
+
+      return container;
+    }
+
+    createRadioButtons(this.moduleDOM, 'deckType', {
+      custom: {
+        header: 'Custom deck of cards',
+        description: 'Generate a deck by defining suits (symbols and colors) and ranks for each suit'
+      },
+      images: {
+        header: 'Upload one image per card',
+        description: 'Generate a deck by uploading an image per card that covers the whole card'
+      }
+    }, v=>{
+      options.innerHTML = '';
+      if(v == 'custom')
+        this.deckGenerator(options);
+      if(v == 'images')
+      this.deckImages(options);
+    });
+
+    const options = div(this.moduleDOM);
+  }
+
+  deckGenerator(target) {
     const deckTemplates = [ this.deckTemplate_standard, this.deckTemplate_colors, this.deckTemplate_simple, this.deckTemplate_skinny, this.deckTemplate_transparent ];
 
     const defaultRanks = [ 'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades' ];
@@ -181,10 +231,10 @@ class PropertiesModule extends SidebarModule {
     const colors = {};
     const ranks = {};
 
-    this.addSubHeader('Suit symbols');
+    this.addSubHeader('Suit symbols', target);
 
     const suitCustomizeDiv = document.createElement('div');
-    suitCustomizeDiv.innerHTML = '<h2>Suit properties</h2>';
+    this.addSubHeader('Suit properties', suitCustomizeDiv);
 
     const linkedRanksToggleDiv = document.createElement('div');
     const linkedRanksLabel = document.createElement('label');
@@ -205,7 +255,8 @@ class PropertiesModule extends SidebarModule {
     };
     const designSelectionDiv = document.createElement('div');
     const updateDesignPreview = _=>{
-      for(const button of $a('.deckTemplateButton', this.moduleDOM))
+      const oldScrollTop = this.moduleDOM.scrollTop;
+      for(const button of $a('.deckTemplateButton', target))
         button.remove();
 
       if(Object.keys(colors).length == 0) {
@@ -219,7 +270,7 @@ class PropertiesModule extends SidebarModule {
         templateButton.classList.add('deckTemplateButton');
         templateButton.dataset.index = index;
         templateButton.onclick = e=>{
-          for(const button of $a('.deckTemplateButton', this.moduleDOM))
+          for(const button of $a('.deckTemplateButton', target))
             if(button != templateButton)
               button.classList.remove('selected');
           templateButton.classList.toggle('selected');
@@ -227,6 +278,7 @@ class PropertiesModule extends SidebarModule {
         };
         deck.id = generateUniqueWidgetID();
       }
+      this.moduleDOM.scrollTop = oldScrollTop;
     };
 
     for(const symbol of [ 'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades', 'delapouite/round-star', 'delapouite/flower-emblem', 'delapouite/plain-circle', 'lorc/biohazard', 'lorc/fluffy-trefoil' ]) {
@@ -234,7 +286,7 @@ class PropertiesModule extends SidebarModule {
         image: `/i/game-icons.net/${symbol}.svg`,
         color: '#000',
         svgReplaces: { '#000': 'color' }
-      }, this.moduleDOM);
+      }, target);
       symbolButton.dataset.symbol = symbol;
       symbolButton.classList.add('deckGeneratorSymbol');
       symbolButton.onclick = async e=>{
@@ -296,7 +348,7 @@ class PropertiesModule extends SidebarModule {
       if(defaultRanks.includes(symbol))
         symbolButton.click();
     }
-    this.moduleDOM.append(suitCustomizeDiv);
+    target.append(suitCustomizeDiv);
 
     function getDeckDefinition() {
       const id = generateUniqueWidgetID();
@@ -351,12 +403,14 @@ class PropertiesModule extends SidebarModule {
 
     const createButton = document.createElement('button');
     createButton.innerText = 'Add to game';
+    createButton.className = 'green';
     createButton.disabled = true;
     createButton.setAttribute('icon', 'add');
     createButton.onclick = async e=>{
       batchStart();
       const deck = getDeckDefinition();
-      await addWidgetLocal(deckTemplates[$('.selected.deckTemplateButton', this.moduleDOM).dataset.index](deck));
+      setDeltaCause(`${getPlayerDetails().playerName} added custom deck "${deck.id}" in editor`);
+      await addWidgetLocal(deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck));
 
       let suitIndex = 0;
       for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
@@ -380,12 +434,150 @@ class PropertiesModule extends SidebarModule {
       batchEnd();
     };
 
-    this.moduleDOM.append(suitCustomizeDiv);
+    target.append(suitCustomizeDiv);
 
-    this.addSubHeader('Card design');
-    this.moduleDOM.append(designSelectionDiv);
+    this.addSubHeader('Card design', target);
+    target.append(designSelectionDiv);
     updateDesignPreview();
-    this.moduleDOM.append(createButton);
+    target.append(createButton);
+  }
+
+  deckImages(target) {
+    this.addSubHeader('Card backs', target);
+    let backImageURL = '/i/cards-default/2B.svg';
+    const backButtons = div(target);
+
+    const addBackImageButton = image=>{
+      this.renderWidgetButton(new BasicWidget(), { image }, backButtons).onclick = e=>{
+        for(const button of $a('.widgetSelectionButton', backButtons))
+          if(button != e.currentTarget)
+            button.classList.remove('selected');
+        e.currentTarget.classList.add('selected');
+        backImageURL = image;
+      };
+      if(backImageURL == image)
+        $('.widgetSelectionButton:last-child', backButtons).click();
+    };
+    for(const image of [ '/i/cards-default/1B.svg', '/i/cards-default/2B.svg', '/i/cards-default/3B.svg', '/i/cards-plastic/1B.svg', '/i/cards-plastic/2B.svg' ])
+      addBackImageButton(image);
+
+    div(target, 'buttonBar', `
+      <button icon=upload id=backButton>Upload back...</button>
+    `);
+
+    $('#backButton').onclick = _=>uploadAsset(function(imagePath, fileName) {
+      addBackImageButton(imagePath);
+      $('.widgetSelectionButton:last-child', backButtons).click();
+    });
+
+    this.addSubHeader('Card fronts', target);
+    const preview = div(target);
+
+    div(target, 'goButton buttonBar', `
+      <button icon=upload id=frontsButton>Upload fronts...</button>
+      <button icon=add class=green disabled>Add to game</button>
+    `);
+
+    $('#frontsButton').onclick = _=>uploadAsset(async function(imagePath, fileName) {
+      const dom = div(preview, 'cardFrontPreview', `
+        <img src="${imagePath}">
+        <div class=flexCenter>
+          <div>
+            <input type=range value=1 max=10> <input type=number value=1 min=0>
+            <button icon=delete>Delete</button>
+          </div>
+        </div>
+      `);
+      dom.dataset.imagePath = imagePath;
+      dom.dataset.fileName = fileName;
+      $('[type=range]', dom).oninput = e=>$('[type=number]', dom).value=e.target.value;
+      $('[type=number]', dom).oninput = e=>$('[type=range]', dom).value=e.target.value;
+      $('[icon=delete]', dom).onclick = e=>dom.remove();
+      $('.goButton [icon=add]', target).disabled = false;
+    });
+
+    $('.goButton [icon=add]', target).onclick = async _=>{
+      const id = generateUniqueWidgetID();
+      const cardTypes = {};
+      const counts = {};
+      for(const previewDiv of $a('.cardFrontPreview', preview)) {
+        cardTypes[previewDiv.dataset.fileName] = {
+          image: previewDiv.dataset.imagePath
+        };
+        counts[previewDiv.dataset.fileName] = $('input', previewDiv).value;
+      }
+
+      const deck = {
+        id,
+        type: 'deck',
+        cardTypes,
+        faceTemplates: [
+          {
+            "objects": [
+              {
+                "type": "image",
+                "color": "transparent",
+                "width": 103,
+                "height": 160,
+                "value": backImageURL
+              }
+            ]
+          },
+          {
+            "objects": [
+              {
+                "type": "image",
+                "color": "transparent",
+                "width": 103,
+                "height": 160,
+                "dynamicProperties": {
+                  "value": "image"
+                }
+              }
+            ]
+          }
+        ]
+      };
+
+      const cardWidth = Math.round($('.cardFrontPreview img', preview).width / $('.cardFrontPreview img', preview).height * 160);
+      if(cardWidth != 103) {
+        deck.cardDefaults = { width: cardWidth };
+        deck.faceTemplates[0].objects[0].width = cardWidth;
+        deck.faceTemplates[1].objects[0].width = cardWidth;
+      }
+      await this.addDeckWithCards(deck, 'image', counts);
+    };
+  }
+
+  async addDeckWithCards(deck, type, counts) {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} added ${type} deck "${deck.id}" in editor`);
+    await addWidgetLocal(deck);
+
+    const cardWidth = deck.cardDefaults && deck.cardDefaults.width || 103;
+    let x = 0;
+    let y = 0;
+    for(const cardType in deck.cardTypes) {
+      const count = counts ? counts[cardType] || 0 : 1;
+      for(let i=1; i<=count; ++i) {
+        await addWidgetLocal({
+          type: 'card',
+          id: `${deck.id} ${cardType}${count > 1 ? ' '+i : ''}`,
+          deck: deck.id,
+          cardType: cardType,
+          x,
+          y: y * 160,
+          activeFace: 1
+        });
+        x += cardWidth;
+        if(x+cardWidth > 1600) {
+          y += 1;
+          x = 0;
+        }
+      }
+    }
+
+    batchEnd();
   }
 
   deckTemplate_colors(deck) {
