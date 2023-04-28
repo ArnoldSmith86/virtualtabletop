@@ -202,7 +202,6 @@ export default async function convertPCIO(content) {
       w.height = widget.height || 180;
     } else if(widget.type == 'cardPile') {
       w.type = 'holder';
-      w.inheritChildZ = true;
       if(pileTransparent[w.id])
         w.classes = 'transparent';
       addDimensions(w, widget, 111, 168);
@@ -254,6 +253,9 @@ export default async function convertPCIO(content) {
           w.dropOffsetY = 0;
         }
       }
+
+      if(widget.layoutType != 'spread' && widget.layoutType != 'freeform')
+        w.inheritChildZ = true;
 
       if(widget.label) {
         output[widget.id + '_label'] = {
