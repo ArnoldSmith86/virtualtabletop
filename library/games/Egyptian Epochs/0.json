@@ -69,29 +69,12 @@
         "variable": "result"
       }
     ],
-    "moveToCashHolderRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "${token}"
-        ],
-        "property": "parent",
-        "value": "setup-holder-cash"
-      }
-    ],
     "distributeToPlayerRoutine": [
       {
-        "func": "FOREACH",
-        "in": "${tokens}",
-        "loopRoutine": [
-          {
-            "func": "CALL",
-            "routine": "moveToCashHolderRoutine",
-            "arguments": {
-              "token": "${value}"
-            }
-          }
-        ]
+        "func": "SET",
+        "collection": "${tokens}",
+        "property": "parent",
+        "value": "setup-holder-cash"
       },
       {
         "func": "CALL",
