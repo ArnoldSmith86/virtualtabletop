@@ -176,6 +176,19 @@
     ],
     "clickRoutine": [
       {
+        "note": "Check that the user really wants to start a new game",
+        "func": "INPUT",
+        "header": "Set up a new game?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Are you sure that you want to erase any progress and start a new game?"
+          }
+        ]
+      },
+      {
         "note": "Return all suns ready for game setup",
         "func": "RECALL",
         "holder": "suns-holder"
