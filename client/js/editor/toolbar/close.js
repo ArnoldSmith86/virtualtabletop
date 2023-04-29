@@ -4,6 +4,6 @@ class CloseButton extends ToolbarButton {
   }
 
   click() {
-    deinitializeEditor();
+    closeEditor();
   }
 }

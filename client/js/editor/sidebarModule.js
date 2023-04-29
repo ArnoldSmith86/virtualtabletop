@@ -75,6 +75,14 @@ class SidebarModule {
   onDeltaReceivedWhileActive(delta) {
   }
 
+  onEditorClose() {
+    if(this.moduleDOM && this.moduleDOM.id == 'editorModuleInOverlay')
+      this.openInTarget();
+  }
+
+  onEditorOpen() {
+  }
+
   onSelectionChanged(newSelection, oldSelection) {
     if(this.moduleDOM)
       this.onSelectionChangedWhileActive(newSelection, oldSelection);
@@ -112,6 +120,7 @@ class SidebarModule {
       this.onClose();
       this.moduleDOM.innerHTML = '';
       delete this.moduleDOM;
+      this.saveToLocalStorage(null);
     } else {
       if(target.dataset.currentlyLoaded && target.dataset.currentlyLoaded != this.icon)
         $(`#editorSidebar button.active[icon="${target.dataset.currentlyLoaded}"]`).click();
@@ -132,6 +141,7 @@ class SidebarModule {
       this.buttonDOM.classList.add('active');
       this.renderModule(target);
       this.onSelectionChanged(selectedWidgets, []);
+      this.saveToLocalStorage(target);
     }
 
     setScale();
@@ -155,5 +165,14 @@ class SidebarModule {
   }
 
   renderModule(target) {
+  }
+
+  saveToLocalStorage(target) {
+    const editorState = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}');
+    if(target)
+      editorState.modules[this.title] = target.id
+    else
+      delete editorState.modules[this.title];
+    localStorage.setItem('editorState', JSON.stringify(editorState));
   }
 }

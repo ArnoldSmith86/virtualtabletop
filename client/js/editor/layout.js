@@ -63,11 +63,17 @@ function initializeEditor() {
   ]);
 }
 
-function deinitializeEditor() {
+export function openEditor() {
+  for(const module of sidebarModules)
+    module.onEditorOpen();
+}
+
+function closeEditor() {
   setJEroutineLogging(jeRoutineLogging = false);
 
-  for(const button of $a('#editorSidebar button.active'))
-    button.click();
+  for(const module of sidebarModules)
+    module.onEditorClose();
+
   $('#activeGameButton').click();
   setScale();
 }
@@ -83,8 +89,12 @@ function renderDragToolbar(buttons) {
 }
 
 function renderSidebar(modules) {
-  for(const module of modules)
+  const state = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}').modules;
+  for(const module of modules) {
     module.renderButton($('#editorSidebar'));
+    if(state[module.title] && state[module.title] != 'editorModuleInOverlay' && $(`#${state[module.title]}`))
+      module.openInTarget($(`#${state[module.title]}`));
+  }
 }
 
 function hint(html) {

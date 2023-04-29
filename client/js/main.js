@@ -408,6 +408,8 @@ async function toggleEditMode() {
   else
     $('body').classList.add('edit');
   edit = !edit;
+  if(edit)
+    openEditor();
   showOverlay();
   setScale();
 }

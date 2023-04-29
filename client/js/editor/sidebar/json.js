@@ -10,6 +10,18 @@ class JsonModule extends SidebarModule {
     $('#jsonEditor').append($('#jeCommands'));
   }
 
+  onEditorClose() {
+    super.onEditorClose();
+    if(this.moduleDOM && jeEnabled)
+      jeToggle();
+  }
+
+  onEditorOpen() {
+    super.onEditorOpen();
+    if(this.moduleDOM && !jeEnabled)
+      jeToggle();
+  }
+
   onSelectionChangedWhileActive(newSelection) {
     if(newSelection.length) {
       jeSelectWidget(newSelection[0]);
