@@ -71,12 +71,10 @@
     ],
     "moveToCashHolderRoutine": [
       {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${token}"
-      },
-      {
         "func": "SET",
+        "collection": [
+          "${token}"
+        ],
         "property": "parent",
         "value": "setup-holder-cash"
       }
@@ -108,102 +106,87 @@
     ],
     "setUpRaTrackRoutine": [
       {
-        "func": "SELECT",
-        "property": "id",
-        "value": "holder-ra-10"
-      },
-      {
         "func": "IF",
         "operand1": "${COUNT}",
-        "relation": "==",
         "operand2": 5,
         "thenRoutine": [
           {
             "func": "SET",
+            "collection": [
+              "holder-ra-7",
+              "holder-ra-8",
+              "holder-ra-9",
+              "holder-ra-10"
+            ],
             "property": "y",
             "value": 10
           }
         ],
         "elseRoutine": [
           {
-            "func": "SET",
-            "property": "y",
-            "value": -300
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "holder-ra-9"
-      },
-      {
-        "func": "IF",
-        "operand1": "${COUNT}",
-        "relation": ">=",
-        "operand2": 4,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "y",
-            "value": 10
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "property": "y",
-            "value": -300
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "holder-ra-8"
-      },
-      {
-        "func": "IF",
-        "operand1": "${COUNT}",
-        "relation": ">=",
-        "operand2": 3,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "y",
-            "value": 10
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "property": "y",
-            "value": -300
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "holder-ra-7"
-      },
-      {
-        "func": "IF",
-        "operand1": "${COUNT}",
-        "relation": ">=",
-        "operand2": 3,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "y",
-            "value": 10
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "property": "y",
-            "value": -300
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 4,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "holder-ra-7",
+                  "holder-ra-8",
+                  "holder-ra-9"
+                ],
+                "property": "y",
+                "value": 10
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "holder-ra-10"
+                ],
+                "property": "y",
+                "value": -300
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "operand2": 3,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "holder-ra-7",
+                      "holder-ra-8"
+                    ],
+                    "property": "y",
+                    "value": 10
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "holder-ra-9",
+                      "holder-ra-10"
+                    ],
+                    "property": "y",
+                    "value": -300
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "holder-ra-7",
+                      "holder-ra-8",
+                      "holder-ra-9",
+                      "holder-ra-10"
+                    ],
+                    "property": "y",
+                    "value": -300
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -215,14 +198,11 @@
         "holder": "suns-holder"
       },
       {
-        "note": "Select the 1 Sun token.",
-        "func": "SELECT",
-        "property": "id",
-        "value": "sun-1"
-      },
-      {
         "note": "Place the 1 Sun as part of the opening auction lot.",
         "func": "SET",
+        "collection": [
+          "sun-1"
+        ],
         "property": "parent",
         "value": "current-holder-sun"
       },
@@ -1063,7 +1043,7 @@
     "height": 14,
     "css": {
       "font-size": "14px",
-      "text-align": "center",
+      "text-align": "center"
     },
     "editable": true,
     "text": 10,
