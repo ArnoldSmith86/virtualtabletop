@@ -585,10 +585,10 @@
     "id": "description-suns",
     "inheritFrom": "description-civ",
     "x": 10,
-    "y": 195,
+    "y": 175,
     "width": 160,
     "height": 60,
-    "text": "End of Game:\nHighest suns total +5VP\nLowest suns total -5VP"
+    "text": "END OF GAME:\nHighest suns total +5VP\nLowest suns total -5VP"
   },
   "example-civ-1": {
     "id": "example-civ-1",
