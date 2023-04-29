@@ -203,9 +203,26 @@
         "value": "current-holder-sun"
       },
       {
+        "note": "Return all tiles to the draw stack",
+        "func": "RECALL",
+        "holder": "tiles-holder"
+      },
+      {
         "note": "Shuffle the tiles",
         "func": "SHUFFLE",
         "holder": "tiles-holder"
+      },
+      {
+        "note": "Set all player scores to 10",
+        "func": "LABEL",
+        "label": [
+          "p1-score",
+          "p2-score",
+          "p3-score",
+          "p4-score",
+          "p5-score"
+        ],
+        "value": 10
       },
       {
         "note": "Select all player seats",
