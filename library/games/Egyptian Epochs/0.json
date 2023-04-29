@@ -37,7 +37,6 @@
     ],
     "x": 1010,
     "y": 95,
-    "z": 1,
     "id": "button-end-turn",
     "width": 70,
     "height": 70
@@ -47,7 +46,6 @@
     "text": "SETUP",
     "x": 1520,
     "y": 10,
-    "z": 1,
     "id": "button-setup",
     "width": 70,
     "height": 70,
@@ -2294,7 +2292,6 @@
       "deck": "suns-deck"
     },
     "linkedToSeat": "p3-seat",
-    "z": 6,
     "stackOffsetX": 30
   },
   "p4-civ1-holder": {
@@ -2471,7 +2468,6 @@
       "deck": "tiles-deck",
       "cardType": "monument-3"
     },
-    "z": 4,
     "linkedToSeat": "p4-seat"
   },
   "p4-monument4-holder": {
@@ -2504,7 +2500,6 @@
       "deck": "tiles-deck",
       "cardType": "monument-5"
     },
-    "z": 5,
     "linkedToSeat": "p4-seat"
   },
   "p4-monument6-holder": {
@@ -3127,8 +3122,7 @@
     "x": 1700,
     "y": 130,
     "width": 40,
-    "height": 40,
-    "z": 8
+    "height": 40
   },
   "sun-1": {
     "type": "card",
@@ -3137,15 +3131,13 @@
     "deck": "suns-deck",
     "cardType": "sun-1",
     "x": 4,
-    "y": 4,
-    "z": 767
+    "y": 4
   },
   "sun-10": {
     "type": "card",
     "id": "sun-10",
     "cardType": "sun-10",
     "deck": "suns-deck",
-    "z": 910,
     "parent": "suns-pile"
   },
   "sun-11": {
@@ -3153,7 +3145,6 @@
     "id": "sun-11",
     "cardType": "sun-11",
     "deck": "suns-deck",
-    "z": 912,
     "parent": "suns-pile"
   },
   "sun-12": {
@@ -3161,7 +3152,6 @@
     "id": "sun-12",
     "cardType": "sun-12",
     "deck": "suns-deck",
-    "z": 914,
     "parent": "suns-pile"
   },
   "sun-13": {
@@ -3169,7 +3159,6 @@
     "id": "sun-13",
     "cardType": "sun-13",
     "deck": "suns-deck",
-    "z": 916,
     "parent": "suns-pile"
   },
   "sun-14": {
@@ -3177,7 +3166,6 @@
     "id": "sun-14",
     "deck": "suns-deck",
     "cardType": "sun-14",
-    "z": 918,
     "parent": "suns-pile"
   },
   "sun-15": {
@@ -3185,7 +3173,6 @@
     "id": "sun-15",
     "deck": "suns-deck",
     "cardType": "sun-15",
-    "z": 920,
     "parent": "suns-pile"
   },
   "sun-16": {
@@ -3193,7 +3180,6 @@
     "id": "sun-16",
     "deck": "suns-deck",
     "cardType": "sun-16",
-    "z": 922,
     "parent": "suns-pile"
   },
   "sun-2": {
@@ -3201,7 +3187,6 @@
     "id": "sun-2",
     "cardType": "sun-2",
     "deck": "suns-deck",
-    "z": 894,
     "parent": "suns-pile"
   },
   "sun-3": {
@@ -3209,7 +3194,6 @@
     "id": "sun-3",
     "cardType": "sun-3",
     "deck": "suns-deck",
-    "z": 896,
     "parent": "suns-pile"
   },
   "sun-4": {
@@ -3217,14 +3201,12 @@
     "id": "sun-4",
     "deck": "suns-deck",
     "cardType": "sun-4",
-    "z": 898,
     "parent": "suns-pile"
   },
   "sun-5": {
     "type": "card",
     "id": "sun-5",
     "cardType": "sun-5",
-    "z": 900,
     "deck": "suns-deck",
     "parent": "suns-pile"
   },
@@ -3232,7 +3214,6 @@
     "type": "card",
     "id": "sun-6",
     "cardType": "sun-6",
-    "z": 902,
     "deck": "suns-deck",
     "parent": "suns-pile"
   },
@@ -3241,7 +3222,6 @@
     "id": "sun-7",
     "cardType": "sun-7",
     "deck": "suns-deck",
-    "z": 904,
     "parent": "suns-pile"
   },
   "sun-8": {
@@ -3249,14 +3229,12 @@
     "id": "sun-8",
     "cardType": "sun-8",
     "deck": "suns-deck",
-    "z": 906,
     "parent": "suns-pile"
   },
   "sun-9": {
     "type": "card",
     "id": "sun-9",
     "cardType": "sun-9",
-    "z": 908,
     "deck": "suns-deck",
     "parent": "suns-pile"
   },
@@ -3360,15 +3338,13 @@
     "dropTarget": {
       "type": "card",
       "deck": "suns-deck"
-    },
-    "z": 1
+    }
   },
   "suns-pile": {
     "type": "pile",
     "id": "suns-pile",
     "width": 30,
     "height": 30,
-    "z": 924,
     "parent": "suns-holder"
   },
   "tile-civ-1-1": {
@@ -3376,47 +3352,41 @@
     "id": "tile-civ-1-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-1",
-    "z": 793
+    "cardType": "civ-1"
   },
   "tile-civ-1-2": {
     "type": "card",
     "id": "tile-civ-1-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-1",
-    "z": 791
+    "cardType": "civ-1"
   },
   "tile-civ-1-3": {
     "type": "card",
     "id": "tile-civ-1-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-1",
-    "z": 789
+    "cardType": "civ-1"
   },
   "tile-civ-1-4": {
     "type": "card",
     "id": "tile-civ-1-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-1",
-    "z": 795
+    "cardType": "civ-1"
   },
   "tile-civ-1-5": {
     "type": "card",
     "id": "tile-civ-1-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-1",
-    "z": 471
+    "cardType": "civ-1"
   },
   "tile-civ-2-1": {
     "type": "card",
     "id": "tile-civ-2-1",
     "deck": "tiles-deck",
     "cardType": "civ-2",
-    "z": 797,
     "parent": "tiles-pile"
   },
   "tile-civ-2-2": {
@@ -3424,23 +3394,20 @@
     "id": "tile-civ-2-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-2",
-    "z": 801
+    "cardType": "civ-2"
   },
   "tile-civ-2-3": {
     "type": "card",
     "id": "tile-civ-2-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-2",
-    "z": 803
+    "cardType": "civ-2"
   },
   "tile-civ-2-4": {
     "type": "card",
     "id": "tile-civ-2-4",
     "deck": "tiles-deck",
     "cardType": "civ-2",
-    "z": 799,
     "parent": "tiles-pile"
   },
   "tile-civ-2-5": {
@@ -3448,103 +3415,90 @@
     "id": "tile-civ-2-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-2",
-    "z": 486
+    "cardType": "civ-2"
   },
   "tile-civ-3-1": {
     "type": "card",
     "id": "tile-civ-3-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-3",
-    "z": 809
+    "cardType": "civ-3"
   },
   "tile-civ-3-2": {
     "type": "card",
     "id": "tile-civ-3-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-3",
-    "z": 811
+    "cardType": "civ-3"
   },
   "tile-civ-3-3": {
     "type": "card",
     "id": "tile-civ-3-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-3",
-    "z": 807
+    "cardType": "civ-3"
   },
   "tile-civ-3-4": {
     "type": "card",
     "id": "tile-civ-3-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-3",
-    "z": 805
+    "cardType": "civ-3"
   },
   "tile-civ-3-5": {
     "type": "card",
     "id": "tile-civ-3-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-3",
-    "z": 503
+    "cardType": "civ-3"
   },
   "tile-civ-4-1": {
     "type": "card",
     "id": "tile-civ-4-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-4",
-    "z": 815
+    "cardType": "civ-4"
   },
   "tile-civ-4-2": {
     "type": "card",
     "id": "tile-civ-4-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-4",
-    "z": 813
+    "cardType": "civ-4"
   },
   "tile-civ-4-3": {
     "type": "card",
     "id": "tile-civ-4-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-4",
-    "z": 819
+    "cardType": "civ-4"
   },
   "tile-civ-4-4": {
     "type": "card",
     "id": "tile-civ-4-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-4",
-    "z": 817
+    "cardType": "civ-4"
   },
   "tile-civ-4-5": {
     "type": "card",
     "id": "tile-civ-4-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-4",
-    "z": 519
+    "cardType": "civ-4"
   },
   "tile-civ-5-1": {
     "type": "card",
     "id": "tile-civ-5-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-5",
-    "z": 821
+    "cardType": "civ-5"
   },
   "tile-civ-5-2": {
     "type": "card",
     "id": "tile-civ-5-2",
     "deck": "tiles-deck",
     "cardType": "civ-5",
-    "z": 825,
     "parent": "tiles-pile"
   },
   "tile-civ-5-3": {
@@ -3552,7 +3506,6 @@
     "id": "tile-civ-5-3",
     "deck": "tiles-deck",
     "cardType": "civ-5",
-    "z": 827,
     "parent": "tiles-pile"
   },
   "tile-civ-5-4": {
@@ -3560,23 +3513,20 @@
     "id": "tile-civ-5-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-5",
-    "z": 823
+    "cardType": "civ-5"
   },
   "tile-civ-5-5": {
     "type": "card",
     "id": "tile-civ-5-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "civ-5",
-    "z": 523
+    "cardType": "civ-5"
   },
   "tile-drought-01": {
     "type": "card",
     "id": "tile-drought-01",
     "deck": "tiles-deck",
     "cardType": "drought",
-    "z": 465,
     "parent": "tiles-pile"
   },
   "tile-drought-02": {
@@ -3584,15 +3534,13 @@
     "id": "tile-drought-02",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "drought",
-    "z": 457
+    "cardType": "drought"
   },
   "tile-earthquake-1": {
     "type": "card",
     "id": "tile-earthquake-1",
     "deck": "tiles-deck",
     "cardType": "earthquake",
-    "z": 818,
     "parent": "tiles-pile"
   },
   "tile-earthquake-2": {
@@ -3600,7 +3548,6 @@
     "id": "tile-earthquake-2",
     "deck": "tiles-deck",
     "cardType": "earthquake",
-    "z": 818,
     "parent": "tiles-pile"
   },
   "tile-flood-01": {
@@ -3608,79 +3555,69 @@
     "id": "tile-flood-01",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 787
+    "cardType": "flood"
   },
   "tile-flood-02": {
     "type": "card",
     "id": "tile-flood-02",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 773
+    "cardType": "flood"
   },
   "tile-flood-03": {
     "type": "card",
     "id": "tile-flood-03",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 775
+    "cardType": "flood"
   },
   "tile-flood-04": {
     "type": "card",
     "id": "tile-flood-04",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 779
+    "cardType": "flood"
   },
   "tile-flood-05": {
     "type": "card",
     "id": "tile-flood-05",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 777
+    "cardType": "flood"
   },
   "tile-flood-06": {
     "type": "card",
     "id": "tile-flood-06",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 771
+    "cardType": "flood"
   },
   "tile-flood-07": {
     "type": "card",
     "id": "tile-flood-07",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 781
+    "cardType": "flood"
   },
   "tile-flood-08": {
     "type": "card",
     "id": "tile-flood-08",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 769
+    "cardType": "flood"
   },
   "tile-flood-09": {
     "type": "card",
     "id": "tile-flood-09",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 783
+    "cardType": "flood"
   },
   "tile-flood-10": {
     "type": "card",
     "id": "tile-flood-10",
     "deck": "tiles-deck",
     "cardType": "flood",
-    "z": 785,
     "parent": "tiles-pile"
   },
   "tile-flood-11": {
@@ -3688,23 +3625,20 @@
     "id": "tile-flood-11",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 437
+    "cardType": "flood"
   },
   "tile-flood-12": {
     "type": "card",
     "id": "tile-flood-12",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "flood",
-    "z": 429
+    "cardType": "flood"
   },
   "tile-funeral-01": {
     "type": "card",
     "id": "tile-funeral-01",
     "deck": "tiles-deck",
     "cardType": "funeral",
-    "z": 351,
     "parent": "tiles-pile"
   },
   "tile-funeral-02": {
@@ -3712,7 +3646,6 @@
     "id": "tile-funeral-02",
     "deck": "tiles-deck",
     "cardType": "funeral",
-    "z": 347,
     "parent": "tiles-pile"
   },
   "tile-god-01": {
@@ -3720,7 +3653,6 @@
     "id": "tile-god-01",
     "deck": "tiles-deck",
     "cardType": "god",
-    "z": 247,
     "parent": "tiles-pile"
   },
   "tile-god-02": {
@@ -3728,39 +3660,34 @@
     "id": "tile-god-02",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "god",
-    "z": 249
+    "cardType": "god"
   },
   "tile-god-03": {
     "type": "card",
     "id": "tile-god-03",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "god",
-    "z": 253
+    "cardType": "god"
   },
   "tile-god-04": {
     "type": "card",
     "id": "tile-god-04",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "god",
-    "z": 257
+    "cardType": "god"
   },
   "tile-god-05": {
     "type": "card",
     "id": "tile-god-05",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "god",
-    "z": 259
+    "cardType": "god"
   },
   "tile-god-06": {
     "type": "card",
     "id": "tile-god-06",
     "deck": "tiles-deck",
     "cardType": "god",
-    "z": 266,
     "parent": "tiles-pile"
   },
   "tile-god-07": {
@@ -3768,23 +3695,20 @@
     "id": "tile-god-07",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "god",
-    "z": 255
+    "cardType": "god"
   },
   "tile-god-08": {
     "type": "card",
     "id": "tile-god-08",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "god",
-    "z": 251
+    "cardType": "god"
   },
   "tile-gold-1": {
     "type": "card",
     "id": "tile-gold-1",
     "deck": "tiles-deck",
     "cardType": "gold",
-    "z": 599,
     "parent": "tiles-pile"
   },
   "tile-gold-2": {
@@ -3792,7 +3716,6 @@
     "id": "tile-gold-2",
     "deck": "tiles-deck",
     "cardType": "gold",
-    "z": 602,
     "parent": "tiles-pile"
   },
   "tile-gold-3": {
@@ -3800,7 +3723,6 @@
     "id": "tile-gold-3",
     "deck": "tiles-deck",
     "cardType": "gold",
-    "z": 588,
     "parent": "tiles-pile"
   },
   "tile-gold-4": {
@@ -3808,7 +3730,6 @@
     "id": "tile-gold-4",
     "deck": "tiles-deck",
     "cardType": "gold",
-    "z": 592,
     "parent": "tiles-pile"
   },
   "tile-gold-5": {
@@ -3816,7 +3737,6 @@
     "id": "tile-gold-5",
     "deck": "tiles-deck",
     "cardType": "gold",
-    "z": 595,
     "parent": "tiles-pile"
   },
   "tile-monument-1-1": {
@@ -3824,447 +3744,391 @@
     "id": "tile-monument-1-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-1",
-    "z": 839
+    "cardType": "monument-1"
   },
   "tile-monument-1-2": {
     "type": "card",
     "id": "tile-monument-1-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-1",
-    "z": 841
+    "cardType": "monument-1"
   },
   "tile-monument-1-3": {
     "type": "card",
     "id": "tile-monument-1-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-1",
-    "z": 845
+    "cardType": "monument-1"
   },
   "tile-monument-1-4": {
     "type": "card",
     "id": "tile-monument-1-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-1",
-    "z": 843
+    "cardType": "monument-1"
   },
   "tile-monument-1-5": {
     "type": "card",
     "id": "tile-monument-1-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-1",
-    "z": 610
+    "cardType": "monument-1"
   },
   "tile-monument-2-1": {
     "type": "card",
     "id": "tile-monument-2-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-2",
-    "z": 849
+    "cardType": "monument-2"
   },
   "tile-monument-2-2": {
     "type": "card",
     "id": "tile-monument-2-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-2",
-    "z": 847
+    "cardType": "monument-2"
   },
   "tile-monument-2-3": {
     "type": "card",
     "id": "tile-monument-2-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-2",
-    "z": 851
+    "cardType": "monument-2"
   },
   "tile-monument-2-4": {
     "type": "card",
     "id": "tile-monument-2-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-2",
-    "z": 853
+    "cardType": "monument-2"
   },
   "tile-monument-2-5": {
     "type": "card",
     "id": "tile-monument-2-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-2",
-    "z": 622
+    "cardType": "monument-2"
   },
   "tile-monument-3-1": {
     "type": "card",
     "id": "tile-monument-3-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-3",
-    "z": 859
+    "cardType": "monument-3"
   },
   "tile-monument-3-2": {
     "type": "card",
     "id": "tile-monument-3-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-3",
-    "z": 861
+    "cardType": "monument-3"
   },
   "tile-monument-3-3": {
     "type": "card",
     "id": "tile-monument-3-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-3",
-    "z": 855
+    "cardType": "monument-3"
   },
   "tile-monument-3-4": {
     "type": "card",
     "id": "tile-monument-3-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-3",
-    "z": 857
+    "cardType": "monument-3"
   },
   "tile-monument-3-5": {
     "type": "card",
     "id": "tile-monument-3-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-3",
-    "z": 634
+    "cardType": "monument-3"
   },
   "tile-monument-4-1": {
     "type": "card",
     "id": "tile-monument-4-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-4",
-    "z": 865
+    "cardType": "monument-4"
   },
   "tile-monument-4-2": {
     "type": "card",
     "id": "tile-monument-4-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-4",
-    "z": 869
+    "cardType": "monument-4"
   },
   "tile-monument-4-3": {
     "type": "card",
     "id": "tile-monument-4-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-4",
-    "z": 863
+    "cardType": "monument-4"
   },
   "tile-monument-4-4": {
     "type": "card",
     "id": "tile-monument-4-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-4",
-    "z": 867
+    "cardType": "monument-4"
   },
   "tile-monument-4-5": {
     "type": "card",
     "id": "tile-monument-4-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-4",
-    "z": 644
+    "cardType": "monument-4"
   },
   "tile-monument-5-1": {
     "type": "card",
     "id": "tile-monument-5-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-5",
-    "z": 877
+    "cardType": "monument-5"
   },
   "tile-monument-5-2": {
     "type": "card",
     "id": "tile-monument-5-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-5",
-    "z": 873
+    "cardType": "monument-5"
   },
   "tile-monument-5-3": {
     "type": "card",
     "id": "tile-monument-5-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-5",
-    "z": 871
+    "cardType": "monument-5"
   },
   "tile-monument-5-4": {
     "type": "card",
     "id": "tile-monument-5-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-5",
-    "z": 875
+    "cardType": "monument-5"
   },
   "tile-monument-5-5": {
     "type": "card",
     "id": "tile-monument-5-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-5",
-    "z": 656
+    "cardType": "monument-5"
   },
   "tile-monument-6-1": {
     "type": "card",
     "id": "tile-monument-6-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-6",
-    "z": 883
+    "cardType": "monument-6"
   },
   "tile-monument-6-2": {
     "type": "card",
     "id": "tile-monument-6-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-6",
-    "z": 885
+    "cardType": "monument-6"
   },
   "tile-monument-6-3": {
     "type": "card",
     "id": "tile-monument-6-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-6",
-    "z": 881
+    "cardType": "monument-6"
   },
   "tile-monument-6-4": {
     "type": "card",
     "id": "tile-monument-6-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-6",
-    "z": 879
+    "cardType": "monument-6"
   },
   "tile-monument-6-5": {
     "type": "card",
     "id": "tile-monument-6-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-6",
-    "z": 879
+    "cardType": "monument-6"
   },
   "tile-monument-7-1": {
     "type": "card",
     "id": "tile-monument-7-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-7",
-    "z": 891
+    "cardType": "monument-7"
   },
   "tile-monument-7-2": {
     "type": "card",
     "id": "tile-monument-7-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-7",
-    "z": 889
+    "cardType": "monument-7"
   },
   "tile-monument-7-3": {
     "type": "card",
     "id": "tile-monument-7-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-7",
-    "z": 887
+    "cardType": "monument-7"
   },
   "tile-monument-7-4": {
     "type": "card",
     "id": "tile-monument-7-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-7",
-    "z": 893
+    "cardType": "monument-7"
   },
   "tile-monument-7-5": {
     "type": "card",
     "id": "tile-monument-7-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-7",
-    "z": 893
+    "cardType": "monument-7"
   },
   "tile-monument-8-1": {
     "type": "card",
     "id": "tile-monument-8-1",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-8",
-    "z": 678
+    "cardType": "monument-8"
   },
   "tile-monument-8-2": {
     "type": "card",
     "id": "tile-monument-8-2",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-8",
-    "z": 680
+    "cardType": "monument-8"
   },
   "tile-monument-8-3": {
     "type": "card",
     "id": "tile-monument-8-3",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-8",
-    "z": 680
+    "cardType": "monument-8"
   },
   "tile-monument-8-4": {
     "type": "card",
     "id": "tile-monument-8-4",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-8",
-    "z": 680
+    "cardType": "monument-8"
   },
   "tile-monument-8-5": {
     "type": "card",
     "id": "tile-monument-8-5",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "monument-8",
-    "z": 680
+    "cardType": "monument-8"
   },
   "tile-nile-01": {
     "type": "card",
     "id": "tile-nile-01",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 395
+    "cardType": "nile"
   },
   "tile-nile-02": {
     "type": "card",
     "id": "tile-nile-02",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 381
+    "cardType": "nile"
   },
   "tile-nile-03": {
     "type": "card",
     "id": "tile-nile-03",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 373
+    "cardType": "nile"
   },
   "tile-nile-04": {
     "type": "card",
     "id": "tile-nile-04",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 391
+    "cardType": "nile"
   },
   "tile-nile-05": {
     "type": "card",
     "id": "tile-nile-05",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 397
+    "cardType": "nile"
   },
   "tile-nile-06": {
     "type": "card",
     "id": "tile-nile-06",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 379
+    "cardType": "nile"
   },
   "tile-nile-07": {
     "type": "card",
     "id": "tile-nile-07",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 383
+    "cardType": "nile"
   },
   "tile-nile-08": {
     "type": "card",
     "id": "tile-nile-08",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 359
+    "cardType": "nile"
   },
   "tile-nile-09": {
     "type": "card",
     "id": "tile-nile-09",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 387
+    "cardType": "nile"
   },
   "tile-nile-10": {
     "type": "card",
     "id": "tile-nile-10",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 365
+    "cardType": "nile"
   },
   "tile-nile-11": {
     "type": "card",
     "id": "tile-nile-11",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 399
+    "cardType": "nile"
   },
   "tile-nile-12": {
     "type": "card",
     "id": "tile-nile-12",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 363
+    "cardType": "nile"
   },
   "tile-nile-13": {
     "type": "card",
     "id": "tile-nile-13",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 377
+    "cardType": "nile"
   },
   "tile-nile-14": {
     "type": "card",
     "id": "tile-nile-14",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 355
+    "cardType": "nile"
   },
   "tile-nile-15": {
     "type": "card",
     "id": "tile-nile-15",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 369
+    "cardType": "nile"
   },
   "tile-nile-16": {
     "type": "card",
     "id": "tile-nile-16",
     "deck": "tiles-deck",
     "cardType": "nile",
-    "z": 415,
     "parent": "tiles-pile"
   },
   "tile-nile-17": {
@@ -4272,215 +4136,188 @@
     "id": "tile-nile-17",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 375
+    "cardType": "nile"
   },
   "tile-nile-18": {
     "type": "card",
     "id": "tile-nile-18",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 353
+    "cardType": "nile"
   },
   "tile-nile-19": {
     "type": "card",
     "id": "tile-nile-19",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 357
+    "cardType": "nile"
   },
   "tile-nile-20": {
     "type": "card",
     "id": "tile-nile-20",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 367
+    "cardType": "nile"
   },
   "tile-nile-21": {
     "type": "card",
     "id": "tile-nile-21",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 371
+    "cardType": "nile"
   },
   "tile-nile-22": {
     "type": "card",
     "id": "tile-nile-22",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 361
+    "cardType": "nile"
   },
   "tile-nile-23": {
     "type": "card",
     "id": "tile-nile-23",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 393
+    "cardType": "nile"
   },
   "tile-nile-24": {
     "type": "card",
     "id": "tile-nile-24",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 389
+    "cardType": "nile"
   },
   "tile-nile-25": {
     "type": "card",
     "id": "tile-nile-25",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "nile",
-    "z": 385
+    "cardType": "nile"
   },
   "tile-pharaoh-01": {
     "type": "card",
     "id": "tile-pharaoh-01",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 274
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-02": {
     "type": "card",
     "id": "tile-pharaoh-02",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 831
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-03": {
     "type": "card",
     "id": "tile-pharaoh-03",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 837
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-04": {
     "type": "card",
     "id": "tile-pharaoh-04",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 835
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-05": {
     "type": "card",
     "id": "tile-pharaoh-05",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 833
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-06": {
     "type": "card",
     "id": "tile-pharaoh-06",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 829
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-07": {
     "type": "card",
     "id": "tile-pharaoh-07",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 304
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-08": {
     "type": "card",
     "id": "tile-pharaoh-08",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 312
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-09": {
     "type": "card",
     "id": "tile-pharaoh-09",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 286
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-10": {
     "type": "card",
     "id": "tile-pharaoh-10",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 280
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-11": {
     "type": "card",
     "id": "tile-pharaoh-11",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 278
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-12": {
     "type": "card",
     "id": "tile-pharaoh-12",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 310
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-13": {
     "type": "card",
     "id": "tile-pharaoh-13",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 284
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-14": {
     "type": "card",
     "id": "tile-pharaoh-14",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 314
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-15": {
     "type": "card",
     "id": "tile-pharaoh-15",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 294
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-16": {
     "type": "card",
     "id": "tile-pharaoh-16",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 290
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-17": {
     "type": "card",
     "id": "tile-pharaoh-17",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 268
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-18": {
     "type": "card",
     "id": "tile-pharaoh-18",
     "deck": "tiles-deck",
     "cardType": "pharaoh",
-    "z": 344,
     "parent": "tiles-pile"
   },
   "tile-pharaoh-19": {
@@ -4488,63 +4325,55 @@
     "id": "tile-pharaoh-19",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 296
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-20": {
     "type": "card",
     "id": "tile-pharaoh-20",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 300
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-21": {
     "type": "card",
     "id": "tile-pharaoh-21",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 306
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-22": {
     "type": "card",
     "id": "tile-pharaoh-22",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 302
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-23": {
     "type": "card",
     "id": "tile-pharaoh-23",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 276
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-24": {
     "type": "card",
     "id": "tile-pharaoh-24",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 292
+    "cardType": "pharaoh"
   },
   "tile-pharaoh-25": {
     "type": "card",
     "id": "tile-pharaoh-25",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "pharaoh",
-    "z": 282
+    "cardType": "pharaoh"
   },
   "tile-ra-01": {
     "type": "card",
     "id": "tile-ra-01",
     "deck": "tiles-deck",
     "cardType": "ra",
-    "z": 174,
     "parent": "tiles-pile"
   },
   "tile-ra-02": {
@@ -4552,7 +4381,6 @@
     "id": "tile-ra-02",
     "deck": "tiles-deck",
     "cardType": "ra",
-    "z": 175,
     "parent": "tiles-pile"
   },
   "tile-ra-03": {
@@ -4560,23 +4388,20 @@
     "id": "tile-ra-03",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 225
+    "cardType": "ra"
   },
   "tile-ra-04": {
     "type": "card",
     "id": "tile-ra-04",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 181
+    "cardType": "ra"
   },
   "tile-ra-05": {
     "type": "card",
     "id": "tile-ra-05",
     "deck": "tiles-deck",
     "cardType": "ra",
-    "z": 236,
     "parent": "tiles-pile"
   },
   "tile-ra-06": {
@@ -4584,183 +4409,160 @@
     "id": "tile-ra-06",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 191
+    "cardType": "ra"
   },
   "tile-ra-07": {
     "type": "card",
     "id": "tile-ra-07",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 189
+    "cardType": "ra"
   },
   "tile-ra-08": {
     "type": "card",
     "id": "tile-ra-08",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 211
+    "cardType": "ra"
   },
   "tile-ra-09": {
     "type": "card",
     "id": "tile-ra-09",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 199
+    "cardType": "ra"
   },
   "tile-ra-10": {
     "type": "card",
     "id": "tile-ra-10",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 207
+    "cardType": "ra"
   },
   "tile-ra-11": {
     "type": "card",
     "id": "tile-ra-11",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 187
+    "cardType": "ra"
   },
   "tile-ra-12": {
     "type": "card",
     "id": "tile-ra-12",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 227
+    "cardType": "ra"
   },
   "tile-ra-13": {
     "type": "card",
     "id": "tile-ra-13",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 183
+    "cardType": "ra"
   },
   "tile-ra-14": {
     "type": "card",
     "id": "tile-ra-14",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 213
+    "cardType": "ra"
   },
   "tile-ra-15": {
     "type": "card",
     "id": "tile-ra-15",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 193
+    "cardType": "ra"
   },
   "tile-ra-16": {
     "type": "card",
     "id": "tile-ra-16",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 221
+    "cardType": "ra"
   },
   "tile-ra-17": {
     "type": "card",
     "id": "tile-ra-17",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 217
+    "cardType": "ra"
   },
   "tile-ra-18": {
     "type": "card",
     "id": "tile-ra-18",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 223
+    "cardType": "ra"
   },
   "tile-ra-19": {
     "type": "card",
     "id": "tile-ra-19",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 219
+    "cardType": "ra"
   },
   "tile-ra-20": {
     "type": "card",
     "id": "tile-ra-20",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 215
+    "cardType": "ra"
   },
   "tile-ra-21": {
     "type": "card",
     "id": "tile-ra-21",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 203
+    "cardType": "ra"
   },
   "tile-ra-22": {
     "type": "card",
     "id": "tile-ra-22",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 201
+    "cardType": "ra"
   },
   "tile-ra-23": {
     "type": "card",
     "id": "tile-ra-23",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 197
+    "cardType": "ra"
   },
   "tile-ra-24": {
     "type": "card",
     "id": "tile-ra-24",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 205
+    "cardType": "ra"
   },
   "tile-ra-25": {
     "type": "card",
     "id": "tile-ra-25",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 185
+    "cardType": "ra"
   },
   "tile-ra-26": {
     "type": "card",
     "id": "tile-ra-26",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 177
+    "cardType": "ra"
   },
   "tile-ra-27": {
     "type": "card",
     "id": "tile-ra-27",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 209
+    "cardType": "ra"
   },
   "tile-ra-28": {
     "type": "card",
     "id": "tile-ra-28",
     "deck": "tiles-deck",
     "cardType": "ra",
-    "z": 239,
     "parent": "tiles-pile"
   },
   "tile-ra-29": {
@@ -4768,23 +4570,20 @@
     "id": "tile-ra-29",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 195
+    "cardType": "ra"
   },
   "tile-ra-30": {
     "type": "card",
     "id": "tile-ra-30",
     "parent": "tiles-pile",
     "deck": "tiles-deck",
-    "cardType": "ra",
-    "z": 179
+    "cardType": "ra"
   },
   "tile-unrest-1": {
     "type": "card",
     "id": "tile-unrest-1",
     "deck": "tiles-deck",
     "cardType": "unrest",
-    "z": 584,
     "parent": "tiles-pile"
   },
   "tile-unrest-2": {
@@ -4792,7 +4591,6 @@
     "id": "tile-unrest-2",
     "deck": "tiles-deck",
     "cardType": "unrest",
-    "z": 581,
     "parent": "tiles-pile"
   },
   "tile-unrest-3": {
@@ -4800,7 +4598,6 @@
     "id": "tile-unrest-3",
     "deck": "tiles-deck",
     "cardType": "unrest",
-    "z": 577,
     "parent": "tiles-pile"
   },
   "tile-unrest-4": {
@@ -4808,7 +4605,6 @@
     "id": "tile-unrest-4",
     "deck": "tiles-deck",
     "cardType": "unrest",
-    "z": 572,
     "parent": "tiles-pile"
   },
   "tiles-deck": {
