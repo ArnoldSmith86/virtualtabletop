@@ -2398,14 +2398,19 @@ function jeInitEventListeners() {
       const hotkey = i>=4 ? i+1 : i;
       if(hoveredWidgets[i-1]) {
         jeWidgetLayers[hotkey] = hoveredWidgets[i-1];
-        var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ndeck: ${hoveredWidgets[i-1].get('deck')}` : "";
+        var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `deck: ${hoveredWidgets[i-1].get('deck')} ` : "";
         var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
-        $(`#jeWidgetLayer${hotkey}`).textContent = `F${hotkey}: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${deck} ${cardType}`;
+        $(`#jeWidgetLayer${hotkey} .id`).textContent = hoveredWidgets[i-1].get('id');
+        $(`#jeWidgetLayer${hotkey} .type`).textContent = hoveredWidgets[i-1].get('type') || 'basic';
+        $(`#jeWidgetLayer${hotkey} .details`).textContent = `${deck}${cardType}`;
+        $(`#jeWidgetLayer${hotkey}`).classList.remove('hidden');
       } else {
         delete jeWidgetLayers[hotkey];
-        $(`#jeWidgetLayer${hotkey}`).textContent = '';
+        $(`#jeWidgetLayer${hotkey}`).classList.add('hidden');
       }
     }
+
+    $('#jeWidgetLayer1').parentNode.scrollTop = $('#jeWidgetLayer1').offsetTop;
 
     if((getRoomRectangle().left <= e.clientX && e.clientX <= getRoomRectangle().right && getRoomRectangle().top <= e.clientY && e.clientY <= getRoomRectangle().bottom)) {
       $('#jeMouseCoords').innerHTML = "(" + jeState.mouseX + ", " + jeState.mouseY + ")";
