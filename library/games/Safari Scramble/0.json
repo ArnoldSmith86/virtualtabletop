@@ -451,6 +451,7 @@
             "height": 140,
             "color": "#509050",
             "css": {
+              "border-radius": "8px",
               "border-style": "solid",
               "border-width": "1px"
             }
@@ -768,6 +769,7 @@
             "width": 70,
             "height": 70,
             "css": {
+              "border-radius": "8px",
               "border-style": "solid",
               "border-width": "1px"
             },
@@ -791,8 +793,7 @@
           "color": "white"
         },
         "handlePosition": "top left"
-      },
-      "value": 0
+      }
     }
   },
   "holder-elephant-p1": {
