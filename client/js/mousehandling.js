@@ -19,13 +19,14 @@ function eventCoords(name, e) {
 }
 
 async function inputHandler(name, e) {
-  if(edit && editInputHandler(name, e))
+  const isMiddleMouseButton = name.startsWith('mouse') && e.button == 1;
+  if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;
 
   if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
 
-  const editMovable = edit || jeEnabled && e.ctrlKey;
+  const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
 
   if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
     if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
@@ -94,9 +95,9 @@ async function inputHandler(name, e) {
         await ms.moveTarget.moveEnd(coords, ms.localAnchor);
       }
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(edit)
-          await editClick(widget);
-        else if(jeEnabled)
+        if(edit && !isMiddleMouseButton)
+          await editClick(widget, e.button);
+        else if(jeEnabled && !isMiddleMouseButton)
           await jeClick(widget, e);
         else if(!target.classList.contains('longtouch')) {
           setDeltaCause(`${playerName} clicked ${widget.id}`);
