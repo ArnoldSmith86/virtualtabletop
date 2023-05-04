@@ -10,7 +10,17 @@ let draggingDragButton = null;
 let widgetRectangles = null;
 
 export function editInputHandler(name, e) {
-  if(!selectionModeActive || isOverlayActive())
+  const isRightMouseButton = name.startsWith('mouse') && (e.button == 2 || e.buttons == 2);
+  if(isRightMouseButton) {
+    $('#editorToolbar [icon=highlight_alt]').classList.toggle('active', !selectionModeActive);
+    if(name == 'mouseup') {
+      setTimeout(function() {
+        $('#editorToolbar [icon=highlight_alt]').classList.toggle('active', selectionModeActive);
+        updateDragToolbar(true);
+      }, 0);
+    }
+  }
+  if((selectionModeActive == isRightMouseButton || isOverlayActive()) && e.target.parentNode.id != 'editorDragToolbar' && !draggingDragButton)
     return;
 
   const coords = eventCoords(name, e);
@@ -90,8 +100,8 @@ function hideSelectionRectangle() {
   $('#editorSelection').classList.remove('active');
 }
 
-function updateDragToolbar() {
-  if(selectedWidgets.length && selectionModeActive) {
+function updateDragToolbar(invertSelectionMode) {
+  if(selectedWidgets.length && (selectionModeActive == !invertSelectionMode)) {
     const rects = selectedWidgets.map(w=>w.domElement.getBoundingClientRect());
     $('#editorDragToolbar').classList.add('active');
 
