@@ -1,0 +1,17 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="62.622px"
+    width="72.309px"
+    viewbox="0 0 72.309 62.622"
+>
+    <g>
+        <polygon
+            style="fill:#fcefde;stroke:#008f4f;stroke-width:5px"
+            points="67.631,31.319 51.881,58.591 20.381,58.591 4.631,31.311 20.381,4.031 51.881,4.031"
+        />
+        <polygon
+            style="fill:none;stroke:#000000;stroke-width:2px"
+            points="71.131,31.311 53.631,61.622 18.631,61.622 1.131,31.311 18.631,1.0 53.631,1.0"
+        />
+    </g>
+</svg>
