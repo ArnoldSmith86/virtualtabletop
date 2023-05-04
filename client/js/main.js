@@ -395,9 +395,16 @@ async function loadEditMode() {
 window.addEventListener('keydown', async function(e) {
   if(e.ctrlKey && e.key == 'j') {
     e.preventDefault();
-    await loadEditMode();
-    $('#editButton').click();
-    $('#editorSidebar button[icon=data_object]').click();
+    if(edit) {
+      $('#editorToolbar button[icon=close]').click();
+    } else if(edit === false) {
+      $('#editButton').click();
+    } else {
+      await loadEditMode();
+      $('#editButton').click();
+      if(!$('#editorSidebar button[icon=data_object].active'))
+        $('#editorSidebar button[icon=data_object]').click();
+    }
   }
 });
 
