@@ -1,23 +1,28 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 13,
     "info": {
       "name": "Forces of Nature",
-      "image": "/assets/-1464256581_1036945",
+      "image": "/assets/-1616562864_72068",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/73313/elements",
       "year": "2010",
       "mode": "vs",
       "time": "10-20",
-      "players": "2",
-      "language": "en-US",
-      "variant": "",
       "attribution": "The game layout and room design are by LawDawg and are released to the Public Domain under CC0.\n\nCard back and library image by Adam Kring is available under the Unsplash License at https://unsplash.com/photos/Spzz_JO7s5k.",
       "similarName": "Elements",
       "description": "Use a 16 card deck consisting of numbers 1 to 6. During turn, either play, draw, discard, knock, or fold. Goal is have higher sum than opponent but equal or less than sum played on table. Winner of each round gets 1 or 2 points. First player to 6 points wins.",
       "showName": true,
       "helpText": "Players take seats.  Choose options (standard or alternate deck). Press play button. Move cards according to rules. Cards drawn from play area are dropped in holder below player's seat. Press turn button if necessary to change turn indicator. When ready to knock or yield, press button. Cards will be moved from hand so players can see other player's cards. Score is automatically updated.",
-      "lastUpdate": 1659321088000
+      "lastUpdate": 1683329254186,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
     }
   },
   "hand": {
@@ -200,7 +205,7 @@
             "width": 103,
             "height": 160,
             "color": "transparent",
-            "value": "/assets/1470004804_1170183"
+            "value": "/assets/393087084_95223"
           }
         ]
       },
@@ -707,7 +712,7 @@
     "z": 102,
     "movable": false,
     "movableInEdit": false,
-    "css": "background-image:url(/assets/1470004804_1170183);font-weight:900;font-size:1.5rem;line-height:50px;color:white",
+    "css": "background-image:url(/assets/393087084_95223);font-weight:900;font-size:1.5rem;line-height:50px;color:white",
     "text": 0,
     "textChangeRoutine": [
       {
@@ -750,7 +755,7 @@
     "z": 102,
     "movable": false,
     "movableInEdit": false,
-    "css": "background-image:url(/assets/1470004804_1170183);filter:brightness(150%)"
+    "css": "background-image:url(/assets/393087084_95223);filter:brightness(150%)"
   },
   "cardCount2": {
     "id": "cardCount2",
@@ -766,7 +771,7 @@
     "z": 102,
     "movable": false,
     "movableInEdit": false,
-    "css": "background-image:url(/assets/1470004804_1170183);font-weight:900;font-size:1.5rem;line-height:50px;color:white",
+    "css": "background-image:url(/assets/393087084_95223);font-weight:900;font-size:1.5rem;line-height:50px;color:white",
     "text": 0,
     "textChangeRoutine": [
       {
@@ -809,7 +814,7 @@
     "z": 102,
     "movable": false,
     "movableInEdit": false,
-    "css": "background-image:url(/assets/1470004804_1170183);filter:brightness(150%)"
+    "css": "background-image:url(/assets/393087084_95223);filter:brightness(150%)"
   },
   "sigman": {
     "id": "sigman",
@@ -852,7 +857,8 @@
         "value": "${sum}"
       }
     ],
-    "points": 0
+    "points": 0,
+    "hoverInheritVisibleForSeat": false
   },
   "handTotal2": {
     "id": "handTotal2",
@@ -875,7 +881,8 @@
         "property": "text",
         "value": "${sum}"
       }
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "offBoard": {
     "type": "holder",
