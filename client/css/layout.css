@@ -916,6 +916,7 @@ button[icon].green:hover {
   border-radius: 4px;
   padding: 2px;
   font-size: 0;
+  z-index: 1;
 }
 
 .richtext-controls button {
@@ -947,15 +948,18 @@ button[icon].green:hover {
 }
 
 .richtextSymbol.richtextSymbol {
+  display: inline-block;
   font-size: 18px;
   position: relative;
   line-height: 10px;
   font-style: normal;
+  height: 18px;
+  width: 18px;
 }
 .richtextSymbol.symbols {
   top: 2px;
 }
-.richtextSymbol.material-icons {
+.richtextSymbol.material-icons, .richtextSymbol.gameicons {
   top: 4px;
 }
 

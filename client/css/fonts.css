@@ -418,6 +418,7 @@
 }
 
 #symbolList {
+  --symbolSize: 24px;
   color: black;
   overflow-x: hidden;
   overflow-y: auto;
@@ -436,13 +437,22 @@
 
 #symbolPickerOverlay i {
   font-style: normal;
-  font-size: 24px;
+  font-size: var(--symbolSize);
   margin-left: 4px;
   cursor: pointer;
 }
 
-#symbolPickerOverlay i.emoji {
+#symbolPickerOverlay .emoji {
   word-break: break-all;
+}
+
+#symbolPickerOverlay .gameicons {
+  display: inline-block;
+  background: url(/i/game-icons.net/overview.png);
+  background-position: calc(-1 * var(--symbolSize) * var(--x)) calc(-1 * var(--symbolSize) * var(--y));
+  background-size: calc(2880 * var(--symbolSize) / 48) calc(3312 * var(--symbolSize) / 48);
+  width: var(--symbolSize);
+  height: var(--symbolSize);
 }
 
 #symbolPickerOverlay .hidden {

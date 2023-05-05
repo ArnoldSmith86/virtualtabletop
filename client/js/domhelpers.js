@@ -297,15 +297,22 @@ export async function loadSymbolPicker() {
     symbolData = 'loading';
     symbolData = await (await fetch('i/fonts/symbols.json')).json();
     let list = '';
+    let gameIconsIndex = 0;
     for(const [ category, symbols ] of Object.entries(symbolData)) {
       list += `<h2>${category}</h2>`;
       for(const [ symbol, keywords ] of Object.entries(symbols)) {
-        let className = 'emoji';
-        if(symbol[0] == '[')
-          className = 'symbols';
-        else if(symbol.match(/^[a-z0-9_]+$/))
-          className = 'material-icons';
-        list += `<i class="${className}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+        if(symbol.includes('/')) {
+          // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
+          list += `<i class="gameicons" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)}"></i>`;
+          ++gameIconsIndex;
+        } else {
+          let className = 'emoji';
+          if(symbol[0] == '[')
+            className = 'symbols';
+          else if(symbol.match(/^[a-z0-9_]+$/))
+            className = 'material-icons';
+          list += `<i class="${className}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+        }
       }
     }
     $('#symbolList').innerHTML = list;
@@ -393,12 +400,16 @@ export function addRichtextControls(dom) {
         showStatesOverlay(detailsOverlay);
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
-        let className = 'emoji';
-        if(icon.innerText[0] == '[')
-          className = 'symbols';
-        else if(icon.innerText.match(/^[a-z0-9_]+$/))
-          className = 'material-icons';
-        document.execCommand('inserthtml', false, `<i class="richtextSymbol ${className}">${icon.innerText}</i>`);
+        if(icon.classList.contains('gameicons')) {
+          document.execCommand('inserthtml', false, `<i class="richtextSymbol gameicons"><img src="/i/game-icons.net/${icon.dataset.symbol}.svg"></i>`);
+        } else {
+          let className = 'emoji';
+          if(icon.innerText[0] == '[')
+            className = 'symbols';
+          else if(icon.innerText.match(/^[a-z0-9_]+$/))
+            className = 'material-icons';
+          document.execCommand('inserthtml', false, `<i class="richtextSymbol ${className}">${icon.innerText}</i>`);
+        }
         for(const insertedSymbol of $a('.richtextSymbol'))
           insertedSymbol.contentEditable = false; // adding the property above causes Chrome to insert two icons
       };
