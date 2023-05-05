@@ -5,8 +5,6 @@ let sidebarModules = null;
 let fullToolbarWidth = 0;
 
 function initializeEditor() {
-  setJEroutineLogging(jeRoutineLogging = true);
-
   registerSelectionEventHandlers();
 
   renderToolbar(toolbarButtons = [
@@ -61,9 +59,12 @@ function initializeEditor() {
     new TreeModule(),
     new DebugModule()
   ]);
+
+  openEditor();
 }
 
 export function openEditor() {
+  setJEroutineLogging(jeRoutineLogging = true);
   for(const module of sidebarModules)
     module.onEditorOpen();
 }
