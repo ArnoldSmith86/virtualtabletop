@@ -1,4 +1,4 @@
-export const VERSION = 12;
+export const VERSION = 13;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -95,6 +95,7 @@ function updateProperties(properties, v, globalProperties) {
   v<8 && v8HoverInheritVisibleForSeat(properties);
   v<10 && v10GridOffset(properties);
   v<12 && globalProperties.v12DropShadowAllowed && v12HandDropShadow(properties);
+  v<13 && v13EnlargeTinyLabels(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -432,5 +433,14 @@ function v11OwnerMOVEXY(routine) {
 function v12HandDropShadow(properties) {
   if (properties.type == 'holder' && properties.childrenPerOwner && !properties.enterRoutine && !properties.leaveRoutine && !properties.changeRoutine) {
     properties.dropShadow = true;
+  }
+}
+
+function v13EnlargeTinyLabels(properties) {
+  if(properties.type == 'label') {
+    const match = JSON.stringify(properties.css || '').match(/font-size"?:"? *([0-9]+) *px/);
+    const fontSize = match ? +match[1] : 16;
+    if((properties.height || 20) < fontSize + 2)
+      properties.height = fontSize + 2;
   }
 }

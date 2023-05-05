@@ -4,6 +4,7 @@
   "urlPrefix": "",
   "minifyJavascript": false,
   "forceTracing": false,
+  "customTab": null,
 
   "allowPublicLibraryEdits": false,
 
