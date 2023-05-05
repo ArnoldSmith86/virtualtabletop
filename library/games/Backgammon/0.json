@@ -477,7 +477,7 @@
     "parent": "column17"
   },
   "edl6": {
-    "image": "/assets/2108595768_1046958",
+    "image": "/assets/-2116107984_51753",
     "movable": false,
     "width": 1600,
     "height": 1000,
@@ -1016,7 +1016,7 @@
     "angle": 25.714285714
   },
   "_meta": {
-    "version": 3,
+    "version": 13,
     "info": {
       "name": "Backgammon",
       "image": "/assets/864541564_120911",
@@ -1025,14 +1025,20 @@
       "year": "-3000",
       "mode": "vs",
       "time": "30",
-      "players": "2",
-      "language": "",
-      "variant": "",
       "attribution": "Room layout, board, and library image by LawDawg96, with small edits by RaphaelAlvez and ArnoldSmith86, are released to the Public Domain by CC0.\n\nWood grains used on the board are recolored versions of files available at https://www.pexels.com/ and are available for use under the Pexels license.",
       "similarName": "Backgammon",
-      "description": "Classic strategy game.  Move checkers around a board to reach home while avoiding capture.  First to remove all own pieces wins.",
+      "description": "Classic strategy game. Move checkers around a board to reach home while avoiding capture. First to remove all own pieces wins.",
       "showName": true,
-      "lastUpdate": 1622320768000
+      "lastUpdate": 1683329352503,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "gukc": {
