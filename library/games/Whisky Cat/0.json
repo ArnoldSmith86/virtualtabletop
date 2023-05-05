@@ -52,7 +52,8 @@
     "width": 323,
     "height": 180,
     "y": 810,
-    "css": "background:rgba(255,255,255,0.4);"
+    "css": "background:rgba(255,255,255,0.4);",
+    "dropShadow": true
   },
   "22vv": {
     "id": "22vv",
@@ -1524,7 +1525,7 @@
     "z": 3,
     "movable": false,
     "movableInEdit": false,
-    "image": "/assets/-1520808336_1631166"
+    "image": "/assets/5257801_619117"
   },
   "yyjj": {
     "color": "#539626",
@@ -3480,7 +3481,7 @@
     "text": "card_2"
   },
   "_meta": {
-    "version": 6,
+    "version": 13,
     "info": {
       "name": "Whisky Cat",
       "image": "/assets/-765734730_247473",
@@ -3489,14 +3490,20 @@
       "year": "1997",
       "mode": "vs",
       "time": "45",
-      "players": "2-4",
-      "language": "",
-      "variant": "",
       "attribution": "The room design, library image, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe wood texture from the playing board by Adesivos RL Adesivos RL on Pixabay is from-https://pixabay.com/de/photos/fresno-holz-glatt-klar-textur-1932212/ and is available under the Pixabay licence.\n\nThe deck back image by Michael Schwarzenberger is from https://pixabay.com/photos/playing-card-back-pattern-568200/ and is available under the Pixabay License.",
       "similarName": "Brändi Dog",
-      "description": "Move tokens from home around board to target area using card powers.  First to move all pieces to target wins.",
+      "description": "Move tokens from home around board to target area using card powers. First to move all pieces to target wins.",
       "showName": true,
-      "lastUpdate": 1642203156000
+      "lastUpdate": 1683330686612,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "xmhz": {
