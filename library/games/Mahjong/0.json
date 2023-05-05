@@ -24,7 +24,7 @@
     "parent": "muci"
   },
   "_meta": {
-    "version": 6,
+    "version": 13,
     "info": {
       "name": "Mahjong",
       "image": "/assets/1442976633_27378",
@@ -33,15 +33,20 @@
       "year": "1850",
       "mode": "vs",
       "time": "30",
-      "players": "3-4",
-      "language": "",
-      "variant": "",
       "attribution": "The room layout and game design are by LawDawg96 and released to the Public Domain by CC0.\n\nThe library image is from Pixabay and is available under the Pixabay license: https://pixabay.com/photos/mahjong-gambling-dice-games-3411181/.\n\nThe background image is from Unsplash and is available under the Unsplash license: https://unsplash.com/photos/I79Y9OFfDw0.\n\nThe mahjong tile designs other than the joker are by 碧海风 and are available under CC BY-SA 4.0 at https://commons.wikimedia.org/wiki/Category:SVG_Planar_illustrations_of_Mahjong_tiles.\n\nThe joker tile design is by Cangjie6 and is available under CC BY-SA 4.0 at https://commons.wikimedia.org/wiki/File:MJj1v1-.svg. This room uses a modified version of that image.",
       "similarName": "Mahjong",
       "description": "Traditional Chinese game using illustrated tiles. Take turns drawing from stock pile or other players' discards to create sets and runs from tiles in hand. Play until all tiles used then start another round. Highest score wins.",
       "showName": true,
       "helpText": "Players take seats. Press settings button (gear icon) to choose options. Set target points (if needed) in bottom left. Press skip/next icon (top of screen) to choose random player to start. Players add tiles to hand using +13 and +1 buttons. Players can sort using the sort button to left of hand. Turn advances to next player automatically when a tile is dropped into green discard area. If turn indicator is out of synch, press skip/next to advance as needed. At end of hand, winning player can press the reveal button in the top right (two open hands) to move their hand to the open display area. Calculate score and manually enter scores. Press recall button (bottom right) to start next hand.",
-      "lastUpdate": 1654391055000
+      "lastUpdate": 1683328496181,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "3-4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
     }
   },
   "deckHolder": {
@@ -1557,7 +1562,8 @@
     "stackOffsetX": 77,
     "childrenPerOwner": true,
     "movableInEdit": false,
-    "css": "background-color:#ffffff80"
+    "css": "background-color:#ffffff80",
+    "dropShadow": true
   },
   "open1": {
     "type": "holder",
@@ -2356,7 +2362,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "opacity:.1",
-    "image": "/assets/790626331_3684463"
+    "image": "/assets/-1319166645_595032"
   },
   "muci": {
     "type": "pile",
