@@ -18,7 +18,8 @@
     "width": 1242,
     "height": 102,
     "css": "background: #ffffff80",
-    "x": 5
+    "x": 5,
+    "dropShadow": true
   },
   "xvkr": {
     "type": "button",
@@ -28,16 +29,14 @@
         "func": "SELECT",
         "property": "shift",
         "value": "yes",
-        "collection": "shiftcheck",
-        "mode": "set"
+        "collection": "shiftcheck"
       },
       {
         "func": "SELECT",
         "source": "shiftcheck",
         "property": "parent",
         "value": null,
-        "collection": "widgetmove",
-        "mode": "set"
+        "collection": "widgetmove"
       },
       {
         "func": "SET",
@@ -50,16 +49,14 @@
         "func": "SELECT",
         "property": "type",
         "value": "pile",
-        "collection": "pilecheck",
-        "mode": "set"
+        "collection": "pilecheck"
       },
       {
         "func": "SELECT",
         "source": "pilecheck",
         "property": "parent",
         "value": null,
-        "collection": "pilemove",
-        "mode": "set"
+        "collection": "pilemove"
       },
       {
         "func": "SET",
@@ -96,16 +93,14 @@
         "func": "SELECT",
         "property": "shift",
         "value": "yes",
-        "collection": "shiftcheck",
-        "mode": "set"
+        "collection": "shiftcheck"
       },
       {
         "func": "SELECT",
         "source": "shiftcheck",
         "property": "parent",
         "value": null,
-        "collection": "widgetmove",
-        "mode": "set"
+        "collection": "widgetmove"
       },
       {
         "func": "SET",
@@ -118,16 +113,14 @@
         "func": "SELECT",
         "property": "type",
         "value": "pile",
-        "collection": "pilecheck",
-        "mode": "set"
+        "collection": "pilecheck"
       },
       {
         "func": "SELECT",
         "source": "pilecheck",
         "property": "parent",
         "value": null,
-        "collection": "pilemove",
-        "mode": "set"
+        "collection": "pilemove"
       },
       {
         "func": "SET",
@@ -153,16 +146,14 @@
         "func": "SELECT",
         "property": "shift",
         "value": "yes",
-        "collection": "shiftcheck",
-        "mode": "set"
+        "collection": "shiftcheck"
       },
       {
         "func": "SELECT",
         "source": "shiftcheck",
         "property": "parent",
         "value": null,
-        "collection": "widgetmove",
-        "mode": "set"
+        "collection": "widgetmove"
       },
       {
         "func": "SET",
@@ -175,16 +166,14 @@
         "func": "SELECT",
         "property": "type",
         "value": "pile",
-        "collection": "pilecheck",
-        "mode": "set"
+        "collection": "pilecheck"
       },
       {
         "func": "SELECT",
         "source": "pilecheck",
         "property": "parent",
         "value": null,
-        "collection": "pilemove",
-        "mode": "set"
+        "collection": "pilemove"
       },
       {
         "func": "SET",
@@ -210,16 +199,14 @@
         "func": "SELECT",
         "property": "shift",
         "value": "yes",
-        "collection": "shiftcheck",
-        "mode": "set"
+        "collection": "shiftcheck"
       },
       {
         "func": "SELECT",
         "source": "shiftcheck",
         "property": "parent",
         "value": null,
-        "collection": "widgetmove",
-        "mode": "set"
+        "collection": "widgetmove"
       },
       {
         "func": "SET",
@@ -232,16 +219,14 @@
         "func": "SELECT",
         "property": "type",
         "value": "pile",
-        "collection": "pilecheck",
-        "mode": "set"
+        "collection": "pilecheck"
       },
       {
         "func": "SELECT",
         "source": "pilecheck",
         "property": "parent",
         "value": null,
-        "collection": "pilemove",
-        "mode": "set"
+        "collection": "pilemove"
       },
       {
         "func": "SET",
@@ -370,20 +355,22 @@
             "x": 0,
             "y": 0,
             "color": "#FFFFFF00",
-            "valueType": "dynamic",
-            "value": "COLOR",
             "width": 86.6,
-            "height": 100
+            "height": 100,
+            "dynamicProperties": {
+              "value": "COLOR"
+            }
           },
           {
             "type": "image",
             "x": 11.6,
             "y": 18.3,
             "color": "#FFFFFF00",
-            "valueType": "dynamic",
-            "value": "BUG",
             "width": 63.4,
-            "height": 63.4
+            "height": 63.4,
+            "dynamicProperties": {
+              "value": "BUG"
+            }
           }
         ],
         "border": 0,
@@ -401,16 +388,16 @@
         {
           "x": 88.6,
           "y": 152,
-          "offsetX": 0,
-          "offsetY": 0,
-          "maxY": 810
+          "offsetX": -44.3,
+          "offsetY": -76,
+          "maxY": 734
         },
         {
           "x": 88.6,
           "y": 152,
-          "offsetX": 44.3,
-          "offsetY": 75.8,
-          "maxY": 810
+          "offsetX": 0,
+          "offsetY": -0.20000000000000284,
+          "maxY": 734
         }
       ]
     },
@@ -438,12 +425,7 @@
       {
         "func": "RECALL",
         "holder": "TheDeck",
-        "applyVariables": [
-          {
-            "parameter": "owned",
-            "variable": true
-          }
-        ]
+        "owned": "${true}"
       },
       {
         "func": "FLIP",
@@ -729,7 +711,7 @@
     "id": "3pws"
   },
   "_meta": {
-    "version": 1,
+    "version": 13,
     "info": {
       "name": "Bug Chess",
       "image": "/assets/1586429197_744589",
@@ -738,18 +720,24 @@
       "year": "2000",
       "mode": "vs",
       "time": "20",
-      "players": "2",
-      "language": "en-US",
-      "variant": "Full Game",
       "attribution": "Layout and library image by u/RaphaelAlvez avaible under license CC0.\n\nBackground by Akshay Chauhan avaible at https://unsplash.com/photos/qBUU6wsgK6A under free license (https://unsplash.com/license).\n\nCards SVGs based on images by Delapouite, Carl Osen and Lorc available at https://game-icons.net/ under license CC BY 3.0.",
       "similarName": "Hive",
       "description": "Place hexagon tiles with bug images, with each bug moving in unique ways, to control the board. First player to surround opponent's queen wins.",
       "showName": true,
-      "lastUpdate": 1610512268000
+      "lastUpdate": 1683328898107,
+      "skill": "",
+      "variantImage": "",
+      "variant": "Full Game",
+      "language": "en-US",
+      "players": "2",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "0ava": {
-    "image": "/assets/410585868_1035294",
+    "image": "/assets/1968491806_156140",
     "movable": false,
     "width": 1600,
     "height": 1000,
