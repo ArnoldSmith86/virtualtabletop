@@ -424,6 +424,9 @@
   overflow-y: auto;
   word-wrap: anywhere;
 }
+#symbolPickerOverlay.bigPreviews #symbolList {
+  --symbolSize: 64px;
+}
 
 #symbolPickerOverlay h1 {
   margin-top: 0;
@@ -447,12 +450,23 @@
 }
 
 #symbolPickerOverlay .gameicons {
+  --spritesheetX: 60;
+  --spritesheetY: 69;
+
   display: inline-block;
-  background: url(/i/game-icons.net/overview.png);
+  background: url(/i/game-icons.net/overview24.png);
   background-position: calc(-1 * var(--symbolSize) * var(--x)) calc(-1 * var(--symbolSize) * var(--y));
-  background-size: calc(2880 * var(--symbolSize) / 48) calc(3312 * var(--symbolSize) / 48);
+  background-size: calc(var(--spritesheetX) * var(--symbolSize)) calc(var(--spritesheetY) * var(--symbolSize));
   width: var(--symbolSize);
   height: var(--symbolSize);
+}
+
+#symbolPickerOverlay.bigPreviews .gameicons {
+  background-image: url(/i/game-icons.net/overview48.png);
+}
+
+#symbolPickerOverlay.bigPreviews .gameicons:hover {
+  background: var(--url);
 }
 
 #symbolPickerOverlay .hidden {

@@ -303,7 +303,7 @@ export async function loadSymbolPicker() {
       for(const [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)}"></i>`;
+          list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('/i/game-icons.net/${symbol}.svg')"></i>`;
           ++gameIconsIndex;
         } else {
           let className = 'emoji';
