@@ -13,6 +13,8 @@ body {
   --textHighlightColor7: darkcyan;
 
   --textDimColor1: #ccc;
+
+  color-scheme: light;
 }
 
 body.darkMode {
@@ -30,6 +32,8 @@ body.darkMode {
   --textHighlightColor7: #40e0d0;
 
   --textDimColor1: #606060;
+
+  color-scheme: dark;
 }
 
 body:not(.edit) #editor,
