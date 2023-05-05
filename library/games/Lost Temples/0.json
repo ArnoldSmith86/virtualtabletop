@@ -1,23 +1,28 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 13,
     "info": {
       "name": "Lost Temples",
-      "image": "/assets/858017082_1122039",
+      "image": "/assets/-1726145672_43196",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/183251/karuba",
       "year": "2015",
       "mode": "vs",
       "time": "30-40",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
       "attribution": "The room layout and game design is by LawDawg96 and released to the Public Domain by CC0.\n\nThe wood grain background and board backgrounds (water, beach, grass) are available under the Pixabay License and are available at:\n\nhttps://pixabay.com/photos/water-sea-background-texture-1029842/\nhttps://pixabay.com/photos/sand-texture-beach-summer-4432101/\nhttps://pixabay.com/photos/lawn-grass-artificial-grass-green-1846813/\nhttps://pixabay.com/photos/wood-structure-fund-nature-grain-186304/\n\nThe jungle image used on the tiles is available under the Pexels License and is available at:\n\nhttps://www.pexels.com/photo/lush-palm-trees-growing-in-tropical-forest-4669542/\n\nThe various icons are available under CC BY 3.0 as follows:\n\n  - By delapouite (grass, temple, statute, skull, gem):\n\nhttps://game-icons.net/1x1/delapouite/high-grass.html\nhttps://game-icons.net/1x1/delapouite/mayan-pyramid.html\nhttps://game-icons.net/1x1/delapouite/colombian-statue.html\nhttps://game-icons.net/1x1/delapouite/calavera.html\nhttps://game-icons.net/1x1/delapouite/rupee.html\n\n  -  By lorc (diamond, chalice):\nhttps://game-icons.net/1x1/lorc/cut-diamond.html\nhttps://game-icons.net/1x1/lorc/jeweled-chalice.html\n\n  -  By faithtoken (gold ore):\nhttps://game-icons.net/1x1/faithtoken/ore.html",
       "similarName": "Karuba",
       "description": "Tile-laying race game. Players start with identical empty boards and each place the same piece and move tokens to be the first to reach temples and collect treasure. Player with most points wins.",
       "showName": true,
       "helpText": "Players take seats. (A player that wants to change playerColor, must leave the seat and return for the new color to take effect.)  Press play in lower left corner. An option is provided to randomly distribute starting pieces. If pieces not moved randomly, players manually move temples to letters and explorers to numbers on board. Press blue next card button in lower left which will appear only when time for another card. Each player moves card to their board. Move treasure pieces, diamonds, and gold, to the loot area for the collecting player for automatic score keeping. Peek at another player’s board by pressing buttons along bottom. Player’s currently peeking at your board are displayed next to eye icon at top.",
-      "lastUpdate": 1642203156000
+      "lastUpdate": 1683329570779,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
     }
   },
   "tac8": {
@@ -40,7 +45,7 @@
     "z": 3,
     "movable": false,
     "movableInEdit": false,
-    "image": "/assets/893603325_1086119"
+    "image": "/assets/-434860097_100950"
   },
   "b1A1": {
     "type": "holder",
@@ -527,7 +532,8 @@
       "seat1"
     ],
     "x": 20,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA2": {
     "type": "card",
@@ -546,7 +552,8 @@
     ],
     "parent": "cardKeeper",
     "x": 125,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA3": {
     "type": "card",
@@ -565,7 +572,8 @@
       "seat1"
     ],
     "x": 230,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA4": {
     "type": "card",
@@ -584,7 +592,8 @@
     ],
     "parent": "cardKeeper",
     "x": 335,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA5": {
     "type": "card",
@@ -603,7 +612,8 @@
       "seat1"
     ],
     "x": 440,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA6": {
     "type": "card",
@@ -622,7 +632,8 @@
     ],
     "parent": "cardKeeper",
     "x": 545,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA7": {
     "type": "card",
@@ -641,7 +652,8 @@
       "seat1"
     ],
     "x": 650,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA8": {
     "type": "card",
@@ -660,7 +672,8 @@
       "seat1"
     ],
     "x": 755,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA9": {
     "type": "card",
@@ -679,7 +692,8 @@
       "seat1"
     ],
     "x": 860,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA10": {
     "type": "card",
@@ -698,7 +712,8 @@
     ],
     "parent": "cardKeeper",
     "x": 965,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA11": {
     "type": "card",
@@ -717,7 +732,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1070,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA12": {
     "type": "card",
@@ -736,7 +752,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1175,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA13": {
     "type": "card",
@@ -755,7 +772,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1280,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA14": {
     "type": "card",
@@ -774,7 +792,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1385,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA15": {
     "type": "card",
@@ -793,7 +812,8 @@
       "seat1"
     ],
     "x": 1490,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA16": {
     "type": "card",
@@ -812,7 +832,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 145
+    "y": 145,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA17": {
     "type": "card",
@@ -831,7 +852,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 250
+    "y": 250,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA18": {
     "type": "card",
@@ -850,7 +872,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 355
+    "y": 355,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA19": {
     "type": "card",
@@ -869,7 +892,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 460
+    "y": 460,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA20": {
     "type": "card",
@@ -888,7 +912,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 565
+    "y": 565,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA21": {
     "type": "card",
@@ -907,7 +932,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 670
+    "y": 670,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA22": {
     "type": "card",
@@ -926,7 +952,8 @@
       "seat1"
     ],
     "x": 1490,
-    "y": 775
+    "y": 775,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA23": {
     "type": "card",
@@ -945,7 +972,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA24": {
     "type": "card",
@@ -964,7 +992,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1385,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA25": {
     "type": "card",
@@ -983,7 +1012,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1280,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA26": {
     "type": "card",
@@ -1002,7 +1032,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1175,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA27": {
     "type": "card",
@@ -1021,7 +1052,8 @@
       "seat1"
     ],
     "x": 1070,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA28": {
     "type": "card",
@@ -1040,7 +1072,8 @@
     ],
     "parent": "cardKeeper",
     "x": 965,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA29": {
     "type": "card",
@@ -1059,7 +1092,8 @@
     ],
     "parent": "cardKeeper",
     "x": 860,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA30": {
     "type": "card",
@@ -1078,7 +1112,8 @@
       "seat1"
     ],
     "x": 755,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA31": {
     "type": "card",
@@ -1097,7 +1132,8 @@
     ],
     "parent": "cardKeeper",
     "x": 650,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA32": {
     "type": "card",
@@ -1116,7 +1152,8 @@
       "seat1"
     ],
     "x": 545,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA33": {
     "type": "card",
@@ -1135,7 +1172,8 @@
       "seat1"
     ],
     "x": 440,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA34": {
     "type": "card",
@@ -1154,7 +1192,8 @@
       "seat1"
     ],
     "x": 335,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA35": {
     "type": "card",
@@ -1173,7 +1212,8 @@
     ],
     "parent": "cardKeeper",
     "x": 230,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "cardA36": {
     "type": "card",
@@ -1192,7 +1232,8 @@
     ],
     "parent": "cardKeeper",
     "x": 125,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "vA3": {
     "type": "holder",
@@ -1625,7 +1666,8 @@
     "onlyVisibleForSeat": [
       "seat2"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleB3": {
     "id": "meepleB3",
@@ -1647,7 +1689,8 @@
     "onlyVisibleForSeat": [
       "seat3"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleB4": {
     "id": "meepleB4",
@@ -1669,7 +1712,8 @@
     "onlyVisibleForSeat": [
       "seat4"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meeple1": {
     "type": "holder",
@@ -2228,7 +2272,8 @@
     "onlyVisibleForSeat": [
       "seat2"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleR3": {
     "id": "meepleR3",
@@ -2250,7 +2295,8 @@
     "onlyVisibleForSeat": [
       "seat3"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleR4": {
     "id": "meepleR4",
@@ -2272,7 +2318,8 @@
     "onlyVisibleForSeat": [
       "seat4"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleO1": {
     "id": "meepleO1",
@@ -2315,7 +2362,8 @@
     "onlyVisibleForSeat": [
       "seat2"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleO3": {
     "id": "meepleO3",
@@ -2337,7 +2385,8 @@
     "onlyVisibleForSeat": [
       "seat3"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleO4": {
     "id": "meepleO4",
@@ -2359,7 +2408,8 @@
     "onlyVisibleForSeat": [
       "seat4"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleY1": {
     "id": "meepleY1",
@@ -2402,7 +2452,8 @@
     "onlyVisibleForSeat": [
       "seat2"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleY3": {
     "id": "meepleY3",
@@ -2424,7 +2475,8 @@
     "onlyVisibleForSeat": [
       "seat3"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleY4": {
     "id": "meepleY4",
@@ -2446,7 +2498,8 @@
     "onlyVisibleForSeat": [
       "seat4"
     ],
-    "parent": "meepleHome"
+    "parent": "meepleHome",
+    "hoverInheritVisibleForSeat": false
   },
   "meepleHome": {
     "type": "holder",
@@ -2467,7 +2520,7 @@
     "z": 4,
     "movable": false,
     "movableInEdit": false,
-    "image": "/assets/1883647394_976053"
+    "image": "/assets/-1163633232_67573"
   },
   "tac9": {
     "type": "holder",
@@ -2516,7 +2569,8 @@
       "seat2"
     ],
     "x": 20,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "bdk6": {
     "type": "card",
@@ -2535,7 +2589,8 @@
       "seat2"
     ],
     "x": 125,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "4dxd": {
     "type": "card",
@@ -2554,7 +2609,8 @@
       "seat2"
     ],
     "x": 230,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "9mmt": {
     "type": "card",
@@ -2573,7 +2629,8 @@
       "seat2"
     ],
     "x": 335,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "hdn9": {
     "type": "card",
@@ -2592,7 +2649,8 @@
       "seat2"
     ],
     "x": 440,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "zxzg": {
     "type": "card",
@@ -2611,7 +2669,8 @@
       "seat2"
     ],
     "x": 545,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "dvt1": {
     "type": "card",
@@ -2630,7 +2689,8 @@
       "seat2"
     ],
     "x": 650,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cjgl": {
     "type": "card",
@@ -2649,7 +2709,8 @@
       "seat2"
     ],
     "x": 755,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "cfuv": {
     "type": "card",
@@ -2668,7 +2729,8 @@
       "seat2"
     ],
     "x": 860,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "spic": {
     "type": "card",
@@ -2687,7 +2749,8 @@
     ],
     "parent": "cardKeeper",
     "x": 965,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "5tw1": {
     "type": "card",
@@ -2706,7 +2769,8 @@
       "seat2"
     ],
     "x": 1070,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "nkq4": {
     "type": "card",
@@ -2725,7 +2789,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1175,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "ldv7": {
     "type": "card",
@@ -2744,7 +2809,8 @@
       "seat2"
     ],
     "x": 1280,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "pqp1": {
     "type": "card",
@@ -2763,7 +2829,8 @@
       "seat2"
     ],
     "x": 1385,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "aem0": {
     "type": "card",
@@ -2782,7 +2849,8 @@
       "seat2"
     ],
     "x": 1490,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "y8i3": {
     "type": "card",
@@ -2801,7 +2869,8 @@
       "seat2"
     ],
     "x": 1490,
-    "y": 145
+    "y": 145,
+    "hoverInheritVisibleForSeat": false
   },
   "uzi4": {
     "type": "card",
@@ -2820,7 +2889,8 @@
       "seat2"
     ],
     "x": 1490,
-    "y": 250
+    "y": 250,
+    "hoverInheritVisibleForSeat": false
   },
   "afn7": {
     "type": "card",
@@ -2839,7 +2909,8 @@
       "seat2"
     ],
     "x": 1490,
-    "y": 355
+    "y": 355,
+    "hoverInheritVisibleForSeat": false
   },
   "zps8": {
     "type": "card",
@@ -2858,7 +2929,8 @@
       "seat2"
     ],
     "x": 1490,
-    "y": 460
+    "y": 460,
+    "hoverInheritVisibleForSeat": false
   },
   "pa6p": {
     "type": "card",
@@ -2877,7 +2949,8 @@
       "seat2"
     ],
     "x": 1490,
-    "y": 565
+    "y": 565,
+    "hoverInheritVisibleForSeat": false
   },
   "v8ni": {
     "type": "card",
@@ -2896,7 +2969,8 @@
       "seat2"
     ],
     "x": 1490,
-    "y": 670
+    "y": 670,
+    "hoverInheritVisibleForSeat": false
   },
   "g3o7": {
     "type": "card",
@@ -2915,7 +2989,8 @@
       "seat2"
     ],
     "x": 1490,
-    "y": 775
+    "y": 775,
+    "hoverInheritVisibleForSeat": false
   },
   "1p6g": {
     "type": "card",
@@ -2934,7 +3009,8 @@
       "seat2"
     ],
     "x": 1490,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "d7h9": {
     "type": "card",
@@ -2953,7 +3029,8 @@
     "z": 210,
     "parent": "cardKeeper",
     "x": 1385,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "jgsq": {
     "type": "card",
@@ -2972,7 +3049,8 @@
       "seat2"
     ],
     "x": 1280,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "v67i": {
     "type": "card",
@@ -2991,7 +3069,8 @@
       "seat2"
     ],
     "x": 1175,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "h8oh": {
     "type": "card",
@@ -3010,7 +3089,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1070,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "t3bi": {
     "type": "card",
@@ -3029,7 +3109,8 @@
       "seat2"
     ],
     "x": 965,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "fpg0": {
     "type": "card",
@@ -3048,7 +3129,8 @@
       "seat2"
     ],
     "x": 860,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "q14a": {
     "type": "card",
@@ -3067,7 +3149,8 @@
     ],
     "parent": "cardKeeper",
     "x": 755,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "hgln": {
     "type": "card",
@@ -3086,7 +3169,8 @@
       "seat2"
     ],
     "x": 650,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "mcln": {
     "type": "card",
@@ -3105,7 +3189,8 @@
       "seat2"
     ],
     "x": 545,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "vbrw": {
     "type": "card",
@@ -3124,7 +3209,8 @@
       "seat2"
     ],
     "x": 440,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "pwjr": {
     "type": "card",
@@ -3143,7 +3229,8 @@
       "seat2"
     ],
     "x": 335,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "abvr": {
     "type": "card",
@@ -3162,7 +3249,8 @@
       "seat2"
     ],
     "x": 230,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "ze47": {
     "type": "card",
@@ -3181,7 +3269,8 @@
       "seat2"
     ],
     "x": 125,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "246k": {
     "type": "card",
@@ -3200,7 +3289,8 @@
       "seat3"
     ],
     "x": 20,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "34fd": {
     "type": "card",
@@ -3219,7 +3309,8 @@
       "seat3"
     ],
     "x": 125,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "4izb": {
     "type": "card",
@@ -3238,7 +3329,8 @@
       "seat3"
     ],
     "x": 230,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "edgo": {
     "type": "card",
@@ -3257,7 +3349,8 @@
       "seat3"
     ],
     "x": 335,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "r2xz": {
     "type": "card",
@@ -3276,7 +3369,8 @@
       "seat3"
     ],
     "x": 440,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "c7lx": {
     "type": "card",
@@ -3295,7 +3389,8 @@
       "seat3"
     ],
     "x": 545,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "qlkw": {
     "type": "card",
@@ -3314,7 +3409,8 @@
       "seat3"
     ],
     "x": 650,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "28v4": {
     "type": "card",
@@ -3333,7 +3429,8 @@
       "seat3"
     ],
     "x": 755,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "u6y2": {
     "type": "card",
@@ -3352,7 +3449,8 @@
       "seat3"
     ],
     "x": 860,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "mz8y": {
     "type": "card",
@@ -3371,7 +3469,8 @@
     ],
     "parent": "cardKeeper",
     "x": 965,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "kmlx": {
     "type": "card",
@@ -3390,7 +3489,8 @@
       "seat3"
     ],
     "x": 1070,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "1scz": {
     "type": "card",
@@ -3409,7 +3509,8 @@
       "seat3"
     ],
     "x": 1175,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "qj3m": {
     "type": "card",
@@ -3428,7 +3529,8 @@
       "seat3"
     ],
     "x": 1280,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "de9s": {
     "type": "card",
@@ -3447,7 +3549,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1385,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "ingz": {
     "type": "card",
@@ -3466,7 +3569,8 @@
       "seat3"
     ],
     "x": 1490,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "9qxs": {
     "type": "card",
@@ -3485,7 +3589,8 @@
       "seat3"
     ],
     "x": 1490,
-    "y": 145
+    "y": 145,
+    "hoverInheritVisibleForSeat": false
   },
   "ltk3": {
     "type": "card",
@@ -3504,7 +3609,8 @@
       "seat3"
     ],
     "x": 1490,
-    "y": 250
+    "y": 250,
+    "hoverInheritVisibleForSeat": false
   },
   "4dih": {
     "type": "card",
@@ -3523,7 +3629,8 @@
       "seat3"
     ],
     "x": 1490,
-    "y": 355
+    "y": 355,
+    "hoverInheritVisibleForSeat": false
   },
   "e21t": {
     "type": "card",
@@ -3542,7 +3649,8 @@
       "seat3"
     ],
     "x": 1490,
-    "y": 460
+    "y": 460,
+    "hoverInheritVisibleForSeat": false
   },
   "oi0v": {
     "type": "card",
@@ -3561,7 +3669,8 @@
       "seat3"
     ],
     "x": 1490,
-    "y": 565
+    "y": 565,
+    "hoverInheritVisibleForSeat": false
   },
   "j1jq": {
     "type": "card",
@@ -3580,7 +3689,8 @@
       "seat3"
     ],
     "x": 1490,
-    "y": 670
+    "y": 670,
+    "hoverInheritVisibleForSeat": false
   },
   "l8wf": {
     "type": "card",
@@ -3599,7 +3709,8 @@
       "seat3"
     ],
     "x": 1490,
-    "y": 775
+    "y": 775,
+    "hoverInheritVisibleForSeat": false
   },
   "1v37": {
     "type": "card",
@@ -3618,7 +3729,8 @@
       "seat3"
     ],
     "x": 1490,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "224c": {
     "type": "card",
@@ -3637,7 +3749,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1385,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "icjo": {
     "type": "card",
@@ -3656,7 +3769,8 @@
       "seat3"
     ],
     "x": 1280,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "onmm": {
     "type": "card",
@@ -3675,7 +3789,8 @@
       "seat3"
     ],
     "x": 1175,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "ylkl": {
     "type": "card",
@@ -3694,7 +3809,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1070,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "wbqv": {
     "type": "card",
@@ -3713,7 +3829,8 @@
     ],
     "parent": "cardKeeper",
     "x": 965,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "t8ac": {
     "type": "card",
@@ -3732,7 +3849,8 @@
       "seat3"
     ],
     "x": 860,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "f6iz": {
     "type": "card",
@@ -3751,7 +3869,8 @@
       "seat3"
     ],
     "x": 755,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "qh06": {
     "type": "card",
@@ -3770,7 +3889,8 @@
     ],
     "z": 2364,
     "x": 650,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "wcrh": {
     "type": "card",
@@ -3789,7 +3909,8 @@
       "seat3"
     ],
     "x": 545,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "54f5": {
     "type": "card",
@@ -3808,7 +3929,8 @@
       "seat3"
     ],
     "x": 440,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "mes8": {
     "type": "card",
@@ -3827,7 +3949,8 @@
       "seat3"
     ],
     "x": 335,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "v3u6": {
     "type": "card",
@@ -3846,7 +3969,8 @@
       "seat3"
     ],
     "x": 230,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "g22b": {
     "type": "card",
@@ -3865,7 +3989,8 @@
       "seat3"
     ],
     "x": 125,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "dwgn": {
     "type": "card",
@@ -3884,7 +4009,8 @@
     ],
     "parent": "cardKeeper",
     "x": 20,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "gb8g": {
     "type": "card",
@@ -3903,7 +4029,8 @@
     ],
     "parent": "cardKeeper",
     "x": 125,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "ssk4": {
     "type": "card",
@@ -3922,7 +4049,8 @@
       "seat4"
     ],
     "x": 230,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "ag3d": {
     "type": "card",
@@ -3941,7 +4069,8 @@
     ],
     "parent": "cardKeeper",
     "x": 335,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "17um": {
     "type": "card",
@@ -3960,7 +4089,8 @@
       "seat4"
     ],
     "x": 440,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "lpfx": {
     "type": "card",
@@ -3979,7 +4109,8 @@
     ],
     "parent": "cardKeeper",
     "x": 545,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "2zi6": {
     "type": "card",
@@ -3998,7 +4129,8 @@
       "seat4"
     ],
     "x": 650,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "vczt": {
     "type": "card",
@@ -4017,7 +4149,8 @@
       "seat4"
     ],
     "x": 755,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "e93w": {
     "type": "card",
@@ -4036,7 +4169,8 @@
       "seat4"
     ],
     "x": 860,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "hl0h": {
     "type": "card",
@@ -4055,7 +4189,8 @@
     ],
     "parent": "cardKeeper",
     "x": 965,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "4jul": {
     "type": "card",
@@ -4074,7 +4209,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1070,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "ybgd": {
     "type": "card",
@@ -4093,7 +4229,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1175,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "fqzu": {
     "type": "card",
@@ -4112,7 +4249,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1280,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "200y": {
     "type": "card",
@@ -4131,7 +4269,8 @@
       "seat4"
     ],
     "x": 1385,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "fo2j": {
     "type": "card",
@@ -4150,7 +4289,8 @@
       "seat4"
     ],
     "x": 1490,
-    "y": 40
+    "y": 40,
+    "hoverInheritVisibleForSeat": false
   },
   "5era": {
     "type": "card",
@@ -4169,7 +4309,8 @@
       "seat4"
     ],
     "x": 1490,
-    "y": 145
+    "y": 145,
+    "hoverInheritVisibleForSeat": false
   },
   "7gts": {
     "type": "card",
@@ -4188,7 +4329,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 250
+    "y": 250,
+    "hoverInheritVisibleForSeat": false
   },
   "679r": {
     "type": "card",
@@ -4207,7 +4349,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 355
+    "y": 355,
+    "hoverInheritVisibleForSeat": false
   },
   "ilcr": {
     "type": "card",
@@ -4226,7 +4369,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 460
+    "y": 460,
+    "hoverInheritVisibleForSeat": false
   },
   "5f41": {
     "type": "card",
@@ -4245,7 +4389,8 @@
       "seat4"
     ],
     "x": 1490,
-    "y": 565
+    "y": 565,
+    "hoverInheritVisibleForSeat": false
   },
   "sar8": {
     "type": "card",
@@ -4264,7 +4409,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 670
+    "y": 670,
+    "hoverInheritVisibleForSeat": false
   },
   "qcbf": {
     "type": "card",
@@ -4283,7 +4429,8 @@
       "seat4"
     ],
     "x": 1490,
-    "y": 775
+    "y": 775,
+    "hoverInheritVisibleForSeat": false
   },
   "5npj": {
     "type": "card",
@@ -4302,7 +4449,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1490,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "kyqs": {
     "type": "card",
@@ -4321,7 +4469,8 @@
       "seat4"
     ],
     "x": 1385,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "pecw": {
     "type": "card",
@@ -4340,7 +4489,8 @@
       "seat4"
     ],
     "x": 1280,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "l8zj": {
     "type": "card",
@@ -4359,7 +4509,8 @@
       "seat4"
     ],
     "x": 1175,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "4tk9": {
     "type": "card",
@@ -4378,7 +4529,8 @@
     ],
     "parent": "cardKeeper",
     "x": 1070,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "dgoz": {
     "type": "card",
@@ -4397,7 +4549,8 @@
     ],
     "parent": "cardKeeper",
     "x": 965,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "sogw": {
     "type": "card",
@@ -4416,7 +4569,8 @@
       "seat4"
     ],
     "x": 860,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "6mt0": {
     "type": "card",
@@ -4435,7 +4589,8 @@
     ],
     "parent": "cardKeeper",
     "x": 755,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "b9f3": {
     "type": "card",
@@ -4454,7 +4609,8 @@
     ],
     "parent": "cardKeeper",
     "x": 650,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "edhb": {
     "type": "card",
@@ -4473,7 +4629,8 @@
       "seat4"
     ],
     "x": 545,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "kfpy": {
     "type": "card",
@@ -4492,7 +4649,8 @@
     ],
     "z": 7546,
     "x": 440,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "7n52": {
     "type": "card",
@@ -4511,7 +4669,8 @@
       "seat4"
     ],
     "x": 335,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "4p0t": {
     "type": "card",
@@ -4530,7 +4689,8 @@
     ],
     "parent": "cardKeeper",
     "x": 230,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "rp03": {
     "type": "card",
@@ -4549,7 +4709,8 @@
       "seat4"
     ],
     "x": 125,
-    "y": 880
+    "y": 880,
+    "hoverInheritVisibleForSeat": false
   },
   "vD3": {
     "type": "holder",
@@ -7962,7 +8123,8 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size:20px;opacity:0.7;",
-    "onlyVisibleForSeat": "seat1"
+    "onlyVisibleForSeat": "seat1",
+    "hoverInheritVisibleForSeat": false
   },
   "visList2": {
     "id": "visList2",
@@ -7974,7 +8136,8 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size:20px;opacity:0.7;",
-    "onlyVisibleForSeat": "seat2"
+    "onlyVisibleForSeat": "seat2",
+    "hoverInheritVisibleForSeat": false
   },
   "visList3": {
     "id": "visList3",
@@ -7986,7 +8149,8 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size:20px;opacity:0.7;",
-    "onlyVisibleForSeat": "seat3"
+    "onlyVisibleForSeat": "seat3",
+    "hoverInheritVisibleForSeat": false
   },
   "visList4": {
     "id": "visList4",
@@ -7998,7 +8162,8 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size:20px;opacity:0.7;",
-    "onlyVisibleForSeat": "seat4"
+    "onlyVisibleForSeat": "seat4",
+    "hoverInheritVisibleForSeat": false
   },
   "buttonOutlineP1": {
     "type": "button",
@@ -8011,7 +8176,8 @@
     "z": 55,
     "movableInEdit": false,
     "css": "background: white; border: 5px dashed black !important",
-    "onlyVisibleForSeat": []
+    "onlyVisibleForSeat": [],
+    "hoverInheritVisibleForSeat": false
   },
   "buttonOutlineP2": {
     "type": "button",
@@ -8024,7 +8190,8 @@
     "z": 55,
     "movableInEdit": false,
     "css": "background: white; border: 5px dashed black !important",
-    "onlyVisibleForSeat": []
+    "onlyVisibleForSeat": [],
+    "hoverInheritVisibleForSeat": false
   },
   "buttonOutlineP3": {
     "type": "button",
@@ -8037,7 +8204,8 @@
     "z": 55,
     "movableInEdit": false,
     "css": "background: white; border: 5px dashed black !important",
-    "onlyVisibleForSeat": []
+    "onlyVisibleForSeat": [],
+    "hoverInheritVisibleForSeat": false
   },
   "buttonOutlineP4": {
     "type": "button",
@@ -8050,7 +8218,8 @@
     "z": 55,
     "movableInEdit": false,
     "css": "background: white; border: 5px dashed black !important",
-    "onlyVisibleForSeat": []
+    "onlyVisibleForSeat": [],
+    "hoverInheritVisibleForSeat": false
   },
   "boardCoverP1": {
     "id": "boardCoverP1",
@@ -8061,7 +8230,8 @@
     "css": "border: 5px dashed yellow; ",
     "movable": false,
     "movableInEdit": false,
-    "onlyVisibleForSeat": "seat1"
+    "onlyVisibleForSeat": "seat1",
+    "hoverInheritVisibleForSeat": false
   },
   "boardCoverP2": {
     "id": "boardCoverP2",
@@ -8072,7 +8242,8 @@
     "css": "border: 5px dashed yellow; ",
     "movable": false,
     "movableInEdit": false,
-    "onlyVisibleForSeat": "seat2"
+    "onlyVisibleForSeat": "seat2",
+    "hoverInheritVisibleForSeat": false
   },
   "boardCoverP3": {
     "id": "boardCoverP3",
@@ -8083,7 +8254,8 @@
     "css": "border: 5px dashed yellow; ",
     "movable": false,
     "movableInEdit": false,
-    "onlyVisibleForSeat": "seat3"
+    "onlyVisibleForSeat": "seat3",
+    "hoverInheritVisibleForSeat": false
   },
   "boardCoverP4": {
     "id": "boardCoverP4",
@@ -8094,7 +8266,8 @@
     "css": "border: 5px dashed yellow; ",
     "movable": false,
     "movableInEdit": false,
-    "onlyVisibleForSeat": "seat4"
+    "onlyVisibleForSeat": "seat4",
+    "hoverInheritVisibleForSeat": false
   },
   "lootSeat1": {
     "type": "holder",
