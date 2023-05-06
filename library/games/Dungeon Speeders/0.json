@@ -11,7 +11,7 @@
     "hoverStatus": 1
   },
   "_meta": {
-    "version": 7,
+    "version": 13,
     "info": {
       "name": "Dungeon Speeders",
       "image": "/assets/-593066566_564377",
@@ -20,14 +20,20 @@
       "year": "2012",
       "mode": "vs",
       "time": "45",
-      "players": "2-8",
-      "language": "en-US",
-      "variant": "",
       "attribution": "How to use the room:\nTake a seat in the upper right corner. After everyone is seated, press the \"reset\" button under the timer and choose your settings. The \"play\" button starts the round and places the new target location onto the map. \nIf you find a path to the target, take the corresponding number from the sorted array to the left and place it into the square next to your name. This will start the timer for the other players. \nYou can hover over the rectangular hero pieces on the right to have a detailed description of each hero's power. The round pieces on the map only show the symbol of its power. \nThe grid on the right can be used to help you plan and keep track of the number of turns for each hero, especially when moving multiple heroes in one turn.\nThe button on the left border of the room expands a view of the progress of other players.\n\nThe room design, library image, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from:\n-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe icons for the pieces are: \n-Check by emkamal kamaluddin from NounProject.com:\nhttps://thenounproject.com/icon/check-1438093/\n-Cross by Anthony Ledoux from NounProject.com:\nhttps://thenounproject.com/icon/cross-1677556/\n-Shield Sword by Tippawan Sookruay from NounProject.com:\nhttps://thenounproject.com/icon/shield-sword-3925508/\n-Assassin's Dagger by Danil Polshin from NounProject.com:\nhttps://thenounproject.com/icon/assassins-dagger-593355/\n-Alchemy by Chanut is Industries from NounProject.com:\nhttps://thenounproject.com/icon/alchemy-4050986/\n-Harp by lastspark from NounProject.com:\nhttps://thenounproject.com/icon/harp-307498/\n-Spell by Kukuh Wachyu Bias from NounProject.com:\nhttps://thenounproject.com/icon/spell-4133550/\n-Battle Axe by ic2icon from NounProject.com:\nhttps://thenounproject.com/icon/battle-axe-2243766/\n-Bow by Eris Natansa from NounProject.com:\nhttps://thenounproject.com/icon/bow-2411262/\n\nAll the Icons are under CCBY License.\n\nThe tiles from the map are from:\n-https://dragosha.com/free/dungeon-part-1-tiles.html and are in the public domain under CC0.",
       "similarName": "Mutant Meeples",
       "description": "Players compete to be the first to have one of their 8 tokens reach the target using the fewest possible moves and the special powers of each token. Once one player’s token reaches the target, that token is collected and no longer available for that player to use. First player to collect 6 tokens wins.",
       "showName": true,
-      "lastUpdate": 1669254070000
+      "lastUpdate": 1683332473079,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-8",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "table": {
@@ -930,12 +936,12 @@
       {
         "x": 50,
         "y": 50,
-        "minX": 300,
-        "maxX": 1300,
-        "minY": 0,
-        "maxY": 1000,
-        "offsetX": 20,
-        "offsetY": 20
+        "minX": 275,
+        "maxX": 1275,
+        "minY": -25,
+        "maxY": 975,
+        "offsetX": -5,
+        "offsetY": -5
       }
     ],
     "css": "background: blue;font-size: 30px;  ",
@@ -2057,7 +2063,7 @@
     "width": 1000,
     "height": 1000,
     "layer": -8,
-    "image": "/assets/256166702_2828612",
+    "image": "/assets/-1090046517_263780",
     "z": 1000,
     "parent": "map",
     "movable": false,
@@ -2124,12 +2130,12 @@
       {
         "x": 50,
         "y": 50,
-        "minX": 300,
-        "maxX": 1300,
-        "minY": 0,
-        "maxY": 1000,
-        "offsetX": 25,
-        "offsetY": 25
+        "minX": 275,
+        "maxX": 1275,
+        "minY": -25,
+        "maxY": 975,
+        "offsetX": 0,
+        "offsetY": 0
       }
     ],
     "parent": "map"
@@ -4090,7 +4096,8 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "p1Zone",
-    "onlyVisibleForSeat": "p1"
+    "onlyVisibleForSeat": "p1",
+    "hoverInheritVisibleForSeat": false
   },
   "p1Label2": {
     "inheritFrom": "p1Label1",
@@ -4195,7 +4202,8 @@
       "box-sizing": "border-box"
     },
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "height": 37
   },
   "p1Label1": {
     "type": "label",
@@ -4498,12 +4506,12 @@
           "note": "board",
           "x": 50,
           "y": 50,
-          "minX": 350,
-          "maxX": 1250,
-          "minY": 50,
-          "maxY": 950,
-          "offsetX": 25,
-          "offsetY": 25
+          "minX": 325,
+          "maxX": 1225,
+          "minY": 25,
+          "maxY": 925,
+          "offsetX": 0,
+          "offsetY": 0
         }
       ],
       "hoverStatus": 1,
@@ -4784,7 +4792,8 @@
         ":hover::after": {
           "display": "block"
         }
-      }
+      },
+      "hoverInheritVisibleForSeat": false
     },
     "cardTypes": {
       "fighterMarker": {
@@ -5075,7 +5084,8 @@
     "movable": false,
     "movableInEdit": false,
     "height": 144,
-    "onlyVisibleForSeat": "p1"
+    "onlyVisibleForSeat": "p1",
+    "hoverInheritVisibleForSeat": false
   },
   "rogueMarkerHolderP1": {
     "type": "holder",
@@ -5507,7 +5517,8 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "p2Zone",
-    "onlyVisibleForSeat": "p2"
+    "onlyVisibleForSeat": "p2",
+    "hoverInheritVisibleForSeat": false
   },
   "markersP2": {
     "id": "markersP2",
@@ -5518,7 +5529,8 @@
     "movable": false,
     "movableInEdit": false,
     "height": 144,
-    "onlyVisibleForSeat": "p2"
+    "onlyVisibleForSeat": "p2",
+    "hoverInheritVisibleForSeat": false
   },
   "alchemistMarkerHolderP2": {
     "type": "holder",
@@ -5671,7 +5683,8 @@
         ":hover::after": {
           "display": "block"
         }
-      }
+      },
+      "hoverInheritVisibleForSeat": false
     },
     "parent": "alchemistMarkerHolderP2",
     "width": 86,
@@ -6071,7 +6084,8 @@
       "box-sizing": "border-box"
     },
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "height": 37
   },
   "p2Label2Field2": {
     "inheritFrom": "p2Label1Field1",
@@ -6352,7 +6366,8 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "p3Zone",
-    "onlyVisibleForSeat": "p3"
+    "onlyVisibleForSeat": "p3",
+    "hoverInheritVisibleForSeat": false
   },
   "markersP3": {
     "id": "markersP3",
@@ -6363,7 +6378,8 @@
     "movable": false,
     "movableInEdit": false,
     "height": 144,
-    "onlyVisibleForSeat": "p3"
+    "onlyVisibleForSeat": "p3",
+    "hoverInheritVisibleForSeat": false
   },
   "alchemistMarkerHolderP3": {
     "type": "holder",
@@ -6516,7 +6532,8 @@
         ":hover::after": {
           "display": "block"
         }
-      }
+      },
+      "hoverInheritVisibleForSeat": false
     },
     "parent": "alchemistMarkerHolderP3",
     "inheritFrom": {
@@ -6792,7 +6809,8 @@
       "box-sizing": "border-box"
     },
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "height": 37
   },
   "p3Label1Field1": {
     "type": "holder",
@@ -7105,7 +7123,8 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "p4Zone",
-    "onlyVisibleForSeat": "p4"
+    "onlyVisibleForSeat": "p4",
+    "hoverInheritVisibleForSeat": false
   },
   "markersP4": {
     "id": "markersP4",
@@ -7116,7 +7135,8 @@
     "movable": false,
     "movableInEdit": false,
     "height": 144,
-    "onlyVisibleForSeat": "p4"
+    "onlyVisibleForSeat": "p4",
+    "hoverInheritVisibleForSeat": false
   },
   "alchemistMarkerHolderP4": {
     "type": "holder",
@@ -7268,7 +7288,8 @@
         ":hover::after": {
           "display": "block"
         }
-      }
+      },
+      "hoverInheritVisibleForSeat": false
     },
     "y": 3,
     "x": 3,
@@ -7549,7 +7570,8 @@
       "box-sizing": "border-box"
     },
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "height": 37
   },
   "p4Label1Field1": {
     "type": "holder",
@@ -7862,7 +7884,8 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "p5Zone",
-    "onlyVisibleForSeat": "p5"
+    "onlyVisibleForSeat": "p5",
+    "hoverInheritVisibleForSeat": false
   },
   "markersP5": {
     "id": "markersP5",
@@ -7873,7 +7896,8 @@
     "movable": false,
     "movableInEdit": false,
     "height": 144,
-    "onlyVisibleForSeat": "p5"
+    "onlyVisibleForSeat": "p5",
+    "hoverInheritVisibleForSeat": false
   },
   "alchemistMarkerHolderP5": {
     "type": "holder",
@@ -8026,7 +8050,8 @@
         ":hover::after": {
           "display": "block"
         }
-      }
+      },
+      "hoverInheritVisibleForSeat": false
     },
     "parent": "alchemistMarkerHolderP5",
     "width": 86,
@@ -8306,7 +8331,8 @@
       "box-sizing": "border-box"
     },
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "height": 37
   },
   "p5Label1Field1": {
     "type": "holder",
@@ -8620,7 +8646,8 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "p6Zone",
-    "onlyVisibleForSeat": "p6"
+    "onlyVisibleForSeat": "p6",
+    "hoverInheritVisibleForSeat": false
   },
   "markersP6": {
     "id": "markersP6",
@@ -8631,7 +8658,8 @@
     "movable": false,
     "movableInEdit": false,
     "height": 144,
-    "onlyVisibleForSeat": "p6"
+    "onlyVisibleForSeat": "p6",
+    "hoverInheritVisibleForSeat": false
   },
   "alchemistMarkerHolderP6": {
     "type": "holder",
@@ -8784,7 +8812,8 @@
         ":hover::after": {
           "display": "block"
         }
-      }
+      },
+      "hoverInheritVisibleForSeat": false
     },
     "parent": "alchemistMarkerHolderP6",
     "width": 86,
@@ -9064,7 +9093,8 @@
       "box-sizing": "border-box"
     },
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "height": 37
   },
   "p6Label1Field1": {
     "type": "holder",
@@ -9377,7 +9407,8 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "p7Zone",
-    "onlyVisibleForSeat": "p7"
+    "onlyVisibleForSeat": "p7",
+    "hoverInheritVisibleForSeat": false
   },
   "markersP7": {
     "id": "markersP7",
@@ -9388,7 +9419,8 @@
     "movable": false,
     "movableInEdit": false,
     "height": 144,
-    "onlyVisibleForSeat": "p7"
+    "onlyVisibleForSeat": "p7",
+    "hoverInheritVisibleForSeat": false
   },
   "alchemistMarkerHolderP7": {
     "type": "holder",
@@ -9541,7 +9573,8 @@
         ":hover::after": {
           "display": "block"
         }
-      }
+      },
+      "hoverInheritVisibleForSeat": false
     },
     "parent": "alchemistMarkerHolderP7",
     "width": 86,
@@ -9821,7 +9854,8 @@
       "box-sizing": "border-box"
     },
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "height": 37
   },
   "p7Label1Field1": {
     "type": "holder",
@@ -10134,7 +10168,8 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "p8Zone",
-    "onlyVisibleForSeat": "p8"
+    "onlyVisibleForSeat": "p8",
+    "hoverInheritVisibleForSeat": false
   },
   "markersP8": {
     "id": "markersP8",
@@ -10145,7 +10180,8 @@
     "movable": false,
     "movableInEdit": false,
     "height": 144,
-    "onlyVisibleForSeat": "p8"
+    "onlyVisibleForSeat": "p8",
+    "hoverInheritVisibleForSeat": false
   },
   "alchemistMarkerHolderP8": {
     "type": "holder",
@@ -10298,7 +10334,8 @@
         ":hover::after": {
           "display": "block"
         }
-      }
+      },
+      "hoverInheritVisibleForSeat": false
     },
     "parent": "alchemistMarkerHolderP8",
     "width": 86,
@@ -10578,7 +10615,8 @@
       "box-sizing": "border-box"
     },
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "height": 37
   },
   "p8Label1Field1": {
     "type": "holder",
@@ -12881,7 +12919,8 @@
     },
     "onlyVisibleForSeat": "p1",
     "movable": false,
-    "x": -300
+    "x": -300,
+    "hoverInheritVisibleForSeat": false
   },
   "p1Score_p1": {
     "type": "label",
@@ -12995,7 +13034,8 @@
       "font-size": "30px",
       "background-color": "#ffffff00",
       "opacity": "0%"
-    }
+    },
+    "height": 32
   },
   "p3Score_p1": {
     "type": "label",
@@ -13010,7 +13050,8 @@
       "font-size": "30px",
       "background-color": "#ffffff00",
       "opacity": "0%"
-    }
+    },
+    "height": 32
   },
   "p4Score_p1": {
     "type": "label",
@@ -13025,7 +13066,8 @@
       "font-size": "30px",
       "background-color": "#ffffff00",
       "opacity": "0%"
-    }
+    },
+    "height": 32
   },
   "p5Score_p1": {
     "type": "label",
@@ -13040,7 +13082,8 @@
       "font-size": "30px",
       "background-color": "#ffffff00",
       "opacity": "0%"
-    }
+    },
+    "height": 32
   },
   "p6Score_p1": {
     "type": "label",
@@ -13055,7 +13098,8 @@
       "font-size": "30px",
       "background-color": "#ffffff00",
       "opacity": "0%"
-    }
+    },
+    "height": 32
   },
   "p7Score_p1": {
     "type": "label",
@@ -13070,7 +13114,8 @@
       "font-size": "30px",
       "background-color": "#ffffff00",
       "opacity": "0%"
-    }
+    },
+    "height": 32
   },
   "p8Score_p1": {
     "type": "label",
@@ -13085,7 +13130,8 @@
       "font-size": "30px",
       "background-color": "#ffffff00",
       "opacity": "0%"
-    }
+    },
+    "height": 32
   },
   "blob1P1_p1": {
     "id": "blob1P1_p1",
@@ -13529,7 +13575,8 @@
     "id": "otherPlayersProgressBGP2",
     "x": -300,
     "y": 0,
-    "onlyVisibleForSeat": "p2"
+    "onlyVisibleForSeat": "p2",
+    "hoverInheritVisibleForSeat": false
   },
   "p1Score_p2": {
     "inheritFrom": "p1Score_p1",
@@ -13911,7 +13958,8 @@
     "id": "otherPlayersProgressBGP3",
     "x": -300,
     "y": 0,
-    "onlyVisibleForSeat": "p3"
+    "onlyVisibleForSeat": "p3",
+    "hoverInheritVisibleForSeat": false
   },
   "p1Score_p3": {
     "inheritFrom": "p1Score_p1",
@@ -14294,7 +14342,8 @@
     "x": -300,
     "y": -3,
     "onlyVisibleForSeat": "p4",
-    "z": 15
+    "z": 15,
+    "hoverInheritVisibleForSeat": false
   },
   "p1Score_p4": {
     "inheritFrom": "p1Score_p1",
@@ -14678,7 +14727,8 @@
     "id": "otherPlayersProgressBGP5",
     "x": -300,
     "y": 0,
-    "onlyVisibleForSeat": "p5"
+    "onlyVisibleForSeat": "p5",
+    "hoverInheritVisibleForSeat": false
   },
   "p1Score_p5": {
     "inheritFrom": "p1Score_p1",
@@ -15060,7 +15110,8 @@
     "id": "otherPlayersProgressBGP6",
     "x": -300,
     "y": 0,
-    "onlyVisibleForSeat": "p6"
+    "onlyVisibleForSeat": "p6",
+    "hoverInheritVisibleForSeat": false
   },
   "p1Score_p6": {
     "inheritFrom": "p1Score_p1",
@@ -15442,7 +15493,8 @@
     "id": "otherPlayersProgressBGP7",
     "x": -300,
     "y": 0,
-    "onlyVisibleForSeat": "p7"
+    "onlyVisibleForSeat": "p7",
+    "hoverInheritVisibleForSeat": false
   },
   "p1Score_p7": {
     "inheritFrom": "p1Score_p1",
@@ -15824,7 +15876,8 @@
     "id": "otherPlayersProgressBGP8",
     "x": -300,
     "y": 0,
-    "onlyVisibleForSeat": "p8"
+    "onlyVisibleForSeat": "p8",
+    "hoverInheritVisibleForSeat": false
   },
   "p1Score_p8": {
     "inheritFrom": "p1Score_p1",
