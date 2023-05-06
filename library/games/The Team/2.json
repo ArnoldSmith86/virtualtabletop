@@ -329,7 +329,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 103,
             "height": 160
@@ -345,10 +344,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 103,
-            "height": 160
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -524,7 +524,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -534,7 +533,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -552,10 +550,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -628,7 +627,8 @@
     "css": "background: #55555550",
     "dropTarget": {
       "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
-    }
+    },
+    "dropShadow": true
   },
   "16d9fd42-a13a-4d4d-b769-d16302b5ff7a_label": {
     "id": "16d9fd42-a13a-4d4d-b769-d16302b5ff7a_label",
@@ -735,10 +735,11 @@
             "x": 0,
             "y": 0,
             "color": "darkblue",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 50,
-            "height": 50
+            "height": 50,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": false,
@@ -843,7 +844,7 @@
     "x": 232
   },
   "v6or": {
-    "image": "/assets/206954176_1013912",
+    "image": "/assets/745153587_51748",
     "movable": false,
     "width": 1600,
     "height": 1000,
@@ -1767,7 +1768,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -1777,7 +1777,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -1795,10 +1794,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -1990,7 +1990,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -2000,7 +1999,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -2018,10 +2016,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -2210,7 +2209,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -2220,7 +2218,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -2238,10 +2235,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -2433,7 +2431,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -2443,7 +2440,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -2461,10 +2457,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -2653,7 +2650,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -2663,7 +2659,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -2681,10 +2676,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -2876,7 +2872,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -2886,7 +2881,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -2904,10 +2898,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -3096,7 +3091,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -3106,7 +3100,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -3124,10 +3117,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -3319,7 +3313,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -3329,7 +3322,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -3347,10 +3339,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -3539,7 +3532,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -3549,7 +3541,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -3567,10 +3558,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -3762,7 +3754,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -3772,7 +3763,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -3790,10 +3780,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -3982,7 +3973,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -3992,7 +3982,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -4010,10 +3999,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -4205,7 +4195,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -4215,7 +4204,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -4233,10 +4221,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -4425,7 +4414,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -4435,7 +4423,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -4453,10 +4440,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -4648,7 +4636,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -4658,7 +4645,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -4676,10 +4662,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -4868,7 +4855,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -4878,7 +4864,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -4896,10 +4881,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -5091,7 +5077,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -5101,7 +5086,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -5119,10 +5103,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -5311,7 +5296,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -5321,7 +5305,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -5339,10 +5322,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -5534,7 +5518,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -5544,7 +5527,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -5562,10 +5544,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -5754,7 +5737,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -5764,7 +5746,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -5782,10 +5763,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -5977,7 +5959,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -5987,7 +5968,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -6005,10 +5985,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -6197,7 +6178,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -6207,7 +6187,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -6225,10 +6204,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -6420,7 +6400,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -6430,7 +6409,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -6448,10 +6426,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -6640,7 +6619,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -6650,7 +6628,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -6668,10 +6645,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -6863,7 +6841,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -6873,7 +6850,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -6891,10 +6867,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -7070,7 +7047,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -7080,7 +7056,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -7098,10 +7073,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -7309,7 +7285,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -7319,7 +7294,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -7337,10 +7311,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -7365,23 +7340,29 @@
     "parent": "khsx"
   },
   "_meta": {
-    "version": 3,
+    "version": 13,
     "info": {
       "name": "The Team",
-      "image": "/assets/-1032817424_900322",
+      "image": "/assets/-1409650904_38719",
       "rules": "",
       "bgg": "https://www.boardgamegeek.com/boardgame/284083/crew-quest-planet-nine",
       "year": "2019",
       "mode": "coop",
       "time": "20",
-      "players": "4",
-      "language": "en-US",
-      "variant": "",
       "attribution": "Original cards and board layout by https://www.reddit.com/user/inseend1, https://www.reddit.com/user/RaphaelAlvez and ArnoldSmith86. Released to public domain under CC0.\n\nCards based on assets from https://unsplash.com/license\n\nAstronauts tokens based on asset https://game-icons.net/1x1/delapouite/astronaut-helmet.html by Delapouite under CC BY 3.0\n\n\n\n\n\n--\n\nOriginal cards and board layout by https://www.reddit.com/user/inseend1, https://www.reddit.com/user/RaphaelAlvez and ArnoldSmith86. Released to public domain under CC0.\n\nCards based on assets from https://unsplash.com/license\n\nAstronauts tokens based on asset https://game-icons.net/1x1/delapouite/astronaut-helmet.html by Delapouite under CC BY 3.0\n\n--\n\nOriginal cards and board layout by https://www.reddit.com/user/inseend1, https://www.reddit.com/user/RaphaelAlvez and ArnoldSmith86. Released to public domain under CC0.\n\nCards based on assets from https://unsplash.com/license\n\nAstronauts tokens based on asset https://game-icons.net/1x1/delapouite/astronaut-helmet.html by Delapouite under CC BY 3.0\n\n--\n\nOriginal cards and board layout by https://www.reddit.com/user/inseend1, https://www.reddit.com/user/RaphaelAlvez and ArnoldSmith86. Released to public domain under CC0.\n\nCards based on assets from https://unsplash.com/license\n\nAstronauts tokens based on asset https://game-icons.net/1x1/delapouite/astronaut-helmet.html by Delapouite under CC BY 3.0",
       "similarName": "The Crew: The Quest for Planet Nine",
       "description": "Cooperative trick taking card game. Work together on mission tasks to ensure that certain tricks are taken by certain players, all while not revealing your hand.",
       "showName": true,
-      "lastUpdate": 1626014391000
+      "lastUpdate": 1683332881225,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "a446559e-6d46-4477-b6ea-2a1c349f93a10": {
@@ -7791,7 +7772,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -7801,7 +7781,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -7819,10 +7798,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -8014,7 +7994,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -8024,7 +8003,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -8042,10 +8020,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -8234,7 +8213,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -8244,7 +8222,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -8262,10 +8239,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -8457,7 +8435,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -8467,7 +8444,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -8485,10 +8461,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -8677,7 +8654,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -8687,7 +8663,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -8705,10 +8680,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -8900,7 +8876,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -8910,7 +8885,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -8928,10 +8902,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -9120,7 +9095,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -9130,7 +9104,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -9148,10 +9121,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -9343,7 +9317,6 @@
             "x": 0,
             "y": 0,
             "color": "#ffffff",
-            "valueType": "static",
             "value": "/assets/-1682721256_109308",
             "width": 59,
             "height": 92
@@ -9353,7 +9326,6 @@
             "x": -1,
             "y": 59.08267474406015,
             "fontSize": 16,
-            "valueType": "static",
             "value": "TASK",
             "textAlign": "center",
             "textFont": "interstate",
@@ -9371,10 +9343,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 59,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
