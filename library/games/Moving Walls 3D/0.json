@@ -623,7 +623,8 @@
     "childrenPerOwner": true,
     "width": 108,
     "y": 210,
-    "css": "background:#BDA1527F"
+    "css": "background:#BDA1527F",
+    "dropShadow": true
   },
   "tempHiddenPile": {
     "id": "tempHiddenPile",
@@ -1235,10 +1236,11 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "background",
             "width": 125,
-            "height": 125
+            "height": 125,
+            "dynamicProperties": {
+              "value": "background"
+            }
           },
           {
             "type": "image",
@@ -1247,8 +1249,9 @@
             "color": "transparent",
             "width": 53,
             "height": 53,
-            "valueType": "dynamic",
-            "value": "treasure"
+            "dynamicProperties": {
+              "value": "treasure"
+            }
           },
           {
             "type": "image",
@@ -1257,8 +1260,9 @@
             "color": "transparent",
             "width": 30,
             "height": 30,
-            "valueType": "dynamic",
-            "value": "L"
+            "dynamicProperties": {
+              "value": "L"
+            }
           },
           {
             "type": "image",
@@ -1267,8 +1271,9 @@
             "color": "transparent",
             "width": 30,
             "height": 30,
-            "valueType": "dynamic",
-            "value": "L"
+            "dynamicProperties": {
+              "value": "L"
+            }
           },
           {
             "type": "image",
@@ -1277,8 +1282,9 @@
             "color": "transparent",
             "width": 30,
             "height": 30,
-            "valueType": "dynamic",
-            "value": "Right"
+            "dynamicProperties": {
+              "value": "Right"
+            }
           },
           {
             "type": "image",
@@ -1287,8 +1293,9 @@
             "color": "transparent",
             "width": 30,
             "height": 30,
-            "valueType": "dynamic",
-            "value": "bottom"
+            "dynamicProperties": {
+              "value": "bottom"
+            }
           }
         ],
         "border": false,
@@ -1850,8 +1857,9 @@
             "color": "transparent",
             "width": 125,
             "height": 125,
-            "valueType": "dynamic",
-            "value": "background"
+            "dynamicProperties": {
+              "value": "background"
+            }
           },
           {
             "type": "image",
@@ -1860,8 +1868,9 @@
             "color": "transparent",
             "width": 53,
             "height": 53,
-            "valueType": "dynamic",
-            "value": "treasure"
+            "dynamicProperties": {
+              "value": "treasure"
+            }
           },
           {
             "type": "image",
@@ -1870,8 +1879,9 @@
             "color": "transparent",
             "width": 30,
             "height": 30,
-            "valueType": "dynamic",
-            "value": "L"
+            "dynamicProperties": {
+              "value": "L"
+            }
           },
           {
             "type": "image",
@@ -1880,8 +1890,9 @@
             "color": "transparent",
             "width": 30,
             "height": 30,
-            "valueType": "dynamic",
-            "value": "L"
+            "dynamicProperties": {
+              "value": "L"
+            }
           },
           {
             "type": "image",
@@ -1890,8 +1901,9 @@
             "color": "transparent",
             "width": 30,
             "height": 30,
-            "valueType": "dynamic",
-            "value": "Right"
+            "dynamicProperties": {
+              "value": "Right"
+            }
           },
           {
             "type": "image",
@@ -1900,8 +1912,9 @@
             "color": "transparent",
             "width": 30,
             "height": 30,
-            "valueType": "dynamic",
-            "value": "bottom"
+            "dynamicProperties": {
+              "value": "bottom"
+            }
           }
         ],
         "border": false,
@@ -2295,7 +2308,6 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "static",
             "value": "/assets/-425409314_2153",
             "width": 100,
             "height": 160
@@ -2305,7 +2317,6 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/504987057_2374",
             "width": 100,
             "height": 160
@@ -2321,7 +2332,6 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "static",
             "value": "/assets/698748228_2153",
             "width": 100,
             "height": 160
@@ -2333,8 +2343,9 @@
             "color": "transparent",
             "width": 53,
             "height": 53,
-            "valueType": "dynamic",
-            "value": "treasure"
+            "dynamicProperties": {
+              "value": "treasure"
+            }
           }
         ],
         "border": false,
@@ -3098,7 +3109,7 @@
     "x": -300
   },
   "0qhi": {
-    "image": "/assets/1383164896_1007871",
+    "image": "/assets/-1602445571_365961",
     "movable": false,
     "width": 1400,
     "height": 1000,
@@ -3112,40 +3123,43 @@
     "x": -17,
     "y": -2,
     "z": 5,
-    "width": 20,
+    "width": 35.85,
     "height": 20,
     "classes": "pinPiece",
     "color": "#4c5fea",
     "id": "tdbq",
     "rotation": -60,
     "movable": false,
-    "parent": "Blue Treasure Cards"
+    "parent": "Blue Treasure Cards",
+    "css": "--pinLength: 33"
   },
   "rx16": {
     "x": -17,
     "y": -2,
     "z": 6,
-    "width": 20,
+    "width": 35.85,
     "height": 20,
     "classes": "pinPiece",
     "color": "#23ca5b",
     "rotation": -60,
     "movable": false,
     "id": "rx16",
-    "parent": "Green Treasure Cards"
+    "parent": "Green Treasure Cards",
+    "css": "--pinLength: 33"
   },
   "5vcu": {
     "x": -17,
     "y": -2,
     "z": 7,
-    "width": 20,
+    "width": 35.85,
     "height": 20,
     "classes": "pinPiece",
     "color": "#e84242",
     "rotation": -60,
     "movable": false,
     "id": "5vcu",
-    "parent": "Red Treasure Cards"
+    "parent": "Red Treasure Cards",
+    "css": "--pinLength: 33"
   },
   "top4": {
     "id": "top4",
@@ -3786,59 +3800,64 @@
     "x": 48.5,
     "y": 48.5,
     "z": 1,
-    "width": 20,
+    "width": 35.85,
     "height": 20,
     "classes": "pinPiece",
     "color": "#e0cb0b",
     "layer": 3,
-    "parent": "board002-1-1"
+    "parent": "board002-1-1",
+    "css": "--pinLength: 33"
   },
   "Pin Blue": {
     "id": "Pin Blue",
     "x": 48.5,
     "y": 48.5,
     "z": 1,
-    "width": 20,
+    "width": 35.85,
     "height": 20,
     "classes": "pinPiece",
     "color": "#4c5fea",
-    "parent": "board002-1-5"
+    "parent": "board002-1-5",
+    "css": "--pinLength: 33"
   },
   "Pin Red": {
     "id": "Pin Red",
     "x": 48.5,
     "y": 48.5,
     "z": 1,
-    "width": 20,
+    "width": 35.85,
     "height": 20,
     "classes": "pinPiece",
     "color": "#e84242",
     "layer": 3,
-    "parent": "board002-5-1"
+    "parent": "board002-5-1",
+    "css": "--pinLength: 33"
   },
   "Pin Green": {
     "id": "Pin Green",
     "x": 48.5,
     "y": 48.5,
     "z": 1,
-    "width": 20,
+    "width": 35.85,
     "height": 20,
     "classes": "pinPiece",
     "color": "#23ca5b",
-    "parent": "board002-5-5"
+    "parent": "board002-5-5",
+    "css": "--pinLength: 33"
   },
   "ewcs": {
     "x": -17,
     "y": -2,
     "z": 8,
-    "width": 20,
+    "width": 35.85,
     "height": 20,
     "classes": "pinPiece",
     "color": "#e0cb0b",
     "rotation": -60,
     "movable": false,
     "id": "ewcs",
-    "parent": "Yellow Treasure Cards"
+    "parent": "Yellow Treasure Cards",
+    "css": "--pinLength: 33"
   },
   "mznc": {
     "x": 4,
@@ -3864,7 +3883,6 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "static",
             "value": "/assets/1330361374_2146",
             "width": 100,
             "height": 160
@@ -3874,7 +3892,6 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/-104593059_28304",
             "width": 100,
             "height": 160
@@ -3892,8 +3909,9 @@
             "color": "white",
             "width": 100,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "Tower"
+            "dynamicProperties": {
+              "value": "Tower"
+            }
           }
         ],
         "border": false,
@@ -4205,7 +4223,7 @@
     "y": 8
   },
   "_meta": {
-    "version": 3,
+    "version": 13,
     "info": {
       "name": "Moving Walls 3D",
       "image": "/assets/-172120137_32543",
@@ -4214,14 +4232,20 @@
       "year": "2019",
       "mode": "vs",
       "time": "20",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
       "attribution": "The game layout and the treasure card template were created by ArnoldSmith86 and https://www.reddit.com/user/Casbuild and are released to the public domain by CC0.\n\nTreasure images (all Public Domain):\nhttps://freesvg.org/boomerang-vector-image\nhttps://freesvg.org/johnny-automatic-crown\nhttps://freesvg.org/brown-hat\nhttps://freesvg.org/old-map-scroll\nhttps://freesvg.org/vector-clip-art-of-break-glass-with-fire-axe\nhttps://freesvg.org/cutlass-cartoon-image\nhttps://freesvg.org/colorful-cube\nhttps://freesvg.org/machovka-hot-dog\nhttps://freesvg.org/10-o-clock\nhttps://freesvg.org/venetian-mask-vector-image\nhttps://freesvg.org/vector-drawing-of-toaster\nhttps://freesvg.org/vector-image-of-wooden-treasure-chest-with-gold-frame\nhttps://freesvg.org/1379546138\n\nDice images (all CC-BY 3.0 by Delapouite):\nhttps://game-icons.net/1x1/delapouite/dice-six-faces-one.html\nhttps://game-icons.net/1x1/delapouite/dice-six-faces-two.html\nhttps://game-icons.net/1x1/delapouite/dice-six-faces-three.html\nhttps://game-icons.net/1x1/delapouite/dice-six-faces-four.html\nhttps://game-icons.net/1x1/delapouite/dice-six-faces-five.html\n\nTower images (all Public Domain):\nhttps://freesvg.org/round-tower-map-vector-symbol\nhttps://freesvg.org/map-symbols-of-tower-square\nhttps://freesvg.org/aiga-stairs-up-sign-vector-image\nhttps://freesvg.org/aiga-stairs-down-sign-vector-image\n\nLabyrinth tiles:\nhttps://ambientcg.com/view?id=Ground042 (CC0)\nhttps://opengameart.org/content/seamless-concrete-floor-tile by Kris Occhipinti (CC-BY-SA 4.0)\n\nBackground:\nhttps://purepng.com/photo/2804/objects-scroll (CC0)\nhttps://www.pexels.com/photo/brown-wooden-parquet-floor-172291/ (Pexels License)",
       "similarName": "3D Labyrinth",
-      "description": "Shift tiles on 3D board to complete a pattern to collect treasure and block opponents.  First to collect treasure pieces wins.",
+      "description": "Shift tiles on 3D board to complete a pattern to collect treasure and block opponents. First to collect treasure pieces wins.",
       "showName": true,
-      "lastUpdate": 1632686648000
+      "lastUpdate": 1683332671998,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "Hand1": {
@@ -4238,7 +4262,8 @@
     "css": "background:#BDA1527F",
     "height": 600,
     "stackOffsetY": -50,
-    "dropOffsetY": 434
+    "dropOffsetY": 434,
+    "dropShadow": true
   },
   "rmyv1": {
     "x": -5,
@@ -4335,7 +4360,6 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "static",
             "value": "/assets/-425409314_2153",
             "width": 100,
             "height": 160
@@ -4345,7 +4369,6 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/504987057_2374",
             "width": 100,
             "height": 160
@@ -4361,7 +4384,6 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "static",
             "value": "/assets/698748228_2153",
             "width": 100,
             "height": 160
@@ -4373,8 +4395,9 @@
             "color": "transparent",
             "width": 53,
             "height": 53,
-            "valueType": "dynamic",
-            "value": "treasure"
+            "dynamicProperties": {
+              "value": "treasure"
+            }
           }
         ],
         "border": false,
