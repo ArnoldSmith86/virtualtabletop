@@ -1,23 +1,28 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 13,
     "info": {
       "name": "Alpaca",
-      "image": "/assets/-1758311402_1721439",
+      "image": "/assets/-1625157355_593694",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/266083/llm",
       "year": "2019",
       "mode": "vs",
       "time": "20",
-      "players": "2-6",
-      "language": "",
-      "variant": "",
-      "attribution": "The game layout, game pieces, and game design are by LawDawg and are released to the Public Domain under CC0.\n\nThe background picture by Dawn Hudson is in the Public Domain under CC0 and is available at https://publicdomainpictures.net/en/view-image.php?image=71643&picture=colourful-flame-background.  It has been cropped and the colors modified.\n\nThe alpaca image is in the Public Domain under CC0 and is available at https://publicdomainpictures.net/en/view-image.php?image=432741&picture=alpaca-animal-mountain-llama",
+      "attribution": "The game layout, game pieces, and game design are by LawDawg and are released to the Public Domain under CC0.\n\nThe background picture by Dawn Hudson is in the Public Domain under CC0 and is available at https://publicdomainpictures.net/en/view-image.php?image=71643&amp;picture=colourful-flame-background.  It has been cropped and the colors modified.\n\nThe alpaca image is in the Public Domain under CC0 and is available at https://publicdomainpictures.net/en/view-image.php?image=432741&amp;picture=alpaca-animal-mountain-llama",
       "similarName": "L.L.A.M.A.",
       "description": "Start with 6 cards and get rid of as many cards as possible. To play, must play same number as top card or one higher. Round ends when one player empties hand of cards or all players quit. Fewest points once another player reaches 40 points wins.",
       "showName": true,
       "helpText": "Players take seats. Press play button in middle of screen to start. A random player will be chosen. Drag card to holder in middle of screen to play. To quit/pass, press trash button on bottom left. When round is over, press scoreboard button to auto-calculate scores. Then press recall and shuffle button to start next round. Scoring note: if a player gets rid of all cards, maximum points will be added back (either 0, 1, or 10) based on the player's current score.",
-      "lastUpdate": 1650427506000
+      "lastUpdate": 1683331727275,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-6",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
     }
   },
   "theDeck": {
@@ -732,7 +737,7 @@
           }
         ]
       },
-      "var countArray = ${countArray} numericSort",
+      "var countArray = ${countArray} numericStringSort",
       "var countArrayLen = ${countArray} length",
       "var countArrayLen = ${countArrayLen} - 1",
       "var maxCards = ${countArray} getIndex ${countArrayLen}",
@@ -1876,7 +1881,7 @@
         "css": "color:red;background: linear-gradient(135deg, red 5%, #fcc4c9, red 95%); border-radius: 15px"
       },
       "Alpaca": {
-        "image": "/assets/-1758311402_1721439",
+        "image": "/assets/-1625157355_593694",
         "sortNum": 10,
         "css": "background: linear-gradient(135deg, black 5%, grey, black 95%); border-radius: 15px"
       }
