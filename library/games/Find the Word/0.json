@@ -1504,7 +1504,7 @@
     "parent": "guesses_1"
   },
   "_meta": {
-    "version": 6,
+    "version": 13,
     "info": {
       "name": "Find the Word",
       "image": "/assets/1812480044_38290",
@@ -1513,14 +1513,20 @@
       "year": "1956",
       "mode": "vs",
       "time": "30",
-      "players": "2",
-      "language": "en-US",
-      "variant": "",
       "attribution": "Room layout and background image by Roger Lipsett and released to the public domain (CC0).",
       "similarName": "Jotto",
       "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
       "showName": true,
-      "lastUpdate": 1647037629000
+      "lastUpdate": 1683331971792,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "corr1_1": {
@@ -2250,7 +2256,8 @@
     "height": 130,
     "z": 7,
     "css": "background-color:lightgray;border:2px solid black",
-    "onlyVisibleForSeat": "P1"
+    "onlyVisibleForSeat": "P1",
+    "hoverInheritVisibleForSeat": false
   },
   "guess_1": {
     "type": "label",
@@ -2417,7 +2424,8 @@
     "z": 8,
     "css": "background-color:lightgray;border:2px solid black",
     "x": 350,
-    "onlyVisibleForSeat": "P1"
+    "onlyVisibleForSeat": "P1",
+    "hoverInheritVisibleForSeat": false
   },
   "guesses_1": {
     "type": "holder",
@@ -2429,7 +2437,8 @@
     "css": "background-color:lightgray;border:2px solid black",
     "numGuesses": 0,
     "y": 1100,
-    "onlyVisibleForSeat": "P1"
+    "onlyVisibleForSeat": "P1",
+    "hoverInheritVisibleForSeat": false
   },
   "scorePanel_1": {
     "type": "holder",
@@ -2440,7 +2449,8 @@
     "z": 26,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P1",
-    "x": 120
+    "x": 120,
+    "hoverInheritVisibleForSeat": false
   },
   "chosen_1": {
     "type": "label",
@@ -2726,7 +2736,8 @@
     "height": 130,
     "z": 7,
     "css": "background-color:lightgray;border:2px solid black",
-    "onlyVisibleForSeat": "P2"
+    "onlyVisibleForSeat": "P2",
+    "hoverInheritVisibleForSeat": false
   },
   "guess_2": {
     "type": "label",
@@ -2894,7 +2905,8 @@
     "z": 22,
     "css": "background-color:lightgray;border:2px solid black",
     "x": 1120,
-    "onlyVisibleForSeat": "P2"
+    "onlyVisibleForSeat": "P2",
+    "hoverInheritVisibleForSeat": false
   },
   "awti3": {
     "type": "label",
@@ -2970,7 +2982,8 @@
     "css": "background-color:lightgray;border:2px solid black",
     "numGuesses": 0,
     "y": 1100,
-    "onlyVisibleForSeat": "P2"
+    "onlyVisibleForSeat": "P2",
+    "hoverInheritVisibleForSeat": false
   },
   "g6l1_2": {
     "type": "button",
@@ -4365,7 +4378,8 @@
     "z": 35,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P1",
-    "x": 296
+    "x": 296,
+    "hoverInheritVisibleForSeat": false
   },
   "word_1": {
     "type": "label",
@@ -4463,7 +4477,8 @@
     "height": 185,
     "z": 23,
     "css": "background-color:lightgray;border:2px solid black",
-    "onlyVisibleForSeat": "P2"
+    "onlyVisibleForSeat": "P2",
+    "hoverInheritVisibleForSeat": false
   },
   "awti5": {
     "type": "label",
@@ -4514,7 +4529,8 @@
     "z": 2,
     "invoker": "g1l4_1",
     "onlyVisibleForSeat": "P1",
-    "y": 1100
+    "y": 1100,
+    "hoverInheritVisibleForSeat": false
   },
   "setIn_1": {
     "type": "button",
@@ -4667,7 +4683,8 @@
     "z": 3,
     "invoker": "g1l1_2",
     "onlyVisibleForSeat": "P2",
-    "y": 1100
+    "y": 1100,
+    "hoverInheritVisibleForSeat": false
   },
   "inWord2": {
     "id": "inWord2",
@@ -5147,7 +5164,7 @@
     "height": 1000,
     "layer": -4,
     "movable": false,
-    "image": "/assets/453039333_2103645",
+    "image": "/assets/-332745963_303481",
     "gameStarted": false,
     "playersReady": [
       false,
@@ -5218,7 +5235,8 @@
     "z": 8,
     "css": "background-color:lightgray;border:2px solid black",
     "x": 998,
-    "onlyVisibleForSeat": "P2"
+    "onlyVisibleForSeat": "P2",
+    "hoverInheritVisibleForSeat": false
   },
   "lA_2": {
     "type": "button",
@@ -5604,7 +5622,8 @@
     "z": 2,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P2",
-    "y": 1100
+    "y": 1100,
+    "hoverInheritVisibleForSeat": false
   },
   "shadow_g1l3_1": {
     "type": "button",
@@ -6753,7 +6772,8 @@
     "onlyVisibleForSeat": "P1",
     "numGuesses": 2,
     "player": 2,
-    "y": 1100
+    "y": 1100,
+    "hoverInheritVisibleForSeat": false
   },
   "shadow_g1l3_2": {
     "type": "button",
