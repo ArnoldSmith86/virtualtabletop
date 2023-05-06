@@ -1,22 +1,28 @@
 {
   "_meta": {
-    "version": 5,
+    "version": 13,
     "info": {
       "name": "Capture the Flag",
-      "image": "/assets/1891395122_1571537",
+      "image": "/assets/1271664203_84908",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/1917/stratego",
       "year": "1946",
       "mode": "teams",
       "time": "45",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
       "attribution": "Game room layout, game pieces, and library image by LawDawg 96 and are released to the Public Domain through CC0.\n\nField background based on original photo by sasha set available at https://unsplash.com/photos/GURzQwO8Li0 under the Unsplash License.\n\nRock background available under the Pixabay License at https://pixabay.com/photos/volcanic-rock-background-template-3836723/.\n\nPiece icons from https://game-icons.net/ available as CC BY 3.0:\n- Flag by Lorc https://game-icons.net/1x1/lorc/flying-flag.html\n- Spy by Delapouite https://game-icons.net/1x1/delapouite/spy.html\n- Bomb by Lorc https://game-icons.net/1x1/lorc/unlit-bomb.html\n- Rank 1 by Delapouite https://game-icons.net/1x1/delapouite/star-formation.html\n- Rank 2 by Delapouite https://game-icons.net/1x1/delapouite/star-medal.html\n- Rank 3 by Skoll https://game-icons.net/1x1/skoll/rank-3.html\n- Rank 4 by Skoll https://game-icons.net/1x1/skoll/rank-2.html\n- Rank 5 by Skoll https://game-icons.net/1x1/skoll/rank-1.html\n- Rank 6 by Delapouite https://game-icons.net/1x1/delapouite/sergeant.html\n- Rank 7 by Delapouite https://game-icons.net/1x1/delapouite/corporal.html\n- Rank 8 by Delapouite https://game-icons.net/1x1/delapouite/private-first-class.html\n- Rank 9 by Delapouite https://game-icons.net/1x1/delapouite/private.html\n",
       "similarName": "Stratego",
       "description": "Strategically arrange movable army pieces, bombs, and flag on board. Attack and capture opponents pieces. First to capture opponent's flag wins.",
       "showName": true,
-      "lastUpdate": 1640793026000
+      "lastUpdate": 1683331390558,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "calls": {
@@ -2392,7 +2398,8 @@
     "x": -1,
     "y": -1,
     "text": "circle\ncircle",
-    "coverBlue": true
+    "coverBlue": true,
+    "hoverInheritVisibleForSeat": false
   },
   "blueseat": {
     "type": "seat",
@@ -2529,235 +2536,274 @@
     "inheritFrom": "coverblue0",
     "id": "coverblue1",
     "parent": "blue1",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue2": {
     "inheritFrom": "coverblue0",
     "id": "coverblue2",
     "parent": "blue2",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue3": {
     "inheritFrom": "coverblue0",
     "id": "coverblue3",
     "parent": "blue3",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue4": {
     "inheritFrom": "coverblue0",
     "id": "coverblue4",
     "parent": "blue4",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue5": {
     "inheritFrom": "coverblue0",
     "id": "coverblue5",
     "parent": "blue5",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue6": {
     "inheritFrom": "coverblue0",
     "id": "coverblue6",
     "parent": "blue6",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue7": {
     "inheritFrom": "coverblue0",
     "id": "coverblue7",
     "parent": "blue7",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue8": {
     "inheritFrom": "coverblue0",
     "id": "coverblue8",
     "parent": "blue8",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue9": {
     "inheritFrom": "coverblue0",
     "id": "coverblue9",
     "parent": "blue9",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue10": {
     "inheritFrom": "coverblue0",
     "id": "coverblue10",
     "parent": "blue10",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue11": {
     "inheritFrom": "coverblue0",
     "id": "coverblue11",
     "parent": "blue11",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue12": {
     "inheritFrom": "coverblue0",
     "id": "coverblue12",
     "parent": "blue12",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue13": {
     "inheritFrom": "coverblue0",
     "id": "coverblue13",
     "parent": "blue13",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue14": {
     "inheritFrom": "coverblue0",
     "id": "coverblue14",
     "parent": "blue14",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue15": {
     "inheritFrom": "coverblue0",
     "id": "coverblue15",
     "parent": "blue15",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue16": {
     "inheritFrom": "coverblue0",
     "id": "coverblue16",
     "parent": "blue16",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue17": {
     "inheritFrom": "coverblue0",
     "id": "coverblue17",
     "parent": "blue17",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue18": {
     "inheritFrom": "coverblue0",
     "id": "coverblue18",
     "parent": "blue18",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue19": {
     "inheritFrom": "coverblue0",
     "id": "coverblue19",
     "parent": "blue19",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue20": {
     "inheritFrom": "coverblue0",
     "id": "coverblue20",
     "parent": "blue20",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue21": {
     "inheritFrom": "coverblue0",
     "id": "coverblue21",
     "parent": "blue21",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue22": {
     "inheritFrom": "coverblue0",
     "id": "coverblue22",
     "parent": "blue22",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue23": {
     "inheritFrom": "coverblue0",
     "id": "coverblue23",
     "parent": "blue23",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue24": {
     "inheritFrom": "coverblue0",
     "id": "coverblue24",
     "parent": "blue24",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue25": {
     "inheritFrom": "coverblue0",
     "id": "coverblue25",
     "parent": "blue25",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue26": {
     "inheritFrom": "coverblue0",
     "id": "coverblue26",
     "parent": "blue26",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue27": {
     "inheritFrom": "coverblue0",
     "id": "coverblue27",
     "parent": "blue27",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue28": {
     "inheritFrom": "coverblue0",
     "id": "coverblue28",
     "parent": "blue28",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue29": {
     "inheritFrom": "coverblue0",
     "id": "coverblue29",
     "parent": "blue29",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue30": {
     "inheritFrom": "coverblue0",
     "id": "coverblue30",
     "parent": "blue30",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue31": {
     "inheritFrom": "coverblue0",
     "id": "coverblue31",
     "parent": "blue31",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue32": {
     "inheritFrom": "coverblue0",
     "id": "coverblue32",
     "parent": "blue32",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue33": {
     "inheritFrom": "coverblue0",
     "id": "coverblue33",
     "parent": "blue33",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue34": {
     "inheritFrom": "coverblue0",
     "id": "coverblue34",
     "parent": "blue34",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue35": {
     "inheritFrom": "coverblue0",
     "id": "coverblue35",
     "parent": "blue35",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue36": {
     "inheritFrom": "coverblue0",
     "id": "coverblue36",
     "parent": "blue36",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue37": {
     "inheritFrom": "coverblue0",
     "id": "coverblue37",
     "parent": "blue37",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue38": {
     "inheritFrom": "coverblue0",
     "id": "coverblue38",
     "parent": "blue38",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverblue39": {
     "inheritFrom": "coverblue0",
     "id": "coverblue39",
     "parent": "blue39",
-    "onlyVisibleForSeat": "redseat"
+    "onlyVisibleForSeat": "redseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred0": {
     "id": "coverred0",
@@ -2773,241 +2819,281 @@
     "x": -1,
     "y": -1,
     "text": "circle\ncircle",
-    "coverRed": true
+    "coverRed": true,
+    "hoverInheritVisibleForSeat": false
   },
   "coverred1": {
     "inheritFrom": "coverred0",
     "id": "coverred1",
     "parent": "red1",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred2": {
     "inheritFrom": "coverred0",
     "id": "coverred2",
     "parent": "red2",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred3": {
     "inheritFrom": "coverred0",
     "id": "coverred3",
     "parent": "red3",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred4": {
     "inheritFrom": "coverred0",
     "id": "coverred4",
     "parent": "red4",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred5": {
     "inheritFrom": "coverred0",
     "id": "coverred5",
     "parent": "red5",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred6": {
     "inheritFrom": "coverred0",
     "id": "coverred6",
     "parent": "red6",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred7": {
     "inheritFrom": "coverred0",
     "id": "coverred7",
     "parent": "red7",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred8": {
     "inheritFrom": "coverred0",
     "id": "coverred8",
     "parent": "red8",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred9": {
     "inheritFrom": "coverred0",
     "id": "coverred9",
     "parent": "red9",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred10": {
     "inheritFrom": "coverred0",
     "id": "coverred10",
     "parent": "red10",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred11": {
     "inheritFrom": "coverred0",
     "id": "coverred11",
     "parent": "red11",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred12": {
     "inheritFrom": "coverred0",
     "id": "coverred12",
     "parent": "red12",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred13": {
     "inheritFrom": "coverred0",
     "id": "coverred13",
     "parent": "red13",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred14": {
     "inheritFrom": "coverred0",
     "id": "coverred14",
     "parent": "red14",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred15": {
     "inheritFrom": "coverred0",
     "id": "coverred15",
     "parent": "red15",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred16": {
     "inheritFrom": "coverred0",
     "id": "coverred16",
     "parent": "red16",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred17": {
     "inheritFrom": "coverred0",
     "id": "coverred17",
     "parent": "red17",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred18": {
     "inheritFrom": "coverred0",
     "id": "coverred18",
     "parent": "red18",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred19": {
     "inheritFrom": "coverred0",
     "id": "coverred19",
     "parent": "red19",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred20": {
     "inheritFrom": "coverred0",
     "id": "coverred20",
     "parent": "red20",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred21": {
     "inheritFrom": "coverred0",
     "id": "coverred21",
     "parent": "red21",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred22": {
     "inheritFrom": "coverred0",
     "id": "coverred22",
     "parent": "red22",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred23": {
     "inheritFrom": "coverred0",
     "id": "coverred23",
     "parent": "red23",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred24": {
     "inheritFrom": "coverred0",
     "id": "coverred24",
     "parent": "red24",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred25": {
     "inheritFrom": "coverred0",
     "id": "coverred25",
     "parent": "red25",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred26": {
     "inheritFrom": "coverred0",
     "id": "coverred26",
     "parent": "red26",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred27": {
     "inheritFrom": "coverred0",
     "id": "coverred27",
     "parent": "red27",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred28": {
     "inheritFrom": "coverred0",
     "id": "coverred28",
     "parent": "red28",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred29": {
     "inheritFrom": "coverred0",
     "id": "coverred29",
     "parent": "red29",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred30": {
     "inheritFrom": "coverred0",
     "id": "coverred30",
     "parent": "red30",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred31": {
     "inheritFrom": "coverred0",
     "id": "coverred31",
     "parent": "red31",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred32": {
     "inheritFrom": "coverred0",
     "id": "coverred32",
     "parent": "red32",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred33": {
     "inheritFrom": "coverred0",
     "id": "coverred33",
     "parent": "red33",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred34": {
     "inheritFrom": "coverred0",
     "id": "coverred34",
     "parent": "red34",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred35": {
     "inheritFrom": "coverred0",
     "id": "coverred35",
     "parent": "red35",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred36": {
     "inheritFrom": "coverred0",
     "id": "coverred36",
     "parent": "red36",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred37": {
     "inheritFrom": "coverred0",
     "id": "coverred37",
     "parent": "red37",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred38": {
     "inheritFrom": "coverred0",
     "id": "coverred38",
     "parent": "red38",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "coverred39": {
     "inheritFrom": "coverred0",
     "id": "coverred39",
     "parent": "red39",
-    "onlyVisibleForSeat": "blueseat"
+    "onlyVisibleForSeat": "blueseat",
+    "hoverInheritVisibleForSeat": false
   },
   "homeBlue1": {
     "type": "holder",
@@ -3501,7 +3587,7 @@
     "layer": -5,
     "movable": false,
     "css": "opacity: 0.5",
-    "image": "/assets/-1997300328_2650328",
+    "image": "/assets/-1055762548_59366",
     "movableInEdit": false
   },
   "backgroundRockRed": {
@@ -3512,7 +3598,7 @@
     "layer": -5,
     "movable": false,
     "css": "opacity: 0.3",
-    "image": "/assets/-1273811190_516854",
+    "image": "/assets/-640046470_110404",
     "movableInEdit": false
   },
   "backgroundRockBlue": {
@@ -3523,7 +3609,7 @@
     "layer": -5,
     "movable": false,
     "css": "opacity: 0.3",
-    "image": "/assets/-1273811190_516854",
+    "image": "/assets/-640046470_110404",
     "movableInEdit": false
   },
   "winner": {
@@ -3564,8 +3650,9 @@
     "height": 1000,
     "onlyVisibleForSeat": "redseat",
     "layer": 5,
-    "image": "/assets/-1273811190_516854",
-    "x": -380
+    "image": "/assets/-640046470_110404",
+    "x": -380,
+    "hoverInheritVisibleForSeat": false
   },
   "redHomeCover": {
     "id": "redHomeCover",
@@ -3576,7 +3663,8 @@
     "onlyVisibleForSeat": "blueseat",
     "x": 1280,
     "layer": 5,
-    "image": "/assets/-1273811190_516854"
+    "image": "/assets/-640046470_110404",
+    "hoverInheritVisibleForSeat": false
   },
   "undo": {
     "type": "button",
