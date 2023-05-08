@@ -336,6 +336,7 @@ body.jsonEdit #toolbar {
 }
 
 #jeLog {
+  margin-left: -40px;
 }
 
 @media (max-width: 1000px) {
@@ -362,7 +363,7 @@ body.jsonEdit #toolbar {
   white-space: normal;
   font-family: monospace;
   font-size: 12px;
-  margin-left: -20px;
+  margin-left: 20px;
   color: var(--textColor);
 }
 
