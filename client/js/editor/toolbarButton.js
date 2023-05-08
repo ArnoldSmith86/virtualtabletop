@@ -17,7 +17,7 @@ class ToolbarButton {
   }
 
   onKeyDown(e) {
-    if(e.key == this.hotkey)
+    if(e.key == this.hotkey && !this.domElement.disabled)
       this.onClick();
   }
 
