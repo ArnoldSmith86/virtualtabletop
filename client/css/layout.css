@@ -947,20 +947,23 @@ button[icon].green:hover {
   margin: 0 20px 20px 0;
 }
 
-.richtextSymbol.richtextSymbol {
+.richtextSymbol.richtextSymbol:not(.emoji), img.emoji {
   display: inline-block;
-  font-size: 18px;
+  font-size: 1.15em;
   position: relative;
-  line-height: 10px;
+  line-height: 1em;
   font-style: normal;
-  height: 18px;
-  width: 18px;
+  height: 1em;
+  width: 1em;
 }
 .richtextSymbol.symbols {
-  top: 2px;
+  top: 0.1em;
 }
-.richtextSymbol.material-icons, .richtextSymbol.gameicons {
-  top: 4px;
+.richtextSymbol.material-icons {
+  top: 0.2em;
+}
+.richtextSymbol.gameicons, img.emoji {
+  vertical-align: bottom;
 }
 
 .symbols {

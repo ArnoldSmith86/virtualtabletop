@@ -213,6 +213,16 @@ export function formField(field, dom, id) {
   }
 }
 
+function emojis2images(dom) {
+  const regex = /\uD83C\uDFF4(\uDB40[\uDC61-\uDC7A])+\uDB40\uDC7F|(\ud83c[\udde6-\uddff]){2}|([\#\*0-9]\ufe0f?\u20e3)|(\u00a9|\u00ae|[\u203c-\u3300]|[\ud83c-\ud83e][\ud000-\udfff])((\ud83c[\udffb-\udfff])?(\ud83e[\uddb0-\uddb3])?(\ufe0f?\u200d([\u2000-\u3300]|[\ud83c-\ud83e][\ud000-\udfff])\ufe0f?)?)*/g;
+  dom.innerHTML = dom.innerHTML.replace(regex, m=>`<img class="emoji" src="i/noto-emoji/emoji_u${emojiToFilename(m)}.svg" alt="${m}">`);
+}
+
+function images2emojis(dom) {
+  const regexpUnicodeModified = /<img class="emoji" src="[^"]*i\/noto-emoji\/emoji_u[0-9a-f_]+\.svg" alt="([^"]+)"[^>]*>/g;
+  dom.innerHTML = dom.innerHTML.replace(regexpUnicodeModified, (m,g)=>g);
+}
+
 export function applyValuesToDOM(parent, obj) {
   for(const dom of $a('[data-field]', parent)) {
     if(obj[dom.dataset.field]) {
@@ -223,6 +233,7 @@ export function applyValuesToDOM(parent, obj) {
         dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
       if(dom.dataset.target == 'src')
         dom.src = mapAssetURLs(obj[dom.dataset.field]);
+      emojis2images(dom);
     } else {
       dom[dom.dataset.target || 'innerText'] = '';
       if(!dom.dataset.forceshow)
@@ -236,12 +247,14 @@ export function applyValuesToDOM(parent, obj) {
 export function getValuesFromDOM(parent) {
   const obj = {};
   for(const dom of $a('[data-field]:not([data-target=href])', parent)) {
+    images2emojis(dom);
     if(dom.dataset.target == 'checked')
       obj[dom.dataset.field] = dom.checked;
     else if(dom.dataset.html && (dom.innerText.trim() || dom.innerHTML.match(/<img|<video/)) && dom.innerText != (dom.dataset.placeholder || '<empty>'))
       obj[dom.dataset.field] = unmapAssetURLs(DOMPurify.sanitize(dom.innerHTML, { USE_PROFILES: { html: true } }));
     else
       obj[dom.dataset.field] = dom[dom.dataset.target || 'innerText'].trim().replace(dom.dataset.placeholder || '<empty>', '');
+    emojis2images(dom);
   }
   return obj;
 }
@@ -291,6 +304,10 @@ export function disableEditing(parent, obj) {
       hideDom.classList.add('hidden');
 }
 
+function emojiToFilename(emoji) {
+  return [...emoji].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
+}
+
 let symbolData = null;
 export async function loadSymbolPicker() {
   if(symbolData === null) {
@@ -311,7 +328,7 @@ export async function loadSymbolPicker() {
             className = 'symbols';
           else if(symbol.match(/^[a-z0-9_]+$/))
             className = 'material-icons';
-          list += `<i class="${className}" title="${className}: ${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+          list += `<i class="${className}" title="${className}: ${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('/i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
         }
       }
     }
@@ -323,6 +340,7 @@ export async function loadSymbolPicker() {
         toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
       for(const title of $a('#symbolList h2'))
         toggleClass(title, 'hidden', text);
+      toggleClass($('#symbolPickerOverlay'), 'fewResults', $a('#symbolList i:not(.hidden)').length < 100);
     };
   }
 }
@@ -408,7 +426,10 @@ export function addRichtextControls(dom) {
             className = 'symbols';
           else if(icon.innerText.match(/^[a-z0-9_]+$/))
             className = 'material-icons';
-          document.execCommand('inserthtml', false, `<i class="richtextSymbol ${className}">${icon.innerText}</i>`);
+          if(className == 'emoji')
+            document.execCommand('inserthtml', false, icon.innerText);
+          else
+            document.execCommand('inserthtml', false, `<i class="richtextSymbol ${className}">${icon.innerText}</i>`);
         }
         for(const insertedSymbol of $a('.richtextSymbol'))
           insertedSymbol.contentEditable = false; // adding the property above causes Chrome to insert two icons

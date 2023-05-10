@@ -1052,6 +1052,8 @@ class PropertiesModule extends SidebarModule {
   renderForHolder(widget) {
     this.addSubHeader('Target widgets');
     for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
+      if(!Object.keys(deck.get('cardTypes')).length)
+        continue;
       const deckButton = this.renderWidgetButton(deck, {}, this.moduleDOM);
       this.addPropertyListener(widget, 'dropTarget', widget=>{
         if(asArray(widget.get('dropTarget')).filter(t=>t.deck == deck.id).length)

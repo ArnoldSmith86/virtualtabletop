@@ -350,6 +350,7 @@ function fillStateTileTitles(dom, name, similarName, savePlayers, saveDate) {
   } else {
     $('h4', dom).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
   }
+  emojis2images(dom);
 }
 
 let sortBy = $('#librarySort').value;
@@ -454,12 +455,12 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
         updateSaveButton.style.display = 'inline-flex';
     }
 
-    if(state.image) {
-      $('img', entry).dataset.src = mapAssetURLs(state.image);
-      lazyImageObserver.observe($('img', entry));
-    }
-
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
+
+    if(state.image) {
+      $('img:not(.emoji)', entry).dataset.src = mapAssetURLs(state.image);
+      lazyImageObserver.observe($('img:not(.emoji)', entry));
+    }
 
     const validPlayers = [];
     const validLanguages = [];
@@ -649,6 +650,7 @@ function fillStateDetails(states, state, dom) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('#similarRulesDomain').innerText = String(state.rules).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('.hideForEdit [data-field=similarAwards]').innerText = String(state.similarAwards);
+    emojis2images($('.hideForEdit [data-field=similarAwards]'));
   }
   updateStateDetailsDomains(state);
 

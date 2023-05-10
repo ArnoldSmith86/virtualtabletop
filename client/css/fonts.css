@@ -417,6 +417,18 @@
   box-sizing: border-box;
 }
 
+#symbolPickerOverlay:not(.bigPreviews) p span {
+  display: none;
+}
+
+#symbolPickerOverlay.fewResults p {
+  display: none;
+}
+
+#symbolPickerOverlay.fewResults input {
+  margin-bottom: 20px;
+}
+
 #symbolList {
   --symbolSize: 24px;
   color: black;
@@ -449,6 +461,11 @@
   word-break: break-all;
 }
 
+#symbolPickerOverlay .emoji:hover, #symbolPickerOverlay.fewResults .emoji {
+  background: var(--url) center no-repeat;
+  color: transparent;
+}
+
 #symbolPickerOverlay .gameicons {
   --spritesheetX: 60;
   --spritesheetY: 69;
@@ -465,7 +482,7 @@
   background-image: url(/i/game-icons.net/overview48.png);
 }
 
-#symbolPickerOverlay.bigPreviews .gameicons:hover {
+#symbolPickerOverlay.bigPreviews .gameicons:hover, #symbolPickerOverlay.fewResults .gameicons {
   background: var(--url);
 }
 
