@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 4,
+    "version": 13,
     "info": {
       "name": "inheritFrom",
       "image": "/assets/2000666030_4993",
@@ -9,42 +9,33 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "",
-      "players": "1",
-      "language": "en-US",
-      "variant": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1638938699000
+      "lastUpdate": 1683827172309,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "spinner2": {
     "type": "spinner",
     "id": "spinner2",
-    "x": 289,
-    "y": 321,
+    "x": 0,
+    "y": 70,
     "width": 110,
     "height": 110,
     "z": 79,
     "movable": true,
     "movableInEdit": true,
-    "inheritFrom": {
-      "spinner1": [
-        "value",
-        "angle"
-      ]
-    },
-    "options": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ]
-  },
-  "spinner1": {
-    "type": "spinner",
-    "value": 2,
+    "inheritFrom": "spinner1",
     "options": [
       1,
       2,
@@ -53,19 +44,37 @@
       5,
       6
     ],
-    "x": 102,
-    "y": 323,
+    "parent": "vgdo"
+  },
+  "spinner1": {
+    "type": "spinner",
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "y": 70,
     "z": 80,
     "id": "spinner1",
-    "angle": 14104
+    "parent": "j8k0",
+    "css": {
+      ">.value": {
+        "background": "red"
+      }
+    },
+    "value": "?"
   },
   "xfmw": {
     "type": "label",
     "text": "Click",
-    "x": 114,
-    "y": 232,
+    "x": 6,
     "z": 146,
-    "id": "xfmw"
+    "id": "xfmw",
+    "height": 60,
+    "parent": "j8k0"
   },
   "slidebuttonx": {
     "type": "button",
@@ -319,8 +328,8 @@
   "yo1qD": {
     "type": "deck",
     "id": "yo1qD",
-    "x": 238,
-    "y": 551,
+    "x": 713,
+    "y": 903,
     "cardTypes": {
       "T 1J": {
         "image": "/i/cards-default/1J.svg",
@@ -820,9 +829,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
-            "value": "/i/cards-default/2B.svg",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "/i/cards-default/2B.svg"
+            }
           }
         ]
       },
@@ -836,9 +846,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -918,7 +929,8 @@
     "x": 623,
     "y": 742,
     "z": 149,
-    "id": "xfmw1"
+    "id": "xfmw1",
+    "height": 60
   },
   "red": {
     "id": "red",
@@ -977,23 +989,8 @@
     "x": 632,
     "y": 486,
     "z": 151,
-    "id": "xfmw2"
-  },
-  "e921": {
-    "classes": "classicPiece",
-    "width": 90,
-    "height": 90,
-    "x": 1406,
-    "y": 850,
-    "z": 94,
-    "id": "e921",
-    "movable": true,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "rainbow": [
-        "color"
-      ]
-    }
+    "id": "xfmw2",
+    "height": 60
   },
   "rainbow": {
     "id": "rainbow",
@@ -1044,7 +1041,8 @@
     "x": 1230,
     "y": 803,
     "z": 159,
-    "id": "xfmw3"
+    "id": "xfmw3",
+    "height": 60
   },
   "dr34": {
     "type": "label",
@@ -1052,7 +1050,8 @@
     "x": 1388,
     "y": 803,
     "z": 160,
-    "text": "Inherits color"
+    "text": "Inherits color",
+    "height": 60
   },
   "dhg4": {
     "type": "label",
@@ -1060,15 +1059,17 @@
     "x": 829,
     "y": 484,
     "z": 152,
-    "text": "Inherits classes"
+    "text": "Inherits classes",
+    "height": 60
   },
   "dbeyh": {
     "type": "label",
     "id": "dbeyh",
-    "x": 301,
-    "y": 226,
+    "x": 5,
     "z": 145,
-    "text": "Inherits angle and value"
+    "text": "Inherits everything",
+    "height": 60,
+    "parent": "vgdo"
   },
   "kklk5": {
     "type": "label",
@@ -1076,7 +1077,8 @@
     "x": 628,
     "y": 228,
     "z": 158,
-    "text": "Type in the box below"
+    "text": "Type in the box below",
+    "height": 60
   },
   "fgfdnj": {
     "type": "label",
@@ -1085,7 +1087,8 @@
     "y": 217,
     "width": 500,
     "z": 148,
-    "text": "Checker inherits x and y values from each respective button. Drag each button to see the change."
+    "text": "Checker inherits x and y values from each respective button. Drag each button to see the change.",
+    "height": 60
   },
   "khfc": {
     "type": "label",
@@ -1093,7 +1096,8 @@
     "x": 893,
     "y": 734,
     "z": 150,
-    "text": "Inherits activeFace"
+    "text": "Inherits activeFace",
+    "height": 60
   },
   "Iffgf4": {
     "type": "label",
@@ -1102,7 +1106,8 @@
     "y": 224,
     "width": 200,
     "z": 157,
-    "text": "Inherits text, height, width, and css"
+    "text": "Inherits text, height, width, and css",
+    "height": 60
   },
   "8fr3": {
     "type": "label",
@@ -1112,13 +1117,14 @@
     "x": 286,
     "y": -5,
     "z": 162,
-    "id": "8fr3"
+    "id": "8fr3",
+    "height": 68
   },
   "gwyf": {
     "type": "button",
     "id": "gwyf",
-    "x": 89,
-    "y": 720,
+    "x": 104,
+    "y": 885,
     "z": 997,
     "text": "Move me up and down",
     "changeMeChangeRoutine": [
@@ -1139,7 +1145,7 @@
       }
     ],
     "movable": true,
-    "changeMe": 720,
+    "changeMe": 885,
     "yChangeRoutine": [
       {
         "func": "SET",
@@ -1152,16 +1158,16 @@
   },
   "2nvd": {
     "id": "2nvd",
-    "x": 266,
+    "x": 281,
     "width": 80,
     "height": 80,
     "z": 913,
     "movable": false,
     "movableInEdit": false,
     "inheritFrom": "gwyf",
-    "text": "Hello",
-    "css": "font-size: 60px; ",
-    "y": 720,
+    "text": "Goodbye",
+    "css": "font-size: 20px; ",
+    "y": 885,
     "customRoutine": [
       {
         "func": "SET",
@@ -1197,11 +1203,12 @@
   "fgfdnj1": {
     "type": "label",
     "id": "fgfdnj1",
-    "y": 616,
+    "y": 781,
     "width": 500,
     "z": 137,
     "text": "Advanced: uses a call to trigger a change routine in a widget that inherits a value, then applies that value to a desired property.",
-    "x": 14
+    "x": 29,
+    "height": 60
   },
   "9nvi": {
     "id": "9nvi",
@@ -1249,5 +1256,131 @@
       "rankFixed": "4K S"
     },
     "clickable": false
+  },
+  "dbeyh1": {
+    "type": "label",
+    "id": "dbeyh1",
+    "x": 5,
+    "z": 145,
+    "text": "Inherits angle and value",
+    "height": 60,
+    "parent": "i6gw"
+  },
+  "dbeyh2": {
+    "type": "label",
+    "id": "dbeyh2",
+    "x": 5,
+    "z": 145,
+    "text": "does not inherits css",
+    "height": 60,
+    "parent": "t3fc"
+  },
+  "spinner3": {
+    "type": "spinner",
+    "id": "spinner3",
+    "x": 0,
+    "y": 70,
+    "width": 110,
+    "height": 110,
+    "z": 79,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "spinner1": [
+        "value",
+        "angle"
+      ]
+    },
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "parent": "i6gw"
+  },
+  "spinner4": {
+    "type": "spinner",
+    "id": "spinner4",
+    "x": 0,
+    "y": 70,
+    "width": 110,
+    "height": 110,
+    "z": 79,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "spinner1": [
+        "value",
+        "angle"
+      ]
+    },
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "parent": "t3fc"
+  },
+  "i6gw": {
+    "parent": null,
+    "x": 102,
+    "y": 463,
+    "width": 110,
+    "height": 182,
+    "id": "i6gw"
+  },
+  "t3fc": {
+    "parent": null,
+    "x": 314,
+    "y": 463,
+    "width": 110,
+    "height": 182,
+    "id": "t3fc"
+  },
+  "j8k0": {
+    "parent": null,
+    "x": 102,
+    "y": 226,
+    "width": 112,
+    "height": 201,
+    "id": "j8k0"
+  },
+  "vgdo": {
+    "parent": null,
+    "x": 314,
+    "y": 226,
+    "width": 110,
+    "height": 205,
+    "id": "vgdo"
+  },
+  "cm5z": {
+    "x": 1420,
+    "y": 851,
+    "width": 50.4,
+    "height": 90,
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "z": 103,
+    "id": "cm5z",
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "rainbow": [
+        "color"
+      ]
+    }
   }
 }
