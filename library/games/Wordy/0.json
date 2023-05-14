@@ -668,7 +668,7 @@
         "func": "TURN"
       }
     ],
-    "globalUpdateRoutine": [
+    "gameStartRoutine": [
       {
         "func": "SHUFFLE",
         "holder": "deckHolder"
