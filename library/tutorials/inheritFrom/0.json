@@ -11,18 +11,18 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1683827172309,
+      "lastUpdate": 1684279645313,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "spinner2": {
@@ -830,9 +830,7 @@
             "width": 103,
             "height": 160,
             "color": "transparent",
-            "dynamicProperties": {
-              "value": "/i/cards-default/2B.svg"
-            }
+            "value": "/i/cards-default/2B.svg"
           }
         ]
       },
@@ -1270,8 +1268,8 @@
     "type": "label",
     "id": "dbeyh2",
     "x": 5,
-    "z": 145,
-    "text": "does not inherits css",
+    "z": 163,
+    "text": "does not inherit css",
     "height": 60,
     "parent": "t3fc"
   },
