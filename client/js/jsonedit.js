@@ -528,7 +528,7 @@ const jeCommands = [
             await removeWidgetLocal(card.get('id'));
 
       jeSetAndSelect();
-      jeApplyChanges();
+      await jeApplyChanges();
 
       for(const [ id, targetCount ] of Object.entries(targetCounts)) {
         const currentCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
