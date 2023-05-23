@@ -47,13 +47,17 @@ export class Label extends Widget {
     }
 
     if(delta.editable !== undefined) {
-      if(delta.editable)
+      if(delta.editable) {
         this.input.removeAttribute("readonly");
-      else
+        this.input.setAttribute('tabindex', this.get('tabindex'));
+      } else {
         this.input.setAttribute("readonly", true);
+        this.input.removeAttribute("tabindex");
+      }
     }
     if(delta.spellCheck !== undefined) {
-      this.input.setAttribute('spellcheck', this.get('spellCheck') === true)
+      this.input.setAttribute('spellcheck', this.get('spellCheck') === true);
     }
+    
   }
 }
