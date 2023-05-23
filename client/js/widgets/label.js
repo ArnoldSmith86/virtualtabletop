@@ -13,6 +13,7 @@ export class Label extends Widget {
       clickable: false,
       spellCheck: false,
       tabIndex: false,
+      placeholderText: false,
 
       text: '',
       editable: false,
@@ -47,6 +48,9 @@ export class Label extends Widget {
       this.input.style.overflowY = contentHeight-this.get('height') < 5 ? 'hidden' : 'scroll';
     }
 
+    if(delta.placeholderText !== undefined) {
+      this.input.setAttribute('placeholder', this.get('placeholderText'));
+    }
     if(delta.editable !== undefined) {
       if(delta.editable) {
         this.input.removeAttribute("readonly");
