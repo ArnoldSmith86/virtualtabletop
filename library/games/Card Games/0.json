@@ -772,6 +772,12 @@
             "value": "${PROPERTY nextTrump OF $gameID}"
           }
         ]
+      },
+      "//This is needed because of Counterpoint",
+      {
+        "func": "SET",
+        "property": "sortAceTen",
+        "value": null
       }
     ]
   },
@@ -3000,10 +3006,7 @@
       " "
     ],
     "showing": false,
-    "player": "",
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000"
+    "player": ""
   },
   "bidValue7": {
     "inheritFrom": {
@@ -5871,6 +5874,22 @@
           },
           {
             "func": "IF",
+            "condition": "${PROPERTY doNotCount OF $gameID}",
+            "thenRoutine": [
+              "var removeHolder = ${PROPERTY doNotCount OF $gameID} + ${value}",
+              {
+                "func": "SELECT",
+                "source": "allCards",
+                "type": "card",
+                "property": "_ancestor",
+                "mode": "remove",
+                "value": "${removeHolder}",
+                "collection": "allCards"
+              }
+            ]
+          },
+          {
+            "func": "IF",
             "operand1": "${trump}",
             "relation": "!=",
             "operand2": "",
@@ -6110,7 +6129,7 @@
         "value": 0
       }
     ],
-    "depth": -1,
+    "depth": 13,
     "text": "Add Card Points",
     "width": 120,
     "css": {
@@ -7624,6 +7643,40 @@
         "func": "CALL",
         "widget": "${gameID}",
         "routine": "resetRoutine"
+      },
+      "\\ Used to minimize the changes diff in GitHub",
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "deckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "pile1"
+      },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "offHolder"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "pile2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": null
       }
     ],
     "width": 60,
@@ -7673,40 +7726,6 @@
         "func": "CALL",
         "widget": "routines",
         "routine": "setTrumpsRoutine"
-      },
-      "\\ Used to minimize the changes diff in GitHub",
-      {
-        "func": "SELECT",
-        "type": "pile",
-        "property": "parent",
-        "value": "deckHolder"
-      },
-      {
-        "func": "SET",
-        "property": "id",
-        "value": "pile1"
-      },
-      {
-        "func": "SELECT",
-        "type": "pile",
-        "property": "parent",
-        "value": "offHolder"
-      },
-      {
-        "func": "SET",
-        "property": "id",
-        "value": "pile2"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "relation": "!=",
-        "value": null
-      },
-      {
-        "func": "SET",
-        "property": "z",
-        "value": null
       }
     ],
     "gameStartRoutine": [
@@ -9101,10 +9120,12 @@
     "width": 83,
     "showBidRoutine": [
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
+      "var gameCheck1 = ${gameID} == 'gameID26'",
+      "var gameCheck2 = ${gameID} == 'gameID27'",
+      "var gameCheck = ${gameCheck1} || ${gameCheck2}",
       {
         "func": "IF",
-        "operand1": "${gameID}",
-        "operand2": "gameID26",
+        "condition": "${gameCheck}",
         "thenRoutine": [
           {
             "func": "SELECT",
@@ -18994,7 +19015,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and all game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div>",
-      "lastUpdate": 1684777133948,
+      "lastUpdate": 1684816210629,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Coiffeur Jass, Coinche, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco",
@@ -20869,6 +20890,12 @@
       3,
       2,
       1,
+      0
+    ],
+    "score27": [
+      30,
+      20,
+      10,
       0
     ]
   },
@@ -23827,9 +23854,6 @@
     },
     "sort1": "sortDefault",
     "sort2": "suit",
-    "roundsTemp": [
-      "Card Points"
-    ],
     "displayArray": [
       [
         "playerAidButton",
@@ -23858,9 +23882,8 @@
     ],
     "gameID": true,
     "hintText": "\"Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder.\\a\\a To declare bid openly for additional pionts, use Actions button then Show Bid button. To reveal hand for additional points, use Actions button then Show Hand button.\\a\\a At the end of the round, press Score button to calculate and enter scores. Manually flipping over bid cards is not necessary, but if a player wants to show their bid, do not manually flip over bid cards until after scoring.\\a\\a Next trump suit is automatically set on the trump indicator widget after recalling cards.\"",
-    "y": 647,
+    "y": 648,
     "autoTeam": false,
-    "transferButtonReturn": false,
     "preSetExceptionsRoutine": [
       {
         "func": "SET",
@@ -24283,6 +24306,475 @@
       }
     ],
     "scale": 0
+  },
+  "gameID27": {
+    "id": "gameID27",
+    "x": -392,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "sort1": "sortAceTen",
+    "sort2": "suit",
+    "roundsTemp": [
+      "Card Points",
+      "Bid",
+      "Bid Difference",
+      "Sum Differences",
+      "Bonus Points",
+      "Final Score"
+    ],
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "scoreButton",
+        1
+      ],
+      [
+        "score+10",
+        1
+      ],
+      [
+        "trump",
+        1
+      ],
+      [
+        "bidWinner",
+        0
+      ],
+      [
+        "transferScoreButton",
+        1
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/countpnt.html.\\a\\a Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder. Trump is automatically indicated on the trump indicator widget in bottom left.\\a\\a At the end of the round, press Add Card Points button to calculate and enter card points captured that round for each player.\\a\\a Press Transfer Score button to autocalculate remaining values on small temporary scoreboard and enter the score onto the main scoreboard.\"",
+    "y": 647,
+    "autoTeam": false,
+    "transferButtonReturn": false,
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "takeSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "settingsArray": [
+      [
+        "centerShow",
+        true
+      ],
+      [
+        "showBidHistory",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        12
+      ],
+      [
+        "hideCards",
+        4
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "jokerCount",
+        1
+      ]
+    ],
+    "playerAidHeader1": "Tricks",
+    "takeSpecialRoutine": [
+      {
+        "func": "MOVE",
+        "from": "centerHolder",
+        "to": "backHolder${seatIndex}",
+        "count": 999,
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat${seatIndex}"
+        ],
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tricksCount"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "text": "Counterpoint",
+    "dealRoutine": [
+      "// Flip over remaining card.",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "deckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      "// If last card is not the joker, then set the sort order and point value of the joker to be equivalent to that card.",
+      {
+        "func": "GET",
+        "property": "suit"
+      },
+      {
+        "func": "GET",
+        "property": "order"
+      },
+      {
+        "func": "GET",
+        "property": "sortAceTen"
+      },
+      "var nine = ${order} == 9",
+      "var joker = ${order} == 14",
+      "var none = ${nine} || ${joker}",
+      {
+        "func": "IF",
+        "condition": "${joker}",
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "jokerBlack1"
+          },
+          {
+            "func": "SET",
+            "property": "sortAceTen",
+            "value": "${sortAceTen}"
+          },
+          {
+            "func": "SET",
+            "property": "suit",
+            "value": "${suit}"
+          },
+          {
+            "func": "SET",
+            "property": "order",
+            "value": "${order}"
+          }
+        ]
+      },
+      "// If remaining card is a 9 or the joker, then set No Trump",
+      {
+        "func": "IF",
+        "condition": "${none}",
+        "thenRoutine": [
+          "var suit = 5"
+        ]
+      },
+      "// This adjusts the trump widget for spade and heart suits because the activeFace does not match the order in the card suits.",
+      {
+        "func": "IF",
+        "operand1": "${suit}",
+        "operand2": 3,
+        "thenRoutine": [
+          "var suit = 4"
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${suit}",
+            "operand2": 4,
+            "thenRoutine": [
+              "var suit = 3"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "activeFace",
+        "value": "${suit}"
+      }
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ]
+    ],
+    "transferExceptionsRoutine": [
+      {
+        "func": "xSET",
+        "collection": [
+          "seat1",
+          "seat3",
+          "seat7"
+        ],
+        "property": "tempScore",
+        "value": []
+      },
+      "var bidValues = '0,30,0,10,20' split ','",
+      "var bidArray = []",
+      "var diffArray = []",
+      "var diffSum = 0",
+      "var basicPoints = []",
+      "var bonusArray = []",
+      "// Calculate what each player bid.",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          7
+        ],
+        "loopRoutine": [
+          "var bidTotal = 0",
+          "var thisHolder = 'holder' + ${value}",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "${thisHolder}",
+            "collection": "bidCards"
+          },
+          {
+            "func": "FOREACH",
+            "range": [
+              4
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "bidCards",
+                "property": "suit",
+                "value": "${value}"
+              },
+              {
+                "func": "COUNT"
+              },
+              "var suitTotal = ${COUNT} * ${bidValues.$value}",
+              "var bidTotal = ${bidTotal} + ${suitTotal}"
+            ]
+          },
+          "var bidArray = push ${bidTotal}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "tempScore",
+            "round": 2,
+            "seats": "seat${value}",
+            "value": "${bidArray.$key}"
+          }
+        ]
+      },
+      "// Calculate difference between bid and actual points.",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          7
+        ],
+        "loopRoutine": [
+          "var seat = 'seat' + ${value}",
+          "var pointsTotal = ${PROPERTY tempScore OF $seat}",
+          "var pointsTotal = ${pointsTotal.0}",
+          "var bidDiff = ${pointsTotal} - ${bidArray.$key}",
+          "var bidDiff = abs ${bidDiff}",
+          "var diffArray = push ${bidDiff}",
+          "var diffSum = ${diffSum} + ${bidDiff}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "tempScore",
+            "round": 3,
+            "seats": "seat${value}",
+            "value": "${bidDiff}"
+          }
+        ]
+      },
+      "// Calculate basic score.",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          7
+        ],
+        "loopRoutine": [
+          "var pointsDiff = ${diffArray.$key} - ${diffSum}",
+          "var pointsDiff = abs ${pointsDiff}",
+          "var basicPoints = push ${pointsDiff}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "tempScore",
+            "round": 4,
+            "seats": "seat${value}",
+            "value": "${pointsDiff}"
+          }
+        ]
+      },
+      "// Calculate bonus points.",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          7
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${diffArray.$key}",
+            "operand2": 0,
+            "thenRoutine": [
+              "var bonusArray = push 30"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${diffArray.$key}",
+                "relation": "<",
+                "operand2": 3,
+                "thenRoutine": [
+                  "var bonusArray = push 20"
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${diffArray.$key}",
+                    "relation": "<",
+                    "operand2": 6,
+                    "thenRoutine": [
+                      "var bonusArray = push 10"
+                    ],
+                    "elseRoutine": [
+                      "var bonusArray = push 0"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "tempScore",
+            "round": 5,
+            "seats": "seat${value}",
+            "value": "${bonusArray.$key}"
+          },
+          "var points = ${basicPoints.$key} + ${bonusArray.$key}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "tempScore",
+            "round": 6,
+            "seats": "seat${value}",
+            "value": "${points}"
+          },
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "seat${value}",
+            "value": "${points}"
+          }
+        ]
+      }
+    ],
+    "doNotCount": "holder"
+  },
+  "playerAid27": {
+    "type": "scoreboard",
+    "id": "playerAid27",
+    "x": 1225,
+    "y": 560,
+    "width": 360,
+    "height": 155,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Suit",
+    "rounds": [
+      "Clubs",
+      "Hearts",
+      "Spades",
+      "Diamonds"
+    ],
+    "seats": "tempSeat1",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true,
+    "scoreProperty": "score27"
   },
   "pile1": {
     "type": "pile",
