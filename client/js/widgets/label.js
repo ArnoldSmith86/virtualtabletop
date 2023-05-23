@@ -13,7 +13,7 @@ export class Label extends Widget {
       clickable: false,
       spellCheck: false,
       tabIndex: false,
-      placeholderText: false,
+      placeholderText: '',
 
       text: '',
       editable: false,
