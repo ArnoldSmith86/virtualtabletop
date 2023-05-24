@@ -8225,10 +8225,10 @@
     ],
     "roundLabel": "",
     "y": 650,
+    "scale": 0,
     "rounds": [
       "Card Points"
-    ],
-    "scale": 0
+    ]
   },
   "seat1": {
     "type": "seat",
@@ -8439,7 +8439,10 @@
         ]
       }
     ],
-    "hideWhenUnused": true
+    "hideWhenUnused": true,
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "preSetsButton": {
     "type": "button",
@@ -19015,10 +19018,10 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and all game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div>",
-      "lastUpdate": 1684816210629,
+      "lastUpdate": 1684903920290,
       "showName": true,
       "skill": "",
-      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Coiffeur Jass, Coinche, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco",
+      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
@@ -24775,6 +24778,358 @@
     "showTotals": false,
     "playerAid": true,
     "scoreProperty": "score27"
+  },
+  "gameID28": {
+    "id": "gameID28",
+    "x": -267,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "displayArray": [
+      [
+        "scoreButton",
+        1
+      ],
+      [
+        "score+10",
+        1
+      ],
+      [
+        "trump",
+        0
+      ],
+      [
+        "bidWinner",
+        0
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/bouncers.html.\\a\\a Hearts are removed from deck and used as score indicators. Tricks are discard and the face-up heart is automatically moved to the trick winner's captured cards holder and displayed face up.\\a\\a At end of round, press Score button to automatically enter score in main scoreboard.\"",
+    "y": 649,
+    "transferButtonReturn": false,
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "takeSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "scoreSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "settingsArray": [
+      [
+        "capturedHolder",
+        true
+      ],
+      [
+        "showDiscard",
+        true
+      ],
+      [
+        "showBidHistory",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        1
+      ],
+      [
+        "seatCount",
+        3
+      ]
+    ],
+    "takeSpecialRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "relation": "in",
+        "value": [
+          "holder1",
+          "holder3",
+          "holder7"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "discard"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "capturedHolder${seatIndex}"
+      }
+    ],
+    "dealRoutine": [
+      {
+        "func": "MOVE",
+        "from": "hand",
+        "to": "deckHolder",
+        "count": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "deckHolder"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "suit",
+        "value": 4
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "tempHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "seat1",
+          "seat3",
+          "seat7"
+        ],
+        "count": 13
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "deckHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        25,
+        25,
+        25
+      ]
+    ],
+    "text": "Bouncers",
+    "scoreSpecialRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          7
+        ],
+        "loopRoutine": [
+          "var basePoints = 0",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "capturedHolder${value}",
+            "collection": "allCards"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "allCards",
+            "loopRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY order OF $widgetID}",
+                "relation": "<",
+                "operand2": 11,
+                "thenRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY order OF $widgetID}",
+                    "operand2": 1,
+                    "thenRoutine": [
+                      "var basePoints = ${basePoints} + 11"
+                    ],
+                    "elseRoutine": [
+                      "var basePoints = ${basePoints} + ${PROPERTY order OF $widgetID}"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "source": "allCards",
+            "property": "order",
+            "relation": ">",
+            "value": 10,
+            "collection": "bouncers"
+          },
+          {
+            "func": "SELECT",
+            "source": "allCards",
+            "property": "order",
+            "relation": "<",
+            "value": 11,
+            "collection": "allCardsNoBouncers"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "bouncers",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "allCards",
+                "property": "order",
+                "value": 1,
+                "collection": "ace"
+              },
+              {
+                "func": "COUNT",
+                "collection": "ace",
+                "variable": "countAce"
+              },
+              {
+                "func": "IF",
+                "operand1": "${countAce}",
+                "operand2": 1,
+                "thenRoutine": [
+                  "var basePoints = ${basePoints} - 11",
+                  {
+                    "func": "SELECT",
+                    "source": "allCards",
+                    "property": "order",
+                    "value": 1,
+                    "mode": "remove",
+                    "collection": "allCards"
+                  },
+                  {
+                    "func": "SELECT",
+                    "source": "bouncers",
+                    "property": "id",
+                    "value": "${widgetID}",
+                    "mode": "remove",
+                    "collection": "bouncers"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "GET",
+                    "collection": "allCardsNoBouncers",
+                    "property": "order",
+                    "aggregation": "max",
+                    "variable": "maxOrder"
+                  },
+                  {
+                    "func": "COUNT",
+                    "collection": "allCardsNoBouncers",
+                    "variable": "allCardsNoBouncers"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${allCardsNoBouncers}",
+                    "relation": ">",
+                    "operand2": 0,
+                    "thenRoutine": [
+                      "var basePoints = ${basePoints} - ${maxOrder}",
+                      {
+                        "func": "SELECT",
+                        "source": "allCards",
+                        "property": "order",
+                        "value": "${maxOrder}",
+                        "mode": "remove",
+                        "collection": "allCardsNoBouncers"
+                      },
+                      {
+                        "func": "SELECT",
+                        "source": "bouncers",
+                        "property": "id",
+                        "value": "${widgetID}",
+                        "mode": "remove",
+                        "collection": "bouncers"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "COUNT",
+            "collection": "bouncers",
+            "variable": "countBouncers"
+          },
+          "var deduct = ${countBouncers} * 25",
+          "var basePoints = ${basePoints} + ${deduct}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "seats": "seat${value}",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "value": "${basePoints}"
+          }
+        ]
+      }
+    ]
   },
   "pile1": {
     "type": "pile",
