@@ -51,12 +51,12 @@ export class Label extends Widget {
     if(delta.placeholderText !== undefined) {
       this.input.setAttribute('placeholder', this.get('placeholderText'));
     }
+    if(delta.tabIndex !== undefined) {
+      this.input.setAttribute('tabindex', this.get('tabIndex'));
+    }
     if(delta.editable !== undefined) {
       if(delta.editable) {
         this.input.removeAttribute("readonly");
-        if(delta.tabIndex !== undefined) {
-          this.input.setAttribute('tabindex', this.get('tabIndex'));
-        }
       } else {
         this.input.setAttribute("readonly", true);
         this.input.removeAttribute("tabindex");
