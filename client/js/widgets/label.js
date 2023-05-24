@@ -12,7 +12,7 @@ export class Label extends Widget {
       typeClasses: 'widget label',
       clickable: false,
       spellCheck: false,
-      tabIndex: false,
+      tabIndex: -1,
       placeholderText: '',
 
       text: '',
@@ -51,9 +51,9 @@ export class Label extends Widget {
     if(delta.placeholderText !== undefined) {
       this.input.setAttribute('placeholder', this.get('placeholderText'));
     }
-    if(delta.tabIndex !== undefined) {
-      this.input.setAttribute('tabindex', this.get('tabIndex'));
-    }
+
+    this.input.setAttribute('tabindex', this.get('tabIndex'));
+    
     if(delta.editable !== undefined) {
       if(delta.editable) {
         this.input.removeAttribute("readonly");
