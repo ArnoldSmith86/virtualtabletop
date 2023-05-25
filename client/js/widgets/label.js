@@ -12,7 +12,7 @@ export class Label extends Widget {
       typeClasses: 'widget label',
       clickable: false,
       spellCheck: false,
-      tabIndex: -1,
+      tabIndex: null,
       placeholderText: '',
 
       text: '',
@@ -48,23 +48,24 @@ export class Label extends Widget {
       this.input.style.overflowY = contentHeight-this.get('height') < 5 ? 'hidden' : 'scroll';
     }
 
-    if(delta.placeholderText !== undefined) {
+    if(delta.placeholderText !== undefined)
       this.input.setAttribute('placeholder', this.get('placeholderText'));
-    }
 
-    this.input.setAttribute('tabindex', this.get('tabIndex'));
-    
-    if(delta.editable !== undefined) {
-      if(delta.editable) {
-        this.input.removeAttribute("readonly");
+    if(delta.editable !== undefined || delta.tabIndex !== undefined) {
+      if(this.get('editable')) {
+        this.input.removeAttribute('readonly');
+        if(this.get('tabIndex') !== null)
+          this.input.setAttribute('tabindex', this.get('tabIndex'));
+        else
+          this.input.removeAttribute('tabindex');
       } else {
-        this.input.setAttribute("readonly", true);
-        this.input.removeAttribute("tabindex");
+        this.input.setAttribute('readonly', true);
+        this.input.setAttribute('tabindex', -1);
       }
     }
-    if(delta.spellCheck !== undefined) {
+
+    if(delta.spellCheck !== undefined)
       this.input.setAttribute('spellcheck', this.get('spellCheck') === true);
-    }
-    
+
   }
 }
