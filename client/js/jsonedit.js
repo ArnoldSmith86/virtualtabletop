@@ -2336,7 +2336,7 @@ function jeEmpty() {
   jeStateNow = null;
   jeWidget = null;
 
-  jeSet('');
+  jeSet('', true);
   jeShowCommands();
 }
 

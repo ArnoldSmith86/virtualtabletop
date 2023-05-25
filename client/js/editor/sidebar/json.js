@@ -24,9 +24,9 @@ class JsonModule extends SidebarModule {
 
   onSelectionChangedWhileActive(newSelection) {
     if(newSelection.length) {
-      jeSelectWidget(newSelection[0]);
+      jeSelectWidget(newSelection[0], true);
       for(let i=1; i<newSelection.length; ++i)
-        jeSelectWidget(newSelection[i], false, true);
+        jeSelectWidget(newSelection[i], true, true);
     } else {
       jeEmpty();
     }
