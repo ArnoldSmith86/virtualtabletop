@@ -30,6 +30,7 @@ class JsonModule extends SidebarModule {
     } else {
       jeEmpty();
     }
+    $('#jeText').blur();
   }
 
   renderModule(target) {
