@@ -50,8 +50,7 @@ class ToolbarButton {
 
 class ToolbarToggleButton extends ToolbarButton {
   click() {
-    this.active = !this.active;
-    this.domElement.classList.toggle('active');
+    this.setState(!this.active);
     this.toggle(this.active);
     if(this.active)
       this.activate();
@@ -72,6 +71,11 @@ class ToolbarToggleButton extends ToolbarButton {
     super.render(target);
     if(this.active)
       this.domElement.classList.add('active');
+  }
+
+  setState(state) {
+    this.active = state;
+    this.domElement.classList.toggle('active', state);
   }
 }
 
