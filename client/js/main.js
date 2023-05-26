@@ -376,7 +376,7 @@ async function loadEditMode() {
       setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,
-      generateUniqueWidgetID, unescapeID, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
+      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
       getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,

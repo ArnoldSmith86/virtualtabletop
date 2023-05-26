@@ -121,3 +121,47 @@
 .undo.editorModule > .active.undoEntry ~ div {
   color: var(--textColor);
 }
+
+
+/* assets */
+
+.image.editorModule .externalLink {
+  display: flex;
+}
+
+.image.editorModule .externalLink:nth-child(2n) {
+  background: var(--backgroundHighlightColor1);
+}
+
+.image.editorModule .externalLink::after {
+  font-family: "Material Icons";
+  font-size: 40px;
+  position: absolute;
+}
+
+.image.editorModule .externalLink.queued::after {
+  content: "hourglass_empty";
+}
+
+.image.editorModule .externalLink.processing::after {
+  content: "cloud_download";
+}
+
+.image.editorModule .externalLink.done::after {
+  content: "check_circle";
+}
+
+.image.editorModule .externalLink:nth-child(2n) {
+  background: var(--backgroundHighlightColor1);
+}
+
+.image.editorModule .externalLink img {
+  height: 100px;
+  width: 100px;
+  min-width: 100px;
+  object-fit: contain;
+}
+
+.image.editorModule .externalLink span {
+  word-break: break-all;
+}

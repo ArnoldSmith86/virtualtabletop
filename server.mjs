@@ -301,6 +301,14 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
+  router.put('/asset/:link', async function(req, res) {
+    const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
+    const filename = `/${CRC32.buf(content)}_${content.length}`;
+    if(!Config.resolveAsset(filename.substr(1)))
+      fs.writeFileSync(assetsdir + filename, content);
+    res.send(`/assets${filename}`);
+  });
+
   router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!Config.resolveAsset(filename.substr(1)))
