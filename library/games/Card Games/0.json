@@ -4758,8 +4758,7 @@
         }
       ]
     },
-    "staged": false,
-    "clickable": true
+    "staged": false
   },
   "6exv_A_C": {
     "id": "6exv_A_C",
@@ -6280,6 +6279,10 @@
               {
                 "text": "Crow (1-14, 4 colors, 1 Crow)",
                 "value": 3
+              },
+              {
+                "text": "Spanish (1-12, Clubs, Coins, Cups, Swords)",
+                "value": 4
               }
             ]
           },
@@ -6343,6 +6346,10 @@
               {
                 "text": "8,9,10",
                 "value": 9
+              },
+              {
+                "text": "8,9",
+                "value": 10
               }
             ]
           },
@@ -7361,6 +7368,9 @@
       ],
       [
         "crowDeck"
+      ],
+      [
+        "spanishDeck"
       ]
     ],
     "hideCardsArray": [
@@ -7417,6 +7427,10 @@
         8,
         9,
         10
+      ],
+      [
+        8,
+        9
       ]
     ],
     "cardsSetupRoutine": [
@@ -19015,7 +19029,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and all game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div>",
-      "lastUpdate": 1684905923359,
+      "lastUpdate": 1685125863956,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.0.1",
@@ -23835,15 +23849,6 @@
     "parent": "itmesHolder11",
     "clickable": false
   },
-  "pile2": {
-    "type": "pile",
-    "parent": "offHolder",
-    "x": 0,
-    "y": 0,
-    "width": 103,
-    "height": 160,
-    "id": "pile2"
-  },
   "gameID26": {
     "id": "gameID26",
     "x": -526,
@@ -25195,6 +25200,941 @@
         "text": "Show All Hearts"
       }
     ]
+  },
+  "spanishDeck": {
+    "type": "deck",
+    "id": "spanishDeck",
+    "parent": "offHolder",
+    "x": 4,
+    "y": 4,
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "clickable": true,
+    "inheritFrom": {
+      "deck1": [
+        "cardDefaults"
+      ]
+    },
+    "staged": false,
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 6,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "x": 20,
+            "y": 20,
+            "width": 63,
+            "height": 120,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rankImage"
+            },
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": -2,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 127,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 28,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImageR"
+            },
+            "css": {
+              "background-size": "50% 50%"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 28,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            }
+          },
+          {
+            "type": "image",
+            "x": 79,
+            "y": 110,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImageR"
+            },
+            "rotation": 180,
+            "css": {
+              "background-size": "50% 50%"
+            }
+          },
+          {
+            "type": "image",
+            "x": 79,
+            "y": 110,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            },
+            "rotation": 180
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "Club 01": {
+        "rank": "1",
+        "rankImage": "i/cards-spanish/1Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 1,
+        "sortDefault": 1
+      },
+      "Club 02": {
+        "rank": "2",
+        "rankImage": "i/cards-spanish/2Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 2,
+        "sortDefault": 2
+      },
+      "Club 03": {
+        "rank": "3",
+        "rankImage": "i/cards-spanish/3Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 3,
+        "sortDefault": 3
+      },
+      "Club 04": {
+        "rank": "4",
+        "rankImage": "i/cards-spanish/4Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 4,
+        "sortDefault": 4
+      },
+      "Club 05": {
+        "rank": "5",
+        "rankImage": "i/cards-spanish/5Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 5,
+        "sortDefault": 5
+      },
+      "Club 06": {
+        "rank": "6",
+        "rankImage": "i/cards-spanish/6Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 6,
+        "sortDefault": 6
+      },
+      "Club 07": {
+        "rank": "7",
+        "rankImage": "i/cards-spanish/7Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 7,
+        "sortDefault": 7
+      },
+      "Club 08": {
+        "rank": "8",
+        "rankImage": "i/cards-spanish/8Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 8,
+        "sortDefault": 8
+      },
+      "Club 09": {
+        "rank": "9",
+        "rankImage": "i/cards-spanish/9Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 9,
+        "sortDefault": 9
+      },
+      "Club 10": {
+        "rank": "10",
+        "rankImage": "i/cards-spanish/10Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 10,
+        "sortDefault": 10
+      },
+      "Club 11": {
+        "rank": "11",
+        "rankImage": "i/cards-spanish/11Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 11,
+        "sortDefault": 11
+      },
+      "Club 12": {
+        "rank": "12",
+        "rankImage": "i/cards-spanish/12Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 12,
+        "sortDefault": 12
+      },
+      "Coin 01": {
+        "rank": "1",
+        "rankImage": "i/cards-spanish/1Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 1,
+        "sortDefault": 1
+      },
+      "Coin 02": {
+        "rank": "2",
+        "rankImage": "i/cards-spanish/2Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 2,
+        "sortDefault": 2
+      },
+      "Coin 03": {
+        "rank": "3",
+        "rankImage": "i/cards-spanish/3Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 3,
+        "sortDefault": 3
+      },
+      "Coin 04": {
+        "rank": "4",
+        "rankImage": "i/cards-spanish/4Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 4,
+        "sortDefault": 4
+      },
+      "Coin 05": {
+        "rank": "5",
+        "rankImage": "i/cards-spanish/5Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 5,
+        "sortDefault": 5
+      },
+      "Coin 06": {
+        "rank": "6",
+        "rankImage": "i/cards-spanish/6Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 6,
+        "sortDefault": 6
+      },
+      "Coin 07": {
+        "rank": "7",
+        "rankImage": "i/cards-spanish/7Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 7,
+        "sortDefault": 7
+      },
+      "Coin 08": {
+        "rank": "8",
+        "rankImage": "i/cards-spanish/8Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 8,
+        "sortDefault": 8
+      },
+      "Coin 09": {
+        "rank": "9",
+        "rankImage": "i/cards-spanish/9Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 9,
+        "sortDefault": 9
+      },
+      "Coin 10": {
+        "rank": "10",
+        "rankImage": "i/cards-spanish/10Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 10,
+        "sortDefault": 10
+      },
+      "Coin 11": {
+        "rank": "11",
+        "rankImage": "i/cards-spanish/11Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 11,
+        "sortDefault": 11
+      },
+      "Coin 12": {
+        "rank": "12",
+        "rankImage": "i/cards-spanish/12Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 12,
+        "sortDefault": 12
+      },
+      "Cup 01": {
+        "rank": "1",
+        "rankImage": "i/cards-spanish/1Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 1,
+        "sortDefault": 1
+      },
+      "Cup 02": {
+        "rank": "2",
+        "rankImage": "i/cards-spanish/2Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 2,
+        "sortDefault": 2
+      },
+      "Cup 03": {
+        "rank": "3",
+        "rankImage": "i/cards-spanish/3Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 3,
+        "sortDefault": 3
+      },
+      "Cup 04": {
+        "rank": "4",
+        "rankImage": "i/cards-spanish/4Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 4,
+        "sortDefault": 4
+      },
+      "Cup 05": {
+        "rank": "5",
+        "rankImage": "i/cards-spanish/5Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 5,
+        "sortDefault": 5
+      },
+      "Cup 06": {
+        "rank": "6",
+        "rankImage": "i/cards-spanish/6Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 6,
+        "sortDefault": 6
+      },
+      "Cup 07": {
+        "rank": "7",
+        "rankImage": "i/cards-spanish/7Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 7,
+        "sortDefault": 7
+      },
+      "Cup 08": {
+        "rank": "8",
+        "rankImage": "i/cards-spanish/8Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 8,
+        "sortDefault": 8
+      },
+      "Cup 09": {
+        "rank": "9",
+        "rankImage": "i/cards-spanish/9Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 9,
+        "sortDefault": 9
+      },
+      "Cup 10": {
+        "rank": "10",
+        "rankImage": "i/cards-spanish/10Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 10,
+        "sortDefault": 10
+      },
+      "Cup 11": {
+        "rank": "11",
+        "rankImage": "i/cards-spanish/11Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 11,
+        "sortDefault": 11
+      },
+      "Cup 12": {
+        "rank": "12",
+        "rankImage": "i/cards-spanish/12Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 12,
+        "sortDefault": 12
+      },
+      "Sword 01": {
+        "rank": "1",
+        "rankImage": "i/cards-spanish/1Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 1,
+        "sortDefault": 1
+      },
+      "Sword 02": {
+        "rank": "2",
+        "rankImage": "i/cards-spanish/2Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 2,
+        "sortDefault": 2
+      },
+      "Sword 03": {
+        "rank": "3",
+        "rankImage": "i/cards-spanish/3Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 3,
+        "sortDefault": 3
+      },
+      "Sword 04": {
+        "rank": "4",
+        "rankImage": "i/cards-spanish/4Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 4,
+        "sortDefault": 4
+      },
+      "Sword 05": {
+        "rank": "5",
+        "rankImage": "i/cards-spanish/5Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 5,
+        "sortDefault": 5
+      },
+      "Sword 06": {
+        "rank": "6",
+        "rankImage": "i/cards-spanish/6Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 6,
+        "sortDefault": 6
+      },
+      "Sword 07": {
+        "rank": "7",
+        "rankImage": "i/cards-spanish/7Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 7,
+        "sortDefault": 7
+      },
+      "Sword 08": {
+        "rank": "8",
+        "rankImage": "i/cards-spanish/8Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 8,
+        "sortDefault": 8
+      },
+      "Sword 09": {
+        "rank": "9",
+        "rankImage": "i/cards-spanish/9Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 9,
+        "sortDefault": 9
+      },
+      "Sword 10": {
+        "rank": "10",
+        "rankImage": "i/cards-spanish/10Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 10,
+        "sortDefault": 10
+      },
+      "Sword 11": {
+        "rank": "11",
+        "rankImage": "i/cards-spanish/11Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 11,
+        "sortDefault": 11
+      },
+      "Sword 12": {
+        "rank": "12",
+        "rankImage": "i/cards-spanish/12Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 12,
+        "sortDefault": 12
+      }
+    }
+  },
+  "sh1e": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 01",
+    "id": "sh1e",
+    "parent": "pile2",
+    "staged": false
+  },
+  "9rai": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 02",
+    "id": "9rai",
+    "parent": "pile2",
+    "staged": false
+  },
+  "9hfs": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 03",
+    "id": "9hfs",
+    "parent": "pile2",
+    "staged": false
+  },
+  "4i54": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 04",
+    "id": "4i54",
+    "parent": "pile2",
+    "staged": false
+  },
+  "cqty": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 05",
+    "id": "cqty",
+    "parent": "pile2",
+    "staged": false
+  },
+  "q3iq": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 06",
+    "id": "q3iq",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "yan6": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 07",
+    "id": "yan6",
+    "parent": "pile2",
+    "staged": false
+  },
+  "4kbm": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 08",
+    "id": "4kbm",
+    "parent": "pile2",
+    "staged": false
+  },
+  "no7i": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 09",
+    "id": "no7i",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "tbd4": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 10",
+    "id": "tbd4",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "9wkw": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 11",
+    "id": "9wkw",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "1uaz": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Club 12",
+    "id": "1uaz",
+    "parent": "pile2",
+    "staged": false
+  },
+  "g2p1": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 01",
+    "id": "g2p1",
+    "parent": "pile2",
+    "staged": false
+  },
+  "2lr5": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 02",
+    "id": "2lr5",
+    "parent": "pile2",
+    "staged": false
+  },
+  "fb07": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 03",
+    "id": "fb07",
+    "parent": "pile2",
+    "staged": false
+  },
+  "7mdx": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 04",
+    "id": "7mdx",
+    "parent": "pile2",
+    "staged": false
+  },
+  "p6t1": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 05",
+    "id": "p6t1",
+    "parent": "pile2",
+    "staged": false
+  },
+  "y8jg": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 06",
+    "id": "y8jg",
+    "parent": "pile2",
+    "staged": false
+  },
+  "jy9e": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 07",
+    "id": "jy9e",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ois8": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 08",
+    "id": "ois8",
+    "parent": "pile2",
+    "staged": false
+  },
+  "bmmy": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 09",
+    "id": "bmmy",
+    "parent": "pile2",
+    "staged": false
+  },
+  "odn8": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 10",
+    "id": "odn8",
+    "parent": "pile2",
+    "staged": false
+  },
+  "v2h2": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 11",
+    "id": "v2h2",
+    "parent": "pile2",
+    "staged": false
+  },
+  "qgiq": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Coin 12",
+    "id": "qgiq",
+    "parent": "pile2",
+    "staged": false
+  },
+  "rj3y": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 01",
+    "id": "rj3y",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ksc2": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 02",
+    "id": "ksc2",
+    "parent": "pile2",
+    "staged": false
+  },
+  "z99b": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 03",
+    "id": "z99b",
+    "parent": "pile2",
+    "staged": false
+  },
+  "x9gd": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 04",
+    "id": "x9gd",
+    "parent": "pile2",
+    "staged": false
+  },
+  "to5r": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 05",
+    "id": "to5r",
+    "parent": "pile2",
+    "staged": false
+  },
+  "epq7": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 06",
+    "id": "epq7",
+    "parent": "pile2",
+    "staged": false
+  },
+  "qd9y": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 07",
+    "id": "qd9y",
+    "parent": "pile2",
+    "staged": false
+  },
+  "fvha": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 08",
+    "id": "fvha",
+    "parent": "pile2",
+    "staged": false
+  },
+  "hvmr": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 09",
+    "id": "hvmr",
+    "parent": "pile2",
+    "staged": false
+  },
+  "o5wk": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 10",
+    "id": "o5wk",
+    "parent": "pile2",
+    "staged": false
+  },
+  "glym": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 11",
+    "id": "glym",
+    "parent": "pile2",
+    "staged": false
+  },
+  "qk6o": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Cup 12",
+    "id": "qk6o",
+    "parent": "pile2",
+    "staged": false
+  },
+  "6ztl": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 01",
+    "id": "6ztl",
+    "parent": "pile2",
+    "staged": false
+  },
+  "6jct": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 02",
+    "id": "6jct",
+    "parent": "pile2",
+    "staged": false
+  },
+  "06fw": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 03",
+    "id": "06fw",
+    "parent": "pile2",
+    "staged": false
+  },
+  "e2ul": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 04",
+    "id": "e2ul",
+    "parent": "pile2",
+    "staged": false
+  },
+  "t499": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 05",
+    "id": "t499",
+    "parent": "pile2",
+    "staged": false
+  },
+  "jceo": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 06",
+    "id": "jceo",
+    "parent": "pile2",
+    "staged": false
+  },
+  "kyrv": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 07",
+    "id": "kyrv",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "cprx": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 08",
+    "id": "cprx",
+    "parent": "pile2",
+    "staged": false
+  },
+  "1van": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 09",
+    "id": "1van",
+    "parent": "pile2",
+    "staged": false
+  },
+  "yvjj": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 10",
+    "id": "yvjj",
+    "parent": "pile2",
+    "staged": false
+  },
+  "rxxu": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 11",
+    "id": "rxxu",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ca49": {
+    "deck": "spanishDeck",
+    "type": "card",
+    "cardType": "Sword 12",
+    "id": "ca49",
+    "parent": "pile2",
+    "staged": false
+  },
+  "pile2": {
+    "type": "pile",
+    "parent": "offHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "pile2"
   },
   "pile1": {
     "type": "pile",
