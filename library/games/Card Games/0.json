@@ -5347,8 +5347,8 @@
         ]
       },
       {
-        "border": false,
-        "radius": false,
+        "border": 1,
+        "radius": 6,
         "objects": [
           {
             "type": "image",
@@ -9777,16 +9777,32 @@
         "collection": [
           "tempSeat1"
         ],
-        "property": "scale",
-        "value": 1
+        "property": "player",
+        "value": "${PROPERTY playerAidHeader1 OF $gameID}"
       },
       {
         "func": "SET",
         "collection": [
           "tempSeat1"
         ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tempSeat2"
+        ],
         "property": "player",
-        "value": "${PROPERTY playerAidHeader1 OF $gameID}"
+        "value": "${PROPERTY playerAidHeader2 OF $gameID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tempSeat2"
+        ],
+        "property": "scale",
+        "value": 1
       }
     ],
     "messageButtonRoutine": [
@@ -11521,7 +11537,7 @@
     "id": "scoreboard3",
     "y": 85,
     "width": 175,
-    "height": 430,
+    "height": 480,
     "movable": false,
     "movableInEdit": false,
     "autosizeColumns": false,
@@ -11559,7 +11575,8 @@
       "S",
       "G",
       "J1",
-      "J2"
+      "J2",
+      "Match"
     ],
     "showAllRounds": true,
     "scoreProperty": "scoreCoiffeur",
@@ -11803,7 +11820,8 @@
       10
     ],
     "x": 60,
-    "text": "Convert"
+    "text": "Convert",
+    "scale": 0
   },
   "3pScoreCoiffeurButton": {
     "type": "button",
@@ -12096,8 +12114,7 @@
       "seat7"
     ],
     "x": 60,
-    "text": "Convert",
-    "scale": 0
+    "text": "Convert"
   },
   "showHandButton": {
     "type": "button",
@@ -13769,7 +13786,13 @@
         ]
       }
     ],
-    "transferButtonReturn": false
+    "transferButtonReturn": false,
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ]
+    ]
   },
   "gameID2": {
     "id": "gameID2",
@@ -14272,6 +14295,10 @@
     ],
     "displayArray": [
       [
+        "playerAidButton",
+        1
+      ],
+      [
         "suitDice",
         1
       ]
@@ -14527,7 +14554,7 @@
   },
   "gameID6": {
     "id": "gameID6",
-    "y": -204,
+    "y": -203,
     "css": {
       "background": "blue",
       "color": "white",
@@ -15386,6 +15413,12 @@
           }
         ]
       }
+    ],
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ]
     ]
   },
   "gameID8": {
@@ -15672,6 +15705,10 @@
       }
     ],
     "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
       [
         "transferScoreButton",
         0
@@ -19081,7 +19118,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and all game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div>",
-      "lastUpdate": 1685198562224,
+      "lastUpdate": 1685214810428,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.0.1",
@@ -20969,7 +21006,7 @@
     "type": "scoreboard",
     "id": "playerAid6",
     "x": 1225,
-    "y": 300,
+    "y": 265,
     "width": 360,
     "height": 305,
     "clickable": false,
@@ -21211,7 +21248,6 @@
     "type": "scoreboard",
     "id": "playerAid12",
     "x": 1225,
-    "y": 300,
     "width": 360,
     "height": 305,
     "clickable": false,
@@ -21243,7 +21279,8 @@
     "playerAid": true,
     "scoreProperty": "score12",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "y": 265
   },
   "messageButton": {
     "id": "messageButton",
@@ -23070,7 +23107,6 @@
     "type": "scoreboard",
     "id": "playerAid25",
     "x": 1225,
-    "y": 300,
     "width": 360,
     "height": 245,
     "movable": false,
@@ -23100,7 +23136,8 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score25"
+    "scoreProperty": "score25",
+    "y": 260
   },
   "3w0o": {
     "width": 30,
@@ -26254,6 +26291,296 @@
     "width": 103,
     "height": 160,
     "id": "pile2"
+  },
+  "playerAid8": {
+    "type": "scoreboard",
+    "id": "playerAid8",
+    "x": 1225,
+    "y": 300,
+    "width": 350,
+    "height": 257,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "120px"
+      },
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Trump Reminders",
+    "rounds": [
+      "Must overtrump if played by an opponent.\n\nIf non-trump is led, no obligation to top the trick.\n\nIf void of led suit and opponenet is winning trick,\nmust trump. If opponent is winning with a trump,\nmust player higher trump if able.\n\nIf void of led suit and partner is winning, play any\ncard even if you have a trump."
+    ],
+    "seats": "tempSeat1",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true
+  },
+  "playerAid25a": {
+    "type": "scoreboard",
+    "id": "playerAid25a",
+    "width": 450,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "default": {
+        "font-size": "14px"
+      },
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "120px"
+      },
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "roundLabel": "Trump Reminders",
+    "rounds": [
+      "Must trump. If you don't have the suit led, you must trump if able.\n\nRotterdam: Must trump if unable to follow. Must beat any trump\nplayed previously, led or otherwise. Otherwise play any card.\n\nAmsterdam: Must trump if unable to follow. Must beat any trump\nplayed previously, led or otherwise. Exception: if void of led suit, you\ndon't have to trump your partner if they are winning trick without a\ntrump. If opponents are winning, you must still overtrump if able. If\npartner is winning with trump, must still overtrump if able."
+    ],
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "parent": "playerAid25",
+    "fixedParent": true,
+    "seats": "tempSeat2",
+    "y": 250,
+    "x": -90,
+    "height": 220
+  },
+  "tempSeat2": {
+    "type": "seat",
+    "id": "tempSeat2",
+    "index": 9,
+    "x": 1790,
+    "tricks": 0,
+    "tempScore": [],
+    "showing": false,
+    "y": 137,
+    "score": [],
+    "displayEmpty": "only for playerAids",
+    "movableInEdit": false
+  },
+  "playerAid1": {
+    "type": "scoreboard",
+    "id": "playerAid1",
+    "x": 1225,
+    "y": 300,
+    "width": 350,
+    "height": 257,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "120px"
+      },
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Trump Reminders",
+    "rounds": [
+      "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
+    ],
+    "seats": "tempSeat1",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true
+  },
+  "playerAid7": {
+    "type": "scoreboard",
+    "id": "playerAid7",
+    "x": 1225,
+    "y": 300,
+    "width": 350,
+    "height": 257,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "120px"
+      },
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Trump Reminders",
+    "rounds": [
+      "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
+    ],
+    "seats": "tempSeat1",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true
+  },
+  "playerAid6a": {
+    "type": "scoreboard",
+    "id": "playerAid6a",
+    "y": 307,
+    "width": 360,
+    "height": 130,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "120px"
+      },
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "roundLabel": "Trump Reminders",
+    "rounds": [
+      "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
+    ],
+    "seats": "tempSeat2",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "parent": "playerAid6",
+    "fixedParent": true
+  },
+  "playerAid12a": {
+    "type": "scoreboard",
+    "id": "playerAid12a",
+    "parent": "playerAid12",
+    "fixedParent": true,
+    "y": 307,
+    "width": 360,
+    "height": 130,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "120px"
+      },
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "roundLabel": "Trump Reminders",
+    "rounds": [
+      "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
+    ],
+    "seats": "tempSeat2",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false
+  },
+  "playerAid2a": {
+    "type": "scoreboard",
+    "id": "playerAid2a",
+    "width": 360,
+    "height": 257,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "120px"
+      },
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "roundLabel": "Trump Reminders",
+    "rounds": [
+      "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless void of led suit.\n\nIf you have cards of the nontrump led suit and the\nsecond player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\n trump. If you don't have the suit led, you can play\n any card, including a lower trump."
+    ],
+    "seats": "tempSeat2",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "parent": "playerAid2",
+    "fixedParent": true,
+    "y": 270
+  },
+  "playerAid4": {
+    "type": "scoreboard",
+    "id": "playerAid4",
+    "x": 1225,
+    "y": 300,
+    "width": 350,
+    "height": 257,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "120px"
+      },
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Trump Reminders",
+    "rounds": [
+      "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
+    ],
+    "seats": "tempSeat1",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true
   },
   "pile1": {
     "type": "pile",
