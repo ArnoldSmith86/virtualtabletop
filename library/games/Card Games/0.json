@@ -3255,6 +3255,7 @@
         "suitImage": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 1,
         "sortDefault": 13,
@@ -3272,6 +3273,7 @@
         "suit-P52": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 2,
         "sortDefault": 1,
@@ -3288,6 +3290,7 @@
         "suit-P52": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 3,
         "sortDefault": 2,
@@ -3305,6 +3308,7 @@
         "suit-P53": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 4,
         "sortDefault": 3,
@@ -3323,6 +3327,7 @@
         "suit-P53": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 5,
         "sortDefault": 4,
@@ -3342,6 +3347,7 @@
         "suit-P53": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 6,
         "sortDefault": 5,
@@ -3362,6 +3368,7 @@
         "suit-P53": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 7,
         "sortDefault": 6,
@@ -3384,6 +3391,7 @@
         "suit-P53": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 8,
         "sortDefault": 7,
@@ -3405,6 +3413,7 @@
         "suit-S33": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 9,
         "sortDefault": 8,
@@ -3427,6 +3436,7 @@
         "suit-S42": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 10,
         "sortDefault": 9,
@@ -3441,6 +3451,7 @@
         "suitImage": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 11,
         "sortDefault": 10,
@@ -3457,6 +3468,7 @@
         "suitImage": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 12,
         "sortDefault": 11,
@@ -3473,6 +3485,7 @@
         "suitImage": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
+        "suitCounterpoint": 1,
         "suitTruco": 1,
         "order": 13,
         "sortDefault": 12,
@@ -3490,6 +3503,7 @@
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 1,
         "sortDefault": 13,
@@ -3508,6 +3522,7 @@
         "suit-P52": "i/icons/diamonds.svg",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 2,
         "sortDefault": 1,
@@ -3525,6 +3540,7 @@
         "suit-P52": "i/icons/diamonds.svg",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 3,
         "sortDefault": 2,
@@ -3543,6 +3559,7 @@
         "suit-P53": "i/icons/diamonds.svg",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 4,
         "sortDefault": 3,
@@ -3562,6 +3579,7 @@
         "suit-P53": "i/icons/diamonds.svg",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 5,
         "sortDefault": 4,
@@ -3582,6 +3600,7 @@
         "suit-P53": "i/icons/diamonds.svg",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 6,
         "sortDefault": 5,
@@ -3603,6 +3622,7 @@
         "suit-P53": "i/icons/diamonds.svg",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 7,
         "sortDefault": 6,
@@ -3626,6 +3646,7 @@
         "suit-P53": "i/icons/diamonds.svg",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 8,
         "sortDefault": 7,
@@ -3648,6 +3669,7 @@
         "suit-S33": "i/icons/diamonds.svg",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 9,
         "sortDefault": 8,
@@ -3672,6 +3694,7 @@
         "suit-S42": "i/icons/diamonds.svg",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 10,
         "sortDefault": 9,
@@ -3687,6 +3710,7 @@
         "redOrBlack": "red",
         "suitColor": "#e50932",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 11,
         "sortDefault": 10,
@@ -3704,6 +3728,7 @@
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 12,
         "sortDefault": 11,
@@ -3721,6 +3746,7 @@
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 2,
+        "suitCounterpoint": 4,
         "suitTruco": 4,
         "order": 13,
         "sortDefault": 12,
@@ -3738,6 +3764,7 @@
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 1,
         "sortDefault": 13,
@@ -3756,6 +3783,7 @@
         "suit-P52": "i/icons/hearts.svg",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 2,
         "sortDefault": 1,
@@ -3773,6 +3801,7 @@
         "suit-P52": "i/icons/hearts.svg",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 3,
         "sortDefault": 2,
@@ -3791,6 +3820,7 @@
         "suit-P53": "i/icons/hearts.svg",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 4,
         "sortDefault": 3,
@@ -3810,6 +3840,7 @@
         "suit-P53": "i/icons/hearts.svg",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 5,
         "sortDefault": 4,
@@ -3830,6 +3861,7 @@
         "suit-P53": "i/icons/hearts.svg",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 6,
         "sortDefault": 5,
@@ -3851,6 +3883,7 @@
         "suit-P53": "i/icons/hearts.svg",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 7,
         "sortDefault": 6,
@@ -3874,6 +3907,7 @@
         "suit-P53": "i/icons/hearts.svg",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 8,
         "sortDefault": 7,
@@ -3896,6 +3930,7 @@
         "suit-S33": "i/icons/hearts.svg",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 9,
         "sortDefault": 8,
@@ -3920,6 +3955,7 @@
         "suit-S42": "i/icons/hearts.svg",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 10,
         "sortDefault": 9,
@@ -3935,6 +3971,7 @@
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 11,
         "sortDefault": 10,
@@ -3952,6 +3989,7 @@
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 12,
         "sortDefault": 11,
@@ -3969,6 +4007,7 @@
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 4,
+        "suitCounterpoint": 2,
         "suitTruco": 2,
         "order": 13,
         "sortDefault": 12,
@@ -3985,6 +4024,7 @@
         "suitImage": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 1,
         "sortDefault": 13,
@@ -4002,6 +4042,7 @@
         "suit-P52": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 2,
         "sortDefault": 1,
@@ -4018,6 +4059,7 @@
         "suit-P52": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 3,
         "sortDefault": 2,
@@ -4035,6 +4077,7 @@
         "suit-P53": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 4,
         "sortDefault": 3,
@@ -4053,6 +4096,7 @@
         "suit-P53": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 5,
         "sortDefault": 4,
@@ -4072,6 +4116,7 @@
         "suit-P53": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 6,
         "sortDefault": 5,
@@ -4092,6 +4137,7 @@
         "suit-P53": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 7,
         "sortDefault": 6,
@@ -4114,6 +4160,7 @@
         "suit-P53": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 8,
         "sortDefault": 7,
@@ -4135,6 +4182,7 @@
         "suit-S33": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 9,
         "sortDefault": 8,
@@ -4158,6 +4206,7 @@
         "suit-S42": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 10,
         "sortDefault": 9,
@@ -4172,6 +4221,7 @@
         "suitImage": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 11,
         "sortDefault": 10,
@@ -4188,6 +4238,7 @@
         "suitImage": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 12,
         "sortDefault": 11,
@@ -4204,6 +4255,7 @@
         "suitImage": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
+        "suitCounterpoint": 3,
         "suitTruco": 3,
         "order": 13,
         "sortDefault": 12,
@@ -8239,10 +8291,10 @@
     ],
     "roundLabel": "",
     "y": 650,
-    "scale": 0,
     "rounds": [
       "Card Points"
-    ]
+    ],
+    "scale": 0
   },
   "seat1": {
     "type": "seat",
@@ -19029,7 +19081,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and all game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div>",
-      "lastUpdate": 1685127301187,
+      "lastUpdate": 1685198562224,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.0.1",
@@ -21927,7 +21979,7 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "2",
+    "versionNumber": "1",
     "scale": 0
   },
   "cloneButton": {
@@ -24321,7 +24373,7 @@
       "font-size": "26px"
     },
     "sort1": "sortAceTen",
-    "sort2": "suit",
+    "sort2": "suitCounterpoint",
     "roundsTemp": [
       "Card Points",
       "Bid",
@@ -24905,6 +24957,68 @@
         "func": "MOVE",
         "from": "deckHolder",
         "to": "capturedHolder${seatIndex}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat${seatIndex}"
+        ],
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tricksCount"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "deckHolder"
+      },
+      {
+        "func": "COUNT",
+        "variable": "countPile"
+      },
+      {
+        "func": "IF",
+        "operand1": "${countPile}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "deckHolder"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": -620
+          },
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": 1
+          }
+        ]
       }
     ],
     "dealRoutine": [
@@ -24956,19 +25070,24 @@
         "value": 1
       },
       {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "deckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -620
+      },
+      {
         "func": "IF",
         "condition": "${PROPERTY spreadHearts}",
         "thenRoutine": [
           {
-            "func": "SELECT",
-            "type": "pile",
-            "property": "parent",
-            "value": "deckHolder"
-          },
-          {
             "func": "SET",
             "property": "x",
-            "value": -600
+            "value": -730
           },
           {
             "func": "SELECT",
@@ -25179,7 +25298,7 @@
         ]
       }
     ],
-    "spreadHearts": true,
+    "spreadHearts": false,
     "version1": {
       "spreadHearts": false
     },
