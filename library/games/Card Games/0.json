@@ -9782,15 +9782,15 @@
       {
         "func": "SET",
         "collection": [
-          "playerAidHeader1"
+          "playerAidDetail1"
         ],
         "property": "player",
-        "value": "${PROPERTY playerAidHeader1 OF $gameID}"
+        "value": "${PROPERTY playerAidDetail1 OF $gameID}"
       },
       {
         "func": "SET",
         "collection": [
-          "playerAidHeader1"
+          "playerAidDetail1"
         ],
         "property": "scale",
         "value": 1
@@ -9798,15 +9798,15 @@
       {
         "func": "SET",
         "collection": [
-          "playerAidHeader2"
+          "playerAidDetail2"
         ],
         "property": "player",
-        "value": "${PROPERTY playerAidHeader2 OF $gameID}"
+        "value": "${PROPERTY playerAidDetail2 OF $gameID}"
       },
       {
         "func": "SET",
         "collection": [
-          "playerAidHeader2"
+          "playerAidDetail2"
         ],
         "property": "scale",
         "value": 1
@@ -13977,7 +13977,7 @@
         0
       ]
     ],
-    "playerAidHeader1": "Scoring"
+    "playerAidDetail1": "Scoring"
   },
   "gameID3": {
     "id": "gameID3",
@@ -14926,7 +14926,7 @@
         ]
       }
     ],
-    "playerAidHeader1": "Notes",
+    "playerAidDetail1": "Notes",
     "x": -150,
     "resetRoutine": [
       {
@@ -18264,7 +18264,7 @@
         ]
       }
     ],
-    "playerAidHeader1": "Notes",
+    "playerAidDetail1": "Notes",
     "resetRoutine": [
       {
         "func": "FOREACH",
@@ -20939,9 +20939,9 @@
     ],
     "scale": 0
   },
-  "playerAidHeader1": {
+  "playerAidDetail1": {
     "type": "seat",
-    "id": "playerAidHeader1",
+    "id": "playerAidDetail1",
     "index": 9,
     "x": 1790,
     "tricks": 0,
@@ -21042,7 +21042,7 @@
       "Gustav",
       "Joker 1/2"
     ],
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -21211,7 +21211,7 @@
         1
       ]
     ],
-    "playerAidHeader1": "Description",
+    "playerAidDetail1": "Description",
     "transferExceptionsRoutine": [
       {
         "func": "INPUT",
@@ -21284,7 +21284,7 @@
       "Gustav",
       "Joker 1/2"
     ],
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -21689,7 +21689,7 @@
       "All others"
     ],
     "scoreProperty": "score2",
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -21871,7 +21871,7 @@
         0
       ]
     ],
-    "playerAidHeader1": "Scoring"
+    "playerAidDetail1": "Scoring"
   },
   "playerAid21": {
     "type": "scoreboard",
@@ -21907,7 +21907,7 @@
       "3-way tie"
     ],
     "scoreProperty": "score21",
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -23083,7 +23083,7 @@
       ]
     ],
     "transferButtonReturn": false,
-    "playerAidHeader1": "Bonus (Run Order: A/K/Q/J/10/9/8/7)",
+    "playerAidDetail1": "Bonus (Run Order: A/K/Q/J/10/9/8/7)",
     "transferExceptionsRoutine": [
       {
         "func": "SELECT",
@@ -23143,7 +23143,7 @@
       200,
       20
     ],
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -24051,7 +24051,7 @@
         false
       ]
     ],
-    "playerAidHeader1": "Tricks",
+    "playerAidDetail1": "Tricks",
     "takeSpecialRoutine": [
       {
         "func": "MOVE",
@@ -24349,7 +24349,7 @@
       "Spades",
       "Diamonds"
     ],
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -24516,7 +24516,7 @@
         1
       ]
     ],
-    "playerAidHeader1": "Tricks",
+    "playerAidDetail1": "Tricks",
     "takeSpecialRoutine": [
       {
         "func": "MOVE",
@@ -24875,7 +24875,7 @@
       "Spades",
       "Diamonds"
     ],
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -26333,7 +26333,7 @@
     "rounds": [
       "Must overtrump if played by an opponent.\n\nIf non-trump is led, no obligation to top the trick.\n\nIf void of led suit and opponenet is winning trick,\nmust trump. If opponent is winning with a trump,\nmust player higher trump if able.\n\nIf void of led suit and partner is winning, play any\ncard even if you have a trump."
     ],
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -26369,14 +26369,14 @@
     "showTotals": false,
     "parent": "playerAid25",
     "fixedParent": true,
-    "seats": "playerAidHeader2",
+    "seats": "playerAidDetail2",
     "y": 250,
     "x": -90,
     "height": 220
   },
-  "playerAidHeader2": {
+  "playerAidDetail2": {
     "type": "seat",
-    "id": "playerAidHeader2",
+    "id": "playerAidDetail2",
     "index": 9,
     "x": 1790,
     "tricks": 0,
@@ -26416,7 +26416,7 @@
     "rounds": [
       "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
     ],
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -26451,7 +26451,7 @@
     "rounds": [
       "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
     ],
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -26484,7 +26484,7 @@
     "rounds": [
       "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
     ],
-    "seats": "playerAidHeader2",
+    "seats": "playerAidDetail2",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -26520,7 +26520,7 @@
     "rounds": [
       "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
     ],
-    "seats": "playerAidHeader2",
+    "seats": "playerAidDetail2",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false
@@ -26551,7 +26551,7 @@
     "rounds": [
       "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless void of led suit.\n\nIf you have cards of the nontrump led suit and the\nsecond player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\n trump. If you don't have the suit led, you can play\n any card, including a lower trump."
     ],
-    "seats": "playerAidHeader2",
+    "seats": "playerAidDetail2",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -26588,7 +26588,7 @@
     "rounds": [
       "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
     ],
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
@@ -27388,7 +27388,7 @@
     ],
     "gameID": true,
     "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/collude.html.\"",
-    "playerAidHeader1": "Bonus",
+    "playerAidDetail1": "Bonus",
     "roundsTemp": [
       "Card Points"
     ],
@@ -27434,6 +27434,7 @@
     "height": 155,
     "movable": false,
     "movableInEdit": false,
+    "clickable": false,
     "css": {
       ".scoreboard tbody tr:nth-child(1) td": {
         "background": "#a9c6e8"
@@ -27451,7 +27452,7 @@
       "also score 1 point per trick"
     ],
     "scoreProperty": "score29",
-    "seats": "playerAidHeader1",
+    "seats": "playerAidDetail1",
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
