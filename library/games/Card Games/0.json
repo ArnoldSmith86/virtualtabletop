@@ -7429,7 +7429,7 @@
       }
     ],
     "dummyHand": 0,
-    "previousDeck": 3
+    "previousDeck": "5"
   },
   "deckOptions": {
     "id": "deckOptions",
@@ -19514,7 +19514,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685416692925,
+      "lastUpdate": 1685466583189,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -22636,11 +22636,11 @@
       {
         "func": "FOREACH",
         "in": [
-          "/i/icons/hearts.svg",
-          "i/icons/circle.svg",
-          "i/icons/square.svg",
-          "i/icons/hexagon_vertical.svg",
-          "/assets/1360797652_307"
+          1,
+          2,
+          3,
+          4,
+          5
         ],
         "loopRoutine": [
           "var seatNum = ${key} + 1",
@@ -22691,7 +22691,7 @@
             "func": "SELECT",
             "source": "DEFAULT",
             "property": "suit",
-            "value": "/i/icons/auto_awesome.svg",
+            "value": 0,
             "max": 1
           },
           {
@@ -27016,7 +27016,7 @@
     "movableInEdit": true,
     "cardTypes": {
       "Acorn 01": {
-        "rank": "1",
+        "rank": "A",
         "rankImage": "i/cards-german/1Acorn.svg",
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
@@ -27096,7 +27096,7 @@
         "sortDefault": 12
       },
       "Bell 01": {
-        "rank": "1",
+        "rank": "A",
         "rankImage": "i/cards-german/1Bell.svg",
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
@@ -27176,7 +27176,7 @@
         "sortDefault": 12
       },
       "Leaf 01": {
-        "rank": "1",
+        "rank": "A",
         "rankImage": "i/cards-german/1Leaf.svg",
         "suitImage": "i/cards-german/leaf.svg",
         "suit": 3,
@@ -27256,7 +27256,7 @@
         "sortDefault": 12
       },
       "Heart 01": {
-        "rank": "1",
+        "rank": "A",
         "rankImage": "i/cards-german/1Heart.svg",
         "suitImage": "i/cards-german/heart.svg",
         "suit": 4,
