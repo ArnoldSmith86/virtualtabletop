@@ -996,7 +996,8 @@
           {
             "func": "SET",
             "collection": [
-              "bidValue${seatIndex}"
+              "bidValue${seatIndex}",
+              "bidSuit${seatIndex}"
             ],
             "property": "text",
             "value": ""
@@ -1006,7 +1007,39 @@
             "collection": [
               "bidSuit${seatIndex}"
             ],
-            "property": "text",
+            "property": "image",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "bidSuit${seatIndex}"
+            ],
+            "property": "deckSuitsColor",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "bidSuit${seatIndex}"
+            ],
+            "property": "deckSuitsUni",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "bidSuit${seatIndex}"
+            ],
+            "property": "deckSuits",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "bidSuit${seatIndex}"
+            ],
+            "property": "chooser",
             "value": ""
           }
         ],
@@ -1168,19 +1201,8 @@
     "parent": "chooseValue"
   },
   "choose10": {
-    "inheritFrom": {
-      "choose0": "*"
-    },
     "type": "button",
     "id": "choose10",
-    "x": 10,
-    "y": 10,
-    "classes": "symbols",
-    "text": "clubs",
-    "css": {
-      "font-size": "${PROPERTY fontSize}",
-      "color": "${PROPERTY fontColor}"
-    },
     "clickRoutine": [
       "var bidWidget = 'bidSuit' concat ${seatIndex}",
       {
@@ -1196,24 +1218,40 @@
         "collection": [
           "${bidWidget}"
         ],
-        "property": "fontColor",
-        "value": "${PROPERTY fontColor}"
+        "property": "image",
+        "value": "${PROPERTY image}"
       },
       {
         "func": "SET",
         "collection": [
           "${bidWidget}"
         ],
-        "property": "fontSize",
-        "value": "${PROPERTY fontSize}"
+        "property": "deckSuitsColor",
+        "value": "${PROPERTY deckSuitsColor}"
       },
       {
         "func": "SET",
         "collection": [
           "${bidWidget}"
         ],
-        "property": "classes",
-        "value": "${PROPERTY classes}"
+        "property": "deckSuitsUni",
+        "value": "${PROPERTY deckSuitsUni}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${bidWidget}"
+        ],
+        "property": "deckSuits",
+        "value": "${PROPERTY deckSuits}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${bidWidget}"
+        ],
+        "property": "chooser",
+        "value": "${PROPERTY chooser}"
       },
       {
         "func": "SET",
@@ -1221,12 +1259,33 @@
           "bids"
         ],
         "property": "message",
-        "value": "${PROPERTY text}"
+        "value": "${PROPERTY deckSuits}"
       }
     ],
-    "fontColor": "black",
-    "fontSize": "40px",
-    "parent": "chooseSuit"
+    "parent": "chooseSuit",
+    "css": {
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "font-size": "15px",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "chooser": 10,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "x": 10,
+    "y": 12,
+    "svgReplaces": {
+      "currentColor": "deckSuitsColor"
+    },
+    "image": "i/icons/clubs.svg",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "♣",
+    "deckSuits": "clubs"
   },
   "choose11": {
     "inheritFrom": {
@@ -1236,9 +1295,14 @@
     "id": "choose11",
     "x": 70,
     "y": 10,
-    "text": "diamonds",
-    "fontColor": "red",
-    "parent": "chooseSuit"
+    "parent": "chooseSuit",
+    "chooser": 11,
+    "deckSuit": "clubs",
+    "image": "i/icons/diamonds.svg",
+    "text": "",
+    "deckSuitsColor": "#e50932",
+    "deckSuitsUni": "♦",
+    "deckSuits": "diamonds"
   },
   "choose12": {
     "inheritFrom": {
@@ -1248,9 +1312,15 @@
     "id": "choose12",
     "x": 10,
     "y": 70,
-    "text": "hearts",
-    "fontColor": "red",
-    "parent": "chooseSuit"
+    "parent": "chooseSuit",
+    "newColor": "#e50932",
+    "chooser": 12,
+    "deckSuit": "coins",
+    "image": "i/icons/spades.svg",
+    "text": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "♠",
+    "deckSuits": "spades"
   },
   "choose13": {
     "inheritFrom": {
@@ -1260,8 +1330,14 @@
     "id": "choose13",
     "x": 70,
     "y": 70,
-    "text": "spades",
-    "parent": "chooseSuit"
+    "parent": "chooseSuit",
+    "chooser": 13,
+    "deckSuit": "cups",
+    "image": "i/icons/hearts.svg",
+    "text": "",
+    "deckSuitsColor": "#e50932",
+    "deckSuitsUni": "♥",
+    "deckSuits": "hearts"
   },
   "choose14": {
     "inheritFrom": {
@@ -1271,77 +1347,30 @@
     "id": "choose14",
     "x": 10,
     "y": 130,
+    "chooser": 14,
+    "deckSuit": "swords",
+    "image": "",
     "text": "No\nTrump",
-    "classes": "",
-    "fontColor": "white",
-    "fontSize": "15px",
-    "clickRoutine": [
-      "var bidWidget = 'bidSuit' concat ${seatIndex}",
-      {
-        "func": "SET",
-        "collection": [
-          "${bidWidget}"
-        ],
-        "property": "text",
-        "value": "${PROPERTY text}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "${bidWidget}"
-        ],
-        "property": "fontColor",
-        "value": "${PROPERTY fontColor}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "${bidWidget}"
-        ],
-        "property": "fontSize",
-        "value": "${PROPERTY fontSize}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "${bidWidget}"
-        ],
-        "property": "classes",
-        "value": "${PROPERTY classes}"
-      }
-    ]
+    "deckSuitsColor": "",
+    "deckSuitsUni": "NT"
   },
   "bidSuit1": {
     "id": "bidSuit1",
     "borderRadius": 8,
     "css": {
       "background": "#ffffff",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
       "border": "1px solid black",
-      "color": "${PROPERTY fontColor}",
-      "font-size": "${PROPERTY fontSize}",
+      "color": "black",
+      "font-size": "15px",
       "text-align": "center",
       "display": "flex",
       "justify-content": "center",
       "align-items": "center"
     },
-    "fontSize": "40px",
-    "fontColor": "red",
-    "fontColorChangeRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY fontColor}",
-        "operand2": "white",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "fontColor",
-            "value": "black"
-          }
-        ]
-      }
-    ],
-    "classes": "symbols",
+    "classes": "",
     "parent": "seat1",
     "fixedParent": true,
     "width": 50,
@@ -1355,10 +1384,17 @@
       "bidValue1": "clickRoutine"
     },
     "scale": 1,
-    "textChangeRoutine": [
+    "image": "",
+    "svgReplaces": {
+      "currentColor": "deckSuitsColor"
+    },
+    "chooser": "",
+    "deckSuitsUni": "",
+    "deckSuits": "",
+    "chooserChangeRoutine": [
       {
         "func": "IF",
-        "operand1": "${PROPERTY text}",
+        "operand1": "${PROPERTY chooser}",
         "operand2": "",
         "thenRoutine": [
           {
@@ -1373,8 +1409,8 @@
       },
       {
         "func": "IF",
-        "operand1": "${PROPERTY text}",
-        "operand2": "clubs",
+        "operand1": "${PROPERTY chooser}",
+        "operand2": 10,
         "thenRoutine": [
           {
             "func": "SET",
@@ -1388,8 +1424,8 @@
       },
       {
         "func": "IF",
-        "operand1": "${PROPERTY text}",
-        "operand2": "diamonds",
+        "operand1": "${PROPERTY chooser}",
+        "operand2": 11,
         "thenRoutine": [
           {
             "func": "SET",
@@ -1403,8 +1439,8 @@
       },
       {
         "func": "IF",
-        "operand1": "${PROPERTY text}",
-        "operand2": "hearts",
+        "operand1": "${PROPERTY chooser}",
+        "operand2": 12,
         "thenRoutine": [
           {
             "func": "SET",
@@ -1418,8 +1454,8 @@
       },
       {
         "func": "IF",
-        "operand1": "${PROPERTY text}",
-        "operand2": "spades",
+        "operand1": "${PROPERTY chooser}",
+        "operand2": 13,
         "thenRoutine": [
           {
             "func": "SET",
@@ -1433,8 +1469,8 @@
       },
       {
         "func": "IF",
-        "operand1": "${PROPERTY text}",
-        "operand2": "No\nTrump",
+        "operand1": "${PROPERTY chooser}",
+        "operand2": 14,
         "thenRoutine": [
           {
             "func": "SET",
@@ -1448,8 +1484,8 @@
       },
       {
         "func": "IF",
-        "operand1": "${PROPERTY text}",
-        "operand2": "All\nTrump",
+        "operand1": "${PROPERTY chooser}",
+        "operand2": 15,
         "thenRoutine": [
           {
             "func": "SET",
@@ -1461,7 +1497,8 @@
           }
         ]
       }
-    ]
+    ],
+    "deckSuitsColor": ""
   },
   "chooseSuit": {
     "id": "chooseSuit",
@@ -1494,100 +1531,6 @@
     "movableInEdit": false,
     "scale": 0.8,
     "owner": []
-  },
-  "choose15": {
-    "inheritFrom": {
-      "choose0": "*"
-    },
-    "type": "button",
-    "id": "choose15",
-    "x": 10,
-    "y": 130,
-    "text": "Pass",
-    "css": {
-      "font-size": "22px"
-    },
-    "clickRoutine": [
-      "var bidWidget = 'bidValue' concat ${seatIndex}",
-      "var bid = ${PROPERTY text}",
-      {
-        "func": "SET",
-        "collection": [
-          "${bidWidget}"
-        ],
-        "property": "text",
-        "value": "${bid}"
-      }
-    ]
-  },
-  "choose16": {
-    "inheritFrom": {
-      "choose0": "*"
-    },
-    "type": "button",
-    "id": "choose16",
-    "x": 250,
-    "y": 130,
-    "text": "",
-    "clickRoutine": [
-      "var bidWidget = 'bidValue' concat ${seatIndex}",
-      {
-        "func": "SET",
-        "collection": [
-          "${bidWidget}"
-        ],
-        "property": "text",
-        "value": ""
-      }
-    ]
-  },
-  "choose17": {
-    "inheritFrom": {
-      "choose10": "*"
-    },
-    "type": "button",
-    "id": "choose17",
-    "x": 70,
-    "y": 130,
-    "text": "All\nTrump",
-    "fontColor": "white",
-    "fontSize": "15px",
-    "classes": "",
-    "clickRoutine": [
-      "var bidWidget = 'bidSuit' concat ${seatIndex}",
-      {
-        "func": "SET",
-        "collection": [
-          "${bidWidget}"
-        ],
-        "property": "text",
-        "value": "${PROPERTY text}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "${bidWidget}"
-        ],
-        "property": "fontColor",
-        "value": "${PROPERTY fontColor}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "${bidWidget}"
-        ],
-        "property": "fontSize",
-        "value": "${PROPERTY fontSize}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "${bidWidget}"
-        ],
-        "property": "classes",
-        "value": "${PROPERTY classes}"
-      }
-    ]
   },
   "closeButton": {
     "type": "button",
@@ -2662,7 +2605,11 @@
     },
     "id": "bidValue2",
     "parent": "seat2",
-    "text": ""
+    "text": "",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": ""
   },
   "bidSuit2": {
     "inheritFrom": {
@@ -2670,7 +2617,12 @@
     },
     "id": "bidSuit2",
     "parent": "seat2",
-    "text": ""
+    "text": "",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": "",
+    "chooser": ""
   },
   "holder2": {
     "inheritFrom": {
@@ -2734,7 +2686,11 @@
     "id": "bidValue3",
     "parent": "seat3",
     "text": "",
-    "fontSize": "40px"
+    "fontSize": "40px",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": ""
   },
   "bidSuit3": {
     "inheritFrom": {
@@ -2743,9 +2699,12 @@
     "id": "bidSuit3",
     "parent": "seat3",
     "text": "",
-    "fontColor": "black",
-    "fontSize": "40px",
-    "classes": "symbols"
+    "classes": "symbols",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": "",
+    "chooser": ""
   },
   "holder3": {
     "inheritFrom": {
@@ -2804,7 +2763,11 @@
     },
     "id": "bidValue4",
     "parent": "seat4",
-    "text": ""
+    "text": "",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": ""
   },
   "bidSuit4": {
     "inheritFrom": {
@@ -2812,7 +2775,12 @@
     },
     "id": "bidSuit4",
     "parent": "seat4",
-    "text": ""
+    "text": "",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": "",
+    "chooser": ""
   },
   "holder4": {
     "inheritFrom": {
@@ -2873,7 +2841,11 @@
     "parent": "seat5",
     "text": "",
     "fontSize": "40px",
-    "y": -60
+    "y": -60,
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": ""
   },
   "bidSuit5": {
     "inheritFrom": {
@@ -2882,10 +2854,13 @@
     "id": "bidSuit5",
     "parent": "seat5",
     "text": "",
-    "fontColor": "black",
-    "fontSize": "40px",
     "classes": "symbols",
-    "y": -60
+    "y": -60,
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": "",
+    "chooser": ""
   },
   "holder5": {
     "inheritFrom": {
@@ -2947,7 +2922,11 @@
     },
     "id": "bidValue6",
     "parent": "seat6",
-    "text": ""
+    "text": "",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": ""
   },
   "bidSuit6": {
     "inheritFrom": {
@@ -2955,7 +2934,12 @@
     },
     "id": "bidSuit6",
     "parent": "seat6",
-    "text": ""
+    "text": "",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": "",
+    "chooser": ""
   },
   "holder6": {
     "inheritFrom": {
@@ -3015,7 +2999,11 @@
     "id": "bidValue7",
     "parent": "seat7",
     "text": "",
-    "fontSize": "40px"
+    "fontSize": "40px",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": ""
   },
   "bidSuit7": {
     "inheritFrom": {
@@ -3025,8 +3013,11 @@
     "parent": "seat7",
     "text": "",
     "classes": "symbols",
-    "fontColor": "red",
-    "fontSize": "40px"
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": "",
+    "chooser": ""
   },
   "holder7": {
     "inheritFrom": {
@@ -3085,7 +3076,11 @@
     },
     "id": "bidValue8",
     "parent": "seat8",
-    "text": ""
+    "text": "",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": ""
   },
   "bidSuit8": {
     "inheritFrom": {
@@ -3093,7 +3088,12 @@
     },
     "id": "bidSuit8",
     "parent": "seat8",
-    "text": ""
+    "text": "",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": "",
+    "chooser": ""
   },
   "holder8": {
     "inheritFrom": {
@@ -4810,7 +4810,46 @@
         }
       ]
     },
-    "staged": false
+    "staged": false,
+    "deckSuits": [
+      "clubs",
+      "diamonds",
+      "spades",
+      "hearts"
+    ],
+    "deckSuitsColor": [
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "",
+      ""
+    ],
+    "deckSuitsImage": [
+      "i/icons/clubs.svg",
+      "i/icons/diamonds.svg",
+      "i/icons/spades.svg",
+      "i/icons/hearts.svg",
+      "",
+      ""
+    ],
+    "deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump",
+      "All\nTrump"
+    ],
+    "deckSuitsUni": [
+      "♣",
+      "♦",
+      "♠",
+      "♥",
+      "NT",
+      "AT"
+    ],
+    "deckType": 0
   },
   "6exv_A_C": {
     "id": "6exv_A_C",
@@ -5235,7 +5274,7 @@
     "dropTarget": {
       "type": "card"
     },
-    "y": 20
+    "y": 21
   },
   "deck2": {
     "type": "deck",
@@ -5256,23 +5295,6 @@
     },
     "staged": false,
     "clickable": true
-  },
-  "deck2RecallButton": {
-    "type": "button",
-    "id": "deck2RecallButton",
-    "parent": "offHolder",
-    "fixedParent": true,
-    "y": 171.36,
-    "width": 111,
-    "height": 40,
-    "movableInEdit": false,
-    "text": "Recall",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      }
-    ]
   },
   "jokers": {
     "type": "deck",
@@ -5739,18 +5761,18 @@
         "trump": 2
       },
       {
-        "text": "hearts",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      },
-      {
         "text": "spades",
         "textColor": "black",
         "fontSize": "40px",
         "classes": "symbols",
         "trump": 3
+      },
+      {
+        "text": "hearts",
+        "textColor": "#e50932",
+        "fontSize": "40px",
+        "classes": "symbols",
+        "trump": 4
       },
       {
         "text": "No\nTrump",
@@ -6316,7 +6338,7 @@
             "variable": "deckType",
             "options": [
               {
-                "text": "52 Standard (Clubs, Diamonds, Hearts, Spades)",
+                "text": "52 Standard (1-13, Clubs, Diamonds, Hearts, Spades)",
                 "value": "0",
                 "select": true
               },
@@ -6325,11 +6347,11 @@
                 "value": 1
               },
               {
-                "text": "Tarot (54 Tarock)",
+                "text": "Tarot (1-4 Red, 7-10 Black, 22 Tarot)",
                 "value": 2
               },
               {
-                "text": "Crow (1-14, 4 colors, 1 Crow)",
+                "text": "Crow (1-14, 5 Colors, 1 Crow)",
                 "value": 3
               },
               {
@@ -6446,6 +6468,12 @@
         "collection": "thisButton",
         "property": "seatCount",
         "value": "${seatCount}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "previousDeck",
+        "value": "${PROPERTY deckType}"
       },
       {
         "func": "SET",
@@ -7400,12 +7428,13 @@
         ]
       }
     ],
-    "dummyHand": 0
+    "dummyHand": 0,
+    "previousDeck": 3
   },
   "deckOptions": {
     "id": "deckOptions",
     "x": 1632,
-    "y": 277,
+    "y": 282,
     "css": {
       "background": "white",
       "border": "1px solid black"
@@ -7493,6 +7522,7 @@
       ]
     ],
     "cardsSetupRoutine": [
+      "// Removes individual cards from play (or adds them in case of jokers)",
       "var decksIndex = ${PROPERTY deckType OF settingsDecks}",
       "var decksArray = ${PROPERTY decksArray}",
       "var decksArray = ${decksArray.$decksIndex}",
@@ -7553,15 +7583,85 @@
       }
     ],
     "decksSetupRoutine": [
+      "// This takes the place of an offHolder RECALL because that takes a LOT of time because there are so many cards.",
       {
-        "func": "CLICK",
-        "collection": [
-          "deck2RecallButton"
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "offHolder"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "pile2"
+      },
+      "var deckType = ${PROPERTY previousDeck OF settingsDecks}",
+      {
+        "func": "IF",
+        "operand1": "${deckType}",
+        "operand2": 1,
+        "thenRoutine": [
+          "\\ Needed because there are no decks with this type. Setting back to 0 gets deck1 and deck2.",
+          "var deckType = 0"
         ]
       },
       {
+        "func": "SELECT",
+        "type": "deck",
+        "property": "deckType",
+        "value": "${deckType}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "thisDeck"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "${thisDeck}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "pile2"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "MOVE",
+        "from": "tempHolder",
+        "to": "offHolder",
+        "count": 0,
+        "face": 0
+      },
+      "// Finish the rest of the card and deck setup",
+      {
         "func": "CALL",
         "routine": "cardsSetupRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "deckSuitsRoutine"
       }
     ],
     "jokersSetupRoutine": [
@@ -7681,6 +7781,84 @@
         "from": "tempHolder",
         "to": "deckHolder",
         "count": 0
+      }
+    ],
+    "deckSuitsRoutine": [
+      "var deckType = ${PROPERTY deckType OF settingsDecks}",
+      {
+        "func": "SELECT",
+        "type": "deck",
+        "property": "deckType",
+        "value": "${deckType}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "thisDeck"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "loopRoutine": [
+          "// This sets the correct suit images on the bid system widgets.",
+          "var thisImage = ${PROPERTY deckSuitsImage OF $thisDeck}",
+          "var thisImage = ${thisImage.$key}",
+          "var thisText = ${PROPERTY deckSuitsText OF $thisDeck}",
+          "var thisText = ${thisText.$key}",
+          "var thisColor = ${PROPERTY deckSuitsColor OF $thisDeck}",
+          "var thisColor = ${thisColor.$key}",
+          "var thisUni = ${PROPERTY deckSuitsUni OF $thisDeck}",
+          "var thisUni = ${thisUni.$key}",
+          "var thisSuits = ${PROPERTY deckSuits OF $thisDeck}",
+          "var thisSuits = ${thisSuits.$key}",
+          {
+            "func": "SET",
+            "collection": [
+              "choose${value}"
+            ],
+            "property": "image",
+            "value": "${thisImage}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "choose${value}"
+            ],
+            "property": "text",
+            "value": "${thisText}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "choose${value}"
+            ],
+            "property": "deckSuitsColor",
+            "value": "${thisColor}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "choose${value}"
+            ],
+            "property": "deckSuitsUni",
+            "value": "${thisUni}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "choose${value}"
+            ],
+            "property": "deckSuits",
+            "value": "${thisSuits}"
+          }
+        ]
       }
     ]
   },
@@ -8298,10 +8476,10 @@
     ],
     "roundLabel": "",
     "y": 650,
-    "scale": 0,
     "rounds": [
       "Card Points"
-    ]
+    ],
+    "scale": 0
   },
   "seat1": {
     "type": "seat",
@@ -8665,6 +8843,14 @@
     "layer": -4,
     "preSetRoutine": [
       "var gameID = 'gameID' + ${PROPERTY preSet}",
+      {
+        "func": "SET",
+        "collection": [
+          "settingsDecks"
+        ],
+        "property": "previousDeck",
+        "value": "${PROPERTY deckType OF settingsDecks}"
+      },
       "//Loop through each default setting in settingsArray, settingsDeckArray, and displayArray and SET it",
       {
         "func": "FOREACH",
@@ -8975,66 +9161,8 @@
         "collection": [
           "bidSuit${seatIndex}"
         ],
-        "property": "text",
+        "property": "deckSuitsUni",
         "variable": "suit"
-      },
-      {
-        "func": "IF",
-        "operand1": "${suit}",
-        "operand2": "clubs",
-        "thenRoutine": [
-          "var suit = '\\u2663'"
-        ],
-        "elseRoutine": [
-          {
-            "func": "IF",
-            "operand1": "${suit}",
-            "operand2": "diamonds",
-            "thenRoutine": [
-              "var suit = '\\u2666'"
-            ],
-            "elseRoutine": [
-              {
-                "func": "IF",
-                "operand1": "${suit}",
-                "operand2": "hearts",
-                "thenRoutine": [
-                  "var suit = '\\u2665'"
-                ],
-                "elseRoutine": [
-                  {
-                    "func": "IF",
-                    "operand1": "${suit}",
-                    "operand2": "spades",
-                    "thenRoutine": [
-                      "var suit = '\\u2660'"
-                    ],
-                    "elseRoutine": [
-                      {
-                        "func": "IF",
-                        "operand1": "${suit}",
-                        "operand2": "No\nTrump",
-                        "thenRoutine": [
-                          "var suit = 'NT'"
-                        ],
-                        "elseRoutine": [
-                          {
-                            "func": "IF",
-                            "operand1": "${suit}",
-                            "operand2": "All\nTrump",
-                            "thenRoutine": [
-                              "var suit = 'AT'"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
       },
       "var text = ''",
       "var oldText = ${PROPERTY text OF bids}",
@@ -9973,6 +10101,46 @@
               "bidSuit${value}"
             ],
             "property": "text",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "bidSuit${value}"
+            ],
+            "property": "image",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "bidSuit${value}"
+            ],
+            "property": "deckSuitsColor",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "bidSuit${value}"
+            ],
+            "property": "deckSuitsUni",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "bidSuit${value}"
+            ],
+            "property": "deckSuits",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "bidSuit${value}"
+            ],
+            "property": "chooser",
             "value": ""
           }
         ]
@@ -11137,7 +11305,47 @@
         "cardDefaults"
       ]
     },
-    "clickable": true
+    "clickable": true,
+    "deckSuits": [
+      "clubs",
+      "diamonds",
+      "spades",
+      "hearts",
+      "stars"
+    ],
+    "deckSuitsColor": [
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "purple",
+      ""
+    ],
+    "deckSuitsImage": [
+      "i/icons/clubs.svg",
+      "i/icons/diamonds.svg",
+      "i/icons/spades.svg",
+      "i/icons/hearts.svg",
+      "/assets/-374765193_624",
+      ""
+    ],
+    "deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump"
+    ],
+    "deckSuitsUni": [
+      "♣",
+      "♦",
+      "♠",
+      "♥",
+      "*",
+      "NT"
+    ],
+    "deckType": 2
   },
   "gcew": {
     "deck": "tarokyDeck",
@@ -11544,7 +11752,7 @@
     "id": "scoreboard3",
     "y": 85,
     "width": 175,
-    "height": 480,
+    "height": 430,
     "movable": false,
     "movableInEdit": false,
     "autosizeColumns": false,
@@ -11582,8 +11790,7 @@
       "S",
       "G",
       "J1",
-      "J2",
-      "Match"
+      "J2"
     ],
     "showAllRounds": true,
     "scoreProperty": "scoreCoiffeur",
@@ -11827,8 +12034,7 @@
       10
     ],
     "x": 60,
-    "text": "Convert",
-    "scale": 0
+    "text": "Convert"
   },
   "3pScoreCoiffeurButton": {
     "type": "button",
@@ -12121,7 +12327,8 @@
       "seat7"
     ],
     "x": 60,
-    "text": "Convert"
+    "text": "Convert",
+    "scale": 0
   },
   "showHandButton": {
     "type": "button",
@@ -13325,18 +13532,18 @@
         "trump": 2
       },
       {
-        "text": "hearts",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      },
-      {
         "text": "spades",
         "textColor": "black",
         "fontSize": "40px",
         "classes": "symbols",
         "trump": 3
+      },
+      {
+        "text": "hearts",
+        "textColor": "#e50932",
+        "fontSize": "40px",
+        "classes": "symbols",
+        "trump": 4
       },
       {
         "text": "No\nTrump",
@@ -15591,18 +15798,18 @@
         "trump": 2
       },
       {
-        "text": "hearts",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      },
-      {
         "text": "spades",
         "textColor": "black",
         "fontSize": "40px",
         "classes": "symbols",
         "trump": 3
+      },
+      {
+        "text": "hearts",
+        "textColor": "#e50932",
+        "fontSize": "40px",
+        "classes": "symbols",
+        "trump": 4
       },
       {
         "text": "No\nTrump",
@@ -16213,668 +16420,810 @@
     "id": "crowDeck",
     "cardTypes": {
       "0 crow": {
-        "suit": "/i/icons/auto_awesome.svg",
+        "suitImage": "/i/icons/auto_awesome.svg",
         "suitColor": "#000000",
         "fontColor": "#000",
+        "suit": 0,
         "order": 15,
         "rank": "",
         "sortKentucky": 1,
-        "sortState": -10
+        "sortState": -10,
+        "sortDefault": 0
       },
       "1 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 1,
         "rank": 1,
         "sortKentucky": 3,
-        "sortState": 1
+        "sortState": 1,
+        "sortDefault": 1
       },
       "2 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 2,
         "rank": 2,
-        "sortState": 2
+        "sortState": 2,
+        "sortDefault": 2
       },
       "3 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 3,
         "rank": 3,
-        "sortState": 3
+        "sortState": 3,
+        "sortDefault": 3
       },
       "4 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 4,
         "rank": 4,
-        "sortState": 4
+        "sortState": 4,
+        "sortDefault": 4
       },
       "5 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 5,
         "rank": 5,
         "sortKentucky": 13,
-        "sortState": 5
+        "sortState": 5,
+        "sortDefault": 5
       },
       "6 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 6,
         "rank": 6,
         "sortKentucky": 12,
-        "sortState": 6
+        "sortState": 6,
+        "sortDefault": 6
       },
       "7 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 7,
         "rank": 7,
         "sortKentucky": 11,
-        "sortState": 7
+        "sortState": 7,
+        "sortDefault": 7
       },
       "8 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 8,
         "rank": 8,
         "sortKentucky": 10,
-        "sortState": 8
+        "sortState": 8,
+        "sortDefault": 8
       },
       "9 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 9,
         "rank": 9,
         "sortKentucky": 9,
-        "sortState": 9
+        "sortState": 9,
+        "sortDefault": 9
       },
       "10 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 10,
         "rank": 10,
         "sortKentucky": 8,
-        "sortState": 10
+        "sortState": 10,
+        "sortDefault": 10
       },
       "11 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 11,
         "rank": 11,
-        "sortKentucky": 7
+        "sortKentucky": 7,
+        "sortDefault": 11
       },
       "12 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 12,
         "rank": 12,
-        "sortKentucky": 6
+        "sortKentucky": 6,
+        "sortDefault": 12
       },
       "13 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 13,
         "rank": 13,
-        "sortKentucky": 5
+        "sortKentucky": 5,
+        "sortDefault": 13
       },
       "14 red": {
-        "suit": "/i/icons/hearts.svg",
+        "suitImage": "/i/icons/hearts.svg",
         "suitColor": "#cc79a7",
         "suitColor2": "#cc79a740",
         "fontColor": "#000",
+        "suit": 1,
         "order": 14,
         "rank": 14,
-        "sortKentucky": 4
+        "sortKentucky": 4,
+        "sortDefault": 14
       },
       "1 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 1,
         "rank": 1,
         "sortKentucky": 14,
-        "sortState": 1
+        "sortState": 1,
+        "sortDefault": 1
       },
       "2 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 2,
         "rank": 2,
         "sortKentucky": 0.5,
-        "sortState": 2
+        "sortState": 2,
+        "sortDefault": 2
       },
       "3 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 3,
         "rank": 3,
-        "sortState": 3
+        "sortState": 3,
+        "sortDefault": 3
       },
       "4 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 4,
         "rank": 4,
-        "sortState": 4
+        "sortState": 4,
+        "sortDefault": 4
       },
       "5 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 5,
         "rank": 5,
         "sortKentucky": 24,
-        "sortState": 5
+        "sortState": 5,
+        "sortDefault": 5
       },
       "6 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 6,
         "rank": 6,
         "sortKentucky": 23,
-        "sortState": 6
+        "sortState": 6,
+        "sortDefault": 6
       },
       "7 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 7,
         "rank": 7,
         "sortKentucky": 22,
-        "sortState": 7
+        "sortState": 7,
+        "sortDefault": 7
       },
       "8 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 8,
         "rank": 8,
         "sortKentucky": 21,
-        "sortState": 8
+        "sortState": 8,
+        "sortDefault": 8
       },
       "9 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 9,
         "rank": 9,
         "sortKentucky": 20,
-        "sortState": 9
+        "sortState": 9,
+        "sortDefault": 9
       },
       "10 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 10,
         "rank": 10,
         "sortKentucky": 19,
-        "sortState": 10
+        "sortState": 10,
+        "sortDefault": 10
       },
       "11 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 11,
         "rank": 11,
-        "sortKentucky": 18
+        "sortKentucky": 18,
+        "sortDefault": 11
       },
       "12 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 12,
         "rank": 12,
-        "sortKentucky": 17
+        "sortKentucky": 17,
+        "sortDefault": 12
       },
       "13 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 13,
         "rank": 13,
-        "sortKentucky": 16
+        "sortKentucky": 16,
+        "sortDefault": 13
       },
       "14 orange": {
-        "suit": "i/icons/circle.svg",
+        "suitImage": "i/icons/circle.svg",
         "suitColor": "#d55e00",
         "suitColor2": "#d55e0040",
         "fontColor": "#fff",
+        "suit": 2,
         "order": 14,
         "rank": 14,
-        "sortKentucky": 15
+        "sortKentucky": 15,
+        "sortDefault": 14
       },
       "1 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 1,
         "rank": 1,
         "sortKentucky": 25,
-        "sortState": 1
+        "sortState": 1,
+        "sortDefault": 1
       },
       "2 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 2,
         "rank": 2,
-        "sortState": 2
+        "sortState": 2,
+        "sortDefault": 2
       },
       "3 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 3,
         "rank": 3,
-        "sortState": 3
+        "sortState": 3,
+        "sortDefault": 3
       },
       "4 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 4,
         "rank": 4,
-        "sortState": 4
+        "sortState": 4,
+        "sortDefault": 4
       },
       "5 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 5,
         "rank": 5,
         "sortKentucky": 35,
-        "sortState": 5
+        "sortState": 5,
+        "sortDefault": 5
       },
       "6 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 6,
         "rank": 6,
         "sortKentucky": 34,
-        "sortState": 6
+        "sortState": 6,
+        "sortDefault": 6
       },
       "7 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 7,
         "rank": 7,
         "sortKentucky": 33,
-        "sortState": 7
+        "sortState": 7,
+        "sortDefault": 7
       },
       "8 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 8,
         "rank": 8,
         "sortKentucky": 32,
-        "sortState": 8
+        "sortState": 8,
+        "sortDefault": 8
       },
       "9 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 9,
         "rank": 9,
         "sortKentucky": 31,
-        "sortState": 9
+        "sortState": 9,
+        "sortDefault": 9
       },
       "10 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 10,
         "rank": 10,
         "sortKentucky": 30,
-        "sortState": 10
+        "sortState": 10,
+        "sortDefault": 10
       },
       "11 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 11,
         "rank": 11,
-        "sortKentucky": 29
+        "sortKentucky": 29,
+        "sortDefault": 11
       },
       "12 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 12,
         "rank": 12,
-        "sortKentucky": 28
+        "sortKentucky": 28,
+        "sortDefault": 12
       },
       "13 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 13,
         "rank": 13,
-        "sortKentucky": 27
+        "sortKentucky": 27,
+        "sortDefault": 13
       },
       "14 green": {
-        "suit": "i/icons/square.svg",
+        "suitImage": "i/icons/square.svg",
         "suitColor": "#009e9b",
         "suitColor2": "#009e9b40",
         "fontColor": "#000",
+        "suit": 3,
         "order": 14,
         "rank": 14,
-        "sortKentucky": 26
+        "sortKentucky": 26,
+        "sortDefault": 14
       },
       "1 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 1,
         "rank": 1,
         "sortKentucky": 36,
-        "sortState": 1
+        "sortState": 1,
+        "sortDefault": 1
       },
       "2 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 2,
         "rank": 2,
-        "sortState": 2
+        "sortState": 2,
+        "sortDefault": 2
       },
       "3 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 3,
         "rank": 3,
-        "sortState": 3
+        "sortState": 3,
+        "sortDefault": 3
       },
       "4 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 4,
         "rank": 4,
-        "sortState": 4
+        "sortState": 4,
+        "sortDefault": 4
       },
       "5 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 5,
         "rank": 5,
         "sortKentucky": 46,
-        "sortState": 5
+        "sortState": 5,
+        "sortDefault": 5
       },
       "6 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 6,
         "rank": 6,
         "sortKentucky": 45,
-        "sortState": 6
+        "sortState": 6,
+        "sortDefault": 6
       },
       "7 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 7,
         "rank": 7,
         "sortKentucky": 44,
-        "sortState": 7
+        "sortState": 7,
+        "sortDefault": 7
       },
       "8 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 8,
         "rank": 8,
         "sortKentucky": 43,
-        "sortState": 8
+        "sortState": 8,
+        "sortDefault": 8
       },
       "9 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 9,
         "rank": 9,
         "sortKentucky": 42,
-        "sortState": 9
+        "sortState": 9,
+        "sortDefault": 9
       },
       "10 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 10,
         "rank": 10,
         "sortKentucky": 41,
-        "sortState": 10
+        "sortState": 10,
+        "sortDefault": 10
       },
       "11 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 11,
         "rank": 11,
-        "sortKentucky": 40
+        "sortKentucky": 40,
+        "sortDefault": 11
       },
       "12 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 12,
         "rank": 12,
-        "sortKentucky": 39
+        "sortKentucky": 39,
+        "sortDefault": 12
       },
       "13 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 13,
         "rank": 13,
-        "sortKentucky": 38
+        "sortKentucky": 38,
+        "sortDefault": 13
       },
       "14 yellow": {
-        "suit": "i/icons/hexagon_vertical.svg",
+        "suitImage": "i/icons/hexagon_vertical.svg",
         "suitColor": "#f0e442",
         "suitColor2": "#f0e44240",
         "fontColor": "#000",
+        "suit": 4,
         "order": 14,
         "rank": 14,
-        "sortKentucky": 37
+        "sortKentucky": 37,
+        "sortDefault": 14
       },
       "1 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 1,
         "rank": 1,
-        "sortState": 1
+        "sortState": 1,
+        "sortDefault": 1
       },
       "2 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 2,
         "rank": 2,
-        "sortState": 2
+        "sortState": 2,
+        "sortDefault": 2
       },
       "3 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 3,
         "rank": 3,
-        "sortState": 3
+        "sortState": 3,
+        "sortDefault": 3
       },
       "4 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 4,
         "rank": 4,
-        "sortState": 4
+        "sortState": 4,
+        "sortDefault": 4
       },
       "5 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 5,
         "rank": 5,
-        "sortState": 5
+        "sortState": 5,
+        "sortDefault": 5
       },
       "6 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 6,
         "rank": 6,
-        "sortState": 6
+        "sortState": 6,
+        "sortDefault": 6
       },
       "7 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 7,
         "rank": 7,
-        "sortState": 7
+        "sortState": 7,
+        "sortDefault": 7
       },
       "8 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 8,
         "rank": 8,
-        "sortState": 8
+        "sortState": 8,
+        "sortDefault": 8
       },
       "9 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 9,
         "rank": 9,
-        "sortState": 9
+        "sortState": 9,
+        "sortDefault": 9
       },
       "10 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 10,
         "rank": 10,
-        "sortState": 10
+        "sortState": 10,
+        "sortDefault": 10
       },
       "11 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 11,
-        "rank": 11
+        "rank": 11,
+        "sortDefault": 11
       },
       "12 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 12,
-        "rank": 12
+        "rank": 12,
+        "sortDefault": 12
       },
       "13 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 13,
-        "rank": 13
+        "rank": 13,
+        "sortDefault": 13
       },
       "14 black": {
-        "suit": "/assets/-1568599145_166",
+        "suitImage": "/assets/-1568599145_166",
         "suitColor": "#000000",
         "suitColor2": "#00000040",
         "fontColor": "#fff",
+        "suit": 5,
         "order": 14,
-        "rank": 14
+        "rank": 14,
+        "sortDefault": 14
       }
     },
     "faceTemplates": [
@@ -16918,7 +17267,7 @@
               "currentColor": "suitColor"
             },
             "dynamicProperties": {
-              "value": "suit",
+              "value": "suitImage",
               "width": "centerScale"
             }
           },
@@ -16948,7 +17297,7 @@
               "currentColor": "suitColor"
             },
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suitImage"
             }
           },
           {
@@ -16977,7 +17326,7 @@
               "currentColor": "suitColor"
             },
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suitImage"
             }
           },
           {
@@ -17006,7 +17355,7 @@
               "currentColor": "suitColor"
             },
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suitImage"
             }
           },
           {
@@ -17036,7 +17385,7 @@
               "currentColor": "suitColor"
             },
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suitImage"
             }
           },
           {
@@ -17071,7 +17420,47 @@
       "deck1": [
         "cardDefaults"
       ]
-    }
+    },
+    "deckType": 3,
+    "deckSuits": [
+      "red",
+      "orange",
+      "green",
+      "yellow",
+      "black"
+    ],
+    "deckSuitsColor": [
+      "#cc79a7",
+      "#d55e00",
+      "#009e9b",
+      "#f0e442",
+      "#000000",
+      ""
+    ],
+    "deckSuitsImage": [
+      "/i/icons/hearts.svg",
+      "i/icons/circle.svg",
+      "i/icons/square.svg",
+      "i/icons/hexagon_vertical.svg",
+      "/assets/-1568599145_166",
+      ""
+    ],
+    "deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump"
+    ],
+    "deckSuitsUni": [
+      "❤",
+      "🟠",
+      "🟩",
+      "⬢",
+      "▲",
+      "NT"
+    ]
   },
   "notu": {
     "deck": "crowDeck",
@@ -17318,8 +17707,8 @@
     "type": "card",
     "cardType": "3 green",
     "id": "g97r",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "48dj": {
     "deck": "crowDeck",
@@ -17406,8 +17795,8 @@
     "type": "card",
     "cardType": "14 green",
     "id": "782o",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "xrbw": {
     "deck": "crowDeck",
@@ -17516,7 +17905,7 @@
   "gameID10": {
     "id": "gameID10",
     "x": -526,
-    "y": 1318,
+    "y": 1319,
     "css": {
       "background": "blue",
       "color": "white",
@@ -19125,10 +19514,10 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685283016875,
+      "lastUpdate": 1685416692925,
       "showName": true,
       "skill": "",
-      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.0.1",
+      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
@@ -19589,7 +19978,7 @@
   "gameID18": {
     "id": "gameID18",
     "x": -526,
-    "y": 530,
+    "y": 531,
     "css": {
       "background": "blue",
       "color": "white",
@@ -19658,18 +20047,18 @@
         "trump": 2
       },
       {
-        "text": "hearts",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      },
-      {
         "text": "spades",
         "textColor": "black",
         "fontSize": "40px",
         "classes": "symbols",
         "trump": 3
+      },
+      {
+        "text": "hearts",
+        "textColor": "#e50932",
+        "fontSize": "40px",
+        "classes": "symbols",
+        "trump": 4
       },
       {
         "text": "No\nTrump",
@@ -22028,7 +22417,7 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "2",
+    "versionNumber": "0",
     "scale": 0
   },
   "cloneButton": {
@@ -22832,7 +23221,7 @@
   },
   "gameID25": {
     "id": "gameID25",
-    "y": 15,
+    "y": 16,
     "css": {
       "background": "blue",
       "color": "white",
@@ -22965,18 +23354,18 @@
         "trump": 2
       },
       {
-        "text": "hearts",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      },
-      {
         "text": "spades",
         "textColor": "black",
         "fontSize": "40px",
         "classes": "symbols",
         "trump": 3
+      },
+      {
+        "text": "hearts",
+        "textColor": "#e50932",
+        "fontSize": "40px",
+        "classes": "symbols",
+        "trump": 4
       }
     ],
     "preSetExceptionsRoutine": [
@@ -25909,7 +26298,38 @@
         "order": 12,
         "sortDefault": 12
       }
-    }
+    },
+    "deckSuits": [
+      "clubs",
+      "coins",
+      "cups",
+      "swords"
+    ],
+    "deckSuitsImage": [
+      "i/cards-spanish/club.svg",
+      "i/cards-spanish/coin.svg",
+      "i/cards-spanish/cup.svg",
+      "i/cards-spanish/sword.svg",
+      "",
+      ""
+    ],
+    "deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump",
+      ""
+    ],
+    "deckSuitsUni": [
+      "🔨",
+      "🪙",
+      "🏆",
+      "⚔",
+      "NT",
+      ""
+    ],
+    "deckType": 4
   },
   "sh1e": {
     "deck": "spanishDeck",
@@ -26294,15 +26714,6 @@
     "id": "ca49",
     "parent": "pile2",
     "staged": false
-  },
-  "pile2": {
-    "type": "pile",
-    "parent": "offHolder",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "pile2"
   },
   "playerAid8": {
     "type": "scoreboard",
@@ -27035,7 +27446,38 @@
       ]
     },
     "staged": false,
-    "parent": "offHolder"
+    "parent": "offHolder",
+    "deckSuits": [
+      "acorns",
+      "bells",
+      "leaves",
+      "hearts"
+    ],
+    "deckSuitsImage": [
+      "i/cards-german/acorn.svg",
+      "i/cards-german/bell.svg",
+      "i/cards-german/leaf.svg",
+      "i/cards-german/heart.svg",
+      "",
+      ""
+    ],
+    "deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump",
+      "All\nTrump"
+    ],
+    "deckSuitsUni": [
+      "🌰",
+      "🔔",
+      "🌿",
+      "💜",
+      "NT",
+      "AT"
+    ],
+    "deckType": 5
   },
   "vaj7": {
     "deck": "germanDeck",
@@ -27354,8 +27796,8 @@
     "type": "card",
     "cardType": "Heart 13",
     "id": "lvgf",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "gameID29": {
     "id": "gameID29",
@@ -27434,7 +27876,6 @@
     "height": 155,
     "movable": false,
     "movableInEdit": false,
-    "clickable": false,
     "css": {
       ".scoreboard tbody tr:nth-child(1) td": {
         "background": "#a9c6e8"
@@ -27457,6 +27898,91 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true
+  },
+  "choose15": {
+    "type": "button",
+    "id": "choose15",
+    "x": 70,
+    "y": 130,
+    "inheritFrom": {
+      "choose10": "*"
+    },
+    "chooser": 15,
+    "image": "",
+    "text": "All\nTrump",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "AT"
+  },
+  "choose16": {
+    "type": "button",
+    "id": "choose16",
+    "x": 10,
+    "y": 130,
+    "css": {
+      "font-size": "22px"
+    },
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "text": "Pass",
+    "clickRoutine": [
+      "var bidWidget = 'bidValue' concat ${seatIndex}",
+      "var bid = ${PROPERTY text}",
+      {
+        "func": "SET",
+        "collection": [
+          "${bidWidget}"
+        ],
+        "property": "text",
+        "value": "${bid}"
+      }
+    ]
+  },
+  "choose17": {
+    "type": "button",
+    "id": "choose17",
+    "x": 250,
+    "y": 130,
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "text": "",
+    "clickRoutine": [
+      "var bidWidget = 'bidValue' concat ${seatIndex}",
+      {
+        "func": "SET",
+        "collection": [
+          "${bidWidget}"
+        ],
+        "property": "text",
+        "value": ""
+      }
+    ]
+  },
+  "pile2": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "pile2",
+    "z": 25503,
+    "parent": "offHolder"
+  },
+  "offHolderRecallButton": {
+    "type": "button",
+    "id": "offHolderRecallButton",
+    "parent": "offHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
   },
   "pile1": {
     "type": "pile",
