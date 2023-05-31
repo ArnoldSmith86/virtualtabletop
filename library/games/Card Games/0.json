@@ -1283,9 +1283,9 @@
       "currentColor": "deckSuitsColor"
     },
     "image": "i/icons/clubs.svg",
-    "deckSuitsColor": "",
     "deckSuitsUni": "♣",
-    "deckSuits": "clubs"
+    "deckSuits": "clubs",
+    "deckSuitsColor": ""
   },
   "choose11": {
     "inheritFrom": {
@@ -1300,9 +1300,9 @@
     "deckSuit": "clubs",
     "image": "i/icons/diamonds.svg",
     "text": "",
-    "deckSuitsColor": "#e50932",
     "deckSuitsUni": "♦",
-    "deckSuits": "diamonds"
+    "deckSuits": "diamonds",
+    "deckSuitsColor": "#e50932"
   },
   "choose12": {
     "inheritFrom": {
@@ -1318,9 +1318,9 @@
     "deckSuit": "coins",
     "image": "i/icons/spades.svg",
     "text": "",
-    "deckSuitsColor": "",
     "deckSuitsUni": "♠",
-    "deckSuits": "spades"
+    "deckSuits": "spades",
+    "deckSuitsColor": ""
   },
   "choose13": {
     "inheritFrom": {
@@ -1335,9 +1335,9 @@
     "deckSuit": "cups",
     "image": "i/icons/hearts.svg",
     "text": "",
-    "deckSuitsColor": "#e50932",
     "deckSuitsUni": "♥",
-    "deckSuits": "hearts"
+    "deckSuits": "hearts",
+    "deckSuitsColor": "#e50932"
   },
   "choose14": {
     "inheritFrom": {
@@ -1351,8 +1351,8 @@
     "deckSuit": "swords",
     "image": "",
     "text": "No\nTrump",
-    "deckSuitsColor": "",
-    "deckSuitsUni": "NT"
+    "deckSuitsUni": "NT",
+    "deckSuitsColor": ""
   },
   "bidSuit1": {
     "id": "bidSuit1",
@@ -2990,7 +2990,10 @@
       " "
     ],
     "showing": false,
-    "player": ""
+    "player": "",
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "bidValue7": {
     "inheritFrom": {
@@ -6479,6 +6482,7 @@
         "property": "previousDeck",
         "value": "${PROPERTY deckType}"
       },
+      "var deckType = parseFloat ${deckType}",
       {
         "func": "SET",
         "collection": "thisButton",
@@ -7433,7 +7437,7 @@
       }
     ],
     "dummyHand": 0,
-    "previousDeck": "6"
+    "previousDeck": 0
   },
   "deckOptions": {
     "id": "deckOptions",
@@ -8497,27 +8501,54 @@
     "score": [],
     "tricks": 0,
     "clickRoutine": [
-      "var playerPrefix = substr ${playerName} 0 5",
       {
         "func": "IF",
-        "operand1": "${playerPrefix}",
-        "operand2": "Guest",
-        "thenRoutine": [
+        "condition": "${PROPERTY player}",
+        "thenRoutine": [],
+        "elseRoutine": [
+          "var playerPrefix = substr ${playerName} 0 5",
           {
-            "func": "INPUT",
-            "header": "Enter player name and color",
-            "fields": [
+            "func": "IF",
+            "operand1": "${playerPrefix}",
+            "operand2": "Guest",
+            "thenRoutine": [
               {
-                "type": "string",
-                "label": "Name",
-                "variable": "playerName",
-                "value": "${playerName}"
-              },
-              {
-                "type": "color",
-                "label": "Color",
-                "variable": "playerColor",
-                "value": "${playerColor}"
+                "func": "INPUT",
+                "header": "Enter player name and color",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Name",
+                    "variable": "playerName",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Color",
+                    "colors": [
+                      "#ffffff",
+                      "#f44336",
+                      "#f06292",
+                      "#9c27b0",
+                      "#3f51b5",
+                      "#1976d2",
+                      "#00bcd4",
+                      "#009688",
+                      "#4caf50",
+                      "#8bc34a",
+                      "#cddc39",
+                      "#ffeb3b",
+                      "#ffc107",
+                      "#ff9800",
+                      "#bf360c",
+                      "#795548",
+                      "#607d8b",
+                      "#000000"
+                    ],
+                    "variable": "playerColor",
+                    "value": "${playerColor}"
+                  }
+                ]
               }
             ]
           }
@@ -8529,50 +8560,8 @@
         "mode": "ignoreClickRoutine"
       },
       {
-        "func": "IF",
-        "operand1": "${PROPERTY player}",
-        "operand2": "",
-        "elseRoutine": [
-          "var contrast = colorContrast ${playerColor} ",
-          {
-            "func": "SET",
-            "collection": [
-              "count${PROPERTY index}"
-            ],
-            "property": "backColor",
-            "value": "${playerColor}"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "count${PROPERTY index}"
-            ],
-            "property": "textColor",
-            "value": "${contrast}"
-          }
-        ],
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "count${PROPERTY index}"
-            ],
-            "property": "backColor",
-            "value": "#e4e4e4"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "count${PROPERTY index}"
-            ],
-            "property": "textColor",
-            "value": "#6d6d6d"
-          },
-          {
-            "func": "CALL",
-            "routine": "setDefaultsRoutine"
-          }
-        ]
+        "func": "CALL",
+        "routine": "playerChangeRoutine"
       }
     ],
     "tempScore": [],
@@ -8697,7 +8686,55 @@
         ]
       }
     ],
-    "hideWhenUnused": true
+    "hideWhenUnused": true,
+    "playerChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "elseRoutine": [
+          "var contrast = colorContrast ${playerColor} ",
+          {
+            "func": "SET",
+            "collection": [
+              "count${PROPERTY index}"
+            ],
+            "property": "backColor",
+            "value": "${playerColor}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "count${PROPERTY index}"
+            ],
+            "property": "textColor",
+            "value": "${contrast}"
+          }
+        ],
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "count${PROPERTY index}"
+            ],
+            "property": "backColor",
+            "value": "#e4e4e4"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "count${PROPERTY index}"
+            ],
+            "property": "textColor",
+            "value": "#6d6d6d"
+          },
+          {
+            "func": "CALL",
+            "routine": "setDefaultsRoutine"
+          }
+        ]
+      }
+    ]
   },
   "preSetsButton": {
     "type": "button",
@@ -19521,7 +19558,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685557641059,
+      "lastUpdate": 1685567006587,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -27917,8 +27954,8 @@
     "chooser": 15,
     "image": "",
     "text": "All\nTrump",
-    "deckSuitsColor": "",
-    "deckSuitsUni": "AT"
+    "deckSuitsUni": "AT",
+    "deckSuitsColor": ""
   },
   "choose16": {
     "type": "button",
