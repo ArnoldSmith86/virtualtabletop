@@ -6361,6 +6361,10 @@
               {
                 "text": "German (5-A, Acorns, Bells, Leaves, Hearts)",
                 "value": 5
+              },
+              {
+                "text": "Swiss (6-A, Acorns, Bells, Roses, Shields)",
+                "value": 6
               }
             ]
           },
@@ -7429,7 +7433,7 @@
       }
     ],
     "dummyHand": 0,
-    "previousDeck": "5"
+    "previousDeck": "6"
   },
   "deckOptions": {
     "id": "deckOptions",
@@ -7459,6 +7463,9 @@
       ],
       [
         "germanDeck"
+      ],
+      [
+        "swissDeck"
       ]
     ],
     "hideCardsArray": [
@@ -19514,7 +19521,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685466583189,
+      "lastUpdate": 1685557641059,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -19522,7 +19529,7 @@
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "<div><i><font color=\"#2d5da8\"><b>Game Button</b></font></i><div><br></div>Use the Game button to automatically configure the room to a particular game type. If a game type is available in the drop-down menu, it will configure the room using the option settings described below for the most common variation of that game type. Even if you use an available pre-set, you can still change other values using the Option Buttons described below.</div><div><br></div><div>If a game pre-set is not available, you can still play many games by configuring the options. The only limitation is that there will be very little automation.</div><div><br></div><div>To the right of the Game button is the name of the current pre-set game. In many rooms, hovering over that text with the cursor will display tips on how to use the automation in that particular pre-set game.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div><i style=\"color: var(--overlayFontColor);\"><font color=\"#2d5da8\"><b>Option Buttons</b></font></i><br></div></div><div><br></div>Use the option buttons in the lower right to set up room as desired.&nbsp;<div><br></div><div><b>Visuals and Other</b></div><div><ul><li><b>Play Holder</b></li><ul><li>Clicking a card in the hand sends the card to the play holder but click to play can be turned off. See Playing A Card in the automation section below for more information.</li><li>Cards are played to either a common holder in the middle of the board or to the holders adjacent to each seat. The common holder is off by default.</li><li>The common holder can display cards spread out or in a pile. When spread out, the space between cards will get smaller if there are more than 5 so they all fit without extending past the holder. About 12 cards fit before it becomes difficult to identify the cards.</li><li>The play holder can force cards to be face up when they enter or face down.</li><li>A mini-holder can be added on top of the normal holder for captured cards. This is useful in games that require some or all captured cards to be displayed face up during play.</li></ul></ul><ul><li><b>Bid &amp; Score Displays</b></li><ul><li>The scoreboard on the left side of the screen can be displayed or hidden.</li><li>The count of tricks taken per player in this round can be displayed or hidden. The total trick count is always displayed beneath the Recall &amp; Shuffle button.</li><li>The white, square bid value widgets to the left at each player's seat can be displayed or hidden.</li><li>The white, square bid suit widgets to the right at each player's seat can be displayed or hidden.</li><li>The discard holder below the trick count score can be displayed or hidden.</li><li>An activity log showing a history of bidding and other messages can be displayed or hidden.</li><li>Bidding values can be displayed to everyone or kept private until the player chooses to reveal them.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Other</b><br></li><ul><li><span style=\"color: var(--overlayFontColor);\">The turn button can be set to move the glowing turn indicator on the seats clockwise or counter-clockwise.</span><br></li><li><span style=\"color: var(--overlayFontColor);\">You can change the background color of the room to a different color.</span></li></ul></ul><div><div><b>Decks and Players</b></div><div><ul><li><b>Players</b></li><ul><li>The number of players can be set between 2 and 8. Each player count has pre-defined seats that cannot be changed. Changing the player count while players are seated will kick all players out of existing seats.</li><li>A dummy hand can be added to seat 1 (bottom-center). Cards can be dealt to the dummy hand either face up or face down. All players may see and interact with the dummy hand.</li></ul></ul><ul><li><b>Cards and Decks</b></li><ul><li>Available decks:</li><ul><li>Standard 52 card French-suited deck</li><li>Two standard 52 card decks</li><li>Tarot</li><li>Crow (similar to Rook)</li><li>Spanish (1-12, clubs, coins, cups, swords)</li><li>German (5-A, acorns, bells, leaves, hearts)</li></ul><li>The number of jokers can be set between 0 (default) and 4. The first joker added is the black 1, the second is a red 2, the third is another black 1, and the fourth is another red 2.</li><li>You can set the number of cards dealt to each seat (including the dummy, when used) from 0 to any value.</li><li>There are options to remove certain cards. This works on the standard, Spanish and Crow decks, but not Tarot.</li><li>A delete button can be displayed in the room. To use this feature, check the box in the settings, drag cards that should be removed from the deck to the Discard holder, and press the red Delete button. All cards in the Discard holder are deleted from the room after confirming your intent in a pop-up menu. Those cards can only be returned to the room by reloading the game from the Game Shelf.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Scoring</b></li><ul><li>Team/partnership scoring using North-South and East-West partners is available when playing a 4-player game.</li><li>Small widgets can be added to indicate \"teams\" that change from round-to-round. This makes variable partnership scoring automated when using certain pre-sets. Otherwise, this is just a visual reminder.</li><li>A smaller, temporary scoreboard on the left side of the screen can also be displayed or hidden (default). This is used to calculate bonuses and other values before entering a final tally in the main scoreboard. The temporary scoreboard records only one round of scores. This is mainly used by pre-sets.</li></ul></ul><i><font color=\"#2d5da8\"><b>Automation</b></font></i><div><br></div>Several widgets and buttons are available in the room to assist with automating some basic tasks.</div></div></div><div><div><ul><li><b>Deal</b></li><ul><li>This will deal the number of cards set in the Decks &amp; Players button automatically to each seat (and to the dummy hand, if being used).</li><li>This button only deals cards in the holder next to it. To start a new round, first press the Recall &amp; Shuffle button.</li></ul></ul></div><div><ul><li><b>Recall &amp; Shuffle</b></li><ul><li>This ends the current round, erases the activity log, and recalls and shuffles the cards.</li></ul></ul><div><ul><li><b>Take 1</b></li><ul><li>This sends one card from the main deck holder to the hand of the player pressing the button.</li></ul></ul></div></div></div><div><ul><li><b>Playing A Card</b></li><ul><li>When click to play is enabled:</li><ul><li>Any player can play the first trick of a new round. After that, the turn indicator moves to the next player. The turn indicator must be correct for click-to-play to work.</li><li>During a player's turn, clicking on a card will immediately play it to the selected play area.</li><li>While players are waiting for their turn, they can click on a card to stage it for play (it will raise up a few pixels above the other cards). Any card in that position when the turn indicator moves to that player will be immediately played.</li><li>If any of these scenarios are incompatible with the game you are playing, turn click to play off. You can always manually drag cards, even when click to play is enabled.</li></ul><li>The circles with numbers on the upper-left of each seat indicate the number of cards in that player's hand.</li></ul></ul></div><div><ul><li><b>Primary Scoreboard</b></li><ul><li>The red and green buttons above the scoreboard decrease and increase the score for the current round for the player pressing the button. Note: the +/- buttons may work on the secondary scoreboard instead; see below.</li><li>A new round is created every time the Recall &amp; Shuffle button is pressed.</li><li>Players can also click on the scoreboard widget directly. A pop-up prompts for which player score to set, which round, and a value. Entering data this way immediately overrides existing values in the selected round for the selected player.</li><li>If a score system was selected in the options menu, then an Add Card Points button, trump indicator, declarer indicator, and possibly a Transfer Score button are displayed at the bottom of the scoreboard.</li><ul><li>The trump indicator is set automatically based on the last bid suit button pressed by a player or by rolling the die (only displayed in some games in the upper right-hand corner for a random trump). But you can override that by clicking on the square trump widget to rotate through the options. If card point values are different for trump cards or when a bid of \"no trumps\" or \"all trumps\" changes point values, then this widget must be set correctly before entering scores. The indicator can be dragged around the room.</li><li>The Declarer indicator shows the player making the last bid. But you can override that by clicking on it to rotate through the names of the players.</li><li>The Add Card Points button will apply the pre-defined point values to the secondary scoreboard for the current round. If there are points already in the current round, pressing the button will replace the existing values with the new ones. Only cards in the holders near each players' seat are counted. There are 3 holders near each players' seat (not all are visible) and all 3 will be counted for that player.</li><li>The Transfer Score button is available in some pre-set games to move and/or convert scores between the secondary scoreboard and the main scoreboard. If available, check the game tips by hovering over the name of the pre-set. If not available, you need to manually enter values in the primary scoreboard before pressing the Recall &amp; Shuffle button.</li></ul></ul></ul><ul><li><b>Secondary Scoreboard</b></li><ul><li>The secondary scoreboard is a smaller scoreboard below the main one. It is used in many pre-sets as a temporary place to calculate interim scores, such as the value of captured card points.</li><li>In addition to the Card Points row, other rows may be available. Drag the slider to the right of the secondary scoreboard up and down to highlight different rows. The red and green +/- buttons work on whichever row is highlighted.</li><li>The red and green +/- buttons can only work on one scoreboard at a time. To reenable the buttons on the primary scoreboard, move the slider all the back up to the top.</li></ul></ul><ul><li><b>Bidding</b></li><ul><li>The square widget on the left side of the player's seat is used to indicate a bid value. The widget on the right is used to indicate the bid's suit.</li><li>Pressing either widget will open a menu in the middle of the screen only visible to that player. On that menu, the player can press numbers and/or suits to indicate a bid. Numbers are entered like a calculator one at a time. Use the blank square to erase a number entry and start over.</li><li>Bids are immediately reflected on the white square widgets for other players to see unless secret bidding is enabled.</li><li>Pressing the green Bid button will optionally display the bid in an activity log in the lower right corner in reverse chronological order. If secret bidding is enabled, the activity log only reports that the player made a bid. The bid history is erased when the cards are recalled for the next round.</li><li>If additional messages are enabled in the pre-set, then a white rectangular Message button appears above the activity log. Pressing that button allows players to choose from a selection of game-related messages that are posted in the activity log.</li><li>To close the bidding menu, press the Close button, the geen Bid button, or once again press one of the white square bidding widgets.</li><li>If secret bidding was enabled in the settings, then at the appropriate time, each player should press the Actions button to the right of the hand. In the pop-up menu, press the Show Bids button. Press the Actions button again to close the pop-up.</li></ul></ul><ul><li><b>Sorting</b></li><ul><li>A Sort button to the left of the hand will sort cards in the hand only for the player pressing the button. Suits are always sorted left to right in order: clubs, diamonds, hearts, spades when using the standard deck. Other decks have similar default sorting.</li><li>The first time a player presses the Sort button, the player is prompted to choose how to sort by value within each suit: high to low or low to high. After making the selection, the player will not see the option again until a new pre-set game is selected.</li><li>After making selections, all subsequent deals to those players will automatically be sorted.</li><li>In some pre-set games, pressing the sort button again after trumps is chosen will change the sort order.</li><li>Some pre-set games also add an additional sort button for unique behavior linked to that game.</li></ul></ul><ul><li><b>Take</b></li><ul><li>The Take button moves all cards played in the round to a holder belonging to the player pressing the button. The cards are turned face-down and placed into a pile.</li><ul><li>If using the common play holder, the cards are moved to the holder near the player's seat.</li><li>If not using the common play holder, the cards are moved to a holder behind and just slightly above and to the right of the holder near the player's seat. This holder is invisible, but can be used, so be careful if manually dragging cards.</li><li>If using the mini-holder to display captured cards, cards can be manually dragged from the holder with the captured cards to the mini-holder. Some games pre-sets do that automatically.</li></ul><li>Clicking the button will increase the count of the number of tricks taken by 1 in the trick scoring widget on the right side of the room.</li><li>The turn indicator moves to the seat of the player pressing the button to lead the next trick.</li></ul></ul><ul><li><b>Actions</b></li><ul><li>This displays a pop-up menu with other buttons that can be used in the game.</li><li>The Show Hand button will create a mini holder over the seat of the player pressing the button. Copies of the cards in the hand of the player will be displayed there in miniature. No player can interact with those copies. They appear and disappear as needed to reflect the cards in the hand of that player.</li><li>The Show Bid button is used as described above to reveal bids that had been secret.</li><li>The Show Arrow button displays a black and white arrow to the left of the hand that can point up or down. This is used in some pre-set games to indicate when low cards are high and vice versa.</li></ul></ul><ul><li><b>Items</b></li><ul><li>This displays a pop-up menu with multiple widgets that can be dragged around and used in the game.</li><li>Most of the widgets (except for the 4 card suits) change color to reflect the color of the player that took it.</li><li>The Label widget can be dragged by grabbing the thick border and you can type short messages in it by clicking in the text area.</li><li>The widgets with numbers can be clicked to change.</li><ul><li>The circular widgets change from 1 to x1, 6 to x6, etc.</li><li>The square widget is a doubling cube and cycles through x2, x4, x8, x16, x32, x64.</li></ul><li>To remove a single widget from the board, just drop it anywhere on the Items \"tray\".</li><li>A player can delete all of their own widgets by pressing the Recall Mine button.</li><li>Any player can delete all of the widgets in the room by pressing the Recall All button.</li></ul></ul><ul><li><b>Reset Scores</b></li><ul><li>The reset scores button will erase all player scores in the scoreboard widget and the trick count in the trick scoring widget. It also deletes all widgets taken from the Items \"tray\".</li></ul></ul><div><b style=\"color: rgb(45, 93, 168);\"><i>Making a New Pre-Set</i></b><br></div></div><div><br></div><div>If you are interested in adding your own pre-set (and hopefully contribute it back to the public library), then see the wiki discussion at&nbsp;https://github.com/96LawDawg/Cards-Tricks/wiki.</div>",
+      "helpText": "<div><i><font color=\"#2d5da8\"><b>Game Button</b></font></i><div><br></div>Use the Game button to automatically configure the room to a particular game type. If a game type is available in the drop-down menu, it will configure the room using the option settings described below for the most common variation of that game type. Even if you use an available pre-set, you can still change other values using the Option Buttons described below.</div><div><br></div><div>If a game pre-set is not available, you can still play many games by configuring the options. The only limitation is that there will be very little automation.</div><div><br></div><div>To the right of the Game button is the name of the current pre-set game. In many rooms, hovering over that text with the cursor will display tips on how to use the automation in that particular pre-set game.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div><i style=\"color: var(--overlayFontColor);\"><font color=\"#2d5da8\"><b>Option Buttons</b></font></i><br></div></div><div><br></div>Use the option buttons in the lower right to set up room as desired.&nbsp;<div><br></div><div><b>Visuals and Other</b></div><div><ul><li><b>Play Holder</b></li><ul><li>Clicking a card in the hand sends the card to the play holder but click to play can be turned off. See Playing A Card in the automation section below for more information.</li><li>Cards are played to either a common holder in the middle of the board or to the holders adjacent to each seat. The common holder is off by default.</li><li>The common holder can display cards spread out or in a pile. When spread out, the space between cards will get smaller if there are more than 5 so they all fit without extending past the holder. About 12 cards fit before it becomes difficult to identify the cards.</li><li>The play holder can force cards to be face up when they enter or face down.</li><li>A mini-holder can be added on top of the normal holder for captured cards. This is useful in games that require some or all captured cards to be displayed face up during play.</li></ul></ul><ul><li><b>Bid &amp; Score Displays</b></li><ul><li>The scoreboard on the left side of the screen can be displayed or hidden.</li><li>The count of tricks taken per player in this round can be displayed or hidden. The total trick count is always displayed beneath the Recall &amp; Shuffle button.</li><li>The white, square bid value widgets to the left at each player's seat can be displayed or hidden.</li><li>The white, square bid suit widgets to the right at each player's seat can be displayed or hidden.</li><li>The discard holder below the trick count score can be displayed or hidden.</li><li>An activity log showing a history of bidding and other messages can be displayed or hidden.</li><li>Bidding values can be displayed to everyone or kept private until the player chooses to reveal them.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Other</b><br></li><ul><li><span style=\"color: var(--overlayFontColor);\">The turn button can be set to move the glowing turn indicator on the seats clockwise or counter-clockwise.</span><br></li><li><span style=\"color: var(--overlayFontColor);\">You can change the background color of the room to a different color.</span></li></ul></ul><div><div><b>Decks and Players</b></div><div><ul><li><b>Players</b></li><ul><li>The number of players can be set between 2 and 8. Each player count has pre-defined seats that cannot be changed. Changing the player count while players are seated will kick all players out of existing seats.</li><li>A dummy hand can be added to seat 1 (bottom-center). Cards can be dealt to the dummy hand either face up or face down. All players may see and interact with the dummy hand.</li></ul></ul><ul><li><b>Cards and Decks</b></li><ul><li>Available decks:</li><ul><li>Standard 52 card French-suited deck</li><li>Two standard 52 card decks</li><li>Tarot</li><li>Crow (similar to Rook)</li><li>Spanish (1-12, clubs, coins, cups, swords)</li><li>German (5-A, acorns, bells, leaves, hearts)</li><li>Swiss (6-A, acorns, bells, roses, shields)</li></ul><li>The number of jokers can be set between 0 (default) and 4. The first joker added is the black 1, the second is a red 2, the third is another black 1, and the fourth is another red 2.</li><li>You can set the number of cards dealt to each seat (including the dummy, when used) from 0 to any value.</li><li>There are options to remove certain cards. This works on the standard, Spanish and Crow decks, but not Tarot.</li><li>A delete button can be displayed in the room. To use this feature, check the box in the settings, drag cards that should be removed from the deck to the Discard holder, and press the red Delete button. All cards in the Discard holder are deleted from the room after confirming your intent in a pop-up menu. Those cards can only be returned to the room by reloading the game from the Game Shelf.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Scoring</b></li><ul><li>Team/partnership scoring using North-South and East-West partners is available when playing a 4-player game.</li><li>Small widgets can be added to indicate \"teams\" that change from round-to-round. This makes variable partnership scoring automated when using certain pre-sets. Otherwise, this is just a visual reminder.</li><li>A smaller, temporary scoreboard on the left side of the screen can also be displayed or hidden (default). This is used to calculate bonuses and other values before entering a final tally in the main scoreboard. The temporary scoreboard records only one round of scores. This is mainly used by pre-sets.</li></ul></ul><i><font color=\"#2d5da8\"><b>Automation</b></font></i><div><br></div>Several widgets and buttons are available in the room to assist with automating some basic tasks.</div></div></div><div><div><ul><li><b>Deal</b></li><ul><li>This will deal the number of cards set in the Decks &amp; Players button automatically to each seat (and to the dummy hand, if being used).</li><li>This button only deals cards in the holder next to it. To start a new round, first press the Recall &amp; Shuffle button.</li></ul></ul></div><div><ul><li><b>Recall &amp; Shuffle</b></li><ul><li>This ends the current round, erases the activity log, and recalls and shuffles the cards.</li></ul></ul><div><ul><li><b>Take 1</b></li><ul><li>This sends one card from the main deck holder to the hand of the player pressing the button.</li></ul></ul></div></div></div><div><ul><li><b>Playing A Card</b></li><ul><li>When click to play is enabled:</li><ul><li>Any player can play the first trick of a new round. After that, the turn indicator moves to the next player. The turn indicator must be correct for click-to-play to work.</li><li>During a player's turn, clicking on a card will immediately play it to the selected play area.</li><li>While players are waiting for their turn, they can click on a card to stage it for play (it will raise up a few pixels above the other cards). Any card in that position when the turn indicator moves to that player will be immediately played.</li><li>If any of these scenarios are incompatible with the game you are playing, turn click to play off. You can always manually drag cards, even when click to play is enabled.</li></ul><li>The circles with numbers on the upper-left of each seat indicate the number of cards in that player's hand.</li></ul></ul></div><div><ul><li><b>Primary Scoreboard</b></li><ul><li>The red and green buttons above the scoreboard decrease and increase the score for the current round for the player pressing the button. Note: the +/- buttons may work on the secondary scoreboard instead; see below.</li><li>A new round is created every time the Recall &amp; Shuffle button is pressed.</li><li>Players can also click on the scoreboard widget directly. A pop-up prompts for which player score to set, which round, and a value. Entering data this way immediately overrides existing values in the selected round for the selected player.</li><li>If a score system was selected in the options menu, then an Add Card Points button, trump indicator, declarer indicator, and possibly a Transfer Score button are displayed at the bottom of the scoreboard.</li><ul><li>The trump indicator is set automatically based on the last bid suit button pressed by a player or by rolling the die (only displayed in some games in the upper right-hand corner for a random trump). But you can override that by clicking on the square trump widget to rotate through the options. If card point values are different for trump cards or when a bid of \"no trumps\" or \"all trumps\" changes point values, then this widget must be set correctly before entering scores. The indicator can be dragged around the room.</li><li>The Declarer indicator shows the player making the last bid. But you can override that by clicking on it to rotate through the names of the players.</li><li>The Add Card Points button will apply the pre-defined point values to the secondary scoreboard for the current round. If there are points already in the current round, pressing the button will replace the existing values with the new ones. Only cards in the holders near each players' seat are counted. There are 3 holders near each players' seat (not all are visible) and all 3 will be counted for that player.</li><li>The Transfer Score button is available in some pre-set games to move and/or convert scores between the secondary scoreboard and the main scoreboard. If available, check the game tips by hovering over the name of the pre-set. If not available, you need to manually enter values in the primary scoreboard before pressing the Recall &amp; Shuffle button.</li></ul></ul></ul><ul><li><b>Secondary Scoreboard</b></li><ul><li>The secondary scoreboard is a smaller scoreboard below the main one. It is used in many pre-sets as a temporary place to calculate interim scores, such as the value of captured card points.</li><li>In addition to the Card Points row, other rows may be available. Drag the slider to the right of the secondary scoreboard up and down to highlight different rows. The red and green +/- buttons work on whichever row is highlighted.</li><li>The red and green +/- buttons can only work on one scoreboard at a time. To reenable the buttons on the primary scoreboard, move the slider all the back up to the top.</li></ul></ul><ul><li><b>Bidding</b></li><ul><li>The square widget on the left side of the player's seat is used to indicate a bid value. The widget on the right is used to indicate the bid's suit.</li><li>Pressing either widget will open a menu in the middle of the screen only visible to that player. On that menu, the player can press numbers and/or suits to indicate a bid. Numbers are entered like a calculator one at a time. Use the blank square to erase a number entry and start over.</li><li>Bids are immediately reflected on the white square widgets for other players to see unless secret bidding is enabled.</li><li>Pressing the green Bid button will optionally display the bid in an activity log in the lower right corner in reverse chronological order. If secret bidding is enabled, the activity log only reports that the player made a bid. The bid history is erased when the cards are recalled for the next round.</li><li>If additional messages are enabled in the pre-set, then a white rectangular Message button appears above the activity log. Pressing that button allows players to choose from a selection of game-related messages that are posted in the activity log.</li><li>To close the bidding menu, press the Close button, the geen Bid button, or once again press one of the white square bidding widgets.</li><li>If secret bidding was enabled in the settings, then at the appropriate time, each player should press the Actions button to the right of the hand. In the pop-up menu, press the Show Bids button. Press the Actions button again to close the pop-up.</li></ul></ul><ul><li><b>Sorting</b></li><ul><li>A Sort button to the left of the hand will sort cards in the hand only for the player pressing the button. Suits are always sorted left to right in order: clubs, diamonds, hearts, spades when using the standard deck. Other decks have similar default sorting.</li><li>The first time a player presses the Sort button, the player is prompted to choose how to sort by value within each suit: high to low or low to high. After making the selection, the player will not see the option again until a new pre-set game is selected.</li><li>After making selections, all subsequent deals to those players will automatically be sorted.</li><li>In some pre-set games, pressing the sort button again after trumps is chosen will change the sort order.</li><li>Some pre-set games also add an additional sort button for unique behavior linked to that game.</li></ul></ul><ul><li><b>Take</b></li><ul><li>The Take button moves all cards played in the round to a holder belonging to the player pressing the button. The cards are turned face-down and placed into a pile.</li><ul><li>If using the common play holder, the cards are moved to the holder near the player's seat.</li><li>If not using the common play holder, the cards are moved to a holder behind and just slightly above and to the right of the holder near the player's seat. This holder is invisible, but can be used, so be careful if manually dragging cards.</li><li>If using the mini-holder to display captured cards, cards can be manually dragged from the holder with the captured cards to the mini-holder. Some games pre-sets do that automatically.</li></ul><li>Clicking the button will increase the count of the number of tricks taken by 1 in the trick scoring widget on the right side of the room.</li><li>The turn indicator moves to the seat of the player pressing the button to lead the next trick.</li></ul></ul><ul><li><b>Actions</b></li><ul><li>This displays a pop-up menu with other buttons that can be used in the game.</li><li>The Show Hand button will create a mini holder over the seat of the player pressing the button. Copies of the cards in the hand of the player will be displayed there in miniature. No player can interact with those copies. They appear and disappear as needed to reflect the cards in the hand of that player.</li><li>The Show Bid button is used as described above to reveal bids that had been secret.</li><li>The Show Arrow button displays a black and white arrow to the left of the hand that can point up or down. This is used in some pre-set games to indicate when low cards are high and vice versa.</li></ul></ul><ul><li><b>Items</b></li><ul><li>This displays a pop-up menu with multiple widgets that can be dragged around and used in the game.</li><li>Most of the widgets (except for the 4 card suits) change color to reflect the color of the player that took it.</li><li>The Label widget can be dragged by grabbing the thick border and you can type short messages in it by clicking in the text area.</li><li>The widgets with numbers can be clicked to change.</li><ul><li>The circular widgets change from 1 to x1, 6 to x6, etc.</li><li>The square widget is a doubling cube and cycles through x2, x4, x8, x16, x32, x64.</li></ul><li>To remove a single widget from the board, just drop it anywhere on the Items \"tray\".</li><li>A player can delete all of their own widgets by pressing the Recall Mine button.</li><li>Any player can delete all of the widgets in the room by pressing the Recall All button.</li></ul></ul><ul><li><b>Reset Scores</b></li><ul><li>The reset scores button will erase all player scores in the scoreboard widget and the trick count in the trick scoring widget. It also deletes all widgets taken from the Items \"tray\".</li></ul></ul><div><b style=\"color: rgb(45, 93, 168);\"><i>Making a New Pre-Set</i></b><br></div></div><div><br></div><div>If you are interested in adding your own pre-set (and hopefully contribute it back to the public library), then see the wiki discussion at&nbsp;https://github.com/96LawDawg/Cards-Tricks/wiki.</div>",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
@@ -27983,6 +27990,736 @@
         "holder": "${PROPERTY parent}"
       }
     ]
+  },
+  "swissDeck": {
+    "type": "deck",
+    "id": "swissDeck",
+    "parent": "offHolder",
+    "x": 4,
+    "y": 4,
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "cardTypes": {
+      "Acorn 01": {
+        "rank": "A",
+        "rankImage": "i/cards-german/1Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 1,
+        "sortDefault": 13
+      },
+      "Acorn 06": {
+        "rank": "6",
+        "rankImage": "i/cards-german/6Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 6,
+        "sortDefault": 5
+      },
+      "Acorn 07": {
+        "rank": "7",
+        "rankImage": "i/cards-german/7Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 7,
+        "sortDefault": 6
+      },
+      "Acorn 08": {
+        "rank": "8",
+        "rankImage": "i/cards-german/8Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 8,
+        "sortDefault": 7
+      },
+      "Acorn 09": {
+        "rank": "9",
+        "rankImage": "i/cards-german/9Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 9,
+        "sortDefault": 8
+      },
+      "Acorn 10": {
+        "rank": "B",
+        "rankImage": "i/cards-swiss/10Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 10,
+        "sortDefault": 9
+      },
+      "Acorn 11": {
+        "rank": "U",
+        "rankImage": "i/cards-german/11Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 11,
+        "sortDefault": 10
+      },
+      "Acorn 12": {
+        "rank": "O",
+        "rankImage": "i/cards-german/12Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 12,
+        "sortDefault": 11
+      },
+      "Acorn 13": {
+        "rank": "K",
+        "rankImage": "i/cards-german/13Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 13,
+        "sortDefault": 12
+      },
+      "Bell 01": {
+        "rank": "A",
+        "rankImage": "i/cards-german/1Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 1,
+        "sortDefault": 13
+      },
+      "Bell 06": {
+        "rank": "6",
+        "rankImage": "i/cards-german/6Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 6,
+        "sortDefault": 5
+      },
+      "Bell 07": {
+        "rank": "7",
+        "rankImage": "i/cards-german/7Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 7,
+        "sortDefault": 6
+      },
+      "Bell 08": {
+        "rank": "8",
+        "rankImage": "i/cards-german/8Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 8,
+        "sortDefault": 7
+      },
+      "Bell 09": {
+        "rank": "9",
+        "rankImage": "i/cards-german/9Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 9,
+        "sortDefault": 8
+      },
+      "Bell 10": {
+        "rank": "B",
+        "rankImage": "i/cards-swiss/10Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 10,
+        "sortDefault": 9
+      },
+      "Bell 11": {
+        "rank": "U",
+        "rankImage": "i/cards-german/11Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 11,
+        "sortDefault": 10
+      },
+      "Bell 12": {
+        "rank": "O",
+        "rankImage": "i/cards-german/12Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 12,
+        "sortDefault": 11
+      },
+      "Bell 13": {
+        "rank": "K",
+        "rankImage": "i/cards-german/13Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 13,
+        "sortDefault": 12
+      },
+      "Rose 01": {
+        "rank": "A",
+        "rankImage": "i/cards-swiss/1Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 1,
+        "sortDefault": 13
+      },
+      "Rose 06": {
+        "rank": "6",
+        "rankImage": "i/cards-swiss/6Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 6,
+        "sortDefault": 5
+      },
+      "Rose 07": {
+        "rank": "7",
+        "rankImage": "i/cards-swiss/7Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 7,
+        "sortDefault": 6
+      },
+      "Rose 08": {
+        "rank": "8",
+        "rankImage": "i/cards-swiss/8Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 8,
+        "sortDefault": 7
+      },
+      "Rose 09": {
+        "rank": "9",
+        "rankImage": "i/cards-swiss/9Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 9,
+        "sortDefault": 8
+      },
+      "Rose 10": {
+        "rank": "B",
+        "rankImage": "i/cards-swiss/10Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 10,
+        "sortDefault": 9
+      },
+      "Rose 11": {
+        "rank": "U",
+        "rankImage": "i/cards-swiss/11Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 11,
+        "sortDefault": 10
+      },
+      "Rose 12": {
+        "rank": "O",
+        "rankImage": "i/cards-swiss/12Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 12,
+        "sortDefault": 11
+      },
+      "Rose 13": {
+        "rank": "K",
+        "rankImage": "i/cards-swiss/13Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 13,
+        "sortDefault": 12
+      },
+      "Shield 01": {
+        "rank": "A",
+        "rankImage": "i/cards-swiss/1Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 1,
+        "sortDefault": 13
+      },
+      "Shield 06": {
+        "rank": "6",
+        "rankImage": "i/cards-swiss/6Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 6,
+        "sortDefault": 5
+      },
+      "Shield 07": {
+        "rank": "7",
+        "rankImage": "i/cards-swiss/7Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 7,
+        "sortDefault": 6
+      },
+      "Shield 08": {
+        "rank": "8",
+        "rankImage": "i/cards-swiss/8Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 8,
+        "sortDefault": 7
+      },
+      "Shield 09": {
+        "rank": "9",
+        "rankImage": "i/cards-swiss/9Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 9,
+        "sortDefault": 8
+      },
+      "Shield 10": {
+        "rank": "B",
+        "rankImage": "i/cards-swiss/10Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 10,
+        "sortDefault": 9
+      },
+      "Shield 11": {
+        "rank": "U",
+        "rankImage": "i/cards-swiss/11Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 11,
+        "sortDefault": 10
+      },
+      "Shield 12": {
+        "rank": "O",
+        "rankImage": "i/cards-swiss/12Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 12,
+        "sortDefault": 11
+      },
+      "Shield 13": {
+        "rank": "K",
+        "rankImage": "i/cards-swiss/13Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 13,
+        "sortDefault": 12
+      }
+    },
+    "clickable": true,
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 6,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 10,
+            "width": 73,
+            "height": 140,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rankImage"
+            },
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": -2,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 127,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 28,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            }
+          },
+          {
+            "type": "image",
+            "x": 79,
+            "y": 110,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            },
+            "rotation": 180
+          }
+        ]
+      }
+    ],
+    "inheritFrom": {
+      "deck1": [
+        "cardDefaults"
+      ]
+    },
+    "deckSuits": [
+      "acorns",
+      "bells",
+      "roses",
+      "shields"
+    ],
+    "deckSuitsImage": [
+      "i/cards-german/acorn.svg",
+      "i/cards-german/bell.svg",
+      "i/cards-swiss/rose.svg",
+      "i/cards-swiss/shield.svg",
+      "",
+      ""
+    ],
+    "deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump",
+      "All\nTrump"
+    ],
+    "deckSuitsUni": [
+      "🌰",
+      "🔔",
+      "🌼",
+      "🛡",
+      "NT",
+      "AT"
+    ],
+    "deckType": 6,
+    "staged": false
+  },
+  "2wa8": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Acorn 01",
+    "id": "2wa8",
+    "parent": "pile2",
+    "staged": false
+  },
+  "alcs": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Acorn 06",
+    "id": "alcs",
+    "parent": "pile2",
+    "staged": false
+  },
+  "zjgq": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Acorn 07",
+    "id": "zjgq",
+    "parent": "pile2",
+    "staged": false
+  },
+  "f4ea": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Acorn 08",
+    "id": "f4ea",
+    "parent": "pile2",
+    "staged": false
+  },
+  "4gts": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Acorn 09",
+    "id": "4gts",
+    "parent": "pile2",
+    "staged": false
+  },
+  "4u5f": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Acorn 10",
+    "id": "4u5f",
+    "parent": "pile2",
+    "staged": false
+  },
+  "1zs0": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Acorn 11",
+    "id": "1zs0",
+    "parent": "pile2",
+    "staged": false
+  },
+  "fj5l": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Acorn 12",
+    "id": "fj5l",
+    "parent": "pile2",
+    "staged": false
+  },
+  "nksh": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Acorn 13",
+    "id": "nksh",
+    "parent": "pile2",
+    "staged": false
+  },
+  "2clx": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Bell 01",
+    "id": "2clx",
+    "parent": "pile2",
+    "staged": false
+  },
+  "wkpt": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Bell 06",
+    "id": "wkpt",
+    "parent": "pile2",
+    "staged": false
+  },
+  "cysa": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Bell 07",
+    "id": "cysa",
+    "parent": "pile2",
+    "staged": false
+  },
+  "1uhp": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Bell 08",
+    "id": "1uhp",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ix0x": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Bell 09",
+    "id": "ix0x",
+    "parent": "pile2",
+    "staged": false
+  },
+  "4ljo": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Bell 10",
+    "id": "4ljo",
+    "parent": "pile2",
+    "staged": false
+  },
+  "dsaz": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Bell 11",
+    "id": "dsaz",
+    "parent": "pile2",
+    "staged": false
+  },
+  "2yuy": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Bell 12",
+    "id": "2yuy",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ydai": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Bell 13",
+    "id": "ydai",
+    "parent": "pile2",
+    "staged": false
+  },
+  "lqvm": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Rose 01",
+    "id": "lqvm",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "l1a4": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Rose 06",
+    "id": "l1a4",
+    "parent": "pile2",
+    "staged": false
+  },
+  "1ao8": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Rose 07",
+    "id": "1ao8",
+    "parent": "pile2",
+    "staged": false
+  },
+  "z53z": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Rose 08",
+    "id": "z53z",
+    "parent": "pile2",
+    "staged": false
+  },
+  "l477": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Rose 09",
+    "id": "l477",
+    "parent": "pile2",
+    "staged": false
+  },
+  "xlbo": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Rose 10",
+    "id": "xlbo",
+    "parent": "pile2",
+    "staged": false
+  },
+  "2fzs": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Rose 11",
+    "id": "2fzs",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ke9s": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Rose 12",
+    "id": "ke9s",
+    "parent": "pile2",
+    "staged": false
+  },
+  "0ytl": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Rose 13",
+    "id": "0ytl",
+    "parent": "pile2",
+    "staged": false
+  },
+  "jykm": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Shield 01",
+    "id": "jykm",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "4ol2": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Shield 06",
+    "id": "4ol2",
+    "parent": "pile2",
+    "staged": false
+  },
+  "5jz0": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Shield 07",
+    "id": "5jz0",
+    "parent": "pile2",
+    "staged": false
+  },
+  "6v02": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Shield 08",
+    "id": "6v02",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ev9f": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Shield 09",
+    "id": "ev9f",
+    "parent": "pile2",
+    "staged": false
+  },
+  "rkh9": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Shield 10",
+    "id": "rkh9",
+    "parent": "pile2",
+    "staged": false
+  },
+  "3lst": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Shield 11",
+    "id": "3lst",
+    "parent": "pile2",
+    "staged": false
+  },
+  "wdsg": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Shield 12",
+    "id": "wdsg",
+    "parent": "pile2",
+    "staged": false
+  },
+  "mb5b": {
+    "deck": "swissDeck",
+    "type": "card",
+    "cardType": "Shield 13",
+    "id": "mb5b",
+    "staged": false,
+    "parent": "pile2"
   },
   "pile1": {
     "type": "pile",
