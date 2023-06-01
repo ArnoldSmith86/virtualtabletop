@@ -768,7 +768,7 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
+            "property": "customFace",
             "value": "${PROPERTY nextTrump OF $gameID}"
           }
         ]
@@ -1402,7 +1402,7 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
+            "property": "customFace",
             "value": 0
           }
         ]
@@ -1417,7 +1417,7 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
+            "property": "customFace",
             "value": 1
           }
         ]
@@ -1432,7 +1432,7 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
+            "property": "customFace",
             "value": 2
           }
         ]
@@ -1447,7 +1447,7 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
+            "property": "customFace",
             "value": 3
           }
         ]
@@ -1462,7 +1462,7 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
+            "property": "customFace",
             "value": 4
           }
         ]
@@ -1477,7 +1477,7 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
+            "property": "customFace",
             "value": 5
           }
         ]
@@ -1492,10 +1492,34 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
+            "property": "customFace",
             "value": 6
           }
         ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "image",
+        "value": "${PROPERTY image}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "text",
+        "value": "${PROPERTY text}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "deckSuitsColor",
+        "value": "${PROPERTY deckSuitsColor}"
       }
     ],
     "deckSuitsColor": ""
@@ -2990,10 +3014,7 @@
       " "
     ],
     "showing": false,
-    "player": "",
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000"
+    "player": ""
   },
   "bidValue7": {
     "inheritFrom": {
@@ -3760,6 +3781,254 @@
         "sortTrucoMineiro": 8,
         "sortTrucoPaulista": 5
       },
+      "S 01": {
+        "rank": "A",
+        "rankImage": "i/icons/spades.svg",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 1,
+        "sortDefault": 13,
+        "sortJassTrump": 11,
+        "sortDoppel": 11,
+        "sortAceTen": 13,
+        "sortCoincheTrump": 11,
+        "sortTrucoMineiro": 3,
+        "sortTrucoPaulista": 4
+      },
+      "S 02": {
+        "rank": "2",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P12": "i/icons/spades.svg",
+        "suit-P52": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 2,
+        "sortDefault": 1,
+        "sortJassTrump": 1,
+        "sortAceTen": 1,
+        "sortTrucoMineiro": 6,
+        "sortTrucoPaulista": 3
+      },
+      "S 03": {
+        "rank": "3",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P12": "i/icons/spades.svg",
+        "suit-P32": "i/icons/spades.svg",
+        "suit-P52": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 3,
+        "sortDefault": 2,
+        "sortJassTrump": 2,
+        "sortAceTen": 2,
+        "sortTrucoMineiro": 5,
+        "sortTrucoPaulista": 2
+      },
+      "S 04": {
+        "rank": "4",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 4,
+        "sortDefault": 3,
+        "sortJassTrump": 3,
+        "sortAceTen": 3,
+        "sortTrucoMineiro": 14,
+        "sortTrucoPaulista": 11
+      },
+      "S 05": {
+        "rank": "5",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P32": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 5,
+        "sortDefault": 4,
+        "sortJassTrump": 4,
+        "sortAceTen": 4,
+        "sortTrucoMineiro": 13,
+        "sortTrucoPaulista": 10
+      },
+      "S 06": {
+        "rank": "6",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P31": "i/icons/spades.svg",
+        "suit-P33": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 6,
+        "sortDefault": 5,
+        "sortJassTrump": 5,
+        "sortAceTen": 5,
+        "sortTrucoMineiro": 12,
+        "sortTrucoPaulista": 9
+      },
+      "S 07": {
+        "rank": "7",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P22": "i/icons/spades.svg",
+        "suit-P31": "i/icons/spades.svg",
+        "suit-P33": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 7,
+        "sortDefault": 6,
+        "sortJassTrump": 6,
+        "sortAceTen": 6,
+        "sortCoincheTrump": 6,
+        "sortTrucoMineiro": 11,
+        "sortTrucoPaulista": 8
+      },
+      "S 08": {
+        "rank": "8",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P22": "i/icons/spades.svg",
+        "suit-P31": "i/icons/spades.svg",
+        "suit-P33": "i/icons/spades.svg",
+        "suit-P42": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 8,
+        "sortDefault": 7,
+        "sortJassTrump": 7,
+        "sortAceTen": 7,
+        "sortCoincheTrump": 7
+      },
+      "S 09": {
+        "rank": "9",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P32": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit-S21": "i/icons/spades.svg",
+        "suit-S23": "i/icons/spades.svg",
+        "suit-S31": "i/icons/spades.svg",
+        "suit-S33": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 9,
+        "sortDefault": 8,
+        "sortJassTrump": 12,
+        "sortDoppel": 8,
+        "sortAceTen": 8,
+        "sortCoincheTrump": 12
+      },
+      "S 10": {
+        "rank": "10",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit-S12": "i/icons/spades.svg",
+        "suit-S21": "i/icons/spades.svg",
+        "suit-S23": "i/icons/spades.svg",
+        "suit-S31": "i/icons/spades.svg",
+        "suit-S33": "i/icons/spades.svg",
+        "suit-S42": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 10,
+        "sortDefault": 9,
+        "sortJassTrump": 8,
+        "sortDoppel": 10,
+        "sortAceTen": 12,
+        "sortCoincheTrump": 10
+      },
+      "S 2J": {
+        "rank": "J",
+        "rankImage": "/assets/2115758924_42014",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 11,
+        "sortDefault": 10,
+        "sortJassTrump": 13,
+        "sortDoppel": 18,
+        "sortAceTen": 9,
+        "sortCoincheTrump": 13,
+        "sortTrucoMineiro": 9,
+        "sortTrucoPaulista": 6
+      },
+      "S 3Q": {
+        "rank": "Q",
+        "rankImage": "/assets/1085111785_36695",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 12,
+        "sortDefault": 11,
+        "sortJassTrump": 9,
+        "sortDoppel": 22,
+        "sortAceTen": 10,
+        "sortCoincheTrump": 8,
+        "sortTrucoMineiro": 10,
+        "sortTrucoPaulista": 7
+      },
+      "S 4K": {
+        "rank": "K",
+        "rankImage": "/assets/-1882019559_61400",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "suitCounterpoint": 3,
+        "suitTruco": 3,
+        "order": 13,
+        "sortDefault": 12,
+        "sortJassTrump": 10,
+        "sortDoppel": 9,
+        "sortAceTen": 11,
+        "sortCoincheTrump": 9,
+        "sortTrucoMineiro": 8,
+        "sortTrucoPaulista": 5
+      },
       "H 01": {
         "rank": "A",
         "rankImage": "i/icons/hearts.svg",
@@ -4016,254 +4285,6 @@
         "sortDefault": 12,
         "sortJassTrump": 10,
         "sortDoppel": 6,
-        "sortAceTen": 11,
-        "sortCoincheTrump": 9,
-        "sortTrucoMineiro": 8,
-        "sortTrucoPaulista": 5
-      },
-      "S 01": {
-        "rank": "A",
-        "rankImage": "i/icons/spades.svg",
-        "suitImage": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 1,
-        "sortDefault": 13,
-        "sortJassTrump": 11,
-        "sortDoppel": 11,
-        "sortAceTen": 13,
-        "sortCoincheTrump": 11,
-        "sortTrucoMineiro": 3,
-        "sortTrucoPaulista": 4
-      },
-      "S 02": {
-        "rank": "2",
-        "suitImage": "i/icons/spades.svg",
-        "suit-P12": "i/icons/spades.svg",
-        "suit-P52": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 2,
-        "sortDefault": 1,
-        "sortJassTrump": 1,
-        "sortAceTen": 1,
-        "sortTrucoMineiro": 6,
-        "sortTrucoPaulista": 3
-      },
-      "S 03": {
-        "rank": "3",
-        "suitImage": "i/icons/spades.svg",
-        "suit-P12": "i/icons/spades.svg",
-        "suit-P32": "i/icons/spades.svg",
-        "suit-P52": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 3,
-        "sortDefault": 2,
-        "sortJassTrump": 2,
-        "sortAceTen": 2,
-        "sortTrucoMineiro": 5,
-        "sortTrucoPaulista": 2
-      },
-      "S 04": {
-        "rank": "4",
-        "suitImage": "i/icons/spades.svg",
-        "suit-P11": "i/icons/spades.svg",
-        "suit-P13": "i/icons/spades.svg",
-        "suit-P51": "i/icons/spades.svg",
-        "suit-P53": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 4,
-        "sortDefault": 3,
-        "sortJassTrump": 3,
-        "sortAceTen": 3,
-        "sortTrucoMineiro": 14,
-        "sortTrucoPaulista": 11
-      },
-      "S 05": {
-        "rank": "5",
-        "suitImage": "i/icons/spades.svg",
-        "suit-P11": "i/icons/spades.svg",
-        "suit-P13": "i/icons/spades.svg",
-        "suit-P32": "i/icons/spades.svg",
-        "suit-P51": "i/icons/spades.svg",
-        "suit-P53": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 5,
-        "sortDefault": 4,
-        "sortJassTrump": 4,
-        "sortAceTen": 4,
-        "sortTrucoMineiro": 13,
-        "sortTrucoPaulista": 10
-      },
-      "S 06": {
-        "rank": "6",
-        "suitImage": "i/icons/spades.svg",
-        "suit-P11": "i/icons/spades.svg",
-        "suit-P13": "i/icons/spades.svg",
-        "suit-P31": "i/icons/spades.svg",
-        "suit-P33": "i/icons/spades.svg",
-        "suit-P51": "i/icons/spades.svg",
-        "suit-P53": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 6,
-        "sortDefault": 5,
-        "sortJassTrump": 5,
-        "sortAceTen": 5,
-        "sortTrucoMineiro": 12,
-        "sortTrucoPaulista": 9
-      },
-      "S 07": {
-        "rank": "7",
-        "suitImage": "i/icons/spades.svg",
-        "suit-P11": "i/icons/spades.svg",
-        "suit-P13": "i/icons/spades.svg",
-        "suit-P22": "i/icons/spades.svg",
-        "suit-P31": "i/icons/spades.svg",
-        "suit-P33": "i/icons/spades.svg",
-        "suit-P51": "i/icons/spades.svg",
-        "suit-P53": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 7,
-        "sortDefault": 6,
-        "sortJassTrump": 6,
-        "sortAceTen": 6,
-        "sortCoincheTrump": 6,
-        "sortTrucoMineiro": 11,
-        "sortTrucoPaulista": 8
-      },
-      "S 08": {
-        "rank": "8",
-        "suitImage": "i/icons/spades.svg",
-        "suit-P11": "i/icons/spades.svg",
-        "suit-P13": "i/icons/spades.svg",
-        "suit-P22": "i/icons/spades.svg",
-        "suit-P31": "i/icons/spades.svg",
-        "suit-P33": "i/icons/spades.svg",
-        "suit-P42": "i/icons/spades.svg",
-        "suit-P51": "i/icons/spades.svg",
-        "suit-P53": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 8,
-        "sortDefault": 7,
-        "sortJassTrump": 7,
-        "sortAceTen": 7,
-        "sortCoincheTrump": 7
-      },
-      "S 09": {
-        "rank": "9",
-        "suitImage": "i/icons/spades.svg",
-        "suit-P11": "i/icons/spades.svg",
-        "suit-P13": "i/icons/spades.svg",
-        "suit-P32": "i/icons/spades.svg",
-        "suit-P51": "i/icons/spades.svg",
-        "suit-P53": "i/icons/spades.svg",
-        "suit-S21": "i/icons/spades.svg",
-        "suit-S23": "i/icons/spades.svg",
-        "suit-S31": "i/icons/spades.svg",
-        "suit-S33": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 9,
-        "sortDefault": 8,
-        "sortJassTrump": 12,
-        "sortDoppel": 8,
-        "sortAceTen": 8,
-        "sortCoincheTrump": 12
-      },
-      "S 10": {
-        "rank": "10",
-        "suitImage": "i/icons/spades.svg",
-        "suit-P11": "i/icons/spades.svg",
-        "suit-P13": "i/icons/spades.svg",
-        "suit-P51": "i/icons/spades.svg",
-        "suit-P53": "i/icons/spades.svg",
-        "suit-S12": "i/icons/spades.svg",
-        "suit-S21": "i/icons/spades.svg",
-        "suit-S23": "i/icons/spades.svg",
-        "suit-S31": "i/icons/spades.svg",
-        "suit-S33": "i/icons/spades.svg",
-        "suit-S42": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 10,
-        "sortDefault": 9,
-        "sortJassTrump": 8,
-        "sortDoppel": 10,
-        "sortAceTen": 12,
-        "sortCoincheTrump": 10
-      },
-      "S 2J": {
-        "rank": "J",
-        "rankImage": "/assets/2115758924_42014",
-        "suitImage": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 11,
-        "sortDefault": 10,
-        "sortJassTrump": 13,
-        "sortDoppel": 18,
-        "sortAceTen": 9,
-        "sortCoincheTrump": 13,
-        "sortTrucoMineiro": 9,
-        "sortTrucoPaulista": 6
-      },
-      "S 3Q": {
-        "rank": "Q",
-        "rankImage": "/assets/1085111785_36695",
-        "suitImage": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 12,
-        "sortDefault": 11,
-        "sortJassTrump": 9,
-        "sortDoppel": 22,
-        "sortAceTen": 10,
-        "sortCoincheTrump": 8,
-        "sortTrucoMineiro": 10,
-        "sortTrucoPaulista": 7
-      },
-      "S 4K": {
-        "rank": "K",
-        "rankImage": "/assets/-1882019559_61400",
-        "suitImage": "i/icons/spades.svg",
-        "redOrBlack": "black",
-        "suit": 3,
-        "suitCounterpoint": 3,
-        "suitTruco": 3,
-        "order": 13,
-        "sortDefault": 12,
-        "sortJassTrump": 10,
-        "sortDoppel": 9,
         "sortAceTen": 11,
         "sortCoincheTrump": 9,
         "sortTrucoMineiro": 8,
@@ -4815,12 +4836,14 @@
     },
     "staged": false,
     "deckSuits": [
+      "",
       "clubs",
       "diamonds",
       "spades",
       "hearts"
     ],
     "deckSuitsColor": [
+      "",
       "",
       "#e50932",
       "",
@@ -4829,6 +4852,7 @@
       ""
     ],
     "deckSuitsImage": [
+      "",
       "i/icons/clubs.svg",
       "i/icons/diamonds.svg",
       "i/icons/spades.svg",
@@ -4841,10 +4865,12 @@
       "",
       "",
       "",
+      "",
       "No\nTrump",
       "All\nTrump"
     ],
     "deckSuitsUni": [
+      "",
       "♣",
       "♦",
       "♠",
@@ -4852,7 +4878,23 @@
       "NT",
       "AT"
     ],
-    "deckType": 0
+    "deckType": 0,
+    "deckDiceFaces": [
+      {
+        "image": "i/icons/clubs.svg"
+      },
+      {
+        "image": "i/icons/diamonds.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "i/icons/spades.svg"
+      },
+      {
+        "image": "i/icons/hearts.svg",
+        "deckSuitColor": "#e50932"
+      }
+    ]
   },
   "6exv_A_C": {
     "id": "6exv_A_C",
@@ -5293,7 +5335,13 @@
       "deck1": [
         "cardDefaults",
         "faceTemplates",
-        "cardTypes"
+        "cardTypes",
+        "deckDiceFaces",
+        "deckSuits",
+        "deckSuitsColor",
+        "deckSuitsImage",
+        "deckSuitsText",
+        "deckSuitsUni"
       ]
     },
     "staged": false,
@@ -5430,7 +5478,10 @@
     "deck": "jokers",
     "cardType": "T 2J",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1,
+    "sortDefault": 9.5,
+    "suit": 1
   },
   "jokerRed2": {
     "type": "card",
@@ -5446,7 +5497,10 @@
     "deck": "jokers",
     "cardType": "T 1J",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "order": 9,
+    "sortAceTen": 8,
+    "suit": 3
   },
   "jokerBlack2": {
     "type": "card",
@@ -5660,10 +5714,13 @@
     "height": 40,
     "borderRadius": 8,
     "css": {
-      "background": "white",
+      "background": "#ffffff",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
       "border": "1px solid black",
-      "color": "${PROPERTY textColor}",
-      "font-size": "${PROPERTY fontSize}",
+      "color": "black",
+      "font-size": "15px",
       "text-align": "center",
       "display": "flex",
       "justify-content": "center",
@@ -5674,7 +5731,78 @@
     "parent": "scoreButton",
     "x": 133,
     "y": 15,
-    "activeFaceChangeRoutine": [
+    "svgReplaces": {
+      "currentColor": "deckSuitsColor"
+    },
+    "customFace": 0,
+    "customFaceChangeRoutine": [
+      "var deckType = ${PROPERTY deckType OF settingsDecks}",
+      "var customFace = ${PROPERTY customFace}",
+      {
+        "func": "IF",
+        "operand1": "${deckType}",
+        "operand2": 1,
+        "thenRoutine": [
+          "\\ Needed because there are no decks with this type. Setting back to 0 gets deck1 and deck2.",
+          "var deckType = 0"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "deck",
+        "property": "deckType",
+        "value": "${deckType}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "thisDeck"
+      },
+      "var deckSuitsText = ${PROPERTY deckSuitsText OF $thisDeck}",
+      "var deckSuitsText = ${deckSuitsText.$customFace}",
+      "var deckSuitsImage = ${PROPERTY deckSuitsImage OF $thisDeck}",
+      "var deckSuitsImage = ${deckSuitsImage.$customFace}",
+      "var deckSuitsColor = ${PROPERTY deckSuitsColor OF $thisDeck}",
+      "var deckSuitsColor = ${deckSuitsColor.$customFace}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${deckSuitsText}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "image",
+        "value": "${deckSuitsImage}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "deckSuitsColor",
+        "value": "${deckSuitsColor}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "No\nTrump",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "trump",
+            "value": "-"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "trump",
+            "value": "${customFace}"
+          }
+        ]
+      },
       "//This is needed because of Pitch",
       {
         "func": "SELECT",
@@ -5744,47 +5872,20 @@
         ]
       }
     ],
-    "faces": [
+    "clickRoutine": [
+      "var a = ${PROPERTY customFace} + 1",
+      "var b = ${a} % ${PROPERTY customFaceCount}",
       {
-        "text": "",
-        "trump": ""
-      },
-      {
-        "text": "clubs",
-        "textColor": "black",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 1
-      },
-      {
-        "text": "diamonds",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 2
-      },
-      {
-        "text": "spades",
-        "textColor": "black",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 3
-      },
-      {
-        "text": "hearts",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      },
-      {
-        "text": "No\nTrump",
-        "textColor": "black",
-        "fontSize": "14px",
-        "classes": null,
-        "trump": "-"
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "customFace",
+        "value": "${b}"
       }
-    ]
+    ],
+    "customFaceCount": 6,
+    "deckSuitsColor": "",
+    "trump": 0,
+    "customFaceCout": 5
   },
   "trumpLabel": {
     "id": "trumpLabel",
@@ -5850,8 +5951,8 @@
       },
       {
         "func": "IF",
-        "operand1": "${PROPERTY text OF trump}",
-        "operand2": "",
+        "operand1": "${PROPERTY customFace OF trump}",
+        "operand2": 0,
         "thenRoutine": [
           {
             "func": "IF",
@@ -6205,7 +6306,7 @@
         "value": 0
       }
     ],
-    "depth": 13,
+    "depth": 15,
     "text": "Add Card Points",
     "width": 120,
     "css": {
@@ -6475,12 +6576,6 @@
         "collection": "thisButton",
         "property": "seatCount",
         "value": "${seatCount}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "previousDeck",
-        "value": "${PROPERTY deckType}"
       },
       "var deckType = parseFloat ${deckType}",
       {
@@ -7436,13 +7531,12 @@
         ]
       }
     ],
-    "dummyHand": 0,
-    "previousDeck": 0
+    "dummyHand": 0
   },
   "deckOptions": {
     "id": "deckOptions",
     "x": 1632,
-    "y": 282,
+    "y": 280,
     "css": {
       "background": "white",
       "border": "1px solid black"
@@ -7594,76 +7688,11 @@
       }
     ],
     "decksSetupRoutine": [
-      "// This takes the place of an offHolder RECALL because that takes a LOT of time because there are so many cards.",
       {
-        "func": "SELECT",
-        "type": "pile",
-        "property": "parent",
-        "value": "offHolder"
-      },
-      {
-        "func": "SET",
-        "property": "id",
-        "value": "pile2"
-      },
-      "var deckType = ${PROPERTY previousDeck OF settingsDecks}",
-      {
-        "func": "IF",
-        "operand1": "${deckType}",
-        "operand2": 1,
-        "thenRoutine": [
-          "\\ Needed because there are no decks with this type. Setting back to 0 gets deck1 and deck2.",
-          "var deckType = 0"
+        "func": "CLICK",
+        "collection": [
+          "offHolderRecallButton"
         ]
-      },
-      {
-        "func": "SELECT",
-        "type": "deck",
-        "property": "deckType",
-        "value": "${deckType}"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "thisDeck"
-      },
-      {
-        "func": "SELECT",
-        "type": "card",
-        "property": "deck",
-        "value": "${thisDeck}"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "pile2"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 0
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 0
-      },
-      {
-        "func": "SET",
-        "property": "activeFace",
-        "value": 0
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": null
-      },
-      {
-        "func": "MOVE",
-        "from": "tempHolder",
-        "to": "offHolder",
-        "count": 0,
-        "face": 0
       },
       "// Finish the rest of the card and deck setup",
       {
@@ -7810,6 +7839,7 @@
       {
         "func": "FOREACH",
         "in": [
+          null,
           10,
           11,
           12,
@@ -7819,57 +7849,73 @@
         ],
         "loopRoutine": [
           "// This sets the correct suit images on the bid system widgets.",
-          "var thisImage = ${PROPERTY deckSuitsImage OF $thisDeck}",
-          "var thisImage = ${thisImage.$key}",
-          "var thisText = ${PROPERTY deckSuitsText OF $thisDeck}",
-          "var thisText = ${thisText.$key}",
-          "var thisColor = ${PROPERTY deckSuitsColor OF $thisDeck}",
-          "var thisColor = ${thisColor.$key}",
-          "var thisUni = ${PROPERTY deckSuitsUni OF $thisDeck}",
-          "var thisUni = ${thisUni.$key}",
-          "var thisSuits = ${PROPERTY deckSuits OF $thisDeck}",
-          "var thisSuits = ${thisSuits.$key}",
           {
-            "func": "SET",
-            "collection": [
-              "choose${value}"
-            ],
-            "property": "image",
-            "value": "${thisImage}"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "choose${value}"
-            ],
-            "property": "text",
-            "value": "${thisText}"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "choose${value}"
-            ],
-            "property": "deckSuitsColor",
-            "value": "${thisColor}"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "choose${value}"
-            ],
-            "property": "deckSuitsUni",
-            "value": "${thisUni}"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "choose${value}"
-            ],
-            "property": "deckSuits",
-            "value": "${thisSuits}"
+            "func": "IF",
+            "operand1": "${key}",
+            "relation": ">",
+            "operand2": 0,
+            "thenRoutine": [
+              "var thisImage = ${PROPERTY deckSuitsImage OF $thisDeck}",
+              "var thisImage = ${thisImage.$key}",
+              "var thisText = ${PROPERTY deckSuitsText OF $thisDeck}",
+              "var thisText = ${thisText.$key}",
+              "var thisColor = ${PROPERTY deckSuitsColor OF $thisDeck}",
+              "var thisColor = ${thisColor.$key}",
+              "var thisUni = ${PROPERTY deckSuitsUni OF $thisDeck}",
+              "var thisUni = ${thisUni.$key}",
+              "var thisSuits = ${PROPERTY deckSuits OF $thisDeck}",
+              "var thisSuits = ${thisSuits.$key}",
+              {
+                "func": "SET",
+                "collection": [
+                  "choose${value}"
+                ],
+                "property": "image",
+                "value": "${thisImage}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "choose${value}"
+                ],
+                "property": "text",
+                "value": "${thisText}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "choose${value}"
+                ],
+                "property": "deckSuitsColor",
+                "value": "${thisColor}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "choose${value}"
+                ],
+                "property": "deckSuitsUni",
+                "value": "${thisUni}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "choose${value}"
+                ],
+                "property": "deckSuits",
+                "value": "${thisSuits}"
+              }
+            ]
           }
         ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "suitDice"
+        ],
+        "property": "faces",
+        "value": "${PROPERTY deckDiceFaces OF $thisDeck}"
       }
     ]
   },
@@ -8846,23 +8892,18 @@
             "property": "versionNumber",
             "value": "0"
           },
-          "var length = ${length} - 1",
-          "var versionMod = ${PROPERTY $version OF $preSet}",
+          "var versionProp = ${PROPERTY version1 OF $preSet}",
           {
             "func": "FOREACH",
-            "range": [
-              0,
-              "${length}"
-            ],
+            "in": "${versionProp}",
             "loopRoutine": [
-              "var thisProp = ${versionProp.$value}",
               {
                 "func": "SET",
                 "collection": [
                   "${preSet}"
                 ],
-                "property": "${versionProp.$value}",
-                "value": "${versionMod.$thisProp}"
+                "property": "${key}",
+                "value": "${value}"
               }
             ]
           }
@@ -8887,14 +8928,6 @@
     "layer": -4,
     "preSetRoutine": [
       "var gameID = 'gameID' + ${PROPERTY preSet}",
-      {
-        "func": "SET",
-        "collection": [
-          "settingsDecks"
-        ],
-        "property": "previousDeck",
-        "value": "${PROPERTY deckType OF settingsDecks}"
-      },
       "//Loop through each default setting in settingsArray, settingsDeckArray, and displayArray and SET it",
       {
         "func": "FOREACH",
@@ -9036,11 +9069,6 @@
         "value": "${hintText}"
       }
     ],
-    "default0": {
-      "text": "Default",
-      "value": "0"
-    },
-    "preSet": "0",
     "movableInEdit": false,
     "setupRoutine": [
       {
@@ -9094,7 +9122,12 @@
         "widget": "deckOptions",
         "routine": "cardsSetupRoutine"
       }
-    ]
+    ],
+    "default0": {
+      "text": "Default",
+      "value": "0"
+    },
+    "preSet": "0"
   },
   "bids": {
     "id": "bids",
@@ -9572,7 +9605,7 @@
   "routines": {
     "id": "routines",
     "x": 1634,
-    "y": 408,
+    "y": 409,
     "text": "Routines",
     "css": {
       "border": "1px solid black",
@@ -9904,7 +9937,7 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
+            "property": "customFace",
             "value": "${PROPERTY trumps OF $gameID}"
           }
         ]
@@ -10194,7 +10227,7 @@
         "collection": [
           "trump"
         ],
-        "property": "activeFace",
+        "property": "customFace",
         "value": 0
       },
       {
@@ -11351,6 +11384,7 @@
     },
     "clickable": true,
     "deckSuits": [
+      "",
       "clubs",
       "diamonds",
       "spades",
@@ -11359,6 +11393,7 @@
     ],
     "deckSuitsColor": [
       "",
+      "",
       "#e50932",
       "",
       "#e50932",
@@ -11366,6 +11401,7 @@
       ""
     ],
     "deckSuitsImage": [
+      "",
       "i/icons/clubs.svg",
       "i/icons/diamonds.svg",
       "i/icons/spades.svg",
@@ -11379,9 +11415,11 @@
       "",
       "",
       "",
+      "",
       "No\nTrump"
     ],
     "deckSuitsUni": [
+      "",
       "♣",
       "♦",
       "♠",
@@ -11389,7 +11427,27 @@
       "*",
       "NT"
     ],
-    "deckType": 2
+    "deckType": 2,
+    "deckDiceFaces": [
+      {
+        "image": "i/icons/clubs.svg"
+      },
+      {
+        "image": "i/icons/diamonds.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "i/icons/spades.svg"
+      },
+      {
+        "image": "i/icons/hearts.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "/assets/-374765193_624",
+        "deckSuitColor": "purple"
+      }
+    ]
   },
   "gcew": {
     "deck": "tarokyDeck",
@@ -13556,51 +13614,36 @@
     ],
     "gameID": true,
     "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\"",
-    "trumpFaces": [
-      {
-        "text": "",
-        "trump": ""
-      },
-      {
-        "text": "clubs",
-        "textColor": "black",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 1
-      },
-      {
-        "text": "diamonds",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 2
-      },
-      {
-        "text": "spades",
-        "textColor": "black",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 3
-      },
-      {
-        "text": "hearts",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      },
-      {
-        "text": "No\nTrump",
-        "textColor": "black",
-        "fontSize": "14px",
-        "classes": null,
-        "trump": "-"
-      }
-    ],
     "y": -132,
     "autoTeam": false,
     "preSetExceptionsRoutine": [
-      "//This is needed to fix whatever happens when other pre-sets are called and the game type is changed to something else. This part comes from Coiffeur Jass.",
+      "// This is needed to fix whatever happens when other pre-sets are called and the game type is changed to something else. This first one comes from several games that change how many 'faces' are displayed on the trump indicator.",
+      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY customFaceCount OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "trump"
+            ],
+            "property": "customFaceCout",
+            "value": "${PROPERTY customFaceCount OF $gameID}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "trump"
+            ],
+            "property": "customFaceCount",
+            "value": 6
+          }
+        ]
+      },
+      "// This part comes from Coiffeur Jass.",
       {
         "func": "SELECT",
         "property": "id",
@@ -13643,17 +13686,8 @@
         "collection": [
           "trump"
         ],
-        "property": "activeFace",
-        "value": null
-      },
-      "//This comes from Crow",
-      {
-        "func": "SET",
-        "collection": [
-          "trump"
-        ],
-        "property": "faces",
-        "value": "${PROPERTY trumpFaces OF gameID0}"
+        "property": "customFace",
+        "value": 0
       },
       "//This comes from Spades",
       {
@@ -13723,7 +13757,7 @@
   "gameID1": {
     "id": "gameID1",
     "x": -541,
-    "y": -211,
+    "y": -209,
     "css": {
       "background": "blue",
       "color": "white",
@@ -15822,54 +15856,6 @@
     ],
     "gameID": true,
     "hintText": "\"After round is over, press Add Card Points button. Ten points for the player taking the last trick are automatically added. Other lines must be manually completed in the small scoreboard using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a When ready to enter final score on main scoreboard, return scrollbar to top and use red/green +/- buttons.\"",
-    "trumpFaces": [
-      {
-        "text": "",
-        "trump": ""
-      },
-      {
-        "text": "clubs",
-        "textColor": "black",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 1
-      },
-      {
-        "text": "diamonds",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 2
-      },
-      {
-        "text": "spades",
-        "textColor": "black",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 3
-      },
-      {
-        "text": "hearts",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      },
-      {
-        "text": "No\nTrump",
-        "textColor": "black",
-        "fontSize": "14px",
-        "classes": null,
-        "trump": "-"
-      },
-      {
-        "text": "All\nTrump",
-        "textColor": "black",
-        "fontSize": "14px",
-        "classes": null,
-        "trump": ""
-      }
-    ],
     "preSetExceptionsRoutine": [
       {
         "func": "SET",
@@ -15972,12 +15958,13 @@
         0
       ]
     ],
-    "x": -410
+    "x": -410,
+    "customFaceCount": 7
   },
   "pawnToken": {
     "id": "pawnToken",
-    "x": 1314,
-    "y": 138,
+    "x": 1312,
+    "y": 137,
     "width": 37,
     "height": 67,
     "color": "#a9c6e8",
@@ -15994,33 +15981,12 @@
   "suitDice": {
     "type": "dice",
     "id": "suitDice",
-    "x": 1505,
-    "y": 140,
+    "x": 1504,
+    "y": 139,
     "movable": true,
     "movableInEdit": false,
-    "faces": [
-      {
-        "image": "i/icons/spades.svg"
-      },
-      {
-        "image": "i/icons/clubs.svg"
-      },
-      {
-        "image": "i/icons/diamonds.svg",
-        "svgReplaces": {
-          "currentColor": "redColor"
-        }
-      },
-      {
-        "image": "i/icons/hearts.svg",
-        "svgReplaces": {
-          "currentColor": "redColor"
-        }
-      }
-    ],
     "pipSymbols": false,
     "shape3d": true,
-    "redColor": "#e50932",
     "activeFaceChangeRoutine": [
       {
         "func": "IF",
@@ -16032,8 +15998,8 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
-            "value": 4
+            "property": "customFace",
+            "value": 1
           }
         ]
       },
@@ -16047,8 +16013,8 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
-            "value": 1
+            "property": "customFace",
+            "value": 2
           }
         ]
       },
@@ -16062,8 +16028,8 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
-            "value": 2
+            "property": "customFace",
+            "value": 3
           }
         ]
       },
@@ -16077,14 +16043,33 @@
             "collection": [
               "trump"
             ],
-            "property": "activeFace",
-            "value": 3
+            "property": "customFace",
+            "value": 4
           }
         ]
       }
     ],
-    "rollCount": 26,
-    "activeFace": 2,
+    "rollCount": 165,
+    "svgReplaces": {
+      "currentColor": "deckSuitColor"
+    },
+    "faces": [
+      {
+        "image": "i/icons/clubs.svg"
+      },
+      {
+        "image": "i/icons/diamonds.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "i/icons/spades.svg"
+      },
+      {
+        "image": "i/icons/hearts.svg",
+        "deckSuitColor": "#e50932"
+      }
+    ],
+    "activeFace": 3,
     "scale": 0
   },
   "itemsButton": {
@@ -16130,14 +16115,14 @@
     "id": "itemsBox",
     "x": 498,
     "width": 600,
-    "height": 305,
+    "height": 405,
     "movableInEdit": false,
     "css": {
       "border": "1px solid black",
       "background": "lightgrey"
     },
     "layer": 6,
-    "y": 691,
+    "y": 591,
     "onlyVisibleForSeat": [],
     "type": "holder",
     "dropTarget": {
@@ -16156,7 +16141,7 @@
     "parent": "itemsBox",
     "fixedParent": true,
     "x": 3,
-    "y": 273,
+    "y": 377,
     "width": 83,
     "height": 30,
     "movableInEdit": false,
@@ -16188,7 +16173,7 @@
     "parent": "itemsBox",
     "fixedParent": true,
     "x": 515,
-    "y": 273,
+    "y": 377,
     "width": 83,
     "height": 30,
     "movableInEdit": false,
@@ -17467,6 +17452,7 @@
     },
     "deckType": 3,
     "deckSuits": [
+      "",
       "red",
       "orange",
       "green",
@@ -17474,6 +17460,7 @@
       "black"
     ],
     "deckSuitsColor": [
+      "",
       "#cc79a7",
       "#d55e00",
       "#009e9b",
@@ -17482,6 +17469,7 @@
       ""
     ],
     "deckSuitsImage": [
+      "",
       "/i/icons/hearts.svg",
       "i/icons/circle.svg",
       "i/icons/square.svg",
@@ -17495,15 +17483,39 @@
       "",
       "",
       "",
+      "",
       "No\nTrump"
     ],
     "deckSuitsUni": [
+      "",
       "❤",
       "🟠",
       "🟩",
       "⬢",
       "▲",
       "NT"
+    ],
+    "deckDiceFaces": [
+      {
+        "image": "/i/icons/hearts.svg",
+        "deckSuitColor": "#cc79a7"
+      },
+      {
+        "image": "i/icons/circle.svg",
+        "deckSuitColor": "#d55e00"
+      },
+      {
+        "image": "i/icons/square.svg",
+        "deckSuitColor": "#009e9b"
+      },
+      {
+        "image": "i/icons/hexagon_vertical.svg",
+        "deckSuitColor": "#f0e442"
+      },
+      {
+        "image": "/assets/-1568599145_166",
+        "deckSuitColor": "#000000"
+      }
     ]
   },
   "notu": {
@@ -17992,40 +18004,6 @@
     ],
     "gameID": true,
     "hintText": "\"After round is over, if any point cards were discarded, move them to the appropriate holder (usually the player that took the last trick). Press Add Card Points button to calculate captured points and display them on the small temporary holder. After verifying points, press Transfer Score button to move points to main scoreboard.\\a\\a Versions: The default version uses 180 point scoring. The other version adds the orange two back into the deck worth 20 points as the highest card, even above the crow.\"",
-    "trumpFaces": [
-      {
-        "text": "",
-        "trump": ""
-      },
-      {
-        "text": "hearts",
-        "textColor": "#cc79a7",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 1
-      },
-      {
-        "text": "circle",
-        "textColor": "#d55e00",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 2
-      },
-      {
-        "text": "square",
-        "textColor": "#009e9b",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 3
-      },
-      {
-        "text": "hexagon_vertical",
-        "textColor": "#f0e442",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      }
-    ],
     "preSetExceptionsRoutine": [
       {
         "func": "SET",
@@ -18034,6 +18012,14 @@
         ],
         "property": "faces",
         "value": "${PROPERTY trumpFaces}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "customFaceCount",
+        "value": 5
       }
     ],
     "versionArray": [
@@ -18092,29 +18078,6 @@
         "12 black",
         "13 black",
         "14 black"
-      ],
-      "scoreSystem": [
-        [
-          0,
-          15,
-          0,
-          0,
-          0,
-          5,
-          0,
-          0,
-          0,
-          0,
-          10,
-          0,
-          0,
-          0,
-          10,
-          20
-        ],
-        [],
-        [],
-        []
       ]
     },
     "version2": {
@@ -18150,10 +18113,10 @@
         "2 yellow",
         "3 yellow",
         "4 yellow",
+        "2 orange",
         "3 orange",
         "4 orange",
         "1 black",
-        "2 black",
         "3 black",
         "4 black",
         "5 black",
@@ -18166,29 +18129,6 @@
         "12 black",
         "13 black",
         "14 black"
-      ],
-      "scoreSystem": [
-        [
-          0,
-          15,
-          20,
-          0,
-          0,
-          5,
-          0,
-          0,
-          0,
-          0,
-          10,
-          0,
-          0,
-          0,
-          10,
-          20
-        ],
-        [],
-        [],
-        []
       ]
     },
     "settingsDecksArray": [
@@ -18223,10 +18163,10 @@
       "2 yellow",
       "3 yellow",
       "4 yellow",
+      "2 orange",
       "3 orange",
       "4 orange",
       "1 black",
-      "2 black",
       "3 black",
       "4 black",
       "5 black",
@@ -19226,7 +19166,7 @@
         "text": "10 ♣ Exposed"
       }
     ],
-    "trumps": 3,
+    "trumps": 4,
     "capturedArray": [
       [],
       [
@@ -19502,7 +19442,7 @@
     "type": "holder",
     "id": "itmesHolder12",
     "x": 10,
-    "y": 211,
+    "y": 180,
     "dropTarget": {
       "item": 12
     },
@@ -19515,7 +19455,7 @@
     "type": "holder",
     "id": "itmesHolder13",
     "x": 110,
-    "y": 211,
+    "y": 180,
     "dropTarget": {
       "item": 13
     },
@@ -19528,7 +19468,7 @@
     "type": "holder",
     "id": "itmesHolder14",
     "x": 210,
-    "y": 211,
+    "y": 180,
     "dropTarget": {
       "item": 14
     },
@@ -19541,7 +19481,7 @@
     "type": "holder",
     "id": "itmesHolder15",
     "x": 310,
-    "y": 211,
+    "y": 180,
     "dropTarget": {
       "item": 15
     },
@@ -19558,7 +19498,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685567006587,
+      "lastUpdate": 1685651334610,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -19685,14 +19625,14 @@
         ]
       }
     ],
-    "trumps": 3,
+    "trumps": 4,
     "text": "Hearts",
-    "y": 409
+    "y": 410
   },
   "gameID17": {
     "id": "gameID17",
     "x": -133,
-    "y": 409,
+    "y": 410,
     "css": {
       "background": "blue",
       "color": "white",
@@ -20071,47 +20011,6 @@
     ],
     "gameID": true,
     "hintText": "\"This room is set-up for 5 players. Scoring is automatic with 5 players using the Add Card Points and Transfer Score buttons. The sort button will move the Mighty, the Joker, and the Ripper (in that order) to a position above the higest trump card.\\a\\aTo make automatic scoring work, the declarer must indicate the bid using the bidding menu, the declarer's name must appear on the widget in the bottom-left corner, and variable teams must be set using the black/red/white widget below the seat. Point cards in the discard holder must be moved to the declarer or partner's holder.\\a\\aMinimum bid is 12. Score calculated using  2 * (Bid minus minimum bid) + (Points earned minus bid).\\a\\a\\a\\a At end of round, press Add Card Points button to enter total of captured cards on temporary small scoreboard. Check score, then press Transfer Score button to enter score on main scoreboard and perform additional calculations based on the rules.\\a\\a Using adjustments in the Options buttons, the room could be configured to play with a different number of players. The Add Card Points button should still work, but the Transfer Score button would not.\"",
-    "trumpFaces": [
-      {
-        "text": "",
-        "trump": ""
-      },
-      {
-        "text": "clubs",
-        "textColor": "black",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 1
-      },
-      {
-        "text": "diamonds",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 2
-      },
-      {
-        "text": "spades",
-        "textColor": "black",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 3
-      },
-      {
-        "text": "hearts",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      },
-      {
-        "text": "No\nTrump",
-        "textColor": "black",
-        "fontSize": "14px",
-        "classes": null,
-        "trump": "-"
-      }
-    ],
     "text": "Mighty",
     "scoreSystem": [
       [
@@ -21791,7 +21690,7 @@
                 "collection": [
                   "trump"
                 ],
-                "property": "activeFace",
+                "property": "customFace",
                 "value": 5
               }
             ]
@@ -22461,7 +22360,7 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "0",
+    "versionNumber": "2",
     "scale": 0
   },
   "cloneButton": {
@@ -22803,8 +22702,8 @@
     "type": "card",
     "cardType": "2 black",
     "id": "64sh",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "dk9p": {
     "deck": "crowDeck",
@@ -23042,7 +22941,7 @@
       "sort2": "sortTrucoPaulista",
       "sort1": "suitTruco"
     },
-    "sort2": "sortTrucoMineiro",
+    "sort2": "sortTrucoPaulista",
     "sortExceptionsRoutine": [
       {
         "func": "SORT",
@@ -23378,40 +23277,6 @@
     ],
     "gameID": true,
     "hintText": "\"Player that chooses trumps must use bid widget near seat so that automatic scoring works properly.\\a\\a After round is over, press Add Card Points button. Ten points for the player taking the last trick are automatically added. Bonus points must be manually completed in the small scoreboard using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a When ready to enter final score on main scoreboard, press Transfer Score button. Points are automatically calculated.\"",
-    "trumpFaces": [
-      {
-        "text": "",
-        "trump": ""
-      },
-      {
-        "text": "clubs",
-        "textColor": "black",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 1
-      },
-      {
-        "text": "diamonds",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 2
-      },
-      {
-        "text": "spades",
-        "textColor": "black",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 3
-      },
-      {
-        "text": "hearts",
-        "textColor": "#e50932",
-        "fontSize": "40px",
-        "classes": "symbols",
-        "trump": 4
-      }
-    ],
     "preSetExceptionsRoutine": [
       {
         "func": "SET",
@@ -23546,7 +23411,8 @@
       "var isS = ${index} == 1",
       "var isN = ${index} == 5",
       "var isNS = ${isN} || ${isS}"
-    ]
+    ],
+    "customFaceCount": 5
   },
   "playerAid25": {
     "type": "scoreboard",
@@ -23790,28 +23656,6 @@
     "clickable": null,
     "id": "yywx",
     "parent": "itmesHolder7"
-  },
-  "2zor": {
-    "y": 4,
-    "x": 4,
-    "width": 50,
-    "height": 50,
-    "image": "i/icons/hearts.svg",
-    "svgReplaces": {
-      "currentColor": "itemColor"
-    },
-    "item": 12,
-    "itemColor": "#e50932",
-    "color": "#fcf0d4",
-    "color3": "#f8dd9f",
-    "color2": "#000000",
-    "layer": 10,
-    "clonedFrom": "pnjt",
-    "itemMarker": true,
-    "ownedBy": null,
-    "id": "2zor",
-    "parent": "itmesHolder12",
-    "clickable": false
   },
   "sprn": {
     "x": 4,
@@ -24421,7 +24265,7 @@
     ],
     "gameID": true,
     "hintText": "\"Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder.\\a\\a To declare bid openly for additional pionts, use Actions button then Show Bid button. To reveal hand for additional points, use Actions button then Show Hand button.\\a\\a At the end of the round, press Score button to calculate and enter scores. Manually flipping over bid cards is not necessary, but if a player wants to show their bid, do not manually flip over bid cards until after scoring.\\a\\a Next trump suit is automatically set on the trump indicator widget after recalling cards.\"",
-    "y": 648,
+    "y": 646,
     "autoTeam": false,
     "preSetExceptionsRoutine": [
       {
@@ -24533,7 +24377,7 @@
     ],
     "scoreSpecialRoutine": [
       "var bidValues = '0,3,0,1,2' split ','",
-      "var nextTrumpArray = '2,4,3,1' split ','",
+      "var nextTrumpArray = '2,3,4,1' split ','",
       "var contractValues = '0,30,20,10' split ','",
       "var bidArray = []",
       "var winnerArray = []",
@@ -24590,7 +24434,6 @@
           {
             "func": "IF",
             "operand1": "${tricksTotal.$value}",
-            "relation": ">=",
             "operand2": "${bidArray.$key}",
             "thenRoutine": [
               "var allWinners = ${allWinners} + 1",
@@ -24679,7 +24522,7 @@
               "var points = ${points} + ${thisContractValue}"
             ]
           },
-          "// If the person declaring or revealing won their bid won, then give that player 30 points for declaring or 60 points for revealing",
+          "// If the person declaring or revealing won their bid, then give that player 30 points for declaring or 60 points for revealing",
           {
             "func": "IF",
             "condition": "${declaredWon}",
@@ -24703,7 +24546,7 @@
               }
             ]
           },
-          "// If the person declaring or revealing did not win their bid won, then give the other players 30 points for declaring or 60 points for revealing",
+          "// If the person declaring or revealing did not win their bid, then give the other players 30 points for declaring or 60 points for revealing",
           {
             "func": "IF",
             "condition": "${declaredWon}",
@@ -24754,7 +24597,7 @@
         "value": "${nextTrump}"
       }
     ],
-    "nextTrump": 0
+    "nextTrump": "3"
   },
   "playerAid26": {
     "type": "scoreboard",
@@ -25052,31 +24895,12 @@
           "var suit = 5"
         ]
       },
-      "// This adjusts the trump widget for spade and heart suits because the activeFace does not match the order in the card suits.",
-      {
-        "func": "IF",
-        "operand1": "${suit}",
-        "operand2": 3,
-        "thenRoutine": [
-          "var suit = 4"
-        ],
-        "elseRoutine": [
-          {
-            "func": "IF",
-            "operand1": "${suit}",
-            "operand2": 4,
-            "thenRoutine": [
-              "var suit = 3"
-            ]
-          }
-        ]
-      },
       {
         "func": "SET",
         "collection": [
           "trump"
         ],
-        "property": "activeFace",
+        "property": "customFace",
         "value": "${suit}"
       }
     ],
@@ -25780,7 +25604,7 @@
         ]
       }
     ],
-    "spreadHearts": false,
+    "spreadHearts": true,
     "version1": {
       "spreadHearts": false
     },
@@ -26344,12 +26168,14 @@
       }
     },
     "deckSuits": [
+      "",
       "clubs",
       "coins",
       "cups",
       "swords"
     ],
     "deckSuitsImage": [
+      "",
       "i/cards-spanish/club.svg",
       "i/cards-spanish/coin.svg",
       "i/cards-spanish/cup.svg",
@@ -26362,10 +26188,12 @@
       "",
       "",
       "",
+      "",
       "No\nTrump",
       ""
     ],
     "deckSuitsUni": [
+      "",
       "🔨",
       "🪙",
       "🏆",
@@ -26373,7 +26201,23 @@
       "NT",
       ""
     ],
-    "deckType": 4
+    "deckType": 4,
+    "deckDiceFaces": [
+      {
+        "image": "i/cards-spanish/club.svg",
+        "imageScale": 0.5
+      },
+      {
+        "image": "i/cards-spanish/coin.svg"
+      },
+      {
+        "image": "i/cards-spanish/cup.svg"
+      },
+      {
+        "image": "i/cards-spanish/sword.svg",
+        "imageScale": 0.3
+      }
+    ]
   },
   "sh1e": {
     "deck": "spanishDeck",
@@ -27492,12 +27336,14 @@
     "staged": false,
     "parent": "offHolder",
     "deckSuits": [
+      "",
       "acorns",
       "bells",
       "leaves",
       "hearts"
     ],
     "deckSuitsImage": [
+      "",
       "i/cards-german/acorn.svg",
       "i/cards-german/bell.svg",
       "i/cards-german/leaf.svg",
@@ -27510,10 +27356,12 @@
       "",
       "",
       "",
+      "",
       "No\nTrump",
       "All\nTrump"
     ],
     "deckSuitsUni": [
+      "",
       "🌰",
       "🔔",
       "🌿",
@@ -27521,7 +27369,22 @@
       "NT",
       "AT"
     ],
-    "deckType": 5
+    "deckType": 5,
+    "deckDiceFaces": [
+      {
+        "image": "i/cards-german/acorn.svg",
+        "imageScale": 0.5
+      },
+      {
+        "image": "i/cards-german/bell.svg"
+      },
+      {
+        "image": "i/cards-german/leaf.svg"
+      },
+      {
+        "image": "i/cards-german/heart.svg"
+      }
+    ]
   },
   "vaj7": {
     "deck": "germanDeck",
@@ -28008,7 +27871,7 @@
     "width": 103,
     "height": 160,
     "id": "pile2",
-    "z": 25503,
+    "z": 1,
     "parent": "offHolder"
   },
   "offHolderRecallButton": {
@@ -28438,12 +28301,14 @@
       ]
     },
     "deckSuits": [
+      "",
       "acorns",
       "bells",
       "roses",
       "shields"
     ],
     "deckSuitsImage": [
+      "",
       "i/cards-german/acorn.svg",
       "i/cards-german/bell.svg",
       "i/cards-swiss/rose.svg",
@@ -28456,10 +28321,12 @@
       "",
       "",
       "",
+      "",
       "No\nTrump",
       "All\nTrump"
     ],
     "deckSuitsUni": [
+      "",
       "🌰",
       "🔔",
       "🌼",
@@ -28468,7 +28335,23 @@
       "AT"
     ],
     "deckType": 6,
-    "staged": false
+    "staged": false,
+    "deckDiceFaces": [
+      {
+        "image": "i/cards-german/acorn.svg",
+        "imageScale": 0.5
+      },
+      {
+        "image": "i/cards-german/bell.svg"
+      },
+      {
+        "image": "i/cards-swiss/rose.svg"
+      },
+      {
+        "image": "i/cards-swiss/shield.svg",
+        "imageScale": 0.6
+      }
+    ]
   },
   "2wa8": {
     "deck": "swissDeck",
@@ -28757,6 +28640,484 @@
     "id": "mb5b",
     "staged": false,
     "parent": "pile2"
+  },
+  "itmesHolder27": {
+    "inheritFrom": {
+      "itmesHolder15": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder27",
+    "x": 410,
+    "y": 180,
+    "dropTarget": {
+      "item": 27
+    }
+  },
+  "itmesHolder28": {
+    "inheritFrom": {
+      "itmesHolder15": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder28",
+    "x": 510,
+    "y": 180,
+    "dropTarget": {
+      "item": 28
+    }
+  },
+  "0iep": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/icons/hearts.svg",
+    "svgReplaces": {
+      "currentColor": "itemColor"
+    },
+    "item": 12,
+    "itemColor": "#e50932",
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "2zor",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "0iep",
+    "parent": "itmesHolder12",
+    "clickable": false
+  },
+  "itmesHolder29": {
+    "inheritFrom": {
+      "itmesHolder12": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder29",
+    "x": 10,
+    "y": 250,
+    "dropTarget": {
+      "item": 29
+    }
+  },
+  "itmesHolder30": {
+    "inheritFrom": {
+      "itmesHolder29": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder30",
+    "x": 110,
+    "y": 250,
+    "dropTarget": {
+      "item": 30
+    }
+  },
+  "itmesHolder31": {
+    "inheritFrom": {
+      "itmesHolder29": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder31",
+    "x": 210,
+    "y": 255,
+    "dropTarget": {
+      "item": 31
+    }
+  },
+  "itmesHolder32": {
+    "inheritFrom": {
+      "itmesHolder29": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder32",
+    "x": 310,
+    "y": 250,
+    "dropTarget": {
+      "item": 32
+    }
+  },
+  "itmesHolder33": {
+    "inheritFrom": {
+      "itmesHolder29": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder33",
+    "x": 410,
+    "y": 250,
+    "dropTarget": {
+      "item": 33
+    }
+  },
+  "itmesHolder34": {
+    "inheritFrom": {
+      "itmesHolder29": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder34",
+    "x": 510,
+    "y": 250,
+    "dropTarget": {
+      "item": 34
+    }
+  },
+  "itmesHolder35": {
+    "inheritFrom": {
+      "itmesHolder34": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder35",
+    "x": 10,
+    "y": 320,
+    "dropTarget": {
+      "item": 35
+    }
+  },
+  "itmesHolder36": {
+    "inheritFrom": {
+      "itmesHolder35": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder36",
+    "x": 110,
+    "y": 320,
+    "dropTarget": {
+      "item": 36
+    }
+  },
+  "itmesHolder37": {
+    "inheritFrom": {
+      "itmesHolder35": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder37",
+    "x": 210,
+    "y": 320,
+    "dropTarget": {
+      "item": 37
+    }
+  },
+  "itmesHolder38": {
+    "inheritFrom": {
+      "itmesHolder35": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder38",
+    "x": 309,
+    "y": 318,
+    "dropTarget": {
+      "item": 38
+    }
+  },
+  "itmesHolder39": {
+    "inheritFrom": {
+      "itmesHolder35": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder39",
+    "x": 410,
+    "y": 320,
+    "dropTarget": {
+      "item": 39
+    }
+  },
+  "itmesHolder40": {
+    "inheritFrom": {
+      "itmesHolder35": "*"
+    },
+    "type": "holder",
+    "id": "itmesHolder40",
+    "x": 510,
+    "y": 320,
+    "dropTarget": {
+      "item": 40
+    }
+  },
+  "2u5b": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/cards-spanish/club.svg",
+    "item": 29,
+    "itemColor": "purple",
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "u9ud",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "2u5b",
+    "parent": "itmesHolder29",
+    "clickable": false
+  },
+  "2sc8": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/cards-spanish/coin.svg",
+    "item": 30,
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "u9ud",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "2sc8",
+    "parent": "itmesHolder30",
+    "clickable": false
+  },
+  "xe11": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/cards-german/acorn.svg",
+    "item": 35,
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "mh8m",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "xe11",
+    "parent": "itmesHolder35",
+    "clickable": false
+  },
+  "ohkh": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/cards-german/bell.svg",
+    "item": 36,
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "mh8m",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "ohkh",
+    "parent": "itmesHolder36",
+    "clickable": false
+  },
+  "izdp": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/cards-german/leaf.svg",
+    "item": 37,
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "mh8m",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "izdp",
+    "parent": "itmesHolder37",
+    "clickable": false
+  },
+  "84jl": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/cards-swiss/rose.svg",
+    "item": 38,
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "mh8m",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "84jl",
+    "parent": "itmesHolder38",
+    "clickable": false
+  },
+  "rg6z": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "/assets/-374765193_624",
+    "svgReplaces": {
+      "currentColor": "itemColor"
+    },
+    "item": 27,
+    "itemColor": "purple",
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "cznb",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "rg6z",
+    "parent": "itmesHolder27",
+    "clickable": false
+  },
+  "u7zn": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/cards-spanish/sword.svg",
+    "item": 32,
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "zp0p",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "u7zn",
+    "parent": "itmesHolder32",
+    "clickable": false
+  },
+  "79g7": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/cards-spanish/cup.svg",
+    "item": 31,
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "9mqz",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "79g7",
+    "parent": "itmesHolder31",
+    "clickable": false
+  },
+  "3irw": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/icons/circle.svg",
+    "svgReplaces": {
+      "currentColor": "itemColor"
+    },
+    "item": 28,
+    "itemColor": "#d55e00",
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "cznb",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "3irw",
+    "parent": "itmesHolder28",
+    "clickable": false
+  },
+  "gawx": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/icons/square.svg",
+    "svgReplaces": {
+      "currentColor": "itemColor"
+    },
+    "item": 33,
+    "itemColor": "#009e9b",
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "cznb",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "gawx",
+    "parent": "itmesHolder33",
+    "clickable": false
+  },
+  "vry9": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/icons/hexagon_vertical.svg",
+    "svgReplaces": {
+      "currentColor": "itemColor"
+    },
+    "item": 34,
+    "itemColor": "#f0e442",
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "cznb",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "vry9",
+    "parent": "itmesHolder34",
+    "clickable": false
+  },
+  "sae8": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "/assets/-1568599145_166",
+    "svgReplaces": {
+      "currentColor": "itemColor"
+    },
+    "item": 40,
+    "itemColor": "#000000",
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "cznb",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "sae8",
+    "parent": "itmesHolder40",
+    "clickable": false
+  },
+  "ekqo": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/cards-swiss/shield.svg",
+    "item": 39,
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "mh8m",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "ekqo",
+    "parent": "itmesHolder39",
+    "clickable": false
   },
   "pile1": {
     "type": "pile",
