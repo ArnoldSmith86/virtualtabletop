@@ -5883,7 +5883,6 @@
       }
     ],
     "customFaceCount": 6,
-    "deckSuitsColor": "",
     "trump": 0,
     "customFaceCout": 5
   },
@@ -8780,7 +8779,10 @@
           }
         ]
       }
-    ]
+    ],
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "preSetsButton": {
     "type": "button",
@@ -19498,7 +19500,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685651334610,
+      "lastUpdate": 1685669882809,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -27908,7 +27910,8 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 1,
-        "sortDefault": 13
+        "sortDefault": 13,
+        "sortJassTrump": 11
       },
       "Acorn 06": {
         "rank": "6",
@@ -27916,7 +27919,8 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 6,
-        "sortDefault": 5
+        "sortDefault": 5,
+        "sortJassTrump": 5
       },
       "Acorn 07": {
         "rank": "7",
@@ -27924,7 +27928,8 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 7,
-        "sortDefault": 6
+        "sortDefault": 6,
+        "sortJassTrump": 6
       },
       "Acorn 08": {
         "rank": "8",
@@ -27932,7 +27937,8 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 8,
-        "sortDefault": 7
+        "sortDefault": 7,
+        "sortJassTrump": 7
       },
       "Acorn 09": {
         "rank": "9",
@@ -27940,7 +27946,8 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 9,
-        "sortDefault": 8
+        "sortDefault": 8,
+        "sortJassTrump": 12
       },
       "Acorn 10": {
         "rank": "B",
@@ -27948,7 +27955,8 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 10,
-        "sortDefault": 9
+        "sortDefault": 9,
+        "sortJassTrump": 8
       },
       "Acorn 11": {
         "rank": "U",
@@ -27956,7 +27964,8 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 11,
-        "sortDefault": 10
+        "sortDefault": 10,
+        "sortJassTrump": 13
       },
       "Acorn 12": {
         "rank": "O",
@@ -27964,7 +27973,8 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 12,
-        "sortDefault": 11
+        "sortDefault": 11,
+        "sortJassTrump": 9
       },
       "Acorn 13": {
         "rank": "K",
@@ -27972,7 +27982,8 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 13,
-        "sortDefault": 12
+        "sortDefault": 12,
+        "sortJassTrump": 10
       },
       "Bell 01": {
         "rank": "A",
@@ -27980,7 +27991,8 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 1,
-        "sortDefault": 13
+        "sortDefault": 13,
+        "sortJassTrump": 11
       },
       "Bell 06": {
         "rank": "6",
@@ -27988,7 +28000,8 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 6,
-        "sortDefault": 5
+        "sortDefault": 5,
+        "sortJassTrump": 5
       },
       "Bell 07": {
         "rank": "7",
@@ -27996,7 +28009,8 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 7,
-        "sortDefault": 6
+        "sortDefault": 6,
+        "sortJassTrump": 6
       },
       "Bell 08": {
         "rank": "8",
@@ -28004,7 +28018,8 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 8,
-        "sortDefault": 7
+        "sortDefault": 7,
+        "sortJassTrump": 7
       },
       "Bell 09": {
         "rank": "9",
@@ -28012,7 +28027,8 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 9,
-        "sortDefault": 8
+        "sortDefault": 8,
+        "sortJassTrump": 12
       },
       "Bell 10": {
         "rank": "B",
@@ -28020,7 +28036,8 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 10,
-        "sortDefault": 9
+        "sortDefault": 9,
+        "sortJassTrump": 8
       },
       "Bell 11": {
         "rank": "U",
@@ -28028,7 +28045,8 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 11,
-        "sortDefault": 10
+        "sortDefault": 10,
+        "sortJassTrump": 13
       },
       "Bell 12": {
         "rank": "O",
@@ -28036,7 +28054,8 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 12,
-        "sortDefault": 11
+        "sortDefault": 11,
+        "sortJassTrump": 9
       },
       "Bell 13": {
         "rank": "K",
@@ -28044,7 +28063,8 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 13,
-        "sortDefault": 12
+        "sortDefault": 12,
+        "sortJassTrump": 10
       },
       "Rose 01": {
         "rank": "A",
@@ -28052,7 +28072,8 @@
         "suitImage": "i/cards-swiss/rose.svg",
         "suit": 3,
         "order": 1,
-        "sortDefault": 13
+        "sortDefault": 13,
+        "sortJassTrump": 11
       },
       "Rose 06": {
         "rank": "6",
@@ -28060,7 +28081,8 @@
         "suitImage": "i/cards-swiss/rose.svg",
         "suit": 3,
         "order": 6,
-        "sortDefault": 5
+        "sortDefault": 5,
+        "sortJassTrump": 5
       },
       "Rose 07": {
         "rank": "7",
@@ -28068,7 +28090,8 @@
         "suitImage": "i/cards-swiss/rose.svg",
         "suit": 3,
         "order": 7,
-        "sortDefault": 6
+        "sortDefault": 6,
+        "sortJassTrump": 6
       },
       "Rose 08": {
         "rank": "8",
@@ -28076,7 +28099,8 @@
         "suitImage": "i/cards-swiss/rose.svg",
         "suit": 3,
         "order": 8,
-        "sortDefault": 7
+        "sortDefault": 7,
+        "sortJassTrump": 7
       },
       "Rose 09": {
         "rank": "9",
@@ -28084,7 +28108,8 @@
         "suitImage": "i/cards-swiss/rose.svg",
         "suit": 3,
         "order": 9,
-        "sortDefault": 8
+        "sortDefault": 8,
+        "sortJassTrump": 12
       },
       "Rose 10": {
         "rank": "B",
@@ -28092,7 +28117,8 @@
         "suitImage": "i/cards-swiss/rose.svg",
         "suit": 3,
         "order": 10,
-        "sortDefault": 9
+        "sortDefault": 9,
+        "sortJassTrump": 8
       },
       "Rose 11": {
         "rank": "U",
@@ -28100,7 +28126,8 @@
         "suitImage": "i/cards-swiss/rose.svg",
         "suit": 3,
         "order": 11,
-        "sortDefault": 10
+        "sortDefault": 10,
+        "sortJassTrump": 13
       },
       "Rose 12": {
         "rank": "O",
@@ -28108,7 +28135,8 @@
         "suitImage": "i/cards-swiss/rose.svg",
         "suit": 3,
         "order": 12,
-        "sortDefault": 11
+        "sortDefault": 11,
+        "sortJassTrump": 9
       },
       "Rose 13": {
         "rank": "K",
@@ -28116,7 +28144,8 @@
         "suitImage": "i/cards-swiss/rose.svg",
         "suit": 3,
         "order": 13,
-        "sortDefault": 12
+        "sortDefault": 12,
+        "sortJassTrump": 10
       },
       "Shield 01": {
         "rank": "A",
@@ -28124,7 +28153,8 @@
         "suitImage": "i/cards-swiss/shield.svg",
         "suit": 4,
         "order": 1,
-        "sortDefault": 13
+        "sortDefault": 13,
+        "sortJassTrump": 11
       },
       "Shield 06": {
         "rank": "6",
@@ -28132,7 +28162,8 @@
         "suitImage": "i/cards-swiss/shield.svg",
         "suit": 4,
         "order": 6,
-        "sortDefault": 5
+        "sortDefault": 5,
+        "sortJassTrump": 5
       },
       "Shield 07": {
         "rank": "7",
@@ -28140,7 +28171,8 @@
         "suitImage": "i/cards-swiss/shield.svg",
         "suit": 4,
         "order": 7,
-        "sortDefault": 6
+        "sortDefault": 6,
+        "sortJassTrump": 6
       },
       "Shield 08": {
         "rank": "8",
@@ -28148,7 +28180,8 @@
         "suitImage": "i/cards-swiss/shield.svg",
         "suit": 4,
         "order": 8,
-        "sortDefault": 7
+        "sortDefault": 7,
+        "sortJassTrump": 7
       },
       "Shield 09": {
         "rank": "9",
@@ -28156,7 +28189,8 @@
         "suitImage": "i/cards-swiss/shield.svg",
         "suit": 4,
         "order": 9,
-        "sortDefault": 8
+        "sortDefault": 8,
+        "sortJassTrump": 12
       },
       "Shield 10": {
         "rank": "B",
@@ -28164,7 +28198,8 @@
         "suitImage": "i/cards-swiss/shield.svg",
         "suit": 4,
         "order": 10,
-        "sortDefault": 9
+        "sortDefault": 9,
+        "sortJassTrump": 8
       },
       "Shield 11": {
         "rank": "U",
@@ -28172,7 +28207,8 @@
         "suitImage": "i/cards-swiss/shield.svg",
         "suit": 4,
         "order": 11,
-        "sortDefault": 10
+        "sortDefault": 10,
+        "sortJassTrump": 13
       },
       "Shield 12": {
         "rank": "O",
@@ -28180,7 +28216,8 @@
         "suitImage": "i/cards-swiss/shield.svg",
         "suit": 4,
         "order": 12,
-        "sortDefault": 11
+        "sortDefault": 11,
+        "sortJassTrump": 9
       },
       "Shield 13": {
         "rank": "K",
@@ -28188,7 +28225,8 @@
         "suitImage": "i/cards-swiss/shield.svg",
         "suit": 4,
         "order": 13,
-        "sortDefault": 12
+        "sortDefault": 12,
+        "sortJassTrump": 10
       }
     },
     "clickable": true,
@@ -28494,8 +28532,8 @@
     "type": "card",
     "cardType": "Bell 13",
     "id": "ydai",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "lqvm": {
     "deck": "swissDeck",
