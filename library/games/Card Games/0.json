@@ -174,7 +174,8 @@
     "type": "card",
     "cardType": "C 2J",
     "staged": false,
-    "parent": "pile1"
+    "parent": "pile1",
+    "sortSuitSkat": 0
   },
   "fate_Q_C": {
     "id": "fate_Q_C",
@@ -278,7 +279,8 @@
     "type": "card",
     "cardType": "D 2J",
     "staged": false,
-    "parent": "pile1"
+    "parent": "pile1",
+    "sortSuitSkat": 0
   },
   "fate_Q_D": {
     "id": "fate_Q_D",
@@ -382,7 +384,8 @@
     "type": "card",
     "cardType": "H 2J",
     "staged": false,
-    "parent": "pile1"
+    "parent": "pile1",
+    "sortSuitSkat": 0
   },
   "fate_Q_H": {
     "id": "fate_Q_H",
@@ -486,7 +489,8 @@
     "type": "card",
     "cardType": "S 2J",
     "staged": false,
-    "parent": "pile1"
+    "parent": "pile1",
+    "sortSuitSkat": 0
   },
   "fate_Q_S": {
     "id": "fate_Q_S",
@@ -1350,8 +1354,8 @@
     "chooser": 14,
     "deckSuit": "swords",
     "image": "",
-    "text": "No\nTrump",
-    "deckSuitsUni": "NT",
+    "text": "Grand",
+    "deckSuitsUni": "G",
     "deckSuitsColor": ""
   },
   "bidSuit1": {
@@ -3288,7 +3292,9 @@
         "sortAceTen": 13,
         "sortCoincheTrump": 11,
         "sortTrucoMineiro": 7,
-        "sortTrucoPaulista": 4
+        "sortTrucoPaulista": 4,
+        "sortSkat": 13,
+        "sortSuitSkat": 1
       },
       "C 02": {
         "rank": "2",
@@ -3400,7 +3406,9 @@
         "sortAceTen": 6,
         "sortCoincheTrump": 6,
         "sortTrucoMineiro": 11,
-        "sortTrucoPaulista": 8
+        "sortTrucoPaulista": 8,
+        "sortSkat": 6,
+        "sortSuitSkat": 1
       },
       "C 08": {
         "rank": "8",
@@ -3421,7 +3429,9 @@
         "sortDefault": 7,
         "sortJassTrump": 7,
         "sortAceTen": 7,
-        "sortCoincheTrump": 7
+        "sortCoincheTrump": 7,
+        "sortSkat": 7,
+        "sortSuitSkat": 1
       },
       "C 09": {
         "rank": "9",
@@ -3443,7 +3453,9 @@
         "sortDefault": 8,
         "sortJassTrump": 12,
         "sortAceTen": 8,
-        "sortCoincheTrump": 12
+        "sortCoincheTrump": 12,
+        "sortSkat": 8,
+        "sortSuitSkat": 1
       },
       "C 10": {
         "rank": "10",
@@ -3467,7 +3479,9 @@
         "sortJassTrump": 8,
         "sortDoppel": 3,
         "sortAceTen": 12,
-        "sortCoincheTrump": 10
+        "sortCoincheTrump": 10,
+        "sortSkat": 12,
+        "sortSuitSkat": 1
       },
       "C 2J": {
         "rank": "J",
@@ -3484,7 +3498,9 @@
         "sortAceTen": 9,
         "sortCoincheTrump": 13,
         "sortTrucoMineiro": 9,
-        "sortTrucoPaulista": 6
+        "sortTrucoPaulista": 6,
+        "sortSkat": 17,
+        "sortSuitSkat": 1
       },
       "C 3Q": {
         "rank": "Q",
@@ -3501,7 +3517,9 @@
         "sortAceTen": 10,
         "sortCoincheTrump": 8,
         "sortTrucoMineiro": 10,
-        "sortTrucoPaulista": 7
+        "sortTrucoPaulista": 7,
+        "sortSkat": 10,
+        "sortSuitSkat": 1
       },
       "C 4K": {
         "rank": "K",
@@ -3518,7 +3536,9 @@
         "sortAceTen": 11,
         "sortCoincheTrump": 9,
         "sortTrucoMineiro": 8,
-        "sortTrucoPaulista": 5
+        "sortTrucoPaulista": 5,
+        "sortSkat": 11,
+        "sortSuitSkat": 1
       },
       "D 01": {
         "rank": "A",
@@ -3536,7 +3556,9 @@
         "sortAceTen": 13,
         "sortCoincheTrump": 11,
         "sortTrucoMineiro": 7,
-        "sortTrucoPaulista": 4
+        "sortTrucoPaulista": 4,
+        "sortSkat": 13,
+        "sortSuitSkat": 4
       },
       "D 02": {
         "rank": "2",
@@ -3654,7 +3676,9 @@
         "sortAceTen": 6,
         "sortCoincheTrump": 6,
         "sortTrucoMineiro": 4,
-        "sortTrucoPaulista": 8
+        "sortTrucoPaulista": 8,
+        "sortSkat": 6,
+        "sortSuitSkat": 4
       },
       "D 08": {
         "rank": "8",
@@ -3676,7 +3700,9 @@
         "sortDefault": 7,
         "sortJassTrump": 7,
         "sortAceTen": 7,
-        "sortCoincheTrump": 7
+        "sortCoincheTrump": 7,
+        "sortSkat": 7,
+        "sortSuitSkat": 4
       },
       "D 09": {
         "rank": "9",
@@ -3700,7 +3726,9 @@
         "sortJassTrump": 11,
         "sortDoppel": 12,
         "sortAceTen": 8,
-        "sortCoincheTrump": 12
+        "sortCoincheTrump": 12,
+        "sortSkat": 8,
+        "sortSuitSkat": 4
       },
       "D 10": {
         "rank": "10",
@@ -3725,7 +3753,9 @@
         "sortJassTrump": 8,
         "sortDoppel": 14,
         "sortAceTen": 12,
-        "sortCoincheTrump": 10
+        "sortCoincheTrump": 10,
+        "sortSkat": 12,
+        "sortSuitSkat": 4
       },
       "D 2J": {
         "rank": "J",
@@ -3743,7 +3773,9 @@
         "sortAceTen": 9,
         "sortCoincheTrump": 13,
         "sortTrucoMineiro": 9,
-        "sortTrucoPaulista": 6
+        "sortTrucoPaulista": 6,
+        "sortSkat": 14,
+        "sortSuitSkat": 4
       },
       "D 3Q": {
         "rank": "Q",
@@ -3761,7 +3793,9 @@
         "sortAceTen": 10,
         "sortCoincheTrump": 8,
         "sortTrucoMineiro": 10,
-        "sortTrucoPaulista": 7
+        "sortTrucoPaulista": 7,
+        "sortSkat": 10,
+        "sortSuitSkat": 4
       },
       "D 4K": {
         "rank": "K",
@@ -3779,7 +3813,9 @@
         "sortAceTen": 11,
         "sortCoincheTrump": 9,
         "sortTrucoMineiro": 8,
-        "sortTrucoPaulista": 5
+        "sortTrucoPaulista": 5,
+        "sortSkat": 11,
+        "sortSuitSkat": 4
       },
       "S 01": {
         "rank": "A",
@@ -3796,7 +3832,9 @@
         "sortAceTen": 13,
         "sortCoincheTrump": 11,
         "sortTrucoMineiro": 3,
-        "sortTrucoPaulista": 4
+        "sortTrucoPaulista": 4,
+        "sortSkat": 13,
+        "sortSuitSkat": 2
       },
       "S 02": {
         "rank": "2",
@@ -3908,7 +3946,9 @@
         "sortAceTen": 6,
         "sortCoincheTrump": 6,
         "sortTrucoMineiro": 11,
-        "sortTrucoPaulista": 8
+        "sortTrucoPaulista": 8,
+        "sortSkat": 6,
+        "sortSuitSkat": 2
       },
       "S 08": {
         "rank": "8",
@@ -3929,7 +3969,9 @@
         "sortDefault": 7,
         "sortJassTrump": 7,
         "sortAceTen": 7,
-        "sortCoincheTrump": 7
+        "sortCoincheTrump": 7,
+        "sortSkat": 7,
+        "sortSuitSkat": 2
       },
       "S 09": {
         "rank": "9",
@@ -3952,7 +3994,9 @@
         "sortJassTrump": 12,
         "sortDoppel": 8,
         "sortAceTen": 8,
-        "sortCoincheTrump": 12
+        "sortCoincheTrump": 12,
+        "sortSkat": 8,
+        "sortSuitSkat": 2
       },
       "S 10": {
         "rank": "10",
@@ -3976,7 +4020,9 @@
         "sortJassTrump": 8,
         "sortDoppel": 10,
         "sortAceTen": 12,
-        "sortCoincheTrump": 10
+        "sortCoincheTrump": 10,
+        "sortSkat": 12,
+        "sortSuitSkat": 2
       },
       "S 2J": {
         "rank": "J",
@@ -3993,7 +4039,9 @@
         "sortAceTen": 9,
         "sortCoincheTrump": 13,
         "sortTrucoMineiro": 9,
-        "sortTrucoPaulista": 6
+        "sortTrucoPaulista": 6,
+        "sortSkat": 16,
+        "sortSuitSkat": 2
       },
       "S 3Q": {
         "rank": "Q",
@@ -4010,7 +4058,9 @@
         "sortAceTen": 10,
         "sortCoincheTrump": 8,
         "sortTrucoMineiro": 10,
-        "sortTrucoPaulista": 7
+        "sortTrucoPaulista": 7,
+        "sortSkat": 10,
+        "sortSuitSkat": 2
       },
       "S 4K": {
         "rank": "K",
@@ -4027,7 +4077,9 @@
         "sortAceTen": 11,
         "sortCoincheTrump": 9,
         "sortTrucoMineiro": 8,
-        "sortTrucoPaulista": 5
+        "sortTrucoPaulista": 5,
+        "sortSkat": 11,
+        "sortSuitSkat": 2
       },
       "H 01": {
         "rank": "A",
@@ -4045,7 +4097,9 @@
         "sortAceTen": 13,
         "sortCoincheTrump": 11,
         "sortTrucoMineiro": 7,
-        "sortTrucoPaulista": 4
+        "sortTrucoPaulista": 4,
+        "sortSkat": 13,
+        "sortSuitSkat": 3
       },
       "H 02": {
         "rank": "2",
@@ -4163,7 +4217,9 @@
         "sortAceTen": 6,
         "sortCoincheTrump": 6,
         "sortTrucoMineiro": 2,
-        "sortTrucoPaulista": 8
+        "sortTrucoPaulista": 8,
+        "sortSkat": 6,
+        "sortSuitSkat": 3
       },
       "H 08": {
         "rank": "8",
@@ -4185,7 +4241,9 @@
         "sortDefault": 7,
         "sortJassTrump": 7,
         "sortAceTen": 7,
-        "sortCoincheTrump": 7
+        "sortCoincheTrump": 7,
+        "sortSkat": 7,
+        "sortSuitSkat": 3
       },
       "H 09": {
         "rank": "9",
@@ -4209,7 +4267,9 @@
         "sortJassTrump": 12,
         "sortDoppel": 5,
         "sortAceTen": 8,
-        "sortCoincheTrump": 12
+        "sortCoincheTrump": 12,
+        "sortSkat": 8,
+        "sortSuitSkat": 3
       },
       "H 10": {
         "rank": "10",
@@ -4234,7 +4294,9 @@
         "sortJassTrump": 8,
         "sortDoppel": 24,
         "sortAceTen": 12,
-        "sortCoincheTrump": 10
+        "sortCoincheTrump": 10,
+        "sortSkat": 12,
+        "sortSuitSkat": 3
       },
       "H 2J": {
         "rank": "J",
@@ -4252,7 +4314,9 @@
         "sortAceTen": 9,
         "sortCoincheTrump": 13,
         "sortTrucoMineiro": 9,
-        "sortTrucoPaulista": 6
+        "sortTrucoPaulista": 6,
+        "sortSkat": 15,
+        "sortSuitSkat": 3
       },
       "H 3Q": {
         "rank": "Q",
@@ -4270,7 +4334,9 @@
         "sortAceTen": 10,
         "sortCoincheTrump": 8,
         "sortTrucoMineiro": 10,
-        "sortTrucoPaulista": 7
+        "sortTrucoPaulista": 7,
+        "sortSkat": 10,
+        "sortSuitSkat": 3
       },
       "H 4K": {
         "rank": "K",
@@ -4288,7 +4354,9 @@
         "sortAceTen": 11,
         "sortCoincheTrump": 9,
         "sortTrucoMineiro": 8,
-        "sortTrucoPaulista": 5
+        "sortTrucoPaulista": 5,
+        "sortSkat": 11,
+        "sortSuitSkat": 3
       }
     },
     "faceTemplates": [
@@ -4866,8 +4934,8 @@
       "",
       "",
       "",
-      "No\nTrump",
-      "All\nTrump"
+      "Grand",
+      "Null"
     ],
     "deckSuitsUni": [
       "",
@@ -4875,8 +4943,8 @@
       "♦",
       "♠",
       "♥",
-      "NT",
-      "AT"
+      "G",
+      "N"
     ],
     "deckType": 0,
     "deckDiceFaces": [
@@ -4982,7 +5050,8 @@
     "type": "card",
     "cardType": "C 2J",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "suit": 0
   },
   "6exv_Q_C": {
     "id": "6exv_Q_C",
@@ -5086,7 +5155,8 @@
     "type": "card",
     "cardType": "D 2J",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "suit": 0
   },
   "6exv_Q_D": {
     "id": "6exv_Q_D",
@@ -5190,7 +5260,8 @@
     "deck": "deck2",
     "type": "card",
     "cardType": "H 2J",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "6exv_Q_H": {
     "id": "6exv_Q_H",
@@ -5294,7 +5365,8 @@
     "deck": "deck2",
     "type": "card",
     "cardType": "S 2J",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "6exv_Q_S": {
     "id": "6exv_Q_S",
@@ -5736,6 +5808,7 @@
     },
     "customFace": 0,
     "customFaceChangeRoutine": [
+      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       "var deckType = ${PROPERTY deckType OF settingsDecks}",
       "var customFace = ${PROPERTY customFace}",
       {
@@ -5802,6 +5875,11 @@
             "value": "${customFace}"
           }
         ]
+      },
+      {
+        "func": "CALL",
+        "widget": "${gameID}",
+        "routine": "trumpRoutine"
       },
       "//This is needed because of Pitch",
       {
@@ -5884,7 +5962,7 @@
     ],
     "customFaceCount": 6,
     "trump": 0,
-    "customFaceCout": 5
+    "deckSuitsColor": ""
   },
   "trumpLabel": {
     "id": "trumpLabel",
@@ -6305,7 +6383,7 @@
         "value": 0
       }
     ],
-    "depth": 15,
+    "depth": 13,
     "text": "Add Card Points",
     "width": 120,
     "css": {
@@ -7409,6 +7487,11 @@
         "func": "CALL",
         "widget": "deckOptions",
         "routine": "decksSetupRoutine"
+      },
+      {
+        "func": "CALL",
+        "widget": "deckSuitsSettings",
+        "routine": "deckSuitsRoutine"
       }
     ],
     "dummyHandChangeRoutine": [
@@ -8779,10 +8862,7 @@
           }
         ]
       }
-    ],
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000"
+    ]
   },
   "preSetsButton": {
     "type": "button",
@@ -9607,7 +9687,7 @@
   "routines": {
     "id": "routines",
     "x": 1634,
-    "y": 409,
+    "y": 556,
     "text": "Routines",
     "css": {
       "border": "1px solid black",
@@ -9987,36 +10067,41 @@
     "playerAidRoutine": [
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
-        "func": "SET",
-        "collection": [
-          "playerAidDetail1"
-        ],
-        "property": "player",
-        "value": "${PROPERTY playerAidDetail1 OF $gameID}"
+        "func": "SELECT",
+        "type": "seat",
+        "property": "playerAidSeat",
+        "value": true
       },
       {
         "func": "SET",
-        "collection": [
-          "playerAidDetail1"
-        ],
         "property": "scale",
         "value": 1
       },
       {
-        "func": "SET",
-        "collection": [
-          "playerAidDetail2"
-        ],
-        "property": "player",
-        "value": "${PROPERTY playerAidDetail2 OF $gameID}"
+        "func": "COUNT"
       },
       {
-        "func": "SET",
-        "collection": [
-          "playerAidDetail2"
+        "func": "FOREACH",
+        "range": [
+          "${COUNT}"
         ],
-        "property": "scale",
-        "value": 1
+        "loopRoutine": [
+          "var thisPAD = 'playerAidDetail' + ${value}",
+          {
+            "func": "IF",
+            "condition": "${PROPERTY $thisPAD OF $gameID}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${thisPAD}"
+                ],
+                "property": "player",
+                "value": "${PROPERTY $thisPAD OF $gameID}"
+              }
+            ]
+          }
+        ]
       }
     ],
     "messageButtonRoutine": [
@@ -13616,10 +13701,10 @@
     ],
     "gameID": true,
     "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\"",
-    "y": -132,
+    "y": -131,
     "autoTeam": false,
     "preSetExceptionsRoutine": [
-      "// This is needed to fix whatever happens when other pre-sets are called and the game type is changed to something else. This first one comes from several games that change how many 'faces' are displayed on the trump indicator.",
+      "// This is needed to fix whatever happens when other pre-sets are called and the game type is changed to something else. This first few are not from specific games are but specific properties of games that may or may not be modified by pre-sets.",
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
         "func": "IF",
@@ -13630,7 +13715,7 @@
             "collection": [
               "trump"
             ],
-            "property": "customFaceCout",
+            "property": "customFaceCount",
             "value": "${PROPERTY customFaceCount OF $gameID}"
           }
         ],
@@ -13641,7 +13726,32 @@
               "trump"
             ],
             "property": "customFaceCount",
-            "value": 6
+            "value": "${PROPERTY customFaceCount}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY showTempScoreTotals OF $gameID}",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "tempScoreboard"
+            ],
+            "property": "showTotals",
+            "value": "${PROPERTY showTempScoreTotals OF $gameID}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "tempScoreboard"
+            ],
+            "property": "showTotals",
+            "value": "${PROPERTY showTempScoreTotals}"
           }
         ]
       },
@@ -13754,7 +13864,9 @@
         "property": "scale",
         "value": 0
       }
-    ]
+    ],
+    "customFaceCount": 6,
+    "showTempScoreTotals": true
   },
   "gameID1": {
     "id": "gameID1",
@@ -16055,6 +16167,8 @@
     "svgReplaces": {
       "currentColor": "deckSuitColor"
     },
+    "activeFace": 3,
+    "scale": 0,
     "faces": [
       {
         "image": "i/icons/clubs.svg"
@@ -16070,9 +16184,7 @@
         "image": "i/icons/hearts.svg",
         "deckSuitColor": "#e50932"
       }
-    ],
-    "activeFace": 3,
-    "scale": 0
+    ]
   },
   "itemsButton": {
     "type": "button",
@@ -17606,7 +17718,8 @@
     "cardType": "11 red",
     "id": "1yph",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "zs4n": {
     "deck": "crowDeck",
@@ -17718,7 +17831,8 @@
     "cardType": "11 orange",
     "id": "php9",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "ojdh": {
     "deck": "crowDeck",
@@ -17830,7 +17944,8 @@
     "cardType": "11 green",
     "id": "ghgj",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "suit": 0
   },
   "qdto": {
     "deck": "crowDeck",
@@ -17934,7 +18049,8 @@
     "cardType": "11 yellow",
     "id": "1clv",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "97qc": {
     "deck": "crowDeck",
@@ -18143,6 +18259,10 @@
         3
       ],
       [
+        "hideCards",
+        3
+      ],
+      [
         "seatCount",
         4
       ],
@@ -18156,19 +18276,8 @@
       ]
     ],
     "hideCardsByType": [
-      "2 red",
-      "3 red",
-      "4 red",
-      "2 green",
-      "3 green",
-      "4 green",
-      "2 yellow",
-      "3 yellow",
-      "4 yellow",
-      "2 orange",
-      "3 orange",
-      "4 orange",
       "1 black",
+      "2 black",
       "3 black",
       "4 black",
       "5 black",
@@ -19500,7 +19609,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685669882809,
+      "lastUpdate": 1685823074435,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -21346,7 +21455,18 @@
       30,
       20,
       10
-    ]
+    ],
+    "score30": [
+      "1 each",
+      1,
+      "n/a",
+      1,
+      "n/a",
+      1,
+      "n/a",
+      "n/a"
+    ],
+    "playerAidSeat": true
   },
   "playerAid6": {
     "type": "scoreboard",
@@ -22362,7 +22482,7 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "2",
+    "versionNumber": "0",
     "scale": 0
   },
   "cloneButton": {
@@ -22777,7 +22897,8 @@
     "cardType": "11 black",
     "id": "f9al",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "g7mu": {
     "deck": "crowDeck",
@@ -26307,7 +26428,8 @@
     "cardType": "Club 11",
     "id": "9wkw",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "suit": 0
   },
   "1uaz": {
     "deck": "spanishDeck",
@@ -26403,7 +26525,8 @@
     "cardType": "Coin 11",
     "id": "v2h2",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "qgiq": {
     "deck": "spanishDeck",
@@ -26499,7 +26622,8 @@
     "cardType": "Cup 11",
     "id": "glym",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "qk6o": {
     "deck": "spanishDeck",
@@ -26595,7 +26719,8 @@
     "cardType": "Sword 11",
     "id": "rxxu",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "ca49": {
     "deck": "spanishDeck",
@@ -26684,9 +26809,20 @@
     "tempScore": [],
     "showing": false,
     "y": 137,
-    "score": [],
     "displayEmpty": "only for playerAids",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "score30": [
+      "1 each",
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "score": [],
+    "playerAidSeat": true
   },
   "playerAid1": {
     "type": "scoreboard",
@@ -26911,7 +27047,9 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 1,
-        "sortDefault": 13
+        "sortDefault": 13,
+        "sortSkat": 13,
+        "sortSuitSkat": 1
       },
       "Acorn 05": {
         "rank": "5",
@@ -26935,7 +27073,9 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 7,
-        "sortDefault": 6
+        "sortDefault": 6,
+        "sortSkat": 6,
+        "sortSuitSkat": 1
       },
       "Acorn 08": {
         "rank": "8",
@@ -26943,7 +27083,9 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 8,
-        "sortDefault": 7
+        "sortDefault": 7,
+        "sortSkat": 7,
+        "sortSuitSkat": 1
       },
       "Acorn 09": {
         "rank": "9",
@@ -26951,7 +27093,9 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 9,
-        "sortDefault": 8
+        "sortDefault": 8,
+        "sortSkat": 8,
+        "sortSuitSkat": 1
       },
       "Acorn 10": {
         "rank": "10",
@@ -26959,7 +27103,9 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 10,
-        "sortDefault": 9
+        "sortDefault": 9,
+        "sortSkat": 12,
+        "sortSuitSkat": 1
       },
       "Acorn 11": {
         "rank": "U",
@@ -26967,7 +27113,9 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 11,
-        "sortDefault": 10
+        "sortDefault": 10,
+        "sortSkat": 17,
+        "sortSuitSkat": 1
       },
       "Acorn 12": {
         "rank": "O",
@@ -26975,7 +27123,9 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 12,
-        "sortDefault": 11
+        "sortDefault": 11,
+        "sortSkat": 10,
+        "sortSuitSkat": 1
       },
       "Acorn 13": {
         "rank": "K",
@@ -26983,7 +27133,9 @@
         "suitImage": "i/cards-german/acorn.svg",
         "suit": 1,
         "order": 13,
-        "sortDefault": 12
+        "sortDefault": 12,
+        "sortSkat": 11,
+        "sortSuitSkat": 1
       },
       "Bell 01": {
         "rank": "A",
@@ -26991,7 +27143,9 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 1,
-        "sortDefault": 13
+        "sortDefault": 13,
+        "sortSkat": 13,
+        "sortSuitSkat": 4
       },
       "Bell 05": {
         "rank": "5",
@@ -27015,7 +27169,9 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 7,
-        "sortDefault": 6
+        "sortDefault": 6,
+        "sortSkat": 6,
+        "sortSuitSkat": 4
       },
       "Bell 08": {
         "rank": "8",
@@ -27023,7 +27179,9 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 8,
-        "sortDefault": 7
+        "sortDefault": 7,
+        "sortSkat": 7,
+        "sortSuitSkat": 4
       },
       "Bell 09": {
         "rank": "9",
@@ -27031,7 +27189,9 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 9,
-        "sortDefault": 8
+        "sortDefault": 8,
+        "sortSkat": 8,
+        "sortSuitSkat": 4
       },
       "Bell 10": {
         "rank": "10",
@@ -27039,7 +27199,9 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 10,
-        "sortDefault": 9
+        "sortDefault": 9,
+        "sortSkat": 12,
+        "sortSuitSkat": 4
       },
       "Bell 11": {
         "rank": "U",
@@ -27047,7 +27209,9 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 11,
-        "sortDefault": 10
+        "sortDefault": 10,
+        "sortSkat": 14,
+        "sortSuitSkat": 4
       },
       "Bell 12": {
         "rank": "O",
@@ -27055,7 +27219,9 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 12,
-        "sortDefault": 11
+        "sortDefault": 11,
+        "sortSkat": 10,
+        "sortSuitSkat": 4
       },
       "Bell 13": {
         "rank": "K",
@@ -27063,7 +27229,9 @@
         "suitImage": "i/cards-german/bell.svg",
         "suit": 2,
         "order": 13,
-        "sortDefault": 12
+        "sortDefault": 12,
+        "sortSkat": 11,
+        "sortSuitSkat": 4
       },
       "Leaf 01": {
         "rank": "A",
@@ -27071,7 +27239,9 @@
         "suitImage": "i/cards-german/leaf.svg",
         "suit": 3,
         "order": 1,
-        "sortDefault": 13
+        "sortDefault": 13,
+        "sortSkat": 13,
+        "sortSuitSkat": 2
       },
       "Leaf 05": {
         "rank": "5",
@@ -27095,7 +27265,9 @@
         "suitImage": "i/cards-german/leaf.svg",
         "suit": 3,
         "order": 7,
-        "sortDefault": 6
+        "sortDefault": 6,
+        "sortSkat": 6,
+        "sortSuitSkat": 2
       },
       "Leaf 08": {
         "rank": "8",
@@ -27103,7 +27275,9 @@
         "suitImage": "i/cards-german/leaf.svg",
         "suit": 3,
         "order": 8,
-        "sortDefault": 7
+        "sortDefault": 7,
+        "sortSkat": 7,
+        "sortSuitSkat": 2
       },
       "Leaf 09": {
         "rank": "9",
@@ -27111,7 +27285,9 @@
         "suitImage": "i/cards-german/leaf.svg",
         "suit": 3,
         "order": 9,
-        "sortDefault": 8
+        "sortDefault": 8,
+        "sortSkat": 8,
+        "sortSuitSkat": 2
       },
       "Leaf 10": {
         "rank": "10",
@@ -27119,7 +27295,9 @@
         "suitImage": "i/cards-german/leaf.svg",
         "suit": 3,
         "order": 10,
-        "sortDefault": 9
+        "sortDefault": 9,
+        "sortSkat": 12,
+        "sortSuitSkat": 2
       },
       "Leaf 11": {
         "rank": "U",
@@ -27127,7 +27305,9 @@
         "suitImage": "i/cards-german/leaf.svg",
         "suit": 3,
         "order": 11,
-        "sortDefault": 10
+        "sortDefault": 10,
+        "sortSkat": 16,
+        "sortSuitSkat": 2
       },
       "Leaf 12": {
         "rank": "O",
@@ -27135,7 +27315,9 @@
         "suitImage": "i/cards-german/leaf.svg",
         "suit": 3,
         "order": 12,
-        "sortDefault": 11
+        "sortDefault": 11,
+        "sortSkat": 10,
+        "sortSuitSkat": 2
       },
       "Leaf 13": {
         "rank": "K",
@@ -27143,7 +27325,9 @@
         "suitImage": "i/cards-german/leaf.svg",
         "suit": 3,
         "order": 13,
-        "sortDefault": 12
+        "sortDefault": 12,
+        "sortSkat": 11,
+        "sortSuitSkat": 2
       },
       "Heart 01": {
         "rank": "A",
@@ -27151,7 +27335,9 @@
         "suitImage": "i/cards-german/heart.svg",
         "suit": 4,
         "order": 1,
-        "sortDefault": 13
+        "sortDefault": 13,
+        "sortSkat": 13,
+        "sortSuitSkat": 3
       },
       "Heart 05": {
         "rank": "5",
@@ -27175,7 +27361,9 @@
         "suitImage": "i/cards-german/heart.svg",
         "suit": 4,
         "order": 7,
-        "sortDefault": 6
+        "sortDefault": 6,
+        "sortSkat": 6,
+        "sortSuitSkat": 3
       },
       "Heart 08": {
         "rank": "8",
@@ -27183,7 +27371,9 @@
         "suitImage": "i/cards-german/heart.svg",
         "suit": 4,
         "order": 8,
-        "sortDefault": 7
+        "sortDefault": 7,
+        "sortSkat": 7,
+        "sortSuitSkat": 3
       },
       "Heart 09": {
         "rank": "9",
@@ -27191,7 +27381,9 @@
         "suitImage": "i/cards-german/heart.svg",
         "suit": 4,
         "order": 9,
-        "sortDefault": 8
+        "sortDefault": 8,
+        "sortSkat": 8,
+        "sortSuitSkat": 3
       },
       "Heart 10": {
         "rank": "10",
@@ -27199,7 +27391,9 @@
         "suitImage": "i/cards-german/heart.svg",
         "suit": 4,
         "order": 10,
-        "sortDefault": 9
+        "sortDefault": 9,
+        "sortSkat": 12,
+        "sortSuitSkat": 3
       },
       "Heart 11": {
         "rank": "U",
@@ -27207,7 +27401,9 @@
         "suitImage": "i/cards-german/heart.svg",
         "suit": 4,
         "order": 11,
-        "sortDefault": 10
+        "sortDefault": 10,
+        "sortSkat": 15,
+        "sortSuitSkat": 3
       },
       "Heart 12": {
         "rank": "O",
@@ -27215,7 +27411,9 @@
         "suitImage": "i/cards-german/heart.svg",
         "suit": 4,
         "order": 12,
-        "sortDefault": 11
+        "sortDefault": 11,
+        "sortSkat": 10,
+        "sortSuitSkat": 3
       },
       "Heart 13": {
         "rank": "K",
@@ -27223,7 +27421,9 @@
         "suitImage": "i/cards-german/heart.svg",
         "suit": 4,
         "order": 13,
-        "sortDefault": 12
+        "sortDefault": 12,
+        "sortSkat": 11,
+        "sortSuitSkat": 3
       }
     },
     "clickable": true,
@@ -27359,8 +27559,8 @@
       "",
       "",
       "",
-      "No\nTrump",
-      "All\nTrump"
+      "Grand",
+      "Null"
     ],
     "deckSuitsUni": [
       "",
@@ -27368,8 +27568,8 @@
       "🔔",
       "🌿",
       "💜",
-      "NT",
-      "AT"
+      "G",
+      "N"
     ],
     "deckType": 5,
     "deckDiceFaces": [
@@ -27417,8 +27617,8 @@
     "type": "card",
     "cardType": "Acorn 07",
     "id": "zzrf",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "zcet": {
     "deck": "germanDeck",
@@ -27433,8 +27633,8 @@
     "type": "card",
     "cardType": "Acorn 09",
     "id": "t7mu",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "anm2": {
     "deck": "germanDeck",
@@ -27450,7 +27650,8 @@
     "cardType": "Acorn 11",
     "id": "up0z",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "sortSuitSkat": 0
   },
   "hrdy": {
     "deck": "germanDeck",
@@ -27530,15 +27731,16 @@
     "cardType": "Bell 11",
     "id": "ya24",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "sortSuitSkat": 0
   },
   "4a99": {
     "deck": "germanDeck",
     "type": "card",
     "cardType": "Bell 12",
     "id": "4a99",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "srqz": {
     "deck": "germanDeck",
@@ -27610,7 +27812,8 @@
     "cardType": "Leaf 11",
     "id": "myzu",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "sortSuitSkat": 0
   },
   "2sab": {
     "deck": "germanDeck",
@@ -27633,8 +27836,8 @@
     "type": "card",
     "cardType": "Heart 01",
     "id": "dctx",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "zk00": {
     "deck": "germanDeck",
@@ -27673,8 +27876,8 @@
     "type": "card",
     "cardType": "Heart 09",
     "id": "scgl",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "xtc9": {
     "deck": "germanDeck",
@@ -27689,8 +27892,9 @@
     "type": "card",
     "cardType": "Heart 11",
     "id": "d9tp",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "sortSuitSkat": 0,
+    "parent": "pile2"
   },
   "8ytr": {
     "deck": "germanDeck",
@@ -27818,8 +28022,8 @@
     },
     "chooser": 15,
     "image": "",
-    "text": "All\nTrump",
-    "deckSuitsUni": "AT",
+    "text": "Null",
+    "deckSuitsUni": "N",
     "deckSuitsColor": ""
   },
   "choose16": {
@@ -27867,14 +28071,6 @@
         "value": ""
       }
     ]
-  },
-  "pile2": {
-    "type": "pile",
-    "width": 103,
-    "height": 160,
-    "id": "pile2",
-    "z": 1,
-    "parent": "offHolder"
   },
   "offHolderRecallButton": {
     "type": "button",
@@ -28445,7 +28641,8 @@
     "cardType": "Acorn 11",
     "id": "1zs0",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "fj5l": {
     "deck": "swissDeck",
@@ -28517,7 +28714,8 @@
     "cardType": "Bell 11",
     "id": "dsaz",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "2yuy": {
     "deck": "swissDeck",
@@ -28589,7 +28787,8 @@
     "cardType": "Rose 11",
     "id": "2fzs",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "ke9s": {
     "deck": "swissDeck",
@@ -28661,7 +28860,8 @@
     "cardType": "Shield 11",
     "id": "3lst",
     "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "suit": 0
   },
   "wdsg": {
     "deck": "swissDeck",
@@ -29156,6 +29356,1009 @@
     "id": "ekqo",
     "parent": "itmesHolder39",
     "clickable": false
+  },
+  "gameID30": {
+    "id": "gameID30",
+    "x": -526,
+    "y": 775,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "roundsTemp": [
+      "Card Points",
+      "Suit/Grand Value",
+      "Null Value",
+      "Multipliers",
+      "Adjustments"
+    ],
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "settingsArray": [
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        10
+      ],
+      [
+        "deckType",
+        5
+      ],
+      [
+        "hideCards",
+        6
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        true
+      ]
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "gameID": true,
+    "hintText": "\"stuff.\"",
+    "transferExceptionsRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Transferring score ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY _totals OF tempScoreboard}",
+        "loopRoutine": [
+          "var seat = 'seat' + ${key}",
+          "var cardPoints = ${PROPERTY tempScore OF $seat}",
+          "var cardPoints = ${cardPoints.0}",
+          "var value = ${value} - ${cardPoints}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seat}",
+            "value": "${value}"
+          }
+        ]
+      }
+    ],
+    "transferButtonReturn": false,
+    "text": "Skat",
+    "sort2": "sorSuitSkat",
+    "sort1": "sortSkat",
+    "customFaceCount": 7,
+    "sortPreExceptionsRoutine": [
+      "var trump = ${PROPERTY trump OF trump}",
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "relation": "<",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "order",
+            "value": 11
+          },
+          {
+            "func": "SET",
+            "property": "sortSuitSkat",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "sortExceptionsRoutine": [
+      "var trump = ${PROPERTY trump OF trump}",
+      "// Adjust value for using regular suit for trump widget and sortSuitSkat for sorting.",
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": 2,
+        "thenRoutine": [
+          "var trump = 4"
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${trump}",
+            "operand2": 4,
+            "thenRoutine": [
+              "var trump = 3"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${trump}",
+                "operand2": 3,
+                "thenRoutine": [
+                  "var trump = 2"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "deck",
+            "property": "deckType",
+            "value": "${PROPERTY deckType OF settingsDecks}",
+            "collection": "deckType"
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "collection": "deckType"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "deck",
+            "value": "${id}",
+            "collection": "thisSuit"
+          },
+          {
+            "func": "SET",
+            "collection": "thisSuit",
+            "property": "sortSuitSkat",
+            "value": null
+          },
+          {
+            "func": "SORT",
+            "collection": "DEFAULT",
+            "key": "sortDefault",
+            "reverse": "${PROPERTY sortDirection OF $seatID}"
+          },
+          {
+            "func": "SORT",
+            "collection": "DEFAULT",
+            "key": "sortSuitSkat"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "type": "card",
+            "property": "id",
+            "relation": "!=",
+            "value": null,
+            "collection": "thisSuit"
+          },
+          {
+            "func": "SELECT",
+            "source": "thisSuit",
+            "type": "card",
+            "property": "order",
+            "relation": "!=",
+            "value": 11,
+            "collection": "noJacks"
+          },
+          {
+            "func": "SET",
+            "collection": "noJacks",
+            "property": "sortSuitSkat",
+            "value": null
+          },
+          {
+            "func": "SELECT",
+            "source": "noJacks",
+            "property": "sortSuitSkat",
+            "value": "${trump}",
+            "collection": "thisSuit"
+          },
+          {
+            "func": "SET",
+            "collection": "thisSuit",
+            "property": "sortSuitSkat",
+            "value": 0
+          },
+          {
+            "func": "SORT",
+            "collection": "DEFAULT",
+            "key": "sortSkat",
+            "reverse": "${PROPERTY sortDirection OF $seatID}"
+          },
+          {
+            "func": "SORT",
+            "collection": "DEFAULT",
+            "key": "sortSuitSkat"
+          }
+        ]
+      }
+    ],
+    "showTempScoreTotals": false,
+    "trumpRoutine": [
+      "var trump = ${PROPERTY trump OF trump}",
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SCORE",
+            "seats": [
+              "seat1",
+              "seat3",
+              "seat5",
+              "seat7"
+            ],
+            "property": "tempScore",
+            "round": 2,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "SCORE",
+            "seats": [
+              "seat1",
+              "seat3",
+              "seat5",
+              "seat7"
+            ],
+            "property": "tempScore",
+            "round": 2,
+            "value": 10
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SCORE",
+            "seats": [
+              "seat1",
+              "seat3",
+              "seat5",
+              "seat7"
+            ],
+            "property": "tempScore",
+            "round": 2,
+            "value": 11
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SCORE",
+            "seats": [
+              "seat1",
+              "seat3",
+              "seat5",
+              "seat7"
+            ],
+            "property": "tempScore",
+            "round": 2,
+            "value": 12
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SCORE",
+            "seats": [
+              "seat1",
+              "seat3",
+              "seat5",
+              "seat7"
+            ],
+            "property": "tempScore",
+            "round": 2,
+            "value": 24
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SCORE",
+            "seats": [
+              "seat1",
+              "seat3",
+              "seat5",
+              "seat7"
+            ],
+            "property": "tempScore",
+            "round": 2,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "SCORE",
+            "seats": [
+              "seat1",
+              "seat3",
+              "seat5",
+              "seat7"
+            ],
+            "property": "tempScore",
+            "round": 2,
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "playerAidDetail1": "Skat",
+    "playerAidDetail2": "Hand",
+    "playerAidDetail3": "Win",
+    "playerAidDetail4": "Lose",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Ouvert",
+        "text": "Ouvert (show cards)"
+      },
+      {
+        "value": "Schneider",
+        "text": "Schneider (90+ points)"
+      },
+      {
+        "value": "Schwarz",
+        "text": "Schwarz (all tricks)"
+      },
+      {
+        "value": "Kontra",
+        "text": "Kontra (double score)"
+      },
+      {
+        "value": "Rekontra",
+        "text": "Rekontra (double score again)"
+      },
+      {
+        "value": "Spitze",
+        "text": "Spitze (win last trick with lowest trump)"
+      }
+    ],
+    "0deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Grand",
+      "Null"
+    ],
+    "0deckSuitsColor": [
+      "",
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "",
+      ""
+    ],
+    "0deckSuitsImage": [
+      "",
+      "i/icons/clubs.svg",
+      "i/icons/diamonds.svg",
+      "i/icons/spades.svg",
+      "i/icons/hearts.svg",
+      "",
+      ""
+    ],
+    "0deckSuitsUni": [
+      "",
+      "♣",
+      "♦",
+      "♠",
+      "♥",
+      "G",
+      "N"
+    ]
+  },
+  "pile2": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "pile2",
+    "z": 1,
+    "parent": "offHolder"
+  },
+  "playerAid30": {
+    "type": "scoreboard",
+    "id": "playerAid30",
+    "x": 1225,
+    "y": 260,
+    "width": 360,
+    "height": 275,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Multiplier",
+    "rounds": [
+      "Matadors (with or against)",
+      "Game (always applies)",
+      "Hand (skat not used)",
+      "Schneider (90+ points)",
+      "Schneider announced",
+      "Schwarz (all tricks)",
+      "Schwarz announced",
+      "Open"
+    ],
+    "seats": [
+      "playerAidDetail1",
+      "playerAidDetail2"
+    ],
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true,
+    "scoreProperty": "score30"
+  },
+  "playerAidDetail3": {
+    "type": "seat",
+    "id": "playerAidDetail3",
+    "index": 9,
+    "x": 1790,
+    "tricks": 0,
+    "tempScore": [],
+    "showing": false,
+    "y": 237,
+    "displayEmpty": "only for playerAids",
+    "movableInEdit": false,
+    "score30": [
+      23,
+      35,
+      46,
+      59
+    ],
+    "score": [],
+    "playerAidSeat": true
+  },
+  "playerAidDetail4": {
+    "type": "seat",
+    "id": "playerAidDetail4",
+    "index": 9,
+    "x": 1790,
+    "tricks": 0,
+    "tempScore": [],
+    "showing": false,
+    "y": 337,
+    "displayEmpty": "only for playerAids",
+    "movableInEdit": false,
+    "score30": [
+      46,
+      70,
+      92,
+      118
+    ],
+    "score": [],
+    "playerAidSeat": true
+  },
+  "playerAid30a": {
+    "type": "scoreboard",
+    "id": "playerAid30a",
+    "y": 280,
+    "width": 360,
+    "height": 155,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "roundLabel": "Null Contracts",
+    "rounds": [
+      "Null",
+      "Null Hand",
+      "Null Ouvert",
+      "Null Ouvert Hand"
+    ],
+    "scoreProperty": "score30",
+    "seats": [
+      "playerAidDetail3",
+      "playerAidDetail4"
+    ],
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "fixedParent": true,
+    "parent": "playerAid30"
+  },
+  "deckSuitsSettings": {
+    "id": "deckSuitsSettings",
+    "x": 1635,
+    "y": 414,
+    "css": {
+      "background": "white",
+      "border": "1px solid black"
+    },
+    "text": "deckSuitsSettings",
+    "0deckDiceFaces": [
+      {
+        "image": "i/icons/clubs.svg"
+      },
+      {
+        "image": "i/icons/diamonds.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "i/icons/spades.svg"
+      },
+      {
+        "image": "i/icons/hearts.svg",
+        "deckSuitColor": "#e50932"
+      }
+    ],
+    "0deckSuits": [
+      "",
+      "clubs",
+      "diamonds",
+      "spades",
+      "hearts"
+    ],
+    "0deckSuitsColor": [
+      "",
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "",
+      ""
+    ],
+    "0deckSuitsImage": [
+      "",
+      "i/icons/clubs.svg",
+      "i/icons/diamonds.svg",
+      "i/icons/spades.svg",
+      "i/icons/hearts.svg",
+      "",
+      ""
+    ],
+    "0deckSuitsUni": [
+      "",
+      "♣",
+      "♦",
+      "♠",
+      "♥",
+      "NT",
+      "AT"
+    ],
+    "0deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump",
+      "All\nTrump"
+    ],
+    "deckSuitsRoutine": [
+      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
+      "var deckType = ${PROPERTY deckType OF settingsDecks}",
+      {
+        "func": "FOREACH",
+        "in": [
+          "deckDiceFaces",
+          "deckSuits",
+          "deckSuitsColor",
+          "deckSuitsImage",
+          "deckSuitsText",
+          "deckSuitsUni"
+        ],
+        "loopRoutine": [
+          "var thisProp = ${deckType} + ${value}",
+          {
+            "func": "IF",
+            "condition": "${PROPERTY $thisProp OF $gameID}",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "${gameID}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "deckSuitsSettings"
+              }
+            ]
+          },
+          {
+            "func": "GET",
+            "property": "${thisProp}",
+            "variable": "suitProp"
+          },
+          {
+            "func": "SELECT",
+            "type": "deck",
+            "property": "deckType",
+            "value": "${deckType}"
+          },
+          {
+            "func": "SET",
+            "property": "${value}",
+            "value": "${suitProp}"
+          }
+        ]
+      }
+    ],
+    "5deckDiceFaces": [
+      {
+        "image": "i/cards-german/acorn.svg",
+        "imageScale": 0.5
+      },
+      {
+        "image": "i/cards-german/bell.svg"
+      },
+      {
+        "image": "i/cards-german/leaf.svg"
+      },
+      {
+        "image": "i/cards-german/heart.svg"
+      }
+    ],
+    "5deckSuits": [
+      "",
+      "acorns",
+      "bells",
+      "leaves",
+      "hearts"
+    ],
+    "5deckSuitsImage": [
+      "",
+      "i/cards-german/acorn.svg",
+      "i/cards-german/bell.svg",
+      "i/cards-german/leaf.svg",
+      "i/cards-german/heart.svg",
+      "",
+      ""
+    ],
+    "5deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Grand",
+      "Null"
+    ],
+    "5deckSuitsUni": [
+      "",
+      "🌰",
+      "🔔",
+      "🌿",
+      "💜",
+      "G",
+      "N"
+    ],
+    "4deckDiceFaces": [
+      {
+        "image": "i/cards-spanish/club.svg",
+        "imageScale": 0.5
+      },
+      {
+        "image": "i/cards-spanish/coin.svg"
+      },
+      {
+        "image": "i/cards-spanish/cup.svg"
+      },
+      {
+        "image": "i/cards-spanish/sword.svg",
+        "imageScale": 0.3
+      }
+    ],
+    "4deckSuits": [
+      "",
+      "clubs",
+      "coins",
+      "cups",
+      "swords"
+    ],
+    "4deckSuitsImage": [
+      "",
+      "i/cards-spanish/club.svg",
+      "i/cards-spanish/coin.svg",
+      "i/cards-spanish/cup.svg",
+      "i/cards-spanish/sword.svg",
+      "",
+      ""
+    ],
+    "4deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump",
+      ""
+    ],
+    "4deckSuitsUni": [
+      "",
+      "🔨",
+      "🪙",
+      "🏆",
+      "⚔",
+      "NT",
+      ""
+    ],
+    "3deckDiceFaces": [
+      {
+        "image": "/i/icons/hearts.svg",
+        "deckSuitColor": "#cc79a7"
+      },
+      {
+        "image": "i/icons/circle.svg",
+        "deckSuitColor": "#d55e00"
+      },
+      {
+        "image": "i/icons/square.svg",
+        "deckSuitColor": "#009e9b"
+      },
+      {
+        "image": "i/icons/hexagon_vertical.svg",
+        "deckSuitColor": "#f0e442"
+      },
+      {
+        "image": "/assets/-1568599145_166",
+        "deckSuitColor": "#000000"
+      }
+    ],
+    "3deckSuits": [
+      "",
+      "red",
+      "orange",
+      "green",
+      "yellow",
+      "black"
+    ],
+    "3deckSuitsColor": [
+      "",
+      "#cc79a7",
+      "#d55e00",
+      "#009e9b",
+      "#f0e442",
+      "#000000",
+      ""
+    ],
+    "3deckSuitsImage": [
+      "",
+      "/i/icons/hearts.svg",
+      "i/icons/circle.svg",
+      "i/icons/square.svg",
+      "i/icons/hexagon_vertical.svg",
+      "/assets/-1568599145_166",
+      ""
+    ],
+    "3deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump"
+    ],
+    "3deckSuitsUni": [
+      "",
+      "❤",
+      "🟠",
+      "🟩",
+      "⬢",
+      "▲",
+      "NT"
+    ],
+    "2deckDiceFaces": [
+      {
+        "image": "i/icons/clubs.svg"
+      },
+      {
+        "image": "i/icons/diamonds.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "i/icons/spades.svg"
+      },
+      {
+        "image": "i/icons/hearts.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "/assets/-374765193_624",
+        "deckSuitColor": "purple"
+      }
+    ],
+    "2deckSuits": [
+      "",
+      "clubs",
+      "diamonds",
+      "spades",
+      "hearts",
+      "stars"
+    ],
+    "2deckSuitsColor": [
+      "",
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "purple",
+      ""
+    ],
+    "2deckSuitsImage": [
+      "",
+      "i/icons/clubs.svg",
+      "i/icons/diamonds.svg",
+      "i/icons/spades.svg",
+      "i/icons/hearts.svg",
+      "/assets/-374765193_624",
+      ""
+    ],
+    "2deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump"
+    ],
+    "2deckSuitsUni": [
+      "",
+      "♣",
+      "♦",
+      "♠",
+      "♥",
+      "*",
+      "NT"
+    ],
+    "6deckDiceFaces": [
+      {
+        "image": "i/cards-german/acorn.svg",
+        "imageScale": 0.5
+      },
+      {
+        "image": "i/cards-german/bell.svg"
+      },
+      {
+        "image": "i/cards-swiss/rose.svg"
+      },
+      {
+        "image": "i/cards-swiss/shield.svg",
+        "imageScale": 0.6
+      }
+    ],
+    "6deckSuits": [
+      "",
+      "acorns",
+      "bells",
+      "roses",
+      "shields"
+    ],
+    "6deckSuitsImage": [
+      "",
+      "i/cards-german/acorn.svg",
+      "i/cards-german/bell.svg",
+      "i/cards-swiss/rose.svg",
+      "i/cards-swiss/shield.svg",
+      "",
+      ""
+    ],
+    "6deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump",
+      "All\nTrump"
+    ],
+    "6deckSuitsUni": [
+      "",
+      "🌰",
+      "🔔",
+      "🌼",
+      "🛡",
+      "NT",
+      "AT"
+    ]
   },
   "pile1": {
     "type": "pile",
