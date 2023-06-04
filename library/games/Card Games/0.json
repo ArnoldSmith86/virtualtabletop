@@ -3026,7 +3026,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "turn": false,
+    "sortDirection": true
   },
   "bidValue7": {
     "inheritFrom": {
@@ -3269,9 +3270,15 @@
         "routine": "autoSortRoutine"
       },
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "dealRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY dealRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "dealRoutine"
+          }
+        ]
       }
     ],
     "text": "Deal",
@@ -8870,7 +8877,8 @@
           }
         ]
       }
-    ]
+    ],
+    "sortDirection": true
   },
   "preSetsButton": {
     "type": "button",
@@ -10142,6 +10150,7 @@
       }
     ],
     "autoSortRoutine": [
+      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
         "func": "FOREACH",
         "range": [
@@ -10154,12 +10163,63 @@
             "condition": "${PROPERTY sortDirection OF $seatID}",
             "thenRoutine": [
               {
+                "func": "GET",
+                "collection": [
+                  "${seatID}"
+                ],
+                "property": "player"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "hand"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "owner",
+                "value": "${player}"
+              },
+              {
+                "func": "IF",
+                "condition": "${PROPERTY sortPreExceptionsRoutine OF $gameID}",
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "widget": [
+                      "${gameID}"
+                    ],
+                    "routine": "sortPreExceptionsRoutine",
+                    "arguments": {
+                      "thisPlayerName": "${player}"
+                    }
+                  }
+                ]
+              },
+              {
                 "func": "CALL",
                 "widget": "sortButton",
-                "routine": "clickRoutine",
+                "routine": "sortRoutine",
                 "arguments": {
                   "seatID": "${seatID}"
                 }
+              },
+              {
+                "func": "IF",
+                "condition": "${PROPERTY sortExceptionsRoutine OF $gameID}",
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "widget": [
+                      "${gameID}"
+                    ],
+                    "routine": "sortExceptionsRoutine",
+                    "arguments": {
+                      "thisPlayerName": "${player}",
+                      "reverseSort": false
+                    }
+                  }
+                ]
               }
             ]
           }
@@ -19617,7 +19677,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685837209814,
+      "lastUpdate": 1685895418290,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
