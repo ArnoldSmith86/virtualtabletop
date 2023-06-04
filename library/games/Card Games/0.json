@@ -745,9 +745,15 @@
         "value": null
       },
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "recallRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY recallRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "recallRoutine"
+          }
+        ]
       },
       "//This is needed because of Truco",
       {
@@ -850,14 +856,20 @@
       },
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
-        "func": "CALL",
-        "widget": [
-          "${gameID}"
-        ],
-        "routine": "sortPreExceptionsRoutine",
-        "arguments": {
-          "thisPlayerName": "${playerName}"
-        }
+        "func": "IF",
+        "condition": "${PROPERTY sortPreExceptionsRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": [
+              "${gameID}"
+            ],
+            "routine": "sortPreExceptionsRoutine",
+            "arguments": {
+              "thisPlayerName": "${playerName}"
+            }
+          }
+        ]
       },
       {
         "func": "CALL",
@@ -867,15 +879,21 @@
         }
       },
       {
-        "func": "CALL",
-        "widget": [
-          "${gameID}"
-        ],
-        "routine": "sortExceptionsRoutine",
-        "arguments": {
-          "thisPlayerName": "${playerName}",
-          "reverseSort": false
-        }
+        "func": "IF",
+        "condition": "${PROPERTY sortExceptionsRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": [
+              "${gameID}"
+            ],
+            "routine": "sortExceptionsRoutine",
+            "arguments": {
+              "thisPlayerName": "${playerName}",
+              "reverseSort": false
+            }
+          }
+        ]
       }
     ],
     "movableInEdit": false,
@@ -1298,9 +1316,9 @@
       "currentColor": "deckSuitsColor"
     },
     "image": "i/icons/clubs.svg",
+    "deckSuitsColor": "",
     "deckSuitsUni": "♣",
-    "deckSuits": "clubs",
-    "deckSuitsColor": ""
+    "deckSuits": "clubs"
   },
   "choose11": {
     "inheritFrom": {
@@ -1315,9 +1333,9 @@
     "deckSuit": "clubs",
     "image": "i/icons/diamonds.svg",
     "text": "",
+    "deckSuitsColor": "#e50932",
     "deckSuitsUni": "♦",
-    "deckSuits": "diamonds",
-    "deckSuitsColor": "#e50932"
+    "deckSuits": "diamonds"
   },
   "choose12": {
     "inheritFrom": {
@@ -1333,9 +1351,9 @@
     "deckSuit": "coins",
     "image": "i/icons/spades.svg",
     "text": "",
+    "deckSuitsColor": "",
     "deckSuitsUni": "♠",
-    "deckSuits": "spades",
-    "deckSuitsColor": ""
+    "deckSuits": "spades"
   },
   "choose13": {
     "inheritFrom": {
@@ -1350,9 +1368,9 @@
     "deckSuit": "cups",
     "image": "i/icons/hearts.svg",
     "text": "",
+    "deckSuitsColor": "#e50932",
     "deckSuitsUni": "♥",
-    "deckSuits": "hearts",
-    "deckSuitsColor": "#e50932"
+    "deckSuits": "hearts"
   },
   "choose14": {
     "inheritFrom": {
@@ -1365,9 +1383,9 @@
     "chooser": 14,
     "deckSuit": "swords",
     "image": "",
-    "text": "Grand",
-    "deckSuitsUni": "G",
-    "deckSuitsColor": ""
+    "text": "No\nTrump",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "NT"
   },
   "bidSuit1": {
     "id": "bidSuit1",
@@ -2714,7 +2732,11 @@
     "trickCount": [
       0,
       0
-    ]
+    ],
+    "turn": false,
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "bidValue3": {
     "inheritFrom": {
@@ -3026,8 +3048,7 @@
       " "
     ],
     "showing": false,
-    "turn": false,
-    "sortDirection": true
+    "turn": false
   },
   "bidValue7": {
     "inheritFrom": {
@@ -4949,8 +4970,8 @@
       "",
       "",
       "",
-      "Grand",
-      "Null"
+      "No\nTrump",
+      "All\nTrump"
     ],
     "deckSuitsUni": [
       "",
@@ -4958,8 +4979,8 @@
       "♦",
       "♠",
       "♥",
-      "G",
-      "N"
+      "NT",
+      "AT"
     ],
     "deckType": 0,
     "deckDiceFaces": [
@@ -5065,8 +5086,7 @@
     "type": "card",
     "cardType": "C 2J",
     "staged": false,
-    "parent": "pile2",
-    "suit": 0
+    "parent": "pile2"
   },
   "6exv_Q_C": {
     "id": "6exv_Q_C",
@@ -5170,8 +5190,7 @@
     "type": "card",
     "cardType": "D 2J",
     "staged": false,
-    "parent": "pile2",
-    "suit": 0
+    "parent": "pile2"
   },
   "6exv_Q_D": {
     "id": "6exv_Q_D",
@@ -5275,8 +5294,7 @@
     "deck": "deck2",
     "type": "card",
     "cardType": "H 2J",
-    "staged": false,
-    "suit": 0
+    "staged": false
   },
   "6exv_Q_H": {
     "id": "6exv_Q_H",
@@ -5380,8 +5398,7 @@
     "deck": "deck2",
     "type": "card",
     "cardType": "S 2J",
-    "staged": false,
-    "suit": 0
+    "staged": false
   },
   "6exv_Q_S": {
     "id": "6exv_Q_S",
@@ -5664,9 +5681,15 @@
       },
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "centerEnterRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY centerEnterRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "centerEnterRoutine"
+          }
+        ]
       }
     ],
     "leaveRoutine": [
@@ -5676,9 +5699,15 @@
       },
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "centerLeaveRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY centerLeaveRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "centerLeaveRoutine"
+          }
+        ]
       }
     ],
     "offSetRoutine": [
@@ -5831,7 +5860,7 @@
         "operand1": "${deckType}",
         "operand2": 1,
         "thenRoutine": [
-          "\\ Needed because there are no decks with this type. Setting back to 0 gets deck1 and deck2.",
+          "// Needed because there are no decks with this type. Setting back to 0 gets deck1 and deck2.",
           "var deckType = 0"
         ]
       },
@@ -5892,9 +5921,15 @@
         ]
       },
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "trumpRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY trumpRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "trumpRoutine"
+          }
+        ]
       },
       "//This is needed because of Pitch",
       {
@@ -6341,9 +6376,15 @@
           "//If there are no exceptions, then result needs to be pre-filled with the value of points.",
           "var result = ${points}",
           {
-            "func": "CALL",
-            "routine": "scoreExceptionsRoutine",
-            "widget": "${gameID}"
+            "func": "IF",
+            "condition": "${PROPERTY scoreExceptionsRoutine OF $gameID}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "${gameID}",
+                "routine": "scoreExceptionsRoutine"
+              }
+            ]
           },
           "var score.$round = ${result}",
           {
@@ -8045,11 +8086,17 @@
       },
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "resetRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY resetRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "resetRoutine"
+          }
+        ]
       },
-      "\\ Used to minimize the changes diff in GitHub",
+      "// Used to minimize the changes diff in GitHub",
       {
         "func": "SELECT",
         "type": "pile",
@@ -8306,9 +8353,15 @@
       },
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "turnRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY turnRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "turnRoutine"
+          }
+        ]
       }
     ],
     "movableInEdit": false,
@@ -8411,14 +8464,26 @@
       },
       "//Move specified cards to the mini holder and display them face up.",
       {
-        "func": "CALL",
-        "routine": "capturedHolderRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY capturedArray OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "capturedHolderRoutine"
+          }
+        ]
       },
       "//Take any special actions for this particular game.",
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "takeRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY takeRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "takeRoutine"
+          }
+        ]
       }
     ],
     "capturedHolderRoutine": [
@@ -8877,8 +8942,7 @@
           }
         ]
       }
-    ],
-    "sortDirection": true
+    ]
   },
   "preSetsButton": {
     "type": "button",
@@ -9130,14 +9194,26 @@
         "widget": "gameID0"
       },
       {
-        "func": "CALL",
-        "routine": "preSetExceptionsRoutine",
-        "widget": "${gameID}"
+        "func": "IF",
+        "condition": "${PROPERTY preSetExceptionsRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "preSetExceptionsRoutine"
+          }
+        ]
       },
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "cardsExceptionsRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY cardsExceptionsRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "cardsExceptionsRoutine"
+          }
+        ]
       },
       "//Set the appropriate round information on the temporary scoreboard",
       {
@@ -9370,9 +9446,15 @@
       },
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "bidRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY bidRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "bidRoutine"
+          }
+        ]
       }
     ]
   },
@@ -9455,7 +9537,7 @@
         "value": "${name}"
       }
     ],
-    "customStateproperty": 2,
+    "customStateproperty": 1,
     "first": false,
     "y": 15
   },
@@ -13026,12 +13108,18 @@
           "var transferButtonReturn = false"
         ]
       },
-      "//This CALL exception is different than most others in that it comes first. There is an option to stop all further action in the routine after the CALL by setting the transferButtonReturn to false on the gameID widget (like in Coiffeur)",
+      "// This CALL exception is different than most others in that it comes first. There is an option to stop all further action in the routine after the CALL by setting the transferButtonReturn to false on the gameID widget (like in Coiffeur)",
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "transferExceptionsRoutine",
-        "return": "${transferButtonReturn}"
+        "func": "IF",
+        "condition": "${PROPERTY transferExceptionsRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "transferExceptionsRoutine",
+            "return": "${transferButtonReturn}"
+          }
+        ]
       },
       {
         "func": "FOREACH",
@@ -19677,7 +19765,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685895418290,
+      "lastUpdate": 1685899171656,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -24854,9 +24942,15 @@
       },
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "scoreSpecialRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY scoreSpecialRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "scoreSpecialRoutine"
+          }
+        ]
       }
     ],
     "scale": 0
@@ -24874,9 +24968,15 @@
     "clickRoutine": [
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
-        "func": "CALL",
-        "widget": "${gameID}",
-        "routine": "takeSpecialRoutine"
+        "func": "IF",
+        "condition": "${PROPERTY takeSpecialRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "takeSpecialRoutine"
+          }
+        ]
       }
     ],
     "scale": 0
@@ -28091,9 +28191,9 @@
     },
     "chooser": 15,
     "image": "",
-    "text": "Null",
-    "deckSuitsUni": "N",
-    "deckSuitsColor": ""
+    "text": "All\nTrump",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "AT"
   },
   "choose16": {
     "type": "button",
