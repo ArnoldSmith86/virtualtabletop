@@ -672,6 +672,17 @@
         "value": null
       },
       {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": null
+      },
+      {
         "func": "CALL",
         "widget": "routines",
         "routine": "checkRoundsRoutine",
@@ -2685,7 +2696,6 @@
     "scale": 1,
     "score": [],
     "tricks": 0,
-    "turn": false,
     "tempScore": [],
     "scoreCoiffeur": [
       " ",
@@ -2704,8 +2714,7 @@
     "trickCount": [
       0,
       0
-    ],
-    "player": ""
+    ]
   },
   "bidValue3": {
     "inheritFrom": {
@@ -3002,7 +3011,6 @@
     "scale": 1,
     "score": [],
     "tricks": 0,
-    "turn": false,
     "tempScore": [],
     "scoreCoiffeur": [
       " ",
@@ -3018,7 +3026,7 @@
       " "
     ],
     "showing": false,
-    "player": ""
+    "turn": false
   },
   "bidValue7": {
     "inheritFrom": {
@@ -19609,7 +19617,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685823074435,
+      "lastUpdate": 1685837209814,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -21452,9 +21460,9 @@
       0
     ],
     "score29": [
-      30,
+      10,
       20,
-      10
+      30
     ],
     "score30": [
       "1 each",
@@ -21466,7 +21474,8 @@
       "n/a",
       "n/a"
     ],
-    "playerAidSeat": true
+    "playerAidSeat": true,
+    "player": "Bonus"
   },
   "playerAid6": {
     "type": "scoreboard",
@@ -27986,7 +27995,7 @@
     "x": 1225,
     "y": 560,
     "width": 360,
-    "height": 155,
+    "height": 157,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -29360,7 +29369,7 @@
   "gameID30": {
     "id": "gameID30",
     "x": -526,
-    "y": 775,
+    "y": 777,
     "css": {
       "background": "blue",
       "color": "white",
