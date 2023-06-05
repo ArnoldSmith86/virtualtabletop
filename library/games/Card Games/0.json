@@ -2748,8 +2748,7 @@
       0,
       0
     ],
-    "turn": false,
-    "player": ""
+    "turn": false
   },
   "bidValue3": {
     "inheritFrom": {
@@ -2771,7 +2770,6 @@
     "id": "bidSuit3",
     "parent": "seat3",
     "text": "",
-    "classes": "symbols",
     "deckSuitsColor": "",
     "deckSuitsUni": "",
     "deckSuits": "",
@@ -2902,8 +2900,7 @@
       " ",
       " "
     ],
-    "showing": false,
-    "player": ""
+    "showing": false
   },
   "bidValue5": {
     "inheritFrom": {
@@ -2926,7 +2923,6 @@
     "id": "bidSuit5",
     "parent": "seat5",
     "text": "",
-    "classes": "symbols",
     "y": -60,
     "deckSuitsColor": "",
     "deckSuitsUni": "",
@@ -3061,8 +3057,7 @@
       " "
     ],
     "showing": false,
-    "turn": false,
-    "player": ""
+    "turn": false
   },
   "bidValue7": {
     "inheritFrom": {
@@ -3084,7 +3079,6 @@
     "id": "bidSuit7",
     "parent": "seat7",
     "text": "",
-    "classes": "symbols",
     "deckSuitsColor": "",
     "deckSuitsUni": "",
     "deckSuits": "",
@@ -19810,7 +19804,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685931285305,
+      "lastUpdate": 1685942794010,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -21667,7 +21661,13 @@
       "n/a",
       "n/a"
     ],
-    "playerAidSeat": true
+    "playerAidSeat": true,
+    "score31": [
+      "AT - S - H - D - C - NT",
+      "K-Q-C-J-10-9-8-7-6",
+      "10-9-8-K-Q-C-J-7-6"
+    ],
+    "player": "Order (High to Low)"
   },
   "playerAid6": {
     "type": "scoreboard",
@@ -30576,7 +30576,7 @@
   "gameID31": {
     "id": "gameID31",
     "x": -150,
-    "y": 1325,
+    "y": 1326,
     "css": {
       "background": "blue",
       "color": "white",
@@ -30605,10 +30605,6 @@
       ],
       [
         "showDiscard",
-        false
-      ],
-      [
-        "turnDirection",
         false
       ]
     ],
@@ -30645,6 +30641,10 @@
       ],
       [
         "trump",
+        1
+      ],
+      [
+        "playerAidButton",
         1
       ]
     ],
@@ -30869,47 +30869,84 @@
     "customFaceCount": 7,
     "bidRoutine": [
       "var thisWidget = 'bidSuit' + ${seatIndex}",
+      "var valueWidget = 'bidValue' + ${seatIndex}",
       "var thisSuitImage = ${PROPERTY image OF $thisWidget}",
       "var thisSuitText = ${PROPERTY text OF $thisWidget}",
       {
-        "func": "SELECT",
-        "property": "id",
-        "relation": "in",
-        "value": [
-          "bidSuit1",
-          "bidSuit2",
-          "bidSuit3",
-          "bidSuit4",
-          "bidSuit5",
-          "bidSuit6",
-          "bidSuit7",
-          "bidSuit8"
-        ],
-        "collection": "allBidSuits"
-      },
-      {
-        "func": "SELECT",
-        "source": "allBidSuits",
-        "property": "image",
-        "relation": "!=",
-        "value": "${thisSuitImage}"
-      },
-      {
-        "func": "SET",
-        "property": "image",
-        "value": ""
-      },
-      {
-        "func": "SELECT",
-        "source": "allBidSuits",
-        "property": "text",
-        "relation": "!=",
-        "value": "${thisSuitText}"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": ""
+        "func": "IF",
+        "operand1": "${PROPERTY deckSuitsUni OF $thisWidget}",
+        "operand2": "",
+        "thenRoutine": [],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "bidValue1",
+              "bidValue2",
+              "bidValue3",
+              "bidValue4",
+              "bidValue5",
+              "bidValue6",
+              "bidValue7",
+              "bidValue8"
+            ],
+            "collection": "allBidValues"
+          },
+          {
+            "func": "SELECT",
+            "source": "allBidValues",
+            "property": "id",
+            "relation": "!=",
+            "value": "${valueWidget}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": ""
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "bidSuit1",
+              "bidSuit2",
+              "bidSuit3",
+              "bidSuit4",
+              "bidSuit5",
+              "bidSuit6",
+              "bidSuit7",
+              "bidSuit8"
+            ],
+            "collection": "allBidSuits"
+          },
+          {
+            "func": "SELECT",
+            "source": "allBidSuits",
+            "property": "image",
+            "relation": "!=",
+            "value": "${thisSuitImage}"
+          },
+          {
+            "func": "SET",
+            "property": "image",
+            "value": ""
+          },
+          {
+            "func": "SELECT",
+            "source": "allBidSuits",
+            "property": "text",
+            "relation": "!=",
+            "value": "${thisSuitText}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": ""
+          }
+        ]
       }
     ],
     "0deckSuitsColor": [
@@ -30947,7 +30984,8 @@
       "♥",
       "♠",
       "AT"
-    ]
+    ],
+    "playerAidDetail1": "Order (High to Low)"
   },
   "cavaliers": {
     "type": "deck",
@@ -31139,6 +31177,37 @@
     "id": "b5ol",
     "staged": false,
     "parent": "pile2"
+  },
+  "playerAid31": {
+    "type": "scoreboard",
+    "id": "playerAid31",
+    "x": 1225,
+    "y": 560,
+    "width": 360,
+    "height": 127,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Category",
+    "rounds": [
+      "Suit ranks (low to high)",
+      "Card ranks (no trump, )",
+      "Card randk (trump)"
+    ],
+    "seats": "playerAidDetail1",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true,
+    "scoreProperty": "score31"
   },
   "pile1": {
     "type": "pile",
