@@ -622,7 +622,7 @@ function fillStateDetails(states, state, dom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
     if(targetDom) {
       arrowDom.dataset.id = targetDom.dataset.id;
-      $('img', arrowDom).src = $('img', targetDom).src;
+      $('img', arrowDom).src = $('img', targetDom).dataset.src;
       toggleClass($('img', arrowDom), 'hidden', $('img', arrowDom).src == location.href);
       $('h3', arrowDom).innerText = $('h3', targetDom).innerText;
       $('h4', arrowDom).innerText = $('h4', targetDom).innerText;
