@@ -2748,7 +2748,8 @@
       0,
       0
     ],
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "bidValue3": {
     "inheritFrom": {
@@ -2900,7 +2901,8 @@
       " ",
       " "
     ],
-    "showing": false
+    "showing": false,
+    "player": ""
   },
   "bidValue5": {
     "inheritFrom": {
@@ -3057,7 +3059,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "bidValue7": {
     "inheritFrom": {
@@ -4495,6 +4498,21 @@
           },
           {
             "type": "text",
+            "x": -3,
+            "y": 25,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "deck2Mark",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
             "x": 81,
             "y": 127,
             "fontSize": 30,
@@ -4502,6 +4520,22 @@
             "width": 25,
             "dynamicProperties": {
               "value": "rank",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 100,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "deck2Mark",
               "color": "suitColor"
             },
             "rotation": 180,
@@ -8696,7 +8730,8 @@
     "y": 826,
     "layer": -5,
     "movableInEdit": false,
-    "classes": "transparent"
+    "classes": "transparent",
+    "dropLimit": 0
   },
   "tempScoreboard": {
     "type": "scoreboard",
@@ -13904,7 +13939,7 @@
     ],
     "gameID": true,
     "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\"",
-    "y": -131,
+    "y": -130,
     "autoTeam": false,
     "preSetExceptionsRoutine": [
       "// This is needed to fix whatever happens when other pre-sets are called and the game type is changed to something else. This first few are not from specific games are but specific properties of games that may or may not be modified by pre-sets.",
@@ -14058,6 +14093,18 @@
         ],
         "property": "scale",
         "value": 0
+      },
+      "//This comes from La Batarde",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "deck2"
+      },
+      {
+        "func": "SET",
+        "property": "deck2Mark",
+        "value": null
       }
     ],
     "customFaceCount": 6,
@@ -18274,7 +18321,7 @@
   "gameID10": {
     "id": "gameID10",
     "x": -526,
-    "y": 1319,
+    "y": 1320,
     "css": {
       "background": "blue",
       "color": "white",
@@ -19804,7 +19851,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685992055887,
+      "lastUpdate": 1685999239533,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -22683,7 +22730,7 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "0",
+    "versionNumber": "1",
     "scale": 0
   },
   "cloneButton": {
@@ -30614,6 +30661,10 @@
     ],
     "settingsDecksArray": [
       [
+        "deckType",
+        0
+      ],
+      [
         "cardCount",
         1
       ],
@@ -30632,6 +30683,17 @@
       {
         "func": "CALL",
         "routine": "recallRoutine"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "deck2"
+      },
+      {
+        "func": "SET",
+        "property": "deck2Mark",
+        "value": "__"
       }
     ],
     "displayArray": [
@@ -30778,6 +30840,36 @@
         "type": "card",
         "property": "deck",
         "value": "cavaliers"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY seatCount OF settingsDecks}",
+        "relation": "<",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "tempHolder"
+          },
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": 0
+          },
+          {
+            "func": "MOVE",
+            "from": "tempHolder",
+            "to": "offHolder",
+            "count": 0
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "deck2Mark",
+            "value": null
+          }
+        ]
       },
       {
         "func": "SET",
@@ -30945,7 +31037,133 @@
       "♠",
       "AT"
     ],
-    "playerAidDetail1": "Order (High to Low)"
+    "playerAidDetail1": "Order (High to Low)",
+    "versionArray": [
+      {
+        "value": "0",
+        "text": "Click here to choose number of players"
+      },
+      {
+        "value": "1",
+        "text": "4 (default)"
+      },
+      {
+        "value": "2",
+        "text": "3"
+      },
+      {
+        "value": "3",
+        "text": "5"
+      },
+      {
+        "value": "4",
+        "text": "6"
+      },
+      {
+        "value": "5",
+        "text": "7"
+      }
+    ],
+    "version1": {
+      "settingsDecksArray": [
+        [
+          "deckType",
+          0
+        ],
+        [
+          "cardCount",
+          1
+        ],
+        [
+          "seatCount",
+          4
+        ],
+        [
+          "hideCards",
+          4
+        ]
+      ]
+    },
+    "version2": {
+      "settingsDecksArray": [
+        [
+          "deckType",
+          0
+        ],
+        [
+          "cardCount",
+          1
+        ],
+        [
+          "seatCount",
+          3
+        ],
+        [
+          "hideCards",
+          4
+        ]
+      ]
+    },
+    "version3": {
+      "settingsDecksArray": [
+        [
+          "deckType",
+          1
+        ],
+        [
+          "cardCount",
+          1
+        ],
+        [
+          "seatCount",
+          5
+        ],
+        [
+          "hideCards",
+          4
+        ]
+      ]
+    },
+    "version4": {
+      "settingsDecksArray": [
+        [
+          "deckType",
+          1
+        ],
+        [
+          "cardCount",
+          1
+        ],
+        [
+          "seatCount",
+          6
+        ],
+        [
+          "hideCards",
+          4
+        ]
+      ]
+    },
+    "version5": {
+      "settingsDecksArray": [
+        [
+          "deckType",
+          1
+        ],
+        [
+          "cardCount",
+          1
+        ],
+        [
+          "seatCount",
+          7
+        ],
+        [
+          "hideCards",
+          4
+        ]
+      ]
+    }
   },
   "cavaliers": {
     "type": "deck",
@@ -30990,6 +31208,48 @@
         "rank": "C",
         "riderImage": "/i/cards-tarot/CH.png",
         "suitImage": "i/icons/hearts.svg",
+        "suit": 4,
+        "order": 11.5,
+        "suitColor": "#e50932",
+        "sortDefault": 10.5,
+        "sortBatardeTrump": 4
+      },
+      "CC2": {
+        "rank": "C",
+        "riderImage": "/i/cards-tarot/CC.png",
+        "suitImage": "i/icons/clubs.svg",
+        "deck2Mark": "__",
+        "suit": 1,
+        "order": 11.5,
+        "sortDefault": 10.5,
+        "sortBatardeTrump": 4
+      },
+      "CD2": {
+        "rank": "C",
+        "riderImage": "/i/cards-tarot/CD.png",
+        "suitImage": "i/icons/diamonds.svg",
+        "deck2Mark": "__",
+        "suit": 2,
+        "order": 11.5,
+        "suitColor": "#e50932",
+        "sortDefault": 10.5,
+        "sortBatardeTrump": 4
+      },
+      "CS2": {
+        "rank": "C",
+        "riderImage": "/i/cards-tarot/CS.png",
+        "suitImage": "i/icons/spades.svg",
+        "deck2Mark": "__",
+        "suit": 3,
+        "order": 11.5,
+        "sortDefault": 10.5,
+        "sortBatardeTrump": 4
+      },
+      "CH2": {
+        "rank": "C",
+        "riderImage": "/i/cards-tarot/CH.png",
+        "suitImage": "i/icons/hearts.svg",
+        "deck2Mark": "__",
         "suit": 4,
         "order": 11.5,
         "suitColor": "#e50932",
@@ -31040,6 +31300,21 @@
           },
           {
             "type": "text",
+            "x": -3,
+            "y": 25,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "deck2Mark",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
             "x": 81,
             "y": 127,
             "fontSize": 30,
@@ -31047,6 +31322,22 @@
             "width": 25,
             "dynamicProperties": {
               "value": "rank",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 100,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "deck2Mark",
               "color": "suitColor"
             },
             "rotation": 180,
@@ -31168,6 +31459,38 @@
     "showTotals": false,
     "playerAid": true,
     "scoreProperty": "score31"
+  },
+  "575h": {
+    "deck": "cavaliers",
+    "type": "card",
+    "cardType": "CC2",
+    "id": "575h",
+    "parent": "pile2",
+    "staged": false
+  },
+  "n8iz": {
+    "deck": "cavaliers",
+    "type": "card",
+    "cardType": "CD2",
+    "id": "n8iz",
+    "parent": "pile2",
+    "staged": false
+  },
+  "469z": {
+    "deck": "cavaliers",
+    "type": "card",
+    "cardType": "CS2",
+    "id": "469z",
+    "parent": "pile2",
+    "staged": false
+  },
+  "kc22": {
+    "deck": "cavaliers",
+    "type": "card",
+    "cardType": "CH2",
+    "id": "kc22",
+    "parent": "pile2",
+    "staged": false
   },
   "pile1": {
     "type": "pile",
