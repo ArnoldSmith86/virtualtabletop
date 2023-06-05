@@ -16272,8 +16272,8 @@
   },
   "pawnToken": {
     "id": "pawnToken",
-    "x": 1314,
-    "y": 135,
+    "x": 1308,
+    "y": 143,
     "width": 37,
     "height": 67,
     "color": "#a9c6e8",
@@ -19804,7 +19804,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1685942794010,
+      "lastUpdate": 1685976628138,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -30576,7 +30576,7 @@
   "gameID31": {
     "id": "gameID31",
     "x": -150,
-    "y": 1326,
+    "y": 1327,
     "css": {
       "background": "blue",
       "color": "white",
@@ -30590,12 +30590,12 @@
         "text": "Click here to choose message"
       },
       {
-        "value": "Méchouner",
-        "text": "Méchouner"
+        "value": "Méchouner (x2)",
+        "text": "Méchouner (x2)"
       },
       {
-        "value": "Chonue",
-        "text": "Choune"
+        "value": "Chonue (x4)",
+        "text": "Choune (x4)"
       }
     ],
     "settingsArray": [
@@ -30605,6 +30605,10 @@
       ],
       [
         "showDiscard",
+        false
+      ],
+      [
+        "showBidSuit",
         false
       ]
     ],
@@ -30623,7 +30627,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"Choose number of players from Decks & Players button.\\a\\a Bid using black and white bid system widgets near seat.\\a\\a Tricks are counted automatically in the scoreboard to the right, but scores should be entered manually using the green/red +/- buttons above the main scoreboard.\"",
+    "hintText": "\"Choose number of players from Decks & Players button.\\a\\a Bid number of tricks using black and white bid system widgets near seat. Bid suit by using the trump widget in the bottom-left.\\a\\a Tricks are counted automatically in the scoreboard to the right, but scores should be entered manually using the green/red +/- buttons above the main scoreboard.\"",
     "preSetExceptionsRoutine": [
       {
         "func": "CALL",
@@ -30695,7 +30699,8 @@
       10,
       9,
       8,
-      7
+      7,
+      12
     ],
     "4PDeal": [
       0,
@@ -30708,7 +30713,8 @@
       8,
       7,
       6,
-      5
+      5,
+      9
     ],
     "5PDeal": [
       0,
@@ -30731,7 +30737,8 @@
       8,
       7,
       6,
-      5
+      5,
+      14
     ],
     "6PDeal": [
       0,
@@ -30746,7 +30753,8 @@
       10,
       9,
       8,
-      7
+      7,
+      12
     ],
     "7PDeal": [
       0,
@@ -30761,7 +30769,8 @@
       8,
       7,
       6,
-      5
+      5,
+      10
     ],
     "recallRoutine": [
       {
@@ -30799,6 +30808,35 @@
     ],
     "sortExceptionsRoutine": [
       "var trump = ${PROPERTY trump OF trump}",
+      "// Adjust value for using regular suit for trump widget and sortSuitSkat for sorting.",
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": 2,
+        "thenRoutine": [
+          "var trump = 1"
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${trump}",
+            "operand2": 3,
+            "thenRoutine": [
+              "var trump = 2"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${trump}",
+                "operand2": 5,
+                "thenRoutine": [
+                  "var trump = 3"
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "var isNum = ${trump} / 1",
       {
         "func": "IF",
@@ -30867,88 +30905,6 @@
       }
     ],
     "customFaceCount": 7,
-    "bidRoutine": [
-      "var thisWidget = 'bidSuit' + ${seatIndex}",
-      "var valueWidget = 'bidValue' + ${seatIndex}",
-      "var thisSuitImage = ${PROPERTY image OF $thisWidget}",
-      "var thisSuitText = ${PROPERTY text OF $thisWidget}",
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY deckSuitsUni OF $thisWidget}",
-        "operand2": "",
-        "thenRoutine": [],
-        "elseRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "relation": "in",
-            "value": [
-              "bidValue1",
-              "bidValue2",
-              "bidValue3",
-              "bidValue4",
-              "bidValue5",
-              "bidValue6",
-              "bidValue7",
-              "bidValue8"
-            ],
-            "collection": "allBidValues"
-          },
-          {
-            "func": "SELECT",
-            "source": "allBidValues",
-            "property": "id",
-            "relation": "!=",
-            "value": "${valueWidget}"
-          },
-          {
-            "func": "SET",
-            "property": "text",
-            "value": ""
-          },
-          {
-            "func": "SELECT",
-            "property": "id",
-            "relation": "in",
-            "value": [
-              "bidSuit1",
-              "bidSuit2",
-              "bidSuit3",
-              "bidSuit4",
-              "bidSuit5",
-              "bidSuit6",
-              "bidSuit7",
-              "bidSuit8"
-            ],
-            "collection": "allBidSuits"
-          },
-          {
-            "func": "SELECT",
-            "source": "allBidSuits",
-            "property": "image",
-            "relation": "!=",
-            "value": "${thisSuitImage}"
-          },
-          {
-            "func": "SET",
-            "property": "image",
-            "value": ""
-          },
-          {
-            "func": "SELECT",
-            "source": "allBidSuits",
-            "property": "text",
-            "relation": "!=",
-            "value": "${thisSuitText}"
-          },
-          {
-            "func": "SET",
-            "property": "text",
-            "value": ""
-          }
-        ]
-      }
-    ],
     "0deckSuitsColor": [
       "",
       "",
