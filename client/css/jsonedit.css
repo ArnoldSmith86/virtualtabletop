@@ -222,7 +222,10 @@ i.error   { color: var(--textHighlightColor3); font-weight: bold; }
 #jeWidgetLayers {
   background: var(--backgroundColor);
   position: absolute;
-  inset: 10px;
+  top: 10px;
+  bottom: 10px;
+  right: 10px;
+  width: calc(var(--commandPaneWidth) - 34px);
   border: 2px solid var(--VTTblue);
   border-radius: 10px;
   overflow: hidden;

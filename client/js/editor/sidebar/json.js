@@ -8,6 +8,7 @@ class JsonModule extends SidebarModule {
     $('#jsonEditor').append($('#jeTextHighlight'));
     $('#jsonEditor').append($('#jeText'));
     $('#jsonEditor').append($('#jeCommands'));
+    $('#jsonEditor').append($('#jeWidgetLayers'));
   }
 
   onEditorClose() {
@@ -38,6 +39,7 @@ class JsonModule extends SidebarModule {
     target.append($('#jeTextHighlight'));
     target.append($('#jeText'));
     target.append($('#jeCommands'));
+    target.append($('#jeWidgetLayers'));
     $('#jsonEditor').style.display = 'none';
   }
 }
