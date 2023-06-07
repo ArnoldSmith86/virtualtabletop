@@ -25,9 +25,9 @@ class JsonModule extends SidebarModule {
 
   onSelectionChangedWhileActive(newSelection) {
     if(newSelection.length) {
-      jeSelectWidget(newSelection[0], true);
+      jeSelectWidget(newSelection[0]);
       for(let i=1; i<newSelection.length; ++i)
-        jeSelectWidget(newSelection[i], true, true);
+        jeSelectWidget(newSelection[i], true);
     } else {
       jeEmpty();
     }
@@ -51,24 +51,21 @@ class TreeModule extends SidebarModule {
 
   onClose() {
     $('#jsonEditor').append($('#jeTree'));
-    //$('#jsonEditor').append($('#jeWidgetSearch'));
-    //$('#jsonEditor').append($('#jeWidgetSearchResults'));
   }
 
   onSelectionChangedWhileActive(newSelection) {
     if(newSelection.length) {
       jeSelectWidget(newSelection[0]);
       for(let i=1; i<newSelection.length; ++i)
-        jeSelectWidget(newSelection[i], false, true);
+        jeSelectWidget(newSelection[i], true);
     } else {
       jeEmpty();
     }
     jeDisplayTree();
+    $('#jeText').blur();
   }
 
   renderModule(target) {
-    //target.append($('#jeWidgetSearch'));
-    //target.append($('#jeWidgetSearchResults'));
     target.append($('#jeTree'));
     jeInitTree();
     jeDisplayTree();

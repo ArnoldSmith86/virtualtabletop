@@ -1327,7 +1327,7 @@ export function jeApplyDelta(delta) {
             return;
           }
 
-          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'), false, true);
+          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'), true);
         }
       }
     }
@@ -1419,7 +1419,7 @@ function jeCommandOptions() {
 
 export async function jeClick(widget, e) {
   if(e.ctrlKey) {
-    jeSelectWidget(widget, false, e.shiftKey || e.which == 3 || e.button == 2);
+    jeSelectWidget(widget, e.shiftKey || e.which == 3 || e.button == 2);
   } else {
     await widget.click();
   }
@@ -1463,12 +1463,12 @@ function jeCursorStateSet(state) {
   }
 }
 
-function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition) {
+function jeSelectWidget(widget, addToSelection, restoreCursorPosition) {
   if(restoreCursorPosition)
     var cursorState = jeCursorStateGet();
 
   if(addToSelection && (jeMode == 'widget' || jeMode == 'multi')) {
-    jeSelectWidgetMulti(widget, dontFocus);
+    jeSelectWidgetMulti(widget);
   } else {
     jeMode = 'widget';
     jeWidget = widget;
@@ -1477,7 +1477,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
     jeStateNow = JSON.parse(JSON.stringify(widget.state));
     if(restoreCursorPosition && cursorState.defaultValueToAdd && jeStateNow[cursorState.defaultValueToAdd] === undefined)
       jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
-    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
+    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')),);
     editPanel.style.setProperty('--treeHeight', "20%");
   }
 
@@ -1489,7 +1489,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
   jeGetContext();
 }
 
-function jeSelectWidgetMulti(widget, dontFocus) {
+function jeSelectWidgetMulti(widget) {
   const wID = widget.get('id');
 
   if(jeMode == 'widget')
@@ -1500,11 +1500,11 @@ function jeSelectWidgetMulti(widget, dontFocus) {
     jeStateNow.widgets.push(wID);
 
   if(jeStateNow.widgets.length == 1 || jeStateNow.widgets[0] == jeStateNow.widgets[1])
-    return jeSelectWidget(widgets.get(jeStateNow.widgets[0]), dontFocus);
+    return jeSelectWidget(widgets.get(jeStateNow.widgets[0]));
 
   jeWidget = null;
   jeMode = 'multi';
-  jeUpdateMulti(dontFocus);
+  jeUpdateMulti();
 }
 
 function jeMultiSelectedWidgets() {
@@ -1550,7 +1550,7 @@ function jeHighlightWidgets() {
     w.setHighlighted(jeWidgetHighlighting && selectedIDs.indexOf(id) != -1);
 }
 
-function jeUpdateMulti(dontFocus) {
+function jeUpdateMulti() {
   jeCenterSelection();
   const keys = [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ];
   for(const usedKey in jeStateNow || [])
@@ -1563,7 +1563,7 @@ function jeUpdateMulti(dontFocus) {
     if(Object.values(jeStateNow[key]).every( (val, i, arr) => val === arr[0] ))
       jeStateNow[key] = Object.values(jeStateNow[key])[0];
   }
-  jeSet(jeStateBefore = JSON.stringify(jeStateNow, null, '  '), dontFocus);
+  jeSet(jeStateBefore = JSON.stringify(jeStateNow, null, '  '));
 }
 
 function html(string) {
@@ -2030,7 +2030,6 @@ function jePasteText(text, select) {
   const v = jeGetEditorContent();
 
   jeSetEditorContent(v.substr(0, s) + text + v.substr(e));
-  $('#jeText').focus();
   jeColorize();
   jeSelect(select ? s : s + text.length, s + text.length, false);
 }
@@ -2129,14 +2128,12 @@ function jeSelect(start, end, scrollToCursor) {
 }
 
 // Set the text area to the formatted version of the given text and colorize.
-function jeSet(text, dontFocus) {
+function jeSet(text) {
   try {
     jeSetEditorContent(jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  ')));
   } catch(e) {
     jeSetEditorContent(text);
   }
-  if(!dontFocus)
-    $('#jeText').focus();
   jeColorize();
 }
 
@@ -2334,7 +2331,7 @@ function jeEmpty() {
   jeStateNow = null;
   jeWidget = null;
 
-  jeSet('', true);
+  jeSet('');
   jeShowCommands();
 }
 

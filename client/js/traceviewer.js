@@ -146,7 +146,7 @@ function jeDisplayTrace(index) {
   jeMode = 'trace';
   jeWidget = null;
   jeStateNow = Object.assign({ index }, loadedTrace[index]);
-  jeSet(jeStateBefore = JSON.stringify(jeStateNow, null, '  '), true);
+  jeSet(jeStateBefore = JSON.stringify(jeStateNow, null, '  '));
   jeGetContext();
   jeShowCommands();
 }
