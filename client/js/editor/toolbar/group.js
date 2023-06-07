@@ -21,6 +21,7 @@ class GroupButton extends ToolbarToggleButton {
       y,
       width:  Math.max(...selectedWidgets.map(w=>w.get('x')+w.get('width' ))) - x,
       height: Math.max(...selectedWidgets.map(w=>w.get('y')+w.get('height'))) - y,
+      layer: -3,
       editorGroup: true,
       movable: false
     }
