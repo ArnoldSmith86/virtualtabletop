@@ -778,6 +778,21 @@ function jeAddMJcommands() {
       return String(jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]]).match(/^http.*\/([UV][1234]|R)$/);
     }
   });
+  jeCommands.push({
+    id: 'je_mjPrompt',
+    name: 'MJ prompt',
+    context: '^.*',
+    call: function() {
+      const url = jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]].split('/');
+      url[5] = encodeURIComponent(prompt('MJ prompt', decodeURIComponent(url[5])));
+      jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] = url.join('/');
+      jeSetAndSelect();
+      jeApplyChanges();
+    },
+    show: function() {
+      return String(jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]]).match(/^http.*\/image\//);
+    }
+  });
   for(const down of [ 'U1', 'U2', 'U3', 'U4', 'V1', 'V2', 'V3', 'V4', 'R' ]) {
     jeCommands.push({
       id: 'je_mj'+down,
