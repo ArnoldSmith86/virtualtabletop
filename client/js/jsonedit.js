@@ -1244,6 +1244,15 @@ function jeAddWidgetPropertyCommands(object, widgetBase) {
     if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
+  jeCommands.push({
+    id: 'addWidget_' + type,
+    name: `add ${type} widget`,
+    context: 'No widget selected.',
+    onEmpty: true,
+    call: async function() {
+      setSelection([ widgets.get(await addWidgetLocal({type})) ]);
+    }
+  });
   return type == 'basic' ? null : type;
 }
 
@@ -2231,7 +2240,7 @@ function jeShowCommands() {
   for(const command of jeCommands) {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch && contextMatch[0]!= "" && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
+    if(contextMatch && contextMatch[0]!= "" && (!command.context || command.onEmpty || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
       const title = command.isTypeSpecific || command.isTypeSpecific === undefined ? contextMatch[0] : 'widget';
       if(activeCommands[title] === undefined)
         activeCommands[title] = [];
@@ -2244,7 +2253,7 @@ function jeShowCommands() {
     commandText += `<div id="var_results"></div>\n`;
   }
 
-  if(!jeJSONerror && jeStateNow) {
+  if(!jeJSONerror) {
     const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
 
     const sortByName = function(a, b) {
