@@ -764,6 +764,37 @@ function jeRoutineCall(callback, synchronous) {
     return async _=>f();
 }
 
+function jeAddMJcommands() {
+  jeCommands.push({
+    id: 'je_mjUp',
+    name: 'MJ up',
+    context: '^.*',
+    call: function() {
+      jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] = jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]].replace(/\/([UV][1234]|R)$/, '');
+      jeSetAndSelect();
+      jeApplyChanges();
+    },
+    show: function() {
+      return String(jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]]).match(/^http.*\/([UV][1234]|R)$/);
+    }
+  });
+  for(const down of [ 'U1', 'U2', 'U3', 'U4', 'V1', 'V2', 'V3', 'V4', 'R' ]) {
+    jeCommands.push({
+      id: 'je_mj'+down,
+      name: 'MJ '+down,
+      context: '^.*',
+      call: function() {
+        jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] = jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] + '/' + down;
+        jeSetAndSelect();
+        jeApplyChanges();
+      },
+      show: function() {
+        return String(jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]]).match(/^http.*\/image\//);
+      }
+    });
+  }
+}
+
 let jeExpressionCounter = 0;
 function jeAddRoutineExpressionCommands(variable, expression) {
   jeCommands.push({
@@ -943,6 +974,7 @@ function jeAddCommands() {
   jeAddNumberCommand('${}', '0', x=>'${}');
 
   jeAddAlignmentCommands();
+  jeAddMJcommands();
 }
 
 function jeAddAlignmentCommands() {
@@ -2078,9 +2110,9 @@ function jePreProcessObject(o) {
 
   try {
     if(copy.type == 'card') {
-      if(widgets.get(copy.deck).state.cardDefaults)
+      if(widgets.get(copy.deck).state.cardDefaults && typeof copy['cardDefaults (in deck)'] === 'undefined')
         copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
-      if(widgets.get(copy.deck).state.cardTypes)
+      if(widgets.get(copy.deck).state.cardTypes && typeof copy['cardType ['+ o.cardType + '] (in deck)'] === 'undefined')
         copy['cardType ['+ o.cardType + '] (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
     }
   } catch(e) {}
