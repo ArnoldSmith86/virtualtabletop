@@ -4,8 +4,8 @@
     "type": "card",
     "cardType": "19",
     "id": "4424",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "7724": {
     "deck": "crowDeck",
@@ -6518,7 +6518,7 @@
         "value": 0
       }
     ],
-    "depth": 15,
+    "depth": 14,
     "text": "Add Card Points",
     "width": 120,
     "css": {
@@ -10607,220 +10607,198 @@
     "cardTypes": {
       "1": {
         "rank": "1",
-        "tarotImage": "/i/cards-tarot/I.jpg",
+        "roman": "I",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 1,
         "order": 5
       },
       "2": {
         "rank": "2",
-        "tarotImage": "/i/cards-tarot/II.jpg",
+        "roman": "II",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 2,
         "order": 1
       },
       "3": {
         "rank": "3",
-        "tarotImage": "/i/cards-tarot/III.jpg",
+        "roman": "III",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 3,
         "order": 1
       },
       "4": {
         "rank": "4",
-        "tarotImage": "/i/cards-tarot/IV.jpg",
+        "roman": "IV",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 4,
         "order": 1
       },
       "5": {
         "rank": "5",
-        "tarotImage": "/i/cards-tarot/V.jpg",
+        "roman": "V",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 5,
-        "order": 1
+        "order": 0.05
       },
       "6": {
         "rank": "6",
-        "tarotImage": "/i/cards-tarot/VI.jpg",
+        "roman": "VI",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 6,
         "order": 1
       },
       "7": {
         "rank": "7",
-        "tarotImage": "/i/cards-tarot/VII.jpg",
+        "roman": "VII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 7,
         "order": 1
       },
       "8": {
         "rank": "8",
-        "tarotImage": "/i/cards-tarot/VIII.jpg",
+        "roman": "VIII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 8,
         "order": 1
       },
       "9": {
         "rank": "9",
-        "tarotImage": "/i/cards-tarot/IX.jpg",
+        "roman": "IX",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 9,
         "order": 1
       },
       "10": {
         "rank": "10",
-        "tarotImage": "/i/cards-tarot/X.jpg",
+        "roman": "X",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 10,
         "order": 1
       },
       "11": {
         "rank": "11",
-        "tarotImage": "/i/cards-tarot/XI.jpg",
+        "roman": "XI",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 11,
         "order": 1
       },
       "12": {
         "rank": "12",
-        "tarotImage": "/i/cards-tarot/XII.jpg",
+        "roman": "XII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 12,
         "order": 1
       },
       "13": {
         "rank": "13",
-        "tarotImage": "/i/cards-tarot/XIII.jpg",
+        "roman": "XIII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 13,
         "order": 1
       },
       "14": {
         "rank": "14",
-        "tarotImage": "/i/cards-tarot/XIV.jpg",
+        "roman": "XIV",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 14,
         "order": 1
       },
       "15": {
         "rank": "15",
-        "tarotImage": "/i/cards-tarot/XV.jpg",
+        "roman": "XV",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 15,
         "order": 1
       },
       "16": {
         "rank": "16",
-        "tarotImage": "/i/cards-tarot/XVI.jpg",
+        "roman": "XVI",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 16,
         "order": 1
       },
       "17": {
         "rank": "17",
-        "tarotImage": "/i/cards-tarot/XVII.jpg",
+        "roman": "XVII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 17,
         "order": 1
       },
       "18": {
         "rank": "18",
-        "tarotImage": "/i/cards-tarot/XVIII.jpg",
+        "roman": "XVIII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 18,
         "order": 1
       },
       "19": {
         "rank": "19",
-        "tarotImage": "/i/cards-tarot/XIX.jpg",
+        "roman": "XIX",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 19,
         "order": 1
       },
       "20": {
         "rank": "20",
-        "tarotImage": "/i/cards-tarot/XX.jpg",
+        "roman": "XX",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 20,
         "order": 1
       },
       "21": {
         "rank": "21",
-        "tarotImage": "/i/cards-tarot/XXI.jpg",
+        "roman": "XXI",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 21,
         "order": 5
       },
       "22": {
+        "roman": "S",
         "suitColor": "purple",
-        "tarotImage": "/i/cards-tarot/Fool.jpg",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
-        "tarotBack": "#ffffff80",
         "rank": "S",
         "sortDefault": 22,
         "order": 5
@@ -11789,7 +11767,8 @@
     "cardType": "1",
     "id": "gcew",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "cx9g": {
     "deck": "tarokyDeck",
@@ -11797,7 +11776,8 @@
     "cardType": "2",
     "id": "cx9g",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "ihao": {
     "deck": "tarokyDeck",
@@ -11805,7 +11785,8 @@
     "cardType": "3",
     "id": "ihao",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "62uz": {
     "deck": "tarokyDeck",
@@ -11813,7 +11794,8 @@
     "cardType": "4",
     "id": "62uz",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "ouw2": {
     "deck": "tarokyDeck",
@@ -11821,7 +11803,8 @@
     "cardType": "5",
     "id": "ouw2",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "hqit": {
     "deck": "tarokyDeck",
@@ -11829,7 +11812,8 @@
     "cardType": "6",
     "id": "hqit",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "sccr": {
     "deck": "tarokyDeck",
@@ -11837,7 +11821,8 @@
     "cardType": "7",
     "id": "sccr",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "p0xc": {
     "deck": "tarokyDeck",
@@ -11845,7 +11830,8 @@
     "cardType": "8",
     "id": "p0xc",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "n5y9": {
     "deck": "tarokyDeck",
@@ -11853,7 +11839,8 @@
     "cardType": "9",
     "id": "n5y9",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "qlze": {
     "deck": "tarokyDeck",
@@ -11861,7 +11848,8 @@
     "cardType": "10",
     "id": "qlze",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "p4hk": {
     "deck": "tarokyDeck",
@@ -11869,7 +11857,8 @@
     "cardType": "11",
     "id": "p4hk",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "yixx": {
     "deck": "tarokyDeck",
@@ -11877,7 +11866,8 @@
     "cardType": "12",
     "id": "yixx",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "xdcd": {
     "deck": "tarokyDeck",
@@ -11885,7 +11875,8 @@
     "cardType": "13",
     "id": "xdcd",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "yc1e": {
     "deck": "tarokyDeck",
@@ -11893,7 +11884,8 @@
     "cardType": "14",
     "id": "yc1e",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "gvb3": {
     "deck": "tarokyDeck",
@@ -11901,7 +11893,8 @@
     "cardType": "15",
     "id": "gvb3",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "9w3w": {
     "deck": "tarokyDeck",
@@ -11909,7 +11902,8 @@
     "cardType": "16",
     "id": "9w3w",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "icaj": {
     "deck": "tarokyDeck",
@@ -11917,7 +11911,8 @@
     "cardType": "17",
     "id": "icaj",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "z80s": {
     "deck": "tarokyDeck",
@@ -11925,7 +11920,8 @@
     "cardType": "18",
     "id": "z80s",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "1bs0": {
     "deck": "tarokyDeck",
@@ -11933,7 +11929,8 @@
     "cardType": "19",
     "id": "1bs0",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "4x8f": {
     "deck": "tarokyDeck",
@@ -11941,7 +11938,8 @@
     "cardType": "20",
     "id": "4x8f",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "fbiv": {
     "deck": "tarokyDeck",
@@ -11949,7 +11947,8 @@
     "cardType": "21",
     "id": "fbiv",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "1gs3": {
     "deck": "tarokyDeck",
@@ -11957,7 +11956,8 @@
     "cardType": "22",
     "id": "1gs3",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "7nqw": {
     "deck": "tarokyDeck",
@@ -11965,7 +11965,8 @@
     "cardType": "KS",
     "id": "7nqw",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "ay8z": {
     "deck": "tarokyDeck",
@@ -11973,7 +11974,8 @@
     "cardType": "QS",
     "id": "ay8z",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "mmr8": {
     "deck": "tarokyDeck",
@@ -11981,7 +11983,8 @@
     "cardType": "JS",
     "id": "mmr8",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "0jm2": {
     "deck": "tarokyDeck",
@@ -11989,7 +11992,8 @@
     "cardType": "TS",
     "id": "0jm2",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "tpgx": {
     "deck": "tarokyDeck",
@@ -11997,7 +12001,8 @@
     "cardType": "9S",
     "id": "tpgx",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "a0w6": {
     "deck": "tarokyDeck",
@@ -12005,7 +12010,8 @@
     "cardType": "8S",
     "id": "a0w6",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "6cna": {
     "deck": "tarokyDeck",
@@ -12013,7 +12019,8 @@
     "cardType": "7S",
     "id": "6cna",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "js97": {
     "deck": "tarokyDeck",
@@ -12021,7 +12028,8 @@
     "cardType": "KC",
     "id": "js97",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "is5g": {
     "deck": "tarokyDeck",
@@ -12029,7 +12037,8 @@
     "cardType": "QC",
     "id": "is5g",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "s9mz": {
     "deck": "tarokyDeck",
@@ -12037,7 +12046,8 @@
     "cardType": "JC",
     "id": "s9mz",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "lz08": {
     "deck": "tarokyDeck",
@@ -12045,7 +12055,8 @@
     "cardType": "TC",
     "id": "lz08",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "pwid": {
     "deck": "tarokyDeck",
@@ -12053,7 +12064,8 @@
     "cardType": "9C",
     "id": "pwid",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "zqx6": {
     "deck": "tarokyDeck",
@@ -12061,7 +12073,8 @@
     "cardType": "8C",
     "id": "zqx6",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "is8d": {
     "deck": "tarokyDeck",
@@ -12069,7 +12082,8 @@
     "cardType": "7C",
     "id": "is8d",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "pmam": {
     "deck": "tarokyDeck",
@@ -12077,7 +12091,8 @@
     "cardType": "AH",
     "id": "pmam",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "44lh": {
     "deck": "tarokyDeck",
@@ -12085,7 +12100,8 @@
     "cardType": "KH",
     "id": "44lh",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "sr00": {
     "deck": "tarokyDeck",
@@ -12093,7 +12109,8 @@
     "cardType": "QH",
     "id": "sr00",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "12h0": {
     "deck": "tarokyDeck",
@@ -12101,7 +12118,8 @@
     "cardType": "JH",
     "id": "12h0",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "ew11": {
     "deck": "tarokyDeck",
@@ -12109,7 +12127,8 @@
     "cardType": "4H",
     "id": "ew11",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "bj7c": {
     "deck": "tarokyDeck",
@@ -12117,7 +12136,8 @@
     "cardType": "3H",
     "id": "bj7c",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "ik4a": {
     "deck": "tarokyDeck",
@@ -12125,7 +12145,8 @@
     "cardType": "2H",
     "id": "ik4a",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "8l8q": {
     "deck": "tarokyDeck",
@@ -12133,7 +12154,8 @@
     "cardType": "AD",
     "id": "8l8q",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "m9m0": {
     "deck": "tarokyDeck",
@@ -12141,7 +12163,8 @@
     "cardType": "KD",
     "id": "m9m0",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "2grz": {
     "deck": "tarokyDeck",
@@ -12149,7 +12172,8 @@
     "cardType": "QD",
     "id": "2grz",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "5lwu": {
     "deck": "tarokyDeck",
@@ -12157,7 +12181,8 @@
     "cardType": "JD",
     "id": "5lwu",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "fwop": {
     "deck": "tarokyDeck",
@@ -12165,7 +12190,8 @@
     "cardType": "4D",
     "id": "fwop",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "fplx": {
     "deck": "tarokyDeck",
@@ -12173,7 +12199,8 @@
     "cardType": "3D",
     "id": "fplx",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "jtkp": {
     "deck": "tarokyDeck",
@@ -12181,7 +12208,8 @@
     "cardType": "2D",
     "id": "jtkp",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "scoreboard3": {
     "type": "scoreboard",
@@ -18563,7 +18591,8 @@
     "cardType": "CS",
     "id": "y2nf",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "ndj3": {
     "deck": "tarokyDeck",
@@ -18571,7 +18600,8 @@
     "cardType": "CC",
     "id": "ndj3",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "f58q": {
     "deck": "tarokyDeck",
@@ -18579,7 +18609,8 @@
     "cardType": "CH",
     "id": "f58q",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "y26i": {
     "deck": "tarokyDeck",
@@ -18587,7 +18618,8 @@
     "cardType": "CD",
     "id": "y26i",
     "staged": false,
-    "parent": "pile2"
+    "parent": "pile2",
+    "activeFace": 1
   },
   "gameID11": {
     "id": "gameID11",
@@ -19866,7 +19898,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1686234685723,
+      "lastUpdate": 1686252819700,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, French Tarot, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -21728,7 +21760,8 @@
       "AT - S - H - D - C - NT",
       "K-Q-C-J-10-9-8-7-6",
       "10-9-8-K-Q-C-J-7-6"
-    ]
+    ],
+    "player": "Description"
   },
   "playerAid6": {
     "type": "scoreboard",
@@ -31589,223 +31622,201 @@
     "cardTypes": {
       "1": {
         "rank": "1",
-        "tarotImage": "/i/cards-tarot/I.jpg",
+        "roman": "I",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 1,
-        "order": 15
+        "order": 14
       },
       "2": {
         "rank": "2",
-        "tarotImage": "/i/cards-tarot/II.jpg",
+        "roman": "II",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 2,
         "order": 1
       },
       "3": {
         "rank": "3",
-        "tarotImage": "/i/cards-tarot/III.jpg",
+        "roman": "III",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 3,
         "order": 1
       },
       "4": {
         "rank": "4",
-        "tarotImage": "/i/cards-tarot/IV.jpg",
+        "roman": "IV",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 4,
         "order": 1
       },
       "5": {
         "rank": "5",
-        "tarotImage": "/i/cards-tarot/V.jpg",
+        "roman": "V",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 5,
         "order": 0.05
       },
       "6": {
         "rank": "6",
-        "tarotImage": "/i/cards-tarot/VI.jpg",
+        "roman": "VI",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 6,
         "order": 1
       },
       "7": {
         "rank": "7",
-        "tarotImage": "/i/cards-tarot/VII.jpg",
+        "roman": "VII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 7,
         "order": 1
       },
       "8": {
         "rank": "8",
-        "tarotImage": "/i/cards-tarot/VIII.jpg",
+        "roman": "VIII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 8,
         "order": 1
       },
       "9": {
         "rank": "9",
-        "tarotImage": "/i/cards-tarot/IX.jpg",
+        "roman": "IX",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 9,
         "order": 1
       },
       "10": {
         "rank": "10",
-        "tarotImage": "/i/cards-tarot/X.jpg",
+        "roman": "X",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 10,
         "order": 1
       },
       "11": {
         "rank": "11",
-        "tarotImage": "/i/cards-tarot/XI.jpg",
+        "roman": "XI",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 11,
         "order": 1
       },
       "12": {
         "rank": "12",
-        "tarotImage": "/i/cards-tarot/XII.jpg",
+        "roman": "XII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 12,
         "order": 1
       },
       "13": {
         "rank": "13",
-        "tarotImage": "/i/cards-tarot/XIII.jpg",
+        "roman": "XIII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 13,
         "order": 1
       },
       "14": {
         "rank": "14",
-        "tarotImage": "/i/cards-tarot/XIV.jpg",
+        "roman": "XIV",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 14,
         "order": 1
       },
       "15": {
         "rank": "15",
-        "tarotImage": "/i/cards-tarot/XV.jpg",
+        "roman": "XV",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 15,
         "order": 1
       },
       "16": {
         "rank": "16",
-        "tarotImage": "/i/cards-tarot/XVI.jpg",
+        "roman": "XVI",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 16,
         "order": 1
       },
       "17": {
         "rank": "17",
-        "tarotImage": "/i/cards-tarot/XVII.jpg",
+        "roman": "XVII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 17,
         "order": 1
       },
       "18": {
         "rank": "18",
-        "tarotImage": "/i/cards-tarot/XVIII.jpg",
+        "roman": "XVIII",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 18,
         "order": 1
       },
       "19": {
         "rank": "19",
-        "tarotImage": "/i/cards-tarot/XIX.jpg",
+        "roman": "XIX",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 19,
         "order": 1
       },
       "20": {
         "rank": "20",
-        "tarotImage": "/i/cards-tarot/XX.jpg",
+        "roman": "XX",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 20,
         "order": 1
       },
       "21": {
         "rank": "21",
-        "tarotImage": "/i/cards-tarot/XXI.jpg",
+        "roman": "XXI",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
         "suitColor": "purple",
-        "tarotBack": "#ffffff80",
         "sortDefault": 21,
-        "order": 15
+        "order": 14
       },
       "22": {
+        "roman": "S",
         "suitColor": "purple",
-        "tarotImage": "/i/cards-tarot/Fool.jpg",
         "suitImage": "/assets/-374765193_624",
         "suit": 0,
-        "tarotBack": "#ffffff80",
         "rank": "S",
         "sortDefault": 22,
-        "order": 15
+        "order": 14
       },
       "1C": {
         "rank": "1",
@@ -32514,20 +32525,6 @@
           },
           {
             "type": "image",
-            "x": 16,
-            "y": 25,
-            "width": 72,
-            "height": 112,
-            "color": "transparent",
-            "dynamicProperties": {
-              "value": "tarotImage"
-            },
-            "css": {
-              "opacity": 0.85
-            }
-          },
-          {
-            "type": "image",
             "x": 19,
             "y": 25,
             "width": 64,
@@ -32589,6 +32586,18 @@
             "rotation": 180,
             "css": {
               "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 18,
+            "y": 62,
+            "fontSize": 35,
+            "textAlign": "center",
+            "width": 60,
+            "dynamicProperties": {
+              "value": "roman",
+              "color": "suitColor"
             }
           },
           {
@@ -33094,136 +33103,136 @@
     "type": "card",
     "cardType": "3",
     "id": "2gql",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "zoeh": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "4",
     "id": "zoeh",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "yqvf": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "5",
     "id": "yqvf",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "ltpy": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "6",
     "id": "ltpy",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "np2x": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "7",
     "id": "np2x",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "4e72": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "8",
     "id": "4e72",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "2kwi": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "9",
     "id": "2kwi",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "d4pk": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "10",
     "id": "d4pk",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "dxj9": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "11",
     "id": "dxj9",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "2x0u": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "12",
     "id": "2x0u",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "6dv5": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "13",
     "id": "6dv5",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "0bw8": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "14",
     "id": "0bw8",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "33re": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "15",
     "id": "33re",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "m05l": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "16",
     "id": "m05l",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "n6be": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "17",
     "id": "n6be",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "68g3": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "18",
     "id": "68g3",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "4da2": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "20",
     "id": "4da2",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "y991": {
     "deck": "tarotDeck",
@@ -33358,8 +33367,8 @@
     "type": "card",
     "cardType": "1S",
     "id": "rf4c",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "sb8x": {
     "deck": "tarotDeck",
@@ -33686,8 +33695,8 @@
     "type": "card",
     "cardType": "KD",
     "id": "op0r",
-    "parent": "pile2",
-    "staged": false
+    "staged": false,
+    "parent": "pile2"
   },
   "gameID32": {
     "id": "gameID32",
@@ -33782,7 +33791,6 @@
         1.5,
         2.5,
         3.5,
-        4.5,
         4.5
       ]
     ],
