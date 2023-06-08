@@ -1,4 +1,12 @@
 {
+  "4424": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "19",
+    "id": "4424",
+    "parent": "pile2",
+    "staged": false
+  },
   "7724": {
     "deck": "crowDeck",
     "type": "card",
@@ -6510,7 +6518,7 @@
         "value": 0
       }
     ],
-    "depth": 13,
+    "depth": 15,
     "text": "Add Card Points",
     "width": 120,
     "css": {
@@ -6655,8 +6663,12 @@
                 "value": 1
               },
               {
-                "text": "Tarot (1-4 Red, 7-10 Black, 22 Tarot)",
+                "text": "Taroky (1-4 Red, 7-10 Black, 22 Tarot)",
                 "value": 2
+              },
+              {
+                "text": "Tarot (52 Standard, 22 Tarot)",
+                "value": 7
               },
               {
                 "text": "Crow (1-14, 5 Colors, 1 Crow)",
@@ -7773,6 +7785,9 @@
       ],
       [
         "swissDeck"
+      ],
+      [
+        "tarotDeck"
       ]
     ],
     "hideCardsArray": [
@@ -8767,10 +8782,10 @@
     ],
     "roundLabel": "",
     "y": 650,
-    "scale": 0,
     "rounds": [
       "Card Points"
-    ]
+    ],
+    "scale": 0
   },
   "seat1": {
     "type": "seat",
@@ -19851,15 +19866,15 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1686022712817,
+      "lastUpdate": 1686195009822,
       "showName": true,
       "skill": "",
-      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
+      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, French Tarot, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "<div><i><font color=\"#2d5da8\"><b>Game Button</b></font></i><div><br></div>Use the Game button to automatically configure the room to a particular game type. If a game type is available in the drop-down menu, it will configure the room using the option settings described below for the most common variation of that game type. Even if you use an available pre-set, you can still change other values using the Option Buttons described below.</div><div><br></div><div>If a game pre-set is not available, you can still play many games by configuring the options. The only limitation is that there will be very little automation.</div><div><br></div><div>To the right of the Game button is the name of the current pre-set game. In many rooms, hovering over that text with the cursor will display tips on how to use the automation in that particular pre-set game.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div><i style=\"color: var(--overlayFontColor);\"><font color=\"#2d5da8\"><b>Option Buttons</b></font></i><br></div></div><div><br></div>Use the option buttons in the lower right to set up room as desired.&nbsp;<div><br></div><div><b>Visuals and Other</b></div><div><ul><li><b>Play Holder</b></li><ul><li>Clicking a card in the hand sends the card to the play holder but click to play can be turned off. See Playing A Card in the automation section below for more information.</li><li>Cards are played to either a common holder in the middle of the board or to the holders adjacent to each seat. The common holder is off by default.</li><li>The common holder can display cards spread out or in a pile. When spread out, the space between cards will get smaller if there are more than 5 so they all fit without extending past the holder. About 12 cards fit before it becomes difficult to identify the cards.</li><li>The play holder can force cards to be face up when they enter or face down.</li><li>A mini-holder can be added on top of the normal holder for captured cards. This is useful in games that require some or all captured cards to be displayed face up during play.</li></ul></ul><ul><li><b>Bid &amp; Score Displays</b></li><ul><li>The scoreboard on the left side of the screen can be displayed or hidden.</li><li>The count of tricks taken per player in this round can be displayed or hidden. The total trick count is always displayed beneath the Recall &amp; Shuffle button.</li><li>The white, square bid value widgets to the left at each player's seat can be displayed or hidden.</li><li>The white, square bid suit widgets to the right at each player's seat can be displayed or hidden.</li><li>The discard holder below the trick count score can be displayed or hidden.</li><li>An activity log showing a history of bidding and other messages can be displayed or hidden.</li><li>Bidding values can be displayed to everyone or kept private until the player chooses to reveal them.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Other</b><br></li><ul><li><span style=\"color: var(--overlayFontColor);\">The turn button can be set to move the glowing turn indicator on the seats clockwise or counter-clockwise.</span><br></li><li><span style=\"color: var(--overlayFontColor);\">You can change the background color of the room to a different color.</span></li></ul></ul><div><div><b>Decks and Players</b></div><div><ul><li><b>Players</b></li><ul><li>The number of players can be set between 2 and 8. Each player count has pre-defined seats that cannot be changed. Changing the player count while players are seated will kick all players out of existing seats.</li><li>A dummy hand can be added to seat 1 (bottom-center). Cards can be dealt to the dummy hand either face up or face down. All players may see and interact with the dummy hand.</li></ul></ul><ul><li><b>Cards and Decks</b></li><ul><li>Available decks:</li><ul><li>Standard 52 card French-suited deck</li><li>Two standard 52 card decks</li><li>Tarot</li><li>Crow (similar to Rook)</li><li>Spanish (1-12, clubs, coins, cups, swords)</li><li>German (5-A, acorns, bells, leaves, hearts)</li><li>Swiss (6-A, acorns, bells, roses, shields)</li></ul><li>The number of jokers can be set between 0 (default) and 4. The first joker added is the black 1, the second is a red 2, the third is another black 1, and the fourth is another red 2.</li><li>You can set the number of cards dealt to each seat (including the dummy, when used) from 0 to any value.</li><li>There are options to remove certain cards. This works on the standard, Spanish and Crow decks, but not Tarot.</li><li>A delete button can be displayed in the room. To use this feature, check the box in the settings, drag cards that should be removed from the deck to the Discard holder, and press the red Delete button. All cards in the Discard holder are deleted from the room after confirming your intent in a pop-up menu. Those cards can only be returned to the room by reloading the game from the Game Shelf.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Scoring</b></li><ul><li>Team/partnership scoring using North-South and East-West partners is available when playing a 4-player game.</li><li>Small widgets can be added to indicate \"teams\" that change from round-to-round. This makes variable partnership scoring automated when using certain pre-sets. Otherwise, this is just a visual reminder.</li><li>A smaller, temporary scoreboard on the left side of the screen can also be displayed or hidden (default). This is used to calculate bonuses and other values before entering a final tally in the main scoreboard. The temporary scoreboard records only one round of scores. This is mainly used by pre-sets.</li></ul></ul><i><font color=\"#2d5da8\"><b>Automation</b></font></i><div><br></div>Several widgets and buttons are available in the room to assist with automating some basic tasks.</div></div></div><div><div><ul><li><b>Deal</b></li><ul><li>This will deal the number of cards set in the Decks &amp; Players button automatically to each seat (and to the dummy hand, if being used).</li><li>This button only deals cards in the holder next to it. To start a new round, first press the Recall &amp; Shuffle button.</li></ul></ul></div><div><ul><li><b>Recall &amp; Shuffle</b></li><ul><li>This ends the current round, erases the activity log, and recalls and shuffles the cards.</li></ul></ul><div><ul><li><b>Take 1</b></li><ul><li>This sends one card from the main deck holder to the hand of the player pressing the button.</li></ul></ul></div></div></div><div><ul><li><b>Playing A Card</b></li><ul><li>When click to play is enabled:</li><ul><li>Any player can play the first trick of a new round. After that, the turn indicator moves to the next player. The turn indicator must be correct for click-to-play to work.</li><li>During a player's turn, clicking on a card will immediately play it to the selected play area.</li><li>While players are waiting for their turn, they can click on a card to stage it for play (it will raise up a few pixels above the other cards). Any card in that position when the turn indicator moves to that player will be immediately played.</li><li>If any of these scenarios are incompatible with the game you are playing, turn click to play off. You can always manually drag cards, even when click to play is enabled.</li></ul><li>The circles with numbers on the upper-left of each seat indicate the number of cards in that player's hand.</li></ul></ul></div><div><ul><li><b>Primary Scoreboard</b></li><ul><li>The red and green buttons above the scoreboard decrease and increase the score for the current round for the player pressing the button. Note: the +/- buttons may work on the secondary scoreboard instead; see below.</li><li>A new round is created every time the Recall &amp; Shuffle button is pressed.</li><li>Players can also click on the scoreboard widget directly. A pop-up prompts for which player score to set, which round, and a value. Entering data this way immediately overrides existing values in the selected round for the selected player.</li><li>If a score system was selected in the options menu, then an Add Card Points button, trump indicator, declarer indicator, and possibly a Transfer Score button are displayed at the bottom of the scoreboard.</li><ul><li>The trump indicator is set automatically based on the last bid suit button pressed by a player or by rolling the die (only displayed in some games in the upper right-hand corner for a random trump). But you can override that by clicking on the square trump widget to rotate through the options. If card point values are different for trump cards or when a bid of \"no trumps\" or \"all trumps\" changes point values, then this widget must be set correctly before entering scores. The indicator can be dragged around the room.</li><li>The Declarer indicator shows the player making the last bid. But you can override that by clicking on it to rotate through the names of the players.</li><li>The Add Card Points button will apply the pre-defined point values to the secondary scoreboard for the current round. If there are points already in the current round, pressing the button will replace the existing values with the new ones. Only cards in the holders near each players' seat are counted. There are 3 holders near each players' seat (not all are visible) and all 3 will be counted for that player.</li><li>The Transfer Score button is available in some pre-set games to move and/or convert scores between the secondary scoreboard and the main scoreboard. If available, check the game tips by hovering over the name of the pre-set. If not available, you need to manually enter values in the primary scoreboard before pressing the Recall &amp; Shuffle button.</li></ul></ul></ul><ul><li><b>Secondary Scoreboard</b></li><ul><li>The secondary scoreboard is a smaller scoreboard below the main one. It is used in many pre-sets as a temporary place to calculate interim scores, such as the value of captured card points.</li><li>In addition to the Card Points row, other rows may be available. Drag the slider to the right of the secondary scoreboard up and down to highlight different rows. The red and green +/- buttons work on whichever row is highlighted.</li><li>The red and green +/- buttons can only work on one scoreboard at a time. To reenable the buttons on the primary scoreboard, move the slider all the back up to the top.</li></ul></ul><ul><li><b>Bidding</b></li><ul><li>The square widget on the left side of the player's seat is used to indicate a bid value. The widget on the right is used to indicate the bid's suit.</li><li>Pressing either widget will open a menu in the middle of the screen only visible to that player. On that menu, the player can press numbers and/or suits to indicate a bid. Numbers are entered like a calculator one at a time. Use the blank square to erase a number entry and start over.</li><li>Bids are immediately reflected on the white square widgets for other players to see unless secret bidding is enabled.</li><li>Pressing the green Bid button will optionally display the bid in an activity log in the lower right corner in reverse chronological order. If secret bidding is enabled, the activity log only reports that the player made a bid. The bid history is erased when the cards are recalled for the next round.</li><li>If additional messages are enabled in the pre-set, then a white rectangular Message button appears above the activity log. Pressing that button allows players to choose from a selection of game-related messages that are posted in the activity log.</li><li>To close the bidding menu, press the Close button, the geen Bid button, or once again press one of the white square bidding widgets.</li><li>If secret bidding was enabled in the settings, then at the appropriate time, each player should press the Actions button to the right of the hand. In the pop-up menu, press the Show Bids button. Press the Actions button again to close the pop-up.</li></ul></ul><ul><li><b>Sorting</b></li><ul><li>A Sort button to the left of the hand will sort cards in the hand only for the player pressing the button. Suits are always sorted left to right in order: clubs, diamonds, hearts, spades when using the standard deck. Other decks have similar default sorting.</li><li>The first time a player presses the Sort button, the player is prompted to choose how to sort by value within each suit: high to low or low to high. After making the selection, the player will not see the option again until a new pre-set game is selected.</li><li>After making selections, all subsequent deals to those players will automatically be sorted.</li><li>In some pre-set games, pressing the sort button again after trumps is chosen will change the sort order.</li><li>Some pre-set games also add an additional sort button for unique behavior linked to that game.</li></ul></ul><ul><li><b>Take</b></li><ul><li>The Take button moves all cards played in the round to a holder belonging to the player pressing the button. The cards are turned face-down and placed into a pile.</li><ul><li>If using the common play holder, the cards are moved to the holder near the player's seat.</li><li>If not using the common play holder, the cards are moved to a holder behind and just slightly above and to the right of the holder near the player's seat. This holder is invisible, but can be used, so be careful if manually dragging cards.</li><li>If using the mini-holder to display captured cards, cards can be manually dragged from the holder with the captured cards to the mini-holder. Some games pre-sets do that automatically.</li></ul><li>Clicking the button will increase the count of the number of tricks taken by 1 in the trick scoring widget on the right side of the room.</li><li>The turn indicator moves to the seat of the player pressing the button to lead the next trick.</li></ul></ul><ul><li><b>Actions</b></li><ul><li>This displays a pop-up menu with other buttons that can be used in the game.</li><li>The Show Hand button will create a mini holder over the seat of the player pressing the button. Copies of the cards in the hand of the player will be displayed there in miniature. No player can interact with those copies. They appear and disappear as needed to reflect the cards in the hand of that player.</li><li>The Show Bid button is used as described above to reveal bids that had been secret.</li><li>The Show Arrow button displays a black and white arrow to the left of the hand that can point up or down. This is used in some pre-set games to indicate when low cards are high and vice versa.</li></ul></ul><ul><li><b>Items</b></li><ul><li>This displays a pop-up menu with multiple widgets that can be dragged around and used in the game.</li><li>Most of the widgets (except for the 4 card suits) change color to reflect the color of the player that took it.</li><li>The Label widget can be dragged by grabbing the thick border and you can type short messages in it by clicking in the text area.</li><li>The widgets with numbers can be clicked to change.</li><ul><li>The circular widgets change from 1 to x1, 6 to x6, etc.</li><li>The square widget is a doubling cube and cycles through x2, x4, x8, x16, x32, x64.</li></ul><li>To remove a single widget from the board, just drop it anywhere on the Items \"tray\".</li><li>A player can delete all of their own widgets by pressing the Recall Mine button.</li><li>Any player can delete all of the widgets in the room by pressing the Recall All button.</li></ul></ul><ul><li><b>Reset Scores</b></li><ul><li>The reset scores button will erase all player scores in the scoreboard widget and the trick count in the trick scoring widget. It also deletes all widgets taken from the Items \"tray\".</li></ul></ul><div><b style=\"color: rgb(45, 93, 168);\"><i>Making a New Pre-Set</i></b><br></div></div><div><br></div><div>If you are interested in adding your own pre-set (and hopefully contribute it back to the public library), then see the wiki discussion at&nbsp;https://github.com/96LawDawg/Cards-Tricks/wiki.</div>",
+      "helpText": "<div><i><font color=\"#2d5da8\"><b>Game Button</b></font></i><div><br></div>Use the Game button to automatically configure the room to a particular game type. If a game type is available in the drop-down menu, it will configure the room using the option settings described below for the most common variation of that game type. Even if you use an available pre-set, you can still change other values using the Option Buttons described below.</div><div><br></div><div>If a game pre-set is not available, you can still play many games by configuring the options. The only limitation is that there will be very little automation.</div><div><br></div><div>To the right of the Game button is the name of the current pre-set game. In many rooms, hovering over that text with the cursor will display tips on how to use the automation in that particular pre-set game.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div><i style=\"color: var(--overlayFontColor);\"><font color=\"#2d5da8\"><b>Option Buttons</b></font></i><br></div></div><div><br></div>Use the option buttons in the lower right to set up room as desired.&nbsp;<div><br></div><div><b>Visuals and Other</b></div><div><ul><li><b>Play Holder</b></li><ul><li>Clicking a card in the hand sends the card to the play holder but click to play can be turned off. See Playing A Card in the automation section below for more information.</li><li>Cards are played to either a common holder in the middle of the board or to the holders adjacent to each seat. The common holder is off by default.</li><li>The common holder can display cards spread out or in a pile. When spread out, the space between cards will get smaller if there are more than 5 so they all fit without extending past the holder. About 12 cards fit before it becomes difficult to identify the cards.</li><li>The play holder can force cards to be face up when they enter or face down.</li><li>A mini-holder can be added on top of the normal holder for captured cards. This is useful in games that require some or all captured cards to be displayed face up during play.</li></ul></ul><ul><li><b>Bid &amp; Score Displays</b></li><ul><li>The scoreboard on the left side of the screen can be displayed or hidden.</li><li>The count of tricks taken per player in this round can be displayed or hidden. The total trick count is always displayed beneath the Recall &amp; Shuffle button.</li><li>The white, square bid value widgets to the left at each player's seat can be displayed or hidden.</li><li>The white, square bid suit widgets to the right at each player's seat can be displayed or hidden.</li><li>The discard holder below the trick count score can be displayed or hidden.</li><li>An activity log showing a history of bidding and other messages can be displayed or hidden.</li><li>Bidding values can be displayed to everyone or kept private until the player chooses to reveal them.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Other</b><br></li><ul><li><span style=\"color: var(--overlayFontColor);\">The turn button can be set to move the glowing turn indicator on the seats clockwise or counter-clockwise.</span><br></li><li><span style=\"color: var(--overlayFontColor);\">You can change the background color of the room to a different color.</span></li></ul></ul><div><div><b>Decks and Players</b></div><div><ul><li><b>Players</b></li><ul><li>The number of players can be set between 2 and 8. Each player count has pre-defined seats that cannot be changed. Changing the player count while players are seated will kick all players out of existing seats.</li><li>A dummy hand can be added to seat 1 (bottom-center). Cards can be dealt to the dummy hand either face up or face down. All players may see and interact with the dummy hand.</li></ul></ul><ul><li><b>Cards and Decks</b></li><ul><li>Available decks:</li><ul><li>Standard 52 card French-suited deck</li><li>Two standard 52 card decks</li><li>Taroky (54 cards)</li><li>Tarot (78 cards)</li><li>Crow (similar to Rook)</li><li>Spanish (1-12, clubs, coins, cups, swords)</li><li>German (5-A, acorns, bells, leaves, hearts)</li><li>Swiss (6-A, acorns, bells, roses, shields)</li></ul><li>The number of jokers can be set between 0 (default) and 4. The first joker added is the black 1, the second is a red 2, the third is another black 1, and the fourth is another red 2.</li><li>You can set the number of cards dealt to each seat (including the dummy, when used) from 0 to any value.</li><li>There are options to remove certain cards. This works on the standard, Spanish and Crow decks, but not Tarot.</li><li>A delete button can be displayed in the room. To use this feature, check the box in the settings, drag cards that should be removed from the deck to the Discard holder, and press the red Delete button. All cards in the Discard holder are deleted from the room after confirming your intent in a pop-up menu. Those cards can only be returned to the room by reloading the game from the Game Shelf.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Scoring</b></li><ul><li>Team/partnership scoring using North-South and East-West partners is available when playing a 4-player game.</li><li>Small widgets can be added to indicate \"teams\" that change from round-to-round. This makes variable partnership scoring automated when using certain pre-sets. Otherwise, this is just a visual reminder.</li><li>A smaller, temporary scoreboard on the left side of the screen can also be displayed or hidden (default). This is used to calculate bonuses and other values before entering a final tally in the main scoreboard. The temporary scoreboard records only one round of scores. This is mainly used by pre-sets.</li></ul></ul><i><font color=\"#2d5da8\"><b>Automation</b></font></i><div><br></div>Several widgets and buttons are available in the room to assist with automating some basic tasks.</div></div></div><div><div><ul><li><b>Deal</b></li><ul><li>This will deal the number of cards set in the Decks &amp; Players button automatically to each seat (and to the dummy hand, if being used).</li><li>This button only deals cards in the holder next to it. To start a new round, first press the Recall &amp; Shuffle button.</li></ul></ul></div><div><ul><li><b>Recall &amp; Shuffle</b></li><ul><li>This ends the current round, erases the activity log, and recalls and shuffles the cards.</li></ul></ul><div><ul><li><b>Take 1</b></li><ul><li>This sends one card from the main deck holder to the hand of the player pressing the button.</li></ul></ul></div></div></div><div><ul><li><b>Playing A Card</b></li><ul><li>When click to play is enabled:</li><ul><li>Any player can play the first trick of a new round. After that, the turn indicator moves to the next player. The turn indicator must be correct for click-to-play to work.</li><li>During a player's turn, clicking on a card will immediately play it to the selected play area.</li><li>While players are waiting for their turn, they can click on a card to stage it for play (it will raise up a few pixels above the other cards). Any card in that position when the turn indicator moves to that player will be immediately played.</li><li>If any of these scenarios are incompatible with the game you are playing, turn click to play off. You can always manually drag cards, even when click to play is enabled.</li></ul><li>The circles with numbers on the upper-left of each seat indicate the number of cards in that player's hand.</li></ul></ul></div><div><ul><li><b>Primary Scoreboard</b></li><ul><li>The red and green buttons above the scoreboard decrease and increase the score for the current round for the player pressing the button. Note: the +/- buttons may work on the secondary scoreboard instead; see below.</li><li>A new round is created every time the Recall &amp; Shuffle button is pressed.</li><li>Players can also click on the scoreboard widget directly. A pop-up prompts for which player score to set, which round, and a value. Entering data this way immediately overrides existing values in the selected round for the selected player.</li><li>If a score system was selected in the options menu, then an Add Card Points button, trump indicator, declarer indicator, and possibly a Transfer Score button are displayed at the bottom of the scoreboard.</li><ul><li>The trump indicator is set automatically based on the last bid suit button pressed by a player or by rolling the die (only displayed in some games in the upper right-hand corner for a random trump). But you can override that by clicking on the square trump widget to rotate through the options. If card point values are different for trump cards or when a bid of \"no trumps\" or \"all trumps\" changes point values, then this widget must be set correctly before entering scores. The indicator can be dragged around the room.</li><li>The Declarer indicator shows the player making the last bid. But you can override that by clicking on it to rotate through the names of the players.</li><li>The Add Card Points button will apply the pre-defined point values to the secondary scoreboard for the current round. If there are points already in the current round, pressing the button will replace the existing values with the new ones. Only cards in the holders near each players' seat are counted. There are 3 holders near each players' seat (not all are visible) and all 3 will be counted for that player.</li><li>The Transfer Score button is available in some pre-set games to move and/or convert scores between the secondary scoreboard and the main scoreboard. If available, check the game tips by hovering over the name of the pre-set. If not available, you need to manually enter values in the primary scoreboard before pressing the Recall &amp; Shuffle button.</li></ul></ul></ul><ul><li><b>Secondary Scoreboard</b></li><ul><li>The secondary scoreboard is a smaller scoreboard below the main one. It is used in many pre-sets as a temporary place to calculate interim scores, such as the value of captured card points.</li><li>In addition to the Card Points row, other rows may be available. Drag the slider to the right of the secondary scoreboard up and down to highlight different rows. The red and green +/- buttons work on whichever row is highlighted.</li><li>The red and green +/- buttons can only work on one scoreboard at a time. To reenable the buttons on the primary scoreboard, move the slider all the back up to the top.</li></ul></ul><ul><li><b>Bidding</b></li><ul><li>The square widget on the left side of the player's seat is used to indicate a bid value. The widget on the right is used to indicate the bid's suit.</li><li>Pressing either widget will open a menu in the middle of the screen only visible to that player. On that menu, the player can press numbers and/or suits to indicate a bid. Numbers are entered like a calculator one at a time. Use the blank square to erase a number entry and start over.</li><li>Bids are immediately reflected on the white square widgets for other players to see unless secret bidding is enabled.</li><li>Pressing the green Bid button will optionally display the bid in an activity log in the lower right corner in reverse chronological order. If secret bidding is enabled, the activity log only reports that the player made a bid. The bid history is erased when the cards are recalled for the next round.</li><li>If additional messages are enabled in the pre-set, then a white rectangular Message button appears above the activity log. Pressing that button allows players to choose from a selection of game-related messages that are posted in the activity log.</li><li>To close the bidding menu, press the Close button, the geen Bid button, or once again press one of the white square bidding widgets.</li><li>If secret bidding was enabled in the settings, then at the appropriate time, each player should press the Actions button to the right of the hand. In the pop-up menu, press the Show Bids button. Press the Actions button again to close the pop-up.</li></ul></ul><ul><li><b>Sorting</b></li><ul><li>A Sort button to the left of the hand will sort cards in the hand only for the player pressing the button. Suits are always sorted left to right in order: clubs, diamonds, hearts, spades when using the standard deck. Other decks have similar default sorting.</li><li>The first time a player presses the Sort button, the player is prompted to choose how to sort by value within each suit: high to low or low to high. After making the selection, the player will not see the option again until a new pre-set game is selected.</li><li>After making selections, all subsequent deals to those players will automatically be sorted.</li><li>In some pre-set games, pressing the sort button again after trumps is chosen will change the sort order.</li><li>Some pre-set games also add an additional sort button for unique behavior linked to that game.</li></ul></ul><ul><li><b>Take</b></li><ul><li>The Take button moves all cards played in the round to a holder belonging to the player pressing the button. The cards are turned face-down and placed into a pile.</li><ul><li>If using the common play holder, the cards are moved to the holder near the player's seat.</li><li>If not using the common play holder, the cards are moved to a holder behind and just slightly above and to the right of the holder near the player's seat. This holder is invisible, but can be used, so be careful if manually dragging cards.</li><li>If using the mini-holder to display captured cards, cards can be manually dragged from the holder with the captured cards to the mini-holder. Some games pre-sets do that automatically.</li></ul><li>Clicking the button will increase the count of the number of tricks taken by 1 in the trick scoring widget on the right side of the room.</li><li>The turn indicator moves to the seat of the player pressing the button to lead the next trick.</li></ul></ul><ul><li><b>Actions</b></li><ul><li>This displays a pop-up menu with other buttons that can be used in the game.</li><li>The Show Hand button will create a mini holder over the seat of the player pressing the button. Copies of the cards in the hand of the player will be displayed there in miniature. No player can interact with those copies. They appear and disappear as needed to reflect the cards in the hand of that player.</li><li>The Show Bid button is used as described above to reveal bids that had been secret.</li><li>The Show Arrow button displays a black and white arrow to the left of the hand that can point up or down. This is used in some pre-set games to indicate when low cards are high and vice versa.</li></ul></ul><ul><li><b>Items</b></li><ul><li>This displays a pop-up menu with multiple widgets that can be dragged around and used in the game.</li><li>Most of the widgets (except for the 4 card suits) change color to reflect the color of the player that took it.</li><li>The Label widget can be dragged by grabbing the thick border and you can type short messages in it by clicking in the text area.</li><li>The widgets with numbers can be clicked to change.</li><ul><li>The circular widgets change from 1 to x1, 6 to x6, etc.</li><li>The square widget is a doubling cube and cycles through x2, x4, x8, x16, x32, x64.</li></ul><li>To remove a single widget from the board, just drop it anywhere on the Items \"tray\".</li><li>A player can delete all of their own widgets by pressing the Recall Mine button.</li><li>Any player can delete all of the widgets in the room by pressing the Recall All button.</li></ul></ul><ul><li><b>Reset Scores</b></li><ul><li>The reset scores button will erase all player scores in the scoreboard widget and the trick count in the trick scoring widget. It also deletes all widgets taken from the Items \"tray\".</li></ul></ul><div><b style=\"color: rgb(45, 93, 168);\"><i>Making a New Pre-Set</i></b><br></div></div><div><br></div><div>If you are interested in adding your own pre-set (and hopefully contribute it back to the public library), then see the wiki discussion at&nbsp;https://github.com/96LawDawg/Cards-Tricks/wiki.</div>",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
@@ -30609,6 +30624,70 @@
       "🛡",
       "NT",
       "AT"
+    ],
+    "7deckDiceFaces": [
+      {
+        "image": "i/icons/clubs.svg"
+      },
+      {
+        "image": "i/icons/diamonds.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "i/icons/spades.svg"
+      },
+      {
+        "image": "i/icons/hearts.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "/assets/-374765193_624",
+        "deckSuitColor": "purple"
+      }
+    ],
+    "7deckSuits": [
+      "",
+      "clubs",
+      "diamonds",
+      "spades",
+      "hearts",
+      "stars"
+    ],
+    "7deckSuitsColor": [
+      "",
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "purple",
+      ""
+    ],
+    "7deckSuitsImage": [
+      "",
+      "i/icons/clubs.svg",
+      "i/icons/diamonds.svg",
+      "i/icons/spades.svg",
+      "i/icons/hearts.svg",
+      "/assets/-374765193_624",
+      ""
+    ],
+    "7deckSuitsText": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump"
+    ],
+    "7deckSuitsUni": [
+      "",
+      "♣",
+      "♦",
+      "♠",
+      "♥",
+      "*",
+      "NT"
     ]
   },
   "gameID31": {
@@ -31491,12 +31570,2267 @@
   },
   "pile2": {
     "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "pile2",
+    "z": 158,
+    "parent": "offHolder"
+  },
+  "tarotDeck": {
+    "type": "deck",
+    "id": "tarotDeck",
     "parent": "offHolder",
     "x": 4,
     "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "pile2"
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "cardTypes": {
+      "1": {
+        "rank": "1",
+        "tarotImage": "/i/cards-tarot/I.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 1,
+        "order": 15
+      },
+      "2": {
+        "rank": "2",
+        "tarotImage": "/i/cards-tarot/II.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 2,
+        "order": 1
+      },
+      "3": {
+        "rank": "3",
+        "tarotImage": "/i/cards-tarot/III.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 3,
+        "order": 1
+      },
+      "4": {
+        "rank": "4",
+        "tarotImage": "/i/cards-tarot/IV.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 4,
+        "order": 1
+      },
+      "5": {
+        "rank": "5",
+        "tarotImage": "/i/cards-tarot/V.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 5,
+        "order": 0.05
+      },
+      "6": {
+        "rank": "6",
+        "tarotImage": "/i/cards-tarot/VI.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 6,
+        "order": 1
+      },
+      "7": {
+        "rank": "7",
+        "tarotImage": "/i/cards-tarot/VII.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 7,
+        "order": 1
+      },
+      "8": {
+        "rank": "8",
+        "tarotImage": "/i/cards-tarot/VIII.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 8,
+        "order": 1
+      },
+      "9": {
+        "rank": "9",
+        "tarotImage": "/i/cards-tarot/IX.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 9,
+        "order": 1
+      },
+      "10": {
+        "rank": "10",
+        "tarotImage": "/i/cards-tarot/X.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 10,
+        "order": 1
+      },
+      "11": {
+        "rank": "11",
+        "tarotImage": "/i/cards-tarot/XI.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 11,
+        "order": 1
+      },
+      "12": {
+        "rank": "12",
+        "tarotImage": "/i/cards-tarot/XII.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 12,
+        "order": 1
+      },
+      "13": {
+        "rank": "13",
+        "tarotImage": "/i/cards-tarot/XIII.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 13,
+        "order": 1
+      },
+      "14": {
+        "rank": "14",
+        "tarotImage": "/i/cards-tarot/XIV.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 14,
+        "order": 1
+      },
+      "15": {
+        "rank": "15",
+        "tarotImage": "/i/cards-tarot/XV.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 15,
+        "order": 1
+      },
+      "16": {
+        "rank": "16",
+        "tarotImage": "/i/cards-tarot/XVI.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 16,
+        "order": 1
+      },
+      "17": {
+        "rank": "17",
+        "tarotImage": "/i/cards-tarot/XVII.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 17,
+        "order": 1
+      },
+      "18": {
+        "rank": "18",
+        "tarotImage": "/i/cards-tarot/XVIII.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 18,
+        "order": 1
+      },
+      "19": {
+        "rank": "19",
+        "tarotImage": "/i/cards-tarot/XIX.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 19,
+        "order": 1
+      },
+      "20": {
+        "rank": "20",
+        "tarotImage": "/i/cards-tarot/XX.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 20,
+        "order": 1
+      },
+      "21": {
+        "rank": "21",
+        "tarotImage": "/i/cards-tarot/XXI.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "suitColor": "purple",
+        "tarotBack": "#ffffff80",
+        "sortDefault": 21,
+        "order": 15
+      },
+      "22": {
+        "suitColor": "purple",
+        "tarotImage": "/i/cards-tarot/Fool.jpg",
+        "suitImage": "/assets/-374765193_624",
+        "suit": 0,
+        "tarotBack": "#ffffff80",
+        "rank": "S",
+        "sortDefault": 22,
+        "order": 15
+      },
+      "1C": {
+        "rank": "1",
+        "rankImage": "i/icons/clubs.svg",
+        "suitImage": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 1,
+        "order": 1
+      },
+      "2C": {
+        "rank": "2",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P12": "i/icons/clubs.svg",
+        "suit-P52": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 2,
+        "order": 2
+      },
+      "3C": {
+        "rank": "3",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P12": "i/icons/clubs.svg",
+        "suit-P32": "i/icons/clubs.svg",
+        "suit-P52": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 3,
+        "order": 3
+      },
+      "4C": {
+        "rank": "4",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 4,
+        "order": 4
+      },
+      "5C": {
+        "rank": "5",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P32": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 5,
+        "order": 5
+      },
+      "6C": {
+        "rank": "6",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P31": "i/icons/clubs.svg",
+        "suit-P33": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 6,
+        "order": 6
+      },
+      "7C": {
+        "rank": "7",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P22": "i/icons/clubs.svg",
+        "suit-P31": "i/icons/clubs.svg",
+        "suit-P33": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 7,
+        "order": 7
+      },
+      "8C": {
+        "rank": "8",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P22": "i/icons/clubs.svg",
+        "suit-P31": "i/icons/clubs.svg",
+        "suit-P33": "i/icons/clubs.svg",
+        "suit-P42": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 8,
+        "order": 8
+      },
+      "9C": {
+        "rank": "9",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P32": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit-S21": "i/icons/clubs.svg",
+        "suit-S23": "i/icons/clubs.svg",
+        "suit-S31": "i/icons/clubs.svg",
+        "suit-S33": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 9,
+        "order": 9
+      },
+      "TC": {
+        "rank": "10",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit-S12": "i/icons/clubs.svg",
+        "suit-S21": "i/icons/clubs.svg",
+        "suit-S23": "i/icons/clubs.svg",
+        "suit-S31": "i/icons/clubs.svg",
+        "suit-S33": "i/icons/clubs.svg",
+        "suit-S42": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 10,
+        "order": 10
+      },
+      "JC": {
+        "rank": "J",
+        "rankImage": "/assets/-1936516067_36132",
+        "suitImage": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 11,
+        "order": 11
+      },
+      "CC": {
+        "rank": "C",
+        "riderImage": "/i/cards-tarot/CC.png",
+        "suitImage": "i/icons/clubs.svg",
+        "tarotBack": "transparent",
+        "suit": 1,
+        "sortDefault": 12,
+        "order": 12
+      },
+      "QC": {
+        "rank": "Q",
+        "rankImage": "/assets/-359721987_40577",
+        "suitImage": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 13,
+        "order": 13
+      },
+      "KC": {
+        "rank": "K",
+        "rankImage": "/assets/-604240792_36033",
+        "suitImage": "i/icons/clubs.svg",
+        "suit": 1,
+        "sortDefault": 14,
+        "order": 14
+      },
+      "1S": {
+        "rank": "1",
+        "rankImage": "i/icons/spades.svg",
+        "suitImage": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 1,
+        "order": 1
+      },
+      "2S": {
+        "rank": "2",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P12": "i/icons/spades.svg",
+        "suit-P52": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 2,
+        "order": 2
+      },
+      "3S": {
+        "rank": "3",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P12": "i/icons/spades.svg",
+        "suit-P32": "i/icons/spades.svg",
+        "suit-P52": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 3,
+        "order": 3
+      },
+      "4S": {
+        "rank": "4",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 4,
+        "order": 4
+      },
+      "5S": {
+        "rank": "5",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P32": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 5,
+        "order": 5
+      },
+      "6S": {
+        "rank": "6",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P31": "i/icons/spades.svg",
+        "suit-P33": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 6,
+        "order": 6
+      },
+      "7S": {
+        "rank": "7",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P22": "i/icons/spades.svg",
+        "suit-P31": "i/icons/spades.svg",
+        "suit-P33": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 7,
+        "order": 7
+      },
+      "8S": {
+        "rank": "8",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P22": "i/icons/spades.svg",
+        "suit-P31": "i/icons/spades.svg",
+        "suit-P33": "i/icons/spades.svg",
+        "suit-P42": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 8,
+        "order": 8
+      },
+      "9S": {
+        "rank": "9",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P32": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit-S21": "i/icons/spades.svg",
+        "suit-S23": "i/icons/spades.svg",
+        "suit-S31": "i/icons/spades.svg",
+        "suit-S33": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 9,
+        "order": 9
+      },
+      "TS": {
+        "rank": "10",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit-S12": "i/icons/spades.svg",
+        "suit-S21": "i/icons/spades.svg",
+        "suit-S23": "i/icons/spades.svg",
+        "suit-S31": "i/icons/spades.svg",
+        "suit-S33": "i/icons/spades.svg",
+        "suit-S42": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 10,
+        "order": 10
+      },
+      "JS": {
+        "rank": "J",
+        "rankImage": "/assets/2115758924_42014",
+        "suitImage": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 11,
+        "order": 11
+      },
+      "CS": {
+        "rank": "C",
+        "riderImage": "/i/cards-tarot/CS.png",
+        "suitImage": "i/icons/spades.svg",
+        "tarotBack": "transparent",
+        "suit": 3,
+        "sortDefault": 12,
+        "order": 12
+      },
+      "QS": {
+        "rank": "Q",
+        "rankImage": "/assets/1085111785_36695",
+        "suitImage": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 13,
+        "order": 13
+      },
+      "KS": {
+        "rank": "K",
+        "rankImage": "/assets/-1882019559_61400",
+        "suitImage": "i/icons/spades.svg",
+        "suit": 3,
+        "sortDefault": 14,
+        "order": 14
+      },
+      "1H": {
+        "rank": "1",
+        "rankImage": "i/icons/hearts.svg",
+        "suitImage": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 1,
+        "order": 1
+      },
+      "2H": {
+        "rank": "2",
+        "suitImage": "i/icons/hearts.svg",
+        "suit-P12": "i/icons/hearts.svg",
+        "suit-P52": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 2,
+        "order": 2
+      },
+      "3H": {
+        "rank": "3",
+        "suitImage": "i/icons/hearts.svg",
+        "suit-P12": "i/icons/hearts.svg",
+        "suit-P32": "i/icons/hearts.svg",
+        "suit-P52": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 3,
+        "order": 3
+      },
+      "4H": {
+        "rank": "4",
+        "suitImage": "i/icons/hearts.svg",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 4,
+        "order": 4
+      },
+      "5H": {
+        "rank": "5",
+        "suitImage": "i/icons/hearts.svg",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P32": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 5,
+        "order": 5
+      },
+      "6H": {
+        "rank": "6",
+        "suitImage": "i/icons/hearts.svg",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P31": "i/icons/hearts.svg",
+        "suit-P33": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 6,
+        "order": 6
+      },
+      "7H": {
+        "rank": "7",
+        "suitImage": "i/icons/hearts.svg",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P22": "i/icons/hearts.svg",
+        "suit-P31": "i/icons/hearts.svg",
+        "suit-P33": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 7,
+        "order": 7
+      },
+      "8H": {
+        "rank": "8",
+        "suitImage": "i/icons/hearts.svg",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P22": "i/icons/hearts.svg",
+        "suit-P31": "i/icons/hearts.svg",
+        "suit-P33": "i/icons/hearts.svg",
+        "suit-P42": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 8,
+        "order": 8
+      },
+      "9H": {
+        "rank": "9",
+        "suitImage": "i/icons/hearts.svg",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P32": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit-S21": "i/icons/hearts.svg",
+        "suit-S23": "i/icons/hearts.svg",
+        "suit-S31": "i/icons/hearts.svg",
+        "suit-S33": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 9,
+        "order": 9
+      },
+      "TH": {
+        "rank": "10",
+        "suitImage": "i/icons/hearts.svg",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit-S12": "i/icons/hearts.svg",
+        "suit-S21": "i/icons/hearts.svg",
+        "suit-S23": "i/icons/hearts.svg",
+        "suit-S31": "i/icons/hearts.svg",
+        "suit-S33": "i/icons/hearts.svg",
+        "suit-S42": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 10,
+        "order": 10
+      },
+      "JH": {
+        "rank": "J",
+        "rankImage": "/assets/-560751544_37381",
+        "suitImage": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 11,
+        "order": 11
+      },
+      "CH": {
+        "rank": "C",
+        "riderImage": "/i/cards-tarot/CH.png",
+        "suitImage": "i/icons/hearts.svg",
+        "tarotBack": "transparent",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 12,
+        "order": 12
+      },
+      "QH": {
+        "rank": "Q",
+        "rankImage": "/assets/-1553973424_45799",
+        "suitImage": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 13,
+        "order": 13
+      },
+      "KH": {
+        "rank": "K",
+        "rankImage": "/assets/-511606639_49182",
+        "suitImage": "i/icons/hearts.svg",
+        "suit": 4,
+        "suitColor": "#e50932",
+        "sortDefault": 14,
+        "order": 14
+      },
+      "1D": {
+        "rank": "1",
+        "rankImage": "i/icons/diamonds.svg",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 1,
+        "order": 1
+      },
+      "2D": {
+        "rank": "2",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit-P12": "i/icons/diamonds.svg",
+        "suit-P52": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 2,
+        "order": 2
+      },
+      "3D": {
+        "rank": "3",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit-P12": "i/icons/diamonds.svg",
+        "suit-P32": "i/icons/diamonds.svg",
+        "suit-P52": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 3,
+        "order": 3
+      },
+      "4D": {
+        "rank": "4",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 4,
+        "order": 4
+      },
+      "5D": {
+        "rank": "5",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P32": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 5,
+        "order": 5
+      },
+      "6D": {
+        "rank": "6",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P31": "i/icons/diamonds.svg",
+        "suit-P33": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 6,
+        "order": 6
+      },
+      "7D": {
+        "rank": "7",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P22": "i/icons/diamonds.svg",
+        "suit-P31": "i/icons/diamonds.svg",
+        "suit-P33": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 7,
+        "order": 7
+      },
+      "8D": {
+        "rank": "8",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P22": "i/icons/diamonds.svg",
+        "suit-P31": "i/icons/diamonds.svg",
+        "suit-P33": "i/icons/diamonds.svg",
+        "suit-P42": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 8,
+        "order": 8
+      },
+      "9D": {
+        "rank": "9",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P32": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit-S21": "i/icons/diamonds.svg",
+        "suit-S23": "i/icons/diamonds.svg",
+        "suit-S31": "i/icons/diamonds.svg",
+        "suit-S33": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 9,
+        "order": 9
+      },
+      "TD": {
+        "rank": "10",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit-S12": "i/icons/diamonds.svg",
+        "suit-S21": "i/icons/diamonds.svg",
+        "suit-S23": "i/icons/diamonds.svg",
+        "suit-S31": "i/icons/diamonds.svg",
+        "suit-S33": "i/icons/diamonds.svg",
+        "suit-S42": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 10,
+        "order": 10
+      },
+      "JD": {
+        "rank": "J",
+        "suitColor": "#e50932",
+        "rankImage": "/assets/-696466837_31225",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit": 2,
+        "sortDefault": 11,
+        "order": 11
+      },
+      "CD": {
+        "rank": "C",
+        "riderImage": "/i/cards-tarot/CD.png",
+        "suitImage": "i/icons/diamonds.svg",
+        "tarotBack": "transparent",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 12,
+        "order": 12
+      },
+      "QD": {
+        "rank": "Q",
+        "rankImage": "/assets/-132931377_41422",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 13,
+        "order": 13
+      },
+      "KD": {
+        "rank": "K",
+        "rankImage": "/assets/-862690059_30988",
+        "suitImage": "i/icons/diamonds.svg",
+        "suit": 2,
+        "suitColor": "#e50932",
+        "sortDefault": 14,
+        "order": 14
+      }
+    },
+    "clickable": true,
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 6,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 25,
+            "width": 53,
+            "height": 110,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rankImage"
+            },
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "css": {
+              "background-size": "100% 100%"
+            }
+          },
+          {
+            "type": "image",
+            "x": 16,
+            "y": 25,
+            "width": 72,
+            "height": 112,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "tarotImage"
+            },
+            "css": {
+              "opacity": 0.85
+            }
+          },
+          {
+            "type": "image",
+            "x": 19,
+            "y": 25,
+            "width": 64,
+            "height": 112,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "riderImage"
+            },
+            "css": {
+              "opacity": 0.85
+            }
+          },
+          {
+            "type": "image",
+            "x": -1,
+            "y": -1,
+            "width": 28,
+            "height": 55,
+            "dynamicProperties": {
+              "color": "tarotBack"
+            }
+          },
+          {
+            "type": "image",
+            "x": 75,
+            "y": 110,
+            "width": 28,
+            "height": 55,
+            "dynamicProperties": {
+              "color": "tarotBack"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": -2,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 127,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 28,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            }
+          },
+          {
+            "type": "image",
+            "x": 79,
+            "y": 110,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            },
+            "rotation": 180
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 25,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P11"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 25,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P12"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 25,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P13"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 48.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P21"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 48.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P22"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 48.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P23"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 72,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P31"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 72,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P32"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 72,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P33"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 95.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P41"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 95.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P42"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 95.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P43"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 119,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P51"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 119,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P52"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 119,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P53"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 40.6,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S11"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 40.6,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S12"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 40.6,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S13"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 56.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S21"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 56.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S22"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 56.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S23"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 87.7,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S31"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 87.7,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S32"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 87.7,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S33"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 103.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S41"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 103.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S42"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 103.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S43"
+            }
+          }
+        ]
+      }
+    ],
+    "inheritFrom": {
+      "deck1": [
+        "cardDefaults"
+      ]
+    },
+    "deckDiceFaces": [
+      {
+        "image": "i/icons/clubs.svg"
+      },
+      {
+        "image": "i/icons/diamonds.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "i/icons/spades.svg"
+      },
+      {
+        "image": "i/icons/hearts.svg",
+        "deckSuitColor": "#e50932"
+      },
+      {
+        "image": "/assets/-374765193_624",
+        "deckSuitColor": "purple"
+      }
+    ],
+    "deckSuits": [
+      "",
+      "clubs",
+      "diamonds",
+      "spades",
+      "hearts",
+      "stars"
+    ],
+    "deckSuitsColor": [
+      "",
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "purple",
+      ""
+    ],
+    "deckSuitsImage": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "deckSuitsText": [
+      "",
+      "Petite",
+      "Garde",
+      "Garde+\nChien",
+      "Garde-\nChien",
+      "",
+      ""
+    ],
+    "deckSuitsUni": [
+      "",
+      "P",
+      "G",
+      "G+C",
+      "G-C",
+      "",
+      ""
+    ],
+    "deckType": 7,
+    "staged": false
+  },
+  "jtch": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "1",
+    "id": "jtch",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "mbpc": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "2",
+    "id": "mbpc",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "2gql": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "3",
+    "id": "2gql",
+    "parent": "pile2",
+    "staged": false
+  },
+  "zoeh": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "4",
+    "id": "zoeh",
+    "parent": "pile2",
+    "staged": false
+  },
+  "yqvf": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "5",
+    "id": "yqvf",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ltpy": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "ltpy",
+    "parent": "pile2",
+    "staged": false
+  },
+  "np2x": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "7",
+    "id": "np2x",
+    "parent": "pile2",
+    "staged": false
+  },
+  "4e72": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "8",
+    "id": "4e72",
+    "parent": "pile2",
+    "staged": false
+  },
+  "2kwi": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "9",
+    "id": "2kwi",
+    "parent": "pile2",
+    "staged": false
+  },
+  "d4pk": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "10",
+    "id": "d4pk",
+    "parent": "pile2",
+    "staged": false
+  },
+  "dxj9": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "11",
+    "id": "dxj9",
+    "parent": "pile2",
+    "staged": false
+  },
+  "2x0u": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "12",
+    "id": "2x0u",
+    "parent": "pile2",
+    "staged": false
+  },
+  "6dv5": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "13",
+    "id": "6dv5",
+    "parent": "pile2",
+    "staged": false
+  },
+  "0bw8": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "14",
+    "id": "0bw8",
+    "parent": "pile2",
+    "staged": false
+  },
+  "33re": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "15",
+    "id": "33re",
+    "parent": "pile2",
+    "staged": false
+  },
+  "m05l": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "16",
+    "id": "m05l",
+    "parent": "pile2",
+    "staged": false
+  },
+  "n6be": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "17",
+    "id": "n6be",
+    "parent": "pile2",
+    "staged": false
+  },
+  "68g3": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "18",
+    "id": "68g3",
+    "parent": "pile2",
+    "staged": false
+  },
+  "4da2": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "20",
+    "id": "4da2",
+    "parent": "pile2",
+    "staged": false
+  },
+  "y991": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "21",
+    "id": "y991",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "g48v": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "22",
+    "id": "g48v",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "3w2i": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "1C",
+    "id": "3w2i",
+    "parent": "pile2",
+    "staged": false
+  },
+  "p4v9": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "2C",
+    "id": "p4v9",
+    "parent": "pile2",
+    "staged": false
+  },
+  "uaoz": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "3C",
+    "id": "uaoz",
+    "parent": "pile2",
+    "staged": false
+  },
+  "jj7b": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "4C",
+    "id": "jj7b",
+    "parent": "pile2",
+    "staged": false
+  },
+  "3gud": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "5C",
+    "id": "3gud",
+    "parent": "pile2",
+    "staged": false
+  },
+  "2iju": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "6C",
+    "id": "2iju",
+    "parent": "pile2",
+    "staged": false
+  },
+  "b598": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "7C",
+    "id": "b598",
+    "parent": "pile2",
+    "staged": false
+  },
+  "1oo2": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "8C",
+    "id": "1oo2",
+    "parent": "pile2",
+    "staged": false
+  },
+  "pukz": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "9C",
+    "id": "pukz",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ylxc": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "TC",
+    "id": "ylxc",
+    "parent": "pile2",
+    "staged": false
+  },
+  "oymw": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "JC",
+    "id": "oymw",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "tesr": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "CC",
+    "id": "tesr",
+    "parent": "pile2",
+    "staged": false
+  },
+  "uwmv": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "QC",
+    "id": "uwmv",
+    "parent": "pile2",
+    "staged": false
+  },
+  "r550": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "KC",
+    "id": "r550",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "rf4c": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "1S",
+    "id": "rf4c",
+    "parent": "pile2",
+    "staged": false
+  },
+  "sb8x": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "2S",
+    "id": "sb8x",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ug2j": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "3S",
+    "id": "ug2j",
+    "parent": "pile2",
+    "staged": false
+  },
+  "p7lg": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "4S",
+    "id": "p7lg",
+    "parent": "pile2",
+    "staged": false
+  },
+  "wyil": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "5S",
+    "id": "wyil",
+    "parent": "pile2",
+    "staged": false
+  },
+  "pmh4": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "6S",
+    "id": "pmh4",
+    "parent": "pile2",
+    "staged": false
+  },
+  "c7jy": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "7S",
+    "id": "c7jy",
+    "parent": "pile2",
+    "staged": false
+  },
+  "6aw4": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "8S",
+    "id": "6aw4",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ve9u": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "9S",
+    "id": "ve9u",
+    "parent": "pile2",
+    "staged": false
+  },
+  "5s5b": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "TS",
+    "id": "5s5b",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "6gee": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "JS",
+    "id": "6gee",
+    "parent": "pile2",
+    "staged": false
+  },
+  "x5md": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "CS",
+    "id": "x5md",
+    "parent": "pile2",
+    "staged": false
+  },
+  "47jy": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "QS",
+    "id": "47jy",
+    "parent": "pile2",
+    "staged": false
+  },
+  "45qe": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "KS",
+    "id": "45qe",
+    "parent": "pile2",
+    "staged": false
+  },
+  "edgy": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "1H",
+    "id": "edgy",
+    "parent": "pile2",
+    "staged": false
+  },
+  "rxu3": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "2H",
+    "id": "rxu3",
+    "parent": "pile2",
+    "staged": false
+  },
+  "pvp2": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "3H",
+    "id": "pvp2",
+    "parent": "pile2",
+    "staged": false
+  },
+  "7w8g": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "4H",
+    "id": "7w8g",
+    "parent": "pile2",
+    "staged": false
+  },
+  "ouox": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "5H",
+    "id": "ouox",
+    "parent": "pile2",
+    "staged": false
+  },
+  "p6qv": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "6H",
+    "id": "p6qv",
+    "parent": "pile2",
+    "staged": false
+  },
+  "g0zk": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "7H",
+    "id": "g0zk",
+    "parent": "pile2",
+    "staged": false
+  },
+  "phv7": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "8H",
+    "id": "phv7",
+    "parent": "pile2",
+    "staged": false
+  },
+  "slaj": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "9H",
+    "id": "slaj",
+    "parent": "pile2",
+    "staged": false
+  },
+  "t27t": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "TH",
+    "id": "t27t",
+    "parent": "pile2",
+    "staged": false
+  },
+  "lh3t": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "JH",
+    "id": "lh3t",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "u117": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "CH",
+    "id": "u117",
+    "parent": "pile2",
+    "staged": false
+  },
+  "v0ar": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "QH",
+    "id": "v0ar",
+    "parent": "pile2",
+    "staged": false
+  },
+  "4tgs": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "KH",
+    "id": "4tgs",
+    "parent": "pile2",
+    "staged": false
+  },
+  "0v9j": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "1D",
+    "id": "0v9j",
+    "parent": "pile2",
+    "staged": false
+  },
+  "8vu2": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "2D",
+    "id": "8vu2",
+    "parent": "pile2",
+    "staged": false
+  },
+  "3bi4": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "3D",
+    "id": "3bi4",
+    "parent": "pile2",
+    "staged": false
+  },
+  "jcpv": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "4D",
+    "id": "jcpv",
+    "parent": "pile2",
+    "staged": false
+  },
+  "rh8y": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "5D",
+    "id": "rh8y",
+    "parent": "pile2",
+    "staged": false
+  },
+  "tthw": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "6D",
+    "id": "tthw",
+    "parent": "pile2",
+    "staged": false
+  },
+  "sgmg": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "7D",
+    "id": "sgmg",
+    "parent": "pile2",
+    "staged": false
+  },
+  "4iu4": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "8D",
+    "id": "4iu4",
+    "parent": "pile2",
+    "staged": false
+  },
+  "67mo": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "9D",
+    "id": "67mo",
+    "parent": "pile2",
+    "staged": false
+  },
+  "i97a": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "TD",
+    "id": "i97a",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "s05m": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "JD",
+    "id": "s05m",
+    "staged": false,
+    "parent": "pile2"
+  },
+  "aiq2": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "CD",
+    "id": "aiq2",
+    "parent": "pile2",
+    "staged": false
+  },
+  "m3r6": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "QD",
+    "id": "m3r6",
+    "parent": "pile2",
+    "staged": false
+  },
+  "op0r": {
+    "deck": "tarotDeck",
+    "type": "card",
+    "cardType": "KD",
+    "id": "op0r",
+    "parent": "pile2",
+    "staged": false
+  },
+  "gameID32": {
+    "id": "gameID32",
+    "x": -272,
+    "y": 1013,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "text": "French Tarot",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Poignee 10",
+        "text": "Poignée 10 trumps / 20 points"
+      },
+      {
+        "value": "Poignee 13",
+        "text": "Poignée 13 trumps / 30 points"
+      },
+      {
+        "value": "Poignee 15",
+        "text": "Poignée 15 trumps / 40 points"
+      },
+      {
+        "value": "Slam",
+        "text": "Chelem (Slam)"
+      }
+    ],
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "settingsArray": [
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showDiscard",
+        true
+      ],
+      [
+        "turnDirection",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        18
+      ],
+      [
+        "deckType",
+        7
+      ],
+      [
+        "seatCount",
+        4
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        true
+      ]
+    ],
+    "scoreSystem": [
+      [
+        0,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        1.5,
+        2.5,
+        3.5,
+        4.5,
+        4.5
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"You may use the bid system widget near the seat to bid and the Message button to announce bonuses. Click on small red, black, and white letter icons to set teams once known.\\a\\a At end of round, be sure all chien cards are in the appropriate player holders.\\a\\aPress Add Card Points button to calculate the card points. Manually calcualte scores based on winning and losing players. Then use the green/red +/- buttons to enter scores on the main scoreboard.\"",
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "displayArray": [
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "7deckSuitsImage": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "7deckSuitsText": [
+      "",
+      "Petite",
+      "Garde",
+      "Garde+\nChien",
+      "Garde-\nChien",
+      "",
+      ""
+    ],
+    "7deckSuitsUni": [
+      "",
+      "P",
+      "G",
+      "G+C",
+      "G-C",
+      "",
+      ""
+    ]
   },
   "pile1": {
     "type": "pile",
