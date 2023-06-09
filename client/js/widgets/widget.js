@@ -1669,7 +1669,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
-        let collection;
+        const collection = a.timer === undefined && getCollection(a.collection);
         if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
           a.mode = 'toggle'
@@ -1682,7 +1682,7 @@ export class Widget extends StateManaged {
                   await widget.setPaused(a.mode);
               });
             }
-          } else if(collection = getCollection(a.collection)) {
+          } else if(collection) {
             if(collections[collection].length) {
               for(const c of collections[collection])
                 if(c.setPaused)
