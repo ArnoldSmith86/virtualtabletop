@@ -94,7 +94,9 @@
         ]
       }
     ],
-    "childrenPerOwner": true
+    "childrenPerOwner": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "fate_A_C": {
     "id": "fate_A_C",
@@ -573,7 +575,9 @@
     "movableInEdit": false,
     "onEnter": {
       "rotation": 0
-    }
+    },
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "recallButton": {
     "type": "button",
@@ -946,7 +950,9 @@
     ],
     "css": {
       "border-radius": "10px 4px 4px 10px"
-    }
+    },
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "bidValue1": {
     "id": "bidValue1",
@@ -1601,7 +1607,9 @@
     "movable": false,
     "movableInEdit": false,
     "scale": 0.8,
-    "owner": []
+    "owner": [],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "closeButton": {
     "type": "button",
@@ -1727,7 +1735,9 @@
       9,
       8,
       7
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "settings": {
     "type": "button",
@@ -2591,7 +2601,9 @@
       }
     ],
     "bgColor": "#deeaf0",
-    "showbidHistory": false
+    "showbidHistory": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "holder1": {
     "type": "holder",
@@ -2664,7 +2676,7 @@
     "index": 2,
     "x": 435,
     "y": 535,
-    "color": "#999999",
+    "color": "#3700f0",
     "scale": 0,
     "score": [],
     "tricks": 0,
@@ -2684,7 +2696,8 @@
       " "
     ],
     "showing": false,
-    "player": ""
+    "player": "",
+    "ownedBy": "LawDawg"
   },
   "bidValue2": {
     "inheritFrom": {
@@ -2763,7 +2776,8 @@
       0,
       0
     ],
-    "turn": false
+    "turn": false,
+    "ownedBy": "LawDawg"
   },
   "bidValue3": {
     "inheritFrom": {
@@ -2820,7 +2834,7 @@
     "index": 4,
     "x": 435,
     "y": 160,
-    "color": "#999999",
+    "color": "#3700f0",
     "scale": 0,
     "score": [],
     "tricks": 0,
@@ -2840,7 +2854,8 @@
       " "
     ],
     "showing": false,
-    "player": ""
+    "player": "",
+    "ownedBy": "LawDawg"
   },
   "bidValue4": {
     "inheritFrom": {
@@ -2915,7 +2930,8 @@
       " ",
       " "
     ],
-    "showing": false
+    "showing": false,
+    "ownedBy": "LawDawg"
   },
   "bidValue5": {
     "inheritFrom": {
@@ -2974,7 +2990,7 @@
     "index": 6,
     "x": 1010,
     "y": 160,
-    "color": "#999999",
+    "color": "#3700f0",
     "scale": 0,
     "score": [],
     "tricks": 0,
@@ -2997,7 +3013,8 @@
     "player": "",
     "mainColor": "#ffffff",
     "textColor": "#000000",
-    "glowColor": "#000000"
+    "glowColor": "#000000",
+    "ownedBy": "LawDawg"
   },
   "bidValue6": {
     "inheritFrom": {
@@ -3072,7 +3089,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "turn": false,
+    "ownedBy": "LawDawg"
   },
   "bidValue7": {
     "inheritFrom": {
@@ -3129,7 +3147,7 @@
     "index": 8,
     "x": 1010,
     "y": 535,
-    "color": "#999999",
+    "color": "#3700f0",
     "scale": 0,
     "score": [],
     "tricks": 0,
@@ -3149,7 +3167,8 @@
       " "
     ],
     "showing": false,
-    "player": ""
+    "player": "",
+    "ownedBy": "LawDawg"
   },
   "bidValue8": {
     "inheritFrom": {
@@ -3226,7 +3245,9 @@
       "seat6",
       "seat7",
       "seat8"
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "dealButton": {
     "type": "button",
@@ -3327,7 +3348,9 @@
     ],
     "text": "Deal",
     "width": 60,
-    "height": 60
+    "height": 60,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "deck1": {
     "type": "deck",
@@ -5509,7 +5532,9 @@
     "dropTarget": {
       "type": "card"
     },
-    "y": 21
+    "y": 21,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "deck2": {
     "type": "deck",
@@ -5709,7 +5734,9 @@
       "type": "card"
     },
     "scale": 0,
-    "dropLimit": 0
+    "dropLimit": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "centerHolder": {
     "type": "holder",
@@ -5857,7 +5884,9 @@
       }
     ],
     "scale": 0,
-    "dropLimit": 0
+    "dropLimit": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "deleteButton": {
     "type": "button",
@@ -5904,7 +5933,9 @@
         "func": "DELETE"
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "trump": {
     "id": "trump",
@@ -6092,7 +6123,9 @@
     ],
     "customFaceCount": 6,
     "trump": 0,
-    "deckSuitsColor": ""
+    "deckSuitsColor": "",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "trumpLabel": {
     "id": "trumpLabel",
@@ -6588,7 +6621,9 @@
       }
     ],
     "activeGameChangeRoutine": [],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "settingsDecks": {
     "type": "button",
@@ -7754,7 +7789,9 @@
       }
     ],
     "dummyHand": 0,
-    "j": "o"
+    "j": "o",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "deckOptions": {
     "id": "deckOptions",
@@ -8143,7 +8180,9 @@
         "property": "faces",
         "value": "${PROPERTY deckDiceFaces OF $thisDeck}"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "resetScoresButton": {
     "type": "button",
@@ -8273,7 +8312,9 @@
         "func": "SHUFFLE",
         "holder": "deckHolder"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "score+10": {
     "type": "button",
@@ -8415,7 +8456,9 @@
     "movableInEdit": false,
     "layer": -5,
     "width": 105,
-    "borderRadius": 8
+    "borderRadius": 8,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "turnButton": {
     "type": "button",
@@ -8457,7 +8500,9 @@
     "direction": "forward",
     "css": {
       "border-radius": "10px 4px 4px 10px"
-    }
+    },
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "discardLabel": {
     "id": "discardLabel",
@@ -8634,7 +8679,9 @@
         "to": "capturedHolder${seatIndex}",
         "count": 0
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "background": {
     "id": "background",
@@ -8646,7 +8693,9 @@
       "background": "${PROPERTY bgColor}"
     },
     "movableInEdit": false,
-    "bgColor": "#deeaf0"
+    "bgColor": "#deeaf0",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "backHolder1": {
     "type": "holder",
@@ -8748,7 +8797,9 @@
     "layer": -5,
     "movableInEdit": false,
     "classes": "transparent",
-    "dropLimit": 0
+    "dropLimit": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "tempScoreboard": {
     "type": "scoreboard",
@@ -8784,10 +8835,12 @@
     ],
     "roundLabel": "",
     "y": 650,
+    "scale": 0,
     "rounds": [
       "Card Points"
     ],
-    "scale": 0
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "seat1": {
     "type": "seat",
@@ -8985,6 +9038,7 @@
     ],
     "hideWhenUnused": true,
     "playerChangeRoutine": [
+      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
         "func": "IF",
         "operand1": "${PROPERTY player}",
@@ -9006,6 +9060,17 @@
             ],
             "property": "textColor",
             "value": "${contrast}"
+          },
+          {
+            "func": "IF",
+            "condition": "${PROPERTY playerSitRoutine OF $gameID}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "${gameID}",
+                "routine": "playerSitRoutine"
+              }
+            ]
           }
         ],
         "thenRoutine": [
@@ -9028,10 +9093,22 @@
           {
             "func": "CALL",
             "routine": "setDefaultsRoutine"
+          },
+          {
+            "func": "IF",
+            "condition": "${PROPERTY playerSitRoutine OF $gameID}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "${gameID}",
+                "routine": "playerStandRoutine"
+              }
+            ]
           }
         ]
       }
-    ]
+    ],
+    "ownedBy": "LawDawg"
   },
   "preSetsButton": {
     "type": "button",
@@ -9411,7 +9488,9 @@
       "text": "Default",
       "value": "0"
     },
-    "preSet": "0"
+    "preSet": "0",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "bids": {
     "id": "bids",
@@ -9470,7 +9549,9 @@
         ]
       }
     ],
-    "double": 1
+    "double": 1,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "bidslabel": {
     "id": "bidslabel",
@@ -10609,7 +10690,9 @@
         "property": "activeFace",
         "value": 0
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "tarokyDeck": {
     "type": "deck",
@@ -12437,7 +12520,9 @@
       "seat7",
       "seat8"
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "4pScoreCoiffeurButton": {
     "type": "button",
@@ -13056,7 +13141,9 @@
     "y": 910,
     "classes": "symbols",
     "activeFace": 1,
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "tricksLabel": {
     "id": "tricksLabel",
@@ -13150,7 +13237,9 @@
     "layer": -6,
     "movableInEdit": false,
     "width": 24,
-    "rotation": 180
+    "rotation": 180,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "actionsBox": {
     "id": "actionsBox",
@@ -13166,7 +13255,9 @@
     "y": 691,
     "onlyVisibleForSeat": [],
     "borderRadius": 8,
-    "layer": 7
+    "layer": 7,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "showArrowButton": {
     "type": "button",
@@ -13556,7 +13647,9 @@
       }
     ],
     "Inuka": true,
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAidButton": {
     "type": "button",
@@ -13609,6 +13702,8 @@
       }
     ],
     "movableInEdit": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0",
     "scale": 0
   },
   "playerAid9": {
@@ -13623,7 +13718,9 @@
     "image": "/assets/186106283_20117",
     "movableInEdit": false,
     "onlyVisibleForSeat": [],
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID9": {
     "id": "gameID9",
@@ -13831,7 +13928,9 @@
         ]
       }
     ],
-    "transferButtonReturn": false
+    "transferButtonReturn": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID0": {
     "id": "gameID0",
@@ -14168,7 +14267,9 @@
       }
     ],
     "customFaceCount": 6,
-    "showTempScoreTotals": true
+    "showTempScoreTotals": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID1": {
     "id": "gameID1",
@@ -14500,7 +14601,9 @@
         "playerAidButton",
         1
       ]
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID2": {
     "id": "gameID2",
@@ -14678,7 +14781,9 @@
         0
       ]
     ],
-    "playerAidDetail1": "Scoring"
+    "playerAidDetail1": "Scoring",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID3": {
     "id": "gameID3",
@@ -14948,7 +15053,9 @@
       }
     ],
     "autoTeam": true,
-    "x": -529
+    "x": -529,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID4": {
     "id": "gameID4",
@@ -15154,7 +15261,9 @@
         ]
       }
     ],
-    "transferButtonReturn": false
+    "transferButtonReturn": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID5": {
     "id": "gameID5",
@@ -15258,7 +15367,9 @@
         "transferScoreButton",
         0
       ]
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID6": {
     "id": "gameID6",
@@ -15678,7 +15789,9 @@
           }
         ]
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID7": {
     "id": "gameID7",
@@ -16127,7 +16240,9 @@
         "playerAidButton",
         1
       ]
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID8": {
     "id": "gameID8",
@@ -16375,7 +16490,9 @@
       ]
     ],
     "x": -410,
-    "customFaceCount": 7
+    "customFaceCount": 7,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "pawnToken": {
     "id": "pawnToken",
@@ -16383,7 +16500,7 @@
     "y": 143,
     "width": 37,
     "height": 67,
-    "color": "#a9c6e8",
+    "color": "#3700f0",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
     "svgReplaces": {
@@ -16392,7 +16509,8 @@
       "#borderWidth": "borderWidth"
     },
     "borderColor": "black",
-    "borderWidth": 1
+    "borderWidth": 1,
+    "ownedBy": "LawDawg"
   },
   "suitDice": {
     "type": "dice",
@@ -16486,7 +16604,9 @@
         "image": "i/icons/hearts.svg",
         "deckSuitColor": "#e50932"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "itemsButton": {
     "type": "button",
@@ -16525,7 +16645,9 @@
     "width": 24,
     "text": "Items",
     "rotation": 180,
-    "layer": -4
+    "layer": -4,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "itemsBox": {
     "id": "itemsBox",
@@ -16549,7 +16671,9 @@
         "func": "DELETE",
         "collection": "child"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "itemsRecallAllButton": {
     "type": "button",
@@ -16616,9 +16740,9 @@
       }
     ]
   },
-  "itemsHolder1": {
+  "itmesHolder1": {
     "type": "holder",
-    "id": "itemsHolder1",
+    "id": "itmesHolder1",
     "parent": "itemsBox",
     "fixedParent": true,
     "x": 10,
@@ -16777,12 +16901,12 @@
       }
     ]
   },
-  "itemsHolder2": {
+  "itmesHolder2": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder2",
+    "id": "itmesHolder2",
     "x": 110,
     "y": 11,
     "dropTarget": {
@@ -16790,12 +16914,12 @@
     },
     "parent": "itemsBox"
   },
-  "itemsHolder3": {
+  "itmesHolder3": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder3",
+    "id": "itmesHolder3",
     "x": 210,
     "y": 11,
     "dropTarget": {
@@ -16803,12 +16927,12 @@
     },
     "parent": "itemsBox"
   },
-  "itemsHolder4": {
+  "itmesHolder4": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder4",
+    "id": "itmesHolder4",
     "x": 310,
     "y": 11,
     "dropTarget": {
@@ -16816,12 +16940,12 @@
     },
     "parent": "itemsBox"
   },
-  "itemsHolder5": {
+  "itmesHolder5": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder5",
+    "id": "itmesHolder5",
     "x": 410,
     "y": 11,
     "dropTarget": {
@@ -16831,9 +16955,9 @@
     "dropOffsetX": 15,
     "parent": "itemsBox"
   },
-  "itemsHolder6": {
+  "itmesHolder6": {
     "type": "holder",
-    "id": "itemsHolder6",
+    "id": "itmesHolder6",
     "x": 510,
     "y": 12,
     "dropOffsetX": -4,
@@ -16842,13 +16966,13 @@
       "item": 6
     },
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "parent": "itemsBox"
   },
-  "itemsHolder7": {
+  "itmesHolder7": {
     "type": "holder",
-    "id": "itemsHolder7",
+    "id": "itmesHolder7",
     "x": 10,
     "y": 112,
     "width": 100,
@@ -16856,7 +16980,7 @@
       "item": 7
     },
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "dropOffsetY": 8,
     "parent": "itemsBox"
@@ -18593,7 +18717,9 @@
       "12 black",
       "13 black",
       "14 black"
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "y6hi": {
     "deck": "crowDeck",
@@ -18704,14 +18830,16 @@
     "text": "200",
     "gameID": true,
     "hintText": "\"After round is over, press Add Card Points button to display totals of captured points on the small tempoarary scoreboard. Compare to bid to determine what declarers' scores and opponsents' scores should be. If scores are correct, you can press the Transfer Score button.  Otherwise, when ready to enter final score on main scoreboard, use green/red +/- buttons.\"",
-    "y": 286
+    "y": 286,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
-  "itemsHolder8": {
+  "itmesHolder8": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder8",
+    "id": "itmesHolder8",
     "x": 210,
     "y": 112,
     "dropTarget": {
@@ -18719,12 +18847,12 @@
     },
     "parent": "itemsBox"
   },
-  "itemsHolder9": {
+  "itmesHolder9": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder9",
+    "id": "itmesHolder9",
     "x": 310,
     "y": 112,
     "dropTarget": {
@@ -18732,12 +18860,12 @@
     },
     "parent": "itemsBox"
   },
-  "itemsHolder10": {
+  "itmesHolder10": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder10",
+    "id": "itmesHolder10",
     "x": 410,
     "y": 112,
     "dropTarget": {
@@ -18745,12 +18873,12 @@
     },
     "parent": "itemsBox"
   },
-  "itemsHolder11": {
+  "itmesHolder11": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder11",
+    "id": "itmesHolder11",
     "x": 510,
     "y": 112,
     "dropTarget": {
@@ -19105,7 +19233,9 @@
           }
         ]
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID13": {
     "id": "gameID13",
@@ -19220,7 +19350,9 @@
           "var result = ${result} + 20"
         ]
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID14": {
     "id": "gameID14",
@@ -19319,7 +19451,9 @@
     ],
     "text": "1000",
     "hintText": "\"Use Items button during play to take out widgets as needed to indicate various game conditions.\\a\\a After round is over, press Add Card Points button. To score bonus points in the small scoreboard, move the scrollbar to highlight the row and press the green/red +/- buttons.\\a\\a When score on the temporary scoreboard is correct, move scrollbar all the way to the top and then the green/red +/- buttons will work on the main scoreboard.\"",
-    "y": 406
+    "y": 406,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameIDLabel": {
     "id": "gameIDLabel",
@@ -19351,7 +19485,9 @@
     "text": "Default",
     "movable": false,
     "movableInEdit": false,
-    "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\""
+    "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\"",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID15": {
     "id": "gameID15",
@@ -19595,7 +19731,9 @@
       [
         4
       ]
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "take1Button": {
     "type": "button",
@@ -19621,7 +19759,9 @@
         "widget": "routines",
         "routine": "autoSortRoutine"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "score+50": {
     "type": "button",
@@ -19757,7 +19897,9 @@
       }
     ],
     "text": "Reverse Sort",
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "slideHolderVertical": {
     "id": "slideHolderVertical",
@@ -19853,12 +19995,12 @@
       }
     ]
   },
-  "itemsHolder12": {
+  "itmesHolder12": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder12",
+    "id": "itmesHolder12",
     "x": 10,
     "y": 180,
     "dropTarget": {
@@ -19866,12 +20008,12 @@
     },
     "parent": "itemsBox"
   },
-  "itemsHolder13": {
+  "itmesHolder13": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder13",
+    "id": "itmesHolder13",
     "x": 110,
     "y": 180,
     "dropTarget": {
@@ -19879,12 +20021,12 @@
     },
     "parent": "itemsBox"
   },
-  "itemsHolder14": {
+  "itmesHolder14": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder14",
+    "id": "itmesHolder14",
     "x": 210,
     "y": 180,
     "dropTarget": {
@@ -19892,12 +20034,12 @@
     },
     "parent": "itemsBox"
   },
-  "itemsHolder15": {
+  "itmesHolder15": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder15",
+    "id": "itmesHolder15",
     "x": 310,
     "y": 180,
     "dropTarget": {
@@ -19916,7 +20058,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1686282209364,
+      "lastUpdate": 1686286449053,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, French Tarot, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
@@ -20045,7 +20187,9 @@
     ],
     "trumps": 4,
     "text": "Hearts",
-    "y": 410
+    "y": 410,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID17": {
     "id": "gameID17",
@@ -20236,7 +20380,9 @@
         "value": "${bidEW}"
       }
     ],
-    "tempScoreReset": false
+    "tempScoreReset": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "capturedHolder1": {
     "type": "holder",
@@ -20862,7 +21008,9 @@
         "property": "sortDefault",
         "value": 16
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "mightyLabel": {
     "id": "mightyLabel",
@@ -20969,7 +21117,9 @@
     "y": 931,
     "height": 70,
     "width": 110,
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "trackTrick3": {
     "inheritFrom": {
@@ -21201,7 +21351,9 @@
     "preventPiles": true,
     "borderRadius": 8,
     "movable": false,
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "trackTrickHolder1": {
     "type": "holder",
@@ -21427,7 +21579,9 @@
         "transferScoreButton",
         0
       ]
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "trackTrickSelectButton": {
     "type": "button",
@@ -21687,7 +21841,9 @@
         }
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAidDetail1": {
     "type": "seat",
@@ -21779,7 +21935,14 @@
       "K-Q-C-J-10-9-8-7-6",
       "10-9-8-K-Q-C-J-7-6"
     ],
-    "player": "Description"
+    "player": "Info",
+    "score33": [
+      "Take back all your counters",
+      "Take back all your counters unless another player wins all tricks",
+      "Take back 1/2 your counters if win 1+ tricks but have 0 penalties"
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid6": {
     "type": "scoreboard",
@@ -21817,7 +21980,9 @@
     "playerAid": true,
     "scoreProperty": "score6",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID20": {
     "id": "gameID20",
@@ -22021,7 +22186,9 @@
         "widget": "itemsRecallAllButton",
         "routine": "clickRoutine"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid12": {
     "type": "scoreboard",
@@ -22059,7 +22226,9 @@
     "scoreProperty": "score12",
     "movable": false,
     "movableInEdit": false,
-    "y": 265
+    "y": 265,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "messageButton": {
     "id": "messageButton",
@@ -22147,14 +22316,16 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
-  "itemsHolder16": {
+  "itmesHolder16": {
     "inheritFrom": {
-      "itemsHolder1": "*"
+      "itmesHolder1": "*"
     },
     "type": "holder",
-    "id": "itemsHolder16",
+    "id": "itmesHolder16",
     "x": 25,
     "y": 73,
     "dropTarget": {
@@ -22166,12 +22337,12 @@
     "dropOffsetY": 0,
     "parent": "itemsBox"
   },
-  "itemsHolder17": {
+  "itmesHolder17": {
     "inheritFrom": {
-      "itemsHolder16": "*"
+      "itmesHolder16": "*"
     },
     "type": "holder",
-    "id": "itemsHolder17",
+    "id": "itmesHolder17",
     "x": 76,
     "y": 73,
     "dropTarget": {
@@ -22181,12 +22352,12 @@
     "height": 25,
     "parent": "itemsBox"
   },
-  "itemsHolder18": {
+  "itmesHolder18": {
     "inheritFrom": {
-      "itemsHolder16": "*"
+      "itmesHolder16": "*"
     },
     "type": "holder",
-    "id": "itemsHolder18",
+    "id": "itmesHolder18",
     "x": 127,
     "y": 73,
     "dropTarget": {
@@ -22196,12 +22367,12 @@
     "height": 25,
     "parent": "itemsBox"
   },
-  "itemsHolder19": {
+  "itmesHolder19": {
     "inheritFrom": {
-      "itemsHolder16": "*"
+      "itmesHolder16": "*"
     },
     "type": "holder",
-    "id": "itemsHolder19",
+    "id": "itmesHolder19",
     "x": 178,
     "y": 73,
     "dropTarget": {
@@ -22211,12 +22382,12 @@
     "height": 25,
     "parent": "itemsBox"
   },
-  "itemsHolder20": {
+  "itmesHolder20": {
     "inheritFrom": {
-      "itemsHolder16": "*"
+      "itmesHolder16": "*"
     },
     "type": "holder",
-    "id": "itemsHolder20",
+    "id": "itmesHolder20",
     "x": 229,
     "y": 73,
     "dropTarget": {
@@ -22226,12 +22397,12 @@
     "height": 25,
     "parent": "itemsBox"
   },
-  "itemsHolder21": {
+  "itmesHolder21": {
     "inheritFrom": {
-      "itemsHolder16": "*"
+      "itmesHolder16": "*"
     },
     "type": "holder",
-    "id": "itemsHolder21",
+    "id": "itmesHolder21",
     "x": 280,
     "y": 73,
     "dropTarget": {
@@ -22241,12 +22412,12 @@
     "height": 25,
     "parent": "itemsBox"
   },
-  "itemsHolder22": {
+  "itmesHolder22": {
     "inheritFrom": {
-      "itemsHolder16": "*"
+      "itmesHolder16": "*"
     },
     "type": "holder",
-    "id": "itemsHolder22",
+    "id": "itmesHolder22",
     "x": 331,
     "y": 73,
     "dropTarget": {
@@ -22256,12 +22427,12 @@
     "height": 25,
     "parent": "itemsBox"
   },
-  "itemsHolder23": {
+  "itmesHolder23": {
     "inheritFrom": {
-      "itemsHolder16": "*"
+      "itmesHolder16": "*"
     },
     "type": "holder",
-    "id": "itemsHolder23",
+    "id": "itmesHolder23",
     "x": 383,
     "y": 73,
     "dropTarget": {
@@ -22271,12 +22442,12 @@
     "height": 25,
     "parent": "itemsBox"
   },
-  "itemsHolder24": {
+  "itmesHolder24": {
     "inheritFrom": {
-      "itemsHolder16": "*"
+      "itmesHolder16": "*"
     },
     "type": "holder",
-    "id": "itemsHolder24",
+    "id": "itmesHolder24",
     "x": 434,
     "y": 73,
     "dropTarget": {
@@ -22286,12 +22457,12 @@
     "height": 25,
     "parent": "itemsBox"
   },
-  "itemsHolder25": {
+  "itmesHolder25": {
     "inheritFrom": {
-      "itemsHolder16": "*"
+      "itmesHolder16": "*"
     },
     "type": "holder",
-    "id": "itemsHolder25",
+    "id": "itmesHolder25",
     "x": 485,
     "y": 73,
     "dropTarget": {
@@ -22301,12 +22472,12 @@
     "height": 25,
     "parent": "itemsBox"
   },
-  "itemsHolder26": {
+  "itmesHolder26": {
     "inheritFrom": {
-      "itemsHolder16": "*"
+      "itmesHolder16": "*"
     },
     "type": "holder",
-    "id": "itemsHolder26",
+    "id": "itmesHolder26",
     "x": 536,
     "y": 73,
     "dropTarget": {
@@ -22363,7 +22534,9 @@
       "align-items": "center"
     },
     "text": "Jass",
-    "height": 140
+    "height": 140,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gamesStandardLabel": {
     "id": "gamesStandardLabel",
@@ -22382,7 +22555,9 @@
       "align-items": "center"
     },
     "text": "Standard Deck Misc",
-    "height": 140
+    "height": 140,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gamesOtherLabel": {
     "id": "gamesOtherLabel",
@@ -22401,7 +22576,9 @@
       "justify-content": "center",
       "align-items": "center"
     },
-    "text": "Other Decks Misc"
+    "text": "Other Decks Misc",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gamesTarotLabel": {
     "id": "gamesTarotLabel",
@@ -22420,7 +22597,9 @@
       "justify-content": "center",
       "align-items": "center"
     },
-    "text": "Tarot"
+    "text": "Tarot",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid2": {
     "type": "scoreboard",
@@ -22460,7 +22639,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID21": {
     "id": "gameID21",
@@ -22638,7 +22819,9 @@
         0
       ]
     ],
-    "playerAidDetail1": "Scoring"
+    "playerAidDetail1": "Scoring",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid21": {
     "type": "scoreboard",
@@ -22678,7 +22861,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid20": {
     "id": "playerAid20",
@@ -22690,7 +22875,9 @@
     "layer": 14,
     "playerAid": true,
     "y": -126,
-    "x": 115
+    "x": 115,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid20a": {
     "id": "playerAid20a",
@@ -22796,7 +22983,9 @@
     ],
     "movableInEdit": false,
     "versionNumber": "4",
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "cloneButton": {
     "type": "button",
@@ -22846,7 +23035,9 @@
       }
     ],
     "text": "Clone",
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID22": {
     "id": "gameID22",
@@ -23122,7 +23313,9 @@
         "func": "CALL",
         "routine": "centerEnterRoutine"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "8oho": {
     "deck": "crowDeck",
@@ -23252,7 +23445,9 @@
       "align-items": "center"
     },
     "text": 0,
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID23": {
     "id": "gameID23",
@@ -23453,7 +23648,9 @@
       }
     ],
     "turnedCard": 8,
-    "dealLimit": 3
+    "dealLimit": 3,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid20b": {
     "id": "playerAid20b",
@@ -23596,7 +23793,9 @@
           }
         ]
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID25": {
     "id": "gameID25",
@@ -23848,7 +24047,9 @@
       "var isN = ${index} == 5",
       "var isNS = ${isN} || ${isS}"
     ],
-    "customFaceCount": 5
+    "customFaceCount": 5,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid25": {
     "type": "scoreboard",
@@ -23884,7 +24085,9 @@
     "showTotals": false,
     "playerAid": true,
     "scoreProperty": "score25",
-    "y": 260
+    "y": 260,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "3w0o": {
     "width": 30,
@@ -23920,7 +24123,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "3w0o",
-    "parent": "itemsHolder18",
+    "parent": "itmesHolder18",
     "clickable": false
   },
   "yi6b": {
@@ -23941,7 +24144,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "yi6b",
-    "parent": "itemsHolder10",
+    "parent": "itmesHolder10",
     "clickable": false
   },
   "6qt4": {
@@ -23978,7 +24181,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "6qt4",
-    "parent": "itemsHolder17",
+    "parent": "itmesHolder17",
     "clickable": false
   },
   "h904": {
@@ -23999,7 +24202,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "h904",
-    "parent": "itemsHolder8",
+    "parent": "itmesHolder8",
     "clickable": false
   },
   "vzn7": {
@@ -24027,7 +24230,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "vzn7",
-    "parent": "itemsHolder3",
+    "parent": "itmesHolder3",
     "clickable": false
   },
   "yywx": {
@@ -24054,7 +24257,7 @@
     "ownedBy": null,
     "clickable": null,
     "id": "yywx",
-    "parent": "itemsHolder7"
+    "parent": "itmesHolder7"
   },
   "sprn": {
     "x": 4,
@@ -24079,7 +24282,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "sprn",
-    "parent": "itemsHolder1",
+    "parent": "itmesHolder1",
     "clickable": false
   },
   "k9on": {
@@ -24107,7 +24310,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "k9on",
-    "parent": "itemsHolder2",
+    "parent": "itmesHolder2",
     "clickable": false
   },
   "kt1e": {
@@ -24144,7 +24347,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "kt1e",
-    "parent": "itemsHolder16",
+    "parent": "itmesHolder16",
     "clickable": false
   },
   "ftel": {
@@ -24181,7 +24384,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "ftel",
-    "parent": "itemsHolder25",
+    "parent": "itmesHolder25",
     "clickable": false
   },
   "95mt": {
@@ -24230,7 +24433,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "95mt",
-    "parent": "itemsHolder26",
+    "parent": "itmesHolder26",
     "clickable": false
   },
   "6wrx": {
@@ -24276,7 +24479,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "6wrx",
-    "parent": "itemsHolder5",
+    "parent": "itmesHolder5",
     "clickable": false
   },
   "z60k": {
@@ -24295,7 +24498,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "z60k",
-    "parent": "itemsHolder15",
+    "parent": "itmesHolder15",
     "clickable": false
   },
   "gw03": {
@@ -24314,7 +24517,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "gw03",
-    "parent": "itemsHolder14",
+    "parent": "itmesHolder14",
     "clickable": false
   },
   "uevu": {
@@ -24351,7 +24554,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "uevu",
-    "parent": "itemsHolder20",
+    "parent": "itmesHolder20",
     "clickable": false
   },
   "3pk6": {
@@ -24372,7 +24575,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "3pk6",
-    "parent": "itemsHolder6",
+    "parent": "itmesHolder6",
     "clickable": false
   },
   "18op": {
@@ -24409,7 +24612,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "18op",
-    "parent": "itemsHolder19",
+    "parent": "itmesHolder19",
     "clickable": false
   },
   "dwg8": {
@@ -24446,7 +24649,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "dwg8",
-    "parent": "itemsHolder21",
+    "parent": "itmesHolder21",
     "clickable": false
   },
   "thzy": {
@@ -24483,7 +24686,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "thzy",
-    "parent": "itemsHolder23",
+    "parent": "itmesHolder23",
     "clickable": false
   },
   "fa5f": {
@@ -24504,7 +24707,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "fa5f",
-    "parent": "itemsHolder9",
+    "parent": "itmesHolder9",
     "clickable": false
   },
   "edj7": {
@@ -24526,7 +24729,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "edj7",
-    "parent": "itemsHolder13",
+    "parent": "itmesHolder13",
     "clickable": false
   },
   "q5fk": {
@@ -24563,7 +24766,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "q5fk",
-    "parent": "itemsHolder22",
+    "parent": "itmesHolder22",
     "clickable": false
   },
   "qa29": {
@@ -24584,7 +24787,7 @@
     "itemMarker": true,
     "ownedBy": null,
     "id": "qa29",
-    "parent": "itemsHolder11",
+    "parent": "itmesHolder11",
     "clickable": false
   },
   "gameID26": {
@@ -24957,7 +25160,9 @@
         "value": "${nextTrump}"
       }
     ],
-    "nextTrump": "3"
+    "nextTrump": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid26": {
     "type": "scoreboard",
@@ -24990,7 +25195,9 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score26"
+    "scoreProperty": "score26",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "scoreSpecial": {
     "type": "button",
@@ -25033,7 +25240,9 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "takeSpecial": {
     "type": "button",
@@ -25059,7 +25268,9 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID27": {
     "id": "gameID27",
@@ -25476,7 +25687,9 @@
         ]
       }
     ],
-    "doNotCount": "holder"
+    "doNotCount": "holder",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid27": {
     "type": "scoreboard",
@@ -25509,7 +25722,9 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score27"
+    "scoreProperty": "score27",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID28": {
     "id": "gameID28",
@@ -25996,7 +26211,9 @@
         "value": "2",
         "text": "Show All Hearts"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "spanishDeck": {
     "type": "deck",
@@ -27012,7 +27229,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid25a": {
     "type": "scoreboard",
@@ -27071,7 +27290,9 @@
       1
     ],
     "score": [],
-    "playerAidSeat": true
+    "playerAidSeat": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid1": {
     "type": "scoreboard",
@@ -27106,7 +27327,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid7": {
     "type": "scoreboard",
@@ -27141,7 +27364,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid6a": {
     "type": "scoreboard",
@@ -27278,7 +27503,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "germanDeck": {
     "type": "deck",
@@ -28227,7 +28454,9 @@
       ]
     ],
     "sort1": "sortDefault",
-    "sort2": "suit"
+    "sort2": "suit",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid29": {
     "type": "scoreboard",
@@ -28259,7 +28488,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "choose15": {
     "type": "button",
@@ -29128,24 +29359,24 @@
     "staged": false,
     "parent": "pile2"
   },
-  "itemsHolder27": {
+  "itmesHolder27": {
     "inheritFrom": {
-      "itemsHolder15": "*"
+      "itmesHolder15": "*"
     },
     "type": "holder",
-    "id": "itemsHolder27",
+    "id": "itmesHolder27",
     "x": 410,
     "y": 180,
     "dropTarget": {
       "item": 27
     }
   },
-  "itemsHolder28": {
+  "itmesHolder28": {
     "inheritFrom": {
-      "itemsHolder15": "*"
+      "itmesHolder15": "*"
     },
     "type": "holder",
-    "id": "itemsHolder28",
+    "id": "itmesHolder28",
     "x": 510,
     "y": 180,
     "dropTarget": {
@@ -29172,147 +29403,147 @@
     "dragging": null,
     "ownedBy": null,
     "id": "0iep",
-    "parent": "itemsHolder12",
+    "parent": "itmesHolder12",
     "clickable": false
   },
-  "itemsHolder29": {
+  "itmesHolder29": {
     "inheritFrom": {
-      "itemsHolder12": "*"
+      "itmesHolder12": "*"
     },
     "type": "holder",
-    "id": "itemsHolder29",
+    "id": "itmesHolder29",
     "x": 10,
     "y": 250,
     "dropTarget": {
       "item": 29
     }
   },
-  "itemsHolder30": {
+  "itmesHolder30": {
     "inheritFrom": {
-      "itemsHolder29": "*"
+      "itmesHolder29": "*"
     },
     "type": "holder",
-    "id": "itemsHolder30",
+    "id": "itmesHolder30",
     "x": 110,
     "y": 250,
     "dropTarget": {
       "item": 30
     }
   },
-  "itemsHolder31": {
+  "itmesHolder31": {
     "inheritFrom": {
-      "itemsHolder29": "*"
+      "itmesHolder29": "*"
     },
     "type": "holder",
-    "id": "itemsHolder31",
+    "id": "itmesHolder31",
     "x": 210,
     "y": 255,
     "dropTarget": {
       "item": 31
     }
   },
-  "itemsHolder32": {
+  "itmesHolder32": {
     "inheritFrom": {
-      "itemsHolder29": "*"
+      "itmesHolder29": "*"
     },
     "type": "holder",
-    "id": "itemsHolder32",
+    "id": "itmesHolder32",
     "x": 310,
     "y": 250,
     "dropTarget": {
       "item": 32
     }
   },
-  "itemsHolder33": {
+  "itmesHolder33": {
     "inheritFrom": {
-      "itemsHolder29": "*"
+      "itmesHolder29": "*"
     },
     "type": "holder",
-    "id": "itemsHolder33",
+    "id": "itmesHolder33",
     "x": 410,
     "y": 250,
     "dropTarget": {
       "item": 33
     }
   },
-  "itemsHolder34": {
+  "itmesHolder34": {
     "inheritFrom": {
-      "itemsHolder29": "*"
+      "itmesHolder29": "*"
     },
     "type": "holder",
-    "id": "itemsHolder34",
+    "id": "itmesHolder34",
     "x": 510,
     "y": 250,
     "dropTarget": {
       "item": 34
     }
   },
-  "itemsHolder35": {
+  "itmesHolder35": {
     "inheritFrom": {
-      "itemsHolder34": "*"
+      "itmesHolder34": "*"
     },
     "type": "holder",
-    "id": "itemsHolder35",
+    "id": "itmesHolder35",
     "x": 10,
     "y": 320,
     "dropTarget": {
       "item": 35
     }
   },
-  "itemsHolder36": {
+  "itmesHolder36": {
     "inheritFrom": {
-      "itemsHolder35": "*"
+      "itmesHolder35": "*"
     },
     "type": "holder",
-    "id": "itemsHolder36",
+    "id": "itmesHolder36",
     "x": 110,
     "y": 320,
     "dropTarget": {
       "item": 36
     }
   },
-  "itemsHolder37": {
+  "itmesHolder37": {
     "inheritFrom": {
-      "itemsHolder35": "*"
+      "itmesHolder35": "*"
     },
     "type": "holder",
-    "id": "itemsHolder37",
+    "id": "itmesHolder37",
     "x": 210,
     "y": 320,
     "dropTarget": {
       "item": 37
     }
   },
-  "itemsHolder38": {
+  "itmesHolder38": {
     "inheritFrom": {
-      "itemsHolder35": "*"
+      "itmesHolder35": "*"
     },
     "type": "holder",
-    "id": "itemsHolder38",
+    "id": "itmesHolder38",
     "x": 309,
     "y": 318,
     "dropTarget": {
       "item": 38
     }
   },
-  "itemsHolder39": {
+  "itmesHolder39": {
     "inheritFrom": {
-      "itemsHolder35": "*"
+      "itmesHolder35": "*"
     },
     "type": "holder",
-    "id": "itemsHolder39",
+    "id": "itmesHolder39",
     "x": 410,
     "y": 320,
     "dropTarget": {
       "item": 39
     }
   },
-  "itemsHolder40": {
+  "itmesHolder40": {
     "inheritFrom": {
-      "itemsHolder35": "*"
+      "itmesHolder35": "*"
     },
     "type": "holder",
-    "id": "itemsHolder40",
+    "id": "itmesHolder40",
     "x": 510,
     "y": 320,
     "dropTarget": {
@@ -29336,7 +29567,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "2u5b",
-    "parent": "itemsHolder29",
+    "parent": "itmesHolder29",
     "clickable": false
   },
   "2sc8": {
@@ -29355,7 +29586,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "2sc8",
-    "parent": "itemsHolder30",
+    "parent": "itmesHolder30",
     "clickable": false
   },
   "xe11": {
@@ -29374,7 +29605,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "xe11",
-    "parent": "itemsHolder35",
+    "parent": "itmesHolder35",
     "clickable": false
   },
   "ohkh": {
@@ -29393,7 +29624,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "ohkh",
-    "parent": "itemsHolder36",
+    "parent": "itmesHolder36",
     "clickable": false
   },
   "izdp": {
@@ -29412,7 +29643,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "izdp",
-    "parent": "itemsHolder37",
+    "parent": "itmesHolder37",
     "clickable": false
   },
   "84jl": {
@@ -29431,7 +29662,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "84jl",
-    "parent": "itemsHolder38",
+    "parent": "itmesHolder38",
     "clickable": false
   },
   "rg6z": {
@@ -29454,7 +29685,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "rg6z",
-    "parent": "itemsHolder27",
+    "parent": "itmesHolder27",
     "clickable": false
   },
   "u7zn": {
@@ -29473,7 +29704,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "u7zn",
-    "parent": "itemsHolder32",
+    "parent": "itmesHolder32",
     "clickable": false
   },
   "79g7": {
@@ -29492,7 +29723,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "79g7",
-    "parent": "itemsHolder31",
+    "parent": "itmesHolder31",
     "clickable": false
   },
   "gawx": {
@@ -29515,7 +29746,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "gawx",
-    "parent": "itemsHolder33",
+    "parent": "itmesHolder33",
     "clickable": false
   },
   "vry9": {
@@ -29538,7 +29769,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "vry9",
-    "parent": "itemsHolder34",
+    "parent": "itmesHolder34",
     "clickable": false
   },
   "sae8": {
@@ -29561,7 +29792,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "sae8",
-    "parent": "itemsHolder40",
+    "parent": "itmesHolder40",
     "clickable": false
   },
   "ekqo": {
@@ -29580,7 +29811,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "ekqo",
-    "parent": "itemsHolder39",
+    "parent": "itmesHolder39",
     "clickable": false
   },
   "gameID30": {
@@ -30061,7 +30292,9 @@
       "♥",
       "G",
       "N"
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid30": {
     "type": "scoreboard",
@@ -30101,7 +30334,9 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score30"
+    "scoreProperty": "score30",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAidDetail3": {
     "type": "seat",
@@ -30121,7 +30356,9 @@
       59
     ],
     "score": [],
-    "playerAidSeat": true
+    "playerAidSeat": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAidDetail4": {
     "type": "seat",
@@ -30141,7 +30378,9 @@
       118
     ],
     "score": [],
-    "playerAidSeat": true
+    "playerAidSeat": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid30a": {
     "type": "scoreboard",
@@ -30640,7 +30879,9 @@
       "♥",
       "*",
       "NT"
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID31": {
     "id": "gameID31",
@@ -31191,7 +31432,9 @@
         "func": "SORT",
         "key": "deck2Mark"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "cavaliers": {
     "type": "deck",
@@ -31486,7 +31729,9 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score31"
+    "scoreProperty": "score31",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "575h": {
     "deck": "cavaliers",
@@ -33757,7 +34002,9 @@
       "G-C",
       "",
       ""
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID33": {
     "id": "gameID33",
@@ -33774,6 +34021,10 @@
       "Adjustments"
     ],
     "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
       [
         "trump",
         0
@@ -33820,7 +34071,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/agonaunt.html\"",
+    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/agonaunt.html.\\a\\a Manually move tokens from holder by seat to player board in upper-left. Queens and jokers will be displayed face-up in front of the player taking the trick as a reminder. When it is time for the 'Dump Trick' a message will appear above the hand.\\a\\a After the round, press one or more of the buttons below the board to move tokens back to players or to the discard area.\"",
     "scoreExceptionsRoutine": [
       "var result = ${points}",
       {
@@ -33937,7 +34188,7 @@
             "loopRoutine": [
               {
                 "func": "MOVE",
-                "from": "itemsHolder4",
+                "from": "itmesHolder4",
                 "to": "${agonyHolder}"
               }
             ]
@@ -34021,7 +34272,28 @@
           }
         ]
       }
-    ]
+    ],
+    "playerAidDetail1": "Info",
+    "playerSitRoutine": [
+      "var agonyHolder = 'agonyHolder' + ${seatIndex}",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${agonyHolder}"
+      },
+      {
+        "func": "SET",
+        "property": "ownedBy",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${playerColor}"
+      }
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "agonyAuntBack": {
     "type": "",
@@ -34037,6 +34309,8 @@
     },
     "x": 5,
     "y": 5,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0",
     "scale": 0
   },
   "agonyAunt1": {
@@ -34306,7 +34580,7 @@
     "dragging": null,
     "ownedBy": null,
     "id": "wa4z",
-    "parent": "itemsHolder28",
+    "parent": "itmesHolder28",
     "clickable": false
   },
   "3dus": {
@@ -34344,14 +34618,14 @@
     "dragging": null,
     "ownedBy": null,
     "id": "3dus",
-    "parent": "itemsHolder24",
+    "parent": "itmesHolder24",
     "clickable": false
   },
   "agonyTokensButton1": {
     "type": "button",
     "id": "agonyTokensButton1",
     "x": 6,
-    "y": 320,
+    "y": 370,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -34421,7 +34695,7 @@
     "type": "button",
     "id": "agonyTokensButton2",
     "x": 110,
-    "y": 320,
+    "y": 370,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -34479,7 +34753,7 @@
     "type": "button",
     "id": "agonyTokensButton3",
     "x": 214,
-    "y": 320,
+    "y": 370,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -34564,9 +34838,72 @@
         "key": "ownedBy"
       }
     ],
-    "y": 400
+    "y": 450
   },
-  "4vh8": {
+  "agonyDumpLabel": {
+    "id": "agonyDumpLabel",
+    "parent": "agonyAuntBack",
+    "fixedParent": true,
+    "x": 715,
+    "y": 755,
+    "width": 152,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "30px",
+      "color": "red"
+    },
+    "text": "Dump Trick",
+    "scale": 0
+  },
+  "playerAid33": {
+    "type": "scoreboard",
+    "id": "playerAid33",
+    "x": 1225,
+    "y": 560,
+    "width": 360,
+    "height": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Score",
+    "rounds": [
+      "Win every trick",
+      "Win no\ntricks",
+      "Take no\npenalties"
+    ],
+    "seats": "playerAidDetail1",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true,
+    "scoreProperty": "score33",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
+  },
+  "agonyInfoLabel": {
+    "id": "agonyInfoLabel",
+    "x": 5,
+    "y": 320,
+    "width": 305,
+    "height": 40,
+    "text": "Remove 1 extra token from your stack for each row/column/diagonal with 3 of yours.",
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "agonyAuntBack",
+    "fixedParent": true
+  },
+  "fyng": {
     "width": 40,
     "height": 40,
     "classes": "chip",
@@ -34596,31 +34933,15 @@
     "item": 4,
     "color3": "#f8dd9f",
     "color2": "#000000",
-    "clonedFrom": "rv37",
+    "clonedFrom": "1uun",
     "itemMarker": true,
     "css": "position:relative; order: ${PROPERTY z}",
     "x": 4,
     "y": 4,
     "ownedBy": null,
-    "id": "4vh8",
-    "parent": "itemsHolder4",
+    "id": "fyng",
+    "parent": "itmesHolder4",
     "clickable": false
-  },
-  "agonyDumpLabel": {
-    "id": "agonyDumpLabel",
-    "parent": "agonyAuntBack",
-    "fixedParent": true,
-    "x": 715,
-    "y": 755,
-    "width": 152,
-    "height": 20,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "font-size": "30px",
-      "color": "red"
-    },
-    "text": "Dump Trick"
   },
   "pile1": {
     "type": "pile",
