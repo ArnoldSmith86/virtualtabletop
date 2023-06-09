@@ -6,6 +6,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
+import fetch from 'node-fetch';
 
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
