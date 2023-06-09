@@ -94,7 +94,9 @@
         ]
       }
     ],
-    "childrenPerOwner": true
+    "childrenPerOwner": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "fate_A_C": {
     "id": "fate_A_C",
@@ -573,7 +575,9 @@
     "movableInEdit": false,
     "onEnter": {
       "rotation": 0
-    }
+    },
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "recallButton": {
     "type": "button",
@@ -763,6 +767,7 @@
           }
         ]
       },
+      "//The following functions erase certain properties on cards used by specific games.",
       "//This is needed because of Truco",
       {
         "func": "SELECT",
@@ -775,7 +780,7 @@
         "property": "sortTrucoPaulista",
         "value": null
       },
-      "//This is needed because of Pitch",
+      "//This is needed because of Pitch and Agony Aunt",
       {
         "func": "SET",
         "property": "suit",
@@ -784,6 +789,11 @@
       {
         "func": "SET",
         "property": "sortDefault",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "order",
         "value": null
       },
       "//This is needed because of 99",
@@ -940,7 +950,9 @@
     ],
     "css": {
       "border-radius": "10px 4px 4px 10px"
-    }
+    },
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "bidValue1": {
     "id": "bidValue1",
@@ -1595,7 +1607,9 @@
     "movable": false,
     "movableInEdit": false,
     "scale": 0.8,
-    "owner": []
+    "owner": [],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "closeButton": {
     "type": "button",
@@ -1721,7 +1735,9 @@
       9,
       8,
       7
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "settings": {
     "type": "button",
@@ -1731,7 +1747,7 @@
     "width": 90,
     "height": 50,
     "movableInEdit": false,
-    "css": "font-size: 20px; line-height:1.05",
+    "css": "font-size: 17px; line-height:1.05",
     "text": "Visuals & Other",
     "clickRoutine": [
       {
@@ -2584,7 +2600,10 @@
         "value": "${PROPERTY bgColor}"
       }
     ],
-    "bgColor": "#deeaf0"
+    "bgColor": "#deeaf0",
+    "showbidHistory": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "holder1": {
     "type": "holder",
@@ -2657,7 +2676,7 @@
     "index": 2,
     "x": 435,
     "y": 535,
-    "color": "#999999",
+    "color": "#3700f0",
     "scale": 0,
     "score": [],
     "tricks": 0,
@@ -2677,7 +2696,8 @@
       " "
     ],
     "showing": false,
-    "player": ""
+    "player": "",
+    "ownedBy": "LawDawg"
   },
   "bidValue2": {
     "inheritFrom": {
@@ -2757,7 +2777,7 @@
       0
     ],
     "turn": false,
-    "player": ""
+    "ownedBy": "LawDawg"
   },
   "bidValue3": {
     "inheritFrom": {
@@ -2814,7 +2834,7 @@
     "index": 4,
     "x": 435,
     "y": 160,
-    "color": "#999999",
+    "color": "#3700f0",
     "scale": 0,
     "score": [],
     "tricks": 0,
@@ -2834,7 +2854,8 @@
       " "
     ],
     "showing": false,
-    "player": ""
+    "player": "",
+    "ownedBy": "LawDawg"
   },
   "bidValue4": {
     "inheritFrom": {
@@ -2910,7 +2931,7 @@
       " "
     ],
     "showing": false,
-    "player": ""
+    "ownedBy": "LawDawg"
   },
   "bidValue5": {
     "inheritFrom": {
@@ -2969,7 +2990,7 @@
     "index": 6,
     "x": 1010,
     "y": 160,
-    "color": "#999999",
+    "color": "#3700f0",
     "scale": 0,
     "score": [],
     "tricks": 0,
@@ -2992,7 +3013,8 @@
     "player": "",
     "mainColor": "#ffffff",
     "textColor": "#000000",
-    "glowColor": "#000000"
+    "glowColor": "#000000",
+    "ownedBy": "LawDawg"
   },
   "bidValue6": {
     "inheritFrom": {
@@ -3068,7 +3090,7 @@
     ],
     "showing": false,
     "turn": false,
-    "player": ""
+    "ownedBy": "LawDawg"
   },
   "bidValue7": {
     "inheritFrom": {
@@ -3125,7 +3147,7 @@
     "index": 8,
     "x": 1010,
     "y": 535,
-    "color": "#999999",
+    "color": "#3700f0",
     "scale": 0,
     "score": [],
     "tricks": 0,
@@ -3145,7 +3167,8 @@
       " "
     ],
     "showing": false,
-    "player": ""
+    "player": "",
+    "ownedBy": "LawDawg"
   },
   "bidValue8": {
     "inheritFrom": {
@@ -3222,7 +3245,9 @@
       "seat6",
       "seat7",
       "seat8"
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "dealButton": {
     "type": "button",
@@ -3323,7 +3348,9 @@
     ],
     "text": "Deal",
     "width": 60,
-    "height": 60
+    "height": 60,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "deck1": {
     "type": "deck",
@@ -5505,7 +5532,9 @@
     "dropTarget": {
       "type": "card"
     },
-    "y": 21
+    "y": 21,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "deck2": {
     "type": "deck",
@@ -5682,10 +5711,7 @@
     "deck": "jokers",
     "cardType": "T 1J",
     "staged": false,
-    "parent": "pile2",
-    "order": 9,
-    "sortAceTen": 8,
-    "suit": 3
+    "parent": "pile2"
   },
   "jokerBlack2": {
     "type": "card",
@@ -5708,7 +5734,9 @@
       "type": "card"
     },
     "scale": 0,
-    "dropLimit": 0
+    "dropLimit": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "centerHolder": {
     "type": "holder",
@@ -5856,7 +5884,9 @@
       }
     ],
     "scale": 0,
-    "dropLimit": 0
+    "dropLimit": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "deleteButton": {
     "type": "button",
@@ -5903,7 +5933,9 @@
         "func": "DELETE"
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "trump": {
     "id": "trump",
@@ -6091,7 +6123,9 @@
     ],
     "customFaceCount": 6,
     "trump": 0,
-    "deckSuitsColor": ""
+    "deckSuitsColor": "",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "trumpLabel": {
     "id": "trumpLabel",
@@ -6587,7 +6621,9 @@
       }
     ],
     "activeGameChangeRoutine": [],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "settingsDecks": {
     "type": "button",
@@ -6597,7 +6633,7 @@
     "width": 90,
     "height": 50,
     "movableInEdit": false,
-    "css": "font-size: 20px; line-height:1.05",
+    "css": "font-size: 18px; line-height:1.05",
     "text": "Decks & Players",
     "jokerCount": 0,
     "seatCount": 4,
@@ -7752,7 +7788,10 @@
         ]
       }
     ],
-    "dummyHand": 0
+    "dummyHand": 0,
+    "j": "o",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "deckOptions": {
     "id": "deckOptions",
@@ -8141,7 +8180,9 @@
         "property": "faces",
         "value": "${PROPERTY deckDiceFaces OF $thisDeck}"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "resetScoresButton": {
     "type": "button",
@@ -8271,7 +8312,9 @@
         "func": "SHUFFLE",
         "holder": "deckHolder"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "score+10": {
     "type": "button",
@@ -8413,7 +8456,9 @@
     "movableInEdit": false,
     "layer": -5,
     "width": 105,
-    "borderRadius": 8
+    "borderRadius": 8,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "turnButton": {
     "type": "button",
@@ -8455,7 +8500,9 @@
     "direction": "forward",
     "css": {
       "border-radius": "10px 4px 4px 10px"
-    }
+    },
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "discardLabel": {
     "id": "discardLabel",
@@ -8632,7 +8679,9 @@
         "to": "capturedHolder${seatIndex}",
         "count": 0
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "background": {
     "id": "background",
@@ -8644,7 +8693,9 @@
       "background": "${PROPERTY bgColor}"
     },
     "movableInEdit": false,
-    "bgColor": "#deeaf0"
+    "bgColor": "#deeaf0",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "backHolder1": {
     "type": "holder",
@@ -8746,7 +8797,9 @@
     "layer": -5,
     "movableInEdit": false,
     "classes": "transparent",
-    "dropLimit": 0
+    "dropLimit": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "tempScoreboard": {
     "type": "scoreboard",
@@ -8782,10 +8835,12 @@
     ],
     "roundLabel": "",
     "y": 650,
+    "scale": 0,
     "rounds": [
       "Card Points"
     ],
-    "scale": 0
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "seat1": {
     "type": "seat",
@@ -8983,6 +9038,7 @@
     ],
     "hideWhenUnused": true,
     "playerChangeRoutine": [
+      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
         "func": "IF",
         "operand1": "${PROPERTY player}",
@@ -9004,6 +9060,17 @@
             ],
             "property": "textColor",
             "value": "${contrast}"
+          },
+          {
+            "func": "IF",
+            "condition": "${PROPERTY playerSitRoutine OF $gameID}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "${gameID}",
+                "routine": "playerSitRoutine"
+              }
+            ]
           }
         ],
         "thenRoutine": [
@@ -9026,10 +9093,22 @@
           {
             "func": "CALL",
             "routine": "setDefaultsRoutine"
+          },
+          {
+            "func": "IF",
+            "condition": "${PROPERTY playerSitRoutine OF $gameID}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "${gameID}",
+                "routine": "playerStandRoutine"
+              }
+            ]
           }
         ]
       }
-    ]
+    ],
+    "ownedBy": "LawDawg"
   },
   "preSetsButton": {
     "type": "button",
@@ -9176,7 +9255,6 @@
     "text": "Game:",
     "layer": -4,
     "preSetRoutine": [
-      "var gameID = 'gameID' + ${PROPERTY preSet}",
       "//Loop through each default setting in settingsArray, settingsDeckArray, and displayArray and SET it",
       {
         "func": "FOREACH",
@@ -9332,6 +9410,7 @@
     ],
     "movableInEdit": false,
     "setupRoutine": [
+      "var gameID = 'gameID' + ${PROPERTY preSet}",
       {
         "func": "SELECT",
         "property": "clonedCard",
@@ -9392,13 +9471,26 @@
         "func": "CALL",
         "widget": "deckOptions",
         "routine": "deckSuitsRoutine"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY postSetExceptionsRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "postSetExceptionsRoutine"
+          }
+        ]
       }
     ],
     "default0": {
       "text": "Default",
       "value": "0"
     },
-    "preSet": "0"
+    "preSet": "0",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "bids": {
     "id": "bids",
@@ -9457,7 +9549,9 @@
         ]
       }
     ],
-    "double": 1
+    "double": 1,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "bidslabel": {
     "id": "bidslabel",
@@ -10596,7 +10690,9 @@
         "property": "activeFace",
         "value": 0
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "tarokyDeck": {
     "type": "deck",
@@ -12424,7 +12520,9 @@
       "seat7",
       "seat8"
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "4pScoreCoiffeurButton": {
     "type": "button",
@@ -13043,7 +13141,9 @@
     "y": 910,
     "classes": "symbols",
     "activeFace": 1,
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "tricksLabel": {
     "id": "tricksLabel",
@@ -13137,7 +13237,9 @@
     "layer": -6,
     "movableInEdit": false,
     "width": 24,
-    "rotation": 180
+    "rotation": 180,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "actionsBox": {
     "id": "actionsBox",
@@ -13153,7 +13255,9 @@
     "y": 691,
     "onlyVisibleForSeat": [],
     "borderRadius": 8,
-    "layer": 7
+    "layer": 7,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "showArrowButton": {
     "type": "button",
@@ -13543,7 +13647,9 @@
       }
     ],
     "Inuka": true,
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAidButton": {
     "type": "button",
@@ -13596,6 +13702,8 @@
       }
     ],
     "movableInEdit": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0",
     "scale": 0
   },
   "playerAid9": {
@@ -13610,7 +13718,9 @@
     "image": "/assets/186106283_20117",
     "movableInEdit": false,
     "onlyVisibleForSeat": [],
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID9": {
     "id": "gameID9",
@@ -13818,7 +13928,9 @@
         ]
       }
     ],
-    "transferButtonReturn": false
+    "transferButtonReturn": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID0": {
     "id": "gameID0",
@@ -13882,6 +13994,10 @@
       [
         "bidWinner",
         1
+      ],
+      [
+        "agonyAuntBack",
+        0
       ]
     ],
     "settingsArray": [
@@ -14151,7 +14267,9 @@
       }
     ],
     "customFaceCount": 6,
-    "showTempScoreTotals": true
+    "showTempScoreTotals": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID1": {
     "id": "gameID1",
@@ -14483,7 +14601,9 @@
         "playerAidButton",
         1
       ]
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID2": {
     "id": "gameID2",
@@ -14661,7 +14781,9 @@
         0
       ]
     ],
-    "playerAidDetail1": "Scoring"
+    "playerAidDetail1": "Scoring",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID3": {
     "id": "gameID3",
@@ -14931,7 +15053,9 @@
       }
     ],
     "autoTeam": true,
-    "x": -529
+    "x": -529,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID4": {
     "id": "gameID4",
@@ -15137,7 +15261,9 @@
         ]
       }
     ],
-    "transferButtonReturn": false
+    "transferButtonReturn": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID5": {
     "id": "gameID5",
@@ -15241,7 +15367,9 @@
         "transferScoreButton",
         0
       ]
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID6": {
     "id": "gameID6",
@@ -15661,7 +15789,9 @@
           }
         ]
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID7": {
     "id": "gameID7",
@@ -16110,7 +16240,9 @@
         "playerAidButton",
         1
       ]
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID8": {
     "id": "gameID8",
@@ -16358,7 +16490,9 @@
       ]
     ],
     "x": -410,
-    "customFaceCount": 7
+    "customFaceCount": 7,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "pawnToken": {
     "id": "pawnToken",
@@ -16366,7 +16500,7 @@
     "y": 143,
     "width": 37,
     "height": 67,
-    "color": "#a9c6e8",
+    "color": "#3700f0",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
     "svgReplaces": {
@@ -16375,7 +16509,8 @@
       "#borderWidth": "borderWidth"
     },
     "borderColor": "black",
-    "borderWidth": 1
+    "borderWidth": 1,
+    "ownedBy": "LawDawg"
   },
   "suitDice": {
     "type": "dice",
@@ -16469,7 +16604,9 @@
         "image": "i/icons/hearts.svg",
         "deckSuitColor": "#e50932"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "itemsButton": {
     "type": "button",
@@ -16508,7 +16645,9 @@
     "width": 24,
     "text": "Items",
     "rotation": 180,
-    "layer": -4
+    "layer": -4,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "itemsBox": {
     "id": "itemsBox",
@@ -16532,7 +16671,9 @@
         "func": "DELETE",
         "collection": "child"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "itemsRecallAllButton": {
     "type": "button",
@@ -16557,7 +16698,8 @@
       {
         "func": "SELECT",
         "source": "DEFAULT",
-        "property": "parent",
+        "property": "ownedBy",
+        "relation": "!=",
         "value": null
       },
       {
@@ -18575,7 +18717,9 @@
       "12 black",
       "13 black",
       "14 black"
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "y6hi": {
     "deck": "crowDeck",
@@ -18686,7 +18830,9 @@
     "text": "200",
     "gameID": true,
     "hintText": "\"After round is over, press Add Card Points button to display totals of captured points on the small tempoarary scoreboard. Compare to bid to determine what declarers' scores and opponsents' scores should be. If scores are correct, you can press the Transfer Score button.  Otherwise, when ready to enter final score on main scoreboard, use green/red +/- buttons.\"",
-    "y": 286
+    "y": 286,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "itmesHolder8": {
     "inheritFrom": {
@@ -19087,7 +19233,9 @@
           }
         ]
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID13": {
     "id": "gameID13",
@@ -19202,7 +19350,9 @@
           "var result = ${result} + 20"
         ]
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID14": {
     "id": "gameID14",
@@ -19301,7 +19451,9 @@
     ],
     "text": "1000",
     "hintText": "\"Use Items button during play to take out widgets as needed to indicate various game conditions.\\a\\a After round is over, press Add Card Points button. To score bonus points in the small scoreboard, move the scrollbar to highlight the row and press the green/red +/- buttons.\\a\\a When score on the temporary scoreboard is correct, move scrollbar all the way to the top and then the green/red +/- buttons will work on the main scoreboard.\"",
-    "y": 406
+    "y": 406,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameIDLabel": {
     "id": "gameIDLabel",
@@ -19333,7 +19485,9 @@
     "text": "Default",
     "movable": false,
     "movableInEdit": false,
-    "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\""
+    "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\"",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID15": {
     "id": "gameID15",
@@ -19577,7 +19731,9 @@
       [
         4
       ]
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "take1Button": {
     "type": "button",
@@ -19603,7 +19759,9 @@
         "widget": "routines",
         "routine": "autoSortRoutine"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "score+50": {
     "type": "button",
@@ -19739,7 +19897,9 @@
       }
     ],
     "text": "Reverse Sort",
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "slideHolderVertical": {
     "id": "slideHolderVertical",
@@ -19898,10 +20058,10 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li></ul></ul></div></div>",
-      "lastUpdate": 1686252819700,
+      "lastUpdate": 1686286449053,
       "showName": true,
       "skill": "",
-      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, French Tarot, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
+      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, French Tarot, Gong Zhu, Hearts, Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco\n\nv1.1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
@@ -20027,7 +20187,9 @@
     ],
     "trumps": 4,
     "text": "Hearts",
-    "y": 410
+    "y": 410,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID17": {
     "id": "gameID17",
@@ -20218,7 +20380,9 @@
         "value": "${bidEW}"
       }
     ],
-    "tempScoreReset": false
+    "tempScoreReset": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "capturedHolder1": {
     "type": "holder",
@@ -20844,7 +21008,9 @@
         "property": "sortDefault",
         "value": 16
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "mightyLabel": {
     "id": "mightyLabel",
@@ -20951,7 +21117,9 @@
     "y": 931,
     "height": 70,
     "width": 110,
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "trackTrick3": {
     "inheritFrom": {
@@ -21183,7 +21351,9 @@
     "preventPiles": true,
     "borderRadius": 8,
     "movable": false,
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "trackTrickHolder1": {
     "type": "holder",
@@ -21409,7 +21579,9 @@
         "transferScoreButton",
         0
       ]
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "trackTrickSelectButton": {
     "type": "button",
@@ -21669,7 +21841,9 @@
         }
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAidDetail1": {
     "type": "seat",
@@ -21761,7 +21935,14 @@
       "K-Q-C-J-10-9-8-7-6",
       "10-9-8-K-Q-C-J-7-6"
     ],
-    "player": "Description"
+    "player": "Info",
+    "score33": [
+      "Take back all your counters",
+      "Take back all your counters unless another player wins all tricks",
+      "Take back 1/2 your counters if win 1+ tricks but have 0 penalties"
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid6": {
     "type": "scoreboard",
@@ -21799,7 +21980,9 @@
     "playerAid": true,
     "scoreProperty": "score6",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID20": {
     "id": "gameID20",
@@ -22003,7 +22186,9 @@
         "widget": "itemsRecallAllButton",
         "routine": "clickRoutine"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid12": {
     "type": "scoreboard",
@@ -22041,7 +22226,9 @@
     "scoreProperty": "score12",
     "movable": false,
     "movableInEdit": false,
-    "y": 265
+    "y": 265,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "messageButton": {
     "id": "messageButton",
@@ -22129,7 +22316,9 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "itmesHolder16": {
     "inheritFrom": {
@@ -22345,7 +22534,9 @@
       "align-items": "center"
     },
     "text": "Jass",
-    "height": 140
+    "height": 140,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gamesStandardLabel": {
     "id": "gamesStandardLabel",
@@ -22364,7 +22555,9 @@
       "align-items": "center"
     },
     "text": "Standard Deck Misc",
-    "height": 140
+    "height": 140,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gamesOtherLabel": {
     "id": "gamesOtherLabel",
@@ -22383,7 +22576,9 @@
       "justify-content": "center",
       "align-items": "center"
     },
-    "text": "Other Decks Misc"
+    "text": "Other Decks Misc",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gamesTarotLabel": {
     "id": "gamesTarotLabel",
@@ -22402,7 +22597,9 @@
       "justify-content": "center",
       "align-items": "center"
     },
-    "text": "Tarot"
+    "text": "Tarot",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid2": {
     "type": "scoreboard",
@@ -22442,7 +22639,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID21": {
     "id": "gameID21",
@@ -22620,7 +22819,9 @@
         0
       ]
     ],
-    "playerAidDetail1": "Scoring"
+    "playerAidDetail1": "Scoring",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid21": {
     "type": "scoreboard",
@@ -22660,7 +22861,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid20": {
     "id": "playerAid20",
@@ -22672,7 +22875,9 @@
     "layer": 14,
     "playerAid": true,
     "y": -126,
-    "x": 115
+    "x": 115,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid20a": {
     "id": "playerAid20a",
@@ -22778,7 +22983,9 @@
     ],
     "movableInEdit": false,
     "versionNumber": "4",
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "cloneButton": {
     "type": "button",
@@ -22828,7 +23035,9 @@
       }
     ],
     "text": "Clone",
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID22": {
     "id": "gameID22",
@@ -23104,7 +23313,9 @@
         "func": "CALL",
         "routine": "centerEnterRoutine"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "8oho": {
     "deck": "crowDeck",
@@ -23234,7 +23445,9 @@
       "align-items": "center"
     },
     "text": 0,
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID23": {
     "id": "gameID23",
@@ -23435,7 +23648,9 @@
       }
     ],
     "turnedCard": 8,
-    "dealLimit": 3
+    "dealLimit": 3,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid20b": {
     "id": "playerAid20b",
@@ -23578,7 +23793,9 @@
           }
         ]
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID25": {
     "id": "gameID25",
@@ -23830,7 +24047,9 @@
       "var isN = ${index} == 5",
       "var isNS = ${isN} || ${isS}"
     ],
-    "customFaceCount": 5
+    "customFaceCount": 5,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid25": {
     "type": "scoreboard",
@@ -23866,7 +24085,9 @@
     "showTotals": false,
     "playerAid": true,
     "scoreProperty": "score25",
-    "y": 260
+    "y": 260,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "3w0o": {
     "width": 30,
@@ -24012,43 +24233,6 @@
     "parent": "itmesHolder3",
     "clickable": false
   },
-  "5xso": {
-    "width": 30,
-    "height": 30,
-    "item": 24,
-    "color": "#fcf0d4",
-    "color3": "#f8dd9f",
-    "color2": "#000000",
-    "layer": 10,
-    "svgReplaces": {
-      "#000000": "color"
-    },
-    "text": 1,
-    "css": {
-      "border": "1px solid ${PROPERTY color2}",
-      "color": "${PROPERTY color2}",
-      "background": "${PROPERTY color}",
-      "text-align": "center",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center"
-    },
-    "borderRadius": 30,
-    "faces": [
-      {
-        "text": 9
-      },
-      {
-        "text": "x9"
-      }
-    ],
-    "clonedFrom": "0qjv",
-    "itemMarker": true,
-    "ownedBy": null,
-    "id": "5xso",
-    "parent": "itmesHolder24",
-    "clickable": false
-  },
   "yywx": {
     "type": "label",
     "text": "Label",
@@ -24099,45 +24283,6 @@
     "ownedBy": null,
     "id": "sprn",
     "parent": "itmesHolder1",
-    "clickable": false
-  },
-  "msiq": {
-    "x": 4,
-    "y": 4,
-    "width": 40,
-    "height": 40,
-    "classes": "chip",
-    "color": "#fcf0d4",
-    "faces": [
-      {
-        "image": "i/game-pieces/2D/Checkers-2D.svg",
-        "crowned": false
-      },
-      {
-        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "crowned": true
-      }
-    ],
-    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 1,
-    "crowned": true,
-    "secondaryColor": "#ffffff",
-    "layer": 10,
-    "item": 4,
-    "color3": "#f8dd9f",
-    "color2": "#000000",
-    "clonedFrom": "19vo",
-    "itemMarker": true,
-    "ownedBy": null,
-    "id": "msiq",
-    "parent": "itmesHolder4",
     "clickable": false
   },
   "k9on": {
@@ -25015,7 +25160,9 @@
         "value": "${nextTrump}"
       }
     ],
-    "nextTrump": "3"
+    "nextTrump": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid26": {
     "type": "scoreboard",
@@ -25048,7 +25195,9 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score26"
+    "scoreProperty": "score26",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "scoreSpecial": {
     "type": "button",
@@ -25091,7 +25240,9 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "takeSpecial": {
     "type": "button",
@@ -25117,7 +25268,9 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID27": {
     "id": "gameID27",
@@ -25534,7 +25687,9 @@
         ]
       }
     ],
-    "doNotCount": "holder"
+    "doNotCount": "holder",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid27": {
     "type": "scoreboard",
@@ -25567,7 +25722,9 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score27"
+    "scoreProperty": "score27",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID28": {
     "id": "gameID28",
@@ -26054,7 +26211,9 @@
         "value": "2",
         "text": "Show All Hearts"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "spanishDeck": {
     "type": "deck",
@@ -27070,7 +27229,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid25a": {
     "type": "scoreboard",
@@ -27129,7 +27290,9 @@
       1
     ],
     "score": [],
-    "playerAidSeat": true
+    "playerAidSeat": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid1": {
     "type": "scoreboard",
@@ -27164,7 +27327,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid7": {
     "type": "scoreboard",
@@ -27199,7 +27364,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid6a": {
     "type": "scoreboard",
@@ -27336,7 +27503,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "germanDeck": {
     "type": "deck",
@@ -28285,7 +28454,9 @@
       ]
     ],
     "sort1": "sortDefault",
-    "sort2": "suit"
+    "sort2": "suit",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid29": {
     "type": "scoreboard",
@@ -28317,7 +28488,9 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "choose15": {
     "type": "button",
@@ -29553,29 +29726,6 @@
     "parent": "itmesHolder31",
     "clickable": false
   },
-  "3irw": {
-    "y": 4,
-    "x": 4,
-    "width": 50,
-    "height": 50,
-    "image": "i/icons/circle.svg",
-    "svgReplaces": {
-      "currentColor": "itemColor"
-    },
-    "item": 28,
-    "itemColor": "#d55e00",
-    "color": "#fcf0d4",
-    "color3": "#f8dd9f",
-    "color2": "#000000",
-    "layer": 10,
-    "clonedFrom": "cznb",
-    "itemMarker": true,
-    "dragging": null,
-    "ownedBy": null,
-    "id": "3irw",
-    "parent": "itmesHolder28",
-    "clickable": false
-  },
   "gawx": {
     "y": 4,
     "x": 4,
@@ -30142,7 +30292,9 @@
       "♥",
       "G",
       "N"
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid30": {
     "type": "scoreboard",
@@ -30182,7 +30334,9 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score30"
+    "scoreProperty": "score30",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAidDetail3": {
     "type": "seat",
@@ -30202,7 +30356,9 @@
       59
     ],
     "score": [],
-    "playerAidSeat": true
+    "playerAidSeat": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAidDetail4": {
     "type": "seat",
@@ -30222,7 +30378,9 @@
       118
     ],
     "score": [],
-    "playerAidSeat": true
+    "playerAidSeat": true,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "playerAid30a": {
     "type": "scoreboard",
@@ -30721,7 +30879,9 @@
       "♥",
       "*",
       "NT"
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "gameID31": {
     "id": "gameID31",
@@ -31272,7 +31432,9 @@
         "func": "SORT",
         "key": "deck2Mark"
       }
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "cavaliers": {
     "type": "deck",
@@ -31567,7 +31729,9 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score31"
+    "scoreProperty": "score31",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
   },
   "575h": {
     "deck": "cavaliers",
@@ -33838,7 +34002,946 @@
       "G-C",
       "",
       ""
-    ]
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
+  },
+  "gameID33": {
+    "id": "gameID33",
+    "x": -520,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "roundsTemp": [
+      "Card Points",
+      "Adjustments"
+    ],
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "trump",
+        0
+      ],
+      [
+        "agonyAuntBack",
+        1
+      ]
+    ],
+    "settingsArray": [
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showScore",
+        false
+      ],
+      [
+        "showBidHistory",
+        false
+      ],
+      [
+        "showTricks",
+        true
+      ],
+      [
+        "turnDirection",
+        true
+      ],
+      [
+        "capturedHolder",
+        true
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "jokerCount",
+        1
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/agonaunt.html.\\a\\a Manually move tokens from holder by seat to player board in upper-left. Queens and jokers will be displayed face-up in front of the player taking the trick as a reminder. When it is time for the 'Dump Trick' a message will appear above the hand.\\a\\a After the round, press one or more of the buttons below the board to move tokens back to players or to the discard area.\"",
+    "scoreExceptionsRoutine": [
+      "var result = ${points}",
+      {
+        "func": "SELECT",
+        "source": "otherCards",
+        "property": "cardType",
+        "value": "S 3Q"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          "var result = ${result} + 13"
+        ]
+      }
+    ],
+    "trumps": 4,
+    "y": 770,
+    "text": "Agony Aunt",
+    "dealRoutine": [
+      "// Flip over remaining card.",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "deckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      "// If last card is not the joker, then set the sort order and point value of the joker to be equivalent to that card.",
+      {
+        "func": "GET",
+        "property": "suit"
+      },
+      {
+        "func": "GET",
+        "property": "order"
+      },
+      {
+        "func": "GET",
+        "property": "sortDefault"
+      },
+      "var nine = ${order} == 9",
+      "var joker = ${order} == 14",
+      "var none = ${nine} || ${joker}",
+      {
+        "func": "IF",
+        "condition": "${joker}",
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "jokerBlack1"
+          },
+          {
+            "func": "SET",
+            "property": "sortDefault",
+            "value": "${sortDefault}"
+          },
+          {
+            "func": "SET",
+            "property": "suit",
+            "value": "${suit}"
+          },
+          {
+            "func": "SET",
+            "property": "order",
+            "value": "${order}"
+          }
+        ],
+        "thenRoutine": [
+          "// If it is the joker, deal again because the joker cannot be the up card by rule.",
+          {
+            "func": "CLICK",
+            "collection": [
+              "recallButton"
+            ]
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "dealButton"
+            ]
+          }
+        ]
+      }
+    ],
+    "postSetExceptionsRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          5,
+          7
+        ],
+        "loopRoutine": [
+          "var agonyHolder = 'agonyHolder' + ${value}",
+          "var thisSeatID = 'seat' + ${value}",
+          "var thisColor = ${PROPERTY color OF $thisSeatID}",
+          "var thisPlayer = ${PROPERTY player OF $thisSeatID}",
+          {
+            "func": "FOREACH",
+            "range": [
+              17
+            ],
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "itmesHolder4",
+                "to": "${agonyHolder}"
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "_ancestor",
+            "value": "${agonyHolder}"
+          },
+          {
+            "func": "SET",
+            "property": "ownedBy",
+            "value": "${thisPlayer}"
+          },
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "${thisColor}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": null
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "agonyDumpLabel"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "capturedArray": [
+      [],
+      [
+        "C 3Q",
+        "D 3Q",
+        "S 3Q",
+        "H 3Q",
+        "T 1J"
+      ],
+      []
+    ],
+    "takeRoutine": [
+      "var tricks = ${PROPERTY text OF tricksCount} + 1",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "deckHolder"
+      },
+      {
+        "func": "GET",
+        "property": "order"
+      },
+      {
+        "func": "IF",
+        "operand1": "${order}",
+        "operand2": "${tricks}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "agonyDumpLabel"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "agonyDumpLabel"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "playerAidDetail1": "Info",
+    "playerSitRoutine": [
+      "var agonyHolder = 'agonyHolder' + ${seatIndex}",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${agonyHolder}"
+      },
+      {
+        "func": "SET",
+        "property": "ownedBy",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${playerColor}"
+      }
+    ],
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
+  },
+  "agonyAuntBack": {
+    "type": "",
+    "id": "agonyAuntBack",
+    "width": 309,
+    "height": 308,
+    "borderRadius": 8,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "border": "2px solid black",
+      "background": "white"
+    },
+    "x": 5,
+    "y": 5,
+    "ownedBy": "LawDawg",
+    "color": "#3700f0",
+    "scale": 0
+  },
+  "agonyAunt1": {
+    "id": "agonyAunt1",
+    "parent": "agonyAuntBack",
+    "borderRadius": 8,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "lightgray",
+      "color": "${PROPERTY text-color}",
+      "font-size": "${PROPERTY font-size}",
+      "border": "1px solid gray",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "background-size": "70px",
+      "background-repeat": "no-repeat",
+      "background-position": "50%"
+    },
+    "text": "🃏",
+    "font-size": "75px"
+  },
+  "agonyAunt2": {
+    "id": "agonyAunt2",
+    "parent": "agonyAuntBack",
+    "x": 103,
+    "y": 0,
+    "image": "/i/icons/clubs.svg",
+    "inheritFrom": {
+      "agonyAunt1": [
+        "*"
+      ]
+    },
+    "text": "Q",
+    "font-size": "35px",
+    "text-color": "white"
+  },
+  "agonyAunt3": {
+    "id": "agonyAunt3",
+    "parent": "agonyAuntBack",
+    "x": 206,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "activeFace": 0,
+    "inheritFrom": {
+      "agonyAunt1": [
+        "*"
+      ]
+    },
+    "text": "Ω",
+    "font-size": "75px"
+  },
+  "agonyAunt4": {
+    "id": "agonyAunt4",
+    "parent": "agonyAuntBack",
+    "x": 0,
+    "y": 102,
+    "image": "/i/icons/hearts.svg",
+    "inheritFrom": {
+      "agonyAunt1": [
+        "*"
+      ]
+    },
+    "svgReplaces": {
+      "currentColor": "imageColor"
+    },
+    "text": "Q",
+    "font-size": "35px",
+    "imageColor": "#e50932",
+    "text-color": "white"
+  },
+  "agonyAunt5": {
+    "id": "agonyAunt5",
+    "parent": "agonyAuntBack",
+    "x": 103,
+    "y": 102,
+    "borderRadius": 8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "inheritFrom": {
+      "agonyAunt1": [
+        "*"
+      ]
+    },
+    "text": "👵",
+    "font-size": "75px"
+  },
+  "agonyAunt6": {
+    "id": "agonyAunt6",
+    "parent": "agonyAuntBack",
+    "x": 206,
+    "y": 102,
+    "image": "/i/icons/diamonds.svg",
+    "inheritFrom": {
+      "agonyAunt1": [
+        "*"
+      ]
+    },
+    "svgReplaces": {
+      "currentColor": "imageColor"
+    },
+    "text": "Q",
+    "font-size": "35px",
+    "imageColor": "#e50932",
+    "text-color": "white"
+  },
+  "agonyAunt7": {
+    "id": "agonyAunt7",
+    "parent": "agonyAuntBack",
+    "x": 0,
+    "y": 204,
+    "inheritFrom": {
+      "agonyAunt1": [
+        "*"
+      ]
+    },
+    "text": ">",
+    "font-size": "125px"
+  },
+  "agonyAunt8": {
+    "id": "agonyAunt8",
+    "parent": "agonyAuntBack",
+    "x": 103,
+    "y": 204,
+    "image": "/i/icons/spades.svg",
+    "inheritFrom": {
+      "agonyAunt1": [
+        "*"
+      ]
+    },
+    "text": "Q",
+    "font-size": "35px",
+    "text-color": "white"
+  },
+  "agonyAunt9": {
+    "id": "agonyAunt9",
+    "parent": "agonyAuntBack",
+    "x": 206,
+    "y": 204,
+    "inheritFrom": {
+      "agonyAunt1": [
+        "*"
+      ]
+    },
+    "text": "#"
+  },
+  "agonyAunt10": {
+    "id": "agonyAunt10",
+    "parent": "agonyAuntBack",
+    "fixedParent": true,
+    "y": 85,
+    "width": 305,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "color": "black"
+    },
+    "text": "       Joker              Q Clubs           Last Trick"
+  },
+  "agonyAunt11": {
+    "id": "agonyAunt11",
+    "parent": "agonyAuntBack",
+    "fixedParent": true,
+    "y": 185,
+    "width": 305,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "color": "black"
+    },
+    "text": "     Q Hearts          Q Dumps       Q Diamonds"
+  },
+  "agonyAunt12": {
+    "id": "agonyAunt12",
+    "parent": "agonyAuntBack",
+    "fixedParent": true,
+    "y": 285,
+    "width": 307,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "color": "black"
+    },
+    "text": "  Most Tricks        Q Spades       Dump Trick"
+  },
+  "agonyHolder1": {
+    "type": "holder",
+    "id": "agonyHolder1",
+    "x": 712,
+    "y": 650,
+    "parent": "agonyAuntBack",
+    "fixedParent": true,
+    "width": 165,
+    "height": 40,
+    "movableInEdit": false,
+    "dropTarget": {
+      "item": "4"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 8,
+    "classes": "transparent",
+    "onEnter": {
+      "scale": 1
+    },
+    "onLeave": {
+      "scale": 1.4
+    }
+  },
+  "agonyHolder7": {
+    "type": "holder",
+    "id": "agonyHolder7",
+    "parent": "agonyAuntBack",
+    "fixedParent": true,
+    "x": 998,
+    "y": 397,
+    "inheritFrom": {
+      "agonyHolder1": "*"
+    }
+  },
+  "agonyHolder5": {
+    "type": "holder",
+    "id": "agonyHolder5",
+    "parent": "agonyAuntBack",
+    "fixedParent": true,
+    "x": 712,
+    "y": 67,
+    "inheritFrom": {
+      "agonyHolder1": "*"
+    }
+  },
+  "agonyHolder3": {
+    "type": "holder",
+    "id": "agonyHolder3",
+    "parent": "agonyAuntBack",
+    "fixedParent": true,
+    "x": 431,
+    "y": 399,
+    "inheritFrom": {
+      "agonyHolder1": "*"
+    }
+  },
+  "wa4z": {
+    "y": 4,
+    "x": 4,
+    "width": 50,
+    "height": 50,
+    "image": "i/icons/circle.svg",
+    "svgReplaces": {
+      "currentColor": "itemColor"
+    },
+    "item": 28,
+    "itemColor": "#d55e00",
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "clonedFrom": "3irw",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "wa4z",
+    "parent": "itmesHolder28",
+    "clickable": false
+  },
+  "3dus": {
+    "width": 30,
+    "height": 30,
+    "item": 24,
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "svgReplaces": {
+      "#000000": "color"
+    },
+    "text": 1,
+    "css": {
+      "border": "1px solid ${PROPERTY color2}",
+      "color": "${PROPERTY color2}",
+      "background": "${PROPERTY color}",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "borderRadius": 30,
+    "faces": [
+      {
+        "text": 9
+      },
+      {
+        "text": "x9"
+      }
+    ],
+    "clonedFrom": "5xso",
+    "itemMarker": true,
+    "dragging": null,
+    "ownedBy": null,
+    "id": "3dus",
+    "parent": "itmesHolder24",
+    "clickable": false
+  },
+  "agonyTokensButton1": {
+    "type": "button",
+    "id": "agonyTokensButton1",
+    "x": 6,
+    "y": 370,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Returning pieces ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Use this to return 1/2 of your pieces if you won one or more tricks but did not take any penalties (do not have any counters on the board). Do you want to return 1/2 of your pieces?"
+          }
+        ],
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel"
+      },
+      "var index = ${PROPERTY index OF $seatID}",
+      {
+        "func": "SELECT",
+        "property": "item",
+        "value": 4
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "ownedBy",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": "agonyDiscard"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var COUNT = ${COUNT} / 2",
+      "var COUNT = ${COUNT} floor",
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "id",
+        "relation": "!=",
+        "value": null,
+        "max": "${COUNT}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "agonyHolder${index}"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "fixedParent": true,
+    "parent": "agonyAuntBack",
+    "text": "Return 1/2 Mine",
+    "height": 45,
+    "width": 90,
+    "movableInEdit": false
+  },
+  "agonyTokensButton2": {
+    "type": "button",
+    "id": "agonyTokensButton2",
+    "x": 110,
+    "y": 370,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Returning pieces ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Use this to return all of your pieces if either (1) you won every trick or (2) you lost every trick and no other player won every trick. Do you want to return all of your pieces?"
+          }
+        ],
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel"
+      },
+      "var index = ${PROPERTY index OF $seatID}",
+      {
+        "func": "SELECT",
+        "property": "item",
+        "value": 4
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "ownedBy",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "agonyHolder${index}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "agonyHolder${index}"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "fixedParent": true,
+    "parent": "agonyAuntBack",
+    "text": "Return All Mine",
+    "height": 45,
+    "width": 90,
+    "movableInEdit": false
+  },
+  "agonyTokensButton3": {
+    "type": "button",
+    "id": "agonyTokensButton3",
+    "x": 214,
+    "y": 370,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Moving pieces to discard ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Use this to move all remaining pieces from the board to the discard holder. Do you want to continue?"
+          }
+        ],
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "SELECT",
+        "property": "item",
+        "value": 4
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "agonyDiscard"
+      }
+    ],
+    "fixedParent": true,
+    "parent": "agonyAuntBack",
+    "text": "Empty Board",
+    "height": 45,
+    "width": 90,
+    "movableInEdit": false
+  },
+  "agonyDiscard": {
+    "type": "holder",
+    "id": "agonyDiscard",
+    "parent": "agonyAuntBack",
+    "fixedParent": true,
+    "width": 309,
+    "height": 400,
+    "classes": "transparent",
+    "css": {
+      "": {
+        "display": "flex",
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "justify-content": "center",
+        "align-items": "center",
+        "gap": "1%",
+        "padding": 0
+      },
+      " .widget": {
+        "position": "relative",
+        "order": "${PROPERTY z}"
+      }
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "item": 4
+    },
+    "onEnter": {
+      "css": "position:relative; order: ${PROPERTY z}"
+    },
+    "onLeave": {
+      "css": ""
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "ownedBy"
+      }
+    ],
+    "y": 450
+  },
+  "agonyDumpLabel": {
+    "id": "agonyDumpLabel",
+    "parent": "agonyAuntBack",
+    "fixedParent": true,
+    "x": 715,
+    "y": 755,
+    "width": 152,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "30px",
+      "color": "red"
+    },
+    "text": "Dump Trick",
+    "scale": 0
+  },
+  "playerAid33": {
+    "type": "scoreboard",
+    "id": "playerAid33",
+    "x": 1225,
+    "y": 560,
+    "width": 360,
+    "height": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Score",
+    "rounds": [
+      "Win every trick",
+      "Win no\ntricks",
+      "Take no\npenalties"
+    ],
+    "seats": "playerAidDetail1",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true,
+    "scoreProperty": "score33",
+    "ownedBy": "LawDawg",
+    "color": "#3700f0"
+  },
+  "agonyInfoLabel": {
+    "id": "agonyInfoLabel",
+    "x": 5,
+    "y": 320,
+    "width": 305,
+    "height": 40,
+    "text": "Remove 1 extra token from your stack for each row/column/diagonal with 3 of yours.",
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "agonyAuntBack",
+    "fixedParent": true
+  },
+  "fyng": {
+    "width": 40,
+    "height": 40,
+    "classes": "chip",
+    "color": "#fcf0d4",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "layer": 10,
+    "item": 4,
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "clonedFrom": "1uun",
+    "itemMarker": true,
+    "css": "position:relative; order: ${PROPERTY z}",
+    "x": 4,
+    "y": 4,
+    "ownedBy": null,
+    "id": "fyng",
+    "parent": "itmesHolder4",
+    "clickable": false
   },
   "pile1": {
     "type": "pile",
