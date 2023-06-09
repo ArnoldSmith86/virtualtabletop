@@ -471,7 +471,7 @@
   --spritesheetY: 69;
 
   display: inline-block;
-  background: url(/i/game-icons.net/overview24.png);
+  background: url(i/game-icons.net/overview24.png);
   background-position: calc(-1 * var(--symbolSize) * var(--x)) calc(-1 * var(--symbolSize) * var(--y));
   background-size: calc(var(--spritesheetX) * var(--symbolSize)) calc(var(--spritesheetY) * var(--symbolSize));
   width: var(--symbolSize);
@@ -479,7 +479,7 @@
 }
 
 #symbolPickerOverlay.bigPreviews .gameicons {
-  background-image: url(/i/game-icons.net/overview48.png);
+  background-image: url(i/game-icons.net/overview48.png);
 }
 
 #symbolPickerOverlay.bigPreviews .gameicons:hover, #symbolPickerOverlay.fewResults .gameicons {

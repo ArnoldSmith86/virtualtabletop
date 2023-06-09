@@ -320,7 +320,7 @@ export async function loadSymbolPicker() {
       for(const [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('/i/game-icons.net/${symbol}.svg')"></i>`;
+          list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
           ++gameIconsIndex;
         } else {
           let className = 'emoji';
@@ -328,7 +328,7 @@ export async function loadSymbolPicker() {
             className = 'symbols';
           else if(symbol.match(/^[a-z0-9_]+$/))
             className = 'material-icons';
-          list += `<i class="${className}" title="${className}: ${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('/i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+          list += `<i class="${className}" title="${className}: ${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
         }
       }
     }
@@ -419,7 +419,7 @@ export function addRichtextControls(dom) {
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
         if(icon.classList.contains('gameicons')) {
-          document.execCommand('inserthtml', false, `<i class="richtextSymbol gameicons"><img src="/i/game-icons.net/${icon.dataset.symbol}.svg"></i>`);
+          document.execCommand('inserthtml', false, `<i class="richtextSymbol gameicons"><img src="i/game-icons.net/${icon.dataset.symbol}.svg"></i>`);
         } else {
           let className = 'emoji';
           if(icon.innerText[0] == '[')
