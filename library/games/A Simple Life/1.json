@@ -1,0 +1,4070 @@
+{
+  "_meta": {
+    "version": 13,
+    "info": {
+      "name": "A Simple Life",
+      "image": "/assets/610330285_23469",
+      "rules": "https://drive.google.com/file/d/1pjuRBdBOQL54y8RAHmilLv9500Uhxjq7/view?usp=drive_link",
+      "bgg": "https://www.pnparcade.com/products/a-simple-life?_pos=1&_sid=82d189eaf&_ss=r",
+      "year": "",
+      "mode": "solo, coop",
+      "time": "15-20",
+      "attribution": "An original game by Clint Ghosn.&nbsp; Copyright Clint Ghosn.&nbsp; Used with permission.<div><br></div><div>Graphic design and art by Clint Ghosn and derived from art/assets from:</div><div>&nbsp; * Shikashi's Fantasy Icon Pack</div><div>&nbsp; * Overworld Grass Biome</div><div>&nbsp; * Pixel Paper</div><div>&nbsp; * DungeonUI</div><div>&nbsp; * Fantasy Eggs&nbsp;</div><div><br></div><div>To download a copy of the original game, go to https://www.pnparcade.com/products/a-simple-life?_pos=1&amp;_sid=72f04235a&amp;_ss=r.</div><div><br></div><div>New Day and Roll Dice button images by Lex Judge available under CC BY 4.0.</div><div><br></div><div>Adapted for use on virtualtabletop.io by Lex Judge, with help from Ricky V and LawDawg96.</div>",
+      "lastUpdate": 1686437937127,
+      "id": "akmi",
+      "showName": true,
+      "skill": "Low Complexity",
+      "description": "You just moved to the province to live a simple life. You promised yourself you’ll get things done in 10 days. Plant crops, make friends, mine the mountains, populate your pond, and donate to the museum to achieve your goals.",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "<b>Game Summary</b>\nThe game is played in 10 rounds. For each round, you will roll 5 dice. Use these dice on locations to perform the location’s action. When you run out of dice, the round ends and a new round is started. If you have completed your goal(s) at the end of the game, you win and you may record your score.<div><br></div><div><b>Key Terms &amp; Rules:</b>\n<b>Checkmark: </b>Draw a check on the checkbox or space specified.\n<b>Circle:</b> Draw a circle around the space or icon specified.\n<b>X:</b> Draw a cross or X on the space or icon specified.&nbsp;\n<b>Gain: </b>Circle its leftmost icon in your inventory.\n<b>Lose: </b>X its leftmost icon with a circle in your inventory.\n<b>Semicolon:</b> Means \"Lose this\" to \"Gain this\", eg \"<b>Carrot : Coin</b>\", means X out a circled carrot to circle a coin.\n<b>Carrot:</b> You may X out a carrot with a circle in your inventory anytime to reroll any number of rolled&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i><span style=\"color: var(--overlayFontColor);\">.&nbsp;</span></div><div><span style=\"color: var(--overlayFontColor);\">&nbsp;</span><br></div><div><b>LOCATIONS</b><div><b>Farm (Cost 1&nbsp;</b><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i><b style=\"color: var(--overlayFontColor);\">): </b><span style=\"color: var(--overlayFontColor);\">Choose a column with a value equal to the value of the&nbsp;</span><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>you used. Add a checkmark to the bottom-most square of that column. When you check off the box with a carrot or a flower, you gain it and it's considered a Harvest. A 6<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>&nbsp;can be used as any value when choosing a column.</div><div><br></div><div><b>Town (<span style=\"color: var(--overlayFontColor);\">Cost 1&nbsp;</span></b><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i><b>): </b>The value of the assigned&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>&nbsp;is the number of actions you can take in the town. You may not perform actions outside the Town during this. When you perform an action, reduce the&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>'s value by the action's cost. The actions are:</div><div><ul><li><b style=\"color: var(--overlayFontColor);\">Town Square (cost: 1 die pip per checkmark)</b><span style=\"color: var(--overlayFontColor);\">: Make friends, X a circled flower to give to a villager and add a checkmark to their leftmost empty square. When you checkmark a heart, you have befriended that villager, immediately gain a heart and a gift from them. The gift is the icon upper right of the villager.</span></li><li><b style=\"color: var(--overlayFontColor);\">Shop (cost: 1 die pip per buy/sell):</b><span style=\"color: var(--overlayFontColor);\"> You may buy and sell.</span></li><li><b style=\"color: var(--overlayFontColor);\">Buy:</b><span style=\"color: var(--overlayFontColor);\"> Cross off one circled coin to gain either 1 carrot, 1 flower, or 1 stone.</span></li><li><b style=\"color: var(--overlayFontColor);\">Sell:</b><span style=\"color: var(--overlayFontColor);\"> Cross off 1 carrot, two flowers, or two stone to gain 1 coin.</span></li></ul><b style=\"color: var(--overlayFontColor);\">Blacksmith:&nbsp; (cost: 1 die pip per checkmark): </b><span style=\"color: var(--overlayFontColor);\">You can upgrade your tools. Cross off two stone to add a checkmark to a tool. You must first checkmark the single arrow before you can checkmark the double arrow. The rightmost effect with checkmark is active for the rest of the game.</span><br>\n<b>Lake (Cost 1&nbsp;</b><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i><span style=\"color: var(--overlayFontColor);\"><b>&nbsp;): </b>The value of the assigned&nbsp;</span><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>&nbsp;determines which column you can cast your fishing line (1-2, 3-4, 5-6). Choose any target without an X or checkmark in that column and reroll your assigned&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>. If you roll greater than or equal to the value in the first column of the target's row, it's a success: checkmark the target and gain it. Otherwise, circle it. However, if it's already circled, X it. See Pond rules below when you gain a Fish. (You have a maximum of 2 attempts per target, so use carrots to reroll.)\n\n<b>Mines (Cost 2</b><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i><b>): </b>Reroll your 2 assigned&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>. Then, choose one die as a column and the other as a row. Then X the cell where the row and column meet. Gain all icons on the cell, unless it's a skull.&nbsp;</div><div>\nSkull<b> </b>- Roll a assigned&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>. If you roll 5+, it's a hit! Circle the left-most skull in your inventory, it's defeated. Otherwise, X a skull in your inventory.\n\n<b>Museum and Pond (no cost, score trackers only)</b>\n<b>Museum:</b> When gaining an artifact, you checkmark its checkbox in the Museum. At the end of the game, you gain stars based on the number of artifacts with checkmarks.</div><div>\n<b>Pond: </b>When gaining a fish, you checkmark its checkbox in the Pond. At the end of the game, you gain the star's value of all fish with checkmarks.\n\n<b>2-Player Cooperative Rules:</b>\nThe rules are the same except for the following:&nbsp;\nBefore you begin: Minimum Goal of 2. Get 6&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>&nbsp;instead of 5. Checkmark any one single arrow tool. Each player rolls 3&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>&nbsp;simultaneously at the start of each day. They may not share dice. Any player may start each day, but one player must use all their&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol emoji\">🎲</i>&nbsp;(or pass) before another player can use theirs.\n\n<b>See the full rules for clarifications/different variants.&nbsp;</b></div></div>",
+      "helpText": "<b>Solo Game:</b><div>First, set your goal for the game. To do this, drag one die from the <b>\"Available Dice\"</b> section to the \"Dice Roller\", then click the <b>\"Roll Dice\"</b> button. That number will be your goal for the game, click on the corresponding goal circle in the<b> \"Goals\"</b> section at the top right (click it again when the goal is completed to checkmark it). Then click on the<b> \"New Day\"</b> button, which will mark off <b>Day 1</b> and automatically recall and reroll your available dice. You are now ready to start playing!&nbsp;\n&nbsp;</div><div>Clicking on an applicable space will cycle through the appropriate<span style=\"color: var(--overlayFontColor);\">&nbsp;symbols (checkmarks, X's and O's), and once you have finished your turn, clicking on the </span><b style=\"color: var(--overlayFontColor);\">\"New Day\"</b><span style=\"color: var(--overlayFontColor);\"> button again will return your dice to the Available Dice section, and roll them.&nbsp;</span></div><div><br></div><div><b>Co-op Game:&nbsp;\n</b>Each player will need to click on a different \"<b>click to sit\" </b>button to see their three dice, then it is the same as the solo game above, except you roll a minimum of two goals and start the game with one single arrow tool.&nbsp;<br></div>",
+      "players": "2",
+      "language": "en-US",
+      "variant": "Co-op",
+      "variantImage": ""
+    }
+  },
+  "xzau": {
+    "image": "/assets/-775939780_323363",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "xzau",
+    "x": -262,
+    "movableInEdit": false
+  },
+  "07vq": {
+    "image": "/assets/-1715832180_67297",
+    "layer": -5,
+    "id": "07vq",
+    "x": 602,
+    "height": 500,
+    "y": -148,
+    "css": {},
+    "z": 15,
+    "width": 1000,
+    "movable": false
+  },
+  "rollDiceButton": {
+    "type": "button",
+    "id": "rollDiceButton",
+    "x": 851,
+    "y": 884,
+    "width": 225,
+    "height": 110,
+    "z": 35062,
+    "css": {
+      "default": {
+        "border": "none",
+        "background": "transparent",
+        "background-size": "100% auto",
+        "transition": "0.2s"
+      },
+      ":hover": {
+        "filter": "invert(75%)"
+      }
+    },
+    "image": "/assets/-750334977_10362",
+    "debug": false,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "Note": "Clicking the button starts the timer.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "rollTimer"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "diceRollerHolder",
+        "sortBy": {
+          "key": "dieSortValue",
+          "reverse": true
+        }
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": "50"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "=",
+        "value": "200"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "transition: ease-out 0.2s;box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;"
+      }
+    ],
+    "borderRadius": 0
+  },
+  "diceRollerHolder": {
+    "type": "holder",
+    "id": "diceRollerHolder",
+    "x": 1092,
+    "y": 787,
+    "width": 300,
+    "height": 210,
+    "z": 2805,
+    "alignChildren": false,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "dice"
+    },
+    "onLeave": {
+      "rotation": 0
+    }
+  },
+  "19zkx": {
+    "type": "dice",
+    "id": "19zkx",
+    "width": 45,
+    "height": 45,
+    "z": 4428,
+    "movable": "true",
+    "clickable": false,
+    "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 378,
+    "originalRollTimes": 7,
+    "rollTimes": "--",
+    "secondaryColor": "#ffffff",
+    "y": 475,
+    "shape3d": true,
+    "scale": "1",
+    "x": 1425,
+    "resetProperties": {
+      "x": 1425,
+      "y": 475,
+      "parent": null,
+      "rotation": 0
+    },
+    "hoverInheritVisibleForSeat": false,
+    "onlyVisibleForSeat": "seat1"
+  },
+  "rollTimer": {
+    "type": "timer",
+    "id": "rollTimer",
+    "x": 1633,
+    "y": -6,
+    "z": 35053,
+    "css": "transition: ease-out 0.2s;",
+    "milliseconds": 1116240,
+    "precision": 180,
+    "diceContainer": "diceRollerHolder",
+    "holderIndex": 24,
+    "maxRolls": "1",
+    "nextStep": 1,
+    "rollsDone": 1,
+    "millisecondsChangeRoutine": [
+      "var thisDiceContainer = ${PROPERTY diceContainer OF rollTimer}",
+      {
+        "Note": "If the button is paused, then do nothing.",
+        "func": "IF",
+        "condition": "${PROPERTY paused}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${thisDiceContainer}",
+            "collection": "diceToRoll"
+          },
+          {
+            "func": "SET",
+            "collection": "diceToRoll",
+            "property": "css",
+            "value": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If the timer is not paused, then get all the variables need for the timer to perform its functions.",
+            "func": "SELECT",
+            "property": "id",
+            "relation": "==",
+            "value": "rollTimer",
+            "collection": "rollTimerWidget"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${thisDiceContainer}",
+            "collection": "diceToRoll"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "==",
+            "value": "${thisDiceContainer}",
+            "collection": "diceRollerHolder"
+          },
+          {
+            "func": "COUNT",
+            "collection": "diceToRoll",
+            "variable": "numDiceToRoll"
+          },
+          "// These try to space the dice evenly across the Dice Container",
+          "var diceDistanceOffset = ${numDiceToRoll} + 1",
+          "var parentWidth = ${PROPERTY width OF $thisDiceContainer}",
+          "var parentHeight = ${PROPERTY height OF $thisDiceContainer}",
+          "var parentHeight = ${parentHeight} - 100",
+          "var parentWidth = ${parentWidth} - 100",
+          "var distanceToMove = ${parentWidth} / ${diceDistanceOffset}",
+          "var xoffset =  ${distanceToMove} - 30",
+          {
+            "func": "FOREACH",
+            "collection": "diceToRoll",
+            "loopRoutine": [
+              {
+                "Note": "Die is given a random number of times to land for each roll if not already set.",
+                "func": "IF",
+                "operand1": "${PROPERTY rollTimes OF $widgetID}",
+                "relation": "==",
+                "operand2": "--",
+                "thenRoutine": [
+                  "var rollThisManyTimes = randInt 2 8",
+                  {
+                    "func": "SET",
+                    "property": "rollTimes",
+                    "relation": "=",
+                    "value": "${rollThisManyTimes}"
+                  },
+                  {
+                    "func": "SET",
+                    "property": "originalRollTimes",
+                    "relation": "=",
+                    "value": "${rollThisManyTimes}"
+                  }
+                ]
+              },
+              {
+                "Note": "If the number of remaining rolls is 1 or more, keep rolling.",
+                "func": "IF",
+                "operand1": "${PROPERTY rollTimes OF $widgetID}",
+                "relation": ">",
+                "operand2": "0",
+                "thenRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "id",
+                    "relation": "==",
+                    "value": "${widgetID}",
+                    "collection": "thisDieWidget"
+                  },
+                  {
+                    "func": "SET",
+                    "property": "css",
+                    "relation": "=",
+                    "value": "transition: ease-out 0.2s;box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
+                    "collection": "thisDieWidget"
+                  },
+                  "var RANDOMFACE = randInt 0 5",
+                  {
+                    "func": "SET",
+                    "property": "activeFace",
+                    "relation": "=",
+                    "value": "${RANDOMFACE}",
+                    "collection": "thisDieWidget"
+                  },
+                  "var RANDOMROTATION = randInt -360 360",
+                  {
+                    "func": "SET",
+                    "property": "rotation",
+                    "relation": "=",
+                    "value": "${RANDOMROTATION}",
+                    "collection": "thisDieWidget"
+                  },
+                  "var RANDOM = randInt 9 11",
+                  "var RANDOMSCALE = ${RANDOM} / 10",
+                  {
+                    "func": "SET",
+                    "property": "scale",
+                    "relation": "=",
+                    "value": "${RANDOMSCALE}",
+                    "collection": "thisDieWidget"
+                  },
+                  "var RANDOM-Y = randInt 30 ${parentHeight}",
+                  {
+                    "func": "SET",
+                    "property": "y",
+                    "relation": "=",
+                    "value": "${RANDOM-Y}",
+                    "collection": "thisDieWidget"
+                  },
+                  "var RANDOMIZEDOFFSET = randInt -45 45",
+                  "var RANDOM-X = ${xoffset} + ${RANDOMIZEDOFFSET}",
+                  {
+                    "func": "SET",
+                    "property": "x",
+                    "relation": "=",
+                    "value": "${RANDOM-X}",
+                    "collection": "thisDieWidget"
+                  },
+                  "var xoffset = ${xoffset} + ${distanceToMove}",
+                  "var rollTimes = ${PROPERTY rollTimes OF $widgetID} - 1",
+                  {
+                    "func": "SET",
+                    "collection": "thisDieWidget",
+                    "property": "rollTimes",
+                    "relation": "=",
+                    "value": "${rollTimes}"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY rollTimes OF $widgetID}",
+                    "relation": ">=",
+                    "operand2": "${PROPERTY maxRolls OF rollTimer}",
+                    "thenRoutine": [
+                      "var maxRolls = ${PROPERTY rollTimes OF $widgetID}",
+                      "var maxRolls = maxRolls + 5",
+                      {
+                        "func": "SET",
+                        "collection": "rollTimerWidget",
+                        "property": "maxRolls",
+                        "relation": "=",
+                        "value": "${maxRolls}"
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "id",
+                    "relation": "==",
+                    "value": "${widgetID}",
+                    "collection": "thisDieWidget"
+                  },
+                  {
+                    "Note": "If no rolls remain, set the scale back to 1.",
+                    "func": "SET",
+                    "property": "scale",
+                    "relation": "=",
+                    "value": "1",
+                    "collection": "thisDieWidget"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": "thisDieWidget",
+                    "property": "css",
+                    "value": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;"
+                  },
+                  "var xoffset = ${xoffset} + ${distanceToMove}"
+                ]
+              }
+            ]
+          },
+          "// Extra roll to allow the animations to finish.",
+          "var extraRolls = ${PROPERTY maxRolls OF rollTimer} + 1",
+          {
+            "Note": "If the number of rolls done is greater than or equal to the max number of rolls of any die, we're done. Do some cleanup.",
+            "func": "IF",
+            "operand1": "${PROPERTY rollsDone OF rollTimer}",
+            "relation": ">",
+            "operand2": "${extraRolls}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "rollTimerWidget",
+                "property": "maxRolls",
+                "value": "1"
+              },
+              {
+                "func": "SET",
+                "collection": "rollTimerWidget",
+                "property": "rollsDone",
+                "value": "0"
+              },
+              {
+                "func": "SET",
+                "collection": "diceRollerHolder",
+                "property": "alignChildren",
+                "value": false
+              },
+              {
+                "Note": "If no rolls remain, set the scale back to 1.",
+                "func": "SET",
+                "property": "scale",
+                "relation": "=",
+                "value": "1",
+                "collection": "diceToRoll"
+              },
+              {
+                "func": "SET",
+                "collection": "diceToRoll",
+                "property": "rollTimes",
+                "value": "--"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "paused",
+                "value": true
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "rollDiceButton"
+                ],
+                "property": "clickable",
+                "value": true
+              }
+            ]
+          },
+          "var rollsDone = ${PROPERTY rollsDone OF rollTimer} + 1",
+          {
+            "func": "SET",
+            "collection": "rollTimerWidget",
+            "property": "rollsDone",
+            "relation": "=",
+            "value": "${rollsDone}"
+          }
+        ]
+      }
+    ]
+  },
+  "20zkx": {
+    "type": "dice",
+    "id": "20zkx",
+    "x": 1498,
+    "width": 45,
+    "height": 45,
+    "z": 4433,
+    "movable": "true",
+    "clickable": false,
+    "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 378,
+    "originalRollTimes": 3,
+    "rollTimes": "--",
+    "secondaryColor": "#ffffff",
+    "y": 586,
+    "shape3d": true,
+    "scale": "1",
+    "resetProperties": {
+      "x": 1498,
+      "y": 586,
+      "parent": null,
+      "rotation": 0
+    },
+    "hoverInheritVisibleForSeat": false,
+    "onlyVisibleForSeat": "seat2",
+    "activeFace": 4
+  },
+  "21zkx": {
+    "type": "dice",
+    "id": "21zkx",
+    "x": 1425,
+    "width": 45,
+    "height": 45,
+    "z": 4430,
+    "movable": "true",
+    "clickable": false,
+    "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 378,
+    "originalRollTimes": 5,
+    "rollTimes": "--",
+    "secondaryColor": "#ffffff",
+    "y": 625,
+    "shape3d": true,
+    "resetProperties": {
+      "x": 1425,
+      "y": 625,
+      "parent": null,
+      "rotation": 0
+    },
+    "scale": "1",
+    "hoverInheritVisibleForSeat": false,
+    "onlyVisibleForSeat": "seat1",
+    "activeFace": 2
+  },
+  "22zkx": {
+    "type": "dice",
+    "id": "22zkx",
+    "x": 1425,
+    "width": 45,
+    "height": 45,
+    "z": 4413,
+    "movable": "true",
+    "clickable": false,
+    "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 378,
+    "originalRollTimes": 2,
+    "rollTimes": "--",
+    "secondaryColor": "#ffffff",
+    "y": 550,
+    "shape3d": true,
+    "scale": "1",
+    "resetProperties": {
+      "x": 1425,
+      "y": 550,
+      "parent": null,
+      "rotation": 0
+    },
+    "hoverInheritVisibleForSeat": false,
+    "onlyVisibleForSeat": "seat1",
+    "activeFace": 5
+  },
+  "23zkx": {
+    "type": "dice",
+    "id": "23zkx",
+    "x": 1498,
+    "width": 45,
+    "height": 45,
+    "z": 4432,
+    "movable": "true",
+    "clickable": false,
+    "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 378,
+    "originalRollTimes": 8,
+    "rollTimes": "--",
+    "secondaryColor": "#ffffff",
+    "shape3d": true,
+    "scale": "1",
+    "resetProperties": {
+      "x": 1498,
+      "y": 527,
+      "parent": null,
+      "rotation": 0
+    },
+    "y": 527,
+    "hoverInheritVisibleForSeat": false,
+    "onlyVisibleForSeat": "seat2",
+    "activeFace": 2
+  },
+  "xvr6": {
+    "type": "holder",
+    "x": 1401,
+    "y": 702,
+    "z": 2806,
+    "id": "xvr6",
+    "css": {
+      "background": "#40404090"
+    },
+    "alignChildren": false,
+    "width": 200,
+    "height": 310
+  },
+  "xvr7": {
+    "type": "holder",
+    "id": "xvr7",
+    "x": 1404,
+    "y": 405,
+    "width": 200,
+    "height": 288,
+    "z": 2808,
+    "alignChildren": false,
+    "css": {
+      "background": "transparent"
+    },
+    "movableInEdit": false
+  },
+  "Check_Empty": {
+    "id": "Check_Empty",
+    "x": 560,
+    "y": 260,
+    "width": 40,
+    "height": 40,
+    "z": 3803,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty": {
+    "id": "Circle_Cross_Empty",
+    "x": 1168,
+    "y": 234,
+    "width": 40,
+    "height": 40,
+    "z": 4170,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty": {
+    "id": "Cross_Empty",
+    "x": 1129,
+    "y": 235,
+    "width": 40,
+    "height": 40,
+    "z": 4169,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty1": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty1",
+    "x": 1278,
+    "y": 275,
+    "z": 4180,
+    "activeFace": 0
+  },
+  "Circle_Cross_Empty2": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty2",
+    "x": 1242,
+    "y": 276,
+    "z": 4179,
+    "activeFace": 0
+  },
+  "Circle_Cross_Empty3": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty3",
+    "x": 1204,
+    "y": 274,
+    "z": 4178,
+    "activeFace": 0
+  },
+  "Circle_Cross_Empty4": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty4",
+    "x": 1168,
+    "y": 275,
+    "z": 4177,
+    "activeFace": 0
+  },
+  "Circle_Cross_Empty5": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty5",
+    "x": 1131,
+    "y": 274,
+    "z": 4176,
+    "activeFace": 0
+  },
+  "Circle_Cross_Empty6": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty6",
+    "x": 1096,
+    "y": 274,
+    "z": 4175,
+    "activeFace": 0
+  },
+  "Circle_Cross_Empty7": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty7",
+    "x": 1315,
+    "y": 234,
+    "z": 4174,
+    "activeFace": 0
+  },
+  "Circle_Cross_Empty8": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty8",
+    "x": 1278,
+    "y": 233,
+    "z": 4173,
+    "activeFace": 0
+  },
+  "Circle_Cross_Empty9": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty9",
+    "x": 1241,
+    "y": 234,
+    "activeFace": 0,
+    "z": 4172
+  },
+  "Circle_Cross_Empty10": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty10",
+    "x": 1204,
+    "y": 234,
+    "activeFace": 0,
+    "z": 4171
+  },
+  "Circle_Cross_Empty11": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty11",
+    "x": 1315,
+    "y": 275,
+    "z": 4181,
+    "activeFace": 0
+  },
+  "Check_Empty1": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty1",
+    "x": 993,
+    "y": 164,
+    "z": 3802,
+    "activeFace": 0
+  },
+  "Check_Empty2": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty2",
+    "x": 990,
+    "y": 210,
+    "z": 3801,
+    "activeFace": 0
+  },
+  "Check_Empty3": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty3",
+    "x": 989,
+    "y": 256,
+    "z": 3800,
+    "activeFace": 0
+  },
+  "Check_Empty4": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty4",
+    "x": 948,
+    "y": 160,
+    "z": 3799,
+    "activeFace": 0
+  },
+  "Check_Empty5": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty5",
+    "x": 946,
+    "y": 208,
+    "z": 3798,
+    "activeFace": 0
+  },
+  "Check_Empty6": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty6",
+    "x": 945,
+    "y": 257,
+    "z": 3797,
+    "activeFace": 0
+  },
+  "Check_Empty7": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty7",
+    "x": 899,
+    "y": 162,
+    "z": 3796,
+    "activeFace": 0
+  },
+  "Check_Empty8": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty8",
+    "x": 898,
+    "y": 210,
+    "z": 3795,
+    "activeFace": 0
+  },
+  "Check_Empty9": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty9",
+    "x": 897,
+    "y": 256,
+    "z": 3794,
+    "activeFace": 0
+  },
+  "Check_Empty10": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty10",
+    "x": 848,
+    "y": 163,
+    "z": 3793,
+    "activeFace": 0
+  },
+  "Check_Empty11": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty11",
+    "x": 849,
+    "y": 208,
+    "z": 3792,
+    "activeFace": 0
+  },
+  "Check_Empty12": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty12",
+    "x": 851,
+    "y": 260,
+    "z": 3791,
+    "activeFace": 0
+  },
+  "Check_Empty13": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty13",
+    "x": 803,
+    "y": 161,
+    "z": 3790,
+    "activeFace": 0
+  },
+  "Check_Empty14": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty14",
+    "x": 803,
+    "y": 207,
+    "z": 3789,
+    "activeFace": 0
+  },
+  "Check_Empty15": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty15",
+    "x": 803,
+    "y": 256,
+    "z": 3788,
+    "activeFace": 0
+  },
+  "Check_Empty16": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty16",
+    "x": 755,
+    "y": 158,
+    "z": 3787,
+    "activeFace": 0
+  },
+  "Check_Empty17": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty17",
+    "x": 753,
+    "y": 209,
+    "z": 3786,
+    "activeFace": 0
+  },
+  "Check_Empty18": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty18",
+    "x": 755,
+    "y": 259,
+    "z": 3785,
+    "activeFace": 0
+  },
+  "Check_Empty19": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty19",
+    "x": 712,
+    "y": 159,
+    "z": 3784,
+    "activeFace": 0
+  },
+  "Check_Empty20": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty20",
+    "x": 704,
+    "y": 209,
+    "z": 3783,
+    "activeFace": 0
+  },
+  "Check_Empty21": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty21",
+    "x": 707,
+    "y": 258,
+    "z": 3782,
+    "activeFace": 0
+  },
+  "Check_Empty22": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty22",
+    "x": 662,
+    "y": 158,
+    "z": 3781,
+    "activeFace": 0
+  },
+  "Check_Empty23": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty23",
+    "x": 660,
+    "y": 213,
+    "z": 3780,
+    "activeFace": 0
+  },
+  "Check_Empty24": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty24",
+    "x": 658,
+    "y": 255,
+    "z": 3779,
+    "activeFace": 0
+  },
+  "Check_Empty25": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty25",
+    "x": 615,
+    "y": 162,
+    "z": 3778,
+    "activeFace": 0
+  },
+  "Check_Empty26": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty26",
+    "x": 612,
+    "y": 210,
+    "z": 3777,
+    "activeFace": 0
+  },
+  "Check_Empty27": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty27",
+    "x": 607,
+    "y": 259,
+    "z": 3776,
+    "activeFace": 0
+  },
+  "Check_Empty28": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty28",
+    "x": 565,
+    "y": 160,
+    "z": 3775,
+    "activeFace": 0
+  },
+  "Check_Empty29": {
+    "inheritFrom": {
+      "Check_Empty": "*"
+    },
+    "id": "Check_Empty29",
+    "x": 561,
+    "y": 211,
+    "z": 3774,
+    "activeFace": 0
+  },
+  "Check_Empty30": {
+    "id": "Check_Empty30",
+    "x": 973,
+    "y": 763,
+    "width": 40,
+    "height": 40,
+    "z": 3848,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty31": {
+    "id": "Check_Empty31",
+    "x": 900,
+    "y": 760,
+    "width": 40,
+    "height": 40,
+    "z": 3847,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty32": {
+    "id": "Check_Empty32",
+    "x": 973,
+    "y": 714,
+    "width": 40,
+    "height": 40,
+    "z": 3846,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty33": {
+    "id": "Check_Empty33",
+    "x": 902,
+    "y": 715,
+    "width": 40,
+    "height": 40,
+    "z": 3845,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty34": {
+    "id": "Check_Empty34",
+    "x": 901,
+    "y": 631,
+    "width": 40,
+    "height": 40,
+    "z": 3844,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty35": {
+    "id": "Check_Empty35",
+    "x": 898,
+    "y": 597,
+    "width": 40,
+    "height": 40,
+    "z": 3843,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty36": {
+    "id": "Check_Empty36",
+    "x": 900,
+    "y": 566,
+    "width": 40,
+    "height": 40,
+    "z": 3842,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty37": {
+    "id": "Check_Empty37",
+    "x": 898,
+    "y": 534,
+    "width": 40,
+    "height": 40,
+    "z": 3841,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty38": {
+    "id": "Check_Empty38",
+    "x": 899,
+    "y": 500,
+    "width": 40,
+    "height": 40,
+    "z": 3839,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty39": {
+    "id": "Check_Empty39",
+    "x": 898,
+    "y": 464,
+    "width": 40,
+    "height": 40,
+    "z": 3838,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty40": {
+    "id": "Check_Empty40",
+    "x": 898,
+    "y": 424,
+    "width": 40,
+    "height": 40,
+    "z": 3837,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty41": {
+    "id": "Check_Empty41",
+    "x": 286,
+    "y": 620,
+    "width": 40,
+    "height": 40,
+    "z": 3830,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty42": {
+    "id": "Check_Empty42",
+    "x": 286,
+    "y": 576,
+    "width": 40,
+    "height": 40,
+    "z": 3832,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty43": {
+    "id": "Check_Empty43",
+    "x": 287,
+    "y": 533,
+    "width": 40,
+    "height": 40,
+    "z": 3831,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty44": {
+    "id": "Check_Empty44",
+    "x": 288,
+    "y": 494,
+    "width": 40,
+    "height": 40,
+    "z": 3833,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty45": {
+    "id": "Check_Empty45",
+    "x": 196,
+    "y": 622,
+    "width": 40,
+    "height": 40,
+    "z": 3822,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty46": {
+    "id": "Check_Empty46",
+    "x": 200,
+    "y": 579,
+    "width": 40,
+    "height": 40,
+    "z": 3834,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty47": {
+    "id": "Check_Empty47",
+    "x": 199,
+    "y": 536,
+    "width": 40,
+    "height": 40,
+    "z": 3835,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty48": {
+    "id": "Check_Empty48",
+    "x": 203,
+    "y": 493,
+    "width": 40,
+    "height": 40,
+    "z": 3816,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty49": {
+    "id": "Check_Empty49",
+    "x": 310,
+    "y": 382,
+    "width": 40,
+    "height": 40,
+    "z": 3814,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty50": {
+    "id": "Check_Empty50",
+    "x": 261,
+    "y": 382,
+    "width": 40,
+    "height": 40,
+    "z": 3813,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty51": {
+    "id": "Check_Empty51",
+    "x": 339,
+    "y": 299,
+    "width": 40,
+    "height": 40,
+    "z": 3812,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty52": {
+    "id": "Check_Empty52",
+    "x": 292,
+    "y": 299,
+    "width": 40,
+    "height": 40,
+    "z": 3811,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty53": {
+    "id": "Check_Empty53",
+    "x": 241,
+    "y": 300,
+    "width": 40,
+    "height": 40,
+    "z": 3815,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty54": {
+    "id": "Check_Empty54",
+    "x": 338,
+    "y": 214,
+    "width": 40,
+    "height": 40,
+    "z": 3809,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty55": {
+    "id": "Check_Empty55",
+    "x": 286,
+    "y": 214,
+    "width": 40,
+    "height": 40,
+    "z": 3808,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty56": {
+    "id": "Check_Empty56",
+    "x": 240,
+    "y": 213,
+    "width": 40,
+    "height": 40,
+    "z": 3807,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty57": {
+    "id": "Check_Empty57",
+    "x": 336,
+    "y": 131,
+    "width": 40,
+    "height": 40,
+    "z": 3806,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty58": {
+    "id": "Check_Empty58",
+    "x": 288,
+    "y": 131,
+    "width": 40,
+    "height": 40,
+    "z": 3805,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Check_Empty59": {
+    "id": "Check_Empty59",
+    "x": 241,
+    "y": 131,
+    "width": 40,
+    "height": 40,
+    "z": 3804,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty1": {
+    "id": "Cross_Empty1",
+    "x": 1133,
+    "y": 396,
+    "width": 40,
+    "height": 40,
+    "z": 4207,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty2": {
+    "id": "Cross_Empty2",
+    "x": 1133,
+    "y": 316,
+    "width": 40,
+    "height": 40,
+    "z": 4354,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty12": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty12",
+    "x": 1350,
+    "y": 553,
+    "z": 4209,
+    "activeFace": 0
+  },
+  "Circle_Cross_Empty13": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty13",
+    "x": 1350,
+    "y": 515,
+    "z": 4210,
+    "activeFace": 0
+  },
+  "Circle_Cross_Empty14": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty14",
+    "x": 1312,
+    "y": 514,
+    "activeFace": 0,
+    "z": 4213
+  },
+  "Circle_Cross_Empty15": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty15",
+    "x": 1275,
+    "y": 515,
+    "activeFace": 0,
+    "z": 4214
+  },
+  "Circle_Cross_Empty16": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty16",
+    "x": 1239,
+    "y": 514,
+    "activeFace": 0,
+    "z": 4217
+  },
+  "Circle_Cross_Empty17": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty17",
+    "x": 1203,
+    "y": 514,
+    "activeFace": 0,
+    "z": 4219
+  },
+  "Circle_Cross_Empty18": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty18",
+    "x": 1166,
+    "y": 515,
+    "activeFace": 0,
+    "z": 4220
+  },
+  "Circle_Cross_Empty19": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty19",
+    "x": 1131,
+    "y": 514,
+    "activeFace": 0,
+    "z": 4223
+  },
+  "Circle_Cross_Empty20": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty20",
+    "x": 1094,
+    "y": 514,
+    "activeFace": 0,
+    "z": 4224
+  },
+  "Circle_Cross_Empty21": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty21",
+    "x": 1350,
+    "y": 477,
+    "activeFace": 0,
+    "z": 4211
+  },
+  "Circle_Cross_Empty22": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty22",
+    "x": 1313,
+    "y": 476,
+    "activeFace": 0,
+    "z": 4212
+  },
+  "Circle_Cross_Empty23": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty23",
+    "x": 1278,
+    "y": 477,
+    "activeFace": 0,
+    "z": 4215
+  },
+  "Circle_Cross_Empty24": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty24",
+    "x": 1240,
+    "y": 475,
+    "activeFace": 0,
+    "z": 4216
+  },
+  "Circle_Cross_Empty25": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty25",
+    "x": 1202,
+    "y": 475,
+    "activeFace": 0,
+    "z": 4218
+  },
+  "Circle_Cross_Empty26": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty26",
+    "x": 1169,
+    "y": 475,
+    "activeFace": 0,
+    "z": 4221
+  },
+  "Circle_Cross_Empty27": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty27",
+    "x": 1129,
+    "y": 475,
+    "activeFace": 0,
+    "z": 4222
+  },
+  "Circle_Cross_Empty28": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty28",
+    "x": 1319,
+    "y": 437,
+    "activeFace": 0,
+    "z": 4194
+  },
+  "Circle_Cross_Empty29": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty29",
+    "x": 1283,
+    "y": 437,
+    "activeFace": 0,
+    "z": 4195
+  },
+  "Circle_Cross_Empty30": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty30",
+    "x": 1246,
+    "y": 438,
+    "activeFace": 0,
+    "z": 4196
+  },
+  "Circle_Cross_Empty31": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty31",
+    "x": 1210,
+    "y": 438,
+    "activeFace": 0,
+    "z": 4197
+  },
+  "Circle_Cross_Empty32": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty32",
+    "x": 1174,
+    "y": 437,
+    "activeFace": 0,
+    "z": 4198
+  },
+  "Circle_Cross_Empty33": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty33",
+    "x": 1136,
+    "y": 438,
+    "activeFace": 0,
+    "z": 4199
+  },
+  "Circle_Cross_Empty34": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty34",
+    "x": 1101,
+    "y": 436,
+    "activeFace": 0,
+    "z": 4200
+  },
+  "Circle_Cross_Empty35": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty35",
+    "x": 1317,
+    "y": 395,
+    "activeFace": 0,
+    "z": 4201
+  },
+  "Circle_Cross_Empty36": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty36",
+    "x": 1281,
+    "y": 395,
+    "activeFace": 0,
+    "z": 4202
+  },
+  "Circle_Cross_Empty37": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty37",
+    "x": 1247,
+    "y": 397,
+    "activeFace": 0,
+    "z": 4203
+  },
+  "Circle_Cross_Empty38": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty38",
+    "x": 1208,
+    "y": 396,
+    "activeFace": 0,
+    "z": 4204
+  },
+  "Circle_Cross_Empty39": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty39",
+    "x": 1173,
+    "y": 395,
+    "activeFace": 0,
+    "z": 4205
+  },
+  "Circle_Cross_Empty40": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty40",
+    "x": 1319,
+    "y": 357,
+    "activeFace": 0,
+    "z": 4187
+  },
+  "Circle_Cross_Empty41": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty41",
+    "x": 1282,
+    "y": 356,
+    "activeFace": 0,
+    "z": 4188
+  },
+  "Circle_Cross_Empty42": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty42",
+    "x": 1247,
+    "y": 356,
+    "activeFace": 0,
+    "z": 4189
+  },
+  "Circle_Cross_Empty43": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty43",
+    "x": 1210,
+    "y": 356,
+    "activeFace": 0,
+    "z": 4190
+  },
+  "Circle_Cross_Empty44": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty44",
+    "x": 1173,
+    "y": 357,
+    "activeFace": 0,
+    "z": 4191
+  },
+  "Circle_Cross_Empty45": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty45",
+    "x": 1135,
+    "y": 356,
+    "activeFace": 0,
+    "z": 4192
+  },
+  "Circle_Cross_Empty46": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty46",
+    "x": 1099,
+    "y": 357,
+    "activeFace": 0,
+    "z": 4193
+  },
+  "Circle_Cross_Empty47": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty47",
+    "x": 1317,
+    "y": 316,
+    "activeFace": 0,
+    "z": 4186
+  },
+  "Circle_Cross_Empty48": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty48",
+    "x": 1281,
+    "y": 316,
+    "activeFace": 0,
+    "z": 4185
+  },
+  "Circle_Cross_Empty49": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty49",
+    "x": 1243,
+    "y": 317,
+    "activeFace": 0,
+    "z": 4184
+  },
+  "Circle_Cross_Empty50": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty50",
+    "x": 1206,
+    "y": 316,
+    "activeFace": 0,
+    "z": 4183
+  },
+  "Circle_Cross_Empty51": {
+    "inheritFrom": {
+      "Circle_Cross_Empty": "*"
+    },
+    "id": "Circle_Cross_Empty51",
+    "x": 1169,
+    "y": 316,
+    "activeFace": 0,
+    "z": 4182
+  },
+  "Circle_Empty": {
+    "id": "Circle_Empty",
+    "x": 1135,
+    "y": 563,
+    "width": 40,
+    "height": 40,
+    "z": 4229,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty1": {
+    "id": "Circle_Empty1",
+    "x": 1173,
+    "y": 649,
+    "width": 40,
+    "height": 40,
+    "z": 4239,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty2": {
+    "id": "Circle_Empty2",
+    "x": 1135,
+    "y": 649,
+    "width": 40,
+    "height": 40,
+    "z": 4240,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty3": {
+    "id": "Circle_Empty3",
+    "x": 1283,
+    "y": 607,
+    "width": 40,
+    "height": 40,
+    "z": 4231,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty4": {
+    "id": "Circle_Empty4",
+    "x": 1245,
+    "y": 608,
+    "width": 40,
+    "height": 40,
+    "z": 4234,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty5": {
+    "id": "Circle_Empty5",
+    "x": 1209,
+    "y": 608,
+    "width": 40,
+    "height": 40,
+    "z": 4233,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty6": {
+    "id": "Circle_Empty6",
+    "x": 1172,
+    "y": 608,
+    "width": 40,
+    "height": 40,
+    "z": 4235,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty7": {
+    "id": "Circle_Empty7",
+    "x": 1135,
+    "y": 608,
+    "width": 40,
+    "height": 40,
+    "z": 4236,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty8": {
+    "id": "Circle_Empty8",
+    "x": 1245,
+    "y": 564,
+    "width": 40,
+    "height": 40,
+    "z": 4226,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty9": {
+    "id": "Circle_Empty9",
+    "x": 1282,
+    "y": 563,
+    "width": 40,
+    "height": 40,
+    "z": 4225,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty10": {
+    "id": "Circle_Empty10",
+    "x": 1243,
+    "y": 650,
+    "width": 40,
+    "height": 40,
+    "z": 4237,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty11": {
+    "id": "Circle_Empty11",
+    "x": 1207,
+    "y": 650,
+    "width": 40,
+    "height": 40,
+    "z": 4241,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty12": {
+    "id": "Circle_Empty12",
+    "x": 1209,
+    "y": 563,
+    "width": 40,
+    "height": 40,
+    "z": 4227,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Empty13": {
+    "id": "Circle_Empty13",
+    "x": 1172,
+    "y": 563,
+    "width": 40,
+    "height": 40,
+    "z": 4228,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      }
+    ],
+    "tile": true
+  },
+  "fbzd": {
+    "type": "label",
+    "text": 64,
+    "id": "fbzd",
+    "x": 46,
+    "y": 101,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 0px; color: transparent; background: transparent;",
+    "editable": true,
+    "z": 21
+  },
+  "fbzdD": {
+    "id": "fbzdD",
+    "parent": "fbzd",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "parent",
+        "value": "67td"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "relation": "-",
+        "value": 1
+      }
+    ]
+  },
+  "fbzdU": {
+    "id": "fbzdU",
+    "parent": "fbzd",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "parent",
+        "value": "67td"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "Check_Empty65": {
+    "id": "Check_Empty65",
+    "x": 1173,
+    "width": 25,
+    "height": 25,
+    "z": 4150,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true,
+    "y": 17
+  },
+  "Circle_Cross_Empty61": {
+    "id": "Circle_Cross_Empty61",
+    "x": 1350,
+    "y": 737,
+    "width": 40,
+    "height": 40,
+    "z": 4242,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty62": {
+    "id": "Circle_Cross_Empty62",
+    "x": 1313,
+    "y": 736,
+    "width": 40,
+    "height": 40,
+    "z": 4243,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty64": {
+    "id": "Circle_Cross_Empty64",
+    "x": 1275,
+    "y": 736,
+    "width": 40,
+    "height": 40,
+    "z": 4244,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty66": {
+    "id": "Circle_Cross_Empty66",
+    "x": 1205,
+    "y": 737,
+    "width": 40,
+    "height": 40,
+    "z": 4246,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty67": {
+    "id": "Circle_Cross_Empty67",
+    "x": 1130,
+    "y": 736,
+    "width": 40,
+    "height": 40,
+    "z": 4248,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty68": {
+    "id": "Circle_Cross_Empty68",
+    "x": 1093,
+    "y": 737,
+    "width": 40,
+    "height": 40,
+    "z": 4249,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty69": {
+    "id": "Circle_Cross_Empty69",
+    "x": 1349,
+    "y": 697,
+    "width": 40,
+    "height": 40,
+    "z": 4250,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty70": {
+    "id": "Circle_Cross_Empty70",
+    "x": 1313,
+    "y": 696,
+    "width": 40,
+    "height": 40,
+    "z": 4251,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty71": {
+    "id": "Circle_Cross_Empty71",
+    "x": 1276,
+    "y": 696,
+    "width": 40,
+    "height": 40,
+    "z": 4252,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty72": {
+    "id": "Circle_Cross_Empty72",
+    "x": 1240,
+    "y": 695,
+    "width": 40,
+    "height": 40,
+    "z": 4253,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty73": {
+    "id": "Circle_Cross_Empty73",
+    "x": 1203,
+    "y": 696,
+    "width": 40,
+    "height": 40,
+    "z": 4254,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty74": {
+    "id": "Circle_Cross_Empty74",
+    "x": 1165,
+    "y": 695,
+    "width": 40,
+    "height": 40,
+    "z": 4255,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty75": {
+    "id": "Circle_Cross_Empty75",
+    "x": 1129,
+    "y": 695,
+    "width": 40,
+    "height": 40,
+    "z": 4256,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty52": {
+    "id": "Circle_Cross_Empty52",
+    "x": 130,
+    "y": 803,
+    "width": 40,
+    "height": 40,
+    "z": 3995,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      },
+      {
+        "image": "/assets/1675039910_1323"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty53": {
+    "inheritFrom": {
+      "Circle_Cross_Empty52": "*"
+    },
+    "id": "Circle_Cross_Empty53",
+    "x": 270,
+    "y": 904,
+    "activeFace": 0,
+    "z": 4003
+  },
+  "Circle_Cross_Empty54": {
+    "inheritFrom": {
+      "Circle_Cross_Empty52": "*"
+    },
+    "id": "Circle_Cross_Empty54",
+    "x": 201,
+    "y": 901,
+    "activeFace": 0,
+    "z": 4002
+  },
+  "Circle_Cross_Empty55": {
+    "inheritFrom": {
+      "Circle_Cross_Empty52": "*"
+    },
+    "id": "Circle_Cross_Empty55",
+    "x": 127,
+    "y": 903,
+    "activeFace": 0,
+    "z": 4001
+  },
+  "Circle_Cross_Empty56": {
+    "inheritFrom": {
+      "Circle_Cross_Empty52": "*"
+    },
+    "id": "Circle_Cross_Empty56",
+    "x": 270,
+    "y": 852,
+    "activeFace": 0,
+    "z": 4000
+  },
+  "Circle_Cross_Empty57": {
+    "inheritFrom": {
+      "Circle_Cross_Empty52": "*"
+    },
+    "id": "Circle_Cross_Empty57",
+    "x": 201,
+    "y": 852,
+    "activeFace": 0,
+    "z": 3999
+  },
+  "Circle_Cross_Empty58": {
+    "inheritFrom": {
+      "Circle_Cross_Empty52": "*"
+    },
+    "id": "Circle_Cross_Empty58",
+    "x": 130,
+    "y": 854,
+    "activeFace": 0,
+    "z": 3998
+  },
+  "Circle_Cross_Empty59": {
+    "inheritFrom": {
+      "Circle_Cross_Empty52": "*"
+    },
+    "id": "Circle_Cross_Empty59",
+    "x": 272,
+    "y": 802,
+    "activeFace": 0,
+    "z": 3997
+  },
+  "Circle_Cross_Empty60": {
+    "inheritFrom": {
+      "Circle_Cross_Empty52": "*"
+    },
+    "id": "Circle_Cross_Empty60",
+    "x": 200,
+    "y": 804,
+    "activeFace": 0,
+    "z": 3996
+  },
+  "Cross_Empty3": {
+    "id": "Cross_Empty3",
+    "x": 775,
+    "y": 748,
+    "width": 40,
+    "height": 40,
+    "z": 4049,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty4": {
+    "id": "Cross_Empty4",
+    "x": 727,
+    "y": 748,
+    "width": 40,
+    "height": 40,
+    "z": 4048,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty5": {
+    "id": "Cross_Empty5",
+    "x": 680,
+    "y": 748,
+    "width": 40,
+    "height": 40,
+    "z": 4047,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty6": {
+    "id": "Cross_Empty6",
+    "x": 631,
+    "y": 747,
+    "width": 40,
+    "height": 40,
+    "z": 4045,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty7": {
+    "id": "Cross_Empty7",
+    "x": 584,
+    "y": 749,
+    "width": 40,
+    "height": 40,
+    "z": 4046,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty18": {
+    "id": "Cross_Empty18",
+    "x": 536,
+    "y": 750,
+    "width": 40,
+    "height": 40,
+    "z": 4040,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty19": {
+    "id": "Cross_Empty19",
+    "x": 774,
+    "y": 699,
+    "width": 40,
+    "height": 40,
+    "z": 4039,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty20": {
+    "id": "Cross_Empty20",
+    "x": 726,
+    "y": 699,
+    "width": 40,
+    "height": 40,
+    "z": 4038,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty21": {
+    "id": "Cross_Empty21",
+    "x": 680,
+    "y": 698,
+    "width": 40,
+    "height": 40,
+    "z": 4037,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty22": {
+    "id": "Cross_Empty22",
+    "x": 632,
+    "y": 699,
+    "width": 40,
+    "height": 40,
+    "z": 4036,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty23": {
+    "id": "Cross_Empty23",
+    "x": 583,
+    "y": 699,
+    "width": 40,
+    "height": 40,
+    "z": 4035,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty24": {
+    "id": "Cross_Empty24",
+    "x": 537,
+    "y": 702,
+    "width": 40,
+    "height": 40,
+    "z": 4034,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty25": {
+    "id": "Cross_Empty25",
+    "x": 775,
+    "y": 651,
+    "width": 40,
+    "height": 40,
+    "z": 4033,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty26": {
+    "id": "Cross_Empty26",
+    "x": 729,
+    "y": 650,
+    "width": 40,
+    "height": 40,
+    "z": 4032,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty27": {
+    "id": "Cross_Empty27",
+    "x": 680,
+    "y": 650,
+    "width": 40,
+    "height": 40,
+    "z": 4031,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty28": {
+    "id": "Cross_Empty28",
+    "x": 631,
+    "y": 648,
+    "width": 40,
+    "height": 40,
+    "z": 4030,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty29": {
+    "id": "Cross_Empty29",
+    "x": 583,
+    "y": 651,
+    "width": 40,
+    "height": 40,
+    "z": 4029,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty30": {
+    "id": "Cross_Empty30",
+    "x": 536,
+    "y": 650,
+    "width": 40,
+    "height": 40,
+    "z": 4028,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty31": {
+    "id": "Cross_Empty31",
+    "x": 775,
+    "y": 599,
+    "width": 40,
+    "height": 40,
+    "z": 4027,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty32": {
+    "id": "Cross_Empty32",
+    "x": 727,
+    "y": 601,
+    "width": 40,
+    "height": 40,
+    "z": 4026,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty33": {
+    "id": "Cross_Empty33",
+    "x": 680,
+    "y": 600,
+    "width": 40,
+    "height": 40,
+    "z": 4025,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty34": {
+    "id": "Cross_Empty34",
+    "x": 631,
+    "y": 598,
+    "width": 40,
+    "height": 40,
+    "z": 4024,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty35": {
+    "id": "Cross_Empty35",
+    "x": 584,
+    "y": 601,
+    "width": 40,
+    "height": 40,
+    "z": 4023,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty36": {
+    "id": "Cross_Empty36",
+    "x": 536,
+    "y": 602,
+    "width": 40,
+    "height": 40,
+    "z": 4022,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty37": {
+    "id": "Cross_Empty37",
+    "x": 776,
+    "y": 549,
+    "width": 40,
+    "height": 40,
+    "z": 4021,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty38": {
+    "id": "Cross_Empty38",
+    "x": 728,
+    "y": 548,
+    "width": 40,
+    "height": 40,
+    "z": 4020,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty39": {
+    "id": "Cross_Empty39",
+    "x": 680,
+    "y": 550,
+    "width": 40,
+    "height": 40,
+    "z": 4019,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty40": {
+    "id": "Cross_Empty40",
+    "x": 633,
+    "y": 549,
+    "width": 40,
+    "height": 40,
+    "z": 4018,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty41": {
+    "id": "Cross_Empty41",
+    "x": 583,
+    "y": 549,
+    "width": 40,
+    "height": 40,
+    "z": 4017,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty42": {
+    "id": "Cross_Empty42",
+    "x": 538,
+    "y": 551,
+    "width": 40,
+    "height": 40,
+    "z": 4016,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty43": {
+    "id": "Cross_Empty43",
+    "x": 776,
+    "y": 503,
+    "width": 40,
+    "height": 40,
+    "z": 4015,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty44": {
+    "id": "Cross_Empty44",
+    "x": 726,
+    "y": 500,
+    "width": 40,
+    "height": 40,
+    "z": 4014,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty45": {
+    "id": "Cross_Empty45",
+    "x": 679,
+    "y": 500,
+    "width": 40,
+    "height": 40,
+    "z": 4013,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty46": {
+    "id": "Cross_Empty46",
+    "x": 631,
+    "y": 503,
+    "width": 40,
+    "height": 40,
+    "z": 4012,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty47": {
+    "id": "Cross_Empty47",
+    "x": 583,
+    "y": 500,
+    "width": 40,
+    "height": 40,
+    "z": 4011,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Cross_Empty48": {
+    "id": "Cross_Empty48",
+    "x": 534,
+    "y": 500,
+    "width": 40,
+    "height": 40,
+    "z": 4010,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "5sja": {
+    "type": "label",
+    "x": 1467,
+    "y": 241,
+    "z": 80,
+    "id": "5sja",
+    "width": 30,
+    "editable": true,
+    "css": {
+      "color": "black;"
+    }
+  },
+  "6sja": {
+    "inheritFrom": {
+      "5sja": "*"
+    },
+    "type": "label",
+    "id": "6sja",
+    "x": 1468,
+    "y": 265,
+    "z": 81,
+    "text": ""
+  },
+  "7sja": {
+    "inheritFrom": {
+      "5sja": "*"
+    },
+    "type": "label",
+    "id": "7sja",
+    "x": 1468,
+    "y": 292,
+    "z": 82,
+    "text": ""
+  },
+  "8sja": {
+    "inheritFrom": {
+      "5sja": "*"
+    },
+    "type": "label",
+    "id": "8sja",
+    "x": 1549,
+    "y": 238,
+    "z": 79,
+    "text": ""
+  },
+  "9sja": {
+    "inheritFrom": {
+      "5sja": "*"
+    },
+    "type": "label",
+    "id": "9sja",
+    "x": 1549,
+    "y": 264,
+    "z": 84,
+    "text": ""
+  },
+  "10sja": {
+    "inheritFrom": {
+      "5sja": "*"
+    },
+    "type": "label",
+    "id": "10sja",
+    "x": 1550,
+    "y": 292,
+    "z": 83,
+    "text": ""
+  },
+  "11sja": {
+    "inheritFrom": {
+      "5sja": "*"
+    },
+    "type": "label",
+    "id": "11sja",
+    "x": 1433,
+    "y": 326,
+    "z": 86,
+    "text": ""
+  },
+  "12sja": {
+    "inheritFrom": {
+      "5sja": "*"
+    },
+    "type": "label",
+    "id": "12sja",
+    "x": 1434,
+    "y": 363,
+    "z": 87,
+    "text": ""
+  },
+  "13sja": {
+    "type": "label",
+    "id": "13sja",
+    "x": 1490,
+    "y": 345,
+    "z": 85,
+    "height": 30,
+    "width": 90,
+    "css": {
+      "color": "black"
+    },
+    "editable": true
+  },
+  "Check_Empty66": {
+    "inheritFrom": {
+      "Check_Empty65": "*"
+    },
+    "id": "Check_Empty66",
+    "x": 1172,
+    "y": 48,
+    "z": 4151,
+    "activeFace": 0
+  },
+  "Check_Empty67": {
+    "inheritFrom": {
+      "Check_Empty65": "*"
+    },
+    "id": "Check_Empty67",
+    "x": 1173,
+    "y": 78,
+    "z": 4152,
+    "activeFace": 0
+  },
+  "Check_Empty68": {
+    "inheritFrom": {
+      "Check_Empty65": "*"
+    },
+    "id": "Check_Empty68",
+    "x": 1174,
+    "y": 110,
+    "z": 4153,
+    "activeFace": 0
+  },
+  "Check_Empty69": {
+    "inheritFrom": {
+      "Check_Empty65": "*"
+    },
+    "id": "Check_Empty69",
+    "x": 1173,
+    "y": 140,
+    "z": 4154,
+    "activeFace": 0
+  },
+  "Check_Empty70": {
+    "inheritFrom": {
+      "Check_Empty65": "*"
+    },
+    "id": "Check_Empty70",
+    "x": 1172,
+    "y": 171,
+    "z": 4155,
+    "activeFace": 0
+  },
+  "6wpg": {
+    "image": "/assets/143284901_288134",
+    "movable": false,
+    "height": 1000,
+    "layer": -4,
+    "id": "6wpg",
+    "z": 85,
+    "x": 1076,
+    "y": 111,
+    "width": 530,
+    "movableInEdit": false
+  },
+  "Circle_Cross_Empty76": {
+    "id": "Circle_Cross_Empty76",
+    "x": 1242,
+    "y": 737,
+    "width": 40,
+    "height": 40,
+    "z": 4245,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "Circle_Cross_Empty63": {
+    "id": "Circle_Cross_Empty63",
+    "x": 1166,
+    "y": 735,
+    "width": 40,
+    "height": 40,
+    "z": 4247,
+    "movable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/-2009371825_1908"
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "tile": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 773,
+    "z": 35076,
+    "hideWhenUnused": "true",
+    "y": -1
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 528,
+    "z": 35075,
+    "hideWhenUnused": "true",
+    "y": -1,
+    "player": "Lex",
+    "color": "#007e09"
+  },
+  "newDayButton": {
+    "type": "button",
+    "id": "newDayButton",
+    "x": 950,
+    "y": 20,
+    "width": 200,
+    "height": 95,
+    "z": 35064,
+    "css": {
+      "default": {
+        "border": "none",
+        "background": "transparent",
+        "background-size": "100% auto",
+        "transition": "0.2s"
+      },
+      ":hover": {
+        "filter": "invert(75%)"
+      }
+    },
+    "image": "/assets/-788062182_6363",
+    "activeDay": 0,
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "newDayButton"
+        ],
+        "property": "activeDay",
+        "aggregation": "sum",
+        "variable": "currentActiveDay"
+      },
+      {
+        "func": "SELECT",
+        "property": "day",
+        "collection": "allDays",
+        "relation": ">=",
+        "value": 1
+      },
+      {
+        "func": "COUNT",
+        "collection": "allDays",
+        "variable": "allDaysCount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${currentActiveDay}",
+        "relation": ">=",
+        "operand2": "${allDaysCount}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "newDayButton"
+            ],
+            "property": "activeDay",
+            "value": 0
+          },
+          {
+            "func": "FLIP",
+            "collection": "allDays",
+            "face": 0
+          }
+        ],
+        "elseRoutine": [
+          "var newActiveDay = ${currentActiveDay} + 1",
+          {
+            "func": "SET",
+            "collection": [
+              "newDayButton"
+            ],
+            "property": "activeDay",
+            "value": "${newActiveDay}"
+          },
+          {
+            "func": "SELECT",
+            "property": "day",
+            "source": "allDays",
+            "value": "${newActiveDay}",
+            "collection": "days"
+          },
+          {
+            "func": "FLIP",
+            "collection": "days",
+            "face": 1
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          "var random = randInt 0 5",
+          {
+            "func": "SET",
+            "collection": "DEFAULT",
+            "property": "activeFace",
+            "value": "${random}"
+          }
+        ]
+      }
+    ],
+    "borderRadius": 0
+  },
+  "day1": {
+    "id": "day1",
+    "x": 1383,
+    "y": 61,
+    "width": 40,
+    "height": 40,
+    "z": 4381,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "css": "background:#transparent",
+        "image": ""
+      },
+      {
+        "image": "/assets/1494362211_1750"
+      }
+    ],
+    "day": 1,
+    "tile": true
+  },
+  "day2": {
+    "id": "day2",
+    "x": 1420,
+    "y": 63,
+    "z": 4369,
+    "activeFace": 0,
+    "inheritFrom": "day1",
+    "day": 2
+  },
+  "day3": {
+    "id": "day3",
+    "x": 1455,
+    "y": 62,
+    "z": 4368,
+    "activeFace": 0,
+    "inheritFrom": "day1",
+    "day": 3
+  },
+  "day4": {
+    "id": "day4",
+    "x": 1492,
+    "y": 64,
+    "width": 40,
+    "height": 40,
+    "z": 4374,
+    "movable": false,
+    "movableInEdit": true,
+    "activeFace": 0,
+    "inheritFrom": "day1",
+    "day": 4
+  },
+  "day5": {
+    "id": "day5",
+    "x": 1530,
+    "y": 64,
+    "width": 40,
+    "height": 40,
+    "z": 4375,
+    "movable": false,
+    "movableInEdit": true,
+    "activeFace": 0,
+    "inheritFrom": "day1",
+    "day": 5
+  },
+  "day6": {
+    "id": "day6",
+    "x": 1384,
+    "y": 108,
+    "width": 40,
+    "height": 40,
+    "z": 4376,
+    "movable": false,
+    "movableInEdit": true,
+    "activeFace": 0,
+    "inheritFrom": "day1",
+    "day": 6
+  },
+  "day7": {
+    "id": "day7",
+    "x": 1419,
+    "y": 106,
+    "width": 40,
+    "height": 40,
+    "z": 4377,
+    "movable": false,
+    "movableInEdit": true,
+    "activeFace": 0,
+    "inheritFrom": "day1",
+    "day": 7
+  },
+  "day8": {
+    "id": "day8",
+    "x": 1456,
+    "y": 107,
+    "width": 40,
+    "height": 40,
+    "z": 4378,
+    "movable": false,
+    "movableInEdit": true,
+    "activeFace": 0,
+    "inheritFrom": "day1",
+    "day": 8
+  },
+  "day9": {
+    "id": "day9",
+    "x": 1492,
+    "y": 107,
+    "width": 40,
+    "height": 40,
+    "z": 4379,
+    "movable": false,
+    "movableInEdit": true,
+    "activeFace": 0,
+    "inheritFrom": "day1",
+    "day": 9
+  },
+  "day10": {
+    "id": "day10",
+    "x": 1530,
+    "y": 107,
+    "width": 40,
+    "height": 40,
+    "z": 4380,
+    "movable": false,
+    "movableInEdit": true,
+    "activeFace": 0,
+    "inheritFrom": "day1",
+    "day": 10
+  },
+  "24zkx": {
+    "type": "dice",
+    "id": "24zkx",
+    "y": 471,
+    "width": 45,
+    "height": 45,
+    "scale": "1",
+    "z": 4431,
+    "movable": "true",
+    "clickable": false,
+    "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 378,
+    "shape3d": true,
+    "originalRollTimes": 2,
+    "resetProperties": {
+      "x": 1499,
+      "y": 471,
+      "parent": null,
+      "rotation": 0
+    },
+    "rollTimes": "--",
+    "secondaryColor": "#ffffff",
+    "x": 1499,
+    "hoverInheritVisibleForSeat": false,
+    "onlyVisibleForSeat": "seat2",
+    "activeFace": 4
+  },
+  "67td": {
+    "type": "holder",
+    "id": "67td",
+    "x": 37,
+    "y": 49,
+    "width": 85,
+    "height": 75,
+    "z": 2809,
+    "movable": false,
+    "alignChildren": false,
+    "css": {
+      "background": "transparent"
+    },
+    "dropTarget": {
+      "type": "dice"
+    }
+  }
+}
