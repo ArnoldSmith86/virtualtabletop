@@ -1,0 +1,3655 @@
+{
+  "hand": {
+    "id": "hand",
+    "x": 336,
+    "y": 767,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 154,
+    "childrenPerOwner": true,
+    "width": 928,
+    "height": 368,
+    "css": {
+      "background": "#0003",
+      "border": "1px solid transparent"
+    },
+    "dropShadow": true,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "property": "playedBy",
+        "collection": "child"
+      }
+    ]
+  },
+  "Seat 1": {
+    "type": "seat",
+    "id": "Seat 1",
+    "x": 10,
+    "y": 10,
+    "hideWhenUnused": true,
+    "css": "box-sizing: border-box",
+    "height": 50,
+    "score": [
+      0,
+      0
+    ],
+    "z": 221
+  },
+  "Seat 2": {
+    "type": "seat",
+    "id": "Seat 2",
+    "x": 169,
+    "y": 10,
+    "index": 2,
+    "hideWhenUnused": true,
+    "css": "box-sizing: border-box",
+    "height": 50,
+    "score": [
+      0,
+      0
+    ],
+    "z": 219
+  },
+  "Seat 3": {
+    "type": "seat",
+    "id": "Seat 3",
+    "x": 328,
+    "y": 10,
+    "index": 3,
+    "hideWhenUnused": true,
+    "css": "box-sizing: border-box",
+    "height": 50,
+    "score": [
+      0,
+      0
+    ],
+    "z": 217,
+    "turn": true
+  },
+  "Seat 4": {
+    "type": "seat",
+    "id": "Seat 4",
+    "x": 487,
+    "y": 10,
+    "index": 4,
+    "hideWhenUnused": true,
+    "css": "box-sizing: border-box",
+    "height": 50,
+    "score": [
+      0,
+      0
+    ],
+    "z": 77884
+  },
+  "Seat 5": {
+    "type": "seat",
+    "id": "Seat 5",
+    "x": 646,
+    "y": 10,
+    "index": 5,
+    "hideWhenUnused": true,
+    "css": "box-sizing: border-box",
+    "height": 50,
+    "score": [
+      0,
+      0
+    ],
+    "z": 214
+  },
+  "Seat 6": {
+    "type": "seat",
+    "id": "Seat 6",
+    "x": 804,
+    "y": 10,
+    "index": 6,
+    "hideWhenUnused": true,
+    "css": "box-sizing: border-box",
+    "height": 50,
+    "score": [
+      0,
+      0
+    ],
+    "z": 222
+  },
+  "Seat 7": {
+    "type": "seat",
+    "id": "Seat 7",
+    "x": 963,
+    "y": 10,
+    "index": 7,
+    "hideWhenUnused": true,
+    "css": "box-sizing: border-box",
+    "height": 50,
+    "score": [
+      0,
+      0
+    ],
+    "z": 218
+  },
+  "Seat 8": {
+    "type": "seat",
+    "id": "Seat 8",
+    "x": 1122,
+    "y": 10,
+    "index": 8,
+    "hideWhenUnused": true,
+    "css": "box-sizing: border-box",
+    "height": 50,
+    "score": [
+      0,
+      0
+    ],
+    "z": 223
+  },
+  "Seat 9": {
+    "type": "seat",
+    "id": "Seat 9",
+    "x": 1281,
+    "y": 10,
+    "index": 9,
+    "hideWhenUnused": true,
+    "css": "box-sizing: border-box",
+    "height": 50,
+    "score": [
+      0,
+      0
+    ],
+    "z": 216
+  },
+  "Draw": {
+    "type": "holder",
+    "id": "Draw",
+    "x": 1422,
+    "y": 133,
+    "width": 158,
+    "height": 233,
+    "inheritFrom": {
+      "hand": "css"
+    },
+    "movable": false,
+    "movableInEdit": true
+  },
+  "Scoreboard": {
+    "type": "scoreboard",
+    "id": "Scoreboard",
+    "x": 20,
+    "y": 110,
+    "width": 158,
+    "height": 607,
+    "movable": false,
+    "css": {
+      " tr": {
+        "height": "54px"
+      }
+    },
+    "z": 226,
+    "verticalHeader": true,
+    "playersInColumns": false,
+    "rounds": [
+      "Round",
+      "Total"
+    ],
+    "roundLabel": "",
+    "showTotals": false
+  },
+  "Start": {
+    "type": "button",
+    "id": "Start",
+    "x": 20,
+    "y": 920,
+    "text": "restart_alt",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Start Over",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Are you sure you want to start over?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!="
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "Draw"
+        ],
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "Draw"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "Draw"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": [
+          "Seat 1",
+          "Seat 2",
+          "Seat 3",
+          "Seat 4",
+          "Seat 5",
+          "Seat 6",
+          "Seat 7",
+          "Seat 8",
+          "Seat 9",
+          "Seat 10"
+        ],
+        "count": 5
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "seat"
+      },
+      {
+        "func": "SET",
+        "property": "score",
+        "value": [
+          0,
+          0
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "Next"
+      }
+    ],
+    "z": 77885,
+    "enableVoteButtonsRoutine": [
+      {
+        "func": "SELECT",
+        "property": "playedBy",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "parent"
+      },
+      {
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "variable": "activeSeat"
+      },
+      {
+        "func": "SELECT",
+        "property": "component",
+        "value": "VoteButton"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "seat",
+        "value": "${activeSeat}",
+        "relation": "!="
+      },
+      {
+        "func": "SET",
+        "property": "show",
+        "value": true
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "Panel A",
+          "Panel B",
+          "Panel C",
+          "Panel D",
+          "Panel E",
+          "Panel F",
+          "Panel G",
+          "Panel H",
+          "Panel I",
+          "Panel J"
+        ],
+        "to": "Temp"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Temp"
+      },
+      {
+        "func": "SELECT",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "type": "seat"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "linkedToSeat",
+            "value": "${widgetID}"
+          },
+          {
+            "func": "GET"
+          },
+          {
+            "func": "MOVE",
+            "from": "Temp",
+            "to": "${id}",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${id}",
+            "type": "card"
+          },
+          {
+            "func": "GET",
+            "property": "playedBy"
+          },
+          {
+            "func": "SELECT",
+            "property": "player",
+            "value": "${playedBy}"
+          },
+          {
+            "func": "GET",
+            "variable": "seatIDofPlayedPlayer"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${id}",
+            "type": "button"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "seat",
+            "value": "${seatIDofPlayedPlayer}",
+            "type": "button"
+          },
+          {
+            "func": "SET",
+            "property": "show",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "disableVoteButtonsRoutine": [
+      {
+        "func": "SELECT",
+        "property": "component",
+        "value": "VoteButton"
+      },
+      {
+        "func": "SET",
+        "property": "show",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "property": "reveal",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "property": "active",
+        "value": false
+      }
+    ],
+    "revealVoteButtonsRoutine": [
+      {
+        "func": "SELECT",
+        "property": "component",
+        "value": "VoteButton"
+      },
+      {
+        "func": "SET",
+        "property": "reveal",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Next"
+        ],
+        "property": "owner"
+      },
+      {
+        "func": "CALL",
+        "widget": "Score"
+      }
+    ],
+    "classes": "material-icons",
+    "css": {
+      "font-size": "48px"
+    },
+    "width": 60,
+    "height": 60
+  },
+  "Discard": {
+    "type": "holder",
+    "id": "Discard",
+    "x": 1422,
+    "y": 461,
+    "width": 158,
+    "height": 233,
+    "inheritFrom": {
+      "hand": "css"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "z": 12
+  },
+  "Seat 10": {
+    "type": "seat",
+    "id": "Seat 10",
+    "x": 1440,
+    "y": 10,
+    "index": 10,
+    "hideWhenUnused": true,
+    "css": "box-sizing: border-box",
+    "height": 50,
+    "score": [
+      0,
+      0
+    ],
+    "z": 215
+  },
+  "y2gw": {
+    "id": "y2gw",
+    "type": "deck",
+    "cardTypes": {
+      "U1 (33).png": {
+        "image": "/assets/-1428640616_35340"
+      },
+      "U1 (35).png": {
+        "image": "/assets/1022884846_9944"
+      },
+      "U1 (38).png": {
+        "image": "/assets/1927678805_16012"
+      },
+      "U1 (37).png": {
+        "image": "/assets/-736761173_33344"
+      },
+      "U1 (34).png": {
+        "image": "/assets/889272531_46818"
+      },
+      "U1 (39).png": {
+        "image": "/assets/-1995372797_18564"
+      },
+      "U1 (40).png": {
+        "image": "/assets/-1081432409_25362"
+      },
+      "U1 (49).png": {
+        "image": "/assets/-1090161620_15520"
+      },
+      "U1 (50).png": {
+        "image": "/assets/2070318600_15468"
+      },
+      "U1 (54).png": {
+        "image": "/assets/1298268116_27472"
+      },
+      "U1 (51).png": {
+        "image": "/assets/29622277_19962"
+      },
+      "U1 (55).png": {
+        "image": "/assets/117965959_11876"
+      },
+      "U1 (52).png": {
+        "image": "/assets/1488444843_45294"
+      },
+      "U1 (53).png": {
+        "image": "/assets/-410136419_20142"
+      },
+      "U1 (57).png": {
+        "image": "/assets/-1078214503_31542"
+      },
+      "U1 (56).png": {
+        "image": "/assets/-59955326_52856"
+      },
+      "U1 (64).png": {
+        "image": "/assets/1312047303_48986"
+      },
+      "U1 (58).png": {
+        "image": "/assets/911505979_28576"
+      },
+      "U1 (60).png": {
+        "image": "/assets/-2099172731_25300"
+      },
+      "U1 (59).png": {
+        "image": "/assets/-329220132_29680"
+      },
+      "U1 (62).png": {
+        "image": "/assets/1827170315_26720"
+      },
+      "U1 (66).png": {
+        "image": "/assets/244517860_25126"
+      },
+      "U1 (68).png": {
+        "image": "/assets/-989236803_8542"
+      },
+      "U1 (65).png": {
+        "image": "/assets/1874912159_18848"
+      },
+      "U1 (67).png": {
+        "image": "/assets/-419081435_20526"
+      },
+      "U1 (71).png": {
+        "image": "/assets/-1571342239_37420"
+      },
+      "U1 (69).png": {
+        "image": "/assets/-277786295_29252"
+      },
+      "U1 (70).png": {
+        "image": "/assets/2020978013_28000"
+      },
+      "U1 (72).png": {
+        "image": "/assets/-567773298_28262"
+      },
+      "U1 (75).png": {
+        "image": "/assets/1749921884_14370"
+      },
+      "U1 (74).png": {
+        "image": "/assets/-1179027958_16904"
+      },
+      "U1 (73).png": {
+        "image": "/assets/-358760998_18092"
+      },
+      "U1 (80).png": {
+        "image": "/assets/210630694_19958"
+      },
+      "U1 (77).png": {
+        "image": "/assets/-2095245959_35984"
+      },
+      "U1 (25).png": {
+        "image": "/assets/-2122585504_11186"
+      },
+      "U1 (78).png": {
+        "image": "/assets/235663543_46764"
+      },
+      "U1 (2).png": {
+        "image": "/assets/-1478560994_16198"
+      },
+      "U1 (79).png": {
+        "image": "/assets/35711429_31992"
+      },
+      "U1 (45).png": {
+        "image": "/assets/-809225123_17878"
+      },
+      "U1 (5).png": {
+        "image": "/assets/1580831435_18992"
+      },
+      "U1 (36).png": {
+        "image": "/assets/-743032794_67998"
+      },
+      "U1 (48).png": {
+        "image": "/assets/-1673614687_18214"
+      },
+      "U1 (4).png": {
+        "image": "/assets/-1740659424_13468"
+      },
+      "U1 (28).png": {
+        "image": "/assets/1498586237_31994"
+      },
+      "U1 (12).png": {
+        "image": "/assets/1146981363_28196"
+      },
+      "U1 (3).png": {
+        "image": "/assets/-2054366966_33320"
+      },
+      "U1 (17).png": {
+        "image": "/assets/1251853302_19044"
+      },
+      "U1 (31).png": {
+        "image": "/assets/-1344130488_25772"
+      },
+      "U1 (41).png": {
+        "image": "/assets/1351008733_19054"
+      },
+      "U1 (10).png": {
+        "image": "/assets/525855878_16774"
+      },
+      "U1 (8).png": {
+        "image": "/assets/673341759_22136"
+      },
+      "U1 (16).png": {
+        "image": "/assets/-1399153531_29592"
+      },
+      "U1 (22).png": {
+        "image": "/assets/2097595008_16502"
+      },
+      "U1 (23).png": {
+        "image": "/assets/-518825318_34668"
+      },
+      "U1 (24).png": {
+        "image": "/assets/1131822140_31280"
+      },
+      "U1 (13).png": {
+        "image": "/assets/2053160130_24582"
+      },
+      "U1 (27).png": {
+        "image": "/assets/1259603452_17070"
+      },
+      "U1 (21).png": {
+        "image": "/assets/-676224730_26638"
+      },
+      "U1 (14).png": {
+        "image": "/assets/1441040487_25084"
+      },
+      "U1 (7).png": {
+        "image": "/assets/-1069768151_37572"
+      },
+      "U1 (19).png": {
+        "image": "/assets/-904737890_38494"
+      },
+      "U1 (43).png": {
+        "image": "/assets/592306326_32646"
+      },
+      "U1.png": {
+        "image": "/assets/-1692257621_27650"
+      },
+      "U1 (1).png": {
+        "image": "/assets/-1494178583_45820"
+      },
+      "U1 (15).png": {
+        "image": "/assets/222038212_26488"
+      },
+      "U1 (6).png": {
+        "image": "/assets/-1732527800_22480"
+      },
+      "U1 (20).png": {
+        "image": "/assets/-1437759148_48078"
+      },
+      "U1 (44).png": {
+        "image": "/assets/-1449041633_30466"
+      },
+      "U1 (9).png": {
+        "image": "/assets/-540534243_40158"
+      },
+      "U1 (29).png": {
+        "image": "/assets/2094249456_49010"
+      },
+      "U1 (30).png": {
+        "image": "/assets/-1806819661_45378"
+      },
+      "U1 (11).png": {
+        "image": "/assets/886564743_22046"
+      },
+      "U1 (18).png": {
+        "image": "/assets/1451837201_35958"
+      },
+      "U1 (32).png": {
+        "image": "/assets/-1405763111_40490"
+      },
+      "U1 (26).png": {
+        "image": "/assets/973094672_31342"
+      },
+      "U1 (42).png": {
+        "image": "/assets/-1723079721_48104"
+      },
+      "U1 (61).png": {
+        "image": "/assets/1791941551_31876"
+      },
+      "U1 (47).png": {
+        "image": "/assets/-1945757434_40302"
+      },
+      "U1 (63).png": {
+        "image": "/assets/-1017882718_34124"
+      },
+      "U1 (81).png": {
+        "image": "/assets/1644789459_45970"
+      },
+      "U1 (46).png": {
+        "image": "/assets/-918982002_56142"
+      },
+      "U1 (76).png": {
+        "image": "/assets/165953693_21910"
+      },
+      "U1 (83).png": {
+        "image": "/assets/-2055798063_38930"
+      },
+      "U1 (84).png": {
+        "image": "/assets/683730966_19528"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "white",
+            "width": 150,
+            "height": 225,
+            "value": ""
+          },
+          {
+            "type": "image",
+            "color": "white",
+            "width": 134,
+            "height": 209,
+            "x": 8,
+            "y": 8,
+            "value": "/assets/1863141377_39158",
+            "css": {
+              "background-size": "cover",
+              "border-radius": "8px",
+              "opacity": 0.75
+            }
+          },
+          {
+            "type": "text",
+            "x": -7,
+            "y": 110,
+            "fontSize": 0,
+            "textAlign": "center",
+            "width": 150,
+            "value": "Dreamcatcher",
+            "color": "#fffa",
+            "rotation": -60
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "width": 150,
+            "height": 225,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 150,
+      "height": 225,
+      "enlarge": 4,
+      "borderRadius": "8px"
+    },
+    "x": 36,
+    "y": 238,
+    "z": 25944,
+    "parent": "Draw"
+  },
+  "y2gw U1 (33).png": {
+    "type": "card",
+    "id": "y2gw U1 (33).png",
+    "deck": "y2gw",
+    "cardType": "U1 (33).png",
+    "z": 47034,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (35).png": {
+    "type": "card",
+    "id": "y2gw U1 (35).png",
+    "deck": "y2gw",
+    "cardType": "U1 (35).png",
+    "z": 47041,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (38).png": {
+    "type": "card",
+    "id": "y2gw U1 (38).png",
+    "deck": "y2gw",
+    "cardType": "U1 (38).png",
+    "z": 47033,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (37).png": {
+    "type": "card",
+    "id": "y2gw U1 (37).png",
+    "deck": "y2gw",
+    "cardType": "U1 (37).png",
+    "z": 47006,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (34).png": {
+    "type": "card",
+    "id": "y2gw U1 (34).png",
+    "deck": "y2gw",
+    "cardType": "U1 (34).png",
+    "z": 47028,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (39).png": {
+    "type": "card",
+    "id": "y2gw U1 (39).png",
+    "deck": "y2gw",
+    "cardType": "U1 (39).png",
+    "z": 47051,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (40).png": {
+    "type": "card",
+    "id": "y2gw U1 (40).png",
+    "deck": "y2gw",
+    "cardType": "U1 (40).png",
+    "z": 47075,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (49).png": {
+    "type": "card",
+    "id": "y2gw U1 (49).png",
+    "deck": "y2gw",
+    "cardType": "U1 (49).png",
+    "z": 47013,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (50).png": {
+    "type": "card",
+    "id": "y2gw U1 (50).png",
+    "deck": "y2gw",
+    "cardType": "U1 (50).png",
+    "z": 47029,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (54).png": {
+    "type": "card",
+    "id": "y2gw U1 (54).png",
+    "deck": "y2gw",
+    "cardType": "U1 (54).png",
+    "z": 47060,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (51).png": {
+    "type": "card",
+    "id": "y2gw U1 (51).png",
+    "deck": "y2gw",
+    "cardType": "U1 (51).png",
+    "z": 47070,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (55).png": {
+    "type": "card",
+    "id": "y2gw U1 (55).png",
+    "deck": "y2gw",
+    "cardType": "U1 (55).png",
+    "z": 47042,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (52).png": {
+    "type": "card",
+    "id": "y2gw U1 (52).png",
+    "deck": "y2gw",
+    "cardType": "U1 (52).png",
+    "z": 47064,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (53).png": {
+    "type": "card",
+    "id": "y2gw U1 (53).png",
+    "deck": "y2gw",
+    "cardType": "U1 (53).png",
+    "z": 47062,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (57).png": {
+    "type": "card",
+    "id": "y2gw U1 (57).png",
+    "deck": "y2gw",
+    "cardType": "U1 (57).png",
+    "z": 47079,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (56).png": {
+    "type": "card",
+    "id": "y2gw U1 (56).png",
+    "deck": "y2gw",
+    "cardType": "U1 (56).png",
+    "z": 47008,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (64).png": {
+    "type": "card",
+    "id": "y2gw U1 (64).png",
+    "deck": "y2gw",
+    "cardType": "U1 (64).png",
+    "z": 47017,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (58).png": {
+    "type": "card",
+    "id": "y2gw U1 (58).png",
+    "deck": "y2gw",
+    "cardType": "U1 (58).png",
+    "z": 47068,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (60).png": {
+    "type": "card",
+    "id": "y2gw U1 (60).png",
+    "deck": "y2gw",
+    "cardType": "U1 (60).png",
+    "z": 47083,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (59).png": {
+    "type": "card",
+    "id": "y2gw U1 (59).png",
+    "deck": "y2gw",
+    "cardType": "U1 (59).png",
+    "z": 47058,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (62).png": {
+    "type": "card",
+    "id": "y2gw U1 (62).png",
+    "deck": "y2gw",
+    "cardType": "U1 (62).png",
+    "z": 47055,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (66).png": {
+    "type": "card",
+    "id": "y2gw U1 (66).png",
+    "deck": "y2gw",
+    "cardType": "U1 (66).png",
+    "z": 47043,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (68).png": {
+    "type": "card",
+    "id": "y2gw U1 (68).png",
+    "deck": "y2gw",
+    "cardType": "U1 (68).png",
+    "z": 47035,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (65).png": {
+    "type": "card",
+    "id": "y2gw U1 (65).png",
+    "deck": "y2gw",
+    "cardType": "U1 (65).png",
+    "z": 47085,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (67).png": {
+    "type": "card",
+    "id": "y2gw U1 (67).png",
+    "deck": "y2gw",
+    "cardType": "U1 (67).png",
+    "z": 47018,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (71).png": {
+    "type": "card",
+    "id": "y2gw U1 (71).png",
+    "deck": "y2gw",
+    "cardType": "U1 (71).png",
+    "z": 47086,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (69).png": {
+    "type": "card",
+    "id": "y2gw U1 (69).png",
+    "deck": "y2gw",
+    "cardType": "U1 (69).png",
+    "z": 47007,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (70).png": {
+    "type": "card",
+    "id": "y2gw U1 (70).png",
+    "deck": "y2gw",
+    "cardType": "U1 (70).png",
+    "z": 47027,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (72).png": {
+    "type": "card",
+    "id": "y2gw U1 (72).png",
+    "deck": "y2gw",
+    "cardType": "U1 (72).png",
+    "z": 47012,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (75).png": {
+    "type": "card",
+    "id": "y2gw U1 (75).png",
+    "deck": "y2gw",
+    "cardType": "U1 (75).png",
+    "z": 47026,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (74).png": {
+    "type": "card",
+    "id": "y2gw U1 (74).png",
+    "deck": "y2gw",
+    "cardType": "U1 (74).png",
+    "z": 47084,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (73).png": {
+    "type": "card",
+    "id": "y2gw U1 (73).png",
+    "deck": "y2gw",
+    "cardType": "U1 (73).png",
+    "z": 47054,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (80).png": {
+    "type": "card",
+    "id": "y2gw U1 (80).png",
+    "deck": "y2gw",
+    "cardType": "U1 (80).png",
+    "z": 47010,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (77).png": {
+    "type": "card",
+    "id": "y2gw U1 (77).png",
+    "deck": "y2gw",
+    "cardType": "U1 (77).png",
+    "z": 47073,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (25).png": {
+    "type": "card",
+    "id": "y2gw U1 (25).png",
+    "deck": "y2gw",
+    "cardType": "U1 (25).png",
+    "z": 47009,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (78).png": {
+    "type": "card",
+    "id": "y2gw U1 (78).png",
+    "deck": "y2gw",
+    "cardType": "U1 (78).png",
+    "z": 47046,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (2).png": {
+    "type": "card",
+    "id": "y2gw U1 (2).png",
+    "deck": "y2gw",
+    "cardType": "U1 (2).png",
+    "z": 47061,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (79).png": {
+    "type": "card",
+    "id": "y2gw U1 (79).png",
+    "deck": "y2gw",
+    "cardType": "U1 (79).png",
+    "z": 47005,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (45).png": {
+    "type": "card",
+    "id": "y2gw U1 (45).png",
+    "deck": "y2gw",
+    "cardType": "U1 (45).png",
+    "z": 47016,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (5).png": {
+    "type": "card",
+    "id": "y2gw U1 (5).png",
+    "deck": "y2gw",
+    "cardType": "U1 (5).png",
+    "z": 47037,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (36).png": {
+    "type": "card",
+    "id": "y2gw U1 (36).png",
+    "deck": "y2gw",
+    "cardType": "U1 (36).png",
+    "z": 47082,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (48).png": {
+    "type": "card",
+    "id": "y2gw U1 (48).png",
+    "deck": "y2gw",
+    "cardType": "U1 (48).png",
+    "z": 47044,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (4).png": {
+    "type": "card",
+    "id": "y2gw U1 (4).png",
+    "deck": "y2gw",
+    "cardType": "U1 (4).png",
+    "z": 47072,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (28).png": {
+    "type": "card",
+    "id": "y2gw U1 (28).png",
+    "deck": "y2gw",
+    "cardType": "U1 (28).png",
+    "z": 47087,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (12).png": {
+    "type": "card",
+    "id": "y2gw U1 (12).png",
+    "deck": "y2gw",
+    "cardType": "U1 (12).png",
+    "z": 47067,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (3).png": {
+    "type": "card",
+    "id": "y2gw U1 (3).png",
+    "deck": "y2gw",
+    "cardType": "U1 (3).png",
+    "z": 47011,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (17).png": {
+    "type": "card",
+    "id": "y2gw U1 (17).png",
+    "deck": "y2gw",
+    "cardType": "U1 (17).png",
+    "z": 47039,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (31).png": {
+    "type": "card",
+    "id": "y2gw U1 (31).png",
+    "deck": "y2gw",
+    "cardType": "U1 (31).png",
+    "z": 47080,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (41).png": {
+    "type": "card",
+    "id": "y2gw U1 (41).png",
+    "deck": "y2gw",
+    "cardType": "U1 (41).png",
+    "z": 47019,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (10).png": {
+    "type": "card",
+    "id": "y2gw U1 (10).png",
+    "deck": "y2gw",
+    "cardType": "U1 (10).png",
+    "z": 47076,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (8).png": {
+    "type": "card",
+    "id": "y2gw U1 (8).png",
+    "deck": "y2gw",
+    "cardType": "U1 (8).png",
+    "z": 47038,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (16).png": {
+    "type": "card",
+    "id": "y2gw U1 (16).png",
+    "deck": "y2gw",
+    "cardType": "U1 (16).png",
+    "z": 47078,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (22).png": {
+    "type": "card",
+    "id": "y2gw U1 (22).png",
+    "deck": "y2gw",
+    "cardType": "U1 (22).png",
+    "z": 47050,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (23).png": {
+    "type": "card",
+    "id": "y2gw U1 (23).png",
+    "deck": "y2gw",
+    "cardType": "U1 (23).png",
+    "z": 47015,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (24).png": {
+    "type": "card",
+    "id": "y2gw U1 (24).png",
+    "deck": "y2gw",
+    "cardType": "U1 (24).png",
+    "z": 47088,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (13).png": {
+    "type": "card",
+    "id": "y2gw U1 (13).png",
+    "deck": "y2gw",
+    "cardType": "U1 (13).png",
+    "z": 47020,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (27).png": {
+    "type": "card",
+    "id": "y2gw U1 (27).png",
+    "deck": "y2gw",
+    "cardType": "U1 (27).png",
+    "z": 47040,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (21).png": {
+    "type": "card",
+    "id": "y2gw U1 (21).png",
+    "deck": "y2gw",
+    "cardType": "U1 (21).png",
+    "z": 47021,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (14).png": {
+    "type": "card",
+    "id": "y2gw U1 (14).png",
+    "deck": "y2gw",
+    "cardType": "U1 (14).png",
+    "z": 47049,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (7).png": {
+    "type": "card",
+    "id": "y2gw U1 (7).png",
+    "deck": "y2gw",
+    "cardType": "U1 (7).png",
+    "z": 47066,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (19).png": {
+    "type": "card",
+    "id": "y2gw U1 (19).png",
+    "deck": "y2gw",
+    "cardType": "U1 (19).png",
+    "z": 47014,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (43).png": {
+    "type": "card",
+    "id": "y2gw U1 (43).png",
+    "deck": "y2gw",
+    "cardType": "U1 (43).png",
+    "z": 47025,
+    "parent": "l8n2"
+  },
+  "y2gw U1.png": {
+    "type": "card",
+    "id": "y2gw U1.png",
+    "deck": "y2gw",
+    "cardType": "U1.png",
+    "z": 47045,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (1).png": {
+    "type": "card",
+    "id": "y2gw U1 (1).png",
+    "deck": "y2gw",
+    "cardType": "U1 (1).png",
+    "z": 47032,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (15).png": {
+    "type": "card",
+    "id": "y2gw U1 (15).png",
+    "deck": "y2gw",
+    "cardType": "U1 (15).png",
+    "z": 47065,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (6).png": {
+    "type": "card",
+    "id": "y2gw U1 (6).png",
+    "deck": "y2gw",
+    "cardType": "U1 (6).png",
+    "z": 47071,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (20).png": {
+    "type": "card",
+    "id": "y2gw U1 (20).png",
+    "deck": "y2gw",
+    "cardType": "U1 (20).png",
+    "z": 47059,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (44).png": {
+    "type": "card",
+    "id": "y2gw U1 (44).png",
+    "deck": "y2gw",
+    "cardType": "U1 (44).png",
+    "z": 47036,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (9).png": {
+    "type": "card",
+    "id": "y2gw U1 (9).png",
+    "deck": "y2gw",
+    "cardType": "U1 (9).png",
+    "z": 47031,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (29).png": {
+    "type": "card",
+    "id": "y2gw U1 (29).png",
+    "deck": "y2gw",
+    "cardType": "U1 (29).png",
+    "z": 47023,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (30).png": {
+    "type": "card",
+    "id": "y2gw U1 (30).png",
+    "deck": "y2gw",
+    "cardType": "U1 (30).png",
+    "z": 47057,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (11).png": {
+    "type": "card",
+    "id": "y2gw U1 (11).png",
+    "deck": "y2gw",
+    "cardType": "U1 (11).png",
+    "z": 47069,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (18).png": {
+    "type": "card",
+    "id": "y2gw U1 (18).png",
+    "deck": "y2gw",
+    "cardType": "U1 (18).png",
+    "z": 47022,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (32).png": {
+    "type": "card",
+    "id": "y2gw U1 (32).png",
+    "deck": "y2gw",
+    "cardType": "U1 (32).png",
+    "z": 47077,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (26).png": {
+    "type": "card",
+    "id": "y2gw U1 (26).png",
+    "deck": "y2gw",
+    "cardType": "U1 (26).png",
+    "z": 47048,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (42).png": {
+    "type": "card",
+    "id": "y2gw U1 (42).png",
+    "deck": "y2gw",
+    "cardType": "U1 (42).png",
+    "z": 47024,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (61).png": {
+    "type": "card",
+    "id": "y2gw U1 (61).png",
+    "deck": "y2gw",
+    "cardType": "U1 (61).png",
+    "z": 47047,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (47).png": {
+    "type": "card",
+    "id": "y2gw U1 (47).png",
+    "deck": "y2gw",
+    "cardType": "U1 (47).png",
+    "z": 47074,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (63).png": {
+    "type": "card",
+    "id": "y2gw U1 (63).png",
+    "deck": "y2gw",
+    "cardType": "U1 (63).png",
+    "z": 47052,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (81).png": {
+    "type": "card",
+    "id": "y2gw U1 (81).png",
+    "deck": "y2gw",
+    "cardType": "U1 (81).png",
+    "z": 47053,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (46).png": {
+    "type": "card",
+    "id": "y2gw U1 (46).png",
+    "deck": "y2gw",
+    "cardType": "U1 (46).png",
+    "z": 47056,
+    "parent": "l8n2"
+  },
+  "y2gw U1 (76).png": {
+    "type": "card",
+    "id": "y2gw U1 (76).png",
+    "deck": "y2gw",
+    "cardType": "U1 (76).png",
+    "z": 47063,
+    "parent": "l8n2"
+  },
+  "l8n2": {
+    "type": "pile",
+    "width": 150,
+    "height": 225,
+    "id": "l8n2",
+    "z": 25946,
+    "parent": "Draw"
+  },
+  "8soy": {
+    "deck": "y2gw",
+    "type": "card",
+    "cardType": "U1 (83).png",
+    "id": "8soy",
+    "z": 47081,
+    "parent": "l8n2"
+  },
+  "aveu": {
+    "deck": "y2gw",
+    "type": "card",
+    "cardType": "U1 (84).png",
+    "id": "aveu",
+    "z": 47030,
+    "parent": "l8n2"
+  },
+  "Player1ReadyButtonA": {
+    "type": "button",
+    "id": "Player1ReadyButtonA",
+    "parent": "Panel A",
+    "fixedParent": true,
+    "x": -5,
+    "y": 195,
+    "width": 50,
+    "height": 50,
+    "z": 77881,
+    "movable": false,
+    "movableInEdit": true,
+    "classes": "material-icons",
+    "css": {
+      "default": {
+        "background": "${PROPERTY color}",
+        "border-color": "gray",
+        "color": "gray",
+        "font-size": "45px",
+        "font-weight": "bold",
+        "opacity": "${PROPERTY opacity}"
+      },
+      "NOPE, #playerCursors": {
+        "display": "none"
+      }
+    },
+    "inheritFrom": {
+      "Seat 1": "color"
+    },
+    "seat": "Seat 1",
+    "text": "check",
+    "component": "VoteButton",
+    "opacity": "0.5",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "component",
+        "value": "VoteButton"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "seat",
+        "value": "${PROPERTY seat}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "id",
+        "relation": "!=",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "property": "active",
+        "value": false
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY active}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "active",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "active",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "layer": 2,
+    "show": false,
+    "reveal": false,
+    "showChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "revealChangeRoutine"
+      }
+    ],
+    "revealChangeRoutine": [
+      "var reveal = ${PROPERTY show} && ${PROPERTY reveal}",
+      "var reveal = ${PROPERTY active} && ${reveal}",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY reveal}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "condition": "${reveal}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "onlyVisibleForSeat",
+                "value": [
+                  "Seat 1",
+                  "Seat 2",
+                  "Seat 3",
+                  "Seat 4",
+                  "Seat 5",
+                  "Seat 6",
+                  "Seat 7",
+                  "Seat 8",
+                  "Seat 9",
+                  "Seat 10"
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "clickable",
+                "value": false
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "onlyVisibleForSeat",
+                "value": "NONE"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "condition": "${PROPERTY show}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "onlyVisibleForSeat",
+                "value": "${PROPERTY seat}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "clickable",
+                "value": true
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "onlyVisibleForSeat",
+                "value": "NONE"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "active": false,
+    "activeChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY active}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "opacity",
+            "value": "1.0"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "opacity",
+            "value": "0.5"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "revealChangeRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "checkVotedCountRoutine"
+      }
+    ],
+    "checkVotedCountRoutine": [
+      {
+        "func": "SELECT",
+        "property": "active",
+        "value": true
+      },
+      {
+        "func": "COUNT",
+        "variable": "votesCount"
+      },
+      {
+        "func": "SELECT",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "type": "seat"
+      },
+      {
+        "func": "COUNT",
+        "variable": "playerCount"
+      },
+      "var votingPlayerCount = ${playerCount} - 1",
+      {
+        "func": "IF",
+        "operand1": "${votesCount}",
+        "operand2": "${votingPlayerCount}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "Start",
+            "routine": "revealVoteButtonsRoutine"
+          }
+        ]
+      }
+    ],
+    "onlyVisibleForSeat": "NONE",
+    "clickable": true
+  },
+  "Panel A": {
+    "type": "holder",
+    "id": "Panel A",
+    "x": 243,
+    "y": 133,
+    "width": 158,
+    "height": 233,
+    "borderRadius": 8,
+    "scale": 1.2,
+    "z": 10,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "hand": "css"
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "playedBy"
+      },
+      {
+        "func": "IF",
+        "condition": "${playedBy}",
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "playedBy",
+            "value": "${playerName}",
+            "collection": "child"
+          },
+          {
+            "func": "CALL",
+            "routine": "checkPlayedCardCountRoutine"
+          }
+        ]
+      }
+    ],
+    "dropLimit": 1,
+    "checkPlayedCardCountRoutine": [
+      {
+        "func": "SELECT",
+        "property": "playedBy",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "COUNT",
+        "variable": "playedCardCount"
+      },
+      {
+        "func": "SELECT",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "type": "seat"
+      },
+      {
+        "func": "COUNT",
+        "variable": "playerCount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${playedCardCount}",
+        "operand2": "${playerCount}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "Start",
+            "routine": "enableVoteButtonsRoutine"
+          }
+        ]
+      }
+    ],
+    "linkedToSeat": "Seat 1"
+  },
+  "Player2ReadyButtonA": {
+    "inheritFrom": {
+      "Seat 2": "color",
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player2ReadyButtonA",
+    "seat": "Seat 2",
+    "opacity": "0.5",
+    "x": 8,
+    "show": false,
+    "active": false,
+    "reveal": false,
+    "onlyVisibleForSeat": "NONE",
+    "clickable": true
+  },
+  "Player3ReadyButtonA": {
+    "inheritFrom": {
+      "Seat 3": "color",
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player3ReadyButtonA",
+    "seat": "Seat 3",
+    "opacity": "0.5",
+    "x": 23,
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player4ReadyButtonA": {
+    "inheritFrom": {
+      "Seat 4": "color",
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player4ReadyButtonA",
+    "seat": "Seat 4",
+    "opacity": "0.5",
+    "x": 39,
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": false
+  },
+  "Player5ReadyButtonA": {
+    "inheritFrom": {
+      "Seat 5": "color",
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player5ReadyButtonA",
+    "seat": "Seat 5",
+    "opacity": "0.5",
+    "x": 52,
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player6ReadyButtonA": {
+    "inheritFrom": {
+      "Seat 6": "color",
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player6ReadyButtonA",
+    "seat": "Seat 6",
+    "opacity": "0.5",
+    "x": 64,
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player7ReadyButtonA": {
+    "inheritFrom": {
+      "Seat 7": "color",
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player7ReadyButtonA",
+    "seat": "Seat 7",
+    "opacity": "0.5",
+    "x": 77,
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player8ReadyButtonA": {
+    "inheritFrom": {
+      "Seat 8": "color",
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player8ReadyButtonA",
+    "seat": "Seat 8",
+    "opacity": "0.5",
+    "x": 90,
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player9ReadyButtonA": {
+    "inheritFrom": {
+      "Seat 9": "color",
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player9ReadyButtonA",
+    "seat": "Seat 9",
+    "opacity": "0.5",
+    "x": 102,
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player10ReadyButtonA": {
+    "inheritFrom": {
+      "Seat 10": "color",
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player10ReadyButtonA",
+    "seat": "Seat 10",
+    "opacity": "0.5",
+    "x": 113,
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Temp": {
+    "type": "holder",
+    "id": "Temp",
+    "x": 191,
+    "y": -369,
+    "width": 158,
+    "height": 233
+  },
+  "Next": {
+    "type": "button",
+    "id": "Next",
+    "x": 1500,
+    "y": 900,
+    "z": 77887,
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SELECT",
+        "property": "playedBy",
+        "relation": "!="
+      },
+      {
+        "func": "SET",
+        "property": "playedBy"
+      },
+      {
+        "func": "CALL",
+        "widget": "Start",
+        "routine": "disableVoteButtonsRoutine"
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "Panel A",
+          "Panel B",
+          "Panel C",
+          "Panel D",
+          "Panel E",
+          "Panel F",
+          "Panel G",
+          "Panel H",
+          "Panel I",
+          "Panel J"
+        ],
+        "to": "Discard",
+        "face": 0
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": [
+          "Seat 1",
+          "Seat 2",
+          "Seat 3",
+          "Seat 4",
+          "Seat 5",
+          "Seat 6",
+          "Seat 7",
+          "Seat 8",
+          "Seat 9",
+          "Seat 10"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "owner",
+        "value": []
+      }
+    ],
+    "classes": "material-icons",
+    "css": {
+      "font-size": "74px"
+    },
+    "owner": []
+  },
+  "Panel B": {
+    "inheritFrom": {
+      "Panel A": "*"
+    },
+    "type": "holder",
+    "id": "Panel B",
+    "x": 482,
+    "y": 133,
+    "z": 9,
+    "linkedToSeat": "Seat 2"
+  },
+  "Player1ReadyButtonB": {
+    "inheritFrom": {
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player1ReadyButtonB",
+    "parent": "Panel B",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "reveal": false,
+    "onlyVisibleForSeat": "NONE",
+    "clickable": true
+  },
+  "Player2ReadyButtonB": {
+    "inheritFrom": {
+      "Player2ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player2ReadyButtonB",
+    "parent": "Panel B",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player3ReadyButtonB": {
+    "inheritFrom": {
+      "Player3ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player3ReadyButtonB",
+    "parent": "Panel B",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player4ReadyButtonB": {
+    "inheritFrom": {
+      "Player4ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player4ReadyButtonB",
+    "parent": "Panel B",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player5ReadyButtonB": {
+    "inheritFrom": {
+      "Player5ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player5ReadyButtonB",
+    "parent": "Panel B",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player6ReadyButtonB": {
+    "inheritFrom": {
+      "Player6ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player6ReadyButtonB",
+    "parent": "Panel B",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player7ReadyButtonB": {
+    "inheritFrom": {
+      "Player7ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player7ReadyButtonB",
+    "parent": "Panel B",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player8ReadyButtonB": {
+    "inheritFrom": {
+      "Player8ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player8ReadyButtonB",
+    "parent": "Panel B",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player9ReadyButtonB": {
+    "inheritFrom": {
+      "Player9ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player9ReadyButtonB",
+    "parent": "Panel B",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player10ReadyButtonB": {
+    "inheritFrom": {
+      "Player10ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player10ReadyButtonB",
+    "parent": "Panel B",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Panel C": {
+    "inheritFrom": {
+      "Panel A": "*"
+    },
+    "type": "holder",
+    "id": "Panel C",
+    "x": 721,
+    "y": 133,
+    "z": 8,
+    "linkedToSeat": "Seat 3"
+  },
+  "Player1ReadyButtonC": {
+    "inheritFrom": {
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player1ReadyButtonC",
+    "parent": "Panel C",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player2ReadyButtonC": {
+    "inheritFrom": {
+      "Player2ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player2ReadyButtonC",
+    "parent": "Panel C",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": false
+  },
+  "Player3ReadyButtonC": {
+    "inheritFrom": {
+      "Player3ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player3ReadyButtonC",
+    "parent": "Panel C",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "reveal": false,
+    "onlyVisibleForSeat": "NONE",
+    "clickable": true
+  },
+  "Player4ReadyButtonC": {
+    "inheritFrom": {
+      "Player4ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player4ReadyButtonC",
+    "parent": "Panel C",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player5ReadyButtonC": {
+    "inheritFrom": {
+      "Player5ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player5ReadyButtonC",
+    "parent": "Panel C",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player6ReadyButtonC": {
+    "inheritFrom": {
+      "Player6ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player6ReadyButtonC",
+    "parent": "Panel C",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player7ReadyButtonC": {
+    "inheritFrom": {
+      "Player7ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player7ReadyButtonC",
+    "parent": "Panel C",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player8ReadyButtonC": {
+    "inheritFrom": {
+      "Player8ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player8ReadyButtonC",
+    "parent": "Panel C",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player9ReadyButtonC": {
+    "inheritFrom": {
+      "Player9ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player9ReadyButtonC",
+    "parent": "Panel C",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player10ReadyButtonC": {
+    "inheritFrom": {
+      "Player10ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player10ReadyButtonC",
+    "parent": "Panel C",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Panel D": {
+    "inheritFrom": {
+      "Panel A": "*"
+    },
+    "type": "holder",
+    "id": "Panel D",
+    "x": 960,
+    "y": 133,
+    "z": 7,
+    "linkedToSeat": "Seat 4"
+  },
+  "Player1ReadyButtonD": {
+    "inheritFrom": {
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player1ReadyButtonD",
+    "parent": "Panel D",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": false
+  },
+  "Player2ReadyButtonD": {
+    "inheritFrom": {
+      "Player2ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player2ReadyButtonD",
+    "parent": "Panel D",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player3ReadyButtonD": {
+    "inheritFrom": {
+      "Player3ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player3ReadyButtonD",
+    "parent": "Panel D",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": false
+  },
+  "Player4ReadyButtonD": {
+    "inheritFrom": {
+      "Player4ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player4ReadyButtonD",
+    "parent": "Panel D",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player5ReadyButtonD": {
+    "inheritFrom": {
+      "Player5ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player5ReadyButtonD",
+    "parent": "Panel D",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player6ReadyButtonD": {
+    "inheritFrom": {
+      "Player6ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player6ReadyButtonD",
+    "parent": "Panel D",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player7ReadyButtonD": {
+    "inheritFrom": {
+      "Player7ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player7ReadyButtonD",
+    "parent": "Panel D",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player8ReadyButtonD": {
+    "inheritFrom": {
+      "Player8ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player8ReadyButtonD",
+    "parent": "Panel D",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player9ReadyButtonD": {
+    "inheritFrom": {
+      "Player9ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player9ReadyButtonD",
+    "parent": "Panel D",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player10ReadyButtonD": {
+    "inheritFrom": {
+      "Player10ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player10ReadyButtonD",
+    "parent": "Panel D",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Panel E": {
+    "inheritFrom": {
+      "Panel A": "*"
+    },
+    "type": "holder",
+    "id": "Panel E",
+    "x": 1199,
+    "y": 133,
+    "z": 6,
+    "linkedToSeat": "Seat 5"
+  },
+  "Player1ReadyButtonE": {
+    "inheritFrom": {
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player1ReadyButtonE",
+    "parent": "Panel E",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player2ReadyButtonE": {
+    "inheritFrom": {
+      "Player2ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player2ReadyButtonE",
+    "parent": "Panel E",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player3ReadyButtonE": {
+    "inheritFrom": {
+      "Player3ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player3ReadyButtonE",
+    "parent": "Panel E",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player4ReadyButtonE": {
+    "inheritFrom": {
+      "Player4ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player4ReadyButtonE",
+    "parent": "Panel E",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player5ReadyButtonE": {
+    "inheritFrom": {
+      "Player5ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player5ReadyButtonE",
+    "parent": "Panel E",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player6ReadyButtonE": {
+    "inheritFrom": {
+      "Player6ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player6ReadyButtonE",
+    "parent": "Panel E",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player7ReadyButtonE": {
+    "inheritFrom": {
+      "Player7ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player7ReadyButtonE",
+    "parent": "Panel E",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player8ReadyButtonE": {
+    "inheritFrom": {
+      "Player8ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player8ReadyButtonE",
+    "parent": "Panel E",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player9ReadyButtonE": {
+    "inheritFrom": {
+      "Player9ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player9ReadyButtonE",
+    "parent": "Panel E",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player10ReadyButtonE": {
+    "inheritFrom": {
+      "Player10ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player10ReadyButtonE",
+    "parent": "Panel E",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Panel F": {
+    "inheritFrom": {
+      "Panel A": "*"
+    },
+    "type": "holder",
+    "id": "Panel F",
+    "x": 243,
+    "y": 461,
+    "z": 5,
+    "linkedToSeat": "Seat 6"
+  },
+  "Player1ReadyButtonF": {
+    "inheritFrom": {
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player1ReadyButtonF",
+    "parent": "Panel F",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player2ReadyButtonF": {
+    "inheritFrom": {
+      "Player2ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player2ReadyButtonF",
+    "parent": "Panel F",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player3ReadyButtonF": {
+    "inheritFrom": {
+      "Player3ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player3ReadyButtonF",
+    "parent": "Panel F",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player4ReadyButtonF": {
+    "inheritFrom": {
+      "Player4ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player4ReadyButtonF",
+    "parent": "Panel F",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player5ReadyButtonF": {
+    "inheritFrom": {
+      "Player5ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player5ReadyButtonF",
+    "parent": "Panel F",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player6ReadyButtonF": {
+    "inheritFrom": {
+      "Player6ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player6ReadyButtonF",
+    "parent": "Panel F",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player7ReadyButtonF": {
+    "inheritFrom": {
+      "Player7ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player7ReadyButtonF",
+    "parent": "Panel F",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player8ReadyButtonF": {
+    "inheritFrom": {
+      "Player8ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player8ReadyButtonF",
+    "parent": "Panel F",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player9ReadyButtonF": {
+    "inheritFrom": {
+      "Player9ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player9ReadyButtonF",
+    "parent": "Panel F",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player10ReadyButtonF": {
+    "inheritFrom": {
+      "Player10ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player10ReadyButtonF",
+    "parent": "Panel F",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Panel G": {
+    "inheritFrom": {
+      "Panel A": "*"
+    },
+    "type": "holder",
+    "id": "Panel G",
+    "x": 482,
+    "y": 461,
+    "z": 4,
+    "linkedToSeat": "Seat 7"
+  },
+  "Player1ReadyButtonG": {
+    "inheritFrom": {
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player1ReadyButtonG",
+    "parent": "Panel G",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player2ReadyButtonG": {
+    "inheritFrom": {
+      "Player2ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player2ReadyButtonG",
+    "parent": "Panel G",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player3ReadyButtonG": {
+    "inheritFrom": {
+      "Player3ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player3ReadyButtonG",
+    "parent": "Panel G",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player4ReadyButtonG": {
+    "inheritFrom": {
+      "Player4ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player4ReadyButtonG",
+    "parent": "Panel G",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player5ReadyButtonG": {
+    "inheritFrom": {
+      "Player5ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player5ReadyButtonG",
+    "parent": "Panel G",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player6ReadyButtonG": {
+    "inheritFrom": {
+      "Player6ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player6ReadyButtonG",
+    "parent": "Panel G",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player7ReadyButtonG": {
+    "inheritFrom": {
+      "Player7ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player7ReadyButtonG",
+    "parent": "Panel G",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player8ReadyButtonG": {
+    "inheritFrom": {
+      "Player8ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player8ReadyButtonG",
+    "parent": "Panel G",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player9ReadyButtonG": {
+    "inheritFrom": {
+      "Player9ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player9ReadyButtonG",
+    "parent": "Panel G",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player10ReadyButtonG": {
+    "inheritFrom": {
+      "Player10ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player10ReadyButtonG",
+    "parent": "Panel G",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Panel H": {
+    "inheritFrom": {
+      "Panel A": "*"
+    },
+    "type": "holder",
+    "id": "Panel H",
+    "x": 721,
+    "y": 461,
+    "z": 3,
+    "linkedToSeat": "Seat 8"
+  },
+  "Player1ReadyButtonH": {
+    "inheritFrom": {
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player1ReadyButtonH",
+    "parent": "Panel H",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player2ReadyButtonH": {
+    "inheritFrom": {
+      "Player2ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player2ReadyButtonH",
+    "parent": "Panel H",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player3ReadyButtonH": {
+    "inheritFrom": {
+      "Player3ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player3ReadyButtonH",
+    "parent": "Panel H",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player4ReadyButtonH": {
+    "inheritFrom": {
+      "Player4ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player4ReadyButtonH",
+    "parent": "Panel H",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player5ReadyButtonH": {
+    "inheritFrom": {
+      "Player5ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player5ReadyButtonH",
+    "parent": "Panel H",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player6ReadyButtonH": {
+    "inheritFrom": {
+      "Player6ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player6ReadyButtonH",
+    "parent": "Panel H",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player7ReadyButtonH": {
+    "inheritFrom": {
+      "Player7ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player7ReadyButtonH",
+    "parent": "Panel H",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player8ReadyButtonH": {
+    "inheritFrom": {
+      "Player8ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player8ReadyButtonH",
+    "parent": "Panel H",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player9ReadyButtonH": {
+    "inheritFrom": {
+      "Player9ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player9ReadyButtonH",
+    "parent": "Panel H",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player10ReadyButtonH": {
+    "inheritFrom": {
+      "Player10ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player10ReadyButtonH",
+    "parent": "Panel H",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Panel I": {
+    "inheritFrom": {
+      "Panel A": "*"
+    },
+    "type": "holder",
+    "id": "Panel I",
+    "x": 960,
+    "y": 461,
+    "z": 2,
+    "linkedToSeat": "Seat 9"
+  },
+  "Player1ReadyButtonI": {
+    "inheritFrom": {
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player1ReadyButtonI",
+    "parent": "Panel I",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player2ReadyButtonI": {
+    "inheritFrom": {
+      "Player2ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player2ReadyButtonI",
+    "parent": "Panel I",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player3ReadyButtonI": {
+    "inheritFrom": {
+      "Player3ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player3ReadyButtonI",
+    "parent": "Panel I",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player4ReadyButtonI": {
+    "inheritFrom": {
+      "Player4ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player4ReadyButtonI",
+    "parent": "Panel I",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player5ReadyButtonI": {
+    "inheritFrom": {
+      "Player5ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player5ReadyButtonI",
+    "parent": "Panel I",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player6ReadyButtonI": {
+    "inheritFrom": {
+      "Player6ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player6ReadyButtonI",
+    "parent": "Panel I",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player7ReadyButtonI": {
+    "inheritFrom": {
+      "Player7ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player7ReadyButtonI",
+    "parent": "Panel I",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player8ReadyButtonI": {
+    "inheritFrom": {
+      "Player8ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player8ReadyButtonI",
+    "parent": "Panel I",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player9ReadyButtonI": {
+    "inheritFrom": {
+      "Player9ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player9ReadyButtonI",
+    "parent": "Panel I",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player10ReadyButtonI": {
+    "inheritFrom": {
+      "Player10ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player10ReadyButtonI",
+    "parent": "Panel I",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Panel J": {
+    "inheritFrom": {
+      "Panel A": "*"
+    },
+    "type": "holder",
+    "id": "Panel J",
+    "x": 1199,
+    "y": 461,
+    "z": 1,
+    "linkedToSeat": "Seat 10"
+  },
+  "Player1ReadyButtonJ": {
+    "inheritFrom": {
+      "Player1ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player1ReadyButtonJ",
+    "parent": "Panel J",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player2ReadyButtonJ": {
+    "inheritFrom": {
+      "Player2ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player2ReadyButtonJ",
+    "parent": "Panel J",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player3ReadyButtonJ": {
+    "inheritFrom": {
+      "Player3ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player3ReadyButtonJ",
+    "parent": "Panel J",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player4ReadyButtonJ": {
+    "inheritFrom": {
+      "Player4ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player4ReadyButtonJ",
+    "parent": "Panel J",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player5ReadyButtonJ": {
+    "inheritFrom": {
+      "Player5ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player5ReadyButtonJ",
+    "parent": "Panel J",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player6ReadyButtonJ": {
+    "inheritFrom": {
+      "Player6ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player6ReadyButtonJ",
+    "parent": "Panel J",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player7ReadyButtonJ": {
+    "inheritFrom": {
+      "Player7ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player7ReadyButtonJ",
+    "parent": "Panel J",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player8ReadyButtonJ": {
+    "inheritFrom": {
+      "Player8ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player8ReadyButtonJ",
+    "parent": "Panel J",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player9ReadyButtonJ": {
+    "inheritFrom": {
+      "Player9ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player9ReadyButtonJ",
+    "parent": "Panel J",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "Player10ReadyButtonJ": {
+    "inheritFrom": {
+      "Player10ReadyButtonA": "*"
+    },
+    "type": "button",
+    "id": "Player10ReadyButtonJ",
+    "parent": "Panel J",
+    "opacity": "0.5",
+    "show": false,
+    "active": false,
+    "onlyVisibleForSeat": "NONE",
+    "reveal": false,
+    "clickable": true
+  },
+  "_meta": {
+    "version": 13,
+    "info": {
+      "name": "Dreamcatcher",
+      "image": "/assets/888311939_36112",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/39856/dixit",
+      "year": "2008",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "Board layout by ArnoldSmith86 and RaphaelAlvez. Released to public domain under CC0.\n\nThe library image (and card back) was generated by Midjourney using the prompt \"dreamcatcher, water color painting\". The background with prompt \"subtle brush strokes, water color painting --ar 16:10\". All card images were also generated by Midjourney using various prompts.<div><br></div><div>Texts were generated by ChatGPT and tweaked by ArnoldSmith86.</div>",
+      "lastUpdate": 1686476450884,
+      "id": "ngbi",
+      "showName": true,
+      "skill": "",
+      "description": "Dreamcatcher is a charming game where players navigate ambiguity and clarity with illustrated cards. The goal is to hint at your chosen image subtly enough to guide some, but not all, players to it, earning the most points to win.",
+      "similarImage": "",
+      "similarName": "Dixit",
+      "similarAwards": "",
+      "ruleText": "<div class=\"flex flex-grow flex-col gap-3\"><div class=\"min-h-[20px] flex flex-col items-start gap-4 whitespace-pre-wrap break-words\"><div class=\"markdown prose w-full break-words dark:prose-invert light\"><h4><strong>Objective</strong> 🏆\n</h4><p>Dreamcatcher is a game of creative guesswork. Your goal is to score the most points by subtly hinting at your chosen image, leading most (but not all) players to it.</p><h4><strong>Setup</strong> 📐</h4><ol><li>Every player joins by clicking on a seat at the top.</li><li>Click <i class=\"richtextSymbol material-icons\">restart_alt</i>.</li></ol><h4><strong>Playing the Game</strong> 🃏</h4><ol><li>The active player (the \"storyteller\") looks at their 6 cards at the bottom (every player sees different cards), selects one, and gives a hint about it. This could be a word, a phrase, a sound, or a sentence. They drag the card into a holder in the center.</li><li>Everyone else selects a card from their hand that best matches the storyteller's hint and also moves it to the center.</li><li>When everyone selected a card, they will automatically be shuffled and revealed, and players (except the storyteller) vote on which card they believe belongs to the storyteller by clicking the check mark on the card.</li><li>When all votes are in, they are revealed, and the scoreboard on the left is updated as per the scoring rules (given below).</li><li>Click <i class=\"richtextSymbol material-icons\">skip_next</i> to start the next round. Your cards will be replenished.<br></li></ol><h4><strong>Scoring</strong> 🥇</h4><ul><li>If <em>all</em> players or <em>no one</em> finds the storyteller's card, the storyteller scores 0, and all other players score 2.</li><li>If <em>at least one</em> but <i>not all</i> players find the storyteller's card, the storyteller scores 3 points per correct vote, and so do the players who found the storyteller's card.</li><li>Players also score 1 point for each vote that their submitted cards receive.</li></ul><h4><strong>Game End</strong> 🏁\n</h4><p>The game ends when the deck is empty or one player scores 30 points. The player with the most points wins.</p><p>Have fun playing Dreamcatcher! 😊🎉</p></div></div></div>",
+      "helpText": "",
+      "players": "4-10",
+      "language": "",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "Background": {
+    "id": "Background",
+    "width": 1620,
+    "height": 1020,
+    "layer": -10,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-1283933771_7994",
+    "css": {
+      "opacity": "0.4",
+      "background-size": "cover",
+      "filter": "blur(5px)"
+    },
+    "x": -10,
+    "y": -10
+  },
+  "Score": {
+    "type": "button",
+    "id": "Score",
+    "x": 1656,
+    "y": 781,
+    "z": 77888,
+    "text": "SCORE",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "seat"
+      },
+      {
+        "func": "SET_DISABLED",
+        "property": "score",
+        "value": [
+          0,
+          0
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "getAllOrNothingCorrectRoutine",
+        "variable": "allOrNothing"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var isActiveSeat = ${PROPERTY turn OF $widgetID} == true",
+          {
+            "func": "IF",
+            "condition": "${allOrNothing}",
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "condition": "${isActiveSeat}",
+                "thenRoutine": [
+                  {
+                    "func": "SCORE",
+                    "seats": "${widgetID}",
+                    "round": 1,
+                    "value": 0
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "SCORE",
+                    "seats": "${widgetID}",
+                    "round": 1,
+                    "value": 2
+                  },
+                  {
+                    "func": "SCORE",
+                    "seats": "${widgetID}",
+                    "round": 2,
+                    "mode": "inc",
+                    "value": 2
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "GET",
+                "property": "player"
+              },
+              {
+                "func": "CALL",
+                "routine": "getCorrectVotesRoutine",
+                "variable": "votes",
+                "arguments": {
+                  "player": "${player}"
+                }
+              },
+              {
+                "func": "IF",
+                "condition": "${isActiveSeat}",
+                "thenRoutine": [
+                  "var votes = ${votes} * 3"
+                ]
+              },
+              {
+                "func": "SCORE",
+                "seats": "${widgetID}",
+                "round": 1,
+                "value": "${votes}"
+              },
+              {
+                "func": "SCORE",
+                "seats": "${widgetID}",
+                "round": 2,
+                "mode": "inc",
+                "value": "${votes}"
+              },
+              {
+                "func": "CALL",
+                "routine": "didSeatVoteCorrectlyRoutine",
+                "variable": "correct",
+                "arguments": {
+                  "seat": "${widgetID}"
+                }
+              },
+              {
+                "func": "IF",
+                "condition": "${correct}",
+                "thenRoutine": [
+                  {
+                    "func": "SCORE",
+                    "seats": "${widgetID}",
+                    "round": 1,
+                    "mode": "inc",
+                    "value": 3
+                  },
+                  {
+                    "func": "SCORE",
+                    "seats": "${widgetID}",
+                    "round": 2,
+                    "mode": "inc",
+                    "value": 3
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "didSeatVoteCorrectlyRoutine": [
+      {
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "variable": "activePlayer"
+      },
+      {
+        "func": "CALL",
+        "routine": "getCorrectVotesRoutine",
+        "collection": "correctVotes",
+        "arguments": {
+          "player": "${activePlayer}"
+        }
+      },
+      {
+        "func": "SELECT",
+        "source": "correctVotes",
+        "property": "seat",
+        "value": "${seat}"
+      },
+      {
+        "func": "COUNT",
+        "variable": "result"
+      }
+    ],
+    "getAllOrNothingCorrectRoutine": [
+      {
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "variable": "activePlayer"
+      },
+      {
+        "func": "CALL",
+        "routine": "getCorrectVotesRoutine",
+        "variable": "correctVotes",
+        "arguments": {
+          "player": "${activePlayer}"
+        }
+      },
+      {
+        "func": "CALL",
+        "routine": "getPlayerCountMinusOneRoutine",
+        "variable": "players"
+      },
+      "var all = ${correctVotes} == ${players}",
+      "var nothing = ${correctVotes} == 0",
+      "var result = ${all} || ${nothing}"
+    ],
+    "getCorrectVotesRoutine": [
+      {
+        "func": "SELECT",
+        "property": "component",
+        "value": "VoteButton"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "active",
+        "value": true,
+        "collection": "VOTES"
+      },
+      {
+        "func": "SELECT",
+        "property": "playedBy",
+        "value": "${player}"
+      },
+      {
+        "func": "GET",
+        "property": "parent",
+        "variable": "panelOfActivePlayer"
+      },
+      {
+        "func": "SELECT",
+        "source": "VOTES",
+        "property": "parent",
+        "value": "${panelOfActivePlayer}",
+        "collection": "result"
+      },
+      {
+        "func": "COUNT",
+        "collection": "result",
+        "variable": "result"
+      }
+    ],
+    "getPlayerCountMinusOneRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "type": "seat"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var result = ${COUNT} - 1"
+    ]
+  }
+}
