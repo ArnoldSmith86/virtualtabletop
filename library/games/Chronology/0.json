@@ -88,11 +88,11 @@
         "year": -753,
         "image": "/assets/-1438625209_28622"
       },
-      "Pythagorean Theorem": {
+      "Pythagore­an Theorem": {
         "year": -570,
         "image": "/assets/1730451055_18026"
       },
-      "Battle of Thermopylae": {
+      "Battle of Thermo­pylae": {
         "year": -480,
         "image": "/assets/-755282836_22100"
       },
@@ -120,7 +120,7 @@
         "year": 622,
         "image": "/assets/-1736103967_24902"
       },
-      "Charlemagne": {
+      "Charle­magne": {
         "year": 747,
         "image": "/assets/-1406094229_31012"
       },
@@ -152,7 +152,7 @@
         "year": 1440,
         "image": "/assets/-2013667703_41956"
       },
-      "Fall of Constantinople": {
+      "Fall of Con­stan­tino­ple": {
         "year": 1453,
         "image": "/assets/-1890561516_30198"
       },
@@ -208,7 +208,7 @@
         "year": 1769,
         "image": "/assets/-871965231_35676"
       },
-      "American Independence": {
+      "American Indepen­dence": {
         "year": 1776,
         "image": "/assets/97533142_25808"
       },
@@ -220,7 +220,7 @@
         "year": 1796,
         "image": "/assets/-1164242689_13350"
       },
-      "Electrochemical Battery": {
+      "Elec­tro­chem­i­cal Battery": {
         "year": 1800,
         "image": "/assets/-1637433172_16612"
       },
@@ -232,7 +232,7 @@
         "year": 1815,
         "image": "/assets/1884545559_51736"
       },
-      "Stethoscope": {
+      "Stetho­scope": {
         "year": 1816,
         "image": "/assets/1424586611_25310"
       },
@@ -244,11 +244,11 @@
         "year": 1816,
         "image": "/assets/2102758717_19666"
       },
-      "Photography": {
+      "Pho­tog­ra­phy": {
         "year": 1822,
         "image": "/assets/-1435279560_16756"
       },
-      "Electromagnetic Induction": {
+      "Electro­mag­netic Induction": {
         "year": 1831,
         "image": "/assets/770761055_23414"
       },
@@ -316,7 +316,7 @@
         "year": 1900,
         "image": "/assets/-733790867_21420"
       },
-      "Air Conditioning": {
+      "Air Con­di­tion­ing": {
         "year": 1901,
         "image": "/assets/671868446_20894"
       },
@@ -328,7 +328,7 @@
         "year": 1904,
         "image": "/assets/1535188951_27956"
       },
-      "Superconductivity": {
+      "Super­conduc­tivi­ty": {
         "year": 1911,
         "image": "/assets/1762052347_22850"
       },
@@ -448,7 +448,7 @@
         "year": 1961,
         "image": "/assets/31106499_25784"
       },
-      "Assassination of John F. Kennedy": {
+      "Assassi­nation of John F. Kennedy": {
         "year": 1963,
         "image": "/assets/-847522398_18190"
       },
@@ -468,7 +468,7 @@
         "year": 1969,
         "image": "/assets/-1196523796_38354"
       },
-      "Microprocessor": {
+      "Micro­processor": {
         "year": 1971,
         "image": "/assets/178212653_45654"
       },
@@ -524,7 +524,7 @@
         "year": 1982,
         "image": "/assets/-82543507_28560"
       },
-      "High-Temperature Superconductors": {
+      "High-Tempera­ture Super­con­duc­tors": {
         "year": 1986,
         "image": "/assets/-808585194_16906"
       },
@@ -648,7 +648,7 @@
         "year": 2014,
         "image": "/assets/470960926_27688"
       },
-      "Gravitational Waves Detection": {
+      "Gravitatio­nal Waves Detection": {
         "year": 2015,
         "image": "/assets/1266256486_19774"
       },
@@ -656,7 +656,7 @@
         "year": 2015,
         "image": "/assets/-1094721115_19984"
       },
-      "Brexit Referendum": {
+      "Brexit Ref­er­en­dum": {
         "year": 2016,
         "image": "/assets/281559309_45416"
       },
@@ -1267,7 +1267,7 @@
   "3n0d": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Battle of Thermopylae",
+    "cardType": "Battle of Thermo­pylae",
     "id": "3n0d",
     "z": 23866,
     "parent": "mjw0"
@@ -1331,7 +1331,7 @@
   "l4pn": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Charlemagne",
+    "cardType": "Charle­magne",
     "id": "l4pn",
     "z": 23847,
     "parent": "mjw0"
@@ -1379,7 +1379,7 @@
   "9pej": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Fall of Constantinople",
+    "cardType": "Fall of Con­stan­tino­ple",
     "id": "9pej",
     "z": 23813,
     "parent": "mjw0"
@@ -1507,7 +1507,7 @@
   "6xqd": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Stethoscope",
+    "cardType": "Stetho­scope",
     "id": "6xqd",
     "z": 23860,
     "parent": "mjw0"
@@ -1515,7 +1515,7 @@
   "4ly9": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Photography",
+    "cardType": "Pho­tog­ra­phy",
     "id": "4ly9",
     "z": 23814,
     "parent": "mjw0"
@@ -1531,7 +1531,7 @@
   "037k": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Electromagnetic Induction",
+    "cardType": "Electro­mag­netic Induction",
     "id": "037k",
     "z": 23771,
     "parent": "mjw0"
@@ -1675,7 +1675,7 @@
   "fnoo": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Air Conditioning",
+    "cardType": "Air Con­di­tion­ing",
     "id": "fnoo",
     "z": 23784,
     "parent": "mjw0"
@@ -1699,7 +1699,7 @@
   "dlde": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Superconductivity",
+    "cardType": "Super­conduc­tivi­ty",
     "id": "dlde",
     "z": 23722,
     "parent": "mjw0"
@@ -1891,7 +1891,7 @@
   "su4u": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Assassination of John F. Kennedy",
+    "cardType": "Assassi­nation of John F. Kennedy",
     "id": "su4u",
     "z": 23709,
     "parent": "mjw0"
@@ -1931,7 +1931,7 @@
   "09p5": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Microprocessor",
+    "cardType": "Micro­processor",
     "id": "09p5",
     "z": 23846,
     "parent": "mjw0"
@@ -2067,7 +2067,7 @@
   "8j2u": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "High-Temperature Superconductors",
+    "cardType": "High-Tempera­ture Super­con­duc­tors",
     "id": "8j2u",
     "z": 23795,
     "parent": "mjw0"
@@ -2227,7 +2227,7 @@
   "n1h7": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Gravitational Waves Detection",
+    "cardType": "Gravitatio­nal Waves Detection",
     "id": "n1h7",
     "z": 23767,
     "parent": "mjw0"
@@ -2235,7 +2235,7 @@
   "jb1r": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Brexit Referendum",
+    "cardType": "Brexit Ref­er­en­dum",
     "id": "jb1r",
     "z": 23827,
     "parent": "mjw0"
@@ -2299,7 +2299,7 @@
   "ew0i": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "American Independence",
+    "cardType": "American Indepen­dence",
     "id": "ew0i",
     "z": 23735,
     "parent": "mjw0"
@@ -2307,7 +2307,7 @@
   "ffpw": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Electrochemical Battery",
+    "cardType": "Elec­tro­chem­i­cal Battery",
     "id": "ffpw",
     "z": 23834,
     "parent": "mjw0"
@@ -2525,7 +2525,7 @@
   "wz0f": {
     "deck": "cd4tD",
     "type": "card",
-    "cardType": "Pythagorean Theorem",
+    "cardType": "Pythagore­an Theorem",
     "id": "wz0f",
     "z": 23835,
     "parent": "mjw0"
