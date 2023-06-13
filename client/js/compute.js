@@ -620,7 +620,7 @@ const compute_ops = [
     desc: 'sorts the elements in array x alphabetically, and returns the resulting array',
     sample: 'var a = ${x} sort',
     call: function(v, x) { return v = x.sort() },
-    hash: '2a9e913bcd4e220764ef32542b8c87c5'
+    hash: ''
   },
   {
     name: 'numericSort',
@@ -635,6 +635,13 @@ const compute_ops = [
     sample: 'var a = ${x} numericSort',
     call: function(v, x) { return v = x.sort((a, b) => a.toString().localeCompare(b, 'en', {numeric: true, ignorePunctuation: true})) },
     hash: '080058deb4a93b597eef9b5db479ba31'
+  },
+  {
+    name: 'shuffle',
+    desc: 'shuffles the elements in array (or string) x, and returns the resulting array (or string)',
+    sample: 'var a = shuffle ${x}',
+    call: function(v, x) { return v = shuffleArray(x) },
+    hash: '2a9e913bcd4e220764ef32542b8c87c5'
   },
   {
     name: 'join',
@@ -696,7 +703,7 @@ const compute_ops = [
     name: 'colorContrast',
     desc: 'converts x color in any format that the browser can interpret to another color in the same hue but with different luminance, with optional y direction and intensity (-1 to 1, defaults to 1)',
     sample: 'var a = colorContrast ${x} ${y}',
-    call: function(v, x, y) { return v = contrastAnyColor(x, y); }, 
+    call: function(v, x, y) { return v = contrastAnyColor(x, y); },
     hash: '83181e89c7f0245a49644ce864625481'
   },
   {
