@@ -620,7 +620,7 @@ const compute_ops = [
     desc: 'sorts the elements in array x alphabetically, and returns the resulting array',
     sample: 'var a = ${x} sort',
     call: function(v, x) { return v = x.sort() },
-    hash: ''
+    hash: '2a9e913bcd4e220764ef32542b8c87c5'
   },
   {
     name: 'numericSort',
