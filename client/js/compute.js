@@ -641,7 +641,7 @@ const compute_ops = [
     desc: 'shuffles the elements in array (or string) x, and returns the resulting array (or string)',
     sample: 'var a = shuffle ${x}',
     call: function(v, x) { return v = shuffleArray(x) },
-    hash: '2a9e913bcd4e220764ef32542b8c87c5'
+    hash: '0f1f81e18571c2b22e227c988a37b189'
   },
   {
     name: 'join',
