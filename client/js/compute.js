@@ -690,14 +690,14 @@ const compute_ops = [
     desc: 'returns a random integer inbetween (and including) two numbers',
     sample: 'var a = randInt ${x} ${y}',
     call: function(v, x, y) { return v = Math.floor((Math.random() * (y - x + 1)) + x) },
-    hash: '72787b6f5fe702d456bde0048cfacd47'
+    hash: '9b07533fb8ae4903272900ea6fbb94d8'
   },
   {
     name: 'randRange',
     desc: 'returns a random integer inbetween two numbers but excluding the endpoint, optionally in z increments (defaults to 1)',
     sample: 'var a = randRange ${x} ${y} ${z}',
     call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) },
-    hash: '4758cba8f404cfe3ef0a300cebf3938a'
+    hash: '5a75b342f9b9a0c11c2a8d0b6ea9e37d'
   },
   {
     name: 'colorContrast',
@@ -739,7 +739,7 @@ const compute_ops = [
     desc: 'returns a semi-random hex color using linear interpolation which will be as visually distinct as possible from active player colors, or optionally from [x] array of colors',
     sample: 'var a = colorCreateHue',
     call: function(v, x) { return v = randomHue(x); },
-    hash: '52422d76f0dbb89af543f4b7972711f0'
+    hash: '29a04e79e53168e3680ee1483a451f4e'
   }
 ];
 
