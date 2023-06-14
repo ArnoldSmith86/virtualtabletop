@@ -378,7 +378,7 @@
         "value": "${mixedArray}"
       }
     ],
-    "x": 374,
+    "x": 538,
     "y": 487,
     "z": 280,
     "id": "0y6s",
@@ -424,7 +424,7 @@
         "value": "${mixedArray}"
       }
     ],
-    "x": 619,
+    "x": 747,
     "y": 486,
     "z": 302,
     "id": "3e62",
@@ -471,7 +471,7 @@
         "value": "${mixedArray}"
       }
     ],
-    "x": 1115,
+    "x": 1165,
     "y": 486,
     "z": 301,
     "id": "kouz",
@@ -579,7 +579,7 @@
     "text": "addme"
   },
   "_meta": {
-    "version": 9,
+    "version": 13,
     "info": {
       "name": "Arrays",
       "image": "/assets/-2001287493_6748",
@@ -590,18 +590,18 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1625237253000,
+      "lastUpdate": 1686752644515,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Modifying - Advanced",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Modifying - Advanced",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "output2": {
@@ -674,7 +674,7 @@
     "width": 1000,
     "z": 20,
     "css": "font-size: 20px; ",
-    "text": "These functions can be used to modify arrays. Press each button to see how the function works with the array to output the result below. For functions with a white box, you have an option to modify the value(s) on the screen without entering into the JSON and then pressing the button to see the revised output. Each time you push a button, it retrieves the default array so the changes across button pushes are not cumulative. Red buttons are functions that are either pending implementation or are not working as intended/described.",
+    "text": "These functions can be used to modify arrays. Press each button to see how the function works with the array to output the result below. For functions with a white box, you have an option to modify the value(s) on the screen without entering into the JSON and then pressing the button to see the revised output. Each time you push a button, it retrieves the default array so the changes across button pushes are not cumulative.",
     "numArray": [
       1,
       3,
@@ -975,11 +975,57 @@
         "value": "${mixedArray}"
       }
     ],
-    "x": 872,
+    "x": 956,
     "y": 487,
     "z": 294,
     "id": "3e63",
     "css": "font-size: 13px; ",
     "text": "numeric_\nStringSort"
+  },
+  "0y7s": {
+    "type": "button",
+    "clickRoutine": [
+      "var wordArray = ${PROPERTY wordArray OF theArray}",
+      "var numArray = ${PROPERTY numArray OF theArray}",
+      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
+      "var wordArray = ${wordArray} shuffle //Randomly shuffles the elements in the array",
+      "var numArray = ${numArray} shuffle",
+      "var mixedArray = ${mixedArray} shuffle",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${wordArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${numArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mixedArray}"
+      }
+    ],
+    "x": 329,
+    "y": 487,
+    "z": 280,
+    "id": "0y7s",
+    "text": "shuffle"
   }
 }
