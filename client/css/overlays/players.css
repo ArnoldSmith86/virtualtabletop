@@ -183,7 +183,7 @@ label.ui-line::before{
 }
 
 .cursor::before {
-  content: var(--playerName);
+  content: "test";
   position: absolute;
   top: calc(var(--cursorSize) * -1px * var(--scale) - 20px);
   left: calc(var(--cursorSize) * -1px * var(--scale));
