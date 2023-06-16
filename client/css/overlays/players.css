@@ -181,3 +181,12 @@ label.ui-line::before{
   border: none;
   background-color: var(--playerColor);
 }
+
+.cursor::before {
+  content: var(--playerName);
+  position: absolute;
+  top: calc(var(--cursorSize) * -1px * var(--scale) - 20px);
+  left: calc(var(--cursorSize) * -1px * var(--scale));
+  font-size: 10px;
+  color: var(--playerColor);
+}
