@@ -784,10 +784,13 @@ function jeAddMJcommands() {
     context: '^.*',
     call: function() {
       const url = jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]].split('/');
-      url[5] = encodeURIComponent(prompt('MJ prompt', decodeURIComponent(url[5])));
-      jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] = url.join('/');
-      jeSetAndSelect();
-      jeApplyChanges();
+      const newPrompt = prompt('MJ prompt', decodeURIComponent(url[5]));
+      if(newPrompt) {
+        url[5] = encodeURIComponent(newPrompt);
+        jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] = url.join('/');
+        jeSetAndSelect();
+        jeApplyChanges();
+      }
     },
     show: function() {
       return String(jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]]).match(/^http.*\/image\//);
