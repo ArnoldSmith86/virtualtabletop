@@ -127,6 +127,7 @@
 
 .image.editorModule .externalLink {
   display: flex;
+  position: relative;
 }
 
 .image.editorModule .externalLink:nth-child(2n) {
