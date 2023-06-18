@@ -2229,13 +2229,20 @@ export class Widget extends StateManaged {
 
       e.className = this.domElement.className;
       e.dataset.id = id;
-      for(const clone of e.querySelectorAll('canvas')) {
-        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+
+      for(const clone of $a('canvas', e)) {
+        const original = $(`canvas[data-id = '${clone.dataset.id}']`, this.domElement);
         const context = clone.getContext('2d');
         clone.width = original.width;
         clone.height = original.height;
         context.drawImage(original, 0, 0);
       }
+
+      const originalTextareas = [...$a('textarea', this.domElement)];
+      const clonedTextareas   = [...$a('textarea', e)];
+      for(const i in originalTextareas)
+        clonedTextareas[i].value = originalTextareas[i].value;
+
       e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
