@@ -3,20 +3,26 @@
     "version": 6,
     "info": {
       "name": "Tutti Frutti",
-      "image": "/assets/1535449792_333307",
+      "image": "/assets/186904067_58697",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/133473/sushi-go",
       "year": "2013",
       "mode": "vs",
       "time": "15",
-      "players": "2-5",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The room layout and game design is by LawDawg96 and released to the Public Domain by CC0.\n\nThe basket background is available under the Pixabay License from https://pixabay.com/photos/basket-rattan-wicker-chair-template-433796/.\n\nThe fruit images are CC BY 3.0 from Game Developer Studio available at https://opengameart.org/content/fruit-icons-redo.\n\nThe yogurt, spoon, and ice cream images are CC0 and available at:\n - https://publicdomainvectors.org/en/free-clipart/Vector-illustration-of-yogurt-cup/24664.html\n - https://publicdomainvectors.org/en/free-clipart/Metallic-spoon/50510.html\n - https://publicdomainvectors.org/en/free-clipart/Color-vector-image-of-three-ice-cream-scoops-in-a-cone/5813.html\n\nCard back created at https://pattern.monster/leaves-9/ under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.",
+      "attribution": "The room layout and game design is by LawDawg96 and released to the Public Domain by CC0.\n\nThe basket background is available under the Pixabay License from https://pixabay.com/photos/basket-rattan-wicker-chair-template-433796/.\n\nThe fruit images are CC BY 3.0 from Game Developer Studio available at https://opengameart.org/content/fruit-icons-redo.\n\nThe yogurt, spoon, and ice cream images are CC0 and available at:\n - https://publicdomainvectors.org/en/free-clipart/Vector-illustration-of-yogurt-cup/24664.html\n - https://publicdomainvectors.org/en/free-clipart/Metallic-spoon/50510.html\n - https://publicdomainvectors.org/en/free-clipart/Color-vector-image-of-three-ice-cream-scoops-in-a-cone/5813.html\n\nCard back created at https://pattern.monster/leaves-9/ under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"tutti frutti watercolor painting --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Sushi Go!",
       "description": "Players choose a card from their hand to play face up, then pass the remaining cards. Repeat until all cards are played. Earn points by collecting sets of cards or being player with most of certain card. Most points after 3 rounds wins.",
       "showName": true,
-      "lastUpdate": 1644184116000
+      "lastUpdate": 1687210688839,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-5",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "fruitDeck": {
