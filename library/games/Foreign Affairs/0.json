@@ -2677,21 +2677,26 @@
     "version": 4,
     "info": {
       "name": "Foreign Affairs",
-      "image": "/assets/-465390535_27288",
+      "image": "/assets/-1549423967_53280",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/214/cafe-international",
       "year": "1989",
       "mode": "vs",
       "time": "45",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
       "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nPublic domain:\nhttps://en.wikipedia.org/wiki/File:Flag_of_the_Central_African_Republic.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_China.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Cuba.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_France.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Germany.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Great_Britain.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_India.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Italy.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Russia.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Spain.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Turkey.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_the_United_States.svg\n\nPixabay license:\nhttps://pixabay.com/vectors/silhouette-of-a-man-male-silhouette-36181/\nhttps://pixabay.com/vectors/female-silhouette-male-silhouette-36177/\n\nhttps://pixabay.com/vectors/chair-furniture-interior-seat-42854/",
       "similarName": "Café International",
       "similarAwards": "1989 Spiel des Jahres Winner",
       "description": "Place tiles around tables based on country and gender. Earn points for proper seating arrangements and lose points for unused tiles. Highest score wins.",
       "showName": true,
-      "lastUpdate": 1636735750000
+      "lastUpdate": 1687234291060,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "mt6f": {

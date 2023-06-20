@@ -1684,20 +1684,26 @@
     "version": 5,
     "info": {
       "name": "Bulls",
-      "image": "/assets/1009941875_19053",
+      "image": "/assets/694713786_25524",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/432/6-nimmt",
       "year": "1994",
       "mode": "vs",
       "time": "45",
-      "players": "2-10",
-      "language": "en-US",
-      "variant": "",
       "attribution": "Bull image by RonBerg under the Pixabay License: https://pixabay.com/photos/highland-cow-bull-cattle-livestock-1575003/\n\nRoom layout by ArnoldSmith86 and released to the public domain (CC0).",
       "similarName": "6 nimmt!",
       "description": "Put cards in rows in increasing numerical order to get rid of cards and force opponent to take them. Lowest score wins.",
       "showName": true,
-      "lastUpdate": 1640793026000
+      "lastUpdate": 1687234211875,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-10",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "background": {
