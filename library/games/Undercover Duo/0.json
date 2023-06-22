@@ -3802,7 +3802,7 @@
     "version": 3,
     "info": {
       "name": "Undercover Duo",
-      "image": "/assets/1099332101_18580",
+      "image": "/assets/-592599224_40574",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/224037/codenames-duet",
       "year": "2017",
@@ -3812,16 +3812,16 @@
       "similarName": "Codenames Duet",
       "description": "Cooperative word guessing game. Give your partner clues to guess words without getting the assasin card.",
       "showName": true,
-      "lastUpdate": 1687234497740,
+      "lastUpdate": 1687449627878,
       "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2"
     }
   }
 }
