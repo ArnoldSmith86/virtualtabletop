@@ -684,20 +684,26 @@
     "version": 1,
     "info": {
       "name": "Bug Chess",
-      "image": "/assets/1586429197_744589",
+      "image": "/assets/1302320610_63031",
       "rules": "",
       "bgg": "https://www.boardgamegeek.com/boardgame/2655/hive",
       "year": "2000",
       "mode": "vs",
       "time": "20",
-      "players": "2",
-      "language": "en-US",
-      "variant": "Base Game",
       "attribution": "Layout and library image by u/RaphaelAlvez avaible under license CC0.\n\nBackground by Akshay Chauhan avaible at https://unsplash.com/photos/qBUU6wsgK6A under free license (https://unsplash.com/license).\n\nCards SVGs based on images by Delapouite, Carl Osen and Lorc available at https://game-icons.net/ under license CC BY 3.0.",
       "similarName": "Hive",
       "description": "Place hexagon tiles with bug images, with each bug moving in unique ways, to control the board. First player to surround opponent's queen wins.",
       "showName": true,
-      "lastUpdate": 1610512268000
+      "lastUpdate": 1687445123092,
+      "skill": "",
+      "variantImage": "",
+      "variant": "Base Game",
+      "language": "en-US",
+      "players": "2",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "0ava": {
