@@ -9840,20 +9840,26 @@
     "version": 2,
     "info": {
       "name": "Adedanha",
-      "image": "/assets/81992686_676222",
+      "image": "/assets/-1911682742_46401",
       "rules": "",
       "bgg": "https://www.boardgamegeek.com/boardgame/2381/scattergories",
       "year": "1988",
       "mode": "vs",
       "time": "30",
-      "players": "2-8",
-      "language": "en-US",
-      "variant": "",
       "attribution": "The game design and all game board elements are by RaphaelAlvez and are released to the Public Domain by CC0.",
       "similarName": "Scattergories",
-      "description": "Starting with a random letter, list words in designated categories.  First to complete list wins.",
+      "description": "Starting with a random letter, list words in designated categories. First to complete list wins.",
       "showName": true,
-      "lastUpdate": 1621871557000
+      "lastUpdate": 1687447141173,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-8",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   }
 }
