@@ -3,7 +3,7 @@
     "version": 3,
     "info": {
       "name": "Zookeeper",
-      "image": "/assets/-642230010_45844",
+      "image": "/assets/-2099668643_37573",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/11/bohnanza",
       "year": "1997",
@@ -13,16 +13,16 @@
       "similarName": "Bohnanza",
       "description": "Collect animal cards and play in order picked up. Trade cards to improve hand. Collect coins based on strength of play. Most coins at end of game wins.",
       "showName": true,
-      "lastUpdate": 1687234509764,
+      "lastUpdate": 1687451441221,
       "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "3-5",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-5"
     }
   },
   "brhd": {
