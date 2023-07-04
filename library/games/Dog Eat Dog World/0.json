@@ -139,7 +139,7 @@
       "similarName": "Food Chain Island",
       "description": "Starting with grid of 16 cards representing animals, move card to eat another smaller, adjacent animal card. Then activate the special power of the eating animal. Game ends when player cannot move to eat an animal. Goal is to have only one animal card remaining.",
       "showName": true,
-      "lastUpdate": 1687209261985,
+      "lastUpdate": 1656358260000,
       "skill": "",
       "variantImage": "",
       "variant": "",

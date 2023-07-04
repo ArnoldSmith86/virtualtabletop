@@ -14,7 +14,7 @@
       "description": "Players start with 4 cards. Play cards face down until one player challenges. Highest bidder then flips stated number of cards. If player flips all 'good' cards and no 'bad' ones, player wins challenge. First player to win two challenges wins.",
       "showName": true,
       "helpText": "Players take seats. Card count for each player is to the right of the player name. Drag lost cards to the trash icon. Press the hand in holder icon to return cards to a player's hand. Press colored edge of player holder to \"flip\" it over (indicated by dashed line) to show that player has won one round.",
-      "lastUpdate": 1687210358510,
+      "lastUpdate": 1644184116000,
       "skill": "",
       "variantImage": "",
       "variant": "",

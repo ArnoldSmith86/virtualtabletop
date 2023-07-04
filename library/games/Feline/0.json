@@ -46,7 +46,7 @@
       "description": "Build a quilt using colorful hexagon tiles. Each player uses their own board. Gain points for matching patterns and colors. Most points wins.",
       "showName": true,
       "helpText": "Players take designated colored seats. Choose and place starting pieces then press Toggle Setup Button. Once play begins, players can switch to look at another player's board at any time using the colored buttons above the board. Scoring is automatic for the design goal tiles. Players must move cat and button tokens onto the board, which will also trigger an automatic score update.",
-      "lastUpdate": 1687209323987,
+      "lastUpdate": 1650427506000,
       "skill": "",
       "variantImage": "",
       "variant": "",

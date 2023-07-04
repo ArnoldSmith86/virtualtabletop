@@ -14,7 +14,7 @@
       "description": "Use double 6, 9, 12, or 15 dominoes depending on number of players. Starting from a common domino, play a domino that matches a previous end of the train. Play on own train, other players trains when available, or on a common Mexican train. Lowest points after desiganted number of rounds wins.",
       "showName": true,
       "helpText": "Players sit in seats. Press settings button (gear icon) to choose domino set to use and timer options. Press the widget button in the middle of the room to move the chosen starting double domino to the board. This will cause a random player to be chosen to begin. Players move desired number of starting dominoes into hand. After play, press the play/skip button above the timer to advance turn to next player. At end of round, record scores. Press play button to begin next round.",
-      "lastUpdate": 1687210300730,
+      "lastUpdate": 1650427506000,
       "skill": "",
       "variantImage": "",
       "variant": "",

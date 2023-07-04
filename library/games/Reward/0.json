@@ -69,7 +69,7 @@
       "description": "Move armies around board using dice rolls to conquer territory. Player who conquers all 42 territories wins.",
       "showName": true,
       "helpText": "Players take seats. Follow on screen options for setting up player territories. When attacking, move attacking pieces to red Active Attackers and defenders to white Active Defenders holders. Roll dice. For each lost piece, click the recall button once to move pieces from Active to Defeated. When attack ends, drag pile of defeated tokens back to storage. To add reinforcements, click on +1 or +5 to create needed amount. They appear in Reinforcements holder at top of board. Press Next Player button to pass turn to next player.",
-      "lastUpdate": 1687218414716,
+      "lastUpdate": 1659321088000,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",

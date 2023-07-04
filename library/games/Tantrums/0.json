@@ -7467,7 +7467,7 @@
       "description": "Place shaped pieces on board to fill in as many spaces as possible, but leaving designated scoring spaces open. Highest score wins.",
       "showName": true,
       "helpText": "Players take seats. Use blue deal face up button to show cards one at a time. After round, manually enter scores. Press square black button of next board to change boards.",
-      "lastUpdate": 1687210649738,
+      "lastUpdate": 1659321088000,
       "skill": "",
       "variantImage": "",
       "variant": "",
