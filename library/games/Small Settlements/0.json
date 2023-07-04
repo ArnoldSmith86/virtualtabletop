@@ -3,21 +3,26 @@
     "version": 6,
     "info": {
       "name": "Small Settlements",
-      "image": "/assets/1657780064_54194",
+      "image": "/assets/999008632_34135",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/265736/tiny-towns",
       "year": "2019",
       "mode": "solo; vs",
       "time": "45-60",
-      "players": "1-6",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "If playing with Town Hall rules, click the next button on the left side of the screen to choose the next resource.\n\nIf playing solo mode, move the used resource card into the small holder on the left. Move the resource onto the board, then press the +1 button to update the available resources.\n\nRoom design and layout by LawDawg96.\n\nThe card back and library image image by OpenClipart-Vectors is available under the Pixabay license from https://pixabay.com/vectors/village-medieval-middle-ages-145656/.\n\nOther icons are available under CC BY 3.0 from:\n - Delapouite\n    House https://game-icons.net/1x1/delapouite/house.html\n    Barn https://game-icons.net/1x1/delapouite/barn.html\n    Church https://game-icons.net/1x1/delapouite/church.html\n    Shop https://game-icons.net/1x1/delapouite/shop.html\n    Tavern https://game-icons.net/1x1/delapouite/tavern-sign.html\n    Flour https://game-icons.net/1x1/delapouite/flour.html\n    Cave https://game-icons.net/1x1/delapouite/cave-entrance.html\n\n - Lorc\n    Tower https://game-icons.net/1x1/lorc/white-tower.html\n\n  - Caro Ascercion\n    Water mill https://game-icons.net/1x1/caro-asercion/water-mill.html",
+      "attribution": "Room design and layout by LawDawg96.\n\nThe card back image by OpenClipart-Vectors is available under the Pixabay license from https://pixabay.com/vectors/village-medieval-middle-ages-145656/.\n\nOther icons are available under CC BY 3.0 from:\n - Delapouite\n    House https://game-icons.net/1x1/delapouite/house.html\n    Barn https://game-icons.net/1x1/delapouite/barn.html\n    Church https://game-icons.net/1x1/delapouite/church.html\n    Shop https://game-icons.net/1x1/delapouite/shop.html\n    Tavern https://game-icons.net/1x1/delapouite/tavern-sign.html\n    Flour https://game-icons.net/1x1/delapouite/flour.html\n    Cave https://game-icons.net/1x1/delapouite/cave-entrance.html\n\n - Lorc\n    Tower https://game-icons.net/1x1/lorc/white-tower.html\n\n  - Caro Ascercion\n    Water mill https://game-icons.net/1x1/caro-asercion/water-mill.html<div><br><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"small settlements oil on canvas by thomas kinkade --ar 1:1 --v 5.1\"<br></div></div>",
       "similarName": "Tiny Towns",
       "description": "Place colored resource blocks into designated patterns on individual 4x4 grid board. When pattern is completed, turn resource cubes into buildings with special point scoring powers. Play until all players can no longer place resources. Highest score wins.",
       "showName": true,
-      "helpText": "Players take seats. Press reset button in upper right and choose options. Press turn button to advance turn indicator for player that is the Master Builder. At end of game, enter scores into table on left. Sum is calculated automatically. Be sure to enter 0 or a negative number for the space with the X indicating blank squares remaining. Players can click on the eye icon beneath any player's seat to see that player's board. Click back on the eye icon beneath your own seat to view your board.",
-      "lastUpdate": 1659650063000
+      "helpText": "Players take seats. Press reset button in upper right and choose options. Press turn button to advance turn indicator for player that is the Master Builder. At end of game, enter scores into table on left. Sum is calculated automatically. Be sure to enter 0 or a negative number for the space with the X indicating blank squares remaining. Players can click on the eye icon beneath any player's seat to see that player's board. Click back on the eye icon beneath your own seat to view your board.<div><br></div><div>If playing with Town Hall rules, click the next button on the left side of the screen to choose the next resource.\n\nIf playing solo mode, move the used resource card into the small holder on the left. Move the resource onto the board, then press the +1 button to update the available resources.<br></div>",
+      "lastUpdate": 1659650063000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1-6",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
     }
   },
   "tbbq": {

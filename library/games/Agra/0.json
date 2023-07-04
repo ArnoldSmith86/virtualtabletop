@@ -3,26 +3,26 @@
     "version": 6,
     "info": {
       "name": "Agra",
-      "image": "/assets/-1085177012_1335",
+      "image": "/assets/282668642_38680",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/54043/jaipur",
       "year": "2009",
       "mode": "vs",
       "time": "30",
-      "attribution": "Room layout and design by LawDawg and released to the public domain by CC0.\n\nGame piece icons are available as follows:\n\nFrom https://game-icons.net/ and available under CC BY 3.0:\nDelapouite\n  - Jug https://game-icons.net/1x1/delapouite/jug.html\n  - Grain https://game-icons.net/1x1/delapouite/grain.html\n  - Gold https://game-icons.net/1x1/delapouite/gold-stack.html\n  - Camel https://game-icons.net/1x1/delapouite/camel.html\n  - Camel head https://game-icons.net/1x1/delapouite/camel-head.html\n  - Palace https://game-icons.net/1x1/delapouite/indian-palace.html\n\nLucas\n  - Shirt https://game-icons.net/1x1/lucasms/shirt.html\n\nLorc\n  - Chest https://game-icons.net/1x1/lorc/locked-chest.html\n  - Diamond https://game-icons.net/1x1/lorc/cut-diamond.html\n  - Coins https://game-icons.net/1x1/lorc/cash.html\n\nTaj Mahal victory chip icon by Freepik available under the FlatIcon license at https://www.flaticon.com/free-icon/taj-mahal_760023\n\nAladin Font by Sudtipos available under Open Font License, Version 1.1 from https://fonts.google.com/specimen/Aladin?query=aladin.\n\nBackground picture by shalender kumar available at https://pixabay.com/photos/taj-mahal-sunset-taj-mahal-india-4808227/ under the Pixabay license.",
+      "attribution": "Room layout and design by LawDawg and released to the public domain by CC0.\n\nGame piece icons are available as follows:\n\nFrom https://game-icons.net/ and available under CC BY 3.0:\nDelapouite\n  - Jug https://game-icons.net/1x1/delapouite/jug.html\n  - Grain https://game-icons.net/1x1/delapouite/grain.html\n  - Gold https://game-icons.net/1x1/delapouite/gold-stack.html\n  - Camel https://game-icons.net/1x1/delapouite/camel.html\n  - Camel head https://game-icons.net/1x1/delapouite/camel-head.html\n  - Palace https://game-icons.net/1x1/delapouite/indian-palace.html\n\nLucas\n  - Shirt https://game-icons.net/1x1/lucasms/shirt.html\n\nLorc\n  - Chest https://game-icons.net/1x1/lorc/locked-chest.html\n  - Diamond https://game-icons.net/1x1/lorc/cut-diamond.html\n  - Coins https://game-icons.net/1x1/lorc/cash.html\n\nTaj Mahal victory chip icon by Freepik available under the FlatIcon license at https://www.flaticon.com/free-icon/taj-mahal_760023\n\nAladin Font by Sudtipos available under Open Font License, Version 1.1 from https://fonts.google.com/specimen/Aladin?query=aladin.\n\nBackground picture by shalender kumar available at https://pixabay.com/photos/taj-mahal-sunset-taj-mahal-india-4808227/ under the Pixabay license.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"taj mahal watercolor painting --ar 1:1 --v 5.1 \"<br></div>",
       "similarName": "Jaipur",
       "description": "Players take turns either taking cards from common market area or selling cards in exchange for 6 different goods tokens worth varying points. Play until card pile is depleted or 3 types of goods are depleted. Most points at end of round wins the round. First to win 2 rounds is overall winner.",
       "showName": true,
       "helpText": "Players take seats. Press restart button in upper right to begin game. After each player's turn, press skip-next button to advance turn indicator and auto-fill market with 5 cards. Each player can only see the count of camel cards for themself. At end of round, each player press the sigma/sum button to calculate and show score. Drag victory point token to circle holder by player name and press restart button to go to next round.",
       "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "",
-      "players": "2",
       "similarImage": "",
       "similarAwards": "2014 Juego del Año Winner\n2014 Juego del Año Finalist\n2011 Games Magazine Best New Family Card Game Winner\n2010 Tric Trac Nominee\n2010 Spiel des Jahres Recommended\n2010 Lys Grand Public Finalist\n2010 International Gamers Award - General Strategy: Two-players\n2010 Golden Geek Best Card Game Nominee\n2010 Golden Geek Best 2-Player Board Game Nominee\n2010 Fairplay À la carte Winner",
       "ruleText": "",
-      "lastUpdate": 1670775305000
+      "lastUpdate": 1670775305000,
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
     }
   },
   "hand": {
