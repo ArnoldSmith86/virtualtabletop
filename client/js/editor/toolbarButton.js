@@ -16,6 +16,9 @@ class ToolbarButton {
     batchEnd();
   }
 
+  onEditorOpen() {
+  }
+
   onKeyDown(e) {
     if(e.key == this.hotkey && !this.domElement.disabled)
       this.onClick();
@@ -51,6 +54,10 @@ class ToolbarButton {
 class ToolbarToggleButton extends ToolbarButton {
   click() {
     this.setState(!this.active);
+    this.performAction();
+  }
+
+  performAction() {
     this.toggle(this.active);
     if(this.active)
       this.activate();
@@ -76,6 +83,40 @@ class ToolbarToggleButton extends ToolbarButton {
   setState(state) {
     this.active = state;
     this.domElement.classList.toggle('active', state);
+  }
+}
+
+class PersistentToolbarToggleButton extends ToolbarToggleButton {
+  onEditorOpen() {
+    super.onEditorOpen();
+    this.loadFromLocalStorage();
+  }
+
+  setState(state) {
+    super.setState(state);
+    this.saveToLocalStorage();
+  }
+
+  render(target) {
+    super.render(target);
+    if(this.active)
+      this.domElement.classList.add('active');
+  }
+
+  loadFromLocalStorage() {
+    const editorState = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}');
+    if(editorState.toggleButtons && typeof editorState.toggleButtons[this.name] == 'boolean') {
+      this.setState(editorState.toggleButtons[this.name]);
+      this.performAction();
+    }
+  }
+
+  saveToLocalStorage() {
+    const editorState = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}');
+    if(!editorState.toggleButtons)
+      editorState.toggleButtons = {};
+    editorState.toggleButtons[this.name] = this.active;
+    localStorage.setItem('editorState', JSON.stringify(editorState));
   }
 }
 

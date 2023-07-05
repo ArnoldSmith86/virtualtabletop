@@ -68,6 +68,8 @@ export function openEditor() {
   setJEroutineLogging(jeRoutineLogging = true);
   for(const module of sidebarModules)
     module.onEditorOpen();
+  for(const button of toolbarButtons)
+    button.onEditorOpen();
 }
 
 function closeEditor() {
