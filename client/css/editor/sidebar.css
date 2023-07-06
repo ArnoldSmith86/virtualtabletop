@@ -57,8 +57,9 @@ body.darkMode #editorSidebar button.active {
   right: var(--editSidebarWidth);
   top: var(--editToolbarHeight);
   bottom: 0;
-  min-width: 500px;
-  width: 33vw;
+  min-width: 250px;
+  max-width: 90vw;
+  width: calc(var(--modulesWidth) - var(--editSidebarWidth));
   z-index: 1;
   box-sizing: border-box;
   padding: 10px;
@@ -72,9 +73,15 @@ body.darkMode #editorSidebar button.active {
   background: var(--backgroundColor);
 }
 
-#editor.hasTopLeft.hasTopRight #editorModules, #editor.hasBottomLeft.hasBottomRight #editorModules {
-  min-width: 750px;
-  width: 50vw;
+#editorModulesResizer {
+  position: absolute;
+  height: 100%;
+  width: 5px;
+  cursor: ew-resize;
+}
+body.editorModulesResizing {
+  cursor: ew-resize !important;
+  height: 100vh;
 }
 
 #editorModules.active {
@@ -268,7 +275,11 @@ body.lightsOff #editorModules {
     bottom: calc(1000px * var(--scale) / var(--roomZoom));
     width: unset !important;
     min-width: unset !important;
+    max-width: unset !important;
     height: unset;
+  }
+  #editorModulesResizer {
+    display: none;
   }
 }
 
@@ -284,6 +295,10 @@ body.lightsOff #editorModules {
     bottom: 0;
     width: unset !important;
     min-width: unset !important;
+    max-width: unset !important;
     height: unset;
+  }
+  #editorModulesResizer {
+    display: none;
   }
 }
