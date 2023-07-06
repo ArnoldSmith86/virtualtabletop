@@ -328,7 +328,7 @@ body.jsonEdit #jeTopButtons {
 }
 
 body.jsonEdit #jeContextButtons {
-  overflow-y: auto;
+  overflow: hidden auto;
 }
 
 body.jsonEdit #jeContextButtons > button {
