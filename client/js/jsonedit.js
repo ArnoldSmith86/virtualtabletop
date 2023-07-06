@@ -2325,7 +2325,7 @@ function jeShowCommands() {
   if(jeCommandError)
     commandText += `\n<i class=error>Last command failed: ${html(String(jeCommandError))}</i>\n`;
   if(jeSecondaryWidget)
-    commandText += `\n\n${html(jeSecondaryWidget)}\n`;
+    commandText += `\n\n<pre>${html(jeSecondaryWidget)}</pre>\n`;
   commandText += `</div>`;
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
