@@ -209,19 +209,14 @@ i.error   { color: var(--textHighlightColor3); font-weight: bold; }
 /*** End compute operations CSS ***/
 
 #jeCommands {
-  white-space: pre-wrap;
   position: absolute;
   top: 0;
   bottom: 0;
   right: 0;
   height: 100%;
   width: var(--commandPaneWidth);
-  overflow: auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  align-content: flex-start;
+  flex-direction: column;
 }
 
 #jeWidgetLayers {
@@ -328,8 +323,16 @@ body.jsonEdit #jsonEditor {
   display: block;
 }
 
-body.jsonEdit #jeCommands > button {
-  width: 100%;
+body.jsonEdit #jeTopButtons {
+  margin-bottom: 10px;
+}
+
+body.jsonEdit #jeContextButtons {
+  overflow-y: auto;
+}
+
+body.jsonEdit #jeContextButtons > button {
+  width: calc(100% - 2px);
   text-align: left;
 }
 
@@ -498,7 +501,7 @@ body.jsonEdit #toolbar {
   width: 100%;
 }
 
-#jeCommands > button > b{
+#jeContextButtons > button > b{
   text-decoration: underline;
   color: yellow;
 }
@@ -532,7 +535,7 @@ body.jsonEdit #toolbar {
 #je_toggleDebug{
 }
 
-#jeCommands > button::before{
+#jeContextButtons > button::before{
   margin-right: 4px;
   font-family: 'VTT-Symbols';
 }

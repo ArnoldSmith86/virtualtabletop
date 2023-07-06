@@ -2256,7 +2256,7 @@ function jeShowCommands() {
       commandText += `<button class='top ${material} ${classes}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
     }
   }
-  commandText += `</div>`;
+  commandText += `</div><div id='jeContextButtons'>`;
 
   // Next figure out which context commands are active here.
   const activeCommands = {};
@@ -2326,6 +2326,7 @@ function jeShowCommands() {
     commandText += `\n<i class=error>Last command failed: ${html(String(jeCommandError))}</i>\n`;
   if(jeSecondaryWidget)
     commandText += `\n\n${html(jeSecondaryWidget)}\n`;
+  commandText += `</div>`;
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
 

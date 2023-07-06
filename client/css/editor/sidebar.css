@@ -68,6 +68,10 @@ body.darkMode #editorSidebar button.active {
   grid-gap: 10px;
 }
 
+#editorModules ::-webkit-scrollbar-track {
+  background: var(--backgroundColor);
+}
+
 #editor.hasTopLeft.hasTopRight #editorModules, #editor.hasBottomLeft.hasBottomRight #editorModules {
   min-width: 750px;
   width: 50vw;
