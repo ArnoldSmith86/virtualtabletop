@@ -1684,6 +1684,7 @@ function jeColorize() {
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
+  const oldFilterValue = $('#jeWidgetSearchBox') && $('#jeWidgetSearchBox').value;
   $('#jeTree').innerHTML = '<input id="jeWidgetSearchBox" placeholder="🔍 Filter"><ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, jeSelectedIDs()) + '</ul>';
 
   treeNodes = {};
@@ -1715,6 +1716,11 @@ function jeDisplayTree() {
 
     e.stopPropagation();
   });
+
+  if(oldFilterValue) {
+    $('#jeWidgetSearchBox').value = oldFilterValue;
+    jeDisplayFilteredWidgets();
+  }
 }
 
 function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
