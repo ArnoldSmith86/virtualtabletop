@@ -69,7 +69,9 @@
   grid-column: 1 / span 2;
   grid-row: 3 / span 1;
   overflow-wrap: break-word;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   white-space: pre-wrap;
   font-family: monospace;
   user-select: none;
@@ -87,6 +89,10 @@
   overflow-wrap: break-word;
 }
 /**** End of grid layout ****/
+
+#jeTree > ul {
+  overflow-y: auto;
+}
 
 #jeTree ul, .jeTreeDisplay, .jeNestedTree {
   margin: 0;
@@ -156,7 +162,6 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 /*** CSS to handle search box for tree widget ***/
 #jeWidgetSearchBox {
   margin-bottom: 10px;
-  width: 80%;
 }
 
 #jeSearchTable {
