@@ -690,20 +690,20 @@
       "year": "2000",
       "mode": "vs",
       "time": "20",
-      "attribution": "Layout and library image by u/RaphaelAlvez avaible under license CC0.\n\nBackground by Akshay Chauhan avaible at https://unsplash.com/photos/qBUU6wsgK6A under free license (https://unsplash.com/license).\n\nCards SVGs based on images by Delapouite, Carl Osen and Lorc available at https://game-icons.net/ under license CC BY 3.0.",
+      "attribution": "Layout and library image by u/RaphaelAlvez avaible under license CC0.\n\nBackground by Akshay Chauhan avaible at https://unsplash.com/photos/qBUU6wsgK6A under free license (https://unsplash.com/license).\n\nCards SVGs based on images by Delapouite, Carl Osen and Lorc available at https://game-icons.net/ under license CC BY 3.0.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"insects on hexagon grid tiles, one per tile, watercolor painting --ar 1:1 --v 5.1 --no bee, wasp\"<br></div>",
       "similarName": "Hive",
       "description": "Place hexagon tiles with bug images, with each bug moving in unique ways, to control the board. First player to surround opponent's queen wins.",
       "showName": true,
-      "lastUpdate": 1610512268000,
+      "lastUpdate": 1688703688334,
       "skill": "",
-      "variantImage": "",
-      "variant": "Base Game",
-      "language": "en-US",
-      "players": "2",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Base Game",
+      "language": "en-US",
+      "players": "2"
     }
   },
   "0ava": {

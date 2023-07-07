@@ -1484,20 +1484,20 @@
       "year": "2020",
       "mode": "vs",
       "time": "15",
-      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/rocks-stones-pebbles-background-1246668/\nhttps://pixabay.com/photos/ice-frost-winter-snow-snowflakes-6538605/\nhttps://pixabay.com/photos/fire-wood-fire-flame-burn-brand-171229/\nhttps://pixabay.com/photos/grass-lawn-field-meadow-grassy-84622/",
+      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/rocks-stones-pebbles-background-1246668/\nhttps://pixabay.com/photos/ice-frost-winter-snow-snowflakes-6538605/\nhttps://pixabay.com/photos/fire-wood-fire-flame-burn-brand-171229/\nhttps://pixabay.com/photos/grass-lawn-field-meadow-grassy-84622/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"water fire land diorama --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Spicy",
       "description": "Bluffing card game. Play or pass each turn while declaring card. Penalties for getting caught lieing and wrong challenges. Collect reward cards for points. Most points wins.",
       "showName": true,
-      "lastUpdate": 1634502388000,
+      "lastUpdate": 1688702917972,
       "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-6",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-6"
     }
   },
   "Background": {
