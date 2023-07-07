@@ -1901,35 +1901,6 @@
       "deck": "Cabbage Deck"
     }
   },
-  "Cabbage Deck1": {
-    "type": "deck",
-    "id": "Cabbage Deck1",
-    "cardDefaults": {
-      "height": 160,
-      "width": 80
-    },
-    "cardTypes": {
-      "cabbage": {}
-    },
-    "faceTemplates": [
-      {
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "green",
-            "valueType": "static",
-            "value": "https://cdn.pixabay.com/photo/2019/09/29/15/45/cabbage-4513641_960_720.jpg",
-            "width": 80,
-            "height": 160
-          }
-        ],
-        "radius": 5
-      }
-    ],
-    "parent": "Hare Cards Draw"
-  },
   "Hare Cards Draw": {
     "type": "holder",
     "id": "Hare Cards Draw",
