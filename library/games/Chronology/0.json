@@ -1,0 +1,2542 @@
+{
+  "cd4tB": {
+    "id": "cd4tB",
+    "y": 20,
+    "height": 60,
+    "type": "button",
+    "text": "restart_alt",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Draw",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "SELECT",
+        "property": "player",
+        "relation": "==",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      "var counts = ${PROPERTY cardCount}",
+      {
+        "func": "MOVE",
+        "count": "${counts.$COUNT}",
+        "from": "Draw",
+        "to": [
+          "Player 1 - Seat",
+          "Player 2 - Seat",
+          "Player 3 - Seat",
+          "Player 4 - Seat",
+          "Player 5 - Seat",
+          "Player 6 - Seat",
+          "Player 7 - Seat",
+          "Player 8 - Seat"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "Timeline",
+        "face": 1
+      }
+    ],
+    "x": 1520,
+    "cardCount": [
+      4,
+      4,
+      4,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6
+    ],
+    "width": 60,
+    "classes": "material-icons",
+    "css": {
+      "font-size": "48px"
+    }
+  },
+  "cd4tD": {
+    "type": "deck",
+    "id": "cd4tD",
+    "parent": "Draw",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "Wheel": {
+        "year": -4000,
+        "image": "/assets/-1936938872_21528"
+      },
+      "Writing System": {
+        "year": -3200,
+        "image": "/assets/-246149202_23634"
+      },
+      "Rome": {
+        "year": -753,
+        "image": "/assets/-1438625209_28622"
+      },
+      "Pythagore­an Theorem": {
+        "year": -570,
+        "image": "/assets/1730451055_18026"
+      },
+      "Battle of Thermo­pylae": {
+        "year": -480,
+        "image": "/assets/-755282836_22100"
+      },
+      "Water Screw": {
+        "year": -300,
+        "image": "/assets/432143031_58676"
+      },
+      "Julius Caesar": {
+        "year": -100,
+        "image": "/assets/2072408500_13950"
+      },
+      "Paper": {
+        "year": 105,
+        "image": "/assets/1520052460_27568"
+      },
+      "Edict of Milan": {
+        "year": 313,
+        "image": "/assets/215127408_23368"
+      },
+      "Fall of Western Roman Empire": {
+        "year": 476,
+        "image": "/assets/-2139160445_38104"
+      },
+      "Hijra": {
+        "year": 622,
+        "image": "/assets/-1736103967_24902"
+      },
+      "Charle­magne": {
+        "year": 747,
+        "image": "/assets/-1406094229_31012"
+      },
+      "Gunpowder": {
+        "year": 808,
+        "image": "/assets/1874017210_17258"
+      },
+      "Compass": {
+        "year": 850,
+        "image": "/assets/1537607434_41054"
+      },
+      "Movable Type Printing": {
+        "year": 1040,
+        "image": "/assets/-749729367_31030"
+      },
+      "Battle of Hastings": {
+        "year": 1066,
+        "image": "/assets/-1325442281_28642"
+      },
+      "Magna Carta": {
+        "year": 1215,
+        "image": "/assets/-133989411_59980"
+      },
+      "Mechanical Clock": {
+        "year": 1300,
+        "image": "/assets/-992324962_31382"
+      },
+      "Printing Press": {
+        "year": 1440,
+        "image": "/assets/-2013667703_41956"
+      },
+      "Fall of Con­stan­tino­ple": {
+        "year": 1453,
+        "image": "/assets/-1890561516_30198"
+      },
+      "Copernicus": {
+        "year": 1473,
+        "image": "/assets/-1450108573_23272"
+      },
+      "Discovery of America": {
+        "year": 1492,
+        "image": "/assets/-1494706515_40070"
+      },
+      "Martin Luther's 95 Theses": {
+        "year": 1517,
+        "image": "/assets/336714219_21712"
+      },
+      "Defeat of Spanish Armada": {
+        "year": 1588,
+        "image": "/assets/1601904369_37370"
+      },
+      "Founding of Jamestown": {
+        "year": 1607,
+        "image": "/assets/1075977962_27312"
+      },
+      "Telescope": {
+        "year": 1608,
+        "image": "/assets/1514974485_25766"
+      },
+      "Microscope": {
+        "year": 1620,
+        "image": "/assets/-502388729_28030"
+      },
+      "Submarine": {
+        "year": 1620,
+        "image": "/assets/-1580933775_39930"
+      },
+      "Gravity": {
+        "year": 1684,
+        "image": "/assets/-984235426_9510"
+      },
+      "Steam Engine": {
+        "year": 1712,
+        "image": "/assets/439519972_24998"
+      },
+      "Sewing Machine": {
+        "year": 1755,
+        "image": "/assets/1822641594_26926"
+      },
+      "Industrial Revolution": {
+        "year": 1760,
+        "image": "/assets/-1597623149_34278"
+      },
+      "Napoleon Bonaparte": {
+        "year": 1769,
+        "image": "/assets/-871965231_35676"
+      },
+      "American Indepen­dence": {
+        "year": 1776,
+        "image": "/assets/97533142_25808"
+      },
+      "French Revolution": {
+        "year": 1789,
+        "image": "/assets/-547459619_43218"
+      },
+      "Vaccination": {
+        "year": 1796,
+        "image": "/assets/-1164242689_13350"
+      },
+      "Elec­tro­chem­i­cal Battery": {
+        "year": 1800,
+        "image": "/assets/-1637433172_16612"
+      },
+      "Abraham Lincoln": {
+        "year": 1809,
+        "image": "/assets/-1725690749_22028"
+      },
+      "Battle of Waterloo": {
+        "year": 1815,
+        "image": "/assets/1884545559_51736"
+      },
+      "Stetho­scope": {
+        "year": 1816,
+        "image": "/assets/1424586611_25310"
+      },
+      "Telegraph": {
+        "year": 1816,
+        "image": "/assets/54128595_29870"
+      },
+      "Camera": {
+        "year": 1816,
+        "image": "/assets/2102758717_19666"
+      },
+      "Pho­tog­ra­phy": {
+        "year": 1822,
+        "image": "/assets/-1435279560_16756"
+      },
+      "Electro­mag­netic Induction": {
+        "year": 1831,
+        "image": "/assets/770761055_23414"
+      },
+      "Electric Vehicles": {
+        "year": 1832,
+        "image": "/assets/594238812_29680"
+      },
+      "Refrigerator": {
+        "year": 1834,
+        "image": "/assets/-1146482796_20326"
+      },
+      "Battle of the Alamo": {
+        "year": 1836,
+        "image": "/assets/436083472_43680"
+      },
+      "Analytical Engine Design": {
+        "year": 1837,
+        "image": "/assets/1724474098_65208"
+      },
+      "Safety Pin": {
+        "year": 1849,
+        "image": "/assets/691305378_11032"
+      },
+      "Nikola Tesla": {
+        "year": 1856,
+        "image": "/assets/-1144118387_20962"
+      },
+      "Anesthesia": {
+        "year": 1859,
+        "image": "/assets/1248715099_15600"
+      },
+      "Theory of Evolution": {
+        "year": 1859,
+        "image": "/assets/-141021645_24874"
+      },
+      "American Civil War": {
+        "year": 1861,
+        "image": "/assets/-1951127843_25394"
+      },
+      "Dynamite": {
+        "year": 1866,
+        "image": "/assets/-1227462815_52966"
+      },
+      "DNA Discovery": {
+        "year": 1869,
+        "image": "/assets/-2010179534_26514"
+      },
+      "Telephone": {
+        "year": 1876,
+        "image": "/assets/820569751_25502"
+      },
+      "Light Bulb": {
+        "year": 1879,
+        "image": "/assets/33970393_10326"
+      },
+      "Automobile": {
+        "year": 1886,
+        "image": "/assets/757534213_23404"
+      },
+      "X-rays": {
+        "year": 1895,
+        "image": "/assets/-443710146_16626"
+      },
+      "Radio": {
+        "year": 1900,
+        "image": "/assets/-733790867_21420"
+      },
+      "Air Con­di­tion­ing": {
+        "year": 1901,
+        "image": "/assets/671868446_20894"
+      },
+      "Airplane": {
+        "year": 1903,
+        "image": "/assets/571048824_27156"
+      },
+      "Vacuum Tubes": {
+        "year": 1904,
+        "image": "/assets/1535188951_27956"
+      },
+      "Super­conduc­tivi­ty": {
+        "year": 1911,
+        "image": "/assets/1762052347_22850"
+      },
+      "World War I": {
+        "year": 1914,
+        "image": "/assets/-684760924_26374"
+      },
+      "Russian Revolution": {
+        "year": 1917,
+        "image": "/assets/1925405273_37250"
+      },
+      "Treaty of Versailles": {
+        "year": 1919,
+        "image": "/assets/-704863947_36670"
+      },
+      "Insulin injection": {
+        "year": 1921,
+        "image": "/assets/-1429908100_5280"
+      },
+      "Television": {
+        "year": 1925,
+        "image": "/assets/2113487161_11516"
+      },
+      "Penicillin": {
+        "year": 1928,
+        "image": "/assets/1283366706_9362"
+      },
+      "Great Depression": {
+        "year": 1929,
+        "image": "/assets/-1466975178_22760"
+      },
+      "Electric Guitar": {
+        "year": 1932,
+        "image": "/assets/859077094_13596"
+      },
+      "Nylon": {
+        "year": 1935,
+        "image": "/assets/-1011977620_22606"
+      },
+      "Turing Machine": {
+        "year": 1936,
+        "image": "/assets/720346136_32836"
+      },
+      "Nuclear Fission": {
+        "year": 1938,
+        "image": "/assets/-1463279313_27216"
+      },
+      "World War II": {
+        "year": 1939,
+        "image": "/assets/28853710_32332"
+      },
+      "Nuclear Power": {
+        "year": 1942,
+        "image": "/assets/-876414943_22566"
+      },
+      "Atomic Bomb": {
+        "year": 1945,
+        "image": "/assets/-1828645652_26466"
+      },
+      "ENIAC Computer": {
+        "year": 1945,
+        "image": "/assets/-1045982755_21998"
+      },
+      "Transistor": {
+        "year": 1947,
+        "image": "/assets/-1172865577_14164"
+      },
+      "Partition of India and Pakistan": {
+        "year": 1947,
+        "image": "/assets/1777277854_36336"
+      },
+      "State of Israel": {
+        "year": 1948,
+        "image": "/assets/-557674142_16340"
+      },
+      "Korean War": {
+        "year": 1950,
+        "image": "/assets/298781882_22880"
+      },
+      "Barcode": {
+        "year": 1952,
+        "image": "/assets/1210571775_45318"
+      },
+      "Structure of DNA": {
+        "year": 1953,
+        "image": "/assets/1501554168_22402"
+      },
+      "Solar Cells": {
+        "year": 1954,
+        "image": "/assets/1119365462_53358"
+      },
+      "Hard Disk Drive": {
+        "year": 1956,
+        "image": "/assets/-1348840936_40440"
+      },
+      "Sputnik": {
+        "year": 1957,
+        "image": "/assets/2049304471_14494"
+      },
+      "Integrated Circuit": {
+        "year": 1958,
+        "image": "/assets/1547111527_27658"
+      },
+      "Video Game “Tennis for Two”": {
+        "year": 1958,
+        "image": "/assets/1950623445_14126"
+      },
+      "Machine Learning": {
+        "year": 1959,
+        "image": "/assets/-1287253493_48626"
+      },
+      "Laser": {
+        "year": 1960,
+        "image": "/assets/981998355_30696"
+      },
+      "First Man in Space": {
+        "year": 1961,
+        "image": "/assets/31106499_25784"
+      },
+      "Assassi­nation of John F. Kennedy": {
+        "year": 1963,
+        "image": "/assets/-847522398_18190"
+      },
+      "ATM": {
+        "year": 1967,
+        "image": "/assets/1748468729_18036"
+      },
+      "Virtual Reality": {
+        "year": 1968,
+        "image": "/assets/692153178_16006"
+      },
+      "Internet": {
+        "year": 1969,
+        "image": "/assets/1978260999_39696"
+      },
+      "Moon Landing": {
+        "year": 1969,
+        "image": "/assets/-1196523796_38354"
+      },
+      "Micro­processor": {
+        "year": 1971,
+        "image": "/assets/178212653_45654"
+      },
+      "Email": {
+        "year": 1971,
+        "image": "/assets/2017414140_32810"
+      },
+      "Genetic Engineering": {
+        "year": 1972,
+        "image": "/assets/-144483321_16924"
+      },
+      "Mobile Phone": {
+        "year": 1973,
+        "image": "/assets/811743178_28280"
+      },
+      "OPEC Oil Embargo": {
+        "year": 1973,
+        "image": "/assets/-1520993506_41280"
+      },
+      "Personal Computer": {
+        "year": 1974,
+        "image": "/assets/1769642374_25514"
+      },
+      "Digital Camera": {
+        "year": 1975,
+        "image": "/assets/-2000174999_23274"
+      },
+      "Portable Computer": {
+        "year": 1975,
+        "image": "/assets/599210434_23240"
+      },
+      "Internet Protocol": {
+        "year": 1975,
+        "image": "/assets/-919591983_38278"
+      },
+      "First GPS Satellite": {
+        "year": 1978,
+        "image": "/assets/351283189_20274"
+      },
+      "Graphical User Interface": {
+        "year": 1979,
+        "image": "/assets/-1041082105_51686"
+      },
+      "MRI Scanner": {
+        "year": 1980,
+        "image": "/assets/-1956709352_62204"
+      },
+      "Artificial Heart": {
+        "year": 1982,
+        "image": "/assets/-1310134950_22890"
+      },
+      "Compact Disc": {
+        "year": 1982,
+        "image": "/assets/-82543507_28560"
+      },
+      "High-Tempera­ture Super­con­duc­tors": {
+        "year": 1986,
+        "image": "/assets/-808585194_16906"
+      },
+      "Montreal Protocol (Ozone Hole)": {
+        "year": 1987,
+        "image": "/assets/1941801329_21852"
+      },
+      "World Wide Web": {
+        "year": 1989,
+        "image": "/assets/-1412630442_21990"
+      },
+      "Fall of the Berlin Wall": {
+        "year": 1989,
+        "image": "/assets/-929583480_23716"
+      },
+      "Hubble Space Telescope": {
+        "year": 1990,
+        "image": "/assets/1597934773_32536"
+      },
+      "Satnav in car": {
+        "year": 1990,
+        "image": "/assets/39955086_51296"
+      },
+      "Human Genome Project": {
+        "year": 1990,
+        "image": "/assets/715025544_19476"
+      },
+      "Dissolution of the Soviet Union": {
+        "year": 1991,
+        "image": "/assets/-11454844_21004"
+      },
+      "End of Apartheid in South Africa": {
+        "year": 1994,
+        "image": "/assets/280107240_23534"
+      },
+      "Rwandan Genocide": {
+        "year": 1994,
+        "image": "/assets/-555145948_28702"
+      },
+      "Wi-Fi": {
+        "year": 1997,
+        "image": "/assets/-500977374_14214"
+      },
+      "Handover of Hong Kong": {
+        "year": 1997,
+        "image": "/assets/1991958692_41182"
+      },
+      "MP3 Player": {
+        "year": 1997,
+        "image": "/assets/1340857187_27796"
+      },
+      "Dark Energy Discovery": {
+        "year": 1998,
+        "image": "/assets/-1933158906_33280"
+      },
+      "Tourism in Orbit": {
+        "year": 2001,
+        "image": "/assets/371905027_24696"
+      },
+      "September 11 Attacks": {
+        "year": 2001,
+        "image": "/assets/636748267_19190"
+      },
+      "Blu-ray Disc Player": {
+        "year": 2003,
+        "image": "/assets/-1724099881_35542"
+      },
+      "Invasion of Iraq": {
+        "year": 2003,
+        "image": "/assets/474722019_39250"
+      },
+      "DARPA Grand Challenge": {
+        "year": 2004,
+        "image": "/assets/-1890978282_31692"
+      },
+      "Facebook": {
+        "year": 2004,
+        "image": "/assets/562473461_16328"
+      },
+      "Precision Medicine": {
+        "year": 2005,
+        "image": "/assets/-1607949542_10680"
+      },
+      "Netflix streaming": {
+        "year": 2007,
+        "image": "/assets/1321389485_21026"
+      },
+      "iPhone": {
+        "year": 2007,
+        "image": "/assets/-1789532890_27962"
+      },
+      "Bitcoin": {
+        "year": 2008,
+        "image": "/assets/2054536381_67220"
+      },
+      "Bankruptcy of Lehman Brothers": {
+        "year": 2008,
+        "image": "/assets/546936828_30874"
+      },
+      "iPad": {
+        "year": 2010,
+        "image": "/assets/100214101_23144"
+      },
+      "Arab Spring": {
+        "year": 2011,
+        "image": "/assets/-766505905_45742"
+      },
+      "CRISPR Gene Editing": {
+        "year": 2012,
+        "image": "/assets/-1180763201_13832"
+      },
+      "Higgs Boson Discovery": {
+        "year": 2012,
+        "image": "/assets/2060557334_29994"
+      },
+      "Lab-grown Meat": {
+        "year": 2013,
+        "image": "/assets/-1217087602_26966"
+      },
+      "Annexation of Crimea": {
+        "year": 2014,
+        "image": "/assets/470960926_27688"
+      },
+      "Gravitatio­nal Waves Detection": {
+        "year": 2015,
+        "image": "/assets/1266256486_19774"
+      },
+      "Falcon 9 Landing": {
+        "year": 2015,
+        "image": "/assets/-1094721115_19984"
+      },
+      "Brexit Ref­er­en­dum": {
+        "year": 2016,
+        "image": "/assets/281559309_45416"
+      },
+      "CRISPR Diagnostics": {
+        "year": 2017,
+        "image": "/assets/-797746167_19710"
+      },
+      "5G Technology": {
+        "year": 2019,
+        "image": "/assets/612139669_19888"
+      },
+      "First Image of a Black Hole": {
+        "year": 2019,
+        "image": "/assets/-1043018474_36328"
+      },
+      "Notre-Dame de Paris Fire": {
+        "year": 2019,
+        "image": "/assets/-851034084_60432"
+      },
+      "COVID-19 Pandemic": {
+        "year": 2020,
+        "image": "/assets/992283243_13292"
+      },
+      "Capitol Riot": {
+        "year": 2021,
+        "image": "/assets/-1447577523_35006"
+      },
+      "Fire": {
+        "year": "-1.7M",
+        "image": "/assets/1447935927_13354"
+      },
+      "Agriculture": {
+        "year": "-10k",
+        "image": "/assets/1806144273_42618"
+      },
+      "Mona Lisa": {
+        "year": 1506,
+        "image": "/assets/-119435926_15022"
+      },
+      "Walkman": {
+        "year": 1979,
+        "image": "/assets/1885613531_13244"
+      },
+      "Special Theory of Relativity": {
+        "year": 1905,
+        "image": "/assets/1868880679_24220"
+      },
+      "Cleopatra": {
+        "year": -70,
+        "image": "/assets/-930964006_25528"
+      },
+      "Thirty Years' War": {
+        "year": 1618,
+        "image": "/assets/2078604467_40472"
+      },
+      "George Washington": {
+        "year": 1732,
+        "image": "/assets/1060806436_25672"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 120,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "css": {
+              "background-size": "cover",
+              "filter": "grayscale(100%) sepia(70%)"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 120,
+            "color": "#0007",
+            "value": ""
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 5,
+            "fontSize": 14,
+            "color": "white",
+            "textAlign": "center",
+            "width": 76,
+            "dynamicProperties": {
+              "value": "cardType"
+            },
+            "css": {
+              "font-weight": "bold",
+              "word-break": "break-word"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 120,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "css": {
+              "background-size": "cover",
+              "filter": "grayscale(100%) sepia(70%)"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 120,
+            "color": "#0007",
+            "value": ""
+          },
+          {
+            "type": "text",
+            "x": 5,
+            "y": 5,
+            "fontSize": 10,
+            "color": "white",
+            "textAlign": "center",
+            "width": 70,
+            "dynamicProperties": {
+              "value": "cardType"
+            },
+            "css": {
+              "font-weight": "bold",
+              "word-break": "break-word"
+            }
+          },
+          {
+            "type": "text",
+            "x": 5,
+            "y": 80,
+            "fontSize": 25,
+            "color": "white",
+            "textAlign": "center",
+            "width": 70,
+            "dynamicProperties": {
+              "value": "year"
+            },
+            "css": {
+              "font-weight": "bold"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 80,
+      "height": 120,
+      "enlarge": 5,
+      "clickable": false
+    }
+  },
+  "Player 1 - Seat": {
+    "type": "seat",
+    "id": "Player 1 - Seat",
+    "x": 165,
+    "z": 2,
+    "hideWhenUnused": true,
+    "parent": "br49",
+    "hand": "Player 1 - Holder"
+  },
+  "Player 1 - Holder": {
+    "type": "holder",
+    "id": "Player 1 - Holder",
+    "y": 57,
+    "width": 494,
+    "height": 124,
+    "z": 8,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropShadow": true,
+    "stackOffsetX": 82,
+    "parent": "br49",
+    "linkedToSeat": "Player 1 - Seat"
+  },
+  "Background": {
+    "id": "Background",
+    "width": 1830,
+    "height": 1145,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background-size": "cover",
+      "opacity": "0.3",
+      "filter": "blur(2px)"
+    },
+    "image": "/assets/506866228_32612",
+    "x": -5,
+    "y": -5
+  },
+  "br49": {
+    "parent": null,
+    "x": 200,
+    "y": 20,
+    "width": 494,
+    "height": 181,
+    "id": "br49",
+    "movable": false
+  },
+  "br50": {
+    "x": 906,
+    "y": 20,
+    "width": 494,
+    "height": 181,
+    "id": "br50",
+    "movable": false
+  },
+  "Player 2 - Seat": {
+    "type": "seat",
+    "id": "Player 2 - Seat",
+    "x": 165,
+    "z": 2,
+    "hideWhenUnused": true,
+    "parent": "br50",
+    "index": 2,
+    "hand": "Player 2 - Holder"
+  },
+  "Player 2 - Holder": {
+    "type": "holder",
+    "id": "Player 2 - Holder",
+    "y": 57,
+    "width": 494,
+    "height": 124,
+    "z": 8,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropShadow": true,
+    "stackOffsetX": 82,
+    "parent": "br50",
+    "linkedToSeat": "Player 2 - Seat"
+  },
+  "br51": {
+    "x": 20,
+    "y": 229,
+    "width": 494,
+    "height": 181,
+    "id": "br51",
+    "movable": false
+  },
+  "Player 3 - Seat": {
+    "type": "seat",
+    "id": "Player 3 - Seat",
+    "x": 165,
+    "z": 2,
+    "hideWhenUnused": true,
+    "parent": "br51",
+    "index": 3,
+    "hand": "Player 3 - Holder"
+  },
+  "Player 3 - Holder": {
+    "type": "holder",
+    "id": "Player 3 - Holder",
+    "y": 57,
+    "width": 494,
+    "height": 124,
+    "z": 8,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropShadow": true,
+    "stackOffsetX": 82,
+    "parent": "br51",
+    "linkedToSeat": "Player 3 - Seat"
+  },
+  "br52": {
+    "x": 1086,
+    "y": 229,
+    "width": 494,
+    "height": 181,
+    "id": "br52",
+    "movable": false
+  },
+  "Player 4 - Seat": {
+    "type": "seat",
+    "id": "Player 4 - Seat",
+    "x": 165,
+    "z": 2,
+    "hideWhenUnused": true,
+    "parent": "br52",
+    "index": 4,
+    "hand": "Player 4 - Holder"
+  },
+  "Player 4 - Holder": {
+    "type": "holder",
+    "id": "Player 4 - Holder",
+    "y": 57,
+    "width": 494,
+    "height": 124,
+    "z": 8,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropShadow": true,
+    "stackOffsetX": 82,
+    "parent": "br52",
+    "linkedToSeat": "Player 4 - Seat"
+  },
+  "br53": {
+    "x": 20,
+    "y": 590,
+    "width": 494,
+    "height": 181,
+    "id": "br53",
+    "movable": false
+  },
+  "Player 5 - Seat": {
+    "type": "seat",
+    "id": "Player 5 - Seat",
+    "x": 165,
+    "z": 2,
+    "hideWhenUnused": true,
+    "parent": "br53",
+    "index": 5,
+    "hand": "Player 5 - Holder"
+  },
+  "Player 5 - Holder": {
+    "type": "holder",
+    "id": "Player 5 - Holder",
+    "y": 57,
+    "width": 494,
+    "height": 124,
+    "z": 8,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropShadow": true,
+    "stackOffsetX": 82,
+    "parent": "br53",
+    "linkedToSeat": "Player 5 - Seat"
+  },
+  "br54": {
+    "x": 1086,
+    "y": 590,
+    "width": 494,
+    "height": 181,
+    "id": "br54",
+    "movable": false
+  },
+  "Player 6 - Seat": {
+    "type": "seat",
+    "id": "Player 6 - Seat",
+    "x": 165,
+    "z": 2,
+    "hideWhenUnused": true,
+    "parent": "br54",
+    "index": 6,
+    "hand": "Player 6 - Holder"
+  },
+  "Player 6 - Holder": {
+    "type": "holder",
+    "id": "Player 6 - Holder",
+    "y": 57,
+    "width": 494,
+    "height": 124,
+    "z": 8,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropShadow": true,
+    "stackOffsetX": 82,
+    "parent": "br54",
+    "linkedToSeat": "Player 6 - Seat"
+  },
+  "br55": {
+    "x": 200,
+    "y": 799,
+    "width": 494,
+    "height": 181,
+    "id": "br55",
+    "movable": false
+  },
+  "Player 7 - Seat": {
+    "type": "seat",
+    "id": "Player 7 - Seat",
+    "x": 165,
+    "z": 2,
+    "hideWhenUnused": true,
+    "parent": "br55",
+    "index": 7,
+    "hand": "Player 7 - Holder"
+  },
+  "Player 7 - Holder": {
+    "type": "holder",
+    "id": "Player 7 - Holder",
+    "y": 57,
+    "width": 494,
+    "height": 124,
+    "z": 8,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropShadow": true,
+    "stackOffsetX": 82,
+    "parent": "br55",
+    "linkedToSeat": "Player 7 - Seat"
+  },
+  "br56": {
+    "x": 906,
+    "y": 799,
+    "width": 494,
+    "height": 181,
+    "id": "br56",
+    "movable": false
+  },
+  "Player 8 - Seat": {
+    "type": "seat",
+    "id": "Player 8 - Seat",
+    "x": 165,
+    "z": 2,
+    "hideWhenUnused": true,
+    "parent": "br56",
+    "index": 8,
+    "hand": "Player 8 - Holder"
+  },
+  "Player 8 - Holder": {
+    "type": "holder",
+    "id": "Player 8 - Holder",
+    "y": 57,
+    "width": 494,
+    "height": 124,
+    "z": 8,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropShadow": true,
+    "stackOffsetX": 82,
+    "parent": "br56",
+    "linkedToSeat": "Player 8 - Seat"
+  },
+  "Draw": {
+    "type": "holder",
+    "id": "Draw",
+    "x": 758,
+    "y": 281,
+    "width": 84,
+    "height": 124,
+    "z": 9,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "Discard": {
+    "type": "holder",
+    "id": "Discard",
+    "x": 758,
+    "y": 647,
+    "width": 84,
+    "height": 124,
+    "z": 9,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "Timeline": {
+    "type": "holder",
+    "id": "Timeline",
+    "x": 20,
+    "y": 438,
+    "width": 1560,
+    "height": 124,
+    "z": 10,
+    "css": "background:#fff6",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropShadow": true,
+    "stackOffsetX": 82,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "offSetRoutine"
+      },
+      "var enterCount = ${PROPERTY enterCount} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "enterCount",
+        "value": "${enterCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "offSetRoutine"
+      }
+    ],
+    "offSetRoutine": [
+      "var cardWidth = 80",
+      "var normalOffset = 82",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "<=",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "stackOffsetX",
+            "value": "${normalOffset}"
+          }
+        ],
+        "elseRoutine": [
+          "var modCount = ${COUNT} - 1",
+          "var available = ${PROPERTY width} - ${cardWidth}",
+          "var dropOffset = ${PROPERTY dropOffsetX} * 2",
+          "var available = ${available} - ${dropOffset}",
+          "var perCard = ${available} / ${modCount}",
+          "var offset = ${perCard} min ${normalOffset}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "stackOffsetX",
+            "value": "${offset}"
+          }
+        ]
+      }
+    ],
+    "enterCount": 441,
+    "onEnter": {
+      "clickable": true
+    },
+    "onLeave": {
+      "clickable": null
+    }
+  },
+  "u6ia": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Fire",
+    "id": "u6ia",
+    "z": 23729,
+    "parent": "mjw0"
+  },
+  "bfod": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Agriculture",
+    "id": "bfod",
+    "z": 23830,
+    "parent": "mjw0"
+  },
+  "nzm9": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Writing System",
+    "id": "nzm9",
+    "z": 23843,
+    "parent": "mjw0"
+  },
+  "30oq": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Wheel",
+    "id": "30oq",
+    "z": 23799,
+    "parent": "mjw0"
+  },
+  "1cb5": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Rome",
+    "id": "1cb5",
+    "z": 23755,
+    "parent": "mjw0"
+  },
+  "3n0d": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Battle of Thermo­pylae",
+    "id": "3n0d",
+    "z": 23866,
+    "parent": "mjw0"
+  },
+  "g615": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Water Screw",
+    "id": "g615",
+    "z": 23750,
+    "parent": "mjw0"
+  },
+  "0hb9": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Julius Caesar",
+    "id": "0hb9",
+    "z": 23763,
+    "parent": "mjw0"
+  },
+  "0jba": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Paper",
+    "id": "0jba",
+    "z": 23740,
+    "parent": "mjw0"
+  },
+  "gxuz": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Edict of Milan",
+    "id": "gxuz",
+    "z": 23848,
+    "parent": "mjw0"
+  },
+  "ttcw": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Fall of Western Roman Empire",
+    "id": "ttcw",
+    "z": 23844,
+    "parent": "mjw0"
+  },
+  "iwl5": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Hijra",
+    "id": "iwl5",
+    "z": 23810,
+    "parent": "mjw0"
+  },
+  "9bse": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Gunpowder",
+    "id": "9bse",
+    "z": 23854,
+    "parent": "mjw0"
+  },
+  "l4pn": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Charle­magne",
+    "id": "l4pn",
+    "z": 23847,
+    "parent": "mjw0"
+  },
+  "kiph": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Compass",
+    "id": "kiph",
+    "z": 23822,
+    "parent": "mjw0"
+  },
+  "d11t": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Movable Type Printing",
+    "id": "d11t",
+    "z": 23859,
+    "parent": "mjw0"
+  },
+  "rh4j": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Battle of Hastings",
+    "id": "rh4j",
+    "z": 23791,
+    "parent": "mjw0"
+  },
+  "xdd0": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Magna Carta",
+    "id": "xdd0",
+    "z": 23789,
+    "parent": "mjw0"
+  },
+  "7qi7": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Printing Press",
+    "id": "7qi7",
+    "z": 23774,
+    "parent": "mjw0"
+  },
+  "9pej": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Fall of Con­stan­tino­ple",
+    "id": "9pej",
+    "z": 23813,
+    "parent": "mjw0"
+  },
+  "ni1z": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Discovery of America",
+    "id": "ni1z",
+    "z": 23732,
+    "parent": "mjw0"
+  },
+  "du59": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Mechanical Clock",
+    "id": "du59",
+    "z": 23857,
+    "parent": "mjw0"
+  },
+  "vnk1": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Martin Luther's 95 Theses",
+    "id": "vnk1",
+    "z": 23715,
+    "parent": "mjw0"
+  },
+  "vu7r": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Defeat of Spanish Armada",
+    "id": "vu7r",
+    "z": 23852,
+    "parent": "mjw0"
+  },
+  "s1fy": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Microscope",
+    "id": "s1fy",
+    "z": 23714,
+    "parent": "mjw0"
+  },
+  "oy9g": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Founding of Jamestown",
+    "id": "oy9g",
+    "z": 23718,
+    "parent": "mjw0"
+  },
+  "hw3u": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Telescope",
+    "id": "hw3u",
+    "z": 23794,
+    "parent": "mjw0"
+  },
+  "7g47": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Submarine",
+    "id": "7g47",
+    "z": 23820,
+    "parent": "mjw0"
+  },
+  "h67v": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Gravity",
+    "id": "h67v",
+    "z": 23723,
+    "parent": "mjw0"
+  },
+  "l5ha": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Steam Engine",
+    "id": "l5ha",
+    "z": 23731,
+    "parent": "mjw0"
+  },
+  "96ly": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Industrial Revolution",
+    "id": "96ly",
+    "z": 23825,
+    "parent": "mjw0"
+  },
+  "m3tq": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "French Revolution",
+    "id": "m3tq",
+    "z": 23787,
+    "parent": "mjw0"
+  },
+  "oagk": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Vaccination",
+    "id": "oagk",
+    "z": 23739,
+    "parent": "mjw0"
+  },
+  "mydq": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Napoleon Bonaparte",
+    "id": "mydq",
+    "z": 23769,
+    "parent": "mjw0"
+  },
+  "aq9c": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Battle of Waterloo",
+    "id": "aq9c",
+    "z": 23853,
+    "parent": "mjw0"
+  },
+  "6xqd": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Stetho­scope",
+    "id": "6xqd",
+    "z": 23860,
+    "parent": "mjw0"
+  },
+  "4ly9": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Pho­tog­ra­phy",
+    "id": "4ly9",
+    "z": 23814,
+    "parent": "mjw0"
+  },
+  "gusd": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Electric Vehicles",
+    "id": "gusd",
+    "z": 23800,
+    "parent": "mjw0"
+  },
+  "037k": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Electro­mag­netic Induction",
+    "id": "037k",
+    "z": 23771,
+    "parent": "mjw0"
+  },
+  "i0av": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Refrigerator",
+    "id": "i0av",
+    "z": 23864,
+    "parent": "mjw0"
+  },
+  "s8kx": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Battle of the Alamo",
+    "id": "s8kx",
+    "z": 23840,
+    "parent": "mjw0"
+  },
+  "99ip": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Telegraph",
+    "id": "99ip",
+    "z": 23824,
+    "parent": "mjw0"
+  },
+  "g79w": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Camera",
+    "id": "g79w",
+    "z": 23745,
+    "parent": "mjw0"
+  },
+  "lofi": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Anesthesia",
+    "id": "lofi",
+    "z": 23797,
+    "parent": "mjw0"
+  },
+  "gzci": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Sewing Machine",
+    "id": "gzci",
+    "z": 23747,
+    "parent": "mjw0"
+  },
+  "x99o": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Safety Pin",
+    "id": "x99o",
+    "z": 23737,
+    "parent": "mjw0"
+  },
+  "9xmf": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Theory of Evolution",
+    "id": "9xmf",
+    "z": 23841,
+    "parent": "mjw0"
+  },
+  "ziow": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "American Civil War",
+    "id": "ziow",
+    "z": 23758,
+    "parent": "mjw0"
+  },
+  "2yxv": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Abraham Lincoln",
+    "id": "2yxv",
+    "z": 23783,
+    "parent": "mjw0"
+  },
+  "4ph1": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Dynamite",
+    "id": "4ph1",
+    "z": 23829,
+    "parent": "mjw0"
+  },
+  "0l8j": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Telephone",
+    "id": "0l8j",
+    "z": 23730,
+    "parent": "mjw0"
+  },
+  "ewns": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Light Bulb",
+    "id": "ewns",
+    "z": 23823,
+    "parent": "mjw0"
+  },
+  "b5ul": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Television",
+    "id": "b5ul",
+    "z": 23836,
+    "parent": "mjw0"
+  },
+  "zrcb": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Automobile",
+    "id": "zrcb",
+    "z": 23845,
+    "parent": "mjw0"
+  },
+  "54v3": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Radio",
+    "id": "54v3",
+    "z": 23855,
+    "parent": "mjw0"
+  },
+  "qhu2": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "X-rays",
+    "id": "qhu2",
+    "z": 23849,
+    "parent": "mjw0"
+  },
+  "fnoo": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Air Con­di­tion­ing",
+    "id": "fnoo",
+    "z": 23784,
+    "parent": "mjw0"
+  },
+  "w7ti": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Airplane",
+    "id": "w7ti",
+    "z": 23842,
+    "parent": "mjw0"
+  },
+  "njks": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Vacuum Tubes",
+    "id": "njks",
+    "z": 23816,
+    "parent": "mjw0"
+  },
+  "dlde": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Super­conduc­tivi­ty",
+    "id": "dlde",
+    "z": 23722,
+    "parent": "mjw0"
+  },
+  "prjj": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "World War I",
+    "id": "prjj",
+    "z": 23865,
+    "parent": "mjw0"
+  },
+  "n8mu": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Russian Revolution",
+    "id": "n8mu",
+    "z": 23785,
+    "parent": "mjw0"
+  },
+  "u14h": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Penicillin",
+    "id": "u14h",
+    "z": 23764,
+    "parent": "mjw0"
+  },
+  "0tok": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Great Depression",
+    "id": "0tok",
+    "z": 23805,
+    "parent": "mjw0"
+  },
+  "ufg7": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Electric Guitar",
+    "id": "ufg7",
+    "z": 23863,
+    "parent": "mjw0"
+  },
+  "zhc1": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Turing Machine",
+    "id": "zhc1",
+    "z": 23775,
+    "parent": "mjw0"
+  },
+  "kcct": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Nylon",
+    "id": "kcct",
+    "z": 23734,
+    "parent": "mjw0"
+  },
+  "vaoh": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Nuclear Fission",
+    "id": "vaoh",
+    "z": 23788,
+    "parent": "mjw0"
+  },
+  "557c": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "World War II",
+    "id": "557c",
+    "z": 23790,
+    "parent": "mjw0"
+  },
+  "1dzy": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Nuclear Power",
+    "id": "1dzy",
+    "z": 23712,
+    "parent": "mjw0"
+  },
+  "d27v": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Atomic Bomb",
+    "id": "d27v",
+    "z": 23759,
+    "parent": "mjw0"
+  },
+  "mla9": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "ENIAC Computer",
+    "id": "mla9",
+    "z": 23754,
+    "parent": "mjw0"
+  },
+  "jgjy": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Transistor",
+    "id": "jgjy",
+    "z": 23815,
+    "parent": "mjw0"
+  },
+  "mlkl": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Partition of India and Pakistan",
+    "id": "mlkl",
+    "z": 23770,
+    "parent": "mjw0"
+  },
+  "zf2p": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "State of Israel",
+    "id": "zf2p",
+    "z": 23744,
+    "parent": "mjw0"
+  },
+  "sv6o": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Korean War",
+    "id": "sv6o",
+    "z": 23786,
+    "parent": "mjw0"
+  },
+  "y5z1": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Structure of DNA",
+    "id": "y5z1",
+    "z": 23711,
+    "parent": "mjw0"
+  },
+  "hfd4": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Solar Cells",
+    "id": "hfd4",
+    "z": 23792,
+    "parent": "mjw0"
+  },
+  "218y": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Machine Learning",
+    "id": "218y",
+    "z": 23716,
+    "parent": "mjw0"
+  },
+  "6mrj": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Hard Disk Drive",
+    "id": "6mrj",
+    "z": 23778,
+    "parent": "mjw0"
+  },
+  "a9mx": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Integrated Circuit",
+    "id": "a9mx",
+    "z": 23826,
+    "parent": "mjw0"
+  },
+  "rajf": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Laser",
+    "id": "rajf",
+    "z": 23862,
+    "parent": "mjw0"
+  },
+  "oodd": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "First Man in Space",
+    "id": "oodd",
+    "z": 23819,
+    "parent": "mjw0"
+  },
+  "su4u": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Assassi­nation of John F. Kennedy",
+    "id": "su4u",
+    "z": 23709,
+    "parent": "mjw0"
+  },
+  "9ilf": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "ATM",
+    "id": "9ilf",
+    "z": 23746,
+    "parent": "mjw0"
+  },
+  "hmjn": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Virtual Reality",
+    "id": "hmjn",
+    "z": 23720,
+    "parent": "mjw0"
+  },
+  "lvk7": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Internet",
+    "id": "lvk7",
+    "z": 23782,
+    "parent": "mjw0"
+  },
+  "qnx8": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Moon Landing",
+    "id": "qnx8",
+    "z": 23721,
+    "parent": "mjw0"
+  },
+  "09p5": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Micro­processor",
+    "id": "09p5",
+    "z": 23846,
+    "parent": "mjw0"
+  },
+  "6m6u": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Email",
+    "id": "6m6u",
+    "z": 23831,
+    "parent": "mjw0"
+  },
+  "2zm6": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Mobile Phone",
+    "id": "2zm6",
+    "z": 23726,
+    "parent": "mjw0"
+  },
+  "01d4": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Genetic Engineering",
+    "id": "01d4",
+    "z": 23742,
+    "parent": "mjw0"
+  },
+  "l476": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "OPEC Oil Embargo",
+    "id": "l476",
+    "z": 23833,
+    "parent": "mjw0"
+  },
+  "99n5": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Barcode",
+    "id": "99n5",
+    "z": 23768,
+    "parent": "mjw0"
+  },
+  "3p66": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Personal Computer",
+    "id": "3p66",
+    "z": 23724,
+    "parent": "mjw0"
+  },
+  "q0uj": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Digital Camera",
+    "id": "q0uj",
+    "z": 23776,
+    "parent": "mjw0"
+  },
+  "6d3j": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "MRI Scanner",
+    "id": "6d3j",
+    "z": 23743,
+    "parent": "mjw0"
+  },
+  "8mmc": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Graphical User Interface",
+    "id": "8mmc",
+    "z": 23796,
+    "parent": "mjw0"
+  },
+  "n5nt": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Artificial Heart",
+    "id": "n5nt",
+    "z": 23777,
+    "parent": "mjw0"
+  },
+  "2fkl": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Compact Disc",
+    "id": "2fkl",
+    "z": 23817,
+    "parent": "mjw0"
+  },
+  "ili1": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Internet Protocol",
+    "id": "ili1",
+    "z": 23856,
+    "parent": "mjw0"
+  },
+  "z3s4": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "World Wide Web",
+    "id": "z3s4",
+    "z": 23851,
+    "parent": "mjw0"
+  },
+  "h5o3": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Fall of the Berlin Wall",
+    "id": "h5o3",
+    "z": 23741,
+    "parent": "mjw0"
+  },
+  "nf2a": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Hubble Space Telescope",
+    "id": "nf2a",
+    "z": 23812,
+    "parent": "mjw0"
+  },
+  "ld7n": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Dissolution of the Soviet Union",
+    "id": "ld7n",
+    "z": 23808,
+    "parent": "mjw0"
+  },
+  "8j2u": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "High-Tempera­ture Super­con­duc­tors",
+    "id": "8j2u",
+    "z": 23795,
+    "parent": "mjw0"
+  },
+  "vl0k": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "End of Apartheid in South Africa",
+    "id": "vl0k",
+    "z": 23751,
+    "parent": "mjw0"
+  },
+  "sln9": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Rwandan Genocide",
+    "id": "sln9",
+    "z": 23832,
+    "parent": "mjw0"
+  },
+  "t8yv": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Wi-Fi",
+    "id": "t8yv",
+    "z": 23773,
+    "parent": "mjw0"
+  },
+  "ml9z": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Handover of Hong Kong",
+    "id": "ml9z",
+    "z": 23749,
+    "parent": "mjw0"
+  },
+  "5upw": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "MP3 Player",
+    "id": "5upw",
+    "z": 23738,
+    "parent": "mjw0"
+  },
+  "532w": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Dark Energy Discovery",
+    "id": "532w",
+    "z": 23858,
+    "parent": "mjw0"
+  },
+  "1ex8": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Human Genome Project",
+    "id": "1ex8",
+    "z": 23708,
+    "parent": "mjw0"
+  },
+  "jkrw": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "September 11 Attacks",
+    "id": "jkrw",
+    "z": 23781,
+    "parent": "mjw0"
+  },
+  "1ewx": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Invasion of Iraq",
+    "id": "1ewx",
+    "z": 23725,
+    "parent": "mjw0"
+  },
+  "i0cr": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Facebook",
+    "id": "i0cr",
+    "z": 23828,
+    "parent": "mjw0"
+  },
+  "bse7": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Precision Medicine",
+    "id": "bse7",
+    "z": 23798,
+    "parent": "mjw0"
+  },
+  "ui0t": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "iPhone",
+    "id": "ui0t",
+    "z": 23887,
+    "parent": "mjw0"
+  },
+  "g3dz": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Bitcoin",
+    "id": "g3dz",
+    "z": 23793,
+    "parent": "mjw0"
+  },
+  "lb7h": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "iPad",
+    "id": "lb7h",
+    "z": 23765,
+    "parent": "mjw0"
+  },
+  "acvx": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Arab Spring",
+    "id": "acvx",
+    "z": 23861,
+    "parent": "mjw0"
+  },
+  "htby": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "CRISPR Gene Editing",
+    "id": "htby",
+    "z": 23801,
+    "parent": "mjw0"
+  },
+  "1kmv": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Higgs Boson Discovery",
+    "id": "1kmv",
+    "z": 23780,
+    "parent": "mjw0"
+  },
+  "7sbq": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Lab-grown Meat",
+    "id": "7sbq",
+    "z": 23727,
+    "parent": "mjw0"
+  },
+  "ltzt": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Annexation of Crimea",
+    "id": "ltzt",
+    "z": 23850,
+    "parent": "mjw0"
+  },
+  "n1h7": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Gravitatio­nal Waves Detection",
+    "id": "n1h7",
+    "z": 23767,
+    "parent": "mjw0"
+  },
+  "jb1r": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Brexit Ref­er­en­dum",
+    "id": "jb1r",
+    "z": 23827,
+    "parent": "mjw0"
+  },
+  "l5x5": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "CRISPR Diagnostics",
+    "id": "l5x5",
+    "z": 23821,
+    "parent": "mjw0"
+  },
+  "wvp8": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "5G Technology",
+    "id": "wvp8",
+    "z": 23811,
+    "parent": "mjw0"
+  },
+  "vc7v": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "First Image of a Black Hole",
+    "id": "vc7v",
+    "z": 23839,
+    "parent": "mjw0"
+  },
+  "hqn0": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Notre-Dame de Paris Fire",
+    "id": "hqn0",
+    "z": 23748,
+    "parent": "mjw0"
+  },
+  "pv9t": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "COVID-19 Pandemic",
+    "id": "pv9t",
+    "z": 23772,
+    "parent": "mjw0"
+  },
+  "tq7r": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Capitol Riot",
+    "id": "tq7r",
+    "z": 23710,
+    "parent": "mjw0"
+  },
+  "2exy": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Copernicus",
+    "id": "2exy",
+    "z": 23717,
+    "parent": "mjw0"
+  },
+  "ew0i": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "American Indepen­dence",
+    "id": "ew0i",
+    "z": 23735,
+    "parent": "mjw0"
+  },
+  "ffpw": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Elec­tro­chem­i­cal Battery",
+    "id": "ffpw",
+    "z": 23834,
+    "parent": "mjw0"
+  },
+  "5yit": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Analytical Engine Design",
+    "id": "5yit",
+    "z": 23736,
+    "parent": "mjw0"
+  },
+  "h7gc": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Nikola Tesla",
+    "id": "h7gc",
+    "z": 23779,
+    "parent": "mjw0"
+  },
+  "hrns": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "DNA Discovery",
+    "id": "hrns",
+    "z": 23818,
+    "parent": "mjw0"
+  },
+  "100f": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Treaty of Versailles",
+    "id": "100f",
+    "z": 23766,
+    "parent": "mjw0"
+  },
+  "y5sk": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Insulin injection",
+    "id": "y5sk",
+    "z": 23713,
+    "parent": "mjw0"
+  },
+  "w66t": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Sputnik",
+    "id": "w66t",
+    "z": 23753,
+    "parent": "mjw0"
+  },
+  "7scl": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Video Game “Tennis for Two”",
+    "id": "7scl",
+    "z": 23719,
+    "parent": "mjw0"
+  },
+  "ojx9": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Portable Computer",
+    "id": "ojx9",
+    "z": 23837,
+    "parent": "mjw0"
+  },
+  "nd7a": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "First GPS Satellite",
+    "id": "nd7a",
+    "z": 23838,
+    "parent": "mjw0"
+  },
+  "ox3i": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Montreal Protocol (Ozone Hole)",
+    "id": "ox3i",
+    "z": 23728,
+    "parent": "mjw0"
+  },
+  "qc86": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Satnav in car",
+    "id": "qc86",
+    "z": 23806,
+    "parent": "mjw0"
+  },
+  "m0du": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Tourism in Orbit",
+    "id": "m0du",
+    "z": 23760,
+    "parent": "mjw0"
+  },
+  "adnl": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Blu-ray Disc Player",
+    "id": "adnl",
+    "z": 23752,
+    "parent": "mjw0"
+  },
+  "otu1": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "DARPA Grand Challenge",
+    "id": "otu1",
+    "z": 23756,
+    "parent": "mjw0"
+  },
+  "54by": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Netflix streaming",
+    "id": "54by",
+    "z": 23762,
+    "parent": "mjw0"
+  },
+  "sgoq": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Bankruptcy of Lehman Brothers",
+    "id": "sgoq",
+    "z": 23733,
+    "parent": "mjw0"
+  },
+  "0hlv": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Falcon 9 Landing",
+    "id": "0hlv",
+    "z": 23803,
+    "parent": "mjw0"
+  },
+  "0dxq": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Mona Lisa",
+    "id": "0dxq",
+    "z": 23809,
+    "parent": "mjw0"
+  },
+  "m1z6": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Walkman",
+    "id": "m1z6",
+    "z": 23807,
+    "parent": "mjw0"
+  },
+  "68mr": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Special Theory of Relativity",
+    "id": "68mr",
+    "z": 23761,
+    "parent": "mjw0"
+  },
+  "c99o": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Cleopatra",
+    "id": "c99o",
+    "z": 23757,
+    "parent": "mjw0"
+  },
+  "m7jk": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Thirty Years' War",
+    "id": "m7jk",
+    "z": 23804,
+    "parent": "mjw0"
+  },
+  "qwwp": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "George Washington",
+    "id": "qwwp",
+    "z": 23802,
+    "parent": "mjw0"
+  },
+  "_meta": {
+    "version": 13,
+    "info": {
+      "name": "Chronology",
+      "image": "/assets/471086008_65694",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/128664/timeline",
+      "year": "2012",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "<div>Board layout by ArnoldSmith86. Released to public domain under CC0.</div><div><br></div><div>The library image was generated by Midjourney using the prompt \"events on a timeline, water color painting\". The background image using prompt \"time vortex, water color painting --ar 16:10\". The card images using prompts \"*, pencil drawing on parchment --ar 2:3\".<br></div><div><br></div>Texts were generated by ChatGPT.",
+      "lastUpdate": 1686641495382,
+      "showName": true,
+      "skill": "2-8",
+      "description": "Dive into the captivating world of history. Draw event cards and place them in precise chronological order. Sharpen your historical knowledge, make strategic choices, and emerge victorious by mastering the intricate tapestry of the past.",
+      "similarImage": "",
+      "similarName": "Timeline",
+      "similarAwards": "2012 Årets Spel Best Adult Game Winner",
+      "ruleText": "<h4>📜 Setup:</h4><ol><li>Every player takes a seat.<br></li><li>Press <i class=\"richtextSymbol material-icons\">restart_alt</i> to shuffle the cards and deal a hand to each player.</li></ol><h4>🎮 Gameplay:</h4><ol><li>On your turn, choose a card from your hand and decide where it fits on the timeline in the middle.</li><li>Place your chosen card face down in the appropriate spot and reveal the date side by clicking it.<ul><li>If placed correctly, the card stays on the timeline, and your turn ends.</li><li>If placed incorrectly, discard the card to the holder under the timeline and draw a new one from the deck above it.</li></ul></li><li>Play then passes to the next player clockwise.</li></ol><h4>⌛ Winning the Game:\n</h4><p>The first player to successfully play all of their cards in the correct chronological order wins the game! 🎉</p>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-8"
+    }
+  },
+  "wz0f": {
+    "deck": "cd4tD",
+    "type": "card",
+    "cardType": "Pythagore­an Theorem",
+    "id": "wz0f",
+    "z": 23835,
+    "parent": "mjw0"
+  },
+  "mjw0": {
+    "type": "pile",
+    "parent": "Draw",
+    "x": 2,
+    "y": 2,
+    "width": 80,
+    "height": 120,
+    "id": "mjw0"
+  }
+}

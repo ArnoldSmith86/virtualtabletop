@@ -13,7 +13,7 @@
     "type": "card",
     "cardType": "General",
     "id": "4994",
-    "z": 24398,
+    "z": 25164,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -22,7 +22,7 @@
     "type": "card",
     "cardType": "Wizard",
     "id": "x4yi",
-    "z": 24400,
+    "z": 25166,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -49,7 +49,7 @@
     "type": "card",
     "cardType": "Unicorn",
     "id": "o2l4",
-    "z": 24406,
+    "z": 25168,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -58,7 +58,7 @@
     "type": "card",
     "cardType": "Pegasus",
     "id": "6svl",
-    "z": 24408,
+    "z": 25170,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -67,7 +67,7 @@
     "type": "card",
     "cardType": "Necromancer",
     "id": "5rr0",
-    "z": 24410,
+    "z": 25172,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -76,7 +76,7 @@
     "type": "card",
     "cardType": "General",
     "id": "fp2t",
-    "z": 24412,
+    "z": 25174,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -85,7 +85,7 @@
     "type": "card",
     "cardType": "Minotaur",
     "id": "4fcc",
-    "z": 24414,
+    "z": 25176,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -94,7 +94,7 @@
     "type": "card",
     "cardType": "Soldier",
     "id": "wset",
-    "z": 24416,
+    "z": 25178,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -103,7 +103,7 @@
     "type": "card",
     "cardType": "Griffin",
     "id": "506x",
-    "z": 24418,
+    "z": 25180,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -112,7 +112,7 @@
     "type": "card",
     "cardType": "Archer",
     "id": "yr52",
-    "z": 24420,
+    "z": 25182,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -121,7 +121,7 @@
     "type": "card",
     "cardType": "Centaur",
     "id": "yvkw",
-    "z": 24422,
+    "z": 25184,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -130,7 +130,7 @@
     "type": "card",
     "cardType": "Gargoyle",
     "id": "bw1s",
-    "z": 24424,
+    "z": 25186,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -139,7 +139,7 @@
     "type": "card",
     "cardType": "Minion",
     "id": "n3y6",
-    "z": 24426,
+    "z": 25188,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -148,7 +148,7 @@
     "type": "card",
     "cardType": "Giant",
     "id": "h1j9",
-    "z": 24428,
+    "z": 25190,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -164,7 +164,7 @@
     "type": "card",
     "cardType": "Wizard",
     "id": "1ue9",
-    "z": 24430,
+    "z": 25192,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -173,7 +173,7 @@
     "type": "card",
     "cardType": "Wizard",
     "id": "dcqo",
-    "z": 24432,
+    "z": 25194,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -182,7 +182,7 @@
     "type": "card",
     "cardType": "Wizard",
     "id": "6ep3",
-    "z": 24434,
+    "z": 25196,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -191,7 +191,7 @@
     "type": "card",
     "cardType": "Wizard",
     "id": "bozh",
-    "z": 24436,
+    "z": 25198,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -299,7 +299,7 @@
     "type": "card",
     "cardType": "Unicorn",
     "id": "ao7j",
-    "z": 24460,
+    "z": 25200,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -308,7 +308,7 @@
     "type": "card",
     "cardType": "Unicorn",
     "id": "aguq",
-    "z": 24462,
+    "z": 25202,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -317,7 +317,7 @@
     "type": "card",
     "cardType": "Unicorn",
     "id": "t96o",
-    "z": 24464,
+    "z": 25204,
     "activeFace": 1,
     "parent": "nlmz"
   },
@@ -326,7 +326,7 @@
     "type": "card",
     "cardType": "Pegasus",
     "id": "y79p",
-    "z": 24466,
+    "z": 25206,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -335,7 +335,7 @@
     "type": "card",
     "cardType": "Pegasus",
     "id": "l7qg",
-    "z": 24468,
+    "z": 25208,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -344,7 +344,7 @@
     "type": "card",
     "cardType": "Pegasus",
     "id": "v9ia",
-    "z": 24470,
+    "z": 25210,
     "activeFace": 1,
     "parent": "nlmz"
   },
@@ -353,7 +353,7 @@
     "type": "card",
     "cardType": "Pegasus",
     "id": "h567",
-    "z": 24472,
+    "z": 25212,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -362,7 +362,7 @@
     "type": "card",
     "cardType": "Necromancer",
     "id": "6q1z",
-    "z": 24474,
+    "z": 25214,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -371,7 +371,7 @@
     "type": "card",
     "cardType": "Necromancer",
     "id": "m5l5",
-    "z": 24476,
+    "z": 25216,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -380,7 +380,7 @@
     "type": "card",
     "cardType": "Necromancer",
     "id": "b896",
-    "z": 24478,
+    "z": 25218,
     "activeFace": 1,
     "parent": "nlmz"
   },
@@ -389,7 +389,7 @@
     "type": "card",
     "cardType": "General",
     "id": "u69w",
-    "z": 24480,
+    "z": 25220,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -398,7 +398,7 @@
     "type": "card",
     "cardType": "General",
     "id": "4xyb",
-    "z": 24482,
+    "z": 25222,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -407,7 +407,7 @@
     "type": "card",
     "cardType": "General",
     "id": "8wq6",
-    "z": 24484,
+    "z": 25224,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -416,7 +416,7 @@
     "type": "card",
     "cardType": "Soldier",
     "id": "r84l",
-    "z": 24486,
+    "z": 25226,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -425,7 +425,7 @@
     "type": "card",
     "cardType": "Soldier",
     "id": "m6bb",
-    "z": 24488,
+    "z": 25228,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -434,7 +434,7 @@
     "type": "card",
     "cardType": "Soldier",
     "id": "thls",
-    "z": 24490,
+    "z": 25230,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -443,7 +443,7 @@
     "type": "card",
     "cardType": "Soldier",
     "id": "7fuk",
-    "z": 24492,
+    "z": 25232,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -452,7 +452,7 @@
     "type": "card",
     "cardType": "Griffin",
     "id": "wisn",
-    "z": 24494,
+    "z": 25234,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -461,7 +461,7 @@
     "type": "card",
     "cardType": "Griffin",
     "id": "a4w5",
-    "z": 24496,
+    "z": 25236,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -470,7 +470,7 @@
     "type": "card",
     "cardType": "Griffin",
     "id": "qe4w",
-    "z": 24498,
+    "z": 25238,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -479,7 +479,7 @@
     "type": "card",
     "cardType": "Griffin",
     "id": "e8th",
-    "z": 24500,
+    "z": 25240,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -488,7 +488,7 @@
     "type": "card",
     "cardType": "Archer",
     "id": "9t5u",
-    "z": 24502,
+    "z": 25242,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -497,7 +497,7 @@
     "type": "card",
     "cardType": "Archer",
     "id": "xvk5",
-    "z": 24504,
+    "z": 25244,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -506,7 +506,7 @@
     "type": "card",
     "cardType": "Archer",
     "id": "awbq",
-    "z": 24506,
+    "z": 25246,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -515,7 +515,7 @@
     "type": "card",
     "cardType": "Centaur",
     "id": "k684",
-    "z": 24508,
+    "z": 25248,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -524,7 +524,7 @@
     "type": "card",
     "cardType": "Centaur",
     "id": "7xlx",
-    "z": 24510,
+    "z": 25250,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -533,7 +533,7 @@
     "type": "card",
     "cardType": "Centaur",
     "id": "umx7",
-    "z": 24512,
+    "z": 25252,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -542,7 +542,7 @@
     "type": "card",
     "cardType": "Centaur",
     "id": "6ii7",
-    "z": 24514,
+    "z": 25254,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -551,7 +551,7 @@
     "type": "card",
     "cardType": "Gargoyle",
     "id": "4qz4",
-    "z": 24516,
+    "z": 25256,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -560,7 +560,7 @@
     "type": "card",
     "cardType": "Gargoyle",
     "id": "sz9c",
-    "z": 24518,
+    "z": 25258,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -569,7 +569,7 @@
     "type": "card",
     "cardType": "Gargoyle",
     "id": "q6q3",
-    "z": 24520,
+    "z": 25260,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -578,7 +578,7 @@
     "type": "card",
     "cardType": "Gargoyle",
     "id": "ah5e",
-    "z": 24522,
+    "z": 25262,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -587,7 +587,7 @@
     "type": "card",
     "cardType": "Minion",
     "id": "1c0p",
-    "z": 24524,
+    "z": 25264,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -596,7 +596,7 @@
     "type": "card",
     "cardType": "Minion",
     "id": "lkhk",
-    "z": 24526,
+    "z": 25266,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -605,7 +605,7 @@
     "type": "card",
     "cardType": "Minion",
     "id": "k3xy",
-    "z": 24528,
+    "z": 25268,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -614,7 +614,7 @@
     "type": "card",
     "cardType": "Minion",
     "id": "2zh8",
-    "z": 24530,
+    "z": 25270,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -623,7 +623,7 @@
     "type": "card",
     "cardType": "Giant",
     "id": "09mt",
-    "z": 24532,
+    "z": 25272,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -632,7 +632,7 @@
     "type": "card",
     "cardType": "Giant",
     "id": "zo7j",
-    "z": 24534,
+    "z": 25274,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -641,7 +641,7 @@
     "type": "card",
     "cardType": "Giant",
     "id": "ur46",
-    "z": 24536,
+    "z": 25276,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -650,7 +650,7 @@
     "type": "card",
     "cardType": "Minotaur",
     "id": "5mk1",
-    "z": 24538,
+    "z": 25278,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -659,7 +659,7 @@
     "type": "card",
     "cardType": "Minotaur",
     "id": "scea",
-    "z": 24540,
+    "z": 25280,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -668,7 +668,7 @@
     "type": "card",
     "cardType": "Minotaur",
     "id": "be07",
-    "z": 24542,
+    "z": 25282,
     "parent": "nlmz",
     "activeFace": 1
   },
@@ -925,7 +925,7 @@
     "type": "card",
     "cardType": "Wolf",
     "id": "zhrx",
-    "z": 24543,
+    "z": 25309,
     "player": "p4",
     "parent": "bagP4",
     "x": 4,
@@ -936,7 +936,7 @@
     "type": "card",
     "cardType": "Wolf",
     "id": "cdtt",
-    "z": 24390,
+    "z": 25158,
     "player": "p2",
     "parent": "bagP2",
     "x": 4,
@@ -947,7 +947,7 @@
     "type": "card",
     "cardType": "Raven",
     "id": "4rpb",
-    "z": 24544,
+    "z": 25310,
     "player": "p3",
     "parent": "bagP3",
     "x": 4,
@@ -958,7 +958,7 @@
     "type": "card",
     "cardType": "Raven",
     "id": "0d39",
-    "z": 24394,
+    "z": 25162,
     "player": "p1",
     "parent": "bagP1",
     "x": 4,
@@ -1021,23 +1021,23 @@
     "movableInEdit": false
   },
   "_meta": {
-    "version": 12,
+    "version": 13,
     "info": {
       "name": "Fantasy Wars",
-      "image": "/assets/-2124487621_265811",
+      "image": "/assets/1187060775_56787",
       "rules": "",
-      "bgg": "",
-      "year": "",
-      "mode": "1v1; 2v2",
+      "bgg": "https://boardgamegeek.com/boardgame/249259/war-chest",
+      "year": "2018",
+      "mode": "vs",
       "time": "30 min",
       "attribution": "<div>Implementation design by RaphaelAlvez with modifications by Ingegneus and released under CC0.</div><div>Assets license may vary.</div><div><br></div><div>Wood texture: https://unsplash.com/photos/J2gEgTPM_OA under the Unsplash license</div><div>Cloth texture: https://unsplash.com/photos/xTaOPMa6wAE under the Unsplash license</div><div><br></div><div>Celtic knot: https://www.vecteezy.com/vector-art/338646-celtic-symbols under the Vecteezy license</div><div>Troops assets modified from https://game-icons.net/ under the CC BY 3.0 license</div>",
-      "lastUpdate": 1679157633956,
+      "lastUpdate": 1685736909329,
       "showName": true,
       "skill": "",
       "description": "",
       "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
+      "similarName": "War Chest",
+      "similarAwards": "2018 Golden Geek Best 2-Player Board Game Nominee\n2018 Cardboard Republic Striker Laurel Nominee",
       "ruleText": "",
       "helpText": "Choose your troops by adding them to your holders or get random troops by clicking in the reset button.Then take 2 tokens from each troop and adding them to your side of the table.Click the reset button on the bottom to refill and shuffle your bag.Each turn drag three pieces from your bag the hand (middle-bottom). If you don't have enough pieces press the rest button again after you dragged all the pieces you had on your bag to the hand.<br><br>First you need to decide who plays which side. Left is \"Raven\" right is \"Wolf\". After that choose which set of troops you want to use. You can either choose some preset combinations, a random assortment or manually select which ones you want to play. To manually select a troop, drag the corresponding cards into one of your square holders. Then put 2 tokens of each troop into your \"BAG\" holder.<br>At the start of each turn draw 3 tokens from your bag into your hand (holder at the bottom). Before you draw them the first time, press the \"Refill\" button, to shuffle and flip all tokens to the correct side.If you have less than 3 tokens in your bag, draw the remaining ones and then press the \"Refill\" button to refill your bag from your \"DISCARD\". Tokens already placed onto the board, won't be affected by the \"Refill\" button.<br>Example: if you have 2 tokens in your bag, drag those 2 into your hand, press \"Refill\" and draw one more token.<br><br>To discard a destroyed troop, put it in the round holder at the top of the board.",
       "variantImage": "",
@@ -2150,13 +2150,13 @@
       "Wizard": {
         "image": "/assets/-1697211857_10577"
       },
-      "Mounted Knight": {
+      "Horseman": {
         "image": "/assets/208115964_5891"
       },
-      "Golen": {
+      "Golem": {
         "image": "/assets/-2037382957_2560"
       },
-      "Fenix": {
+      "Phoenix": {
         "image": "/assets/771751108_6461"
       },
       "Unicorn": {
@@ -3306,5 +3306,122 @@
     "parent": "line1",
     "x": 478,
     "y": 4
+  },
+  "xyq9": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Horseman",
+    "id": "xyq9",
+    "z": 25284,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "y9y6": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Horseman",
+    "id": "y9y6",
+    "z": 25286,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "lyrg": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Horseman",
+    "id": "lyrg",
+    "z": 25288,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "thzt": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Golem",
+    "id": "thzt",
+    "z": 25290,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "zuiz": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Golem",
+    "id": "zuiz",
+    "z": 25292,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "geu3": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Golem",
+    "id": "geu3",
+    "z": 25294,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "kqss": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Golem",
+    "id": "kqss",
+    "z": 25296,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "gxuo": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Horseman",
+    "id": "gxuo",
+    "z": 25298,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "xdfh": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Phoenix",
+    "id": "xdfh",
+    "z": 25300,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "twhx": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Phoenix",
+    "id": "twhx",
+    "z": 25302,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "2p7p": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Phoenix",
+    "id": "2p7p",
+    "z": 25304,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "80dk": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Phoenix",
+    "id": "80dk",
+    "z": 25306,
+    "parent": "nlmz",
+    "activeFace": 1
+  },
+  "k816": {
+    "deck": "allTokensDeck",
+    "type": "card",
+    "cardType": "Phoenix",
+    "id": "k816",
+    "z": 25308,
+    "parent": "nlmz",
+    "activeFace": 1
   }
 }

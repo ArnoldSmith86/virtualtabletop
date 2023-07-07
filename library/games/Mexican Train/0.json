@@ -3,21 +3,26 @@
     "version": 6,
     "info": {
       "name": "Mexican Train",
-      "image": "/assets/2059434913_541498",
+      "image": "/assets/-1880120601_28557",
       "rules": "https://www.mexicantrainrulesandstrategies.com/mexican_train_rules.pdf",
       "bgg": "https://boardgamegeek.com/boardgame/11634/mexican-train",
       "year": "1994",
       "mode": "vs",
       "time": "30",
-      "players": "2-8",
-      "language": "",
-      "variant": "",
-      "attribution": "The game layout and game piece design is by LawDawg and is released to the public domain as CC0.\n\nThe following graphics items are available for use under the Pixabay license:\n \n - Train token from https://publicdomainvectors.org/en/free-clipart/Vector-illustration-of-locomotive/4823.html\n\n - Background and library image from https://pixabay.com/photos/railway-rails-track-train-2439189/",
+      "attribution": "The game layout and game piece design is by LawDawg and is released to the public domain as CC0.\n\nThe following graphics items are available for use under the Pixabay license:\n \n - Train token from https://publicdomainvectors.org/en/free-clipart/Vector-illustration-of-locomotive/4823.html\n\n - Background image from https://pixabay.com/photos/railway-rails-track-train-2439189/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"train tracks receding into horizon pencil sketch by leonardo da vinci --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Mexican Train",
       "description": "Use double 6, 9, 12, or 15 dominoes depending on number of players. Starting from a common domino, play a domino that matches a previous end of the train. Play on own train, other players trains when available, or on a common Mexican train. Lowest points after desiganted number of rounds wins.",
       "showName": true,
       "helpText": "Players sit in seats. Press settings button (gear icon) to choose domino set to use and timer options. Press the widget button in the middle of the room to move the chosen starting double domino to the board. This will cause a random player to be chosen to begin. Players move desired number of starting dominoes into hand. After play, press the play/skip button above the timer to advance turn to next player. At end of round, record scores. Press play button to begin next round.",
-      "lastUpdate": 1650427506000
+      "lastUpdate": 1650427506000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-8",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
     }
   },
   "hand": {

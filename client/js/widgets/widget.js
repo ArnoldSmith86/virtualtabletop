@@ -1669,7 +1669,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
-        let collection;
+        const collection = a.timer === undefined && getCollection(a.collection);
         if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
           a.mode = 'toggle'
@@ -1682,7 +1682,7 @@ export class Widget extends StateManaged {
                   await widget.setPaused(a.mode);
               });
             }
-          } else if(collection = getCollection(a.collection)) {
+          } else if(collection) {
             if(collections[collection].length) {
               for(const c of collections[collection])
                 if(c.setPaused)
@@ -2228,13 +2228,20 @@ export class Widget extends StateManaged {
 
       e.className = this.domElement.className;
       e.dataset.id = id;
-      for(const clone of e.querySelectorAll('canvas')) {
-        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+
+      for(const clone of $a('canvas', e)) {
+        const original = $(`canvas[data-id = '${clone.dataset.id}']`, this.domElement);
         const context = clone.getContext('2d');
         clone.width = original.width;
         clone.height = original.height;
         context.drawImage(original, 0, 0);
       }
+
+      const originalTextareas = [...$a('textarea', this.domElement)];
+      const clonedTextareas   = [...$a('textarea', e)];
+      for(const i in originalTextareas)
+        clonedTextareas[i].value = originalTextareas[i].value;
+
       e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
