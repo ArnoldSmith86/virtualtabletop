@@ -38,6 +38,16 @@ export function domByTemplate(id, obj, type='div') {
   return dom;
 }
 
+export function shuffleArray(array) {
+  const isString = typeof array === 'string';
+  array = [...array];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return isString ? array.join('') : array;
+}
+
 export function mapAssetURLs(str) {
   return String(str).replaceAll(/(^|["' (])\/(assets|i)\//g, '$1$2/');
 }
