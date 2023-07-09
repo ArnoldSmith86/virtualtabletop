@@ -40,6 +40,10 @@ async function ensureRoomIsLoaded(id) {
   if(!activeRooms.has(id)) {
     const room = new Room(id, function() {
       activeRooms.delete(id);
+    }, function() {
+      Logging.log(`The public library was edited in room ${id}. Reloading in every room...`);
+      for(const [ _, room ] of activeRooms)
+        room.reloadPublicLibraryGames();
     });
     await room.load();
     activeRooms.set(id, room);
