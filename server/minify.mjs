@@ -95,6 +95,7 @@ export default async function minifyHTML() {
     'client/js/editor/toolbar/zoomout.js',
     'client/js/editor/toolbar/fullscreen.js',
     'client/js/editor/toolbar/close.js',
+    'client/js/editor/toolbar/undo.js',
     'client/js/editor/toolbar/selectmode.js',
     'client/js/editor/toolbar/add.js',
     'client/js/editor/toolbar/delete.js',

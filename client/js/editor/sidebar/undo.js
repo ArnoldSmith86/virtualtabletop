@@ -1,6 +1,6 @@
 class UndoModule extends SidebarModule {
   constructor() {
-    super('undo', 'Undo', 'Undo changes from editing or playing.');
+    super('undo', 'History', 'Undo changes from editing or playing.');
     this.lastRenderedIndex = -2;
   }
 
