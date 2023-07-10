@@ -22,7 +22,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1689020768775,
+      "lastUpdate": 1689025315871,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -238,7 +238,7 @@
     "clickRoutine": [
       "var a = ${PROPERTY text OF atString1a}",
       "var b = ${PROPERTY text OF atString1b}",
-      "var output = ((${a} + ${b}) / (${a} - ${b})) * 2",
+      "var output = ((${a} + ${b}) / (${a} - ${b})) * 2 // Nested expression",
       {
         "func": "LABEL",
         "label": "outputstring",
