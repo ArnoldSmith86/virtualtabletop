@@ -685,7 +685,7 @@
   "White Pawn B": {
     "id": "White Pawn B",
     "text": "♙︎",
-    "z": 1041,
+    "z": 1445,
     "home": "hexB1",
     "inheritFrom": {
       "White King": [
@@ -697,12 +697,13 @@
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexB1"
+    "parent": "hexB1",
+    "background": "white"
   },
   "White Pawn C": {
     "id": "White Pawn C",
     "text": "♙︎",
-    "z": 1073,
+    "z": 1447,
     "home": "hexC2",
     "inheritFrom": {
       "White King": [
@@ -714,12 +715,13 @@
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexC2"
+    "parent": "hexC2",
+    "background": "white"
   },
   "White Pawn D": {
     "id": "White Pawn D",
     "text": "♙︎",
-    "z": 1046,
+    "z": 1450,
     "home": "hexD3",
     "inheritFrom": {
       "White King": [
@@ -732,12 +734,13 @@
     "activeFace": 0,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexD3"
+    "parent": "hexD3",
+    "background": "white"
   },
   "White Pawn E": {
     "id": "White Pawn E",
     "text": "♙︎",
-    "z": 1263,
+    "z": 1455,
     "home": "hexE4",
     "inheritFrom": {
       "White King": [
@@ -749,12 +752,13 @@
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexE4"
+    "parent": "hexE4",
+    "background": "white"
   },
   "White Pawn F": {
     "id": "White Pawn F",
     "text": "♙︎",
-    "z": 1096,
+    "z": 1521,
     "home": "hexF5",
     "inheritFrom": {
       "White King": [
@@ -766,12 +770,13 @@
     "value": 1,
     "width": 76.6,
     "height": 76.6,
+    "background": "white",
     "parent": "hexF5"
   },
   "White Pawn G": {
     "id": "White Pawn G",
     "text": "♙︎",
-    "z": 1067,
+    "z": 1513,
     "home": "hexG4",
     "inheritFrom": {
       "White King": [
@@ -783,12 +788,13 @@
     "y": 4,
     "width": 76.6,
     "height": 76.6,
+    "background": "white",
     "parent": "hexG4"
   },
   "White Pawn H": {
     "id": "White Pawn H",
     "text": "♙︎",
-    "z": 1090,
+    "z": 1484,
     "home": "hexH3",
     "inheritFrom": {
       "White King": [
@@ -800,12 +806,13 @@
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexH3"
+    "parent": "hexH3",
+    "background": "white"
   },
   "White Queen": {
     "id": "White Queen",
     "text": "♕",
-    "z": 1166,
+    "z": 1438,
     "home": "hexE1",
     "inheritFrom": {
       "White King": [
@@ -818,36 +825,38 @@
     "activeFace": 0,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexE1"
+    "parent": "hexE1",
+    "background": "white"
   },
   "White King": {
     "id": "White King",
     "text": "♔",
     "css": {
       "font-size": "70px",
-      "color": "black",
+      "color": "${PROPERTY color}",
       "display": "flex",
       "justify-content": "center",
       "align-items": "center",
       "text-align": "center",
       "text-shadow": "#fa0 ${PROPERTY highlight}px 0 10px",
       "border-radius": "100%",
-      "background": "white",
+      "background": "${PROPERTY background}",
       "border": "1px solid #aaa"
     },
-    "z": 1177,
+    "z": 1433,
     "home": "hexG1",
     "value": 10,
     "width": 76.6,
     "height": 76.6,
     "x": 4,
     "y": 4,
-    "parent": "hexG1"
+    "parent": "hexG1",
+    "background": "white"
   },
   "Black Pawn B": {
     "id": "Black Pawn B",
     "text": "♟︎",
-    "z": 1032,
+    "z": 1376,
     "home": "hexB7",
     "inheritFrom": {
       "White King": [
@@ -859,12 +868,14 @@
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexB7"
+    "parent": "hexB7",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Pawn G": {
     "id": "Black Pawn G",
     "text": "♟︎",
-    "z": 1000,
+    "z": 1419,
     "home": "hexG7",
     "inheritFrom": {
       "White King": [
@@ -876,12 +887,15 @@
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexG7"
+    "activeFace": 0,
+    "parent": "hexG7",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Queen": {
     "id": "Black Queen",
     "text": "♛",
-    "z": 1249,
+    "z": 1368,
     "home": "hexE10",
     "inheritFrom": {
       "White King": [
@@ -894,12 +908,14 @@
     "activeFace": 0,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexE10"
+    "parent": "hexE10",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black King": {
     "id": "Black King",
     "text": "♚",
-    "z": 1255,
+    "z": 1404,
     "home": "hexG10",
     "inheritFrom": {
       "White King": [
@@ -911,7 +927,9 @@
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexG10"
+    "parent": "hexG10",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Seat": {
     "type": "seat",
@@ -943,7 +961,7 @@
     "dropOffsetY": 0,
     "dropTarget": {},
     "css": {
-      "background": "#ddd"
+      "background": "#ffffff80"
     },
     "enterRoutine": [
       {
@@ -1118,7 +1136,8 @@
     "z": 2,
     "css": "font-size: 30px;",
     "editable": true,
-    "parent": "p9sl"
+    "parent": "p9sl",
+    "text": 0
   },
   "Black Score Down": {
     "type": "button",
@@ -1137,7 +1156,7 @@
         "func": "LABEL",
         "label": "${PROPERTY parent}",
         "mode": "dec",
-        "value": 0.5
+        "value": 0.25
       }
     ],
     "movable": false,
@@ -1162,7 +1181,7 @@
         "func": "LABEL",
         "label": "${PROPERTY parent}",
         "mode": "inc",
-        "value": 0.5
+        "value": 0.25
       }
     ],
     "movable": false,
@@ -1290,10 +1309,10 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Gliński's hexagonal chess",
+      "players": "",
       "language": "",
-      "players": ""
+      "variant": "Gliński's hexagonal chess",
+      "variantImage": ""
     }
   },
   "vwam": {
@@ -2210,8 +2229,7 @@
   },
   "Black Pawn F1": {
     "id": "Black Pawn F1",
-    "text": "♟︎",
-    "z": 993,
+    "z": 1390,
     "home": "hexF7",
     "inheritFrom": {
       "White King": [
@@ -2223,12 +2241,16 @@
     "value": 1,
     "width": 76.6,
     "height": 76.6,
-    "parent": "hexF7"
+    "activeFace": 0,
+    "parent": "hexF7",
+    "background": "black",
+    "text": "♟︎",
+    "color": "#c0c0c0"
   },
   "Black Score Down1": {
     "type": "button",
     "id": "Black Score Down1",
-    "parent": "White Score1",
+    "parent": "White Score",
     "fixedParent": true,
     "x": -38,
     "y": 1,
@@ -2242,7 +2264,7 @@
         "func": "LABEL",
         "label": "${PROPERTY parent}",
         "mode": "dec",
-        "value": 0.5
+        "value": 0.25
       }
     ],
     "movable": false,
@@ -2253,7 +2275,7 @@
   "Black Score Up1": {
     "type": "button",
     "id": "Black Score Up1",
-    "parent": "White Score1",
+    "parent": "White Score",
     "fixedParent": true,
     "x": 68,
     "y": 1,
@@ -2267,39 +2289,13 @@
         "func": "LABEL",
         "label": "${PROPERTY parent}",
         "mode": "inc",
-        "value": 0.5
+        "value": 0.25
       }
     ],
     "movable": false,
     "inheritFrom": {
       "Reset Button": "css"
     }
-  },
-  "White Seat1": {
-    "type": "seat",
-    "id": "White Seat1",
-    "index": 2,
-    "width": 164,
-    "height": 54,
-    "z": 5,
-    "css": {
-      "box-sizing": "border-box"
-    },
-    "turn": true,
-    "parent": "dkmt"
-  },
-  "White Score1": {
-    "type": "label",
-    "id": "White Score1",
-    "x": 49,
-    "y": 69,
-    "width": 65,
-    "height": 40,
-    "z": 2,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "text": 0,
-    "parent": "dkmt"
   },
   "p9sl": {
     "parent": null,
@@ -3052,12 +3048,11 @@
   },
   "Black Pawn K": {
     "id": "Black Pawn K",
-    "parent": "hexK7",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1022,
+    "z": 1410,
     "activeFace": 0,
     "inheritFrom": {
       "White King": [
@@ -3066,16 +3061,18 @@
     },
     "text": "♟︎",
     "home": "hexK7",
-    "value": 1
+    "value": 1,
+    "parent": "hexK7",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Pawn I": {
     "id": "Black Pawn I",
-    "parent": "hexI7",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1015,
+    "z": 1412,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3083,16 +3080,18 @@
     },
     "text": "♟︎",
     "home": "hexI7",
-    "value": 1
+    "value": 1,
+    "parent": "hexI7",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Pawn H": {
     "id": "Black Pawn H",
-    "parent": "hexH7",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1007,
+    "z": 1415,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3100,16 +3099,18 @@
     },
     "text": "♟︎",
     "home": "hexH7",
-    "value": 1
+    "value": 1,
+    "parent": "hexH7",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Pawn E": {
     "id": "Black Pawn E",
-    "parent": "hexE7",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 985,
+    "z": 1385,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3117,16 +3118,19 @@
     },
     "text": "♟︎",
     "home": "hexE7",
-    "value": 1
+    "value": 1,
+    "activeFace": 0,
+    "parent": "hexE7",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Pawn C": {
     "id": "Black Pawn C",
-    "parent": "hexC7",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 970,
+    "z": 1378,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3134,16 +3138,18 @@
     },
     "text": "♟︎",
     "home": "hexC7",
-    "value": 1
+    "value": 1,
+    "parent": "hexC7",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Pawn D": {
     "id": "Black Pawn D",
-    "parent": "hexD7",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1037,
+    "z": 1381,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3151,16 +3157,18 @@
     },
     "text": "♟︎",
     "home": "hexD7",
-    "value": 1
+    "value": 1,
+    "parent": "hexD7",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "White Pawn I": {
     "id": "White Pawn I",
-    "parent": "hexI2",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1103,
+    "z": 1428,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3168,16 +3176,17 @@
     },
     "text": "♙︎",
     "home": "hexI2",
-    "value": 1
+    "value": 1,
+    "parent": "hexI2",
+    "background": "white"
   },
   "White Pawn K": {
     "id": "White Pawn K",
-    "parent": "hexK1",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1107,
+    "z": 1424,
     "activeFace": 0,
     "inheritFrom": {
       "White King": [
@@ -3186,16 +3195,17 @@
     },
     "text": "♙︎",
     "home": "hexK1",
-    "value": 1
+    "value": 1,
+    "parent": "hexK1",
+    "background": "white"
   },
   "White Knight D": {
     "id": "White Knight D",
-    "parent": "hexD1",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1111,
+    "z": 1441,
     "activeFace": 0,
     "inheritFrom": {
       "White King": [
@@ -3204,16 +3214,17 @@
     },
     "text": "♘",
     "home": "hexD1",
-    "value": 3
+    "value": 3,
+    "parent": "hexD1",
+    "background": "white"
   },
   "White Knight H1": {
     "id": "White Knight H1",
-    "parent": "hexH1",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1119,
+    "z": 1431,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3221,16 +3232,17 @@
     },
     "text": "♘",
     "home": "hexH1",
-    "value": 3
+    "value": 3,
+    "parent": "hexH1",
+    "background": "white"
   },
   "White Bishop F2": {
     "id": "White Bishop F2",
-    "parent": "hexF2",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1137,
+    "z": 1539,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3238,16 +3250,17 @@
     },
     "text": "♗",
     "home": "hexF2",
-    "value": 3.1
+    "value": 3.1,
+    "background": "white",
+    "parent": "hexF2"
   },
   "White Bishop F3": {
     "id": "White Bishop F3",
-    "parent": "hexF3",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1145,
+    "z": 1525,
     "activeFace": 0,
     "inheritFrom": {
       "White King": [
@@ -3256,16 +3269,17 @@
     },
     "text": "♗",
     "home": "hexF3",
-    "value": 3.1
+    "value": 3.1,
+    "background": "white",
+    "parent": "hexF3"
   },
   "White Rook I": {
     "id": "White Rook I",
-    "parent": "hexI1",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1152,
+    "z": 1426,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3273,16 +3287,17 @@
     },
     "text": "♖",
     "home": "hexI1",
-    "value": 5
+    "value": 5,
+    "parent": "hexI1",
+    "background": "white"
   },
   "White Rook C": {
     "id": "White Rook C",
-    "parent": "hexC1",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1158,
+    "z": 1443,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3290,16 +3305,17 @@
     },
     "text": "♖",
     "home": "hexC1",
-    "value": 5
+    "value": 5,
+    "parent": "hexC1",
+    "background": "white"
   },
   "Black Knight D": {
     "id": "Black Knight D",
-    "parent": "hexD9",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1191,
+    "z": 1371,
     "activeFace": 0,
     "inheritFrom": {
       "White King": [
@@ -3308,16 +3324,18 @@
     },
     "text": "♞",
     "home": "hexD9",
-    "value": 3
+    "value": 3,
+    "parent": "hexD9",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Knight H": {
     "id": "Black Knight H",
-    "parent": "hexH9",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1195,
+    "z": 1406,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3325,16 +3343,18 @@
     },
     "text": "♞",
     "home": "hexH9",
-    "value": 3
+    "value": 3,
+    "parent": "hexH9",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Bishop F10": {
     "id": "Black Bishop F10",
-    "parent": "hexF10",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1217,
+    "z": 1400,
     "activeFace": 0,
     "inheritFrom": {
       "White King": [
@@ -3343,16 +3363,18 @@
     },
     "text": "♝",
     "home": "hexF10",
-    "value": 3.1
+    "value": 3.1,
+    "parent": "hexF10",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Bishop F9": {
     "id": "Black Bishop F9",
-    "parent": "hexF9",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1225,
+    "z": 1396,
     "activeFace": 0,
     "inheritFrom": {
       "White King": [
@@ -3361,16 +3383,18 @@
     },
     "text": "♝",
     "home": "hexF9",
-    "value": 3.1
+    "value": 3.1,
+    "parent": "hexF9",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Rook C": {
     "id": "Black Rook C",
-    "parent": "hexC8",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1233,
+    "z": 1374,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3378,16 +3402,18 @@
     },
     "text": "♜",
     "home": "hexC8",
-    "value": 5
+    "value": 5,
+    "parent": "hexC8",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Rook I": {
     "id": "Black Rook I",
-    "parent": "hexI8",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1243,
+    "z": 1408,
     "activeFace": 0,
     "inheritFrom": {
       "White King": [
@@ -3396,16 +3422,18 @@
     },
     "text": "♜",
     "home": "hexI8",
-    "value": 5
+    "value": 5,
+    "parent": "hexI8",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "Black Bishop F": {
     "id": "Black Bishop F",
-    "parent": "hexF11",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1214,
+    "z": 1365,
     "inheritFrom": {
       "White King": [
         "css"
@@ -3413,16 +3441,18 @@
     },
     "text": "♝",
     "home": "hexF11",
-    "value": 3.1
+    "value": 3.1,
+    "parent": "hexF11",
+    "background": "black",
+    "color": "#c0c0c0"
   },
   "White Bishop F": {
     "id": "White Bishop F",
-    "parent": "hexF1",
     "x": 4,
     "y": 4,
     "width": 76.6,
     "height": 76.6,
-    "z": 1126,
+    "z": 1435,
     "activeFace": 0,
     "inheritFrom": {
       "White King": [
@@ -3431,6 +3461,47 @@
     },
     "text": "♗",
     "home": "hexF1",
-    "value": 3.1
+    "value": 3.1,
+    "parent": "hexF1",
+    "background": "white"
+  },
+  "gy3y": {
+    "id": "gy3y",
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "#eee6d9"
+      }
+    },
+    "layer": -10,
+    "width": 1600,
+    "height": 1000
+  },
+  "White Seat": {
+    "type": "seat",
+    "id": "White Seat",
+    "parent": "dkmt",
+    "index": 2,
+    "width": 164,
+    "height": 54,
+    "z": 5,
+    "css": {
+      "box-sizing": "border-box"
+    },
+    "turn": true
+  },
+  "White Score": {
+    "type": "label",
+    "id": "White Score",
+    "parent": "dkmt",
+    "x": 49,
+    "y": 69,
+    "width": 65,
+    "height": 40,
+    "z": 2,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
   }
 }
