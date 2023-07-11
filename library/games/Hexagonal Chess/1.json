@@ -1,0 +1,3366 @@
+{
+  "1255": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "1255",
+    "z": 101,
+    "y": 153.6,
+    "x": 975
+  },
+  "5337": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "5337",
+    "z": 169,
+    "y": 586.5999999999999,
+    "x": 825
+  },
+  "A1": {
+    "id": "A1",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "css": "background: #888",
+    "width": 100,
+    "height": 100,
+    "y": 700,
+    "enterRoutine": [
+      "// TAKE",
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "child",
+        "loopRoutine": [
+          "var color = ${widgetID} substr 0 5",
+          "var childID = ${widgetID}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "Black",
+        "thenRoutine": [
+          "var opponent = 'White'"
+        ],
+        "elseRoutine": [
+          "var opponent = 'Black'"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${widgetID}",
+            "operand2": "${childID}",
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "value": "${opponent} Captures"
+              }
+            ]
+          }
+        ]
+      },
+      "// TURN",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "==",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": true
+      },
+      "// HIGHLIGHT",
+      {
+        "func": "SELECT",
+        "property": "highlight",
+        "relation": "!="
+      },
+      {
+        "func": "SET",
+        "property": "highlight"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "highlight",
+        "value": 1
+      }
+    ],
+    "borderRadius": 0,
+    "parent": "7plk"
+  },
+  "A2": {
+    "id": "A2",
+    "type": "holder",
+    "y": 600,
+    "x": 0,
+    "inheritFrom": "B1",
+    "parent": "7plk",
+    "z": 0
+  },
+  "A3": {
+    "id": "A3",
+    "type": "holder",
+    "y": 500,
+    "inheritFrom": "A1",
+    "x": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "A4": {
+    "id": "A4",
+    "type": "holder",
+    "y": 400,
+    "inheritFrom": "A2",
+    "x": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "A5": {
+    "id": "A5",
+    "type": "holder",
+    "y": 300,
+    "inheritFrom": "A1",
+    "x": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "A6": {
+    "id": "A6",
+    "type": "holder",
+    "y": 200,
+    "inheritFrom": "A2",
+    "x": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "A7": {
+    "id": "A7",
+    "type": "holder",
+    "y": 100,
+    "inheritFrom": "A1",
+    "x": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "A8": {
+    "id": "A8",
+    "type": "holder",
+    "y": 0,
+    "inheritFrom": "A2",
+    "x": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "B1": {
+    "id": "B1",
+    "type": "holder",
+    "css": "background:#ccc",
+    "x": 100,
+    "inheritFrom": "A1",
+    "y": 700,
+    "parent": "7plk",
+    "z": 0
+  },
+  "B2": {
+    "id": "B2",
+    "type": "holder",
+    "y": 600,
+    "x": 100,
+    "inheritFrom": "A1",
+    "parent": "7plk",
+    "z": 0
+  },
+  "B3": {
+    "id": "B3",
+    "type": "holder",
+    "y": 500,
+    "inheritFrom": "B1",
+    "x": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "B4": {
+    "id": "B4",
+    "type": "holder",
+    "y": 400,
+    "inheritFrom": "B2",
+    "x": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "B5": {
+    "id": "B5",
+    "type": "holder",
+    "y": 300,
+    "inheritFrom": "B1",
+    "x": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "B6": {
+    "id": "B6",
+    "type": "holder",
+    "y": 200,
+    "inheritFrom": "B2",
+    "x": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "B7": {
+    "id": "B7",
+    "type": "holder",
+    "y": 100,
+    "inheritFrom": "B1",
+    "x": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "B8": {
+    "id": "B8",
+    "type": "holder",
+    "y": 0,
+    "inheritFrom": "B2",
+    "x": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "C1": {
+    "id": "C1",
+    "type": "holder",
+    "x": 200,
+    "inheritFrom": "A1",
+    "y": 700,
+    "parent": "7plk",
+    "z": 0
+  },
+  "C2": {
+    "id": "C2",
+    "type": "holder",
+    "x": 200,
+    "inheritFrom": "A2",
+    "y": 600,
+    "parent": "7plk",
+    "z": 0
+  },
+  "C3": {
+    "id": "C3",
+    "type": "holder",
+    "x": 200,
+    "inheritFrom": "A3",
+    "y": 500,
+    "parent": "7plk",
+    "z": 0
+  },
+  "C4": {
+    "id": "C4",
+    "type": "holder",
+    "x": 200,
+    "inheritFrom": "A4",
+    "y": 400,
+    "parent": "7plk",
+    "z": 0
+  },
+  "C5": {
+    "id": "C5",
+    "type": "holder",
+    "x": 200,
+    "inheritFrom": "A5",
+    "y": 300,
+    "parent": "7plk",
+    "z": 0
+  },
+  "C6": {
+    "id": "C6",
+    "type": "holder",
+    "x": 200,
+    "inheritFrom": "A6",
+    "y": 200,
+    "parent": "7plk",
+    "z": 0
+  },
+  "C7": {
+    "id": "C7",
+    "type": "holder",
+    "x": 200,
+    "inheritFrom": "A7",
+    "y": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "C8": {
+    "id": "C8",
+    "type": "holder",
+    "x": 200,
+    "inheritFrom": "A8",
+    "y": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "D1": {
+    "id": "D1",
+    "type": "holder",
+    "x": 300,
+    "inheritFrom": "B1",
+    "y": 700,
+    "parent": "7plk",
+    "z": 0
+  },
+  "D2": {
+    "id": "D2",
+    "type": "holder",
+    "x": 300,
+    "inheritFrom": "B2",
+    "y": 600,
+    "parent": "7plk",
+    "z": 0
+  },
+  "D3": {
+    "id": "D3",
+    "type": "holder",
+    "x": 300,
+    "inheritFrom": "B3",
+    "y": 500,
+    "parent": "7plk",
+    "z": 0
+  },
+  "D4": {
+    "id": "D4",
+    "type": "holder",
+    "x": 300,
+    "inheritFrom": "B4",
+    "y": 400,
+    "parent": "7plk",
+    "z": 0
+  },
+  "D5": {
+    "id": "D5",
+    "type": "holder",
+    "x": 300,
+    "inheritFrom": "B5",
+    "y": 300,
+    "parent": "7plk",
+    "z": 0
+  },
+  "D6": {
+    "id": "D6",
+    "type": "holder",
+    "x": 300,
+    "inheritFrom": "B6",
+    "y": 200,
+    "parent": "7plk",
+    "z": 0
+  },
+  "D7": {
+    "id": "D7",
+    "type": "holder",
+    "x": 300,
+    "inheritFrom": "B7",
+    "y": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "D8": {
+    "id": "D8",
+    "type": "holder",
+    "x": 300,
+    "inheritFrom": "B8",
+    "y": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "E1": {
+    "id": "E1",
+    "type": "holder",
+    "x": 400,
+    "inheritFrom": "A1",
+    "y": 700,
+    "parent": "7plk",
+    "z": 0
+  },
+  "E2": {
+    "id": "E2",
+    "type": "holder",
+    "x": 400,
+    "inheritFrom": "A2",
+    "y": 600,
+    "parent": "7plk",
+    "z": 0
+  },
+  "E3": {
+    "id": "E3",
+    "type": "holder",
+    "x": 400,
+    "inheritFrom": "A3",
+    "y": 500,
+    "parent": "7plk",
+    "z": 0
+  },
+  "E4": {
+    "id": "E4",
+    "type": "holder",
+    "x": 400,
+    "inheritFrom": "A4",
+    "y": 400,
+    "parent": "7plk",
+    "z": 0
+  },
+  "E5": {
+    "id": "E5",
+    "type": "holder",
+    "x": 400,
+    "inheritFrom": "A5",
+    "y": 300,
+    "parent": "7plk",
+    "z": 0
+  },
+  "E6": {
+    "id": "E6",
+    "type": "holder",
+    "x": 400,
+    "inheritFrom": "A6",
+    "y": 200,
+    "parent": "7plk",
+    "z": 0
+  },
+  "E7": {
+    "id": "E7",
+    "type": "holder",
+    "x": 400,
+    "inheritFrom": "A7",
+    "y": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "E8": {
+    "id": "E8",
+    "type": "holder",
+    "x": 400,
+    "inheritFrom": "A8",
+    "y": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "F1": {
+    "id": "F1",
+    "type": "holder",
+    "x": 500,
+    "inheritFrom": "B1",
+    "y": 700,
+    "parent": "7plk",
+    "z": 0
+  },
+  "F2": {
+    "id": "F2",
+    "type": "holder",
+    "x": 500,
+    "inheritFrom": "B2",
+    "y": 600,
+    "parent": "7plk",
+    "z": 0
+  },
+  "F3": {
+    "id": "F3",
+    "type": "holder",
+    "x": 500,
+    "inheritFrom": "B3",
+    "y": 500,
+    "parent": "7plk",
+    "z": 0
+  },
+  "F4": {
+    "id": "F4",
+    "type": "holder",
+    "x": 500,
+    "inheritFrom": "B4",
+    "y": 400,
+    "parent": "7plk",
+    "z": 0
+  },
+  "F5": {
+    "id": "F5",
+    "type": "holder",
+    "x": 500,
+    "inheritFrom": "B5",
+    "y": 300,
+    "parent": "7plk",
+    "z": 0
+  },
+  "F6": {
+    "id": "F6",
+    "type": "holder",
+    "x": 500,
+    "inheritFrom": "B6",
+    "y": 200,
+    "parent": "7plk",
+    "z": 0
+  },
+  "F7": {
+    "id": "F7",
+    "type": "holder",
+    "x": 500,
+    "inheritFrom": "B7",
+    "y": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "F8": {
+    "id": "F8",
+    "type": "holder",
+    "x": 500,
+    "inheritFrom": "B8",
+    "y": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "G1": {
+    "id": "G1",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A1",
+    "y": 700,
+    "parent": "7plk",
+    "z": 0
+  },
+  "G2": {
+    "id": "G2",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A2",
+    "y": 600,
+    "parent": "7plk",
+    "z": 0
+  },
+  "G3": {
+    "id": "G3",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A3",
+    "y": 500,
+    "parent": "7plk",
+    "z": 0
+  },
+  "G4": {
+    "id": "G4",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A4",
+    "y": 400,
+    "parent": "7plk",
+    "z": 0
+  },
+  "G5": {
+    "id": "G5",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A5",
+    "y": 300,
+    "parent": "7plk",
+    "z": 0
+  },
+  "G6": {
+    "id": "G6",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A6",
+    "y": 200,
+    "parent": "7plk",
+    "z": 0
+  },
+  "G7": {
+    "id": "G7",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A7",
+    "y": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "G8": {
+    "id": "G8",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A8",
+    "y": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "H1": {
+    "id": "H1",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B1",
+    "y": 701,
+    "parent": "7plk",
+    "z": 235
+  },
+  "H2": {
+    "id": "H2",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B2",
+    "y": 600,
+    "parent": "7plk",
+    "z": 0
+  },
+  "H3": {
+    "id": "H3",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B3",
+    "y": 500,
+    "parent": "7plk",
+    "z": 0
+  },
+  "H4": {
+    "id": "H4",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B4",
+    "y": 400,
+    "parent": "7plk",
+    "z": 0
+  },
+  "H5": {
+    "id": "H5",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B5",
+    "y": 300,
+    "parent": "7plk",
+    "z": 0
+  },
+  "H6": {
+    "id": "H6",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B6",
+    "y": 200,
+    "parent": "7plk",
+    "z": 0
+  },
+  "H7": {
+    "id": "H7",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B7",
+    "y": 100,
+    "parent": "7plk",
+    "z": 0
+  },
+  "H8": {
+    "id": "H8",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B8",
+    "y": 0,
+    "parent": "7plk",
+    "z": 0
+  },
+  "White Pawn C": {
+    "id": "White Pawn C",
+    "text": "♙︎",
+    "z": 1404,
+    "home": "hexC1",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexC1"
+  },
+  "White Pawn D": {
+    "id": "White Pawn D",
+    "text": "♙︎",
+    "z": 1408,
+    "home": "hexD2",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 4,
+    "y": 4,
+    "activeFace": 0,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexD2"
+  },
+  "White Pawn E": {
+    "id": "White Pawn E",
+    "text": "♙︎",
+    "z": 1306,
+    "home": "hexE3",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexE3"
+  },
+  "White Pawn F": {
+    "id": "White Pawn F",
+    "text": "♙︎",
+    "z": 1414,
+    "home": "hexF4",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "x": 4,
+    "y": 4,
+    "value": 1,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexF4"
+  },
+  "White Pawn G": {
+    "id": "White Pawn G",
+    "text": "♙︎",
+    "z": 1314,
+    "home": "hexG3",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexG3"
+  },
+  "White Pawn H": {
+    "id": "White Pawn H",
+    "text": "♙︎",
+    "z": 1318,
+    "home": "hexH2",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexH2"
+  },
+  "White Queen": {
+    "id": "White Queen",
+    "text": "♕",
+    "z": 1166,
+    "home": "hexE1",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 9,
+    "x": 4,
+    "y": 4,
+    "activeFace": 0,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexE1"
+  },
+  "White King": {
+    "id": "White King",
+    "text": "♔",
+    "css": {
+      "font-size": "70px",
+      "color": "black",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "text-shadow": "#fa0 ${PROPERTY highlight}px 0 10px",
+      "border-radius": "100%",
+      "background": "white",
+      "border": "1px solid #aaa"
+    },
+    "z": 1177,
+    "home": "hexG1",
+    "value": 10,
+    "width": 76.6,
+    "height": 76.6,
+    "x": 4,
+    "y": 4,
+    "parent": "hexG1"
+  },
+  "Black Pawn G": {
+    "id": "Black Pawn G",
+    "text": "♟︎",
+    "z": 1359,
+    "home": "hexG8",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexG8"
+  },
+  "Black Queen": {
+    "id": "Black Queen",
+    "text": "♛",
+    "z": 1249,
+    "home": "hexE10",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 9,
+    "x": 4,
+    "y": 4,
+    "activeFace": 0,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexE10"
+  },
+  "Black King": {
+    "id": "Black King",
+    "text": "♚",
+    "z": 1255,
+    "home": "hexG10",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 10,
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexG10"
+  },
+  "Black Seat": {
+    "type": "seat",
+    "id": "Black Seat",
+    "z": 5,
+    "css": {
+      "box-sizing": "border-box"
+    },
+    "width": 164,
+    "height": 54,
+    "parent": "p9sl"
+  },
+  "Black Captures": {
+    "type": "holder",
+    "id": "Black Captures",
+    "inheritFrom": "White Captures",
+    "z": 234,
+    "parent": "p9sl"
+  },
+  "White Captures": {
+    "type": "holder",
+    "id": "White Captures",
+    "y": 119,
+    "width": 80,
+    "height": 750,
+    "z": 241,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {},
+    "css": {
+      "background": "#ddd"
+    },
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "value",
+        "reverse": true
+      }
+    ],
+    "borderRadius": 0,
+    "x": 42,
+    "stackOffsetY": 40,
+    "parent": "dkmt"
+  },
+  "Reset Button": {
+    "type": "button",
+    "id": "Reset Button",
+    "x": 84,
+    "y": 260,
+    "z": 10,
+    "text": "Next\nGame",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting board ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to reset the board and swap colors?"
+          },
+          {
+            "type": "checkbox",
+            "label": "Delete pieces that were manually added?",
+            "value": "${PROPERTY keep}",
+            "variable": "keep"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "keep",
+        "value": "${keep}"
+      },
+      "// SWAP PLAYERS",
+      "var whitePlayer = ${PROPERTY player OF White Seat}",
+      "var whiteColor = ${PROPERTY color OF White Seat}",
+      "var whiteScore = ${PROPERTY text OF White Score}",
+      {
+        "func": "SET",
+        "property": "player",
+        "value": "${PROPERTY player OF Black Seat}",
+        "collection": [
+          "White Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${PROPERTY color OF Black Seat}",
+        "collection": [
+          "White Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": true,
+        "collection": [
+          "White Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${PROPERTY text OF Black Score}",
+        "collection": [
+          "White Score"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "player",
+        "value": "${whitePlayer}",
+        "collection": [
+          "Black Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${whiteColor}",
+        "collection": [
+          "Black Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false,
+        "collection": [
+          "Black Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${whiteScore}",
+        "collection": [
+          "Black Score"
+        ]
+      },
+      "// PIECES",
+      {
+        "func": "SELECT",
+        "property": "home",
+        "relation": "!="
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${PROPERTY home OF $widgetID}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${keep}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "clonedFrom",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "DELETE"
+          }
+        ]
+      },
+      "// HIGHLIGHT",
+      {
+        "func": "SELECT",
+        "property": "highlight",
+        "relation": "!="
+      },
+      {
+        "func": "SET",
+        "property": "highlight"
+      }
+    ],
+    "css": {
+      "--wcMain": "#ccc",
+      "--wcBorder": "#888",
+      "color": "#000"
+    },
+    "keep": true
+  },
+  "Black Score": {
+    "type": "label",
+    "id": "Black Score",
+    "x": 49,
+    "y": 69,
+    "width": 65,
+    "height": 40,
+    "z": 2,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "parent": "p9sl"
+  },
+  "Black Score Down": {
+    "type": "button",
+    "id": "Black Score Down",
+    "parent": "Black Score",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 0.5
+      }
+    ],
+    "movable": false,
+    "inheritFrom": {
+      "Reset Button": "css"
+    }
+  },
+  "Black Score Up": {
+    "type": "button",
+    "id": "Black Score Up",
+    "parent": "Black Score",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 0.5
+      }
+    ],
+    "movable": false,
+    "inheritFrom": {
+      "Reset Button": "css"
+    }
+  },
+  "Reset Button1": {
+    "inheritFrom": {
+      "Reset Button": "css"
+    },
+    "type": "button",
+    "id": "Reset Button1",
+    "x": 84,
+    "y": 660,
+    "z": 9,
+    "text": "Add\nPiece",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "select",
+            "options": [
+              {
+                "text": "White",
+                "value": "White"
+              },
+              {
+                "text": "Black",
+                "value": "Black"
+              }
+            ],
+            "label": "Color",
+            "variable": "color"
+          },
+          {
+            "type": "select",
+            "options": [
+              {
+                "value": "Pawn C",
+                "text": "Pawn"
+              },
+              {
+                "value": "Knight E",
+                "text": "Knight"
+              },
+              {
+                "value": "Bishop F",
+                "text": "Bishop"
+              },
+              {
+                "value": "Rook D",
+                "text": "Rook"
+              },
+              {
+                "value": "Queen",
+                "text": "Queen"
+              },
+              {
+                "value": "King",
+                "text": "King"
+              }
+            ],
+            "label": "Piece",
+            "variable": "piece"
+          },
+          {
+            "type": "select",
+            "label": "Orientation",
+            "variable": "rotation",
+            "options": [
+              {
+                "value": "0",
+                "text": "Up"
+              },
+              {
+                "value": "90",
+                "text": "Right"
+              },
+              {
+                "value": "180",
+                "text": "Down"
+              },
+              {
+                "value": "270",
+                "text": "Left"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLONE",
+        "source": [
+          "${color} ${piece}"
+        ],
+        "properties": {
+          "x": 150,
+          "y": 450,
+          "parent": null,
+          "home": null,
+          "rotation": "${rotation}"
+        }
+      }
+    ]
+  },
+  "_meta": {
+    "version": 13,
+    "info": {
+      "name": "Hexagonal Chess",
+      "image": "/assets/1382790366_146200",
+      "rules": "https://en.wikipedia.org/wiki/Hexagonal_chess",
+      "bgg": "",
+      "year": "",
+      "mode": "",
+      "time": "",
+      "attribution": "Library image is CC0 Public Domain:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=44722&amp;picture=chess-king\n\nThe game file itself was created by ArnoldSmith86 and modified by RaphaelAlvez and is hereby released to the public domain by CC0.<br>",
+      "lastUpdate": 1689085640344,
+      "showName": true,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "McCooey's hexagonal chess",
+      "language": "",
+      "players": ""
+    }
+  },
+  "vwam": {
+    "type": "deck",
+    "id": "vwam",
+    "x": 972,
+    "y": 1080,
+    "z": 537,
+    "cardDefaults": {
+      "movable": false,
+      "movableInEdit": false,
+      "layer": -10,
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 100,
+      "height": 86.6,
+      "shift": "yes",
+      "grid": [
+        {
+          "x": 150,
+          "y": 86.6,
+          "offsetX": -75,
+          "offsetY": -19.6
+        },
+        {
+          "x": 150,
+          "y": 86.6,
+          "offsetX": 0,
+          "offsetY": 23.7
+        }
+      ]
+    },
+    "cardTypes": {
+      "Black": {
+        "css": {
+          "filter": "brightness(20%)"
+        }
+      },
+      "Grey": {
+        "css": {
+          "filter": "brightness(50%)"
+        }
+      },
+      "White": {
+        "css": {
+          "filter": "brightness(80%)"
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 86.6,
+            "color": "transparent",
+            "value": "/assets/-1204226281_296",
+            "css": {}
+          }
+        ]
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false
+  },
+  "4e0u": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "4e0u",
+    "x": 975,
+    "y": 673.1999999999999,
+    "z": 187
+  },
+  "nehz": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "nehz",
+    "z": 186,
+    "y": 673.1999999999999,
+    "x": 825
+  },
+  "l7l5": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "l7l5",
+    "z": 185,
+    "y": 543.3,
+    "x": 1050
+  },
+  "4j76": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "4j76",
+    "z": 184,
+    "y": 543.3,
+    "x": 900
+  },
+  "5r8u": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "5r8u",
+    "z": 183,
+    "x": 750,
+    "y": 543.3
+  },
+  "57v5": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "57v5",
+    "z": 180,
+    "y": 413.4,
+    "x": 975
+  },
+  "ba1f": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "ba1f",
+    "z": 179,
+    "y": 283.5,
+    "x": 1050
+  },
+  "iifj": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "iifj",
+    "z": 178,
+    "y": 283.5,
+    "x": 900
+  },
+  "1w1q": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "1w1q",
+    "z": 177,
+    "y": 413.4,
+    "x": 825
+  },
+  "na7y": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "na7y",
+    "z": 176,
+    "y": 413.4,
+    "x": 675
+  },
+  "s5i1": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "s5i1",
+    "z": 175,
+    "y": 283.5,
+    "x": 750
+  },
+  "kjhk": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "kjhk",
+    "z": 174,
+    "y": 283.5,
+    "x": 600
+  },
+  "rdc3": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "rdc3",
+    "z": 173,
+    "y": 153.6,
+    "x": 825
+  },
+  "pn86": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "pn86",
+    "z": 172,
+    "y": 153.6,
+    "x": 675
+  },
+  "svqk": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "svqk",
+    "z": 139,
+    "y": 803.1,
+    "x": 750
+  },
+  "pb04": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "pb04",
+    "z": 138,
+    "y": 673.1999999999999,
+    "x": 675
+  },
+  "cu10": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "cu10",
+    "z": 137,
+    "y": 543.3,
+    "x": 600
+  },
+  "2tqm": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "2tqm",
+    "z": 136,
+    "y": 413.4,
+    "x": 525
+  },
+  "c9wm": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "c9wm",
+    "z": 135,
+    "y": 283.5,
+    "x": 450
+  },
+  "abjm": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "abjm",
+    "z": 131,
+    "y": 673.1999999999999,
+    "x": 525
+  },
+  "fgdl": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "fgdl",
+    "z": 130,
+    "y": 543.3,
+    "x": 450
+  },
+  "tyn4": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "tyn4",
+    "z": 121,
+    "y": 803.1,
+    "x": 600
+  },
+  "8w4j": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "8w4j",
+    "z": 120,
+    "y": 803.1,
+    "x": 900
+  },
+  "a3j0": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "a3j0",
+    "z": 115,
+    "y": 673.1999999999999,
+    "x": 1125
+  },
+  "1h2u": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "1h2u",
+    "z": 114,
+    "y": 673.1999999999999,
+    "x": 375
+  },
+  "l07d": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "l07d",
+    "z": 109,
+    "y": 413.4,
+    "x": 1125
+  },
+  "c0k2": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "c0k2",
+    "z": 108,
+    "y": 413.4,
+    "x": 375
+  },
+  "9wah": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "9wah",
+    "z": 100,
+    "y": 153.6,
+    "x": 525
+  },
+  "0h2m": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "0h2m",
+    "z": 95,
+    "y": 23.700000000000003,
+    "x": 750
+  },
+  "5mo9": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "5mo9",
+    "y": 716.5,
+    "z": 171,
+    "x": 900
+  },
+  "v676": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "v676",
+    "z": 170,
+    "y": 586.5999999999999,
+    "x": 975
+  },
+  "mjcx": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "mjcx",
+    "z": 168,
+    "y": 456.69999999999993,
+    "x": 1050
+  },
+  "3eja": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "3eja",
+    "z": 167,
+    "x": 900,
+    "y": 456.69999999999993
+  },
+  "y8ej": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "y8ej",
+    "z": 166,
+    "y": 456.69999999999993,
+    "x": 750
+  },
+  "r1p3": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "r1p3",
+    "z": 165,
+    "y": 326.79999999999995,
+    "x": 975
+  },
+  "8ikh": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "8ikh",
+    "z": 164,
+    "y": 326.79999999999995,
+    "x": 825
+  },
+  "ekgq": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "ekgq",
+    "z": 163,
+    "y": 326.79999999999995,
+    "x": 675
+  },
+  "2rn9": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "2rn9",
+    "z": 162,
+    "y": 196.89999999999998,
+    "x": 900
+  },
+  "kztb": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "kztb",
+    "z": 161,
+    "x": 750,
+    "y": 196.89999999999998
+  },
+  "x0fx": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "x0fx",
+    "z": 160,
+    "y": 196.89999999999998,
+    "x": 600
+  },
+  "kr2g": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "kr2g",
+    "z": 143,
+    "y": 716.5,
+    "x": 750
+  },
+  "7jir": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "7jir",
+    "z": 142,
+    "y": 586.5999999999999,
+    "x": 675
+  },
+  "iypx": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "iypx",
+    "z": 141,
+    "y": 456.69999999999993,
+    "x": 600
+  },
+  "pwpr": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "pwpr",
+    "z": 140,
+    "y": 326.79999999999995,
+    "x": 525
+  },
+  "vj6h": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "vj6h",
+    "z": 134,
+    "y": 716.5,
+    "x": 600
+  },
+  "x4x8": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "x4x8",
+    "z": 133,
+    "y": 586.5999999999999,
+    "x": 525
+  },
+  "7jxw": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "7jxw",
+    "z": 132,
+    "y": 456.69999999999993,
+    "x": 450
+  },
+  "cjee": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "cjee",
+    "z": 123,
+    "y": 846.3999999999999,
+    "x": 825
+  },
+  "qxgi": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "qxgi",
+    "z": 122,
+    "y": 846.3999999999999,
+    "x": 675
+  },
+  "5o4f": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "5o4f",
+    "z": 118,
+    "y": 716.5,
+    "x": 1050
+  },
+  "pbgh": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "pbgh",
+    "z": 116,
+    "y": 716.5,
+    "x": 450
+  },
+  "95ez": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "95ez",
+    "z": 113,
+    "y": 586.5999999999999,
+    "x": 1125
+  },
+  "pe0b": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "pe0b",
+    "z": 112,
+    "y": 586.5999999999999,
+    "x": 375
+  },
+  "mtnn": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "mtnn",
+    "z": 106,
+    "y": 326.79999999999995,
+    "x": 375
+  },
+  "a148": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "a148",
+    "z": 103,
+    "x": 1050,
+    "y": 196.89999999999998
+  },
+  "huly": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "huly",
+    "z": 102,
+    "y": 196.89999999999998,
+    "x": 450
+  },
+  "679x": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "679x",
+    "z": 97,
+    "y": 67,
+    "x": 825
+  },
+  "nw75": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "nw75",
+    "z": 96,
+    "y": 66.99999999999999,
+    "x": 675
+  },
+  "b1e3": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "b1e3",
+    "z": 107,
+    "y": 326.79999999999995,
+    "x": 1125
+  },
+  "8ixj": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "8ixj",
+    "z": 159,
+    "y": 759.8,
+    "x": 825
+  },
+  "2fwr": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "2fwr",
+    "z": 158,
+    "y": 629.9,
+    "x": 1050
+  },
+  "0z08": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "0z08",
+    "z": 157,
+    "y": 629.9,
+    "x": 900
+  },
+  "mjr9": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "mjr9",
+    "z": 156,
+    "y": 629.9,
+    "x": 750
+  },
+  "dnxz": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "dnxz",
+    "z": 155,
+    "y": 500,
+    "x": 975
+  },
+  "vfrt": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "vfrt",
+    "z": 154,
+    "x": 825,
+    "y": 500
+  },
+  "fbm9": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "fbm9",
+    "z": 153,
+    "y": 499.99999999999994,
+    "x": 675
+  },
+  "gva3": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "gva3",
+    "z": 152,
+    "y": 370.09999999999997,
+    "x": 1050
+  },
+  "vcer": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "vcer",
+    "z": 151,
+    "y": 370.09999999999997,
+    "x": 900
+  },
+  "y4ah": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "y4ah",
+    "z": 150,
+    "y": 370.09999999999997,
+    "x": 750
+  },
+  "b3yx": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "b3yx",
+    "z": 149,
+    "y": 370.09999999999997,
+    "x": 600
+  },
+  "35my": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "35my",
+    "z": 148,
+    "y": 110.29999999999998,
+    "x": 750
+  },
+  "589c": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "589c",
+    "z": 147,
+    "y": 240.19999999999996,
+    "x": 975
+  },
+  "gzj8": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "gzj8",
+    "z": 146,
+    "y": 240.19999999999996,
+    "x": 825
+  },
+  "kv7d": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "kv7d",
+    "z": 145,
+    "y": 240.19999999999996,
+    "x": 675
+  },
+  "7yns": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "7yns",
+    "z": 144,
+    "y": 240.19999999999996,
+    "x": 525
+  },
+  "ala6": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "ala6",
+    "z": 129,
+    "y": 759.8,
+    "x": 675
+  },
+  "adoq": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "adoq",
+    "z": 128,
+    "y": 629.9,
+    "x": 600
+  },
+  "inj3": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "inj3",
+    "z": 127,
+    "y": 499.99999999999994,
+    "x": 525
+  },
+  "wglf": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "wglf",
+    "z": 126,
+    "y": 370.09999999999997,
+    "x": 450
+  },
+  "noh7": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "noh7",
+    "z": 125,
+    "y": 629.9,
+    "x": 450
+  },
+  "vlxd": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "vlxd",
+    "z": 124,
+    "y": 889.7,
+    "x": 750
+  },
+  "zznf": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "zznf",
+    "z": 119,
+    "y": 759.8,
+    "x": 975
+  },
+  "cwjh": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "cwjh",
+    "z": 117,
+    "y": 759.8,
+    "x": 525
+  },
+  "7sb1": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "7sb1",
+    "z": 111,
+    "x": 1125,
+    "y": 499.99999999999994
+  },
+  "oumc": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "oumc",
+    "z": 110,
+    "y": 499.99999999999994,
+    "x": 375
+  },
+  "9nhx": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "9nhx",
+    "z": 105,
+    "y": 240.19999999999996,
+    "x": 1125
+  },
+  "u1gz": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "u1gz",
+    "z": 104,
+    "y": 240.19999999999996,
+    "x": 375
+  },
+  "5fq9": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "5fq9",
+    "z": 99,
+    "y": 110.29999999999998,
+    "x": 900
+  },
+  "ujfu": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "ujfu",
+    "z": 98,
+    "x": 600,
+    "y": 110.29999999999998
+  },
+  "7plk": {
+    "parent": null,
+    "x": 47,
+    "y": 1029,
+    "width": 800,
+    "height": 800,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "7plk"
+  },
+  "b7zk": {
+    "type": "holder",
+    "id": "b7zk",
+    "x": 174,
+    "y": -203,
+    "width": 86.6,
+    "height": 86.6,
+    "z": 127,
+    "css": {
+      "border-radius": "100%",
+      "background": "transparent",
+      "border": "none"
+    },
+    "dropShadow": true,
+    "grid": [
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": -68.3,
+        "offsetY": -19.6
+      },
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": 6.7,
+        "offsetY": 23.7
+      }
+    ],
+    "dropTarget": {},
+    "movableInEdit": false
+  },
+  "Black Pawn F1": {
+    "id": "Black Pawn F1",
+    "text": "♟︎",
+    "z": 1363,
+    "home": "hexF8",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "x": 4,
+    "y": 4,
+    "value": 1,
+    "width": 76.6,
+    "height": 76.6,
+    "parent": "hexF8"
+  },
+  "Black Score Down1": {
+    "type": "button",
+    "id": "Black Score Down1",
+    "parent": "White Score1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 0.5
+      }
+    ],
+    "movable": false,
+    "inheritFrom": {
+      "Reset Button": "css"
+    }
+  },
+  "Black Score Up1": {
+    "type": "button",
+    "id": "Black Score Up1",
+    "parent": "White Score1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 0.5
+      }
+    ],
+    "movable": false,
+    "inheritFrom": {
+      "Reset Button": "css"
+    }
+  },
+  "White Seat1": {
+    "type": "seat",
+    "id": "White Seat1",
+    "index": 2,
+    "width": 164,
+    "height": 54,
+    "z": 5,
+    "css": {
+      "box-sizing": "border-box"
+    },
+    "turn": true,
+    "parent": "dkmt"
+  },
+  "White Score1": {
+    "type": "label",
+    "id": "White Score1",
+    "x": 49,
+    "y": 69,
+    "width": 65,
+    "height": 40,
+    "z": 2,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "dkmt"
+  },
+  "p9sl": {
+    "parent": null,
+    "x": 213,
+    "y": 45,
+    "width": 164,
+    "height": 109,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "p9sl"
+  },
+  "dkmt": {
+    "width": 164,
+    "height": 109,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "dkmt",
+    "y": 45,
+    "x": 1230
+  },
+  "hexA1": {
+    "type": "holder",
+    "id": "hexA1",
+    "x": 381.70000000000005,
+    "y": 673.1999999999999,
+    "z": 226,
+    "inheritFrom": "b7zk"
+  },
+  "hexA2": {
+    "type": "holder",
+    "id": "hexA2",
+    "x": 381.70000000000005,
+    "y": 589,
+    "z": 129,
+    "inheritFrom": "b7zk"
+  },
+  "hexA3": {
+    "type": "holder",
+    "id": "hexA3",
+    "x": 381.70000000000005,
+    "y": 502,
+    "z": 129,
+    "inheritFrom": "b7zk"
+  },
+  "hexA4": {
+    "type": "holder",
+    "id": "hexA4",
+    "x": 381.70000000000005,
+    "y": 415,
+    "z": 129,
+    "inheritFrom": "b7zk"
+  },
+  "hexA5": {
+    "type": "holder",
+    "id": "hexA5",
+    "x": 381.7,
+    "y": 326.79999999999995,
+    "z": 141,
+    "inheritFrom": "b7zk"
+  },
+  "hexA6": {
+    "type": "holder",
+    "id": "hexA6",
+    "x": 381.7,
+    "y": 240.19999999999996,
+    "z": 140,
+    "inheritFrom": "b7zk"
+  },
+  "hexB1": {
+    "type": "holder",
+    "id": "hexB1",
+    "x": 456.70000000000005,
+    "y": 716.5,
+    "z": 227,
+    "inheritFrom": "b7zk"
+  },
+  "hexB2": {
+    "type": "holder",
+    "id": "hexB2",
+    "x": 456.70000000000005,
+    "y": 629.9,
+    "z": 178,
+    "inheritFrom": "b7zk"
+  },
+  "hexB3": {
+    "type": "holder",
+    "id": "hexB3",
+    "x": 456.70000000000005,
+    "y": 543.3,
+    "z": 177,
+    "inheritFrom": "b7zk"
+  },
+  "hexB4": {
+    "type": "holder",
+    "id": "hexB4",
+    "x": 456.7,
+    "y": 456.69999999999993,
+    "z": 165,
+    "inheritFrom": "b7zk"
+  },
+  "hexB5": {
+    "type": "holder",
+    "id": "hexB5",
+    "x": 456.70000000000005,
+    "y": 370.09999999999997,
+    "z": 164,
+    "inheritFrom": "b7zk"
+  },
+  "hexB6": {
+    "type": "holder",
+    "id": "hexB6",
+    "x": 456.70000000000005,
+    "y": 283.5,
+    "z": 250,
+    "inheritFrom": "b7zk"
+  },
+  "hexB7": {
+    "type": "holder",
+    "id": "hexB7",
+    "x": 456.7,
+    "y": 196.89999999999998,
+    "z": 139,
+    "inheritFrom": "b7zk"
+  },
+  "hexC1": {
+    "type": "holder",
+    "id": "hexC1",
+    "x": 531.7,
+    "y": 759.8,
+    "z": 228,
+    "inheritFrom": "b7zk"
+  },
+  "hexD1": {
+    "type": "holder",
+    "id": "hexD1",
+    "x": 606.7,
+    "y": 803.1,
+    "z": 229,
+    "inheritFrom": "b7zk"
+  },
+  "hexE1": {
+    "type": "holder",
+    "id": "hexE1",
+    "x": 681.7,
+    "y": 846.3999999999999,
+    "z": 276,
+    "inheritFrom": "b7zk"
+  },
+  "hexF1": {
+    "type": "holder",
+    "id": "hexF1",
+    "x": 756.7,
+    "y": 889.7,
+    "z": 232,
+    "inheritFrom": "b7zk"
+  },
+  "hexG1": {
+    "type": "holder",
+    "id": "hexG1",
+    "x": 831.7,
+    "y": 846.3999999999999,
+    "z": 299,
+    "inheritFrom": "b7zk"
+  },
+  "hexH1": {
+    "type": "holder",
+    "id": "hexH1",
+    "x": 906.7,
+    "y": 803.1,
+    "z": 221,
+    "inheritFrom": "b7zk"
+  },
+  "hexI1": {
+    "type": "holder",
+    "id": "hexI1",
+    "x": 981.7,
+    "y": 759.8,
+    "z": 222,
+    "inheritFrom": "b7zk"
+  },
+  "hexK1": {
+    "type": "holder",
+    "id": "hexK1",
+    "x": 1056.7,
+    "y": 716.5,
+    "z": 223,
+    "inheritFrom": "b7zk"
+  },
+  "hexL1": {
+    "type": "holder",
+    "id": "hexL1",
+    "x": 1131.7,
+    "y": 673.1999999999999,
+    "z": 330,
+    "inheritFrom": "b7zk"
+  },
+  "hexC2": {
+    "type": "holder",
+    "id": "hexC2",
+    "x": 531.7,
+    "y": 673.1999999999999,
+    "z": 255,
+    "inheritFrom": "b7zk"
+  },
+  "hexC3": {
+    "type": "holder",
+    "id": "hexC3",
+    "x": 531.7,
+    "y": 586.5999999999999,
+    "z": 254,
+    "inheritFrom": "b7zk"
+  },
+  "hexC4": {
+    "type": "holder",
+    "id": "hexC4",
+    "x": 531.7,
+    "y": 499.99999999999994,
+    "z": 253,
+    "inheritFrom": "b7zk"
+  },
+  "hexC5": {
+    "type": "holder",
+    "id": "hexC5",
+    "x": 531.7,
+    "y": 413.4,
+    "z": 252,
+    "inheritFrom": "b7zk"
+  },
+  "hexC6": {
+    "type": "holder",
+    "id": "hexC6",
+    "x": 531.7,
+    "y": 326.79999999999995,
+    "z": 251,
+    "inheritFrom": "b7zk"
+  },
+  "hexC7": {
+    "type": "holder",
+    "id": "hexC7",
+    "x": 531.7,
+    "y": 240.19999999999996,
+    "z": 249,
+    "inheritFrom": "b7zk"
+  },
+  "hexC8": {
+    "type": "holder",
+    "id": "hexC8",
+    "x": 531.7,
+    "y": 153.6,
+    "z": 248,
+    "inheritFrom": "b7zk"
+  },
+  "hexD2": {
+    "type": "holder",
+    "id": "hexD2",
+    "x": 606.7,
+    "y": 716.5,
+    "z": 256,
+    "inheritFrom": "b7zk"
+  },
+  "hexD3": {
+    "type": "holder",
+    "id": "hexD3",
+    "x": 606.7,
+    "y": 629.9,
+    "z": 257,
+    "inheritFrom": "b7zk"
+  },
+  "hexD4": {
+    "type": "holder",
+    "id": "hexD4",
+    "x": 606.7,
+    "y": 543.3,
+    "z": 258,
+    "inheritFrom": "b7zk"
+  },
+  "hexD5": {
+    "type": "holder",
+    "id": "hexD5",
+    "x": 606.7,
+    "y": 456.69999999999993,
+    "z": 259,
+    "inheritFrom": "b7zk"
+  },
+  "hexD6": {
+    "type": "holder",
+    "id": "hexD6",
+    "x": 606.7,
+    "y": 370.09999999999997,
+    "z": 260,
+    "inheritFrom": "b7zk"
+  },
+  "hexD7": {
+    "type": "holder",
+    "id": "hexD7",
+    "x": 606.7,
+    "y": 283.5,
+    "z": 261,
+    "inheritFrom": "b7zk"
+  },
+  "hexD8": {
+    "type": "holder",
+    "id": "hexD8",
+    "x": 606.7,
+    "y": 196.89999999999998,
+    "z": 263,
+    "inheritFrom": "b7zk"
+  },
+  "hexD9": {
+    "type": "holder",
+    "id": "hexD9",
+    "x": 606.7,
+    "y": 110.29999999999998,
+    "z": 264,
+    "inheritFrom": "b7zk"
+  },
+  "hexE2": {
+    "type": "holder",
+    "id": "hexE2",
+    "x": 681.7,
+    "y": 759.8,
+    "z": 275,
+    "inheritFrom": "b7zk"
+  },
+  "hexE3": {
+    "type": "holder",
+    "id": "hexE3",
+    "x": 681.7,
+    "y": 673.1999999999999,
+    "z": 274,
+    "inheritFrom": "b7zk"
+  },
+  "hexE4": {
+    "type": "holder",
+    "id": "hexE4",
+    "x": 681.7,
+    "y": 586.5999999999999,
+    "z": 273,
+    "inheritFrom": "b7zk"
+  },
+  "hexE5": {
+    "type": "holder",
+    "id": "hexE5",
+    "x": 681.7,
+    "y": 499.99999999999994,
+    "z": 272,
+    "inheritFrom": "b7zk"
+  },
+  "hexE6": {
+    "type": "holder",
+    "id": "hexE6",
+    "x": 681.7,
+    "y": 413.4,
+    "z": 271,
+    "inheritFrom": "b7zk"
+  },
+  "hexE7": {
+    "type": "holder",
+    "id": "hexE7",
+    "x": 681.7,
+    "y": 326.79999999999995,
+    "z": 268,
+    "inheritFrom": "b7zk"
+  },
+  "hexE8": {
+    "type": "holder",
+    "id": "hexE8",
+    "x": 681.7,
+    "y": 240.19999999999996,
+    "z": 267,
+    "inheritFrom": "b7zk"
+  },
+  "hexE9": {
+    "type": "holder",
+    "id": "hexE9",
+    "x": 681.7,
+    "y": 153.6,
+    "z": 266,
+    "inheritFrom": "b7zk"
+  },
+  "hexE10": {
+    "type": "holder",
+    "id": "hexE10",
+    "x": 681.7,
+    "y": 67,
+    "z": 265,
+    "inheritFrom": "b7zk"
+  },
+  "hexF2": {
+    "type": "holder",
+    "id": "hexF2",
+    "x": 756.7,
+    "y": 803.1,
+    "z": 277,
+    "inheritFrom": "b7zk"
+  },
+  "hexF3": {
+    "type": "holder",
+    "id": "hexF3",
+    "x": 756.7,
+    "y": 716.5,
+    "z": 278,
+    "inheritFrom": "b7zk"
+  },
+  "hexF4": {
+    "type": "holder",
+    "id": "hexF4",
+    "x": 756.7,
+    "y": 629.9,
+    "z": 279,
+    "inheritFrom": "b7zk"
+  },
+  "hexF5": {
+    "type": "holder",
+    "id": "hexF5",
+    "x": 756.7,
+    "y": 543.3,
+    "z": 280,
+    "inheritFrom": "b7zk"
+  },
+  "hexF6": {
+    "type": "holder",
+    "id": "hexF6",
+    "x": 756.7,
+    "y": 456.69999999999993,
+    "z": 281,
+    "inheritFrom": "b7zk"
+  },
+  "hexF7": {
+    "type": "holder",
+    "id": "hexF7",
+    "x": 756.7,
+    "y": 370.09999999999997,
+    "z": 282,
+    "inheritFrom": "b7zk"
+  },
+  "hexF8": {
+    "type": "holder",
+    "id": "hexF8",
+    "x": 756.7,
+    "y": 283.5,
+    "z": 283,
+    "inheritFrom": "b7zk"
+  },
+  "hexF9": {
+    "type": "holder",
+    "id": "hexF9",
+    "x": 756.7,
+    "y": 196.89999999999998,
+    "z": 284,
+    "inheritFrom": "b7zk"
+  },
+  "hexF10": {
+    "type": "holder",
+    "id": "hexF10",
+    "x": 756.7,
+    "y": 110.29999999999998,
+    "z": 291,
+    "inheritFrom": "b7zk"
+  },
+  "hexF11": {
+    "type": "holder",
+    "id": "hexF11",
+    "x": 756.7,
+    "y": 23.700000000000003,
+    "z": 288,
+    "inheritFrom": "b7zk"
+  },
+  "hexG2": {
+    "type": "holder",
+    "id": "hexG2",
+    "x": 831.7,
+    "y": 759.8,
+    "z": 298,
+    "inheritFrom": "b7zk"
+  },
+  "hexG3": {
+    "type": "holder",
+    "id": "hexG3",
+    "x": 831.7,
+    "y": 673.1999999999999,
+    "z": 297,
+    "inheritFrom": "b7zk"
+  },
+  "hexG4": {
+    "type": "holder",
+    "id": "hexG4",
+    "x": 831.7,
+    "y": 586.5999999999999,
+    "z": 296,
+    "inheritFrom": "b7zk"
+  },
+  "hexG5": {
+    "type": "holder",
+    "id": "hexG5",
+    "x": 831.7,
+    "y": 499.99999999999994,
+    "z": 295,
+    "inheritFrom": "b7zk"
+  },
+  "hexG6": {
+    "type": "holder",
+    "id": "hexG6",
+    "x": 831.7,
+    "y": 413.4,
+    "z": 294,
+    "inheritFrom": "b7zk"
+  },
+  "hexG7": {
+    "type": "holder",
+    "id": "hexG7",
+    "x": 831.7,
+    "y": 326.79999999999995,
+    "z": 293,
+    "inheritFrom": "b7zk"
+  },
+  "hexG8": {
+    "type": "holder",
+    "id": "hexG8",
+    "x": 831.7,
+    "y": 240.19999999999996,
+    "z": 292,
+    "inheritFrom": "b7zk"
+  },
+  "hexG9": {
+    "type": "holder",
+    "id": "hexG9",
+    "x": 831.7,
+    "y": 153.6,
+    "z": 290,
+    "inheritFrom": "b7zk"
+  },
+  "hexG10": {
+    "type": "holder",
+    "id": "hexG10",
+    "x": 831.7,
+    "y": 66.99999999999999,
+    "z": 289,
+    "inheritFrom": "b7zk"
+  },
+  "hexH2": {
+    "type": "holder",
+    "id": "hexH2",
+    "x": 906.7,
+    "y": 716.5,
+    "z": 300,
+    "inheritFrom": "b7zk"
+  },
+  "hexH3": {
+    "type": "holder",
+    "id": "hexH3",
+    "x": 906.7,
+    "y": 629.9,
+    "z": 301,
+    "inheritFrom": "b7zk"
+  },
+  "hexH4": {
+    "type": "holder",
+    "id": "hexH4",
+    "x": 906.7,
+    "y": 543.3,
+    "z": 302,
+    "inheritFrom": "b7zk"
+  },
+  "hexH5": {
+    "type": "holder",
+    "id": "hexH5",
+    "x": 906.7,
+    "y": 456.69999999999993,
+    "z": 303,
+    "inheritFrom": "b7zk"
+  },
+  "hexH6": {
+    "type": "holder",
+    "id": "hexH6",
+    "x": 906.7,
+    "y": 370.09999999999997,
+    "z": 304,
+    "inheritFrom": "b7zk"
+  },
+  "hexH7": {
+    "type": "holder",
+    "id": "hexH7",
+    "x": 906.7,
+    "y": 283.5,
+    "z": 305,
+    "inheritFrom": "b7zk"
+  },
+  "hexH8": {
+    "type": "holder",
+    "id": "hexH8",
+    "x": 906.7,
+    "y": 196.89999999999998,
+    "z": 306,
+    "inheritFrom": "b7zk"
+  },
+  "hexH9": {
+    "type": "holder",
+    "id": "hexH9",
+    "x": 906.7,
+    "y": 110.29999999999998,
+    "z": 307,
+    "inheritFrom": "b7zk"
+  },
+  "hexI2": {
+    "type": "holder",
+    "id": "hexI2",
+    "x": 981.7,
+    "y": 673.1999999999999,
+    "z": 317,
+    "inheritFrom": "b7zk"
+  },
+  "hexI3": {
+    "type": "holder",
+    "id": "hexI3",
+    "x": 981.7,
+    "y": 586.5999999999999,
+    "z": 316,
+    "inheritFrom": "b7zk"
+  },
+  "hexI4": {
+    "type": "holder",
+    "id": "hexI4",
+    "x": 981.7,
+    "y": 499.99999999999994,
+    "z": 315,
+    "inheritFrom": "b7zk"
+  },
+  "hexI5": {
+    "type": "holder",
+    "id": "hexI5",
+    "x": 981.7,
+    "y": 413.4,
+    "z": 314,
+    "inheritFrom": "b7zk"
+  },
+  "hexI6": {
+    "type": "holder",
+    "id": "hexI6",
+    "x": 981.7,
+    "y": 326.79999999999995,
+    "z": 313,
+    "inheritFrom": "b7zk"
+  },
+  "hexI7": {
+    "type": "holder",
+    "id": "hexI7",
+    "x": 981.7,
+    "y": 240.19999999999996,
+    "z": 309,
+    "inheritFrom": "b7zk"
+  },
+  "hexI8": {
+    "type": "holder",
+    "id": "hexI8",
+    "x": 981.7,
+    "y": 153.6,
+    "z": 308,
+    "inheritFrom": "b7zk"
+  },
+  "hexK2": {
+    "type": "holder",
+    "id": "hexK2",
+    "x": 1056.7,
+    "y": 629.9,
+    "z": 318,
+    "inheritFrom": "b7zk"
+  },
+  "hexK3": {
+    "type": "holder",
+    "id": "hexK3",
+    "x": 1056.7,
+    "y": 543.3,
+    "z": 319,
+    "inheritFrom": "b7zk"
+  },
+  "hexK4": {
+    "type": "holder",
+    "id": "hexK4",
+    "x": 1056.7,
+    "y": 456.69999999999993,
+    "z": 320,
+    "inheritFrom": "b7zk"
+  },
+  "hexK5": {
+    "type": "holder",
+    "id": "hexK5",
+    "x": 1056.7,
+    "y": 370.09999999999997,
+    "z": 321,
+    "inheritFrom": "b7zk"
+  },
+  "hexK6": {
+    "type": "holder",
+    "id": "hexK6",
+    "x": 1056.7,
+    "y": 283.5,
+    "z": 322,
+    "inheritFrom": "b7zk"
+  },
+  "hexK7": {
+    "type": "holder",
+    "id": "hexK7",
+    "x": 1056.7,
+    "y": 196.89999999999998,
+    "z": 323,
+    "inheritFrom": "b7zk"
+  },
+  "hexL2": {
+    "type": "holder",
+    "id": "hexL2",
+    "x": 1131.7,
+    "y": 586.5999999999999,
+    "z": 329,
+    "inheritFrom": "b7zk"
+  },
+  "hexL3": {
+    "type": "holder",
+    "id": "hexL3",
+    "x": 1131.7,
+    "y": 499.99999999999994,
+    "z": 328,
+    "inheritFrom": "b7zk"
+  },
+  "hexL4": {
+    "type": "holder",
+    "id": "hexL4",
+    "x": 1131.7,
+    "y": 413.4,
+    "z": 327,
+    "inheritFrom": "b7zk"
+  },
+  "hexL5": {
+    "type": "holder",
+    "id": "hexL5",
+    "x": 1131.7,
+    "y": 326.79999999999995,
+    "z": 326,
+    "inheritFrom": "b7zk"
+  },
+  "hexL6": {
+    "type": "holder",
+    "id": "hexL6",
+    "x": 1131.7,
+    "y": 240.19999999999996,
+    "z": 324,
+    "inheritFrom": "b7zk"
+  },
+  "Black Pawn I": {
+    "id": "Black Pawn I",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1351,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♟︎",
+    "home": "hexI8",
+    "value": 1,
+    "parent": "hexI8"
+  },
+  "Black Pawn H": {
+    "id": "Black Pawn H",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1355,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♟︎",
+    "home": "hexH8",
+    "value": 1,
+    "parent": "hexH8"
+  },
+  "Black Pawn E": {
+    "id": "Black Pawn E",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1367,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♟︎",
+    "home": "hexE8",
+    "value": 1,
+    "parent": "hexE8"
+  },
+  "Black Pawn C": {
+    "id": "Black Pawn C",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1379,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♟︎",
+    "home": "hexC8",
+    "value": 1,
+    "parent": "hexC8"
+  },
+  "Black Pawn D": {
+    "id": "Black Pawn D",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1371,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♟︎",
+    "home": "hexD8",
+    "value": 1,
+    "parent": "hexD8"
+  },
+  "White Pawn I": {
+    "id": "White Pawn I",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1322,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♙︎",
+    "home": "hexI1",
+    "value": 1,
+    "parent": "hexI1"
+  },
+  "White Bishop F2": {
+    "id": "White Bishop F2",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1392,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♗",
+    "home": "hexF2",
+    "value": 3.1,
+    "parent": "hexF2"
+  },
+  "White Bishop F3": {
+    "id": "White Bishop F3",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1387,
+    "activeFace": 0,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♗",
+    "home": "hexF3",
+    "value": 3.1,
+    "parent": "hexF3"
+  },
+  "Black Bishop F10": {
+    "id": "Black Bishop F10",
+    "parent": "hexF10",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1217,
+    "activeFace": 0,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♝",
+    "home": "hexF10",
+    "value": 3.1
+  },
+  "Black Bishop F9": {
+    "id": "Black Bishop F9",
+    "parent": "hexF9",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1225,
+    "activeFace": 0,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♝",
+    "home": "hexF9",
+    "value": 3.1
+  },
+  "Black Bishop F": {
+    "id": "Black Bishop F",
+    "parent": "hexF11",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1214,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♝",
+    "home": "hexF11",
+    "value": 3.1
+  },
+  "White Bishop F": {
+    "id": "White Bishop F",
+    "parent": "hexF1",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1126,
+    "activeFace": 0,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♗",
+    "home": "hexF1",
+    "value": 3.1
+  },
+  "Black Rook D": {
+    "id": "Black Rook D",
+    "parent": "hexD9",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1339,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♜",
+    "home": "hexD9",
+    "value": 5
+  },
+  "Black Rook H": {
+    "id": "Black Rook H",
+    "parent": "hexH9",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1347,
+    "activeFace": 0,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♜",
+    "home": "hexH9",
+    "value": 5
+  },
+  "White Rook H": {
+    "id": "White Rook H",
+    "parent": "hexH1",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1289,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♖",
+    "home": "hexH1",
+    "value": 5
+  },
+  "White Knight G1": {
+    "id": "White Knight G1",
+    "parent": "hexG2",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1282,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♘",
+    "home": "hexG2",
+    "value": 3
+  },
+  "Black Knight G": {
+    "id": "Black Knight G",
+    "parent": "hexG9",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1343,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♞",
+    "home": "hexG9",
+    "value": 3
+  },
+  "Black Knight E": {
+    "id": "Black Knight E",
+    "parent": "hexE9",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1335,
+    "activeFace": 0,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♞",
+    "home": "hexE9",
+    "value": 3
+  },
+  "White Rook D": {
+    "id": "White Rook D",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1398,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♖",
+    "home": "hexD1",
+    "value": 5,
+    "parent": "hexD1"
+  },
+  "White Knight E": {
+    "id": "White Knight E",
+    "parent": "hexE2",
+    "x": 4,
+    "y": 4,
+    "width": 76.6,
+    "height": 76.6,
+    "z": 1271,
+    "activeFace": 0,
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "text": "♘",
+    "home": "hexE2",
+    "value": 3
+  }
+}
