@@ -18,404 +18,8 @@
     "width": 1242,
     "height": 102,
     "css": "background: #ffffff80",
-    "x": 5
-  },
-  "xvkr": {
-    "type": "button",
-    "text": "➡",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "shift",
-        "value": "yes",
-        "collection": "shiftcheck",
-        "mode": "set"
-      },
-      {
-        "func": "SELECT",
-        "source": "shiftcheck",
-        "property": "parent",
-        "value": null,
-        "collection": "widgetmove",
-        "mode": "set"
-      },
-      {
-        "func": "SET",
-        "collection": "widgetmove",
-        "property": "x",
-        "relation": "+",
-        "value": 88.6
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "value": "pile",
-        "collection": "pilecheck",
-        "mode": "set"
-      },
-      {
-        "func": "SELECT",
-        "source": "pilecheck",
-        "property": "parent",
-        "value": null,
-        "collection": "pilemove",
-        "mode": "set"
-      },
-      {
-        "func": "SET",
-        "collection": "pilemove",
-        "property": "x",
-        "relation": "+",
-        "value": 88.6
-      }
-    ],
-    "x": 1548,
-    "y": 876,
-    "z": 31,
-    "id": "xvkr",
-    "css": "font-size:38px;background:transparent;border-style:none; border-radius:0; color:black",
-    "width": 40,
-    "height": 40
-  },
-  "qnlj": {
-    "type": "label",
-    "text": "👁",
-    "css": "font-size: 50px;color:black",
-    "height": 70,
-    "width": 70,
-    "x": 1495,
-    "y": 863,
-    "z": 2494,
-    "id": "qnlj"
-  },
-  "gamj": {
-    "type": "button",
-    "text": "⬅",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "shift",
-        "value": "yes",
-        "collection": "shiftcheck",
-        "mode": "set"
-      },
-      {
-        "func": "SELECT",
-        "source": "shiftcheck",
-        "property": "parent",
-        "value": null,
-        "collection": "widgetmove",
-        "mode": "set"
-      },
-      {
-        "func": "SET",
-        "collection": "widgetmove",
-        "property": "x",
-        "relation": "-",
-        "value": 88.6
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "value": "pile",
-        "collection": "pilecheck",
-        "mode": "set"
-      },
-      {
-        "func": "SELECT",
-        "source": "pilecheck",
-        "property": "parent",
-        "value": null,
-        "collection": "pilemove",
-        "mode": "set"
-      },
-      {
-        "func": "SET",
-        "collection": "pilemove",
-        "property": "x",
-        "relation": "-",
-        "value": 88.6
-      }
-    ],
-    "x": 1473,
-    "y": 877,
-    "z": 20,
-    "css": "font-size:38px;background:transparent;border-style:none; border-radius:0; color:black",
-    "id": "gamj",
-    "width": 40,
-    "height": 40
-  },
-  "0gj3": {
-    "type": "button",
-    "text": "⬆",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "shift",
-        "value": "yes",
-        "collection": "shiftcheck",
-        "mode": "set"
-      },
-      {
-        "func": "SELECT",
-        "source": "shiftcheck",
-        "property": "parent",
-        "value": null,
-        "collection": "widgetmove",
-        "mode": "set"
-      },
-      {
-        "func": "SET",
-        "collection": "widgetmove",
-        "property": "y",
-        "relation": "-",
-        "value": 152
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "value": "pile",
-        "collection": "pilecheck",
-        "mode": "set"
-      },
-      {
-        "func": "SELECT",
-        "source": "pilecheck",
-        "property": "parent",
-        "value": null,
-        "collection": "pilemove",
-        "mode": "set"
-      },
-      {
-        "func": "SET",
-        "collection": "pilemove",
-        "property": "y",
-        "relation": "-",
-        "value": 152
-      }
-    ],
-    "x": 1510,
-    "y": 851,
-    "z": 37,
-    "css": "font-size:38px;background:transparent;border-style:none; border-radius:0; color:black",
-    "id": "0gj3",
-    "width": 40,
-    "height": 40
-  },
-  "iccb": {
-    "type": "button",
-    "text": "⬇",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "shift",
-        "value": "yes",
-        "collection": "shiftcheck",
-        "mode": "set"
-      },
-      {
-        "func": "SELECT",
-        "source": "shiftcheck",
-        "property": "parent",
-        "value": null,
-        "collection": "widgetmove",
-        "mode": "set"
-      },
-      {
-        "func": "SET",
-        "collection": "widgetmove",
-        "property": "y",
-        "relation": "+",
-        "value": 152
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "value": "pile",
-        "collection": "pilecheck",
-        "mode": "set"
-      },
-      {
-        "func": "SELECT",
-        "source": "pilecheck",
-        "property": "parent",
-        "value": null,
-        "collection": "pilemove",
-        "mode": "set"
-      },
-      {
-        "func": "SET",
-        "collection": "pilemove",
-        "property": "y",
-        "relation": "+",
-        "value": 152
-      }
-    ],
-    "x": 1511,
-    "y": 906,
-    "z": 38,
-    "css": "font-size:38px;background:transparent;border-style:none; border-radius:0; color:black",
-    "id": "iccb",
-    "width": 40,
-    "height": 40
-  },
-  "TheDeck": {
-    "x": 1257,
-    "y": 890,
-    "z": 1717,
-    "type": "holder",
-    "inheritChildZ": true,
-    "width": 88.6,
-    "height": 102,
-    "css": "background: #ffffff80",
-    "id": "TheDeck",
-    "dropOffsetX": 0.5,
-    "dropOffsetY": 1
-  },
-  "2d992c4a-df59-49be-b61f-cab4d9599365": {
-    "id": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "x": 0.5,
-    "y": 1,
-    "z": 16987,
-    "type": "deck",
-    "cardTypes": {
-      "White Bee": {
-        "COLOR": "/assets/-244343145_283",
-        "BUG": "/assets/-1181892661_2586",
-        "RANK": 1
-      },
-      "White Spider": {
-        "label": "Buttercup",
-        "COLOR": "/assets/-244343145_283",
-        "BUG": "/assets/1812052926_2350",
-        "RANK": 2
-      },
-      "White Beetle": {
-        "COLOR": "/assets/-244343145_283",
-        "BUG": "/assets/381654925_3188",
-        "RANK": 3
-      },
-      "White Grasshopper": {
-        "COLOR": "/assets/-244343145_283",
-        "BUG": "/assets/-1233642537_6472",
-        "RANK": 4
-      },
-      "White Ant": {
-        "COLOR": "/assets/-244343145_283",
-        "BUG": "/assets/1423104575_2685",
-        "RANK": 5
-      },
-      "White Mosquito": {
-        "COLOR": "/assets/-244343145_283",
-        "BUG": "/assets/650002164_12629",
-        "RANK": 6
-      },
-      "White Ladybug": {
-        "COLOR": "/assets/-244343145_283",
-        "BUG": "/assets/948920351_2230",
-        "RANK": 7
-      },
-      "White Pill bug": {
-        "COLOR": "/assets/-244343145_283",
-        "BUG": "/assets/805706918_2938",
-        "RANK": 8
-      },
-      "Black Bee": {
-        "COLOR": "/assets/2093467574_283",
-        "BUG": "/assets/-1181892661_2586",
-        "RANK": 1
-      },
-      "Black Spider": {
-        "label": "Buttercup",
-        "COLOR": "/assets/2093467574_283",
-        "BUG": "/assets/1812052926_2350",
-        "RANK": 2
-      },
-      "Black Beetle": {
-        "COLOR": "/assets/2093467574_283",
-        "BUG": "/assets/381654925_3188",
-        "RANK": 3
-      },
-      "Black Grasshopper": {
-        "COLOR": "/assets/2093467574_283",
-        "BUG": "/assets/-1233642537_6472",
-        "RANK": 4
-      },
-      "Black Ant": {
-        "COLOR": "/assets/2093467574_283",
-        "BUG": "/assets/1423104575_2685",
-        "RANK": 5
-      },
-      "Black Mosquito": {
-        "COLOR": "/assets/2093467574_283",
-        "BUG": "/assets/650002164_12629",
-        "RANK": 6
-      },
-      "Black Ladybug": {
-        "COLOR": "/assets/2093467574_283",
-        "BUG": "/assets/948920351_2230",
-        "RANK": 7
-      },
-      "Black Pill bug": {
-        "COLOR": "/assets/2093467574_283",
-        "BUG": "/assets/805706918_2938",
-        "RANK": 8
-      }
-    },
-    "faceTemplates": [
-      {
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "#FFFFFF00",
-            "valueType": "dynamic",
-            "value": "COLOR",
-            "width": 86.6,
-            "height": 100
-          },
-          {
-            "type": "image",
-            "x": 11.6,
-            "y": 18.3,
-            "color": "#FFFFFF00",
-            "valueType": "dynamic",
-            "value": "BUG",
-            "width": 63.4,
-            "height": 63.4
-          }
-        ],
-        "border": 0,
-        "radius": 25
-      }
-    ],
-    "cardDefaults": {
-      "pilesWith": {
-        "type": "card"
-      },
-      "width": 86.6,
-      "height": 100,
-      "shift": "yes",
-      "grid": [
-        {
-          "x": 88.6,
-          "y": 152,
-          "offsetX": 0,
-          "offsetY": 0,
-          "maxY": 810
-        },
-        {
-          "x": 88.6,
-          "y": 152,
-          "offsetX": 44.3,
-          "offsetY": 75.8,
-          "maxY": 810
-        }
-      ]
-    },
-    "activeFace": 0,
-    "parent": "TheDeck"
+    "x": 5,
+    "dropShadow": true
   },
   "a38m": {
     "y": 954,
@@ -423,7 +27,6 @@
     "height": 30,
     "type": "button",
     "text": "Restart",
-    "movableInEdit": true,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -437,39 +40,32 @@
       },
       {
         "func": "RECALL",
-        "holder": "TheDeck",
-        "applyVariables": [
-          {
-            "parameter": "owned",
-            "variable": true
-          }
-        ]
+        "holder": [
+          "HolderWhite",
+          "HolderBlack"
+        ],
+        "owned": "${true}"
       },
       {
         "func": "FLIP",
-        "holder": "TheDeck",
+        "holder": [
+          "HolderWhite",
+          "HolderBlack"
+        ],
         "face": 0
       },
       {
         "func": "SORT",
         "key": "RANK",
-        "holder": "TheDeck",
+        "holder": [
+          "HolderWhite",
+          "HolderBlack"
+        ],
         "reverse": true
-      },
-      {
-        "func": "SORT",
-        "key": "COLOR",
-        "holder": "TheDeck"
-      },
-      {
-        "func": "MOVE",
-        "to": "3pws",
-        "from": "TheDeck",
-        "count": 14
       }
     ],
     "css": "background: #b0ffa2; color: black; border-color: white;font-family:arial",
-    "x": 1494.5,
+    "x": 1485,
     "id": "a38m",
     "z": 41
   },
@@ -491,245 +87,8 @@
     "css": "background: #b0ffa2; color: black; border-color: white;font-family:arial",
     "x": 6
   },
-  "wf1j": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Bee",
-    "id": "wf1j",
-    "z": 15,
-    "parent": "b0o0"
-  },
-  "z2dp": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Spider",
-    "id": "z2dp",
-    "z": 14,
-    "parent": "b0o0"
-  },
-  "b1g5": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Beetle",
-    "id": "b1g5",
-    "z": 12,
-    "parent": "b0o0"
-  },
-  "mcp9": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Grasshopper",
-    "id": "mcp9",
-    "z": 10,
-    "parent": "b0o0"
-  },
-  "695n": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Ant",
-    "id": "695n",
-    "z": 7,
-    "parent": "b0o0"
-  },
-  "8tj3": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Mosquito",
-    "id": "8tj3",
-    "z": 4,
-    "parent": "b0o0"
-  },
-  "kwte": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Ladybug",
-    "id": "kwte",
-    "z": 3,
-    "parent": "b0o0"
-  },
-  "cm4q": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Pill bug",
-    "id": "cm4q",
-    "z": 2,
-    "parent": "b0o0"
-  },
-  "n79n": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Bee",
-    "id": "n79n",
-    "z": 17734,
-    "parent": "bds2"
-  },
-  "tx3t": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Spider",
-    "id": "tx3t",
-    "z": 17732,
-    "parent": "bds2"
-  },
-  "2es2": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Beetle",
-    "id": "2es2",
-    "z": 17728,
-    "parent": "bds2"
-  },
-  "8km5": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Grasshopper",
-    "id": "8km5",
-    "z": 17724,
-    "parent": "bds2"
-  },
-  "0pl7": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Ant",
-    "id": "0pl7",
-    "z": 17718,
-    "parent": "bds2"
-  },
-  "8t6q": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Mosquito",
-    "id": "8t6q",
-    "z": 17712,
-    "parent": "bds2"
-  },
-  "6vw3": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Ladybug",
-    "id": "6vw3",
-    "z": 17710,
-    "parent": "bds2"
-  },
-  "peg3": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Pill bug",
-    "id": "peg3",
-    "z": 17709,
-    "parent": "bds2"
-  },
-  "6e53": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Spider",
-    "id": "6e53",
-    "z": 13,
-    "parent": "b0o0"
-  },
-  "gjw5": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Beetle",
-    "id": "gjw5",
-    "z": 11,
-    "parent": "b0o0"
-  },
-  "r8z9": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Grasshopper",
-    "id": "r8z9",
-    "z": 9,
-    "parent": "b0o0"
-  },
-  "q992": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Grasshopper",
-    "id": "q992",
-    "z": 8,
-    "parent": "b0o0"
-  },
-  "nzue": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Ant",
-    "id": "nzue",
-    "z": 6,
-    "parent": "b0o0"
-  },
-  "cxd3": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "White Ant",
-    "id": "cxd3",
-    "z": 5,
-    "parent": "b0o0"
-  },
-  "6pro": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Spider",
-    "id": "6pro",
-    "z": 17730,
-    "parent": "bds2"
-  },
-  "xark": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Beetle",
-    "id": "xark",
-    "z": 17726,
-    "parent": "bds2"
-  },
-  "gz7w": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Grasshopper",
-    "id": "gz7w",
-    "z": 17722,
-    "parent": "bds2"
-  },
-  "3bqq": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Grasshopper",
-    "id": "3bqq",
-    "z": 17720,
-    "parent": "bds2"
-  },
-  "p6ua": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Ant",
-    "id": "p6ua",
-    "z": 17716,
-    "parent": "bds2"
-  },
-  "0zni": {
-    "deck": "2d992c4a-df59-49be-b61f-cab4d9599365",
-    "type": "card",
-    "cardType": "Black Ant",
-    "id": "0zni",
-    "z": 17714,
-    "parent": "bds2"
-  },
-  "3pws": {
-    "x": 1355.6,
-    "y": 890,
-    "z": 1720,
-    "type": "holder",
-    "inheritChildZ": true,
-    "width": 88.6,
-    "height": 102,
-    "css": "background: #ffffff80",
-    "dropOffsetX": 0.5,
-    "dropOffsetY": 1,
-    "id": "3pws"
-  },
   "_meta": {
-    "version": 1,
+    "version": 13,
     "info": {
       "name": "Bug Chess",
       "image": "/assets/1302320610_63031",
@@ -742,16 +101,16 @@
       "similarName": "Hive",
       "description": "Place hexagon tiles with bug images, with each bug moving in unique ways, to control the board. First player to surround opponent's queen wins.",
       "showName": true,
-      "lastUpdate": 1610512268000,
+      "lastUpdate": 1689086342874,
       "skill": "",
-      "variantImage": "",
-      "variant": "Full Game",
-      "language": "en-US",
-      "players": "2",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Full Game",
+      "language": "en-US",
+      "players": "2"
     }
   },
   "0ava": {
@@ -760,24 +119,998 @@
     "width": 1600,
     "height": 1000,
     "layer": -4,
-    "id": "0ava"
+    "id": "0ava",
+    "css": {
+      "default": {
+        "filter": "saturate(180%) contrast(70%) brightness(90%)"
+      }
+    }
   },
-  "b0o0": {
+  "blackDeck": {
+    "type": "deck",
+    "id": "blackDeck",
+    "x": 0.5,
+    "y": 1,
+    "z": 18231,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "onPileCreation": {
+        "shift": true,
+        "grid": [
+          {
+            "x": 88.6,
+            "y": 152,
+            "offsetX": 0,
+            "offsetY": 0,
+            "maxY": 810
+          },
+          {
+            "x": 88.6,
+            "y": 152,
+            "offsetX": 44.3,
+            "offsetY": 75.8,
+            "maxY": 810
+          }
+        ],
+        "handleCSS": {
+          "border": "2px solid #666",
+          "font-size": "25px",
+          "color": "black",
+          "top": "19%"
+        },
+        "handleOffset": 0,
+        "handleSize": 25
+      },
+      "width": 86.6,
+      "height": 100,
+      "shift": true,
+      "grid": [
+        {
+          "x": 88.6,
+          "y": 152,
+          "offsetX": -44.3,
+          "offsetY": -76,
+          "maxY": 734
+        },
+        {
+          "x": 88.6,
+          "y": 152,
+          "offsetX": 0,
+          "offsetY": -0.20000000000000284,
+          "maxY": 734
+        }
+      ],
+      "colorBorder": "#666",
+      "color": "#1f1f1f",
+      "enlarge": 5,
+      "css": {
+        "border-radius": " 50%/27%"
+      }
+    },
+    "cardTypes": {
+      "Bee": {
+        "colorBug": "#f0e442",
+        "BUG": "/assets/1729530418_2586",
+        "RANK": 1
+      },
+      "Spider": {
+        "colorBug": "#e69f00",
+        "BUG": "/assets/1076465921_2350",
+        "RANK": 2
+      },
+      "Beetle": {
+        "colorBug": "#cc79a7",
+        "BUG": "/assets/-1100050525_3188",
+        "RANK": 3
+      },
+      "Grasshopper": {
+        "colorBug": "#009e9b",
+        "BUG": "/assets/-1121946865_6472",
+        "RANK": 4
+      },
+      "Ant": {
+        "colorBug": "#0072b2",
+        "BUG": "/assets/1509221382_2685",
+        "RANK": 5
+      },
+      "Mosquito": {
+        "colorBug": "#bbb",
+        "BUG": "/assets/-551294595_1440",
+        "RANK": 6
+      },
+      "Ladybug": {
+        "colorBug": "#d55e00",
+        "BUG": "/assets/-176849796_2230",
+        "RANK": 7
+      },
+      "Pill bug": {
+        "colorBug": "#56b4e9",
+        "BUG": "/assets/-1233369999_2938",
+        "RANK": 8
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#FFFFFF00",
+            "width": 86.6,
+            "height": 97,
+            "value": "/assets/-271546625_458",
+            "svgReplaces": {
+              "#ff0000": "colorBorder"
+            }
+          },
+          {
+            "type": "image",
+            "x": 2.23,
+            "y": 2.5,
+            "color": "#FFFFFF00",
+            "width": 82.13,
+            "height": 92,
+            "value": "/assets/-271546625_458",
+            "svgReplaces": {
+              "#ff0000": "color"
+            }
+          },
+          {
+            "type": "image",
+            "x": 11.6,
+            "y": 15.3,
+            "color": "#FFFFFF00",
+            "width": 63.4,
+            "height": 63.4,
+            "dynamicProperties": {
+              "value": "BUG",
+              "brightness": "brightness"
+            },
+            "svgReplaces": {
+              "#ff0000": "colorBug"
+            },
+            "css": {
+              "filter": "brightness(120%)"
+            }
+          }
+        ],
+        "border": 0,
+        "radius": 25
+      }
+    ],
+    "activeFace": 0,
+    "parent": "HolderBlack"
+  },
+  "whiteDeck": {
+    "type": "deck",
+    "id": "whiteDeck",
+    "x": 0.5,
+    "y": 1,
+    "z": 18229,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "onPileCreation": {
+        "shift": true,
+        "grid": [
+          {
+            "x": 88.6,
+            "y": 152,
+            "offsetX": 0,
+            "offsetY": 0,
+            "maxY": 810
+          },
+          {
+            "x": 88.6,
+            "y": 152,
+            "offsetX": 44.3,
+            "offsetY": 75.8,
+            "maxY": 810
+          }
+        ],
+        "handleCSS": {
+          "border": "2px solid #666",
+          "font-size": "25px",
+          "color": "black",
+          "top": "19%"
+        },
+        "handleOffset": 0,
+        "handleSize": 25
+      },
+      "width": 86.6,
+      "height": 100,
+      "shift": true,
+      "grid": [
+        {
+          "x": 88.6,
+          "y": 152,
+          "offsetX": -44.3,
+          "offsetY": -76,
+          "maxY": 734
+        },
+        {
+          "x": 88.6,
+          "y": 152,
+          "offsetX": 0,
+          "offsetY": -0.20000000000000284,
+          "maxY": 734
+        }
+      ],
+      "colorBorder": "#666",
+      "color": "#ffffff",
+      "enlarge": 5,
+      "css": {
+        "border-radius": " 50%/27%"
+      }
+    },
+    "cardTypes": {
+      "Bee": {
+        "colorBug": "#f0e442",
+        "BUG": "/assets/1729530418_2586",
+        "RANK": 1
+      },
+      "Spider": {
+        "colorBug": "#e69f00",
+        "BUG": "/assets/1076465921_2350",
+        "RANK": 2
+      },
+      "Beetle": {
+        "colorBug": "#cc79a7",
+        "BUG": "/assets/-1100050525_3188",
+        "RANK": 3
+      },
+      "Grasshopper": {
+        "colorBug": "#009e9b",
+        "BUG": "/assets/-1121946865_6472",
+        "RANK": 4
+      },
+      "Ant": {
+        "colorBug": "#0072b2",
+        "BUG": "/assets/1509221382_2685",
+        "RANK": 5
+      },
+      "Mosquito": {
+        "colorBug": "#bbb",
+        "BUG": "/assets/-551294595_1440",
+        "RANK": 6
+      },
+      "Ladybug": {
+        "colorBug": "#d55e00",
+        "BUG": "/assets/-176849796_2230",
+        "RANK": 7
+      },
+      "Pill bug": {
+        "colorBug": "#56b4e9",
+        "BUG": "/assets/-1233369999_2938",
+        "RANK": 8
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#FFFFFF00",
+            "width": 86.6,
+            "height": 97,
+            "value": "/assets/-271546625_458",
+            "svgReplaces": {
+              "#ff0000": "colorBorder"
+            }
+          },
+          {
+            "type": "image",
+            "x": 2.23,
+            "y": 2.5,
+            "color": "#FFFFFF00",
+            "width": 82.13,
+            "height": 92,
+            "value": "/assets/-271546625_458",
+            "svgReplaces": {
+              "#ff0000": "color"
+            }
+          },
+          {
+            "type": "image",
+            "x": 11.6,
+            "y": 15.3,
+            "color": "#FFFFFF00",
+            "width": 63.4,
+            "height": 63.4,
+            "dynamicProperties": {
+              "value": "BUG",
+              "brightness": "brightness"
+            },
+            "svgReplaces": {
+              "#ff0000": "colorBug"
+            },
+            "css": {
+              "filter": "brightness(90%)"
+            }
+          }
+        ],
+        "border": 0,
+        "radius": 25
+      }
+    ],
+    "activeFace": 0,
+    "parent": "HolderWhite"
+  },
+  "4f8e": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Bee",
+    "id": "4f8e",
+    "z": 15,
+    "parent": "yfnf"
+  },
+  "5xlg": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Spider",
+    "id": "5xlg",
+    "z": 14,
+    "parent": "yfnf"
+  },
+  "okv4": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Spider",
+    "id": "okv4",
+    "z": 13,
+    "parent": "yfnf"
+  },
+  "6pd7": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Beetle",
+    "id": "6pd7",
+    "z": 12,
+    "parent": "yfnf"
+  },
+  "slz1": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Beetle",
+    "id": "slz1",
+    "z": 11,
+    "parent": "yfnf"
+  },
+  "o92c": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Grasshopper",
+    "id": "o92c",
+    "z": 10,
+    "parent": "yfnf"
+  },
+  "9tz8": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Grasshopper",
+    "id": "9tz8",
+    "z": 9,
+    "parent": "yfnf"
+  },
+  "03ej": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Grasshopper",
+    "id": "03ej",
+    "z": 8,
+    "parent": "yfnf"
+  },
+  "09mp": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Ant",
+    "id": "09mp",
+    "z": 7,
+    "parent": "yfnf"
+  },
+  "87cg": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Ant",
+    "id": "87cg",
+    "z": 6,
+    "parent": "yfnf"
+  },
+  "7owp": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Ant",
+    "id": "7owp",
+    "z": 5,
+    "parent": "yfnf"
+  },
+  "xoaj": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Mosquito",
+    "id": "xoaj",
+    "z": 4,
+    "parent": "yfnf"
+  },
+  "xeco": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Ladybug",
+    "id": "xeco",
+    "z": 3,
+    "parent": "yfnf"
+  },
+  "wb4l": {
+    "deck": "whiteDeck",
+    "type": "card",
+    "cardType": "Pill bug",
+    "id": "wb4l",
+    "z": 2,
+    "parent": "yfnf"
+  },
+  "j94x": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Bee",
+    "id": "j94x",
+    "z": 15,
+    "parent": "wrw2"
+  },
+  "8f1i": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Spider",
+    "id": "8f1i",
+    "z": 14,
+    "parent": "wrw2"
+  },
+  "2awl": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Spider",
+    "id": "2awl",
+    "z": 13,
+    "parent": "wrw2"
+  },
+  "pjm3": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Beetle",
+    "id": "pjm3",
+    "z": 12,
+    "parent": "wrw2"
+  },
+  "mzew": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Beetle",
+    "id": "mzew",
+    "z": 11,
+    "parent": "wrw2"
+  },
+  "d51z": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Grasshopper",
+    "id": "d51z",
+    "z": 10,
+    "parent": "wrw2"
+  },
+  "xdfh": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Grasshopper",
+    "id": "xdfh",
+    "z": 9,
+    "parent": "wrw2"
+  },
+  "6b8p": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Grasshopper",
+    "id": "6b8p",
+    "z": 8,
+    "parent": "wrw2"
+  },
+  "4yfl": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Ant",
+    "id": "4yfl",
+    "z": 7,
+    "parent": "wrw2"
+  },
+  "etx7": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Ant",
+    "id": "etx7",
+    "z": 6,
+    "parent": "wrw2"
+  },
+  "kq8m": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Ant",
+    "id": "kq8m",
+    "z": 5,
+    "parent": "wrw2"
+  },
+  "tfc5": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Mosquito",
+    "id": "tfc5",
+    "z": 4,
+    "parent": "wrw2"
+  },
+  "4d7w": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Ladybug",
+    "id": "4d7w",
+    "z": 3,
+    "parent": "wrw2"
+  },
+  "9j08": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Pill bug",
+    "id": "9j08",
+    "z": 2,
+    "parent": "wrw2"
+  },
+  "HolderWhite": {
+    "type": "holder",
+    "id": "HolderWhite",
+    "x": 1257,
+    "y": 890,
+    "width": 88.6,
+    "height": 102,
+    "z": 1717,
+    "inheritChildZ": true,
+    "css": "background: #ffffff80",
+    "dropOffsetX": 0.5,
+    "dropOffsetY": 1
+  },
+  "HolderBlack": {
+    "type": "holder",
+    "id": "HolderBlack",
+    "x": 1355.6,
+    "y": 890,
+    "width": 88.6,
+    "height": 102,
+    "z": 1720,
+    "inheritChildZ": true,
+    "css": "background: #ffffff80",
+    "dropOffsetX": 0.5,
+    "dropOffsetY": 1
+  },
+  "shiftParent": {
+    "id": "shiftParent",
+    "x": 1453,
+    "y": 800,
+    "width": 140,
+    "height": 140,
+    "z": 11,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-size": "50px",
+        "color": "#000",
+        "border-radius": "50%"
+      },
+      ":hover": {
+        "color": "#888"
+      }
+    },
+    "shiftX": -265.8,
+    "shiftY": -304
+  },
+  "shiftUp": {
+    "id": "shiftUp",
+    "parent": "shiftParent",
+    "x": 45,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 618,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "inheritFrom": {
+      "shiftParent": [
+        "css"
+      ]
+    },
+    "text": "arrow_up",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true,
+        "type": "pile",
+        "collection": "pile"
+      },
+      {
+        "func": "SELECT",
+        "source": "pile",
+        "property": "parent",
+        "value": null,
+        "type": "pile",
+        "collection": "DEFAULT",
+        "mode": "add"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "-",
+        "value": 152
+      },
+      {
+        "func": "SET",
+        "property": "shiftY",
+        "collection": [
+          "shiftParent"
+        ],
+        "relation": "-",
+        "value": 152
+      }
+    ]
+  },
+  "shiftCenter": {
+    "id": "shiftCenter",
+    "parent": "shiftParent",
+    "x": 45,
+    "y": 45,
+    "width": 50,
+    "height": 50,
+    "scale": 0.8,
+    "layer": 2,
+    "z": 628,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "inheritFrom": {
+      "shiftParent": [
+        "css"
+      ]
+    },
+    "text": "visibility",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true,
+        "type": "pile",
+        "collection": "pile"
+      },
+      {
+        "func": "SELECT",
+        "source": "pile",
+        "property": "parent",
+        "value": null,
+        "type": "pile",
+        "collection": "DEFAULT",
+        "mode": "add"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "-",
+        "value": "${PROPERTY shiftX OF shiftParent}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "-",
+        "value": "${PROPERTY shiftY OF shiftParent}"
+      },
+      {
+        "func": "SET",
+        "property": "shiftX",
+        "collection": [
+          "shiftParent"
+        ],
+        "relation": "=",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "shiftY",
+        "collection": [
+          "shiftParent"
+        ],
+        "relation": "=",
+        "value": 0
+      }
+    ]
+  },
+  "shiftLeft": {
+    "id": "shiftLeft",
+    "parent": "shiftParent",
+    "x": 0,
+    "y": 45,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 625,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "inheritFrom": {
+      "shiftParent": [
+        "css"
+      ]
+    },
+    "text": "arrow_left",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true,
+        "type": "pile",
+        "collection": "pile"
+      },
+      {
+        "func": "SELECT",
+        "source": "pile",
+        "property": "parent",
+        "value": null,
+        "type": "pile",
+        "collection": "DEFAULT",
+        "mode": "add"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "-",
+        "value": 88.6
+      },
+      {
+        "func": "SET",
+        "property": "shiftX",
+        "collection": [
+          "shiftParent"
+        ],
+        "relation": "-",
+        "value": 88.6
+      }
+    ]
+  },
+  "shiftRight": {
+    "id": "shiftRight",
+    "parent": "shiftParent",
+    "x": 90,
+    "y": 45,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 621,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "inheritFrom": {
+      "shiftParent": [
+        "css"
+      ]
+    },
+    "text": "arrow_right",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true,
+        "type": "pile",
+        "collection": "pile"
+      },
+      {
+        "func": "SELECT",
+        "source": "pile",
+        "property": "parent",
+        "value": null,
+        "type": "pile",
+        "collection": "DEFAULT",
+        "mode": "add"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "+",
+        "value": 88.6
+      },
+      {
+        "func": "SET",
+        "property": "shiftX",
+        "collection": [
+          "shiftParent"
+        ],
+        "relation": "+",
+        "value": 88.6
+      }
+    ]
+  },
+  "shiftDown": {
+    "id": "shiftDown",
+    "parent": "shiftParent",
+    "x": 45,
+    "y": 90,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 626,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "inheritFrom": {
+      "shiftParent": [
+        "css"
+      ]
+    },
+    "text": "arrow_down",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "shift",
+        "value": true,
+        "type": "pile",
+        "collection": "pile"
+      },
+      {
+        "func": "SELECT",
+        "source": "pile",
+        "property": "parent",
+        "value": null,
+        "type": "pile",
+        "collection": "DEFAULT",
+        "mode": "add"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "+",
+        "value": 152
+      },
+      {
+        "func": "SET",
+        "property": "shiftY",
+        "collection": [
+          "shiftParent"
+        ],
+        "relation": "+",
+        "value": 152
+      }
+    ]
+  },
+  "yfnf": {
     "type": "pile",
-    "parent": "TheDeck",
+    "parent": "HolderWhite",
     "x": 0.5,
     "y": 1,
     "width": 86.6,
     "height": 100,
-    "id": "b0o0"
+    "shift": true,
+    "grid": [
+      {
+        "x": 88.6,
+        "y": 152,
+        "offsetX": 0,
+        "offsetY": 0,
+        "maxY": 810
+      },
+      {
+        "x": 88.6,
+        "y": 152,
+        "offsetX": 44.3,
+        "offsetY": 75.8,
+        "maxY": 810
+      }
+    ],
+    "handleCSS": {
+      "border": "2px solid #666",
+      "font-size": "25px",
+      "color": "black",
+      "top": "19%"
+    },
+    "handleOffset": 0,
+    "handleSize": 25,
+    "id": "yfnf"
   },
-  "bds2": {
+  "wrw2": {
     "type": "pile",
-    "parent": "3pws",
+    "parent": "HolderBlack",
     "x": 0.5,
     "y": 1,
     "width": 86.6,
     "height": 100,
-    "id": "bds2"
+    "shift": true,
+    "grid": [
+      {
+        "x": 88.6,
+        "y": 152,
+        "offsetX": 0,
+        "offsetY": 0,
+        "maxY": 810
+      },
+      {
+        "x": 88.6,
+        "y": 152,
+        "offsetX": 44.3,
+        "offsetY": 75.8,
+        "maxY": 810
+      }
+    ],
+    "handleCSS": {
+      "border": "2px solid #666",
+      "font-size": "25px",
+      "color": "black",
+      "top": "19%"
+    },
+    "handleOffset": 0,
+    "handleSize": 25,
+    "id": "wrw2"
   }
 }
