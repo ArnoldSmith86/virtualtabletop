@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 12,
+    "version": 13,
     "info": {
       "name": "Alphabet Soup",
       "image": "/assets/-914344625_43565",
@@ -11,7 +11,7 @@
       "time": "10",
       "link": "",
       "attribution": "The room design and all game elements are by LawDawg96 are are released into the Public Domain as CC0.<div><br></div><div>The library image was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"black and white cube dice with letters on the sides in a plain white bowl\".&nbsp;</div><div><br></div>",
-      "lastUpdate": 1677730979097,
+      "lastUpdate": 1690310699827,
       "showName": true,
       "skill": "",
       "description": "Race against the timer to find the most words using letters on dice in a grid. Most points wins.",
@@ -31,7 +31,6 @@
     "y": 46,
     "width": 200,
     "height": 200,
-    "z": 44821,
     "css": {
       "border": "1px solid black"
     },
@@ -42,7 +41,6 @@
   "row1": {
     "type": "holder",
     "id": "row1",
-    "z": 2,
     "dropTarget": {
       "type": "dice"
     },
@@ -107,9 +105,8 @@
       "activeFace": 0
     },
     "shape3d": true,
-    "parent": "holder1",
-    "z": 54121,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice2": {
     "inheritFrom": {
@@ -122,9 +119,8 @@
     "faces": "ABILTY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54123,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice3": {
     "inheritFrom": {
@@ -137,9 +133,8 @@
     "faces": "ABJMOQ",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54116,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice4": {
     "inheritFrom": {
@@ -152,9 +147,8 @@
     "faces": "ACDEMP",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54124,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice5": {
     "inheritFrom": {
@@ -167,9 +161,8 @@
     "faces": "ACELRS",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54114,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice6": {
     "inheritFrom": {
@@ -182,9 +175,8 @@
     "faces": "ADENVZ",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54115,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice7": {
     "inheritFrom": {
@@ -197,9 +189,8 @@
     "faces": "AHMORS",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54113,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice8": {
     "inheritFrom": {
@@ -212,9 +203,8 @@
     "faces": "BIFORX",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54122,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice9": {
     "inheritFrom": {
@@ -227,9 +217,8 @@
     "faces": "DENOSW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54125,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice10": {
     "inheritFrom": {
@@ -242,9 +231,8 @@
     "faces": "DKNOTU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54126,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice11": {
     "inheritFrom": {
@@ -257,9 +245,8 @@
     "faces": "EEFHIY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54119,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice12": {
     "inheritFrom": {
@@ -272,9 +259,8 @@
     "faces": "EGKLUY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54127,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice13": {
     "inheritFrom": {
@@ -287,9 +273,8 @@
     "faces": "EGINTV",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54112,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice14": {
     "inheritFrom": {
@@ -302,9 +287,8 @@
     "faces": "EHINPS",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54117,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice15": {
     "inheritFrom": {
@@ -317,9 +301,8 @@
     "faces": "ELPSTU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54120,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "dice16": {
     "inheritFrom": {
@@ -332,15 +315,13 @@
     "faces": "GILRUW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder1",
-    "z": 54118,
-    "clickable": false
+    "clickable": false,
+    "parent": "holder1"
   },
   "holder1": {
     "type": "holder",
     "id": "holder1",
     "y": -100,
-    "z": 5,
     "width": 50,
     "height": 50,
     "dropOffsetX": 0,
@@ -379,7 +360,6 @@
   "restart": {
     "type": "button",
     "id": "restart",
-    "z": 882,
     "text": "restart",
     "clickRoutine": [
       {
@@ -494,6 +474,22 @@
         "routine": "resizeRoutine"
       },
       {
+        "func": "FOREACH",
+        "range": [
+          8
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "list${value}"
+            ],
+            "property": "text",
+            "value": null
+          }
+        ]
+      },
+      {
         "func": "IF",
         "condition": "${PROPERTY scores}",
         "thenRoutine": [
@@ -575,6 +571,17 @@
         "func": "SET",
         "property": "rollCount",
         "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": null
       }
     ],
     "groupChangeRoutine": [
@@ -698,10 +705,8 @@
     ],
     "resizeRoutine": [
       "var newSize = ${PROPERTY rows} * 50",
-      "var newY = ${newSize} + 5",
       "var newX = ${newSize} / 2",
       "var newXRoll = ${newX} - 50",
-      "var newXTimer = ${newX} - 27",
       "var newXBase = 800 - ${newX}",
       {
         "func": "SET",
@@ -734,30 +739,6 @@
         ],
         "property": "x",
         "value": "${newXRoll}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "theTimer"
-        ],
-        "property": "x",
-        "value": "${newXTimer}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "timerBar"
-        ],
-        "property": "y",
-        "value": "${newY}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "timerBar"
-        ],
-        "property": "width",
-        "value": "${newSize}"
       }
     ],
     "timerLength": "3",
@@ -767,7 +748,6 @@
     "type": "button",
     "id": "roll",
     "y": -45,
-    "z": 879,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -878,7 +858,6 @@
     "id": "holder2",
     "x": 50,
     "y": -100,
-    "z": 5,
     "width": 50,
     "height": 50,
     "dropOffsetX": 0,
@@ -917,8 +896,7 @@
       "activeFace": 0
     },
     "shape3d": true,
-    "parent": "holder2",
-    "z": 54135
+    "parent": "holder2"
   },
   "dice18": {
     "inheritFrom": {
@@ -931,9 +909,8 @@
     "faces": "ABBJOO",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54128,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice19": {
     "inheritFrom": {
@@ -946,9 +923,8 @@
     "faces": "ACHOPS",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54140,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice20": {
     "inheritFrom": {
@@ -961,9 +937,8 @@
     "faces": "AFFKPS",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54129,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice21": {
     "inheritFrom": {
@@ -976,9 +951,8 @@
     "faces": "AOOTTW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54139,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice22": {
     "inheritFrom": {
@@ -991,9 +965,8 @@
     "faces": "CIMOTU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54134,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice23": {
     "inheritFrom": {
@@ -1006,9 +979,8 @@
     "faces": "DEILRX",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54141,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice24": {
     "inheritFrom": {
@@ -1021,9 +993,8 @@
     "faces": "DELRVY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54136,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice25": {
     "inheritFrom": {
@@ -1036,9 +1007,8 @@
     "faces": "DISTTY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54143,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice26": {
     "inheritFrom": {
@@ -1051,9 +1021,8 @@
     "faces": "EEGHNW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54142,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice27": {
     "inheritFrom": {
@@ -1066,9 +1035,8 @@
     "faces": "EEINSU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54133,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice28": {
     "inheritFrom": {
@@ -1081,9 +1049,8 @@
     "faces": "EHRTVW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54130,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice29": {
     "inheritFrom": {
@@ -1096,9 +1063,8 @@
     "faces": "EIOSST",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54138,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice30": {
     "inheritFrom": {
@@ -1111,9 +1077,8 @@
     "faces": "ELRTTY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54132,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice31": {
     "inheritFrom": {
@@ -1126,9 +1091,8 @@
     "faces": "HIMNUQ",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54137,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "dice32": {
     "inheritFrom": {
@@ -1141,16 +1105,14 @@
     "faces": "HLNNRZ",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder2",
-    "z": 54131,
-    "clickable": true
+    "clickable": true,
+    "parent": "holder2"
   },
   "holder3": {
     "type": "holder",
     "id": "holder3",
     "x": 100,
     "y": -100,
-    "z": 5,
     "width": 50,
     "height": 50,
     "dropOffsetX": 0,
@@ -1189,8 +1151,7 @@
       "activeFace": 0
     },
     "shape3d": true,
-    "parent": "holder3",
-    "z": 54162
+    "parent": "holder3"
   },
   "dice34": {
     "inheritFrom": {
@@ -1200,11 +1161,10 @@
     "id": "dice34",
     "x": 0,
     "y": 0,
-    "parent": "holder3",
     "faces": "AAEEEE",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54146
+    "parent": "holder3"
   },
   "dice35": {
     "inheritFrom": {
@@ -1215,10 +1175,9 @@
     "x": 0,
     "y": 0,
     "faces": "AAFIRS",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54154
+    "parent": "holder3"
   },
   "dice36": {
     "inheritFrom": {
@@ -1229,10 +1188,9 @@
     "x": 0,
     "y": 0,
     "faces": "ADENNN",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54152
+    "parent": "holder3"
   },
   "dice37": {
     "inheritFrom": {
@@ -1243,10 +1201,9 @@
     "x": 0,
     "y": 0,
     "faces": "AEEEEM",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54157
+    "parent": "holder3"
   },
   "dice38": {
     "inheritFrom": {
@@ -1257,10 +1214,9 @@
     "x": 0,
     "y": 0,
     "faces": "AEEGMU",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54164
+    "parent": "holder3"
   },
   "dice39": {
     "inheritFrom": {
@@ -1271,10 +1227,9 @@
     "x": 0,
     "y": 0,
     "faces": "AEGMNN",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54165
+    "parent": "holder3"
   },
   "dice40": {
     "inheritFrom": {
@@ -1285,10 +1240,9 @@
     "x": 0,
     "y": 0,
     "faces": "AFIRSY",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54150
+    "parent": "holder3"
   },
   "dice41": {
     "inheritFrom": {
@@ -1299,10 +1253,9 @@
     "x": 0,
     "y": 0,
     "faces": "BJKQXZ",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54148
+    "parent": "holder3"
   },
   "dice42": {
     "inheritFrom": {
@@ -1313,10 +1266,9 @@
     "x": 0,
     "y": 0,
     "faces": "CCENST",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54159
+    "parent": "holder3"
   },
   "dice43": {
     "inheritFrom": {
@@ -1327,10 +1279,9 @@
     "x": 0,
     "y": 0,
     "faces": "CEIILT",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54151
+    "parent": "holder3"
   },
   "dice44": {
     "inheritFrom": {
@@ -1341,10 +1292,9 @@
     "x": 0,
     "y": 0,
     "faces": "CEIPST",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54167
+    "parent": "holder3"
   },
   "dice45": {
     "inheritFrom": {
@@ -1355,10 +1305,9 @@
     "x": 0,
     "y": 0,
     "faces": "DDHNOT",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54144
+    "parent": "holder3"
   },
   "dice46": {
     "inheritFrom": {
@@ -1369,10 +1318,9 @@
     "x": 0,
     "y": 0,
     "faces": "DHHLOR",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54166
+    "parent": "holder3"
   },
   "dice47": {
     "inheritFrom": {
@@ -1383,10 +1331,9 @@
     "x": 0,
     "y": 0,
     "faces": "DHHLOR",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54160
+    "parent": "holder3"
   },
   "dice48": {
     "inheritFrom": {
@@ -1397,10 +1344,9 @@
     "x": 0,
     "y": 0,
     "faces": "DHLNOR",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54145
+    "parent": "holder3"
   },
   "dice49": {
     "inheritFrom": {
@@ -1411,10 +1357,9 @@
     "x": 0,
     "y": 0,
     "faces": "EIIITT",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54168
+    "parent": "holder3"
   },
   "dice50": {
     "inheritFrom": {
@@ -1425,10 +1370,9 @@
     "x": 0,
     "y": 0,
     "faces": "CEILPT",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54147
+    "parent": "holder3"
   },
   "dice51": {
     "inheritFrom": {
@@ -1439,10 +1383,9 @@
     "x": 0,
     "y": 0,
     "faces": "EMOTTT",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54158
+    "parent": "holder3"
   },
   "dice52": {
     "inheritFrom": {
@@ -1453,10 +1396,9 @@
     "x": 0,
     "y": 0,
     "faces": "ENSSSU",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54161
+    "parent": "holder3"
   },
   "dice53": {
     "inheritFrom": {
@@ -1467,10 +1409,9 @@
     "x": 0,
     "y": 0,
     "faces": "FIPRSY",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54155
+    "parent": "holder3"
   },
   "dice54": {
     "inheritFrom": {
@@ -1481,10 +1422,9 @@
     "x": 0,
     "y": 0,
     "faces": "GORRVW",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54163
+    "parent": "holder3"
   },
   "dice55": {
     "inheritFrom": {
@@ -1495,10 +1435,9 @@
     "x": 0,
     "y": 0,
     "faces": "IPRRRY",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54153
+    "parent": "holder3"
   },
   "dice56": {
     "inheritFrom": {
@@ -1509,10 +1448,9 @@
     "x": 0,
     "y": 0,
     "faces": "NOOTUW",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54149
+    "parent": "holder3"
   },
   "dice57": {
     "inheritFrom": {
@@ -1523,17 +1461,15 @@
     "x": 0,
     "y": 0,
     "faces": "OOOTTU",
-    "parent": "holder3",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54156
+    "parent": "holder3"
   },
   "holder4": {
     "type": "holder",
     "id": "holder4",
     "x": 150,
     "y": -100,
-    "z": 5,
     "width": 50,
     "height": 50,
     "dropOffsetX": 0,
@@ -1572,8 +1508,7 @@
       "activeFace": 0
     },
     "shape3d": true,
-    "parent": "holder4",
-    "z": 54186
+    "parent": "holder4"
   },
   "dice59": {
     "inheritFrom": {
@@ -1586,8 +1521,7 @@
     "faces": "AAEEEE",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54174
+    "parent": "holder4"
   },
   "dice60": {
     "inheritFrom": {
@@ -1600,8 +1534,7 @@
     "faces": "AAFIRS",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54179
+    "parent": "holder4"
   },
   "dice61": {
     "inheritFrom": {
@@ -1614,8 +1547,7 @@
     "faces": "ADENNN",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54173
+    "parent": "holder4"
   },
   "dice62": {
     "inheritFrom": {
@@ -1628,8 +1560,7 @@
     "faces": "AEEEEM",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54172
+    "parent": "holder4"
   },
   "dice63": {
     "inheritFrom": {
@@ -1642,8 +1573,7 @@
     "faces": "AEEGMU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54192
+    "parent": "holder4"
   },
   "dice64": {
     "inheritFrom": {
@@ -1656,8 +1586,7 @@
     "faces": "AEGMNN",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54176
+    "parent": "holder4"
   },
   "dice65": {
     "inheritFrom": {
@@ -1670,8 +1599,7 @@
     "faces": "AFIRSY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54178
+    "parent": "holder4"
   },
   "dice66": {
     "inheritFrom": {
@@ -1684,8 +1612,7 @@
     "faces": "BJKQXZ",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54183
+    "parent": "holder4"
   },
   "dice67": {
     "inheritFrom": {
@@ -1698,8 +1625,7 @@
     "faces": "CCENST",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54182
+    "parent": "holder4"
   },
   "dice68": {
     "inheritFrom": {
@@ -1712,8 +1638,7 @@
     "faces": "CEIILT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54170
+    "parent": "holder4"
   },
   "dice69": {
     "inheritFrom": {
@@ -1726,8 +1651,7 @@
     "faces": "CEIPST",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54189
+    "parent": "holder4"
   },
   "dice70": {
     "inheritFrom": {
@@ -1740,8 +1664,7 @@
     "faces": "DDHNOT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54193
+    "parent": "holder4"
   },
   "dice71": {
     "inheritFrom": {
@@ -1754,8 +1677,7 @@
     "faces": "DHHLOR",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54171
+    "parent": "holder4"
   },
   "dice72": {
     "inheritFrom": {
@@ -1768,8 +1690,7 @@
     "faces": "IKLMQU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54185
+    "parent": "holder4"
   },
   "dice73": {
     "inheritFrom": {
@@ -1782,8 +1703,7 @@
     "faces": "DHLNOR",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54191
+    "parent": "holder4"
   },
   "dice74": {
     "inheritFrom": {
@@ -1796,8 +1716,7 @@
     "faces": "EIIITT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54180
+    "parent": "holder4"
   },
   "dice75": {
     "inheritFrom": {
@@ -1810,8 +1729,7 @@
     "faces": "CEILPT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54181
+    "parent": "holder4"
   },
   "dice76": {
     "inheritFrom": {
@@ -1824,8 +1742,7 @@
     "faces": "EMOTTT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54190
+    "parent": "holder4"
   },
   "dice77": {
     "inheritFrom": {
@@ -1838,8 +1755,7 @@
     "faces": "ENSSSU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54184
+    "parent": "holder4"
   },
   "dice78": {
     "inheritFrom": {
@@ -1852,8 +1768,7 @@
     "faces": "FIPRSY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54187
+    "parent": "holder4"
   },
   "dice79": {
     "inheritFrom": {
@@ -1866,8 +1781,7 @@
     "faces": "GORRVW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54169
+    "parent": "holder4"
   },
   "dice80": {
     "inheritFrom": {
@@ -1880,8 +1794,7 @@
     "faces": "IPRRRY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54175
+    "parent": "holder4"
   },
   "dice81": {
     "inheritFrom": {
@@ -1894,8 +1807,7 @@
     "faces": "NOOTUW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54177
+    "parent": "holder4"
   },
   "dice82": {
     "inheritFrom": {
@@ -1908,15 +1820,13 @@
     "faces": "OOOTTU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder4",
-    "z": 54188
+    "parent": "holder4"
   },
   "holder5": {
     "type": "holder",
     "id": "holder5",
     "x": 200,
     "y": -100,
-    "z": 5,
     "width": 50,
     "height": 50,
     "dropOffsetX": 0,
@@ -1955,8 +1865,7 @@
       "activeFace": 0
     },
     "shape3d": true,
-    "parent": "holder5",
-    "z": 54206
+    "parent": "holder5"
   },
   "dice84": {
     "inheritFrom": {
@@ -1969,8 +1878,7 @@
     "faces": "AAEEEE",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54194
+    "parent": "holder5"
   },
   "dice85": {
     "inheritFrom": {
@@ -1983,8 +1891,7 @@
     "faces": "AAFIRS",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54213
+    "parent": "holder5"
   },
   "dice86": {
     "inheritFrom": {
@@ -1997,8 +1904,7 @@
     "faces": "ADENNN",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54212
+    "parent": "holder5"
   },
   "dice87": {
     "inheritFrom": {
@@ -2011,8 +1917,7 @@
     "faces": "AEEEEM",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54217
+    "parent": "holder5"
   },
   "dice88": {
     "inheritFrom": {
@@ -2025,8 +1930,7 @@
     "faces": "AEEGMU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54210
+    "parent": "holder5"
   },
   "dice89": {
     "inheritFrom": {
@@ -2039,8 +1943,7 @@
     "faces": "AEGMNN",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54218
+    "parent": "holder5"
   },
   "dice90": {
     "inheritFrom": {
@@ -2053,8 +1956,7 @@
     "faces": "AFIRSY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54197
+    "parent": "holder5"
   },
   "dice91": {
     "inheritFrom": {
@@ -2067,8 +1969,7 @@
     "faces": "BJKQXZ",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54205
+    "parent": "holder5"
   },
   "dice92": {
     "inheritFrom": {
@@ -2081,8 +1982,7 @@
     "faces": "CCNSTW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54200
+    "parent": "holder5"
   },
   "dice93": {
     "inheritFrom": {
@@ -2095,8 +1995,7 @@
     "faces": "CEIILT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54198
+    "parent": "holder5"
   },
   "dice94": {
     "inheritFrom": {
@@ -2109,8 +2008,7 @@
     "faces": "CEIPST",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54215
+    "parent": "holder5"
   },
   "dice95": {
     "inheritFrom": {
@@ -2123,8 +2021,7 @@
     "faces": "DDLNOR",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54204
+    "parent": "holder5"
   },
   "dice96": {
     "inheritFrom": {
@@ -2137,8 +2034,7 @@
     "faces": "DHHLOR",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54199
+    "parent": "holder5"
   },
   "dice97": {
     "inheritFrom": {
@@ -2151,8 +2047,7 @@
     "faces": "DHHNOT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54207
+    "parent": "holder5"
   },
   "dice98": {
     "inheritFrom": {
@@ -2165,8 +2060,7 @@
     "faces": "DHLNOR",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54203
+    "parent": "holder5"
   },
   "dice99": {
     "inheritFrom": {
@@ -2179,8 +2073,7 @@
     "faces": "EIIITT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54209
+    "parent": "holder5"
   },
   "dice100": {
     "inheritFrom": {
@@ -2193,8 +2086,7 @@
     "faces": "CEILPT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54201
+    "parent": "holder5"
   },
   "dice101": {
     "inheritFrom": {
@@ -2207,8 +2099,7 @@
     "faces": "EMOTTT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54211
+    "parent": "holder5"
   },
   "dice102": {
     "inheritFrom": {
@@ -2221,8 +2112,7 @@
     "faces": "ENSSSU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54196
+    "parent": "holder5"
   },
   "dice103": {
     "inheritFrom": {
@@ -2235,8 +2125,7 @@
     "faces": "FIPRSY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54214
+    "parent": "holder5"
   },
   "dice104": {
     "inheritFrom": {
@@ -2249,8 +2138,7 @@
     "faces": "GORRVW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54195
+    "parent": "holder5"
   },
   "dice105": {
     "inheritFrom": {
@@ -2263,8 +2151,7 @@
     "faces": "IPRRRY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54208
+    "parent": "holder5"
   },
   "dice106": {
     "inheritFrom": {
@@ -2277,8 +2164,7 @@
     "faces": "NOOTUW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54202
+    "parent": "holder5"
   },
   "dice107": {
     "inheritFrom": {
@@ -2291,15 +2177,13 @@
     "faces": "OOOTTU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder5",
-    "z": 54216
+    "parent": "holder5"
   },
   "holder6": {
     "type": "holder",
     "id": "holder6",
     "x": 250,
     "y": -100,
-    "z": 5,
     "width": 50,
     "height": 50,
     "dropOffsetX": 0,
@@ -2338,7 +2222,6 @@
       "activeFace": 0
     },
     "shape3d": true,
-    "z": 54233,
     "parent": "holder6"
   },
   "dice109": {
@@ -2352,7 +2235,6 @@
     "faces": "AAEEEE",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54243,
     "parent": "holder6"
   },
   "dice110": {
@@ -2366,7 +2248,6 @@
     "faces": "AAFIRS",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54241,
     "parent": "holder6"
   },
   "dice111": {
@@ -2380,7 +2261,6 @@
     "faces": "ADENNN",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54237,
     "parent": "holder6"
   },
   "dice112": {
@@ -2394,7 +2274,6 @@
     "faces": "AEEEEM",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54238,
     "parent": "holder6"
   },
   "dice113": {
@@ -2408,7 +2287,6 @@
     "faces": "AEEGMU",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54227,
     "parent": "holder6"
   },
   "dice114": {
@@ -2422,7 +2300,6 @@
     "faces": "AEGMNN",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54223,
     "parent": "holder6"
   },
   "dice115": {
@@ -2436,7 +2313,6 @@
     "faces": "AFIRSY",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54242,
     "parent": "holder6"
   },
   "dice116": {
@@ -2450,7 +2326,6 @@
     "faces": "BBJKXZ",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54228,
     "parent": "holder6"
   },
   "dice117": {
@@ -2464,7 +2339,6 @@
     "faces": "CCENST",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54229,
     "parent": "holder6"
   },
   "dice118": {
@@ -2478,7 +2352,6 @@
     "faces": "EIILST",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54232,
     "parent": "holder6"
   },
   "dice119": {
@@ -2492,7 +2365,6 @@
     "faces": "CEIPST",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54225,
     "parent": "holder6"
   },
   "dice120": {
@@ -2506,7 +2378,6 @@
     "faces": "DDHNOT",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54220,
     "parent": "holder6"
   },
   "dice121": {
@@ -2520,7 +2391,6 @@
     "faces": "DHHLOR",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54230,
     "parent": "holder6"
   },
   "dice122": {
@@ -2534,7 +2404,6 @@
     "faces": "DHHNOW",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54224,
     "parent": "holder6"
   },
   "dice123": {
@@ -2548,7 +2417,6 @@
     "faces": "DHLNOR",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54222,
     "parent": "holder6"
   },
   "dice124": {
@@ -2562,7 +2430,6 @@
     "faces": "EIIITT",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54234,
     "parent": "holder6"
   },
   "dice125": {
@@ -2576,7 +2443,6 @@
     "faces": "EILPST",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54226,
     "parent": "holder6"
   },
   "dice126": {
@@ -2590,7 +2456,6 @@
     "faces": "EMOTTT",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54236,
     "parent": "holder6"
   },
   "dice127": {
@@ -2604,7 +2469,6 @@
     "faces": "ENSSSU",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54235,
     "parent": "holder6"
   },
   "dice128": {
@@ -2628,7 +2492,6 @@
     "faceCSS": {
       "font-size": "35px"
     },
-    "z": 54221,
     "parent": "holder6"
   },
   "dice129": {
@@ -2642,7 +2505,6 @@
     "faces": "GORRVW",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54239,
     "parent": "holder6"
   },
   "dice130": {
@@ -2656,7 +2518,6 @@
     "faces": "IPRSYY",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54231,
     "parent": "holder6"
   },
   "dice131": {
@@ -2670,7 +2531,6 @@
     "faces": "NOOTUW",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54219,
     "parent": "holder6"
   },
   "dice132": {
@@ -2684,7 +2544,6 @@
     "faces": "OOOTTU",
     "activeFace": 0,
     "rollCount": 0,
-    "z": 54240,
     "parent": "holder6"
   },
   "holder7": {
@@ -2692,7 +2551,6 @@
     "id": "holder7",
     "x": 300,
     "y": -100,
-    "z": 5,
     "width": 50,
     "height": 50,
     "dropOffsetX": 0,
@@ -2731,8 +2589,7 @@
       "activeFace": 0
     },
     "shape3d": true,
-    "parent": "holder7",
-    "z": 54270
+    "parent": "holder7"
   },
   "dice134": {
     "inheritFrom": {
@@ -2745,8 +2602,7 @@
     "faces": "AAEEEE",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54250
+    "parent": "holder7"
   },
   "dice135": {
     "inheritFrom": {
@@ -2759,8 +2615,7 @@
     "faces": "AAEEOO",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54266
+    "parent": "holder7"
   },
   "dice136": {
     "inheritFrom": {
@@ -2773,8 +2628,7 @@
     "faces": "AAFIRS",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54268
+    "parent": "holder7"
   },
   "dice137": {
     "inheritFrom": {
@@ -2787,8 +2641,7 @@
     "faces": "ABDEIO",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54251
+    "parent": "holder7"
   },
   "dice138": {
     "inheritFrom": {
@@ -2801,8 +2654,7 @@
     "faces": "ADENNN",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54271
+    "parent": "holder7"
   },
   "dice139": {
     "inheritFrom": {
@@ -2815,8 +2667,7 @@
     "faces": "AEEEEM",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54278
+    "parent": "holder7"
   },
   "dice140": {
     "inheritFrom": {
@@ -2829,8 +2680,7 @@
     "faces": "AEEGMU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54267
+    "parent": "holder7"
   },
   "dice141": {
     "inheritFrom": {
@@ -2843,8 +2693,7 @@
     "faces": "AEGMNN",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54258
+    "parent": "holder7"
   },
   "dice142": {
     "inheritFrom": {
@@ -2857,8 +2706,7 @@
     "faces": "AEILMN",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54259
+    "parent": "holder7"
   },
   "dice143": {
     "inheritFrom": {
@@ -2871,8 +2719,7 @@
     "faces": "AEINOU",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54262
+    "parent": "holder7"
   },
   "dice144": {
     "inheritFrom": {
@@ -2885,8 +2732,7 @@
     "faces": "AFIRSY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54245
+    "parent": "holder7"
   },
   "dice145": {
     "inheritFrom": {
@@ -2906,11 +2752,10 @@
     ],
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54246,
     "faceCSS": {
       "font-size": "35px"
-    }
+    },
+    "parent": "holder7"
   },
   "dice146": {
     "inheritFrom": {
@@ -2923,8 +2768,7 @@
     "faces": "BBJKXZ",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54255
+    "parent": "holder7"
   },
   "dice147": {
     "inheritFrom": {
@@ -2937,8 +2781,7 @@
     "faces": "CCENST",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54264
+    "parent": "holder7"
   },
   "dice148": {
     "inheritFrom": {
@@ -2951,8 +2794,7 @@
     "faces": "CDDLNN",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54274
+    "parent": "holder7"
   },
   "dice149": {
     "inheritFrom": {
@@ -2965,8 +2807,7 @@
     "faces": "CEIITT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54260
+    "parent": "holder7"
   },
   "dice150": {
     "inheritFrom": {
@@ -2979,8 +2820,7 @@
     "faces": "CEIPST",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54247
+    "parent": "holder7"
   },
   "dice151": {
     "inheritFrom": {
@@ -2993,8 +2833,7 @@
     "faces": "CFGNUY",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54269
+    "parent": "holder7"
   },
   "dice152": {
     "inheritFrom": {
@@ -3007,8 +2846,7 @@
     "faces": "DDHNOT",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54253
+    "parent": "holder7"
   },
   "dice153": {
     "inheritFrom": {
@@ -3021,8 +2859,7 @@
     "activeFace": 0,
     "rollCount": 0,
     "faces": "DHHLOR",
-    "parent": "holder7",
-    "z": 54257
+    "parent": "holder7"
   },
   "dice154": {
     "inheritFrom": {
@@ -3035,8 +2872,7 @@
     "faces": "DHHNOW",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54272
+    "parent": "holder7"
   },
   "dice155": {
     "inheritFrom": {
@@ -3049,8 +2885,7 @@
     "faces": "DHLNOR",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54279
+    "parent": "holder7"
   },
   "dice156": {
     "inheritFrom": {
@@ -3063,8 +2898,7 @@
     "faces": "EHILRS",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54248
+    "parent": "holder7"
   },
   "dice157": {
     "inheritFrom": {
@@ -3077,8 +2911,7 @@
     "faces": "EIILST",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
-    "z": 54265
+    "parent": "holder7"
   },
   "dice158": {
     "inheritFrom": {
@@ -3089,10 +2922,9 @@
     "x": 0,
     "y": 0,
     "faces": "EILPST",
-    "parent": "holder7",
-    "z": 54273,
     "activeFace": 0,
-    "rollCount": 0
+    "rollCount": 0,
+    "parent": "holder7"
   },
   "dice159": {
     "inheritFrom": {
@@ -3103,10 +2935,9 @@
     "faces": "EIO___",
     "activeFace": 0,
     "rollCount": 0,
-    "parent": "holder7",
     "x": 0,
     "y": 0,
-    "z": 54244
+    "parent": "holder7"
   },
   "dice160": {
     "inheritFrom": {
@@ -3117,10 +2948,9 @@
     "x": 0,
     "y": 0,
     "faces": "EMTTTO",
-    "parent": "holder7",
-    "z": 54254,
     "activeFace": 0,
-    "rollCount": 0
+    "rollCount": 0,
+    "parent": "holder7"
   },
   "dice161": {
     "inheritFrom": {
@@ -3131,10 +2961,9 @@
     "x": 0,
     "y": 0,
     "faces": "ENSSSU",
-    "parent": "holder7",
-    "z": 54256,
     "activeFace": 0,
-    "rollCount": 0
+    "rollCount": 0,
+    "parent": "holder7"
   },
   "dice162": {
     "inheritFrom": {
@@ -3145,10 +2974,9 @@
     "x": 0,
     "y": 0,
     "faces": "GORRVW",
-    "parent": "holder7",
-    "z": 54276,
     "activeFace": 0,
-    "rollCount": 0
+    "rollCount": 0,
+    "parent": "holder7"
   },
   "dice163": {
     "inheritFrom": {
@@ -3159,10 +2987,9 @@
     "x": 0,
     "y": 0,
     "faces": "HIRSTV",
-    "parent": "holder7",
-    "z": 54252,
     "activeFace": 0,
-    "rollCount": 0
+    "rollCount": 0,
+    "parent": "holder7"
   },
   "dice164": {
     "inheritFrom": {
@@ -3173,10 +3000,9 @@
     "x": 0,
     "y": 0,
     "faces": "HOPRST",
-    "parent": "holder7",
-    "z": 54275,
     "activeFace": 0,
-    "rollCount": 0
+    "rollCount": 0,
+    "parent": "holder7"
   },
   "dice165": {
     "inheritFrom": {
@@ -3187,10 +3013,9 @@
     "x": 0,
     "y": 0,
     "faces": "IPRSYY",
-    "parent": "holder7",
-    "z": 54277,
     "activeFace": 0,
-    "rollCount": 0
+    "rollCount": 0,
+    "parent": "holder7"
   },
   "dice166": {
     "inheritFrom": {
@@ -3201,10 +3026,9 @@
     "x": 0,
     "y": 0,
     "faces": "JKQWXZ",
-    "parent": "holder7",
-    "z": 54249,
     "activeFace": 0,
-    "rollCount": 0
+    "rollCount": 0,
+    "parent": "holder7"
   },
   "dice167": {
     "inheritFrom": {
@@ -3215,10 +3039,9 @@
     "x": 0,
     "y": 0,
     "faces": "NOOTUW",
-    "parent": "holder7",
-    "z": 54263,
     "activeFace": 0,
-    "rollCount": 0
+    "rollCount": 0,
+    "parent": "holder7"
   },
   "dice168": {
     "inheritFrom": {
@@ -3229,50 +3052,17 @@
     "x": 0,
     "y": 0,
     "faces": "OOOTTU",
-    "parent": "holder7",
-    "z": 54261,
     "activeFace": 0,
-    "rollCount": 0
-  },
-  "timerBar": {
-    "id": "timerBar",
-    "y": 205,
-    "width": 200,
-    "height": 25,
-    "z": 23185,
-    "movable": false,
-    "fixedParent": true,
-    "parent": "base",
-    "borderRadius": 10,
-    "css": "border: 2px solid black; background-image: linear-gradient(to right, red, 100%, grey -100%)",
-    "x": -2,
-    "movableInEdit": false
+    "rollCount": 0,
+    "parent": "holder7"
   },
   "theTimer": {
     "type": "timer",
     "id": "theTimer",
-    "parent": "timerBar",
-    "x": 73,
-    "y": -3,
-    "z": 876,
     "movableInEdit": false,
     "countdown": true,
-    "css": "color:white",
-    "precision": 100,
     "start": 180000,
     "millisecondsChangeRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "timerBar"
-      },
-      "var bar = ${PROPERTY milliseconds} / ${PROPERTY start}",
-      "var bar = ${bar} * 100",
-      {
-        "func": "SET",
-        "property": "css",
-        "value": "border: 2px solid black; background-image: linear-gradient(to right, red, ${bar}%, grey -100%)"
-      },
       {
         "func": "IF",
         "operand1": "${PROPERTY milliseconds}",
@@ -3293,14 +3083,24 @@
         ]
       }
     ],
-    "width": 50,
-    "milliseconds": 180000
+    "width": 70,
+    "css": {
+      "font-size": "30px",
+      "background": "white",
+      "border": "1px solid black",
+      "color": "black"
+    },
+    "end": 10000,
+    "borderRadius": 5,
+    "height": 35,
+    "x": 770,
+    "milliseconds": 180000,
+    "y": 348
   },
   "seat1": {
     "type": "seat",
     "id": "seat1",
     "y": 5,
-    "z": 885,
     "score": [],
     "movableInEdit": false
   },
@@ -3310,7 +3110,6 @@
     "x": 649,
     "y": 386,
     "height": 540,
-    "z": 884,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -3338,7 +3137,6 @@
     "id": "entry1",
     "x": 10,
     "y": 55,
-    "z": 3,
     "editable": true,
     "css": {
       "font-size": "20px",
@@ -3403,7 +3201,6 @@
     "y": 100,
     "width": 130,
     "height": 860,
-    "z": 34790,
     "movableInEdit": false,
     "css": {
       "font-size": "20px",
@@ -3419,7 +3216,6 @@
     "index": 2,
     "x": 160,
     "score": [],
-    "z": 885,
     "movableInEdit": false,
     "y": 5
   },
@@ -3442,9 +3238,9 @@
     "type": "label",
     "id": "list2",
     "parent": "seat2",
-    "text": "",
     "spellCheck": false,
-    "onlyVisibleForSeat": "seat2"
+    "onlyVisibleForSeat": "seat2",
+    "text": ""
   },
   "seat3": {
     "type": "seat",
@@ -3452,7 +3248,6 @@
     "index": 3,
     "x": 320,
     "score": [],
-    "z": 885,
     "movableInEdit": false,
     "y": 5
   },
@@ -3475,9 +3270,9 @@
     "type": "label",
     "id": "list3",
     "parent": "seat3",
-    "text": "",
     "spellCheck": false,
-    "onlyVisibleForSeat": "seat3"
+    "onlyVisibleForSeat": "seat3",
+    "text": ""
   },
   "seat4": {
     "type": "seat",
@@ -3485,7 +3280,6 @@
     "index": 4,
     "x": 480,
     "score": [],
-    "z": 885,
     "movableInEdit": false,
     "y": 5
   },
@@ -3508,9 +3302,9 @@
     "type": "label",
     "id": "list4",
     "parent": "seat4",
-    "text": "",
     "spellCheck": false,
-    "onlyVisibleForSeat": "seat4"
+    "onlyVisibleForSeat": "seat4",
+    "text": ""
   },
   "seat5": {
     "type": "seat",
@@ -3518,7 +3312,6 @@
     "index": 5,
     "x": 955,
     "score": [],
-    "z": 885,
     "movableInEdit": false,
     "y": 5
   },
@@ -3541,9 +3334,9 @@
     "type": "label",
     "id": "list5",
     "parent": "seat5",
-    "text": "",
     "spellCheck": false,
-    "onlyVisibleForSeat": "seat5"
+    "onlyVisibleForSeat": "seat5",
+    "text": ""
   },
   "seat6": {
     "type": "seat",
@@ -3551,7 +3344,6 @@
     "index": 6,
     "x": 1115,
     "score": [],
-    "z": 885,
     "movableInEdit": false,
     "y": 5
   },
@@ -3574,9 +3366,9 @@
     "type": "label",
     "id": "list6",
     "parent": "seat6",
-    "text": "",
     "spellCheck": false,
-    "onlyVisibleForSeat": "seat6"
+    "onlyVisibleForSeat": "seat6",
+    "text": ""
   },
   "seat7": {
     "type": "seat",
@@ -3584,7 +3376,6 @@
     "index": 7,
     "x": 1275,
     "score": [],
-    "z": 885,
     "movableInEdit": false,
     "y": 5
   },
@@ -3607,9 +3398,9 @@
     "type": "label",
     "id": "list7",
     "parent": "seat7",
-    "text": "",
     "spellCheck": false,
-    "onlyVisibleForSeat": "seat7"
+    "onlyVisibleForSeat": "seat7",
+    "text": ""
   },
   "seat8": {
     "type": "seat",
@@ -3617,7 +3408,6 @@
     "index": 8,
     "x": 1435,
     "score": [],
-    "z": 885,
     "movableInEdit": false,
     "y": 5
   },
@@ -3640,16 +3430,15 @@
     "type": "label",
     "id": "list8",
     "parent": "seat8",
-    "text": "",
     "spellCheck": false,
-    "onlyVisibleForSeat": "seat8"
+    "onlyVisibleForSeat": "seat8",
+    "text": ""
   },
   "finish": {
     "type": "button",
     "id": "finish",
     "x": 760,
     "y": 1050,
-    "z": 890,
     "clickRoutine": [
       {
         "func": "SET",
@@ -3706,7 +3495,6 @@
     "x": 650,
     "y": 960,
     "height": 40,
-    "z": 914,
     "movableInEdit": false,
     "text": "Validate",
     "clickRoutine": [
@@ -3879,7 +3667,6 @@
     "id": "dupes",
     "x": 648,
     "y": -450,
-    "z": 46751,
     "css": {
       "background": "black",
       "color": "white",
@@ -3898,7 +3685,6 @@
     "x": 870,
     "y": 960,
     "height": 40,
-    "z": 913,
     "movableInEdit": false,
     "text": "Duplicates",
     "clickRoutine": [
