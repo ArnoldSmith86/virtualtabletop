@@ -11,7 +11,7 @@
       "time": "10",
       "link": "",
       "attribution": "The room design and all game elements are by LawDawg96 are are released into the Public Domain as CC0.<div><br></div><div>The library image was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"black and white cube dice with letters on the sides in a plain white bowl\".&nbsp;</div><div><br></div>",
-      "lastUpdate": 1690310699827,
+      "lastUpdate": 1690320459772,
       "showName": true,
       "skill": "",
       "description": "Race against the timer to find the most words using letters on dice in a grid. Most points wins.",
@@ -783,6 +783,14 @@
             ],
             "property": "onlyVisibleForSeat",
             "value": "seat${value}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "list${value}"
+            ],
+            "property": "text",
+            "value": null
           }
         ]
       },
@@ -3094,15 +3102,16 @@
     "borderRadius": 5,
     "height": 35,
     "x": 770,
-    "milliseconds": 180000,
-    "y": 348
+    "y": 348,
+    "milliseconds": 180000
   },
   "seat1": {
     "type": "seat",
     "id": "seat1",
     "y": 5,
     "score": [],
-    "movableInEdit": false
+    "movableInEdit": false,
+    "hideWhenUnused": true
   },
   "scoreboard": {
     "type": "scoreboard",
@@ -3217,7 +3226,8 @@
     "x": 160,
     "score": [],
     "movableInEdit": false,
-    "y": 5
+    "y": 5,
+    "hideWhenUnused": true
   },
   "entry2": {
     "inheritFrom": {
@@ -3249,7 +3259,8 @@
     "x": 320,
     "score": [],
     "movableInEdit": false,
-    "y": 5
+    "y": 5,
+    "hideWhenUnused": true
   },
   "entry3": {
     "inheritFrom": {
@@ -3281,7 +3292,8 @@
     "x": 480,
     "score": [],
     "movableInEdit": false,
-    "y": 5
+    "y": 5,
+    "hideWhenUnused": true
   },
   "entry4": {
     "inheritFrom": {
@@ -3313,7 +3325,8 @@
     "x": 955,
     "score": [],
     "movableInEdit": false,
-    "y": 5
+    "y": 5,
+    "hideWhenUnused": true
   },
   "entry5": {
     "inheritFrom": {
@@ -3345,7 +3358,8 @@
     "x": 1115,
     "score": [],
     "movableInEdit": false,
-    "y": 5
+    "y": 5,
+    "hideWhenUnused": true
   },
   "entry6": {
     "inheritFrom": {
@@ -3377,7 +3391,8 @@
     "x": 1275,
     "score": [],
     "movableInEdit": false,
-    "y": 5
+    "y": 5,
+    "hideWhenUnused": true
   },
   "entry7": {
     "inheritFrom": {
@@ -3409,7 +3424,8 @@
     "x": 1435,
     "score": [],
     "movableInEdit": false,
-    "y": 5
+    "y": 5,
+    "hideWhenUnused": true
   },
   "entry8": {
     "inheritFrom": {
@@ -3590,7 +3606,7 @@
         "func": "FOREACH",
         "in": "${completeArray}",
         "loopRoutine": [
-          "//Remove duplicate values across all lists",
+          "//Create list of duplicates",
           "var firstIndex = ${completeArray} indexOf ${value}",
           {
             "func": "IF",
@@ -3601,8 +3617,7 @@
               "var noDupComplete = push ${value}"
             ],
             "elseRoutine": [
-              "var dupSpace = ${value} + ' '",
-              "var dupList = push ${dupSpace}"
+              "var dupList = push ${value}"
             ]
           }
         ]
@@ -3611,7 +3626,7 @@
         "func": "FOREACH",
         "in": "${dupList}",
         "loopRoutine": [
-          "//Compare the duplicate list to the array a final time.",
+          "//Compare and remove the duplicates",
           "var position = ${noDupComplete} indexOf ${value}",
           {
             "func": "IF",
