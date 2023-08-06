@@ -867,7 +867,7 @@ export class Widget extends StateManaged {
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
           const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
           if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
-            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
+            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
           else if(index !== undefined)
             variables[variable][index] = getValue(variables[variable][index]);
           else
@@ -879,7 +879,28 @@ export class Widget extends StateManaged {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
-            problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
+            const withoutVars = evaluateVariables(a).replace(/false|null/g, 0).replace(/true/g, 1);
+            const mathExpression = withoutVars.match(new RegExp(`^${left} += +([() 0-9.&|!*/+-]+)(?: +//.*)?`+'\x24'));
+            if(mathExpression) {
+              let result = null;
+              try {
+                result = +eval(mathExpression[5]);
+              } catch(e) {
+                problems.push(`The expression "${mathExpression[5]}" threw an exception: ${e}.`);
+                result = null;
+              }
+              const variable = mathExpression[1] !== undefined ? variables[unescape(mathExpression[2])] : unescape(mathExpression[2]);
+              const index = mathExpression[3] !== undefined ? variables[unescape(mathExpression[4])] : unescape(mathExpression[4]);
+              if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
+                problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
+              else if(index !== undefined)
+                variables[variable][index] = result;
+              else
+                variables[variable] = result;
+              if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], JSON.stringify(result));
+            } else {
+              problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
+            }
           }
         }
       }

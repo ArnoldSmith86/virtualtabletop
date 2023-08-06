@@ -8,7 +8,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "y": -40,
@@ -113,7 +115,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "y": 4,
@@ -161,7 +165,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "x": 4,
@@ -267,7 +273,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "clickRoutine": [
@@ -313,7 +321,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "clickRoutine": [
@@ -418,7 +428,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "clickRoutine": [
@@ -466,7 +478,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "parent": "b008h"
@@ -481,7 +495,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "clickRoutine": [
@@ -586,7 +602,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "clickRoutine": [
@@ -633,7 +651,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "clickRoutine": [
@@ -736,7 +756,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "x": -40,
@@ -841,7 +863,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "clickRoutine": [
@@ -946,7 +970,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "parent": "b016h"
@@ -962,7 +988,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "clickRoutine": [
@@ -1009,7 +1037,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "clickRoutine": [
@@ -1056,7 +1086,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "clickRoutine": [
@@ -1131,7 +1163,6 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b002h",
-    "owner": "LawDawg",
     "parent": "bluehand"
   },
   "b003h": {
@@ -1352,8 +1383,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b016h",
-    "parent": "bluehand",
-    "owner": "LawDawg"
+    "parent": "bluehand"
   },
   "b017h": {
     "type": "holder",
@@ -1372,8 +1402,7 @@
     "classes": "transparent",
     "dropOffsetY": -40,
     "id": "b017h",
-    "parent": "bluehand",
-    "owner": "LawDawg"
+    "parent": "bluehand"
   },
   "b018h": {
     "type": "holder",
@@ -1421,7 +1450,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2930,
@@ -1527,7 +1558,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2889,
@@ -1573,7 +1606,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2957,
@@ -1679,7 +1714,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2890,
@@ -1725,7 +1762,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2939,
@@ -1830,7 +1869,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2891,
@@ -1878,7 +1919,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2894,
@@ -1893,7 +1936,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3203,
@@ -1997,7 +2042,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2907,
@@ -2045,7 +2092,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3202,
@@ -2148,7 +2197,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "x": -40,
@@ -2254,7 +2305,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2905,
@@ -2359,7 +2412,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2902,
@@ -2375,7 +2430,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2901,
@@ -2422,7 +2479,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2904,
@@ -2469,7 +2528,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2896,
@@ -2848,7 +2909,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3049,
@@ -2954,7 +3017,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3026,
@@ -3000,7 +3065,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "x": 4,
@@ -3106,7 +3173,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3029,
@@ -3152,7 +3221,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3031,
@@ -3257,7 +3328,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3030,
@@ -3305,7 +3378,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2415,
@@ -3320,7 +3395,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3036,
@@ -3425,7 +3502,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3205,
@@ -3472,7 +3551,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3035,
@@ -3575,7 +3656,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "x": -40,
@@ -3680,7 +3763,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3044,
@@ -3785,7 +3870,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 2451,
@@ -3801,7 +3888,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3047,
@@ -3848,7 +3937,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3042,
@@ -3895,7 +3986,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3204,
@@ -4274,7 +4367,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3174,
@@ -4380,7 +4475,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3143,
@@ -4426,7 +4523,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "x": 4,
@@ -4532,7 +4631,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3173,
@@ -4578,7 +4679,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3166,
@@ -4683,7 +4786,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3149,
@@ -4731,7 +4836,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3147,
@@ -4746,7 +4853,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3190,
@@ -4851,7 +4960,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3132,
@@ -4898,7 +5009,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3146,
@@ -5001,7 +5114,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "x": -40,
@@ -5106,7 +5221,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3201,
@@ -5211,7 +5328,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3193,
@@ -5227,7 +5346,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3199,
@@ -5276,7 +5397,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3191,
@@ -5325,7 +5448,9 @@
     "grid": [
       {
         "x": 40,
-        "y": 40
+        "y": 40,
+        "offsetX": -20,
+        "offsetY": -20
       }
     ],
     "z": 3189,
@@ -6668,25 +6793,29 @@
         "func": "MOVEXY",
         "from": "startholder",
         "x": 210,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 570,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 930,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 1290,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "RECALL",
@@ -6789,25 +6918,29 @@
         "func": "MOVEXY",
         "from": "startholder",
         "x": 210,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 570,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 930,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 1290,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "RECALL",
@@ -6910,25 +7043,29 @@
         "func": "MOVEXY",
         "from": "startholder",
         "x": 210,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 570,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 930,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 1290,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "RECALL",
@@ -7453,7 +7590,7 @@
     "movableInEdit": false
   },
   "_meta": {
-    "version": 6,
+    "version": 13,
     "info": {
       "name": "Tantrums",
       "image": "/assets/1638858926_33112",
@@ -7467,15 +7604,15 @@
       "description": "Place shaped pieces on board to fill in as many spaces as possible, but leaving designated scoring spaces open. Highest score wins.",
       "showName": true,
       "helpText": "Players take seats. Use blue deal face up button to show cards one at a time. After round, manually enter scores. Press square black button of next board to change boards.",
-      "lastUpdate": 1659321088000,
+      "lastUpdate": 1690554507193,
       "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "1-4",
-      "similarImage": "",
-      "similarAwards": "",
-      "ruleText": ""
+      "players": "1-4"
     }
   },
   "gpjvD": {
@@ -7790,25 +7927,29 @@
         "func": "MOVEXY",
         "from": "startholder",
         "x": 210,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 570,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 930,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "startholder",
         "x": 1290,
-        "y": 200
+        "y": 200,
+        "resetOwner": false
       },
       {
         "func": "RECALL",
