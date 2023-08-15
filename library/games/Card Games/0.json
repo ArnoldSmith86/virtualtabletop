@@ -103,7 +103,7 @@
     "type": "card",
     "cardType": "C 01",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_2_C": {
     "id": "fate_2_C",
@@ -111,7 +111,7 @@
     "type": "card",
     "cardType": "C 02",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_3_C": {
     "id": "fate_3_C",
@@ -119,7 +119,7 @@
     "type": "card",
     "cardType": "C 03",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_4_C": {
     "id": "fate_4_C",
@@ -127,7 +127,7 @@
     "type": "card",
     "cardType": "C 04",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_5_C": {
     "id": "fate_5_C",
@@ -135,7 +135,7 @@
     "type": "card",
     "cardType": "C 05",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_6_C": {
     "id": "fate_6_C",
@@ -143,7 +143,7 @@
     "type": "card",
     "cardType": "C 06",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_7_C": {
     "id": "fate_7_C",
@@ -151,7 +151,7 @@
     "type": "card",
     "cardType": "C 07",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_8_C": {
     "id": "fate_8_C",
@@ -159,7 +159,7 @@
     "type": "card",
     "cardType": "C 08",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_9_C": {
     "id": "fate_9_C",
@@ -167,7 +167,7 @@
     "type": "card",
     "cardType": "C 09",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_T_C": {
     "id": "fate_T_C",
@@ -175,7 +175,7 @@
     "type": "card",
     "cardType": "C 10",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_J_C": {
     "id": "fate_J_C",
@@ -184,7 +184,7 @@
     "cardType": "C 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_Q_C": {
     "id": "fate_Q_C",
@@ -192,7 +192,7 @@
     "type": "card",
     "cardType": "C 3Q",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_K_C": {
     "id": "fate_K_C",
@@ -200,7 +200,7 @@
     "type": "card",
     "cardType": "C 4K",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_A_D": {
     "id": "fate_A_D",
@@ -208,7 +208,7 @@
     "type": "card",
     "cardType": "D 01",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_2_D": {
     "id": "fate_2_D",
@@ -216,7 +216,7 @@
     "type": "card",
     "cardType": "D 02",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_3_D": {
     "id": "fate_3_D",
@@ -224,7 +224,7 @@
     "type": "card",
     "cardType": "D 03",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_4_D": {
     "id": "fate_4_D",
@@ -232,7 +232,7 @@
     "type": "card",
     "cardType": "D 04",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_5_D": {
     "id": "fate_5_D",
@@ -240,7 +240,7 @@
     "type": "card",
     "cardType": "D 05",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_6_D": {
     "id": "fate_6_D",
@@ -248,7 +248,7 @@
     "type": "card",
     "cardType": "D 06",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_7_D": {
     "id": "fate_7_D",
@@ -256,7 +256,7 @@
     "type": "card",
     "cardType": "D 07",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_8_D": {
     "id": "fate_8_D",
@@ -264,7 +264,7 @@
     "type": "card",
     "cardType": "D 08",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_9_D": {
     "id": "fate_9_D",
@@ -272,7 +272,7 @@
     "type": "card",
     "cardType": "D 09",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_T_D": {
     "id": "fate_T_D",
@@ -280,7 +280,7 @@
     "type": "card",
     "cardType": "D 10",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_J_D": {
     "id": "fate_J_D",
@@ -289,7 +289,7 @@
     "cardType": "D 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_Q_D": {
     "id": "fate_Q_D",
@@ -297,7 +297,7 @@
     "type": "card",
     "cardType": "D 3Q",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_K_D": {
     "id": "fate_K_D",
@@ -305,7 +305,7 @@
     "type": "card",
     "cardType": "D 4K",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_A_H": {
     "id": "fate_A_H",
@@ -313,7 +313,7 @@
     "type": "card",
     "cardType": "H 01",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_2_H": {
     "id": "fate_2_H",
@@ -321,7 +321,7 @@
     "type": "card",
     "cardType": "H 02",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_3_H": {
     "id": "fate_3_H",
@@ -329,7 +329,7 @@
     "type": "card",
     "cardType": "H 03",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_4_H": {
     "id": "fate_4_H",
@@ -337,7 +337,7 @@
     "type": "card",
     "cardType": "H 04",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_5_H": {
     "id": "fate_5_H",
@@ -345,7 +345,7 @@
     "type": "card",
     "cardType": "H 05",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_6_H": {
     "id": "fate_6_H",
@@ -353,7 +353,7 @@
     "type": "card",
     "cardType": "H 06",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_7_H": {
     "id": "fate_7_H",
@@ -361,7 +361,7 @@
     "type": "card",
     "cardType": "H 07",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_8_H": {
     "id": "fate_8_H",
@@ -369,7 +369,7 @@
     "type": "card",
     "cardType": "H 08",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_9_H": {
     "id": "fate_9_H",
@@ -377,7 +377,7 @@
     "type": "card",
     "cardType": "H 09",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_T_H": {
     "id": "fate_T_H",
@@ -385,7 +385,7 @@
     "type": "card",
     "cardType": "H 10",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_J_H": {
     "id": "fate_J_H",
@@ -394,7 +394,7 @@
     "cardType": "H 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_Q_H": {
     "id": "fate_Q_H",
@@ -402,7 +402,7 @@
     "type": "card",
     "cardType": "H 3Q",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_K_H": {
     "id": "fate_K_H",
@@ -410,7 +410,7 @@
     "type": "card",
     "cardType": "H 4K",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_A_S": {
     "id": "fate_A_S",
@@ -418,7 +418,7 @@
     "type": "card",
     "cardType": "S 01",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_2_S": {
     "id": "fate_2_S",
@@ -426,7 +426,7 @@
     "type": "card",
     "cardType": "S 02",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_3_S": {
     "id": "fate_3_S",
@@ -434,7 +434,7 @@
     "type": "card",
     "cardType": "S 03",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_4_S": {
     "id": "fate_4_S",
@@ -442,7 +442,7 @@
     "type": "card",
     "cardType": "S 04",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_5_S": {
     "id": "fate_5_S",
@@ -450,7 +450,7 @@
     "type": "card",
     "cardType": "S 05",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_6_S": {
     "id": "fate_6_S",
@@ -458,7 +458,7 @@
     "type": "card",
     "cardType": "S 06",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_7_S": {
     "id": "fate_7_S",
@@ -466,7 +466,7 @@
     "type": "card",
     "cardType": "S 07",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_8_S": {
     "id": "fate_8_S",
@@ -474,7 +474,7 @@
     "type": "card",
     "cardType": "S 08",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_9_S": {
     "id": "fate_9_S",
@@ -482,7 +482,7 @@
     "type": "card",
     "cardType": "S 09",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_T_S": {
     "id": "fate_T_S",
@@ -490,7 +490,7 @@
     "type": "card",
     "cardType": "S 10",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_J_S": {
     "id": "fate_J_S",
@@ -499,7 +499,7 @@
     "cardType": "S 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_Q_S": {
     "id": "fate_Q_S",
@@ -507,7 +507,7 @@
     "type": "card",
     "cardType": "S 3Q",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "fate_K_S": {
     "id": "fate_K_S",
@@ -515,7 +515,7 @@
     "type": "card",
     "cardType": "S 4K",
     "staged": false,
-    "parent": "96j7"
+    "parent": "pile1"
   },
   "deckHolder": {
     "type": "holder",
@@ -8306,6 +8306,12 @@
         "func": "CLICK",
         "collection": [
           "recallButton"
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "index"
         ]
       },
       "// Used to minimize the changes diff in GitHub",
@@ -20514,10 +20520,10 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1691619065487,
+      "lastUpdate": 1692119574588,
       "showName": true,
       "skill": "",
-      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Secret Agent, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco, Tute Subastado\n\nv1.1",
+      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Secret Agent, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco, Tute Subastado\n\nv1.2",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
@@ -37035,13 +37041,178 @@
       }
     ]
   },
-  "96j7": {
+  "index": {
+    "id": "index",
+    "x": 193,
+    "y": -130,
+    "css": {
+      "background": "red",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Game Index",
+    "GamesByID": [
+      "gameID0 - Default",
+      "gameID1 - Schieber Jass",
+      "gameID2 - Mittlere Jass",
+      "gameID3 - Pitch Pawnee 10 Point",
+      "gameID4 - Differenzler Jass",
+      "gameID5 - Czech Taroky",
+      "gameID6 - Coiffeur Jass (3P)",
+      "gameID7 - Sidi Barrani Jass",
+      "gameID8 - Coinche",
+      "gameID9 - Doppelkopf",
+      "gameID10 - Crow (Similar to Rook)",
+      "gameID11 - 200",
+      "gameID12 - Coiffeur Jass (4P)",
+      "gameID13 - Huutopussi",
+      "gameID14 - 1000",
+      "gameID15 - Gong Zhu",
+      "gameID16 - Hearts",
+      "gameID17 - Spades",
+      "gameID18 - Mighty",
+      "gameID19 - Tracktrick",
+      "gameID20 - Königrufen",
+      "gameID21 - Molotow Jass",
+      "gameID22 - State (Similar to Ohio)",
+      "gameID23 - Truco",
+      "gameID24 - Israeli Whist",
+      "gameID25 - Klaverjassen",
+      "gameID26 - 99",
+      "gameID27 - Counterpoint",
+      "gameID28 - Bouncers",
+      "gameID29 - Collusion",
+      "gameID30 - Skat",
+      "gameID31 - La Bâtarde",
+      "gameID32 - French Tarot",
+      "gameID33 - Agony Aunt",
+      "gameID34 - Secret Agent",
+      "gameID35 - Auctions (Similar to Bids)",
+      "gameID36 - Hold My Beer",
+      "gameID37 - Tute Subastado"
+    ],
+    "GamesByName": [
+      "1000 - gameID14",
+      "200 - gameID11",
+      "99 - gameID26",
+      "Agony Aunt - gameID33",
+      "Auctions (Similar to Bids) - gameID35",
+      "Bouncers - gameID28",
+      "Coiffeur Jass (3P) - gameID6",
+      "Coiffeur Jass (4P) - gameID12",
+      "Coinche - gameID8",
+      "Collusion - gameID29",
+      "Counterpoint - gameID27",
+      "Crow (Similar to Rook) - gameID10",
+      "Czech Taroky - gameID5",
+      "Default - gameID0",
+      "Differenzler Jass - gameID4",
+      "Doppelkopf - gameID9",
+      "French Tarot - gameID32",
+      "Gong Zhu - gameID15",
+      "Hearts - gameID16",
+      "Hold My Beer - gameID36",
+      "Huutopussi - gameID13",
+      "Israeli Whist - gameID24",
+      "Klaverjassen - gameID25",
+      "Königrufen - gameID20",
+      "La Bâtarde - gameID31",
+      "Mighty - gameID18",
+      "Mittlere Jass - gameID2",
+      "Molotow Jass - gameID21",
+      "Pitch Pawnee 10 Point - gameID3",
+      "Schieber Jass - gameID1",
+      "Secret Agent - gameID34",
+      "Sidi Barrani Jass - gameID7",
+      "Skat - gameID30",
+      "Spades - gameID17",
+      "State (Similar to Ohio) - gameID22",
+      "Tracktrick - gameID19",
+      "Truco - gameID23",
+      "Tute Subastado - gameID37"
+    ],
+    "clickRoutine": [
+      "var textArray = []",
+      "var idArray = []",
+      {
+        "func": "SELECT",
+        "property": "gameID",
+        "value": true,
+        "collection": "allGames"
+      },
+      {
+        "func": "GET",
+        "collection": "allGames",
+        "property": "text",
+        "aggregation": "array"
+      },
+      "var sortedText = ${text} sort",
+      {
+        "func": "GET",
+        "collection": "allGames",
+        "property": "id",
+        "aggregation": "array"
+      },
+      "var sortedID = ${id} numericStringSort",
+      {
+        "func": "FOREACH",
+        "in": "${sortedText}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "allGames",
+            "property": "text",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "property": "id"
+          },
+          "var thisText = ${value} + ' - '",
+          "var thisText = ${thisText} + ${id}",
+          "var textArray = push ${thisText}"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": "${sortedID}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "allGames",
+            "property": "id",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "property": "text"
+          },
+          "var thisID = ${value} + ' - '",
+          "var thisID = ${thisID} + ${text}",
+          "var idArray = push ${thisID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "GamesByName",
+        "value": "${textArray}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "GamesByID",
+        "value": "${idArray}"
+      }
+    ]
+  },
+  "pile1": {
     "type": "pile",
     "parent": "deckHolder",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "96j7"
+    "id": "pile1"
   }
 }
