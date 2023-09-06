@@ -3967,20 +3967,20 @@
       "year": "2000",
       "mode": "vs",
       "time": "45",
-      "attribution": "Room layout by ArnoldSmith86 and LawDawg96 released to public domain by CC0.\n\nGame pieces by ArnoldSmith86 released to public domain by CC0.\n\nThe sprite sheet for the tiles was created by ArnoldSmith86 and LawDawg96, licensed as CC By 3.0, and contains the following artwork:\n\nCC By 3.0 by Delapouite:\n - https://game-icons.net/1x1/delapouite/rolled-cloth.html\n - https://game-icons.net/1x1/lorc/wheat.html\n - https://game-icons.net/1x1/delapouite/barrel.html\n - https://game-icons.net/1x1/delapouite/house.html\n - https://game-icons.net/1x1/delapouite/stone-bridge.html\n - https://game-icons.net/1x1/delapouite/church.html\n - https://game-icons.net/1x1/delapouite/smoking-volcano.html (as modified by LawDawg96)\n\nCC By 3.0 by Lorc:\n - https://game-icons.net/1x1/lorc/dragon-head.html\n - https://game-icons.net/1x1/lorc/magic-portal.html\n\nCC By 3.0 by Skoll:\n - https://game-icons.net/1x1/skoll/chess-rook.html\n\nAvailable under the Flaticon License by Photo3idea_studio:\nhttps://www.flaticon.com/free-icon/church_4446088?term=church&amp;page=1&amp;position=2&amp;page=1&amp;position=2&amp;related_id=4446088&amp;origin=style#",
+      "attribution": "Room layout by ArnoldSmith86 and LawDawg96 released to public domain by CC0.\n\nGame pieces by ArnoldSmith86 released to public domain by CC0.\n\nThe sprite sheet for the tiles was created by ArnoldSmith86 and LawDawg96, licensed as CC By 3.0, and contains the following artwork:\n\nCC By 3.0 by Delapouite:\n - https://game-icons.net/1x1/delapouite/rolled-cloth.html\n - https://game-icons.net/1x1/lorc/wheat.html\n - https://game-icons.net/1x1/delapouite/barrel.html\n - https://game-icons.net/1x1/delapouite/house.html\n - https://game-icons.net/1x1/delapouite/stone-bridge.html\n - https://game-icons.net/1x1/delapouite/church.html\n - https://game-icons.net/1x1/delapouite/smoking-volcano.html (as modified by LawDawg96)\n\nCC By 3.0 by Lorc:\n - https://game-icons.net/1x1/lorc/dragon-head.html\n - https://game-icons.net/1x1/lorc/magic-portal.html\n\nCC By 3.0 by Skoll:\n - https://game-icons.net/1x1/skoll/chess-rook.html\n\nAvailable under the Flaticon License by Photo3idea_studio:\nhttps://www.flaticon.com/free-icon/church_4446088?term=church&amp;page=1&amp;position=2&amp;page=1&amp;position=2&amp;related_id=4446088&amp;origin=style#<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"scale model middle ages village water color painting --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Carcassonne",
       "similarAwards": "2012 Ludo Award Best Board Game Editor's Choice Winner\n2011 Jocul Anului în România Best Game in Romanian Finalist\n2004 Vuoden Peli Family Game of the Year Winner\n2004 Hra roku Nominee\n2002 Årets Spel Best Family Game Winner\n2001 Spiel des Jahres Winner\n2001 Spiel der Spiele Hit mit Freunden Recommended\n2001 Nederlandse Spellenprijs Nominee\n2001 International Gamers Awards - General Strategy; Multi-player Nominee\n2001 Deutscher Spiele Preis Best Family/Adult Game Winner\n2000 Meeples' Choice Award",
       "description": "Tile-building game where players create and link farmland, cities, and roads to earn points. Optional 4 expansion packs with additional tiles, scoring system, and rules available and built-in to the main game.",
       "showName": true,
       "lastUpdate": 1635211586000,
       "skill": "",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": "",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2-8",
-      "similarImage": "",
-      "ruleText": "",
-      "helpText": ""
+      "players": "2-8"
     }
   },
   "Player 2 - Big Meeple": {

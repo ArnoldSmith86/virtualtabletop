@@ -496,20 +496,20 @@
       "year": "2021",
       "mode": "solo",
       "time": "15",
-      "attribution": "By ArnoldSmith86. Released to public domain under CC0.\n\nUses images by Delapouite under CC BY 3.0:\n\nhttps://game-icons.net/1x1/delapouite/tree-growth.html\n\nhttps://game-icons.net/1x1/delapouite/waterfall.html\nhttps://game-icons.net/1x1/delapouite/camping-tent.html\nhttps://game-icons.net/1x1/delapouite/sasquatch.html\nhttps://game-icons.net/1x1/delapouite/cave-entrance.html\n\nhttps://game-icons.net/1x1/delapouite/hiking.html",
+      "attribution": "By ArnoldSmith86. Released to public domain under CC0.\n\nUses images by Delapouite under CC BY 3.0:\n\nhttps://game-icons.net/1x1/delapouite/tree-growth.html\n\nhttps://game-icons.net/1x1/delapouite/waterfall.html\nhttps://game-icons.net/1x1/delapouite/camping-tent.html\nhttps://game-icons.net/1x1/delapouite/sasquatch.html\nhttps://game-icons.net/1x1/delapouite/cave-entrance.html\n\nhttps://game-icons.net/1x1/delapouite/hiking.html<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"dangerous mountain trail watercolor painting --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Unsurmountable",
       "description": "Build a pyramid of cards ensuring a continuous path is available from bottom to top. A card may be discarded instead of played on the board to activate its special ability. Goal is to fill in all spaces on the pyramid with a connected path before running out of cards.",
       "showName": true,
       "lastUpdate": 1656358260000,
       "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "Reset": {

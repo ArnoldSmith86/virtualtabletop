@@ -8,7 +8,7 @@
     "parent": "36xe"
   },
   "_meta": {
-    "version": 4,
+    "version": 13,
     "info": {
       "name": "Imagination",
       "image": "/assets/294730837_39781",
@@ -22,15 +22,15 @@
       "similarAwards": "2022 Gra Roku Best Party Game Winner\n2021 MinD-Spielepreis Short Game Winner\n2021 Hungarian Board Game Award Nominee\n2020 Spiel des Jahres Winner\n2020 MinD-Spielepreis Short Game Nominee\n2020 Japan Boardgame Prize Voters' Selection Nominee",
       "description": "Players are assigned a random card to recreate each using different components. Players vote on which picture was recreated and points awarded for correct guesses. Most points after 5 rounds wins.",
       "showName": true,
-      "lastUpdate": 1638419682000,
+      "lastUpdate": 1690573833582,
       "skill": "",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": "Instructions for use are in the game itself.",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "3-5",
-      "similarImage": "",
-      "ruleText": "",
-      "helpText": ""
+      "players": "3-5"
     }
   },
   "seat1": {
@@ -620,9 +620,10 @@
             "y": 0,
             "width": 320,
             "height": 159,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1306,9 +1307,10 @@
           {
             "type": "text",
             "fontSize": "35",
-            "valueType": "dynamic",
-            "value": "text1",
-            "color": "red"
+            "color": "red",
+            "dynamicProperties": {
+              "value": "text1"
+            }
           }
         ]
       }
@@ -1396,7 +1398,8 @@
         "value": "${cardText}"
       }
     ],
-    "cardSeat": 1
+    "cardSeat": 1,
+    "hoverInheritVisibleForSeat": false
   },
   "imageLabel": {
     "id": "imageLabel",
@@ -1415,28 +1418,32 @@
     "id": "gridCardHolder2",
     "onlyVisibleForSeat": "seat2",
     "inheritFrom": "gridCardHolder1",
-    "cardSeat": 2
+    "cardSeat": 2,
+    "hoverInheritVisibleForSeat": false
   },
   "gridCardHolder3": {
     "type": "holder",
     "id": "gridCardHolder3",
     "onlyVisibleForSeat": "seat3",
     "inheritFrom": "gridCardHolder1",
-    "cardSeat": 3
+    "cardSeat": 3,
+    "hoverInheritVisibleForSeat": false
   },
   "gridCardHolder4": {
     "type": "holder",
     "id": "gridCardHolder4",
     "onlyVisibleForSeat": "seat4",
     "inheritFrom": "gridCardHolder1",
-    "cardSeat": 4
+    "cardSeat": 4,
+    "hoverInheritVisibleForSeat": false
   },
   "gridCardHolder5": {
     "type": "holder",
     "id": "gridCardHolder5",
     "onlyVisibleForSeat": "seat5",
     "inheritFrom": "gridCardHolder1",
-    "cardSeat": 5
+    "cardSeat": 5,
+    "hoverInheritVisibleForSeat": false
   },
   "toolCanvas": {
     "type": "canvas",
@@ -1456,7 +1463,8 @@
     "activeGuess": false,
     "onlyVisibleForSeat": "seat1",
     "y": 5,
-    "x": 1700
+    "x": 1700,
+    "hoverInheritVisibleForSeat": false
   },
   "toolCanvasLabel": {
     "id": "toolCanvasLabel",
@@ -1511,7 +1519,8 @@
     "layer": 1,
     "onlyVisibleForSeat": "seat2",
     "movableInEdit": false,
-    "x": 1700
+    "x": 1700,
+    "hoverInheritVisibleForSeat": false
   },
   "marble1": {
     "id": "marble1",
@@ -1848,7 +1857,8 @@
     "activeGuess": false,
     "layer": 1,
     "onlyVisibleForSeat": "seat3",
-    "x": 1700
+    "x": 1700,
+    "hoverInheritVisibleForSeat": false
   },
   "toolCubesReset": {
     "type": "button",
@@ -2294,7 +2304,8 @@
     "activeGuess": false,
     "layer": 1,
     "onlyVisibleForSeat": "seat4",
-    "x": 1700
+    "x": 1700,
+    "hoverInheritVisibleForSeat": false
   },
   "toolShadesReset": {
     "type": "button",
@@ -2603,7 +2614,8 @@
     "activeGuess": false,
     "layer": 1,
     "onlyVisibleForSeat": "seat5",
-    "x": 1700
+    "x": 1700,
+    "hoverInheritVisibleForSeat": false
   },
   "toolShapesLabel": {
     "id": "toolShapesLabel",
@@ -4201,7 +4213,8 @@
         ]
       }
     ],
-    "css": "background: #f0f0f0; "
+    "css": "background: #f0f0f0; ",
+    "hoverInheritVisibleForSeat": false
   },
   "guessingLabel2": {
     "inheritFrom": "guessingLabel1",
@@ -4212,7 +4225,8 @@
     "z": 1284,
     "activeFace": 0,
     "thisSeat": 2,
-    "parent": "scoringLabel"
+    "parent": "scoringLabel",
+    "hoverInheritVisibleForSeat": false
   },
   "guessingLabel3": {
     "inheritFrom": "guessingLabel1",
@@ -4222,7 +4236,8 @@
     "onlyVisibleForSeat": "seat3",
     "thisSeat": 3,
     "parent": "scoringLabel",
-    "activeFace": 0
+    "activeFace": 0,
+    "hoverInheritVisibleForSeat": false
   },
   "guessingLabel4": {
     "inheritFrom": "guessingLabel1",
@@ -4232,7 +4247,8 @@
     "onlyVisibleForSeat": "seat4",
     "thisSeat": 4,
     "parent": "scoringLabel",
-    "activeFace": 0
+    "activeFace": 0,
+    "hoverInheritVisibleForSeat": false
   },
   "guessingLabel5": {
     "inheritFrom": "guessingLabel1",
@@ -4241,7 +4257,8 @@
     "y": 100,
     "onlyVisibleForSeat": "seat5",
     "thisSeat": 5,
-    "parent": "scoringLabel"
+    "parent": "scoringLabel",
+    "hoverInheritVisibleForSeat": false
   },
   "nextToolButton": {
     "type": "button",
@@ -4601,7 +4618,8 @@
       "none"
     ],
     "fixedParent": true,
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline2": {
     "inheritFrom": "pOutline1",
@@ -4613,7 +4631,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline3": {
     "inheritFrom": "pOutline1",
@@ -4625,7 +4644,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline4": {
     "inheritFrom": "pOutline1",
@@ -4637,7 +4657,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline5": {
     "inheritFrom": "pOutline1",
@@ -4649,7 +4670,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline6": {
     "inheritFrom": "pOutline1",
@@ -4661,7 +4683,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline7": {
     "inheritFrom": "pOutline1",
@@ -4673,7 +4696,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline8": {
     "inheritFrom": "pOutline1",
@@ -4685,7 +4709,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline9": {
     "inheritFrom": "pOutline1",
@@ -4697,7 +4722,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline10": {
     "inheritFrom": "pOutline1",
@@ -4709,7 +4735,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline11": {
     "inheritFrom": "pOutline1",
@@ -4721,7 +4748,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline12": {
     "inheritFrom": "pOutline1",
@@ -4733,7 +4761,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline13": {
     "inheritFrom": "pOutline1",
@@ -4745,7 +4774,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline14": {
     "inheritFrom": "pOutline1",
@@ -4757,7 +4787,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline15": {
     "inheritFrom": "pOutline1",
@@ -4769,7 +4800,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "outlineButton": {
     "type": "button",
@@ -5694,7 +5726,8 @@
     "text": "Advance to next drawing",
     "width": 200,
     "layer": 3,
-    "css": "font-size: 28px; "
+    "css": "font-size: 28px; ",
+    "hoverInheritVisibleForSeat": false
   },
   "arzv": {
     "deck": "gnr5D",
@@ -6306,5 +6339,46 @@
     ],
     "css": "font-size: 28px; ",
     "text": "Start Next Round"
+  },
+  "divider1": {
+    "id": "divider1",
+    "parent": "creatorLabel1",
+    "fixedParent": true,
+    "x": 10,
+    "y": 101,
+    "width": 575,
+    "height": 0,
+    "borderRadius": "3px",
+    "z": 9762,
+    "css": {
+      "border": "3px solid #fff"
+    }
+  },
+  "divider2": {
+    "id": "divider2",
+    "parent": "creatorLabel2",
+    "x": 10,
+    "y": 101,
+    "inheritFrom": {
+      "divider1": "*"
+    }
+  },
+  "divider3": {
+    "id": "divider3",
+    "parent": "creatorLabel3",
+    "x": 10,
+    "y": 101,
+    "inheritFrom": {
+      "divider1": "*"
+    }
+  },
+  "divider4": {
+    "id": "divider4",
+    "parent": "creatorLabel4",
+    "x": 10,
+    "y": 101,
+    "inheritFrom": {
+      "divider1": "*"
+    }
   }
 }
