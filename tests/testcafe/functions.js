@@ -146,8 +146,8 @@ test('Dynamic expressions', async t => {
   await ClientFunction(prepareClient)();
   await setName(t);
   await t
-    .click('#addButton')
-    .click('#addBasicWidget')
+    .click('#editButton')
+    .pressKey('a')
     .pressKey('ctrl+j')
     .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
     .typeText('#jeText', button, { replace: true, paste: true })
