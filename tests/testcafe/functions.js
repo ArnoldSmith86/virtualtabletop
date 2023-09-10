@@ -147,9 +147,11 @@ test('Dynamic expressions', async t => {
   await setName(t);
   await t
     .click('#editButton')
+    .debug()
     .pressKey('a')
-    .pressKey('ctrl+j')
+    .click('#addBasicWidget')
     .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
+    .click(Selector('button').withAttribute('icon', 'data_object'))
     .typeText('#jeText', button, { replace: true, paste: true })
     .click('#w_jyo6')
   const log = await Selector('#jeLog').textContent
