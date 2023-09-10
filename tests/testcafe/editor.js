@@ -97,5 +97,5 @@ test('Create game using edit mode', async t => {
     .drag(Selector('button').withAttribute('icon', 'settings_backup_restore'), -100, 0)
     .drag(Selector('button').withAttribute('icon', 'control_camera'), -500, -200)
   await t.resizeWindow(width,height);
-  await compareState(t, '0409884b9427545b8e4b8ff77043a8a4');
+  await compareState(t, '42a828367d88a6a5ba9cfc83accc87a4');
 });
