@@ -147,7 +147,7 @@ test('Dynamic expressions', async t => {
   await setName(t);
   await t
     .click('#editButton')
-    .debug()
+    .pressKey('a')
     .pressKey('a')
     .click('#addBasicWidget')
     .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
