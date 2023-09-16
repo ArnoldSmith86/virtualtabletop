@@ -1384,10 +1384,11 @@ function jeApplyDelta(delta) {
         } else {
           if(jeKeyIsDown) {
             jeKeyIsDownDeltas.push(delta.s[jeStateNow[field]]);
+            if(delta.s[jeStateNow.id].milliseconds === undefined)
+              jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText',), false, false);
             return;
           }
-
-          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'), false, true);
+          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText',), false, true);
         }
       }
     }
