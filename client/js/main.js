@@ -9,7 +9,11 @@ let muted = false;
 let unmuteVol = 30;
 let optionsHidden = true;
 
-var vmEditOverlay;
+let edit = null;
+export let jeEnabled = null;
+let zoom = 1;
+let offset = [ 0, 0 ];
+let jeRoutineLogging = false;
 
 let urlProperties = {};
 
@@ -103,7 +107,6 @@ export function showOverlay(id, forced) {
     }
     toServer('mouse',{inactive:true})
   } else {
-    vmEditOverlay.selectedWidget = {};
     overlayActive = false;
   }
 }
@@ -113,6 +116,10 @@ export function showStatesOverlay(id) {
   if(id == 'statesOverlay')
     updateFilterOverflow();
   $('#statesButton').dataset.overlay = id;
+}
+
+export function isOverlayActive() {
+  return overlayActive;
 }
 
 function checkURLproperties(connected) {
@@ -147,7 +154,6 @@ function checkURLproperties(connected) {
       on('#askIDoverlay button', 'click', function() {
         roomID = urlProperties.askID + $('#enteredID').value;
         toServer('room', { playerName, roomID });
-        $('#legacy-link').href += `#${roomID}`;
         showOverlay();
       });
       showOverlay('askIDoverlay');
@@ -170,19 +176,37 @@ function checkURLproperties(connected) {
   }
 }
 
+function setZoomAndOffset(newZoom, xOffset, yOffset) {
+  zoom = newZoom;
+  offset = [ xOffset, yOffset ];
+  setScale();
+}
+
 function setScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
-  if(jeEnabled) {
-    const targetWidth = jeZoomOut ? 3200 : 1600;
-    const targetHeight = jeZoomOut ? 2000 : 1000;
-    const availableWidth = $('#jeEditArea').offsetLeft;
-    if(availableWidth/(h-70) < 1600/1000)
-      scale = availableWidth/targetWidth;
-    else
-      scale = (h-70)/targetHeight;
+  if(edit || jeEnabled) {
+    const targetWidth = 1600 / zoom;
+    const targetHeight = 1000 / zoom;
+    const availableRect = getAvailableRoomRectangle();
+    const availableWidth = availableRect.right-availableRect.left;
+    const availableHeight = availableRect.bottom-availableRect.top;
+
+    scale = availableWidth/availableHeight < 1600/1000 ? availableWidth/targetWidth : availableHeight/targetHeight;
+
+    const offsetX = offset[0] + (1-zoom)/2*1600*scale/zoom;
+    const offsetY = offset[1] + (1-zoom)/2*1000*scale/zoom;
+
+    if(availableWidth/availableHeight < 1600/1000) {
+      document.documentElement.style.setProperty('--editModeRoomLeft', (offsetX + availableRect.left) + 'px');
+      document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top + (availableHeight-scale*targetHeight)/2) + 'px');
+    } else {
+      document.documentElement.style.setProperty('--editModeRoomLeft', (offsetX + availableRect.left + (availableWidth-scale*targetWidth)/2) + 'px');
+      document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top) + 'px');
+    }
+    document.documentElement.style.setProperty('--roomZoom', zoom);
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
@@ -201,6 +225,16 @@ function setScale() {
   }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
+  if(edit)
+    scaleHasChanged(scale);
+}
+
+function getScale() {
+  return scale;
+}
+
+function getRoomRectangle() {
+  return roomRectangle;
 }
 
 export async function shuffleWidgets(collection) {
@@ -334,6 +368,60 @@ function getSVG(url, replaces, callback) {
   return '';
 }
 
+async function loadEditMode() {
+  if(edit === null) {
+    edit = false;
+    Object.assign(window, {
+      $, $a, div, on, onMessage, showOverlay,
+      setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
+      toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
+      addWidgetLocal, removeWidgetLocal,
+      loadJSZip, waitForJSZip,
+      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
+      getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+      formField,
+      Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
+      toHex, contrastAnyColor,
+      asArray, compute_ops,
+      eventCoords
+    });
+    $('body').classList.add('loadingEditMode');
+    const editmode = await import('./edit.js');
+    $('body').classList.remove('loadingEditMode');
+    Object.assign(window, editmode);
+    initializeEditMode();
+  }
+}
+
+window.addEventListener('keydown', async function(e) {
+  if(e.ctrlKey && e.key == 'j') {
+    e.preventDefault();
+    if(edit) {
+      $('#editorToolbar button[icon=close]').click();
+    } else if(edit === false) {
+      $('#editButton').click();
+    } else {
+      await loadEditMode();
+      $('#editButton').click();
+      if(!$('#editorSidebar button[icon=data_object].active'))
+        $('#editorSidebar button[icon=data_object]').click();
+    }
+  }
+});
+
+async function toggleEditMode() {
+  await loadEditMode();
+  if(edit)
+    $('body').classList.remove('edit');
+  else
+    $('body').classList.add('edit');
+  edit = !edit;
+  if(edit)
+    openEditor();
+  showOverlay();
+  setScale();
+}
+
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
@@ -355,18 +443,16 @@ onLoad(function() {
       toggleEditMode();
   });
 
-  on('#addButton', 'click', function(e) {
-    if(!$a('#activeGameButton.active, #editButton.active').length)
-      $('#activeGameButton').click();
-  });
-
   on('#activeGameButton', 'click', function() {
     showOverlay();
   });
 
-  on('.toolbarButton', 'click', function(e) {
+  on('.toolbarButton', 'click', async function(e) {
     const overlay = e.currentTarget.dataset.overlay;
     if(overlay) {
+      if(overlay == 'addOverlay')
+        await loadEditMode();
+
       showOverlay(overlay);
       if(overlay == 'statesOverlay')
         updateFilterOverflow();
@@ -476,19 +562,30 @@ onLoad(function() {
   });
 });
 
+function getEdit() {
+  return edit;
+}
+
+function setJEenabled(v) {
+  jeEnabled = v;
+}
+
+function setJEroutineLogging(v) {
+  jeRoutineLogging = v;
+}
+
 window.onresize = function(event) {
   setScale();
 }
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    if(overlayActive || edit)
+    if($('body.edit #editorSidebar button.active'))
+      $('#editorSidebar button.active').click();
+    else if(edit)
+      $('#editorToolbar button[icon=close]').click();
+    else if(overlayActive)
       $('#activeGameButton').click();
-    else if(jeEnabled && jeDebugViewing) {
-      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
-      jeShowCommands();
-    } else if(jeEnabled)
-      jeToggle();
   }
 }
 
