@@ -174,7 +174,7 @@ function receiveDelta(delta) {
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
 
-  if(edit)
+  if(typeof edit != 'undefined' && edit)
     editorReceiveDelta(delta);
 }
 
