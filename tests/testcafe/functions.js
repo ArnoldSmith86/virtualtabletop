@@ -52,6 +52,7 @@ test('Compute', async t => {
 });
 
 test('Dynamic expressions', async t => {
+  await t.resizeWindow(1280, 800);
   let button = `{
     "type": "button",
     "text": "DEAL",
@@ -147,8 +148,7 @@ test('Dynamic expressions', async t => {
   await setName(t);
   await t
     .click('#editButton')
-    .pressKey('a')
-    .pressKey('a')
+    .click('#editorToolbar [icon=add]')
     .click('#addBasicWidget')
     .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
     .click(Selector('button').withAttribute('icon', 'data_object'))
