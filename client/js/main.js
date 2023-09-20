@@ -101,7 +101,8 @@ export function showOverlay(id, forced) {
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
-    toServer('mouse',{inactive:true})
+    if(!isLoading)
+      toServer('mouse',{inactive:true})
   } else {
     vmEditOverlay.selectedWidget = {};
     overlayActive = false;
@@ -119,7 +120,18 @@ function checkURLproperties(connected) {
   if(!connected) {
 
     try {
-      if(location.hash) {
+      const gameURLmatch = location.href.match(/\/game\/(?:([0-9a-z]{8})\/)?([a-z-]+)$/);
+      if(gameURLmatch) {
+        console.log(gameURLmatch);
+        fetch(`api/shareDetails/${gameURLmatch[1]}`).then(async function(r) {
+          const state = await r.json();
+          console.log(state);
+          applyValuesToDOM($('#linkDetailsOverlay'), state);
+          toggleClass($('#linkDetailsOverlay .star'),               'hidden', !!gameURLmatch[1]);
+          toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', !gameURLmatch[1]);
+          showOverlay('linkDetailsOverlay');
+        });
+      } else if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
           $('#filterByType').value = 'Tutorials';
@@ -338,6 +350,13 @@ onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
+
+  on('.toolbarButton', 'click', function(e) {
+    if(isLoading) {
+      e.stopImmediatePropagation();
+      return;
+    }
+  });
 
   on('.toolbarTab', 'click', function(e) {
     if(e.currentTarget.classList.contains('active')) {

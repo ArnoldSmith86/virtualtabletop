@@ -202,6 +202,10 @@ body.aspectTooGood.hiddenToolbar {
       background-color: rgba(0, 0, 0, 0.1);
     }
 
+    body.loading .toolbarButton:hover {
+      background-color: transparent;
+    }
+
     .toolbarButton:focus {
       outline-style: none;
       box-shadow: none;

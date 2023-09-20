@@ -261,13 +261,16 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
-  router.get('/:room', function(req, res, next) {
-    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
-      if(!isLoaded) {
+  router.get('/:room', gameRoomHandler);
+  router.get('/game/:id', gameRoomHandler);
+  router.get('/game/:id/:junk', gameRoomHandler);
+  function gameRoomHandler(req, res, next) {
+    ensureRoomIsLoaded(req.params.room || req.params.id).then(function(isLoaded) {
+      if (!isLoaded) {
         res.send('Invalid characters in room ID.');
         return;
       }
-      if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+      if (req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
         res.setHeader('Content-Encoding', 'gzip');
         res.setHeader('Content-Type', 'text/html');
         res.send(result.gzipped);
@@ -275,7 +278,7 @@ MinifyRoom().then(function(result) {
         res.send(result.min);
       }
     }).catch(next);
-  });
+  }
 
   router.get('/createTempState/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {

@@ -391,7 +391,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   color: var(--overlayFontColor);
 }
 
-#stateDetailsOverlay > .buttons.one {
+#stateDetailsOverlay > .buttons.one, #linkDetailsOverlay > .buttons.one {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -416,12 +416,12 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: none;
 }
 
-#stateDetailsOverlay {
+:root {
   --mainDetailsHeight: 300px;
   --similarDetailsHeight: 200px;
   --arrowButtonsSize: 160px;
 }
-#mainDetails, #similarDetails, #variantsList, #helpTexts {
+.mainStateDetails, #similarDetails, #variantsList, #helpTexts {
   position: absolute;
   width: 60%;
   top: 10px;
@@ -436,21 +436,21 @@ div:nth-of-type(2) > .list > .roomState .star {
 #stateDetailsOverlay img {
   object-fit: cover;
 }
-#mainImage, #similarImage {
+.mainStateImage, #similarImage {
   position: fixed;
   height: var(--mainDetailsHeight);
   width: var(--mainDetailsHeight);
 }
-#mainImage img, #similarImage img, .variant-image img, #mainImage > div, #similarImage div, .variant-image div {
+.mainStateImage img, #similarImage img, .variant-image img, .mainStateImage > div, #similarImage div, .variant-image div {
   position: absolute;
   height: 100%;
   width: 100%;
   border-radius: 20px 0 0 20px;
 }
-#mainImage > div, #similarImage div, .variant-image div {
+.mainStateImage > div, #similarImage div, .variant-image div {
   background: #fff8;
 }
-#mainDetails > .details > div:nth-of-type(1) {
+#stateDetailsOverlay .mainStateDetails > .details > div:nth-of-type(1) {
   position: absolute;
   bottom: 10px;
   left: 10px;
@@ -458,43 +458,43 @@ div:nth-of-type(2) > .list > .roomState .star {
 .notEditing .onlyForEdit, .editing .hideForEdit {
   display: none !important;
 }
-#mainImage > div button, #similarImage div button, .variant-image div button {
+.mainStateImage > div button, #similarImage div button, .variant-image div button {
   margin: calc(50% - 17px) auto;
 }
-#mainDetails .details, #similarDetails .details {
+.mainStateDetails .details, #similarDetails .details {
   margin-left: var(--mainDetailsHeight);
   padding-left: 20px;
   padding-top: 14px;
   padding-bottom: 14px;
 }
-#mainDetails h1, #similarDetails h1 {
+.mainStateDetails h1, #similarDetails h1 {
   color: var(--VTTblue);
   text-align: left;
   margin-top: 0;
   margin-bottom: 8px;
 }
-#mainDetails .material-icons, #similarDetails .material-icons {
+.mainStateDetails .material-icons, #similarDetails .material-icons {
   top: 5px;
   position: relative;
 }
-#mainDetails .star, #mainDetails #mainImage > i, #mainImage span {
+.mainStateDetails .star, .mainStateDetails .mainStateImage > i, .mainStateImage span {
   position: fixed;
   font-size: 50px;
   background: none;
   text-shadow: 2px 2px 4px #444;
 }
-#mainDetails .star::before {
+.mainStateDetails .star::before {
   font-size: 50px;
 }
-#mainDetails #mainImage > i {
+.mainStateDetails .mainStateImage > i {
   top: unset;
   color: white;
   padding: 9px;
 }
-#mainImage .active.star, #mainImage .active.star + span {
+.mainStateImage .active.star, .mainStateImage .active.star + span {
   color: gold;
 }
-#mainImage span {
+.mainStateImage span {
   position: absolute;
   font-size: 16px;
   top: 51px;
@@ -503,7 +503,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   color: white;
   font-weight: bold;
 }
-#mainDetails p, #similarDetails p {
+.mainStateDetails p, #similarDetails p {
   margin-top: 8px;
   margin-bottom: 0;
 }
@@ -734,21 +734,21 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 
 @media (max-width: 1260px), (max-height: 787px), (min-width: 1421px) and (min-height: 888px) {
-  #stateDetailsOverlay {
+  :root {
     --mainDetailsHeight: 200px;
     --similarDetailsHeight: 160px;
     --arrowButtonsSize: 100px;
   }
-  #mainDetails .details, #similarDetails .details {
+  #stateDetailsOverlay .mainStateDetails .details, #similarDetails .details {
     padding-top: 10px;
     padding-bottom: 10px;
   }
-  #mainDetails > .details > div + div {
+  #stateDetailsOverlay .mainStateDetails > .details > div + div {
     display: inline-block;
     font-size: 14px;
     margin-right: 10px;
   }
-  #mainDetails .material-icons {
+  #stateDetailsOverlay .mainStateDetails .material-icons {
     font-size: 18px;
     top: 3px;
   }
@@ -762,11 +762,11 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
 }
 @media (max-width: 957px), (max-height: 600px), (max-width: 1000px) and (max-height: 643px), (min-width: 1421px) and (min-height: 888px) {
-  #stateDetailsOverlay {
+  :root {
     --mainDetailsHeight: 150px;
     --similarDetailsHeight: 150px;
   }
-  #mainDetails, #similarDetails, #variantsList, #helpTexts {
+  #stateDetailsOverlay .mainStateDetails, #similarDetails, #variantsList, #helpTexts {
     position: unset;
     overflow: unset;
     margin: 20px auto;
@@ -778,33 +778,33 @@ div:nth-of-type(2) > .list > .roomState .star {
   #stateDetailsOverlay #similarDetails.hidden, #stateDetailsOverlay #helpTexts.hidden {
     display: none !important;
   }
-  #mainDetails {
+  #stateDetailsOverlay .mainStateDetails {
     position: relative;
     top: 0;
     left: 0;
     margin-top: 60px;
   }
-  #mainImage, #similarImage {
+  #stateDetailsOverlay .mainStateImage, #similarImage {
     position: relative;
     float: left;
     margin-right: 10px;
   }
-  #mainImage img, #similarImage img, #mainImage > div, #similarImage div {
+  #stateDetailsOverlay .mainStateImage img, #similarImage img, #stateDetailsOverlay .mainStateImage > div, #similarImage div {
     height: var(--mainDetailsHeight);
     width: var(--mainDetailsHeight);
     border-radius: 10px;
   }
-  #mainDetails > .details > div:nth-of-type(1) {
+  #stateDetailsOverlay .mainStateDetails > .details > div:nth-of-type(1) {
     position: absolute;
     bottom: unset;
     top: 140px;
     left: 30px;
   }
-  #mainDetails .details, #similarDetails .details {
+  #stateDetailsOverlay .mainStateDetails .details, #similarDetails .details {
     padding-top: 0;
     padding-bottom: 0;
   }
-  #mainDetails .star, #mainDetails #mainImage > i {
+  #stateDetailsOverlay .mainStateDetails .star, #stateDetailsOverlay .mainStateDetails .mainStateImage > i {
     position: absolute;
   }
   #nextState, #prevState {
@@ -818,39 +818,39 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
 }
 @media (max-width: 500px), (max-height: 312px) {
-  #stateDetailsOverlay {
+  :root {
     --mainDetailsHeight: 50px;
     --similarDetailsHeight: 50px;
   }
-  #mainDetails, #similarDetails, #variantsList, #helpTexts {
+  .mainStateDetails, #similarDetails, #variantsList, #helpTexts {
     padding: 10px;
     margin: 10px auto;
   }
-  #mainDetails {
+  .mainStateDetails {
     margin-top: 60px;
   }
-  #mainDetails h1, #similarDetails h1 {
+  .mainStateDetails h1, #similarDetails h1 {
     margin: 8px;
     min-height: 40px;
   }
-  #mainDetails .details, #similarDetails .details {
+  .mainStateDetails .details, #similarDetails .details {
     margin: unset;
     padding: unset;
   }
-  #mainDetails > .details > div:nth-of-type(1) {
+  .mainStateDetails > .details > div:nth-of-type(1) {
     position: unset;
   }
-  #mainDetails .star::before, #mainDetails #mainImage > i {
+  .mainStateDetails .star::before, .mainStateDetails .mainStateImage > i {
     font-size: 32px;
   }
-  #mainImage button, #similarImage button {
+  .mainStateImage button, #similarImage button {
     font-size: 0;
     padding: 5px;
   }
-  #mainImage button::before, #similarImage button::before {
+  .mainStateImage button::before, #similarImage button::before {
     margin: 0;
   }
-  #mainImage span {
+  .mainStateImage span {
     display: none;
   }
   #variantsList {
@@ -887,7 +887,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
 }
 @media (max-width: 270px), (max-height: 168px) {
-  #stateDetailsOverlay.editing #mainDetails {
+  #stateDetailsOverlay.editing .mainStateDetails {
     margin-top: 0;
   }
   #stateDetailsOverlay.editing > .buttons {
@@ -916,7 +916,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   #stateDetailsOverlay {
     background: var(--roomColor);
   }
-  #helpTexts, #mainDetails, #similarDetails, #variantsList {
+  #helpTexts, #stateDetailsOverlay  .mainStateDetails, #similarDetails, #variantsList {
     background: white;
   }
 }
@@ -928,7 +928,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   background-repeat: repeat
 }
 
-#stateDetailsOverlay .hidden {
+#stateDetailsOverlay .hidden, .mainStateDetails .hidden {
   display: none !important;
 }
 
@@ -1002,6 +1002,47 @@ div:nth-of-type(2) > .list > .roomState .star {
     padding: 5px;
     border-radius: 10px;
   }
+}
+
+
+
+
+
+/* linkDetailsOverlay */
+
+#linkDetailsOverlay {
+  color: var(--overlayFontColor);
+}
+
+#linkDetailsOverlay h1 {
+  margin-bottom: 0;
+}
+
+#linkDetailsOverlay h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+#linkDetailsOverlay .addToRoomBox {
+  position: absolute;
+  width: 60%;
+  top: calc(20px + var(--mainDetailsHeight));
+  left: 20%;
+  box-sizing: border-box;
+  background: var(--roomColor);
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 20px;
+}
+#linkDetailsOverlay .addToRoomBox button[icon=play_arrow] {
+  margin: auto;
+}
+#linkDetailsOverlay .addToRoomBox button[icon=share] {
+  display: inline-flex;
+  padding: 2px;
+  vertical-align: middle;
+}
+#linkDetailsOverlay p[icon]::before {
+  left: 32px;
 }
 
 

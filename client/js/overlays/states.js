@@ -488,7 +488,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.addEventListener('click', async function(e) {
         let loadGame = $('#stateDetailsOverlay.notEditing');
         if(!loadGame) {
-          loadGame = await confirmOverlay('Discard changes', `Are you sure you want to discard any changes you made to ${$('#mainDetails h1').innerText}?`, 'Discard', 'Keep', 'delete', 'undo', 'red');
+          loadGame = await confirmOverlay('Discard changes', `Are you sure you want to discard any changes you made to ${$('#stateDetailsOverlay .mainStateDetails h1').innerText}?`, 'Discard', 'Keep', 'delete', 'undo', 'red');
           if(loadGame)
             disableEditing($('#stateDetailsOverlay'), state);
           showStatesOverlay('statesOverlay');
@@ -610,13 +610,13 @@ function fillStateDetails(states, state, dom) {
     dom.scrollTop = 0;
 
   applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
-  toggleClass($('#mainDetails'), 'noImage', !state.image);
+  toggleClass($('#stateDetailsOverlay .mainStateDetails'), 'noImage', !state.image);
   toggleClass($('#similarDetails'), 'noImage', !state.similarImage);
 
-  toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
-  toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);
-  toggleClass($('#mainImage > i'),                     'hidden', !state.link);
-  toggleClass($('#stateDetailsOverlay [icon=upload]'), 'hidden', state.publicLibrary || !config.allowPublicLibraryEdits);
+  toggleClass($('#stateDetailsOverlay .star'),               'active', !!state.starred);
+  toggleClass($('#stateDetailsOverlay .star'),               'hidden', !state.publicLibrary);
+  toggleClass($('#stateDetailsOverlay .mainStateImage > i'), 'hidden', !state.link);
+  toggleClass($('#stateDetailsOverlay [icon=upload]'),       'hidden', state.publicLibrary || !config.allowPublicLibraryEdits);
 
   function fillArrowButton(arrowDom, targetDom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
@@ -845,7 +845,7 @@ function fillStateDetails(states, state, dom) {
     shareLink(state);
   };
   $('#stateDetailsOverlay .buttons [icon=link_off]').onclick = function() {
-    $('#mainImage > i').classList.add('hidden');
+    $('#stateDetailsOverlay .mainStateImage > i').classList.add('hidden');
     toServer('unlinkState', state.id);
   };
   $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
