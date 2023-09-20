@@ -123,14 +123,17 @@ export default async function minifyHTML() {
     'client/components/deckEditor.js',
     'client/components/loadComponents.js'
   ]);
-  editorJS = editorJS.replace(/["']\ \/\/\*\*\*\ CSS\ \*\*\*\/\/\ ["']/, '`' + editorCSS.replace(/\\/g, '\\\\') + '`');
-  editorJS = editorJS.replace(/["']\ \/\/\*\*\*\ HTML\ \*\*\*\/\/\ ["']/, '`' + await minify({
+
+  const editorHTML = await minify({
     compressor: htmlMinifier,
     content: fs.readFileSync(path.resolve() + '/client/editor.html', {encoding:'utf8'}),
     options: {
       conservativeCollapse: true
     }
-  }) + '`');
+  });
+
+  editorJS = editorJS.replace(/["']\ \/\/\*\*\*\ CSS\ \*\*\*\/\/\ ["']/, _=>'`' + editorCSS.replace(/\\/g, '\\\\') + '`');
+  editorJS = editorJS.replace(/["']\ \/\/\*\*\*\ HTML\ \*\*\*\/\/\ ["']/, _=>'`' + editorHTML + '`');
 
   return {
     min: room.min,
@@ -160,10 +163,10 @@ async function compress(htmlFile, cssFiles, jsFiles) {
   let htmlString = fs.readFileSync(path.resolve() + '/' + htmlFile, {encoding:'utf8'});
 
   const css = await compressCSS(cssFiles);
-  htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, `const config = ${JSON.stringify(Config.config)};`);
+  htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, _=>css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, _=>`const config = ${JSON.stringify(Config.config)};`);
 
   const js = await compressJS(jsFiles);
-  htmlString = htmlString.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, js.replace(/\bimport[^(][^;]*\.\/[^;]*;/g, ""));
+  htmlString = htmlString.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, _=>js.replace(/\bimport[^(][^;]*\.\/[^;]*;/g, ""));
 
   const html = await minify({
     compressor: htmlMinifier,

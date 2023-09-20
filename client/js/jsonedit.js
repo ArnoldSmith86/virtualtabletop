@@ -258,7 +258,7 @@ const jeCommands = [
   {
     id: 'je_uploadAsset',
     name: 'upload a different asset',
-    context: '.*"(/assets/[0-9_-]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value' + String.fromCharCode(36), // the minifier doesn't like "$" or "\x24" here
+    context: '.*"(/assets/[0-9_-]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
     call: async function() {
       uploadAsset().then(a=> {
         if(a) {
@@ -999,7 +999,7 @@ function jeAddAlignmentCommands() {
   jeCommands.push({
     id: 'jeCenterInParent',
     name: 'center in parent',
-    context: '^.* ↦ (x|y)( ↦ "[0-9]+")?' + String.fromCharCode(36), // the minifier doesn't like "$" or "\x24" here
+    context: '^.* ↦ (x|y)( ↦ "[0-9]+")?$',
     show: _=>!jeContext.includes('grid'),
     call: async function() {
       const key = jeGetLastKey();
