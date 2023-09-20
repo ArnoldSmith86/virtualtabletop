@@ -314,7 +314,7 @@ function loadGameFromURLproperties(states) {
   if(widgets.size || !urlProperties.load)
     return;
 
-  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?`+String.fromCharCode(36));
+  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?$`);
   if(match) {
     let targetStateID = 'PL:games:' + match[1].substr(0, match[1].length-4);
     if(match[1].match(/^Tutorial%20-%20/))
@@ -330,7 +330,7 @@ function loadGameFromURLproperties(states) {
     addState(null, 'link', urlProperties.load);
     loadedFromURLproperties = true;
   } else if(urlProperties.load) {
-    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\\.json)?)?`+String.fromCharCode(36))
+    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\\.json)?)?$`)
     const foundStates = (Object.values(states).filter(s=>s.link && s.link.match(`^${regexEscape(urlMatch[1])}`)));
     if(foundStates.length) {
       toServer('loadState', { stateID: foundStates[0].id, variantID: urlMatch[3] || 0 });

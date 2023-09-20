@@ -324,12 +324,15 @@ async function uploadAsset(multipleCallback) {
 }
 
 async function _uploadAsset(file) {
+    if(typeof file == 'string')
+      file = await (await fetch(file)).arrayBuffer();
+
     const response = await fetch('asset', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/octet-stream'
       },
-      body: file.content
+      body: file.content || file
     });
 
     if(response.status == 413)
@@ -377,7 +380,7 @@ async function loadEditMode() {
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,
       loadJSZip, waitForJSZip,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
+      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, _uploadAsset, selectFile,
       getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
