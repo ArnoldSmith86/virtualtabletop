@@ -103,6 +103,18 @@
   width: 50px;
 }
 
+.tune.editorModule .cardCountDiv {
+  float: left;
+}
+.tune.editorModule .cardCountDiv button {
+  display: inline-flex;
+}
+.tune.editorModule .cardCountDiv input {
+  font-size: 30px;
+  width: 40px;
+  text-align: right;
+}
+
 
 /* undo */
 

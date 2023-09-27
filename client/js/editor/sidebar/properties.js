@@ -83,6 +83,34 @@ function parseRankRange(rankRange) {
   return rankArray;
 }
 
+async function setCardCount(deck, cardType, count) {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} updated card count of deck ${deck.id} (card type ${cardType}) in editor`);
+    // Get the current cards of the specific cardType in the deck
+    const currentCards = widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType);
+    const currentCount = currentCards.length;
+
+    if (count < currentCount) {
+        // If the desired count is less than the current count, remove cards
+        for (let i = 0; i < currentCount - count; i++) {
+            await removeWidgetLocal(currentCards[i].get('id'));
+        }
+    } else if (count > currentCount) {
+        // If the desired count is greater than the current count, add cards
+        for (let i = 0; i < count - currentCount; i++) {
+            const card = { deck: deck.id, type: 'card', cardType: cardType };
+            await addWidgetLocal(card);
+
+            if (deck.get('parent')) {
+                await widgets.get(card.id).moveToHolder(widgets.get(deck.get('parent')));
+            } else {
+                await widgets.get(card.id).updatePiles();
+            }
+        }
+    }
+    batchEnd();
+}
+
 /* end helper functions */
 
 
@@ -148,8 +176,10 @@ class PropertiesModule extends SidebarModule {
       this.addHeader(widget.id);
       this.inputUpdaters[widget.id] = {};
 
-      if(widget.get('type') == 'card')
+      if(widget.get('type') == 'card') {
         this.renderCardLayers(widget);
+        this.renderCardTypes(widget);
+      }
       if(widget.get('type') == 'holder')
         this.renderForHolder(widget);
 
@@ -981,6 +1011,30 @@ class PropertiesModule extends SidebarModule {
     return deck;
   }
 
+  dynamicPropertyInputValueUpdated(deck, cardType, prop, value) {
+      // If the value matches a number, null, true, or false, we JSON parse it. Otherwise, we use the string value.
+      if (value.match(/^(-?[0-9]+(\.[0-9]+)?|null|true|false)$/)) {
+          this.cardTypes[cardType][prop] = JSON.parse(value);
+      } else {
+          this.cardTypes[cardType][prop] = value;
+      }
+
+      const oCard = this.cardTypeCards[cardType];
+      oCard.domElement.innerHTML = '';
+      oCard.state[prop] = value;
+      oCard.createFaces(this.faceTemplates);
+      for (let i = 0; i < oCard.domElement.children.length; ++i) {
+          oCard.domElement.children[i].classList.toggle('active', i == oCard.get('activeFace'));
+      }
+  }
+
+  async applyCardTypeChanges(deck) {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} updated card types of deck ${deck.id} in editor`);
+    await deck.set('cardTypes', this.cardTypes);
+    batchEnd();
+  }
+
   faceObjectInputValueUpdated(deck, face, object, property, value, card, removeObjects) {
     if(value.match(/^(-?[0-9]+(\.[0-9]+)?|null|true|false)$/))
       this.faceTemplates[face].objects[object][property] = JSON.parse(value);
@@ -998,8 +1052,11 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
-  applyFaceTemplateChanges(deck) {
-    deck.set('faceTemplates', this.faceTemplates);
+  async applyFaceTemplateChanges(deck) {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} updated face templates of deck ${deck.id} in editor`);
+    await deck.set('faceTemplates', this.faceTemplates);
+    batchEnd();
   }
 
   renderCardLayers(widget) {
@@ -1047,6 +1104,86 @@ class PropertiesModule extends SidebarModule {
     applyButton.innerText = 'Apply changes';
     applyButton.onclick = e=>this.applyFaceTemplateChanges(deck);
     this.moduleDOM.appendChild(applyButton);
+  }
+
+  renderCardTypes(widget) {
+      const deck = widgets.get(widget.get('deck'));
+      const faceTemplates = JSON.parse(JSON.stringify(deck.get('faceTemplates')));
+      const cardTypes = this.cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
+
+      this.cardTypeCards = [];
+
+      this.addHeader('Card types');
+      for(const [ cardType, cardTypeProperties ] of Object.entries(cardTypes)) {
+          const cardTypeDiv = document.createElement('div');
+          cardTypeDiv.className = 'faceTemplateEdit';
+
+          this.cardTypeCards[cardType] = [];
+
+          const card = new Card();
+          const newState = {...widget.state};
+          newState.activeFace = faceTemplates.length>1?1:0;
+          newState.cardType = cardType;
+          this.renderWidget(card, newState, cardTypeDiv);
+
+          this.cardTypeCards[cardType] = card;
+
+          const propsDiv = document.createElement('div');
+          propsDiv.className = 'faceTemplateProperties';
+
+          for(const face in faceTemplates) {
+              if(faceTemplates[face].objects) {
+                  for(const object in faceTemplates[face].objects) {
+                      if(faceTemplates[face].objects[object].dynamicProperties) {
+                          const dynamicProps = faceTemplates[face].objects[object].dynamicProperties;
+                          for(const prop in dynamicProps) {
+                              const dynamicValue = cardTypeProperties[dynamicProps[prop]] || '';
+                              const input = this.addInput('text', dynamicProps[prop], dynamicValue, propsDiv);
+                              if(input) {
+                                  input.onkeyup = e => this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], input.value);
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+
+          const cardCountDiv = document.createElement('div');
+          cardCountDiv.className = 'cardCountDiv';
+
+          const cardCount = widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length;
+          const cardCountInput = this.addInput('number', 'Card Count', cardCount, cardCountDiv);
+
+          function updateCount(delta) {
+              // Parse the value, ensure it's non-negative
+              const newValue = Math.max(0, (parseInt(cardCountInput.value, 10)||0)+delta);
+              cardCountInput.value = newValue; // Update the input value in case it was negative
+              setCardCount(deck, cardType, newValue);
+          }
+
+          cardCountInput.oninput = e => updateCount(0);
+
+          const minusButton = document.createElement('button');
+          minusButton.setAttribute('icon', 'remove');
+          minusButton.onclick = e => updateCount(-1);
+
+          const plusButton = document.createElement('button');
+          plusButton.setAttribute('icon', 'add');
+          plusButton.onclick = e => updateCount(1);
+
+          cardCountDiv.appendChild(minusButton);
+          cardCountDiv.appendChild(cardCountInput);
+          cardCountDiv.appendChild(plusButton);
+
+          cardTypeDiv.appendChild(propsDiv);
+          cardTypeDiv.appendChild(cardCountDiv);
+          this.moduleDOM.appendChild(cardTypeDiv);
+      }
+
+      const applyButton = document.createElement('button');
+      applyButton.innerText = 'Apply changes';
+      applyButton.onclick = e => this.applyCardTypeChanges(deck);
+      this.moduleDOM.appendChild(applyButton);
   }
 
   renderForHolder(widget) {
