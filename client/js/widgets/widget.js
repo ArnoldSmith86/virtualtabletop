@@ -1120,7 +1120,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: 0, face: null, faceCycle: null, collection: 'DEFAULT' });
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
