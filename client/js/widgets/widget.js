@@ -1101,7 +1101,7 @@ export class Widget extends StateManaged {
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
+          jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
 
       }
 
@@ -1120,7 +1120,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: 0, face: null, faceCycle: null, collection: 'DEFAULT' });
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
@@ -1130,7 +1130,7 @@ export class Widget extends StateManaged {
             });
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
+            jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
             for(const c of collections[collection].slice(0, a.count || 999999))
@@ -1139,7 +1139,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
 
@@ -1650,7 +1650,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
 
@@ -1797,8 +1797,9 @@ export class Widget extends StateManaged {
               collections[a.collection].push(w);
           }
 
-          jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
-        } else {
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+        } else if(jeRoutineLogging) {
           jeLoggingRoutineOperationSummary(`no active seats found`);
         }
       }
