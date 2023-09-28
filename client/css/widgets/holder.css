@@ -20,15 +20,15 @@
   top: 0;
 }
 
-.holder.showCardBacksToOtherPlayers > .foreign.card.widget {
-  display: block !important;
+.holder.showCardBack > .card.widget {
+  display: block;
 }
 
-.holder.showCardBacksToOtherPlayers > .foreign.card.widget > .active.cardFace {
+.holder.showCardBack > .card.widget > .active.cardFace, .card.widget.showCardBack > .active.cardFace {
   display: none;
 }
 
-.holder.showCardBacksToOtherPlayers > .foreign.card.widget > :not(.active).cardFace {
+.holder.showCardBack > .card.widget > :not(.active).cardFace, .card.widget.showCardBack > :not(.active).cardFace {
   display: block;
 }
 

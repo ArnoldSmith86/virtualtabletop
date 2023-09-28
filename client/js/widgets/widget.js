@@ -386,6 +386,9 @@ export class Widget extends StateManaged {
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
+    if(hoverTarget && hoverTarget.domElement.classList.contains('showCardBack'))
+      className += ' showCardBack';
+
     if(typeof this.get('dragging') == 'string')
       className += ' dragging';
     if(this.get('dragging') == playerName)
