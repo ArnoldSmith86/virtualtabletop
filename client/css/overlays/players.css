@@ -181,3 +181,6 @@ label.ui-line::before{
   border: none;
   background-color: var(--playerColor);
 }
+.cursor.hidden {
+  display: none;
+}

@@ -70,6 +70,7 @@ export class Widget extends StateManaged {
       dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
+      hidePlayerCursors: false,
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
@@ -2174,6 +2175,14 @@ export class Widget extends StateManaged {
 
   readOnlyProperties() {
     return readOnlyProperties;
+  }
+
+  requiresHiddenCursor() {
+    if(this.get('hidePlayerCursors'))
+      return true;
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      return widgets.get(this.get('parent')).requiresHiddenCursor();
+    return false;
   }
 
   async rotate(degrees, mode) {
