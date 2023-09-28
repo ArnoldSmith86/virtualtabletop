@@ -3782,20 +3782,26 @@
     "version": 8,
     "info": {
       "name": "Crafty",
-      "image": "/assets/-1449701584_410546",
+      "image": "/assets/-2094624322_36253",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/163412/patchwork",
       "year": "2014",
       "mode": "vs",
       "time": "30",
-      "players": "2",
-      "language": "",
-      "variant": "",
-      "attribution": "INSTRUCTIONS:\n\nPlayers sit in seats.  Press black and white reset button to begin game. Random player will be selected to start. Smallest piece will be highlighted at beginning of game for visibility and pawn will be placed next to it in the clockwise starting position. Move pieces around board as needed.  Keep track of buttons using plus and minus symbols above seat. Use turn button to indicate turn is over.\n\n\nThe game layout, playing boards, and library image were done by LawDawg96 and are released to the Public Domain under CC0.\n\nThe circle player pieces are from VTT's Public Domain assets.\n\nThe following items are available under the Pixabay License\n\n - Wood grain background:  https://pixabay.com/photos/wood-structure-fund-nature-grain-186304/\n - Green button: https://pixabay.com/vectors/button-sewing-yarn-green-glossy-153950/\n - Leather texture: \n https://pixabay.com/photos/leather-background-structure-orange-2719497/\n\nThe game piece quilt patterns are from a variety of sources on Pixabay, including:\n\nhttps://pixabay.com/photos/quilting-american-blocks-crafts-2581992/\nhttps://pixabay.com/vectors/abstract-art-background-colorful-1296712/\nhttps://pixabay.com/photos/quilt-quilting-lap-patches-textile-1574953/\nhttps://pixabay.com/photos/quilt-quilting-lap-patches-textile-1574953/\nhttps://pixabay.com/illustrations/pastel-quilt-background-texture-1487282/\nhttps://pixabay.com/nl/illustrations/prijswinnende-quilt-driehoek-ontwerp-958633/\nhttps://pixabay.com/illustrations/prize-winning-quilt-hand-made-958630/\nhttps://pixabay.com/illustrations/textile-texture-patchwork-pink-1214860/\nhttps://pixabay.com/illustrations/textile-fabric-texture-geometric-1407814/\nhttps://pixabay.com/illustrations/patchwork-material-colorful-patches-1156357/\nhttps://pixabay.com/illustrations/denim-fabric-texture-design-829475/\nhttps://pixabay.com/illustrations/fabric-blue-green-pattern-740059/\nhttps://pixabay.com/illustrations/plaid-pastel-blue-baby-textile-902424/\nhttps://pixabay.com/photos/mosaic-texture-colored-stones-tiles-1792976/\nhttps://pixabay.com/illustrations/plaid-tartan-scottish-yellow-red-2751007/\nhttps://pixabay.com/illustrations/geometric-tartan-pattern-square-760474/\nhttps://pixabay.com/illustrations/wallpaper-pattern-abstract-seamless-1859792/\nhttps://pixabay.com/illustrations/fabric-coarse-texture-rough-red-806443/\nhttps://pixabay.com/illustrations/triangle-background-pattern-2831617/",
+      "attribution": "INSTRUCTIONS:\n\nPlayers sit in seats.  Press black and white reset button to begin game. Random player will be selected to start. Smallest piece will be highlighted at beginning of game for visibility and pawn will be placed next to it in the clockwise starting position. Move pieces around board as needed.  Keep track of buttons using plus and minus symbols above seat. Use turn button to indicate turn is over.\n\n\nThe game layout and playing boards were done by LawDawg96 and are released to the Public Domain under CC0.\n\nThe circle player pieces are from VTT's Public Domain assets.\n\nThe following items are available under the Pixabay License\n\n - Wood grain background:  https://pixabay.com/photos/wood-structure-fund-nature-grain-186304/\n - Green button: https://pixabay.com/vectors/button-sewing-yarn-green-glossy-153950/\n - Leather texture: \n https://pixabay.com/photos/leather-background-structure-orange-2719497/\n\nThe game piece quilt patterns are from a variety of sources on Pixabay, including:\n\nhttps://pixabay.com/photos/quilting-american-blocks-crafts-2581992/\nhttps://pixabay.com/vectors/abstract-art-background-colorful-1296712/\nhttps://pixabay.com/photos/quilt-quilting-lap-patches-textile-1574953/\nhttps://pixabay.com/photos/quilt-quilting-lap-patches-textile-1574953/\nhttps://pixabay.com/illustrations/pastel-quilt-background-texture-1487282/\nhttps://pixabay.com/nl/illustrations/prijswinnende-quilt-driehoek-ontwerp-958633/\nhttps://pixabay.com/illustrations/prize-winning-quilt-hand-made-958630/\nhttps://pixabay.com/illustrations/textile-texture-patchwork-pink-1214860/\nhttps://pixabay.com/illustrations/textile-fabric-texture-geometric-1407814/\nhttps://pixabay.com/illustrations/patchwork-material-colorful-patches-1156357/\nhttps://pixabay.com/illustrations/denim-fabric-texture-design-829475/\nhttps://pixabay.com/illustrations/fabric-blue-green-pattern-740059/\nhttps://pixabay.com/illustrations/plaid-pastel-blue-baby-textile-902424/\nhttps://pixabay.com/photos/mosaic-texture-colored-stones-tiles-1792976/\nhttps://pixabay.com/illustrations/plaid-tartan-scottish-yellow-red-2751007/\nhttps://pixabay.com/illustrations/geometric-tartan-pattern-square-760474/\nhttps://pixabay.com/illustrations/wallpaper-pattern-abstract-seamless-1859792/\nhttps://pixabay.com/illustrations/fabric-coarse-texture-rough-red-806443/\nhttps://pixabay.com/illustrations/triangle-background-pattern-2831617/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"making quilts oil on canvas --ar 1:1 --v 5.1 \"<br></div>",
       "similarName": "Patchwork",
-      "description": "Placed shaped pieces on board to fill in spaces while balancing cost of pieces and token position on progress board.  Most points wins.",
+      "description": "Placed shaped pieces on board to fill in spaces while balancing cost of pieces and token position on progress board. Most points wins.",
       "showName": true,
-      "lastUpdate": 1669254070000
+      "lastUpdate": 1669254070000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "tempHolder": {

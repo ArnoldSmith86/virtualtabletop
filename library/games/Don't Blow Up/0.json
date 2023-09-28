@@ -1453,20 +1453,26 @@
     "version": 1,
     "info": {
       "name": "Don't Blow Up",
-      "image": "/assets/1599847053_3509",
+      "image": "/assets/-1184950750_41366",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/172225/exploding-kittens",
       "year": "2015",
       "mode": "vs",
       "time": "15",
-      "players": "2-5",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The room layout is public domain (CC0) by ArnoldSmith86.\n\nAll other images are CC-BY from game-icons.net:\n\nhttps://game-icons.net/1x1/lorc/mushroom-cloud.html\nhttps://game-icons.net/1x1/lorc/pincers.html\nhttps://game-icons.net/1x1/lorc/crystal-ball.html\nhttps://game-icons.net/1x1/lorc/run.html\nhttps://game-icons.net/1x1/lorc/interdiction.html\nhttps://game-icons.net/1x1/delapouite/pineapple.html\nhttps://game-icons.net/1x1/lorc/rainbow-star.html\nhttps://game-icons.net/1x1/lorc/beard.html\nhttps://game-icons.net/1x1/lorc/comb.html\nhttps://game-icons.net/1x1/delapouite/tacos.html\nhttps://game-icons.net/1x1/faithtoken/card-random.html\nhttps://game-icons.net/1x1/darkzaitzev/robber-hand.html\nhttps://game-icons.net/1x1/lorc/sword-clash.html\nhttps://game-icons.net/1x1/lorc/cat.html",
+      "attribution": "The room layout is public domain (CC0) by ArnoldSmith86.\n\nAll other images are CC-BY from game-icons.net:\n\nhttps://game-icons.net/1x1/lorc/mushroom-cloud.html\nhttps://game-icons.net/1x1/lorc/pincers.html\nhttps://game-icons.net/1x1/lorc/crystal-ball.html\nhttps://game-icons.net/1x1/lorc/run.html\nhttps://game-icons.net/1x1/lorc/interdiction.html\nhttps://game-icons.net/1x1/delapouite/pineapple.html\nhttps://game-icons.net/1x1/lorc/rainbow-star.html\nhttps://game-icons.net/1x1/lorc/beard.html\nhttps://game-icons.net/1x1/lorc/comb.html\nhttps://game-icons.net/1x1/delapouite/tacos.html\nhttps://game-icons.net/1x1/faithtoken/card-random.html\nhttps://game-icons.net/1x1/darkzaitzev/robber-hand.html\nhttps://game-icons.net/1x1/lorc/sword-clash.html\nhttps://game-icons.net/1x1/lorc/cat.html<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"red nuclear mushroom cloud watercolor painting --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Exploding Kittens",
-      "description": "Take turns drawing cards, using card powers to avoid getting the explosion card.  First player to get explosion card loses. ",
+      "description": "Take turns drawing cards, using card powers to avoid getting the explosion card. First player to get explosion card loses.",
       "showName": true,
-      "lastUpdate": 1618589525000
+      "lastUpdate": 1618589525000,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-5"
     }
   }
 }

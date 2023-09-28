@@ -34,16 +34,18 @@ class Seat extends Widget {
       setText(this.domElement, displayedText);
     }
 
-    this.updateLinkedWidgets(delta.player !== undefined);
+    this.updateScoreboards(delta)
+    if(delta.player !== undefined)
+      this.updateLinkedWidgets();
   }
 
   applyInitialDelta(delta) {
     super.applyInitialDelta(delta);
-    this.updateLinkedWidgets(true);
+    this.updateLinkedWidgets();
   }
 
-  classes() {
-    let className = super.classes();
+  classes(includeTemporary=true) {
+    let className = super.classes(includeTemporary);
 
     if(this.get('player') != '')
       className += ' seated';
@@ -92,12 +94,18 @@ class Seat extends Widget {
     }
   }
 
-  updateLinkedWidgets(playerChanged) {
+  updateScoreboards(delta) {
+    const seatID = this.get('id');
     const scoreboard = widgetFilter(w => w.get('type') == 'scoreboard');
-    for(const board of scoreboard)
-      board.updateTable();
+    const deltaProps = Object.keys(delta);
+    for(const board of scoreboard) {
+      const boardProps = board.seatProperties(seatID);
+      if(boardProps.some(p=>deltaProps.includes(p)))
+        board.updateTable();
+    }
+  }
 
-    if(playerChanged)
-      widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
+  updateLinkedWidgets() {
+    widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
   }
 }

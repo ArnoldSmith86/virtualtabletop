@@ -2080,20 +2080,26 @@
     "version": 4,
     "info": {
       "name": "Shattered Dominion",
-      "image": "/assets/1597719616_28558",
+      "image": "/assets/-2101023079_38697",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/204583/kingdomino",
       "year": "2016",
       "mode": "vs",
       "time": "15",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "Board layout and \"king\" game piece by ArnoldSmith86. Released to public domain under CC0.\n\nPixabay license:\nhttps://pixabay.com/vectors/crown-golden-yellow-emperor-576226/\nhttps://pixabay.com/vectors/building-castle-fort-fortification-2024446/\n\nhttps://pixabay.com/photos/sheep-meadow-aerial-view-drone-939566/\nhttps://pixabay.com/photos/wheat-wheat-field-crop-spikelets-5581130/\nhttps://pixabay.com/photos/central-tien-shan-china-landscape-92365/\nhttps://pixabay.com/de/photos/erde-trocken-lehm-lehmhaltig-d%C3%BCrre-3483470/\nhttps://pixabay.com/photos/sand-texture-dune-beach-desert-5085975/\n\nPublic domain:\nhttps://www.piqsels.com/en/public-domain-photo-fmixo\nhttps://www.piqsels.com/en/public-domain-photo-sqflp\n",
+      "attribution": "Board layout and \"king\" game piece by ArnoldSmith86. Released to public domain under CC0.\n\nPixabay license:\nhttps://pixabay.com/vectors/crown-golden-yellow-emperor-576226/\nhttps://pixabay.com/vectors/building-castle-fort-fortification-2024446/\n\nhttps://pixabay.com/photos/sheep-meadow-aerial-view-drone-939566/\nhttps://pixabay.com/photos/wheat-wheat-field-crop-spikelets-5581130/\nhttps://pixabay.com/photos/central-tien-shan-china-landscape-92365/\nhttps://pixabay.com/de/photos/erde-trocken-lehm-lehmhaltig-d%C3%BCrre-3483470/\nhttps://pixabay.com/photos/sand-texture-dune-beach-desert-5085975/\n\nPublic domain:\nhttps://www.piqsels.com/en/public-domain-photo-fmixo\nhttps://www.piqsels.com/en/public-domain-photo-sqflp\n<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"square topography tiles watercolor --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Kingdomino",
+      "similarAwards": "2018 Hungarian Board Game Award Nominee\n2018 Boardgames Australia Awards Best International Game Nominee\n2017 Spiel des Jahres Winner\n2017 Nederlandse Spellenprijs Best Family Game Nominee\n2017 Lys Grand Public Finalist\n2017 Japan Boardgame Prize Voters' Selection Winner\n2017 Japan Boardgame Prize U-more Award Winner\n2017 Hra roku Finalist\n2017 Guldbrikken Best Family Game Winner\n2017 Gra Roku Family Game of the Year Nominee\n2017 Gouden Ludo Best Family Game Winner\n2017 Gioco dell’Anno Winner\n2017 Board Game Quest Awards Best Family Game Nominee\n2017 As d'Or - Jeu de l'Année Nominee\n2017 Årets Spill Best Family Game Winner\n2016 Tric Trac Nominee\n2016 Meeples' Choice Nominee\n2016 Golden Geek Best Family Board Game Nominee",
       "description": "Place tiles consisting of images of various types of terrain to connect to a matching type of terrain already on the 5x5 board. Earn points for connecting tiles and playing bonus symbol. Most points wins.",
       "showName": true,
-      "lastUpdate": 1636735750000
+      "lastUpdate": 1636735750000,
+      "skill": "",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4"
     }
   },
   "mtnb": {

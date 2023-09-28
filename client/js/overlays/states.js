@@ -265,13 +265,17 @@ function updateLibraryFilter() {
 
   function applyFilters(filters, callback) {
     for(const [ dom, dataset ] of states) {
-      const textMatch     = dataset.text.match(filters.text);
-      const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
-      const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
-      const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
-      const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
-      const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
-      callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
+      if(dom.classList.contains('uploading')) {
+        callback(dom, true);
+      } else {
+        const textMatch     = dataset.text.match(filters.text);
+        const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
+        const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
+        const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
+        const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
+        const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
+        callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
+      }
     }
   }
 
@@ -310,7 +314,7 @@ function loadGameFromURLproperties(states) {
   if(widgets.size || !urlProperties.load)
     return;
 
-  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?`+String.fromCharCode(36));
+  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?$`);
   if(match) {
     let targetStateID = 'PL:games:' + match[1].substr(0, match[1].length-4);
     if(match[1].match(/^Tutorial%20-%20/))
@@ -326,7 +330,7 @@ function loadGameFromURLproperties(states) {
     addState(null, 'link', urlProperties.load);
     loadedFromURLproperties = true;
   } else if(urlProperties.load) {
-    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\\.json)?)?`+String.fromCharCode(36))
+    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\\.json)?)?$`)
     const foundStates = (Object.values(states).filter(s=>s.link && s.link.match(`^${regexEscape(urlMatch[1])}`)));
     if(foundStates.length) {
       toServer('loadState', { stateID: foundStates[0].id, variantID: urlMatch[3] || 0 });
@@ -346,6 +350,7 @@ function fillStateTileTitles(dom, name, similarName, savePlayers, saveDate) {
   } else {
     $('h4', dom).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
   }
+  emojis2images(dom);
 }
 
 let sortBy = $('#librarySort').value;
@@ -450,10 +455,12 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
         updateSaveButton.style.display = 'inline-flex';
     }
 
-    if(state.image)
-      $('img', entry).src = mapAssetURLs(state.image);
-
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
+
+    if(state.image) {
+      $('img:not(.emoji)', entry).dataset.src = mapAssetURLs(state.image);
+      lazyImageObserver.observe($('img:not(.emoji)', entry));
+    }
 
     const validPlayers = [];
     const validLanguages = [];
@@ -616,7 +623,7 @@ function fillStateDetails(states, state, dom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
     if(targetDom) {
       arrowDom.dataset.id = targetDom.dataset.id;
-      $('img', arrowDom).src = $('img', targetDom).src;
+      $('img', arrowDom).src = $('img', targetDom).dataset.src;
       toggleClass($('img', arrowDom), 'hidden', $('img', arrowDom).src == location.href);
       $('h3', arrowDom).innerText = $('h3', targetDom).innerText;
       $('h4', arrowDom).innerText = $('h4', targetDom).innerText;
@@ -643,6 +650,7 @@ function fillStateDetails(states, state, dom) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('#similarRulesDomain').innerText = String(state.rules).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('.hideForEdit [data-field=similarAwards]').innerText = String(state.similarAwards);
+    emojis2images($('.hideForEdit [data-field=similarAwards]'));
   }
   updateStateDetailsDomains(state);
 
@@ -1078,14 +1086,27 @@ onLoad(function() {
     updateFilterOverflow();
   });
   document.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-    $('#statesButton').click();
+    if(e.dataTransfer.types.includes('Files')) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+      $('#statesButton').click();
+    }
   });
   document.addEventListener('drop', function(e) {
-    e.preventDefault();
-    loadJSZip();
-    for(const file of e.dataTransfer.files)
-      resolveStateCollections(file, addStateFile);
+    if(e.dataTransfer.files.length) {
+      e.preventDefault();
+      loadJSZip();
+      for(const file of e.dataTransfer.files)
+        resolveStateCollections(file, addStateFile);
+    }
   });
+});
+
+const lazyImageObserver = new IntersectionObserver(entries => {
+  for(const entry of entries) {
+    if(entry.isIntersecting) {
+      entry.target.src = entry.target.dataset.src;
+      lazyImageObserver.unobserve(entry.target);
+    }
+  }
 });

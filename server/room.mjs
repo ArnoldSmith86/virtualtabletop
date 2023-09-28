@@ -15,9 +15,10 @@ export default class Room {
   deltaID = 0;
   lastStatisticsDeltaID = 0;
 
-  constructor(id, unloadCallback) {
+  constructor(id, unloadCallback, publicLibraryUpdatedCallback) {
     this.id = id;
     this.unloadCallback = unloadCallback;
+    this.publicLibraryUpdatedCallback = publicLibraryUpdatedCallback;
     this.unloadTimeout = setTimeout(_=>{
       if(this.players.length == 0) {
         Logging.log(`unloading room ${this.id} after 5s without player connection`);
@@ -166,6 +167,10 @@ export default class Room {
   addStateToPublicLibrary(player, id) {
     if(!Config.get('allowPublicLibraryEdits'))
       return;
+
+    for(const usedAsset in this.getAssetListForState(id))
+      if(!Config.resolveAsset(usedAsset))
+        throw new Logging.UserError(404, `Could not find asset /assets/${usedAsset} which is referenced in the state.`);
 
     const variantData = {};
     for(const variantID in this.state._meta.states[id].variants)
@@ -354,6 +359,14 @@ export default class Room {
 
   getAssetList(state) {
     return [...new Set(JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [])];
+  }
+
+  getAssetListForState(stateID) {
+    const usedAssets = {};
+    for(const vID in this.state._meta.states[stateID].variants)
+      for(const asset of this.getAssetList(JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)))))
+        usedAssets[asset.split('/')[2]] = true;
+    return usedAssets;
   }
 
   getRedirection() {
@@ -705,6 +718,14 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  reloadPublicLibraryGames() {
+    for(const id in this.state._meta.states)
+      if(id.match(/^PL:/))
+        delete this.state._meta.states[id];
+    this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+    this.sendMetaUpdate();
+  }
+
   removeInvalidPublicLibraryLinks(player) {
     for(const [ id, state ] of Object.entries(this.state._meta.states)) {
       const operations = [];
@@ -750,7 +771,12 @@ export default class Room {
 
     delete this.state._meta.states[stateID];
 
-    this.sendMetaUpdate();
+    if(stateID.match(/^PL:/)) {
+      delete Room.publicLibrary;
+      this.publicLibraryUpdatedCallback();
+    } else {
+      this.sendMetaUpdate();
+    }
   }
 
   renamePlayer(renamingPlayer, oldName, newName) {
@@ -988,11 +1014,7 @@ export default class Room {
       return;
 
     const assetsDir = this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets');
-
-    const usedAssets = {};
-    for(const vID in this.state._meta.states[stateID].variants)
-      for(const asset of this.getAssetList(JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)))))
-        usedAssets[asset.split('/')[2]] = true;
+    const usedAssets = this.getAssetListForState(stateID);
 
     const savedAssets = {};
     for(const file of fs.readdirSync(assetsDir))
@@ -1004,7 +1026,7 @@ export default class Room {
 
     for(const usedAsset in usedAssets)
       if(!savedAssets[usedAsset])
-        fs.copyFileSync(Config.directory('assets') + '/' + usedAsset, assetsDir + '/' + usedAsset);
+        fs.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
   }
 
   writePublicLibraryMetaToFilesystem(stateID, meta) {
@@ -1032,7 +1054,7 @@ export default class Room {
     this.writePublicLibraryAssetsToFilesystem(stateID);
 
     delete Room.publicLibrary;
-    this.getPublicLibraryGames();
+    this.publicLibraryUpdatedCallback();
   }
 
   writePublicLibraryToFilesystem(stateID, variantID, state) {
@@ -1057,6 +1079,9 @@ export default class Room {
 
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
     this.writePublicLibraryAssetsToFilesystem(stateID);
+
+    delete Room.publicLibrary;
+    this.publicLibraryUpdatedCallback();
   }
 
   writeToFilesystem() {

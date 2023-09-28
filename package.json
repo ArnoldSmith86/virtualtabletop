@@ -46,24 +46,25 @@
   },
   "homepage": "https://github.com/ArnoldSmith86/virtualtabletop#readme",
   "dependencies": {
-    "@node-minify/clean-css": "^7.1.0",
-    "@node-minify/core": "^7.1.0",
-    "@node-minify/html-minifier": "^7.1.0",
-    "@node-minify/no-compress": "^7.1.0",
-    "@node-minify/uglify-es": "^7.1.0",
+    "@node-minify/clean-css": "^8.0.6",
+    "@node-minify/core": "^8.0.6",
+    "@node-minify/html-minifier": "^8.0.6",
+    "@node-minify/no-compress": "^8.0.6",
+    "@node-minify/uglify-es": "^8.0.6",
     "crc-32": "^1.2.2",
-    "dompurify": "^2.4.3",
+    "dompurify": "^3.0.2",
     "express": "^4.18.2",
     "jszip": "^3.10.1",
     "node-fetch": "^2.6.9",
-    "ws": "^8.12.0"
+    "vue": "^3.2.47",
+    "ws": "^8.13.0"
   },
   "devDependencies": {
-    "jest": "^29.4.1",
-    "jest-environment-jsdom": "^29.4.1",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "jest-environment-jsdom-global": "^4.0.0",
-    "json-diff": "^1.0.0",
-    "nodemon": "^2.0.20",
-    "testcafe": "^2.3.0"
+    "json-diff": "^1.0.3",
+    "nodemon": "^2.0.22",
+    "testcafe": "^2.5.0"
   }
 }

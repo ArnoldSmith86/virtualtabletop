@@ -80,7 +80,9 @@ export class Widget extends StateManaged {
       enterRoutine: null,
       leaveRoutine: null,
       globalUpdateRoutine: null,
-      gameStartRoutine: null
+      gameStartRoutine: null,
+
+      animatePropertyChange: []
     });
     this.domElement.timer = false
 
@@ -110,10 +112,17 @@ export class Widget extends StateManaged {
       this.timer = null;
       this.domElement.classList.add('longtouch');
     }
+
+    this.animateTimeouts = {};
+    this.animateClasses = new Set;
   }
 
   absoluteCoord(coord) {
     return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
+  }
+
+  animateProperties() {
+    return asArray(JSON.parse(JSON.stringify(this.get('animatePropertyChange'))));
   }
 
   applyChildAdd(child) {
@@ -199,6 +208,32 @@ export class Widget extends StateManaged {
       }
     }
 
+    if(this.activateAnimation) {
+      this.animateProperties().forEach((prop)=>{
+        if(prop != null) {
+          const rule = (typeof prop == 'object')? prop : { property: prop };
+          if(delta[rule.property] !== undefined) {
+            if(rule.className == null)
+              rule.className = `animate_${escapeID(rule.property)}`;
+            rule.className = asArray(rule.className).join(' ').split(' ').filter(c=>c!='');
+            if(typeof rule.duration != 'number')
+              rule.duration = 1000;
+            rule.className.forEach(c => {
+              if(this.animateTimeouts[c])
+                clearTimeout(this.animateTimeouts[c]);
+              this.domElement.classList.add(c);
+              this.animateClasses.add(c);
+              this.animateTimeouts[c] = setTimeout(()=>{
+                if(this.classes(false).split(' ').indexOf(c) == -1)
+                  this.domElement.classList.remove(c);
+                this.animateClasses.delete(c);
+              },rule.duration);
+            });
+          }
+        }
+      });
+    }
+
     for(const key in delta) {
       const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
       if(isGlobalUpdateRoutine) {
@@ -254,6 +289,11 @@ export class Widget extends StateManaged {
       }
     }
     this.applyDeltaToDOM(delta);
+  }
+
+  applyInitialDelta(delta) {
+    super.applyInitialDelta(delta);
+    this.activateAnimation = true;
   }
 
   applyRemove() {
@@ -316,7 +356,7 @@ export class Widget extends StateManaged {
     }
   }
 
-  classes() {
+  classes(includeTemporary = true) {
     let className = this.get('typeClasses') + ' ' + this.get('classes');
 
     if(Array.isArray(this.get('owner')) && this.get('owner').indexOf(playerName) == -1)
@@ -365,6 +405,9 @@ export class Widget extends StateManaged {
     if(this.isHighlighted)
       className += ' selectedInEdit';
 
+    if(includeTemporary)
+      className += ' ' + Array.from(this.animateClasses.values()).join(' ');
+
     return className;
   }
 
@@ -402,23 +445,22 @@ export class Widget extends StateManaged {
     delete clone.parent;
     const cWidget = widgets.get(await addWidgetLocal(clone));
 
-    if(parent) {
-      // use moveToHolder so that CLONE triggers onEnter and similar features
-      cWidget.movedByButton = problems != null;
+    // use moveToHolder so that CLONE triggers onEnter and similar features
+    cWidget.movedByButton = problems != null;
+    if(parent)
       await cWidget.moveToHolder(widgets.get(parent));
 
-      // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
-      if(!widgets.get(parent).get('alignChildren')) {
-        await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
-        await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
-        await cWidget.updatePiles();
-      }
-      delete cWidget.movedByButton;
+    // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
+    if(!parent || !widgets.get(parent).get('alignChildren')) {
+      await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
+      await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
+      await cWidget.updatePiles();
     }
+    delete cWidget.movedByButton;
 
     if (recursive) {
-      for (const w of this.children()) {
-        w.clone({parent: cWidget.get('id')}, true, problems);
+      for (const w of this.childArray) {
+        await w.clone({parent: cWidget.get('id')}, true, problems);
       }
     }
     return cWidget;
@@ -537,13 +579,14 @@ export class Widget extends StateManaged {
   cssToStylesheet(css, usedProperties, nested = false) {
     let styleString = '';
     for(const key in css) {
-      let selector = key;
+      let usesVariables = false;
+      let selector = key.replace(/\$\{THIS\}/g, m => {usesVariables = true; return `#w_${escapeID(this.id)}`});
       if(!nested) {
         if(key == 'inline')
           continue;
         if(key == 'default')
           selector = '';
-        if(selector.charAt(0) != '@')
+        if(!usesVariables && selector.charAt(0) != '@')
           selector = `#w_${escapeID(this.id)}${selector}`;
       }
       styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], usedProperties, true), usedProperties))} }\n`;
@@ -573,6 +616,21 @@ export class Widget extends StateManaged {
 
   cssTransformProperties() {
     return [ 'rotation', 'scale', 'x', 'y' ];
+  }
+
+  dragCorner(coordGlobal, localAnchor, parent = null) {
+    const coord = parent ?
+        parent.coordLocalFromCoordGlobal(coordGlobal) :
+        this.coordParentFromCoordGlobal(coordGlobal);
+    const transformOrigin = getTransformOrigin(this.domElement);
+    let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
+    let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
+    if (parent)
+      corner = parent.coordGlobalFromCoordLocal(corner);
+    corner.x = Math.round(corner.x);
+    corner.y = Math.round(corner.y);
+    return corner;
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
@@ -809,7 +867,7 @@ export class Widget extends StateManaged {
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
           const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
           if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
-            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
+            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
           else if(index !== undefined)
             variables[variable][index] = getValue(variables[variable][index]);
           else
@@ -821,7 +879,28 @@ export class Widget extends StateManaged {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
-            problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
+            const withoutVars = evaluateVariables(a).replace(/false|null/g, 0).replace(/true/g, 1);
+            const mathExpression = withoutVars.match(new RegExp(`^${left} += +([() 0-9.&|!*/+-]+)(?: +//.*)?`+'\x24'));
+            if(mathExpression) {
+              let result = null;
+              try {
+                result = +eval(mathExpression[5]);
+              } catch(e) {
+                problems.push(`The expression "${mathExpression[5]}" threw an exception: ${e}.`);
+                result = null;
+              }
+              const variable = mathExpression[1] !== undefined ? variables[unescape(mathExpression[2])] : unescape(mathExpression[2]);
+              const index = mathExpression[3] !== undefined ? variables[unescape(mathExpression[4])] : unescape(mathExpression[4]);
+              if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
+                problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
+              else if(index !== undefined)
+                variables[variable][index] = result;
+              else
+                variables[variable] = result;
+              if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], JSON.stringify(result));
+            } else {
+              problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
+            }
           }
         }
       }
@@ -962,13 +1041,13 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CLONE') {
-        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
+        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, recursive: false, collection: 'DEFAULT' });
         const source = getCollection(a.source);
         if(source) {
           var c=[];
           for(const w of collections[source]) {
             for(let i=1; i<=a.count; ++i) {
-              c.push(await w.clone(a.properties, false, problems, a.xOffset * i, a.yOffset * i));
+              c.push(await w.clone(a.properties, a.recursive, problems, a.xOffset * i, a.yOffset * i));
             }
           }
           collections[a.collection]=c;
@@ -1022,7 +1101,7 @@ export class Widget extends StateManaged {
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
+          jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
 
       }
 
@@ -1041,7 +1120,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: 0, face: null, faceCycle: null, collection: 'DEFAULT' });
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
@@ -1051,7 +1130,7 @@ export class Widget extends StateManaged {
             });
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
+            jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
             for(const c of collections[collection].slice(0, a.count || 999999))
@@ -1060,7 +1139,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
 
@@ -1148,13 +1227,20 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'GET') {
-        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
+        const propertyPath = asArray(a.property || 'id');
+        const mainProperty = String(propertyPath.shift());
+
+        setDefaults(a, { variable: mainProperty, collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         const collection = getCollection(a.collection);
         if(collection) {
-          let c = collections[collection];
+
+          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>w.get(mainProperty))));
+          for(const subkey of propertyPath)
+            c = c.map(v=>v && typeof v == 'object' && v[subkey] || null);
+
           if (a.skipMissing)
-            c = c.filter(w=>w.get(String(a.property)) !== null && w.get(String(a.property)) !== undefined);
-          c = JSON.parse(JSON.stringify(c.map(w=>w.get(String(a.property)))));
+            c = c.filter(v=>v !== null && v !== undefined);
+
           if(c.length) {
             switch(a.aggregation) {
             case 'first':
@@ -1191,7 +1277,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${a.property}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
         }
       }
 
@@ -1297,12 +1383,12 @@ export class Widget extends StateManaged {
                     if(widgets.has(target.get('hand'))) {
                       const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
-                      c.targetPlayer = target.get('player')
+                      c.targetPlayer = target.get('player');
                       await c.moveToHolder(targetHand);
-                      delete c.targetPlayer
-                      c.bringToFront()
+                      delete c.targetPlayer;
+                      await c.bringToFront();
                       if(targetHand.get('type') == 'holder')
-                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                        await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                     } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
@@ -1348,7 +1434,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true });
+        setDefaults(a, { owned: true, inHolder: true });
         if(this.isValidID(a.holder, problems)) {
           for(const holder of asArray(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
@@ -1357,6 +1443,8 @@ export class Widget extends StateManaged {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
+                if(!a.inHolder)
+                  cards = cards.filter(c=>!c.get('_ancestor'));
                 for(const c of cards)
                   await c.moveToHolder(widgets.get(holder));
               }
@@ -1426,7 +1514,7 @@ export class Widget extends StateManaged {
           if(a.round > newScore.length)
             newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
           newScore[seatRound-1] = compute(relation, null, newScore[seatRound-1] || 0, a.value);
-          await seats[i].set(a.property, newScore);
+          await seats[i].set(String(a.property), newScore);
         }
 
         if(jeRoutineLogging) {
@@ -1562,7 +1650,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
 
@@ -1602,7 +1690,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
-        let collection;
+        const collection = a.timer === undefined && getCollection(a.collection);
         if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
           a.mode = 'toggle'
@@ -1615,7 +1703,7 @@ export class Widget extends StateManaged {
                   await widget.setPaused(a.mode);
               });
             }
-          } else if(collection = getCollection(a.collection)) {
+          } else if(collection) {
             if(collections[collection].length) {
               for(const c of collections[collection])
                 if(c.setPaused)
@@ -1661,8 +1749,8 @@ export class Widget extends StateManaged {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
-        //copied from select
-        let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(w=>w.get('type')=='seat');
+        let c = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
+        c = c.filter(w => w.get('type') === 'seat');
 
         //this get the list of valid index
         const indexList = [];
@@ -1709,8 +1797,9 @@ export class Widget extends StateManaged {
               collections[a.collection].push(w);
           }
 
-          jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
-        } else {
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+        } else if(jeRoutineLogging) {
           jeLoggingRoutineOperationSummary(`no active seats found`);
         }
       }
@@ -1889,33 +1978,28 @@ export class Widget extends StateManaged {
   }
 
   async move(coordGlobal, localAnchor) {
-    const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
-    const transformOrigin = getTransformOrigin(this.domElement);
-    let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
-    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
-    let newX = Math.round(coordParent.x + offset.x - transformOrigin.x);
-    let newY = Math.round(coordParent.y + offset.y - transformOrigin.y);
+    let newCoord = this.dragCorner(coordGlobal, localAnchor);
 
     //Keeps widget's top left corner within coordinates set by dragLimit object
     const limit = this.get('dragLimit');
 
     if (limit.minX !== undefined) {
-      newX = Math.max(limit.minX, newX);
+      newCoord.x = Math.max(limit.minX, newCoord.x);
     }
     if (limit.maxX !== undefined) {
-      newX = Math.min(limit.maxX, newX);
+      newCoord.x = Math.min(limit.maxX, newCoord.x);
     }
     if (limit.minY !== undefined) {
-      newY = Math.max(limit.minY, newY);
+      newCoord.y = Math.max(limit.minY, newCoord.y);
     }
     if (limit.maxY !== undefined) {
-      newY = Math.min(limit.maxY, newY);
+      newCoord.y = Math.min(limit.maxY, newCoord.y);
     }
 
     if(tracingEnabled)
-      sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX, newY });
+      sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
 
-    await this.setPosition(newX, newY, this.get('z'));
+    await this.setPosition(newCoord.x, newCoord.y, this.get('z'));
     await this.snapToGrid();
 
     if(!this.get('fixedParent') && this.get('movable')) {
@@ -1978,7 +2062,8 @@ export class Widget extends StateManaged {
       // If we currently have a shadow widget, position it and place it in the holder.
       if (this.hoverTarget && this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
         const shadowWidget = widgets.get(this.get('dropShadowWidget'));
-        const globalPoint = {x: this.get('x'), y: this.get('y'), z: this.get('z')};
+
+        const globalPoint = this.dragCorner(coordGlobal, localAnchor, this.hoverTarget);
         const shadowParentId = shadowWidget.get('parent');
         if (shadowParentId != this.hoverTarget.get('id')) {
           shadowWidget.currentParent = widgets.get(shadowParentId);
@@ -1994,9 +2079,9 @@ export class Widget extends StateManaged {
     }
   }
 
-  async moveEnd(coord, localAnchor) {
+  async moveEnd(coordGlobal, localAnchor) {
     if(tracingEnabled)
-      sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
+      sendTraceEvent('moveEnd', { id: this.get('id'), coordGlobal, localAnchor });
 
     await this.hideShadowWidget();
     await this.set('dragging', null);
@@ -2009,9 +2094,7 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       if(this.hoverTarget) {
-        let coordNew = this.hoverTarget.coordLocalFromCoordClient({x: coord.clientX, y: coord.clientY});
-        const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
-        coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: Math.round(coordNew.x + offset.x), y: Math.round(coordNew.y + offset.y)});
+        let coordNew = this.dragCorner(coordGlobal, localAnchor, this.hoverTarget);
         this.setPosition(coordNew.x, coordNew.y, this.get('z'));
         await this.snapToGrid();
         await this.moveToHolder(this.hoverTarget);
@@ -2167,13 +2250,20 @@ export class Widget extends StateManaged {
 
       e.className = this.domElement.className;
       e.dataset.id = id;
-      for(const clone of e.querySelectorAll('canvas')) {
-        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+
+      for(const clone of $a('canvas', e)) {
+        const original = $(`canvas[data-id = '${clone.dataset.id}']`, this.domElement);
         const context = clone.getContext('2d');
         clone.width = original.width;
         clone.height = original.height;
         context.drawImage(original, 0, 0);
       }
+
+      const originalTextareas = [...$a('textarea', this.domElement)];
+      const clonedTextareas   = [...$a('textarea', e)];
+      for(const i in originalTextareas)
+        clonedTextareas[i].value = originalTextareas[i].value;
+
       e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
@@ -2280,7 +2370,7 @@ export class Widget extends StateManaged {
       }
 
       if(closest) {
-        this.setPosition(closest[0], closest[1], this.get('z'));
+        await this.setPosition(closest[0], closest[1], this.get('z'));
         for(const p in closest[2])
           if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY' ].indexOf(p) == -1)
             await this.set(p, closest[2][p]);
@@ -2308,7 +2398,8 @@ export class Widget extends StateManaged {
     const thisX = this.get('x');
     const thisY = this.get('y');
     const thisOwner = this.get('owner');
-    const thisOnPileCreation = JSON.stringify(this.get('onPileCreation'));
+    const thisOnPileCreation = this.get('onPileCreation');
+    const thisOnPileCreationJSON = JSON.stringify(thisOnPileCreation);
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -2316,9 +2407,13 @@ export class Widget extends StateManaged {
       if(widgetType != 'card' && widgetType != 'pile')
         continue;
 
-      // check if this widget is closer than 10px from another widget in the same parent
-      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
-        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowOwner') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
+      // check if this widget is closer than the pileSnapRange from another widget in the same parent
+      let pileSnapRange = this.get('pileSnapRange');
+      if(thisType == 'card')
+        pileSnapRange = thisOnPileCreation && thisOnPileCreation.pileSnapRange !== undefined ? thisOnPileCreation.pileSnapRange : defaultPileSnapRange;
+
+      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < pileSnapRange && Math.abs(widget.get('y')-thisY) < pileSnapRange) {
+        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowOwner') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreationJSON)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
