@@ -1,4 +1,5 @@
 {
+  "serverName": "VirtualTabletop.io",
   "port": 8272,
   "externalURL": "http://localhost:8272",
   "urlPrefix": "",
