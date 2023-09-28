@@ -1,0 +1,122 @@
+body {
+  --backgroundColor: white;
+  --textColor: black;
+
+  --backgroundHighlightColor1: #ccc;
+
+  --textHighlightColor1: #880;
+  --textHighlightColor2: orange;
+  --textHighlightColor3: red;
+  --textHighlightColor4: green;
+  --textHighlightColor5: purple;
+  --textHighlightColor6: blue;
+  --textHighlightColor7: darkcyan;
+
+  --textDimColor1: #ccc;
+
+  color-scheme: light;
+}
+
+body.darkMode {
+  --backgroundColor: #08090a;
+  --textColor: #f8f8f2;
+
+  --backgroundHighlightColor1: #444;
+
+  --textHighlightColor1: yellow;
+  --textHighlightColor2: orange;
+  --textHighlightColor3: red;
+  --textHighlightColor4: #7ed07e;
+  --textHighlightColor5: #dda0dd;
+  --textHighlightColor6: blue;
+  --textHighlightColor7: #40e0d0;
+
+  --textDimColor1: #606060;
+
+  color-scheme: dark;
+}
+
+body:not(.edit) #editor,
+body.edit #toolbar {
+  display: none;
+}
+
+body.edit {
+  background-image: none;
+}
+body.edit::after {
+  display: none;
+}
+
+body.edit {
+  --roomTop: var(--editModeRoomTop);
+  --roomLeft: var(--editModeRoomLeft);
+}
+
+body.edit.zoomedOut #roomArea, body.edit.zoomedOut #topSurface {
+  overflow: visible;
+}
+
+#editorSelection {
+  display: none;
+  box-shadow: 0px 0px 0px 5px green;
+  position: absolute;
+  z-index: 2;
+}
+#editorSelection.active {
+  display: block;
+}
+
+body.edit:not(.dragToolbarDragging) .widget.selectedInEdit:not(.pile) {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
+
+body.edit:not(.dragToolbarDragging) .widget.selectedInEdit.pile .handle {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
+
+body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview:not(.pile) {
+  box-shadow: 0px 0px 0px 5px red;
+}
+
+body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview.pile .handle {
+  box-shadow: 0px 0px 0px 5px red;
+}
+
+.hintUI {
+  position: relative;
+}
+
+.hintUI > button {
+  position: absolute;
+  top: -34px;
+  right: 0;
+  margin: 0;
+}
+
+.hintUI > span {
+  display: none;
+  background: var(--VTTblue);
+  color: white;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  border-top-right-radius: 0;
+}
+
+.active.hintUI > button {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.active.hintUI > span {
+  display: block;
+}
+
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

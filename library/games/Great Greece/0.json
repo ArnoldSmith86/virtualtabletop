@@ -1,0 +1,8533 @@
+{
+  "_meta": {
+    "version": 13,
+    "info": {
+      "name": "Great Greece",
+      "image": "/assets/-156642727_1370922",
+      "rules": "https://boardgamegeek.com/filepage/101132/magna-grecia-original-rules-rio-grande-website-ref",
+      "bgg": "https://boardgamegeek.com/boardgame/5419/magna-grecia",
+      "year": "2003",
+      "mode": "vs",
+      "time": "90",
+      "attribution": "The graphical assets were modified from a design created by Stephan Suhar. They are used with their full permission. All graphical modifications, layout design, library image, and coding were completed by Jonathan Cox.&nbsp;",
+      "lastUpdate": 1694146322880,
+      "id": "kc48",
+      "showName": true,
+      "skill": "",
+      "description": "Build sprawling trade empires while competing for the attention of powerful Oracles, and investing in opponent's cities.",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2 - 4",
+      "similarImage": "",
+      "similarName": "Magna Grecia",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Have every player take a seat and then click the setup button. This will randomly place the oracles and put the correct number out for the player count.&nbsp;<div><br></div><div>Left-clicking on road tiles and oracles will rotate them clockwise. Road tiles can be flipped to their opposite side (straight vs. bent) by clicking the Change Road Type button next to their holder.&nbsp;</div><div><br></div><div>Left-click on markets to cycle them through their 3 phases: isolated, connected, and sold.&nbsp;</div><div><br></div><div>It is suggested that market value numbers be dragged over to cities, to help track the number of connections the city has. Left-click on a market value number to increase its value by 1. If the value is higher than 9, add a second counter in the \"1\" position next to the first counter.</div><div><br></div><div>Hover your mouse over the player aid in the top left to get a helpful overview of the rules and the structure of each player's turn.&nbsp;</div><div><br></div><div>Gain and spend money by typing the amount changed (negative number if paying) into the box under your seat, and then press \"enter\" on your keyboard or left-click on the modify button next to the text box.&nbsp;</div><div><br></div><div>When city and road tiles are gained, press the \"+\" button under the associated holder and the tile will move to it. There is a count above each holder showing how many of each tile type is remaining in the supply.</div><div><br></div><div>View a detailed list of all transactions for the entire game by clicking on the \"Toggle Ledger\" button. This will only make the ledger visible to the player who clicks the button, but multiple people can click the button to view it at the same time.&nbsp;</div>"
+    }
+  },
+  "woiqD": {
+    "type": "card",
+    "id": "woiqD",
+    "parent": "woiq",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "hex red straight.png": {
+        "image": "/assets/-10577771_9418",
+        "back": "/assets/-273717236_9397"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 86.6,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 86.6,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 86.6,
+      "height": 100,
+      "shift": "yes",
+      "grid": [
+        {
+          "x": 86.6,
+          "y": 150,
+          "offsetX": -43.3,
+          "offsetY": -75,
+          "maxY": 735
+        },
+        {
+          "x": 86.6,
+          "y": 150,
+          "offsetX": 0,
+          "offsetY": 0,
+          "maxY": 735
+        }
+      ]
+    },
+    "z": 116
+  },
+  "oivz": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red straight.png",
+    "id": "oivz",
+    "z": 1,
+    "parent": "23ta"
+  },
+  "l7jj": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red straight.png",
+    "id": "l7jj",
+    "z": 3,
+    "parent": "23ta",
+    "x": null,
+    "y": null
+  },
+  "qvru": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red straight.png",
+    "id": "qvru",
+    "z": 5,
+    "parent": "23ta",
+    "x": null,
+    "y": null
+  },
+  "qn4f": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red straight.png",
+    "id": "qn4f",
+    "z": 142,
+    "x": 389.69999999999993,
+    "y": 675
+  },
+  "lobx": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red straight.png",
+    "id": "lobx",
+    "z": 101,
+    "x": 606.1999999999999,
+    "y": 450
+  },
+  "rbfl": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red straight.png",
+    "id": "rbfl",
+    "z": 174,
+    "activeFace": 1,
+    "x": 259.79999999999995,
+    "y": 450
+  },
+  "t0qj": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red straight.png",
+    "id": "t0qj",
+    "z": 167,
+    "x": 692.8,
+    "y": 300
+  },
+  "0kta": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red straight.png",
+    "id": "0kta",
+    "z": 175,
+    "x": 519.5999999999999,
+    "y": 450
+  },
+  "q80h": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red bend.png",
+    "id": "q80h",
+    "z": 37,
+    "x": 303.09999999999997,
+    "y": 75
+  },
+  "r44j": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red bend.png",
+    "id": "r44j",
+    "z": 36,
+    "x": 346.4,
+    "y": 300
+  },
+  "ffx3": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red bend.png",
+    "id": "ffx3",
+    "z": 35,
+    "x": 433,
+    "y": 450
+  },
+  "h34l": {
+    "deck": "woiqD",
+    "type": "card",
+    "cardType": "hex red bend.png",
+    "id": "h34l",
+    "z": 165,
+    "x": 389.69999999999993,
+    "y": 375
+  },
+  "q42r": {
+    "image": "/assets/-543816414_324800",
+    "movable": false,
+    "width": 1600,
+    "layer": -4,
+    "id": "q42r",
+    "z": 5,
+    "movableInEdit": false,
+    "height": 1000
+  },
+  "1uclD": {
+    "type": "deck",
+    "id": "1uclD",
+    "x": 1499,
+    "y": 497,
+    "cardTypes": {
+      "hex red bend.png": {
+        "image": "/assets/-10577771_9418",
+        "back": "/assets/-273717236_9397"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 78,
+            "height": 78,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 78,
+            "height": 78,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 78,
+            "height": 78,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 1,
+    "cardDefaults": {
+      "width": 78,
+      "height": 78,
+      "grid": [
+        {
+          "x": 67,
+          "y": 117,
+          "offsetX": 0,
+          "offsetY": 0
+        },
+        {
+          "x": 67,
+          "y": 117,
+          "offsetX": 33.5,
+          "offsetY": 58.5
+        }
+      ],
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 60
+        }
+      ]
+    },
+    "activeFace": 0
+  },
+  "61wa": {
+    "deck": "1uclD",
+    "type": "card",
+    "cardType": "hex red straight.png",
+    "id": "61wa",
+    "z": 184,
+    "activeFace": 1,
+    "x": 346.4,
+    "y": 150,
+    "rotation": 240
+  },
+  "blue roads": {
+    "type": "deck",
+    "id": "blue roads",
+    "x": 4,
+    "y": 4,
+    "z": 4,
+    "cardDefaults": {
+      "width": 69,
+      "height": 69,
+      "grid": [
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": -2.6,
+          "offsetY": 50,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        },
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": 27.2337,
+          "offsetY": 101.675,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        }
+      ],
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 60
+        }
+      ]
+    },
+    "cardTypes": {
+      "road": {
+        "image": "/assets/884478070_4381",
+        "back": "/assets/-1457059290_30563"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "blue roads holder"
+  },
+  "purple roads": {
+    "type": "deck",
+    "id": "purple roads",
+    "x": 4,
+    "y": 4,
+    "z": 2,
+    "cardDefaults": {
+      "width": 69,
+      "height": 69,
+      "grid": [
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": -2.6,
+          "offsetY": 50,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        },
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": 27.2337,
+          "offsetY": 101.675,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        }
+      ],
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 60
+        }
+      ]
+    },
+    "cardTypes": {
+      "road": {
+        "image": "/assets/1291543607_4380",
+        "back": "/assets/-1029929025_29246"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "purple roads holder"
+  },
+  "purple town": {
+    "type": "deck",
+    "id": "purple town",
+    "x": 4,
+    "y": 4,
+    "z": 3,
+    "cardDefaults": {
+      "width": 69,
+      "height": 69,
+      "grid": [
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": -2.6,
+          "offsetY": 50,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        },
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": 27.2337,
+          "offsetY": 101.675,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        }
+      ],
+      "clickRoutine": []
+    },
+    "cardTypes": {
+      "town": {
+        "image": "/assets/-1229101722_6998"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "purple towns holder"
+  },
+  "blue town": {
+    "type": "deck",
+    "id": "blue town",
+    "x": 4,
+    "y": 4,
+    "z": 5,
+    "cardDefaults": {
+      "width": 69,
+      "height": 69,
+      "grid": [
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": -2.6,
+          "offsetY": 50,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        },
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": 27.2337,
+          "offsetY": 101.675,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        }
+      ],
+      "clickRoutine": []
+    },
+    "cardTypes": {
+      "town": {
+        "image": "/assets/-1944095788_18196"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "blue towns holder"
+  },
+  "yellow town": {
+    "type": "deck",
+    "id": "yellow town",
+    "x": 4,
+    "y": 4,
+    "z": 7,
+    "cardDefaults": {
+      "width": 69,
+      "height": 69,
+      "grid": [
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": -2.6,
+          "offsetY": 50,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        },
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": 27.2337,
+          "offsetY": 101.675,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        }
+      ]
+    },
+    "cardTypes": {
+      "town": {
+        "image": "/assets/309415826_15768"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "yellow towns holder"
+  },
+  "red town": {
+    "type": "deck",
+    "id": "red town",
+    "x": 4,
+    "y": 4,
+    "z": 9,
+    "cardDefaults": {
+      "width": 69,
+      "height": 69,
+      "grid": [
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": -2.6,
+          "offsetY": 50,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        },
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": 27.2337,
+          "offsetY": 101.675,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        }
+      ]
+    },
+    "cardTypes": {
+      "town": {
+        "image": "/assets/1205787877_16941"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "red towns holder"
+  },
+  "eapz": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "eapz",
+    "z": 2121,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "f4t8": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "f4t8",
+    "z": 1953,
+    "parent": "wp7d"
+  },
+  "xpn4": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "xpn4",
+    "z": 2081,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "5wcr": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "5wcr",
+    "z": 2123,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "jgwc": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "jgwc",
+    "z": 2125,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "q5pf": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "q5pf",
+    "z": 2127,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "fug5": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "fug5",
+    "z": 2129,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "cdpl": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "cdpl",
+    "z": 2131,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "kkpd": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "kkpd",
+    "z": 2133,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "4kel": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "4kel",
+    "z": 2135,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "b94a": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "b94a",
+    "z": 2137,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "2a6m": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "2a6m",
+    "z": 2139,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "3e0k": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "3e0k",
+    "z": 2141,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "jfnd": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "jfnd",
+    "z": 2143,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "12vj": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "12vj",
+    "z": 2549,
+    "activeFace": 1,
+    "parent": "purple roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "4p3q": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "4p3q",
+    "z": 2113,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "ky8m": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "ky8m",
+    "z": 2115,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "81tv": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "81tv",
+    "z": 2117,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "2cl4": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "2cl4",
+    "z": 2119,
+    "activeFace": 1,
+    "parent": "38xf"
+  },
+  "a3xb": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "a3xb",
+    "z": 2550,
+    "activeFace": 1,
+    "parent": "purple roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "ivcq": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "ivcq",
+    "z": 2551,
+    "activeFace": 1,
+    "parent": "purple roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "f9mk": {
+    "deck": "purple roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "f9mk",
+    "z": 2552,
+    "activeFace": 1,
+    "parent": "purple roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "iche": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "iche",
+    "z": 1955,
+    "parent": "wp7d"
+  },
+  "w8h7": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "w8h7",
+    "z": 1957,
+    "parent": "wp7d"
+  },
+  "s8ys": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "s8ys",
+    "z": 1959,
+    "parent": "wp7d"
+  },
+  "pjw7": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "pjw7",
+    "z": 1961,
+    "parent": "wp7d"
+  },
+  "1yav": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "1yav",
+    "z": 1963,
+    "parent": "wp7d"
+  },
+  "9eff": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "9eff",
+    "z": 2553,
+    "x": 12,
+    "y": 15,
+    "activeFace": 1,
+    "parent": "purple towns hand"
+  },
+  "yazk": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "yazk",
+    "z": 2554,
+    "activeFace": 1,
+    "parent": "purple towns hand",
+    "x": 12,
+    "y": 15
+  },
+  "87gv": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "87gv",
+    "z": 2555,
+    "x": 12,
+    "y": 15,
+    "activeFace": 1,
+    "parent": "purple towns hand"
+  },
+  "qxtd": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "qxtd",
+    "z": 1965,
+    "parent": "wp7d"
+  },
+  "89xw": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "89xw",
+    "z": 1967,
+    "parent": "wp7d"
+  },
+  "47ci": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "47ci",
+    "z": 2556,
+    "activeFace": 1,
+    "x": 12,
+    "y": 15,
+    "parent": "purple towns hand"
+  },
+  "hsho": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "hsho",
+    "z": 1969,
+    "parent": "wp7d"
+  },
+  "hv3r": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "hv3r",
+    "z": 1971,
+    "parent": "wp7d"
+  },
+  "drfn": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "drfn",
+    "z": 1973,
+    "parent": "wp7d"
+  },
+  "kl31": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "kl31",
+    "z": 1975,
+    "parent": "wp7d"
+  },
+  "qjca": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "qjca",
+    "z": 1977,
+    "parent": "wp7d"
+  },
+  "h9e3": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "h9e3",
+    "z": 1979,
+    "parent": "wp7d"
+  },
+  "3x5a": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "3x5a",
+    "z": 1981,
+    "parent": "wp7d"
+  },
+  "xjmk": {
+    "deck": "purple town",
+    "type": "card",
+    "cardType": "town",
+    "id": "xjmk",
+    "z": 1983,
+    "parent": "wp7d"
+  },
+  "7yo0": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "7yo0",
+    "z": 2083,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "583i": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "583i",
+    "z": 2085,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "so0m": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "so0m",
+    "z": 2087,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "ailg": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "ailg",
+    "z": 2089,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "48z2": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "48z2",
+    "z": 2091,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "1inx": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "1inx",
+    "z": 2093,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "p5bd": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "p5bd",
+    "z": 2095,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "q1e3": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "q1e3",
+    "z": 2097,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "lezo": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "lezo",
+    "z": 2099,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "pzia": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "pzia",
+    "z": 2101,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "oi56": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "oi56",
+    "z": 2103,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "vxkv": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "vxkv",
+    "z": 2073,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "4yrn": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "4yrn",
+    "z": 2075,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "kaks": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "kaks",
+    "z": 2077,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "a3io": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "a3io",
+    "z": 2079,
+    "activeFace": 1,
+    "parent": "bjjt"
+  },
+  "laox": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "laox",
+    "z": 2541,
+    "activeFace": 1,
+    "parent": "blue roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "mwfc": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "mwfc",
+    "z": 2542,
+    "activeFace": 1,
+    "parent": "blue roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "mr8b": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "mr8b",
+    "z": 2543,
+    "activeFace": 1,
+    "parent": "blue roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "iwtp": {
+    "deck": "blue roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "iwtp",
+    "z": 2544,
+    "activeFace": 1,
+    "parent": "blue roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "4ds4": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "4ds4",
+    "z": 1921,
+    "parent": "w8zh"
+  },
+  "51wr": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "51wr",
+    "z": 1923,
+    "parent": "w8zh"
+  },
+  "hhjt": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "hhjt",
+    "z": 1925,
+    "parent": "w8zh"
+  },
+  "swxu": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "swxu",
+    "z": 1927,
+    "parent": "w8zh"
+  },
+  "mfj6": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "mfj6",
+    "z": 1929,
+    "parent": "w8zh"
+  },
+  "c6cm": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "c6cm",
+    "z": 1931,
+    "parent": "w8zh"
+  },
+  "36a2": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "36a2",
+    "z": 1933,
+    "parent": "w8zh"
+  },
+  "vg3v": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "vg3v",
+    "z": 1935,
+    "activeFace": 1,
+    "parent": "w8zh"
+  },
+  "wdxe": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "wdxe",
+    "z": 1937,
+    "parent": "w8zh"
+  },
+  "7wji": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "7wji",
+    "z": 1939,
+    "activeFace": 1,
+    "parent": "w8zh"
+  },
+  "ha1b": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "ha1b",
+    "z": 1941,
+    "activeFace": 1,
+    "parent": "w8zh"
+  },
+  "crgq": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "crgq",
+    "z": 1943,
+    "activeFace": 1,
+    "parent": "w8zh"
+  },
+  "t4dm": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "t4dm",
+    "z": 2545,
+    "parent": "blue towns hand",
+    "x": 12,
+    "y": 15,
+    "activeFace": 1
+  },
+  "vtgp": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "vtgp",
+    "z": 2546,
+    "parent": "blue towns hand",
+    "x": 12,
+    "y": 15,
+    "activeFace": 1
+  },
+  "rsfm": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "rsfm",
+    "z": 2547,
+    "parent": "blue towns hand",
+    "x": 12,
+    "y": 15,
+    "activeFace": 1
+  },
+  "ucyb": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "ucyb",
+    "z": 2548,
+    "parent": "blue towns hand",
+    "x": 12,
+    "y": 15,
+    "activeFace": 1
+  },
+  "grgx": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "grgx",
+    "z": 1913,
+    "parent": "w8zh",
+    "activeFace": 1
+  },
+  "v8tr": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "v8tr",
+    "z": 1915,
+    "parent": "w8zh",
+    "activeFace": 1
+  },
+  "liil": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "liil",
+    "z": 1917,
+    "parent": "w8zh",
+    "activeFace": 1
+  },
+  "d08o": {
+    "deck": "blue town",
+    "type": "card",
+    "cardType": "town",
+    "id": "d08o",
+    "z": 1919,
+    "parent": "w8zh",
+    "activeFace": 1
+  },
+  "un72": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "un72",
+    "z": 2201,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "h1yb": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "h1yb",
+    "z": 2203,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "nekj": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "nekj",
+    "z": 2205,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "pf5v": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "pf5v",
+    "z": 2207,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "ajws": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "ajws",
+    "z": 2209,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "mw1r": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "mw1r",
+    "z": 2211,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "srwz": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "srwz",
+    "z": 2213,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "cw3b": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "cw3b",
+    "z": 2215,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "bb24": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "bb24",
+    "z": 2217,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "po47": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "po47",
+    "z": 2219,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "ewq3": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "ewq3",
+    "z": 2221,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "lxq3": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "lxq3",
+    "z": 2223,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "17mj": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "17mj",
+    "z": 2565,
+    "activeFace": 1,
+    "parent": "yellow roads hand",
+    "x": 12,
+    "y": 13
+  },
+  "h98o": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "h98o",
+    "z": 2566,
+    "activeFace": 1,
+    "parent": "yellow roads hand",
+    "x": 12,
+    "y": 13
+  },
+  "2sh8": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "2sh8",
+    "z": 2193,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "h5oc": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "h5oc",
+    "z": 2195,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "opku": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "opku",
+    "z": 2197,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "dmzg": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "dmzg",
+    "z": 2199,
+    "activeFace": 1,
+    "parent": "41zc"
+  },
+  "hq4u": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "hq4u",
+    "z": 2567,
+    "activeFace": 1,
+    "parent": "yellow roads hand",
+    "x": 12,
+    "y": 13
+  },
+  "kz3m": {
+    "deck": "yellow roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "kz3m",
+    "z": 2568,
+    "activeFace": 1,
+    "parent": "yellow roads hand",
+    "x": 12,
+    "y": 13
+  },
+  "z0fw": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "z0fw",
+    "z": 2033,
+    "parent": "bu72"
+  },
+  "5y73": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "5y73",
+    "z": 2035,
+    "parent": "bu72"
+  },
+  "6hmw": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "6hmw",
+    "z": 2037,
+    "parent": "bu72"
+  },
+  "cqnf": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "cqnf",
+    "z": 2569,
+    "x": 12,
+    "y": 14,
+    "activeFace": 1,
+    "parent": "yellow towns hand"
+  },
+  "qdae": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "qdae",
+    "z": 2570,
+    "activeFace": 1,
+    "parent": "yellow towns hand",
+    "x": 12,
+    "y": 14
+  },
+  "s9cd": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "s9cd",
+    "z": 2571,
+    "activeFace": 1,
+    "parent": "yellow towns hand",
+    "x": 12,
+    "y": 14
+  },
+  "egkz": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "egkz",
+    "z": 2039,
+    "parent": "bu72"
+  },
+  "huyy": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "huyy",
+    "z": 2041,
+    "parent": "bu72"
+  },
+  "xig8": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "xig8",
+    "z": 2572,
+    "x": 12,
+    "y": 14,
+    "activeFace": 1,
+    "parent": "yellow towns hand"
+  },
+  "rs7s": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "rs7s",
+    "z": 2043,
+    "parent": "bu72"
+  },
+  "ww99": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "ww99",
+    "z": 2045,
+    "parent": "bu72"
+  },
+  "taqv": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "taqv",
+    "z": 2047,
+    "parent": "bu72"
+  },
+  "y3bw": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "y3bw",
+    "z": 2049,
+    "parent": "bu72"
+  },
+  "e2fg": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "e2fg",
+    "z": 2051,
+    "parent": "bu72"
+  },
+  "2o5e": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "2o5e",
+    "z": 2053,
+    "parent": "bu72"
+  },
+  "j218": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "j218",
+    "z": 2055,
+    "parent": "bu72"
+  },
+  "tl2h": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "tl2h",
+    "z": 2057,
+    "parent": "bu72"
+  },
+  "4p5j": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "4p5j",
+    "z": 2059,
+    "parent": "bu72"
+  },
+  "xlbe": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "xlbe",
+    "z": 2061,
+    "parent": "bu72"
+  },
+  "kemt": {
+    "deck": "yellow town",
+    "type": "card",
+    "cardType": "town",
+    "id": "kemt",
+    "z": 2063,
+    "parent": "bu72"
+  },
+  "8a2x": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "8a2x",
+    "z": 2161,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "xp27": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "xp27",
+    "z": 2163,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "ksli": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "ksli",
+    "z": 2165,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "uwrk": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "uwrk",
+    "z": 2167,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "plll": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "plll",
+    "z": 2169,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "fnx7": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "fnx7",
+    "z": 2171,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "p5dm": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "p5dm",
+    "z": 2173,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "x0kt": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "x0kt",
+    "z": 2175,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "pjvt": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "pjvt",
+    "z": 2177,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "svoa": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "svoa",
+    "z": 2179,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "vq48": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "vq48",
+    "z": 2181,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "rs6t": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "rs6t",
+    "z": 2183,
+    "parent": "sptv",
+    "activeFace": 1
+  },
+  "820b": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "820b",
+    "z": 2557,
+    "activeFace": 1,
+    "parent": "red roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "bmy6": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "bmy6",
+    "z": 2558,
+    "activeFace": 1,
+    "parent": "red roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "d0jw": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "d0jw",
+    "z": 2559,
+    "activeFace": 1,
+    "parent": "red roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "vcxk": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "vcxk",
+    "z": 2560,
+    "activeFace": 1,
+    "parent": "red roads hand",
+    "x": 12,
+    "y": 15
+  },
+  "oa16": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "oa16",
+    "z": 2153,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "cxgm": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "cxgm",
+    "z": 2155,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "wr56": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "wr56",
+    "z": 2157,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "vwdk": {
+    "deck": "red roads",
+    "type": "card",
+    "cardType": "road",
+    "id": "vwdk",
+    "z": 2159,
+    "activeFace": 1,
+    "parent": "sptv"
+  },
+  "0ul1": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "0ul1",
+    "z": 1993,
+    "parent": "n5tr"
+  },
+  "1b1v": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "1b1v",
+    "z": 1995,
+    "parent": "n5tr"
+  },
+  "l9e7": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "l9e7",
+    "z": 1997,
+    "parent": "n5tr"
+  },
+  "a116": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "a116",
+    "z": 2561,
+    "activeFace": 1,
+    "parent": "red towns hand",
+    "x": 12,
+    "y": 15
+  },
+  "ev67": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "ev67",
+    "z": 2562,
+    "activeFace": 1,
+    "parent": "red towns hand",
+    "x": 12,
+    "y": 15
+  },
+  "f0d9": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "f0d9",
+    "z": 1999,
+    "parent": "n5tr"
+  },
+  "7e5h": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "7e5h",
+    "z": 2563,
+    "activeFace": 1,
+    "parent": "red towns hand",
+    "x": 12,
+    "y": 15
+  },
+  "2kc3": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "2kc3",
+    "z": 2001,
+    "activeFace": 1,
+    "parent": "n5tr"
+  },
+  "c6mt": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "c6mt",
+    "z": 2564,
+    "activeFace": 1,
+    "parent": "red towns hand",
+    "x": 12,
+    "y": 15
+  },
+  "r2lv": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "r2lv",
+    "z": 2003,
+    "parent": "n5tr"
+  },
+  "b1t9": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "b1t9",
+    "z": 2005,
+    "parent": "n5tr"
+  },
+  "jg1r": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "jg1r",
+    "z": 2007,
+    "activeFace": 1,
+    "parent": "n5tr"
+  },
+  "80qj": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "80qj",
+    "z": 2009,
+    "parent": "n5tr"
+  },
+  "al8d": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "al8d",
+    "z": 2011,
+    "parent": "n5tr"
+  },
+  "em3z": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "em3z",
+    "z": 2013,
+    "parent": "n5tr"
+  },
+  "vcq8": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "vcq8",
+    "z": 2015,
+    "parent": "n5tr"
+  },
+  "v6y5": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "v6y5",
+    "z": 2017,
+    "parent": "n5tr"
+  },
+  "elii": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "elii",
+    "z": 2019,
+    "parent": "n5tr"
+  },
+  "68ft": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "68ft",
+    "z": 2021,
+    "parent": "n5tr"
+  },
+  "9km7": {
+    "deck": "red town",
+    "type": "card",
+    "cardType": "town",
+    "id": "9km7",
+    "z": 2023,
+    "parent": "n5tr"
+  },
+  "5sfeB": {
+    "id": "5sfeB",
+    "parent": "red roads holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "6sfeB": {
+    "id": "6sfeB",
+    "parent": "yellow roads holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "7sfeB": {
+    "id": "7sfeB",
+    "parent": "blue roads holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "8sfeB": {
+    "id": "8sfeB",
+    "parent": "purple roads holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "9sfeB": {
+    "id": "9sfeB",
+    "parent": "red towns holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "10sfeB": {
+    "id": "10sfeB",
+    "parent": "yellow towns holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "11sfeB": {
+    "id": "11sfeB",
+    "parent": "blue towns holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "12sfeB": {
+    "id": "12sfeB",
+    "parent": "purple towns holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "n5tr": {
+    "type": "pile",
+    "parent": "red towns holder",
+    "x": 4,
+    "y": 4,
+    "width": 86,
+    "height": 86,
+    "id": "n5tr"
+  },
+  "bu72": {
+    "type": "pile",
+    "parent": "yellow towns holder",
+    "x": 4,
+    "y": 4,
+    "width": 86,
+    "height": 86,
+    "id": "bu72"
+  },
+  "wp7d": {
+    "type": "pile",
+    "parent": "purple towns holder",
+    "x": 4,
+    "y": 4,
+    "width": 86,
+    "height": 86,
+    "id": "wp7d"
+  },
+  "b2maB": {
+    "id": "b2maB",
+    "parent": "temple holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "temple holder": {
+    "type": "holder",
+    "id": "temple holder",
+    "x": 196,
+    "y": -258,
+    "z": 221,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "temples": {
+    "type": "deck",
+    "id": "temples",
+    "parent": "temple holder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "temple": {
+        "image": "/assets/-874944435_5218"
+      },
+      "blank": {
+        "image": ""
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 60,
+      "height": 60,
+      "clickRoutine": [
+        {
+          "func": "GET",
+          "collection": "thisButton",
+          "property": "rotation",
+          "variable": "current_angle"
+        },
+        {
+          "func": "IF",
+          "operand1": "${current_angle}",
+          "relation": "==",
+          "operand2": 330,
+          "thenRoutine": [
+            {
+              "func": "ROTATE",
+              "collection": "thisButton",
+              "angle": 30
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "ROTATE",
+              "collection": "thisButton",
+              "angle": 60
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "blue roads hand": {
+    "type": "holder",
+    "id": "blue roads hand",
+    "x": 1408,
+    "width": 94,
+    "height": 94,
+    "z": 560,
+    "linkedToSeat": "seat1",
+    "activeFace": 0,
+    "text": "17 roads left",
+    "y": 40,
+    "dropOffsetX": 12,
+    "dropOffsetY": 15,
+    "css": "background: no-repeat center url(/assets/-2133282075_2267); background-size:69px 69px;border:calc(1px / var(--scale)) solid transparent",
+    "dropTarget": {
+      "deck": "blue roads"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "updateCountRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "NumCards"
+      },
+      {
+        "func": "LABEL",
+        "label": "blue_road_count",
+        "value": "${NumCards}"
+      }
+    ]
+  },
+  "purple roads holder": {
+    "type": "holder",
+    "id": "purple roads holder",
+    "x": 1796,
+    "y": 300,
+    "z": 315,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "blue roads holder": {
+    "type": "holder",
+    "id": "blue roads holder",
+    "x": 1775,
+    "y": 27,
+    "z": 318,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "yellow roads holder": {
+    "type": "holder",
+    "id": "yellow roads holder",
+    "x": 1780,
+    "y": 808,
+    "z": 322,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "red roads holder": {
+    "type": "holder",
+    "id": "red roads holder",
+    "x": 1788,
+    "y": 553,
+    "z": 321,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "purple towns holder": {
+    "type": "holder",
+    "id": "purple towns holder",
+    "x": 1640,
+    "y": 300,
+    "z": 316,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "blue towns holder": {
+    "type": "holder",
+    "id": "blue towns holder",
+    "x": 1635,
+    "y": 37,
+    "z": 317,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "yellow towns holder": {
+    "type": "holder",
+    "id": "yellow towns holder",
+    "x": 1629,
+    "y": 819,
+    "z": 320,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "red towns holder": {
+    "type": "holder",
+    "id": "red towns holder",
+    "x": 1634,
+    "y": 545,
+    "z": 319,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "1wuxB": {
+    "id": "1wuxB",
+    "parent": "round cards blue holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "blue roads left": {
+    "type": "label",
+    "id": "blue roads left",
+    "width": 120,
+    "z": 115,
+    "css": "font-size: 15px; ",
+    "text": "16 remaining",
+    "linkedToSeat": "seat1",
+    "activeFace": 0,
+    "parent": "blue roads hand",
+    "fixedParent": true,
+    "y": -20,
+    "x": -12
+  },
+  "nw10j": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "blue roads hand",
+        "to": "blue roads holder",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "blue roads holder"
+        ],
+        "variable": "BlueRoadsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "blue roads left",
+        "mode": "set",
+        "value": "${BlueRoadsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 1
+      }
+    ],
+    "y": 100,
+    "z": 76473,
+    "id": "nw10j",
+    "height": 30,
+    "width": 30,
+    "text": "-",
+    "linkedToSeat": "seat1",
+    "activeFace": 0,
+    "parent": "blue roads hand",
+    "fixedParent": true,
+    "x": 15,
+    "movableInEdit": false
+  },
+  "purple roads left": {
+    "type": "label",
+    "id": "purple roads left",
+    "x": -13,
+    "width": 120,
+    "z": 225,
+    "css": "font-size: 15px; ",
+    "text": "16 remaining",
+    "linkedToSeat": "seat2",
+    "activeFace": 0,
+    "parent": "purple roads hand",
+    "fixedParent": true,
+    "y": -21
+  },
+  "first temple holder": {
+    "type": "holder",
+    "id": "first temple holder",
+    "x": 326,
+    "y": 205,
+    "width": 60,
+    "height": 60,
+    "z": 572,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "temple_holder": true,
+    "classes": "transparent",
+    "activeFace": 0,
+    "movableInEdit": false
+  },
+  "39du": {
+    "type": "holder",
+    "x": 924,
+    "y": 723,
+    "z": 308,
+    "id": "39du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "setup": {
+    "type": "button",
+    "id": "setup",
+    "x": 3,
+    "z": 76502,
+    "clickRoutine": [
+      {
+        "note": "Get player count",
+        "func": "SELECT",
+        "type": "seat",
+        "collection": "seatedPlayers",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT",
+        "collection": "seatedPlayers",
+        "variable": "player_count"
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "checkbox",
+            "label": "Check this box and click the green button to reset the game.",
+            "variable": "checkbox",
+            "value": false
+          }
+        ],
+        "confirmButtonText": "Reset the game!",
+        "cancelButtonIcon": "cancel"
+      },
+      {
+        "func": "IF",
+        "operand1": "${checkbox}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "note": "Sets all cards to their default face.",
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "relation": "==",
+            "collection": "road_cards",
+            "value": "road"
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "collection": "road_cards",
+            "aggregation": "array",
+            "variable": "road_IDs"
+          },
+          {
+            "func": "SET",
+            "collection": "road_cards",
+            "property": "activeFace",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": "road_cards",
+            "property": "rotation",
+            "value": 0
+          },
+          {
+            "note": "Sets all city counters to their default face.",
+            "func": "SELECT",
+            "type": "card",
+            "property": "deck",
+            "relation": "==",
+            "collection": "city_counters",
+            "value": "city value"
+          },
+          {
+            "func": "SET",
+            "collection": "city_counters",
+            "property": "activeFace",
+            "value": 1
+          },
+          {
+            "note": "Sets all markets to their default face.",
+            "func": "SELECT",
+            "type": "card",
+            "collection": "markets",
+            "property": "market",
+            "relation": "==",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "markets",
+            "property": "activeFace",
+            "value": 0
+          },
+          {
+            "func": "RECALL",
+            "holder": "blank temple holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "market blue holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "market purple holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "market red holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "market yellow holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "blue towns holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "purple towns holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "red towns holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "yellow towns holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "blue roads holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "purple roads holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "red roads holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "yellow roads holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "temple holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "blank temple holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "round cards blue holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "round cards purple holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "round cards red holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "round cards yellow holder",
+            "owned": false
+          },
+          {
+            "func": "RECALL",
+            "holder": "city value holder",
+            "owned": false
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "blue towns holder"
+            ],
+            "variable": "blueTownsLeft"
+          },
+          {
+            "func": "ROTATE",
+            "holder": "temple holder",
+            "count": 32,
+            "angle": 330,
+            "mode": "set"
+          },
+          {
+            "func": "LABEL",
+            "label": "blue towns left",
+            "mode": "set",
+            "value": "${blueTownsLeft} towns left"
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "purple towns holder"
+            ],
+            "variable": "PurpleTownsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "purple towns left",
+            "mode": "set",
+            "value": "${PurpleTownsLeft} towns left"
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "red towns holder"
+            ],
+            "variable": "redTownsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "red towns left",
+            "mode": "set",
+            "value": "${redTownsLeft} towns left"
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "yellow towns holder"
+            ],
+            "variable": "yellowTownsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "yellow towns left",
+            "mode": "set",
+            "value": "${yellowTownsLeft} towns left"
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "blue roads holder"
+            ],
+            "variable": "BlueRoadsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "blue roads left",
+            "mode": "set",
+            "value": "${BlueRoadsLeft} roads left"
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "purple roads holder"
+            ],
+            "variable": "purpleRoadsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "purple roads left",
+            "mode": "set",
+            "value": "${purpleRoadsLeft} roads left"
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "red roads holder"
+            ],
+            "variable": "redRoadsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "red roads left",
+            "mode": "set",
+            "value": "${redRoadsLeft} roads left"
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "yellow roads holder"
+            ],
+            "variable": "yellowRoadsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "yellow roads left",
+            "mode": "set",
+            "value": "${yellowRoadsLeft} roads left"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "round cards blue holder"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "round cards purple holder"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "round cards red holder"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "round cards yellow holder"
+          },
+          "var start = 1",
+          "var end = 3",
+          "var step = 1",
+          {
+            "func": "FOREACH",
+            "range": [
+              "${start}",
+              "${end}",
+              "${step}"
+            ],
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "round cards blue holder",
+                "to": "round cards temp holder",
+                "count": 1
+              },
+              {
+                "func": "MOVE",
+                "from": "round cards purple holder",
+                "to": "round cards temp holder",
+                "count": 1
+              },
+              {
+                "func": "MOVE",
+                "from": "round cards red holder",
+                "to": "round cards temp holder",
+                "count": 1
+              },
+              {
+                "func": "MOVE",
+                "from": "round cards yellow holder",
+                "to": "round cards temp holder",
+                "count": 1
+              },
+              {
+                "func": "SHUFFLE",
+                "holder": "round cards temp holder"
+              },
+              {
+                "func": "MOVE",
+                "from": "round cards temp holder",
+                "to": "next round holder",
+                "count": 4
+              }
+            ]
+          },
+          {
+            "func": "MOVE",
+            "from": "next round holder",
+            "to": "current round holder"
+          },
+          {
+            "func": "MOVE",
+            "from": "blank temple holder",
+            "to": "temple holder",
+            "count": 23
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "temple holder"
+          },
+          {
+            "func": "SELECT",
+            "property": "temple_holder",
+            "value": true
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "aggregation": "array",
+            "variable": "holders"
+          },
+          {
+            "func": "MOVE",
+            "from": "temple holder",
+            "to": "${holders}"
+          },
+          {
+            "func": "RECALL",
+            "holder": "blank temple holder",
+            "owned": false
+          },
+          {
+            "note": "Removes 2 temples if less than 4 people are playing",
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "<",
+            "operand2": 4,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "2p3p_remove",
+                "value": true,
+                "collection": "temples_to_remove"
+              },
+              {
+                "func": "SET",
+                "collection": "temples_to_remove",
+                "property": "parent",
+                "value": "temple holder"
+              }
+            ]
+          },
+          {
+            "note": "Determine starting points",
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 2,
+            "thenRoutine": [
+              "var starting_score = 10"
+            ]
+          },
+          {
+            "note": "Determine starting points",
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 3,
+            "thenRoutine": [
+              "var starting_score = 12"
+            ]
+          },
+          {
+            "note": "Determine starting points",
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 4,
+            "thenRoutine": [
+              "var starting_score = 15"
+            ]
+          },
+          {
+            "note": "Grabs all score labels",
+            "func": "SELECT",
+            "property": "score_label",
+            "value": true,
+            "collection": "score_labels"
+          },
+          {
+            "func": "LABEL",
+            "collection": "score_labels",
+            "mode": "set",
+            "value": "${starting_score}"
+          },
+          {
+            "note": "Give all players their starting tiles",
+            "func": "MOVE",
+            "from": "blue roads holder",
+            "to": "blue roads hand",
+            "count": 4
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "blue roads holder"
+            ],
+            "variable": "RoadsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "blue roads left",
+            "mode": "set",
+            "value": "${RoadsLeft} remaining"
+          },
+          {
+            "func": "MOVE",
+            "from": "blue towns holder",
+            "to": "blue towns hand",
+            "count": 4
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "blue towns holder"
+            ],
+            "variable": "TownsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "blue towns left",
+            "mode": "set",
+            "value": "${TownsLeft} remaining"
+          },
+          {
+            "func": "MOVE",
+            "from": "purple roads holder",
+            "to": "purple roads hand",
+            "count": 4
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "purple roads holder"
+            ],
+            "variable": "RoadsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "purple roads left",
+            "mode": "set",
+            "value": "${RoadsLeft} remaining"
+          },
+          {
+            "func": "MOVE",
+            "from": "purple towns holder",
+            "to": "purple towns hand",
+            "count": 4
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "purple towns holder"
+            ],
+            "variable": "TownsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "purple towns left",
+            "mode": "set",
+            "value": "${TownsLeft} remaining"
+          },
+          {
+            "func": "MOVE",
+            "from": "red roads holder",
+            "to": "red roads hand",
+            "count": 4
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "red roads holder"
+            ],
+            "variable": "RoadsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "red roads left",
+            "mode": "set",
+            "value": "${RoadsLeft} remaining"
+          },
+          {
+            "func": "MOVE",
+            "from": "red towns holder",
+            "to": "red towns hand",
+            "count": 4
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "red towns holder"
+            ],
+            "variable": "TownsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "red towns left",
+            "mode": "set",
+            "value": "${TownsLeft} remaining"
+          },
+          {
+            "func": "MOVE",
+            "from": "yellow roads holder",
+            "to": "yellow roads hand",
+            "count": 4
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "yellow roads holder"
+            ],
+            "variable": "RoadsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "yellow roads left",
+            "mode": "set",
+            "value": "${RoadsLeft} remaining"
+          },
+          {
+            "func": "MOVE",
+            "from": "yellow towns holder",
+            "to": "yellow towns hand",
+            "count": 4
+          },
+          {
+            "func": "COUNT",
+            "holder": [
+              "yellow towns holder"
+            ],
+            "variable": "TownsLeft"
+          },
+          {
+            "func": "LABEL",
+            "label": "yellow towns left",
+            "mode": "set",
+            "value": "${TownsLeft} remaining"
+          },
+          {
+            "func": "LABEL",
+            "label": "ledger_label",
+            "mode": "set",
+            "value": ""
+          },
+          {
+            "func": "SELECT",
+            "property": "isClone",
+            "relation": "==",
+            "value": true,
+            "collection": "all_clones"
+          },
+          {
+            "func": "DELETE",
+            "collection": "all_clones"
+          },
+          {
+            "func": "SELECT",
+            "property": "isClone",
+            "relation": "==",
+            "value": true,
+            "collection": "all_clones"
+          },
+          {
+            "func": "DELETE",
+            "collection": "all_clones"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "relation": "==",
+            "value": "city value holder",
+            "collection": "city_value_seed"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 1,
+            "collection": "city_value_seed"
+          }
+        ]
+      }
+    ],
+    "activeFace": 0,
+    "text": "Setup Game",
+    "y": 3
+  },
+  "vigj": {
+    "deck": "temples",
+    "type": "card",
+    "cardType": "temple",
+    "id": "vigj",
+    "z": 2488,
+    "2p3p_remove": true,
+    "rotation": 330,
+    "parent": "s51b"
+  },
+  "hrka": {
+    "deck": "temples",
+    "type": "card",
+    "cardType": "temple",
+    "id": "hrka",
+    "z": 2475,
+    "x": 4,
+    "y": 4,
+    "parent": "50du",
+    "rotation": 330
+  },
+  "x3i8": {
+    "deck": "temples",
+    "type": "card",
+    "cardType": "temple",
+    "id": "x3i8",
+    "z": 2469,
+    "x": 4,
+    "y": 4,
+    "rotation": 330,
+    "parent": "44du"
+  },
+  "bep8": {
+    "deck": "temples",
+    "type": "card",
+    "cardType": "temple",
+    "id": "bep8",
+    "z": 2540,
+    "2p3p_remove": true,
+    "parent": "s51b",
+    "rotation": 330
+  },
+  "z16s": {
+    "deck": "temples",
+    "type": "card",
+    "cardType": "temple",
+    "id": "z16s",
+    "z": 2476,
+    "x": 4,
+    "y": 4,
+    "rotation": 330,
+    "parent": "51du"
+  },
+  "hsii": {
+    "deck": "temples",
+    "type": "card",
+    "cardType": "temple",
+    "id": "hsii",
+    "z": 2485,
+    "x": 4,
+    "y": 4,
+    "rotation": 330,
+    "parent": "60du"
+  },
+  "4yta": {
+    "deck": "temples",
+    "type": "card",
+    "cardType": "temple",
+    "id": "4yta",
+    "z": 2466,
+    "x": 4,
+    "y": 4,
+    "parent": "41du",
+    "rotation": 330
+  },
+  "20g5": {
+    "deck": "temples",
+    "type": "card",
+    "cardType": "temple",
+    "id": "20g5",
+    "z": 2491,
+    "x": 4,
+    "y": 4,
+    "rotation": 330,
+    "parent": "66du"
+  },
+  "xo7j": {
+    "deck": "temples",
+    "type": "card",
+    "cardType": "temple",
+    "id": "xo7j",
+    "z": 2487,
+    "x": 4,
+    "y": 4,
+    "rotation": 330,
+    "parent": "62du"
+  },
+  "52h8B": {
+    "id": "52h8B",
+    "parent": "blank temple holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "blank temple holder": {
+    "type": "holder",
+    "id": "blank temple holder",
+    "x": 349,
+    "y": -240,
+    "z": 223,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "blank temple deck": {
+    "type": "deck",
+    "id": "blank temple deck",
+    "parent": "blank temple holder",
+    "x": 4,
+    "y": 4,
+    "z": 12,
+    "cardTypes": {
+      "blank": {
+        "image": ""
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "blank temple original": {
+    "type": "card",
+    "id": "blank temple original",
+    "deck": "blank temple deck",
+    "cardType": "blank",
+    "z": 2495,
+    "parent": "s2to"
+  },
+  "next round holder": {
+    "type": "holder",
+    "id": "next round holder",
+    "x": 546,
+    "y": 3,
+    "width": 135,
+    "height": 180,
+    "z": 587,
+    "classes": "transparent",
+    "activeFace": 0,
+    "dropTarget": {
+      "round_card": true
+    }
+  },
+  "a0p0": {
+    "type": "label",
+    "text": "Current Round",
+    "x": 682,
+    "z": 270,
+    "id": "a0p0",
+    "width": 250,
+    "activeFace": 0,
+    "y": 185
+  },
+  "a0p1": {
+    "type": "label",
+    "text": "Next Round",
+    "x": 489,
+    "z": 274,
+    "id": "a0p1",
+    "width": 250,
+    "activeFace": 0,
+    "y": 185
+  },
+  "40du": {
+    "type": "holder",
+    "x": 804,
+    "y": 826,
+    "z": 307,
+    "id": "40du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "41du": {
+    "type": "holder",
+    "x": 744,
+    "y": 723,
+    "z": 306,
+    "id": "41du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "42du": {
+    "type": "holder",
+    "x": 864,
+    "y": 619,
+    "z": 305,
+    "id": "42du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "43du": {
+    "type": "holder",
+    "x": 805,
+    "y": 516,
+    "z": 304,
+    "id": "43du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "44du": {
+    "type": "holder",
+    "x": 685,
+    "y": 620,
+    "z": 303,
+    "id": "44du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "45du": {
+    "type": "holder",
+    "x": 595,
+    "y": 568,
+    "z": 302,
+    "id": "45du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "46du": {
+    "type": "holder",
+    "x": 595,
+    "y": 671,
+    "z": 301,
+    "id": "46du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "47du": {
+    "type": "holder",
+    "x": 595,
+    "y": 775,
+    "z": 300,
+    "id": "47du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "48du": {
+    "type": "holder",
+    "x": 655,
+    "y": 879,
+    "z": 299,
+    "id": "48du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "49du": {
+    "type": "holder",
+    "x": 476,
+    "y": 774,
+    "z": 297,
+    "id": "49du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "50du": {
+    "type": "holder",
+    "x": 446,
+    "y": 619,
+    "z": 296,
+    "id": "50du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "51du": {
+    "type": "holder",
+    "x": 386,
+    "y": 723,
+    "z": 295,
+    "id": "51du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "52du": {
+    "type": "holder",
+    "x": 296,
+    "y": 775,
+    "z": 294,
+    "id": "52du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "53du": {
+    "type": "holder",
+    "x": 236,
+    "y": 879,
+    "z": 293,
+    "id": "53du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "54du": {
+    "type": "holder",
+    "x": 356,
+    "y": 568,
+    "z": 292,
+    "id": "54du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "55du": {
+    "type": "holder",
+    "x": 237,
+    "y": 671,
+    "z": 291,
+    "id": "55du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "56du": {
+    "type": "holder",
+    "x": 177,
+    "y": 775,
+    "z": 290,
+    "id": "56du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "57du": {
+    "type": "holder",
+    "x": 58,
+    "y": 775,
+    "z": 289,
+    "id": "57du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "58du": {
+    "type": "holder",
+    "x": 87,
+    "y": 620,
+    "z": 287,
+    "id": "58du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "59du": {
+    "type": "holder",
+    "x": 237,
+    "y": 567,
+    "z": 286,
+    "id": "59du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "60du": {
+    "type": "holder",
+    "x": 296,
+    "y": 464,
+    "z": 285,
+    "id": "60du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "61du": {
+    "type": "holder",
+    "x": 446,
+    "y": 516,
+    "z": 284,
+    "id": "61du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "62du": {
+    "type": "holder",
+    "x": 535,
+    "y": 464,
+    "z": 283,
+    "id": "62du",
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0,
+    "width": 60
+  },
+  "63du": {
+    "type": "holder",
+    "x": 654,
+    "y": 464,
+    "z": 282,
+    "id": "63du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "64du": {
+    "type": "holder",
+    "x": 744,
+    "y": 413,
+    "z": 281,
+    "id": "64du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "65du": {
+    "type": "holder",
+    "x": 864,
+    "y": 309,
+    "z": 280,
+    "id": "65du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "66du": {
+    "type": "holder",
+    "x": 387,
+    "y": 412,
+    "z": 279,
+    "id": "66du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "67du": {
+    "type": "holder",
+    "x": 237,
+    "y": 361,
+    "z": 278,
+    "id": "67du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "68du": {
+    "type": "holder",
+    "x": 147,
+    "y": 308,
+    "z": 277,
+    "id": "68du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "69du": {
+    "type": "holder",
+    "x": 446,
+    "y": 309,
+    "z": 309,
+    "id": "69du",
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "deck": "temples"
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "first temple holder",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "2wuxB": {
+    "id": "2wuxB",
+    "parent": "round cards temp holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "3wuxB": {
+    "id": "3wuxB",
+    "parent": "round cards yellow holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "4wuxB": {
+    "id": "4wuxB",
+    "parent": "round cards red holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "5wuxB": {
+    "id": "5wuxB",
+    "parent": "round cards purple holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "round cards blue": {
+    "type": "deck",
+    "id": "round cards blue",
+    "parent": "round cards blue holder",
+    "x": 4,
+    "y": 4,
+    "z": 13,
+    "cardDefaults": {
+      "width": 135,
+      "height": 175,
+      "enlarge": 4,
+      "round_card": true
+    },
+    "cardTypes": {
+      "mo20": {
+        "image": "/assets/-629251329_226123"
+      },
+      "v8qu": {
+        "image": "/assets/-156392233_232384"
+      },
+      "678m": {
+        "image": "/assets/-485849516_230711"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 135,
+            "height": 175,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "j880": {
+    "deck": "round cards blue",
+    "type": "card",
+    "cardType": "mo20",
+    "id": "j880",
+    "z": 2381,
+    "parent": "dfr3"
+  },
+  "nqsj": {
+    "deck": "round cards blue",
+    "type": "card",
+    "cardType": "v8qu",
+    "id": "nqsj",
+    "z": 2339,
+    "onPileCreation": {},
+    "parent": "dfr3"
+  },
+  "9wnw": {
+    "deck": "round cards blue",
+    "type": "card",
+    "cardType": "678m",
+    "id": "9wnw",
+    "z": 2358,
+    "parent": "dfr3"
+  },
+  "round cards blue holder": {
+    "type": "holder",
+    "id": "round cards blue holder",
+    "x": 192,
+    "y": 1022,
+    "z": 329,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "round cards purple": {
+    "type": "deck",
+    "id": "round cards purple",
+    "parent": "round cards purple holder",
+    "x": 4,
+    "y": 4,
+    "z": 14,
+    "cardDefaults": {
+      "width": 135,
+      "height": 175,
+      "enlarge": 4,
+      "round_card": true
+    },
+    "cardTypes": {
+      "3dk1": {
+        "image": "/assets/711208508_234519"
+      },
+      "4dw8": {
+        "image": "/assets/1587959710_237463"
+      },
+      "sh2l": {
+        "image": "/assets/-629251329_226123"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 135,
+            "height": 175,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "b256": {
+    "deck": "round cards purple",
+    "type": "card",
+    "cardType": "3dk1",
+    "id": "b256",
+    "z": 2341,
+    "parent": "dfr3"
+  },
+  "rmie": {
+    "deck": "round cards purple",
+    "type": "card",
+    "cardType": "4dw8",
+    "id": "rmie",
+    "z": 2364,
+    "parent": "dfr3"
+  },
+  "hkez": {
+    "deck": "round cards purple",
+    "type": "card",
+    "cardType": "sh2l",
+    "id": "hkez",
+    "z": 2384,
+    "parent": "current round holder",
+    "y": 2
+  },
+  "round cards purple holder": {
+    "type": "holder",
+    "id": "round cards purple holder",
+    "x": 337,
+    "y": 1033,
+    "z": 326,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "round cards red": {
+    "type": "deck",
+    "id": "round cards red",
+    "parent": "round cards red holder",
+    "x": 4,
+    "y": 4,
+    "z": 10,
+    "cardDefaults": {
+      "width": 135,
+      "height": 175,
+      "enlarge": 4,
+      "round_card": true
+    },
+    "cardTypes": {
+      "kliq": {
+        "image": "/assets/-1221954931_225400"
+      },
+      "0646": {
+        "image": "/assets/358768744_230034"
+      },
+      "4ftb": {
+        "image": "/assets/504887717_238937"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 135,
+            "height": 175,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "egvn": {
+    "deck": "round cards red",
+    "type": "card",
+    "cardType": "kliq",
+    "id": "egvn",
+    "z": 2379,
+    "parent": "dfr3"
+  },
+  "xmrg": {
+    "deck": "round cards red",
+    "type": "card",
+    "cardType": "0646",
+    "id": "xmrg",
+    "z": 2343,
+    "parent": "dfr3"
+  },
+  "lu10": {
+    "deck": "round cards red",
+    "type": "card",
+    "cardType": "4ftb",
+    "id": "lu10",
+    "z": 2362,
+    "parent": "dfr3"
+  },
+  "round cards red holder": {
+    "type": "holder",
+    "id": "round cards red holder",
+    "x": 489,
+    "y": 1020,
+    "z": 325,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "round cards yellow": {
+    "type": "deck",
+    "id": "round cards yellow",
+    "parent": "round cards yellow holder",
+    "x": 4,
+    "y": 4,
+    "z": 11,
+    "cardDefaults": {
+      "width": 135,
+      "height": 175,
+      "enlarge": 4,
+      "round_card": true
+    },
+    "cardTypes": {
+      "ptah": {
+        "image": "/assets/-1515671562_223254"
+      },
+      "ti61": {
+        "image": "/assets/1218225602_223086"
+      },
+      "4io3": {
+        "image": "/assets/-2117793558_237800"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 135,
+            "height": 175,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "1vdk": {
+    "deck": "round cards yellow",
+    "type": "card",
+    "cardType": "ptah",
+    "id": "1vdk",
+    "z": 2345,
+    "parent": "dfr3"
+  },
+  "0map": {
+    "deck": "round cards yellow",
+    "type": "card",
+    "cardType": "ti61",
+    "id": "0map",
+    "z": 2360,
+    "parent": "dfr3"
+  },
+  "nvz2": {
+    "deck": "round cards yellow",
+    "type": "card",
+    "cardType": "4io3",
+    "id": "nvz2",
+    "z": 2377,
+    "parent": "dfr3"
+  },
+  "round cards yellow holder": {
+    "type": "holder",
+    "id": "round cards yellow holder",
+    "x": 635,
+    "y": 1022,
+    "z": 324,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "round cards temp holder": {
+    "type": "holder",
+    "id": "round cards temp holder",
+    "x": 846,
+    "y": 1028,
+    "z": 323,
+    "dropTarget": {
+      "type": "card"
+    },
+    "activeFace": 0
+  },
+  "current round holder": {
+    "type": "holder",
+    "id": "current round holder",
+    "x": 736,
+    "y": 1,
+    "width": 140,
+    "height": 185,
+    "z": 593,
+    "classes": "transparent",
+    "activeFace": 0,
+    "css": "font-size: 25px;text-align: right;border:3px solid black",
+    "dropOffsetY": 2,
+    "dropOffsetX": 0,
+    "dropTarget": {
+      "round_card": true
+    }
+  },
+  "market yellow holder": {
+    "type": "holder",
+    "id": "market yellow holder",
+    "x": 1185,
+    "y": 825,
+    "z": 349,
+    "dropTarget": {
+      "deck": "markets yellow"
+    },
+    "width": 40,
+    "height": 40,
+    "linkedToSeat": "seat4",
+    "activeFace": 0,
+    "classes": "transparent"
+  },
+  "iy7l": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "iy7l",
+    "z": 83434,
+    "parent": "nxhb"
+  },
+  "9zd6": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "9zd6",
+    "z": 83436,
+    "parent": "nxhb"
+  },
+  "epu7": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "epu7",
+    "z": 83438,
+    "parent": "nxhb"
+  },
+  "w24p": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "w24p",
+    "z": 83440,
+    "parent": "nxhb"
+  },
+  "22he": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "22he",
+    "z": 83442,
+    "parent": "nxhb"
+  },
+  "ucyh3": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "ucyh3",
+    "z": 83444,
+    "parent": "nxhb"
+  },
+  "ztrq3": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "ztrq3",
+    "z": 83446,
+    "parent": "nxhb"
+  },
+  "r93k": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "r93k",
+    "z": 83448,
+    "parent": "nxhb"
+  },
+  "jzxa3": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "jzxa3",
+    "z": 83450,
+    "parent": "nxhb"
+  },
+  "uoa10": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "uoa10",
+    "z": 83452,
+    "parent": "nxhb"
+  },
+  "60uy": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "60uy",
+    "z": 83454,
+    "parent": "nxhb"
+  },
+  "10vxx": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "10vxx",
+    "z": 83456,
+    "parent": "nxhb"
+  },
+  "dzvr3": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "dzvr3",
+    "z": 83458,
+    "parent": "nxhb"
+  },
+  "xila3": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "xila3",
+    "z": 83460,
+    "parent": "nxhb"
+  },
+  "awao3": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "awao3",
+    "z": 83462,
+    "parent": "nxhb"
+  },
+  "vjmt3": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "vjmt3",
+    "z": 83464,
+    "parent": "nxhb"
+  },
+  "ov12a": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "ov12a",
+    "z": 83466,
+    "parent": "nxhb"
+  },
+  "ssc3": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "ssc3",
+    "z": 83468,
+    "parent": "nxhb"
+  },
+  "kf8j": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "kf8j",
+    "z": 83470,
+    "parent": "nxhb"
+  },
+  "j2l3": {
+    "deck": "markets yellow",
+    "type": "card",
+    "cardType": "market",
+    "id": "j2l3",
+    "z": 83472,
+    "parent": "nxhb"
+  },
+  "market blue holder": {
+    "type": "holder",
+    "id": "market blue holder",
+    "x": 1185,
+    "y": 15,
+    "width": 40,
+    "height": 40,
+    "z": 548,
+    "dropTarget": {
+      "deck": "markets blue"
+    },
+    "linkedToSeat": "seat1",
+    "activeFace": 0,
+    "classes": "transparent"
+  },
+  "market purple holder": {
+    "type": "holder",
+    "id": "market purple holder",
+    "x": 1185,
+    "y": 285,
+    "width": 40,
+    "height": 40,
+    "z": 356,
+    "dropTarget": {
+      "deck": "markets purple"
+    },
+    "linkedToSeat": "seat2",
+    "activeFace": 0,
+    "classes": "transparent"
+  },
+  "market red holder": {
+    "type": "holder",
+    "id": "market red holder",
+    "x": 1185,
+    "y": 555,
+    "width": 40,
+    "height": 40,
+    "z": 535,
+    "dropTarget": {
+      "deck": "markets red"
+    },
+    "linkedToSeat": "seat3",
+    "activeFace": 0,
+    "classes": "transparent"
+  },
+  "o79t": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "o79t",
+    "z": 83394,
+    "parent": "zcp8"
+  },
+  "1mtu": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "1mtu",
+    "z": 83396,
+    "parent": "zcp8"
+  },
+  "a19q": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "a19q",
+    "z": 83398,
+    "parent": "zcp8"
+  },
+  "omsy": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "omsy",
+    "z": 83400,
+    "parent": "zcp8"
+  },
+  "okur": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "okur",
+    "z": 83402,
+    "parent": "zcp8"
+  },
+  "2r1c": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "2r1c",
+    "z": 83404,
+    "parent": "zcp8"
+  },
+  "mlrg": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "mlrg",
+    "z": 83406,
+    "parent": "zcp8"
+  },
+  "f1lm": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "f1lm",
+    "z": 83408,
+    "parent": "zcp8"
+  },
+  "kvtd": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "kvtd",
+    "z": 83410,
+    "parent": "zcp8"
+  },
+  "dm21": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "dm21",
+    "z": 83412,
+    "parent": "zcp8"
+  },
+  "fvk6": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "fvk6",
+    "z": 83414,
+    "parent": "zcp8"
+  },
+  "td4b": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "td4b",
+    "z": 83416,
+    "parent": "zcp8"
+  },
+  "b3w2": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "b3w2",
+    "z": 83418,
+    "parent": "zcp8"
+  },
+  "8dlw": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "8dlw",
+    "z": 83420,
+    "parent": "zcp8"
+  },
+  "8pn6": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "8pn6",
+    "z": 83422,
+    "parent": "zcp8"
+  },
+  "s42o": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "s42o",
+    "z": 83424,
+    "parent": "zcp8"
+  },
+  "yrih": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "yrih",
+    "z": 83426,
+    "parent": "zcp8"
+  },
+  "joiq": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "joiq",
+    "z": 83428,
+    "parent": "zcp8"
+  },
+  "wqsb": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "wqsb",
+    "z": 83430,
+    "parent": "zcp8"
+  },
+  "plwx": {
+    "deck": "markets red",
+    "type": "card",
+    "cardType": "market",
+    "id": "plwx",
+    "z": 83432,
+    "parent": "zcp8"
+  },
+  "x8vn": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "x8vn",
+    "z": 83354,
+    "parent": "qs4j"
+  },
+  "0u9p": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "0u9p",
+    "z": 83356,
+    "parent": "qs4j"
+  },
+  "7yz5": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "7yz5",
+    "z": 83358,
+    "parent": "qs4j"
+  },
+  "9prz": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "9prz",
+    "z": 83360,
+    "parent": "qs4j"
+  },
+  "gz3s": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "gz3s",
+    "z": 83362,
+    "parent": "qs4j"
+  },
+  "1p3c": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "1p3c",
+    "z": 83364,
+    "parent": "qs4j"
+  },
+  "xwkn": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "xwkn",
+    "z": 83366,
+    "parent": "qs4j"
+  },
+  "u07k": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "u07k",
+    "z": 83368,
+    "parent": "qs4j"
+  },
+  "fpfm": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "fpfm",
+    "z": 83370,
+    "parent": "qs4j"
+  },
+  "6c5n": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "6c5n",
+    "z": 83372,
+    "parent": "qs4j"
+  },
+  "fazp": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "fazp",
+    "z": 83374,
+    "parent": "qs4j"
+  },
+  "50ok": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "50ok",
+    "z": 83376,
+    "parent": "qs4j"
+  },
+  "z25p": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "z25p",
+    "z": 83378,
+    "parent": "qs4j"
+  },
+  "7w4x": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "7w4x",
+    "z": 83380,
+    "parent": "qs4j"
+  },
+  "h8nu": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "h8nu",
+    "z": 83382,
+    "parent": "qs4j"
+  },
+  "5u3t": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "5u3t",
+    "z": 83384,
+    "parent": "qs4j"
+  },
+  "a4n8": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "a4n8",
+    "z": 83386,
+    "parent": "qs4j"
+  },
+  "1pnl": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "1pnl",
+    "z": 83388,
+    "parent": "qs4j"
+  },
+  "1trz": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "1trz",
+    "z": 83390,
+    "parent": "qs4j"
+  },
+  "vh5z": {
+    "deck": "markets purple",
+    "type": "card",
+    "cardType": "market",
+    "id": "vh5z",
+    "z": 83392,
+    "parent": "qs4j"
+  },
+  "2s7y": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "2s7y",
+    "z": 83314,
+    "parent": "a6e6"
+  },
+  "u92u": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "u92u",
+    "z": 83316,
+    "parent": "a6e6"
+  },
+  "dr2j": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "dr2j",
+    "z": 83318,
+    "parent": "a6e6"
+  },
+  "inhm": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "inhm",
+    "z": 83320,
+    "parent": "a6e6"
+  },
+  "jfm4": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "jfm4",
+    "z": 83322,
+    "parent": "a6e6"
+  },
+  "8n5n": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "8n5n",
+    "z": 83324,
+    "parent": "a6e6"
+  },
+  "0r7r": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "0r7r",
+    "z": 83326,
+    "parent": "a6e6"
+  },
+  "s0zn": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "s0zn",
+    "z": 83328,
+    "parent": "a6e6"
+  },
+  "qdai": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "qdai",
+    "z": 83330,
+    "parent": "a6e6"
+  },
+  "qvbn": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "qvbn",
+    "z": 83332,
+    "parent": "a6e6"
+  },
+  "79y5": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "79y5",
+    "z": 83334,
+    "parent": "a6e6"
+  },
+  "z1jb": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "z1jb",
+    "z": 83336,
+    "parent": "a6e6"
+  },
+  "efat": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "efat",
+    "z": 83338,
+    "parent": "a6e6"
+  },
+  "6x4o": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "6x4o",
+    "z": 83340,
+    "parent": "a6e6"
+  },
+  "ge96": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "ge96",
+    "z": 83342,
+    "parent": "a6e6"
+  },
+  "70zh": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "70zh",
+    "z": 83344,
+    "parent": "a6e6"
+  },
+  "qdfz": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "qdfz",
+    "z": 83346,
+    "parent": "a6e6"
+  },
+  "lyna": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "lyna",
+    "z": 83348,
+    "parent": "a6e6"
+  },
+  "dqow": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "dqow",
+    "z": 83350,
+    "parent": "a6e6"
+  },
+  "m1ln": {
+    "deck": "markets blue",
+    "type": "card",
+    "cardType": "market",
+    "id": "m1ln",
+    "z": 83352,
+    "parent": "a6e6"
+  },
+  "markets yellow": {
+    "type": "deck",
+    "id": "markets yellow",
+    "x": 4,
+    "y": 4,
+    "z": 15,
+    "cardDefaults": {
+      "width": 30,
+      "height": 30,
+      "market": true,
+      "onPileCreation": {
+        "handleCSS": "box-shadow:0 2px 3px black;background:white;z-index: -1;border-radius:0;font-weight:900;font-size:0.85rem;height:1.25rem;text-align:right;padding-left:10px;",
+        "handleOffset": 20,
+        "handlePosition": "middle right"
+      },
+      "layer": 1
+    },
+    "cardTypes": {
+      "market": {
+        "slash": "/assets/-275435519_2638",
+        "normal": "/assets/1951073475_1926",
+        "zero": "/assets/-943112176_2149"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "zero"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "normal"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "slash"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "market yellow holder"
+  },
+  "road flip yellow": {
+    "type": "button",
+    "id": "road flip yellow",
+    "z": 76483,
+    "text": "Change Road Type",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1
+      }
+    ],
+    "parent": "red roads hand",
+    "fixedParent": true,
+    "x": 100,
+    "movableInEdit": false,
+    "y": 6
+  },
+  "blue plus road": {
+    "type": "button",
+    "id": "blue plus road",
+    "width": 30,
+    "height": 30,
+    "parent": "blue roads hand",
+    "fixedParent": true,
+    "z": 76472,
+    "linkedToSeat": "seat1",
+    "text": "+",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "blue roads holder",
+        "to": "blue roads hand",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "blue roads holder"
+        ],
+        "variable": "BlueRoadsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "blue roads left",
+        "mode": "set",
+        "value": "${BlueRoadsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 1
+      }
+    ],
+    "x": 50,
+    "y": 100,
+    "movableInEdit": false
+  },
+  "purple roads hand": {
+    "type": "holder",
+    "id": "purple roads hand",
+    "x": 1408,
+    "y": 311,
+    "width": 94,
+    "height": 94,
+    "z": 568,
+    "linkedToSeat": "seat2",
+    "activeFace": 0,
+    "text": "20 roads left",
+    "dropOffsetX": 12,
+    "dropOffsetY": 15,
+    "css": "background: no-repeat center url(/assets/-2133282075_2267); background-size:69px 69px;border:calc(1px / var(--scale)) solid transparent",
+    "dropTarget": {
+      "deck": "purple roads"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "updateCountRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "NumCards"
+      },
+      {
+        "func": "LABEL",
+        "label": "purple_road_count",
+        "value": "${NumCards}"
+      }
+    ]
+  },
+  "purple minus road": {
+    "type": "button",
+    "id": "purple minus road",
+    "parent": "purple roads hand",
+    "fixedParent": true,
+    "x": 50,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "linkedToSeat": "seat2",
+    "text": "+",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "purple roads holder",
+        "to": "purple roads hand",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "purple roads holder"
+        ],
+        "variable": "PurpleRoadsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "purple roads left",
+        "mode": "set",
+        "value": "${PurpleRoadsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 1
+      }
+    ]
+  },
+  "purple minus road2": {
+    "type": "button",
+    "id": "purple minus road2",
+    "parent": "purple roads hand",
+    "fixedParent": true,
+    "x": 15,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "linkedToSeat": "seat2",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "purple roads hand",
+        "to": "purple roads holder",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "purple roads holder"
+        ],
+        "variable": "PurpleRoadsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "purple roads left",
+        "mode": "set",
+        "value": "${PurpleRoadsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 1
+      }
+    ],
+    "text": "-"
+  },
+  "red roads hand": {
+    "type": "holder",
+    "id": "red roads hand",
+    "x": 1410,
+    "y": 580,
+    "width": 94,
+    "height": 94,
+    "z": 598,
+    "linkedToSeat": "seat3",
+    "activeFace": 0,
+    "text": "21 roads left",
+    "dropOffsetX": 12,
+    "dropOffsetY": 15,
+    "css": "background: no-repeat center url(/assets/-2133282075_2267); background-size:69px 69px;border:calc(1px / var(--scale)) solid transparent",
+    "dropTarget": {
+      "deck": "red roads"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "updateCountRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "NumCards"
+      },
+      {
+        "func": "LABEL",
+        "label": "red_road_count",
+        "value": "${NumCards}"
+      }
+    ]
+  },
+  "red roads left": {
+    "type": "label",
+    "id": "red roads left",
+    "parent": "red roads hand",
+    "fixedParent": true,
+    "x": -12,
+    "y": -20,
+    "width": 120,
+    "z": 121,
+    "css": "font-size: 15px; ",
+    "linkedToSeat": "seat3",
+    "text": "16 remaining",
+    "activeFace": 0
+  },
+  "red plus road": {
+    "type": "button",
+    "id": "red plus road",
+    "parent": "red roads hand",
+    "fixedParent": true,
+    "x": 50,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "linkedToSeat": "seat3",
+    "text": "+",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "red roads holder",
+        "to": "${PROPERTY parent}",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "red roads holder"
+        ],
+        "variable": "redRoadsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "red roads left",
+        "mode": "set",
+        "value": "${redRoadsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 1
+      }
+    ]
+  },
+  "red minus road": {
+    "type": "button",
+    "id": "red minus road",
+    "parent": "red roads hand",
+    "fixedParent": true,
+    "x": 15,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "linkedToSeat": "seat3",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "red roads holder",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "red roads holder"
+        ],
+        "variable": "redRoadsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "red roads left",
+        "mode": "set",
+        "value": "${redRoadsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 1
+      }
+    ],
+    "text": "-"
+  },
+  "road flip yellow1": {
+    "type": "button",
+    "id": "road flip yellow1",
+    "z": 76483,
+    "text": "Change Road Type",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1
+      }
+    ],
+    "parent": "yellow roads hand",
+    "fixedParent": true,
+    "x": 100,
+    "movableInEdit": false,
+    "y": 6
+  },
+  "plus road1": {
+    "type": "button",
+    "id": "plus road1",
+    "parent": "yellow roads hand",
+    "fixedParent": true,
+    "x": 50,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "text": "+",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "yellow roads holder",
+        "to": "${PROPERTY parent}",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "yellow roads holder"
+        ],
+        "variable": "RoadsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "yellow roads left",
+        "mode": "set",
+        "value": "${RoadsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 1
+      }
+    ]
+  },
+  "yellow roads left": {
+    "type": "label",
+    "id": "yellow roads left",
+    "parent": "yellow roads hand",
+    "fixedParent": true,
+    "x": -12,
+    "y": -20,
+    "width": 120,
+    "z": 128,
+    "css": "font-size: 15px; ",
+    "text": "16 remaining",
+    "activeFace": 0,
+    "movableInEdit": false
+  },
+  "yellow roads hand": {
+    "type": "holder",
+    "id": "yellow roads hand",
+    "x": 1410,
+    "y": 849,
+    "width": 94,
+    "height": 94,
+    "z": 597,
+    "linkedToSeat": "seat4",
+    "activeFace": 0,
+    "dropOffsetX": 12,
+    "dropOffsetY": 13,
+    "css": "background: no-repeat center url(/assets/-2133282075_2267); background-size:69px 69px;border:calc(1px / var(--scale)) solid transparent",
+    "dropTarget": {
+      "deck": "yellow roads"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "updateCountRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "NumCards"
+      },
+      {
+        "func": "LABEL",
+        "label": "yellow_road_count",
+        "value": "${NumCards}"
+      }
+    ]
+  },
+  "yellow minus road": {
+    "type": "button",
+    "id": "yellow minus road",
+    "parent": "yellow roads hand",
+    "fixedParent": true,
+    "x": 15,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "text": "-",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "yellow roads holder",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "yellow roads holder"
+        ],
+        "variable": "RoadsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "yellow roads left",
+        "mode": "set",
+        "value": "${RoadsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 1
+      }
+    ]
+  },
+  "41zc": {
+    "type": "pile",
+    "parent": "yellow roads holder",
+    "x": 4,
+    "y": 4,
+    "width": 86,
+    "height": 86,
+    "id": "41zc"
+  },
+  "road flip yellow2": {
+    "type": "button",
+    "id": "road flip yellow2",
+    "z": 76483,
+    "text": "Change Road Type",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1
+      }
+    ],
+    "parent": "purple roads hand",
+    "fixedParent": true,
+    "x": 100,
+    "movableInEdit": false,
+    "y": 6
+  },
+  "road flip yellow3": {
+    "type": "button",
+    "id": "road flip yellow3",
+    "z": 76483,
+    "text": "Change Road Type",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1
+      }
+    ],
+    "parent": "blue roads hand",
+    "fixedParent": true,
+    "x": 100,
+    "movableInEdit": false,
+    "y": 6
+  },
+  "blue towns hand": {
+    "type": "holder",
+    "id": "blue towns hand",
+    "x": 1300,
+    "y": 40,
+    "width": 94,
+    "height": 94,
+    "z": 596,
+    "linkedToSeat": "seat1",
+    "activeFace": 0,
+    "dropOffsetX": 12,
+    "dropOffsetY": 15,
+    "css": "background: no-repeat center url(/assets/1312160563_3337); background-size:69px 69px;border:calc(1px / var(--scale)) solid transparent",
+    "dropTarget": {
+      "deck": "blue town"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "updateCountRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "NumCards"
+      },
+      {
+        "func": "LABEL",
+        "label": "blue_city_count",
+        "value": "${NumCards}"
+      }
+    ]
+  },
+  "plus town1": {
+    "type": "button",
+    "id": "plus town1",
+    "parent": "blue towns hand",
+    "fixedParent": true,
+    "x": 50,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "text": "+",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "blue towns holder",
+        "to": "${PROPERTY parent}",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "blue towns holder"
+        ],
+        "variable": "TownsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "blue towns left",
+        "mode": "set",
+        "value": "${TownsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 0
+      }
+    ]
+  },
+  "blue towns left": {
+    "type": "label",
+    "id": "blue towns left",
+    "parent": "blue towns hand",
+    "fixedParent": true,
+    "x": -12,
+    "y": -20,
+    "width": 120,
+    "z": 128,
+    "movableInEdit": false,
+    "css": "font-size: 15px; ",
+    "text": "16 remaining",
+    "activeFace": 0
+  },
+  "minus town1": {
+    "type": "button",
+    "id": "minus town1",
+    "parent": "blue towns hand",
+    "fixedParent": true,
+    "x": 15,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "blue towns holder",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "blue towns holder"
+        ],
+        "variable": "TownsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "blue towns left",
+        "mode": "set",
+        "value": "${TownsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 0
+      }
+    ],
+    "text": "-"
+  },
+  "plus town2": {
+    "type": "button",
+    "id": "plus town2",
+    "parent": "purple towns hand",
+    "fixedParent": true,
+    "x": 50,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "text": "+",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "purple towns holder",
+        "to": "${PROPERTY parent}",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "purple towns holder"
+        ],
+        "variable": "TownsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "purple towns left",
+        "mode": "set",
+        "value": "${TownsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 0
+      }
+    ]
+  },
+  "minus town2": {
+    "type": "button",
+    "id": "minus town2",
+    "parent": "purple towns hand",
+    "fixedParent": true,
+    "x": 15,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "purple towns holder",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "purple towns holder"
+        ],
+        "variable": "TownsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "purple towns left",
+        "mode": "set",
+        "value": "${TownsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 0
+      }
+    ],
+    "text": "-"
+  },
+  "purple towns left": {
+    "type": "label",
+    "id": "purple towns left",
+    "parent": "purple towns hand",
+    "fixedParent": true,
+    "x": -12,
+    "y": -20,
+    "width": 120,
+    "z": 128,
+    "movableInEdit": false,
+    "css": "font-size: 15px; ",
+    "text": "16 remaining",
+    "activeFace": 0
+  },
+  "plus town3": {
+    "type": "button",
+    "id": "plus town3",
+    "parent": "red towns hand",
+    "fixedParent": true,
+    "x": 50,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "text": "+",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "red towns holder",
+        "to": "${PROPERTY parent}",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "red towns holder"
+        ],
+        "variable": "TownsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "red towns left",
+        "mode": "set",
+        "value": "${TownsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 0
+      }
+    ]
+  },
+  "minus town3": {
+    "type": "button",
+    "id": "minus town3",
+    "parent": "red towns hand",
+    "fixedParent": true,
+    "x": 15,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "red towns holder",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "red towns holder"
+        ],
+        "variable": "TownsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "red towns left",
+        "mode": "set",
+        "value": "${TownsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 0
+      }
+    ],
+    "text": "-"
+  },
+  "red towns left": {
+    "type": "label",
+    "id": "red towns left",
+    "parent": "red towns hand",
+    "fixedParent": true,
+    "x": -12,
+    "y": -20,
+    "width": 120,
+    "z": 128,
+    "movableInEdit": false,
+    "css": "font-size: 15px; ",
+    "text": "16 remaining",
+    "activeFace": 0
+  },
+  "plus town4": {
+    "type": "button",
+    "id": "plus town4",
+    "parent": "yellow towns hand",
+    "fixedParent": true,
+    "x": 50,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "text": "+",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "yellow towns holder",
+        "to": "${PROPERTY parent}",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "yellow towns holder"
+        ],
+        "variable": "TownsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "yellow towns left",
+        "mode": "set",
+        "value": "${TownsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 0
+      }
+    ]
+  },
+  "minus town4": {
+    "type": "button",
+    "id": "minus town4",
+    "parent": "yellow towns hand",
+    "fixedParent": true,
+    "x": 15,
+    "y": 100,
+    "width": 30,
+    "height": 30,
+    "z": 76472,
+    "movableInEdit": false,
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "yellow towns holder",
+        "count": 1
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "yellow towns holder"
+        ],
+        "variable": "TownsLeft"
+      },
+      {
+        "func": "LABEL",
+        "label": "yellow towns left",
+        "mode": "set",
+        "value": "${TownsLeft} remaining"
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "angle": 0,
+        "mode": "set"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "count": 1,
+        "face": 0
+      }
+    ],
+    "text": "-"
+  },
+  "yellow towns left": {
+    "type": "label",
+    "id": "yellow towns left",
+    "parent": "yellow towns hand",
+    "fixedParent": true,
+    "x": -12,
+    "y": -20,
+    "width": 120,
+    "z": 128,
+    "movableInEdit": false,
+    "css": "font-size: 15px; ",
+    "text": "16 remaining",
+    "activeFace": 0
+  },
+  "w8zh": {
+    "type": "pile",
+    "parent": "blue towns holder",
+    "x": 4,
+    "y": 4,
+    "width": 69,
+    "height": 69,
+    "id": "w8zh"
+  },
+  "sf0c": {
+    "type": "label",
+    "text": "Market Value Indicators\n CLICK TO CHANGE",
+    "y": 190,
+    "z": 214,
+    "id": "sf0c",
+    "height": 80,
+    "width": 140,
+    "x": -2
+  },
+  "player aid": {
+    "type": "deck",
+    "id": "player aid",
+    "y": 76,
+    "z": 19,
+    "cardTypes": {
+      "33vi": {
+        "image": "/assets/1207997856_956859"
+      },
+      "hex neutral town.png": {
+        "image": "/assets/1312160563_3337"
+      },
+      "hex neutral road.png": {
+        "image": "/assets/-2133282075_2267"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 130,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 100,
+      "height": 130
+    },
+    "x": -1
+  },
+  "k2wo": {
+    "deck": "player aid",
+    "type": "card",
+    "cardType": "33vi",
+    "id": "k2wo",
+    "z": 24,
+    "x": 139,
+    "movable": false,
+    "enlarge": 7,
+    "y": 9
+  },
+  "purple towns hand": {
+    "type": "holder",
+    "id": "purple towns hand",
+    "x": 1300,
+    "y": 310,
+    "width": 94,
+    "height": 94,
+    "z": 523,
+    "css": "background: no-repeat center url(/assets/1312160563_3337); background-size:69px 69px;border:calc(1px / var(--scale)) solid transparent",
+    "dropOffsetX": 12,
+    "dropOffsetY": 15,
+    "linkedToSeat": "seat2",
+    "activeFace": 0,
+    "dropTarget": {
+      "deck": "purple town"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "updateCountRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "NumCards"
+      },
+      {
+        "func": "LABEL",
+        "label": "purple_city_count",
+        "value": "${NumCards}"
+      }
+    ]
+  },
+  "red towns hand": {
+    "type": "holder",
+    "id": "red towns hand",
+    "x": 1300,
+    "y": 580,
+    "width": 94,
+    "height": 94,
+    "z": 524,
+    "css": "background: no-repeat center url(/assets/1312160563_3337); background-size:69px 69px;border:calc(1px / var(--scale)) solid transparent",
+    "dropOffsetX": 12,
+    "dropOffsetY": 15,
+    "linkedToSeat": "seat3",
+    "activeFace": 0,
+    "dropTarget": {
+      "deck": "red town"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "updateCountRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "NumCards"
+      },
+      {
+        "func": "LABEL",
+        "label": "red_city_count",
+        "value": "${NumCards}"
+      }
+    ]
+  },
+  "yellow towns hand": {
+    "type": "holder",
+    "id": "yellow towns hand",
+    "x": 1300,
+    "y": 850,
+    "width": 94,
+    "height": 94,
+    "z": 564,
+    "css": "background: no-repeat center url(/assets/1312160563_3337); background-size:69px 69px;border:calc(1px / var(--scale)) solid transparent",
+    "dropOffsetX": 12,
+    "dropOffsetY": 14,
+    "linkedToSeat": "seat4",
+    "activeFace": 0,
+    "dropTarget": {
+      "deck": "yellow town"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateCountRoutine"
+      }
+    ],
+    "updateCountRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "NumCards"
+      },
+      {
+        "func": "LABEL",
+        "label": "yellow_city_count",
+        "value": "${NumCards}"
+      }
+    ]
+  },
+  "qxdp": {
+    "image": "/assets/-1308479704_2019",
+    "id": "qxdp",
+    "z": 83474,
+    "y": 91,
+    "x": 307,
+    "width": 40,
+    "height": 40,
+    "movable": false
+  },
+  "qxdp1": {
+    "image": "/assets/-646607464_2242",
+    "id": "qxdp1",
+    "z": 83476,
+    "y": 91,
+    "x": 427,
+    "width": 40,
+    "height": 40,
+    "movable": false
+  },
+  "qxdp2": {
+    "image": "/assets/-1788848617_1431",
+    "id": "qxdp2",
+    "z": 83475,
+    "y": 91,
+    "x": 367,
+    "width": 40,
+    "height": 40,
+    "movable": false
+  },
+  "cax1": {
+    "type": "label",
+    "x": 339,
+    "y": 71,
+    "z": 299,
+    "id": "cax1",
+    "text": "Connected",
+    "css": "font-size: 12px;"
+  },
+  "cax2": {
+    "type": "label",
+    "x": 396,
+    "y": 71,
+    "z": 298,
+    "id": "cax2",
+    "text": "Sold",
+    "css": "font-size: 12px;"
+  },
+  "cax3": {
+    "type": "label",
+    "x": 275,
+    "y": 71,
+    "z": 229,
+    "id": "cax3",
+    "text": "Isolated",
+    "css": "font-size: 12px;"
+  },
+  "b80l": {
+    "type": "label",
+    "text": "CLICK TO CHANGE ",
+    "css": "font-size: 20px",
+    "height": 42,
+    "width": 200,
+    "x": 286,
+    "z": 300,
+    "id": "b80l",
+    "y": 44
+  },
+  "qxdp3": {
+    "image": "/assets/-2133282075_2267",
+    "id": "qxdp3",
+    "z": 790,
+    "y": 405,
+    "x": 20,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "ROTATE",
+        "collection": "thisButton",
+        "angle": 60
+      }
+    ],
+    "rotation": 180
+  },
+  "b81l": {
+    "type": "label",
+    "text": "CLICK TO ROTATE ",
+    "css": "font-size: 18px",
+    "height": 52,
+    "z": 276,
+    "id": "b81l",
+    "y": 361,
+    "x": -3
+  },
+  "lore": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "lore",
+    "z": 2497,
+    "parent": "s2to"
+  },
+  "q4pt": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "q4pt",
+    "z": 2499,
+    "parent": "s2to"
+  },
+  "uyfg": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "uyfg",
+    "z": 2501,
+    "parent": "s2to"
+  },
+  "0ax6": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "0ax6",
+    "z": 2503,
+    "parent": "s2to"
+  },
+  "cnyy": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "cnyy",
+    "z": 2505,
+    "parent": "s2to"
+  },
+  "q6q5": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "q6q5",
+    "z": 2507,
+    "parent": "s2to"
+  },
+  "ohzr": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "ohzr",
+    "z": 2509,
+    "parent": "s2to"
+  },
+  "eh9x": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "eh9x",
+    "z": 2511,
+    "parent": "s2to"
+  },
+  "zcs7": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "zcs7",
+    "z": 2513,
+    "parent": "s2to"
+  },
+  "89bj": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "89bj",
+    "z": 2515,
+    "parent": "s2to"
+  },
+  "w4uz": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "w4uz",
+    "z": 2517,
+    "parent": "s2to"
+  },
+  "j7wo": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "j7wo",
+    "z": 2519,
+    "parent": "s2to"
+  },
+  "pquh": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "pquh",
+    "z": 2521,
+    "parent": "s2to"
+  },
+  "n3de": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "n3de",
+    "z": 2523,
+    "parent": "s2to"
+  },
+  "sr7r": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "sr7r",
+    "z": 2525,
+    "parent": "s2to"
+  },
+  "cbne": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "cbne",
+    "z": 2527,
+    "parent": "s2to"
+  },
+  "b1p5": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "b1p5",
+    "z": 2529,
+    "parent": "s2to"
+  },
+  "h8wk": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "h8wk",
+    "z": 2531,
+    "parent": "s2to"
+  },
+  "fnsg": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "fnsg",
+    "z": 2533,
+    "parent": "s2to"
+  },
+  "cpcq": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "cpcq",
+    "z": 2535,
+    "parent": "s2to"
+  },
+  "hd62": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "hd62",
+    "z": 2537,
+    "parent": "s2to"
+  },
+  "oqve": {
+    "deck": "blank temple deck",
+    "type": "card",
+    "cardType": "blank",
+    "id": "oqve",
+    "z": 2539,
+    "parent": "s2to"
+  },
+  "a6e6": {
+    "type": "pile",
+    "parent": "market blue holder",
+    "width": 30,
+    "height": 30,
+    "handleCSS": "box-shadow:0 2px 3px black;background:white;z-index: -1;border-radius:0;font-weight:900;font-size:0.85rem;height:1.25rem;text-align:right;padding-left:10px;",
+    "handleOffset": 20,
+    "handlePosition": "middle right",
+    "id": "a6e6",
+    "z": 20
+  },
+  "zcp8": {
+    "type": "pile",
+    "parent": "market red holder",
+    "width": 30,
+    "height": 30,
+    "handleCSS": "box-shadow:0 2px 3px black;background:white;z-index: -1;border-radius:0;font-weight:900;font-size:0.85rem;height:1.25rem;text-align:right;padding-left:10px;",
+    "handleOffset": 20,
+    "handlePosition": "middle right",
+    "id": "zcp8",
+    "z": 21
+  },
+  "nxhb": {
+    "type": "pile",
+    "width": 30,
+    "height": 30,
+    "handleCSS": "box-shadow:0 2px 3px black;background:white;z-index: -1;border-radius:0;font-weight:900;font-size:0.85rem;height:1.25rem;text-align:right;padding-left:10px;",
+    "handleOffset": 20,
+    "handlePosition": "middle right",
+    "id": "nxhb",
+    "z": 22,
+    "parent": "market yellow holder"
+  },
+  "yellow roads": {
+    "type": "deck",
+    "id": "yellow roads",
+    "parent": "yellow roads holder",
+    "x": 4,
+    "y": 4,
+    "z": 6,
+    "cardDefaults": {
+      "width": 69,
+      "height": 69,
+      "grid": [
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": -2.6,
+          "offsetY": 50,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        },
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": 27.2337,
+          "offsetY": 101.675,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        }
+      ],
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 60
+        }
+      ]
+    },
+    "cardTypes": {
+      "road": {
+        "image": "/assets/-1016487660_4371",
+        "back": "/assets/-1910625717_30241"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "index": 2,
+    "x": 1132,
+    "y": 59,
+    "z": 76528,
+    "color": "#1e87ff",
+    "colorEmpty": "#1e87ff",
+    "css": "border-color: #1e87ff",
+    "hand": "boardHolder4",
+    "hideWhenUnused": true,
+    "activeFace": 0
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 1134,
+    "y": 331,
+    "z": 76527,
+    "color": "#b00ef1",
+    "colorEmpty": "#b00ef1",
+    "css": "border-color: #b00ef1",
+    "hand": "boardHolder4",
+    "hideWhenUnused": true,
+    "activeFace": 0
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "x": 1126,
+    "y": 600,
+    "z": 76530,
+    "color": "#db1918",
+    "colorEmpty": "#db1918",
+    "css": "border-color: #db1918",
+    "hand": "boardHolder4",
+    "hideWhenUnused": true,
+    "activeFace": 0
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 3,
+    "x": 1130,
+    "y": 871,
+    "z": 76529,
+    "color": "#e7e52c",
+    "colorEmpty": "#e7e52c",
+    "css": "border-color: #e7e52c",
+    "hand": "boardHolder4",
+    "hideWhenUnused": true,
+    "activeFace": 0
+  },
+  "modify_counter1": {
+    "type": "label",
+    "id": "modify_counter1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -3,
+    "y": 51,
+    "width": 50,
+    "height": 30,
+    "z": 257,
+    "css": "font-size: 25px;text-align: right;border-radius:00%;border:3px solid grey",
+    "editable": true,
+    "modify counter": true,
+    "changeRoutine": [
+      {
+        "Note": "Determine if user has pressed Enter key.",
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "myChat"
+      },
+      "var isCR = ${myChat} includes '\\u000a'",
+      {
+        "Note": "If user has pressed Enter, do the thenRoutine; otherwise do nothing.",
+        "func": "IF",
+        "operand1": "${isCR}",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var myChat = ${myChat} replace '\\u000a' '' // Erase the carriage return.",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${myChat}"
+          },
+          "var player_index = ${PROPERTY id} charAt 14",
+          {
+            "func": "CLICK",
+            "collection": [
+              "modify${player_index}"
+            ],
+            "count": 1
+          }
+        ]
+      }
+    ]
+  },
+  "modify1": {
+    "type": "button",
+    "id": "modify1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": 57,
+    "y": 53,
+    "height": 30,
+    "z": 76517,
+    "css": "color: white; font-size: 15px;border:3px solid grey;background-color: grey",
+    "text": "modify score",
+    "clickRoutine": [
+      "var player_index = ${PROPERTY id} charAt 6",
+      {
+        "func": "GET",
+        "collection": [
+          "modify_counter${player_index}"
+        ],
+        "property": "text",
+        "aggregation": "first",
+        "variable": "transfer_amount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${transfer_amount}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "player_counter${player_index}"
+            ],
+            "property": "text",
+            "aggregation": "first",
+            "variable": "previous_amount"
+          },
+          {
+            "func": "LABEL",
+            "label": "player_counter${player_index}",
+            "mode": "inc",
+            "value": "${transfer_amount}"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "player_counter${player_index}"
+            ],
+            "property": "text",
+            "aggregation": "first",
+            "variable": "new_amount"
+          },
+          "var previous_ledger = ${PROPERTY text OF ledger_label}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "==",
+            "value": "seat${player_index}"
+          },
+          {
+            "func": "GET",
+            "property": "player",
+            "variable": "transact_player"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${transact_player} modifies by ${transfer_amount} [ ${previous_amount} -> ${new_amount} ]\n${previous_ledger}",
+            "collection": [
+              "ledger_label"
+            ]
+          },
+          {
+            "func": "LABEL",
+            "label": "modify_counter${player_index}",
+            "mode": "set",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "width": 100
+  },
+  "player_counter1": {
+    "type": "label",
+    "id": "player_counter1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -109,
+    "y": -10,
+    "height": 60,
+    "z": 242,
+    "css": "font-size: 50px;text-align: right;color: black",
+    "score_label": true,
+    "text": 0
+  },
+  "ledger_holder": {
+    "type": "holder",
+    "id": "ledger_holder",
+    "x": 346,
+    "y": 223,
+    "width": 530,
+    "height": 670,
+    "layer": 2,
+    "z": 781,
+    "dropTarget": {
+      "label": "ledger_label"
+    },
+    "onlyVisibleForSeat": [
+      "seat0"
+    ]
+  },
+  "rq6r": {
+    "type": "button",
+    "id": "rq6r",
+    "x": 938,
+    "y": 65,
+    "width": 90,
+    "height": 50,
+    "z": 76523,
+    "text": "LEDGER TOGGLE",
+    "clickRoutine": [
+      "var visibleToSeats = ${PROPERTY onlyVisibleForSeat OF ledger_holder}",
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}",
+        "collection": "mySeatID"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "mySeatID",
+        "variable": "mySeatID"
+      },
+      "var inVisibility = ${visibleToSeats} indexOf ${mySeatID}",
+      {
+        "func": "IF",
+        "operand1": "${inVisibility}",
+        "relation": ">=",
+        "operand2": 0,
+        "thenRoutine": [
+          "var visibleToSeats = remove ${inVisibility} 1"
+        ],
+        "elseRoutine": [
+          "var visibleToSeats = push ${mySeatID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ledger_holder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${visibleToSeats}"
+      }
+    ]
+  },
+  "ledger_label": {
+    "id": "ledger_label",
+    "parent": "ledger_holder",
+    "fixedParent": true,
+    "y": 19,
+    "width": 510,
+    "height": 650,
+    "z": 79248,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "overflow": "scroll"
+      }
+    },
+    "x": 9
+  },
+  "player_counter2": {
+    "type": "label",
+    "id": "player_counter2",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -109,
+    "y": -10,
+    "height": 60,
+    "z": 266,
+    "css": "font-size: 50px;text-align: right;color: black",
+    "text": 0,
+    "score_label": true
+  },
+  "player_counter3": {
+    "type": "label",
+    "id": "player_counter3",
+    "parent": "seat3",
+    "fixedParent": true,
+    "x": -109,
+    "y": -10,
+    "height": 60,
+    "z": 242,
+    "css": "font-size: 50px;text-align: right;color: black",
+    "text": 0,
+    "score_label": true
+  },
+  "player_counter4": {
+    "type": "label",
+    "id": "player_counter4",
+    "parent": "seat4",
+    "fixedParent": true,
+    "x": -109,
+    "y": -10,
+    "height": 60,
+    "z": 242,
+    "css": "font-size: 50px;text-align: right;color: black",
+    "text": 0,
+    "score_label": true
+  },
+  "modify_counter2": {
+    "type": "label",
+    "id": "modify_counter2",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -3,
+    "y": 51,
+    "width": 50,
+    "height": 30,
+    "z": 257,
+    "css": "font-size: 25px;text-align: right;border-radius:00%;border:3px solid grey",
+    "editable": true,
+    "modify counter": true,
+    "changeRoutine": [
+      {
+        "Note": "Determine if user has pressed Enter key.",
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "myChat"
+      },
+      "var isCR = ${myChat} includes '\\u000a'",
+      {
+        "Note": "If user has pressed Enter, do the thenRoutine; otherwise do nothing.",
+        "func": "IF",
+        "operand1": "${isCR}",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var myChat = ${myChat} replace '\\u000a' '' // Erase the carriage return.",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${myChat}"
+          },
+          "var player_index = ${PROPERTY id} charAt 14",
+          {
+            "func": "CLICK",
+            "collection": [
+              "modify${player_index}"
+            ],
+            "count": 1
+          }
+        ]
+      }
+    ]
+  },
+  "modify_counter3": {
+    "type": "label",
+    "id": "modify_counter3",
+    "parent": "seat3",
+    "fixedParent": true,
+    "x": -3,
+    "y": 51,
+    "width": 50,
+    "height": 30,
+    "z": 257,
+    "css": "font-size: 25px;text-align: right;border-radius:00%;border:3px solid grey",
+    "editable": true,
+    "modify counter": true,
+    "changeRoutine": [
+      {
+        "Note": "Determine if user has pressed Enter key.",
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "myChat"
+      },
+      "var isCR = ${myChat} includes '\\u000a'",
+      {
+        "Note": "If user has pressed Enter, do the thenRoutine; otherwise do nothing.",
+        "func": "IF",
+        "operand1": "${isCR}",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var myChat = ${myChat} replace '\\u000a' '' // Erase the carriage return.",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${myChat}"
+          },
+          "var player_index = ${PROPERTY id} charAt 14",
+          {
+            "func": "CLICK",
+            "collection": [
+              "modify${player_index}"
+            ],
+            "count": 1
+          }
+        ]
+      }
+    ]
+  },
+  "modify_counter4": {
+    "type": "label",
+    "id": "modify_counter4",
+    "parent": "seat4",
+    "fixedParent": true,
+    "x": -3,
+    "y": 51,
+    "width": 50,
+    "height": 30,
+    "z": 257,
+    "css": "font-size: 25px;text-align: right;border-radius:00%;border:3px solid grey",
+    "editable": true,
+    "modify counter": true,
+    "changeRoutine": [
+      {
+        "Note": "Determine if user has pressed Enter key.",
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "myChat"
+      },
+      "var isCR = ${myChat} includes '\\u000a'",
+      {
+        "Note": "If user has pressed Enter, do the thenRoutine; otherwise do nothing.",
+        "func": "IF",
+        "operand1": "${isCR}",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var myChat = ${myChat} replace '\\u000a' '' // Erase the carriage return.",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${myChat}"
+          },
+          "var player_index = ${PROPERTY id} charAt 14",
+          {
+            "func": "CLICK",
+            "collection": [
+              "modify${player_index}"
+            ],
+            "count": 1
+          }
+        ]
+      }
+    ]
+  },
+  "modify2": {
+    "type": "button",
+    "id": "modify2",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": 57,
+    "y": 53,
+    "width": 100,
+    "height": 30,
+    "z": 76517,
+    "css": "color: white; font-size: 15px;border:3px solid grey;background-color: grey",
+    "text": "modify score",
+    "clickRoutine": [
+      "var player_index = ${PROPERTY id} charAt 6",
+      {
+        "func": "GET",
+        "collection": [
+          "modify_counter${player_index}"
+        ],
+        "property": "text",
+        "aggregation": "first",
+        "variable": "transfer_amount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${transfer_amount}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "player_counter${player_index}"
+            ],
+            "property": "text",
+            "aggregation": "first",
+            "variable": "previous_amount"
+          },
+          {
+            "func": "LABEL",
+            "label": "player_counter${player_index}",
+            "mode": "inc",
+            "value": "${transfer_amount}"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "player_counter${player_index}"
+            ],
+            "property": "text",
+            "aggregation": "first",
+            "variable": "new_amount"
+          },
+          "var previous_ledger = ${PROPERTY text OF ledger_label}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "==",
+            "value": "seat${player_index}"
+          },
+          {
+            "func": "GET",
+            "property": "player",
+            "variable": "transact_player"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${transact_player} modifies by ${transfer_amount} [ ${previous_amount} -> ${new_amount} ]\n${previous_ledger}",
+            "collection": [
+              "ledger_label"
+            ]
+          },
+          {
+            "func": "LABEL",
+            "label": "modify_counter${player_index}",
+            "mode": "set",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "modify3": {
+    "type": "button",
+    "id": "modify3",
+    "parent": "seat3",
+    "fixedParent": true,
+    "x": 57,
+    "y": 53,
+    "width": 100,
+    "height": 30,
+    "z": 76517,
+    "css": "color: white; font-size: 15px;border:3px solid grey;background-color: grey",
+    "text": "modify score",
+    "clickRoutine": [
+      "var player_index = ${PROPERTY id} charAt 6",
+      {
+        "func": "GET",
+        "collection": [
+          "modify_counter${player_index}"
+        ],
+        "property": "text",
+        "aggregation": "first",
+        "variable": "transfer_amount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${transfer_amount}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "player_counter${player_index}"
+            ],
+            "property": "text",
+            "aggregation": "first",
+            "variable": "previous_amount"
+          },
+          {
+            "func": "LABEL",
+            "label": "player_counter${player_index}",
+            "mode": "inc",
+            "value": "${transfer_amount}"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "player_counter${player_index}"
+            ],
+            "property": "text",
+            "aggregation": "first",
+            "variable": "new_amount"
+          },
+          "var previous_ledger = ${PROPERTY text OF ledger_label}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "==",
+            "value": "seat${player_index}"
+          },
+          {
+            "func": "GET",
+            "property": "player",
+            "variable": "transact_player"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${transact_player} modifies by ${transfer_amount} [ ${previous_amount} -> ${new_amount} ]\n${previous_ledger}",
+            "collection": [
+              "ledger_label"
+            ]
+          },
+          {
+            "func": "LABEL",
+            "label": "modify_counter${player_index}",
+            "mode": "set",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "modify4": {
+    "type": "button",
+    "id": "modify4",
+    "parent": "seat4",
+    "fixedParent": true,
+    "x": 57,
+    "y": 53,
+    "width": 100,
+    "height": 30,
+    "z": 76517,
+    "css": "color: white; font-size: 15px;border:3px solid grey;background-color: grey",
+    "text": "modify score",
+    "clickRoutine": [
+      "var player_index = ${PROPERTY id} charAt 6",
+      {
+        "func": "GET",
+        "collection": [
+          "modify_counter${player_index}"
+        ],
+        "property": "text",
+        "aggregation": "first",
+        "variable": "transfer_amount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${transfer_amount}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "player_counter${player_index}"
+            ],
+            "property": "text",
+            "aggregation": "first",
+            "variable": "previous_amount"
+          },
+          {
+            "func": "LABEL",
+            "label": "player_counter${player_index}",
+            "mode": "inc",
+            "value": "${transfer_amount}"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "player_counter${player_index}"
+            ],
+            "property": "text",
+            "aggregation": "first",
+            "variable": "new_amount"
+          },
+          "var previous_ledger = ${PROPERTY text OF ledger_label}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "==",
+            "value": "seat${player_index}"
+          },
+          {
+            "func": "GET",
+            "property": "player",
+            "variable": "transact_player"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${transact_player} modifies by ${transfer_amount} [ ${previous_amount} -> ${new_amount} ]\n${previous_ledger}",
+            "collection": [
+              "ledger_label"
+            ]
+          },
+          {
+            "func": "LABEL",
+            "label": "modify_counter${player_index}",
+            "mode": "set",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "sptv": {
+    "type": "pile",
+    "parent": "red roads holder",
+    "x": 4,
+    "y": 4,
+    "width": 69,
+    "height": 69,
+    "id": "sptv"
+  },
+  "c16f": {
+    "y": 294,
+    "width": 50.4,
+    "height": 90,
+    "image": "/assets/-874944435_5218",
+    "borderColor": "black",
+    "borderWidth": 1,
+    "z": 789,
+    "id": "c16f",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "current_angle"
+      },
+      {
+        "func": "IF",
+        "operand1": "${current_angle}",
+        "relation": "==",
+        "operand2": 330,
+        "thenRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "angle": 30
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "angle": 60
+          }
+        ]
+      }
+    ],
+    "x": 20,
+    "rotation": 330
+  },
+  "qs4j": {
+    "type": "pile",
+    "parent": "market purple holder",
+    "width": 30,
+    "height": 30,
+    "handleCSS": "box-shadow:0 2px 3px black;background:white;z-index: -1;border-radius:0;font-weight:900;font-size:0.85rem;height:1.25rem;text-align:right;padding-left:10px;",
+    "handleOffset": 20,
+    "handlePosition": "middle right",
+    "id": "qs4j",
+    "z": 23
+  },
+  "bjjt": {
+    "type": "pile",
+    "parent": "blue roads holder",
+    "x": 4,
+    "y": 4,
+    "width": 69,
+    "height": 69,
+    "id": "bjjt"
+  },
+  "38xf": {
+    "type": "pile",
+    "parent": "purple roads holder",
+    "x": 4,
+    "y": 4,
+    "width": 69,
+    "height": 69,
+    "id": "38xf"
+  },
+  "red roads": {
+    "type": "deck",
+    "id": "red roads",
+    "parent": "red roads holder",
+    "x": 4,
+    "y": 4,
+    "z": 8,
+    "cardDefaults": {
+      "width": 69,
+      "height": 69,
+      "grid": [
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": -2.6,
+          "offsetY": 50,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        },
+        {
+          "x": 59.6674,
+          "y": 103.35,
+          "offsetX": 27.2337,
+          "offsetY": 101.675,
+          "maxX": 1040,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 125
+        }
+      ],
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 60
+        }
+      ]
+    },
+    "cardTypes": {
+      "road": {
+        "image": "/assets/-789727638_4379",
+        "back": "/assets/-695127256_31124"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 69,
+            "height": 69,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "markets blue": {
+    "type": "deck",
+    "id": "markets blue",
+    "parent": "market blue holder",
+    "x": 4,
+    "y": 4,
+    "z": 17,
+    "cardDefaults": {
+      "width": 30,
+      "height": 30,
+      "market": true,
+      "onPileCreation": {
+        "handleCSS": "box-shadow:0 2px 3px black;background:white;z-index: -1;border-radius:0;font-weight:900;font-size:0.85rem;height:1.25rem;text-align:right;padding-left:10px;",
+        "handleOffset": 20,
+        "handlePosition": "middle right"
+      },
+      "layer": 1
+    },
+    "cardTypes": {
+      "market": {
+        "slash": "/assets/-1400320040_2474",
+        "normal": "/assets/206129680_1734",
+        "zero": "/assets/889110884_2093"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "zero"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "normal"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "slash"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "markets purple": {
+    "type": "deck",
+    "id": "markets purple",
+    "parent": "market purple holder",
+    "x": 4,
+    "y": 4,
+    "z": 16,
+    "cardDefaults": {
+      "width": 30,
+      "height": 30,
+      "market": true,
+      "onPileCreation": {
+        "handleCSS": "box-shadow:0 2px 3px black;background:white;z-index: -1;border-radius:0;font-weight:900;font-size:0.85rem;height:1.25rem;text-align:right;padding-left:10px;",
+        "handleOffset": 20,
+        "handlePosition": "middle right"
+      },
+      "layer": 1
+    },
+    "cardTypes": {
+      "market": {
+        "slash": "/assets/1333760315_2655",
+        "normal": "/assets/-936124024_1977",
+        "zero": "/assets/1277029730_2223"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "zero"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "normal"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "slash"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "markets red": {
+    "type": "deck",
+    "id": "markets red",
+    "parent": "market red holder",
+    "x": 4,
+    "y": 4,
+    "z": 18,
+    "cardDefaults": {
+      "width": 30,
+      "height": 30,
+      "market": true,
+      "onPileCreation": {
+        "handleCSS": "box-shadow:0 2px 3px black;background:white;z-index: -1;border-radius:0;font-weight:900;font-size:0.85rem;height:1.25rem;text-align:right;padding-left:10px;",
+        "handleOffset": 20,
+        "handlePosition": "middle right"
+      },
+      "layer": 1
+    },
+    "cardTypes": {
+      "market": {
+        "normal": "/assets/1755734387_1962",
+        "slash": "/assets/-761751296_2670",
+        "zero": "/assets/-1009840976_2182"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "zero"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "normal"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "slash"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "blue_city_count": {
+    "type": "label",
+    "id": "blue_city_count",
+    "x": 1361,
+    "y": 45,
+    "width": 42,
+    "height": 42,
+    "z": 287,
+    "css": {
+      "font-size": "24px",
+      "background": "#dddddd",
+      "border-radius": "100%",
+      "line-height": "42px"
+    },
+    "text": 4,
+    "linkedToSeat": "seat1"
+  },
+  "blue_road_count": {
+    "type": "label",
+    "id": "blue_road_count",
+    "x": 1467,
+    "y": 41,
+    "width": 42,
+    "height": 42,
+    "z": 295,
+    "css": {
+      "font-size": "24px",
+      "background": "#dddddd",
+      "border-radius": "100%",
+      "line-height": "42px"
+    },
+    "text": 4,
+    "linkedToSeat": "seat1"
+  },
+  "purple_city_count": {
+    "type": "label",
+    "id": "purple_city_count",
+    "x": 1357,
+    "y": 310,
+    "width": 42,
+    "height": 42,
+    "z": 294,
+    "css": {
+      "font-size": "24px",
+      "background": "#dddddd",
+      "border-radius": "100%",
+      "line-height": "42px"
+    },
+    "text": 4,
+    "linkedToSeat": "seat2"
+  },
+  "purple_road_count": {
+    "type": "label",
+    "id": "purple_road_count",
+    "x": 1465,
+    "y": 310,
+    "width": 42,
+    "height": 42,
+    "z": 293,
+    "css": {
+      "font-size": "24px",
+      "background": "#dddddd",
+      "border-radius": "100%",
+      "line-height": "42px"
+    },
+    "text": 4,
+    "linkedToSeat": "seat2"
+  },
+  "red_road_count": {
+    "type": "label",
+    "id": "red_road_count",
+    "x": 1467,
+    "y": 579,
+    "width": 42,
+    "height": 42,
+    "z": 291,
+    "css": {
+      "font-size": "24px",
+      "background": "#dddddd",
+      "border-radius": "100%",
+      "line-height": "42px"
+    },
+    "text": 4,
+    "linkedToSeat": "seat3"
+  },
+  "red_city_count": {
+    "type": "label",
+    "id": "red_city_count",
+    "x": 1357,
+    "y": 580,
+    "width": 42,
+    "height": 42,
+    "z": 292,
+    "css": {
+      "font-size": "24px",
+      "background": "#dddddd",
+      "border-radius": "100%",
+      "line-height": "42px"
+    },
+    "text": 4,
+    "linkedToSeat": "seat3"
+  },
+  "yellow_city_count": {
+    "type": "label",
+    "id": "yellow_city_count",
+    "x": 1361,
+    "y": 852,
+    "width": 42,
+    "height": 42,
+    "z": 290,
+    "css": {
+      "font-size": "24px",
+      "background": "#dddddd",
+      "border-radius": "100%",
+      "line-height": "42px"
+    },
+    "text": 4,
+    "linkedToSeat": "seat4"
+  },
+  "yellow_road_count": {
+    "type": "label",
+    "id": "yellow_road_count",
+    "x": 1469,
+    "y": 849,
+    "width": 42,
+    "height": 42,
+    "z": 289,
+    "css": {
+      "font-size": "24px",
+      "background": "#dddddd",
+      "border-radius": "100%",
+      "line-height": "42px"
+    },
+    "text": 4,
+    "linkedToSeat": "seat4"
+  },
+  "city value holder": {
+    "type": "holder",
+    "id": "city value holder",
+    "x": 38,
+    "y": 253,
+    "width": 50,
+    "height": 40,
+    "z": 600,
+    "dropTarget": {
+      "component": "MarketValueIndicator"
+    },
+    "onEnter": {},
+    "onLeave": {
+      "isClone": true
+    },
+    "preventPiles": true,
+    "active": true,
+    "activeFace": 0,
+    "color": "#999999",
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "isClone",
+        "relation": "==",
+        "value": true,
+        "source": "DEFAULT"
+      },
+      {
+        "func": "DELETE"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY active}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": 0,
+            "relation": "==",
+            "operand2": "${COUNT}",
+            "thenRoutine": [
+              {
+                "func": "CLONE",
+                "source": "child"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${thisID}"
+              },
+              {
+                "func": "MOVE",
+                "from": "${thisID}",
+                "to": "${thisID}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "otdn": {
+    "type": "button",
+    "x": 4,
+    "y": 4,
+    "width": 42,
+    "height": 32,
+    "layer": 1,
+    "z": 83152,
+    "movable": true,
+    "color": "#999999",
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "34px",
+        "line-height": "32px",
+        "border": "4px white",
+        "font-weight": "900",
+        "background": "transparent",
+        "text-shadow": "-1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0 1px 5px #00000099"
+      }
+    },
+    "text": 2,
+    "clonedFrom": "nlx2",
+    "component": "MarketValueIndicator",
+    "isClone": false,
+    "clickRoutine": [
+      "var NewValue = ${PROPERTY text} + 1",
+      {
+        "func": "IF",
+        "operand1": "${NewValue}",
+        "relation": ">",
+        "operand2": 9,
+        "thenRoutine": [
+          "var NewValue = 0"
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${NewValue}"
+      }
+    ],
+    "dragging": "Jonathan",
+    "id": "otdn",
+    "parent": "city value holder"
+  },
+  "dfr3": {
+    "type": "pile",
+    "parent": "next round holder",
+    "x": 4,
+    "y": 4,
+    "width": 135,
+    "height": 175,
+    "id": "dfr3"
+  },
+  "s2to": {
+    "type": "pile",
+    "parent": "blank temple holder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "s2to"
+  },
+  "s51b": {
+    "type": "pile",
+    "parent": "temple holder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "id": "s51b"
+  }
+}
