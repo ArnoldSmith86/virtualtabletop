@@ -129,7 +129,7 @@ async function inputHandler(name, e) {
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
 
-  if(targetForHiddenCursorCheck && widgets.get(unescapeID(targetForHiddenCursorCheck.id.slice(2))).requiresHiddenCursor()) {
+  if(targetForHiddenCursorCheck && widgets.has(unescapeID(targetForHiddenCursorCheck.id.slice(2))) && widgets.get(unescapeID(targetForHiddenCursorCheck.id.slice(2))).requiresHiddenCursor()) {
     toServer('mouse', { hidden: true });
   } else {
     toServer('mouse',
