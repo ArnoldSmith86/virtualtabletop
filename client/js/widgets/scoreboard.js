@@ -46,7 +46,8 @@ class Scoreboard extends Widget {
       'showAllSeats',
       'sortAscending',
       'rounds',
-      'showAllRounds'
+      'showAllRounds',
+      'verticalHeader'
     ]
     if(Object.keys(delta).some(k=>updateTableProps.includes(k)))
       this.updateTable();

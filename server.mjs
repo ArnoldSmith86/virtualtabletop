@@ -6,11 +6,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
+import fetch from 'node-fetch';
 
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
-import MinifyRoom from './server/minify.mjs';
+import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
 import Statistics from './server/statistics.mjs';
@@ -39,6 +40,10 @@ async function ensureRoomIsLoaded(id) {
   if(!activeRooms.has(id)) {
     const room = new Room(id, function() {
       activeRooms.delete(id);
+    }, function() {
+      Logging.log(`The public library was edited in room ${id}. Reloading in every room...`);
+      for(const [ _, room ] of activeRooms)
+        room.reloadPublicLibraryGames();
     });
     await room.load();
     activeRooms.set(id, room);
@@ -79,7 +84,7 @@ function autosaveRooms() {
   }, 60*1000);
 }
 
-MinifyRoom().then(function(result) {
+MinifyHTML().then(function(result) {
   router.use('/', express.static(path.resolve() + '/client'));
 
   // fonts.css is specifically made available for use from card html iframe. It must
@@ -261,15 +266,25 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
+  router.get('/edit.js', function(req, res, next) {
+    res.setHeader('Content-Type', 'text/javascript');
+    if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+      res.setHeader('Content-Encoding', 'gzip');
+      res.send(result.editorJSgzipped);
+    } else {
+      res.send(result.editorJSmin);
+    }
+  });
+
   router.get('/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(!isLoaded) {
         res.send('Invalid characters in room ID.');
         return;
       }
+      res.setHeader('Content-Type', 'text/html');
       if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
         res.setHeader('Content-Encoding', 'gzip');
-        res.setHeader('Content-Type', 'text/html');
         res.send(result.gzipped);
       } else {
         res.send(result.min);
@@ -289,6 +304,14 @@ MinifyRoom().then(function(result) {
       if(isLoaded && req.params.tempID.match(/^[a-z0-9]{8}$/))
         res.send(await activeRooms.get(req.params.room).createTempState(req.params.tempID, req.body));
     }).catch(next);
+  });
+
+  router.put('/asset/:link', async function(req, res) {
+    const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
+    const filename = `/${CRC32.buf(content)}_${content.length}`;
+    if(!Config.resolveAsset(filename.substr(1)))
+      fs.writeFileSync(assetsdir + filename, content);
+    res.send(`/assets${filename}`);
   });
 
   router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {

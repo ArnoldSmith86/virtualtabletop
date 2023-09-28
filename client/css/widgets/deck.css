@@ -7,10 +7,15 @@ body.jsonEdit .deck, body.edit .deck {
 }
 
 body.edit .deck {
-  padding-top: 40px;
+  background-color: white;
+  border: 3px solid var(--VTTblueDark);
+  color: var(--VTTblueDark);
+  box-sizing: border-box;
+
+  padding-top: 35px;
   text-align: center;
 
-  font-size: 200%;
+  font-size: 32px;
 }
 
 body.jsonEdit:not(.hitTest, .edit) .deck {
@@ -18,17 +23,12 @@ body.jsonEdit:not(.hitTest, .edit) .deck {
   pointer-events: none;
 }
 
-body.edit .deck::before, body.edit .deck::after {
+body.edit .deck::before {
   position: absolute;
-  width: 15px;
+  right: 0;
   height: 25px;
-  border: 2px solid var(--editColor);
-  top: 10px;
-  left: 30px;
-  content: "";
-}
-
-body.edit .deck::after {
-  top: 15px;
-  left: 35px;
+  top: 8px;
+  left: 0;
+  content: "[cards]";
+  font-family: 'VTT-Symbols';
 }
