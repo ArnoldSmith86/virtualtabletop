@@ -1589,9 +1589,9 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
 
   if(widget.id !== previousState.id || widget.type !== previousState.type) {
     for(const child of children)
-      await widgets.get(child.get('id')).set('parent', null);
+      sendPropertyUpdate(child.get('id'), 'parent', null);
     for(const card of cards)
-      await widgets.get(card.get('id')).set('deck', null);
+      sendPropertyUpdate(card.get('id'), 'deck', null);
     await removeWidgetLocal(previousState.id, true);
   } else {
     for(const key in previousState)
@@ -1603,13 +1603,14 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     const id = await addWidgetLocal(widget);
 
     for(const child of children)
-      await widgets.get(child.get('id')).set('parent', id);
+      sendPropertyUpdate(child.get('id'), 'parent', id);
     for(const card of cards)
-      await widgets.get(card.get('id')).set('deck', id);
+      sendPropertyUpdate(card.get('id'), 'deck', id);
   } else {
     for(const key in widget) {
       if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
-        await widgets.get(widget.id).set(key, widget[key]);
+        widgets.get(widget.id).state[key] = widget[key];
+        sendPropertyUpdate(widget.id, key, widget[key]);
       }
     }
   }
