@@ -73,6 +73,10 @@ class TreeModule extends SidebarModule {
     $('#jeText').blur();
   }
 
+  onStateReceivedWhileActive(delta) {
+    jeDisplayTree();
+  }
+
   renderModule(target) {
     target.append($('#jeTree'));
     jeInitTree();
