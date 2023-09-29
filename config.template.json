@@ -8,6 +8,7 @@
   "customTab": null,
 
   "allowPublicLibraryEdits": false,
+  "adminURL": null,
 
   "directories": {
     "library": "library",
