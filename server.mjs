@@ -87,6 +87,19 @@ function autosaveRooms() {
 MinifyHTML().then(function(result) {
   router.use('/', express.static(path.resolve() + '/client'));
 
+  if(Config.get('adminURL')) {
+    router.get(Config.get('adminURL'), function(req, res, next) {
+      let output = '<h1>Active rooms</h1>';
+      for(const [ roomID, room ] of activeRooms) {
+        let game = '';
+        if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
+          game = ` playing ${room.state._meta.states[room.state._meta.activeState.stateID].name}`;
+        output += `<p><b><a href='${roomID}'>${roomID}</a></b>${game}: ${room.players.map(p=>p.name).join(', ')} (${room.deltaID} deltas transmitted)</p>`;
+      }
+      res.send(output);
+    });
+  }
+
   // fonts.css is specifically made available for use from card html iframe. It must
   // be fetched from the root in order for the relative paths to fonts to work.
   // Additionally allow cached use of fonts for a short period of time to allow
