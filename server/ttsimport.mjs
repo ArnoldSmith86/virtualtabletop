@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import JSZip from 'jszip';
 import fetch from 'node-fetch';
-import BSON from 'bson';
+import { BSON } from 'bson';
 
 import Logging from './logging.mjs';
 

@@ -51,7 +51,7 @@
     "@node-minify/html-minifier": "^8.0.6",
     "@node-minify/no-compress": "^8.0.6",
     "@node-minify/uglify-es": "^8.0.6",
-    "bson": "^4.6.4",
+    "bson": "^6.1.0",
     "crc-32": "^1.2.2",
     "dompurify": "^3.0.6",
     "express": "^4.18.2",
