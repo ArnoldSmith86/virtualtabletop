@@ -552,12 +552,7 @@ onLoad(function() {
     if(!checkedOnce)
       checkURLproperties(true);
     checkedOnce = true;
-    let tabSuffix;
-    if (config.customTab) {
-      tabSuffix = config.customTab;
-    } else {
-      tabSuffix = "VirtualTabletop.io"
-    }
+    let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
     document.title = `${document.location.pathname.split('/').pop()} - ${tabSuffix}`;
   });
 });
