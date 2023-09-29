@@ -1,0 +1,2564 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Oasis",
+      "image": "/assets/-119005749_42758",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/92415/skull",
+      "year": "2011",
+      "mode": "vs",
+      "time": "15-45",
+      "attribution": "The room layout and game design is by LawDawg96 and released to the Public Domain by CC0.\n\nThe desert icon is by Flaticon and is available under the Flaticon license: https://www.flaticon.com/free-icons/desert\n\nThe waterfall icon is by Delapouite and is available under CC BY 3.0: https://game-icons.net/1x1/delapouite/waterfall.html\n\nThe oasis card back is available under the Pixabay License: https://pixabay.com/illustrations/oasis-oases-nature-desert-sand-4701493/ \n\nThe oasis room background is available under the Pixabay License: https://pixabay.com/photos/huacachina-oasis-ica---peru-930676/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"circular oasis in the Sahara colored pencil drawing --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Skull",
+      "description": "Players start with 4 cards. Play cards face down until one player challenges. Highest bidder then flips stated number of cards. If player flips all 'good' cards and no 'bad' ones, player wins challenge. First player to win two challenges wins.",
+      "showName": true,
+      "helpText": "Players take seats. Card count for each player is to the right of the player name. Drag lost cards to the trash icon. Press the hand in holder icon to return cards to a player's hand. Press colored edge of player holder to \"flip\" it over (indicated by dashed line) to show that player has won one round.",
+      "lastUpdate": 1644184116000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "3-8",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
+    }
+  },
+  "green1": {
+    "id": "green1",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "black",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px dotted white",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #33a72b",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "black",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px dotted white",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-2023519775_27944"
+      }
+    ],
+    "disc": true,
+    "classes": "green",
+    "z": 3,
+    "x": 72,
+    "y": 2,
+    "parent": "greenHolder"
+  },
+  "green2": {
+    "id": "green2",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "border-radius": "100%",
+      "background-size": "250%",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "6px solid #33a72b",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #33a72b",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#33a72b",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #4af33e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "disc": true,
+    "classes": "green",
+    "z": 2,
+    "x": 37,
+    "y": 2,
+    "parent": "greenHolder"
+  },
+  "green3": {
+    "id": "green3",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "border-radius": "100%",
+      "background-size": "250%",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "6px solid #33a72b",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #33a72b",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#33a72b",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #4af33e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "disc": true,
+    "classes": "green",
+    "z": 1,
+    "x": 2,
+    "y": 2,
+    "parent": "greenHolder"
+  },
+  "green4": {
+    "id": "green4",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "border-radius": "100%",
+      "background-size": "250%",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "6px solid #33a72b",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #33a72b",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#33a72b",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #4af33e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "disc": true,
+    "classes": "green",
+    "z": 4,
+    "x": 107,
+    "y": 2,
+    "parent": "greenHolder"
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "childrenPerOwner": true,
+    "width": 770,
+    "height": 195,
+    "id": "hand",
+    "dropTarget": {
+      "disc": true
+    },
+    "y": 799,
+    "stackOffsetX": 190,
+    "z": 14,
+    "x": 415,
+    "css": {
+      "background": "#00000020",
+      "border-radius": "15%/75%"
+    },
+    "countRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4",
+          "seat5",
+          "seat6",
+          "seat7",
+          "seat8"
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "player",
+            "variable": "pID"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": "${pID}",
+            "collection": "cardsInHand"
+          },
+          {
+            "func": "COUNT",
+            "collection": "cardsInHand"
+          },
+          "var holderNum = ${key} + 1",
+          "var holderName = 'countSeat' + ${holderNum}",
+          {
+            "func": "LABEL",
+            "collection": [
+              "${holderName}"
+            ],
+            "mode": "set",
+            "value": "${COUNT}"
+          }
+        ]
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "greenBack": {
+    "id": "greenBack",
+    "width": 350,
+    "height": 245,
+    "z": 831,
+    "faces": [
+      {
+        "css": {
+          "background": "#96c78a",
+          "border-radius": "50%/75%"
+        }
+      },
+      {
+        "css": {
+          "background": "#96c78a",
+          "border-radius": "50%/75%",
+          "border": "7px dashed black"
+        }
+      }
+    ],
+    "css": {
+      "background": "#96c78a",
+      "border-radius": "50%/75%"
+    },
+    "movable": false,
+    "linkedToSeat": "seat1",
+    "fixedParent": true,
+    "parent": "seat1",
+    "x": -93,
+    "y": 62
+  },
+  "greenHolder": {
+    "type": "holder",
+    "id": "greenHolder",
+    "x": 25,
+    "y": 25,
+    "width": 300,
+    "height": 195,
+    "z": 11,
+    "dropTarget": {
+      "classes": "green"
+    },
+    "stackOffsetX": 35,
+    "css": {
+      "background": "#cce3c3",
+      "border-radius": "50%/75%"
+    },
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "parent": "greenBack",
+    "fixedParent": true
+  },
+  "red1": {
+    "id": "red1",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#d8271e",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px dotted white",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #d8271e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "black",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px dotted white",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-2023519775_27944"
+      }
+    ],
+    "classes": "red",
+    "z": 1,
+    "x": 2,
+    "y": 2,
+    "parent": "redHolder"
+  },
+  "orange1": {
+    "id": "orange1",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#f38200",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px dotted white",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #f38200",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "black",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px dotted white",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-2023519775_27944"
+      }
+    ],
+    "classes": "orange",
+    "z": 1,
+    "x": 2,
+    "y": 2,
+    "parent": "orangeHolder"
+  },
+  "redBack": {
+    "id": "redBack",
+    "x": -100,
+    "y": 55,
+    "width": 350,
+    "height": 245,
+    "z": 468,
+    "css": {
+      "background": "#dc8a86",
+      "border-radius": "50%/75%"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#dc8a86",
+          "border-radius": "50%/75%"
+        }
+      },
+      {
+        "css": {
+          "background": "#dc8a86",
+          "border-radius": "50%/75%",
+          "border": "7px dashed black"
+        }
+      }
+    ],
+    "movable": false,
+    "linkedToSeat": "seat2",
+    "parent": "seat2",
+    "fixedParent": true
+  },
+  "redHolder": {
+    "type": "holder",
+    "id": "redHolder",
+    "parent": "redBack",
+    "fixedParent": true,
+    "x": 25,
+    "y": 25,
+    "width": 300,
+    "height": 195,
+    "z": 10,
+    "css": {
+      "background": "#e0bcba",
+      "border-radius": "50%/75%"
+    },
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "classes": "red"
+    },
+    "stackOffsetX": 35
+  },
+  "orangeHolder": {
+    "type": "holder",
+    "id": "orangeHolder",
+    "fixedParent": true,
+    "x": 25,
+    "y": 25,
+    "width": 300,
+    "height": 195,
+    "z": 12,
+    "css": {
+      "background": "#EAD3AF",
+      "border-radius": "50%/75%"
+    },
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "classes": "orange"
+    },
+    "stackOffsetX": 35,
+    "parent": "orangeBack"
+  },
+  "orangeBack": {
+    "id": "orangeBack",
+    "x": -100,
+    "y": 55,
+    "width": 350,
+    "height": 245,
+    "z": 720,
+    "css": {
+      "background": "#ebb773",
+      "border-radius": "50%/75%"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#ebb773",
+          "border-radius": "50%/75%"
+        }
+      },
+      {
+        "css": {
+          "background": "#ebb773",
+          "border-radius": "50%/75%",
+          "border": "7px dashed black"
+        }
+      }
+    ],
+    "movable": false,
+    "parent": "seat4",
+    "fixedParent": true,
+    "linkedToSeat": "seat4"
+  },
+  "purpleHolder": {
+    "type": "holder",
+    "id": "purpleHolder",
+    "fixedParent": true,
+    "x": 25,
+    "y": 25,
+    "width": 300,
+    "height": 195,
+    "z": 11,
+    "css": {
+      "background": "#d1c7d4",
+      "border-radius": "50%/75%"
+    },
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "classes": "purple"
+    },
+    "stackOffsetX": 35,
+    "parent": "purpleBack"
+  },
+  "purpleBack": {
+    "id": "purpleBack",
+    "x": -100,
+    "y": 55,
+    "width": 350,
+    "height": 245,
+    "z": 685,
+    "css": {
+      "background": "#b59eb8",
+      "border-radius": "50%/75%"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#b59eb8",
+          "border-radius": "50%/75%"
+        }
+      },
+      {
+        "css": {
+          "background": "#b59eb8",
+          "border-radius": "50%/75%",
+          "border": "7px dashed black"
+        }
+      }
+    ],
+    "parent": "seat3",
+    "fixedParent": true,
+    "movable": false,
+    "linkedToSeat": "seat3"
+  },
+  "yellowBack": {
+    "id": "yellowBack",
+    "x": -100,
+    "y": 55,
+    "width": 350,
+    "height": 245,
+    "z": 724,
+    "css": {
+      "background": "#f2e970",
+      "border-radius": "50%/75%"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#f2e970",
+          "border-radius": "50%/75%"
+        }
+      },
+      {
+        "css": {
+          "background": "#f2e970",
+          "border-radius": "50%/75%",
+          "border": "7px dashed black"
+        }
+      }
+    ],
+    "movable": false,
+    "parent": "seat6",
+    "fixedParent": true,
+    "linkedToSeat": "seat6"
+  },
+  "yellowHolder": {
+    "type": "holder",
+    "id": "yellowHolder",
+    "parent": "yellowBack",
+    "fixedParent": true,
+    "x": 25,
+    "y": 25,
+    "width": 300,
+    "height": 195,
+    "z": 11,
+    "css": {
+      "background": "#efecad",
+      "border-radius": "50%/75%"
+    },
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "classes": "yellow"
+    },
+    "stackOffsetX": 35
+  },
+  "blueBack": {
+    "id": "blueBack",
+    "x": -100,
+    "y": 55,
+    "width": 350,
+    "height": 245,
+    "z": 721,
+    "css": {
+      "background": "#90a9f0",
+      "border-radius": "50%/75%"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#90a9f0",
+          "border-radius": "50%/75%"
+        }
+      },
+      {
+        "css": {
+          "background": "#90a9f0",
+          "border-radius": "50%/75%",
+          "border": "7px dashed black"
+        }
+      }
+    ],
+    "movable": false,
+    "parent": "seat5",
+    "fixedParent": true,
+    "linkedToSeat": "seat5"
+  },
+  "blueHolder": {
+    "type": "holder",
+    "id": "blueHolder",
+    "parent": "blueBack",
+    "fixedParent": true,
+    "x": 25,
+    "y": 25,
+    "width": 300,
+    "height": 195,
+    "z": 11,
+    "css": {
+      "background": "#C2CCF0",
+      "border-radius": "50%/75%"
+    },
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "classes": "blue"
+    },
+    "stackOffsetX": 35
+  },
+  "pinkBack": {
+    "id": "pinkBack",
+    "x": -100,
+    "y": 55,
+    "width": 350,
+    "height": 245,
+    "z": 539,
+    "css": {
+      "background": "#ecb3d6",
+      "border-radius": "50%/75%"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#ecb3d6",
+          "border-radius": "50%/75%"
+        }
+      },
+      {
+        "css": {
+          "background": "#ecb3d6",
+          "border-radius": "50%/75%",
+          "border": "7px dashed black"
+        }
+      }
+    ],
+    "movable": false,
+    "parent": "seat7",
+    "fixedParent": true,
+    "linkedToSeat": "seat7"
+  },
+  "pinkHolder": {
+    "type": "holder",
+    "id": "pinkHolder",
+    "parent": "pinkBack",
+    "fixedParent": true,
+    "x": 25,
+    "y": 25,
+    "width": 300,
+    "height": 195,
+    "z": 11,
+    "css": {
+      "background": "#ebd1e3",
+      "border-radius": "50%/75%"
+    },
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "classes": "pink"
+    },
+    "stackOffsetX": 35
+  },
+  "red2": {
+    "id": "red2",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "border-radius": "100%",
+      "background-size": "250%",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "6px solid #d8271e",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #d8271e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#d8271e",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ff2b18",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "red",
+    "z": 2,
+    "x": 37,
+    "y": 2,
+    "parent": "redHolder"
+  },
+  "orange2": {
+    "id": "orange2",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#f38200",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #ffaa00",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #f38200",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#f38200",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ffaa00",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "orange",
+    "z": 2,
+    "x": 37,
+    "y": 2,
+    "parent": "orangeHolder"
+  },
+  "purple1": {
+    "id": "purple1",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#804c7e",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px dotted white",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #804c7e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "black",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px dotted white",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-2023519775_27944"
+      }
+    ],
+    "classes": "purple",
+    "parent": "purpleHolder",
+    "z": 3,
+    "x": 72,
+    "y": 2
+  },
+  "yellow1": {
+    "id": "yellow1",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#fbe600",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px dotted white",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #fbe600",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "black",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px dotted white",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-2023519775_27944"
+      }
+    ],
+    "classes": "yellow",
+    "z": 4,
+    "x": 107,
+    "y": 2,
+    "parent": "yellowHolder"
+  },
+  "blue1": {
+    "id": "blue1",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#2961ee",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px dotted white",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #2961ee",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "black",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px dotted white",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-2023519775_27944"
+      }
+    ],
+    "classes": "blue",
+    "z": 1,
+    "x": 2,
+    "y": 2,
+    "parent": "blueHolder"
+  },
+  "pink1": {
+    "id": "pink1",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#f577bc",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px dotted white",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #f577bc",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "black",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px dotted white",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-2023519775_27944"
+      }
+    ],
+    "classes": "pink",
+    "parent": "pinkHolder",
+    "z": 1,
+    "x": 2,
+    "y": 2
+  },
+  "purple2": {
+    "id": "purple2",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#804c7e",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #cc79c9",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #804c7e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#804c7e",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #cc79c9",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "purple",
+    "parent": "purpleHolder",
+    "z": 4,
+    "x": 107,
+    "y": 2
+  },
+  "yellow2": {
+    "id": "yellow2",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#fbe600",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #f2ff00",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #fbe600",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#fbe600",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #f2ff00",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "yellow",
+    "z": 1,
+    "x": 2,
+    "y": 2,
+    "parent": "yellowHolder"
+  },
+  "blue2": {
+    "id": "blue2",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#2961ee",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #2b4bff",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #2961ee",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#2961ee",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #2b4bff",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "blue",
+    "z": 2,
+    "x": 37,
+    "y": 2,
+    "parent": "blueHolder"
+  },
+  "pink2": {
+    "id": "pink2",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#f577bc",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #ff7bb2",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #f577bc",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#f577bc",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ff7bb2",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "pink",
+    "parent": "pinkHolder",
+    "z": 4,
+    "x": 107,
+    "y": 2
+  },
+  "brown1": {
+    "id": "brown1",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#5f413a",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px dotted white",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #5f413a",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "black",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px dotted white",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-2023519775_27944"
+      }
+    ],
+    "classes": "brown",
+    "parent": "brownHolder",
+    "z": 3,
+    "x": 72,
+    "y": 2
+  },
+  "brown2": {
+    "id": "brown2",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#5f413a",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #ab7568",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #5f413a",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#5f413a",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ab7568",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "brown",
+    "parent": "brownHolder",
+    "z": 4,
+    "x": 107,
+    "y": 2
+  },
+  "brownHolder": {
+    "type": "holder",
+    "id": "brownHolder",
+    "fixedParent": true,
+    "x": 25,
+    "y": 25,
+    "width": 300,
+    "height": 195,
+    "z": 11,
+    "css": {
+      "background": "#968b88",
+      "border-radius": "50%/75%"
+    },
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "classes": "brown"
+    },
+    "stackOffsetX": 35,
+    "parent": "brownBack"
+  },
+  "brownBack": {
+    "id": "brownBack",
+    "x": -100,
+    "y": 55,
+    "width": 350,
+    "height": 245,
+    "z": 661,
+    "css": {
+      "background": "#796a65",
+      "border-radius": "50%/75%"
+    },
+    "faces": [
+      {
+        "css": {
+          "background": "#796a65",
+          "border-radius": "50%/75%"
+        }
+      },
+      {
+        "css": {
+          "background": "#796a65",
+          "border-radius": "50%/75%",
+          "border": "7px dashed black"
+        }
+      }
+    ],
+    "movable": false,
+    "parent": "seat8",
+    "fixedParent": true,
+    "linkedToSeat": "seat8"
+  },
+  "red3": {
+    "id": "red3",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "border-radius": "100%",
+      "background-size": "250%",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "6px solid #d8271e",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #d8271e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#d8271e",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ff2b18",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "red",
+    "z": 3,
+    "x": 72,
+    "y": 2,
+    "parent": "redHolder"
+  },
+  "red4": {
+    "id": "red4",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "border-radius": "100%",
+      "background-size": "250%",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "6px solid #d8271e",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #d8271e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#d8271e",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ff2b18",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "red",
+    "z": 4,
+    "x": 107,
+    "y": 2,
+    "parent": "redHolder"
+  },
+  "orange3": {
+    "id": "orange3",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#f38200",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #ffaa00",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #f38200",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#f38200",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ffaa00",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "image": "/assets/-448076851_4945",
+    "classes": "orange",
+    "z": 3,
+    "x": 72,
+    "y": 2,
+    "parent": "orangeHolder"
+  },
+  "orange4": {
+    "id": "orange4",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#f38200",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #ffaa00",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #f38200",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#f38200",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ffaa00",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "image": "/assets/-448076851_4945",
+    "classes": "orange",
+    "z": 4,
+    "x": 107,
+    "y": 2,
+    "parent": "orangeHolder"
+  },
+  "purple3": {
+    "id": "purple3",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#804c7e",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #cc79c9",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #804c7e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#804c7e",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #cc79c9",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "image": "/assets/-448076851_4945",
+    "classes": "purple",
+    "parent": "purpleHolder",
+    "z": 2,
+    "x": 37,
+    "y": 2
+  },
+  "purple4": {
+    "id": "purple4",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#804c7e",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #cc79c9",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #804c7e",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#804c7e",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #cc79c9",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "image": "/assets/-448076851_4945",
+    "classes": "purple",
+    "parent": "purpleHolder",
+    "z": 1,
+    "x": 2,
+    "y": 2
+  },
+  "yellow3": {
+    "id": "yellow3",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#fbe600",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #f2ff00",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #fbe600",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#fbe600",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #f2ff00",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "image": "/assets/-448076851_4945",
+    "classes": "yellow",
+    "z": 3,
+    "x": 72,
+    "y": 2,
+    "parent": "yellowHolder"
+  },
+  "yellow4": {
+    "id": "yellow4",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#fbe600",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #f2ff00",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #fbe600",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#fbe600",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #f2ff00",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "image": "/assets/-448076851_4945",
+    "classes": "yellow",
+    "z": 2,
+    "x": 37,
+    "y": 2,
+    "parent": "yellowHolder"
+  },
+  "blue3": {
+    "id": "blue3",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#2961ee",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #2b4bff",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #2961ee",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#2961ee",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #2b4bff",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "image": "/assets/-448076851_4945",
+    "classes": "blue",
+    "z": 3,
+    "x": 72,
+    "y": 2,
+    "parent": "blueHolder"
+  },
+  "blue4": {
+    "id": "blue4",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "border-radius": "100%",
+      "background-size": "250%",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "6px solid #2961ee",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #2961ee",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#2961ee",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #2b4bff",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "blue",
+    "parent": "blueHolder",
+    "z": 4,
+    "x": 107,
+    "y": 2
+  },
+  "brown3": {
+    "id": "brown3",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "border-radius": "100%",
+      "background-size": "250%",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "6px solid #5f413a",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #5f413a",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#5f413a",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ab7568",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "classes": "brown",
+    "parent": "brownHolder",
+    "z": 2,
+    "x": 37,
+    "y": 2
+  },
+  "brown4": {
+    "id": "brown4",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#5f413a",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #ab7568",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #5f413a",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#5f413a",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ab7568",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "image": "/assets/-448076851_4945",
+    "classes": "brown",
+    "parent": "brownHolder",
+    "z": 1,
+    "x": 2,
+    "y": 2
+  },
+  "pink3": {
+    "id": "pink3",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#f577bc",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #ff7bb2",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #f577bc",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#f577bc",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ff7bb2",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "image": "/assets/-448076851_4945",
+    "classes": "pink",
+    "parent": "pinkHolder",
+    "z": 3,
+    "x": 72,
+    "y": 2
+  },
+  "pink4": {
+    "id": "pink4",
+    "width": 175,
+    "height": 175,
+    "css": {
+      "background": "#f577bc",
+      "border-radius": "100%",
+      "background-size": "65%",
+      "background-repeat": "no-repeat",
+      "background-position": "60% 40%",
+      "border": "6px double #ff7bb2",
+      "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+    },
+    "disc": true,
+    "faces": [
+      {
+        "css": {
+          "border-radius": "100%",
+          "background-size": "250%",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border": "6px solid #f577bc",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-1626571047_32100"
+      },
+      {
+        "css": {
+          "background": "#f577bc",
+          "border-radius": "100%",
+          "background-size": "65%",
+          "background-repeat": "no-repeat",
+          "background-position": "60% 40%",
+          "border": "6px double #ff7bb2",
+          "box-shadow": " rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;"
+        },
+        "image": "/assets/-448076851_4945"
+      }
+    ],
+    "image": "/assets/-448076851_4945",
+    "classes": "pink",
+    "parent": "pinkHolder",
+    "z": 2,
+    "x": 37,
+    "y": 2
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "z": 21,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "You are about to reset the game.  Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY colorArray}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "classes",
+            "value": "${value}"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${value}Holder"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "${value}Holder"
+          },
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": null
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${value}Back"
+          },
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "colorArray": [
+      "green",
+      "red",
+      "purple",
+      "orange",
+      "blue",
+      "yellow",
+      "pink",
+      "brown"
+    ],
+    "text": "restart",
+    "width": 50,
+    "height": 50,
+    "classes": "symbols",
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black; font-size:35px;padding-bottom:3px"
+  },
+  "countSeat1": {
+    "id": "countSeat1",
+    "x": 160,
+    "z": 662,
+    "text": 0,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "35px"
+    },
+    "height": 40,
+    "width": 40,
+    "fixedParent": true,
+    "parent": "seat1",
+    "y": -2,
+    "linkedToSeat": "seat1"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 100,
+    "y": 675,
+    "z": 7,
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "greenHolder",
+        "to": "hand",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "countSeat1"
+        ],
+        "property": "text",
+        "value": 4
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "movableInEdit": false,
+    "cardColor": "green"
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 100,
+    "y": 342.5,
+    "z": 8,
+    "hideWhenUnused": true,
+    "index": 2,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "redHolder",
+        "to": "hand",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "countSeat2"
+        ],
+        "property": "text",
+        "value": 4
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "movableInEdit": false,
+    "cardColor": "red"
+  },
+  "countSeat2": {
+    "id": "countSeat2",
+    "x": 160,
+    "z": 662,
+    "text": 0,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "35px"
+    },
+    "height": 40,
+    "width": 40,
+    "fixedParent": true,
+    "parent": "seat2",
+    "y": -2,
+    "linkedToSeat": "seat2"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 100,
+    "z": 10,
+    "hideWhenUnused": true,
+    "y": 10,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "purpleHolder",
+        "to": "hand",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "countSeat3"
+        ],
+        "property": "text",
+        "value": 4
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "index": 3,
+    "movableInEdit": false,
+    "cardColor": "purple"
+  },
+  "countSeat3": {
+    "id": "countSeat3",
+    "x": 160,
+    "z": 662,
+    "text": 0,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "35px"
+    },
+    "height": 40,
+    "width": 40,
+    "fixedParent": true,
+    "parent": "seat3",
+    "y": -2,
+    "linkedToSeat": "seat3"
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 508,
+    "z": 15,
+    "hideWhenUnused": true,
+    "y": 10,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "orangeHolder",
+        "to": "hand",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "countSeat4"
+        ],
+        "property": "text",
+        "value": 4
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "index": 4,
+    "movableInEdit": false,
+    "cardColor": "orange"
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "x": 917,
+    "z": 14,
+    "hideWhenUnused": true,
+    "y": 10,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "blueHolder",
+        "to": "hand",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "countSeat5"
+        ],
+        "property": "text",
+        "value": 4
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "index": 5,
+    "movableInEdit": false,
+    "cardColor": "blue"
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "x": 1325,
+    "z": 13,
+    "hideWhenUnused": true,
+    "y": 11,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "yellowHolder",
+        "to": "hand",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "countSeat6"
+        ],
+        "property": "text",
+        "value": 4
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "index": 6,
+    "movableInEdit": false,
+    "cardColor": "yellow"
+  },
+  "seat7": {
+    "type": "seat",
+    "id": "seat7",
+    "x": 1325,
+    "z": 12,
+    "hideWhenUnused": true,
+    "y": 342.5,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "pinkHolder",
+        "to": "hand",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "countSeat7"
+        ],
+        "property": "text",
+        "value": 4
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "index": 7,
+    "movableInEdit": false,
+    "cardColor": "pink"
+  },
+  "seat8": {
+    "type": "seat",
+    "id": "seat8",
+    "x": 1325,
+    "z": 11,
+    "hideWhenUnused": true,
+    "y": 675,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "brownHolder",
+        "to": "hand",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "countSeat8"
+        ],
+        "property": "text",
+        "value": 4
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "index": 8,
+    "movableInEdit": false,
+    "cardColor": "brown"
+  },
+  "countSeat4": {
+    "id": "countSeat4",
+    "x": 160,
+    "z": 662,
+    "text": 0,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "35px"
+    },
+    "height": 40,
+    "width": 40,
+    "fixedParent": true,
+    "parent": "seat4",
+    "y": -2,
+    "linkedToSeat": "seat4"
+  },
+  "countSeat5": {
+    "id": "countSeat5",
+    "x": 160,
+    "z": 662,
+    "text": 0,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "35px"
+    },
+    "height": 40,
+    "width": 40,
+    "fixedParent": true,
+    "parent": "seat5",
+    "y": -2,
+    "linkedToSeat": "seat5"
+  },
+  "countSeat6": {
+    "id": "countSeat6",
+    "x": 160,
+    "z": 662,
+    "text": 0,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "35px"
+    },
+    "height": 40,
+    "width": 40,
+    "fixedParent": true,
+    "parent": "seat6",
+    "y": -2,
+    "linkedToSeat": "seat6"
+  },
+  "countSeat7": {
+    "id": "countSeat7",
+    "x": 160,
+    "z": 662,
+    "text": 0,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "35px"
+    },
+    "height": 40,
+    "width": 40,
+    "fixedParent": true,
+    "parent": "seat7",
+    "y": -2,
+    "linkedToSeat": "seat7"
+  },
+  "countSeat8": {
+    "id": "countSeat8",
+    "x": 160,
+    "z": 662,
+    "text": 0,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "35px"
+    },
+    "height": 40,
+    "width": 40,
+    "fixedParent": true,
+    "parent": "seat8",
+    "y": -2,
+    "linkedToSeat": "seat8"
+  },
+  "background": {
+    "id": "background",
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "css": "opacity:0.25",
+    "image": "/assets/-60079731_476554",
+    "width": 1800,
+    "height": 1100
+  },
+  "tempHolder": {
+    "type": "holder",
+    "id": "tempHolder",
+    "x": 14,
+    "y": 1037,
+    "z": 17,
+    "dropTarget": {
+      "disc": true
+    }
+  },
+  "mq3s": {
+    "id": "mq3s",
+    "z": 9998,
+    "x": 1165,
+    "y": 929,
+    "classes": "symbols",
+    "text": "holder_hand",
+    "css": {
+      "default": {
+        "font-size": "70px"
+      },
+      ":hover": {
+        "color": "red"
+      }
+    },
+    "width": 40,
+    "height": 40,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Recalling card to hand ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Do you want to move your cards to your hand?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "cardColor",
+        "variable": "cardColor"
+      },
+      {
+        "func": "SELECT",
+        "property": "classes",
+        "value": "${cardColor}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "hand"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false
+  },
+  "s5ej": {
+    "id": "s5ej",
+    "z": 10115,
+    "fixedParent": true,
+    "parent": "hideHolder",
+    "classes": "symbols",
+    "text": "trash",
+    "css": "font-size: 80px; opacity:0.4",
+    "x": 8,
+    "y": 8,
+    "width": 80,
+    "height": 80,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "hideHolder": {
+    "type": "holder",
+    "id": "hideHolder",
+    "x": 750,
+    "y": 700,
+    "width": 100,
+    "height": 100,
+    "z": 20,
+    "css": {
+      "border-radius": "100%",
+      "background": "#f4000030"
+    },
+    "dropTarget": {
+      "disc": true
+    },
+    "enterRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Removing card from play ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Do you want to remove this card from the board?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "MOVE",
+        "from": "hideHolder",
+        "to": "tempHolder",
+        "count": 1
+      }
+    ]
+  }
+}

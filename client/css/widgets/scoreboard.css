@@ -1,0 +1,79 @@
+.scoreboard {
+  background: #fff;
+  color: #333;
+}
+
+.scoreboard > div.scoreboardIntermediate {
+  position: relative;
+  z-index: 0;
+  border: 2px solid black;
+  box-sizing: border-box;
+  border-radius: inherit;
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.scoreboard > div.scoreboardIntermediate > table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.scoreboard > div.scoreboardIntermediate > table tbody td {
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding: 5px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.scoreboard.equalWidth > div.scoreboardIntermediate > table td {
+  white-space: normal;
+  width: calc((100% - var(--firstColWidth)) / (var(--columns) - 1));
+}
+
+.scoreboard.verticalHeader > div.scoreboardIntermediate > table tbody tr:nth-child(1) td div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  word-break: normal;
+  writing-mode: tb-rl;
+  transform: rotate(180deg);
+}
+
+.scoreboard > div.scoreboardIntermediate > table tbody tr:nth-child(1) td:nth-child(1) {
+  z-index: 2;
+}
+
+.scoreboard > div.scoreboardIntermediate > table tbody tr:nth-child(1) td {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-color: #ddd;
+  word-break: break-all;
+  text-align:center;
+}
+
+.scoreboard > div.scoreboardIntermediate > table tbody tr td:nth-child(1) {
+  position: sticky;
+  z-index: 1;
+  left: 0;
+  background-color: #ddd;
+  word-break: break-all;
+  text-align: center;
+  min-width: var(--firstColWidth);
+}
+
+.scoreboard > div.scoreboardIntermediate > table .currentRound {
+  background-color: #fdf5e6;
+}
+
+.scoreboard > div.scoreboardIntermediate > table .totalsLine {
+  background-color: #ddd;
+  position: sticky;
+  bottom: 0;
+}
+

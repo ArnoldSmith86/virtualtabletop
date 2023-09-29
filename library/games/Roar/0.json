@@ -1,0 +1,2178 @@
+{
+  "Deck": {
+    "type": "deck",
+    "id": "Deck",
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "darkgreen",
+            "valueType": "static",
+            "value": "",
+            "width": 103,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 50,
+            "y": 75,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/-405660824_6475",
+            "width": 50,
+            "height": 50
+          },
+          {
+            "type": "image",
+            "x": 50,
+            "y": 25,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/1662072282_3339",
+            "width": 50,
+            "height": 50
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/707530774_6038",
+            "width": 50,
+            "height": 50
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/-1287723199_4659",
+            "width": 50,
+            "height": 50
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 100,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/1648300762_5642",
+            "width": 50,
+            "height": 50
+          }
+        ],
+        "radius": 20
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "darkgreen",
+            "valueType": "static",
+            "value": "",
+            "width": 103,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 20,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 103,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 40,
+            "valueType": "dynamic",
+            "value": "number",
+            "textAlign": "center",
+            "width": 103,
+            "css": "color: #96C23D; font-weight: bold"
+          }
+        ],
+        "radius": 20
+      }
+    ],
+    "cardTypes": {
+      "Ape 1": {
+        "image": "/assets/1648300762_5642",
+        "number": 1
+      },
+      "Frog 1": {
+        "image": "/assets/-1287723199_4659",
+        "number": 1
+      },
+      "Lion 1": {
+        "image": "/assets/707530774_6038",
+        "number": 1
+      },
+      "Owl 1": {
+        "image": "/assets/1662072282_3339",
+        "number": 1
+      },
+      "Pig 1": {
+        "image": "/assets/-405660824_6475",
+        "number": 1
+      },
+      "Ape 2": {
+        "image": "/assets/1648300762_5642",
+        "number": 2
+      },
+      "Frog 2": {
+        "image": "/assets/-1287723199_4659",
+        "number": 2
+      },
+      "Lion 2": {
+        "image": "/assets/707530774_6038",
+        "number": 2
+      },
+      "Owl 2": {
+        "image": "/assets/1662072282_3339",
+        "number": 2
+      },
+      "Pig 2": {
+        "image": "/assets/-405660824_6475",
+        "number": 2
+      },
+      "Ape 3": {
+        "image": "/assets/1648300762_5642",
+        "number": 3
+      },
+      "Frog 3": {
+        "image": "/assets/-1287723199_4659",
+        "number": 3
+      },
+      "Lion 3": {
+        "image": "/assets/707530774_6038",
+        "number": 3
+      },
+      "Owl 3": {
+        "image": "/assets/1662072282_3339",
+        "number": 3
+      },
+      "Pig 3": {
+        "image": "/assets/-405660824_6475",
+        "number": 3
+      },
+      "Ape 4": {
+        "image": "/assets/1648300762_5642",
+        "number": 4
+      },
+      "Frog 4": {
+        "image": "/assets/-1287723199_4659",
+        "number": 4
+      },
+      "Lion 4": {
+        "image": "/assets/707530774_6038",
+        "number": 4
+      },
+      "Owl 4": {
+        "image": "/assets/1662072282_3339",
+        "number": 4
+      },
+      "Pig 4": {
+        "image": "/assets/-405660824_6475",
+        "number": 4
+      },
+      "Ape 5": {
+        "image": "/assets/1648300762_5642",
+        "number": 5
+      },
+      "Frog 5": {
+        "image": "/assets/-1287723199_4659",
+        "number": 5
+      },
+      "Lion 5": {
+        "image": "/assets/707530774_6038",
+        "number": 5
+      },
+      "Owl 5": {
+        "image": "/assets/1662072282_3339",
+        "number": 5
+      },
+      "Pig 5": {
+        "image": "/assets/-405660824_6475",
+        "number": 5
+      },
+      "Ape 6": {
+        "image": "/assets/1648300762_5642",
+        "number": 6
+      },
+      "Frog 6": {
+        "image": "/assets/-1287723199_4659",
+        "number": 6
+      },
+      "Lion 6": {
+        "image": "/assets/707530774_6038",
+        "number": 6
+      },
+      "Owl 6": {
+        "image": "/assets/1662072282_3339",
+        "number": 6
+      },
+      "Pig 6": {
+        "image": "/assets/-405660824_6475",
+        "number": 6
+      },
+      "Ape 7": {
+        "image": "/assets/1648300762_5642",
+        "number": 7
+      },
+      "Frog 7": {
+        "image": "/assets/-1287723199_4659",
+        "number": 7
+      },
+      "Lion 7": {
+        "image": "/assets/707530774_6038",
+        "number": 7
+      },
+      "Owl 7": {
+        "image": "/assets/1662072282_3339",
+        "number": 7
+      },
+      "Pig 7": {
+        "image": "/assets/-405660824_6475",
+        "number": 7
+      },
+      "Ape 8": {
+        "image": "/assets/1648300762_5642",
+        "number": 8
+      },
+      "Frog 8": {
+        "image": "/assets/-1287723199_4659",
+        "number": 8
+      },
+      "Lion 8": {
+        "image": "/assets/707530774_6038",
+        "number": 8
+      },
+      "Owl 8": {
+        "image": "/assets/1662072282_3339",
+        "number": 8
+      },
+      "Pig 8": {
+        "image": "/assets/-405660824_6475",
+        "number": 8
+      },
+      "Ape 9": {
+        "image": "/assets/1648300762_5642",
+        "number": 9
+      },
+      "Frog 9": {
+        "image": "/assets/-1287723199_4659",
+        "number": 9
+      },
+      "Lion 9": {
+        "image": "/assets/707530774_6038",
+        "number": 9
+      },
+      "Owl 9": {
+        "image": "/assets/1662072282_3339",
+        "number": 9
+      },
+      "Pig 9": {
+        "image": "/assets/-405660824_6475",
+        "number": 9
+      },
+      "Ape 10": {
+        "image": "/assets/1648300762_5642",
+        "number": 10
+      },
+      "Frog 10": {
+        "image": "/assets/-1287723199_4659",
+        "number": 10
+      },
+      "Lion 10": {
+        "image": "/assets/707530774_6038",
+        "number": 10
+      },
+      "Owl 10": {
+        "image": "/assets/1662072282_3339",
+        "number": 10
+      },
+      "Pig 10": {
+        "image": "/assets/-405660824_6475",
+        "number": 10
+      },
+      "Ape 11": {
+        "image": "/assets/1648300762_5642",
+        "number": 11
+      },
+      "Frog 11": {
+        "image": "/assets/-1287723199_4659",
+        "number": 11
+      },
+      "Lion 11": {
+        "image": "/assets/707530774_6038",
+        "number": 11
+      },
+      "Owl 11": {
+        "image": "/assets/1662072282_3339",
+        "number": 11
+      },
+      "Pig 11": {
+        "image": "/assets/-405660824_6475",
+        "number": 11
+      },
+      "Ape 12": {
+        "image": "/assets/1648300762_5642",
+        "number": 12
+      },
+      "Frog 12": {
+        "image": "/assets/-1287723199_4659",
+        "number": 12
+      },
+      "Lion 12": {
+        "image": "/assets/707530774_6038",
+        "number": 12
+      },
+      "Owl 12": {
+        "image": "/assets/1662072282_3339",
+        "number": 12
+      },
+      "Pig 12": {
+        "image": "/assets/-405660824_6475",
+        "number": 12
+      },
+      "Ape 13": {
+        "image": "/assets/1648300762_5642",
+        "number": 13
+      },
+      "Frog 13": {
+        "image": "/assets/-1287723199_4659",
+        "number": 13
+      },
+      "Lion 13": {
+        "image": "/assets/707530774_6038",
+        "number": 13
+      },
+      "Owl 13": {
+        "image": "/assets/1662072282_3339",
+        "number": 13
+      },
+      "Pig 13": {
+        "image": "/assets/-405660824_6475",
+        "number": 13
+      },
+      "Ape 14": {
+        "image": "/assets/1648300762_5642",
+        "number": 14
+      },
+      "Frog 14": {
+        "image": "/assets/-1287723199_4659",
+        "number": 14
+      },
+      "Lion 14": {
+        "image": "/assets/707530774_6038",
+        "number": 14
+      },
+      "Owl 14": {
+        "image": "/assets/1662072282_3339",
+        "number": 14
+      },
+      "Pig 14": {
+        "image": "/assets/-405660824_6475",
+        "number": 14
+      },
+      "Ape 15": {
+        "image": "/assets/1648300762_5642",
+        "number": 15
+      },
+      "Frog 15": {
+        "image": "/assets/-1287723199_4659",
+        "number": 15
+      },
+      "Lion 15": {
+        "image": "/assets/707530774_6038",
+        "number": 15
+      },
+      "Owl 15": {
+        "image": "/assets/1662072282_3339",
+        "number": 15
+      },
+      "Pig 15": {
+        "image": "/assets/-405660824_6475",
+        "number": 15
+      }
+    },
+    "parent": "Draw"
+  },
+  "niy0": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 1",
+    "id": "niy0",
+    "z": 648,
+    "parent": "yfym"
+  },
+  "9gla": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 1",
+    "id": "9gla",
+    "parent": "yfym",
+    "z": 5995
+  },
+  "mn1c": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 1",
+    "id": "mn1c",
+    "z": 1069,
+    "parent": "yfym"
+  },
+  "28kx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 1",
+    "id": "28kx",
+    "z": 6490,
+    "parent": "yfym"
+  },
+  "5zy8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 1",
+    "id": "5zy8",
+    "parent": "yfym",
+    "z": 4488
+  },
+  "si22": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 2",
+    "id": "si22",
+    "z": 8152,
+    "parent": "yfym"
+  },
+  "187m": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 2",
+    "id": "187m",
+    "parent": "yfym",
+    "z": 110
+  },
+  "v4iq": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 2",
+    "id": "v4iq",
+    "z": 3178,
+    "parent": "yfym"
+  },
+  "jyws": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 2",
+    "id": "jyws",
+    "z": 6927,
+    "parent": "yfym"
+  },
+  "lgjw": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 2",
+    "id": "lgjw",
+    "parent": "yfym",
+    "z": 3047
+  },
+  "mihb": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 3",
+    "id": "mihb",
+    "parent": "yfym",
+    "z": 5962
+  },
+  "7ius": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 3",
+    "id": "7ius",
+    "parent": "yfym",
+    "z": 7243
+  },
+  "bq3k": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 3",
+    "id": "bq3k",
+    "z": 1045,
+    "parent": "yfym"
+  },
+  "pm1u": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 3",
+    "id": "pm1u",
+    "z": 1967,
+    "parent": "yfym"
+  },
+  "vaut": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 3",
+    "id": "vaut",
+    "z": 5385,
+    "parent": "yfym"
+  },
+  "x944": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 4",
+    "id": "x944",
+    "parent": "yfym",
+    "z": 1706
+  },
+  "g8yw": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 4",
+    "id": "g8yw",
+    "parent": "yfym",
+    "z": 5563
+  },
+  "i9uc": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 4",
+    "id": "i9uc",
+    "parent": "yfym",
+    "z": 3483
+  },
+  "mjjq": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 4",
+    "id": "mjjq",
+    "z": 6139,
+    "parent": "yfym"
+  },
+  "wj1r": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 4",
+    "id": "wj1r",
+    "parent": "yfym",
+    "z": 8531
+  },
+  "b2i4": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 5",
+    "id": "b2i4",
+    "z": 9217,
+    "parent": "yfym"
+  },
+  "dcq6": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 5",
+    "id": "dcq6",
+    "parent": "yfym",
+    "z": 7035
+  },
+  "pyz1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 5",
+    "id": "pyz1",
+    "parent": "yfym",
+    "z": 2825
+  },
+  "831p": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 5",
+    "id": "831p",
+    "z": 9794,
+    "parent": "yfym"
+  },
+  "8j7d": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 5",
+    "id": "8j7d",
+    "parent": "yfym",
+    "z": 9384
+  },
+  "6u0l": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 6",
+    "id": "6u0l",
+    "parent": "yfym",
+    "z": 416
+  },
+  "ye4z": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 6",
+    "id": "ye4z",
+    "parent": "yfym",
+    "z": 5257
+  },
+  "2j8j": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 6",
+    "id": "2j8j",
+    "z": 7539,
+    "parent": "yfym"
+  },
+  "b4f1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 6",
+    "id": "b4f1",
+    "parent": "yfym",
+    "z": 3782
+  },
+  "xg4s": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 6",
+    "id": "xg4s",
+    "parent": "yfym",
+    "z": 1052
+  },
+  "64zm": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 7",
+    "id": "64zm",
+    "parent": "yfym",
+    "z": 1975
+  },
+  "62df": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 7",
+    "id": "62df",
+    "parent": "yfym",
+    "z": 9693
+  },
+  "e0n1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 7",
+    "id": "e0n1",
+    "parent": "yfym",
+    "z": 5236
+  },
+  "jaty": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 7",
+    "id": "jaty",
+    "z": 3917,
+    "parent": "yfym"
+  },
+  "sk8e": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 7",
+    "id": "sk8e",
+    "parent": "yfym",
+    "z": 7254
+  },
+  "hx6z": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 8",
+    "id": "hx6z",
+    "parent": "yfym",
+    "z": 5607
+  },
+  "1mxp": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 8",
+    "id": "1mxp",
+    "parent": "yfym",
+    "z": 6654
+  },
+  "9ilj": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 8",
+    "id": "9ilj",
+    "parent": "yfym",
+    "z": 9401
+  },
+  "ow41": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 8",
+    "id": "ow41",
+    "parent": "yfym",
+    "z": 679
+  },
+  "xl7x": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 8",
+    "id": "xl7x",
+    "z": 6944,
+    "parent": "yfym"
+  },
+  "ezzr": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 9",
+    "id": "ezzr",
+    "parent": "yfym",
+    "z": 2522
+  },
+  "2lwz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 9",
+    "id": "2lwz",
+    "parent": "yfym",
+    "z": 225
+  },
+  "y3qu": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 9",
+    "id": "y3qu",
+    "parent": "yfym",
+    "z": 1198
+  },
+  "d04p": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 9",
+    "id": "d04p",
+    "z": 887,
+    "parent": "yfym"
+  },
+  "i551": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 9",
+    "id": "i551",
+    "parent": "yfym",
+    "z": 6640
+  },
+  "kq0v": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 10",
+    "id": "kq0v",
+    "z": 8208,
+    "parent": "yfym"
+  },
+  "5kqr": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 10",
+    "id": "5kqr",
+    "parent": "yfym",
+    "z": 1909
+  },
+  "3nl7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 10",
+    "id": "3nl7",
+    "parent": "yfym",
+    "z": 3069
+  },
+  "4vai": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 10",
+    "id": "4vai",
+    "parent": "yfym",
+    "z": 1165
+  },
+  "s2jl": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 10",
+    "id": "s2jl",
+    "parent": "yfym",
+    "z": 1782
+  },
+  "8rmg": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 11",
+    "id": "8rmg",
+    "z": 4938,
+    "parent": "yfym"
+  },
+  "3vm5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 11",
+    "id": "3vm5",
+    "parent": "yfym",
+    "z": 9192
+  },
+  "7kri": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 11",
+    "id": "7kri",
+    "parent": "yfym",
+    "z": 8892
+  },
+  "y5v2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 11",
+    "id": "y5v2",
+    "parent": "yfym",
+    "z": 6365
+  },
+  "drv3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 11",
+    "id": "drv3",
+    "z": 8549,
+    "parent": "yfym"
+  },
+  "8zpv": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 12",
+    "id": "8zpv",
+    "parent": "yfym",
+    "z": 334
+  },
+  "3g5a": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 12",
+    "id": "3g5a",
+    "z": 9944,
+    "parent": "yfym"
+  },
+  "w7d5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 12",
+    "id": "w7d5",
+    "parent": "yfym",
+    "z": 3499
+  },
+  "9qlp": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 12",
+    "id": "9qlp",
+    "parent": "yfym",
+    "z": 2132
+  },
+  "fay0": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 12",
+    "id": "fay0",
+    "parent": "yfym",
+    "z": 347
+  },
+  "ecn0": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 13",
+    "id": "ecn0",
+    "parent": "yfym",
+    "z": 853
+  },
+  "5kkp": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 13",
+    "id": "5kkp",
+    "z": 5276,
+    "parent": "yfym"
+  },
+  "0yhw": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 13",
+    "id": "0yhw",
+    "parent": "yfym",
+    "z": 4690
+  },
+  "ntbs": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 13",
+    "id": "ntbs",
+    "z": 7358,
+    "parent": "yfym"
+  },
+  "r7sz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 13",
+    "id": "r7sz",
+    "parent": "yfym",
+    "z": 1383
+  },
+  "gf1t": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 14",
+    "id": "gf1t",
+    "z": 4224,
+    "parent": "yfym"
+  },
+  "r9ob": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 14",
+    "id": "r9ob",
+    "parent": "yfym",
+    "z": 4411
+  },
+  "pt8y": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 14",
+    "id": "pt8y",
+    "parent": "yfym",
+    "z": 6929
+  },
+  "d7vz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 14",
+    "id": "d7vz",
+    "parent": "yfym",
+    "z": 3988
+  },
+  "rfee": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 14",
+    "id": "rfee",
+    "parent": "yfym",
+    "z": 5228
+  },
+  "pdh8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ape 15",
+    "id": "pdh8",
+    "z": 9393,
+    "parent": "yfym"
+  },
+  "jcfl": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Frog 15",
+    "id": "jcfl",
+    "parent": "yfym",
+    "z": 201
+  },
+  "hlxf": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Lion 15",
+    "id": "hlxf",
+    "parent": "yfym",
+    "z": 5189
+  },
+  "tlpc": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Owl 15",
+    "id": "tlpc",
+    "parent": "yfym",
+    "z": 5274
+  },
+  "ss74": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Pig 15",
+    "id": "ss74",
+    "z": 4571,
+    "parent": "yfym"
+  },
+  "Draw": {
+    "type": "holder",
+    "id": "Draw",
+    "dropTarget": {
+      "deck": "Deck"
+    },
+    "y": 4,
+    "x": 4
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": [
+          "Draw",
+          "Token Holder"
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Draw",
+        "face": 0
+      },
+      {
+        "func": "SORT",
+        "holder": "Token Holder",
+        "key": "image"
+      },
+      {
+        "func": "SORT",
+        "holder": "Token Holder",
+        "key": "value"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Reaper"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 122.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 38
+      },
+      {
+        "func": "SELECT",
+        "property": "text",
+        "value": "Join"
+      },
+      {
+        "func": "SET",
+        "property": "owner"
+      }
+    ],
+    "text": "Reset",
+    "height": 40,
+    "x": 1516,
+    "y": 4
+  },
+  "Hand": {
+    "type": "holder",
+    "id": "Hand",
+    "y": 816.5,
+    "width": 1593,
+    "height": 180,
+    "childrenPerOwner": true,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 105,
+    "x": 3.5,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "Draw"
+  },
+  "Player 1 - Card": {
+    "type": "holder",
+    "id": "Player 1 - Card",
+    "x": 544.6666666666666,
+    "y": 233.6875,
+    "inheritFrom": "Draw",
+    "z": 65
+  },
+  "Player 2 - Card": {
+    "type": "holder",
+    "id": "Player 2 - Card",
+    "x": 944.3333333333333,
+    "y": 117.125,
+    "inheritFrom": "Draw",
+    "z": 57
+  },
+  "Player 3 - Card": {
+    "type": "holder",
+    "id": "Player 3 - Card",
+    "x": 944.3333333333333,
+    "y": 350.25,
+    "inheritFrom": "Draw",
+    "z": 56
+  },
+  "Player 4 - Card": {
+    "type": "holder",
+    "id": "Player 4 - Card",
+    "x": 944.3333333333333,
+    "y": 583.375,
+    "inheritFrom": "Draw",
+    "z": 58
+  },
+  "Player 5 - Card": {
+    "type": "holder",
+    "id": "Player 5 - Card",
+    "x": 547.5,
+    "y": 466,
+    "inheritFrom": "Draw",
+    "z": 75
+  },
+  "Tokens": {
+    "type": "deck",
+    "id": "Tokens",
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "invalid",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 40,
+            "height": 40,
+            "css": "background-repeat: no-repeat; background-position: center"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "invalid",
+            "valueType": "static",
+            "value": "",
+            "width": 40,
+            "height": 40,
+            "css": "background: var(--color); border-radius: 100%; "
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 40,
+      "height": 40,
+      "value": -2,
+      "css": "--color: transparent"
+    },
+    "cardTypes": {
+      "Black": {
+        "css": "--color: black",
+        "value": -3
+      },
+      "White": {
+        "css": "--color: lightgrey",
+        "value": -4
+      },
+      "Ape": {
+        "image": "/assets/900179807_2426"
+      },
+      "Frog": {
+        "image": "/assets/707153237_1841"
+      },
+      "Lion": {
+        "image": "/assets/1242550039_3992"
+      },
+      "Owl": {
+        "image": "/assets/1742233512_1635"
+      },
+      "Pig": {
+        "image": "/assets/-807326126_1918"
+      }
+    },
+    "parent": "Token Holder"
+  },
+  "w7ft": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "White",
+    "id": "w7ft",
+    "x": 4,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 1
+  },
+  "a52f": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Ape",
+    "id": "a52f",
+    "x": 1012,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 25
+  },
+  "hsz2": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Frog",
+    "id": "hsz2",
+    "x": 886,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 22
+  },
+  "5wiu": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Lion",
+    "id": "5wiu",
+    "x": 550,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 14
+  },
+  "cf8o": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Owl",
+    "id": "cf8o",
+    "x": 760,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 19
+  },
+  "wiqd": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Pig",
+    "id": "wiqd",
+    "x": 424,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 11
+  },
+  "78al": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Black",
+    "id": "78al",
+    "parent": "Token Holder",
+    "x": 172,
+    "y": 4,
+    "z": 5
+  },
+  "oxqa": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "White",
+    "id": "oxqa",
+    "parent": "Token Holder",
+    "x": 46,
+    "y": 4,
+    "z": 2
+  },
+  "y3he": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Ape",
+    "id": "y3he",
+    "parent": "Token Holder",
+    "x": 1054,
+    "y": 4,
+    "z": 26
+  },
+  "tk1g": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Frog",
+    "id": "tk1g",
+    "x": 928,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 23
+  },
+  "xjs4": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Lion",
+    "id": "xjs4",
+    "x": 592,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 15
+  },
+  "itnp": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Owl",
+    "id": "itnp",
+    "x": 802,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 20
+  },
+  "e9ww": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Pig",
+    "id": "e9ww",
+    "x": 466,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 12
+  },
+  "do4f": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Black",
+    "id": "do4f",
+    "parent": "Token Holder",
+    "x": 214,
+    "y": 4,
+    "z": 6
+  },
+  "c7lz": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "White",
+    "id": "c7lz",
+    "parent": "Token Holder",
+    "x": 88,
+    "y": 4,
+    "z": 3
+  },
+  "4be1": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Ape",
+    "id": "4be1",
+    "x": 1096,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 27
+  },
+  "mk6e": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Frog",
+    "id": "mk6e",
+    "x": 970,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 24
+  },
+  "e0t2": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Lion",
+    "id": "e0t2",
+    "x": 634,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 16
+  },
+  "u6ie": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Owl",
+    "id": "u6ie",
+    "x": 844,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 21
+  },
+  "ul99": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Pig",
+    "id": "ul99",
+    "x": 508,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 13
+  },
+  "4hbe": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Black",
+    "id": "4hbe",
+    "x": 256,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 7
+  },
+  "q4y7": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Black",
+    "id": "q4y7",
+    "x": 298,
+    "y": 4,
+    "z": 8,
+    "parent": "Token Holder"
+  },
+  "2ah5": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Black",
+    "id": "2ah5",
+    "x": 340,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 9
+  },
+  "8k9u": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Black",
+    "id": "8k9u",
+    "x": 382,
+    "y": 4,
+    "z": 10,
+    "parent": "Token Holder"
+  },
+  "gl2g": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "White",
+    "id": "gl2g",
+    "x": 130,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 4
+  },
+  "a5d1": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Lion",
+    "id": "a5d1",
+    "x": 676,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 17
+  },
+  "n36m": {
+    "deck": "Tokens",
+    "type": "card",
+    "cardType": "Lion",
+    "id": "n36m",
+    "x": 718,
+    "y": 4,
+    "parent": "Token Holder",
+    "z": 18
+  },
+  "Token Holder": {
+    "type": "holder",
+    "id": "Token Holder",
+    "x": 230,
+    "y": 4,
+    "width": 1140,
+    "height": 48,
+    "stackOffsetX": 42,
+    "dropTarget": {
+      "deck": "Tokens"
+    }
+  },
+  "Player 1 - Tricks": {
+    "type": "holder",
+    "id": "Player 1 - Tricks",
+    "x": 329.3333333333333,
+    "y": 233.6875,
+    "inheritFrom": "Draw",
+    "z": 64
+  },
+  "Player 2 - Tricks": {
+    "type": "holder",
+    "id": "Player 2 - Tricks",
+    "x": 1159.6666666666665,
+    "y": 117.125,
+    "inheritFrom": "Draw",
+    "z": 54
+  },
+  "Player 3 - Tricks": {
+    "type": "holder",
+    "id": "Player 3 - Tricks",
+    "x": 1159.6666666666665,
+    "y": 350.25,
+    "inheritFrom": "Draw",
+    "z": 51
+  },
+  "Player 4 - Tricks": {
+    "type": "holder",
+    "id": "Player 4 - Tricks",
+    "x": 1159.6666666666665,
+    "y": 583.375,
+    "inheritFrom": "Draw",
+    "z": 59
+  },
+  "Player 5 - Tricks": {
+    "type": "holder",
+    "id": "Player 5 - Tricks",
+    "x": 329.3333333333333,
+    "y": 466.8125,
+    "inheritFrom": "Draw",
+    "z": 68
+  },
+  "Player 1 - Tokens": {
+    "type": "holder",
+    "id": "Player 1 - Tokens",
+    "x": 468.5,
+    "y": 233.6875,
+    "inheritFrom": "Token Holder",
+    "width": 48,
+    "height": 168,
+    "stackOffsetX": 0,
+    "stackOffsetY": 20,
+    "z": 69
+  },
+  "yfym": {
+    "type": "pile",
+    "parent": "Draw",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "yfym"
+  },
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Roar",
+      "image": "/assets/-1702084554_36337",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/8129/sluff",
+      "year": "2003",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/vectors/ape-animal-cartoon-character-comic-3224416/\nhttps://pixabay.com/vectors/frog-animal-comic-comic-drawing-3241108/\nhttps://pixabay.com/vectors/lion-animal-comic-drawing-simple-3221778/\nhttps://pixabay.com/vectors/owl-comic-animal-portrait-3218837/\nhttps://pixabay.com/vectors/pig-animal-comic-comic-drawing-3245668/\nhttps://pixabay.com/vectors/death-halloween-skeleton-undead-159120/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"lion anime --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Sluff Off!",
+      "description": "Trick-taking card game with 15 cards in 5 suits. Points lost for not taking exact number of bids. One player serves as a foil and instead of taking tricks, tries to force other players to take them. Fewest penalty points at end of game wins.",
+      "showName": true,
+      "lastUpdate": 1635211586000,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-5"
+    }
+  },
+  "Player 2 - Tokens": {
+    "type": "holder",
+    "id": "Player 2 - Tokens",
+    "x": 1083.5,
+    "y": 117.125,
+    "inheritFrom": "Token Holder",
+    "width": 48,
+    "height": 168,
+    "stackOffsetX": 0,
+    "stackOffsetY": 20,
+    "z": 72
+  },
+  "Player 3 - Tokens": {
+    "type": "holder",
+    "id": "Player 3 - Tokens",
+    "x": 1083.5,
+    "y": 350.25,
+    "inheritFrom": "Token Holder",
+    "width": 48,
+    "height": 168,
+    "stackOffsetX": 0,
+    "stackOffsetY": 20,
+    "z": 71
+  },
+  "Player 4 - Tokens": {
+    "type": "holder",
+    "id": "Player 4 - Tokens",
+    "x": 1083.5,
+    "y": 583.375,
+    "inheritFrom": "Token Holder",
+    "width": 48,
+    "height": 168,
+    "stackOffsetX": 0,
+    "stackOffsetY": 20,
+    "z": 73
+  },
+  "Player 5 - Tokens": {
+    "type": "holder",
+    "id": "Player 5 - Tokens",
+    "x": 469.91666666666663,
+    "y": 466.8125,
+    "inheritFrom": "Token Holder",
+    "width": 48,
+    "height": 168,
+    "stackOffsetX": 0,
+    "stackOffsetY": 20,
+    "z": 74
+  },
+  "Reaper": {
+    "id": "Reaper",
+    "x": 122.5,
+    "y": 38,
+    "image": "/assets/-237869722_24039"
+  },
+  "72dqD": {
+    "id": "72dqD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 1 - Score"
+  },
+  "72dqU": {
+    "id": "72dqU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 1 - Score"
+  },
+  "Player 1 - Score": {
+    "type": "label",
+    "id": "Player 1 - Score",
+    "x": 160,
+    "y": 313.6875,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "z": 10
+  },
+  "Player 2 - Score": {
+    "type": "label",
+    "id": "Player 2 - Score",
+    "x": 1375,
+    "y": 197.125,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "z": 7
+  },
+  "73dqD": {
+    "id": "73dqD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 2 - Score"
+  },
+  "73dqU": {
+    "id": "73dqU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 2 - Score"
+  },
+  "Player 3 - Score": {
+    "type": "label",
+    "id": "Player 3 - Score",
+    "y": 430.25,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "z": 6,
+    "x": 1375
+  },
+  "74dqD": {
+    "id": "74dqD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 3 - Score"
+  },
+  "74dqU": {
+    "id": "74dqU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 3 - Score"
+  },
+  "Player 4 - Score": {
+    "type": "label",
+    "id": "Player 4 - Score",
+    "x": 1375,
+    "y": 663.375,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "z": 8
+  },
+  "75dqD": {
+    "id": "75dqD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 4 - Score"
+  },
+  "75dqU": {
+    "id": "75dqU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 4 - Score"
+  },
+  "Player 5 - Score": {
+    "type": "label",
+    "id": "Player 5 - Score",
+    "x": 160,
+    "y": 546.8125,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "z": 9
+  },
+  "76dqD": {
+    "id": "76dqD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 5 - Score"
+  },
+  "76dqU": {
+    "id": "76dqU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 5 - Score"
+  },
+  "Player 1 - Take": {
+    "type": "button",
+    "id": "Player 1 - Take",
+    "x": 25.5,
+    "y": 54,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "Player 1 - Card",
+          "Player 2 - Card",
+          "Player 3 - Card",
+          "Player 4 - Card",
+          "Player 5 - Card"
+        ],
+        "to": "${PROPERTY parent}",
+        "face": 0
+      }
+    ],
+    "text": "Take",
+    "parent": "Player 1 - Tricks",
+    "layer": 5,
+    "width": 60,
+    "height": 60
+  },
+  "Player 2 - Take": {
+    "inheritFrom": "Player 1 - Take",
+    "id": "Player 2 - Take",
+    "type": "button",
+    "parent": "Player 2 - Tricks"
+  },
+  "Player 3 - Take": {
+    "inheritFrom": "Player 1 - Take",
+    "id": "Player 3 - Take",
+    "type": "button",
+    "parent": "Player 3 - Tricks"
+  },
+  "Player 4 - Take": {
+    "inheritFrom": "Player 1 - Take",
+    "id": "Player 4 - Take",
+    "type": "button",
+    "parent": "Player 4 - Tricks"
+  },
+  "Player 5 - Take": {
+    "inheritFrom": "Player 1 - Take",
+    "id": "Player 5 - Take",
+    "type": "button",
+    "parent": "Player 5 - Tricks"
+  },
+  "Player 1 - Label": {
+    "type": "label",
+    "id": "Player 1 - Label",
+    "x": 92.5,
+    "y": 273.6875,
+    "z": 21,
+    "text": "Player 1",
+    "css": "font-size: 24px; ",
+    "width": 200
+  },
+  "Player 2 - Label": {
+    "inheritFrom": "Player 1 - Label",
+    "id": "Player 2 - Label",
+    "type": "label",
+    "x": 1307.5,
+    "y": 157.125,
+    "z": 16,
+    "text": "Player 2"
+  },
+  "Player 3 - Label": {
+    "inheritFrom": "Player 1 - Label",
+    "id": "Player 3 - Label",
+    "type": "label",
+    "x": 1307.5,
+    "y": 390.25,
+    "z": 18,
+    "text": "Player 3"
+  },
+  "Player 4 - Label": {
+    "inheritFrom": "Player 1 - Label",
+    "id": "Player 4 - Label",
+    "type": "label",
+    "x": 1307.5,
+    "y": 623.375,
+    "z": 20,
+    "text": "Player 4"
+  },
+  "Player 5 - Label": {
+    "inheritFrom": "Player 1 - Label",
+    "id": "Player 5 - Label",
+    "type": "label",
+    "x": 92.5,
+    "y": 506.8125,
+    "text": "Player 5",
+    "z": 12
+  },
+  "Player 1 - Join": {
+    "type": "button",
+    "id": "Player 1 - Join",
+    "x": 60,
+    "y": -10,
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Who are you?",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "owner",
+        "value": []
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "property": "text",
+        "value": "Join"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "collection": "inactivePlayers"
+      },
+      {
+        "func": "COUNT",
+        "collection": "inactivePlayers"
+      },
+      "var playerCount = 5 - ${COUNT}",
+      "var highestCard = 3 * ${playerCount}",
+      {
+        "func": "RECALL",
+        "holder": "Draw"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Draw",
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "Deck",
+        "collection": "Cards"
+      },
+      {
+        "func": "SELECT",
+        "source": "Cards",
+        "property": "number",
+        "relation": ">",
+        "value": "${highestCard}",
+        "collection": "Unused Cards"
+      },
+      {
+        "func": "SET",
+        "collection": "Unused Cards",
+        "value": "Discard"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var parent = ${PROPERTY parent OF $widgetID}",
+          "var player = ${PROPERTY text OF $parent}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY owner OF $widgetID}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "value": "Draw",
+                "type": "card",
+                "max": 15,
+                "sortBy": "z"
+              },
+              {
+                "func": "SET",
+                "value": "Hand"
+              },
+              {
+                "func": "SET",
+                "property": "owner",
+                "value": "${player}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "Hand",
+        "key": "number"
+      },
+      {
+        "func": "SORT",
+        "holder": "Hand",
+        "key": "image"
+      }
+    ],
+    "text": "Join",
+    "parent": "Player 1 - Label"
+  },
+  "Player 2 - Join": {
+    "inheritFrom": {
+      "Player 1 - Join": [
+        "x",
+        "y",
+        "width",
+        "height",
+        "clickRoutine",
+        "text"
+      ]
+    },
+    "id": "Player 2 - Join",
+    "type": "button",
+    "parent": "Player 2 - Label"
+  },
+  "Player 3 - Join": {
+    "inheritFrom": {
+      "Player 1 - Join": [
+        "x",
+        "y",
+        "width",
+        "height",
+        "clickRoutine",
+        "text"
+      ]
+    },
+    "id": "Player 3 - Join",
+    "type": "button",
+    "parent": "Player 3 - Label"
+  },
+  "Player 4 - Join": {
+    "inheritFrom": {
+      "Player 1 - Join": [
+        "x",
+        "y",
+        "width",
+        "height",
+        "clickRoutine",
+        "text"
+      ]
+    },
+    "id": "Player 4 - Join",
+    "type": "button",
+    "parent": "Player 4 - Label"
+  },
+  "Player 5 - Join": {
+    "inheritFrom": {
+      "Player 1 - Join": [
+        "x",
+        "y",
+        "width",
+        "height",
+        "clickRoutine",
+        "text"
+      ]
+    },
+    "id": "Player 5 - Join",
+    "type": "button",
+    "parent": "Player 5 - Label"
+  },
+  "Discard": {
+    "type": "holder",
+    "id": "Discard",
+    "y": -200,
+    "inheritFrom": "Draw"
+  }
+}

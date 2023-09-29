@@ -1,0 +1,7801 @@
+{
+  "1637": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curve-tower",
+    "id": "1637",
+    "z": 9986,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1480,
+    "y": 850,
+    "parent": "floor"
+  },
+  "4851": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-fourway",
+    "id": "4851",
+    "z": 10344,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1620,
+    "y": 1410,
+    "parent": "floor"
+  },
+  "6753": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "cloister3",
+    "id": "6753",
+    "z": 10188,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "y": 1200,
+    "x": 1340,
+    "parent": "floor"
+  },
+  "9585": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-t",
+    "id": "9585",
+    "z": 9980,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "x": 1410,
+    "y": 710,
+    "parent": "floor"
+  },
+  "bo9g": {
+    "type": "deck",
+    "id": "bo9g",
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "valueType": "static",
+            "value": "",
+            "color": "transparent",
+            "css": "background-image: linear-gradient(-45deg, #111 25%, black 25%, black 50%, #111 50%, #111 75%, black 75%, black);background-size: 50px 50px;background-repeat:repeat"
+          },
+          {
+            "type": "text",
+            "x": -2,
+            "y": 4,
+            "fontSize": 50,
+            "valueType": "static",
+            "value": "C",
+            "textAlign": "center",
+            "width": 70,
+            "css": "color: #444;font-weight:bold"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "i",
+            "width": 70,
+            "height": 70,
+            "css": "background-size:auto;background-position:calc(var(--x1) * -70px) calc(var(--y1) * -70px);transform:rotate(calc(var(--r1) * 90deg))"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "i",
+            "width": 70,
+            "height": 70,
+            "css": "background-size:auto;background-position:calc(var(--x2) * -70px) calc(var(--y2) * -70px);transform:rotate(calc(var(--r2) * 90deg))"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "i",
+            "width": 70,
+            "height": 70,
+            "css": "background-size:auto;background-position:calc(var(--x3) * -70px) calc(var(--y3) * -70px);transform:rotate(calc(var(--r3) * 90deg))"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "i",
+            "width": 70,
+            "height": 70,
+            "css": "background-size:auto;background-position:calc(var(--x4) * -70px) calc(var(--y4) * -70px);transform:rotate(calc(var(--r4) * 90deg))"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "i",
+            "width": 70,
+            "height": 70,
+            "css": "background-size:auto;background-position:calc(var(--x5) * -70px) calc(var(--y5) * -70px);transform:rotate(calc(var(--r5) * 90deg))"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "i",
+            "width": 70,
+            "height": 70,
+            "css": "background-size:auto;background-position:calc(var(--x6) * -70px) calc(var(--y6) * -70px);transform:rotate(calc(var(--r6) * 90deg))"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "i",
+            "width": 70,
+            "height": 70,
+            "css": "background-size:auto;background-position:calc(var(--x7) * -70px) calc(var(--y7) * -70px);transform:rotate(calc(var(--r7) * 90deg))"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "i",
+            "width": 70,
+            "height": 70,
+            "css": "background-size:auto;background-position:calc(var(--x8) * -70px) calc(var(--y8) * -70px);transform:rotate(calc(var(--r8) * 90deg))"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "i": "/assets/1170802298_68846",
+      "height": 70,
+      "width": 70,
+      "grid": [
+        {
+          "x": 70,
+          "y": 70,
+          "offsetX": -20,
+          "offsetY": -10
+        }
+      ],
+      "clickRoutine": [
+        {
+          "func": "IF",
+          "condition": "${PROPERTY activeFace}",
+          "elseRoutine": [
+            {
+              "func": "FLIP",
+              "collection": "thisButton"
+            }
+          ],
+          "thenRoutine": [
+            {
+              "func": "ROTATE",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "cloister0": {
+        "css": "--x1:1;--y1:1; --x2:0;--y2:1"
+      },
+      "cloister1": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:0;--y3:1;--r2:2"
+      },
+      "road-straight": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:2"
+      },
+      "road-curve": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1"
+      },
+      "road-t": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:1; --x4:2;--y4:0;--r4:2; --x5:2;--y5:1"
+      },
+      "road-fourway": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:1; --x4:2;--y4:0;--r4:2; --x5:2;--y5:0;--r5:3; --x6:2;--y6:1"
+      },
+      "town1": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0"
+      },
+      "town1-road": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:2;--y3:0;--r3:1; --x4:2;--y4:0;--r4:3",
+        "startTile": true
+      },
+      "town1-road-start": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:2;--y3:0;--r3:1; --x4:2;--y4:0;--r4:3"
+      },
+      "town1-curve1": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0;--r2:3; --x3:3;--y3:1"
+      },
+      "town1-curve2": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0;--r2:3; --x3:3;--y3:1;--r3:1"
+      },
+      "town1-t": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:1; --x4:2;--y4:0;--r4:2; --x5:2;--y5:1; --x6:1;--y6:0;--r6:3"
+      },
+      "town2-1": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:1;--y3:0;--r3:2"
+      },
+      "town2-2": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:1;--y3:0;--r3:1"
+      },
+      "town2-3": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:2"
+      },
+      "town2-3-curve": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:2;; --x3:3;--y3:1"
+      },
+      "town2-3-emblem": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:2; --x3:1;--y3:2;--r3:2"
+      },
+      "town2-3-curve-emblem": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:2;; --x3:3;--y3:1; --x4:1;--y4:2;--r4:2"
+      },
+      "town2-4": {
+        "css": "--x1:1;--y1:1; --x2:4;--y2:1;--r2:1"
+      },
+      "town2-4-emblem": {
+        "css": "--x1:1;--y1:1; --x2:4;--y2:1;--r2:1; --x3:1;--y3:2;--r3:1"
+      },
+      "town3": {
+        "css": "--x1:1;--y1:1; --x2:0;--y2:2"
+      },
+      "town3-road": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:3; --x3:0;--y3:2;--r3:3"
+      },
+      "town3-emblem": {
+        "css": "--x1:1;--y1:1; --x2:0;--y2:2;--r2:2; --x3:1;--y3:2"
+      },
+      "town3-road-emblem": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:3; --x3:0;--y3:2;--r3:3; --x4:1;--y4:2"
+      },
+      "town4-emblem": {
+        "css": "--x1:1;--y1:1; --x2:5;--y2:2; --x3:1;--y3:2"
+      },
+      "road-curve-lake": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1; --x3:2;--y3:2;--r3:1",
+        "expansion": 1
+      },
+      "road-straight-lake": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:2; --x4:2;--y4:2",
+        "expansion": 1
+      },
+      "road-t-lake": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:2; --x4:2;--y4:0;--r4:3; --x5:2;--y5:1; --x6:2;--y6:2;--r6:1",
+        "expansion": 1
+      },
+      "cloister2": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:2; --x4:0;--y4:1;--r4:2",
+        "expansion": 1
+      },
+      "road-curve-curve": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1; --x3:3;--y3:1;--r3:2",
+        "expansion": 1
+      },
+      "road-straight-towncorner": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:2; --x4:3;--y4:0",
+        "expansion": 1
+      },
+      "town1-across": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:2",
+        "expansion": 1
+      },
+      "town4": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:1;--y3:0;--r3:1; --x4:1;--y4:0;--r4:2; --x5:1;--y5:0;--r5:3",
+        "expansion": 1
+      },
+      "town2-road-fourway": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:1; --x4:2;--y4:0;--r4:2; --x5:2;--y5:0;--r5:3; --x6:2;--y6:1; --x7:1;--y7:0;--r7:3; --x8:1;--y8:0;--r8:1",
+        "expansion": 1
+      },
+      "road-straight-town1": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:2; --x4:1;--y4:0",
+        "expansion": 1
+      },
+      "town4-cathedral": {
+        "css": "--x1:1;--y1:1; --x2:5;--y2:2; --x3:0;--y3:3",
+        "expansion": 1
+      },
+      "town2-3-curve-emblem-lake": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:2; --x3:3;--y3:1; --x4:1;--y4:2;--r4:2; --x5:2;--y5:2",
+        "expansion": 1
+      },
+      "town1-lake": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:3;--y3:1;--r3:2; --x4:2;--y4:2;--r4:1",
+        "expansion": 1
+      },
+      "town2-3-straight-lake": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1; --x3:3;--y3:0;--r3:1; --x4:2;--y4:2;--r4:3",
+        "expansion": 1
+      },
+      "town3-singles": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:1;--y3:0;--r3:1; --x4:1;--y4:0;--r4:2",
+        "expansion": 1
+      },
+      "town3-2and1": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:3;--y3:0;--r3:1; --x4:1;--y4:2;--r4:1",
+        "expansion": 1
+      },
+      "town2-across-road": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:2; --x4:4;--y4:1; --x5:1;--y5:2",
+        "expansion": 1
+      },
+      "town1-curve3": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1; --x3:1;--y3:0",
+        "expansion": 2
+      },
+      "road-bridge": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:1; --x4:2;--y4:0;--r4:2; --x5:2;--y5:0;--r5:3; --x6:4;--y6:2",
+        "expansion": 2
+      },
+      "town1-road-bridge": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:1; --x4:2;--y4:0;--r4:2; --x5:1;--y5:0;--r5:2; --x6:4;--y6:2",
+        "expansion": 2
+      },
+      "town3-curve-wheat": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1;--r2:2; --x3:3;--y3:0;--r3:1; --x4:1;--y4:0; --x5:1;--y5:3;--r5:2; --x6:2;--y6:3;--r6:2",
+        "expansion": 2
+      },
+      "town2-road-wheat": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:2; --x3:4;--y3:1; --x4:1;--y4:3; --x5:2;--y5:3",
+        "expansion": 2
+      },
+      "town2-curve-wheat": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1; --x3:3;--y3:0;--r3:1; --x4:1;--y4:3;--r4:2; --x5:2;--y5:3;--r5:2",
+        "expansion": 2
+      },
+      "town2-wheat": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:1; --x3:1;--y3:3;--r3:2; --x4:2;--y4:3;--r4:2",
+        "expansion": 2
+      },
+      "town3-wheat": {
+        "css": "--x1:1;--y1:1; --x2:0;--y2:2;--r2:2; --x3:1;--y3:3; --x4:2;--y4:3",
+        "expansion": 2
+      },
+      "town2-block-road-wheat": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:1; --x3:4;--y3:0;--r3:1; --x4:1;--y4:3;--r4:3; --x5:2;--y5:3;--r5:3",
+        "expansion": 2
+      },
+      "cloister3": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:1; --x3:2;--y3:0;--r3:2; --x4:2;--y4:0;--r4:3; --x5:0;--y5:1",
+        "expansion": 2
+      },
+      "town2-curve-cloth": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1;--r2:2; --x3:3;--y3:0;--r3:1; --x4:1;--y4:3;--r4:2; --x5:4;--y5:3;--r5:2",
+        "expansion": 2
+      },
+      "town3-curve-cloth": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1;--r2:2; --x3:3;--y3:0;--r3:1; --x4:1;--y4:3;--r4:2; --x5:4;--y5:3;--r5:2; --x6:1;--y6:0",
+        "expansion": 2
+      },
+      "town211-cloth": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0;--r2:3; --x3:3;--y3:0;--r3:1; --x4:1;--y4:3;--r4:2; --x5:4;--y5:3;--r5:2; --x6:1;--y6:0",
+        "expansion": 2
+      },
+      "town21-cloth": {
+        "css": "--x1:1;--y1:1; --x2:5;--y2:3; --x3:1;--y3:0; --x4:1;--y4:3;--r4:3; --x5:4;--y5:3;--r5:3",
+        "expansion": 2
+      },
+      "town2-block-road2-cloth": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:1; --x4:4;--y4:0;--r4:1; --x5:1;--y5:3;--r5:3; --x6:4;--y6:3;--r6:3",
+        "expansion": 2
+      },
+      "town21-barrel": {
+        "css": "--x1:1;--y1:1; --x2:5;--y2:3; --x3:1;--y3:0; --x4:1;--y4:3;--r4:3; --x5:3;--y5:3;--r5:3",
+        "expansion": 2
+      },
+      "town2-barrel": {
+        "css": "--x1:1;--y1:1; --x2:4;--y2:1;--r2:1; --x3:1;--y3:3;--r3:2; --x4:3;--y4:3;--r4:2",
+        "expansion": 2
+      },
+      "town2-road-barrel": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:3; --x3:4;--y3:1;--r3:1; --x4:1;--y4:3;--r4:2; --x5:3;--y5:3;--r5:2",
+        "expansion": 2
+      },
+      "town2-road2-barrel": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:3; --x3:2;--y3:0;--r3:1; --x4:4;--y4:1;--r4:1; --x5:1;--y5:3;--r5:2; --x6:3;--y6:3;--r6:2",
+        "expansion": 2
+      },
+      "town2-1-barrel": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:1; --x3:1;--y3:3;--r3:2; --x4:3;--y4:3;--r4:2",
+        "expansion": 2
+      },
+      "town2-1-curve2-barrel": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1; --x3:3;--y3:1;--r3:2; --x4:3;--y4:0;--r4:1; --x5:1;--y5:3;--r5:2; --x6:3;--y6:3;--r6:2",
+        "expansion": 2
+      },
+      "town3-road-barrel": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:2; --x3:0;--y3:2;--r3:2; --x4:1;--y4:3; --x5:3;--y5:3",
+        "expansion": 2
+      },
+      "town2-block-road-barrel": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:4;--y3:0;--r3:1; --x4:1;--y4:3;--r4:3; --x5:3;--y5:3;--r5:3",
+        "expansion": 2
+      },
+      "town22-barrel": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:3; --x3:3;--y3:0;--r3:1; --x4:1;--y4:3;--r4:2; --x5:3;--y5:3;--r5:2",
+        "expansion": 2
+      },
+      "town2-curve-princess": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1;--r2:1; --x3:3;--y3:0;--r3:3; --x4:1;--y4:4",
+        "expansion": 3
+      },
+      "town2-princess": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:3; --x3:1;--y3:4",
+        "expansion": 3
+      },
+      "town3-princess": {
+        "css": "--x1:1;--y1:1; --x2:0;--y2:2;--r2:2; --x3:1;--y3:4",
+        "expansion": 3
+      },
+      "town1-t-princess": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:1; --x3:2;--y3:0;--r3:2; --x4:2;--y4:0;--r4:3; --x5:2;--y5:1; --x6:1;--y6:0; --x7:1;--y7:4",
+        "expansion": 3
+      },
+      "town2-blocked-princess": {
+        "css": "--x1:1;--y1:1; --x2:4;--y2:0;--r2:2; --x3:1;--y3:4",
+        "expansion": 3
+      },
+      "town12-emblem-princess": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0; --x3:0;--y3:5;--r3:1; --x4:1;--y4:4;--r4:3; --x5:1;--y5:2",
+        "expansion": 3
+      },
+      "curve-dragon": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1;--r2:2; --x3:2;--y3:4",
+        "expansion": 3
+      },
+      "straight-dragon": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:1; --x3:2;--y3:0;--r3:3; --x4:2;--y4:4",
+        "expansion": 3
+      },
+      "t-dragon": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:1; --x3:2;--y3:0;--r3:2; --x4:2;--y4:0;--r4:3; --x5:2;--y5:1; --x6:2;--y6:4",
+        "expansion": 3
+      },
+      "town1-dragon": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:2;--y3:4;--r3:2",
+        "expansion": 3
+      },
+      "town2-dragon": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:3; --x3:2;--y3:4;--r3:2",
+        "expansion": 3
+      },
+      "town1-curve-dragon": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:3;--y3:1;--r3:2; --x4:2;--y4:4;--r4:2",
+        "expansion": 3
+      },
+      "town1-curveX-dragon": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1;--r2:1; --x3:1;--y3:0; --x4:2;--y4:4;--r4:3",
+        "expansion": 3
+      },
+      "town2-emblem-dragon": {
+        "css": "--x1:1;--y1:1; --x2:4;--y2:1; --x3:1;--y3:2; --x4:2;--y4:4",
+        "expansion": 3
+      },
+      "town-cloister-dragon": {
+        "css": "--x1:1;--y1:1; --x2:0;--y2:2;--r2:2; --x3:0;--y3:1; --x4:2;--y4:4",
+        "expansion": 3
+      },
+      "cloister3-dragon": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:1; --x3:2;--y3:0;--r3:2; --x4:2;--y4:0;--r4:3; --x5:0;--y5:1; --x6:2;--y6:4",
+        "expansion": 3
+      },
+      "town2-tunnel-dragon": {
+        "css": "--x1:1;--y1:1;--r1:1; --x2:5;--y2:3; --x3:5;--y3:1; --x4:2;--y4:4",
+        "expansion": 3
+      },
+      "t-portal": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:1; --x3:2;--y3:0;--r3:2; --x4:2;--y4:0;--r4:3; --x5:2;--y5:1; --x6:3;--y6:4",
+        "expansion": 3
+      },
+      "town3-emblem-portal": {
+        "css": "--x1:1;--y1:1; --x2:0;--y2:2;--r2:2; --x3:1;--y3:2; --x4:3;--y4:4;--r4:2",
+        "expansion": 3
+      },
+      "town1-curve-portal": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:3;--y3:1;--r3:2; --x4:3;--y4:4;--r4:2",
+        "expansion": 3
+      },
+      "town1-curveX-portal": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:3;--y3:1;--r3:1; --x4:3;--y4:4;--r4:3",
+        "expansion": 3
+      },
+      "town2-curve-portal": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:3; --x3:3;--y3:1;--r3:1; --x4:3;--y4:4;--r4:2",
+        "expansion": 3
+      },
+      "curve2-portal": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1;--r2:1; --x3:3;--y3:1;--r3:3; --x4:3;--y4:4;--r4:1",
+        "expansion": 3
+      },
+      "curve-volcano": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1;--r2:2; --x3:4;--y3:4;--r3:1",
+        "expansion": 3
+      },
+      "town11-volcano": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:1;--y3:0;--r3:3; --x4:4;--y4:4;--r4:2",
+        "expansion": 3
+      },
+      "town1-volcano": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0;--r2:1; --x3:4;--y3:4;--r3:3",
+        "expansion": 3
+      },
+      "road1-volcano": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:2; --x3:2;--y3:1; --x4:4;--y4:4",
+        "expansion": 3
+      },
+      "volcano": {
+        "css": "--x1:1;--y1:1; --x2:4;--y2:4",
+        "expansion": 3
+      },
+      "straight-volcano": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:2; --x4:4;--y4:4",
+        "expansion": 3
+      },
+      "town2-bridge-tower": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:1; --x3:2;--y3:0;--r3:3; --x4:5;--y4:3;--r4:1; --x5:5;--y5:4; --x6:0;--y6:4;--r6:1",
+        "expansion": 4
+      },
+      "town11-straight-tower": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0;--r2:1; --x3:1;--y3:0;--r3:3; --x4:2;--y4:0; --x5:2;--y5:0;--r5:2; --x6:0;--y6:4",
+        "expansion": 4
+      },
+      "town3-road-tower": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:2; --x3:0;--y3:2;--r3:2; --x4:0;--y4:4",
+        "expansion": 4
+      },
+      "town31-emblem-tower": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:5; --x3:1;--y3:0; --x4:1;--y4:2;--r4:2; --x5:0;--y5:4;--r5:2",
+        "expansion": 4
+      },
+      "curve-tower": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:3; --x4:2;--y4:1; --x5:0;--y5:4",
+        "expansion": 4
+      },
+      "curve2-tower": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:1;--r2:1; --x3:3;--y3:1;--r3:3; --x4:0;--y4:4",
+        "expansion": 4
+      },
+      "t-tower": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:1; --x4:2;--y4:0;--r4:3; --x5:2;--y5:1; --x6:0;--y6:4",
+        "expansion": 4
+      },
+      "fourway-tower": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:1; --x4:2;--y4:0;--r4:2; --x5:2;--y5:0;--r5:3; --x6:2;--y6:1; --x7:0;--y7:4",
+        "expansion": 4
+      },
+      "tower": {
+        "css": "--x1:1;--y1:1; --x2:0;--y2:4",
+        "expansion": 4
+      },
+      "cloister-tower": {
+        "css": "--x1:1;--y1:1; --x2:0;--y2:1; --x3:0;--y3:4",
+        "expansion": 4
+      },
+      "town1-tower": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:0;--y3:4;--r3:2",
+        "expansion": 4
+      },
+      "town11-tower": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:1;--y3:0;--r3:1; --x4:0;--y4:4;--r4:3",
+        "expansion": 4
+      },
+      "town1-road-tower": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:2; --x4:1;--y4:0; --x5:0;--y5:4;--r5:2",
+        "expansion": 4
+      },
+      "town1-curve-tower": {
+        "css": "--x1:1;--y1:1; --x2:1;--y2:0; --x3:3;--y3:1;--r3:2; --x4:0;--y4:4;--r4:2",
+        "expansion": 4
+      },
+      "town1-straight-tower": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0; --x3:2;--y3:0;--r3:2; --x4:1;--y4:0;--r4:1; --x5:0;--y5:4",
+        "expansion": 4
+      },
+      "town2-blocked-road-tower": {
+        "css": "--x1:1;--y1:1; --x2:2;--y2:0;--r2:1; --x3:4;--y3:0;--r3:2; --x4:0;--y4:4",
+        "expansion": 4
+      },
+      "town2-tower": {
+        "css": "--x1:1;--y1:1; --x2:3;--y2:0;--r2:3; --x3:0;--y3:4;--r3:2",
+        "expansion": 4
+      }
+    },
+    "y": 4,
+    "x": 4,
+    "parent": "draw"
+  },
+  "2hal": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "cloister0",
+    "id": "2hal",
+    "z": 10813,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1060,
+    "y": 1410,
+    "parent": "floor"
+  },
+  "zw2w": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "cloister0",
+    "id": "zw2w",
+    "z": 10330,
+    "shift": true,
+    "activeFace": 1,
+    "parent": "floor",
+    "x": 1620,
+    "y": 1270
+  },
+  "oibm": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "cloister0",
+    "id": "oibm",
+    "z": 11074,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1060,
+    "y": 990,
+    "parent": "floor"
+  },
+  "l3oj": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "cloister0",
+    "id": "l3oj",
+    "z": 10779,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1130,
+    "y": 1410,
+    "parent": "floor"
+  },
+  "xi4p": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "cloister1",
+    "id": "xi4p",
+    "z": 11048,
+    "shift": true,
+    "rotation": 270,
+    "x": 1690,
+    "y": 570,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "o8uh": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "cloister1",
+    "id": "o8uh",
+    "z": 10100,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1060,
+    "y": 570,
+    "parent": "floor"
+  },
+  "4rch": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight",
+    "id": "4rch",
+    "z": 10110,
+    "rotation": 90,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1270,
+    "y": 1130,
+    "parent": "floor"
+  },
+  "klry": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight",
+    "id": "klry",
+    "z": 10302,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 990,
+    "y": 850,
+    "parent": "floor"
+  },
+  "nihy": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight",
+    "id": "nihy",
+    "z": 11076,
+    "rotation": 180,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1130,
+    "y": 990,
+    "parent": "floor"
+  },
+  "k7w6": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight",
+    "id": "k7w6",
+    "z": 9907,
+    "rotation": 270,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1060,
+    "y": 920,
+    "parent": "floor"
+  },
+  "bq53": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight",
+    "id": "bq53",
+    "z": 10990,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "y": 990,
+    "x": 920,
+    "parent": "floor"
+  },
+  "6qo0": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight",
+    "id": "6qo0",
+    "z": 10186,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1550,
+    "parent": "floor",
+    "y": 500
+  },
+  "sb93": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight",
+    "id": "sb93",
+    "z": 9947,
+    "shift": true,
+    "activeFace": 1,
+    "y": 990,
+    "x": 1200,
+    "parent": "floor"
+  },
+  "gl7u": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight",
+    "id": "gl7u",
+    "z": 10163,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1550,
+    "y": 570,
+    "parent": "floor"
+  },
+  "wrg1": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve",
+    "id": "wrg1",
+    "z": 11072,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1130,
+    "rotation": 90,
+    "x": 1620,
+    "parent": "floor"
+  },
+  "ctsd": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve",
+    "id": "ctsd",
+    "z": 9935,
+    "rotation": 270,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1130,
+    "y": 710,
+    "parent": "floor"
+  },
+  "vage": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve",
+    "id": "vage",
+    "z": 10011,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 990,
+    "y": 920,
+    "parent": "floor"
+  },
+  "pfca": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve",
+    "id": "pfca",
+    "z": 10412,
+    "rotation": 180,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1130,
+    "y": 640,
+    "parent": "floor"
+  },
+  "y76g": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve",
+    "id": "y76g",
+    "z": 10679,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1130,
+    "rotation": 180,
+    "x": 920,
+    "parent": "floor"
+  },
+  "t27o": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve",
+    "id": "t27o",
+    "z": 10025,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1410,
+    "y": 640,
+    "parent": "floor"
+  },
+  "s2g2": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve",
+    "id": "s2g2",
+    "z": 10036,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1480,
+    "y": 710,
+    "parent": "floor"
+  },
+  "mdfr": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve",
+    "id": "mdfr",
+    "z": 10147,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1480,
+    "y": 570,
+    "parent": "floor"
+  },
+  "9w3o": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve",
+    "id": "9w3o",
+    "z": 11070,
+    "shift": true,
+    "rotation": 270,
+    "activeFace": 1,
+    "x": 1620,
+    "y": 1200,
+    "parent": "floor"
+  },
+  "f5td": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-t",
+    "id": "f5td",
+    "z": 10334,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1550,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "netp": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-t",
+    "id": "netp",
+    "z": 10286,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1270,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "c00u": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-t",
+    "id": "c00u",
+    "z": 10673,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1410,
+    "rotation": 270,
+    "x": 1550,
+    "parent": "floor"
+  },
+  "bubw": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-t",
+    "id": "bubw",
+    "z": 11002,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1130,
+    "rotation": 90,
+    "x": 1690,
+    "parent": "floor"
+  },
+  "03qg": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1",
+    "id": "03qg",
+    "z": 10535,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "y": 1270,
+    "x": 1480,
+    "parent": "floor"
+  },
+  "iuib": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1",
+    "id": "iuib",
+    "z": 11008,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1410,
+    "x": 1200,
+    "parent": "floor"
+  },
+  "e7ly": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1",
+    "id": "e7ly",
+    "z": 10071,
+    "rotation": 270,
+    "shift": true,
+    "x": 1270,
+    "y": 1060,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "5zn0": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1",
+    "id": "5zn0",
+    "z": 9945,
+    "rotation": 180,
+    "shift": true,
+    "activeFace": 1,
+    "y": 920,
+    "x": 1410,
+    "parent": "floor"
+  },
+  "oycw": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1",
+    "id": "oycw",
+    "z": 11046,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1270,
+    "parent": "floor",
+    "y": 500
+  },
+  "q45u": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-road",
+    "id": "q45u",
+    "z": 10193,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1690,
+    "y": 640,
+    "parent": "floor"
+  },
+  "9kz0": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-road",
+    "id": "9kz0",
+    "z": 11084,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "y": 570,
+    "x": 920,
+    "parent": "floor"
+  },
+  "3im4": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-road",
+    "id": "3im4",
+    "z": 10249,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1060,
+    "y": 1200,
+    "parent": "floor",
+    "rotation": 270
+  },
+  "d25k": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-road",
+    "id": "d25k",
+    "z": 10753,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1270,
+    "rotation": 90,
+    "x": 1690,
+    "parent": "floor"
+  },
+  "gm2z": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curve1",
+    "id": "gm2z",
+    "z": 10643,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1060,
+    "y": 1270,
+    "parent": "floor"
+  },
+  "5uh0": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curve1",
+    "id": "5uh0",
+    "z": 10462,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 990,
+    "y": 570,
+    "parent": "floor"
+  },
+  "ilpo": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curve1",
+    "id": "ilpo",
+    "z": 10458,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1340,
+    "y": 1130,
+    "parent": "floor"
+  },
+  "lmzo": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curve2",
+    "id": "lmzo",
+    "z": 10472,
+    "rotation": 270,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1410,
+    "x": 1270,
+    "parent": "floor"
+  },
+  "75h5": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curve2",
+    "id": "75h5",
+    "z": 10641,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1550,
+    "y": 1200,
+    "parent": "floor"
+  },
+  "xw33": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curve2",
+    "id": "xw33",
+    "z": 10555,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1270,
+    "x": 1200,
+    "parent": "floor"
+  },
+  "flbf": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-t",
+    "id": "flbf",
+    "z": 10356,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "parent": "floor",
+    "x": 1690,
+    "y": 1340
+  },
+  "lh5s": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-t",
+    "id": "lh5s",
+    "z": 10226,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1340,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "cxph": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-1",
+    "id": "cxph",
+    "z": 9867,
+    "shift": true,
+    "x": 1200,
+    "y": 780,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "ofdn": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-1",
+    "id": "ofdn",
+    "z": 10077,
+    "rotation": 180,
+    "shift": true,
+    "activeFace": 1,
+    "x": 990,
+    "y": 1130,
+    "parent": "floor"
+  },
+  "g5su": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-1",
+    "id": "g5su",
+    "z": 10827,
+    "shift": true,
+    "activeFace": 1,
+    "x": 920,
+    "y": 780,
+    "parent": "floor"
+  },
+  "ftpz": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-2",
+    "id": "ftpz",
+    "z": 10998,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1060,
+    "rotation": 270,
+    "x": 1690,
+    "parent": "floor"
+  },
+  "ps74": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-2",
+    "id": "ps74",
+    "z": 10104,
+    "rotation": 90,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1550,
+    "y": 640,
+    "parent": "floor"
+  },
+  "ach7": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3",
+    "id": "ach7",
+    "z": 9971,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1340,
+    "y": 920,
+    "parent": "floor"
+  },
+  "sec3": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3",
+    "id": "sec3",
+    "z": 10049,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1550,
+    "y": 1060,
+    "parent": "floor"
+  },
+  "idmh": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3",
+    "id": "idmh",
+    "z": 10027,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1200,
+    "parent": "floor",
+    "y": 500
+  },
+  "0hrz": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-4",
+    "id": "0hrz",
+    "z": 10199,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1410,
+    "y": 1270,
+    "parent": "floor"
+  },
+  "iqvg": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-4-emblem",
+    "id": "iqvg",
+    "z": 10803,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1060,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "ia2c": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-4-emblem",
+    "id": "ia2c",
+    "z": 10161,
+    "rotation": 180,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1410,
+    "y": 1200,
+    "parent": "floor"
+  },
+  "6bsn": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3-emblem",
+    "id": "6bsn",
+    "z": 11056,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1270,
+    "y": 990,
+    "rotation": 180,
+    "parent": "floor"
+  },
+  "ji94": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3-emblem",
+    "id": "ji94",
+    "z": 10019,
+    "rotation": 90,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1550,
+    "y": 990,
+    "parent": "floor"
+  },
+  "4q0c": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town4-emblem",
+    "id": "4q0c",
+    "z": 10372,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1410,
+    "y": 990,
+    "parent": "floor"
+  },
+  "7byu": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3",
+    "id": "7byu",
+    "z": 10523,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "y": 920,
+    "x": 1480,
+    "parent": "floor"
+  },
+  "t7ph": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3",
+    "id": "t7ph",
+    "z": 10206,
+    "rotation": 180,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1410,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "nzbq": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3",
+    "id": "nzbq",
+    "z": 11012,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1340,
+    "rotation": 90,
+    "x": 920,
+    "parent": "floor"
+  },
+  "kzld": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-road",
+    "id": "kzld",
+    "z": 9969,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1340,
+    "y": 850,
+    "parent": "floor"
+  },
+  "gmgd": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-road-emblem",
+    "id": "gmgd",
+    "z": 10825,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1690,
+    "y": 780,
+    "parent": "floor"
+  },
+  "tqeg": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-road-emblem",
+    "id": "tqeg",
+    "z": 10360,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 920,
+    "y": 1270,
+    "parent": "floor"
+  },
+  "oil1": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3-curve",
+    "id": "oil1",
+    "z": 10304,
+    "rotation": 270,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1340,
+    "y": 1410,
+    "parent": "floor"
+  },
+  "hsv7": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3-curve",
+    "id": "hsv7",
+    "z": 9994,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1270,
+    "y": 570,
+    "parent": "floor"
+  },
+  "drl0": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3-curve",
+    "id": "drl0",
+    "z": 10130,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1620,
+    "y": 640,
+    "parent": "floor"
+  },
+  "p6l3": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3-curve-emblem",
+    "id": "p6l3",
+    "z": 9984,
+    "rotation": 270,
+    "shift": true,
+    "x": 1270,
+    "y": 920,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "evmb": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3-curve-emblem",
+    "id": "evmb",
+    "z": 10430,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "y": 850,
+    "x": 1550,
+    "parent": "floor"
+  },
+  "pqsj": {
+    "type": "button",
+    "id": "pqsj",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset entire game",
+        "fields": [
+          {
+            "type": "checkbox",
+            "label": "Expansion 1 - Inns and Cathedrals",
+            "variable": "e1",
+            "value": true
+          },
+          {
+            "type": "checkbox",
+            "label": "Expansion 2 - Traders and Builders",
+            "variable": "e2",
+            "value": true
+          },
+          {
+            "type": "checkbox",
+            "label": "Expansion 3 - The Princess and the Dragon",
+            "variable": "e3",
+            "value": true
+          },
+          {
+            "type": "checkbox",
+            "label": "Expansion 4 - The Tower",
+            "variable": "e4",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "draw",
+        "face": 0
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          "var conditionVariable = concat 'e' ${value}",
+          {
+            "func": "SELECT",
+            "property": "expansion",
+            "value": "${value}",
+            "type": "card",
+            "collection": "CARDS"
+          },
+          {
+            "func": "SELECT",
+            "property": "expansion",
+            "value": "${value}",
+            "collection": "ALL"
+          },
+          {
+            "func": "IF",
+            "condition": "${$conditionVariable}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "draw",
+                "collection": "CARDS"
+              },
+              {
+                "func": "SET",
+                "property": "owner",
+                "collection": "ALL"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "unused",
+                "collection": "CARDS"
+              },
+              {
+                "func": "SET",
+                "property": "owner",
+                "value": [],
+                "collection": "ALL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "loopRoutine": [
+          {
+            "func": "LABEL",
+            "label": "Player ${value} - Score"
+          },
+          {
+            "func": "SELECT",
+            "property": "player",
+            "value": "${value}",
+            "collection": "PIECES"
+          },
+          "var player = ${value}",
+          {
+            "func": "FOREACH",
+            "in": [
+              "Meeples",
+              "Big Meeples",
+              "Pigs",
+              "Builders"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "PIECES",
+                "property": "home",
+                "value": "${value}"
+              },
+              {
+                "func": "SET",
+                "value": "Player ${player} - ${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "draw"
+      },
+      {
+        "func": "SELECT",
+        "value": "draw"
+      },
+      {
+        "func": "SET",
+        "property": "rotation"
+      },
+      {
+        "func": "SELECT",
+        "property": "inheritFrom",
+        "value": "Tower Template"
+      },
+      {
+        "func": "SET",
+        "value": "Player 8 - Towers"
+      },
+      {
+        "func": "SELECT",
+        "property": "inheritFrom",
+        "value": "Join Template"
+      },
+      {
+        "func": "SET",
+        "property": "owner"
+      },
+      {
+        "func": "SELECT",
+        "property": "player",
+        "relation": ">",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": []
+      },
+      {
+        "func": "SELECT",
+        "property": "startTile",
+        "value": true,
+        "max": 1
+      },
+      {
+        "func": "SET",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1285
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 945
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "barrel"
+      },
+      {
+        "func": "SET",
+        "value": "Barrel"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "wheat"
+      },
+      {
+        "func": "SET",
+        "value": "Wheat"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "cloth"
+      },
+      {
+        "func": "SET",
+        "value": "Cloth"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "dragon"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 90
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 940
+      },
+      {
+        "func": "SET",
+        "property": "parent"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "fairy"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 95
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 885
+      },
+      {
+        "func": "SET",
+        "property": "parent"
+      }
+    ],
+    "z": 21924,
+    "x": 1508,
+    "y": 13,
+    "height": 40,
+    "text": "Reset"
+  },
+  "floor": {
+    "type": "holder",
+    "id": "floor",
+    "x": -500,
+    "y": -500,
+    "width": 2600,
+    "height": 2000,
+    "layer": -9,
+    "z": 1,
+    "movableInEdit": false,
+    "alignChildren": false,
+    "classes": "transparent",
+    "css": "border: none",
+    "dropTarget": {
+      "shift": true
+    }
+  },
+  "shiftup": {
+    "type": "button",
+    "id": "shiftup",
+    "x": 1509,
+    "y": 867,
+    "width": 50,
+    "height": 50,
+    "z": 613,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "-",
+        "value": 70
+      }
+    ],
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "image": "/assets/979051549_277",
+    "layer": 2
+  },
+  "shiftright": {
+    "type": "button",
+    "id": "shiftright",
+    "x": 1548,
+    "y": 907,
+    "width": 50,
+    "height": 50,
+    "z": 612,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "+",
+        "value": 70
+      }
+    ],
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "layer": 2,
+    "image": "/assets/822277903_277"
+  },
+  "shiftdown": {
+    "type": "button",
+    "id": "shiftdown",
+    "x": 1509,
+    "y": 947,
+    "width": 50,
+    "height": 50,
+    "z": 611,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "+",
+        "value": 70
+      }
+    ],
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "layer": 2,
+    "image": "/assets/-1712546135_277"
+  },
+  "shiftleft": {
+    "type": "button",
+    "id": "shiftleft",
+    "x": 1470,
+    "y": 907,
+    "width": 50,
+    "height": 50,
+    "z": 614,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "-",
+        "value": 70
+      }
+    ],
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "layer": 2,
+    "image": "/assets/1502865726_277"
+  },
+  "shiftcenter": {
+    "type": "button",
+    "id": "shiftcenter",
+    "x": 1514,
+    "y": 912,
+    "width": 40,
+    "height": 40,
+    "z": 615,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -500
+      }
+    ],
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "image": "/assets/-27377452_736",
+    "layer": 2
+  },
+  "sk7a": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-emblem",
+    "id": "sk7a",
+    "z": 10273,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1130,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "lpz0": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve-lake",
+    "id": "lpz0",
+    "z": 10647,
+    "shift": true,
+    "activeFace": 1,
+    "x": 920,
+    "y": 1060,
+    "parent": "floor"
+  },
+  "mmsa": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight-lake",
+    "id": "mmsa",
+    "z": 10583,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "y": 920,
+    "x": 920,
+    "parent": "floor"
+  },
+  "wnzh": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-t-lake",
+    "id": "wnzh",
+    "z": 10791,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1690,
+    "y": 1200,
+    "parent": "floor"
+  },
+  "zu5d": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "cloister2",
+    "id": "zu5d",
+    "z": 10306,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1550,
+    "y": 1270,
+    "parent": "floor",
+    "rotation": 180
+  },
+  "u8jz": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-curve-curve",
+    "id": "u8jz",
+    "z": 10230,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1270,
+    "y": 1270,
+    "parent": "floor"
+  },
+  "w3wc": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight-towncorner",
+    "id": "w3wc",
+    "z": 10561,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "y": 1340,
+    "x": 1200,
+    "parent": "floor"
+  },
+  "e3as": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-across",
+    "id": "e3as",
+    "z": 10422,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1130,
+    "y": 780,
+    "parent": "floor"
+  },
+  "75wv": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town4",
+    "id": "75wv",
+    "z": 10703,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1550,
+    "y": 920,
+    "parent": "floor"
+  },
+  "vs4q": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-road-fourway",
+    "id": "vs4q",
+    "z": 9992,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1340,
+    "y": 570,
+    "parent": "floor"
+  },
+  "2ylc": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-straight-town1",
+    "id": "2ylc",
+    "z": 10093,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "x": 1200,
+    "y": 1130,
+    "parent": "floor"
+  },
+  "ze92": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town4-cathedral",
+    "id": "ze92",
+    "z": 10143,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1410,
+    "y": 1130,
+    "parent": "floor"
+  },
+  "t03r": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town4-cathedral",
+    "id": "t03r",
+    "z": 10368,
+    "shift": true,
+    "x": 1340,
+    "y": 780,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "bp2g": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3-curve-emblem-lake",
+    "id": "bp2g",
+    "z": 10300,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 920,
+    "y": 850,
+    "parent": "floor"
+  },
+  "fedw": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-lake",
+    "id": "fedw",
+    "z": 10799,
+    "shift": true,
+    "y": 640,
+    "rotation": 180,
+    "x": 1270,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "kd94": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-3-straight-lake",
+    "id": "kd94",
+    "z": 10675,
+    "shift": true,
+    "rotation": 90,
+    "x": 1480,
+    "y": 1410,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "bkpu": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-singles",
+    "id": "bkpu",
+    "z": 10029,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1410,
+    "y": 1060,
+    "parent": "floor"
+  },
+  "gghp": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-2and1",
+    "id": "gghp",
+    "z": 10500,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "y": 990,
+    "x": 1340,
+    "parent": "floor"
+  },
+  "pj66": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-across-road",
+    "id": "pj66",
+    "z": 10392,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "y": 1270,
+    "x": 990,
+    "parent": "floor"
+  },
+  "ocjo": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curve3",
+    "id": "ocjo",
+    "z": 10277,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1130,
+    "y": 570,
+    "parent": "floor"
+  },
+  "ahjn": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road-bridge",
+    "id": "ahjn",
+    "z": 10424,
+    "shift": true,
+    "activeFace": 1,
+    "x": 990,
+    "y": 710,
+    "parent": "floor"
+  },
+  "sl6l": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-road-bridge",
+    "id": "sl6l",
+    "z": 11018,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1620,
+    "y": 570,
+    "parent": "floor"
+  },
+  "kxqz": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-curve-wheat",
+    "id": "kxqz",
+    "z": 10118,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1620,
+    "y": 780,
+    "parent": "floor"
+  },
+  "37us": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-road-wheat",
+    "id": "37us",
+    "z": 10123,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "x": 1620,
+    "y": 710,
+    "parent": "floor"
+  },
+  "gskj": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-curve-wheat",
+    "id": "gskj",
+    "z": 10591,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1620,
+    "y": 850,
+    "parent": "floor"
+  },
+  "dbmv": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-wheat",
+    "id": "dbmv",
+    "z": 10051,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1130,
+    "parent": "floor",
+    "y": 500
+  },
+  "9wmo": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-wheat",
+    "id": "9wmo",
+    "z": 10313,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1410,
+    "y": 1410,
+    "parent": "floor"
+  },
+  "ukni": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-block-road-wheat",
+    "id": "ukni",
+    "z": 10657,
+    "shift": true,
+    "rotation": 270,
+    "x": 990,
+    "y": 1340,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "bdou": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-curve-cloth",
+    "id": "bdou",
+    "z": 9905,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1270,
+    "y": 710,
+    "parent": "floor"
+  },
+  "dl3v": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-curve-cloth",
+    "id": "dl3v",
+    "z": 10108,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1130,
+    "y": 1130,
+    "parent": "floor"
+  },
+  "gjib": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town211-cloth",
+    "id": "gjib",
+    "z": 9990,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1480,
+    "y": 990,
+    "parent": "floor"
+  },
+  "gmh3": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town21-cloth",
+    "id": "gmh3",
+    "z": 10747,
+    "shift": true,
+    "y": 990,
+    "x": 1620,
+    "rotation": 90,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "taiz": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-block-road2-cloth",
+    "id": "taiz",
+    "z": 10002,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1200,
+    "y": 570,
+    "parent": "floor"
+  },
+  "lba6": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town21-barrel",
+    "id": "lba6",
+    "z": 10805,
+    "shift": true,
+    "x": 1410,
+    "activeFace": 1,
+    "parent": "floor",
+    "y": 500
+  },
+  "pi19": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-barrel",
+    "id": "pi19",
+    "z": 10085,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1550,
+    "y": 710,
+    "parent": "floor"
+  },
+  "wmhp": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-road-barrel",
+    "id": "wmhp",
+    "z": 10053,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "y": 1060,
+    "x": 1200,
+    "parent": "floor"
+  },
+  "25bf": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-road2-barrel",
+    "id": "25bf",
+    "z": 10994,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1690,
+    "y": 920,
+    "parent": "floor"
+  },
+  "jpzk": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-1-barrel",
+    "id": "jpzk",
+    "z": 10773,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "y": 1060,
+    "x": 1620,
+    "parent": "floor"
+  },
+  "4vqe": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-1-curve2-barrel",
+    "id": "4vqe",
+    "z": 10064,
+    "shift": true,
+    "activeFace": 1,
+    "x": 990,
+    "y": 1060,
+    "parent": "floor"
+  },
+  "h0n1": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-road-barrel",
+    "id": "h0n1",
+    "z": 10184,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1690,
+    "y": 710,
+    "parent": "floor"
+  },
+  "k3gn": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-block-road-barrel",
+    "id": "k3gn",
+    "z": 10655,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1270,
+    "rotation": 270,
+    "x": 1130,
+    "parent": "floor"
+  },
+  "ldh1": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town22-barrel",
+    "id": "ldh1",
+    "z": 10992,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1690,
+    "y": 990,
+    "parent": "floor"
+  },
+  "884m": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-curve-princess",
+    "id": "884m",
+    "z": 10211,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 990,
+    "y": 1200,
+    "parent": "floor"
+  },
+  "kejl": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-princess",
+    "id": "kejl",
+    "z": 9939,
+    "shift": true,
+    "activeFace": 1,
+    "parent": "floor",
+    "x": 1410,
+    "y": 850
+  },
+  "2pkn": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-princess",
+    "id": "2pkn",
+    "z": 9903,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1200,
+    "y": 710,
+    "parent": "floor"
+  },
+  "zxqu": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-t-princess",
+    "id": "zxqu",
+    "z": 10420,
+    "shift": true,
+    "rotation": 180,
+    "x": 1060,
+    "y": 710,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "p299": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-blocked-princess",
+    "id": "p299",
+    "z": 10565,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1410,
+    "x": 990,
+    "parent": "floor"
+  },
+  "5qu2": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town12-emblem-princess",
+    "id": "5qu2",
+    "z": 10519,
+    "shift": true,
+    "x": 1480,
+    "y": 1130,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "nhjr": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "curve-dragon",
+    "id": "nhjr",
+    "z": 10328,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "x": 1270,
+    "y": 1200,
+    "parent": "floor"
+  },
+  "592d": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "straight-dragon",
+    "id": "592d",
+    "z": 10000,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1480,
+    "y": 780,
+    "parent": "floor"
+  },
+  "mdbw": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "t-dragon",
+    "id": "mdbw",
+    "z": 10579,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1340,
+    "x": 1620,
+    "parent": "floor"
+  },
+  "on9i": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-dragon",
+    "id": "on9i",
+    "z": 9858,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1200,
+    "y": 850,
+    "parent": "floor"
+  },
+  "c4pw": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-dragon",
+    "id": "c4pw",
+    "z": 11044,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1340,
+    "parent": "floor",
+    "y": 500
+  },
+  "sv01": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curve-dragon",
+    "id": "sv01",
+    "z": 10216,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "x": 1480,
+    "parent": "floor",
+    "y": 500
+  },
+  "voma": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curveX-dragon",
+    "id": "voma",
+    "z": 11032,
+    "shift": true,
+    "x": 1270,
+    "y": 850,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "ugok": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-emblem-dragon",
+    "id": "ugok",
+    "z": 11052,
+    "shift": true,
+    "y": 850,
+    "rotation": 90,
+    "x": 1690,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "trak": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town-cloister-dragon",
+    "id": "trak",
+    "z": 10605,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1060,
+    "x": 1060,
+    "rotation": 180,
+    "parent": "floor"
+  },
+  "zvwh": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "cloister3-dragon",
+    "id": "zvwh",
+    "z": 10221,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1340,
+    "y": 1270,
+    "parent": "floor"
+  },
+  "ms48": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-tunnel-dragon",
+    "id": "ms48",
+    "z": 10396,
+    "shift": true,
+    "rotation": 90,
+    "x": 1340,
+    "y": 640,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "bec8": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "t-portal",
+    "id": "bec8",
+    "z": 9871,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1200,
+    "y": 920,
+    "parent": "floor"
+  },
+  "2krg": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-emblem-portal",
+    "id": "2krg",
+    "z": 9933,
+    "shift": true,
+    "rotation": 270,
+    "x": 1410,
+    "y": 780,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "i1sl": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curve-portal",
+    "id": "i1sl",
+    "z": 9988,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 920,
+    "y": 710,
+    "parent": "floor"
+  },
+  "nwtt": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-curveX-portal",
+    "id": "nwtt",
+    "z": 10066,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1550,
+    "y": 780,
+    "parent": "floor"
+  },
+  "kpjk": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-curve-portal",
+    "id": "kpjk",
+    "z": 10739,
+    "shift": true,
+    "activeFace": 1,
+    "y": 920,
+    "rotation": 270,
+    "x": 1620,
+    "parent": "floor"
+  },
+  "kk9q": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "curve2-portal",
+    "id": "kk9q",
+    "z": 11030,
+    "shift": true,
+    "x": 1130,
+    "y": 920,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "y99e": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "curve-volcano",
+    "id": "y99e",
+    "z": 9865,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1130,
+    "y": 850,
+    "parent": "floor"
+  },
+  "gnhy": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town11-volcano",
+    "id": "gnhy",
+    "z": 10232,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1480,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "anar": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-volcano",
+    "id": "anar",
+    "z": 10811,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1480,
+    "y": 1200,
+    "parent": "floor"
+  },
+  "eg3c": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "road1-volcano",
+    "id": "eg3c",
+    "z": 10073,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1410,
+    "y": 570,
+    "parent": "floor"
+  },
+  "gfqa": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "volcano",
+    "id": "gfqa",
+    "z": 11036,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1060,
+    "parent": "floor",
+    "y": 500
+  },
+  "pwmm": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "straight-volcano",
+    "id": "pwmm",
+    "z": 10038,
+    "shift": true,
+    "activeFace": 1,
+    "x": 990,
+    "y": 990,
+    "parent": "floor"
+  },
+  "jdnq": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "curve-dragon",
+    "id": "jdnq",
+    "z": 10410,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "x": 1060,
+    "y": 640,
+    "parent": "floor"
+  },
+  "w5so": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-bridge-tower",
+    "id": "w5so",
+    "z": 10488,
+    "shift": true,
+    "rotation": 90,
+    "x": 1130,
+    "y": 1060,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "6bd1": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town11-straight-tower",
+    "id": "6bd1",
+    "z": 9924,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1340,
+    "y": 710,
+    "parent": "floor"
+  },
+  "y9ec": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town3-road-tower",
+    "id": "y9ec",
+    "z": 9889,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1060,
+    "y": 780,
+    "parent": "floor"
+  },
+  "jhjn": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town31-emblem-tower",
+    "id": "jhjn",
+    "z": 10366,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1480,
+    "y": 1060,
+    "parent": "floor"
+  },
+  "gfu3": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "curve-tower",
+    "id": "gfu3",
+    "z": 9973,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 990,
+    "y": 780,
+    "parent": "floor"
+  },
+  "1ori": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "curve2-tower",
+    "id": "1ori",
+    "z": 10765,
+    "shift": true,
+    "activeFace": 1,
+    "x": 920,
+    "y": 1200,
+    "parent": "floor"
+  },
+  "w1xs": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "t-tower",
+    "id": "w1xs",
+    "z": 10009,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "x": 990,
+    "y": 640,
+    "parent": "floor"
+  },
+  "tmeo": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "fourway-tower",
+    "id": "tmeo",
+    "z": 10761,
+    "shift": true,
+    "activeFace": 1,
+    "y": 640,
+    "x": 920,
+    "parent": "floor"
+  },
+  "b56u": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "tower",
+    "id": "b56u",
+    "z": 10182,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1200,
+    "y": 1200,
+    "parent": "floor"
+  },
+  "8lpq": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "cloister-tower",
+    "id": "8lpq",
+    "z": 10083,
+    "shift": true,
+    "x": 1480,
+    "y": 640,
+    "parent": "floor",
+    "activeFace": 1
+  },
+  "ppap": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-tower",
+    "id": "ppap",
+    "z": 9963,
+    "shift": true,
+    "activeFace": 1,
+    "y": 1060,
+    "x": 1340,
+    "parent": "floor"
+  },
+  "bjpo": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town11-tower",
+    "id": "bjpo",
+    "z": 10665,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "y": 1130,
+    "x": 1550,
+    "parent": "floor"
+  },
+  "fa07": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-road-tower",
+    "id": "fa07",
+    "z": 9909,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1200,
+    "y": 640,
+    "parent": "floor"
+  },
+  "u3wv": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-straight-tower",
+    "id": "u3wv",
+    "z": 10281,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 270,
+    "x": 1060,
+    "y": 850,
+    "parent": "floor"
+  },
+  "gzs1": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-blocked-road-tower",
+    "id": "gzs1",
+    "z": 10599,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 90,
+    "y": 1130,
+    "x": 1060,
+    "parent": "floor"
+  },
+  "obhf": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town2-tower",
+    "id": "obhf",
+    "z": 9918,
+    "shift": true,
+    "activeFace": 1,
+    "rotation": 180,
+    "x": 1270,
+    "y": 780,
+    "parent": "floor"
+  },
+  "1nyr": {
+    "deck": "bo9g",
+    "type": "card",
+    "cardType": "town1-tower",
+    "id": "1nyr",
+    "z": 10195,
+    "shift": true,
+    "activeFace": 1,
+    "x": 1130,
+    "y": 1200,
+    "parent": "floor"
+  },
+  "draw": {
+    "type": "holder",
+    "id": "draw",
+    "x": 5,
+    "y": 26,
+    "width": 78,
+    "height": 78,
+    "layer": -1,
+    "z": 10941,
+    "dropTarget": {
+      "deck": "bo9g"
+    }
+  },
+  "fairy": {
+    "id": "fairy",
+    "x": 95,
+    "y": 885,
+    "z": 10921,
+    "image": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='40 80 100 130'%3e%3cpath style='fill:white;stroke:black;stroke-width:2px' d='m 61,207 13,-60 -22,1 -1,-16 h 26 l 13,-50 15,49 27,1 1,15 -25,-2 21,60 z' /%3e%3c/svg%3e",
+    "width": 40,
+    "height": 55,
+    "expansion": 3,
+    "shift": true
+  },
+  "dragon": {
+    "id": "dragon",
+    "x": 90,
+    "y": 940,
+    "z": 10922,
+    "image": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 20 250 200'%3e%3cpath style='fill:purple;stroke:white;stroke-width:4px' d='m 13,193 20,-48 84,-35 49,-58 49,-24 10,58 -50,-5 -43,56 -9,73 -21,-1 6,-65 -50,14 -11,43 H 36 l -2,-33 z' /%3e%3c/svg%3e",
+    "width": 60,
+    "height": 60,
+    "expansion": 3,
+    "shift": true
+  },
+  "hand": {
+    "type": "holder",
+    "id": "hand",
+    "x": 88,
+    "y": 26,
+    "width": 78,
+    "height": 78,
+    "layer": -1,
+    "z": 10940,
+    "childrenPerOwner": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": {
+      "deck": "bo9g"
+    }
+  },
+  "t9bs": {
+    "parent": "7nxg",
+    "x": 22.5,
+    "y": 32,
+    "width": 35,
+    "height": 50,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      }
+    ],
+    "fixedParent": true,
+    "fixedZ": true,
+    "image": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='25 -20 125 180'%3e%3cpath style='fill:currentColor;stroke:black;stroke-width:4px' d='M 32,152 68,72 52,80 40,59 81,38 71,12 92,-18 117,10 103,43 144,62 127,86 l -22,-8 33,74' /%3e%3c/svg%3e",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "rotation": 0,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": "seatTemplate",
+    "activeFace": 0,
+    "z": 0,
+    "css": "",
+    "id": "t9bs"
+  },
+  "ic6k": {
+    "parent": "7nxg",
+    "x": 72.5,
+    "inheritFrom": "p1-meeple1",
+    "y": 31,
+    "activeFace": 0,
+    "rotation": 0,
+    "z": 0,
+    "id": "ic6k"
+  },
+  "fj6h": {
+    "parent": "ayah",
+    "x": 22.5,
+    "y": 32,
+    "width": 35,
+    "height": 50,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      }
+    ],
+    "fixedParent": true,
+    "fixedZ": true,
+    "image": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='25 -20 125 180'%3e%3cpath style='fill:currentColor;stroke:black;stroke-width:4px' d='M 32,152 68,72 52,80 40,59 81,38 71,12 92,-18 117,10 103,43 144,62 127,86 l -22,-8 33,74' /%3e%3c/svg%3e",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "rotation": 0,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": "ayah",
+    "activeFace": 0,
+    "z": 0,
+    "css": "",
+    "id": "fj6h"
+  },
+  "kute": {
+    "parent": "ayah",
+    "x": 72.5,
+    "inheritFrom": "p1-meeple1",
+    "y": 31,
+    "activeFace": 0,
+    "rotation": 0,
+    "z": 0,
+    "id": "kute"
+  },
+  "feey": {
+    "parent": "0zn3",
+    "x": 22.5,
+    "y": 32,
+    "width": 35,
+    "height": 50,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      }
+    ],
+    "fixedParent": true,
+    "fixedZ": true,
+    "image": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='25 -20 125 180'%3e%3cpath style='fill:currentColor;stroke:black;stroke-width:4px' d='M 32,152 68,72 52,80 40,59 81,38 71,12 92,-18 117,10 103,43 144,62 127,86 l -22,-8 33,74' /%3e%3c/svg%3e",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "rotation": 0,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": "0zn3",
+    "activeFace": 0,
+    "z": 0,
+    "css": "",
+    "id": "feey"
+  },
+  "927p": {
+    "parent": "0zn3",
+    "x": 72.5,
+    "inheritFrom": "p1-meeple1",
+    "y": 31,
+    "activeFace": 0,
+    "rotation": 0,
+    "z": 0,
+    "id": "927p"
+  },
+  "helpOverlay": {
+    "id": "helpOverlay",
+    "x": 160,
+    "y": 100,
+    "width": 1280,
+    "height": 800,
+    "layer": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "border: 5px solid black; border-radius: 50px; background: white;",
+    "owner": []
+  },
+  "helpOverlayCloseCover": {
+    "id": "helpOverlayCloseCover",
+    "parent": "helpOverlay",
+    "x": -165,
+    "y": -105,
+    "width": 1680,
+    "height": 1000,
+    "layer": 10,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "helpOverlay"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": []
+      }
+    ]
+  },
+  "helpButton": {
+    "type": "button",
+    "id": "helpButton",
+    "x": 1417,
+    "y": 8,
+    "z": 21925,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "helpOverlay"
+      },
+      {
+        "func": "SET",
+        "property": "owner"
+      }
+    ],
+    "text": "Help",
+    "owner": []
+  },
+  "helpDeck": {
+    "type": "deck",
+    "id": "helpDeck",
+    "parent": "helpOverlay",
+    "x": 0,
+    "y": 0,
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": "bo9g"
+  },
+  "6qo1": {
+    "deck": "helpDeck",
+    "type": "card",
+    "cardType": "road-straight",
+    "id": "6qo1",
+    "z": 10186,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 150,
+    "parent": "helpOverlay",
+    "y": 100
+  },
+  "unused": {
+    "type": "holder",
+    "id": "unused",
+    "x": -152
+  },
+  "Player 1": {
+    "type": "holder",
+    "id": "Player 1",
+    "width": 120,
+    "z": 16,
+    "x": 10,
+    "y": 110,
+    "dropTarget": [
+      {
+        "deck": "Bonus Deck"
+      },
+      {
+        "player": 1
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "color": "darkgrey",
+    "player": 1,
+    "classes": "transparent",
+    "height": 190
+  },
+  "Player 1 - Meeples": {
+    "type": "holder",
+    "id": "Player 1 - Meeples",
+    "parent": "Player 1",
+    "dropTarget": {
+      "home": "Meeples"
+    },
+    "stackOffsetY": 10,
+    "fixedParent": true,
+    "z": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "width": 35,
+    "height": 110,
+    "y": 40
+  },
+  "Meeple Template": {
+    "id": "Meeple Template",
+    "x": 147.5,
+    "y": -610,
+    "width": 35,
+    "height": 50,
+    "z": 10934,
+    "color": "pink",
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      }
+    ],
+    "image": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='25 -20 125 180'%3e%3cpath style='fill:currentColor;stroke:black;stroke-width:4px' d='M 32,152 68,72 52,80 40,59 81,38 71,12 92,-18 117,10 103,43 144,62 127,86 l -22,-8 33,74' /%3e%3c/svg%3e",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "home": "Meeples",
+    "shift": true
+  },
+  "Player 1 - Meeple A": {
+    "id": "Player 1 - Meeple A",
+    "x": 0,
+    "y": 50,
+    "rotation": 0,
+    "z": 6,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Meeples"
+  },
+  "Player 1 - Meeple B": {
+    "id": "Player 1 - Meeple B",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "z": 5,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Meeples"
+  },
+  "Player 1 - Big Meeples": {
+    "type": "holder",
+    "id": "Player 1 - Big Meeples",
+    "x": 35,
+    "inheritFrom": "Player 1 - Meeples",
+    "parent": "Player 1",
+    "z": 5,
+    "dropTarget": {
+      "home": "Big Meeples"
+    },
+    "width": 50,
+    "height": 70,
+    "expansion": 1
+  },
+  "Big Meeple Template": {
+    "id": "Big Meeple Template",
+    "x": 235,
+    "y": -613,
+    "inheritFrom": "Meeple Template",
+    "z": 10936,
+    "width": 50,
+    "height": 70,
+    "activeFace": 0,
+    "rotation": 0,
+    "home": "Big Meeples"
+  },
+  "Player 1 - Pigs": {
+    "type": "holder",
+    "id": "Player 1 - Pigs",
+    "parent": "Player 1",
+    "x": 70,
+    "y": 120,
+    "inheritFrom": "Player 1 - Meeples",
+    "z": 6,
+    "dropTarget": {
+      "home": "Pigs"
+    },
+    "height": 30,
+    "expansion": 2
+  },
+  "Pig Template": {
+    "id": "Pig Template",
+    "x": 295.5,
+    "y": -579,
+    "width": 35,
+    "height": 30,
+    "rotation": 0,
+    "z": 10937,
+    "activeFace": 0,
+    "home": "Pigs",
+    "inheritFrom": "Meeple Template",
+    "image": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='25 45 195 120'%3e%3cpath style='fill:currentColor;stroke:black;stroke-width:4px' d='m 66,151 0,-32 -31,13 -7,-18 39,-20 96,0 3,-37 45,-3 -0,29 -32,1 -12,77 -18,-0 6,-46 -67,-0 -2,41 z' /%3e%3c/svg%3e"
+  },
+  "Player 1 - Pig": {
+    "id": "Player 1 - Pig",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Pig Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Pigs"
+  },
+  "Player 1 - Meeple C": {
+    "id": "Player 1 - Meeple C",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "z": 2,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Meeples",
+    "moving": "yes"
+  },
+  "Player 1 - Meeple D": {
+    "id": "Player 1 - Meeple D",
+    "x": 0,
+    "y": 60,
+    "rotation": 0,
+    "z": 7,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Meeples"
+  },
+  "Player 1 - Meeple E": {
+    "id": "Player 1 - Meeple E",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "z": 3,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Meeples",
+    "moving": "yes"
+  },
+  "Player 1 - Meeple F": {
+    "id": "Player 1 - Meeple F",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Meeples"
+  },
+  "Player 1 - Meeple G": {
+    "id": "Player 1 - Meeple G",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "z": 4,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Meeples",
+    "moving": "yes"
+  },
+  "Player 1 - Builders": {
+    "type": "holder",
+    "id": "Player 1 - Builders",
+    "parent": "Player 1",
+    "x": 35,
+    "y": 110,
+    "z": 13,
+    "inheritFrom": "Player 1 - Meeples",
+    "dropTarget": {
+      "home": "Builders"
+    },
+    "height": 50,
+    "expansion": 2
+  },
+  "Builder Template": {
+    "id": "Builder Template",
+    "x": 189.5,
+    "y": -601,
+    "width": 35,
+    "height": 50,
+    "rotation": 0,
+    "z": 10935,
+    "activeFace": 0,
+    "home": "Builders",
+    "image": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='25 -20 125 180'%3e%3cpath style='fill:currentColor;stroke:black;stroke-width:4px' d='m 74,148 -6,-58 -15,-9 -12,-20 c 31,2 54,1 38,-14 l -6,-33 20,-30 25,29 -14,32 c -13,13 -2e-5,20 40,19 L 127,86 102,90 96,150' /%3e%3c/svg%3e",
+    "inheritFrom": "Meeple Template"
+  },
+  "Player 1 - Builder": {
+    "id": "Player 1 - Builder",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Builder Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Builders"
+  },
+  "Join Template": {
+    "type": "button",
+    "id": "Join Template",
+    "x": 60,
+    "y": -621,
+    "layer": 10,
+    "z": 10455,
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Who are you?",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              },
+              {
+                "type": "color",
+                "label": "Color",
+                "variable": "playerColor",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${playerColor}"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": [],
+        "collection": "thisButton"
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent} - Label",
+        "value": "${playerName}"
+      },
+      "var parent = ${PROPERTY parent}",
+      "var playerCount = ${PROPERTY player OF $parent}",
+      "var nextPlayer = ${playerCount} + 1",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Player ${nextPlayer}"
+      },
+      {
+        "func": "SET",
+        "property": "owner"
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "Player 1 - Towers",
+          "Player 2 - Towers",
+          "Player 3 - Towers",
+          "Player 4 - Towers",
+          "Player 5 - Towers",
+          "Player 6 - Towers",
+          "Player 7 - Towers"
+        ],
+        "to": "Player 8 - Towers",
+        "count": 0
+      },
+      "var towerCount = ${PROPERTY towerCount}",
+      "var towerCount = ${towerCount.$playerCount}",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player OF $parent}",
+            "relation": ">=",
+            "operand2": "${value}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "Player 8 - Towers",
+                "to": "Player ${value} - Towers",
+                "count": "${towerCount}"
+              },
+              {
+                "func": "SELECT",
+                "value": "Player ${value} - Towers"
+              },
+              {
+                "func": "SET",
+                "property": "player",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "inheritFrom",
+        "value": "Tower Template"
+      }
+    ],
+    "text": "Join",
+    "fixedParent": true,
+    "towerCount": [
+      10,
+      10,
+      10,
+      9,
+      7,
+      6,
+      5,
+      4,
+      4
+    ]
+  },
+  "Player 1 - Join": {
+    "type": "button",
+    "id": "Player 1 - Join",
+    "x": 20,
+    "y": 55,
+    "inheritFrom": "Join Template",
+    "parent": "Player 1",
+    "z": 10456,
+    "owner": []
+  },
+  "Player 1 - Label": {
+    "type": "label",
+    "id": "Player 1 - Label",
+    "text": "Player 1",
+    "parent": "Player 1",
+    "fixedParent": true,
+    "css": "color: black; font-size: 22px; ",
+    "width": 120,
+    "height": 30,
+    "layer": -5
+  },
+  "Player 1 - Towers": {
+    "type": "holder",
+    "id": "Player 1 - Towers",
+    "parent": "Player 1",
+    "x": 85,
+    "height": 80,
+    "z": 12,
+    "dropTarget": {
+      "home": "Towers"
+    },
+    "inheritFrom": "Player 1 - Meeples",
+    "stackOffsetY": 5,
+    "expansion": 4
+  },
+  "Tower Template": {
+    "id": "Tower Template",
+    "x": 349.5,
+    "y": -589.5,
+    "width": 35,
+    "height": 35,
+    "z": 10938,
+    "expansion": 4,
+    "image": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='45 80 105 100'%3e%3cpath style='fill:orange;stroke:black;stroke-width:4px' d='m 52,107 -1,71 25,-0 22,-18 16,15 30,1 -2,-68 -24,-1 L 97,86 78,104 Z' /%3e%3c/svg%3e",
+    "shift": true,
+    "home": "Towers"
+  },
+  "Tower 1": {
+    "id": "Tower 1",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 1,
+    "parent": "Player 1 - Towers"
+  },
+  "xiahD": {
+    "id": "xiahD",
+    "fixedParent": true,
+    "x": -33,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 1 - Score"
+  },
+  "xiahU": {
+    "id": "xiahU",
+    "fixedParent": true,
+    "x": 63,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 1 - Score"
+  },
+  "Player 1 - Score": {
+    "type": "label",
+    "id": "Player 1 - Score",
+    "width": 65,
+    "height": 40,
+    "z": 11,
+    "css": "font-size: 30px;color: black; ",
+    "editable": true,
+    "text": 0,
+    "parent": "Player 1",
+    "fixedParent": true,
+    "x": 27.5,
+    "y": 152
+  },
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Cities",
+      "image": "/assets/-1122376404_65941",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/822/carcassonne",
+      "year": "2000",
+      "mode": "vs",
+      "time": "45",
+      "attribution": "Room layout by ArnoldSmith86 and LawDawg96 released to public domain by CC0.\n\nGame pieces by ArnoldSmith86 released to public domain by CC0.\n\nThe sprite sheet for the tiles was created by ArnoldSmith86 and LawDawg96, licensed as CC By 3.0, and contains the following artwork:\n\nCC By 3.0 by Delapouite:\n - https://game-icons.net/1x1/delapouite/rolled-cloth.html\n - https://game-icons.net/1x1/lorc/wheat.html\n - https://game-icons.net/1x1/delapouite/barrel.html\n - https://game-icons.net/1x1/delapouite/house.html\n - https://game-icons.net/1x1/delapouite/stone-bridge.html\n - https://game-icons.net/1x1/delapouite/church.html\n - https://game-icons.net/1x1/delapouite/smoking-volcano.html (as modified by LawDawg96)\n\nCC By 3.0 by Lorc:\n - https://game-icons.net/1x1/lorc/dragon-head.html\n - https://game-icons.net/1x1/lorc/magic-portal.html\n\nCC By 3.0 by Skoll:\n - https://game-icons.net/1x1/skoll/chess-rook.html\n\nAvailable under the Flaticon License by Photo3idea_studio:\nhttps://www.flaticon.com/free-icon/church_4446088?term=church&amp;page=1&amp;position=2&amp;page=1&amp;position=2&amp;related_id=4446088&amp;origin=style#<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"scale model middle ages village water color painting --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Carcassonne",
+      "similarAwards": "2012 Ludo Award Best Board Game Editor's Choice Winner\n2011 Jocul Anului în România Best Game in Romanian Finalist\n2004 Vuoden Peli Family Game of the Year Winner\n2004 Hra roku Nominee\n2002 Årets Spel Best Family Game Winner\n2001 Spiel des Jahres Winner\n2001 Spiel der Spiele Hit mit Freunden Recommended\n2001 Nederlandse Spellenprijs Nominee\n2001 International Gamers Awards - General Strategy; Multi-player Nominee\n2001 Deutscher Spiele Preis Best Family/Adult Game Winner\n2000 Meeples' Choice Award",
+      "description": "Tile-building game where players create and link farmland, cities, and roads to earn points. Optional 4 expansion packs with additional tiles, scoring system, and rules available and built-in to the main game.",
+      "showName": true,
+      "lastUpdate": 1635211586000,
+      "skill": "",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-8"
+    }
+  },
+  "Player 2 - Big Meeple": {
+    "id": "Player 2 - Big Meeple",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Big Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Big Meeples"
+  },
+  "Player 2": {
+    "type": "holder",
+    "id": "Player 2",
+    "width": 120,
+    "z": 16,
+    "x": 10,
+    "y": 303.3,
+    "dropTarget": [
+      {
+        "deck": "Bonus Deck"
+      },
+      {
+        "player": 2
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "color": "darkgrey",
+    "player": 2,
+    "classes": "transparent",
+    "height": 190
+  },
+  "Player 2 - Meeples": {
+    "type": "holder",
+    "id": "Player 2 - Meeples",
+    "parent": "Player 2",
+    "dropTarget": {
+      "home": "Meeples"
+    },
+    "stackOffsetY": 10,
+    "fixedParent": true,
+    "z": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "width": 35,
+    "height": 110,
+    "y": 40
+  },
+  "Player 2 - Meeple A": {
+    "id": "Player 2 - Meeple A",
+    "x": 0,
+    "y": 50,
+    "rotation": 0,
+    "z": 6,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Meeples"
+  },
+  "Player 2 - Meeple B": {
+    "id": "Player 2 - Meeple B",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "z": 5,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Meeples"
+  },
+  "Player 2 - Meeple C": {
+    "id": "Player 2 - Meeple C",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "z": 2,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Meeples",
+    "moving": "yes"
+  },
+  "Player 2 - Meeple D": {
+    "id": "Player 2 - Meeple D",
+    "x": 0,
+    "y": 60,
+    "rotation": 0,
+    "z": 7,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Meeples"
+  },
+  "Player 2 - Meeple E": {
+    "id": "Player 2 - Meeple E",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "z": 3,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Meeples",
+    "moving": "yes"
+  },
+  "Player 2 - Meeple F": {
+    "id": "Player 2 - Meeple F",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Meeples"
+  },
+  "Player 2 - Meeple G": {
+    "id": "Player 2 - Meeple G",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "z": 4,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Meeples",
+    "moving": "yes"
+  },
+  "Player 2 - Big Meeples": {
+    "type": "holder",
+    "id": "Player 2 - Big Meeples",
+    "x": 35,
+    "inheritFrom": "Player 1 - Meeples",
+    "parent": "Player 2",
+    "z": 5,
+    "dropTarget": {
+      "home": "Big Meeples"
+    },
+    "width": 50,
+    "height": 70,
+    "expansion": 1
+  },
+  "Player 3 - Big Meeple": {
+    "id": "Player 3 - Big Meeple",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Big Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Big Meeples"
+  },
+  "Player 2 - Pigs": {
+    "type": "holder",
+    "id": "Player 2 - Pigs",
+    "parent": "Player 2",
+    "x": 70,
+    "y": 120,
+    "inheritFrom": "Player 1 - Meeples",
+    "z": 6,
+    "dropTarget": {
+      "home": "Pigs"
+    },
+    "height": 30,
+    "expansion": 2
+  },
+  "Player 2 - Pig": {
+    "id": "Player 2 - Pig",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Pig Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Pigs"
+  },
+  "Player 2 - Builders": {
+    "type": "holder",
+    "id": "Player 2 - Builders",
+    "parent": "Player 2",
+    "x": 35,
+    "y": 110,
+    "z": 13,
+    "inheritFrom": "Player 1 - Meeples",
+    "dropTarget": {
+      "home": "Builders"
+    },
+    "height": 50,
+    "expansion": 2
+  },
+  "Player 2 - Builder": {
+    "id": "Player 2 - Builder",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Builder Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Builders"
+  },
+  "Player 2 - Join": {
+    "type": "button",
+    "id": "Player 2 - Join",
+    "x": 20,
+    "y": 55,
+    "inheritFrom": "Join Template",
+    "parent": "Player 2",
+    "z": 10456,
+    "owner": []
+  },
+  "Player 2 - Label": {
+    "type": "label",
+    "id": "Player 2 - Label",
+    "text": "Player 2",
+    "parent": "Player 2",
+    "fixedParent": true,
+    "css": "color: black; font-size: 22px; ",
+    "width": 120,
+    "height": 30,
+    "layer": -5
+  },
+  "Player 2 - Towers": {
+    "type": "holder",
+    "id": "Player 2 - Towers",
+    "parent": "Player 2",
+    "x": 85,
+    "height": 80,
+    "z": 12,
+    "dropTarget": {
+      "home": "Towers"
+    },
+    "inheritFrom": "Player 1 - Meeples",
+    "stackOffsetY": 5,
+    "expansion": 4
+  },
+  "Tower 2": {
+    "id": "Tower 2",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 2,
+    "parent": "Player 2 - Towers"
+  },
+  "Player 2 - Score": {
+    "type": "label",
+    "id": "Player 2 - Score",
+    "width": 65,
+    "height": 40,
+    "z": 11,
+    "css": "font-size: 30px;color: black; ",
+    "editable": true,
+    "text": 0,
+    "parent": "Player 2",
+    "fixedParent": true,
+    "x": 27.5,
+    "y": 152
+  },
+  "xiahD1": {
+    "id": "xiahD1",
+    "fixedParent": true,
+    "x": -33,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 2 - Score"
+  },
+  "xiahU1": {
+    "id": "xiahU1",
+    "fixedParent": true,
+    "x": 63,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 2 - Score"
+  },
+  "Player 3": {
+    "type": "holder",
+    "id": "Player 3",
+    "width": 120,
+    "z": 16,
+    "x": 10,
+    "y": 496.6,
+    "dropTarget": [
+      {
+        "deck": "Bonus Deck"
+      },
+      {
+        "player": 3
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "color": "darkgrey",
+    "player": 3,
+    "classes": "transparent",
+    "height": 190
+  },
+  "Player 3 - Meeples": {
+    "type": "holder",
+    "id": "Player 3 - Meeples",
+    "parent": "Player 3",
+    "dropTarget": {
+      "home": "Meeples"
+    },
+    "stackOffsetY": 10,
+    "fixedParent": true,
+    "z": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "width": 35,
+    "height": 110,
+    "y": 40
+  },
+  "Player 3 - Meeple A": {
+    "id": "Player 3 - Meeple A",
+    "x": 0,
+    "y": 50,
+    "rotation": 0,
+    "z": 6,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Meeples"
+  },
+  "Player 3 - Meeple B": {
+    "id": "Player 3 - Meeple B",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "z": 5,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Meeples"
+  },
+  "Player 3 - Meeple C": {
+    "id": "Player 3 - Meeple C",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "z": 2,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Meeples",
+    "moving": "yes"
+  },
+  "Player 3 - Meeple D": {
+    "id": "Player 3 - Meeple D",
+    "x": 0,
+    "y": 60,
+    "rotation": 0,
+    "z": 7,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Meeples"
+  },
+  "Player 3 - Meeple E": {
+    "id": "Player 3 - Meeple E",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "z": 3,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Meeples",
+    "moving": "yes"
+  },
+  "Player 3 - Meeple F": {
+    "id": "Player 3 - Meeple F",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Meeples"
+  },
+  "Player 3 - Meeple G": {
+    "id": "Player 3 - Meeple G",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "z": 4,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Meeples",
+    "moving": "yes"
+  },
+  "Player 3 - Big Meeples": {
+    "type": "holder",
+    "id": "Player 3 - Big Meeples",
+    "x": 35,
+    "inheritFrom": "Player 1 - Meeples",
+    "parent": "Player 3",
+    "z": 5,
+    "dropTarget": {
+      "home": "Big Meeples"
+    },
+    "width": 50,
+    "height": 70,
+    "expansion": 1
+  },
+  "Player 4 - Big Meeple": {
+    "id": "Player 4 - Big Meeple",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Big Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Big Meeples"
+  },
+  "Player 3 - Pigs": {
+    "type": "holder",
+    "id": "Player 3 - Pigs",
+    "parent": "Player 3",
+    "x": 70,
+    "y": 120,
+    "inheritFrom": "Player 1 - Meeples",
+    "z": 6,
+    "dropTarget": {
+      "home": "Pigs"
+    },
+    "height": 30,
+    "expansion": 2
+  },
+  "Player 3 - Pig": {
+    "id": "Player 3 - Pig",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Pig Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Pigs"
+  },
+  "Player 3 - Builders": {
+    "type": "holder",
+    "id": "Player 3 - Builders",
+    "parent": "Player 3",
+    "x": 35,
+    "y": 110,
+    "z": 13,
+    "inheritFrom": "Player 1 - Meeples",
+    "dropTarget": {
+      "home": "Builders"
+    },
+    "height": 50,
+    "expansion": 2
+  },
+  "Player 3 - Builder": {
+    "id": "Player 3 - Builder",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Builder Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Builders"
+  },
+  "Player 3 - Join": {
+    "type": "button",
+    "id": "Player 3 - Join",
+    "x": 20,
+    "y": 55,
+    "inheritFrom": "Join Template",
+    "parent": "Player 3",
+    "z": 10456,
+    "owner": []
+  },
+  "Player 3 - Label": {
+    "type": "label",
+    "id": "Player 3 - Label",
+    "text": "Player 3",
+    "parent": "Player 3",
+    "fixedParent": true,
+    "css": "color: black; font-size: 22px; ",
+    "width": 120,
+    "height": 30,
+    "layer": -5
+  },
+  "Player 3 - Towers": {
+    "type": "holder",
+    "id": "Player 3 - Towers",
+    "parent": "Player 3",
+    "x": 85,
+    "height": 80,
+    "z": 12,
+    "dropTarget": {
+      "home": "Towers"
+    },
+    "inheritFrom": "Player 1 - Meeples",
+    "stackOffsetY": 5,
+    "expansion": 4
+  },
+  "Tower 3": {
+    "id": "Tower 3",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 3,
+    "parent": "Player 3 - Towers"
+  },
+  "Player 3 - Score": {
+    "type": "label",
+    "id": "Player 3 - Score",
+    "width": 65,
+    "height": 40,
+    "z": 11,
+    "css": "font-size: 30px;color: black; ",
+    "editable": true,
+    "text": 0,
+    "parent": "Player 3",
+    "fixedParent": true,
+    "x": 27.5,
+    "y": 152
+  },
+  "xiahD2": {
+    "id": "xiahD2",
+    "fixedParent": true,
+    "x": -33,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 3 - Score"
+  },
+  "xiahU2": {
+    "id": "xiahU2",
+    "fixedParent": true,
+    "x": 63,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 3 - Score"
+  },
+  "Player 4": {
+    "type": "holder",
+    "id": "Player 4",
+    "width": 120,
+    "z": 16,
+    "x": 10,
+    "y": 690,
+    "dropTarget": [
+      {
+        "deck": "Bonus Deck"
+      },
+      {
+        "player": 4
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "color": "darkgrey",
+    "player": 4,
+    "classes": "transparent",
+    "height": 190
+  },
+  "Player 4 - Meeples": {
+    "type": "holder",
+    "id": "Player 4 - Meeples",
+    "parent": "Player 4",
+    "dropTarget": {
+      "home": "Meeples"
+    },
+    "stackOffsetY": 10,
+    "fixedParent": true,
+    "z": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "width": 35,
+    "height": 110,
+    "y": 40
+  },
+  "Player 4 - Meeple A": {
+    "id": "Player 4 - Meeple A",
+    "x": 0,
+    "y": 50,
+    "rotation": 0,
+    "z": 6,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Meeples"
+  },
+  "Player 4 - Meeple B": {
+    "id": "Player 4 - Meeple B",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "z": 5,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Meeples"
+  },
+  "Player 4 - Meeple C": {
+    "id": "Player 4 - Meeple C",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "z": 2,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Meeples",
+    "moving": "yes"
+  },
+  "Player 4 - Meeple D": {
+    "id": "Player 4 - Meeple D",
+    "x": 0,
+    "y": 60,
+    "rotation": 0,
+    "z": 7,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Meeples"
+  },
+  "Player 4 - Meeple E": {
+    "id": "Player 4 - Meeple E",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "z": 3,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Meeples",
+    "moving": "yes"
+  },
+  "Player 4 - Meeple F": {
+    "id": "Player 4 - Meeple F",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Meeples"
+  },
+  "Player 4 - Meeple G": {
+    "id": "Player 4 - Meeple G",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "z": 4,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Meeples",
+    "moving": "yes"
+  },
+  "Player 4 - Big Meeples": {
+    "type": "holder",
+    "id": "Player 4 - Big Meeples",
+    "x": 35,
+    "inheritFrom": "Player 1 - Meeples",
+    "parent": "Player 4",
+    "z": 5,
+    "dropTarget": {
+      "home": "Big Meeples"
+    },
+    "width": 50,
+    "height": 70,
+    "expansion": 1
+  },
+  "Player 4 - Pigs": {
+    "type": "holder",
+    "id": "Player 4 - Pigs",
+    "parent": "Player 4",
+    "x": 70,
+    "y": 120,
+    "inheritFrom": "Player 1 - Meeples",
+    "z": 6,
+    "dropTarget": {
+      "home": "Pigs"
+    },
+    "height": 30,
+    "expansion": 2
+  },
+  "Player 4 - Pig": {
+    "id": "Player 4 - Pig",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Pig Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Pigs"
+  },
+  "Player 4 - Builders": {
+    "type": "holder",
+    "id": "Player 4 - Builders",
+    "parent": "Player 4",
+    "x": 35,
+    "y": 110,
+    "z": 13,
+    "inheritFrom": "Player 1 - Meeples",
+    "dropTarget": {
+      "home": "Builders"
+    },
+    "height": 50,
+    "expansion": 2
+  },
+  "Player 4 - Builder": {
+    "id": "Player 4 - Builder",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Builder Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Builders"
+  },
+  "Player 4 - Join": {
+    "type": "button",
+    "id": "Player 4 - Join",
+    "x": 20,
+    "y": 55,
+    "inheritFrom": "Join Template",
+    "parent": "Player 4",
+    "z": 10456,
+    "owner": []
+  },
+  "Player 4 - Label": {
+    "type": "label",
+    "id": "Player 4 - Label",
+    "text": "Player 4",
+    "parent": "Player 4",
+    "fixedParent": true,
+    "css": "color: black; font-size: 22px; ",
+    "width": 120,
+    "height": 30,
+    "layer": -5
+  },
+  "Player 4 - Towers": {
+    "type": "holder",
+    "id": "Player 4 - Towers",
+    "parent": "Player 4",
+    "x": 85,
+    "height": 80,
+    "z": 12,
+    "dropTarget": {
+      "home": "Towers"
+    },
+    "inheritFrom": "Player 1 - Meeples",
+    "stackOffsetY": 5,
+    "expansion": 4
+  },
+  "Tower 4": {
+    "id": "Tower 4",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 4,
+    "parent": "Player 4 - Towers"
+  },
+  "Player 4 - Score": {
+    "type": "label",
+    "id": "Player 4 - Score",
+    "width": 65,
+    "height": 40,
+    "z": 11,
+    "css": "font-size: 30px;color: black; ",
+    "editable": true,
+    "text": 0,
+    "parent": "Player 4",
+    "fixedParent": true,
+    "x": 27.5,
+    "y": 152
+  },
+  "xiahD3": {
+    "id": "xiahD3",
+    "fixedParent": true,
+    "x": -33,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 4 - Score"
+  },
+  "xiahU3": {
+    "id": "xiahU3",
+    "fixedParent": true,
+    "x": 63,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 4 - Score"
+  },
+  "Player 5": {
+    "type": "holder",
+    "id": "Player 5",
+    "width": 120,
+    "z": 16,
+    "x": 1470,
+    "y": 110,
+    "dropTarget": [
+      {
+        "deck": "Bonus Deck"
+      },
+      {
+        "player": 5
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "color": "darkgrey",
+    "player": 5,
+    "classes": "transparent",
+    "height": 190
+  },
+  "Player 5 - Meeples": {
+    "type": "holder",
+    "id": "Player 5 - Meeples",
+    "parent": "Player 5",
+    "dropTarget": {
+      "home": "Meeples"
+    },
+    "stackOffsetY": 10,
+    "fixedParent": true,
+    "z": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "width": 35,
+    "height": 110,
+    "y": 40
+  },
+  "Player 5 - Meeple A": {
+    "id": "Player 5 - Meeple A",
+    "x": 0,
+    "y": 50,
+    "rotation": 0,
+    "z": 6,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 5": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 5 - Meeples"
+  },
+  "Player 5 - Meeple B": {
+    "id": "Player 5 - Meeple B",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "z": 5,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 5": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 5 - Meeples"
+  },
+  "Player 5 - Meeple C": {
+    "id": "Player 5 - Meeple C",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "z": 2,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 5": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 5 - Meeples",
+    "moving": "yes"
+  },
+  "Player 5 - Meeple D": {
+    "id": "Player 5 - Meeple D",
+    "x": 0,
+    "y": 60,
+    "rotation": 0,
+    "z": 7,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 5": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 5 - Meeples"
+  },
+  "Player 5 - Meeple E": {
+    "id": "Player 5 - Meeple E",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "z": 3,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 5": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 5 - Meeples",
+    "moving": "yes"
+  },
+  "Player 5 - Meeple F": {
+    "id": "Player 5 - Meeple F",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 5": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 5 - Meeples"
+  },
+  "Player 5 - Meeple G": {
+    "id": "Player 5 - Meeple G",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "z": 4,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 5": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 5 - Meeples",
+    "moving": "yes"
+  },
+  "Player 5 - Big Meeples": {
+    "type": "holder",
+    "id": "Player 5 - Big Meeples",
+    "x": 35,
+    "inheritFrom": "Player 1 - Meeples",
+    "parent": "Player 5",
+    "z": 5,
+    "dropTarget": {
+      "home": "Big Meeples"
+    },
+    "width": 50,
+    "height": 70,
+    "expansion": 1
+  },
+  "Player 5 - Big Meeple": {
+    "id": "Player 5 - Big Meeple",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Big Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 5": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 5 - Big Meeples"
+  },
+  "Player 5 - Pigs": {
+    "type": "holder",
+    "id": "Player 5 - Pigs",
+    "parent": "Player 5",
+    "x": 70,
+    "y": 120,
+    "inheritFrom": "Player 1 - Meeples",
+    "z": 6,
+    "dropTarget": {
+      "home": "Pigs"
+    },
+    "height": 30,
+    "expansion": 2
+  },
+  "Player 5 - Pig": {
+    "id": "Player 5 - Pig",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Pig Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 5": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 5 - Pigs"
+  },
+  "Player 5 - Builders": {
+    "type": "holder",
+    "id": "Player 5 - Builders",
+    "parent": "Player 5",
+    "x": 35,
+    "y": 110,
+    "z": 13,
+    "inheritFrom": "Player 1 - Meeples",
+    "dropTarget": {
+      "home": "Builders"
+    },
+    "height": 50,
+    "expansion": 2
+  },
+  "Player 5 - Builder": {
+    "id": "Player 5 - Builder",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Builder Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 5": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 5 - Builders"
+  },
+  "Player 5 - Join": {
+    "type": "button",
+    "id": "Player 5 - Join",
+    "x": 20,
+    "y": 55,
+    "inheritFrom": "Join Template",
+    "parent": "Player 5",
+    "z": 10456,
+    "owner": []
+  },
+  "Player 5 - Label": {
+    "type": "label",
+    "id": "Player 5 - Label",
+    "text": "Player 5",
+    "parent": "Player 5",
+    "fixedParent": true,
+    "css": "color: black; font-size: 22px; ",
+    "width": 120,
+    "height": 30,
+    "layer": -5
+  },
+  "Player 5 - Towers": {
+    "type": "holder",
+    "id": "Player 5 - Towers",
+    "parent": "Player 5",
+    "x": 85,
+    "height": 80,
+    "z": 12,
+    "dropTarget": {
+      "home": "Towers"
+    },
+    "inheritFrom": "Player 1 - Meeples",
+    "stackOffsetY": 5,
+    "expansion": 4
+  },
+  "Tower 5": {
+    "id": "Tower 5",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 5,
+    "parent": "Player 5 - Towers"
+  },
+  "Player 5 - Score": {
+    "type": "label",
+    "id": "Player 5 - Score",
+    "width": 65,
+    "height": 40,
+    "z": 11,
+    "css": "font-size: 30px;color: black; ",
+    "editable": true,
+    "text": 0,
+    "parent": "Player 5",
+    "fixedParent": true,
+    "x": 27.5,
+    "y": 152
+  },
+  "xiahD4": {
+    "id": "xiahD4",
+    "fixedParent": true,
+    "x": -33,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 5 - Score"
+  },
+  "xiahU4": {
+    "id": "xiahU4",
+    "fixedParent": true,
+    "x": 63,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 5 - Score"
+  },
+  "Player 6": {
+    "type": "holder",
+    "id": "Player 6",
+    "width": 120,
+    "z": 16,
+    "x": 1470,
+    "y": 303.3,
+    "dropTarget": [
+      {
+        "deck": "Bonus Deck"
+      },
+      {
+        "player": 6
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "color": "darkgrey",
+    "player": 6,
+    "classes": "transparent",
+    "height": 190
+  },
+  "Player 6 - Meeples": {
+    "type": "holder",
+    "id": "Player 6 - Meeples",
+    "parent": "Player 6",
+    "dropTarget": {
+      "home": "Meeples"
+    },
+    "stackOffsetY": 10,
+    "fixedParent": true,
+    "z": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "width": 35,
+    "height": 110,
+    "y": 40
+  },
+  "Player 6 - Meeple A": {
+    "id": "Player 6 - Meeple A",
+    "x": 0,
+    "y": 50,
+    "rotation": 0,
+    "z": 6,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 6": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 6 - Meeples"
+  },
+  "Player 6 - Meeple B": {
+    "id": "Player 6 - Meeple B",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "z": 5,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 6": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 6 - Meeples"
+  },
+  "Player 6 - Meeple C": {
+    "id": "Player 6 - Meeple C",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "z": 2,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 6": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 6 - Meeples",
+    "moving": "yes"
+  },
+  "Player 6 - Meeple D": {
+    "id": "Player 6 - Meeple D",
+    "x": 0,
+    "y": 60,
+    "rotation": 0,
+    "z": 7,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 6": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 6 - Meeples"
+  },
+  "Player 6 - Meeple E": {
+    "id": "Player 6 - Meeple E",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "z": 3,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 6": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 6 - Meeples",
+    "moving": "yes"
+  },
+  "Player 6 - Meeple F": {
+    "id": "Player 6 - Meeple F",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 6": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 6 - Meeples"
+  },
+  "Player 6 - Meeple G": {
+    "id": "Player 6 - Meeple G",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "z": 4,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 6": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 6 - Meeples",
+    "moving": "yes"
+  },
+  "Player 6 - Big Meeples": {
+    "type": "holder",
+    "id": "Player 6 - Big Meeples",
+    "x": 35,
+    "inheritFrom": "Player 1 - Meeples",
+    "parent": "Player 6",
+    "z": 5,
+    "dropTarget": {
+      "home": "Big Meeples"
+    },
+    "width": 50,
+    "height": 70,
+    "expansion": 1
+  },
+  "Player 6 - Big Meeple": {
+    "id": "Player 6 - Big Meeple",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Big Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 6": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 6 - Big Meeples"
+  },
+  "Player 6 - Pigs": {
+    "type": "holder",
+    "id": "Player 6 - Pigs",
+    "parent": "Player 6",
+    "x": 70,
+    "y": 120,
+    "inheritFrom": "Player 1 - Meeples",
+    "z": 6,
+    "dropTarget": {
+      "home": "Pigs"
+    },
+    "height": 30,
+    "expansion": 2
+  },
+  "Player 6 - Pig": {
+    "id": "Player 6 - Pig",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Pig Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 6": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 6 - Pigs"
+  },
+  "Player 6 - Builders": {
+    "type": "holder",
+    "id": "Player 6 - Builders",
+    "parent": "Player 6",
+    "x": 35,
+    "y": 110,
+    "z": 13,
+    "inheritFrom": "Player 1 - Meeples",
+    "dropTarget": {
+      "home": "Builders"
+    },
+    "height": 50,
+    "expansion": 2
+  },
+  "Player 6 - Builder": {
+    "id": "Player 6 - Builder",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Builder Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 6": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 6 - Builders"
+  },
+  "Player 6 - Join": {
+    "type": "button",
+    "id": "Player 6 - Join",
+    "x": 20,
+    "y": 55,
+    "inheritFrom": "Join Template",
+    "parent": "Player 6",
+    "z": 10456,
+    "owner": []
+  },
+  "Player 6 - Label": {
+    "type": "label",
+    "id": "Player 6 - Label",
+    "text": "Player 6",
+    "parent": "Player 6",
+    "fixedParent": true,
+    "css": "color: black; font-size: 22px; ",
+    "width": 120,
+    "height": 30,
+    "layer": -5
+  },
+  "Player 6 - Towers": {
+    "type": "holder",
+    "id": "Player 6 - Towers",
+    "parent": "Player 6",
+    "x": 85,
+    "height": 80,
+    "z": 12,
+    "dropTarget": {
+      "home": "Towers"
+    },
+    "inheritFrom": "Player 1 - Meeples",
+    "stackOffsetY": 5,
+    "expansion": 4
+  },
+  "Tower 6": {
+    "id": "Tower 6",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 6,
+    "parent": "Player 6 - Towers"
+  },
+  "Player 6 - Score": {
+    "type": "label",
+    "id": "Player 6 - Score",
+    "width": 65,
+    "height": 40,
+    "z": 11,
+    "css": "font-size: 30px;color: black; ",
+    "editable": true,
+    "text": 0,
+    "parent": "Player 6",
+    "fixedParent": true,
+    "x": 27.5,
+    "y": 152
+  },
+  "xiahD5": {
+    "id": "xiahD5",
+    "fixedParent": true,
+    "x": -33,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 6 - Score"
+  },
+  "xiahU5": {
+    "id": "xiahU5",
+    "fixedParent": true,
+    "x": 63,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 6 - Score"
+  },
+  "Player 7": {
+    "type": "holder",
+    "id": "Player 7",
+    "width": 120,
+    "z": 16,
+    "x": 1470,
+    "y": 496.6,
+    "dropTarget": [
+      {
+        "deck": "Bonus Deck"
+      },
+      {
+        "player": 7
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "color": "darkgrey",
+    "player": 7,
+    "classes": "transparent",
+    "height": 190
+  },
+  "Player 7 - Meeples": {
+    "type": "holder",
+    "id": "Player 7 - Meeples",
+    "parent": "Player 7",
+    "dropTarget": {
+      "home": "Meeples"
+    },
+    "stackOffsetY": 10,
+    "fixedParent": true,
+    "z": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "width": 35,
+    "height": 110,
+    "y": 40
+  },
+  "Player 7 - Meeple A": {
+    "id": "Player 7 - Meeple A",
+    "x": 0,
+    "y": 50,
+    "rotation": 0,
+    "z": 6,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 7": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 7 - Meeples"
+  },
+  "Player 7 - Meeple B": {
+    "id": "Player 7 - Meeple B",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "z": 5,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 7": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 7 - Meeples"
+  },
+  "Player 7 - Meeple C": {
+    "id": "Player 7 - Meeple C",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "z": 2,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 7": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 7 - Meeples",
+    "moving": "yes"
+  },
+  "Player 7 - Meeple D": {
+    "id": "Player 7 - Meeple D",
+    "x": 0,
+    "y": 60,
+    "rotation": 0,
+    "z": 7,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 7": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 7 - Meeples"
+  },
+  "Player 7 - Meeple E": {
+    "id": "Player 7 - Meeple E",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "z": 3,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 7": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 7 - Meeples",
+    "moving": "yes"
+  },
+  "Player 7 - Meeple F": {
+    "id": "Player 7 - Meeple F",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 7": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 7 - Meeples"
+  },
+  "Player 7 - Meeple G": {
+    "id": "Player 7 - Meeple G",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "z": 4,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 7": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 7 - Meeples",
+    "moving": "yes"
+  },
+  "Player 7 - Big Meeples": {
+    "type": "holder",
+    "id": "Player 7 - Big Meeples",
+    "x": 35,
+    "inheritFrom": "Player 1 - Meeples",
+    "parent": "Player 7",
+    "z": 5,
+    "dropTarget": {
+      "home": "Big Meeples"
+    },
+    "width": 50,
+    "height": 70,
+    "expansion": 1
+  },
+  "Player 7 - Big Meeple": {
+    "id": "Player 7 - Big Meeple",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Big Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 7": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 7 - Big Meeples"
+  },
+  "Player 7 - Pigs": {
+    "type": "holder",
+    "id": "Player 7 - Pigs",
+    "parent": "Player 7",
+    "x": 70,
+    "y": 120,
+    "inheritFrom": "Player 1 - Meeples",
+    "z": 6,
+    "dropTarget": {
+      "home": "Pigs"
+    },
+    "height": 30,
+    "expansion": 2
+  },
+  "Player 7 - Pig": {
+    "id": "Player 7 - Pig",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Pig Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 7": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 7 - Pigs"
+  },
+  "Player 7 - Builders": {
+    "type": "holder",
+    "id": "Player 7 - Builders",
+    "parent": "Player 7",
+    "x": 35,
+    "y": 110,
+    "z": 13,
+    "inheritFrom": "Player 1 - Meeples",
+    "dropTarget": {
+      "home": "Builders"
+    },
+    "height": 50,
+    "expansion": 2
+  },
+  "Player 7 - Builder": {
+    "id": "Player 7 - Builder",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Builder Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 7": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 7 - Builders"
+  },
+  "Player 7 - Join": {
+    "type": "button",
+    "id": "Player 7 - Join",
+    "x": 20,
+    "y": 55,
+    "inheritFrom": "Join Template",
+    "parent": "Player 7",
+    "z": 10456,
+    "owner": []
+  },
+  "Player 7 - Label": {
+    "type": "label",
+    "id": "Player 7 - Label",
+    "text": "Player 7",
+    "parent": "Player 7",
+    "fixedParent": true,
+    "css": "color: black; font-size: 22px; ",
+    "width": 120,
+    "height": 30,
+    "layer": -5
+  },
+  "Player 7 - Towers": {
+    "type": "holder",
+    "id": "Player 7 - Towers",
+    "parent": "Player 7",
+    "x": 85,
+    "height": 80,
+    "z": 12,
+    "dropTarget": {
+      "home": "Towers"
+    },
+    "inheritFrom": "Player 1 - Meeples",
+    "stackOffsetY": 5,
+    "expansion": 4
+  },
+  "Tower 7": {
+    "id": "Tower 7",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 7,
+    "parent": "Player 7 - Towers"
+  },
+  "Player 7 - Score": {
+    "type": "label",
+    "id": "Player 7 - Score",
+    "width": 65,
+    "height": 40,
+    "z": 11,
+    "css": "font-size: 30px;color: black; ",
+    "editable": true,
+    "text": 0,
+    "parent": "Player 7",
+    "fixedParent": true,
+    "x": 27.5,
+    "y": 152
+  },
+  "xiahD6": {
+    "id": "xiahD6",
+    "fixedParent": true,
+    "x": -33,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 7 - Score"
+  },
+  "xiahU6": {
+    "id": "xiahU6",
+    "fixedParent": true,
+    "x": 63,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 7 - Score"
+  },
+  "Player 8": {
+    "type": "holder",
+    "id": "Player 8",
+    "width": 120,
+    "z": 16,
+    "x": 1470,
+    "y": 690,
+    "dropTarget": [
+      {
+        "deck": "Bonus Deck"
+      },
+      {
+        "player": 8
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "color": "darkgrey",
+    "player": 8,
+    "classes": "transparent",
+    "height": 190
+  },
+  "Player 8 - Meeples": {
+    "type": "holder",
+    "id": "Player 8 - Meeples",
+    "parent": "Player 8",
+    "dropTarget": {
+      "home": "Meeples"
+    },
+    "stackOffsetY": 10,
+    "fixedParent": true,
+    "z": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "width": 35,
+    "height": 110,
+    "y": 40
+  },
+  "Player 8 - Meeple A": {
+    "id": "Player 8 - Meeple A",
+    "x": 0,
+    "y": 50,
+    "rotation": 0,
+    "z": 6,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 8": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 8 - Meeples"
+  },
+  "Player 8 - Meeple B": {
+    "id": "Player 8 - Meeple B",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "z": 5,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 8": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 8 - Meeples"
+  },
+  "Player 8 - Meeple C": {
+    "id": "Player 8 - Meeple C",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "z": 2,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 8": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 8 - Meeples",
+    "moving": "yes"
+  },
+  "Player 8 - Meeple D": {
+    "id": "Player 8 - Meeple D",
+    "x": 0,
+    "y": 60,
+    "rotation": 0,
+    "z": 7,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 8": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 8 - Meeples"
+  },
+  "Player 8 - Meeple E": {
+    "id": "Player 8 - Meeple E",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "z": 3,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 8": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 8 - Meeples",
+    "moving": "yes"
+  },
+  "Player 8 - Meeple F": {
+    "id": "Player 8 - Meeple F",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 8": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 8 - Meeples"
+  },
+  "Player 8 - Meeple G": {
+    "id": "Player 8 - Meeple G",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "z": 4,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 8": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 8 - Meeples",
+    "moving": "yes"
+  },
+  "Player 8 - Big Meeples": {
+    "type": "holder",
+    "id": "Player 8 - Big Meeples",
+    "x": 35,
+    "inheritFrom": "Player 1 - Meeples",
+    "parent": "Player 8",
+    "z": 5,
+    "dropTarget": {
+      "home": "Big Meeples"
+    },
+    "width": 50,
+    "height": 70,
+    "expansion": 1
+  },
+  "Player 8 - Big Meeple": {
+    "id": "Player 8 - Big Meeple",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Big Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 8": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 8 - Big Meeples"
+  },
+  "Player 8 - Pigs": {
+    "type": "holder",
+    "id": "Player 8 - Pigs",
+    "parent": "Player 8",
+    "x": 70,
+    "y": 120,
+    "inheritFrom": "Player 1 - Meeples",
+    "z": 6,
+    "dropTarget": {
+      "home": "Pigs"
+    },
+    "height": 30,
+    "expansion": 2
+  },
+  "Player 8 - Pig": {
+    "id": "Player 8 - Pig",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Pig Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 8": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 8 - Pigs"
+  },
+  "Player 8 - Builders": {
+    "type": "holder",
+    "id": "Player 8 - Builders",
+    "parent": "Player 8",
+    "x": 35,
+    "y": 110,
+    "z": 13,
+    "inheritFrom": "Player 1 - Meeples",
+    "dropTarget": {
+      "home": "Builders"
+    },
+    "height": 50,
+    "expansion": 2
+  },
+  "Player 8 - Builder": {
+    "id": "Player 8 - Builder",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Builder Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 8": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 8 - Builders"
+  },
+  "Player 8 - Join": {
+    "type": "button",
+    "id": "Player 8 - Join",
+    "x": 20,
+    "y": 55,
+    "inheritFrom": "Join Template",
+    "parent": "Player 8",
+    "z": 10456,
+    "owner": []
+  },
+  "Player 8 - Label": {
+    "type": "label",
+    "id": "Player 8 - Label",
+    "text": "Player 8",
+    "parent": "Player 8",
+    "fixedParent": true,
+    "css": "color: black; font-size: 22px; ",
+    "width": 120,
+    "height": 30,
+    "layer": -5
+  },
+  "Player 8 - Towers": {
+    "type": "holder",
+    "id": "Player 8 - Towers",
+    "parent": "Player 8",
+    "x": 85,
+    "height": 80,
+    "z": 12,
+    "dropTarget": {
+      "home": "Towers"
+    },
+    "inheritFrom": "Player 1 - Meeples",
+    "stackOffsetY": 5,
+    "expansion": 4
+  },
+  "Tower 8": {
+    "id": "Tower 8",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 8,
+    "parent": "Player 8 - Towers"
+  },
+  "Player 8 - Score": {
+    "type": "label",
+    "id": "Player 8 - Score",
+    "width": 65,
+    "height": 40,
+    "z": 11,
+    "css": "font-size: 30px;color: black; ",
+    "editable": true,
+    "text": 0,
+    "parent": "Player 8",
+    "fixedParent": true,
+    "x": 27.5,
+    "y": 152
+  },
+  "xiahD7": {
+    "id": "xiahD7",
+    "fixedParent": true,
+    "x": -33,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 8 - Score"
+  },
+  "xiahU7": {
+    "id": "xiahU7",
+    "fixedParent": true,
+    "x": 63,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 8 - Score"
+  },
+  "Player 1 - Big Meeple": {
+    "id": "Player 1 - Big Meeple",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Big Meeple Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Big Meeples"
+  },
+  "Tower 9": {
+    "id": "Tower 9",
+    "x": 0,
+    "y": 5,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 1,
+    "parent": "Player 1 - Towers"
+  },
+  "Tower 10": {
+    "id": "Tower 10",
+    "x": 0,
+    "y": 10,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 1,
+    "parent": "Player 1 - Towers"
+  },
+  "Tower 11": {
+    "id": "Tower 11",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 1,
+    "parent": "Player 1 - Towers"
+  },
+  "Tower 12": {
+    "id": "Tower 12",
+    "x": 0,
+    "y": 5,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 2,
+    "parent": "Player 2 - Towers"
+  },
+  "Tower 13": {
+    "id": "Tower 13",
+    "x": 0,
+    "y": 10,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 2,
+    "parent": "Player 2 - Towers"
+  },
+  "Tower 14": {
+    "id": "Tower 14",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 2,
+    "parent": "Player 2 - Towers"
+  },
+  "Tower 15": {
+    "id": "Tower 15",
+    "x": 0,
+    "y": 5,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 3,
+    "parent": "Player 3 - Towers"
+  },
+  "Tower 16": {
+    "id": "Tower 16",
+    "x": 0,
+    "y": 10,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 3,
+    "parent": "Player 3 - Towers"
+  },
+  "Tower 17": {
+    "id": "Tower 17",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 3,
+    "parent": "Player 3 - Towers"
+  },
+  "Tower 18": {
+    "id": "Tower 18",
+    "x": 0,
+    "y": 5,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 4,
+    "parent": "Player 4 - Towers"
+  },
+  "Tower 19": {
+    "id": "Tower 19",
+    "x": 0,
+    "y": 10,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 4,
+    "parent": "Player 4 - Towers"
+  },
+  "Tower 20": {
+    "id": "Tower 20",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 4,
+    "parent": "Player 4 - Towers"
+  },
+  "Tower 21": {
+    "id": "Tower 21",
+    "x": 0,
+    "y": 5,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 5,
+    "parent": "Player 5 - Towers"
+  },
+  "Tower 22": {
+    "id": "Tower 22",
+    "x": 0,
+    "y": 10,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 5,
+    "parent": "Player 5 - Towers"
+  },
+  "Tower 23": {
+    "id": "Tower 23",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 5,
+    "parent": "Player 5 - Towers"
+  },
+  "Tower 24": {
+    "id": "Tower 24",
+    "x": 0,
+    "y": 5,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 6,
+    "parent": "Player 6 - Towers"
+  },
+  "Tower 25": {
+    "id": "Tower 25",
+    "x": 0,
+    "y": 10,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 6,
+    "parent": "Player 6 - Towers"
+  },
+  "Tower 26": {
+    "id": "Tower 26",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 6,
+    "parent": "Player 6 - Towers"
+  },
+  "Tower 27": {
+    "id": "Tower 27",
+    "x": 0,
+    "y": 5,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 7,
+    "parent": "Player 7 - Towers"
+  },
+  "Tower 28": {
+    "id": "Tower 28",
+    "x": 0,
+    "y": 10,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 7,
+    "parent": "Player 7 - Towers"
+  },
+  "Tower 29": {
+    "id": "Tower 29",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 7,
+    "parent": "Player 7 - Towers"
+  },
+  "Tower 30": {
+    "id": "Tower 30",
+    "x": 0,
+    "y": 5,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 8,
+    "parent": "Player 8 - Towers"
+  },
+  "Tower 31": {
+    "id": "Tower 31",
+    "x": 0,
+    "y": 10,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 8,
+    "parent": "Player 8 - Towers"
+  },
+  "Tower 32": {
+    "id": "Tower 32",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Tower Template",
+    "z": 1,
+    "player": 8,
+    "parent": "Player 8 - Towers"
+  },
+  "Bonus Deck": {
+    "type": "deck",
+    "id": "Bonus Deck",
+    "cardDefaults": {
+      "i": "/assets/1170802298_68846",
+      "height": 30,
+      "width": 30,
+      "home": "Barrels"
+    },
+    "cardTypes": {
+      "wheat": {
+        "css": "--x:2"
+      },
+      "cloth": {
+        "css": "--x:4"
+      },
+      "barrel": {
+        "css": "--x:3"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "i",
+            "width": 30,
+            "height": 30,
+            "css": "background-size:auto;background-position:-73px -210px"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "i",
+            "width": 30,
+            "height": 30,
+            "css": "background-size:auto;background-position:calc(calc(var(--x) * -70px) - 3px) -210px"
+          }
+        ]
+      }
+    ]
+  },
+  "pyxk": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "pyxk",
+    "z": 3,
+    "y": 10,
+    "parent": "Wheat"
+  },
+  "npl0": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "cloth",
+    "id": "npl0",
+    "z": 2,
+    "parent": "Cloth",
+    "y": 5
+  },
+  "r8ik": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "barrel",
+    "id": "r8ik",
+    "z": 4,
+    "y": 15,
+    "parent": "Barrel"
+  },
+  "q7dw": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "q7dw",
+    "z": 5,
+    "y": 20,
+    "parent": "Wheat"
+  },
+  "vksj": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "cloth",
+    "id": "vksj",
+    "z": 5,
+    "y": 20,
+    "parent": "Cloth"
+  },
+  "brqc": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "barrel",
+    "id": "brqc",
+    "z": 6,
+    "y": 25,
+    "parent": "Barrel"
+  },
+  "ti1a": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "ti1a",
+    "z": 4,
+    "y": 15,
+    "parent": "Wheat"
+  },
+  "a73k": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "cloth",
+    "id": "a73k",
+    "z": 1,
+    "parent": "Cloth"
+  },
+  "iwdz": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "barrel",
+    "id": "iwdz",
+    "z": 7,
+    "y": 30,
+    "parent": "Barrel"
+  },
+  "wg5p": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "wg5p",
+    "z": 6,
+    "y": 25,
+    "parent": "Wheat"
+  },
+  "yo8x": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "cloth",
+    "id": "yo8x",
+    "z": 4,
+    "y": 15,
+    "parent": "Cloth"
+  },
+  "9jrj": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "barrel",
+    "id": "9jrj",
+    "z": 3,
+    "y": 10,
+    "parent": "Barrel"
+  },
+  "sfxr": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "sfxr",
+    "z": 2,
+    "y": 5,
+    "parent": "Wheat"
+  },
+  "7h7s": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "cloth",
+    "id": "7h7s",
+    "z": 3,
+    "y": 10,
+    "parent": "Cloth"
+  },
+  "t88l": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "barrel",
+    "id": "t88l",
+    "z": 8,
+    "y": 35,
+    "parent": "Barrel"
+  },
+  "ccai": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "ccai",
+    "z": 1,
+    "parent": "Wheat"
+  },
+  "4juh": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "barrel",
+    "id": "4juh",
+    "z": 5,
+    "y": 20,
+    "parent": "Barrel"
+  },
+  "9hnx": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "barrel",
+    "id": "9hnx",
+    "z": 1,
+    "parent": "Barrel"
+  },
+  "8mg6": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "barrel",
+    "id": "8mg6",
+    "z": 9,
+    "y": 40,
+    "parent": "Barrel"
+  },
+  "q9f1": {
+    "deck": "Bonus Deck",
+    "type": "card",
+    "cardType": "barrel",
+    "id": "q9f1",
+    "z": 2,
+    "y": 5,
+    "parent": "Barrel"
+  },
+  "Wheat": {
+    "type": "holder",
+    "id": "Wheat",
+    "dropTarget": {
+      "cardType": "wheat"
+    },
+    "width": 30,
+    "z": 21,
+    "y": 923.5,
+    "stackOffsetY": 5,
+    "height": 75,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "expansion": 2,
+    "x": 32
+  },
+  "Barrel": {
+    "type": "holder",
+    "id": "Barrel",
+    "x": 2,
+    "y": 923.5,
+    "inheritFrom": "Wheat",
+    "dropTarget": {
+      "cardType": "barrel"
+    }
+  },
+  "Cloth": {
+    "type": "holder",
+    "id": "Cloth",
+    "x": 62,
+    "y": 923.5,
+    "dropTarget": {
+      "cardType": "cloth"
+    },
+    "inheritFrom": "Wheat",
+    "z": 20
+  },
+  "Draw Label": {
+    "type": "label",
+    "id": "Draw Label",
+    "parent": "draw",
+    "x": -11,
+    "y": -20,
+    "text": "Draw"
+  },
+  "Peek Label": {
+    "type": "label",
+    "id": "Peek Label",
+    "x": -11,
+    "y": -20,
+    "inheritFrom": "Draw Label",
+    "text": "Peek",
+    "parent": "hand"
+  },
+  "Player 1 - Barrels": {
+    "type": "holder",
+    "id": "Player 1 - Barrels",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Barrel",
+    "parent": "Player 1",
+    "layer": 9,
+    "fixedParent": true,
+    "classes": "transparent",
+    "height": 30,
+    "width": 120,
+    "dropTarget": {
+      "deck": "Bonus Deck"
+    },
+    "stackOffsetX": 10,
+    "stackOffsetY": 0
+  },
+  "Player 2 - Barrels": {
+    "type": "holder",
+    "id": "Player 2 - Barrels",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Barrel",
+    "parent": "Player 2",
+    "layer": 9,
+    "fixedParent": true,
+    "classes": "transparent",
+    "height": 30,
+    "width": 120,
+    "dropTarget": {
+      "deck": "Bonus Deck"
+    },
+    "z": 21,
+    "stackOffsetX": 10,
+    "stackOffsetY": 0
+  },
+  "Player 3 - Barrels": {
+    "type": "holder",
+    "id": "Player 3 - Barrels",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Barrel",
+    "parent": "Player 3",
+    "layer": 9,
+    "fixedParent": true,
+    "classes": "transparent",
+    "height": 30,
+    "width": 120,
+    "dropTarget": {
+      "deck": "Bonus Deck"
+    },
+    "stackOffsetX": 10,
+    "stackOffsetY": 0
+  },
+  "Player 4 - Barrels": {
+    "type": "holder",
+    "id": "Player 4 - Barrels",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Barrel",
+    "parent": "Player 4",
+    "layer": 9,
+    "fixedParent": true,
+    "classes": "transparent",
+    "height": 30,
+    "width": 120,
+    "dropTarget": {
+      "deck": "Bonus Deck"
+    },
+    "stackOffsetX": 10,
+    "stackOffsetY": 0
+  },
+  "Player 5 - Barrels": {
+    "type": "holder",
+    "id": "Player 5 - Barrels",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Barrel",
+    "parent": "Player 5",
+    "layer": 9,
+    "fixedParent": true,
+    "classes": "transparent",
+    "height": 30,
+    "width": 120,
+    "dropTarget": {
+      "deck": "Bonus Deck"
+    },
+    "stackOffsetX": 10,
+    "stackOffsetY": 0
+  },
+  "Player 6 - Barrels": {
+    "type": "holder",
+    "id": "Player 6 - Barrels",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Barrel",
+    "parent": "Player 6",
+    "layer": 9,
+    "fixedParent": true,
+    "classes": "transparent",
+    "height": 30,
+    "width": 120,
+    "dropTarget": {
+      "deck": "Bonus Deck"
+    },
+    "stackOffsetX": 10,
+    "stackOffsetY": 0
+  },
+  "Player 7 - Barrels": {
+    "type": "holder",
+    "id": "Player 7 - Barrels",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Barrel",
+    "parent": "Player 7",
+    "layer": 9,
+    "fixedParent": true,
+    "classes": "transparent",
+    "height": 30,
+    "width": 120,
+    "dropTarget": {
+      "deck": "Bonus Deck"
+    },
+    "stackOffsetX": 10,
+    "stackOffsetY": 0
+  },
+  "Player 8 - Barrels": {
+    "type": "holder",
+    "id": "Player 8 - Barrels",
+    "x": 0,
+    "y": 15,
+    "inheritFrom": "Barrel",
+    "parent": "Player 8",
+    "layer": 9,
+    "fixedParent": true,
+    "classes": "transparent",
+    "height": 30,
+    "width": 120,
+    "dropTarget": {
+      "deck": "Bonus Deck"
+    },
+    "stackOffsetX": 10,
+    "stackOffsetY": 0
+  }
+}

@@ -1,0 +1,1907 @@
+{
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Best Guess",
+      "image": "/assets/2016798349_34683",
+      "rules": "",
+      "bgg": "https://www.boardgamegeek.com/boardgame/254640/just-one",
+      "year": "2018",
+      "mode": "coop",
+      "time": "20",
+      "attribution": "Room layout and all room elements by LawDawg96 and released to the Public Domain by CC0.  List of nouns randomly generated from https://www.randomlists.com/nouns, https://randomwordgenerator.com/noun.php, and https://jimpix.co.uk/words/word-generator.asp.\n\nBackground available under the Pixabay license: https://pixabay.com/photos/texture-handwriting-s%c3%bctterlin-1362873/.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"pantomime charades game charcoal art --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Just One",
+      "similarAwards": "2021 Bulgarian Board Game Awards Game of the Year Nominee\n2021 Bulgarian Board Game Awards Bulgarian Game of the Year Winner\n2020/2021 Årets Spill Best Party Game Nominee\n2020 Japan Boardgame Prize Voters' Selection Nominee\n2020 Hungarian Board Game Award Special Prize Winner\n2020 Guldbrikken Best Parlor Game Winner\n2019 Tric Trac Nominee\n2019 Swiss Gamers Award Nominee\n2019 Swiss Gamers Award Kids Nominee\n2019 Spiel des Jahres Winner\n2019 Palme d'Argent for Best Party Game\n2019 Lys Grand Public Finalist\n2019 Juego del Año Recommended\n2019 International Gamers Award - General Strategy: Multi-player Nominee\n2019 Fairplay À la carte Runner-up\n2019 American Tabletop Casual Games Recommended\n2019 5 Seasons Best International Party&Coop Nominee\n2018 Meeples' Choice Nominee\n2018 Golden Geek Best Party Game Nominee\n2018 Golden Geek Best Cooperative Game Nominee\n2018 Cardboard Republic Socializer Laurel Nominee",
+      "description": "Cooperative game where one player guesses word based on clues provided by other players. Try to get as many correct as possible.",
+      "showName": true,
+      "lastUpdate": 1637895026000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-8",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": ""
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 75,
+    "y": 110,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "classes": "handwriting_casual_font",
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 75,
+    "y": 224,
+    "movableInEdit": false,
+    "index": 2,
+    "hideWhenUnused": true,
+    "classes": "handwriting_casual_font",
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 75,
+    "y": 338,
+    "movableInEdit": false,
+    "index": 3,
+    "hideWhenUnused": true,
+    "classes": "handwriting_casual_font",
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 75,
+    "y": 452,
+    "movableInEdit": false,
+    "index": 4,
+    "hideWhenUnused": true,
+    "classes": "handwriting_casual_font",
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "x": 75,
+    "y": 567,
+    "movableInEdit": false,
+    "index": 5,
+    "hideWhenUnused": true,
+    "classes": "handwriting_casual_font",
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "x": 75,
+    "y": 681,
+    "movableInEdit": false,
+    "index": 6,
+    "hideWhenUnused": true,
+    "classes": "handwriting_casual_font",
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+  },
+  "seat7": {
+    "type": "seat",
+    "id": "seat7",
+    "x": 75,
+    "y": 795,
+    "movableInEdit": false,
+    "index": 7,
+    "hideWhenUnused": true,
+    "classes": "handwriting_casual_font",
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+  },
+  "seat8": {
+    "type": "seat",
+    "id": "seat8",
+    "x": 75,
+    "y": 910,
+    "movableInEdit": false,
+    "index": 8,
+    "hideWhenUnused": true,
+    "classes": "handwriting_casual_font",
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+  },
+  "startButton": {
+    "type": "button",
+    "id": "startButton",
+    "width": 65,
+    "height": 65,
+    "z": 935,
+    "movableInEdit": false,
+    "backgroundColor": "black",
+    "backgroundColorOH": "white",
+    "borderColor": "white",
+    "borderColorOH": "black",
+    "textColorOH": "black",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Preparing to start...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You are about to begin or reset the game.  Are you sure?"
+          }
+        ]
+      },
+      {
+        "note": "Call various reset functions",
+        "func": "CALL",
+        "routine": "zzResetSeatRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "zzResetCluesRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "zzResetButtonsRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "zzResetScoreRoutine"
+      },
+      {
+        "note": "Get and set active seats into array.",
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "id",
+        "variable": "activeSeats"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeSeats",
+        "value": "${activeSeats}"
+      },
+      {
+        "note": "Pick a random seat from the active seats and set the turn to true"
+      },
+      "var activeSeatCount = ${activeSeats} length",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeSeatCount",
+        "value": "${activeSeatCount}"
+      },
+      "var activeSeatCount = ${activeSeatCount} - 1",
+      "var randomSeatIndex = randInt 0 ${activeSeatCount}",
+      "var activeSeatID = ${activeSeats} getIndex ${randomSeatIndex}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${activeSeatID}",
+        "collection": "seatTurn"
+      },
+      {
+        "func": "SET",
+        "collection": "seatTurn",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "CALL",
+        "routine": "zzAssignWordRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "Restart"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "nextInstructionButton"
+        ]
+      }
+    ],
+    "wordArray": [
+      "accident",
+      "account",
+      "act",
+      "actor",
+      "affair",
+      "afternoon",
+      "afterthought",
+      "agency",
+      "agreement",
+      "air",
+      "airline",
+      "airport",
+      "alarm",
+      "alcohol",
+      "amount",
+      "analysis",
+      "analyst",
+      "anxiety",
+      "apartment",
+      "appliance",
+      "arch",
+      "area",
+      "arithmetic",
+      "arrival",
+      "art",
+      "article",
+      "aside",
+      "assignment",
+      "atmosphere",
+      "attack",
+      "attitude",
+      "authority",
+      "balance",
+      "base",
+      "baseball",
+      "basin",
+      "basis",
+      "bath",
+      "bathroom",
+      "bear",
+      "bedroom",
+      "beer",
+      "beginning",
+      "belief",
+      "bell",
+      "benefit",
+      "berry",
+      "beyond",
+      "bird",
+      "birthday",
+      "bite",
+      "blame",
+      "blood",
+      "bone",
+      "bonus",
+      "books",
+      "border",
+      "boss",
+      "bother",
+      "boundary",
+      "box",
+      "boyfriend",
+      "brake",
+      "brass",
+      "bread",
+      "breakfast",
+      "breath",
+      "brother",
+      "butter",
+      "buyer",
+      "cactus",
+      "camera",
+      "camp",
+      "campaign",
+      "canvas",
+      "car",
+      "career",
+      "cast",
+      "celebration",
+      "celery",
+      "cellar",
+      "cemetery",
+      "cent",
+      "championship",
+      "chance",
+      "channel",
+      "character",
+      "cheese",
+      "cherry",
+      "chicken",
+      "childhood",
+      "chocolate",
+      "church",
+      "circle",
+      "city",
+      "class",
+      "classroom",
+      "client",
+      "closet",
+      "clothes",
+      "clue",
+      "coal",
+      "coast",
+      "cobweb",
+      "collection",
+      "commercial",
+      "commission",
+      "committee",
+      "communication",
+      "community",
+      "competition",
+      "complaint",
+      "computer",
+      "concert",
+      "conclusion",
+      "confidence",
+      "conflict",
+      "confusion",
+      "connection",
+      "construction",
+      "contest",
+      "contract",
+      "copper",
+      "corner",
+      "country",
+      "county",
+      "courage",
+      "court",
+      "cousin",
+      "crack",
+      "cream",
+      "creature",
+      "criticism",
+      "crook",
+      "cub",
+      "currency",
+      "curtain",
+      "cushion",
+      "customer",
+      "data",
+      "day",
+      "debt",
+      "decision",
+      "definition",
+      "degree",
+      "delivery",
+      "department",
+      "deposit",
+      "depression",
+      "depth",
+      "desire",
+      "desk",
+      "destruction",
+      "device",
+      "diamond",
+      "dime",
+      "direction",
+      "disaster",
+      "discipline",
+      "discount",
+      "discussion",
+      "district",
+      "doctor",
+      "door",
+      "downtown",
+      "drain",
+      "drama",
+      "drawer",
+      "drawing",
+      "drink",
+      "driver",
+      "duck",
+      "economy",
+      "edge",
+      "elbow",
+      "election",
+      "elevator",
+      "emergency",
+      "emotion",
+      "employee",
+      "employer",
+      "engine",
+      "entrance",
+      "error",
+      "essay",
+      "establishment",
+      "estate",
+      "examination",
+      "exit",
+      "experience",
+      "fact",
+      "family",
+      "fang",
+      "father",
+      "fear",
+      "fee",
+      "feedback",
+      "feeling",
+      "final",
+      "finish",
+      "flame",
+      "flesh",
+      "flock",
+      "floor",
+      "flower",
+      "fly",
+      "fork",
+      "fortune",
+      "foundation",
+      "frame",
+      "freedom",
+      "friendship",
+      "frog",
+      "front",
+      "fruit",
+      "funeral",
+      "garage",
+      "garbage",
+      "ghost",
+      "girl",
+      "girlfriend",
+      "glad",
+      "glass",
+      "god",
+      "goose",
+      "government",
+      "grain",
+      "grandmother",
+      "guest",
+      "guitar",
+      "guy",
+      "hair",
+      "hand",
+      "harbor",
+      "head",
+      "highway",
+      "historian",
+      "history",
+      "hole",
+      "holiday",
+      "homework",
+      "honey",
+      "hook",
+      "horse",
+      "hose",
+      "hospital",
+      "hour",
+      "house",
+      "income",
+      "individual",
+      "inflation",
+      "initiative",
+      "injury",
+      "insect",
+      "inspector",
+      "insurance",
+      "interview",
+      "investment",
+      "joint",
+      "judgment",
+      "juice",
+      "jury",
+      "kid",
+      "kiss",
+      "lace",
+      "lady",
+      "language",
+      "laugh",
+      "layer",
+      "leader",
+      "leg",
+      "lesson",
+      "lettuce",
+      "level",
+      "library",
+      "line",
+      "literature",
+      "loaf",
+      "magazine",
+      "magic",
+      "mall",
+      "manager",
+      "manner",
+      "manufacturer",
+      "mark",
+      "market",
+      "marriage",
+      "math",
+      "meal",
+      "measurement",
+      "meat",
+      "medicine",
+      "member",
+      "men",
+      "menu",
+      "metal",
+      "middle",
+      "mind",
+      "mint",
+      "mist",
+      "mistake",
+      "mixture",
+      "mom",
+      "money",
+      "month",
+      "mood",
+      "moon",
+      "mortgage",
+      "movie",
+      "mud",
+      "music",
+      "nation",
+      "needle",
+      "news",
+      "obligation",
+      "observation",
+      "occasion",
+      "office",
+      "oil",
+      "opening",
+      "operation",
+      "opinion",
+      "organization",
+      "outcome",
+      "oven",
+      "owner",
+      "page",
+      "pail",
+      "painting",
+      "pan",
+      "pancake",
+      "paper",
+      "party",
+      "passenger",
+      "path",
+      "payment",
+      "pen",
+      "penalty",
+      "pencil",
+      "pension",
+      "people",
+      "percentage",
+      "performance",
+      "person",
+      "personality",
+      "pest",
+      "pet",
+      "philosophy",
+      "phone",
+      "phrase",
+      "pickle",
+      "picture",
+      "piece",
+      "pin",
+      "pizza",
+      "place",
+      "plantation",
+      "platform",
+      "playground",
+      "poem",
+      "poet",
+      "point",
+      "policy",
+      "pollution",
+      "popcorn",
+      "population",
+      "potato",
+      "powder",
+      "power",
+      "president",
+      "price",
+      "priest",
+      "problem",
+      "procedure",
+      "produce",
+      "profession",
+      "professor",
+      "profit",
+      "promotion",
+      "property",
+      "proposal",
+      "prose",
+      "protection",
+      "pump",
+      "question",
+      "quicksand",
+      "rabbit",
+      "rain",
+      "rat",
+      "ratio",
+      "reaction",
+      "reception",
+      "recording",
+      "reference",
+      "reflection",
+      "refrigerator",
+      "region",
+      "relationship",
+      "rent",
+      "replacement",
+      "representative",
+      "republic",
+      "requirement",
+      "resident",
+      "resolution",
+      "resort",
+      "restaurant",
+      "revenue",
+      "review",
+      "revolution",
+      "reward",
+      "rice",
+      "river",
+      "rock",
+      "rod",
+      "roof",
+      "root",
+      "rule",
+      "rust",
+      "salad",
+      "sale",
+      "sample",
+      "scene",
+      "schedule",
+      "screw",
+      "sea",
+      "season",
+      "secretary",
+      "security",
+      "seed",
+      "sentence",
+      "series",
+      "setting",
+      "shake",
+      "shape",
+      "sheep",
+      "sheet",
+      "shine",
+      "ship",
+      "shirt",
+      "shoe",
+      "show",
+      "sidewalk",
+      "sign",
+      "silk",
+      "silver",
+      "singer",
+      "sister",
+      "skill",
+      "smell",
+      "snail",
+      "snake",
+      "sneeze",
+      "sock",
+      "son",
+      "song",
+      "soup",
+      "space",
+      "spade",
+      "spark",
+      "specialist",
+      "spoon",
+      "spy",
+      "squirrel",
+      "stage",
+      "stamp",
+      "star",
+      "steam",
+      "steel",
+      "step",
+      "stocking",
+      "story",
+      "stove",
+      "stranger",
+      "street",
+      "struggle",
+      "studio",
+      "suggestion",
+      "survey",
+      "system",
+      "tank",
+      "task",
+      "tax",
+      "teacher",
+      "television",
+      "tennis",
+      "test",
+      "texture",
+      "thanks",
+      "theme",
+      "thing",
+      "throat",
+      "thumb",
+      "tin",
+      "title",
+      "tomorrow",
+      "tone",
+      "tonight",
+      "toothbrush",
+      "town",
+      "trade",
+      "traffic",
+      "trick",
+      "trip",
+      "trousers",
+      "truth",
+      "tub",
+      "tune",
+      "twig",
+      "uncle",
+      "union",
+      "unit",
+      "upstairs",
+      "usual",
+      "value",
+      "vase",
+      "veil",
+      "video",
+      "village",
+      "virus",
+      "visitor",
+      "volcano",
+      "wall",
+      "wash",
+      "week",
+      "weekend",
+      "wife",
+      "window",
+      "wine",
+      "witness",
+      "woman",
+      "worker",
+      "world",
+      "worm",
+      "writing",
+      "year",
+      "yesterday"
+    ],
+    "activeSeats": [
+      "seat1",
+      "seat3",
+      "seat8"
+    ],
+    "zzResetSeatRoutine": [
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "seat"
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false
+      }
+    ],
+    "zzRemoveWordRoutine": [
+      "var wordArray = remove ${randomWordIndex} 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "wordArray",
+        "value": "${wordArray}"
+      }
+    ],
+    "zzResetCluesRoutine": [
+      {
+        "func": "SELECT",
+        "relation": "in",
+        "property": "id",
+        "value": [
+          "clueSeat1",
+          "clueSeat2",
+          "clueSeat3",
+          "clueSeat4",
+          "clueSeat5",
+          "clueSeat6",
+          "clueSeat7",
+          "clueSeat8"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 200
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "?"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "clueShow1",
+          "clueShow2",
+          "clueShow3",
+          "clueShow4",
+          "clueShow5",
+          "clueShow6",
+          "clueShow7",
+          "clueShow8"
+        ],
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "labelWaiting"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "submitCountButton"
+        ],
+        "property": "text",
+        "value": 0
+      }
+    ],
+    "activeSeatCount": 3,
+    "zzAssignWordRoutine": [
+      {
+        "note": "Move the clue label for active player off board.",
+        "func": "SELECT",
+        "relation": "in",
+        "property": "id",
+        "value": [
+          "clueSeat1",
+          "clueSeat2",
+          "clueSeat3",
+          "clueSeat4",
+          "clueSeat5",
+          "clueSeat6",
+          "clueSeat7",
+          "clueSeat8"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": "${activeSeatID}"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "note": "Move the word label to the active seat.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "labelWord"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${activeSeatID}"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 200
+      },
+      {
+        "note": "Move the waiting label to the active seat and set its visibility.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "labelWaiting"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${activeSeatID}"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 200
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "${activeSeatID}"
+      },
+      {
+        "note": "Get a random word, set it to the word label, and set visibility for the label."
+      },
+      "var wordArray = ${PROPERTY wordArray}",
+      "var wordArrayCount = ${wordArray} length",
+      "var wordArrayCount = ${wordArrayCount} - 1",
+      "var randomWordIndex = randInt 0 ${wordArrayCount}",
+      "var randomWord = ${PROPERTY wordArray} getIndex ${randomWordIndex}",
+      {
+        "func": "LABEL",
+        "label": "labelWord",
+        "value": "${randomWord}"
+      },
+      {
+        "note": "This removes the word so it will not be used again.",
+        "func": "CALL",
+        "routine": "zzRemoveWordRoutine"
+      },
+      "var wordVisArray = []",
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY activeSeats}",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "operand2": "${activeSeatID}",
+            "thenRoutine": [],
+            "elseRoutine": [
+              "var wordVisArray = ${wordVisArray} concatArray ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "labelWord"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${wordVisArray}"
+      }
+    ],
+    "zzResetButtonsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "submitCountButton"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "revealCluesButton"
+        ],
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "revealAllButton"
+        ],
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "nextRoundButton"
+        ],
+        "property": "x",
+        "value": 1700
+      }
+    ],
+    "x": 1535,
+    "css": "font-size: 15px; box-shadow:0 20px 15px #9B7468",
+    "zzResetScoreRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score",
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": "roundsLeft",
+        "value": 13
+      }
+    ],
+    "classes": "handwriting_casual_font",
+    "text": "Play"
+  },
+  "labelWord": {
+    "id": "labelWord",
+    "z": 6,
+    "width": 300,
+    "css": "background: #9b7468; color: white; font-size:25px; text-align: center;line-height: 3; border:2px solid #44332d; border-radius:5%; box-shadow: 0 20px 15px #9B7468;line-height:25px; display: flex; flex-direction: column;justify-content:center;",
+    "height": 80,
+    "layer": 3,
+    "onlyVisibleForSeat": [
+      "seat3"
+    ],
+    "x": 1700,
+    "y": -20,
+    "parent": "seat3",
+    "movableInEdit": false,
+    "movable": false,
+    "classes": "handwriting_casual_font"
+  },
+  "clueSeat1": {
+    "type": "label",
+    "id": "clueSeat1",
+    "x": 1700,
+    "width": 300,
+    "height": 80,
+    "z": 1,
+    "css": "font-size: 25px;color: black; background: #ffffffaa;text-align: center;line-height: 2.4; border: 2px solid #9b7468;border-radius:5%;box-shadow: 0 20px 15px #9B7468;line-height:75px; display: flex; flex-direction: column;justify-content:center;",
+    "editable": true,
+    "fixedParent": true,
+    "parent": "seat1",
+    "y": -20,
+    "onlyVisibleForSeat": "seat1",
+    "movableInEdit": false,
+    "classes": "handwriting_casual_font",
+    "text": "?"
+  },
+  "clueSeat2": {
+    "inheritFrom": "clueSeat1",
+    "id": "clueSeat2",
+    "type": "label",
+    "x": 200,
+    "y": -20,
+    "parent": "seat2",
+    "text": "?",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "clueSeat3": {
+    "inheritFrom": "clueSeat1",
+    "id": "clueSeat3",
+    "type": "label",
+    "x": 1700,
+    "y": -20,
+    "parent": "seat3",
+    "text": "?",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "clueSeat4": {
+    "inheritFrom": "clueSeat1",
+    "id": "clueSeat4",
+    "type": "label",
+    "x": 1700,
+    "y": -20,
+    "parent": "seat4",
+    "text": "?",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "clueSeat5": {
+    "inheritFrom": "clueSeat1",
+    "id": "clueSeat5",
+    "type": "label",
+    "x": 1700,
+    "y": -20,
+    "parent": "seat5",
+    "text": "?",
+    "onlyVisibleForSeat": "seat5"
+  },
+  "clueSeat6": {
+    "inheritFrom": "clueSeat1",
+    "id": "clueSeat6",
+    "type": "label",
+    "x": 1700,
+    "y": -20,
+    "parent": "seat6",
+    "text": "?",
+    "onlyVisibleForSeat": "seat6"
+  },
+  "clueSeat7": {
+    "inheritFrom": "clueSeat1",
+    "id": "clueSeat7",
+    "type": "label",
+    "x": 1700,
+    "y": -20,
+    "parent": "seat7",
+    "onlyVisibleForSeat": "seat7",
+    "activeFace": 1,
+    "text": "?"
+  },
+  "clueSeat8": {
+    "inheritFrom": "clueSeat1",
+    "id": "clueSeat8",
+    "type": "label",
+    "x": 1700,
+    "y": -20,
+    "parent": "seat8",
+    "onlyVisibleForSeat": "seat8",
+    "activeFace": 1,
+    "text": "?"
+  },
+  "submitButton1": {
+    "type": "button",
+    "id": "submitButton1",
+    "parent": "clueSeat1",
+    "fixedParent": true,
+    "x": 350,
+    "y": 20,
+    "width": 100,
+    "height": 40,
+    "z": 937,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "submitCountButton",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "x",
+        "value": 1700
+      }
+    ],
+    "css": "font-size: 18px; box-shadow:0 20px 15px #9B7468",
+    "text": "Submit",
+    "backgroundColor": "#9B7468",
+    "backgroundColorOH": "#44332d",
+    "borderColor": "#44332d",
+    "borderColorOH": "#9B7468"
+  },
+  "submitCountButton": {
+    "type": "button",
+    "id": "submitCountButton",
+    "x": 98,
+    "y": 1051,
+    "z": 950,
+    "activeFace": 1,
+    "text": 0,
+    "textChangeRoutine": [
+      "var activeSeatCountMinus = ${PROPERTY activeSeatCount OF startButton} - 1",
+      "var text = ${PROPERTY text}",
+      {
+        "func": "IF",
+        "operand1": "${activeSeatCountMinus}",
+        "operand2": "${text}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "clueSeat1",
+              "clueSeat2",
+              "clueSeat3",
+              "clueSeat4",
+              "clueSeat5",
+              "clueSeat6",
+              "clueSeat7",
+              "clueSeat8"
+            ],
+            "property": "x",
+            "value": 1700
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "clueShow1",
+              "clueShow2",
+              "clueShow3",
+              "clueShow4",
+              "clueShow5",
+              "clueShow6",
+              "clueShow7",
+              "clueShow8"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": 200
+          },
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "value": "${PROPERTY onlyVisibleForSeat OF labelWord}"
+          },
+          {
+            "func": "CLICK"
+          },
+          {
+            "note": "Show buttons",
+            "func": "SET",
+            "collection": [
+              "revealCluesButton"
+            ],
+            "property": "x",
+            "value": 1395
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "nextInstructionButton"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "submitButton2": {
+    "inheritFrom": "submitButton1",
+    "id": "submitButton2",
+    "type": "button",
+    "x": 350,
+    "y": 20,
+    "parent": "clueSeat2"
+  },
+  "submitButton3": {
+    "inheritFrom": "submitButton1",
+    "id": "submitButton3",
+    "type": "button",
+    "x": 350,
+    "y": 20,
+    "parent": "clueSeat3"
+  },
+  "submitButton4": {
+    "inheritFrom": "submitButton1",
+    "id": "submitButton4",
+    "type": "button",
+    "x": 350,
+    "y": 20,
+    "parent": "clueSeat4"
+  },
+  "submitButton5": {
+    "inheritFrom": "submitButton1",
+    "id": "submitButton5",
+    "type": "button",
+    "x": 350,
+    "y": 20,
+    "parent": "clueSeat5"
+  },
+  "submitButton6": {
+    "inheritFrom": "submitButton1",
+    "id": "submitButton6",
+    "type": "button",
+    "x": 350,
+    "y": 20,
+    "parent": "clueSeat6"
+  },
+  "submitButton7": {
+    "inheritFrom": "submitButton1",
+    "id": "submitButton7",
+    "type": "button",
+    "x": 350,
+    "y": 20,
+    "parent": "clueSeat7"
+  },
+  "submitButton8": {
+    "inheritFrom": "submitButton1",
+    "id": "submitButton8",
+    "type": "button",
+    "x": 350,
+    "y": 20,
+    "parent": "clueSeat8"
+  },
+  "clueShow1": {
+    "id": "clueShow1",
+    "x": 1700,
+    "y": -20,
+    "width": 300,
+    "height": 80,
+    "z": 6,
+    "clickRoutine": [
+      "var linkedTo = ${PROPERTY linkedTo}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${PROPERTY text OF $linkedTo}"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "faces": [
+      {
+        "css": "font-size: 25px;background: #ffffffaa; color: black; text-align: center;line-height: 2.4;border: 2px solid black; border-radius:5%;box-shadow: 0 20px 15px #9B7468; display: flex; flex-direction: column;justify-content:center;"
+      },
+      {
+        "text": "",
+        "css": "font-size: 25px;background: repeating-linear-gradient(45deg, #ffffff10, #ffffff10 10px, #c2aba4 10px, #c2aba4 20px); color: black; text-align: center;line-height: 2.4;border: 2px solid #9b7468; border-radius:5%;box-shadow: 0 20px 15px #9B7468; display: flex; flex-direction: column;justify-content:center;"
+      }
+    ],
+    "parent": "seat1",
+    "fixedParent": true,
+    "linkedTo": "clueSeat1",
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [
+      "seat1"
+    ],
+    "movable": false,
+    "classes": "handwriting_casual_font",
+    "text": "?"
+  },
+  "clueShow2": {
+    "inheritFrom": "clueShow1",
+    "id": "clueShow2",
+    "css": "font-size: 30px;background: white; color: black; text-align: center;line-height: 2.4;border: 2px solid green; border-radius:5%;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
+    "parent": "seat2",
+    "linkedTo": "clueSeat2",
+    "x": 1700,
+    "activeFace": 0,
+    "text": "?",
+    "onlyVisibleForSeat": [
+      "seat2"
+    ]
+  },
+  "clueShow3": {
+    "inheritFrom": "clueShow1",
+    "id": "clueShow3",
+    "css": "font-size: 25px;background: repeating-linear-gradient(45deg, #ffffff10, #ffffff10 10px, #c2aba4 10px, #c2aba4 20px); color: black; text-align: center;line-height: 2.4;border: 2px solid #9b7468; border-radius:5%;box-shadow: 0 20px 15px #9B7468; display: flex; flex-direction: column;justify-content:center;",
+    "parent": "seat3",
+    "linkedTo": "clueSeat3",
+    "x": 1700,
+    "activeFace": 0,
+    "text": "",
+    "onlyVisibleForSeat": [
+      "seat3"
+    ]
+  },
+  "clueShow4": {
+    "inheritFrom": "clueShow1",
+    "id": "clueShow4",
+    "css": "font-size: 30px;background: white; color: black; text-align: center;line-height: 2.4;border: 2px solid green; border-radius:5%;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
+    "parent": "seat4",
+    "linkedTo": "clueSeat4",
+    "x": 1700,
+    "activeFace": 0,
+    "text": "?",
+    "onlyVisibleForSeat": [
+      "seat4"
+    ]
+  },
+  "clueShow5": {
+    "inheritFrom": "clueShow1",
+    "id": "clueShow5",
+    "css": "font-size: 30px;background: white; color: black; text-align: center;line-height: 2.4;border: 2px solid green; border-radius:5%;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
+    "parent": "seat5",
+    "linkedTo": "clueSeat5",
+    "x": 1700,
+    "activeFace": 0,
+    "text": "?",
+    "onlyVisibleForSeat": [
+      "seat5"
+    ]
+  },
+  "clueShow6": {
+    "inheritFrom": "clueShow1",
+    "id": "clueShow6",
+    "css": "font-size: 30px;background: white; color: black; text-align: center;line-height: 2.4;border: 2px solid green; border-radius:5%;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
+    "parent": "seat6",
+    "linkedTo": "clueSeat6",
+    "x": 1700,
+    "activeFace": 0,
+    "text": "?",
+    "onlyVisibleForSeat": [
+      "seat6"
+    ]
+  },
+  "clueShow7": {
+    "inheritFrom": "clueShow1",
+    "id": "clueShow7",
+    "css": "font-size: 30px;background: white; color: black; text-align: center;line-height: 2.4;border: 2px solid green; border-radius:5%;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
+    "parent": "seat7",
+    "linkedTo": "clueSeat7",
+    "x": 1700,
+    "activeFace": 0,
+    "text": "?",
+    "onlyVisibleForSeat": [
+      "seat7"
+    ]
+  },
+  "clueShow8": {
+    "inheritFrom": "clueShow1",
+    "id": "clueShow8",
+    "css": "font-size: 30px;background: white; color: black; text-align: center;line-height: 2.4;border: 2px solid green; border-radius:5%;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
+    "parent": "seat8",
+    "linkedTo": "clueSeat8",
+    "x": 1700,
+    "activeFace": 0,
+    "text": "?",
+    "onlyVisibleForSeat": [
+      "seat8"
+    ]
+  },
+  "revealCluesButton": {
+    "type": "button",
+    "id": "revealCluesButton",
+    "x": 1700,
+    "y": 915,
+    "width": 200,
+    "z": 951,
+    "clickRoutine": [
+      {
+        "note": "Set visibility of clues so all players can see them.",
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "clueShow1",
+          "clueShow2",
+          "clueShow3",
+          "clueShow4",
+          "clueShow5",
+          "clueShow6",
+          "clueShow7",
+          "clueShow8"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "${PROPERTY activeSeats OF startButton}"
+      },
+      {
+        "note": "Move the clue for active player off board.",
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "activeSeatID"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${activeSeatID}"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "note": "Move the waiting label off board.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "labelWaiting"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "note": "Swap buttons.",
+        "func": "SET",
+        "collection": [
+          "revealAllButton"
+        ],
+        "property": "x",
+        "value": 1395
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "nextInstructionButton"
+        ]
+      }
+    ],
+    "css": "font-size: 25px; box-shadow:0 20px 15px #9B7468",
+    "text": "Reveal Clues",
+    "backgroundColor": "#9B7468",
+    "backgroundColorOH": "#44332d",
+    "borderColor": "#44332d",
+    "borderColorOH": "#9B7468"
+  },
+  "revealAllButton": {
+    "type": "button",
+    "id": "revealAllButton",
+    "x": 1700,
+    "y": 915,
+    "width": 200,
+    "z": 952,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "labelWord"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "${PROPERTY activeSeats OF startButton}"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 200
+      },
+      {
+        "note": "Swap buttons.",
+        "func": "SET",
+        "collection": [
+          "nextRoundButton"
+        ],
+        "property": "x",
+        "value": 1395
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "note": "Flip all cards face up.",
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "clueShow1",
+          "clueShow2",
+          "clueShow3",
+          "clueShow4",
+          "clueShow5",
+          "clueShow6",
+          "clueShow7",
+          "clueShow8"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "nextInstructionButton"
+        ]
+      }
+    ],
+    "css": "font-size: 25px; box-shadow:0 20px 15px #9B7468",
+    "text": "Reveal All",
+    "backgroundColor": "#9B7468",
+    "backgroundColorOH": "#44332d",
+    "borderColor": "#44332d",
+    "borderColorOH": "#9B7468"
+  },
+  "nextRoundButton": {
+    "type": "button",
+    "id": "nextRoundButton",
+    "x": 1700,
+    "y": 915,
+    "width": 200,
+    "z": 948,
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "thisTurn"
+      },
+      {
+        "func": "CALL",
+        "widget": "startButton",
+        "routine": "zzResetCluesRoutine"
+      },
+      {
+        "func": "CALL",
+        "widget": "startButton",
+        "routine": "zzAssignWordRoutine",
+        "arguments": {
+          "activeSeatID": "${thisTurn}"
+        }
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "nextInstructionButton"
+        ],
+        "count": 2
+      }
+    ],
+    "css": "font-size: 25px; box-shadow:0 20px 15px #9B7468",
+    "text": "Next Round",
+    "backgroundColor": "#9B7468",
+    "backgroundColorOH": "#44332d",
+    "borderColor": "#44332d",
+    "borderColorOH": "#9B7468"
+  },
+  "labelWaiting": {
+    "id": "labelWaiting",
+    "parent": "seat3",
+    "x": 1700,
+    "y": -20,
+    "width": 300,
+    "height": 80,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background: #9b7468; color: white; font-size:25px; text-align: center;line-height: 3; border:2px solid #44332d; border-radius:5%; box-shadow: 0 20px 15px #9B7468;line-height:25px; display: flex; flex-direction: column;justify-content:center;",
+    "onlyVisibleForSeat": "seat3",
+    "text": "Waiting on other players",
+    "classes": "handwriting_casual_font"
+  },
+  "7yekD": {
+    "id": "7yekD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score",
+    "css": "box-shadow:0 20px 15px #9B7468",
+    "backgroundColor": "#9B7468",
+    "backgroundColorOH": "#44332d",
+    "borderColor": "#44332d",
+    "borderColorOH": "#9B7468"
+  },
+  "7yekU": {
+    "id": "7yekU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score",
+    "css": "box-shadow:0 20px 15px #9B7468",
+    "backgroundColor": "#9B7468",
+    "backgroundColorOH": "#44332d",
+    "borderColor": "#44332d",
+    "borderColorOH": "#9B7468"
+  },
+  "score": {
+    "type": "label",
+    "id": "score",
+    "x": 1470,
+    "y": 650,
+    "width": 65,
+    "height": 40,
+    "z": 4,
+    "css": "font-size: 30px;color: black",
+    "editable": true,
+    "text": 0,
+    "classes": "handwriting_casual_font"
+  },
+  "fy7b": {
+    "id": "fy7b",
+    "z": 7,
+    "x": -45,
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "score",
+    "width": 160,
+    "css": "color: black; border-radius:5%;box-shadow:0 20px 15px #9B7468; line-height:20px; display: flex; flex-direction: column;justify-content:center",
+    "y": -65,
+    "text": "Correct\nGuesses",
+    "height": 50,
+    "classes": "handwriting_casual_font"
+  },
+  "8yekD": {
+    "id": "8yekD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "roundsLeft",
+    "css": "box-shadow:0 20px 15px #9B7468",
+    "backgroundColor": "#9B7468",
+    "backgroundColorOH": "#44332d",
+    "borderColor": "#44332d",
+    "borderColorOH": "#9B7468"
+  },
+  "8yekU": {
+    "id": "8yekU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "roundsLeft",
+    "css": "box-shadow:0 20px 15px #9B7468",
+    "backgroundColor": "#9B7468",
+    "backgroundColorOH": "#44332d",
+    "borderColor": "#44332d",
+    "borderColorOH": "#9B7468"
+  },
+  "fy8b": {
+    "id": "fy8b",
+    "z": 7,
+    "x": -45,
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "width": 160,
+    "y": -65,
+    "height": 50,
+    "text": "Rounds Remaining",
+    "parent": "roundsLeft",
+    "classes": "handwriting_casual_font",
+    "css": "color: black;  border-radius:5%;box-shadow:0 20px 15px #9B7468; line-height:20px; display: flex; flex-direction: column;justify-content:center"
+  },
+  "roundsLeft": {
+    "type": "label",
+    "id": "roundsLeft",
+    "x": 1470,
+    "y": 790,
+    "width": 65,
+    "height": 40,
+    "z": 5,
+    "css": "font-size: 30px;color: black; ",
+    "editable": true,
+    "text": 13,
+    "classes": "handwriting_casual_font"
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "scale": 1.1,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "opacity:10%; filter: grayscale(50%) brightness(90%) blur(1px)",
+    "image": "/assets/395452875_478156"
+  },
+  "ldpr": {
+    "text": "Best Guess",
+    "id": "ldpr",
+    "z": 9,
+    "x": 590,
+    "css": "font-size: 80px;  border-radius:5%;box-shadow:0 20px 15px #9B7468;line-height:80px; display: flex; flex-direction: column;justify-content:center",
+    "classes": "handwriting_casual_font",
+    "width": 420,
+    "height": 80
+  },
+  "instructions": {
+    "id": "instructions",
+    "x": 880,
+    "y": 100,
+    "width": 500,
+    "height": 740,
+    "z": 13,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "handwriting_casual_font",
+    "css": "color: black; background:#ffffffaa;border-radius:5%;box-shadow:0 20px 15px #9B7468; font-size:22px; line-height:22px;padding-left:10px",
+    "text": "                               Instructions\n\n1. When all players are seated, press 'Play' to assign random starting player and word.\n\n2. Non-guessing players write clue in box with a question mark. Press 'Submit'.\n\n3.After all players have submitted, clues are displayed for rules check. Click box to hide clues that violate rules:\n    - same clue provided by multiple players\n    - mystery word written differently\n    - mystery word in foreign language\n    - word from same family as mystery word\n    - invented word\n    - phonetically same but different meaning\n\n4. Press 'Reveal Clues' to show valid clues to the guessing player.\n\n5. Assigned player makes guess.  Then press 'Reveal All'.\n\n6. Adjust score:\n    - If player guessed correctly, add 1 to 'Correct Guesses and decrease 'Rounds Remaining' by 1.\n    - If player guessed incorrectly, decrease 'Rounds Remaining' by 2.\n    - If player did not guess, decrease 'Rounds Remaining' by 1.\n\n7. Press 'Next Round'."
+  },
+  "highlight": {
+    "id": "highlight",
+    "parent": "instructions",
+    "fixedParent": true,
+    "width": 503,
+    "z": 20,
+    "css": "background: #9B7468; border-radius:5%; opacity:60% ",
+    "x": 4.5,
+    "height": 70,
+    "y": 30
+  },
+  "nextInstructionButton": {
+    "type": "button",
+    "id": "nextInstructionButton",
+    "x": 237,
+    "y": 1052,
+    "z": 961,
+    "clickRoutine": [
+      "var pos = ${PROPERTY state} + 1",
+      "var height = ${PROPERTY state} + 1",
+      "var z = ${pos} % 5",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "state",
+        "value": "${z}"
+      }
+    ],
+    "debug": true,
+    "state": 0,
+    "stateChangeRoutine": [
+      "var pos = ${PROPERTY yPosition} getIndex ${PROPERTY state}",
+      "var height = ${PROPERTY yHeight} getIndex ${PROPERTY state}",
+      {
+        "func": "SET",
+        "collection": [
+          "highlight"
+        ],
+        "property": "y",
+        "value": "${pos}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "highlight"
+        ],
+        "property": "height",
+        "value": "${height}"
+      }
+    ],
+    "text": "Next Instruction",
+    "yHeight": [
+      70,
+      70,
+      280,
+      70,
+      210
+    ],
+    "yPosition": [
+      30,
+      100,
+      170,
+      450,
+      520
+    ]
+  }
+}

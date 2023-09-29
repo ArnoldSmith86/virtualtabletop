@@ -33,6 +33,8 @@ class Seat extends Widget {
       displayedText = displayedText.replaceAll('playerName',this.get('player'))
       setText(this.domElement, displayedText);
     }
+
+    this.updateScoreboards(delta)
     if(delta.player !== undefined)
       this.updateLinkedWidgets();
   }
@@ -42,8 +44,8 @@ class Seat extends Widget {
     this.updateLinkedWidgets();
   }
 
-  classes() {
-    let className = super.classes();
+  classes(includeTemporary=true) {
+    let className = super.classes(includeTemporary);
 
     if(this.get('player') != '')
       className += ' seated';
@@ -89,6 +91,17 @@ class Seat extends Widget {
     } else {
       await this.set('player', null);
       await this.set('color', this.get('colorEmpty'));
+    }
+  }
+
+  updateScoreboards(delta) {
+    const seatID = this.get('id');
+    const scoreboard = widgetFilter(w => w.get('type') == 'scoreboard');
+    const deltaProps = Object.keys(delta);
+    for(const board of scoreboard) {
+      const boardProps = board.seatProperties(seatID);
+      if(boardProps.some(p=>deltaProps.includes(p)))
+        board.updateTable();
     }
   }
 

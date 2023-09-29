@@ -1,0 +1,197 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "CSS",
+      "image": "/assets/-1069925580_4501",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1676865317862,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Caution",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "x": 400,
+    "text": "CSS: Caution"
+  },
+  "406b": {
+    "id": "406b",
+    "x": 108,
+    "y": 100,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 2718,
+    "css": "font-size: 23px; ",
+    "text": "CAUTION!!!!!!! Only advanced users that understand the risks should experiment with anything in this room. The demonstrations in this room use a powerful hack that is intentionally not documented in the wiki so casual users will not experiment. Also the methods shown here may not always work as there are plans to change aspects of VTT which may cause games made using this hack not to work properly.\n\nThe demos in this room use a button to switch an effect on or off. It is not necessary to do that in your room. You can simply have a widget with the css you need. It is done here to deomonstrate the differences and to allow the room to be returned to normal."
+  },
+  "bm4j": {
+    "text": "The button above turns the visible cursor marker for other players on and off. To see the effect, open this room in two different windows using incognito mode or a different browser/device for one of he windows. Click the button and notice how other players' cursors are hidden.",
+    "id": "bm4j",
+    "x": 60,
+    "y": 700,
+    "z": 10659,
+    "width": 300,
+    "movable": false,
+    "css": "font-size: 20px; "
+  },
+  "bm6j": {
+    "id": "bm6j",
+    "x": 808,
+    "y": 700,
+    "z": 9732,
+    "width": 300,
+    "text": "The button above uses the css 'root' property to modify the colors. Specifically, it changes the definition of 'VTT Blue' which is used in the sidebar, for buttons, and in the JSON editor.  A click returns the room back to its normal color. ",
+    "movable": false,
+    "css": "font-size: 20px; "
+  },
+  "wwid": {
+    "type": "button",
+    "text": "Cursor On",
+    "clickRoutine": [
+      "var a = ${PROPERTY currentState} + 1",
+      "var b = ${a} % 2",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "currentState",
+        "value": "${b}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${b}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": "${PROPERTY cursorOff}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Cursor Off"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": "${PROPERTY cursorOn}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Cursor On"
+          }
+        ]
+      }
+    ],
+    "x": 154,
+    "y": 522,
+    "z": 9793,
+    "id": "wwid",
+    "currentState": 0,
+    "cursorOff": {
+      "anythinghere, .cursor": {
+        "display": "none"
+      }
+    },
+    "cursorOn": {},
+    "css": {}
+  },
+  "wwid1": {
+    "type": "button",
+    "clickRoutine": [
+      "var a = ${PROPERTY currentState} + 1",
+      "var b = ${a} % 2",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "currentState",
+        "value": "${b}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${b}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": "${PROPERTY colorMod}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Grey"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": "${PROPERTY colorNorm}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "VTT Blue"
+          }
+        ]
+      }
+    ],
+    "x": 900,
+    "y": 532,
+    "z": 9794,
+    "id": "wwid1",
+    "currentState": 0,
+    "css": {
+      "whatever,:root": {
+        "--VTTblue": "#1f5ca6"
+      }
+    },
+    "colorMod": {
+      "whatever,:root": {
+        "--VTTblue": "grey"
+      }
+    },
+    "colorNorm": {
+      "whatever,:root": {
+        "--VTTblue": "#1f5ca6"
+      }
+    },
+    "text": "VTT Blue"
+  }
+}

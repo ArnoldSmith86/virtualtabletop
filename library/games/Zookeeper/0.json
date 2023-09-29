@@ -1,0 +1,2713 @@
+{
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Zookeeper",
+      "image": "/assets/-2099668643_37573",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/11/bohnanza",
+      "year": "1997",
+      "mode": "vs",
+      "time": "45",
+      "attribution": "Coin image and board layout by ArnoldSmith86. Released to public domain under CC0.\n\nAnimal images released under Pixabay License:\nhttps://pixabay.com/photos/maltese-dog-puppy-small-dog-1123016/\nhttps://pixabay.com/photos/cat-kitten-pet-kitty-young-cat-551554/\nhttps://pixabay.com/photos/wood-mouse-rodent-foraging-mouse-3082922/\nhttps://pixabay.com/photos/bunny-rabbit-spring-baby-bunny-5014814/\nhttps://pixabay.com/photos/cute-small-portrait-golden-hamster-3161014/\nhttps://pixabay.com/photos/elephant-animal-safari-mammal-114543/\nhttps://pixabay.com/photos/lion-lion-king-forest-king-lion-794962/\nhttps://pixabay.com/photos/cow-alps-horn-759018/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"pride of lions watercolor painting --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Bohnanza",
+      "description": "Collect animal cards and play in order picked up. Trade cards to improve hand. Collect coins based on strength of play. Most coins at end of game wins.",
+      "showName": true,
+      "lastUpdate": 1634502388000,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-5"
+    }
+  },
+  "brhd": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "8",
+    "id": "brhd",
+    "z": 8388,
+    "parent": "8e13"
+  },
+  "0ily": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "0ily",
+    "z": 8703,
+    "parent": "8e13"
+  },
+  "7lg9": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "7lg9",
+    "z": 9436,
+    "parent": "8e13"
+  },
+  "7d4z": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "6",
+    "id": "7d4z",
+    "z": 7727,
+    "parent": "8e13"
+  },
+  "u2gi": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "u2gi",
+    "z": 443,
+    "parent": "8e13"
+  },
+  "ql73": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "ql73",
+    "z": 8895,
+    "parent": "8e13"
+  },
+  "1d8f": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "1d8f",
+    "z": 4784,
+    "parent": "8e13"
+  },
+  "fx8x": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "fx8x",
+    "z": 3941,
+    "parent": "8e13"
+  },
+  "14tb": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "6",
+    "id": "14tb",
+    "z": 10311,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "Player 2 - Compound C"
+  },
+  "pewm": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "8",
+    "id": "pewm",
+    "z": 283,
+    "parent": "8e13"
+  },
+  "ylkk": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "ylkk",
+    "z": 2442,
+    "parent": "8e13"
+  },
+  "ifol": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "ifol",
+    "z": 20,
+    "parent": "8e13"
+  },
+  "3hn5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "3hn5",
+    "z": 8793,
+    "parent": "8e13"
+  },
+  "v9qn": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "v9qn",
+    "z": 265,
+    "parent": "8e13"
+  },
+  "cdga": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "cdga",
+    "z": 10323,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "Player 5 - Compound B"
+  },
+  "i4d4": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "i4d4",
+    "z": 7670,
+    "parent": "8e13"
+  },
+  "na83": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "6",
+    "id": "na83",
+    "z": 6672,
+    "parent": "8e13"
+  },
+  "rxrw": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "8",
+    "id": "rxrw",
+    "z": 10313,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "Player 2 - Compound B"
+  },
+  "k25o": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "k25o",
+    "z": 1493,
+    "parent": "8e13"
+  },
+  "znr1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "znr1",
+    "z": 8016,
+    "parent": "8e13"
+  },
+  "d9o7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "d9o7",
+    "z": 9370,
+    "parent": "8e13"
+  },
+  "w8gg": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "w8gg",
+    "z": 557,
+    "parent": "8e13"
+  },
+  "lu6a": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "lu6a",
+    "z": 9521,
+    "parent": "8e13"
+  },
+  "gw0c": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "gw0c",
+    "z": 725,
+    "parent": "8e13"
+  },
+  "5dbl": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "6",
+    "id": "5dbl",
+    "z": 7034,
+    "parent": "8e13"
+  },
+  "eywx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "8",
+    "id": "eywx",
+    "z": 8862,
+    "parent": "8e13"
+  },
+  "5vn8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "5vn8",
+    "z": 8851,
+    "parent": "8e13"
+  },
+  "cutq": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "cutq",
+    "z": 5739,
+    "parent": "8e13"
+  },
+  "twel": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "twel",
+    "z": 5897,
+    "parent": "8e13"
+  },
+  "bpiw": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "bpiw",
+    "z": 8290,
+    "parent": "8e13"
+  },
+  "gms7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "gms7",
+    "z": 9415,
+    "parent": "8e13"
+  },
+  "4ki2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "4ki2",
+    "z": 1516,
+    "parent": "8e13"
+  },
+  "zteu": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "6",
+    "id": "zteu",
+    "z": 9551,
+    "parent": "8e13"
+  },
+  "r9wt": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "8",
+    "id": "r9wt",
+    "z": 3934,
+    "parent": "8e13"
+  },
+  "y0yr": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "y0yr",
+    "z": 5096,
+    "parent": "8e13"
+  },
+  "8ej3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "8ej3",
+    "z": 9620,
+    "parent": "8e13"
+  },
+  "62j9": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "62j9",
+    "z": 4410,
+    "parent": "8e13"
+  },
+  "2x9y": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "2x9y",
+    "z": 4586,
+    "parent": "8e13"
+  },
+  "og15": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "og15",
+    "z": 5562,
+    "parent": "8e13"
+  },
+  "wbgz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "wbgz",
+    "z": 5557,
+    "parent": "8e13"
+  },
+  "zokr": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "6",
+    "id": "zokr",
+    "z": 6445,
+    "parent": "8e13"
+  },
+  "8cu4": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "8",
+    "id": "8cu4",
+    "z": 8351,
+    "parent": "8e13"
+  },
+  "qtmr": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "qtmr",
+    "z": 7429,
+    "parent": "8e13"
+  },
+  "kh1f": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "kh1f",
+    "z": 6954,
+    "parent": "8e13"
+  },
+  "lmbr": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "lmbr",
+    "z": 5041,
+    "parent": "8e13"
+  },
+  "8cj3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "8cj3",
+    "z": 272,
+    "parent": "8e13"
+  },
+  "008o": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "008o",
+    "z": 56,
+    "parent": "8e13"
+  },
+  "t63e": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "t63e",
+    "z": 6354,
+    "parent": "8e13"
+  },
+  "g5r8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "8",
+    "id": "g5r8",
+    "z": 834,
+    "parent": "8e13"
+  },
+  "ntnp": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "8",
+    "id": "ntnp",
+    "z": 3144,
+    "parent": "8e13"
+  },
+  "x6s2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "x6s2",
+    "z": 4734,
+    "parent": "8e13"
+  },
+  "uc97": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "uc97",
+    "z": 1305,
+    "parent": "8e13"
+  },
+  "9kt3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "9kt3",
+    "z": 9291,
+    "parent": "8e13"
+  },
+  "e879": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "e879",
+    "z": 10315,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "Player 2 - Compound A"
+  },
+  "x4rn": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "x4rn",
+    "z": 6307,
+    "parent": "8e13"
+  },
+  "7guj": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "7guj",
+    "z": 8468,
+    "parent": "8e13"
+  },
+  "o5a3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "o5a3",
+    "z": 7892,
+    "parent": "8e13"
+  },
+  "4sgb": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "4sgb",
+    "z": 2805,
+    "parent": "8e13"
+  },
+  "w0mx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "w0mx",
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "Player 2 - Trade"
+  },
+  "9mok": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "9mok",
+    "z": 1006,
+    "parent": "8e13"
+  },
+  "sh0g": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "sh0g",
+    "z": 4347,
+    "parent": "8e13"
+  },
+  "vis6": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "vis6",
+    "z": 3464,
+    "parent": "8e13"
+  },
+  "q06e": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "q06e",
+    "z": 5649,
+    "parent": "8e13"
+  },
+  "2z4z": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "2z4z",
+    "z": 8743,
+    "parent": "8e13"
+  },
+  "m4p4": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "m4p4",
+    "z": 5428,
+    "parent": "8e13"
+  },
+  "1kmf": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "1kmf",
+    "z": 7524,
+    "parent": "8e13"
+  },
+  "cjle": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "cjle",
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "Player 5 - Trade"
+  },
+  "lcud": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "lcud",
+    "z": 1680,
+    "parent": "8e13"
+  },
+  "xrmp": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "xrmp",
+    "z": 5447,
+    "parent": "8e13"
+  },
+  "ty4t": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "ty4t",
+    "z": 6855,
+    "parent": "8e13"
+  },
+  "bc62": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "bc62",
+    "z": 191,
+    "parent": "8e13"
+  },
+  "8rjh": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "8rjh",
+    "z": 8807,
+    "parent": "8e13"
+  },
+  "4kf8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "4kf8",
+    "z": 8001,
+    "parent": "8e13"
+  },
+  "xog1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "xog1",
+    "z": 8040,
+    "parent": "8e13"
+  },
+  "rzmu": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "rzmu",
+    "z": 4028,
+    "parent": "8e13"
+  },
+  "ydlq": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "ydlq",
+    "z": 5816,
+    "parent": "8e13"
+  },
+  "dd7o": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "dd7o",
+    "z": 10321,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "Player 5 - Compound A"
+  },
+  "cnnx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "cnnx",
+    "z": 7539,
+    "parent": "8e13"
+  },
+  "94wr": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "94wr",
+    "z": 7475,
+    "parent": "8e13"
+  },
+  "d1yu": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "d1yu",
+    "z": 9182,
+    "parent": "8e13"
+  },
+  "0bsq": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "0bsq",
+    "z": 3105,
+    "parent": "8e13"
+  },
+  "thqp": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "thqp",
+    "z": 2419,
+    "parent": "8e13"
+  },
+  "vge7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "vge7",
+    "z": 9746,
+    "parent": "8e13"
+  },
+  "8sxg": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "8sxg",
+    "z": 5143,
+    "parent": "8e13"
+  },
+  "808l": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "808l",
+    "z": 7497,
+    "parent": "8e13"
+  },
+  "x7z1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "x7z1",
+    "z": 345,
+    "parent": "8e13"
+  },
+  "t2nr": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "t2nr",
+    "z": 9703,
+    "parent": "8e13"
+  },
+  "c2gh": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "c2gh",
+    "z": 4003,
+    "parent": "8e13"
+  },
+  "3g27": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "3g27",
+    "z": 4967,
+    "parent": "8e13"
+  },
+  "vzwi": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "vzwi",
+    "z": 2909,
+    "parent": "8e13"
+  },
+  "bzma": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "bzma",
+    "z": 3913,
+    "parent": "8e13"
+  },
+  "ve5o": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "ve5o",
+    "z": 8220,
+    "parent": "8e13"
+  },
+  "f7cu": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "f7cu",
+    "z": 2352,
+    "parent": "8e13"
+  },
+  "4akj": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "4akj",
+    "z": 2339,
+    "parent": "8e13"
+  },
+  "k8mh": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "k8mh",
+    "z": 5043,
+    "parent": "8e13"
+  },
+  "f8f5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "f8f5",
+    "z": 4868,
+    "parent": "8e13"
+  },
+  "htz1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "htz1",
+    "z": 6036,
+    "parent": "8e13"
+  },
+  "zefx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "zefx",
+    "z": 5522,
+    "parent": "8e13"
+  },
+  "k9q7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "k9q7",
+    "z": 3196,
+    "parent": "8e13"
+  },
+  "ytpm": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "ytpm",
+    "z": 10325,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "Player 5 - Compound C"
+  },
+  "y7of": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "y7of",
+    "z": 8262,
+    "parent": "8e13"
+  },
+  "5rvm": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "5rvm",
+    "z": 8969,
+    "parent": "8e13"
+  },
+  "oepo": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "oepo",
+    "z": 6593,
+    "parent": "8e13"
+  },
+  "h90h": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "h90h",
+    "z": 5710,
+    "parent": "8e13"
+  },
+  "Draw": {
+    "type": "holder",
+    "id": "Draw",
+    "x": 721,
+    "y": 395,
+    "width": 158,
+    "height": 233,
+    "z": 33
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "Draw"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Draw",
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Draw 3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "Draw 5"
+      },
+      {
+        "func": "SET",
+        "property": "cards",
+        "value": 5
+      }
+    ],
+    "text": "Reset",
+    "height": 40,
+    "z": 4,
+    "x": 760,
+    "y": 15
+  },
+  "Deck": {
+    "type": "deck",
+    "id": "Deck",
+    "cardDefaults": {
+      "width": 150,
+      "height": 225,
+      "enlarge": 2,
+      "coin": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='40 130 170 175' style='fill:%23b88d00;stroke:black'%3E%3Cpath d='m 48,146 0,15 c 0,0 2,12 58,13 50,0 58,-11 58,-11 l 0,-17' style='fill:brown' /%3E%3Cellipse cx='106' cy='146' rx='58' ry='13' /%3E%3C/svg%3E%0A"
+    },
+    "cardTypes": {
+      "6": {
+        "name": "Lion",
+        "image": "/assets/1961017347_18553",
+        "count": 6,
+        "1coin": "-",
+        "2coin": 2,
+        "3coin": 3,
+        "4coin": "-"
+      },
+      "8": {
+        "name": "Elephant",
+        "image": "/assets/-1827779921_14815",
+        "count": 8,
+        "1coin": 2,
+        "2coin": 3,
+        "3coin": 4,
+        "4coin": 5
+      },
+      "10": {
+        "name": "Cow",
+        "image": "/assets/-1281494506_21685",
+        "count": 10,
+        "1coin": 2,
+        "2coin": 4,
+        "3coin": 5,
+        "4coin": 6
+      },
+      "12": {
+        "name": "Dog",
+        "image": "/assets/-625025145_20168",
+        "count": 12,
+        "1coin": 2,
+        "2coin": 4,
+        "3coin": 6,
+        "4coin": 7
+      },
+      "14": {
+        "name": "Cat",
+        "image": "/assets/1958132201_11410",
+        "count": 14,
+        "1coin": 3,
+        "2coin": 5,
+        "3coin": 6,
+        "4coin": 7
+      },
+      "16": {
+        "name": "Mouse",
+        "image": "/assets/939703981_16652",
+        "count": 16,
+        "1coin": 3,
+        "2coin": 5,
+        "3coin": 7,
+        "4coin": 8
+      },
+      "18": {
+        "name": "Hamster",
+        "image": "/assets/-921724402_9995",
+        "count": 18,
+        "1coin": 3,
+        "2coin": 6,
+        "3coin": 8,
+        "4coin": 9
+      },
+      "20": {
+        "name": "Rabbit",
+        "image": "/assets/1980528970_21911",
+        "count": 20,
+        "1coin": 4,
+        "2coin": 6,
+        "3coin": 8,
+        "4coin": 10
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#1f5ca6",
+            "valueType": "dynamic",
+            "value": "",
+            "width": 150,
+            "height": 225
+          },
+          {
+            "type": "image",
+            "x": 19,
+            "y": 94,
+            "color": "transparent",
+            "value": "coin",
+            "width": 140,
+            "height": 140
+          }
+        ],
+        "radius": 20
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#1f5ca6",
+            "valueType": "static",
+            "value": "",
+            "width": 150,
+            "height": 225
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 40,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 140,
+            "height": 140,
+            "css": "border-radius: 10px; "
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 4,
+            "fontSize": 26,
+            "valueType": "dynamic",
+            "value": "name",
+            "textAlign": "center",
+            "width": 150,
+            "css": "color: white"
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 45,
+            "fontSize": 20,
+            "valueType": "dynamic",
+            "value": "count",
+            "textAlign": "left",
+            "width": 30,
+            "css": "background: white; border-radius: 100%; height: 30px; display: flex; justify-content: center; align-items: center;"
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 202,
+            "color": "transparent",
+            "value": "coin",
+            "width": 40,
+            "height": 40
+          },
+          {
+            "type": "text",
+            "x": 5,
+            "y": 185,
+            "fontSize": 28,
+            "valueType": "dynamic",
+            "value": "1coin",
+            "textAlign": "center",
+            "width": 35,
+            "css": "color: white"
+          },
+          {
+            "type": "image",
+            "x": 40,
+            "y": 202,
+            "color": "transparent",
+            "value": "coin",
+            "width": 40,
+            "height": 40
+          },
+          {
+            "type": "image",
+            "x": 42,
+            "y": 196,
+            "color": "transparent",
+            "value": "coin",
+            "width": 40,
+            "height": 40
+          },
+          {
+            "type": "text",
+            "x": 40,
+            "y": 185,
+            "fontSize": 28,
+            "valueType": "dynamic",
+            "value": "2coin",
+            "textAlign": "center",
+            "width": 35,
+            "css": "color: white"
+          },
+          {
+            "type": "image",
+            "x": 75,
+            "y": 202,
+            "color": "transparent",
+            "value": "coin",
+            "width": 40,
+            "height": 40
+          },
+          {
+            "type": "image",
+            "x": 77,
+            "y": 196,
+            "color": "transparent",
+            "value": "coin",
+            "width": 40,
+            "height": 40
+          },
+          {
+            "type": "image",
+            "x": 74,
+            "y": 190,
+            "color": "transparent",
+            "value": "coin",
+            "width": 40,
+            "height": 40
+          },
+          {
+            "type": "text",
+            "x": 75,
+            "y": 185,
+            "fontSize": 28,
+            "valueType": "dynamic",
+            "value": "3coin",
+            "textAlign": "center",
+            "width": 35,
+            "css": "color: white"
+          },
+          {
+            "type": "image",
+            "x": 110,
+            "y": 202,
+            "color": "transparent",
+            "value": "coin",
+            "width": 40,
+            "height": 40
+          },
+          {
+            "type": "image",
+            "x": 112,
+            "y": 196,
+            "color": "transparent",
+            "value": "coin",
+            "width": 40,
+            "height": 40
+          },
+          {
+            "type": "image",
+            "x": 109,
+            "y": 190,
+            "color": "transparent",
+            "value": "coin",
+            "width": 40,
+            "height": 40
+          },
+          {
+            "type": "image",
+            "x": 113,
+            "y": 184,
+            "color": "transparent",
+            "value": "coin",
+            "width": 40,
+            "height": 40
+          },
+          {
+            "type": "text",
+            "x": 110,
+            "y": 185,
+            "fontSize": 28,
+            "valueType": "dynamic",
+            "value": "4coin",
+            "textAlign": "center",
+            "width": 35,
+            "css": "color: white"
+          }
+        ],
+        "radius": 20
+      }
+    ],
+    "parent": "Draw",
+    "x": 4,
+    "y": 4
+  },
+  "Player 1 - Coins": {
+    "type": "holder",
+    "id": "Player 1 - Coins",
+    "width": 158,
+    "height": 233,
+    "parent": "Player 1",
+    "z": 5
+  },
+  "Player 1 - Trade": {
+    "type": "holder",
+    "id": "Player 1 - Trade",
+    "x": 640,
+    "width": 158,
+    "height": 293,
+    "stackOffsetY": 30,
+    "parent": "Player 1",
+    "z": 1
+  },
+  "Hand": {
+    "type": "holder",
+    "id": "Hand",
+    "x": 895,
+    "y": 690,
+    "width": 700,
+    "height": 233,
+    "z": 32,
+    "stackOffsetX": 45,
+    "childrenPerOwner": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "Discard": {
+    "type": "holder",
+    "id": "Discard",
+    "x": 721,
+    "y": 70,
+    "width": 158,
+    "height": 233,
+    "z": 34
+  },
+  "Player 1": {
+    "id": "Player 1",
+    "width": 800,
+    "z": 2,
+    "height": 233,
+    "y": 40,
+    "x": -95,
+    "layer": -1,
+    "movable": false
+  },
+  "Player 4": {
+    "id": "Player 4",
+    "width": 800,
+    "z": 3,
+    "height": 233,
+    "y": 40,
+    "x": 895,
+    "layer": -1,
+    "movable": false
+  },
+  "Player 4 - Coins": {
+    "type": "holder",
+    "id": "Player 4 - Coins",
+    "width": 158,
+    "height": 233,
+    "parent": "Player 4",
+    "z": 2,
+    "x": 640
+  },
+  "Player 4 - Trade": {
+    "type": "holder",
+    "id": "Player 4 - Trade",
+    "width": 158,
+    "height": 293,
+    "stackOffsetY": 30,
+    "parent": "Player 4",
+    "z": 5
+  },
+  "Player 1 - Compound A": {
+    "type": "holder",
+    "id": "Player 1 - Compound A",
+    "parent": "Player 1",
+    "x": 480,
+    "width": 158,
+    "height": 233,
+    "z": 2
+  },
+  "Player 1 - Compound B": {
+    "type": "holder",
+    "id": "Player 1 - Compound B",
+    "parent": "Player 1",
+    "x": 320,
+    "width": 158,
+    "height": 233,
+    "z": 3
+  },
+  "Player 1 - Compound C": {
+    "type": "holder",
+    "id": "Player 1 - Compound C",
+    "parent": "Player 1",
+    "x": 160,
+    "width": 158,
+    "height": 233,
+    "z": 4
+  },
+  "Player 4 - Compound A": {
+    "type": "holder",
+    "id": "Player 4 - Compound A",
+    "parent": "Player 4",
+    "x": 160,
+    "width": 158,
+    "height": 233,
+    "z": 4
+  },
+  "Player 4 - Compound B": {
+    "type": "holder",
+    "id": "Player 4 - Compound B",
+    "parent": "Player 4",
+    "x": 320,
+    "width": 158,
+    "height": 233,
+    "z": 3
+  },
+  "Player 4 - Compound C": {
+    "type": "holder",
+    "id": "Player 4 - Compound C",
+    "parent": "Player 4",
+    "x": 480,
+    "width": 158,
+    "height": 233,
+    "z": 1
+  },
+  "Shuffle": {
+    "type": "button",
+    "id": "Shuffle",
+    "x": 39,
+    "y": 96.5,
+    "height": 40,
+    "z": 4,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Discard",
+        "to": "Draw",
+        "count": 0,
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      }
+    ],
+    "text": "Shuffle",
+    "parent": "Draw"
+  },
+  "Draw 3": {
+    "type": "button",
+    "id": "Draw 3",
+    "x": 760,
+    "y": 766.5,
+    "z": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "Draw",
+        "sortBy": "z",
+        "max": "${PROPERTY cards}",
+        "type": "card"
+      },
+      {
+        "func": "SET",
+        "value": "Hand"
+      }
+    ],
+    "text": "Draw 5",
+    "cards": 5
+  },
+  "Player 1 - Draw": {
+    "type": "button",
+    "id": "Player 1 - Draw",
+    "parent": "Player 1 - Trade",
+    "x": 39,
+    "y": 76.5,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "${PROPERTY parent}",
+        "count": 2,
+        "face": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Draw 3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "Draw 3"
+      },
+      {
+        "func": "SET",
+        "property": "cards",
+        "value": 3
+      }
+    ],
+    "text": "Draw 2"
+  },
+  "Discard Label": {
+    "type": "label",
+    "id": "Discard Label",
+    "x": 750,
+    "y": 304,
+    "z": 6,
+    "text": "Discard"
+  },
+  "Draw Label": {
+    "type": "label",
+    "id": "Draw Label",
+    "x": 750,
+    "y": 629,
+    "z": 6,
+    "text": "Draw"
+  },
+  "Hand Label": {
+    "type": "label",
+    "id": "Hand Label",
+    "x": 924,
+    "y": 924,
+    "z": 7,
+    "text": "Hand"
+  },
+  "Player 1 - Compound A - Sell": {
+    "type": "button",
+    "id": "Player 1 - Compound A - Sell",
+    "parent": "Player 1 - Compound A",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 1 - Compound B - Sell": {
+    "type": "button",
+    "id": "Player 1 - Compound B - Sell",
+    "parent": "Player 1 - Compound B",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 1 - Compound C - Sell": {
+    "type": "button",
+    "id": "Player 1 - Compound C - Sell",
+    "parent": "Player 1 - Compound C",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 2": {
+    "id": "Player 2",
+    "width": 800,
+    "z": 2,
+    "height": 233,
+    "y": 365,
+    "x": -95,
+    "layer": -1,
+    "movable": false
+  },
+  "Player 2 - Coins": {
+    "type": "holder",
+    "id": "Player 2 - Coins",
+    "width": 158,
+    "height": 233,
+    "parent": "Player 2",
+    "z": 5
+  },
+  "Player 2 - Trade": {
+    "type": "holder",
+    "id": "Player 2 - Trade",
+    "x": 640,
+    "width": 158,
+    "height": 293,
+    "stackOffsetY": 30,
+    "parent": "Player 2",
+    "z": 1
+  },
+  "Player 2 - Compound A": {
+    "type": "holder",
+    "id": "Player 2 - Compound A",
+    "parent": "Player 2",
+    "x": 480,
+    "width": 158,
+    "height": 233,
+    "z": 2
+  },
+  "Player 2 - Compound A - Sell": {
+    "type": "button",
+    "id": "Player 2 - Compound A - Sell",
+    "parent": "Player 2 - Compound A",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 2 - Compound B": {
+    "type": "holder",
+    "id": "Player 2 - Compound B",
+    "parent": "Player 2",
+    "x": 320,
+    "width": 158,
+    "height": 233,
+    "z": 3
+  },
+  "Player 2 - Compound B - Sell": {
+    "type": "button",
+    "id": "Player 2 - Compound B - Sell",
+    "parent": "Player 2 - Compound B",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 2 - Compound C": {
+    "type": "holder",
+    "id": "Player 2 - Compound C",
+    "parent": "Player 2",
+    "x": 160,
+    "width": 158,
+    "height": 233,
+    "z": 4
+  },
+  "Player 2 - Compound C - Sell": {
+    "type": "button",
+    "id": "Player 2 - Compound C - Sell",
+    "parent": "Player 2 - Compound C",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 3": {
+    "id": "Player 3",
+    "width": 800,
+    "z": 2,
+    "height": 233,
+    "y": 690,
+    "x": -95,
+    "layer": -1,
+    "movable": false
+  },
+  "Player 3 - Coins": {
+    "type": "holder",
+    "id": "Player 3 - Coins",
+    "width": 158,
+    "height": 233,
+    "parent": "Player 3",
+    "z": 5
+  },
+  "Player 3 - Trade": {
+    "type": "holder",
+    "id": "Player 3 - Trade",
+    "x": 640,
+    "width": 158,
+    "height": 293,
+    "stackOffsetY": 30,
+    "parent": "Player 3",
+    "z": 1
+  },
+  "Player 3 - Compound A": {
+    "type": "holder",
+    "id": "Player 3 - Compound A",
+    "parent": "Player 3",
+    "x": 480,
+    "width": 158,
+    "height": 233,
+    "z": 2
+  },
+  "Player 3 - Compound A - Sell": {
+    "type": "button",
+    "id": "Player 3 - Compound A - Sell",
+    "parent": "Player 3 - Compound A",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 3 - Compound B": {
+    "type": "holder",
+    "id": "Player 3 - Compound B",
+    "parent": "Player 3",
+    "x": 320,
+    "width": 158,
+    "height": 233,
+    "z": 3
+  },
+  "Player 3 - Compound B - Sell": {
+    "type": "button",
+    "id": "Player 3 - Compound B - Sell",
+    "parent": "Player 3 - Compound B",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 3 - Compound C": {
+    "type": "holder",
+    "id": "Player 3 - Compound C",
+    "parent": "Player 3",
+    "x": 160,
+    "width": 158,
+    "height": 233,
+    "z": 4
+  },
+  "Player 3 - Compound C - Sell": {
+    "type": "button",
+    "id": "Player 3 - Compound C - Sell",
+    "parent": "Player 3 - Compound C",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 4 - Compound A - Sell": {
+    "type": "button",
+    "id": "Player 4 - Compound A - Sell",
+    "parent": "Player 4 - Compound A",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 4 - Compound B - Sell": {
+    "type": "button",
+    "id": "Player 4 - Compound B - Sell",
+    "parent": "Player 4 - Compound B",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 4 - Compound C - Sell": {
+    "type": "button",
+    "id": "Player 4 - Compound C - Sell",
+    "parent": "Player 4 - Compound C",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 5": {
+    "id": "Player 5",
+    "width": 800,
+    "z": 3,
+    "height": 233,
+    "y": 365,
+    "x": 895,
+    "layer": -1,
+    "movable": false
+  },
+  "Player 5 - Coins": {
+    "type": "holder",
+    "id": "Player 5 - Coins",
+    "width": 158,
+    "height": 233,
+    "parent": "Player 5",
+    "z": 2,
+    "x": 640
+  },
+  "Player 5 - Trade": {
+    "type": "holder",
+    "id": "Player 5 - Trade",
+    "width": 158,
+    "height": 293,
+    "stackOffsetY": 30,
+    "parent": "Player 5",
+    "z": 5
+  },
+  "Player 5 - Compound A": {
+    "type": "holder",
+    "id": "Player 5 - Compound A",
+    "parent": "Player 5",
+    "x": 160,
+    "width": 158,
+    "height": 233,
+    "z": 4
+  },
+  "Player 5 - Compound A - Sell": {
+    "type": "button",
+    "id": "Player 5 - Compound A - Sell",
+    "parent": "Player 5 - Compound A",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 5 - Compound B": {
+    "type": "holder",
+    "id": "Player 5 - Compound B",
+    "parent": "Player 5",
+    "x": 320,
+    "width": 158,
+    "height": 233,
+    "z": 3
+  },
+  "Player 5 - Compound B - Sell": {
+    "type": "button",
+    "id": "Player 5 - Compound B - Sell",
+    "parent": "Player 5 - Compound B",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Player 5 - Compound C": {
+    "type": "holder",
+    "id": "Player 5 - Compound C",
+    "parent": "Player 5",
+    "x": 480,
+    "width": 158,
+    "height": 233,
+    "z": 1
+  },
+  "Player 5 - Compound C - Sell": {
+    "type": "button",
+    "id": "Player 5 - Compound C - Sell",
+    "parent": "Player 5 - Compound C",
+    "x": 49,
+    "y": 238,
+    "width": 60,
+    "height": 50,
+    "layer": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var coins = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "${value}coin",
+            "variable": "needed"
+          },
+          "var enoughCoins = ${COUNT} >= ${needed}",
+          {
+            "func": "IF",
+            "condition": "${enoughCoins}",
+            "thenRoutine": [
+              "var coins = ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${coins}",
+        "thenRoutine": [
+          "var parent = ${PROPERTY parent}",
+          "var parentParent = ${PROPERTY parent OF $parent}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "${parentParent} - Coins",
+            "count": "${coins}",
+            "face": 0
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "Discard",
+        "count": 0
+      }
+    ],
+    "text": "Sell"
+  },
+  "Coins Left": {
+    "type": "label",
+    "id": "Coins Left",
+    "x": -19,
+    "y": 12,
+    "z": 3,
+    "text": "Coins"
+  },
+  "Compounds Left": {
+    "type": "label",
+    "id": "Compounds Left",
+    "x": 334,
+    "y": 12,
+    "z": 1,
+    "text": "Compounds"
+  },
+  "Trade Left": {
+    "type": "label",
+    "id": "Trade Left",
+    "x": 574,
+    "y": 12,
+    "z": 2,
+    "text": "Trade"
+  },
+  "Trade Right": {
+    "type": "label",
+    "id": "Trade Right",
+    "x": 924,
+    "y": 12,
+    "z": 2,
+    "text": "Trade"
+  },
+  "Compounds Right": {
+    "type": "label",
+    "id": "Compounds Right",
+    "x": 1164,
+    "y": 12,
+    "z": 4,
+    "text": "Compounds"
+  },
+  "Coins Right": {
+    "type": "label",
+    "id": "Coins Right",
+    "x": 1516,
+    "y": 12,
+    "z": 5,
+    "text": "Coins"
+  },
+  "8e13": {
+    "type": "pile",
+    "parent": "Draw",
+    "x": 4,
+    "y": 4,
+    "width": 150,
+    "height": 225,
+    "id": "8e13"
+  },
+  "Player 2 - Draw": {
+    "inheritFrom": "Player 1 - Draw",
+    "id": "Player 2 - Draw",
+    "type": "button",
+    "parent": "Player 2 - Trade"
+  },
+  "Player 3 - Draw": {
+    "inheritFrom": "Player 1 - Draw",
+    "id": "Player 3 - Draw",
+    "type": "button",
+    "parent": "Player 3 - Trade"
+  },
+  "Player 4 - Draw": {
+    "inheritFrom": "Player 1 - Draw",
+    "id": "Player 4 - Draw",
+    "type": "button",
+    "parent": "Player 4 - Trade"
+  },
+  "Player 5 - Draw": {
+    "inheritFrom": "Player 1 - Draw",
+    "id": "Player 5 - Draw",
+    "type": "button",
+    "parent": "Player 5 - Trade"
+  }
+}

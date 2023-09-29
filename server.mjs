@@ -6,13 +6,15 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
+import fetch from 'node-fetch';
 
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
-import MinifyRoom from './server/minify.mjs';
+import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
+import Statistics from './server/statistics.mjs';
 
 const app = express();
 const server = http.Server(app);
@@ -38,9 +40,23 @@ async function ensureRoomIsLoaded(id) {
   if(!activeRooms.has(id)) {
     const room = new Room(id, function() {
       activeRooms.delete(id);
+    }, function() {
+      Logging.log(`The public library was edited in room ${id}. Reloading in every room...`);
+      for(const [ _, room ] of activeRooms)
+        room.reloadPublicLibraryGames();
     });
     await room.load();
     activeRooms.set(id, room);
+  }
+  return true;
+}
+
+function validateInput(res, next, values) {
+  for(const value of values) {
+    if(value && !value.match(/^[A-Za-z0-9.: _-]+$/)) {
+      next(new Logging.UserError(403, 'Invalid characters in parameters'));
+      return false;
+    }
   }
   return true;
 }
@@ -58,34 +74,69 @@ function autosaveRooms() {
   setInterval(function() {
     for(const [ _, room ] of activeRooms) {
       try {
+        room.updateTimeStatistics();
         room.writeToFilesystem();
       } catch(e) {
         Logging.handleGenericException('autosaveRooms', e);
       }
     }
+    Statistics.writeToFilesystem();
   }, 60*1000);
 }
 
-MinifyRoom().then(function(result) {
+MinifyHTML().then(function(result) {
   router.use('/', express.static(path.resolve() + '/client'));
+
+  if(Config.get('adminURL')) {
+    router.get(Config.get('adminURL'), function(req, res, next) {
+      let output = '<h1>Active rooms</h1>';
+      for(const [ roomID, room ] of activeRooms) {
+        let game = '';
+        if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
+          game = ` playing ${room.state._meta.states[room.state._meta.activeState.stateID].name}`;
+        output += `<p><b><a href='${roomID}'>${roomID}</a></b>${game}: ${room.players.map(p=>p.name).join(', ')} (${room.deltaID} deltas transmitted)</p>`;
+      }
+      res.send(output);
+    });
+  }
+
+  // fonts.css is specifically made available for use from card html iframe. It must
+  // be fetched from the root in order for the relative paths to fonts to work.
+  // Additionally allow cached use of fonts for a short period of time to allow
+  // immediate rendering in subframes.
+  function cache5m(req, res, next) {
+    res.setHeader('Cache-Control', 'public, max-age=300');
+    res.setHeader('Expires', new Date(Date.now() + 300000).toUTCString());
+    next();
+  }
+  router.get('/fonts.css', cache5m);
+  router.get('/i/fonts/', cache5m);
+  router.use('/fonts.css', express.static(path.resolve() + '/client/css/fonts.css'));
+
   router.use('/i', express.static(path.resolve() + '/assets'));
-  router.use('/library', express.static(Config.directory('library')));
+
+  router.get('/scripts/:name', function(req, res) {
+    res.setHeader('Content-Type', 'application/javascript');
+    if(req.params.name == 'jszip')
+      res.send(fs.readFileSync('node_modules/jszip/dist/jszip.min.js'));
+  });
 
   router.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
     const result = {};
     if(Array.isArray(req.body))
       for(const asset of req.body)
         if(asset.match(/^[0-9_-]+$/))
-          result[asset] = fs.existsSync(assetsdir + '/' + asset);
+          result[asset] = !!Config.resolveAsset(asset);
     res.send(result);
   });
 
   router.get('/assets/:name', function(req, res) {
-    if(!req.params.name.match(/^[0-9_-]+$/)) {
+    if(!req.params.name.match(/^[0-9_-]+$/) || !Config.resolveAsset(req.params.name)) {
       res.sendStatus(404);
       return;
     }
-    fs.readFile(assetsdir + '/' + req.params.name, function(err, content) {
+
+    fs.readFile(Config.resolveAsset(req.params.name), function(err, content) {
       if(!content) {
         res.sendStatus(404);
         Logging.log(`WARNING: Could not load asset ${req.params.name}`);
@@ -138,12 +189,14 @@ MinifyRoom().then(function(result) {
     downloadState(res, req.params.room).catch(next);
   });
 
-  router.options('/state/:room', function(req, res, next) {
+  function allowCORS(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.sendStatus(200);
-  });
+  }
+
+  router.options('/state/:room', allowCORS);
 
   router.get('/state/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
@@ -171,24 +224,69 @@ MinifyRoom().then(function(result) {
     }
   });
 
+  router.options('/api/addShareToRoom/:room/:share', allowCORS);
+  router.get('/api/addShareToRoom/:room/:share', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if(!sharedLinks[`/s/${req.params.share}`])
+      return res.sendStatus(404);
+
+    const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).addState(req.params.share, 'link', `${Config.get('externalURL')}/s/${req.params.share}/name.vtt`, '');
+        res.send('OK');
+      }
+    }).catch(next);
+  });
+
+  router.options('/api/shareDetails/:share', allowCORS);
+  router.get('/api/shareDetails/:share', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if(!sharedLinks[`/s/${req.params.share}`])
+      return res.sendStatus(404);
+
+    const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
+    ensureRoomIsLoaded(tokens[2]).then(function(isLoaded) {
+      if(isLoaded) {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(activeRooms.get(tokens[2]).state._meta.states[tokens[3]]));
+      }
+    }).catch(next);
+  });
+
   router.get('/s/:link/:junk', function(req, res, next) {
     if(!sharedLinks[`/s/${req.params.link}`])
-      return res.status(404);
+      return res.sendStatus(404);
 
     const tokens = sharedLinks[`/s/${req.params.link}`].split('/');
     downloadState(res, tokens[2], tokens[3]).catch(next);
   });
 
-  router.get('/share/:room/:state', function(req, res) {
-    const target = `${Config.get('urlPrefix')}/dl/${req.params.room}/${req.params.state}`;
+  router.get('/share/:room/:state', function(req, res, next) {
+    const target = `/dl/${req.params.room}/${req.params.state}`;
     for(const link in sharedLinks)
       if(sharedLinks[link] == target)
-        return res.send(link);
+        return res.send(Config.get('urlPrefix') + link);
 
-    const newLink = `${Config.get('urlPrefix')}/s/${Math.random().toString(36).substring(3, 11)}`;
-    sharedLinks[newLink] = target;
-    fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
-    res.send(newLink);
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded)
+        activeRooms.get(req.params.room).writeToFilesystem();
+
+      const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
+      sharedLinks[newLink] = target;
+      fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
+      res.send(Config.get('urlPrefix') + newLink);
+    }).catch(next);
+  });
+
+  router.get('/edit.js', function(req, res, next) {
+    res.setHeader('Content-Type', 'text/javascript');
+    if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+      res.setHeader('Content-Encoding', 'gzip');
+      res.send(result.editorJSgzipped);
+    } else {
+      res.send(result.editorJSmin);
+    }
   });
 
   router.get('/:room', function(req, res, next) {
@@ -197,9 +295,9 @@ MinifyRoom().then(function(result) {
         res.send('Invalid characters in room ID.');
         return;
       }
+      res.setHeader('Content-Type', 'text/html');
       if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
         res.setHeader('Content-Encoding', 'gzip');
-        res.setHeader('Content-Type', 'text/html');
         res.send(result.gzipped);
       } else {
         res.send(result.min);
@@ -207,14 +305,37 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
+  router.get('/createTempState/:room', function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
+      if(isLoaded)
+        res.send(await activeRooms.get(req.params.room).createTempState());
+    }).catch(next);
+  });
+
+  router.put('/createTempState/:room/:tempID', bodyParser.raw({ limit: '500mb' }), function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
+      if(isLoaded && req.params.tempID.match(/^[a-z0-9]{8}$/))
+        res.send(await activeRooms.get(req.params.room).createTempState(req.params.tempID, req.body));
+    }).catch(next);
+  });
+
+  router.put('/asset/:link', async function(req, res) {
+    const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
+    const filename = `/${CRC32.buf(content)}_${content.length}`;
+    if(!Config.resolveAsset(filename.substr(1)))
+      fs.writeFileSync(assetsdir + filename, content);
+    res.send(`/assets${filename}`);
+  });
+
   router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
-    if(!fs.existsSync(assetsdir + filename))
+    if(!Config.resolveAsset(filename.substr(1)))
       fs.writeFileSync(assetsdir + filename, req.body);
     res.send(`/assets${filename}`);
   });
 
   router.put('/addState/:room/:id/:type/:name/:addAsVariant?', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+    if(!validateInput(res, next, [ req.params.id, req.params.addAsVariant ])) return;
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
         activeRooms.get(req.params.room).addState(req.params.id, req.params.type, req.body, req.params.name, req.params.addAsVariant).then(function() {
@@ -257,6 +378,7 @@ autosaveRooms();
   process.on(eventType, function() {
     for(const [ _, room ] of activeRooms)
       room.unload();
+    Statistics.writeToFilesystem();
     if(eventType != 'exit')
       process.exit();
   });

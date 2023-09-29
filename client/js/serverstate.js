@@ -1,5 +1,6 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID } from './domhelpers.js';
+import { getElementTransformRelativeTo } from './geometry.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
 
@@ -13,6 +14,18 @@ let deltaChanged = false;
 let deltaID = 0;
 let batchDepth = 0;
 let overlayShownForEmptyRoom = false;
+
+let triggerGameStartRoutineOnNextStateLoad = false;
+
+let undoProtocol = [];
+
+function generateUniqueWidgetID() {
+  let id;
+  do {
+    id = Math.random().toString(36).substring(3, 7);
+  } while (widgets.has(id));
+  return id;
+}
 
 export function addWidget(widget, instance) {
   if(widget.parent && !widgets.has(widget.parent)) {
@@ -52,12 +65,16 @@ export function addWidget(widget, instance) {
     w = new Canvas(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
+  } else if(widget.type == 'dice') {
+    w = new Dice(id);
   } else if(widget.type == 'holder') {
     w = new Holder(id);
   } else if(widget.type == 'label') {
     w = new Label(id);
   } else if(widget.type == 'pile') {
     w = new Pile(id);
+  } else if(widget.type == 'scoreboard') {
+    w = new Scoreboard(id);
   } else if(widget.type == 'seat') {
     w = new Seat(id);
   } else if(widget.type == 'spinner') {
@@ -89,6 +106,28 @@ export function addWidget(widget, instance) {
   delete deferredChildren[widget.id];
 }
 
+async function addWidgetLocal(widget) {
+  if (!widget.id)
+    widget.id = generateUniqueWidgetID();
+
+  if(widget.parent && !widgets.has(widget.parent)) {
+    console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
+    return null;
+  }
+
+  const isNewWidget = !widgets.has(widget.id);
+  if(isNewWidget)
+    addWidget(widget);
+  sendPropertyUpdate(widget.id, widget);
+  sendDelta();
+  batchStart();
+  if(isNewWidget)
+    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
+      await w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
+  batchEnd();
+  return widget.id;
+}
+
 export function batchStart() {
   ++batchDepth;
 }
@@ -98,11 +137,27 @@ export function batchEnd() {
   sendDelta();
 }
 
+function setDeltaCause(cause) {
+  if(!delta.c)
+    delta.c = cause;
+}
+
+function getDeltaID() {
+  return deltaID;
+}
+
 function receiveDelta(delta) {
+  addDeltaEntryToUndoProtocol(delta);
+
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
-  for(const widgetID in delta.s)
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID))
-      $('#topSurface').appendChild(widgets.get(widgetID).domElement);
+  for(const widgetID in delta.s) {
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined) {
+      const domElement = widgets.get(widgetID).domElement;
+      const topTransform = getElementTransformRelativeTo(domElement, $('#topSurface')) || 'none';
+      $('#topSurface').appendChild(domElement);
+      domElement.style.transform = topTransform;
+    }
+  }
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
@@ -118,6 +173,103 @@ function receiveDelta(delta) {
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
+
+  if(typeof edit != 'undefined' && edit)
+    editorReceiveDelta(delta);
+}
+
+function mergeDeltas(firstDelta, secondDelta) {
+  const merged = {};
+  for(const widgetID in firstDelta) {
+    if(firstDelta[widgetID] !== null && secondDelta[widgetID] !== null)
+      merged[widgetID] = Object.assign({}, firstDelta[widgetID], secondDelta[widgetID] || {});
+    else if(firstDelta[widgetID] === null && secondDelta[widgetID] !== undefined) {
+      console.log("merging failed", firstDelta[widgetID], secondDelta[widgetID]);
+      return null; // a widget was removed and then another one added with the same ID; a merged delta would have to know which properties the widget had before the first delta removed it in order to unset those
+    } else
+      merged[widgetID] = null;
+  }
+  for(const widgetID in secondDelta)
+    if(merged[widgetID] === undefined)
+      merged[widgetID] = secondDelta[widgetID];
+  return merged;
+}
+
+function addDeltaEntryToUndoProtocol(delta) {
+  const undoDelta = {};
+
+  for(const widgetID in delta.s) {
+    if(delta.s[widgetID] === null) {
+      if(widgets.has(widgetID))
+        undoDelta[widgetID] = JSON.parse(JSON.stringify(widgets.get(widgetID).unalteredState));
+    } else if(delta.s[widgetID].id) {
+      undoDelta[widgetID] = null;
+    } else {
+      undoDelta[widgetID] = {};
+      for(const property in delta.s[widgetID]) {
+        undoDelta[widgetID][property] = widgets.get(widgetID).unalteredState[property];
+        if(typeof undoDelta[widgetID][property] == 'undefined')
+          undoDelta[widgetID][property] = null;
+      }
+    }
+  }
+
+  // merge with previous delta if it's the same cause
+  if(undoProtocol.length && delta.c && delta.c === undoProtocol[undoProtocol.length-1].delta.c) {
+    const mergedUndoDelta = mergeDeltas(undoDelta, undoProtocol[undoProtocol.length-1].undoDelta);
+    const mergedRedoDelta = mergeDeltas(undoProtocol[undoProtocol.length-1].delta.s, delta.s);
+
+    if(mergedUndoDelta && mergedRedoDelta) {
+      undoProtocol[undoProtocol.length-1].undoDelta = mergedUndoDelta;
+      undoProtocol[undoProtocol.length-1].delta.s   = mergedRedoDelta;
+      return;
+    }
+  }
+
+  undoProtocol.push({ delta, undoDelta });
+}
+
+function addStateEntryToUndoProtocol(state) {
+  const undoDelta = {};
+  const redoDelta = {...state};
+  delete redoDelta._meta;
+
+
+  for(const id in redoDelta)
+    undoDelta[id] = null;
+
+  for(const [ id, widget ] of widgets) {
+    if(!redoDelta[id])
+      redoDelta[id] = null;
+
+    undoDelta[id] = widget.unalteredState;
+
+    // unset properties of widgets with same ID
+    if(redoDelta[id]) {
+      for(const property in redoDelta[id])
+        if(typeof undoDelta[id][property] == 'undefined')
+          undoDelta[id][property] = null;
+      for(const property in undoDelta[id])
+        if(typeof redoDelta[id][property] == 'undefined')
+          redoDelta[id][property] = null;
+    }
+  }
+
+  undoProtocol.push({ delta: {s:redoDelta,c:'received complete room state'}, undoDelta });
+}
+
+function getUndoProtocol() {
+  return undoProtocol;
+}
+
+function setUndoProtocol(up) {
+  undoProtocol = up;
+}
+
+function sendRawDelta(delta) {
+  receiveDelta(delta);
+  delta.id = deltaID;
+  toServer('delta', delta);
 }
 
 function receiveDeltaFromServer(delta) {
@@ -126,6 +278,8 @@ function receiveDeltaFromServer(delta) {
 }
 
 function receiveStateFromServer(args) {
+  addStateEntryToUndoProtocol(args);
+
   mouseTarget = null;
   deltaID = args._meta.deltaID;
   for(const widget of widgetFilter(w=>w.get('parent')===null))
@@ -160,14 +314,25 @@ function receiveStateFromServer(args) {
     deferredChildren = {};
   }
 
-  if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-    showOverlay('statesOverlay');
+  if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
+    $('#statesButton').click();
     overlayShownForEmptyRoom = true;
   }
   toServer('confirm');
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyState(args);
+
+  if(triggerGameStartRoutineOnNextStateLoad) {
+    triggerGameStartRoutineOnNextStateLoad = false;
+    (async function() {
+      batchStart();
+      for(const [ id, w ] of widgets)
+        if(w.get('gameStartRoutine'))
+          await w.evaluateRoutine('gameStartRoutine', { widgetID: id }, { widget: [ w ] });
+      batchEnd();
+    })();
+  }
 }
 
 function removeWidget(widgetID) {
@@ -178,6 +343,30 @@ function removeWidget(widgetID) {
   }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
+}
+
+async function removeWidgetLocal(widgetID, keepChildren) {
+  function getWidgetsToRemove(widgetID) {
+    const children = [];
+    if(!keepChildren)
+      for(const [ childWidgetID, childWidget ] of widgets)
+        if(!childWidget.inRemovalQueue && (childWidget.get('parent') == widgetID || childWidget.get('deck') == widgetID))
+          children.push(...getWidgetsToRemove(childWidgetID));
+    widgets.get(widgetID).inRemovalQueue = true;
+    children.push(widgets.get(widgetID));
+    return children;
+  }
+
+  if(widgets.get(widgetID).inRemovalQueue)
+    return;
+
+  for(const w of getWidgetsToRemove(widgetID)) {
+    w.isBeingRemoved = true;
+    // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
+    await w.onPropertyChange('deck', w.get('deck'), null);
+    await w.onPropertyChange('parent', w.get('parent'), null);
+    sendPropertyUpdate(w.id, null);
+  }
 }
 
 function sendDelta() {

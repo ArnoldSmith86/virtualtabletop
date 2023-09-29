@@ -1,0 +1,1667 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Forces of Nature",
+      "image": "/assets/-1130025787_37759",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/73313/elements",
+      "year": "2010",
+      "mode": "vs",
+      "time": "10-20",
+      "attribution": "The game layout and room design are by LawDawg and are released to the Public Domain under CC0.\n\nCard back by Adam Kring is available under the Unsplash License at https://unsplash.com/photos/Spzz_JO7s5k.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"the four elements multimedia art --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Elements",
+      "description": "Use a 16 card deck consisting of numbers 1 to 6. During turn, either play, draw, discard, knock, or fold. Goal is have higher sum than opponent but equal or less than sum played on table. Winner of each round gets 1 or 2 points. First player to 6 points wins.",
+      "showName": true,
+      "helpText": "Players take seats.  Choose options (standard or alternate deck). Press play button. Move cards according to rules. Cards drawn from play area are dropped in holder below player's seat. Press turn button if necessary to change turn indicator. When ready to knock or yield, press button. Cards will be moved from hand so players can see other player's cards. Score is automatically updated.",
+      "lastUpdate": 1659321088000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
+    }
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "childrenPerOwner": true,
+    "y": 820,
+    "width": 650,
+    "height": 180,
+    "id": "hand",
+    "stackOffsetX": 80,
+    "x": 450,
+    "z": 24,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "player",
+        "variable": "playerList"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${playerList}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "hand"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "aggregation": "sum",
+            "property": "rank",
+            "variable": "sum"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "property": "index",
+            "variable": "seatIndex"
+          },
+          {
+            "func": "LABEL",
+            "label": "cardCount${seatIndex}",
+            "mode": "set",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "handTotal${seatIndex}"
+            ],
+            "property": "points",
+            "value": "${sum}"
+          },
+          {
+            "func": "CALL",
+            "widget": "handTotal1",
+            "routine": "sumRoutine"
+          },
+          {
+            "func": "CALL",
+            "widget": "handTotal2",
+            "routine": "sumRoutine"
+          }
+        ]
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 1459,
+    "y": 782,
+    "z": 21,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "theDeck": {
+    "type": "deck",
+    "id": "theDeck",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "1": {
+        "pips": "i/icons/die_face_1.svg",
+        "rank": 1,
+        "cardColor": "#000000aa",
+        "back": "background-image:linear-gradient(#d6ffaf,#a5c487)"
+      },
+      "2": {
+        "pips": "i/icons/die_face_2.svg",
+        "rank": 2,
+        "cardColor": "#000000aa",
+        "back": "background-image:linear-gradient(#ff976b,#ed7b64)"
+      },
+      "3": {
+        "pips": "i/icons/die_face_3.svg",
+        "rank": 3,
+        "cardColor": "#000000aa",
+        "back": "background-image:linear-gradient(#f4c4ba,#a88780)"
+      },
+      "4": {
+        "pips": "i/icons/die_face_4.svg",
+        "rank": 4,
+        "cardColor": "#000000aa",
+        "back": "background-image:linear-gradient(#d0d4ff,#a1a4c5)"
+      },
+      "5": {
+        "pips": "i/icons/die_face_5.svg",
+        "rank": 5,
+        "cardColor": "#000000aa",
+        "back": "background-image:linear-gradient(#448dff,#448dff)"
+      },
+      "6": {
+        "pips": "i/icons/die_face_6.svg",
+        "rank": 6,
+        "cardColor": "#000000aa",
+        "back": "background-image:linear-gradient(#e4e4e4,#989898)"
+      },
+      "7": {
+        "pips": "/assets/501798293_763",
+        "rank": 7,
+        "cardColor": "#000000aa",
+        "back": "background-image:linear-gradient(#ff839c,#ff6282)"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/assets/1470004804_1170183"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "css": "back"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 15,
+            "width": 82,
+            "height": 128,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "pips"
+            },
+            "svgReplaces": {
+              "currentColor": "cardColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 5,
+            "y": 5,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "cardColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 80,
+            "y": 5,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "cardColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 5,
+            "y": 120,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "cardColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 80,
+            "y": 120,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "cardColor"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "css": "font-size:30px"
+    }
+  },
+  "dzci": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1",
+    "id": "dzci",
+    "z": 14117,
+    "parent": "e4uw"
+  },
+  "5t96": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2",
+    "id": "5t96",
+    "z": 14127,
+    "parent": "e4uw"
+  },
+  "ognc": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3",
+    "id": "ognc",
+    "z": 14124,
+    "parent": "e4uw"
+  },
+  "cl15": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4",
+    "id": "cl15",
+    "z": 14115,
+    "parent": "e4uw"
+  },
+  "stgg": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5",
+    "id": "stgg",
+    "z": 14120,
+    "parent": "e4uw"
+  },
+  "10zt": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "10zt",
+    "z": 14123,
+    "parent": "e4uw"
+  },
+  "ki5i": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7",
+    "id": "ki5i",
+    "z": 14118,
+    "parent": "j0ry"
+  },
+  "kc24": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1",
+    "id": "kc24",
+    "z": 14129,
+    "parent": "e4uw"
+  },
+  "616e": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2",
+    "id": "616e",
+    "z": 14119,
+    "parent": "e4uw"
+  },
+  "3rnb": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3",
+    "id": "3rnb",
+    "z": 14121,
+    "parent": "e4uw"
+  },
+  "0vmf": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4",
+    "id": "0vmf",
+    "z": 14116,
+    "parent": "e4uw"
+  },
+  "rnm7": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5",
+    "id": "rnm7",
+    "z": 14122,
+    "parent": "e4uw"
+  },
+  "pw4y": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "pw4y",
+    "z": 14128,
+    "parent": "e4uw"
+  },
+  "i3g8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "i3g8",
+    "z": 14112,
+    "parent": "e4uw"
+  },
+  "bkre": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "bkre",
+    "z": 14126,
+    "parent": "e4uw"
+  },
+  "e9yr": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "e9yr",
+    "z": 14114,
+    "parent": "e4uw"
+  },
+  "2xfd": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "2xfd",
+    "z": 14113,
+    "parent": "e4uw"
+  },
+  "zsxw": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7",
+    "id": "zsxw",
+    "z": 14130,
+    "parent": "j0ry"
+  },
+  "sort": {
+    "type": "button",
+    "id": "sort",
+    "x": 350,
+    "y": 878,
+    "z": 2,
+    "movableInEdit": false,
+    "css": "font-size: 27px; ",
+    "text": "Sort",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SORT",
+        "key": "rank"
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 300,
+    "y": 84,
+    "z": 19,
+    "movableInEdit": false
+  },
+  "huitD": {
+    "id": "huitD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score1"
+  },
+  "huitU": {
+    "id": "huitU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score1"
+  },
+  "score1": {
+    "type": "label",
+    "id": "score1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": 45,
+    "y": -75,
+    "width": 65,
+    "height": 40,
+    "z": 3,
+    "movableInEdit": false,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "draw1": {
+    "type": "holder",
+    "id": "draw1",
+    "y": 69,
+    "z": 2,
+    "fixedParent": true,
+    "parent": "seat1",
+    "x": -91,
+    "width": 333,
+    "stackOffsetX": 70,
+    "movableInEdit": false,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "TURN"
+      }
+    ],
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "draw1"
+      },
+      {
+        "func": "GET",
+        "aggregation": "sum",
+        "property": "rank",
+        "variable": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "points",
+        "value": "${sum}"
+      },
+      {
+        "func": "CALL",
+        "widget": "handTotal1",
+        "routine": "sumRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "points": 0
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 1100,
+    "y": 84,
+    "z": 6,
+    "index": 2,
+    "movableInEdit": false
+  },
+  "score2": {
+    "type": "label",
+    "id": "score2",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": 45,
+    "y": -75,
+    "width": 65,
+    "height": 40,
+    "z": 3,
+    "movableInEdit": false,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "huitD1": {
+    "id": "huitD1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score2"
+  },
+  "huitU1": {
+    "id": "huitU1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score2"
+  },
+  "draw2": {
+    "type": "holder",
+    "id": "draw2",
+    "y": 69,
+    "z": 2,
+    "fixedParent": true,
+    "parent": "seat2",
+    "x": -91,
+    "width": 333,
+    "stackOffsetX": 70,
+    "movableInEdit": false,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "draw2"
+      },
+      {
+        "func": "GET",
+        "aggregation": "sum",
+        "property": "rank",
+        "variable": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "points",
+        "value": "${sum}"
+      },
+      {
+        "func": "CALL",
+        "widget": "handTotal2",
+        "routine": "sumRoutine"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "TURN"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "points": 0
+  },
+  "discard": {
+    "type": "holder",
+    "id": "discard",
+    "x": 726,
+    "y": 160,
+    "z": 13,
+    "movableInEdit": false,
+    "enterRoutine": [
+      {
+        "func": "TURN"
+      }
+    ]
+  },
+  "cardCount1": {
+    "id": "cardCount1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": 155,
+    "y": -5,
+    "width": 35,
+    "height": 50,
+    "borderRadius": 5,
+    "rotation": -3,
+    "layer": 2,
+    "z": 102,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-image:url(/assets/1470004804_1170183);font-weight:900;font-size:1.5rem;line-height:50px;color:white",
+    "text": 0,
+    "textChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "nextRound"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "nextRound"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  "cardback1": {
+    "id": "cardback1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": 160,
+    "y": -5,
+    "width": 35,
+    "height": 50,
+    "borderRadius": 5,
+    "rotation": 5,
+    "z": 102,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-image:url(/assets/1470004804_1170183);filter:brightness(150%)"
+  },
+  "cardCount2": {
+    "id": "cardCount2",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": 155,
+    "y": -5,
+    "width": 35,
+    "height": 50,
+    "borderRadius": 5,
+    "rotation": -3,
+    "layer": 2,
+    "z": 102,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-image:url(/assets/1470004804_1170183);font-weight:900;font-size:1.5rem;line-height:50px;color:white",
+    "text": 0,
+    "textChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "nextRound"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "nextRound"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  "cardback2": {
+    "id": "cardback2",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": 160,
+    "y": -5,
+    "width": 35,
+    "height": 50,
+    "borderRadius": 5,
+    "rotation": 5,
+    "z": 102,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-image:url(/assets/1470004804_1170183);filter:brightness(150%)"
+  },
+  "sigman": {
+    "id": "sigman",
+    "x": 725,
+    "y": 661,
+    "z": 104,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 70px; ",
+    "text": "Σ"
+  },
+  "playTotal": {
+    "id": "playTotal",
+    "x": 800,
+    "y": 661,
+    "z": 104,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 70px; ",
+    "text": 0
+  },
+  "handTotal1": {
+    "id": "handTotal1",
+    "x": 1040,
+    "y": 819,
+    "width": 50,
+    "height": 50,
+    "z": 106,
+    "css": "font-size: 40px; text-align:right",
+    "text": 0,
+    "onlyVisibleForSeat": "seat1",
+    "movable": false,
+    "movableInEdit": false,
+    "sumRoutine": [
+      "var sum = ${PROPERTY points} + ${PROPERTY points OF draw1}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${sum}"
+      }
+    ],
+    "points": 0
+  },
+  "handTotal2": {
+    "id": "handTotal2",
+    "x": 1040,
+    "y": 819,
+    "width": 50,
+    "height": 50,
+    "z": 106,
+    "css": "font-size: 40px; text-align:right",
+    "text": 0,
+    "onlyVisibleForSeat": "seat2",
+    "movable": false,
+    "movableInEdit": false,
+    "points": 0,
+    "sumRoutine": [
+      "var sum = ${PROPERTY points} + ${PROPERTY points OF draw2}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${sum}"
+      }
+    ]
+  },
+  "offBoard": {
+    "type": "holder",
+    "id": "offBoard",
+    "x": 72,
+    "y": 1037,
+    "z": 20
+  },
+  "options": {
+    "type": "button",
+    "id": "options",
+    "x": 1550,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 10,
+    "movableInEdit": false,
+    "classes": "material-icons",
+    "css": "font-size: 35px; line-height:1.2",
+    "text": "settings",
+    "alternate": false,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Choose deck options"
+          },
+          {
+            "type": "checkbox",
+            "label": "The standard deck uses six cards with number 6. The alternate deck uses four cards with number 6 and two with number 7. Check the box to use the alternate deck.",
+            "value": "${PROPERTY alternate}",
+            "variable": "alternate"
+          }
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "Set Options"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "alternate",
+        "value": "${alternate}"
+      },
+      {
+        "func": "CALL",
+        "widget": "shuffle",
+        "routine": "shuffleRoutine"
+      }
+    ],
+    "setDeckRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY alternate}",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "rank",
+            "value": 7
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "offBoard"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "rank",
+            "value": 6,
+            "max": 2
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "offBoard"
+          }
+        ]
+      }
+    ]
+  },
+  "shuffle": {
+    "type": "button",
+    "id": "shuffle",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Recall and shuffle"
+          },
+          {
+            "type": "subtitle",
+            "text": "This will recall and shuffle the cards. Do you want to continue?"
+          }
+        ],
+        "confirmButtonText": "Recall and Shuffle"
+      },
+      {
+        "func": "CALL",
+        "routine": "shuffleRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "play"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "shuffleRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "CALL",
+        "widget": "options",
+        "routine": "setDeckRoutine"
+      }
+    ]
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "width": 50,
+    "height": 50,
+    "z": 10,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 40px; line-height:1.2",
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restart game"
+          },
+          {
+            "type": "subtitle",
+            "text": "This will restart the game. Do you want to continue?"
+          }
+        ],
+        "confirmButtonText": "Restart"
+      },
+      {
+        "func": "CALL",
+        "widget": "shuffle",
+        "routine": "shuffleRoutine"
+      },
+      {
+        "func": "LABEL",
+        "collection": [
+          "score1",
+          "score2"
+        ],
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "cardCount1",
+          "cardCount2"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "play"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "play"
+        ],
+        "property": "started",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1",
+          "seat2"
+        ],
+        "property": "turn",
+        "value": false
+      }
+    ]
+  },
+  "playArea": {
+    "type": "holder",
+    "id": "playArea",
+    "x": 450,
+    "y": 500,
+    "width": 650,
+    "z": 17,
+    "movableInEdit": false,
+    "stackOffsetX": 70,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "sumRoutine"
+      },
+      {
+        "func": "TURN"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "sumRoutine"
+      }
+    ],
+    "sumRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "playArea"
+      },
+      {
+        "func": "GET",
+        "aggregation": "sum",
+        "property": "rank",
+        "variable": "sum"
+      },
+      {
+        "func": "LABEL",
+        "label": "playTotal",
+        "mode": "set",
+        "value": "${sum}"
+      }
+    ]
+  },
+  "play": {
+    "type": "button",
+    "id": "play",
+    "x": 728,
+    "y": 370,
+    "width": 100,
+    "height": 100,
+    "z": 14,
+    "movableInEdit": false,
+    "css": "font-size: 27px; ",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY started}",
+        "elseRoutine": [
+          {
+            "func": "TURN",
+            "turnCycle": "random"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "started",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "shuffle",
+        "routine": "shuffleRoutine"
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "seat1",
+          "seat2"
+        ],
+        "count": 6
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "rank"
+      },
+      {
+        "func": "CALL",
+        "widget": "hand",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "yield"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "knock"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "text": "Play",
+    "started": false
+  },
+  "turn": {
+    "type": "button",
+    "id": "turn",
+    "x": 1125,
+    "y": 878,
+    "z": 2,
+    "movableInEdit": false,
+    "css": "font-size: 27px; ",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ],
+    "text": "Turn"
+  },
+  "yield": {
+    "type": "button",
+    "id": "yield",
+    "x": 1125,
+    "y": 546,
+    "z": 21,
+    "movableInEdit": false,
+    "css": "font-size: 27px; ",
+    "text": "Yield",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Yield"
+          },
+          {
+            "type": "subtitle",
+            "text": "This will end the round and give one point to your opponenet. Do you want to continue?"
+          }
+        ],
+        "confirmButtonText": "Yield"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "knock"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "play"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "seatIndex"
+      },
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "score2",
+            "mode": "inc",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seat1",
+              "seat2"
+            ],
+            "property": "turn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seat2"
+            ],
+            "property": "turn",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "LABEL",
+            "label": "score1",
+            "mode": "inc",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seat1",
+              "seat2"
+            ],
+            "property": "turn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seat1"
+            ],
+            "property": "turn",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "knock",
+        "routine": "moveCardsRoutine"
+      }
+    ]
+  },
+  "knock": {
+    "type": "button",
+    "id": "knock",
+    "x": 350,
+    "y": 546,
+    "z": 21,
+    "movableInEdit": false,
+    "css": "font-size: 27px; ",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Knock"
+          },
+          {
+            "type": "subtitle",
+            "text": "This will end the round and give two points to the winning player.  The score will automatically be updated.  Do you want to continue?"
+          }
+        ],
+        "confirmButtonText": "Knock"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "yield"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "play"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "seatIndex"
+      },
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "knockRoutine",
+            "arguments": {
+              "knocker": 1,
+              "other": 2
+            }
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "knockRoutine",
+            "arguments": {
+              "knocker": 2,
+              "other": 1
+            }
+          }
+        ]
+      }
+    ],
+    "text": "Knock",
+    "knockRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "playTotal"
+        ],
+        "property": "text",
+        "variable": "playPoints"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "handTotal${knocker}"
+        ],
+        "property": "text",
+        "variable": "knockerPoints"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "handTotal${other}"
+        ],
+        "property": "text",
+        "variable": "otherPoints"
+      },
+      {
+        "func": "IF",
+        "operand1": "${knockerPoints}",
+        "relation": ">",
+        "operand2": "${playPoints}",
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "score${other}",
+            "mode": "inc",
+            "value": 2
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seat1",
+              "seat2"
+            ],
+            "property": "turn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seat${other}"
+            ],
+            "property": "turn",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${otherPoints}",
+            "relation": ">",
+            "operand2": "${playPoints}",
+            "thenRoutine": [
+              {
+                "func": "LABEL",
+                "label": "score${knocker}",
+                "mode": "inc",
+                "value": 2
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "seat1",
+                  "seat2"
+                ],
+                "property": "turn",
+                "value": false
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "seat${knocker}"
+                ],
+                "property": "turn",
+                "value": true
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${knockerPoints}",
+                "relation": ">",
+                "operand2": "${otherPoints}",
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "score${knocker}",
+                    "mode": "inc",
+                    "value": 2
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "seat1",
+                      "seat2"
+                    ],
+                    "property": "turn",
+                    "value": false
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "seat${knocker}"
+                    ],
+                    "property": "turn",
+                    "value": true
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "score${other}",
+                    "mode": "inc",
+                    "value": 2
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "seat1",
+                      "seat2"
+                    ],
+                    "property": "turn",
+                    "value": false
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "seat${other}"
+                    ],
+                    "property": "turn",
+                    "value": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "moveCardsRoutine"
+      }
+    ],
+    "moveCardsRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "seat${value}"
+            ],
+            "property": "player",
+            "variable": "playerID"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "owner",
+            "value": "${playerID}"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "draw${value}"
+          },
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": null
+          },
+          {
+            "func": "MOVE",
+            "from": "draw${value}",
+            "to": "tempHolder",
+            "count": 0
+          },
+          {
+            "func": "SORT",
+            "holder": "tempHolder",
+            "key": "rank"
+          },
+          {
+            "func": "MOVE",
+            "from": "tempHolder",
+            "to": "draw${value}",
+            "count": 0
+          }
+        ]
+      }
+    ]
+  },
+  "tempHolder": {
+    "type": "holder",
+    "id": "tempHolder",
+    "x": 268,
+    "y": 1038,
+    "z": 26
+  },
+  "e4uw": {
+    "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "e4uw"
+  },
+  "j0ry": {
+    "type": "pile",
+    "parent": "offBoard",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "j0ry"
+  }
+}
