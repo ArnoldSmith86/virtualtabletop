@@ -296,6 +296,8 @@ MinifyHTML().then(function(result) {
       if(RegExp(crawler.pattern).test(req.headers['user-agent']))
         isBot = true;
 
+    console.log(req.headers['user-agent'], isBot);
+
     if(isBot) {
       res.setHeader('Content-Type', 'text/html');
       res.send('<meta property="og:title" content="Yay, it works" />');
