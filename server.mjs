@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
 import fetch from 'node-fetch';
+import crawlers from 'crawler-user-agents' assert { type: 'json' };;
 
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
@@ -290,19 +291,29 @@ MinifyHTML().then(function(result) {
   });
 
   router.get('/:room', function(req, res, next) {
-    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
-      if(!isLoaded) {
-        res.send('Invalid characters in room ID.');
-        return;
-      }
+    let isBot = false;
+    for(const crawler of crawlers)
+      if(RegExp(crawler.pattern).test(req.headers['user-agent']))
+        isBot = true;
+
+    if(isBot) {
       res.setHeader('Content-Type', 'text/html');
-      if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-        res.setHeader('Content-Encoding', 'gzip');
-        res.send(result.gzipped);
-      } else {
-        res.send(result.min);
-      }
-    }).catch(next);
+      res.send('<meta property="og:title" content="Yay, it works" />');
+    } else {
+      ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+        if(!isLoaded) {
+          res.send('Invalid characters in room ID.');
+          return;
+        }
+        res.setHeader('Content-Type', 'text/html');
+        if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+          res.setHeader('Content-Encoding', 'gzip');
+          res.send(result.gzipped);
+        } else {
+          res.send(result.min);
+        }
+      }).catch(next);
+    }
   });
 
   router.get('/createTempState/:room', function(req, res, next) {
