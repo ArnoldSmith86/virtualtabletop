@@ -11,6 +11,10 @@ class JsonModule extends SidebarModule {
     $('#jsonEditor').append($('#jeWidgetLayers'));
   }
 
+  onDeltaReceivedWhileActive(delta) {
+    jeApplyDelta(delta);
+  }
+
   onEditorClose() {
     super.onEditorClose();
     if(this.moduleDOM && jeEnabled)
@@ -53,6 +57,10 @@ class TreeModule extends SidebarModule {
     $('#jsonEditor').append($('#jeTree'));
   }
 
+  onDeltaReceivedWhileActive(delta) {
+    jeUpdateTree(delta.s);
+  }
+
   onSelectionChangedWhileActive(newSelection) {
     if(newSelection.length) {
       jeSelectWidget(newSelection[0]);
@@ -60,8 +68,8 @@ class TreeModule extends SidebarModule {
         jeSelectWidget(newSelection[i], true);
     } else {
       jeEmpty();
+      jeCenterSelection();
     }
-    jeDisplayTree();
     $('#jeText').blur();
   }
 
