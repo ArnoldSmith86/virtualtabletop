@@ -112,6 +112,7 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/undo.js',
     'client/js/editor/sidebar/json.js',
     'client/js/editor/sidebar/assets.js',
+    'client/js/editor/sidebar/toolbox.js',
 
     'node_modules/vue/dist/vue.global.js',
 

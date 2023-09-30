@@ -59,7 +59,8 @@ function initializeEditor() {
     new JsonModule(),
     new TreeModule(),
     new DebugModule(),
-    new AssetsModule()
+    new AssetsModule(),
+    new ToolboxModule()
   ]);
 
   openEditor();
