@@ -171,9 +171,6 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] === null && widgets.has(widgetID))
       removeWidget(widgetID);
 
-  if(typeof jeEnabled != 'undefined' && jeEnabled)
-    jeApplyDelta(delta);
-
   if(typeof edit != 'undefined' && edit)
     editorReceiveDelta(delta);
 }
