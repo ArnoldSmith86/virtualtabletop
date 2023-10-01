@@ -1,4 +1,4 @@
-export const VERSION = 13;
+export const VERSION = 14;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -96,6 +96,7 @@ function updateProperties(properties, v, globalProperties) {
   v<10 && v10GridOffset(properties);
   v<12 && globalProperties.v12DropShadowAllowed && v12HandDropShadow(properties);
   v<13 && v13EnlargeTinyLabels(properties);
+  v<13 && v14HidePlayerCursors(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -443,4 +444,9 @@ function v13EnlargeTinyLabels(properties) {
     if((properties.height || 20) < fontSize + 2)
       properties.height = fontSize + 2;
   }
+}
+
+function v14HidePlayerCursors(properties) {
+  if(properties.type == 'holder' && properties.childrenPerOwner)
+    properties.hidePlayerCursors = true;
 }
