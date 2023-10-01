@@ -96,8 +96,13 @@ export default class Room {
           attribution: ''
         };
 
-        if(stateID.match(/^PL:/))
-          return this.writePublicLibraryToFilesystem(stateID, newVariantID, variant);
+        if(stateID.match(/^PL:/)) {
+          this.writePublicLibraryToFilesystem(stateID, newVariantID, variant);
+          this.writePublicLibraryAssetsToFilesystem(stateID);
+          delete Room.publicLibrary;
+          this.publicLibraryUpdatedCallback();
+          return;
+        }
 
         if(type != 'link')
           fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
@@ -186,6 +191,9 @@ export default class Room {
       delete this.state._meta.states['PL:NEW'].variants[variantID].variants;
       this.writePublicLibraryToFilesystem('PL:NEW', variantID, variantData[variantID]);
     }
+    this.writePublicLibraryAssetsToFilesystem('PL:NEW');
+    delete Room.publicLibrary;
+    this.publicLibraryUpdatedCallback();
 
     this.removeState(player, id);
   }
@@ -1078,10 +1086,6 @@ export default class Room {
     copy._meta.info.lastUpdate = +new Date();
 
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
-    this.writePublicLibraryAssetsToFilesystem(stateID);
-
-    delete Room.publicLibrary;
-    this.publicLibraryUpdatedCallback();
   }
 
   writeToFilesystem() {
