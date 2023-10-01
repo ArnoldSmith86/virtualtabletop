@@ -96,7 +96,7 @@ function updateProperties(properties, v, globalProperties) {
   v<10 && v10GridOffset(properties);
   v<12 && globalProperties.v12DropShadowAllowed && v12HandDropShadow(properties);
   v<13 && v13EnlargeTinyLabels(properties);
-  v<13 && v14HidePlayerCursors(properties);
+  v<14 && v14HidePlayerCursors(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
