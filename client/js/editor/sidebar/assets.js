@@ -269,7 +269,7 @@ class AssetsModule extends SidebarModule {
     for(const checkbox of $a('input[type=checkbox]', this.moduleDOM)) {
       if(checkbox.checked) {
         const img = $('img', checkbox.parentNode)
-        this.replaceAsset(assets[img.dataset.sourceAsset], await _uploadAsset(img.src));
+        await this.replaceAsset(assets[img.dataset.sourceAsset], await _uploadAsset(img.src));
       }
     }
     batchEnd();
