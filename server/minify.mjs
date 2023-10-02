@@ -112,6 +112,7 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/undo.js',
     'client/js/editor/sidebar/json.js',
     'client/js/editor/sidebar/assets.js',
+    'client/js/editor/sidebar/toolbox.js',
 
     'node_modules/vue/dist/vue.global.js',
 
@@ -161,6 +162,7 @@ async function compressJS(jsFiles) {
 
 async function compress(htmlFile, cssFiles, jsFiles) {
   let htmlString = fs.readFileSync(path.resolve() + '/' + htmlFile, {encoding:'utf8'});
+  htmlString = htmlString.replace(/\ \/\*\*\*\ TITLE\ \*\*\*\/\ /, _=>Config.get('serverName'));
 
   const css = await compressCSS(cssFiles);
   htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, _=>css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, _=>`const config = ${JSON.stringify(Config.config)};`);

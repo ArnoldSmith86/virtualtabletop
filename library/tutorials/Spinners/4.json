@@ -725,12 +725,20 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Styling Examples",
       "attribution": "Background color CSS: https://www.w3schools.com/cssref/pr_background-color.asp\nFont color CSS: https://www.w3schools.com/cssref/pr_text_color.asp\nBorder color CSS: https://www.w3schools.com/cssref/pr_border-color.asp",
       "showName": false,
-      "lastUpdate": 1623354701000
+      "lastUpdate": 1693318813182,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Styling Examples",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   }
 }

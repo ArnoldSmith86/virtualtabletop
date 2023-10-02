@@ -70,6 +70,7 @@ export class Widget extends StateManaged {
       dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
+      hidePlayerCursors: false,
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
@@ -258,7 +259,7 @@ export class Widget extends StateManaged {
     for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
       const inheritedDelta = {};
       this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
-      inheriting.applyDeltaToDOM(inheritedDelta);
+      inheriting.applyInheritedDeltaToDOM(inheritedDelta);
     }
 
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
@@ -266,10 +267,22 @@ export class Widget extends StateManaged {
     }
   }
 
+  applyInheritedDeltaToDOM(delta) {
+    if(!this.inheritedProperties)
+      this.inheritedProperties = {};
+    for(const [ property, value ] of Object.entries(delta)) {
+      if(value === null)
+        delete this.inheritedProperties[property];
+      else
+        this.inheritedProperties[property] = true;
+    }
+    this.applyDeltaToDOM(delta);
+  }
+
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
     for(const key in sourceDelta)
       if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
-          targetDelta[key] = sourceDelta[key];
+        targetDelta[key] = sourceDelta[key];
   }
 
   applyInheritedValuesToDOM(inheritFrom, pushasArray) {
@@ -288,7 +301,7 @@ export class Widget extends StateManaged {
         StateManaged.inheritFromMapping[id].push(this);
       }
     }
-    this.applyDeltaToDOM(delta);
+    this.applyInheritedDeltaToDOM(delta);
   }
 
   applyInitialDelta(delta) {
@@ -385,6 +398,9 @@ export class Widget extends StateManaged {
     if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
+
+    if(hoverTarget && hoverTarget.domElement.classList.contains('showCardBack'))
+      className += ' showCardBack';
 
     if(typeof this.get('dragging') == 'string')
       className += ' dragging';
@@ -1120,7 +1136,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: 0, face: null, faceCycle: null, collection: 'DEFAULT' });
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
@@ -2174,6 +2190,14 @@ export class Widget extends StateManaged {
 
   readOnlyProperties() {
     return readOnlyProperties;
+  }
+
+  requiresHiddenCursor() {
+    if(this.get('hidePlayerCursors'))
+      return true;
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      return widgets.get(this.get('parent')).requiresHiddenCursor();
+    return false;
   }
 
   async rotate(degrees, mode) {
