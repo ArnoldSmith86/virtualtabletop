@@ -20,6 +20,18 @@
   top: 0;
 }
 
+.holder.showCardBack > .card.widget {
+  display: block;
+}
+
+.holder.showCardBack > .card.widget > .active.cardFace, .card.widget.showCardBack > .active.cardFace {
+  display: none;
+}
+
+.holder.showCardBack > .card.widget > :not(.active).cardFace, .card.widget.showCardBack > :not(.active).cardFace {
+  display: block;
+}
+
 .widget.droppable.droptarget {
   border: calc(1px / var(--scale)) solid #333 !important;
 }

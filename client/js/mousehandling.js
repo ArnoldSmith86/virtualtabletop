@@ -43,6 +43,7 @@ async function inputHandler(name, e) {
       return;
     target = target.parentNode;
   }
+  const targetForHiddenCursorCheck = target && target.id && target.id.slice(0,2) == 'w_' && widgets.has(unescapeID(target.id.slice(2))) ? target : null;
 
   e.preventDefault();
 
@@ -128,13 +129,17 @@ async function inputHandler(name, e) {
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
 
-  toServer('mouse',
-    {
-      x: Math.round(coords.x),
-      y: Math.round(coords.y),
-      pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
-      target: mouseTarget? unescapeID(mouseTarget.id.slice(2)) : null
-    });
+  if(targetForHiddenCursorCheck && widgets.has(unescapeID(targetForHiddenCursorCheck.id.slice(2))) && widgets.get(unescapeID(targetForHiddenCursorCheck.id.slice(2))).requiresHiddenCursor()) {
+    toServer('mouse', { hidden: true });
+  } else {
+    toServer('mouse',
+      {
+        x: Math.round(coords.x),
+        y: Math.round(coords.y),
+        pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
+        target: mouseTarget? unescapeID(mouseTarget.id.slice(2)) : null
+      });
+  }
 }
 
 onLoad(function() {
