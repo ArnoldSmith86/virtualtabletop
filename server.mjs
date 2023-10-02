@@ -314,10 +314,10 @@ MinifyHTML().then(function(result) {
         let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
         if(game) {
           ogOutput += `<meta property="og:description" content="Come play the game ${game.name} with me!" />`;
-          ogOutput += `<meta property="og:image" content="${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
+          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
         } else {
           ogOutput += `<meta property="og:description" content="Come play with me!" />`;
-          ogOutput += `<meta property="og:image" content="i/branding/android-512.png" />`;
+          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
         }
         res.send(ogOutput);
       } else {
