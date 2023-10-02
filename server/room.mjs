@@ -15,9 +15,10 @@ export default class Room {
   deltaID = 0;
   lastStatisticsDeltaID = 0;
 
-  constructor(id, unloadCallback) {
+  constructor(id, unloadCallback, publicLibraryUpdatedCallback) {
     this.id = id;
     this.unloadCallback = unloadCallback;
+    this.publicLibraryUpdatedCallback = publicLibraryUpdatedCallback;
     this.unloadTimeout = setTimeout(_=>{
       if(this.players.length == 0) {
         Logging.log(`unloading room ${this.id} after 5s without player connection`);
@@ -95,8 +96,13 @@ export default class Room {
           attribution: ''
         };
 
-        if(stateID.match(/^PL:/))
-          return this.writePublicLibraryToFilesystem(stateID, newVariantID, variant);
+        if(stateID.match(/^PL:/)) {
+          this.writePublicLibraryToFilesystem(stateID, newVariantID, variant);
+          this.writePublicLibraryAssetsToFilesystem(stateID);
+          delete Room.publicLibrary;
+          this.publicLibraryUpdatedCallback();
+          return;
+        }
 
         if(type != 'link')
           fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
@@ -185,6 +191,9 @@ export default class Room {
       delete this.state._meta.states['PL:NEW'].variants[variantID].variants;
       this.writePublicLibraryToFilesystem('PL:NEW', variantID, variantData[variantID]);
     }
+    this.writePublicLibraryAssetsToFilesystem('PL:NEW');
+    delete Room.publicLibrary;
+    this.publicLibraryUpdatedCallback();
 
     this.removeState(player, id);
   }
@@ -717,6 +726,14 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  reloadPublicLibraryGames() {
+    for(const id in this.state._meta.states)
+      if(id.match(/^PL:/))
+        delete this.state._meta.states[id];
+    this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+    this.sendMetaUpdate();
+  }
+
   removeInvalidPublicLibraryLinks(player) {
     for(const [ id, state ] of Object.entries(this.state._meta.states)) {
       const operations = [];
@@ -762,7 +779,12 @@ export default class Room {
 
     delete this.state._meta.states[stateID];
 
-    this.sendMetaUpdate();
+    if(stateID.match(/^PL:/)) {
+      delete Room.publicLibrary;
+      this.publicLibraryUpdatedCallback();
+    } else {
+      this.sendMetaUpdate();
+    }
   }
 
   renamePlayer(renamingPlayer, oldName, newName) {
@@ -1040,7 +1062,7 @@ export default class Room {
     this.writePublicLibraryAssetsToFilesystem(stateID);
 
     delete Room.publicLibrary;
-    this.getPublicLibraryGames();
+    this.publicLibraryUpdatedCallback();
   }
 
   writePublicLibraryToFilesystem(stateID, variantID, state) {
@@ -1064,7 +1086,6 @@ export default class Room {
     copy._meta.info.lastUpdate = +new Date();
 
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
-    this.writePublicLibraryAssetsToFilesystem(stateID);
   }
 
   writeToFilesystem() {

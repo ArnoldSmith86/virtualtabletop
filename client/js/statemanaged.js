@@ -5,6 +5,7 @@ export class StateManaged {
   constructor() {
     this.defaults = {};
     this.state = {};
+    this.unalteredState = {};
   }
 
   addDefaults(defaults) {
@@ -15,10 +16,11 @@ export class StateManaged {
     const deltaForDOM = {};
     for(const i in delta) {
       if(delta[i] === null) {
+        delete this.unalteredState[i];
         delete this.state[i];
         deltaForDOM[i] = this.get(i);
       } else {
-        deltaForDOM[i] = this.state[i] = delta[i];
+        deltaForDOM[i] = this.unalteredState[i] = this.state[i] = delta[i];
       }
     }
     this.applyDeltaToDOM(deltaForDOM);

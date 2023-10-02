@@ -9378,20 +9378,26 @@
     "version": 3,
     "info": {
       "name": "Magician",
-      "image": "/assets/2060903656_3659",
+      "image": "/assets/-783415951_29388",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/1465/wizard",
       "year": "1984",
       "mode": "vs",
       "time": "45",
-      "players": "3-6",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The room layout is public domain by https://www.reddit.com/user/Ingegneus. The card deck and library image were added by ArnoldSmith86 (along with a few layout changes) and are also public domain.\n\nThe background image by Nathan Dumlao is free to use under the Unsplash License: https://unsplash.com/photos/J2gEgTPM_OA",
+      "attribution": "The room layout is public domain by https://www.reddit.com/user/Ingegneus. The card deck was added by ArnoldSmith86 (along with a few layout changes) and are also public domain.\n\nThe background image by Nathan Dumlao is free to use under the Unsplash License: https://unsplash.com/photos/J2gEgTPM_OA.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"magician card trick watercolor painting --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Wizard",
-      "description": "Trick taking, trump card game using a deck of 60 cards where players must take exact number of tricks bid and 8 cards have special rules.  Most points wins.",
+      "description": "Trick taking, trump card game using a deck of 60 cards where players must take exact number of tricks bid and 8 cards have special rules. Most points wins.",
       "showName": true,
-      "lastUpdate": 1624554755000
+      "lastUpdate": 1624554755000,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-6"
     }
   },
   "y953": {

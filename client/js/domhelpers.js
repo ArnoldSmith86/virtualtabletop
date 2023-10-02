@@ -6,6 +6,17 @@ export function $a(selector, parent) {
   return (parent || document).querySelectorAll(selector);
 }
 
+export function div(parent, className, html) {
+  const div = document.createElement('div');
+  if(className)
+    div.className = className;
+  if(html)
+    div.innerHTML = html;
+  if(parent)
+    parent.append(div);
+  return div;
+}
+
 const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
 
 export function regexEscape(string) {
@@ -36,6 +47,16 @@ export function domByTemplate(id, obj, type='div') {
   dom.innerHTML = document.getElementById(id).innerHTML;
   applyValuesToDOM(dom, obj || {});
   return dom;
+}
+
+export function shuffleArray(array) {
+  const isString = typeof array === 'string';
+  array = [...array];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return isString ? array.join('') : array;
 }
 
 export function mapAssetURLs(str) {
@@ -202,6 +223,16 @@ export function formField(field, dom, id) {
   }
 }
 
+function emojis2images(dom) {
+  const regex = /\uD83C\uDFF4(\uDB40[\uDC61-\uDC7A])+\uDB40\uDC7F|(\ud83c[\udde6-\uddff]){2}|([\#\*0-9]\ufe0f?\u20e3)|(\u00a9|\u00ae|[\u203c-\u3300]|[\ud83c-\ud83e][\ud000-\udfff])((\ud83c[\udffb-\udfff])?(\ud83e[\uddb0-\uddb3])?(\ufe0f?\u200d([\u2000-\u3300]|[\ud83c-\ud83e][\ud000-\udfff])\ufe0f?)?)*/g;
+  dom.innerHTML = dom.innerHTML.replace(regex, m=>`<img class="emoji" src="i/noto-emoji/emoji_u${emojiToFilename(m)}.svg" alt="${m}">`);
+}
+
+function images2emojis(dom) {
+  const regexpUnicodeModified = /<img class="emoji" src="[^"]*i\/noto-emoji\/emoji_u[0-9a-f_]+\.svg" alt="([^"]+)"[^>]*>/g;
+  dom.innerHTML = dom.innerHTML.replace(regexpUnicodeModified, (m,g)=>g);
+}
+
 export function applyValuesToDOM(parent, obj) {
   for(const dom of $a('[data-field]', parent)) {
     if(obj[dom.dataset.field]) {
@@ -212,6 +243,7 @@ export function applyValuesToDOM(parent, obj) {
         dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
       if(dom.dataset.target == 'src')
         dom.src = mapAssetURLs(obj[dom.dataset.field]);
+      emojis2images(dom);
     } else {
       dom[dom.dataset.target || 'innerText'] = '';
       if(!dom.dataset.forceshow)
@@ -225,12 +257,14 @@ export function applyValuesToDOM(parent, obj) {
 export function getValuesFromDOM(parent) {
   const obj = {};
   for(const dom of $a('[data-field]:not([data-target=href])', parent)) {
+    images2emojis(dom);
     if(dom.dataset.target == 'checked')
       obj[dom.dataset.field] = dom.checked;
     else if(dom.dataset.html && (dom.innerText.trim() || dom.innerHTML.match(/<img|<video/)) && dom.innerText != (dom.dataset.placeholder || '<empty>'))
       obj[dom.dataset.field] = unmapAssetURLs(DOMPurify.sanitize(dom.innerHTML, { USE_PROFILES: { html: true } }));
     else
       obj[dom.dataset.field] = dom[dom.dataset.target || 'innerText'].trim().replace(dom.dataset.placeholder || '<empty>', '');
+    emojis2images(dom);
   }
   return obj;
 }
@@ -280,21 +314,32 @@ export function disableEditing(parent, obj) {
       hideDom.classList.add('hidden');
 }
 
+function emojiToFilename(emoji) {
+  return [...emoji].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
+}
+
 let symbolData = null;
 export async function loadSymbolPicker() {
   if(symbolData === null) {
     symbolData = 'loading';
     symbolData = await (await fetch('i/fonts/symbols.json')).json();
     let list = '';
+    let gameIconsIndex = 0;
     for(const [ category, symbols ] of Object.entries(symbolData)) {
       list += `<h2>${category}</h2>`;
       for(const [ symbol, keywords ] of Object.entries(symbols)) {
-        let className = 'emoji';
-        if(symbol[0] == '[')
-          className = 'symbols';
-        else if(symbol.match(/^[a-z0-9_]+$/))
-          className = 'material-icons';
-        list += `<i class="${className}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+        if(symbol.includes('/')) {
+          // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
+          list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+          ++gameIconsIndex;
+        } else {
+          let className = 'emoji';
+          if(symbol[0] == '[')
+            className = 'symbols';
+          else if(symbol.match(/^[a-z0-9_]+$/))
+            className = 'material-icons';
+          list += `<i class="${className}" title="${className}: ${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+        }
       }
     }
     $('#symbolList').innerHTML = list;
@@ -305,6 +350,7 @@ export async function loadSymbolPicker() {
         toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
       for(const title of $a('#symbolList h2'))
         toggleClass(title, 'hidden', text);
+      toggleClass($('#symbolPickerOverlay'), 'fewResults', $a('#symbolList i:not(.hidden)').length < 100);
     };
   }
 }
@@ -382,12 +428,19 @@ export function addRichtextControls(dom) {
         showStatesOverlay(detailsOverlay);
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
-        let className = 'emoji';
-        if(icon.innerText[0] == '[')
-          className = 'symbols';
-        else if(icon.innerText.match(/^[a-z0-9_]+$/))
-          className = 'material-icons';
-        document.execCommand('inserthtml', false, `<i class="richtextSymbol ${className}">${icon.innerText}</i>`);
+        if(icon.classList.contains('gameicons')) {
+          document.execCommand('inserthtml', false, `<i class="richtextSymbol gameicons"><img src="i/game-icons.net/${icon.dataset.symbol}.svg"></i>`);
+        } else {
+          let className = 'emoji';
+          if(icon.innerText[0] == '[')
+            className = 'symbols';
+          else if(icon.innerText.match(/^[a-z0-9_]+$/))
+            className = 'material-icons';
+          if(className == 'emoji')
+            document.execCommand('inserthtml', false, icon.innerText);
+          else
+            document.execCommand('inserthtml', false, `<i class="richtextSymbol ${className}">${icon.innerText}</i>`);
+        }
         for(const insertedSymbol of $a('.richtextSymbol'))
           insertedSymbol.contentEditable = false; // adding the property above causes Chrome to insert two icons
       };
