@@ -1795,6 +1795,7 @@ export function initializeEditMode() {
       stackOffsetX: 40,
       childrenPerOwner: true,
       dropShadow: true,
+      hidePlayerCursors: true,
       x: 50,
       y: 820,
       width: 1500,
