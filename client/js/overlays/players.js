@@ -17,6 +17,16 @@ export {
   mouseCoords
 }
 
+function getPlayerDetails() {
+  return {
+    playerName,
+    playerColor,
+    activePlayers,
+    activeColors,
+    mouseCoords
+  };
+}
+
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';
@@ -66,6 +76,7 @@ onLoad(function() {
   onMessage('mouse', function(args) {
     if(args.player != playerName) {
       clearTimeout(playerCursorsTimeout[args.player]);
+      playerCursors[args.player].classList.toggle('hidden', !!args.mouseState.hidden);
       if(args.mouseState.inactive) {
         playerCursors[args.player].classList.remove('pressed','active','foreign');
       } else {

@@ -3,20 +3,26 @@
     "version": 4,
     "info": {
       "name": "Best Guess",
-      "image": "/assets/-532174150_777283",
+      "image": "/assets/2016798349_34683",
       "rules": "",
       "bgg": "https://www.boardgamegeek.com/boardgame/254640/just-one",
       "year": "2018",
       "mode": "coop",
       "time": "20",
-      "players": "3-8",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "Room layout and all room elements by LawDawg96 and released to the Public Domain by CC0.  List of nouns randomly generated from https://www.randomlists.com/nouns, https://randomwordgenerator.com/noun.php, and https://jimpix.co.uk/words/word-generator.asp.\n\nBackground available under the Pixabay license: https://pixabay.com/photos/texture-handwriting-s%c3%bctterlin-1362873/.",
+      "attribution": "Room layout and all room elements by LawDawg96 and released to the Public Domain by CC0.  List of nouns randomly generated from https://www.randomlists.com/nouns, https://randomwordgenerator.com/noun.php, and https://jimpix.co.uk/words/word-generator.asp.\n\nBackground available under the Pixabay license: https://pixabay.com/photos/texture-handwriting-s%c3%bctterlin-1362873/.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"pantomime charades game charcoal art --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Just One",
+      "similarAwards": "2021 Bulgarian Board Game Awards Game of the Year Nominee\n2021 Bulgarian Board Game Awards Bulgarian Game of the Year Winner\n2020/2021 Årets Spill Best Party Game Nominee\n2020 Japan Boardgame Prize Voters' Selection Nominee\n2020 Hungarian Board Game Award Special Prize Winner\n2020 Guldbrikken Best Parlor Game Winner\n2019 Tric Trac Nominee\n2019 Swiss Gamers Award Nominee\n2019 Swiss Gamers Award Kids Nominee\n2019 Spiel des Jahres Winner\n2019 Palme d'Argent for Best Party Game\n2019 Lys Grand Public Finalist\n2019 Juego del Año Recommended\n2019 International Gamers Award - General Strategy: Multi-player Nominee\n2019 Fairplay À la carte Runner-up\n2019 American Tabletop Casual Games Recommended\n2019 5 Seasons Best International Party&Coop Nominee\n2018 Meeples' Choice Nominee\n2018 Golden Geek Best Party Game Nominee\n2018 Golden Geek Best Cooperative Game Nominee\n2018 Cardboard Republic Socializer Laurel Nominee",
       "description": "Cooperative game where one player guesses word based on clues provided by other players. Try to get as many correct as possible.",
       "showName": true,
-      "lastUpdate": 1637895026000
+      "lastUpdate": 1637895026000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-8",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "seat1": {

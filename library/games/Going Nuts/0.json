@@ -2256,21 +2256,26 @@
     "version": 6,
     "info": {
       "name": "Going Nuts",
-      "image": "/assets/534708919_69028",
+      "image": "/assets/-1761079877_27723",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/27225/bananagrams",
       "year": "2006",
       "mode": "solo; vs",
       "time": "15",
-      "players": "1-8",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The game layout, game board, game piece designs, and library image were done by LawDawg and are released to the Public Domain by CC0.",
+      "attribution": "The game layout, game board, and game piece designs were done by LawDawg and are released to the Public Domain by CC0.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"nuts raining from the sky disney cartoon --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Bananagrams",
       "description": "Play letter tiles in crossword pattern until all tiles are used. First to play valid words and run out of tiles wins.",
       "showName": true,
       "helpText": "Players choose seats. If desired, change settings using gear icon. Press play button to begin. Letter tiles will automatically be dealt to seated players. Each player can sort tiles alphabetically by clicking on the sort tile button (ascending stacked line icon) to the bottom left. Drag tiles from hand to main board to play them. After you run out of letters, press +1 All button to distribute one tile to all players. To swap one tile for 3, drop tile into swap holder above +1 button. Three replacement tiles will automatically be moved to that player's hand. To view board and hand of another player, press the eye icon below the player's name. Be sure to switch back to your own view before making changes by clicking the eye icon below your own name. The numbers beside the eye icon show how many cards are in the hand of that player. The number above the stack of tiles shows how many are remaining. The tiles do not stack, so there are no pile drag handles.",
-      "lastUpdate": 1647839274000
+      "lastUpdate": 1647839274000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1-8",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": ""
     }
   },
   "x0dd": {

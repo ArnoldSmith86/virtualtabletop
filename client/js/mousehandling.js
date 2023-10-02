@@ -11,7 +11,7 @@ function eventCoords(name, e) {
     coords = e;
   let x = (coords.clientX - roomRectangle.left) / scale;
   let y = (coords.clientY - roomRectangle.top) / scale;
-  if(!jeZoomOut) {
+  if(!zoom) {
     x = Math.max(0, Math.min(1600, x));
     y = Math.max(0, Math.min(1000, y));
   }
@@ -19,16 +19,18 @@ function eventCoords(name, e) {
 }
 
 async function inputHandler(name, e) {
+  const isMiddleMouseButton = name.startsWith('mouse') && e.button == 1;
+  if(edit && !isMiddleMouseButton && editInputHandler(name, e))
+    return;
+
   if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
 
-  const editMovable = edit || typeof jeEnabled == 'boolean' && jeEnabled && e.ctrlKey;
+  const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
 
   if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
     if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
-
-  e.preventDefault();
 
   if(name == 'mousedown' || name == 'touchstart') {
     if (!window.getSelection().isCollapsed)
@@ -36,8 +38,14 @@ async function inputHandler(name, e) {
     document.activeElement.blur();
   }
   let target = e.target;
-  while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2)))))
+  while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2))))) {
+    if(target.id == 'editor')
+      return;
     target = target.parentNode;
+  }
+  const targetForHiddenCursorCheck = target && target.id && target.id.slice(0,2) == 'w_' && widgets.has(unescapeID(target.id.slice(2))) ? target : null;
+
+  e.preventDefault();
 
   const coords = eventCoords(name, e);
   mouseCoords = [Math.round(coords.x), Math.round(coords.y)];
@@ -83,29 +91,34 @@ async function inputHandler(name, e) {
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
-      if(ms.status != 'initial' && ms.moveTarget)
+      if(ms.status != 'initial' && ms.moveTarget) {
+        setDeltaCause(`${playerName} dragged ${widget.id}`);
         await ms.moveTarget.moveEnd(coords, ms.localAnchor);
+      }
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(typeof jeEnabled == 'boolean' && jeEnabled)
+        if(edit && !isMiddleMouseButton)
+          await editClick(widget, e.button);
+        else if(jeEnabled && !isMiddleMouseButton)
           await jeClick(widget, e);
-        else if(edit)
-          editClick(widget);
-        else
-          if(!target.classList.contains('longtouch'))
-            await widget.click();
-        else
+        else if(!target.classList.contains('longtouch')) {
+          setDeltaCause(`${playerName} clicked ${widget.id}`);
+          await widget.click();
+        } else
           widget.domElement.classList.remove('longtouch');
       }
       delete mouseStatus[target.id];
     } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
+      setDeltaCause(`${playerName} dragged ${widget.id}`);
       if(mouseStatus[target.id].status == 'initial') {
         mouseStatus[target.id].status = 'moving';
         if(mouseStatus[target.id].moveTarget)
           await mouseStatus[target.id].moveTarget.moveStart();
       }
       mouseStatus[target.id].coords = coords;
-      if(mouseStatus[target.id].moveTarget)
+      if(mouseStatus[target.id].moveTarget) {
+        setDeltaCause(`${playerName} dragged ${widget.id}`);
         await mouseStatus[target.id].moveTarget.move(coords, mouseStatus[target.id].localAnchor);
+      }
     }
     batchEnd();
   }
@@ -116,13 +129,17 @@ async function inputHandler(name, e) {
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
 
-  toServer('mouse',
-    {
-      x: Math.round(coords.x),
-      y: Math.round(coords.y),
-      pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
-      target: mouseTarget? unescapeID(mouseTarget.id.slice(2)) : null
-    });
+  if(targetForHiddenCursorCheck && widgets.has(unescapeID(targetForHiddenCursorCheck.id.slice(2))) && widgets.get(unescapeID(targetForHiddenCursorCheck.id.slice(2))).requiresHiddenCursor()) {
+    toServer('mouse', { hidden: true });
+  } else {
+    toServer('mouse',
+      {
+        x: Math.round(coords.x),
+        y: Math.round(coords.y),
+        pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
+        target: mouseTarget? unescapeID(mouseTarget.id.slice(2)) : null
+      });
+  }
 }
 
 onLoad(function() {

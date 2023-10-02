@@ -70,6 +70,7 @@ export class Widget extends StateManaged {
       dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
+      hidePlayerCursors: false,
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
@@ -258,7 +259,7 @@ export class Widget extends StateManaged {
     for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
       const inheritedDelta = {};
       this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
-      inheriting.applyDeltaToDOM(inheritedDelta);
+      inheriting.applyInheritedDeltaToDOM(inheritedDelta);
     }
 
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
@@ -266,10 +267,22 @@ export class Widget extends StateManaged {
     }
   }
 
+  applyInheritedDeltaToDOM(delta) {
+    if(!this.inheritedProperties)
+      this.inheritedProperties = {};
+    for(const [ property, value ] of Object.entries(delta)) {
+      if(value === null)
+        delete this.inheritedProperties[property];
+      else
+        this.inheritedProperties[property] = true;
+    }
+    this.applyDeltaToDOM(delta);
+  }
+
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
     for(const key in sourceDelta)
       if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
-          targetDelta[key] = sourceDelta[key];
+        targetDelta[key] = sourceDelta[key];
   }
 
   applyInheritedValuesToDOM(inheritFrom, pushasArray) {
@@ -288,7 +301,7 @@ export class Widget extends StateManaged {
         StateManaged.inheritFromMapping[id].push(this);
       }
     }
-    this.applyDeltaToDOM(delta);
+    this.applyInheritedDeltaToDOM(delta);
   }
 
   applyInitialDelta(delta) {
@@ -385,6 +398,9 @@ export class Widget extends StateManaged {
     if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
+
+    if(hoverTarget && hoverTarget.domElement.classList.contains('showCardBack'))
+      className += ' showCardBack';
 
     if(typeof this.get('dragging') == 'string')
       className += ' dragging';
@@ -626,8 +642,11 @@ export class Widget extends StateManaged {
     let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
     const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
     let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
-    return parent ?
-        parent.coordGlobalFromCoordLocal(corner) : corner;
+    if (parent)
+      corner = parent.coordGlobalFromCoordLocal(corner);
+    corner.x = Math.round(corner.x);
+    corner.y = Math.round(corner.y);
+    return corner;
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
@@ -864,7 +883,7 @@ export class Widget extends StateManaged {
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
           const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
           if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
-            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
+            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
           else if(index !== undefined)
             variables[variable][index] = getValue(variables[variable][index]);
           else
@@ -876,7 +895,28 @@ export class Widget extends StateManaged {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
-            problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
+            const withoutVars = evaluateVariables(a).replace(/false|null/g, 0).replace(/true/g, 1);
+            const mathExpression = withoutVars.match(new RegExp(`^${left} += +([() 0-9.&|!*/+-]+)(?: +//.*)?`+'\x24'));
+            if(mathExpression) {
+              let result = null;
+              try {
+                result = +eval(mathExpression[5]);
+              } catch(e) {
+                problems.push(`The expression "${mathExpression[5]}" threw an exception: ${e}.`);
+                result = null;
+              }
+              const variable = mathExpression[1] !== undefined ? variables[unescape(mathExpression[2])] : unescape(mathExpression[2]);
+              const index = mathExpression[3] !== undefined ? variables[unescape(mathExpression[4])] : unescape(mathExpression[4]);
+              if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
+                problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
+              else if(index !== undefined)
+                variables[variable][index] = result;
+              else
+                variables[variable] = result;
+              if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], JSON.stringify(result));
+            } else {
+              problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
+            }
           }
         }
       }
@@ -1077,7 +1117,7 @@ export class Widget extends StateManaged {
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
+          jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
 
       }
 
@@ -1096,7 +1136,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: 0, face: null, faceCycle: null, collection: 'DEFAULT' });
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
@@ -1106,7 +1146,7 @@ export class Widget extends StateManaged {
             });
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
+            jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
             for(const c of collections[collection].slice(0, a.count || 999999))
@@ -1115,7 +1155,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
 
@@ -1359,12 +1399,12 @@ export class Widget extends StateManaged {
                     if(widgets.has(target.get('hand'))) {
                       const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
-                      c.targetPlayer = target.get('player')
+                      c.targetPlayer = target.get('player');
                       await c.moveToHolder(targetHand);
-                      delete c.targetPlayer
-                      c.bringToFront()
+                      delete c.targetPlayer;
+                      await c.bringToFront();
                       if(targetHand.get('type') == 'holder')
-                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                        await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                     } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
@@ -1410,7 +1450,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true });
+        setDefaults(a, { owned: true, inHolder: true });
         if(this.isValidID(a.holder, problems)) {
           for(const holder of asArray(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
@@ -1419,6 +1459,8 @@ export class Widget extends StateManaged {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
+                if(!a.inHolder)
+                  cards = cards.filter(c=>!c.get('_ancestor'));
                 for(const c of cards)
                   await c.moveToHolder(widgets.get(holder));
               }
@@ -1488,7 +1530,7 @@ export class Widget extends StateManaged {
           if(a.round > newScore.length)
             newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
           newScore[seatRound-1] = compute(relation, null, newScore[seatRound-1] || 0, a.value);
-          await seats[i].set(a.property, newScore);
+          await seats[i].set(String(a.property), newScore);
         }
 
         if(jeRoutineLogging) {
@@ -1624,7 +1666,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
 
@@ -1664,7 +1706,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
-        let collection;
+        const collection = a.timer === undefined && getCollection(a.collection);
         if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
           a.mode = 'toggle'
@@ -1677,7 +1719,7 @@ export class Widget extends StateManaged {
                   await widget.setPaused(a.mode);
               });
             }
-          } else if(collection = getCollection(a.collection)) {
+          } else if(collection) {
             if(collections[collection].length) {
               for(const c of collections[collection])
                 if(c.setPaused)
@@ -1723,8 +1765,8 @@ export class Widget extends StateManaged {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
-        //copied from select
-        let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(w=>w.get('type')=='seat');
+        let c = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
+        c = c.filter(w => w.get('type') === 'seat');
 
         //this get the list of valid index
         const indexList = [];
@@ -1771,8 +1813,9 @@ export class Widget extends StateManaged {
               collections[a.collection].push(w);
           }
 
-          jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
-        } else {
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+        } else if(jeRoutineLogging) {
           jeLoggingRoutineOperationSummary(`no active seats found`);
         }
       }
@@ -2149,6 +2192,14 @@ export class Widget extends StateManaged {
     return readOnlyProperties;
   }
 
+  requiresHiddenCursor() {
+    if(this.get('hidePlayerCursors'))
+      return true;
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      return widgets.get(this.get('parent')).requiresHiddenCursor();
+    return false;
+  }
+
   async rotate(degrees, mode) {
     if(!mode || mode == 'add')
       await this.set('rotation', (this.get('rotation') + degrees) % 360);
@@ -2223,13 +2274,20 @@ export class Widget extends StateManaged {
 
       e.className = this.domElement.className;
       e.dataset.id = id;
-      for(const clone of e.querySelectorAll('canvas')) {
-        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+
+      for(const clone of $a('canvas', e)) {
+        const original = $(`canvas[data-id = '${clone.dataset.id}']`, this.domElement);
         const context = clone.getContext('2d');
         clone.width = original.width;
         clone.height = original.height;
         context.drawImage(original, 0, 0);
       }
+
+      const originalTextareas = [...$a('textarea', this.domElement)];
+      const clonedTextareas   = [...$a('textarea', e)];
+      for(const i in originalTextareas)
+        clonedTextareas[i].value = originalTextareas[i].value;
+
       e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;

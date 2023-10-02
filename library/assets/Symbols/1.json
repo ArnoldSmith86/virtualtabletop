@@ -9,12 +9,20 @@
       "year": "2021",
       "mode": "Demo",
       "time": "0",
-      "players": "",
-      "language": "en-US",
-      "variant": "Dice and Cards",
       "attribution": "See https://github.com/ArnoldSmith86/virtualtabletop/wiki/Fonts for usage instructions.",
       "showName": false,
-      "lastUpdate": 1640793026000
+      "lastUpdate": 1679628974609,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Dice and Cards",
+      "language": "en-US",
+      "players": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "icons": {

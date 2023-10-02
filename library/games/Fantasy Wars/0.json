@@ -4,7 +4,7 @@
     "type": "card",
     "cardType": "Phoenix",
     "id": "3961",
-    "z": 30614,
+    "z": 30918,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -13,7 +13,7 @@
     "type": "card",
     "cardType": "General",
     "id": "4994",
-    "z": 30616,
+    "z": 30920,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -22,7 +22,7 @@
     "type": "card",
     "cardType": "Wizard",
     "id": "x4yi",
-    "z": 30618,
+    "z": 30922,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -31,7 +31,7 @@
     "type": "card",
     "cardType": "Horseman",
     "id": "1oeg",
-    "z": 30620,
+    "z": 30924,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -40,7 +40,7 @@
     "type": "card",
     "cardType": "Golem",
     "id": "wth1",
-    "z": 30622,
+    "z": 30926,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -49,7 +49,7 @@
     "type": "card",
     "cardType": "Unicorn",
     "id": "o2l4",
-    "z": 30624,
+    "z": 30928,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -58,7 +58,7 @@
     "type": "card",
     "cardType": "Pegasus",
     "id": "6svl",
-    "z": 30626,
+    "z": 30930,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -67,7 +67,7 @@
     "type": "card",
     "cardType": "Necromancer",
     "id": "5rr0",
-    "z": 30628,
+    "z": 30932,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -76,7 +76,7 @@
     "type": "card",
     "cardType": "General",
     "id": "fp2t",
-    "z": 30630,
+    "z": 30934,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -85,7 +85,7 @@
     "type": "card",
     "cardType": "Minotaur",
     "id": "4fcc",
-    "z": 30632,
+    "z": 30936,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -94,7 +94,7 @@
     "type": "card",
     "cardType": "Soldier",
     "id": "wset",
-    "z": 30634,
+    "z": 30938,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -103,7 +103,7 @@
     "type": "card",
     "cardType": "Griffin",
     "id": "506x",
-    "z": 30636,
+    "z": 30940,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -112,7 +112,7 @@
     "type": "card",
     "cardType": "Archer",
     "id": "yr52",
-    "z": 30638,
+    "z": 30942,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -121,7 +121,7 @@
     "type": "card",
     "cardType": "Centaur",
     "id": "yvkw",
-    "z": 30640,
+    "z": 30944,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -130,7 +130,7 @@
     "type": "card",
     "cardType": "Gargoyle",
     "id": "bw1s",
-    "z": 30642,
+    "z": 30946,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -139,7 +139,7 @@
     "type": "card",
     "cardType": "Minion",
     "id": "n3y6",
-    "z": 30644,
+    "z": 30948,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -148,7 +148,7 @@
     "type": "card",
     "cardType": "Giant",
     "id": "h1j9",
-    "z": 30646,
+    "z": 30950,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -164,7 +164,7 @@
     "type": "card",
     "cardType": "Wizard",
     "id": "1ue9",
-    "z": 30648,
+    "z": 30952,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -173,7 +173,7 @@
     "type": "card",
     "cardType": "Wizard",
     "id": "dcqo",
-    "z": 30650,
+    "z": 30954,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -182,7 +182,7 @@
     "type": "card",
     "cardType": "Wizard",
     "id": "6ep3",
-    "z": 30652,
+    "z": 30956,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -191,7 +191,7 @@
     "type": "card",
     "cardType": "Wizard",
     "id": "bozh",
-    "z": 30654,
+    "z": 30958,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -200,7 +200,7 @@
     "type": "card",
     "cardType": "Horseman",
     "id": "hdle",
-    "z": 30656,
+    "z": 30960,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -209,7 +209,7 @@
     "type": "card",
     "cardType": "Horseman",
     "id": "9xob",
-    "z": 30658,
+    "z": 30962,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -218,7 +218,7 @@
     "type": "card",
     "cardType": "Horseman",
     "id": "k1zm",
-    "z": 30660,
+    "z": 30964,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -227,7 +227,7 @@
     "type": "card",
     "cardType": "Golem",
     "id": "w08s",
-    "z": 30662,
+    "z": 30966,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -236,7 +236,7 @@
     "type": "card",
     "cardType": "Golem",
     "id": "t011",
-    "z": 30664,
+    "z": 30968,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -245,7 +245,7 @@
     "type": "card",
     "cardType": "Golem",
     "id": "0rmq",
-    "z": 30666,
+    "z": 30970,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -254,7 +254,7 @@
     "type": "card",
     "cardType": "Golem",
     "id": "6d5h",
-    "z": 30668,
+    "z": 30972,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -263,7 +263,7 @@
     "type": "card",
     "cardType": "Phoenix",
     "id": "aouv",
-    "z": 30670,
+    "z": 30974,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -272,7 +272,7 @@
     "type": "card",
     "cardType": "Phoenix",
     "id": "xy0c",
-    "z": 30672,
+    "z": 30976,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -281,7 +281,7 @@
     "type": "card",
     "cardType": "Phoenix",
     "id": "9cgy",
-    "z": 30674,
+    "z": 30978,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -290,7 +290,7 @@
     "type": "card",
     "cardType": "Phoenix",
     "id": "9bkr",
-    "z": 30676,
+    "z": 30980,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -299,7 +299,7 @@
     "type": "card",
     "cardType": "Unicorn",
     "id": "ao7j",
-    "z": 30678,
+    "z": 30982,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -308,7 +308,7 @@
     "type": "card",
     "cardType": "Unicorn",
     "id": "aguq",
-    "z": 30680,
+    "z": 30984,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -317,7 +317,7 @@
     "type": "card",
     "cardType": "Unicorn",
     "id": "t96o",
-    "z": 30682,
+    "z": 30986,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -326,7 +326,7 @@
     "type": "card",
     "cardType": "Pegasus",
     "id": "y79p",
-    "z": 30684,
+    "z": 30988,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -335,7 +335,7 @@
     "type": "card",
     "cardType": "Pegasus",
     "id": "l7qg",
-    "z": 30686,
+    "z": 30990,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -344,7 +344,7 @@
     "type": "card",
     "cardType": "Pegasus",
     "id": "v9ia",
-    "z": 30688,
+    "z": 30992,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -353,7 +353,7 @@
     "type": "card",
     "cardType": "Pegasus",
     "id": "h567",
-    "z": 30690,
+    "z": 30994,
     "activeFace": 1,
     "parent": "aoi1"
   },
@@ -362,7 +362,7 @@
     "type": "card",
     "cardType": "Necromancer",
     "id": "6q1z",
-    "z": 30692,
+    "z": 30996,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -371,7 +371,7 @@
     "type": "card",
     "cardType": "Necromancer",
     "id": "m5l5",
-    "z": 30694,
+    "z": 30998,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -380,7 +380,7 @@
     "type": "card",
     "cardType": "Necromancer",
     "id": "b896",
-    "z": 30696,
+    "z": 31000,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -389,7 +389,7 @@
     "type": "card",
     "cardType": "General",
     "id": "u69w",
-    "z": 30698,
+    "z": 31002,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -398,7 +398,7 @@
     "type": "card",
     "cardType": "General",
     "id": "4xyb",
-    "z": 30700,
+    "z": 31004,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -407,7 +407,7 @@
     "type": "card",
     "cardType": "General",
     "id": "8wq6",
-    "z": 30702,
+    "z": 31006,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -416,7 +416,7 @@
     "type": "card",
     "cardType": "Soldier",
     "id": "r84l",
-    "z": 30704,
+    "z": 31008,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -425,7 +425,7 @@
     "type": "card",
     "cardType": "Soldier",
     "id": "m6bb",
-    "z": 30706,
+    "z": 31010,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -434,7 +434,7 @@
     "type": "card",
     "cardType": "Soldier",
     "id": "thls",
-    "z": 30708,
+    "z": 31012,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -443,7 +443,7 @@
     "type": "card",
     "cardType": "Soldier",
     "id": "7fuk",
-    "z": 30710,
+    "z": 31014,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -452,7 +452,7 @@
     "type": "card",
     "cardType": "Griffin",
     "id": "wisn",
-    "z": 30712,
+    "z": 31016,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -461,7 +461,7 @@
     "type": "card",
     "cardType": "Griffin",
     "id": "a4w5",
-    "z": 30714,
+    "z": 31018,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -470,7 +470,7 @@
     "type": "card",
     "cardType": "Griffin",
     "id": "qe4w",
-    "z": 30716,
+    "z": 31020,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -479,7 +479,7 @@
     "type": "card",
     "cardType": "Griffin",
     "id": "e8th",
-    "z": 30718,
+    "z": 31022,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -488,7 +488,7 @@
     "type": "card",
     "cardType": "Archer",
     "id": "9t5u",
-    "z": 30720,
+    "z": 31024,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -497,7 +497,7 @@
     "type": "card",
     "cardType": "Archer",
     "id": "xvk5",
-    "z": 30722,
+    "z": 31026,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -506,7 +506,7 @@
     "type": "card",
     "cardType": "Archer",
     "id": "awbq",
-    "z": 30724,
+    "z": 31028,
     "activeFace": 1,
     "parent": "aoi1"
   },
@@ -515,7 +515,7 @@
     "type": "card",
     "cardType": "Centaur",
     "id": "k684",
-    "z": 30726,
+    "z": 31030,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -524,7 +524,7 @@
     "type": "card",
     "cardType": "Centaur",
     "id": "7xlx",
-    "z": 30728,
+    "z": 31032,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -533,7 +533,7 @@
     "type": "card",
     "cardType": "Centaur",
     "id": "umx7",
-    "z": 30730,
+    "z": 31034,
     "activeFace": 1,
     "parent": "aoi1"
   },
@@ -542,7 +542,7 @@
     "type": "card",
     "cardType": "Centaur",
     "id": "6ii7",
-    "z": 30732,
+    "z": 31036,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -551,7 +551,7 @@
     "type": "card",
     "cardType": "Gargoyle",
     "id": "4qz4",
-    "z": 30734,
+    "z": 31038,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -560,7 +560,7 @@
     "type": "card",
     "cardType": "Gargoyle",
     "id": "sz9c",
-    "z": 30736,
+    "z": 31040,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -569,7 +569,7 @@
     "type": "card",
     "cardType": "Gargoyle",
     "id": "q6q3",
-    "z": 30738,
+    "z": 31042,
     "activeFace": 1,
     "parent": "aoi1"
   },
@@ -578,7 +578,7 @@
     "type": "card",
     "cardType": "Gargoyle",
     "id": "ah5e",
-    "z": 30740,
+    "z": 31044,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -587,7 +587,7 @@
     "type": "card",
     "cardType": "Minion",
     "id": "1c0p",
-    "z": 30742,
+    "z": 31046,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -596,7 +596,7 @@
     "type": "card",
     "cardType": "Minion",
     "id": "lkhk",
-    "z": 30744,
+    "z": 31048,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -605,7 +605,7 @@
     "type": "card",
     "cardType": "Minion",
     "id": "k3xy",
-    "z": 30746,
+    "z": 31050,
     "activeFace": 1,
     "parent": "aoi1"
   },
@@ -614,7 +614,7 @@
     "type": "card",
     "cardType": "Minion",
     "id": "2zh8",
-    "z": 30748,
+    "z": 31052,
     "activeFace": 1,
     "parent": "aoi1"
   },
@@ -623,7 +623,7 @@
     "type": "card",
     "cardType": "Giant",
     "id": "09mt",
-    "z": 30750,
+    "z": 31054,
     "activeface": 1,
     "parent": "aoi1",
     "activeFace": 1
@@ -633,7 +633,7 @@
     "type": "card",
     "cardType": "Giant",
     "id": "zo7j",
-    "z": 30752,
+    "z": 31056,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -642,7 +642,7 @@
     "type": "card",
     "cardType": "Giant",
     "id": "ur46",
-    "z": 30754,
+    "z": 31058,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -651,7 +651,7 @@
     "type": "card",
     "cardType": "Minotaur",
     "id": "5mk1",
-    "z": 30756,
+    "z": 31060,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -660,7 +660,7 @@
     "type": "card",
     "cardType": "Minotaur",
     "id": "scea",
-    "z": 30758,
+    "z": 31062,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -669,7 +669,7 @@
     "type": "card",
     "cardType": "Minotaur",
     "id": "be07",
-    "z": 30760,
+    "z": 31064,
     "parent": "aoi1",
     "activeFace": 1
   },
@@ -758,7 +758,7 @@
     "type": "card",
     "cardType": "Wolf",
     "id": "zhrx",
-    "z": 30612,
+    "z": 30916,
     "player": "p2",
     "parent": "bagP2",
     "x": 4,
@@ -781,7 +781,7 @@
     "type": "card",
     "cardType": "Raven",
     "id": "0d39",
-    "z": 30610,
+    "z": 30914,
     "player": "p1",
     "parent": "bagP1",
     "x": 4,
@@ -909,10 +909,10 @@
     "id": "horsemanCard",
     "deck": "allCardsDeck",
     "cardType": "Horseman",
-    "z": 1,
+    "z": 3,
     "player": "p2",
     "parent": "line2",
-    "x": 4,
+    "x": 320,
     "y": 4
   },
   "golemCard": {
@@ -974,9 +974,9 @@
     "id": "necromancerCard",
     "deck": "allCardsDeck",
     "cardType": "Necromancer",
-    "z": 3,
+    "z": 4,
     "parent": "line2",
-    "x": 320,
+    "x": 478,
     "y": 4
   },
   "giantCard": {
@@ -984,9 +984,9 @@
     "id": "giantCard",
     "deck": "allCardsDeck",
     "cardType": "Giant",
-    "z": 4,
+    "z": 1,
     "parent": "line2",
-    "x": 478,
+    "x": 4,
     "y": 4
   },
   "griffinCard": {
@@ -995,9 +995,9 @@
     "deck": "allCardsDeck",
     "cardType": "Griffin",
     "z": 1,
-    "parent": "line3",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "line3"
   },
   "minionCard": {
     "type": "card",
@@ -1986,9 +1986,6 @@
     "y": 4,
     "z": 27172,
     "cardDefaults": {
-      "pilesWith": {
-        "deck": "nj3c"
-      },
       "width": 150,
       "height": 200,
       "css": "border:1px solid #333;border-radius:5px",
@@ -2029,7 +2026,7 @@
         "image": "/assets/771751108_6461",
         "Name": "Phoenix",
         "P1 T": "Passive:",
-        "P1 L1": "When attacked, you can remove 1 coin from the \"DIASCARD\" instead of the board.",
+        "P1 L1": "When attacked, you can remove 1 coin from the \"DISCARD\" instead of the board.",
         "P2 T": "Active:",
         "P2 L1": "Discard the faction coin face up to move 1 tile.",
         "Count": "5"
@@ -2068,7 +2065,7 @@
         "image": "/assets/-5735833_2285",
         "Name": "General",
         "P1 T": "Active:",
-        "P1 L1": "Uses your coin to attack or use the active skill of any friendly troop up to 2 tiles away.",
+        "P1 L1": "Use your coin to attack or use the active skill of any friendly troop up to 2 tiles away.",
         "P2 T": "",
         "P2 L1": "",
         "Count": "5"
@@ -2086,7 +2083,7 @@
         "image": "/assets/-52886148_3910",
         "Name": "Griffin",
         "P1 T": "Active:",
-        "P1 L1": "Choose a friendly troop up to 2 tiles away and move it 1 tile keeping it within 2 tile from this troop.",
+        "P1 L1": "Choose a friendly troop up to 2 tiles away and move it by 1 tile  while keeping it within 2 tiles from this troop.",
         "P1 L2": "",
         "P1 L3": "",
         "P2 T": "",
@@ -2100,7 +2097,7 @@
         "P1 T": "Active:",
         "P1 L1": "Attack any troop exactly 2 tiles away.",
         "P2 T": "Passive:",
-        "P2 L1": "Can't attack adjecent tiles.",
+        "P2 L1": "Can't attack adjacent tiles.",
         "Count": "4"
       },
       "Centaur": {
@@ -2142,12 +2139,13 @@
         "image": "/assets/-58591872_2532",
         "Name": "Minotaur",
         "P1 T": "Passive:",
-        "P1 L1": "When attacked from an adjecent tile, remove  1 coin from the attacker.",
+        "P1 L1": "When attacked from an adjacent tile, remove  1 coin from the attacker.",
         "P2 T": "",
         "P2 L1": "",
         "Count": "4"
       }
     },
+    "parent": "allCardsHolder",
     "faceTemplates": [
       {
         "border": true,
@@ -2202,12 +2200,12 @@
           {
             "type": "text",
             "x": 15,
-            "y": 87,
-            "fontSize": "14",
+            "y": 85,
+            "fontSize": "13",
             "textAlign": "left",
-            "textFont": null,
             "color": "#3a3b3e",
             "width": 118,
+            "css": "line-height:100%",
             "dynamicProperties": {
               "value": "P1 T"
             }
@@ -2215,12 +2213,13 @@
           {
             "type": "text",
             "x": 17,
-            "y": 103,
-            "fontSize": "12",
+            "y": 100,
+            "fontSize": "11",
             "textAlign": "left",
             "textFont": null,
             "color": "#3a3b3e",
             "width": 118,
+            "css": "line-height:100%",
             "dynamicProperties": {
               "value": "P1 L1"
             }
@@ -2229,11 +2228,12 @@
             "type": "text",
             "x": 15,
             "y": 145,
-            "fontSize": "14",
+            "fontSize": "13",
             "textAlign": "left",
             "textFont": null,
             "color": "#3a3b3e",
             "width": 118,
+            "css": "line-height:100%",
             "dynamicProperties": {
               "value": "P2 T"
             }
@@ -2241,20 +2241,20 @@
           {
             "type": "text",
             "x": 17,
-            "y": 161,
-            "fontSize": "12",
+            "y": 160,
+            "fontSize": "11",
             "textAlign": "left",
             "textFont": null,
             "color": "#3a3b3e",
             "width": 118,
+            "css": "line-height:100%",
             "dynamicProperties": {
               "value": "P2 L1"
             }
           }
         ]
       }
-    ],
-    "parent": "allCardsHolder"
+    ]
   },
   "allCardsHolder": {
     "type": "holder",
@@ -3325,20 +3325,20 @@
     "version": 12,
     "info": {
       "name": "Fantasy Wars",
-      "image": "/assets/-2124487621_265811",
+      "image": "/assets/1187060775_56787",
       "rules": "",
-      "bgg": "",
-      "year": "",
-      "mode": "1v1; 2v2",
+      "bgg": "https://boardgamegeek.com/boardgame/249259/war-chest",
+      "year": "2018",
+      "mode": "vs",
       "time": "30 min",
-      "attribution": "<div>Implementation design by RaphaelAlvez with modifications by Ingegneus and released under CC0.</div><div>Assets license may vary.</div><div><br></div><div>Wood texture: https://unsplash.com/photos/J2gEgTPM_OA under the Unsplash license</div><div>Cloth texture: https://unsplash.com/photos/xTaOPMa6wAE under the Unsplash license</div><div><br></div><div>Celtic knot: https://www.vecteezy.com/vector-art/338646-celtic-symbols under the Vecteezy license</div><div>Troops assets modified from https://game-icons.net/ under the CC BY 3.0 license</div>",
-      "lastUpdate": 1677868291734,
+      "attribution": "<div>Implementation design by RaphaelAlvez with modifications by Ingegneus and released under CC0.</div><div>Assets license may vary.</div><div><br></div><div>Wood texture: https://unsplash.com/photos/J2gEgTPM_OA under the Unsplash license</div><div>Cloth texture: https://unsplash.com/photos/xTaOPMa6wAE under the Unsplash license</div><div><br></div><div>Celtic knot: https://www.vecteezy.com/vector-art/338646-celtic-symbols under the Vecteezy license</div><div>Troops assets modified from https://game-icons.net/ under the CC BY 3.0 license</div><div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"fantasy battle coming out of treasure chest, minotaur, phoenix, wizard, centaur, archer elf, giant, unicorn, big open treasure chest, watercolor painting, detailed --ar 1:1 --v 5.1\"<br></div>",
+      "lastUpdate": 1685736909323,
       "showName": true,
       "skill": "",
       "description": "",
       "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
+      "similarName": "War Chest",
+      "similarAwards": "2018 Golden Geek Best 2-Player Board Game Nominee\n2018 Cardboard Republic Striker Laurel Nominee",
       "ruleText": "",
       "helpText": "Choose your troops by adding them to your holders or get random troops by clicking in the reset button.Then take 2 tokens from each troop and adding them to your side of the table.Click the reset button on the bottom to refill and shuffle your bag.Each turn drag three pieces from your bag the hand (middle-bottom). If you don't have enough pieces press the rest button again after you dragged all the pieces you had on your bag to the hand.<br><br>First you need to decide who plays which side. Left is \"Raven\" right is \"Wolf\". After that choose which set of troops you want to use. You can either choose some preset combinations, a random assortment or manually select which ones you want to play. To manually select a troop, drag the corresponding cards into one of your square holders. Then put 2 tokens of each troop into your \"BAG\" holder.<br>At the start of each turn draw 3 tokens from your bag into your hand (holder at the bottom). Before you draw them the first time, press the \"Refill\" button, to shuffle and flip all tokens to the correct side.If you have less than 3 tokens in your bag, draw the remaining ones and then press the \"Refill\" button to refill your bag from your \"DISCARD\". Tokens already placed onto the board, won't be affected by the \"Refill\" button.<br>Example: if you have 2 tokens in your bag, drag those 2 into your hand, press \"Refill\" and draw one more token.<br><br>To discard a destroyed troop, put it in the round holder at the top of the board.",
       "variantImage": "",
