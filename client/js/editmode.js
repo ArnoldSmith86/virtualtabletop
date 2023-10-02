@@ -1609,6 +1609,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   } else {
     for(const key in widget) {
       if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
+        widgets.get(widget.id).state[key] = widget[key];
         sendPropertyUpdate(widget.id, key, widget[key]);
       }
     }
