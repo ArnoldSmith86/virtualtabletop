@@ -259,7 +259,7 @@ export class Widget extends StateManaged {
     for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
       const inheritedDelta = {};
       this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
-      inheriting.applyDeltaToDOM(inheritedDelta);
+      inheriting.applyInheritedDeltaToDOM(inheritedDelta);
     }
 
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
@@ -267,10 +267,22 @@ export class Widget extends StateManaged {
     }
   }
 
+  applyInheritedDeltaToDOM(delta) {
+    if(!this.inheritedProperties)
+      this.inheritedProperties = {};
+    for(const [ property, value ] of Object.entries(delta)) {
+      if(value === null)
+        delete this.inheritedProperties[property];
+      else
+        this.inheritedProperties[property] = true;
+    }
+    this.applyDeltaToDOM(delta);
+  }
+
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
     for(const key in sourceDelta)
       if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
-          targetDelta[key] = sourceDelta[key];
+        targetDelta[key] = sourceDelta[key];
   }
 
   applyInheritedValuesToDOM(inheritFrom, pushasArray) {
@@ -289,7 +301,7 @@ export class Widget extends StateManaged {
         StateManaged.inheritFromMapping[id].push(this);
       }
     }
-    this.applyDeltaToDOM(delta);
+    this.applyInheritedDeltaToDOM(delta);
   }
 
   applyInitialDelta(delta) {
