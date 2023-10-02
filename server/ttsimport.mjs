@@ -225,6 +225,38 @@ async function addRecursive(os, parent=null) {
   return widgets;
 }
 
+function moveIntoBounds(widgets) {
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+
+    // 1. Find bounding box for all parent-less widgets
+    for (let key in widgets) {
+        let widget = widgets[key];
+        if (widget.parent) continue;
+        minX = Math.min(minX, (widget.x||0));
+        minY = Math.min(minY, (widget.y||0));
+        maxX = Math.max(maxX, (widget.x||0));
+        maxY = Math.max(maxY, (widget.y||0));
+    }
+
+    const visibleWidth = 1400;
+    const visibleHeight = (widgets.hand !== undefined) ? 600 : 800;
+
+    // 2. Adjust each widget's position based on its proportional distance from bounding box edge
+    for (let key in widgets) {
+        let widget = widgets[key];
+        if (widget.parent || key=='hand') continue;
+
+        // Proportional movement
+        let proportionX = (widget.x - minX) / (maxX - minX);
+        widget.x = 50 + proportionX * visibleWidth;
+
+        let proportionY = (widget.y - minY) / (maxY - minY);
+        widget.y = 50 + proportionY * visibleHeight;
+    }
+
+    return widgets;
+}
+
 async function convertTTS(content, linkContent) {
   let json = {};
 
@@ -287,7 +319,7 @@ async function convertTTS(content, linkContent) {
     version: 5
   };
 
-  return widgets;
+  return moveIntoBounds(widgets);
 }
 
 async function fromBSON(content) {
