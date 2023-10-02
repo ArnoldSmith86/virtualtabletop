@@ -291,22 +291,36 @@ MinifyHTML().then(function(result) {
   });
 
   router.get('/:room', function(req, res, next) {
-    let isBot = false;
-    for(const crawler of crawlers)
-      if(RegExp(crawler.pattern).test(req.headers['user-agent']))
-        isBot = true;
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(!isLoaded) {
+        res.send('Invalid characters in room ID.');
+        return;
+      }
 
-    console.log(req.headers['user-agent'], isBot);
+      let isBot = false;
+      for(const crawler of crawlers)
+        if(RegExp(crawler.pattern).test(req.headers['user-agent']))
+          isBot = true;
 
-    if(isBot) {
-      res.setHeader('Content-Type', 'text/html');
-      res.send('<meta property="og:title" content="Yay, it works" />');
-    } else {
-      ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
-        if(!isLoaded) {
-          res.send('Invalid characters in room ID.');
-          return;
+      console.log(req.headers['user-agent'], isBot);
+
+      if(isBot) {
+        const room = activeRooms.get(req.params.room);
+        let game = null;
+        if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
+          game = room.state._meta.states[room.state._meta.activeState.stateID];
+
+        res.setHeader('Content-Type', 'text/html');
+        let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
+        if(game) {
+          ogOutput += `<meta property="og:description" content="Come play the game ${game.name} with me!" />`;
+          ogOutput += `<meta property="og:image" content="${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
+        } else {
+          ogOutput += `<meta property="og:description" content="Come play with me!" />`;
+          ogOutput += `<meta property="og:image" content="i/branding/android-512.png" />`;
         }
+        res.send(ogOutput);
+      } else {
         res.setHeader('Content-Type', 'text/html');
         if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
           res.setHeader('Content-Encoding', 'gzip');
@@ -314,8 +328,8 @@ MinifyHTML().then(function(result) {
         } else {
           res.send(result.min);
         }
-      }).catch(next);
-    }
+      }
+    }).catch(next);
   });
 
   router.get('/createTempState/:room', function(req, res, next) {
