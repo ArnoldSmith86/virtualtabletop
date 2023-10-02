@@ -4,6 +4,7 @@ import JSZip from 'jszip';
 
 import { VERSION } from './fileupdater.mjs';
 import PCIO from './pcioimport.mjs';
+import MTG from './mtgimport.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
 
@@ -44,6 +45,8 @@ async function readStatesFromBuffer(buffer, includeVariantNameList) {
 
   if(zip.files['widgets.json'])
     return { 'PCIO': await readVariantsFromBuffer(buffer) };
+  if(Object.keys(zip.files).filter(f=>f.match(/\.htm/)).length)
+    return { 'MTG': await readVariantsFromBuffer(buffer) };
 
   const states = {};
   for(const filename in zip.files) {
@@ -142,7 +145,9 @@ async function readStatesFromLink(linkAndPath, includeVariantNameList) {
 
 async function readVariantsFromBuffer(buffer) {
   const zip = await JSZip.loadAsync(buffer);
-  if(zip.files['widgets.json']) {
+  if(Object.keys(zip.files).filter(f=>f.match(/\.htm/)).length) {
+    return [ await MTG(buffer) ];
+  } else if(zip.files['widgets.json']) {
     return [ await PCIO(buffer) ];
   } else {
     const variants = [];

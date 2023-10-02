@@ -1,0 +1,440 @@
+{
+  "toolbox": {
+    "type": "holder",
+    "id": "toolbox",
+    "x": 734.5,
+    "y": -4,
+    "z": 23,
+    "width": 123
+  },
+  "transform": {
+    "type": "button",
+    "id": "transform",
+    "x": 761,
+    "y": 177,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "toolbox"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 2
+      }
+    ],
+    "text": "Transform",
+    "z": 2
+  },
+  "_meta": {
+    "version": 5,
+    "info": {
+      "name": "MTG Template",
+      "image": "",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "",
+      "time": "",
+      "players": "",
+      "language": "",
+      "variant": "",
+      "attribution": ""
+    }
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 120,
+    "childrenPerOwner": true,
+    "x": 148,
+    "y": 816,
+    "width": 1300,
+    "height": 180,
+    "id": "hand",
+    "z": 17
+  },
+  "Player 2 - Graveyard": {
+    "type": "holder",
+    "id": "Player 2 - Graveyard",
+    "x": 1462.5,
+    "y": 644,
+    "z": 19,
+    "width": 123
+  },
+  "8udpD": {
+    "id": "8udpD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 2 - Health"
+  },
+  "8udpU": {
+    "id": "8udpU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 2 - Health"
+  },
+  "f3ym": {
+    "type": "label",
+    "text": 20,
+    "id": "f3ym",
+    "x": 48.5,
+    "y": 594,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color:black;",
+    "editable": true,
+    "z": 5
+  },
+  "f3ymD": {
+    "id": "f3ymD",
+    "parent": "f3ym",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "f3ymU": {
+    "id": "f3ymU",
+    "parent": "f3ym",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "Player 2 - Health": {
+    "type": "label",
+    "id": "Player 2 - Health",
+    "x": 1488.5,
+    "y": 595,
+    "width": 65,
+    "height": 40,
+    "z": 4,
+    "css": "font-size: 30px; color:black;",
+    "editable": true,
+    "text": 20
+  },
+  "Player 2 - Background": {
+    "id": "Player 2 - Background",
+    "z": 3,
+    "x": 800,
+    "css": "background: #00ff0020; ",
+    "width": 800,
+    "height": 1000,
+    "layer": -4,
+    "movable": false
+  },
+  "pots": {
+    "type": "holder",
+    "x": 15.5,
+    "y": 14,
+    "z": 25,
+    "id": "pots",
+    "height": 500,
+    "width": 123,
+    "stackOffsetY": 30
+  },
+  "Player 1 - Graveyard": {
+    "type": "holder",
+    "id": "Player 1 - Graveyard",
+    "x": 16.5,
+    "y": 640,
+    "z": 22,
+    "width": 123
+  },
+  "Player 2 - Library": {
+    "type": "holder",
+    "id": "Player 2 - Library",
+    "x": 1466.5,
+    "y": 826,
+    "width": 123,
+    "z": 18
+  },
+  "Player 1 - Library": {
+    "type": "holder",
+    "id": "Player 1 - Library",
+    "x": 19.5,
+    "y": 818,
+    "width": 123,
+    "z": 20
+  },
+  "1ttj": {
+    "text": "😼",
+    "css": "font-size:25px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "width": 25,
+    "height": 25,
+    "x": 824.5,
+    "y": 356.5,
+    "z": 10,
+    "id": "1ttj",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY rotation}",
+        "elseRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 270
+          }
+        ],
+        "thenRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 0
+          }
+        ]
+      }
+    ]
+  },
+  "2ttj": {
+    "text": "😼",
+    "css": "font-size:25px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "width": 25,
+    "height": 25,
+    "x": 823.5,
+    "y": 417.5,
+    "z": 15,
+    "id": "2ttj",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY rotation}",
+        "elseRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 270
+          }
+        ],
+        "thenRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 0
+          }
+        ]
+      }
+    ]
+  },
+  "3ttj": {
+    "text": "😼",
+    "css": "font-size:25px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "width": 25,
+    "height": 25,
+    "x": 823.5,
+    "y": 385.5,
+    "z": 16,
+    "id": "3ttj",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY rotation}",
+        "elseRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 270
+          }
+        ],
+        "thenRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 0
+          }
+        ]
+      }
+    ]
+  },
+  "4ttj": {
+    "text": "😼",
+    "css": "font-size:25px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "width": 25,
+    "height": 25,
+    "x": 822.5,
+    "y": 442.5,
+    "z": 17,
+    "id": "4ttj",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY rotation}",
+        "elseRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 270
+          }
+        ],
+        "thenRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 0
+          }
+        ]
+      }
+    ]
+  },
+  "5ttj": {
+    "text": "😼",
+    "css": "font-size:25px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "width": 25,
+    "height": 25,
+    "x": 827.5,
+    "y": 286.5,
+    "z": 19,
+    "id": "5ttj",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY rotation}",
+        "elseRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 270
+          }
+        ],
+        "thenRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 0
+          }
+        ]
+      }
+    ]
+  },
+  "6ttj": {
+    "text": "😼",
+    "css": "font-size:25px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "width": 25,
+    "height": 25,
+    "x": 826.5,
+    "y": 321.5,
+    "z": 18,
+    "id": "6ttj",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY rotation}",
+        "elseRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 270
+          }
+        ],
+        "thenRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": "thisButton",
+            "mode": "set",
+            "angle": 0
+          }
+        ]
+      }
+    ]
+  },
+  "pots1": {
+    "type": "holder",
+    "x": 1461.5,
+    "y": 13,
+    "z": 27,
+    "id": "pots1",
+    "height": 500,
+    "width": 123,
+    "stackOffsetY": 30
+  },
+  "wi91": {
+    "type": "holder",
+    "x": 159,
+    "y": -140,
+    "z": 34,
+    "id": "wi91",
+    "width": 550,
+    "stackOffsetX": 20
+  },
+  "Player 1 - Background": {
+    "id": "Player 1 - Background",
+    "z": 3,
+    "css": "background: #ff000020; ",
+    "width": 800,
+    "height": 1000,
+    "layer": -4,
+    "movable": false
+  }
+}

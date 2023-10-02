@@ -73,7 +73,7 @@ function addStateFile(f) {
 async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
   await waitForJSZip();
 
-  let zip = null;
+  /*let zip = null;
   try {
     zip = await JSZip.loadAsync(sourceFile);
   } catch(e) {
@@ -136,20 +136,20 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       ++removed;
       zip.remove(assets[asset]);
     }
-  }
+  }*/
 
   let blob = sourceFile;
-  if(removed > total/2) {
+  /*if(removed > total/2) {
     zip.file('asset-map.json', JSON.stringify(assets));
     console.log(`Uploading ${sourceFile.name}: rebuilding zip file because ${removed}/${total} assets are already on the server.`);
     blob = await zip.generateAsync({ type: 'blob', compression: total-removed < 5 ? 'DEFLATE' : 'STORE' });
-  }
+  }*/
 
   var req = new XMLHttpRequest();
   req.onload = function(e) {
     if(e.target.status != 200)
       alert(`${e.target.status}: ${e.target.response}`);
-    loadCallback();
+    //loadCallback();
   };
   req.upload.onprogress = e=>progressCallback(e.loaded/e.total);
 
