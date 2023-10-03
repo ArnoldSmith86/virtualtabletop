@@ -5,6 +5,7 @@ import { compareState, prepareClient, setName, setRoomState, setupTestEnvironmen
 setupTestEnvironment();
 
 test('Create game using edit mode', async t => {
+  console.log("USERAGENT: " + t.browser.userAgent);
   await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
