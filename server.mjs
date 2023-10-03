@@ -321,6 +321,7 @@ MinifyHTML().then(function(result) {
           ogOutput += `<meta property="og:description" content="Come play with me!" />`;
           ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
         }
+        ogOutput += `<p>Your browser identifies as a bot and therefor only receives metadata. Please use a different browser and/or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a>.</p>`;
         res.send(ogOutput);
       } else {
         res.setHeader('Content-Type', 'text/html');
