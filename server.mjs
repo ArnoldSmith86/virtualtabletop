@@ -292,7 +292,7 @@ MinifyHTML().then(function(result) {
 
   function createBotPattern(crawlers) {
     // Join all the patterns using the | operator
-    const combinedPattern = crawlers.map(crawler => crawler.pattern).join('|');
+    const combinedPattern = crawlers.filter(c => c.pattern!='HeadlessChrome').map(c => c.pattern).join('|');
 
     // Create and return the compiled regex pattern
     return new RegExp(combinedPattern);
