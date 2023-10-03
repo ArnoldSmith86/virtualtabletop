@@ -290,6 +290,15 @@ MinifyHTML().then(function(result) {
     }
   });
 
+  function createBotPattern(crawlers) {
+    // Join all the patterns using the | operator
+    const combinedPattern = crawlers.map(crawler => crawler.pattern).join('|');
+
+    // Create and return the compiled regex pattern
+    return new RegExp(combinedPattern);
+  }
+  const botPattern = createBotPattern(crawlers);
+
   router.get('/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(!isLoaded) {
@@ -297,14 +306,7 @@ MinifyHTML().then(function(result) {
         return;
       }
 
-      let isBot = false;
-      for(const crawler of crawlers)
-        if(RegExp(crawler.pattern).test(req.headers['user-agent']))
-          isBot = true;
-
-      console.log(req.headers['user-agent'], isBot);
-
-      if(isBot) {
+      if(botPattern.test(req.headers['user-agent'])) {
         const room = activeRooms.get(req.params.room);
         let game = null;
         if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
