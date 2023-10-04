@@ -584,6 +584,9 @@ window.onkeyup = function(event) {
   }
 }
 
+if('serviceWorker' in navigator)
+  navigator.serviceWorker.register('service-worker.js')
+
 if($('#volume')) {
   on('#volume', 'input', function(){ // allows volume to be adjusted in real time
     if(muted) {
@@ -595,3 +598,4 @@ if($('#volume')) {
     });
   });
 }
+
