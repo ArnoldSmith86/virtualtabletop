@@ -4,7 +4,7 @@
   "description": "Play board games with friends. No ads, no accounts.",
   "start_url": "../..",
   "scope": "../..",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "landscape",
   "background_color": "#484848",
   "theme_color": "#1f5ca6",
