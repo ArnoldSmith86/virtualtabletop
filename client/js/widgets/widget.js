@@ -92,13 +92,14 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
     this.domElement.addEventListener('mousedown',  e => this.selected(), false);
     this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
-    this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
+    this.domElement.addEventListener("touchstart", e => this.touchstart(e), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
 
-    this.touchstart = function() {
+    this.touchstart = function(e) {
       if (!this.timer) {
         this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
       }
+      e.preventDefault();
     }
 
     this.touchend = function() {
