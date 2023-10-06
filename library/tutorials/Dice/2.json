@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 12,
+    "version": 14,
     "info": {
       "name": "Dice",
       "image": "/assets/-1031725036_4176",
@@ -11,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1677861639107,
+      "lastUpdate": 1696615203994,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -307,30 +307,54 @@
   "dice7": {
     "type": "dice",
     "id": "dice7",
-    "x": 1437,
-    "y": 300,
-    "z": 221,
+    "x": 444,
+    "y": 650,
+    "z": 227,
     "faces": [
-      {
-        "image": "i/icons/pawn.svg",
-        "imageScale": 1.2
-      },
-      {
-        "image": "i/icons/hex_grid_horizontal.svg"
-      },
-      {
-        "image": "i/icons/auto_awesome.svg",
-        "imageScale": 0.8
-      },
-      {
-        "image": "i/icons/link.svg",
-        "imageScale": 1.1
-      }
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
     ],
     "pipSymbols": false,
-    "rollCount": 11,
-    "shape3d": true,
-    "activeFace": 1
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      " .diceFaces ::after": {
+        "content": "'${PROPERTY dieText}'",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "10px",
+        "width": "100%",
+        "font-size": "9px",
+        "top": "35px",
+        "letter-spacing": "initial"
+      },
+      " .diceFaces ::before": {
+        "content": "''",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "17px",
+        "width": "150%",
+        "font-size": "9px",
+        "top": "3px",
+        "left": "0",
+        "background": "url(${PROPERTY dieImage}) center no-repeat"
+      }
+    },
+    "faceCSS": {
+      "font-size": "25px"
+    },
+    "dieText": "Zoom",
+    "dieImage": "i/icons/zoom_out.svg",
+    "activeFace": 2
   },
   "dice8": {
     "type": "dice",
@@ -382,5 +406,139 @@
     "movableInEdit": false,
     "css": "font-size: 22px; ",
     "text": "'faceCSS' is ued on this dice to set the backgroundColor. But you could also use the dice property 'color'. But do not use the css parameter 'backgroundColor'. Also setting the 'pipColor' property to green also changes the border color of each face. "
+  },
+  "dice7text": {
+    "id": "dice7text",
+    "x": 400,
+    "y": 725,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "This shows how to use ::before and ::after with css to add text and images to faces in addition to the basic value of a face. The left dice adds the same text and images to every face. The right dice keeps the same text but has different images on each face. "
+  },
+  "dice9": {
+    "type": "dice",
+    "id": "dice9",
+    "x": 544,
+    "y": 650,
+    "z": 227,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipSymbols": false,
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      " .diceFaces ::after": {
+        "content": "'${PROPERTY dieText}'",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "10px",
+        "width": "100%",
+        "font-size": "9px",
+        "top": "35px",
+        "letter-spacing": "initial"
+      },
+      " .diceFaces .face1::before": {
+        "content": "''",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "17px",
+        "width": "50%",
+        "font-size": "9px",
+        "top": "3px",
+        "left": "0",
+        "background": "url(${PROPERTY dieImage1}) center no-repeat"
+      },
+      " .diceFaces .face2::before": {
+        "content": "''",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "17px",
+        "width": "50%",
+        "font-size": "9px",
+        "top": "0px",
+        "left": "0",
+        "background": "url(${PROPERTY dieImage2}) center no-repeat"
+      },
+      " .diceFaces .face3::before": {
+        "content": "''",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "17px",
+        "width": "50%",
+        "font-size": "9px",
+        "top": "0px",
+        "left": "0",
+        "background": "url(${PROPERTY dieImage3}) center no-repeat"
+      },
+      " .diceFaces .face4::before": {
+        "content": "''",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "17px",
+        "width": "50%",
+        "font-size": "9px",
+        "top": "0px",
+        "left": "0",
+        "background": "url(${PROPERTY dieImage4}) center no-repeat"
+      },
+      " .diceFaces .face5::before": {
+        "content": "''",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "17px",
+        "width": "50%",
+        "font-size": "9px",
+        "top": "0px",
+        "left": "0",
+        "background": "url(${PROPERTY dieImage5}) center no-repeat"
+      },
+      " .diceFaces .face6::before": {
+        "content": "''",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "17px",
+        "width": "50%",
+        "font-size": "9px",
+        "top": "0px",
+        "left": "0",
+        "background": "url(${PROPERTY dieImage6}) center no-repeat"
+      }
+    },
+    "faceCSS": {
+      "font-size": "25px"
+    },
+    "dieText": "Move",
+    "dieImage1": "i/icons/arrow_down.svg",
+    "dieImage2": "i/icons/arrow_up.svg",
+    "shape3d": true,
+    "dieImage3": "i/icons/arrow_left.svg",
+    "dieImage4": "i/icons/arrow_right.svg",
+    "dieImage5": "i/icons/undo.svg",
+    "dieImage6": "i/icons/redo.svg",
+    "activeFace": 3
   }
 }
