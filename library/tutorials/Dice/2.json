@@ -11,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1696615203994,
+      "lastUpdate": 1696615965143,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -394,7 +394,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 22px; ",
-    "text": "This dice shows how to use 'imageSclae' on each face. In this case, the imageScale is tailored to each face."
+    "text": "This dice shows how to use 'imageScale' on each face. In this case, the imageScale is tailored to each face."
   },
   "dice6text": {
     "id": "dice6text",
@@ -540,5 +540,33 @@
     "dieImage5": "i/icons/undo.svg",
     "dieImage6": "i/icons/redo.svg",
     "activeFace": 3
+  },
+  "dice10": {
+    "type": "dice",
+    "id": "dice10",
+    "x": 1437,
+    "y": 300,
+    "z": 221,
+    "activeFace": 1,
+    "faces": [
+      {
+        "image": "i/icons/pawn.svg",
+        "imageScale": 1.2
+      },
+      {
+        "image": "i/icons/hex_grid_horizontal.svg"
+      },
+      {
+        "image": "i/icons/auto_awesome.svg",
+        "imageScale": 0.8
+      },
+      {
+        "image": "i/icons/link.svg",
+        "imageScale": 1.1
+      }
+    ],
+    "pipSymbols": false,
+    "rollCount": 11,
+    "shape3d": true
   }
 }
