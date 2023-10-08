@@ -4,6 +4,6 @@ class GridButton extends PersistentToolbarToggleButton {
   }
 
   toggle(state) {
-    $('body').classList.toggle('gridLines', state);
+    $('body').classList.toggle('gridLines25', state);
   }
 }
