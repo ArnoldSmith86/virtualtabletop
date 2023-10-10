@@ -16,7 +16,8 @@ body {
 
   color-scheme: light;
   --gridSize: 25px;
-  --gridColor: #c0c0c0
+  --gridColor: #c0c0c0;
+  --gridMajor: 25;
 }
 
 body.darkMode {

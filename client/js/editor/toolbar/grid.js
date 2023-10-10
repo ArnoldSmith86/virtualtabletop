@@ -6,7 +6,8 @@ class GridButton extends PersistentToolbarToggleButton {
   toggle(state) {
   
     if (state) {
-      $('body').classList.toggle('gridLines', state);
+      const gridMajor = Number(getComputedStyle(document.body).getPropertyValue('--gridMajor'));
+      $('body').classList.toggle(`gridLines${gridMajor === 0 ? '' : gridMajor}`, state);
       showOverlay('gridOverlay');
       const modal = document.querySelector('#gridOverlay > .modal');
       modal.innerHTML = `<div class="inputtitle"><label>Grid Options</label></div>`;
@@ -31,7 +32,8 @@ class GridButton extends PersistentToolbarToggleButton {
         return input;
       };
     
-      const gridSizeInput = createInput('text', 'gridSizeInput', '', ['gridFields'], e => {
+      const currentGridSize = getComputedStyle(document.body).getPropertyValue('--gridSize').replace(/[^0-9.]/g, '');
+      const gridSizeInput = createInput('text', 'gridSizeInput', currentGridSize, ['gridFields'], e => {
         const gridSizeValue = e.target.value.replace(/[^0-9.]/g, '') + 'px';
         document.body.style.setProperty('--gridSize', gridSizeValue);
       });
@@ -40,26 +42,27 @@ class GridButton extends PersistentToolbarToggleButton {
       const colorInput = createInput('color', 'colorPicker', '', ['gridFields'], e => {
         document.body.style.setProperty('--gridColor', e.target.value);
       });
-      colorInput.value = '#c0c0c0';
+      const currentGridColor = getComputedStyle(document.body).getPropertyValue('--gridColor');
+      colorInput.value = currentGridColor;
       addInputField('Grid color:  ', colorInput);
     
       const majorLineDropdown = document.createElement('select');
       majorLineDropdown.id = 'majorLineDropdown';
       majorLineDropdown.classList.add('gridFields');
       addInputField('Major lines:  ', majorLineDropdown);
-    
+
       const options = [
-        { text: 'None', value: 'none' },
-        { text: '1/3', value: '1/3' },
-        { text: '1/4', value: '1/4' },
-        { text: '1/5', value: '1/5' },
+        { text: 'None', value: 0 },
+        { text: '1/3', value: 33 },
+        { text: '1/4', value: 25 },
+        { text: '1/5', value: 20 },
       ];
     
       options.forEach(option => {
         const optionElement = document.createElement('option');
         optionElement.value = option.value;
         optionElement.textContent = option.text;
-        if (option.value === 'None') {
+        if (option.value === gridMajor) {
           optionElement.selected = true;
         }
         majorLineDropdown.appendChild(optionElement);
@@ -69,21 +72,25 @@ class GridButton extends PersistentToolbarToggleButton {
         const selectedOption = e.target.value;
     
         switch (selectedOption) {
-          case 'none':
+          case '0':
             $('body').classList.remove('gridLines33', 'gridLines25', 'gridLines20');
             $('body').classList.add('gridLines');
+            document.body.style.setProperty('--gridMajor', 0);
             break;
-          case '1/3':
+          case '33':
             $('body').classList.remove('gridLines', 'gridLines25', 'gridLines20');
             $('body').classList.add('gridLines33');
+            document.body.style.setProperty('--gridMajor', 33);
             break;
-          case '1/4':
+          case '25':
             $('body').classList.remove('gridLines', 'gridLines33', 'gridLines20');
             $('body').classList.add('gridLines25');
+            document.body.style.setProperty('--gridMajor', 25);
             break;
-          case '1/5':
+          case '20':
             $('body').classList.remove('gridLines', 'gridLines33', 'gridLines25');
             $('body').classList.add('gridLines20');
+            document.body.style.setProperty('--gridMajor', 20);
             break;
         }
       });
