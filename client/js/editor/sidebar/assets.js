@@ -300,6 +300,11 @@ class AssetsModule extends SidebarModule {
     return await response.text();
   }
 
+  onStateReceivedWhileActive(delta) {
+    for(const oldContainer of $a('.compressAssetsContainer'))
+      oldContainer.remove();
+  }
+
   renderModule(target) {
     this.urlMap = {};
     this.urlDIVs = {};
