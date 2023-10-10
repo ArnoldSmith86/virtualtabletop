@@ -4,12 +4,9 @@ class GridButton extends PersistentToolbarToggleButton {
   }
 
   toggle(state) {
-    $('body').classList.toggle('gridLines', state);
-    document.querySelectorAll('#majorGridLinesV1, #majorGridLinesV2, #majorGridLinesH1, #majorGridLinesH2').forEach(el => {
-      el.classList.toggle('majorLinesHidden', !state);
-    });
   
     if (state) {
+      $('body').classList.toggle('gridLines', state);
       showOverlay('gridOverlay');
       const modal = document.querySelector('#gridOverlay > .modal');
       modal.innerHTML = `<div class="inputtitle"><label>Grid Options</label></div>`;
@@ -34,7 +31,7 @@ class GridButton extends PersistentToolbarToggleButton {
         return input;
       };
     
-      const gridSizeInput = createInput('text', 'gridSizeInput', '25', ['gridFields'], e => {
+      const gridSizeInput = createInput('text', 'gridSizeInput', '', ['gridFields'], e => {
         const gridSizeValue = e.target.value.replace(/[^0-9.]/g, '') + 'px';
         document.body.style.setProperty('--gridSize', gridSizeValue);
       });
@@ -62,7 +59,7 @@ class GridButton extends PersistentToolbarToggleButton {
         const optionElement = document.createElement('option');
         optionElement.value = option.value;
         optionElement.textContent = option.text;
-        if (option.value === '1/4') {
+        if (option.value === 'None') {
           optionElement.selected = true;
         }
         majorLineDropdown.appendChild(optionElement);
@@ -70,27 +67,23 @@ class GridButton extends PersistentToolbarToggleButton {
     
       majorLineDropdown.addEventListener('change', e => {
         const selectedOption = e.target.value;
-        const majorLinesAll = document.querySelectorAll('#majorGridLinesV1, #majorGridLinesV2, #majorGridLinesH1, #majorGridLinesH2');
-        const majorLines3 = document.querySelectorAll('#majorGridLinesV2, #majorGridLinesH2');
     
         switch (selectedOption) {
           case 'none':
-            majorLinesAll.forEach(element => element.style.display = 'none');
+            $('body').classList.remove('gridLines33', 'gridLines25', 'gridLines20');
+            $('body').classList.add('gridLines');
             break;
           case '1/3':
-            majorLines3.forEach(element => element.style.display = 'none');
-            document.body.style.setProperty('--majorLineV', '533.33px');
-            document.body.style.setProperty('--majorLineH', '333.33px');
+            $('body').classList.remove('gridLines', 'gridLines25', 'gridLines20');
+            $('body').classList.add('gridLines33');
             break;
           case '1/4':
-            majorLinesAll.forEach(element => element.style.display = 'block');
-            document.body.style.setProperty('--majorLineV', '400px');
-            document.body.style.setProperty('--majorLineH', '250px');
+            $('body').classList.remove('gridLines', 'gridLines33', 'gridLines20');
+            $('body').classList.add('gridLines25');
             break;
           case '1/5':
-            majorLinesAll.forEach(element => element.style.display = 'block');
-            document.body.style.setProperty('--majorLineV', '320px');
-            document.body.style.setProperty('--majorLineH', '200px');
+            $('body').classList.remove('gridLines', 'gridLines33', 'gridLines25');
+            $('body').classList.add('gridLines20');
             break;
         }
       });
@@ -101,7 +94,8 @@ class GridButton extends PersistentToolbarToggleButton {
       cancelButton.className = 'ui-button pilecancelbutton material-icons';
       $('#gridOverlay > .modal').appendChild(document.createElement('div').appendChild(cancelButton));
     } else {
-      document.querySelector('#gridOverlay').style.display = 'none';   
+      $('body').classList.remove('gridLines', 'gridLines33', 'gridLines25', 'gridLines20');
+      document.querySelector('#gridOverlay').style.display = 'none';  
     }
   }
 }
