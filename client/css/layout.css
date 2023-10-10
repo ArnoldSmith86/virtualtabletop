@@ -1096,6 +1096,29 @@ button:disabled:hover {
 .ui-button.blue {
   background-color: var(--neutralInput);
 }
+#gridOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
+.gridFields {
+  color: #fff;
+  background-color: var(--VTTblue);
+  width: 60px;
+}
+.gridFields::placeholder{
+  color: #a9a;
+}
+#gridOverlay .modal{
+  width: 200px;
+}
+#gridOverlay > .modal button.ui-button{
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
 #pileOverlay{
   color: black;
   align-items: center;
