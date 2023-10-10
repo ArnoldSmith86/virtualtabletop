@@ -38,19 +38,30 @@ function getAllAssetsGrouped() {
 }
 
 function getAssetTargetSize(asset, originalWidth, originalHeight) {
-  let targetWidth = 0;
-  let targetHeight = 0;
+    let targetWidth = 0;
+    let targetHeight = 0;
 
-  for(const use of asset.uses) {
-    const targetWidget = use.type == 'deck' ? widgetFilter(w=>w.get('deck')==use.widget)[0] : widgets.get(use.widget);
-    targetWidth  = Math.max(targetWidth,  targetWidget.get('width')  * (targetWidget.get('enlarge')||1));
-    targetHeight = Math.max(targetHeight, targetWidget.get('height') * (targetWidget.get('enlarge')||1));
-  }
+    for (const use of asset.uses) {
+        const targetWidget = use.type == 'deck' ? widgetFilter(w => w.get('deck') == use.widget)[0] : widgets.get(use.widget);
+        targetWidth = Math.max(targetWidth, targetWidget.get('width') * (targetWidget.get('enlarge') || 1));
+        targetHeight = Math.max(targetHeight, targetWidget.get('height') * (targetWidget.get('enlarge') || 1));
+    }
 
-  return [
-    Math.min(targetWidth *2, originalWidth),
-    Math.min(targetHeight*2, originalHeight)
-  ];
+    // Calculate safe width and height
+    const safeWidth = Math.min(targetWidth * 2, originalWidth);
+    const safeHeight = Math.min(targetHeight * 2, originalHeight);
+
+    // Calculate the aspect ratio of the original size
+    const originalAspectRatio = originalWidth / originalHeight;
+
+    // Adjust dimensions based on the original aspect ratio
+    if (safeWidth / safeHeight > originalAspectRatio) {
+        // Adjust the height based on the width
+        return [safeWidth, safeWidth / originalAspectRatio];
+    } else {
+        // Adjust the width based on the height
+        return [safeHeight * originalAspectRatio, safeHeight];
+    }
 }
 
 class AssetsModule extends SidebarModule {
