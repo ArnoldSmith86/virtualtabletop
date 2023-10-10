@@ -16,9 +16,7 @@ body {
 
   color-scheme: light;
   --gridSize: 25px;
-  --gridColor: #c0c0c0;
-  --majorLineV: 400px;
-  --majorLineH: 250px;
+  --gridColor: #c0c0c0
 }
 
 body.darkMode {
@@ -61,8 +59,6 @@ body.edit.zoomedOut #roomArea, body.edit.zoomedOut #topSurface {
   overflow: visible;
 }
 
-/* Regular gridlines */
-
 body.gridLines #topSurface {
   background-image:
     linear-gradient(to right, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),
@@ -70,86 +66,31 @@ body.gridLines #topSurface {
   background-size: var(--gridSize) var(--gridSize)    
 }
 
-/* Up to 4 major vertical gridlines */
-
-#majorGridLinesV1, #majorGridLinesV2 {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: var(--gridColor);
-  display: block;
+body.gridLines20 #topSurface {
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),
+    linear-gradient(to bottom, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)), 
+    linear-gradient(to right, transparent 0% 19.85%, var(--gridColor) 19.85% 20.15%, transparent 20.15% 39.85%, var(--gridColor) 39.85% 40.15%, transparent 40.15% 59.85%, var(--gridColor) 59.85% 60.15%, transparent 60.15% 79.85%, var(--gridColor) 79.85% 80.15%, transparent 80.15% 100% ),
+    linear-gradient(to bottom, transparent 0% 19.80%, var(--gridColor) 19.80% 20.2%, transparent 20.2% 39.8%, var(--gridColor) 39.8% 40.2%, transparent 40.2% 59.8%, var(--gridColor) 59.8% 60.2%, transparent 60.2% 79.8%, var(--gridColor) 79.8% 80.2%, transparent 80.2% 100% );
+  background-size: var(--gridSize) var(--gridSize), var(--gridSize) var(--gridSize), 1600px 1000px, 1600px 1000px;
 }
 
-#majorGridLinesV1 {
-  left: calc(var(--majorLineV) - 2px);
+body.gridLines25 #topSurface {
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),
+    linear-gradient(to bottom, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)), 
+    linear-gradient(to right, transparent 0% 24.85%, var(--gridColor) 24.85% 25.15%, transparent 25.15% 49.85%, var(--gridColor) 49.85% 50.15%, transparent 50.15% 74.85%, var(--gridColor) 74.85% 75.15%, transparent 75.15% 100%),
+    linear-gradient(to bottom, transparent 0% 24.8%, var(--gridColor) 24.8% 25.2%, transparent 25.2% 49.8%, var(--gridColor) 49.8% 50.2%, transparent 50.2% 74.8%, var(--gridColor) 74.8% 75.2%, transparent 75.2% 100%);
+  background-size: var(--gridSize) var(--gridSize), var(--gridSize) var(--gridSize), 1600px 1000px, 1600px 1000px;
 }
 
-#majorGridLinesV1::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--majorLineV);
-  width: 4px;
-  background: var(--gridColor);
-}
-
-#majorGridLinesV2 {
-  left: calc(var(--majorLineV) * 3 - 2px);
-}
-
-#majorGridLinesV2::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--majorLineV);
-  width: 4px;
-  background: var(--gridColor);
-}
-
-/* Up to 4 major horizontal gridlines */
-
-#majorGridLinesH1, #majorGridLinesH2 {
-  position: fixed;
-  width: 1600px;
-  height: 4px;
-  background: var(--gridColor);
-  display: block;
-}
-
-#majorGridLinesH1 {
-  top: calc(var(--majorLineH) - 2px);
-}
-
-#majorGridLinesH1::after {
-  content: "";
-  position: absolute;
-  width: 1600px;
-  top: var(--majorLineH);
-  height: 4px;
-  background: var(--gridColor);
-}
-
-#majorGridLinesH2 {
-  top: calc(var(--majorLineH) * 3 - 2px);
-}
-
-#majorGridLinesH2::after {
-  content: "";
-  position: absolute;
-  width: 1600px;
-  top: var(--majorLineH);
-  height: 4px;
-  background: var(--gridColor);
-}
-
-#majorGridLinesV1.majorLinesHidden,
-#majorGridLinesV2.majorLinesHidden,
-#majorGridLinesH1.majorLinesHidden,
-#majorGridLinesH2.majorLinesHidden {
-  display: none;
+body.gridLines33 #topSurface {
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),   
+    linear-gradient(to bottom, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),
+    linear-gradient(to right, transparent 0% 33.183%, var(--gridColor) 33.183% 33.483%, transparent 33.483% 66.516%, var(--gridColor) 66.516% 66.816%, transparent 66.816% 100%),
+    linear-gradient(to bottom, transparent 0% 33.133%, var(--gridColor) 33.133% 33.533%, transparent 33.533% 66.466%, var(--gridColor) 66.466% 66.866%, transparent 66.866% 100%);
+  background-size: var(--gridSize) var(--gridSize), var(--gridSize) var(--gridSize), 1600px 1000px, 1600px 1000px;
 }
 
 #editorSelection {
