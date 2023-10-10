@@ -841,7 +841,7 @@ function fillStateDetails(states, state, dom) {
     document.addEventListener('click', e=>$('#stateDetailsOverlay .buttons > div').classList.add('hidden'));
   };
   $('#stateDetailsOverlay .buttons [icon=download]').onclick = function() {
-    window.open(`dl/${roomID}/${state.id}`);
+    window.open(`dl/${roomID}/${encodeURIComponent(state.id)}`);
   };
   $('#stateDetailsOverlay .buttons [icon=link]').onclick = function() {
     shareLink(state);

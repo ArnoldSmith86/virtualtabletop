@@ -66,7 +66,7 @@ async function downloadState(res, roomID, stateID, variantID) {
   if(await ensureRoomIsLoaded(roomID)) {
     const d = await activeRooms.get(roomID).download(stateID, variantID);
     res.setHeader('Content-Type', d.type);
-    res.setHeader('Content-Disposition', `attachment; filename="${d.name.replace(/[^A-Za-z0-9._-]/g, '_')}"`);
+    res.setHeader('Content-Disposition', `attachment; filename*=utf-8''${encodeURIComponent(d.name)}`);
     res.send(d.content);
   }
 }

@@ -272,7 +272,7 @@ export default class Room {
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
 
-    let name = s.name + '.vtt';
+    let name = s.name + '.🎲';
     if(s.savePlayers)
       name = `${s.name} ${new Date(s.saveDate).toISOString().substr(0,10)} ${s.savePlayers}.vtts`;
 
