@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
 import fetch from 'node-fetch';
+import crawlers from 'crawler-user-agents' assert { type: 'json' };;
 
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
@@ -289,18 +290,47 @@ MinifyHTML().then(function(result) {
     }
   });
 
+  function createBotPattern(crawlers) {
+    // Join all the patterns using the | operator
+    const combinedPattern = crawlers.filter(c => c.pattern!='HeadlessChrome').map(c => c.pattern).join('|');
+
+    // Create and return the compiled regex pattern
+    return new RegExp(combinedPattern);
+  }
+  const botPattern = createBotPattern(crawlers);
+
   router.get('/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(!isLoaded) {
         res.send('Invalid characters in room ID.');
         return;
       }
-      res.setHeader('Content-Type', 'text/html');
-      if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-        res.setHeader('Content-Encoding', 'gzip');
-        res.send(result.gzipped);
+
+      if(botPattern.test(req.headers['user-agent'])) {
+        const room = activeRooms.get(req.params.room);
+        let game = null;
+        if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
+          game = room.state._meta.states[room.state._meta.activeState.stateID];
+
+        res.setHeader('Content-Type', 'text/html');
+        let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
+        if(game) {
+          ogOutput += `<meta property="og:description" content="Come play the game ${game.name} with me!" />`;
+          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
+        } else {
+          ogOutput += `<meta property="og:description" content="Come play with me!" />`;
+          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
+        }
+        ogOutput += `<p>Your browser identifies as a bot and therefor only receives metadata. Please use a different browser and/or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a>.</p>`;
+        res.send(ogOutput);
       } else {
-        res.send(result.min);
+        res.setHeader('Content-Type', 'text/html');
+        if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+          res.setHeader('Content-Encoding', 'gzip');
+          res.send(result.gzipped);
+        } else {
+          res.send(result.min);
+        }
       }
     }).catch(next);
   });
