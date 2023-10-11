@@ -62,10 +62,10 @@ function getAssetTargetSize(asset, originalWidth, originalHeight) {
     // Adjust dimensions based on the original aspect ratio
     if (safeWidth / safeHeight > originalAspectRatio) {
         // Adjust the height based on the width
-        return [safeWidth, safeWidth / originalAspectRatio];
+        return [Math.round(safeWidth), Math.round(safeWidth / originalAspectRatio)];
     } else {
         // Adjust the width based on the height
-        return [safeHeight * originalAspectRatio, safeHeight];
+        return [Math.round(safeHeight * originalAspectRatio), Math.round(safeHeight)];
     }
 }
 
@@ -165,12 +165,7 @@ class AssetsModule extends SidebarModule {
     Object.values(getAllAssetsGrouped()).forEach(asset => {
       const row = table.insertRow();
 
-      const processImage = (img, format, checkbox, sizeLabel) => {
-        let labelContent = format === 'original' ? 'Original' : format.toUpperCase();
-        const dimensions = `${img.naturalWidth}x${img.naturalHeight}`;
-        labelContent += ` (${dimensions})`;
-        sizeLabel.textContent = `${labelContent}: ${sizeLabel.textContent}`;
-
+      const processImage = (checkbox) => {
         // Extract sizes from the DOM
         const sizesFromDOM = Array.from(row.querySelectorAll('span')) // adjust the selector accordingly
                                   .map(label => parseFloat(label.textContent.split(' ')[2]));
@@ -244,10 +239,10 @@ class AssetsModule extends SidebarModule {
                 const res = await fetch(compressedDataUrl);
                 const blob = await res.blob();
                 const sizeInKB = (blob.size / 1024).toFixed(2);
-                sizeLabel.textContent = `${sizeInKB} KB`;
-                const compressedImg = new Image();
-                compressedImg.src = compressedDataUrl;
-                processImage(compressedImg, format, checkbox, sizeLabel);
+                processImage(checkbox);
+
+                const formatString = format === 'original' ? 'Original' : format.toUpperCase();
+                sizeLabel.textContent = `${formatString} (${targetWidth}x${targetHeight}): ${sizeInKB} KB`;
 
                 img.src = compressedDataUrl;
                 img.dataset.sourceAsset = asset.asset;
