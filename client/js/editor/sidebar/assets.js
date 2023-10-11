@@ -43,8 +43,13 @@ function getAssetTargetSize(asset, originalWidth, originalHeight) {
 
     for (const use of asset.uses) {
         const targetWidget = use.type == 'deck' ? widgetFilter(w => w.get('deck') == use.widget)[0] : widgets.get(use.widget);
-        targetWidth = Math.max(targetWidth, targetWidget.get('width') * (targetWidget.get('enlarge') || 1));
-        targetHeight = Math.max(targetHeight, targetWidget.get('height') * (targetWidget.get('enlarge') || 1));
+        if(targetWidget) {
+          targetWidth = Math.max(targetWidth, targetWidget.get('width') * (targetWidget.get('enlarge') || 1));
+          targetHeight = Math.max(targetHeight, targetWidget.get('height') * (targetWidget.get('enlarge') || 1));
+        } else {
+          targetWidth = Math.max(targetWidth, originalWidth);
+          targetHeight = Math.max(targetHeight, originalHeight);
+        }
     }
 
     // Calculate safe width and height
