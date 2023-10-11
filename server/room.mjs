@@ -1029,6 +1029,9 @@ export default class Room {
     const assetsDir = this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets');
     const usedAssets = this.getAssetListForState(stateID);
 
+    if(!fs.existsSync(assetsDir))
+      fs.mkdirSync(assetsDir);
+
     const savedAssets = {};
     for(const file of fs.readdirSync(assetsDir))
       savedAssets[file] = true;
