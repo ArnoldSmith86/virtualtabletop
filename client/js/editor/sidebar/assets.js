@@ -42,13 +42,49 @@ function getAssetTargetSize(asset, originalWidth, originalHeight) {
     let targetHeight = 0;
 
     for (const use of asset.uses) {
-        const targetWidget = use.type == 'deck' ? widgetFilter(w => w.get('deck') == use.widget)[0] : widgets.get(use.widget);
-        if(targetWidget) {
-          targetWidth = Math.max(targetWidth, targetWidget.get('width') * (targetWidget.get('enlarge') || 1));
-          targetHeight = Math.max(targetHeight, targetWidget.get('height') * (targetWidget.get('enlarge') || 1));
+        if(use.type == 'deck') {
+            const deck = widgets.get(use.widget);
+
+            let key = null;
+            let face = null;
+            let object = null;
+            if(use.keys.length == 3 && use.keys[0] == 'cardTypes')
+                key = use.keys[2];
+            if(use.keys.length == 2 && use.keys[0] == 'cardDefaults')
+                key = use.keys[1];
+            if(use.keys.length == 5 && use.keys[0] == 'faceTemplates' && use.keys[4] == 'value') {
+                face = use.keys[1];
+                object = use.keys[3];
+            }
+
+            if(key) {
+                for(const [ t, template ] of Object.entries(deck.get('faceTemplates'))) {
+                    for(const [ o, faceObject ] of Object.entries(template.objects)) {
+                        if(faceObject.dynamicProperties && faceObject.dynamicProperties.value == key) {
+                            face = t;
+                            object = o;
+                        }
+                    }
+                }
+            }
+
+            if(face) {
+                const targetFace   = deck.get('faceTemplates')[face];
+                const cardDefaults = deck.get('cardDefaults');
+                const targetObject = targetFace.objects[object];
+                const enlarge      = targetFace.properties && targetFace.properties.enlarge || cardDefaults && cardDefaults.enlarge || 1;
+                targetWidth  = Math.max(targetWidth,  targetObject.width  * enlarge || originalWidth);
+                targetHeight = Math.max(targetHeight, targetObject.height * enlarge || originalHeight);
+            }
         } else {
-          targetWidth = Math.max(targetWidth, originalWidth);
-          targetHeight = Math.max(targetHeight, originalHeight);
+            const targetWidget = widgets.get(use.widget);
+            if(targetWidget) {
+                targetWidth  = Math.max(targetWidth,  targetWidget.get('width')  * (targetWidget.get('enlarge') || 1));
+                targetHeight = Math.max(targetHeight, targetWidget.get('height') * (targetWidget.get('enlarge') || 1));
+            } else {
+                targetWidth  = Math.max(targetWidth,  originalWidth);
+                targetHeight = Math.max(targetHeight, originalHeight);
+            }
         }
     }
 
