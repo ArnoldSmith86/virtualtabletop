@@ -2480,9 +2480,9 @@ function jeInitEventListeners() {
 
   window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
   window.addEventListener('mouseup', async function(e) {
+    jeRoutineResetOnNextLog = jeRoutineAutoReset;
     if(!jeEnabled)
       return;
-    jeRoutineResetOnNextLog = jeRoutineAutoReset;
     jeMouseButtonIsDown = false;
 
     if(e.target == $('#jeText') && jeContext != 'macro') // Click in widget text, fix context
