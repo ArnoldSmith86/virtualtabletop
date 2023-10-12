@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "version": 14,
+    "info": {
+      "name": "Unnamed",
+      "image": "",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1697075218421,
+      "id": "rbpo",
+      "showName": true,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    }
+  },
+  "e375": {
+    "classes": "pinPiece",
+    "color": "#000000",
+    "width": 35.85,
+    "height": 43.83,
+    "x": 82.075,
+    "y": 62.085,
+    "z": 2,
+    "id": "e375"
+  }
+}
