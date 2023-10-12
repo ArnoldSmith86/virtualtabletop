@@ -239,10 +239,11 @@ class AssetsModule extends SidebarModule {
                 const res = await fetch(compressedDataUrl);
                 const blob = await res.blob();
                 const sizeInKB = (blob.size / 1024).toFixed(2);
-                processImage(checkbox);
 
                 const formatString = format === 'original' ? 'Original' : format.toUpperCase();
                 sizeLabel.textContent = `${formatString} (${targetWidth}x${targetHeight}): ${sizeInKB} KB`;
+
+                processImage(checkbox);
 
                 img.src = compressedDataUrl;
                 img.dataset.sourceAsset = asset.asset;
