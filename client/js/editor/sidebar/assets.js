@@ -46,29 +46,21 @@ function getAssetTargetSize(asset, originalWidth, originalHeight) {
             const deck = widgets.get(use.widget);
 
             let key = null;
-            let face = null;
-            let object = null;
+            let objects = [];
             if(use.keys.length == 3 && use.keys[0] == 'cardTypes')
                 key = use.keys[2];
             if(use.keys.length == 2 && use.keys[0] == 'cardDefaults')
                 key = use.keys[1];
-            if(use.keys.length == 5 && use.keys[0] == 'faceTemplates' && use.keys[4] == 'value') {
-                face = use.keys[1];
-                object = use.keys[3];
-            }
+            if(use.keys.length == 5 && use.keys[0] == 'faceTemplates' && use.keys[4] == 'value')
+                objects = [ [ use.keys[1], use.keys[3] ] ];
 
-            if(key) {
-                for(const [ t, template ] of Object.entries(deck.get('faceTemplates'))) {
-                    for(const [ o, faceObject ] of Object.entries(template.objects)) {
-                        if(faceObject.dynamicProperties && faceObject.dynamicProperties.value == key) {
-                            face = t;
-                            object = o;
-                        }
-                    }
-                }
-            }
+            if(key)
+                for(const [ t, template ] of Object.entries(deck.get('faceTemplates')))
+                    for(const [ o, faceObject ] of Object.entries(template.objects))
+                        if(faceObject.dynamicProperties && faceObject.dynamicProperties.value == key)
+                            objects.push([ t, o ]);
 
-            if(face) {
+            for(const [ face, object ] of objects) {
                 const targetFace   = deck.get('faceTemplates')[face];
                 const cardDefaults = deck.get('cardDefaults');
                 const targetObject = targetFace.objects[object];
