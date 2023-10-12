@@ -235,7 +235,7 @@ class AssetsModule extends SidebarModule {
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
-                const compressedDataUrl = canvas.toDataURL(`image/${format}`, 0.6);
+                const compressedDataUrl = canvas.toDataURL(`image/${format}`, 0.7);
                 const res = await fetch(compressedDataUrl);
                 const blob = await res.blob();
                 const sizeInKB = (blob.size / 1024).toFixed(2);
