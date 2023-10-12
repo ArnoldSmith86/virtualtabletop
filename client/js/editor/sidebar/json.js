@@ -89,11 +89,31 @@ class DebugModule extends SidebarModule {
     super('pest_control', 'Debug', 'View debug information for the most recent routine execution.');
   }
 
+  button_clearButton() {
+    jeLoggingHTML = '';
+    $('#jeLog').innerHTML = '';
+  }
+
+  button_clearCheckbox() {
+    jeRoutineAutoReset = !$('#clearLogButton').disabled;
+
+    $('#clearLogButton').disabled = $('#autoClearLog').checked;
+    if($('#clearLogButton').disabled)
+      jeLoggingHTML = '';
+  }
+
   onClose() {
     $('#jsonEditor').append($('#jeLog'));
   }
 
   renderModule(target) {
+    div(target, 'buttonBar', `
+      <input type=checkbox id=autoClearLog checked><label for=autoClearLog> Clear after each interaction</label>
+      <button icon=backspace id=clearLogButton disabled>Clear</button>
+    `);
     target.append($('#jeLog'));
+
+    on('#autoClearLog', 'change', e=>this.button_clearCheckbox());
+    on('#clearLogButton', 'click', e=>this.button_clearButton());
   }
 }

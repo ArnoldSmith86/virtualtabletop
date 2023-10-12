@@ -1935,6 +1935,7 @@ function jeInsert(context, key, value) {
 // START routine logging
 
 let jeRoutineResetOnNextLog = true;
+let jeRoutineAutoReset = true;
 let jeRoutineResult = '';
 let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
@@ -2481,7 +2482,7 @@ function jeInitEventListeners() {
   window.addEventListener('mouseup', async function(e) {
     if(!jeEnabled)
       return;
-    jeRoutineResetOnNextLog = true;
+    jeRoutineResetOnNextLog = jeRoutineAutoReset;
     jeMouseButtonIsDown = false;
 
     if(e.target == $('#jeText') && jeContext != 'macro') // Click in widget text, fix context
