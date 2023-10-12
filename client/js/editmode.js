@@ -1609,6 +1609,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   } else {
     for(const key in widget) {
       if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
+        widgets.get(widget.id).state[key] = widget[key];
         sendPropertyUpdate(widget.id, key, widget[key]);
       }
     }
@@ -1795,6 +1796,7 @@ export function initializeEditMode() {
       stackOffsetX: 40,
       childrenPerOwner: true,
       dropShadow: true,
+      hidePlayerCursors: true,
       x: 50,
       y: 820,
       width: 1500,

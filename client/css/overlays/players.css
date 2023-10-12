@@ -190,3 +190,7 @@ label.ui-line::before{
   font-size: 10px;
   color: var(--playerColor);
 }
+
+.cursor.hidden {
+  display: none;
+}

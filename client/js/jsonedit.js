@@ -17,7 +17,7 @@ let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
 let jeMouseButtonIsDown = false;
-let jeKeyIsDown = true;
+let jeKeyIsDown = false;
 let jeKeyIsDownDeltas = [];
 let jeKeyword = '';
 const jeWidgetLayers = {};
@@ -468,7 +468,7 @@ const jeCommands = [
             await removeWidgetLocal(card.get('id'));
 
       jeSetAndSelect();
-      jeApplyChanges();
+      await jeApplyChanges();
 
       for(const [ id, targetCount ] of Object.entries(targetCounts)) {
         const currentCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
@@ -1374,7 +1374,7 @@ async function jeApplyChangesMulti() {
   }
 }
 
-export function jeApplyDelta(delta) {
+function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
@@ -1386,7 +1386,7 @@ export function jeApplyDelta(delta) {
             return;
           }
 
-          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'), true);
+          jeSelectWidget(widgets.get(jeStateNow.id), false, true);
         }
       }
     }
@@ -1407,8 +1407,6 @@ export function jeApplyDelta(delta) {
     } catch(e) {
     }
   }
-
-  jeUpdateTree(delta.s);
 }
 
 export function jeApplyState(state) {
@@ -2385,7 +2383,6 @@ export function jeToggle() {
       jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
       jeShowCommands()
     }
-    jeDisplayTree();
   } else {
     $('body').classList.remove('jsonEdit');
   }
