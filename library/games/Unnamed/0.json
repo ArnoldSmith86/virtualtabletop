@@ -10,19 +10,20 @@
       "mode": "",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1697211146687,
+      "lastUpdate": 1697075218421,
+      "id": "rbpo",
       "showName": true,
       "skill": "",
       "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "",
-      "players": ""
+      "helpText": ""
     }
   },
   "e375": {
@@ -34,15 +35,5 @@
     "y": 62.085,
     "z": 2,
     "id": "e375"
-  },
-  "zox2": {
-    "text": "Basic widget",
-    "id": "zox2",
-    "image": "/assets/859141492_327754",
-    "width": 600,
-    "height": 600,
-    "z": 3,
-    "x": 512,
-    "y": 195
   }
 }
