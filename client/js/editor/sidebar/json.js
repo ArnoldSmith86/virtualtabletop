@@ -106,6 +106,10 @@ class DebugModule extends SidebarModule {
     $('#jsonEditor').append($('#jeLog'));
   }
 
+  onStateReceivedWhileActive(delta) {
+    this.button_clearButton();
+  }
+
   renderModule(target) {
     div(target, 'buttonBar', `
       <input type=checkbox id=autoClearLog checked><label for=autoClearLog> Clear after each interaction</label>
