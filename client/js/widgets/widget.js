@@ -870,12 +870,12 @@ export class Widget extends StateManaged {
               return 1;
             }
           };
-          const getValue = function(input) {
+          const getValue = async function(input) {
             const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
             if(match[14] && match[9] !== undefined)
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
+              return await compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
             else if(match[14])
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
+              return await compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
             else
               return getParam(5, null);
           };
@@ -885,9 +885,9 @@ export class Widget extends StateManaged {
           if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
             problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
           else if(index !== undefined)
-            variables[variable][index] = getValue(variables[variable][index]);
+            variables[variable][index] = await getValue(variables[variable][index]);
           else
-            variables[variable] = getValue(variables[variable]);
+            variables[variable] = await getValue(variables[variable]);
           if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else {
           const comment = a.match(new RegExp('^(?://(.*))?\x24'));
@@ -1072,10 +1072,10 @@ export class Widget extends StateManaged {
         }
       }
 
-      function compute(o, v, x, y, z) {
+      async function compute(o, v, x, y, z) {
         try {
           if (compute_ops.find(op => op.name == o) !== undefined) {
-            v = compute_ops.find(op => op.name == o).call(v, x, y, z);
+            v = await compute_ops.find(op => op.name == o).call(v, x, y, z);
           }else {
             problems.push(`Operation ${o} is unsupported.`);
             return v = null;
@@ -1306,7 +1306,7 @@ export class Widget extends StateManaged {
         if(a.condition !== undefined || a.operand1 !== undefined) {
           let condition = a.condition;
           if (condition === undefined)
-            condition = compute(a.relation, null, a.operand1, a.operand2);
+            condition = await compute(a.relation, null, a.operand1, a.operand2);
           const branch = condition ? 'thenRoutine' : 'elseRoutine';
           if(Array.isArray(a[branch]))
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
@@ -1529,7 +1529,7 @@ export class Widget extends StateManaged {
           const seatRound = a.round === null ? newScore.length + 1 : a.round;
           if(a.round > newScore.length)
             newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
-          newScore[seatRound-1] = compute(relation, null, newScore[seatRound-1] || 0, a.value);
+          newScore[seatRound-1] = await compute(relation, null, newScore[seatRound-1] || 0, a.value);
           await seats[i].set(String(a.property), newScore);
         }
 
@@ -1615,7 +1615,7 @@ export class Widget extends StateManaged {
               const oldID = oldWidget.get('id');
               var newState = JSON.parse(oldState);
 
-              newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
+              newState.id = await compute(a.relation, null, oldWidget.get(a.property), a.value);
               if(!widgets.has(newState.id)) {
                 $('#editWidgetJSON').dataset.previousState = oldState;
                 $('#editWidgetJSON').value = JSON.stringify(newState);
@@ -1638,7 +1638,7 @@ export class Widget extends StateManaged {
               if(a.relation == '+' && a.value == null)
                 problems.push(`null value being appended, SET ignored`);
               else
-                await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+                await w.set(String(a.property), await compute(a.relation, null, w.get(String(a.property)), a.value));
             }
           }
         }
