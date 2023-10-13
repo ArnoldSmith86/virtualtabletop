@@ -73,7 +73,7 @@ class TreeModule extends SidebarModule {
     $('#jeText').blur();
   }
 
-  onStateReceivedWhileActive(delta) {
+  onStateReceivedWhileActive() {
     jeDisplayTree();
   }
 
@@ -106,7 +106,7 @@ class DebugModule extends SidebarModule {
     $('#jsonEditor').append($('#jeLog'));
   }
 
-  onStateReceivedWhileActive(delta) {
+  onStateReceivedWhileActive() {
     this.button_clearButton();
   }
 
