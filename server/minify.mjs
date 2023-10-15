@@ -101,6 +101,7 @@ export default async function minifyHTML() {
     'client/js/editor/toolbar/delete.js',
     'client/js/editor/toolbar/align.js',
     'client/js/editor/toolbar/group.js',
+    'client/js/editor/toolbar/grid.js',
     'client/js/editor/dragButton.js',
     'client/js/editor/dragbuttons/drag.js',
     'client/js/editor/dragbuttons/clone.js',
