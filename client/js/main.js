@@ -425,6 +425,8 @@ async function toggleEditMode() {
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
+  on('#gridOverlay', 'click', e=>e.target.id=='gridOverlay'&&showOverlay());
+
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
 
   on('.toolbarTab', 'click', function(e) {
