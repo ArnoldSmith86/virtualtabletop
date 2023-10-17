@@ -282,7 +282,7 @@ export class Widget extends StateManaged {
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
     for(const key in sourceDelta)
       if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
-        targetDelta[key] = sourceDelta[key];
+        targetDelta[key] = JSON.stringify(sourceDelta[key]) === JSON.stringify(this.defaults[key]) ? null : sourceDelta[key];
   }
 
   applyInheritedValuesToDOM(inheritFrom, pushasArray) {
