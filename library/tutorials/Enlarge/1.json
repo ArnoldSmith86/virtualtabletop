@@ -9,8 +9,8 @@
       "year": "2022",
       "mode": "Tutorial",
       "time": "",
-      "attribution": "The pawn used in this variant is a VTT asset released to the public domain under CC0.",
-      "lastUpdate": 1697591478581,
+      "attribution": "",
+      "lastUpdate": 1697592037124,
       "showName": false,
       "skill": "",
       "description": "",
@@ -528,7 +528,7 @@
       "card2": {
         "image1": "/i/icons/group.svg",
         "iconColor": "#ff0000",
-        "enlargedImage": "/assets/1354907148_10474",
+        "enlargedImage": "i/icons/meeple.svg",
         "enlargeWidth": 125,
         "enlargeHeight": 175
       }
