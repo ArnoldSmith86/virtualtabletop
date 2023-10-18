@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1697592037124,
+      "lastUpdate": 1697667666145,
       "showName": false,
       "skill": "",
       "description": "",
@@ -195,7 +195,8 @@
     "layer": -3,
     "z": 125,
     "css": "font-size: 25px; ",
-    "text": "With the additional elements of faces and cardTypes, enlarging cards can be a bit more complex than other widget types."
+    "text": "With the additional elements of faces and cardTypes, enlarging cards can be a bit more complex than other widget types.",
+    "movable": false
   },
   "bm7j": {
     "id": "bm7j",
@@ -508,9 +509,6 @@
         },
         "#enlarged > .active": {
           "display": "none"
-        },
-        "#enlarged > .cardFace": {
-          "overflow": "visible !important"
         },
         "#enlarged > .cardFace:nth-child(2)": {
           "display": "block"
