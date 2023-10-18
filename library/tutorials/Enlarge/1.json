@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 14,
     "info": {
       "name": "Enlarge",
       "image": "/assets/-1439185659_4027",
@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "The pawn used in this variant is a VTT asset released to the public domain under CC0.",
-      "lastUpdate": 1672720696186,
+      "lastUpdate": 1697591478581,
       "showName": false,
       "skill": "",
       "description": "",
@@ -508,6 +508,9 @@
         },
         "#enlarged > .active": {
           "display": "none"
+        },
+        "#enlarged > .cardFace": {
+          "overflow": "visible !important"
         },
         "#enlarged > .cardFace:nth-child(2)": {
           "display": "block"
