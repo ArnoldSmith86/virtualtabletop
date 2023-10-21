@@ -2313,7 +2313,7 @@ export class Widget extends StateManaged {
 
   async showInputOverlay(o, widgets, variables, problems) {
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
-    $('#buttonInputCancel').style = "display: initial";
+    $('#buttonInputCancel').style.visibility = "visible";
     return new Promise((resolve, reject) => {
       const maxRandomRotate = o.randomRotation || 0;
       const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
@@ -2332,7 +2332,7 @@ export class Widget extends StateManaged {
         confirmButtonText = "Go";
       }
       if (o.cancelButtonText === null && o.cancelButtonIcon === null) {
-        $('#buttonInputCancel').style = "display: none";
+        $('#buttonInputCancel').style.visibility = "hidden";
       } else (!o.cancelButtonText && !o.cancelButtonIcon)
         cancelButtonText = "Cancel";
 
