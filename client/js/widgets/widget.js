@@ -2333,7 +2333,7 @@ export class Widget extends StateManaged {
       }
       if (o.cancelButtonText === null && o.cancelButtonIcon === null) {
         $('#buttonInputCancel').style.visibility = "hidden";
-      } else (!o.cancelButtonText && !o.cancelButtonIcon)
+      } else if (!o.cancelButtonText && !o.cancelButtonIcon)
         cancelButtonText = "Cancel";
 
       $('#buttonInputGo label').textContent = o.confirmButtonText || confirmButtonText;
