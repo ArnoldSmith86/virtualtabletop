@@ -1683,3 +1683,9 @@ input:invalid+span:after {
   border-radius: 5px;
   z-index: -2;
 }
+
+
+
+#chooseInputOverlay .widget {
+  position: unset;
+}

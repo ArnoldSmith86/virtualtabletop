@@ -1037,8 +1037,24 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'CHOOSE') {
+        setDefaults(a, { source: 'DEFAULT', collection: 'DEFAULT', count: 1, min: null, mode: 'widgets', faces: null, variable: 'CHOOSE' });
+        if(a.count == 1 && a.mode == 'widgets')
+          a.mode = 'faces';
+        if(a.min === null)
+          a.min = a.count;
+        const source = getCollection(a.source);
+
+
+        if(source) {
+          const result = await this.showChooseOverlay(a, collections[source]);
+          if(result)
+            collections[a.collection] = [ result ];
+        }
+      }
+
       if(a.func == 'CLICK') {
-        setDefaults(a, { collection: 'DEFAULT', count: 1 , mode: 'respect' });
+        setDefaults(a, { collection: 'DEFAULT', count: 1, mode: 'respect' });
         const collection = getCollection(a.collection);
 
         if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
@@ -2365,6 +2381,41 @@ export class Widget extends StateManaged {
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
+    });
+  }
+
+  async showChooseOverlay(o, sourceWidgets) {
+    function renderWidget(widget, state, target) {
+      // TODO: consolidate with sidebar/properties.js
+      delete state.id;
+      delete state.x;
+      delete state.y;
+      delete state.rotation;
+      delete state.scale;
+      delete state.parent;
+
+      widget.applyInitialDelta(state);
+      target.appendChild(widget.domElement);
+      if(widget instanceof Card)
+        widget.deck.removeCard(widget);
+      return widget.domElement;
+    }
+
+    $('#activeGameButton').dataset.overlay = 'chooseInputOverlay';
+
+    return new Promise((resolve, reject) => {
+      const target = $('#chooseInputOverlayChoices');
+      target.innerHTML = '';
+      for(const widget of sourceWidgets) {
+        const tempID = generateUniqueWidgetID();
+        const dom = renderWidget(new widget.constructor(tempID), Object.assign({}, widget.state), target);
+        dom.onclick = _=>{
+          delete $('#activeGameButton').dataset.overlay;
+          showOverlay(null);
+          resolve(widget);
+        };
+      }
+      showOverlay('chooseInputOverlay');
     });
   }
 
