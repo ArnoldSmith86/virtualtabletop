@@ -220,13 +220,13 @@ export function formField(field, dom, id) {
       return widget.domElement;
     }
 
-    function renderWidget(widget, target) {
-      return renderWidgetRaw(new widget.constructor(generateUniqueWidgetID()), Object.assign({}, widget.state), target);
+    function renderWidget(widget, propertyOverride, target) {
+      return renderWidgetRaw(new widget.constructor(generateUniqueWidgetID()), Object.assign({}, widget.state, propertyOverride), target);
     }
 
     const input = document.createElement('div');
     for(const widgetID of field.widgets) {
-      const widgetDOM = renderWidget(widgets.get(widgetID), input);
+      const widgetDOM = renderWidget(widgets.get(widgetID), field.propertyOverride || {}, input);
       widgetDOM.dataset.source = widgetID;
       if(asArray(field.value || []).indexOf(widgetID) != -1)
         widgetDOM.classList.add('selected');
