@@ -648,36 +648,38 @@ export class Widget extends StateManaged {
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
-    const result = {};
+    const variables = {};
+    const collections = {};
     if(go) {
       for(const field of o.fields) {
         const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
         if(field.type == 'checkbox') {
-          result[field.variable] = dom.checked;
+          variables[field.variable] = dom.checked;
         } else if(field.type == 'switch') {
-          result[field.variable] = dom.checked ? 'on' : 'off';
+          variables[field.variable] = dom.checked ? 'on' : 'off';
         } else if(field.type == 'palette') {
-          result[field.variable] = $(':checked', dom) ? $(':checked', dom).value : null;
+          variables[field.variable] = $(':checked', dom) ? $(':checked', dom).value : null;
         } else if(field.type == 'choose') {
-          result[field.variable] = [...$a('.selected.widget', dom)].map(w=>w.dataset.source);
+          variables[field.variable] = [...$a('.selected.widget', dom)].map(w=>w.dataset.source);
+          collections[field.collection || 'DEFAULT'] = variables[field.variable].map(w=>widgets.get(w));
         } else if(field.type == 'number') {
           let thisvalue = dom.value;
           if(thisvalue > field.max)
             thisvalue = field.max;
           if(thisvalue < field.min)
             thisvalue = field.min;
-          result[field.variable] = thisvalue
+          variables[field.variable] = thisvalue
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
-          result[field.variable] = dom.value;
+          variables[field.variable] = dom.value;
         }
       }
     }
 
     showOverlay(null);
     if(go)
-      resolve(result);
+      resolve({ variables, collections });
     else
-      reject(result);
+      reject({ variables, collections });
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
@@ -1313,7 +1315,9 @@ export class Widget extends StateManaged {
 
       if(a.func == 'INPUT') {
         try {
-          Object.assign(variables, await this.showInputOverlay(a, widgets, variables, collections, getCollection, problems));
+          const result = await this.showInputOverlay(a, widgets, variables, collections, getCollection, problems);
+          Object.assign(variables, result.variables);
+          Object.assign(collections, result.collections);
           if(jeRoutineLogging) {
             let varList = [];
             let valueList = [];

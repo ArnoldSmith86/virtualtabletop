@@ -734,7 +734,7 @@ function addPieceToAddWidgetOverlay(w, wi) {
       });
       const toAdd = {...wi};
       toAdd.z = getMaxZ(w.get('layer')) + 1;
-      toAdd.color = result.color;
+      toAdd.color = result.variables.color;
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
@@ -1311,7 +1311,7 @@ function populateAddWidgetOverlay() {
           }
         ]
       });
-      const sides = result.sides;
+      const sides = result.variables.sides;
       const toAdd = {...dice2DAttrs};
       toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
@@ -1385,10 +1385,10 @@ function populateAddWidgetOverlay() {
       });
       const toAdd = {...dice2DCubeAttrs};
       toAdd.z = getMaxZ(dice2DCube.get('layer')) + 1;
-      toAdd.cT = result.color;
-      toAdd.cL = contrastAnyColor(result.color, 0.2);
-      toAdd.cR = contrastAnyColor(result.color, 0.4);
-      toAdd.cP = contrastAnyColor(result.color, 1);
+      toAdd.cT = result.variables.color;
+      toAdd.cL = contrastAnyColor(result.variables.color, 0.2);
+      toAdd.cR = contrastAnyColor(result.variables.color, 0.4);
+      toAdd.cP = contrastAnyColor(result.variables.color, 1);
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
@@ -1420,7 +1420,7 @@ function populateAddWidgetOverlay() {
           }
         ]
       });
-      const sides = result.sides;
+      const sides = result.variables.sides;
       const toAdd = {...dice3DAttrs};
       toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
@@ -1461,7 +1461,7 @@ function populateAddWidgetOverlay() {
           }
         ]
       });
-      const values = result.values;
+      const values = result.variables.values;
       const toAdd = {...spinAttrs};
       toAdd.z = getMaxZ(spinner.get('layer')) + 1;
       toAdd.value = values;
