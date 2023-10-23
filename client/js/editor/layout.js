@@ -12,6 +12,7 @@ function initializeEditor() {
     new SaveButton(),
     new DarkModeButton(),
     new FullscreenButton(),
+    new GridButton(),
     new CloseButton(),
 
     new ToolbarDivider(),
