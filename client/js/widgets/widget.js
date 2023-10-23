@@ -1370,12 +1370,16 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: 1, face: null });
-        const count = a.count || 999999;
+        setDefaults(a, { count: 1, face: null, fillTo: null });
+        const count = a.fillTo || a.count || 999999;
 
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
             for(const c of source.children().slice(0, count).reverse()) {
+              let currentCount = target.children().length;
+              if(target.get('type') == 'seat' && target.get('hand') && target.get('player') && widgets.has(target.get('hand')))
+                currentCount = widgetFilter(w=>w.get('parent')==target.get('hand')&&w.get('owner')==target.get('player')).length;
+
               const applyFlip = async function() {
                 if(a.face !== null && c.flip)
                   await c.flip(a.face);
@@ -1383,7 +1387,7 @@ export class Widget extends StateManaged {
               if(source == target) {
                 await applyFlip();
                 await c.bringToFront();
-              } else {
+              } else if(!a.fillTo || currentCount < a.fillTo) {
                 c.movedByButton = true;
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
@@ -1411,8 +1415,8 @@ export class Widget extends StateManaged {
             }
           }));
           if(jeRoutineLogging) {
-            const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
-            jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to '${a.to}'`)
+            const logCount = count==1 ? '1 widget' : `${count} widgets`;
+            jeLoggingRoutineOperationSummary(`${logCount} from '${a.from}' to '${a.to}'`)
           }
         }
       }
