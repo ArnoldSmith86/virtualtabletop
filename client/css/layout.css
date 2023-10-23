@@ -1690,23 +1690,3 @@ input:invalid+span:after {
   position: unset;
   border: 3px solid transparent;
 }
-
-.chooseContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-}
-
-#chooseInputOverlay h1 {
-  font-size: 30px;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-#chooseInputOverlay .footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 25px;
-}
