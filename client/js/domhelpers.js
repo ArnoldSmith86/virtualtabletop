@@ -228,6 +228,8 @@ export function formField(field, dom, id) {
     for(const widgetID of field.widgets) {
       const widgetDOM = renderWidget(widgets.get(widgetID), input);
       widgetDOM.dataset.source = widgetID;
+      if(asArray(field.value || []).indexOf(widgetID) != -1)
+        widgetDOM.classList.add('selected');
       widgetDOM.onclick = _=>widgetDOM.classList.toggle('selected');
     }
     dom.appendChild(input);
