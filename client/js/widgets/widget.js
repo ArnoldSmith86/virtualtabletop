@@ -662,6 +662,8 @@ export class Widget extends StateManaged {
         } else if(field.type == 'choose') {
           variables[field.variable] = [...$a('.selected.widget', dom)].map(w=>w.dataset.source);
           collections[field.collection || 'DEFAULT'] = variables[field.variable].map(w=>widgets.get(w));
+          if(field.max === 1 || field.max === undefined)
+            variables[field.variable] = variables[field.variable].length ? variables[field.variable][0] : null;
         } else if(field.type == 'number') {
           let thisvalue = dom.value;
           if(thisvalue > field.max)

@@ -230,7 +230,17 @@ export function formField(field, dom, id) {
       widgetDOM.dataset.source = widgetID;
       if(asArray(field.value || []).indexOf(widgetID) != -1)
         widgetDOM.classList.add('selected');
-      widgetDOM.onclick = _=>widgetDOM.classList.toggle('selected');
+      widgetDOM.onclick = _=>{
+        if(widgetDOM.classList.contains('selected')) {
+          widgetDOM.classList.remove('selected');
+        } else if($a('.selected', input).length < (field.max === undefined ? 1 : field.max)) {
+          widgetDOM.classList.add('selected');
+        } else if(field.max === undefined || field.max === 1) {
+          for(const previousSelected of $a('.selected', input))
+            previousSelected.classList.remove('selected');
+          widgetDOM.classList.add('selected');
+        }
+      };
     }
     dom.appendChild(input);
     input.id = id;
