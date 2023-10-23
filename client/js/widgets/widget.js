@@ -2279,6 +2279,9 @@ export class Widget extends StateManaged {
       e.className = this.domElement.className;
       e.dataset.id = id;
 
+      if(this.get('_ancestor') && widgets.has(this.get('_ancestor')) && widgets.get(this.get('_ancestor')).domElement.classList.contains('showCardBack'))
+        e.classList.add('showCardBack');
+
       for(const clone of $a('canvas', e)) {
         const original = $(`canvas[data-id = '${clone.dataset.id}']`, this.domElement);
         const context = clone.getContext('2d');
