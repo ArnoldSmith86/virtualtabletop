@@ -2385,7 +2385,7 @@ export class Widget extends StateManaged {
   }
 
   async showChooseOverlay(o, sourceWidgets) {
-    function renderWidget(widget, state, target) {
+    function renderWidgetRaw(widget, state, target) {
       // TODO: consolidate with sidebar/properties.js
       delete state.id;
       delete state.x;
@@ -2401,14 +2401,17 @@ export class Widget extends StateManaged {
       return widget.domElement;
     }
 
+    function renderWidget(widget, target) {
+      return renderWidgetRaw(new widget.constructor(generateUniqueWidgetID()), Object.assign({}, widget.state), target);
+    }
+
     $('#activeGameButton').dataset.overlay = 'chooseInputOverlay';
 
     return new Promise((resolve, reject) => {
       const target = $('#chooseInputOverlayChoices');
       target.innerHTML = '';
       for(const widget of sourceWidgets) {
-        const tempID = generateUniqueWidgetID();
-        const dom = renderWidget(new widget.constructor(tempID), Object.assign({}, widget.state), target);
+        const dom = renderWidget(widget, target);
         dom.onclick = _=>{
           delete $('#activeGameButton').dataset.overlay;
           showOverlay(null);
