@@ -1357,7 +1357,8 @@ button:disabled:hover {
 .inputnumber,
 .inputstring,
 .inputselect,
-.inputpalette{
+.inputpalette,
+.inputchoose{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -1367,7 +1368,8 @@ button:disabled:hover {
 .inputnumber label,
 .inputstring label,
 .inputselect label,
-.inputpalette label{
+.inputpalette label,
+.inputchoose label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1628,7 +1630,7 @@ input:invalid+span:after {
   color: red;
   letter-spacing: -1px;
 }
-.inputpalette > div{
+.inputpalette > div, .inputchoose > div{
   display: flex;
   flex-wrap: wrap;
   padding: 0 3px;
@@ -1646,10 +1648,10 @@ input:invalid+span:after {
   padding: 0;
   margin: -1.5px;
 }
-.inputpalette > div input[type="radio"]:checked+label{
+.inputpalette > div input[type="radio"]:checked+label, .inputchoose .selected.widget{
   border: 3px solid var(--VTTblue);
 }
-.inputpalette > div input[type="radio"]:checked+label::after{
+.inputpalette > div input[type="radio"]:checked+label::after, .inputchoose .selected.widget::after{
   font-family: 'Material Icons';
   line-height: 1.25em;
   text-align: center;
@@ -1684,10 +1686,9 @@ input:invalid+span:after {
   z-index: -2;
 }
 
-
-
-#chooseInputOverlay .widget {
+.inputchoose .widget {
   position: unset;
+  border: 3px solid transparent;
 }
 
 .chooseContainer {

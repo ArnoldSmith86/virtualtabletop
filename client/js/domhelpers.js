@@ -180,7 +180,7 @@ export function formField(field, dom, id) {
 
   if(field.type == 'palette') {
     const input = document.createElement('div');
-    for(const option of field.colors) {
+    for(const option of asArray(field.colors || '#000000')) {
       const optionlabel = document.createElement('label');
       optionlabel.htmlFor = option;
       optionlabel.textContent = ' ';
@@ -198,6 +198,37 @@ export function formField(field, dom, id) {
         optionElement.checked = 'checked';
       input.appendChild(optionElement);
       input.appendChild(optionlabel);
+    }
+    dom.appendChild(input);
+    input.id = id;
+  }
+
+  if(field.type == 'choose') {
+    function renderWidgetRaw(widget, state, target) {
+      // TODO: consolidate with sidebar/properties.js
+      delete state.id;
+      delete state.x;
+      delete state.y;
+      delete state.rotation;
+      delete state.scale;
+      delete state.parent;
+
+      widget.applyInitialDelta(state);
+      target.appendChild(widget.domElement);
+      if(widget instanceof Card)
+        widget.deck.removeCard(widget);
+      return widget.domElement;
+    }
+
+    function renderWidget(widget, target) {
+      return renderWidgetRaw(new widget.constructor(generateUniqueWidgetID()), Object.assign({}, widget.state), target);
+    }
+
+    const input = document.createElement('div');
+    for(const widgetID of field.widgets) {
+      const widgetDOM = renderWidget(widgets.get(widgetID), input);
+      widgetDOM.dataset.source = widgetID;
+      widgetDOM.onclick = _=>widgetDOM.classList.toggle('selected');
     }
     dom.appendChild(input);
     input.id = id;

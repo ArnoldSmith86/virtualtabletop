@@ -90,8 +90,6 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener('mousedown',  e => this.selected(), false);
-    this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
 
@@ -653,31 +651,24 @@ export class Widget extends StateManaged {
     const result = {};
     if(go) {
       for(const field of o.fields) {
+        const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
         if(field.type == 'checkbox') {
-          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
+          result[field.variable] = dom.checked;
         } else if(field.type == 'switch') {
-          let thisresult = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
-          if(thisresult){
-            result[field.variable] = 'on';
-          } else {
-            result[field.variable] = 'off';
-          }
+          result[field.variable] = dom.checked ? 'on' : 'off';
         } else if(field.type == 'palette') {
-          let thisresult = document.getElementsByName('INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
-          for (var i=0;i<thisresult.length;i++){
-            if ( thisresult[i].checked ) {
-              result[field.variable] = thisresult[i].value;
-            }
-          }
+          result[field.variable] = $(':checked', dom) ? $(':checked', dom).value : null;
+        } else if(field.type == 'choose') {
+          result[field.variable] = [...$a('.selected.widget', dom)].map(w=>w.dataset.source);
         } else if(field.type == 'number') {
-          let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
+          let thisvalue = dom.value;
           if(thisvalue > field.max)
             thisvalue = field.max;
           if(thisvalue < field.min)
             thisvalue = field.min;
           result[field.variable] = thisvalue
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
-          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
+          result[field.variable] = dom.value;
         }
       }
     }
@@ -1037,22 +1028,6 @@ export class Widget extends StateManaged {
         }
       }
 
-      if(a.func == 'CHOOSE') {
-        setDefaults(a, { source: 'DEFAULT', collection: 'DEFAULT', count: 1, min: null, mode: 'widgets', faces: null, variable: 'CHOOSE' });
-        if(a.count == 1 && a.mode == 'widgets')
-          a.mode = 'faces';
-        if(a.min === null)
-          a.min = a.count;
-        const source = getCollection(a.source);
-
-
-        if(source) {
-          const result = await this.showChooseOverlay(a, collections[source]);
-          if(result)
-            collections[a.collection] = [ result ];
-        }
-      }
-
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1, mode: 'respect' });
         const collection = getCollection(a.collection);
@@ -1338,7 +1313,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'INPUT') {
         try {
-          Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
+          Object.assign(variables, await this.showInputOverlay(a, widgets, variables, collections, problems));
           if(jeRoutineLogging) {
             let varList = [];
             let valueList = [];
@@ -2255,14 +2230,6 @@ export class Widget extends StateManaged {
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
 
-  selected() {
-    this.domElement.classList.add('selected');
-  }
-
-  notSelected() {
-    this.domElement.classList.remove('selected');
-  }
-
   showEnlarged(event, delta) {
     if(this.get('enlarge')) {
       const id = this.get('id');
@@ -2327,7 +2294,7 @@ export class Widget extends StateManaged {
       event.preventDefault();
   }
 
-  async showInputOverlay(o, widgets, variables, problems) {
+  async showInputOverlay(o, widgets, variables, collections, problems) {
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
     $('#buttonInputCancel').style.visibility = "visible";
     return new Promise((resolve, reject) => {
@@ -2362,6 +2329,8 @@ export class Widget extends StateManaged {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
+        if(field.type == 'choose')
+          field.widgets = collections[field.source || 'DEFAULT'].map(w=>w.id);
         formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
@@ -2381,44 +2350,6 @@ export class Widget extends StateManaged {
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
-    });
-  }
-
-  async showChooseOverlay(o, sourceWidgets) {
-    function renderWidgetRaw(widget, state, target) {
-      // TODO: consolidate with sidebar/properties.js
-      delete state.id;
-      delete state.x;
-      delete state.y;
-      delete state.rotation;
-      delete state.scale;
-      delete state.parent;
-
-      widget.applyInitialDelta(state);
-      target.appendChild(widget.domElement);
-      if(widget instanceof Card)
-        widget.deck.removeCard(widget);
-      return widget.domElement;
-    }
-
-    function renderWidget(widget, target) {
-      return renderWidgetRaw(new widget.constructor(generateUniqueWidgetID()), Object.assign({}, widget.state), target);
-    }
-
-    $('#activeGameButton').dataset.overlay = 'chooseInputOverlay';
-
-    return new Promise((resolve, reject) => {
-      const target = $('#chooseInputOverlayChoices');
-      target.innerHTML = '';
-      for(const widget of sourceWidgets) {
-        const dom = renderWidget(widget, target);
-        dom.onclick = _=>{
-          delete $('#activeGameButton').dataset.overlay;
-          showOverlay(null);
-          resolve(widget);
-        };
-      }
-      showOverlay('chooseInputOverlay');
     });
   }
 
