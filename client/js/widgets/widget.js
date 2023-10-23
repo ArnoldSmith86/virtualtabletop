@@ -1313,7 +1313,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'INPUT') {
         try {
-          Object.assign(variables, await this.showInputOverlay(a, widgets, variables, collections, problems));
+          Object.assign(variables, await this.showInputOverlay(a, widgets, variables, collections, getCollection, problems));
           if(jeRoutineLogging) {
             let varList = [];
             let valueList = [];
@@ -2301,7 +2301,7 @@ export class Widget extends StateManaged {
       event.preventDefault();
   }
 
-  async showInputOverlay(o, widgets, variables, collections, problems) {
+  async showInputOverlay(o, widgets, variables, collections, getCollection, problems) {
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
     $('#buttonInputCancel').style.visibility = "visible";
     return new Promise((resolve, reject) => {
@@ -2337,7 +2337,7 @@ export class Widget extends StateManaged {
         dom.style = field.css || "";
         dom.className = "input"+field.type;
         if(field.type == 'choose')
-          field.widgets = collections[field.source || 'DEFAULT'].map(w=>w.id);
+          field.widgets = collections[getCollection(field.source || 'DEFAULT')].map(w=>w.id);
         formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
