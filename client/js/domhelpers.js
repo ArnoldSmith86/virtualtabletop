@@ -244,7 +244,7 @@ export function formField(field, dom, id) {
               widgetDOM.classList.remove('selected');
             }
           } else if (selectedWidgets.length < (field.max === undefined ? 1 : field.max)) {
-          widgetDOM.classList.add('selected');
+            widgetDOM.classList.add('selected');
           }
         };
       }

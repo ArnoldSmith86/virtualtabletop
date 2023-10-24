@@ -653,6 +653,7 @@ export class Widget extends StateManaged {
     if(go) {
       for(const field of o.fields) {
         const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
+        const isSingleWidget = field.source && Array.isArray(field.source) && field.source.length == 1;
         if(field.type == 'checkbox') {
           variables[field.variable] = dom.checked;
         } else if(field.type == 'switch') {
@@ -662,12 +663,8 @@ export class Widget extends StateManaged {
         } else if(field.type == 'choose') {
           variables[field.variable] = [...$a('.selected.widget', dom)].map(w=>w.dataset.source);
           collections[field.collection || 'DEFAULT'] = variables[field.variable].map(w=>widgets.get(w));
-          if(field.mode == 'faces') {
-            variables[field.variable] = [...$a('.selected.widget', dom)].reduce((acc, w) => {
-              acc[w.dataset.source] = w.dataset.face;
-              return acc;
-            }, {});
-          }
+          if(field.mode == 'faces')
+            variables[field.variable] = [...$a('.selected.widget', dom)].map(w=>(isSingleWidget?w.dataset.face:{ widget: w.dataset.source, face: w.dataset.face }));
           if(field.max === 1 || field.max === undefined)
             variables[field.variable] = Object.values(variables[field.variable]).length ? Object.values(variables[field.variable])[0] : null;
         } else if(field.type == 'number') {
