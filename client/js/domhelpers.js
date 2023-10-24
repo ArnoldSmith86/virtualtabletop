@@ -226,21 +226,28 @@ export function formField(field, dom, id) {
 
     const input = document.createElement('div');
     for (const widgetID of field.widgets) {
-      const widgetDOM = renderWidget(widgets.get(widgetID), field.propertyOverride || {}, input);
-      widgetDOM.dataset.source = widgetID;
-      if (asArray(field.value || []).indexOf(widgetID) !== -1) {
-        widgetDOM.classList.add('selected');
-      }
-      widgetDOM.onclick = () => {
-        const selectedWidgets = $a('.selected', input);
-        if (widgetDOM.classList.contains('selected')) {
-          if (selectedWidgets.length > (field.min === undefined ? 0 : field.min) || field.min === field.max) {
-            widgetDOM.classList.remove('selected');
-          }
-        } else if (selectedWidgets.length < (field.max === undefined ? 1 : field.max)) {
-        widgetDOM.classList.add('selected');
+      const widget = widgets.get(widgetID);
+      for(let face=0; face<(field.mode == 'faces'?widget.getFaceCount():1); ++face) {
+        let propertyOverride = field.propertyOverride || {};
+        if(field.mode == 'faces')
+          propertyOverride.activeFace = face;
+        const widgetDOM = renderWidget(widget, propertyOverride, input);
+        widgetDOM.dataset.source = widgetID;
+        widgetDOM.dataset.face = face;
+        if (asArray(field.value || []).indexOf(widgetID) !== -1) {
+          widgetDOM.classList.add('selected');
         }
-      };
+        widgetDOM.onclick = () => {
+          const selectedWidgets = $a('.selected', input);
+          if (widgetDOM.classList.contains('selected')) {
+            if (selectedWidgets.length > (field.min === undefined ? 0 : field.min) || field.min === field.max) {
+              widgetDOM.classList.remove('selected');
+            }
+          } else if (selectedWidgets.length < (field.max === undefined ? 1 : field.max)) {
+          widgetDOM.classList.add('selected');
+          }
+        };
+      }
     }
     dom.appendChild(input);
     input.id = id;

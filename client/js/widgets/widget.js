@@ -662,8 +662,14 @@ export class Widget extends StateManaged {
         } else if(field.type == 'choose') {
           variables[field.variable] = [...$a('.selected.widget', dom)].map(w=>w.dataset.source);
           collections[field.collection || 'DEFAULT'] = variables[field.variable].map(w=>widgets.get(w));
+          if(field.mode == 'faces') {
+            variables[field.variable] = [...$a('.selected.widget', dom)].reduce((acc, w) => {
+              acc[w.dataset.source] = w.dataset.face;
+              return acc;
+            }, {});
+          }
           if(field.max === 1 || field.max === undefined)
-            variables[field.variable] = variables[field.variable].length ? variables[field.variable][0] : null;
+            variables[field.variable] = Object.values(variables[field.variable]).length ? Object.values(variables[field.variable])[0] : null;
         } else if(field.type == 'number') {
           let thisvalue = dom.value;
           if(thisvalue > field.max)
@@ -1326,7 +1332,7 @@ export class Widget extends StateManaged {
             a.fields.forEach(f=>{
               if(f.variable) {
                 varList.push(f.variable);
-                valueList.push(variables[f.variable]);
+                valueList.push(JSON.stringify(variables[f.variable]));
               }
             });
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
@@ -1644,7 +1650,7 @@ export class Widget extends StateManaged {
           }
         }
         if(jeRoutineLogging)
-          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} '${a.value}' for widgets in '${a.collection}'`);
+          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
       }
 
       if(a.func == 'SHUFFLE') {
@@ -1876,6 +1882,10 @@ export class Widget extends StateManaged {
           return super.get(property);
       }
     }
+  }
+
+  getFaceCount() {
+    return 1;
   }
 
   hideEnlarged() {
