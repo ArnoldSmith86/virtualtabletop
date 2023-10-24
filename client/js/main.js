@@ -433,7 +433,7 @@ onLoad(function() {
     if(e.currentTarget.classList.contains('active')) {
       if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
         showStatesOverlay('statesOverlay');
-      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display != 'none')
+      if(e.currentTarget == $('#activeGameButton'))
         showOverlay();
       e.stopImmediatePropagation();
       return;
