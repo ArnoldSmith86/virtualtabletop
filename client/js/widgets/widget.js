@@ -1683,7 +1683,7 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              if(holder.get('type') == 'holder')
+              if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
           }
@@ -1693,7 +1693,7 @@ export class Widget extends StateManaged {
           if(collections[collection].length) {
             await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{
-              if(holder.get('type') == 'holder')
+              if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
           } else {
