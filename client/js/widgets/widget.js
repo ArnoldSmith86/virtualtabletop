@@ -1385,10 +1385,6 @@ export class Widget extends StateManaged {
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
             for(const c of source.children().slice(0, count).reverse()) {
-              let currentCount = target.children().length;
-              if(target.get('type') == 'seat' && target.get('hand') && target.get('player') && widgets.has(target.get('hand')))
-                currentCount = widgetFilter(w=>w.get('parent')==target.get('hand')&&w.get('owner')==target.get('player')).length;
-
               const applyFlip = async function() {
                 if(a.face !== null && c.flip)
                   await c.flip(a.face);
@@ -1396,7 +1392,7 @@ export class Widget extends StateManaged {
               if(source == target) {
                 await applyFlip();
                 await c.bringToFront();
-              } else if(!a.fillTo || currentCount < a.fillTo) {
+              } else if(!a.fillTo || target.children().length < a.fillTo) {
                 c.movedByButton = true;
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
@@ -2349,8 +2345,15 @@ export class Widget extends StateManaged {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
-        if(field.type == 'choose')
-          field.widgets = collections[getCollection(field.source || 'DEFAULT')].map(w=>w.id);
+
+        if(field.type == 'choose') {
+          if(field.holder) {
+            field.widgets = [].concat(...asArray(field.holder).map(w=>widgets.has(w)?widgets.get(w).children():[])).map(w=>w.id);
+          } else {
+            field.widgets = collections[getCollection(field.source || 'DEFAULT')].map(w=>w.id);
+          }
+        }
+
         formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }

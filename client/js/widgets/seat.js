@@ -44,6 +44,12 @@ class Seat extends Widget {
     this.updateLinkedWidgets();
   }
 
+  children() {
+    if(this.get('hand') && this.get('player') && widgets.has(this.get('hand')))
+      return widgetFilter(w=>w.get('parent')==this.get('hand')&&w.get('owner')==this.get('player'));
+    return [];
+  }
+
   classes(includeTemporary=true) {
     let className = super.classes(includeTemporary);
 

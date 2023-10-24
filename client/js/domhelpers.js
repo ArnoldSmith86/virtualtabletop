@@ -228,7 +228,7 @@ export function formField(field, dom, id) {
     for (const widgetID of field.widgets) {
       const widget = widgets.get(widgetID);
       for(let face=0; face<(field.mode == 'faces'?widget.getFaceCount():1); ++face) {
-        let propertyOverride = field.propertyOverride || {};
+        let propertyOverride = Object.assign({}, field.propertyOverride || {}, { owner: null });
         if(field.mode == 'faces')
           propertyOverride.activeFace = face;
         const widgetDOM = renderWidget(widget, propertyOverride, input);
