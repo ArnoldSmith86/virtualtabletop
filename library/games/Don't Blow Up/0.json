@@ -911,7 +911,7 @@
       "similarName": "Exploding Kittens",
       "description": "Take turns drawing cards, using card powers to avoid getting the explosion card. First player to get explosion card loses.",
       "showName": true,
-      "lastUpdate": 1698118691860,
+      "lastUpdate": 1698153703055,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",
@@ -963,7 +963,8 @@
             "max": 0
           }
         ],
-        "cancelButtonText": "Done Peeking",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
         "confirmButtonText": "Done Peeking"
       }
     ]
