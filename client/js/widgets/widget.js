@@ -1653,7 +1653,7 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await shuffleWidgets(holder.children());
-              if(holder.get('type') == 'holder')
+              if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)

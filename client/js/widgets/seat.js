@@ -100,6 +100,11 @@ class Seat extends Widget {
     }
   }
 
+  updateAfterShuffle() {
+    if(this.get('hand') && widgets.has(this.get('hand')))
+      widgets.get(this.get('hand')).updateAfterShuffle();
+  }
+
   updateScoreboards(delta) {
     const seatID = this.get('id');
     const scoreboard = widgetFilter(w => w.get('type') == 'scoreboard');
