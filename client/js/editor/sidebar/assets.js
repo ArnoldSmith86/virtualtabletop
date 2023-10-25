@@ -103,8 +103,9 @@ class AssetsModule extends SidebarModule {
       div.classList.remove('queued');
       div.classList.add('processing');
       const asset = await this.externalLinkToAsset(url);
-      for(const id of this.urlMap[url])
-        await this.replaceLinkInWidget(id, url, asset);
+      if(asset.match(/^\/asset/))
+        for(const id of this.urlMap[url])
+          await this.replaceLinkInWidget(id, url, asset);
       $('span', div).innerText = asset;
       div.classList.remove('processing');
       div.classList.add('done');
@@ -122,7 +123,7 @@ class AssetsModule extends SidebarModule {
     this.urlMap = {};
     this.urlDIVs = {};
     for(const widget of widgets.values()) {
-      for(const url of JSON.stringify(widget.state).match(/http[^'") ]+/g) || []) {
+      for(const url of JSON.stringify(widget.state).match(/https?:\/\/[^'") ]+/g) || []) {
         if(!this.urlMap[url])
           this.urlMap[url] = [];
         this.urlMap[url].push(widget.get('id'));
