@@ -1656,10 +1656,10 @@ input:invalid+span::after, .inputError::before {
   padding: 0;
   margin: -1.5px;
 }
-.inputpalette > div input[type="radio"]:checked+label, .inputchoose .selected.widget{
+.inputpalette > div input[type="radio"]:checked+label, .inputchoose .selected.inputchooseWidgetWrapper {
   border: 3px solid var(--VTTblue);
 }
-.inputpalette > div input[type="radio"]:checked+label::after, .inputchoose .selected.widget::after{
+.inputpalette > div input[type="radio"]:checked+label::after, .inputchoose .selected.inputchooseWidgetWrapper::after {
   font-family: 'Material Icons';
   line-height: 1.25em;
   text-align: center;
@@ -1694,7 +1694,14 @@ input:invalid+span::after, .inputError::before {
   z-index: -2;
 }
 
-.inputchoose .widget {
-  position: unset;
+.inputchoose .inputchooseWidgetWrapper {
+  position: relative;
   border: 3px solid transparent;
+  border-radius: 8px;
+}
+
+.inputchoose .widget {
+  position: relative !important;
+  transform-origin: top left !important;
+  z-index: -2 !important;
 }

@@ -661,10 +661,10 @@ export class Widget extends StateManaged {
         } else if(field.type == 'palette') {
           variables[field.variable] = $(':checked', dom) ? $(':checked', dom).value : null;
         } else if(field.type == 'choose') {
-          variables[field.variable] = [...$a('.selected.widget', dom)].map(w=>w.dataset.source);
+          variables[field.variable] = [...$a('.selected .widget', dom)].map(w=>w.dataset.source);
           collections[field.collection || 'DEFAULT'] = variables[field.variable].map(w=>widgets.get(w));
           if(field.mode == 'faces')
-            variables[field.variable] = [...$a('.selected.widget', dom)].map(w=>(isSingleWidget?w.dataset.face:{ widget: w.dataset.source, face: w.dataset.face }));
+            variables[field.variable] = [...$a('.selected .widget', dom)].map(w=>(isSingleWidget?w.dataset.face:{ widget: w.dataset.source, face: w.dataset.face }));
           if(variables[field.variable].length == 1 && (field.max || 1) === 1)
             variables[field.variable] = Object.values(variables[field.variable]).length ? Object.values(variables[field.variable])[0] : null;
         } else if(field.type == 'number') {
@@ -2225,6 +2225,9 @@ export class Widget extends StateManaged {
     delete state.rotation;
     delete state.scale;
     delete state.parent;
+    delete state.owner;
+    delete state.linkedToSeat;
+    delete state.onlyVisibleForSeat;
 
     this.applyInitialDelta(state);
     target.appendChild(this.domElement);

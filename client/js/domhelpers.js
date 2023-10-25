@@ -210,24 +210,35 @@ export function formField(field, dom, id) {
       for(let face=0; face<(field.mode == 'faces'?widget.getFaceCount():1); ++face) {
         if(Array.isArray(field.faces) && field.faces.indexOf(face) == -1)
           continue;
-        let propertyOverride = Object.assign({}, field.propertyOverride || {}, { owner: null });
+        let propertyOverride = Object.assign({}, field.propertyOverride || {});
         if(field.mode == 'faces')
           propertyOverride.activeFace = face;
-        const widgetDOM = widget.renderReadonlyCopy(propertyOverride, input).domElement;
+
+        const widgetContainer = div(input, 'inputchooseWidgetWrapper');
+        const widgetClone = widget.renderReadonlyCopy(propertyOverride, $('body'));
+        const widgetDOM = widgetClone.domElement;
+        widgetClone.state.scale = scale * (field.scale || 1);
+        widgetClone.domElement.style.cssText = mapAssetURLs(widgetClone.css());
         widgetDOM.dataset.source = widgetID;
         widgetDOM.dataset.face = face;
+
+        const rect = widgetDOM.getBoundingClientRect();
+        widgetContainer.style.width  = `${rect.width }px`;
+        widgetContainer.style.height = `${rect.height}px`;
+        widgetContainer.append(widgetDOM);
+
         if (asArray(field.value || []).indexOf(widgetID) !== -1) {
-          widgetDOM.classList.add('selected');
+          widgetContainer.classList.add('selected');
         }
-        widgetDOM.onclick = _=>{
-          if(widgetDOM.classList.contains('selected')) {
-            widgetDOM.classList.remove('selected');
+        widgetContainer.onclick = _=>{
+          if(widgetContainer.classList.contains('selected')) {
+            widgetContainer.classList.remove('selected');
           } else if($a('.selected', input).length < (field.max === undefined ? 1 : field.max)) {
-            widgetDOM.classList.add('selected');
+            widgetContainer.classList.add('selected');
           } else if(field.max === undefined || field.max === 1) {
             for(const previousSelected of $a('.selected', input))
               previousSelected.classList.remove('selected');
-            widgetDOM.classList.add('selected');
+            widgetContainer.classList.add('selected');
           }
         };
       }

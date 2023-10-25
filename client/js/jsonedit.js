@@ -958,6 +958,7 @@ function jeAddCommands() {
   jeAddFieldCommand('max', 'choose', 1);
   jeAddFieldCommand('mode', 'choose', 'widgets');
   jeAddFieldCommand('faces', 'choose', null);
+  jeAddFieldCommand('scale', 'choose', 1);
   jeAddFieldCommand('propertyOverride', 'choose', {});
 
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
