@@ -11,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1698200138382,
+      "lastUpdate": 1698238860433,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1402,6 +1402,11 @@
               "dice1"
             ],
             "mode": "faces",
+            "faces": [
+              1,
+              3,
+              5
+            ],
             "variable": "thisVariable",
             "collection": "thisCollection"
           }
@@ -1455,7 +1460,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 22px; ",
-    "text": "This uses the mode 'faces' and one widget. The player can see all of the faces and choose one. In this case, that face will be set onto the dice. Notice the difference in output between the variable and the collection."
+    "text": "This uses the mode 'faces' and one widget. The player can see the even faces and choose one. Only the even faces are shown because the 'faces' property is an array of the even faces. Notice the difference in output between the variable and the collection."
   },
   "explain4": {
     "id": "explain4",
