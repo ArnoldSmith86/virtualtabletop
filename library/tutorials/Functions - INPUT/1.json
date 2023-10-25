@@ -11,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1698199598676,
+      "lastUpdate": 1698200138382,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -45,7 +45,7 @@
     "layer": -3,
     "z": 129,
     "css": "font-size: 25px; ",
-    "text": "The 'choose' field option for the INPUT function allows the display of graphical elements. The display can show either widgets or all the possible faces of widgets with faces. The player then makes one or more selections. The results are stored in either a variable, a collection, or both. In this room, the widgets used for populating the graphics display are kept off-screen and the results are shown in the white areas in the bottom right.",
+    "text": "The 'choose' field option for the INPUT function allows the display of graphical elements. The display can show either widgets or all the possible faces of widgets with faces. The player then makes one or more selections. The results are stored in either a variable, a collection, or both and are shown in the white areas in the bottom right.",
     "y": 80,
     "movable": false,
     "movableInEdit": false
