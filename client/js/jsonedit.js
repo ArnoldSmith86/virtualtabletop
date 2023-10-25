@@ -955,6 +955,7 @@ function jeAddCommands() {
   jeAddFieldCommand('source', 'choose', 'DEFAULT');
   jeAddFieldCommand('collection', 'choose', 'DEFAULT');
   jeAddFieldCommand('holder', 'choose', '');
+  jeAddFieldCommand('min', 'choose', 0);
   jeAddFieldCommand('max', 'choose', 1);
   jeAddFieldCommand('mode', 'choose', 'widgets');
   jeAddFieldCommand('faces', 'choose', null);
