@@ -665,26 +665,48 @@ export class Widget extends StateManaged {
           collections[field.collection || 'DEFAULT'] = variables[field.variable].map(w=>widgets.get(w));
           if(field.mode == 'faces')
             variables[field.variable] = [...$a('.selected.widget', dom)].map(w=>(isSingleWidget?w.dataset.face:{ widget: w.dataset.source, face: w.dataset.face }));
-          if(field.max === 1 || field.max === undefined)
+          if(variables[field.variable].length == 1 && (field.max || 1) === 1)
             variables[field.variable] = Object.values(variables[field.variable]).length ? Object.values(variables[field.variable])[0] : null;
         } else if(field.type == 'number') {
-          let thisvalue = dom.value;
-          if(thisvalue > field.max)
-            thisvalue = field.max;
-          if(thisvalue < field.min)
-            thisvalue = field.min;
-          variables[field.variable] = thisvalue
+          variables[field.variable] = dom.value
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
           variables[field.variable] = dom.value;
         }
       }
     }
 
-    showOverlay(null);
-    if(go)
-      resolve({ variables, collections });
-    else
-      reject({ variables, collections });
+    if(!go || this.evaluateInputOverlayErrors(o, variables)) {
+      showOverlay(null);
+      if(go)
+        resolve({ variables, collections });
+      else
+        reject({ variables, collections });
+      return true;
+    }
+  }
+
+  evaluateInputOverlayErrors(o, variables) {
+    removeFromDOM('#buttonInputOverlay .inputError');
+
+    let isValid = true;
+
+    const displayError = (field, error) => {
+      const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
+      div(dom.parentElement, 'inputError', error);
+    };
+
+    for(const field of o.fields) {
+      if(field.type == 'choose' && asArray(variables[field.variable]).length < field.min)
+        isValid = displayError(field, `Please select at least ${field.min}.`);
+      if(field.type == 'choose' && asArray(variables[field.variable]).length > (field.max || 1))
+        isValid = displayError(field, `Please select at most ${field.min}.`);
+      if(field.type == 'number' && variables[field.variable] < field.min)
+        isValid = displayError(field, `Please enter a number above ${field.min}.`);
+      if(field.type == 'number' && variables[field.variable] > field.max)
+        isValid = displayError(field, `Please enter a number below ${field.max}.`);
+    }
+
+    return isValid;
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
@@ -2378,16 +2400,18 @@ export class Widget extends StateManaged {
       }
 
       const goHandler = e=>{
-        this.evaluateInputOverlay(o, resolve, reject, true)
-        $('#buttonInputGo').removeEventListener('click', goHandler);
-        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
-        delete $('#activeGameButton').dataset.overlay;
+        if(this.evaluateInputOverlay(o, resolve, reject, true)) {
+          $('#buttonInputGo').removeEventListener('click', goHandler);
+          $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+          delete $('#activeGameButton').dataset.overlay;
+        }
       };
       const cancelHandler = e=>{
-        this.evaluateInputOverlay(o, resolve, reject, false)
-        $('#buttonInputGo').removeEventListener('click', goHandler);
-        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
-        delete $('#activeGameButton').dataset.overlay;
+        if(this.evaluateInputOverlay(o, resolve, reject, false)) {
+          $('#buttonInputGo').removeEventListener('click', goHandler);
+          $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+          delete $('#activeGameButton').dataset.overlay;
+        }
       };
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);

@@ -1620,7 +1620,7 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
 input:invalid{
   color: red;
 }
-input:invalid+span:after {
+input:invalid+span::after, .inputError::before {
   font-family: 'Material Icons';
   content: 'error';
   position: absolute;
@@ -1630,7 +1630,15 @@ input:invalid+span:after {
   color: red;
   letter-spacing: -1px;
 }
-.inputpalette > div, .inputchoose > div{
+.inputError {
+  color: red;
+  align-items: center;
+}
+.inputError::before {
+  position: unset;
+  margin-right: 5px;
+}
+.inputpalette > div, .inputchoose > div, .inputError {
   display: flex;
   flex-wrap: wrap;
   padding: 0 3px;
