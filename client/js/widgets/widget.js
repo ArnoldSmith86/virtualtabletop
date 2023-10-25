@@ -2196,6 +2196,25 @@ export class Widget extends StateManaged {
     return readOnlyProperties;
   }
 
+  renderReadonlyCopyRaw(state, target) {
+    delete state.id;
+    delete state.x;
+    delete state.y;
+    delete state.rotation;
+    delete state.scale;
+    delete state.parent;
+
+    this.applyInitialDelta(state);
+    target.appendChild(this.domElement);
+    if(this instanceof Card)
+      this.deck.removeCard(this);
+    return this;
+  }
+
+  renderReadonlyCopy(propertyOverride, target) {
+    return new this.constructor(generateUniqueWidgetID()).renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target);
+  }
+
   requiresHiddenCursor() {
     if(this.get('hidePlayerCursors'))
       return true;

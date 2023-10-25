@@ -204,26 +204,6 @@ export function formField(field, dom, id) {
   }
 
   if(field.type == 'choose') {
-    function renderWidgetRaw(widget, state, target) {
-      // TODO: consolidate with sidebar/properties.js
-      delete state.id;
-      delete state.x;
-      delete state.y;
-      delete state.rotation;
-      delete state.scale;
-      delete state.parent;
-
-      widget.applyInitialDelta(state);
-      target.appendChild(widget.domElement);
-      if(widget instanceof Card)
-        widget.deck.removeCard(widget);
-      return widget.domElement;
-    }
-
-    function renderWidget(widget, propertyOverride, target) {
-      return renderWidgetRaw(new widget.constructor(generateUniqueWidgetID()), Object.assign({}, widget.state, propertyOverride), target);
-    }
-
     const input = document.createElement('div');
     for (const widgetID of field.widgets) {
       const widget = widgets.get(widgetID);
@@ -233,7 +213,7 @@ export function formField(field, dom, id) {
         let propertyOverride = Object.assign({}, field.propertyOverride || {}, { owner: null });
         if(field.mode == 'faces')
           propertyOverride.activeFace = face;
-        const widgetDOM = renderWidget(widget, propertyOverride, input);
+        const widgetDOM = widget.renderReadonlyCopy(propertyOverride, input).domElement;
         widgetDOM.dataset.source = widgetID;
         widgetDOM.dataset.face = face;
         if (asArray(field.value || []).indexOf(widgetID) !== -1) {
