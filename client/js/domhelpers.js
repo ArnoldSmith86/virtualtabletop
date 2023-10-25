@@ -237,13 +237,14 @@ export function formField(field, dom, id) {
         if (asArray(field.value || []).indexOf(widgetID) !== -1) {
           widgetDOM.classList.add('selected');
         }
-        widgetDOM.onclick = () => {
-          const selectedWidgets = $a('.selected', input);
-          if (widgetDOM.classList.contains('selected')) {
-            if (selectedWidgets.length > (field.min === undefined ? 0 : field.min) || field.min === field.max) {
-              widgetDOM.classList.remove('selected');
-            }
-          } else if (selectedWidgets.length < (field.max === undefined ? 1 : field.max)) {
+        widgetDOM.onclick = _=>{
+          if(widgetDOM.classList.contains('selected')) {
+            widgetDOM.classList.remove('selected');
+          } else if($a('.selected', input).length < (field.max === undefined ? 1 : field.max)) {
+            widgetDOM.classList.add('selected');
+          } else if(field.max === undefined || field.max === 1) {
+            for(const previousSelected of $a('.selected', input))
+              previousSelected.classList.remove('selected');
             widgetDOM.classList.add('selected');
           }
         };
