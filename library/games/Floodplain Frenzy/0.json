@@ -3637,11 +3637,26 @@
     "parent": "area-p1",
     "fixedParent": true,
     "x": 5,
-    "y": 10,
-    "height": 25,
-    "width": 290,
+    "y": 8,
+    "height": 40,
+    "width": 295,
     "index": 1,
     "hideWhenUnused": true,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000"
+      },
+      ".seated.turn": {
+        "border": "5px dotted #000000"
+      }
+    },
     "clickRoutine": [
       {
         "func": "CLICK",
@@ -3684,6 +3699,7 @@
         "y",
         "height",
         "width",
+        "css",
         "hideWhenUnused",
         "clickRoutine"
       ]
@@ -3701,6 +3717,7 @@
         "y",
         "height",
         "width",
+        "css",
         "hideWhenUnused",
         "clickRoutine"
       ]
@@ -3718,6 +3735,7 @@
         "y",
         "height",
         "width",
+        "css",
         "hideWhenUnused",
         "clickRoutine"
       ]
