@@ -165,7 +165,7 @@ class Card extends Widget {
             objectDiv.srcdoc = html;
           } else {
             objectDiv.textContent = object.value;
-            objectDiv.style.color = object.color;
+            objectDiv.style.color = object.color || 'black';
           }
           return usedProperties;
         }
