@@ -799,8 +799,34 @@
         "func": "SET",
         "property": "color",
         "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
       }
-    ]
+    ],
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "26px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    }
   },
   "seat-p2": {
     "id": "seat-p2",
@@ -817,7 +843,8 @@
         "movable",
         "movableInEdit",
         "hideWhenUnused",
-        "clickRoutine"
+        "clickRoutine",
+        "css"
       ]
     },
     "color": "#999999"
@@ -837,7 +864,8 @@
         "movable",
         "movableInEdit",
         "hideWhenUnused",
-        "clickRoutine"
+        "clickRoutine",
+        "css"
       ]
     },
     "color": "#999999"
@@ -857,7 +885,8 @@
         "movable",
         "movableInEdit",
         "hideWhenUnused",
-        "clickRoutine"
+        "clickRoutine",
+        "css"
       ]
     }
   },
@@ -876,7 +905,8 @@
         "movable",
         "movableInEdit",
         "hideWhenUnused",
-        "clickRoutine"
+        "clickRoutine",
+        "css"
       ]
     }
   },
