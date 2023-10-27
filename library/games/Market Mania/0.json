@@ -9,8 +9,8 @@
       "year": "1997",
       "mode": "vs",
       "time": "60",
-      "attribution": "Game layout and scripting by Andy Pymont, provided under the MIT License.\n\nTile graphics are from https://game-icons.net/&nbsp;https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• City buildings https://game-icons.net/1x1/delapouite/modern-city.html\n• Donut https://game-icons.net/1x1/delapouite/donut.html\n• Fish https://game-icons.net/1x1/delapouite/double-fish.html\n• Meeple https://game-icons.net/1x1/delapouite/meeple.html\n<div>• Sandwich https://game-icons.net/1x1/delapouite/sandwich.html</div><div><br></div><div>Umer Younas</div><div>• Bank Note https://thenounproject.com/icon/bank-note-3947508<br></div>",
-      "lastUpdate": 1692573813362,
+      "attribution": "Game layout and scripting by Andy Pymont, provided under the MIT License.\n\nTile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• City buildings https://game-icons.net/1x1/delapouite/modern-city.html\n• Donut https://game-icons.net/1x1/delapouite/donut.html\n• Fish https://game-icons.net/1x1/delapouite/double-fish.html\n• Meeple https://game-icons.net/1x1/delapouite/meeple.html\n<div>• Sandwich https://game-icons.net/1x1/delapouite/sandwich.html</div><div><br></div><div>Umer Younas</div><div>• Bank Note https://thenounproject.com/icon/bank-note-3947508<br></div>",
+      "lastUpdate": 1698409698000,
       "id": "mvrf",
       "showName": true,
       "skill": "",
@@ -168,7 +168,7 @@
             "y": 0,
             "width": 95,
             "height": 95,
-            "color": "#7bb661",
+            "color": "#aaaaaa",
             "css": {
               "border-color": "black",
               "border-style": "solid",
@@ -181,7 +181,7 @@
             "y": 1,
             "width": 35,
             "height": 93,
-            "color": "#555555",
+            "color": "#bbbbbb",
             "css": {
               "border-style": "none"
             }
@@ -192,7 +192,7 @@
             "y": 30,
             "width": 93,
             "height": 35,
-            "color": "#555555",
+            "color": "#bbbbbb",
             "css": {
               "border-style": "none"
             }
@@ -328,7 +328,7 @@
         "image": "/assets/1457797325_1602"
       },
       "building": {
-        "color": "#555555",
+        "color": "#a0d6ff",
         "image": "/assets/-705565880_1529"
       },
       "donut": {
@@ -1016,7 +1016,7 @@
       "border-color": "black",
       "border-style": "solid",
       "border-width": "1px",
-      "background-color": "#a9ba9d"
+      "background-color": "#e9ffd9"
     },
     "movable": false,
     "players": 5,
@@ -1940,11 +1940,10 @@
     "layer": -4,
     "width": 855,
     "height": 855,
-    "css": {
-      "border-color": "black",
-      "border-style": "solid",
-      "border-width": "1px",
-      "background-color": "#a9ba9d"
+    "inheritFrom": {
+      "board-5p": [
+        "css"
+      ]
     },
     "movable": false,
     "players": 4,
@@ -2678,11 +2677,10 @@
     "layer": -4,
     "width": 760,
     "height": 760,
-    "css": {
-      "border-color": "black",
-      "border-style": "solid",
-      "border-width": "1px",
-      "background-color": "#a9ba9d"
+    "inheritFrom": {
+      "board-5p": [
+        "css"
+      ]
     },
     "movable": false,
     "players": 3,
@@ -3282,11 +3280,10 @@
     "layer": -4,
     "width": 665,
     "height": 665,
-    "css": {
-      "border-color": "black",
-      "border-style": "solid",
-      "border-width": "1px",
-      "background-color": "#a9ba9d"
+    "inheritFrom": {
+      "board-5p": [
+        "css"
+      ]
     },
     "movable": false,
     "players": 2,
