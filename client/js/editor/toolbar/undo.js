@@ -6,7 +6,7 @@ class UndoButton extends ToolbarButton {
   click() {
     const protocol = [...getUndoProtocol()];
 
-    if(protocol.length) {
+    if(protocol.length > 1) {
       sendRawDelta({s:protocol[protocol.length-1].undoDelta});
       setUndoProtocol(protocol.slice(0, protocol.length-1));
       setSelection([...selectedWidgets].filter(w=>widgets.has(w.id)));
