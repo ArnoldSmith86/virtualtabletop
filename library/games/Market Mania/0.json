@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "Game layout and scripting by Andy Pymont, released to the public domain under CC0.\n\nTile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• City buildings https://game-icons.net/1x1/delapouite/modern-city.html\n• Donut https://game-icons.net/1x1/delapouite/donut.html\n• Fish https://game-icons.net/1x1/delapouite/double-fish.html\n• Meeple https://game-icons.net/1x1/delapouite/meeple.html\n<div>• Sandwich https://game-icons.net/1x1/delapouite/sandwich.html</div><div><br></div><div>Umer Younas</div><div>• Bank Note https://thenounproject.com/icon/bank-note-3947508<br></div>",
-      "lastUpdate": 1698409698000,
+      "lastUpdate": 1698414769000,
       "id": "mvrf",
       "showName": true,
       "skill": "",
@@ -139,7 +139,7 @@
     "id": "holder-roads",
     "type": "holder",
     "x": 500,
-    "y": 270,
+    "y": 240,
     "width": 95,
     "height": 95,
     "dropTarget": {
@@ -150,6 +150,21 @@
     "css": {
       "border-radius": "0px"
     }
+  },
+  "holder-roads-label": {
+    "id": "holder-roads-label",
+    "type": "label",
+    "parent": "holder-roads",
+    "x": 0,
+    "y": -35,
+    "width": 95,
+    "height": 20,
+    "fixedParent": true,
+    "css": {
+        "color": "black",
+        "font-weight": "bold"
+    },
+    "text": "ROADS"
   },
   "deck-roads": {
     "id": "deck-roads",
@@ -173,28 +188,6 @@
               "border-color": "black",
               "border-style": "solid",
               "border-width": "1px"
-            }
-          },
-          {
-            "type": "image",
-            "x": 30,
-            "y": 1,
-            "width": 35,
-            "height": 93,
-            "color": "#bbbbbb",
-            "css": {
-              "border-style": "none"
-            }
-          },
-          {
-            "type": "image",
-            "x": 1,
-            "y": 30,
-            "width": 93,
-            "height": 35,
-            "color": "#bbbbbb",
-            "css": {
-              "border-style": "none"
             }
           }
         ]
@@ -252,6 +245,13 @@
     "onEnter": {
       "activeFace": 0
     }
+  },
+  "holder-tiles-label": {
+    "id": "holder-tiles-label",
+    "type": "label",
+    "parent": "holder-tiles",
+    "inheritFrom": "holder-roads-label",
+    "text": "TILE DRAW"
   },
   "deck-tiles": {
     "id": "deck-tiles",
