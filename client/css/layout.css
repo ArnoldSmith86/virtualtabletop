@@ -1700,7 +1700,16 @@ input:invalid+span::after, .inputError::before {
   border-radius: 8px;
 }
 
+.inputchoose .selected.inputchooseWidgetWrapper {
+  overflow: hidden;
+}
+.inputchoose .selected.inputchooseWidgetWrapper::after {
+  border: unset;
+  z-index: 2;
+}
+
 .inputchoose .widget {
   position: relative !important;
   transform-origin: top left !important;
+  z-index: 1 !important;
 }
