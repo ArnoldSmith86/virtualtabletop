@@ -3642,6 +3642,7 @@
     "width": 295,
     "index": 1,
     "hideWhenUnused": true,
+    "foreground": "#000000",
     "css": {
       "default": {
         "border": "5px solid #999999",
@@ -3651,10 +3652,11 @@
       },
       ".seated": {
         "background": "${PROPERTY color}",
-        "border": "5px solid #000000"
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
       },
       ".seated.turn": {
-        "border": "5px dotted #000000"
+        "border": "5px dotted ${PROPERTY foreground}"
       }
     },
     "clickRoutine": [
@@ -3684,6 +3686,14 @@
         "func": "SET",
         "property": "color",
         "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
       }
     ]
   },
@@ -3693,6 +3703,7 @@
     "parent": "area-p2",
     "fixedParent": true,
     "index": 2,
+    "foreground": "#000000",
     "inheritFrom": {
       "seat-p1": [
         "x",
@@ -3711,6 +3722,7 @@
     "parent": "area-p3",
     "fixedParent": true,
     "index": 3,
+    "foreground": "#000000",
     "inheritFrom": {
       "seat-p1": [
         "x",
@@ -3729,6 +3741,7 @@
     "parent": "area-p4",
     "fixedParent": true,
     "index": 4,
+    "foreground": "#000000",
     "inheritFrom": {
       "seat-p1": [
         "x",
