@@ -111,6 +111,10 @@ class BasicWidget extends Widget {
     return super.get(property);
   }
 
+  getFaceCount() {
+    return this.faces().length || 1;
+  }
+
   getImage() {
     if(!Object.keys(this.get('svgReplaces') || {}).length)
       return this.get('image');
