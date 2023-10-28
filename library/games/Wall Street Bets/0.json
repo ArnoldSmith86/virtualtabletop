@@ -1,0 +1,3954 @@
+{
+  "_meta": {
+    "version": 14,
+    "info": {
+      "name": "Wall Street Bets",
+      "image": "/assets/-1718610635_202634",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/27298/owners-choice",
+      "year": "2007",
+      "mode": "vs",
+      "time": "45",
+      "attribution": "Game layout and scripting by Andy Pymont, released to the Public Domain by CC0.\n\nLibrary image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"a crazy adventure on the New York Stock Exchange\".\n\nTile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nDelapouite\n- Chart https://game-icons.net/1x1/delapouite/chart.html\n- Random Die https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-random.html\n- Star Flag https://game-icons.net/1x1/delapouite/star-flag.html\n\nLorc\n- Queen's Crown https://game-icons.net/1x1/lorc/queen-crown.html\n\nSyed Raheel\n- Money Bag https://thenounproject.com/icon/money-bag-5505885/\n\nUmer Younas\n- Bank Note https://thenounproject.com/icon/bank-note-3947508/",
+      "lastUpdate": 1681756475828,
+      "showName": true,
+      "description": "Buy low, sell high, and make the right choice as a majority owner to come out the richest by the game's end.",
+      "helpText": "Have all players take a seat and then click the Setup button to create a random board and pick a start player.\n\nThe pawn is the only player component which should be dragged and dropped - to take most other actions in the game you should instead use the buttons in the player areas and in the central company areal.\n\nThe implementation will allow you to sell all of your shares of a company - this is helpful in bankruptcy and end-game situations as described below. However, recall that you are not allowed to sell your final share if nobody else owns a share of that company.\n\nSpecific situations:\n- COMPANY SPACE: Either: (A) pay 50 (or 100 if price is in the high-price green area of the market) to the fund using the \"50 → FUND\" button in your player area, then click the company spinner; or (B) click the fund spinner and resolve the result.\n- RECEIVE THE WHOLE FUND: When rolling the Fund die and getting a Raid result, you take the entire contents of the fund. Click the \"50 ← FUND\" button in the relevant player area until there is nothing left in the fund.\n- BANKRUPTCY: Reduce the company's price to zero and then have all players sell their shares with their Sell buttons. (They will receive no money as the price is zero.) Then increase the price back to 100.\n- END GAME: Have the player moving the pawn to the Goal space take up to $100 from the fund by clicking the \"50 ← FUND\" button in their player area twice. Then click the End Game button and confirm you're happy to end the game. This will sell all shares at once, after which the player with the most cash then wins the game.\n- FIXING MISTAKES: If you accidentally take or give money to the fund, or accidentally buy or sell shares, you can usually reverse this by doing the opposite. (You may need another player to buy and/or sell a share too in order to get the presidency in the right place.) if you accidentally pay dividends or take money from the bank when you should not have, then you can undo this by manually adjusting players' cash totals - click on the large dollar bills to bring up the UI to edit their value.",
+      "id": "irsn",
+      "skill": "",
+      "similarImage": "",
+      "similarName": "Owner's Choice",
+      "similarAwards": "",
+      "ruleText": "GAME OBJECTIVE\nHave the most net worth (value of your shares at their current price, plus your cash in hand) once the purple pawn has traveled around the whole track around the edge of the board and reached the \"Goal\" space.\n\nCOMPANIES\nThere are four companies which a player may invest in: Red ♥, Green ♣, Blue ♠ and Yellow ♦. Each of these companies can increase or decrease in share value over the course of the game and can pay dividends to shareholders, allowing you the chance to make more money than your opponents.\n\nPRESIDENT\nThe first player to buy a share in a company becomes its President. From then on, if another player overtakes them in share count (either because of buying more shares than the President, or because the President sells shares), that player becomes the President.\n\nUnless it goes bankrupt (see below), a company must always have a President once someone buys the first share. Therefore, if you are the only share-holder, you may not sell your final share.\n\nPLAYER TURN\nOn the first turn during the game, each player either Trades Stocks or chooses to skip their turn. On every subsequent turn, a player must Move the Pawn and may also Trade Stocks. If they Trade Stocks, this may be done either before they Move the Pawn or afterwards, but not both.\n\nTRADE STOCKS\nA player buys and sells as many shares as they like/can afford at the current share price. No player may own more than 12 stocks in total. There are 15 stocks available in each company and more can be purchased if they are all owned by players.\n\nMOVE THE PAWN\nEvery turn except each player's first, the pawn must be moved and the space it lands on resolved. In a 2-player or 3-player game, the pawn is moved 1, 2, 3 or 4 spaces. In a 4-player or 5-player game, it is moved 1, 2, or 3 spaces.\n\nThe \"Goal\" space may not be passed over, and the game will end once this space is reached and resolved.\n\nCOMPANY SPACES\nThe spaces marked with the colour and symbol of one of the companies give the president of that company an opportunity to operate their company or attempt to raid the fund. In the case of the space marked with all four company colours and symbols, the player taking their turn and moving the pawn picks one company and the space is resolved as if it had only that colour and symbol.\n\nOPERATING OR RAIDING\nWhen the company's colour space is resolved, the President (not necessarily the player whose turn it is) makes a decision. Either they pay $50 (or $100 instead if the company in question is in the green area at the top of the stock price chart) into the communal Fund on the board in order to operate the company, or they attempt to raid the contents of the fund.\n\nOPERATING A COMPANY\nAfter paying $50 (or $100 if the company's price is high enough) into the Fund, the President spins the company spinner and resolves the effects. \"Price +1\", \"Price -1\", \"Price +2\" etc. refer to the spinning company and adjust it the relevant number of spaces on the stock price chart. Prices can go down as well as up. \"Div\" indicates that dividends are paid - at a rate-per-share corresponding to the current stock price as looked up on the stock price chart. \"Other\" value changes apply to any company other than the rolling company.\n\nATTEMPTING TO RAID THE FUND\nIf the president cannot or chooses not to pay into the fund to operate the company, they must attempt to raid the fund. They spin the black spinner and resolve the effects: \"Status Quo\" indicates nothing happens whilst on the other results the price will be reduced by one or two steps and the raiding president will take the entire cash contents of the Fund on the board.\n\nHIGH-PRICE DIVIDEND SPACE\nWhen landing on the space with a picture of a graph and a money bag marked \"Dividend\", the company or companies with the single highest price at the time on the stock price chart immediately pays dividends to all share holders. As with the \"Div\" spinner result, the rate-per-share is determined by looking up the corresponding figure in the Dividend column on the stock price chart, based on the company's current share price.\n\nEVENT SPACE\nWhen landing on the Event space, the player taking their turn spins the white Event spinner and resolves the result shown.\n\nPRESIDENTS' SPACE\nWhen landing on the space with the crown and \"X100\" symbols, $100 is paid from the bank to the player that holds each company President title at present. The same player could potentially receive multiple $100 payments if they hold multiple company President titles.\n\nGOAL SPACE\nWhen landing on the goal space, the player taking their turn receives $100 from the Fund on the board (or the whole fund, if it contains less than $100) and then the game ends. All shares are sold for their current share price and the player with the most cash then wins the game.\n\nCOMPANY BANKRUPTCY\nIf at any point during play, a company's share price would fall down into or beyond the Bankrupt space at the bottom of the share price chart, the company goes bankrupt. All shares are returned to the bank for no compensation. There is then again no President, just as at the beginning of the game. The company's share price is returned to the starting value of $100 and it may be re-launched by a player who buys the first share (and becomes President) during any subsequent turn's stock trading.",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-GB",
+      "players": "2-5"
+    }
+  },
+  "board": {
+    "id": "board",
+    "layer": -4,
+    "x": 600,
+    "y": 0,
+    "width": 1000,
+    "height": 1000,
+    "movable": false,
+    "image": "/assets/-678130333_97657"
+  },
+  "board-space-holder-segment1-1": {
+    "id": "board-space-holder-segment1-1",
+    "type": "holder",
+    "parent": "board",
+    "layer": -4,
+    "x": 0,
+    "y": 500,
+    "width": 100,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropTarget": {
+      "deck": "deck-squares"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "board-space-holder-segment1-2": {
+    "id": "board-space-holder-segment1-2",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 600,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment1-3": {
+    "id": "board-space-holder-segment1-3",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 700,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment1-4": {
+    "id": "board-space-holder-segment1-4",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 800,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment1-5": {
+    "id": "board-space-holder-segment1-5",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 900,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment1-6": {
+    "id": "board-space-holder-segment1-6",
+    "type": "holder",
+    "parent": "board",
+    "x": 100,
+    "y": 900,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment1-7": {
+    "id": "board-space-holder-segment1-7",
+    "type": "holder",
+    "parent": "board",
+    "x": 200,
+    "y": 900,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment1-8": {
+    "id": "board-space-holder-segment1-8",
+    "type": "holder",
+    "parent": "board",
+    "x": 300,
+    "y": 900,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment1-9": {
+    "id": "board-space-holder-segment1-9",
+    "type": "holder",
+    "parent": "board",
+    "x": 400,
+    "y": 900,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment2-1": {
+    "id": "board-space-holder-segment2-1",
+    "type": "holder",
+    "parent": "board",
+    "x": 400,
+    "y": 0,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment2-2": {
+    "id": "board-space-holder-segment2-2",
+    "type": "holder",
+    "parent": "board",
+    "x": 300,
+    "y": 0,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment2-3": {
+    "id": "board-space-holder-segment2-3",
+    "type": "holder",
+    "parent": "board",
+    "x": 200,
+    "y": 0,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment2-4": {
+    "id": "board-space-holder-segment2-4",
+    "type": "holder",
+    "parent": "board",
+    "x": 100,
+    "y": 0,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment2-5": {
+    "id": "board-space-holder-segment2-5",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment2-6": {
+    "id": "board-space-holder-segment2-6",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 100,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment2-7": {
+    "id": "board-space-holder-segment2-7",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 200,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment2-8": {
+    "id": "board-space-holder-segment2-8",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 300,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment2-9": {
+    "id": "board-space-holder-segment2-9",
+    "type": "holder",
+    "parent": "board",
+    "x": 0,
+    "y": 400,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment3-1": {
+    "id": "board-space-holder-segment3-1",
+    "type": "holder",
+    "parent": "board",
+    "x": 900,
+    "y": 400,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment3-2": {
+    "id": "board-space-holder-segment3-2",
+    "type": "holder",
+    "parent": "board",
+    "x": 900,
+    "y": 300,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment3-3": {
+    "id": "board-space-holder-segment3-3",
+    "type": "holder",
+    "parent": "board",
+    "x": 900,
+    "y": 200,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment3-4": {
+    "id": "board-space-holder-segment3-4",
+    "type": "holder",
+    "parent": "board",
+    "x": 900,
+    "y": 100,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment3-5": {
+    "id": "board-space-holder-segment3-5",
+    "type": "holder",
+    "parent": "board",
+    "x": 900,
+    "y": 0,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment3-6": {
+    "id": "board-space-holder-segment3-6",
+    "type": "holder",
+    "parent": "board",
+    "x": 800,
+    "y": 0,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment3-7": {
+    "id": "board-space-holder-segment3-7",
+    "type": "holder",
+    "parent": "board",
+    "x": 700,
+    "y": 0,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment3-8": {
+    "id": "board-space-holder-segment3-8",
+    "type": "holder",
+    "parent": "board",
+    "x": 600,
+    "y": 0,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment3-9": {
+    "id": "board-space-holder-segment3-9",
+    "type": "holder",
+    "parent": "board",
+    "x": 500,
+    "y": 0,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment4-1": {
+    "id": "board-space-holder-segment4-1",
+    "type": "holder",
+    "parent": "board",
+    "x": 500,
+    "y": 900,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment4-2": {
+    "id": "board-space-holder-segment4-2",
+    "type": "holder",
+    "parent": "board",
+    "x": 600,
+    "y": 900,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment4-3": {
+    "id": "board-space-holder-segment4-3",
+    "type": "holder",
+    "parent": "board",
+    "x": 700,
+    "y": 900,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment4-4": {
+    "id": "board-space-holder-segment4-4",
+    "type": "holder",
+    "parent": "board",
+    "x": 800,
+    "y": 900,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment4-5": {
+    "id": "board-space-holder-segment4-5",
+    "type": "holder",
+    "parent": "board",
+    "x": 900,
+    "y": 900,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment4-6": {
+    "id": "board-space-holder-segment4-6",
+    "type": "holder",
+    "parent": "board",
+    "x": 900,
+    "y": 800,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment4-7": {
+    "id": "board-space-holder-segment4-7",
+    "type": "holder",
+    "parent": "board",
+    "x": 900,
+    "y": 700,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment4-8": {
+    "id": "board-space-holder-segment4-8",
+    "type": "holder",
+    "parent": "board",
+    "x": 900,
+    "y": 600,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "board-space-holder-segment4-9": {
+    "id": "board-space-holder-segment4-9",
+    "type": "holder",
+    "parent": "board",
+    "x": 900,
+    "y": 500,
+    "inheritFrom": "board-space-holder-segment1-1"
+  },
+  "cash-fund": {
+    "id": "cash-fund",
+    "parent": "board",
+    "x": 520,
+    "y": 110,
+    "width": 200,
+    "height": 100,
+    "image": "/assets/273860642_3829",
+    "movable": false,
+    "text": 0,
+    "css": {
+      "color": "black",
+      "font-size": "70px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "clickRoutine": [
+      "var header = 'Enter new value for ' + ${PROPERTY id}",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "min": 0,
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      }
+    ]
+  },
+  "shares-bank-red": {
+    "id": "shares-bank-red",
+    "parent": "board",
+    "x": 136.5,
+    "y": 384,
+    "width": 80,
+    "height": 80,
+    "movable": false,
+    "image": "/assets/846740500_837",
+    "symbolColor": "#aa3227",
+    "svgReplaces": {
+      "#0b0303": "symbolColor"
+    },
+    "text": 15,
+    "css": {
+      "font-size": "60px",
+      "text-align": "center",
+      "line-height": "90px"
+    },
+    "company": "red",
+    "getSharePriceRoutine": [
+      "var priceMarker = 'share-price-' + ${PROPERTY company}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${priceMarker}"
+      },
+      {
+        "func": "GET",
+        "property": "price",
+        "variable": "result"
+      }
+    ]
+  },
+  "president-red": {
+    "id": "president-red",
+    "parent": "shares-bank-red",
+    "x": 58,
+    "y": 2,
+    "width": 20,
+    "height": 20,
+    "movable": false,
+    "image": "/assets/1507952319_1116"
+  },
+  "button-red-price-increase": {
+    "id": "button-red-price-increase",
+    "type": "button",
+    "parent": "board",
+    "x": 249.5,
+    "y": 372.5,
+    "width": 100,
+    "height": 30,
+    "css": {
+      "--wcMain": "#e34234",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "text": "PRICE ↑",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "share-price-red",
+        "routine": "priceIncreaseRoutine"
+      }
+    ]
+  },
+  "button-red-price-decrease": {
+    "id": "button-red-price-decrease",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": "button-red-price-increase",
+    "x": 249.5,
+    "y": 413,
+    "text": "PRICE ↓",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "share-price-red",
+        "routine": "priceDecreaseRoutine"
+      }
+    ]
+  },
+  "button-red-dividend": {
+    "id": "button-red-dividend",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": "button-red-price-increase",
+    "x": 249.5,
+    "y": 453.5,
+    "text": "DIVIDEND",
+    "company": "red",
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          "var cash = 'cash-p' + ${value}",
+          "var marker = 'share-price-' + ${PROPERTY company}",
+          "var counter = 'shares-p' + ${value}",
+          "var counter = ${counter} + '-'",
+          "var counter = ${counter} + ${PROPERTY company}",
+          "var total = ${PROPERTY dividend OF $marker} * ${PROPERTY text OF $counter}",
+          {
+            "func": "LABEL",
+            "label": "${cash}",
+            "mode": "inc",
+            "value": "${total}"
+          }
+        ]
+      }
+    ]
+  },
+  "shares-bank-green": {
+    "id": "shares-bank-green",
+    "parent": "board",
+    "inheritFrom": "shares-bank-red",
+    "x": 136.5,
+    "y": 520,
+    "image": "/assets/1408235603_1288",
+    "symbolColor": "#63ca00",
+    "svgReplaces": {
+      "#060d00": "symbolColor"
+    },
+    "text": 15,
+    "company": "green"
+  },
+  "president-green": {
+    "id": "president-green",
+    "parent": "shares-bank-green",
+    "inheritFrom": "president-red"
+  },
+  "button-green-price-increase": {
+    "id": "button-green-price-increase",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": "button-red-price-increase",
+    "x": 249.5,
+    "y": 508.5,
+    "css": {
+      "--wcMain": "#7cfc00",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "share-price-green",
+        "routine": "priceIncreaseRoutine"
+      }
+    ]
+  },
+  "button-green-price-decrease": {
+    "id": "button-green-price-decrease",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": "button-green-price-increase",
+    "x": 249.5,
+    "y": 549,
+    "text": "PRICE ↓",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "share-price-green",
+        "routine": "priceDecreaseRoutine"
+      }
+    ]
+  },
+  "button-green-dividend": {
+    "id": "button-green-dividend",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": {
+      "button-red-dividend": [
+        "clickRoutine",
+        "text"
+      ],
+      "button-green-price-increase": "*"
+    },
+    "x": 249.5,
+    "y": 589.5,
+    "company": "green"
+  },
+  "shares-bank-blue": {
+    "id": "shares-bank-blue",
+    "parent": "board",
+    "inheritFrom": "shares-bank-red",
+    "x": 136.5,
+    "y": 656,
+    "image": "/assets/-382658565_965",
+    "symbolColor": "#1873cc",
+    "svgReplaces": {
+      "#02070d": "symbolColor"
+    },
+    "text": 15,
+    "company": "blue"
+  },
+  "president-blue": {
+    "id": "president-blue",
+    "parent": "shares-bank-blue",
+    "inheritFrom": "president-red"
+  },
+  "button-blue-price-increase": {
+    "id": "button-blue-price-increase",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": "button-red-price-increase",
+    "x": 249.5,
+    "y": 644.5,
+    "css": {
+      "--wcMain": "#1e90ff",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "share-price-blue",
+        "routine": "priceIncreaseRoutine"
+      }
+    ]
+  },
+  "button-blue-price-decrease": {
+    "id": "button-blue-price-decrease",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": "button-blue-price-increase",
+    "x": 249.5,
+    "y": 685,
+    "text": "PRICE ↓",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "share-price-blue",
+        "routine": "priceDecreaseRoutine"
+      }
+    ]
+  },
+  "button-blue-dividend": {
+    "id": "button-blue-dividend",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": {
+      "button-red-dividend": [
+        "clickRoutine",
+        "text"
+      ],
+      "button-blue-price-increase": "*"
+    },
+    "x": 249.5,
+    "y": 725.5,
+    "company": "blue"
+  },
+  "shares-bank-yellow": {
+    "id": "shares-bank-yellow",
+    "parent": "board",
+    "inheritFrom": "shares-bank-red",
+    "x": 136.5,
+    "y": 792,
+    "image": "/assets/280034795_477",
+    "symbolColor": "#ccbf00",
+    "svgReplaces": {
+      "#0d0c00": "symbolColor"
+    },
+    "text": 15,
+    "company": "yellow"
+  },
+  "president-yellow": {
+    "id": "president-yellow",
+    "parent": "shares-bank-yellow",
+    "inheritFrom": "president-red"
+  },
+  "button-yellow-price-increase": {
+    "id": "button-yellow-price-increase",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": "button-red-price-increase",
+    "x": 249.5,
+    "y": 780.5,
+    "css": {
+      "--wcMain": "#ffef00",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "share-price-yellow",
+        "routine": "priceIncreaseRoutine"
+      }
+    ]
+  },
+  "button-yellow-price-decrease": {
+    "id": "button-yellow-price-decrease",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": "button-yellow-price-increase",
+    "x": 249.5,
+    "y": 821,
+    "text": "PRICE ↓",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "share-price-yellow",
+        "routine": "priceDecreaseRoutine"
+      }
+    ]
+  },
+  "button-yellow-dividend": {
+    "id": "button-yellow-dividend",
+    "type": "button",
+    "parent": "board",
+    "inheritFrom": {
+      "button-red-dividend": [
+        "clickRoutine",
+        "text"
+      ],
+      "button-yellow-price-increase": "*"
+    },
+    "x": 249.5,
+    "y": 861.5,
+    "company": "yellow"
+  },
+  "spinner-red": {
+    "id": "spinner-red",
+    "type": "spinner",
+    "parent": "board",
+    "x": 368,
+    "y": 359,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-image:URL(/assets/-1468932466_12356); border-radius: 100%;",
+    "backgroundCSS": "display:none",
+    "valueCSS": "background-color: #000000; color:#e34234 !important; scale: 60%; font-size: 24px; font-weight: bold; line-height:0.8em;",
+    "spinnerCSS": "background-image:URL(/assets/-1708270000_315); background-position:center; scale:80%;",
+    "options": [
+      "Div",
+      "Div",
+      "+2",
+      "+2",
+      "Oth +1",
+      "Oth +1"
+    ],
+    "enlarge": 2
+  },
+  "spinner-green": {
+    "id": "spinner-green",
+    "type": "spinner",
+    "parent": "board",
+    "x": 368,
+    "y": 495,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-image:URL(/assets/1498549_13366); border-radius: 100%;",
+    "backgroundCSS": "display:none",
+    "valueCSS": "background-color: #000000; color:#7cfc00 !important; scale: 60%; font-size: 24px; font-weight: bold; line-height:0.8em;",
+    "spinnerCSS": "background-image:URL(/assets/-1708270000_315); background-position:center; scale:80%;",
+    "options": [
+      "Div",
+      "Div",
+      "Div",
+      "=",
+      "+2",
+      "+1"
+    ],
+    "enlarge": 2
+  },
+  "spinner-blue": {
+    "id": "spinner-blue",
+    "type": "spinner",
+    "parent": "board",
+    "x": 368,
+    "y": 631,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-image:URL(/assets/-173838546_13628); border-radius: 100%;",
+    "backgroundCSS": "display:none",
+    "valueCSS": "background-color: #000000; color:#1e90ff !important; scale: 60%; font-size: 24px; font-weight: bold; line-height:0.8em;",
+    "spinnerCSS": "background-image:URL(/assets/-1708270000_315); background-position:center; scale:80%;",
+    "options": [
+      "Div",
+      "+2",
+      "+1",
+      "+1",
+      "Oth -1",
+      "Oth -2"
+    ],
+    "enlarge": 2
+  },
+  "spinner-yellow": {
+    "id": "spinner-yellow",
+    "type": "spinner",
+    "parent": "board",
+    "x": 368,
+    "y": 767,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-image:URL(/assets/987893692_12858); border-radius: 100%;",
+    "backgroundCSS": "display:none",
+    "valueCSS": "background-color: #000000; color:#ffef00 !important; scale: 60%; font-size: 24px; font-weight: bold; line-height:0.8em;",
+    "spinnerCSS": "background-image:URL(/assets/-1708270000_315); background-position:center; scale:80%;",
+    "options": [
+      "Div",
+      "Div",
+      "+3",
+      "+2",
+      "+1",
+      "-1"
+    ],
+    "enlarge": 2
+  },
+  "spinner-fund": {
+    "id": "spinner-fund",
+    "type": "spinner",
+    "parent": "board",
+    "x": 102,
+    "y": 223,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-image:URL(/assets/513619282_13058); border-radius: 100%;",
+    "backgroundCSS": "display:none",
+    "valueCSS": "background-color: #000000; color:#ffffff !important; scale: 60%; font-size: 24px; font-weight: bold; line-height:0.8em;",
+    "spinnerCSS": "background-image:URL(/assets/-1708270000_315); background-position:center; scale:80%;",
+    "options": [
+      "=",
+      "-1 Raid",
+      "-1 Raid",
+      "-1 Raid",
+      "-2 Raid",
+      "-2 Raid"
+    ],
+    "enlarge": 2
+  },
+  "spinner-event": {
+    "id": "spinner-event",
+    "type": "spinner",
+    "parent": "board",
+    "x": 235,
+    "y": 223,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-image:URL(/assets/1265334863_24469); border-radius: 100%;",
+    "backgroundCSS": "display:none",
+    "valueCSS": "background-color: #000000; color:#ffffff !important; scale: 60%; font-size: 24px; font-weight: bold; line-height:0.8em;",
+    "spinnerCSS": "background-image:URL(/assets/-1708270000_315); background-position:center; scale:80%;",
+    "options": [
+      "Fund 50",
+      "Fund 50",
+      "Bank 100",
+      "Swap",
+      "Any -2",
+      "All -1"
+    ],
+    "enlarge": 2
+  },
+  "share-price-red": {
+    "id": "share-price-red",
+    "x": 1202.5,
+    "y": 622.5,
+    "width": 45,
+    "height": 45,
+    "movable": false,
+    "image": "/assets/846740500_837",
+    "price": 100,
+    "dividend": 30,
+    "priceChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 837.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 40,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 772.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 30
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 60,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 722.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 30
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 80,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 672.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 30
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 100,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 622.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 30
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 120,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 572.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 30
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 140,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 522.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 40
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 160,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 472.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 40
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 190,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 422.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 50
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 220,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 372.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 50
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 260,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 322.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 60
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": "==",
+        "operand2": 300,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 272.5
+          },
+          {
+            "func": "SET",
+            "property": "dividend",
+            "value": 80
+          }
+        ]
+      }
+    ],
+    "priceIncreaseRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY price}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "price",
+            "value": 40
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY price}",
+            "relation": "<=",
+            "operand2": 140,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "property": "price",
+                "relation": "+",
+                "value": 20
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY price}",
+                "relation": "<=",
+                "operand2": 190,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "property": "price",
+                    "relation": "+",
+                    "value": 30
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY price}",
+                    "relation": "<=",
+                    "operand2": 260,
+                    "thenRoutine": [
+                      {
+                        "func": "SET",
+                        "property": "price",
+                        "relation": "+",
+                        "value": 40
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "priceDecreaseRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY price}",
+        "relation": "==",
+        "operand2": 40,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "price",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY price}",
+            "relation": "<=",
+            "operand2": 160,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "property": "price",
+                "relation": "-",
+                "value": 20
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY price}",
+                "relation": "<=",
+                "operand2": 220,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "property": "price",
+                    "relation": "-",
+                    "value": 30
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY price}",
+                    "relation": "<=",
+                    "operand2": 300,
+                    "thenRoutine": [
+                      {
+                        "func": "SET",
+                        "property": "price",
+                        "relation": "-",
+                        "value": 40
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "share-price-green": {
+    "id": "share-price-green",
+    "inheritFrom": "share-price-red",
+    "x": 1252.5,
+    "y": 622.5,
+    "image": "/assets/1408235603_1288",
+    "price": 100,
+    "dividend": 30
+  },
+  "share-price-blue": {
+    "id": "share-price-blue",
+    "inheritFrom": "share-price-red",
+    "x": 1302.5,
+    "y": 622.5,
+    "image": "/assets/-382658565_965",
+    "price": 100,
+    "dividend": 30
+  },
+  "share-price-yellow": {
+    "id": "share-price-yellow",
+    "inheritFrom": "share-price-red",
+    "x": 1352.5,
+    "y": 622.5,
+    "image": "/assets/280034795_477",
+    "price": 100,
+    "dividend": 30
+  },
+  "setup-area": {
+    "id": "setup-area",
+    "layer": -3,
+    "x": 0,
+    "y": -500,
+    "width": 600,
+    "height": 200,
+    "movable": false,
+    "image": "/assets/1576629398_255"
+  },
+  "setup-holder-start": {
+    "id": "setup-holder-start",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-squares"
+    }
+  },
+  "deck-squares": {
+    "id": "deck-squares",
+    "type": "deck",
+    "parent": "setup-holder-start",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "movable": false
+    },
+    "cardTypes": {
+      "cardtype-square-start": {
+        "image": "/assets/-807640662_2715"
+      },
+      "cardtype-square-goal": {
+        "image": "/assets/-485094233_7898"
+      },
+      "cardtype-square-red": {
+        "image": "/assets/846740500_837"
+      },
+      "cardtype-square-green": {
+        "image": "/assets/1408235603_1288"
+      },
+      "cardtype-square-blue": {
+        "image": "/assets/-382658565_965"
+      },
+      "cardtype-square-yellow": {
+        "image": "/assets/280034795_477"
+      },
+      "cardtype-square-almighty": {
+        "image": "/assets/-1321565871_3357"
+      },
+      "cardtype-square-dividend": {
+        "image": "/assets/715036293_4118"
+      },
+      "cardtype-square-event": {
+        "image": "/assets/-375752173_3728"
+      },
+      "cardtype-square-president": {
+        "image": "/assets/1929273021_3317"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "color": "transparent",
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "setup-holder-goal": {
+    "id": "setup-holder-goal",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 55.5,
+    "y": 0,
+    "inheritFrom": "setup-holder-start"
+  },
+  "setup-holder-red": {
+    "id": "setup-holder-red",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 111,
+    "y": 0,
+    "inheritFrom": "setup-holder-start"
+  },
+  "setup-holder-green": {
+    "id": "setup-holder-green",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 166.5,
+    "y": 0,
+    "inheritFrom": "setup-holder-start"
+  },
+  "setup-holder-blue": {
+    "id": "setup-holder-blue",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 222,
+    "y": 0,
+    "inheritFrom": "setup-holder-start"
+  },
+  "setup-holder-yellow": {
+    "id": "setup-holder-yellow",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 277.5,
+    "y": 0,
+    "inheritFrom": "setup-holder-start"
+  },
+  "setup-holder-almighty": {
+    "id": "setup-holder-almighty",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 333,
+    "y": 0,
+    "inheritFrom": "setup-holder-start"
+  },
+  "setup-holder-dividend": {
+    "id": "setup-holder-dividend",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 388.5,
+    "y": 0,
+    "inheritFrom": "setup-holder-start"
+  },
+  "setup-holder-event": {
+    "id": "setup-holder-event",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 444,
+    "y": 0,
+    "inheritFrom": "setup-holder-start"
+  },
+  "setup-holder-president": {
+    "id": "setup-holder-president",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 499.5,
+    "y": 0,
+    "inheritFrom": "setup-holder-start"
+  },
+  "square-start-1": {
+    "id": "square-start-1",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-start",
+    "parent": "setup-holder-start"
+  },
+  "square-goal-1": {
+    "id": "square-goal-1",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-goal",
+    "parent": "setup-holder-start"
+  },
+  "square-red-1": {
+    "id": "square-red-1",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-red",
+    "parent": "setup-holder-start"
+  },
+  "square-red-2": {
+    "id": "square-red-2",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-red",
+    "parent": "setup-holder-start"
+  },
+  "square-red-3": {
+    "id": "square-red-3",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-red",
+    "parent": "setup-holder-start"
+  },
+  "square-red-4": {
+    "id": "square-red-4",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-red",
+    "parent": "setup-holder-start"
+  },
+  "square-red-5": {
+    "id": "square-red-5",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-red",
+    "parent": "setup-holder-start"
+  },
+  "square-red-6": {
+    "id": "square-red-6",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-red",
+    "parent": "setup-holder-start"
+  },
+  "square-green-1": {
+    "id": "square-green-1",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-green",
+    "parent": "setup-holder-start"
+  },
+  "square-green-2": {
+    "id": "square-green-2",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-green",
+    "parent": "setup-holder-start"
+  },
+  "square-green-3": {
+    "id": "square-green-3",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-green",
+    "parent": "setup-holder-start"
+  },
+  "square-green-4": {
+    "id": "square-green-4",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-green",
+    "parent": "setup-holder-start"
+  },
+  "square-green-5": {
+    "id": "square-green-5",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-green",
+    "parent": "setup-holder-start"
+  },
+  "square-green-6": {
+    "id": "square-green-6",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-green",
+    "parent": "setup-holder-start"
+  },
+  "square-blue-1": {
+    "id": "square-blue-1",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-blue",
+    "parent": "setup-holder-start"
+  },
+  "square-blue-2": {
+    "id": "square-blue-2",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-blue",
+    "parent": "setup-holder-start"
+  },
+  "square-blue-3": {
+    "id": "square-blue-3",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-blue",
+    "parent": "setup-holder-start"
+  },
+  "square-blue-4": {
+    "id": "square-blue-4",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-blue",
+    "parent": "setup-holder-start"
+  },
+  "square-blue-5": {
+    "id": "square-blue-5",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-blue",
+    "parent": "setup-holder-start"
+  },
+  "square-blue-6": {
+    "id": "square-blue-6",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-blue",
+    "parent": "setup-holder-start"
+  },
+  "square-blue-7": {
+    "id": "square-blue-7",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-blue",
+    "parent": "setup-holder-start"
+  },
+  "square-yellow-1": {
+    "id": "square-yellow-1",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-yellow",
+    "parent": "setup-holder-start"
+  },
+  "square-yellow-2": {
+    "id": "square-yellow-2",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-yellow",
+    "parent": "setup-holder-start"
+  },
+  "square-yellow-3": {
+    "id": "square-yellow-3",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-yellow",
+    "parent": "setup-holder-start"
+  },
+  "square-yellow-4": {
+    "id": "square-yellow-4",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-yellow",
+    "parent": "setup-holder-start"
+  },
+  "square-yellow-5": {
+    "id": "square-yellow-5",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-yellow",
+    "parent": "setup-holder-start"
+  },
+  "square-yellow-6": {
+    "id": "square-yellow-6",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-yellow",
+    "parent": "setup-holder-start"
+  },
+  "square-almighty-1": {
+    "id": "square-almighty-1",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-almighty",
+    "parent": "setup-holder-start"
+  },
+  "square-almighty-2": {
+    "id": "square-almighty-2",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-almighty",
+    "parent": "setup-holder-start"
+  },
+  "square-almighty-3": {
+    "id": "square-almighty-3",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-almighty",
+    "parent": "setup-holder-start"
+  },
+  "square-almighty-4": {
+    "id": "square-almighty-4",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-almighty",
+    "parent": "setup-holder-start"
+  },
+  "square-president-1": {
+    "id": "square-president-1",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-president",
+    "parent": "setup-holder-start"
+  },
+  "square-president-2": {
+    "id": "square-president-2",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-president",
+    "parent": "setup-holder-start"
+  },
+  "square-president-3": {
+    "id": "square-president-3",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-president",
+    "parent": "setup-holder-start"
+  },
+  "square-president-4": {
+    "id": "square-president-4",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-president",
+    "parent": "setup-holder-start"
+  },
+  "square-event-1": {
+    "id": "square-event-1",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-event",
+    "parent": "setup-holder-start"
+  },
+  "square-event-2": {
+    "id": "square-event-2",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-event",
+    "parent": "setup-holder-start"
+  },
+  "square-event-3": {
+    "id": "square-event-3",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-event",
+    "parent": "setup-holder-start"
+  },
+  "square-event-4": {
+    "id": "square-event-4",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-event",
+    "parent": "setup-holder-start"
+  },
+  "square-event-5": {
+    "id": "square-event-5",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-event",
+    "parent": "setup-holder-start"
+  },
+  "square-dividend-1": {
+    "id": "square-dividend-1",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-dividend",
+    "parent": "setup-holder-start"
+  },
+  "square-dividend-2": {
+    "id": "square-dividend-2",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-dividend",
+    "parent": "setup-holder-start"
+  },
+  "square-dividend-3": {
+    "id": "square-dividend-3",
+    "type": "card",
+    "deck": "deck-squares",
+    "cardType": "cardtype-square-dividend",
+    "parent": "setup-holder-start"
+  },
+  "setup-holder": {
+    "id": "setup-holder",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 75,
+    "y": 100,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-setup"
+    }
+  },
+  "deck-setup": {
+    "id": "deck-setup",
+    "type": "deck",
+    "parent": "setup-holder",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "movable": false
+    },
+    "cardTypes": {
+      "cardtype-setup-1": {
+        "value": 1,
+        "squaresA": [
+          "blue",
+          "green",
+          "yellow",
+          "red",
+          "start",
+          "goal",
+          "event",
+          "dividend",
+          "almighty"
+        ],
+        "squaresB": [
+          "green",
+          "red",
+          "yellow",
+          "blue",
+          "start",
+          "goal",
+          "almighty",
+          "president",
+          "event"
+        ]
+      },
+      "cardtype-setup-2": {
+        "value": 2,
+        "squaresA": [
+          "dividend",
+          "red",
+          "green",
+          "blue",
+          "yellow",
+          "event",
+          "blue",
+          "green",
+          "red"
+        ],
+        "squaresB": [
+          "dividend",
+          "blue",
+          "almighty",
+          "red",
+          "president",
+          "green",
+          "yellow",
+          "event",
+          "red"
+        ]
+      },
+      "cardtype-setup-3": {
+        "value": 3,
+        "squaresA": [
+          "dividend",
+          "yellow",
+          "blue",
+          "event",
+          "green",
+          "almighty",
+          "red",
+          "yellow",
+          "blue"
+        ],
+        "squaresB": [
+          "president",
+          "green",
+          "yellow",
+          "almighty",
+          "red",
+          "blue",
+          "event",
+          "red",
+          "yellow"
+        ]
+      },
+      "cardtype-setup-4": {
+        "value": 4,
+        "squaresA": [
+          "president",
+          "event",
+          "green",
+          "yellow",
+          "blue",
+          "red",
+          "almighty",
+          "yellow",
+          "green"
+        ],
+        "squaresB": [
+          "president",
+          "blue",
+          "red",
+          "green",
+          "event",
+          "yellow",
+          "green",
+          "blue",
+          "event"
+        ]
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 40,
+            "width": 100,
+            "height": 100,
+            "fontSize": 20,
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "value"
+            }
+          }
+        ],
+        "properties": {
+          "squareList": "squaresA"
+        }
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 40,
+            "width": 100,
+            "height": 100,
+            "fontSize": 20,
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "value"
+            }
+          }
+        ],
+        "properties": {
+          "squareList": "squaresB"
+        }
+      }
+    ]
+  },
+  "setup-holder-active": {
+    "id": "setup-holder-active",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 250,
+    "y": 100,
+    "inheritFrom": "setup-holder"
+  },
+  "card-setup-1": {
+    "id": "card-setup-1",
+    "parent": "setup-holder",
+    "type": "card",
+    "deck": "deck-setup",
+    "cardType": "cardtype-setup-1",
+    "x": 0,
+    "y": 0
+  },
+  "card-setup-2": {
+    "id": "card-setup-2",
+    "parent": "setup-holder",
+    "type": "card",
+    "deck": "deck-setup",
+    "cardType": "cardtype-setup-2",
+    "x": 0,
+    "y": 0
+  },
+  "card-setup-3": {
+    "id": "card-setup-3",
+    "parent": "setup-holder",
+    "type": "card",
+    "deck": "deck-setup",
+    "cardType": "cardtype-setup-3",
+    "x": 0,
+    "y": 0
+  },
+  "card-setup-4": {
+    "id": "card-setup-4",
+    "parent": "setup-holder",
+    "type": "card",
+    "deck": "deck-setup",
+    "cardType": "cardtype-setup-4",
+    "x": 0,
+    "y": 0
+  },
+  "setup-holder-discard": {
+    "id": "setup-holder-discard",
+    "type": "holder",
+    "parent": "setup-area",
+    "x": 425,
+    "y": 100,
+    "inheritFrom": "setup-holder"
+  },
+  "player-area-p1": {
+    "id": "player-area-p1",
+    "layer": -3,
+    "x": 0,
+    "y": 0,
+    "width": 600,
+    "height": 200,
+    "movable": false,
+    "image": "/assets/1576629398_255",
+    "cash": "cash-p1",
+    "linkedToSeat": "seat-p1",
+    "share-counters-prefix": "shares-p1-",
+    "getCertificateCountRoutine": [
+      "var result = 0",
+      "var prefix = ${PROPERTY share-counters-prefix}",
+      {
+        "func": "FOREACH",
+        "in": [
+          "red",
+          "green",
+          "blue",
+          "yellow"
+        ],
+        "loopRoutine": [
+          "var counter = ${prefix} + ${value}",
+          "var count = ${PROPERTY text OF $counter}",
+          "var result = ${result} + ${count}"
+        ]
+      }
+    ]
+  },
+  "cash-p1": {
+    "id": "cash-p1",
+    "parent": "player-area-p1",
+    "inheritFrom": "cash-fund",
+    "x": 5,
+    "y": 5,
+    "text": 690
+  },
+  "seat-p1": {
+    "id": "seat-p1",
+    "type": "seat",
+    "parent": "player-area-p1",
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "20px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "x": 210,
+    "y": 5,
+    "width": 383,
+    "height": 32,
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      }
+    ],
+    "foreground": "#000000"
+  },
+  "button-from-fund-p1": {
+    "id": "button-from-fund-p1",
+    "type": "button",
+    "parent": "player-area-p1",
+    "x": 5,
+    "y": 115,
+    "width": 100,
+    "height": 30,
+    "css": {
+      "font-size": "15px"
+    },
+    "text": "50 ← FUND",
+    "clickRoutine": [
+      "var area = ${PROPERTY parent}",
+      "var cash = ${PROPERTY cash OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF cash-fund}",
+        "relation": ">=",
+        "operand2": 50,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${cash}",
+            "mode": "inc",
+            "value": 50
+          },
+          {
+            "func": "LABEL",
+            "label": "cash-fund",
+            "mode": "dec",
+            "value": 50
+          }
+        ]
+      }
+    ]
+  },
+  "button-to-fund-p1": {
+    "id": "button-to-fund-p1",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-from-fund-p1",
+    "x": 5,
+    "y": 160,
+    "text": "50 → FUND",
+    "clickRoutine": [
+      "var area = ${PROPERTY parent}",
+      "var cash = ${PROPERTY cash OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $cash}",
+        "relation": ">=",
+        "operand2": 50,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${cash}",
+            "mode": "dec",
+            "value": 50
+          },
+          {
+            "func": "LABEL",
+            "label": "cash-fund",
+            "mode": "inc",
+            "value": 50
+          }
+        ]
+      }
+    ]
+  },
+  "button-from-bank-p1": {
+    "id": "button-from-bank-p1",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-from-fund-p1",
+    "x": 105,
+    "y": 137.5,
+    "text": "100 ← BANK",
+    "clickRoutine": [
+      "var area = ${PROPERTY parent}",
+      "var cash = ${PROPERTY cash OF $area}",
+      {
+        "func": "LABEL",
+        "label": "${cash}",
+        "mode": "inc",
+        "value": 100
+      }
+    ]
+  },
+  "shares-p1-red": {
+    "id": "shares-p1-red",
+    "parent": "player-area-p1",
+    "inheritFrom": "shares-bank-red",
+    "x": 210,
+    "y": 40,
+    "text": 0,
+    "player": 1,
+    "findOtherPresidentRoutine": [
+      "var result = ''",
+      "var highest = 0",
+      {
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          "var player = ${currentPlayer} + ${value}",
+          {
+            "func": "IF",
+            "operand1": "${player}",
+            "relation": ">",
+            "operand2": 5,
+            "thenRoutine": [
+              "var player = ${player} - 5"
+            ]
+          },
+          "var shareCounter = 'shares-p' + ${player}",
+          "var shareCounter = ${shareCounter} + '-'",
+          "var shareCounter = ${shareCounter} + ${PROPERTY company}",
+          "var shareCount = ${PROPERTY text OF $shareCounter}",
+          {
+            "func": "IF",
+            "operand1": "${shareCount}",
+            "relation": ">",
+            "operand2": "${highest}",
+            "thenRoutine": [
+              "var highest = ${shareCount}",
+              "var result = ${shareCounter}"
+            ]
+          }
+        ]
+      }
+    ],
+    "textChangeRoutine": [
+      "var presidency = 'president-' + ${PROPERTY company}",
+      {
+        "func": "CALL",
+        "routine": "findOtherPresidentRoutine",
+        "arguments": {
+          "currentPlayer": "${PROPERTY player}"
+        },
+        "variable": "otherCounter"
+      },
+      {
+        "func": "IF",
+        "operand1": "${otherCounter}",
+        "operand2": "",
+        "thenRoutine": [
+          "var otherCount = 0",
+          "var otherCounter = 'shares-bank-' + ${PROPERTY company}"
+        ],
+        "elseRoutine": [
+          "var otherCount = ${PROPERTY text OF $otherCounter}"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${presidency}"
+      },
+      "var owned = ${otherCount} + ${PROPERTY text}",
+      {
+        "func": "IF",
+        "operand1": "${owned}",
+        "operand2": 0,
+        "thenRoutine": [
+          "var presidency = 'president-' + ${PROPERTY company}",
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${otherCounter}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "relation": ">",
+            "operand2": "${otherCount}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${PROPERTY id}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY parent OF $presidency}",
+                "operand2": "${PROPERTY id}",
+                "thenRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY text}",
+                    "relation": "<",
+                    "operand2": "${otherCount}",
+                    "thenRoutine": [
+                      {
+                        "func": "SET",
+                        "property": "parent",
+                        "value": "${otherCounter}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "button-p1-red-buy": {
+    "id": "button-p1-red-buy",
+    "type": "button",
+    "parent": "player-area-p1",
+    "x": 210,
+    "y": 121,
+    "width": 80,
+    "height": 25,
+    "movable": false,
+    "css": {
+      "font-size": "15px",
+      "--wcMain": "#e34234",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "text": "BUY ♥",
+    "player": 1,
+    "company": "red",
+    "clickRoutine": [
+      "var supply = 'shares-bank-' + ${PROPERTY company}",
+      "var counter = 'shares-p' + ${PROPERTY player}",
+      "var counter = ${counter} + '-'",
+      "var counter = ${counter} + ${PROPERTY company}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $supply}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${PROPERTY parent}",
+            "routine": "getCertificateCountRoutine",
+            "variable": "certificates"
+          },
+          {
+            "func": "IF",
+            "operand1": "${certificates}",
+            "relation": "<",
+            "operand2": 12,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "${supply}",
+                "routine": "getSharePriceRoutine",
+                "variable": "price"
+              },
+              "var area = ${PROPERTY parent}",
+              "var cash = ${PROPERTY cash OF $area}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY text OF $cash}",
+                "relation": ">=",
+                "operand2": "${price}",
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "${cash}",
+                    "mode": "dec",
+                    "value": "${price}"
+                  },
+                  {
+                    "func": "LABEL",
+                    "label": "${supply}",
+                    "mode": "dec",
+                    "value": 1
+                  },
+                  {
+                    "func": "LABEL",
+                    "label": "${counter}",
+                    "mode": "inc",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "button-p1-red-sell": {
+    "id": "button-p1-red-sell",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-red-buy",
+    "x": 210,
+    "y": 146.5,
+    "text": "SELL ♥",
+    "clickRoutine": [
+      "var counter = 'shares-p' + ${PROPERTY player}",
+      "var counter = ${counter} + '-'",
+      "var counter = ${counter} + ${PROPERTY company}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $counter}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          "var area = ${PROPERTY parent}",
+          "var cash = ${PROPERTY cash OF $area}",
+          "var supply = 'shares-bank-' + ${PROPERTY company}",
+          {
+            "func": "CALL",
+            "widget": "${supply}",
+            "routine": "getSharePriceRoutine",
+            "variable": "price"
+          },
+          {
+            "func": "LABEL",
+            "label": "${cash}",
+            "mode": "inc",
+            "value": "${price}"
+          },
+          {
+            "func": "LABEL",
+            "label": "${counter}",
+            "mode": "dec",
+            "value": 1
+          },
+          {
+            "func": "LABEL",
+            "label": "${supply}",
+            "mode": "inc",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  "button-p1-exchange-red-green": {
+    "id": "button-p1-exchange-red-green",
+    "type": "button",
+    "parent": "player-area-p1",
+    "x": 210,
+    "y": 173,
+    "width": 25,
+    "height": 25,
+    "movable": false,
+    "css": {
+      "font-size": "15px",
+      "--wcMain": "#7cfc00",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "text": "♣",
+    "player": 1,
+    "give": "red",
+    "take": "green",
+    "clickRoutine": [
+      "var supplyTake = 'shares-bank-' + ${PROPERTY take}",
+      "var supplyGive = 'shares-bank-' + ${PROPERTY give}",
+      "var counterBase = 'shares-p' + ${PROPERTY player}",
+      "var counterBase = ${counterBase} + '-'",
+      "var counterTake = ${counterBase} + ${PROPERTY take}",
+      "var counterGive = ${counterBase} + ${PROPERTY give}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $supplyTake}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text OF $counterGive}",
+            "relation": ">",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "LABEL",
+                "label": "${supplyTake}",
+                "mode": "dec",
+                "value": 1
+              },
+              {
+                "func": "LABEL",
+                "label": "${supplyGive}",
+                "mode": "inc",
+                "value": 1
+              },
+              {
+                "func": "LABEL",
+                "label": "${counterGive}",
+                "mode": "dec",
+                "value": 1
+              },
+              {
+                "func": "LABEL",
+                "label": "${counterTake}",
+                "mode": "inc",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "button-p1-exchange-red-blue": {
+    "id": "button-p1-exchange-red-blue",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-red-green",
+    "x": 237.5,
+    "y": 173,
+    "css": {
+      "font-size": "15px",
+      "--wcMain": "#1e90ff",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "text": "♠",
+    "take": "blue"
+  },
+  "button-p1-exchange-red-yellow": {
+    "id": "button-p1-exchange-red-yellow",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-red-green",
+    "x": 265,
+    "y": 173,
+    "css": {
+      "font-size": "15px",
+      "--wcMain": "#ffef00",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "text": "♦",
+    "take": "yellow"
+  },
+  "shares-p1-green": {
+    "id": "shares-p1-green",
+    "parent": "player-area-p1",
+    "inheritFrom": {
+      "shares-p1-red": [
+        "findOtherPresidentRoutine",
+        "textChangeRoutine"
+      ],
+      "shares-bank-green": "*"
+    },
+    "x": 310,
+    "y": 40,
+    "text": 0,
+    "player": 1
+  },
+  "button-p1-green-buy": {
+    "id": "button-p1-green-buy",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-red-buy",
+    "x": 310,
+    "y": 121,
+    "css": {
+      "font-size": "15px",
+      "--wcMain": "#7cfc00",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "text": "BUY ♣",
+    "player": 1,
+    "company": "green"
+  },
+  "button-p1-green-sell": {
+    "id": "button-p1-green-sell",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": {
+      "button-p1-red-sell": "clickRoutine",
+      "button-p1-green-buy": "*"
+    },
+    "x": 310,
+    "y": 146.5,
+    "text": "SELL ♣",
+    "player": 1,
+    "company": "green"
+  },
+  "button-p1-exchange-green-red": {
+    "id": "button-p1-exchange-green-red",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-red-green",
+    "x": 310,
+    "y": 173,
+    "css": {
+      "font-size": "15px",
+      "--wcMain": "#e34234",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "text": "♥",
+    "give": "green",
+    "take": "red"
+  },
+  "button-p1-exchange-green-blue": {
+    "id": "button-p1-exchange-green-blue",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-red-blue",
+    "x": 337.5,
+    "y": 173,
+    "give": "green"
+  },
+  "button-p1-exchange-green-yellow": {
+    "id": "button-p1-exchange-green-yellow",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-red-yellow",
+    "x": 365,
+    "y": 173,
+    "give": "green"
+  },
+  "shares-p1-blue": {
+    "id": "shares-p1-blue",
+    "parent": "player-area-p1",
+    "inheritFrom": {
+      "shares-p1-red": [
+        "findOtherPresidentRoutine",
+        "textChangeRoutine"
+      ],
+      "shares-bank-blue": "*"
+    },
+    "x": 410,
+    "y": 40,
+    "text": 0,
+    "player": 1
+  },
+  "button-p1-blue-buy": {
+    "id": "button-p1-blue-buy",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-red-buy",
+    "x": 410,
+    "y": 121,
+    "css": {
+      "font-size": "15px",
+      "--wcMain": "#1e90ff",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "text": "BUY ♠",
+    "player": 1,
+    "company": "blue"
+  },
+  "button-p1-blue-sell": {
+    "id": "button-p1-blue-sell",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": {
+      "button-p1-red-sell": "clickRoutine",
+      "button-p1-blue-buy": "*"
+    },
+    "x": 410,
+    "y": 146.5,
+    "text": "SELL ♠"
+  },
+  "button-p1-exchange-blue-red": {
+    "id": "button-p1-exchange-blue-red",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-green-red",
+    "x": 410,
+    "y": 173,
+    "give": "blue"
+  },
+  "button-p1-exchange-blue-green": {
+    "id": "button-p1-exchange-blue-green",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-red-green",
+    "x": 437.5,
+    "y": 173,
+    "give": "blue"
+  },
+  "button-p1-exchange-blue-yellow": {
+    "id": "button-p1-exchange-blue-yellow",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-red-yellow",
+    "x": 465,
+    "y": 173,
+    "give": "blue"
+  },
+  "shares-p1-yellow": {
+    "id": "shares-p1-yellow",
+    "parent": "player-area-p1",
+    "inheritFrom": {
+      "shares-p1-red": [
+        "findOtherPresidentRoutine",
+        "textChangeRoutine"
+      ],
+      "shares-bank-yellow": "*"
+    },
+    "x": 510,
+    "y": 40,
+    "text": 0,
+    "player": 1
+  },
+  "button-p1-yellow-buy": {
+    "id": "button-p1-yellow-buy",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-red-buy",
+    "x": 510,
+    "y": 121,
+    "css": {
+      "font-size": "15px",
+      "--wcMain": "#ffef00",
+      "--wcBorder": "#000000",
+      "--wcFont": "#000000",
+      "--wcFontOH": "#ffffff"
+    },
+    "text": "BUY ♦",
+    "player": 1,
+    "company": "yellow"
+  },
+  "button-p1-yellow-sell": {
+    "id": "button-p1-yellow-sell",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": {
+      "button-p1-red-sell": "clickRoutine",
+      "button-p1-yellow-buy": "*"
+    },
+    "x": 510,
+    "y": 146.5,
+    "text": "SELL ♦"
+  },
+  "button-p1-exchange-yellow-red": {
+    "id": "button-p1-exchange-yellow-red",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-green-red",
+    "x": 510,
+    "y": 173,
+    "give": "yellow"
+  },
+  "button-p1-exchange-yellow-green": {
+    "id": "button-p1-exchange-yellow-green",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-red-green",
+    "x": 537.5,
+    "y": 173,
+    "give": "yellow"
+  },
+  "button-p1-exchange-yellow-blue": {
+    "id": "button-p1-exchange-yellow-blue",
+    "type": "button",
+    "parent": "player-area-p1",
+    "inheritFrom": "button-p1-exchange-red-blue",
+    "x": 565,
+    "y": 173,
+    "give": "yellow"
+  },
+  "player-area-p2": {
+    "id": "player-area-p2",
+    "inheritFrom": "player-area-p1",
+    "x": 0,
+    "y": 200,
+    "cash": "cash-p2",
+    "linkedToSeat": "seat-p2",
+    "share-counters-prefix": "shares-p2-",
+    "activeFace": 0
+  },
+  "cash-p2": {
+    "id": "cash-p2",
+    "parent": "player-area-p2",
+    "inheritFrom": "cash-p1",
+    "text": 690
+  },
+  "seat-p2": {
+    "id": "seat-p2",
+    "type": "seat",
+    "parent": "player-area-p2",
+    "index": 2,
+    "inheritFrom": {
+      "seat-p1": [
+        "x",
+        "y",
+        "width",
+        "height",
+        "hideWhenUnused",
+        "clickRoutine",
+        "css"
+      ]
+    },
+    "color": "#999999",
+    "foreground": "#000000"
+  },
+  "button-from-fund-p2": {
+    "id": "button-from-fund-p2",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-from-fund-p1"
+  },
+  "button-to-fund-p2": {
+    "id": "button-to-fund-p2",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-to-fund-p1"
+  },
+  "button-from-bank-p2": {
+    "id": "button-from-bank-p2",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-from-bank-p1"
+  },
+  "shares-p2-red": {
+    "id": "shares-p2-red",
+    "parent": "player-area-p2",
+    "inheritFrom": "shares-p1-red",
+    "text": 0,
+    "player": 2
+  },
+  "button-p2-red-buy": {
+    "id": "button-p2-red-buy",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-red-buy",
+    "player": 2
+  },
+  "button-p2-red-sell": {
+    "id": "button-p2-red-sell",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-red-sell",
+    "player": 2
+  },
+  "button-p2-exchange-red-green": {
+    "id": "button-p2-exchange-red-green",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-red-green",
+    "player": 2
+  },
+  "button-p2-exchange-red-blue": {
+    "id": "button-p2-exchange-red-blue",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-red-blue",
+    "player": 2
+  },
+  "button-p2-exchange-red-yellow": {
+    "id": "button-p2-exchange-red-yellow",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-red-yellow",
+    "player": 2
+  },
+  "shares-p2-green": {
+    "id": "shares-p2-green",
+    "parent": "player-area-p2",
+    "inheritFrom": "shares-p1-green",
+    "text": 0,
+    "player": 2
+  },
+  "button-p2-green-buy": {
+    "id": "button-p2-green-buy",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-green-buy",
+    "player": 2
+  },
+  "button-p2-green-sell": {
+    "id": "button-p2-green-sell",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-green-sell",
+    "player": 2
+  },
+  "button-p2-exchange-green-red": {
+    "id": "button-p2-exchange-green-red",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-green-red",
+    "player": 2
+  },
+  "button-p2-exchange-green-blue": {
+    "id": "button-p2-exchange-green-blue",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-green-blue",
+    "player": 2
+  },
+  "button-p2-exchange-green-yellow": {
+    "id": "button-p2-exchange-green-yellow",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-green-yellow",
+    "player": 2
+  },
+  "shares-p2-blue": {
+    "id": "shares-p2-blue",
+    "parent": "player-area-p2",
+    "inheritFrom": "shares-p1-blue",
+    "text": 0,
+    "player": 2
+  },
+  "button-p2-blue-buy": {
+    "id": "button-p2-blue-buy",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-blue-buy",
+    "player": 2
+  },
+  "button-p2-blue-sell": {
+    "id": "button-p2-blue-sell",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-blue-sell",
+    "player": 2
+  },
+  "button-p2-exchange-blue-red": {
+    "id": "button-p2-exchange-blue-red",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-blue-red",
+    "player": 2
+  },
+  "button-p2-exchange-blue-green": {
+    "id": "button-p2-exchange-blue-green",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-blue-green",
+    "player": 2
+  },
+  "button-p2-exchange-blue-yellow": {
+    "id": "button-p2-exchange-blue-yellow",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-blue-yellow",
+    "player": 2
+  },
+  "shares-p2-yellow": {
+    "id": "shares-p2-yellow",
+    "parent": "player-area-p2",
+    "inheritFrom": "shares-p1-yellow",
+    "text": 0,
+    "player": 2
+  },
+  "button-p2-yellow-buy": {
+    "id": "button-p2-yellow-buy",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-yellow-buy",
+    "player": 2
+  },
+  "button-p2-yellow-sell": {
+    "id": "button-p2-yellow-sell",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-yellow-sell",
+    "player": 2
+  },
+  "button-p2-exchange-yellow-red": {
+    "id": "button-p2-exchange-yellow-red",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-yellow-red",
+    "player": 2
+  },
+  "button-p2-exchange-yellow-green": {
+    "id": "button-p2-exchange-yellow-green",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-yellow-green",
+    "player": 2
+  },
+  "button-p2-exchange-yellow-blue": {
+    "id": "button-p2-exchange-yellow-blue",
+    "type": "button",
+    "parent": "player-area-p2",
+    "inheritFrom": "button-p1-exchange-yellow-blue",
+    "player": 2
+  },
+  "player-area-p3": {
+    "id": "player-area-p3",
+    "inheritFrom": "player-area-p1",
+    "x": 0,
+    "y": 400,
+    "cash": "cash-p3",
+    "linkedToSeat": "seat-p3",
+    "share-counters-prefix": "shares-p3-"
+  },
+  "cash-p3": {
+    "id": "cash-p3",
+    "parent": "player-area-p3",
+    "inheritFrom": "cash-p1",
+    "text": 690
+  },
+  "seat-p3": {
+    "id": "seat-p3",
+    "type": "seat",
+    "parent": "player-area-p3",
+    "index": 3,
+    "inheritFrom": {
+      "seat-p1": [
+        "x",
+        "y",
+        "width",
+        "height",
+        "hideWhenUnused",
+        "clickRoutine",
+        "css"
+      ]
+    },
+    "color": "#999999",
+    "foreground": "#000000"
+  },
+  "button-from-fund-p3": {
+    "id": "button-from-fund-p3",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-from-fund-p1"
+  },
+  "button-to-fund-p3": {
+    "id": "button-to-fund-p3",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-to-fund-p1"
+  },
+  "button-from-bank-p3": {
+    "id": "button-from-bank-p3",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-from-bank-p1"
+  },
+  "shares-p3-red": {
+    "id": "shares-p3-red",
+    "parent": "player-area-p3",
+    "inheritFrom": "shares-p1-red",
+    "text": 0,
+    "player": 3
+  },
+  "button-p3-red-buy": {
+    "id": "button-p3-red-buy",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-red-buy",
+    "player": 3
+  },
+  "button-p3-red-sell": {
+    "id": "button-p3-red-sell",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-red-sell",
+    "player": 3
+  },
+  "button-p3-exchange-red-green": {
+    "id": "button-p3-exchange-red-green",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-red-green",
+    "player": 3
+  },
+  "button-p3-exchange-red-blue": {
+    "id": "button-p3-exchange-red-blue",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-red-blue",
+    "player": 3
+  },
+  "button-p3-exchange-red-yellow": {
+    "id": "button-p3-exchange-red-yellow",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-red-yellow",
+    "player": 3
+  },
+  "shares-p3-green": {
+    "id": "shares-p3-green",
+    "parent": "player-area-p3",
+    "inheritFrom": "shares-p1-green",
+    "text": 0,
+    "player": 3
+  },
+  "button-p3-green-buy": {
+    "id": "button-p3-green-buy",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-green-buy",
+    "player": 3
+  },
+  "button-p3-green-sell": {
+    "id": "button-p3-green-sell",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-green-sell",
+    "player": 3
+  },
+  "button-p3-exchange-green-red": {
+    "id": "button-p3-exchange-green-red",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-green-red",
+    "player": 3
+  },
+  "button-p3-exchange-green-blue": {
+    "id": "button-p3-exchange-green-blue",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-green-blue",
+    "player": 3
+  },
+  "button-p3-exchange-green-yellow": {
+    "id": "button-p3-exchange-green-yellow",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-green-yellow",
+    "player": 3
+  },
+  "shares-p3-blue": {
+    "id": "shares-p3-blue",
+    "parent": "player-area-p3",
+    "inheritFrom": "shares-p1-blue",
+    "text": 0,
+    "player": 3
+  },
+  "button-p3-blue-buy": {
+    "id": "button-p3-blue-buy",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-blue-buy",
+    "player": 3
+  },
+  "button-p3-blue-sell": {
+    "id": "button-p3-blue-sell",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-blue-sell",
+    "player": 3
+  },
+  "button-p3-exchange-blue-red": {
+    "id": "button-p3-exchange-blue-red",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-blue-red",
+    "player": 3
+  },
+  "button-p3-exchange-blue-green": {
+    "id": "button-p3-exchange-blue-green",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-blue-green",
+    "player": 3
+  },
+  "button-p3-exchange-blue-yellow": {
+    "id": "button-p3-exchange-blue-yellow",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-blue-yellow",
+    "player": 3
+  },
+  "shares-p3-yellow": {
+    "id": "shares-p3-yellow",
+    "parent": "player-area-p3",
+    "inheritFrom": "shares-p1-yellow",
+    "text": 0,
+    "player": 3
+  },
+  "button-p3-yellow-buy": {
+    "id": "button-p3-yellow-buy",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-yellow-buy",
+    "player": 3
+  },
+  "button-p3-yellow-sell": {
+    "id": "button-p3-yellow-sell",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-yellow-sell",
+    "player": 3
+  },
+  "button-p3-exchange-yellow-red": {
+    "id": "button-p3-exchange-yellow-red",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-yellow-red",
+    "player": 3
+  },
+  "button-p3-exchange-yellow-green": {
+    "id": "button-p3-exchange-yellow-green",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-yellow-green",
+    "player": 3
+  },
+  "button-p3-exchange-yellow-blue": {
+    "id": "button-p3-exchange-yellow-blue",
+    "type": "button",
+    "parent": "player-area-p3",
+    "inheritFrom": "button-p1-exchange-yellow-blue",
+    "player": 3
+  },
+  "player-area-p4": {
+    "id": "player-area-p4",
+    "inheritFrom": "player-area-p1",
+    "x": 0,
+    "y": 600,
+    "cash": "cash-p4",
+    "linkedToSeat": "seat-p4",
+    "share-counters-prefix": "shares-p4-"
+  },
+  "cash-p4": {
+    "id": "cash-p4",
+    "parent": "player-area-p4",
+    "inheritFrom": "cash-p1",
+    "text": 690
+  },
+  "seat-p4": {
+    "id": "seat-p4",
+    "type": "seat",
+    "parent": "player-area-p4",
+    "index": 4,
+    "inheritFrom": {
+      "seat-p1": [
+        "x",
+        "y",
+        "width",
+        "height",
+        "hideWhenUnused",
+        "clickRoutine",
+        "css"
+      ]
+    },
+    "color": "#999999",
+    "foreground": "#000000"
+  },
+  "button-from-fund-p4": {
+    "id": "button-from-fund-p4",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-from-fund-p1"
+  },
+  "button-to-fund-p4": {
+    "id": "button-to-fund-p4",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-to-fund-p1"
+  },
+  "button-from-bank-p4": {
+    "id": "button-from-bank-p4",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-from-bank-p1"
+  },
+  "shares-p4-red": {
+    "id": "shares-p4-red",
+    "parent": "player-area-p4",
+    "inheritFrom": "shares-p1-red",
+    "text": 0,
+    "player": 4
+  },
+  "button-p4-red-buy": {
+    "id": "button-p4-red-buy",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-red-buy",
+    "player": 4
+  },
+  "button-p4-red-sell": {
+    "id": "button-p4-red-sell",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-red-sell",
+    "player": 4
+  },
+  "button-p4-exchange-red-green": {
+    "id": "button-p4-exchange-red-green",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-red-green",
+    "player": 4
+  },
+  "button-p4-exchange-red-blue": {
+    "id": "button-p4-exchange-red-blue",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-red-blue",
+    "player": 4
+  },
+  "button-p4-exchange-red-yellow": {
+    "id": "button-p4-exchange-red-yellow",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-red-yellow",
+    "player": 4
+  },
+  "shares-p4-green": {
+    "id": "shares-p4-green",
+    "parent": "player-area-p4",
+    "inheritFrom": "shares-p1-green",
+    "text": 0,
+    "player": 4
+  },
+  "button-p4-green-buy": {
+    "id": "button-p4-green-buy",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-green-buy",
+    "player": 4
+  },
+  "button-p4-green-sell": {
+    "id": "button-p4-green-sell",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-green-sell",
+    "player": 4
+  },
+  "button-p4-exchange-green-red": {
+    "id": "button-p4-exchange-green-red",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-green-red",
+    "player": 4
+  },
+  "button-p4-exchange-green-blue": {
+    "id": "button-p4-exchange-green-blue",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-green-blue",
+    "player": 4
+  },
+  "button-p4-exchange-green-yellow": {
+    "id": "button-p4-exchange-green-yellow",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-green-yellow",
+    "player": 4
+  },
+  "shares-p4-blue": {
+    "id": "shares-p4-blue",
+    "parent": "player-area-p4",
+    "inheritFrom": "shares-p1-blue",
+    "text": 0,
+    "player": 4
+  },
+  "button-p4-blue-buy": {
+    "id": "button-p4-blue-buy",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-blue-buy",
+    "player": 4
+  },
+  "button-p4-blue-sell": {
+    "id": "button-p4-blue-sell",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-blue-sell",
+    "player": 4
+  },
+  "button-p4-exchange-blue-red": {
+    "id": "button-p4-exchange-blue-red",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-blue-red",
+    "player": 4
+  },
+  "button-p4-exchange-blue-green": {
+    "id": "button-p4-exchange-blue-green",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-blue-green",
+    "player": 4
+  },
+  "button-p4-exchange-blue-yellow": {
+    "id": "button-p4-exchange-blue-yellow",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-blue-yellow",
+    "player": 4
+  },
+  "shares-p4-yellow": {
+    "id": "shares-p4-yellow",
+    "parent": "player-area-p4",
+    "inheritFrom": "shares-p1-yellow",
+    "text": 0,
+    "player": 4
+  },
+  "button-p4-yellow-buy": {
+    "id": "button-p4-yellow-buy",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-yellow-buy",
+    "player": 4
+  },
+  "button-p4-yellow-sell": {
+    "id": "button-p4-yellow-sell",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-yellow-sell",
+    "player": 4
+  },
+  "button-p4-exchange-yellow-red": {
+    "id": "button-p4-exchange-yellow-red",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-yellow-red",
+    "player": 4
+  },
+  "button-p4-exchange-yellow-green": {
+    "id": "button-p4-exchange-yellow-green",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-yellow-green",
+    "player": 4
+  },
+  "button-p4-exchange-yellow-blue": {
+    "id": "button-p4-exchange-yellow-blue",
+    "type": "button",
+    "parent": "player-area-p4",
+    "inheritFrom": "button-p1-exchange-yellow-blue",
+    "player": 4
+  },
+  "player-area-p5": {
+    "id": "player-area-p5",
+    "inheritFrom": "player-area-p1",
+    "x": 0,
+    "y": 800,
+    "cash": "cash-p5",
+    "linkedToSeat": "seat-p5",
+    "share-counters-prefix": "shares-p5-"
+  },
+  "cash-p5": {
+    "id": "cash-p5",
+    "parent": "player-area-p5",
+    "inheritFrom": "cash-p1",
+    "text": 690
+  },
+  "seat-p5": {
+    "id": "seat-p5",
+    "type": "seat",
+    "parent": "player-area-p5",
+    "index": 5,
+    "inheritFrom": {
+      "seat-p1": [
+        "x",
+        "y",
+        "width",
+        "height",
+        "hideWhenUnused",
+        "clickRoutine",
+        "css"
+      ]
+    }
+  },
+  "button-from-fund-p5": {
+    "id": "button-from-fund-p5",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-from-fund-p1"
+  },
+  "button-to-fund-p5": {
+    "id": "button-to-fund-p5",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-to-fund-p1"
+  },
+  "button-from-bank-p5": {
+    "id": "button-from-bank-p5",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-from-bank-p1"
+  },
+  "shares-p5-red": {
+    "id": "shares-p5-red",
+    "parent": "player-area-p5",
+    "inheritFrom": "shares-p1-red",
+    "text": 0,
+    "player": 5
+  },
+  "button-p5-red-buy": {
+    "id": "button-p5-red-buy",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-red-buy",
+    "player": 5
+  },
+  "button-p5-red-sell": {
+    "id": "button-p5-red-sell",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-red-sell",
+    "player": 5
+  },
+  "button-p5-exchange-red-green": {
+    "id": "button-p5-exchange-red-green",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-red-green",
+    "player": 5
+  },
+  "button-p5-exchange-red-yellow": {
+    "id": "button-p5-exchange-red-yellow",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-red-yellow",
+    "player": 5
+  },
+  "button-p5-exchange-red-blue": {
+    "id": "button-p5-exchange-red-blue",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-red-blue",
+    "player": 5
+  },
+  "shares-p5-green": {
+    "id": "shares-p5-green",
+    "parent": "player-area-p5",
+    "inheritFrom": "shares-p1-green",
+    "text": 0,
+    "player": 5
+  },
+  "button-p5-green-buy": {
+    "id": "button-p5-green-buy",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-green-buy",
+    "player": 5
+  },
+  "button-p5-green-sell": {
+    "id": "button-p5-green-sell",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-green-sell",
+    "player": 5
+  },
+  "button-p5-exchange-green-red": {
+    "id": "button-p5-exchange-green-red",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-green-red",
+    "player": 5
+  },
+  "button-p5-exchange-green-blue": {
+    "id": "button-p5-exchange-green-blue",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-green-blue",
+    "player": 5
+  },
+  "button-p5-exchange-green-yellow": {
+    "id": "button-p5-exchange-green-yellow",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-green-yellow",
+    "player": 5
+  },
+  "shares-p5-blue": {
+    "id": "shares-p5-blue",
+    "parent": "player-area-p5",
+    "inheritFrom": "shares-p1-blue",
+    "text": 0,
+    "player": 5
+  },
+  "button-p5-blue-buy": {
+    "id": "button-p5-blue-buy",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-blue-buy",
+    "player": 5
+  },
+  "button-p5-blue-sell": {
+    "id": "button-p5-blue-sell",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-blue-sell",
+    "player": 5
+  },
+  "button-p5-exchange-blue-red": {
+    "id": "button-p5-exchange-blue-red",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-blue-red",
+    "player": 5
+  },
+  "button-p5-exchange-blue-green": {
+    "id": "button-p5-exchange-blue-green",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-blue-green",
+    "player": 5
+  },
+  "button-p5-exchange-blue-yellow": {
+    "id": "button-p5-exchange-blue-yellow",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-blue-yellow",
+    "player": 5
+  },
+  "shares-p5-yellow": {
+    "id": "shares-p5-yellow",
+    "parent": "player-area-p5",
+    "inheritFrom": "shares-p1-yellow",
+    "text": 0,
+    "player": 5
+  },
+  "button-p5-yellow-buy": {
+    "id": "button-p5-yellow-buy",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-yellow-buy",
+    "player": 5
+  },
+  "button-p5-yellow-sell": {
+    "id": "button-p5-yellow-sell",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-yellow-sell",
+    "player": 5
+  },
+  "button-p5-exchange-yellow-red": {
+    "id": "button-p5-exchange-yellow-red",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-yellow-red",
+    "player": 5
+  },
+  "button-p5-exchange-yellow-green": {
+    "id": "button-p5-exchange-yellow-green",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-yellow-green",
+    "player": 5
+  },
+  "button-p5-exchange-yellow-blue": {
+    "id": "button-p5-exchange-yellow-blue",
+    "type": "button",
+    "parent": "player-area-p5",
+    "inheritFrom": "button-p1-exchange-yellow-blue",
+    "player": 5
+  },
+  "button-end-turn": {
+    "id": "button-end-turn",
+    "type": "button",
+    "parent": "board",
+    "x": 382.5,
+    "y": 230,
+    "width": 100,
+    "height": 30,
+    "css": {
+      "font-size": "15px"
+    },
+    "text": "END TURN",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ]
+  },
+  "button-setup": {
+    "id": "button-setup",
+    "type": "button",
+    "parent": "board",
+    "x": 382.5,
+    "y": 272,
+    "width": 100,
+    "height": 30,
+    "css": {
+      "font-size": "15px"
+    },
+    "text": "SETUP",
+    "clickRoutine": [
+      {
+        "note": "Check that the user really wants to set up a fresh game",
+        "func": "INPUT",
+        "header": "Set up a new game?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Are you sure that you want to erase any progress and start a new game?"
+          }
+        ]
+      },
+      {
+        "note": "Reset the board squares ready to set the board up",
+        "func": "CALL",
+        "routine": "resetSquaresRoutine"
+      },
+      {
+        "note": "Recall the board randomiser cards",
+        "func": "RECALL",
+        "holder": "setup-holder"
+      },
+      {
+        "note": "Randomise the active face of the cards",
+        "func": "FLIP",
+        "collection": [
+          "card-setup-1",
+          "card-setup-2",
+          "card-setup-3",
+          "card-setup-4"
+        ],
+        "faceCycle": "random"
+      },
+      {
+        "note": "Move the board 1 card to the active holder",
+        "func": "SET",
+        "collection": [
+          "card-setup-1"
+        ],
+        "property": "parent",
+        "value": "setup-holder-active"
+      },
+      {
+        "note": "Shuffle the board 2-4 cards",
+        "func": "SHUFFLE",
+        "holder": "setup-holder"
+      },
+      {
+        "note": "Setup the board segments from each of the 4 cards",
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "note": "If this isn't the first board segment, move in the next card",
+            "func": "IF",
+            "operand1": "${value}",
+            "relation": ">",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "setup-holder",
+                "to": "setup-holder-active",
+                "count": 1
+              }
+            ]
+          },
+          {
+            "note": "Set up the current segment from the active card",
+            "func": "CALL",
+            "routine": "setupBoardSegmentRoutine",
+            "arguments": {
+              "holderPrefix": "board-space-holder-segment${value}-"
+            }
+          },
+          {
+            "note": "Move the card to the discard",
+            "func": "MOVE",
+            "from": "setup-holder-active",
+            "to": "setup-holder-discard",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "note": "Set all stock prices to 100",
+        "func": "SET",
+        "collection": [
+          "share-price-red",
+          "share-price-green",
+          "share-price-blue",
+          "share-price-yellow"
+        ],
+        "property": "price",
+        "value": 100
+      },
+      {
+        "note": "Set player starting cash to $690",
+        "func": "LABEL",
+        "label": [
+          "cash-p1",
+          "cash-p2",
+          "cash-p3",
+          "cash-p4",
+          "cash-p5"
+        ],
+        "value": 690
+      },
+      {
+        "note": "Set the fund to $0",
+        "func": "LABEL",
+        "label": "cash-fund",
+        "value": 0
+      },
+      {
+        "note": "Set player share counts to 0",
+        "func": "LABEL",
+        "label": [
+          "shares-p1-red",
+          "shares-p1-green",
+          "shares-p1-blue",
+          "shares-p1-yellow",
+          "shares-p2-red",
+          "shares-p2-green",
+          "shares-p2-blue",
+          "shares-p2-yellow",
+          "shares-p3-red",
+          "shares-p3-green",
+          "shares-p3-blue",
+          "shares-p3-yellow",
+          "shares-p4-red",
+          "shares-p4-green",
+          "shares-p4-blue",
+          "shares-p4-yellow",
+          "shares-p5-red",
+          "shares-p5-green",
+          "shares-p5-blue",
+          "shares-p5-yellow"
+        ],
+        "value": 0
+      },
+      {
+        "note": "Set bank share counts to 15",
+        "func": "LABEL",
+        "label": [
+          "shares-bank-red",
+          "shares-bank-green",
+          "shares-bank-blue",
+          "shares-bank-yellow"
+        ],
+        "value": 15
+      },
+      {
+        "note": "Move the pawn to the Start space 1/2",
+        "func": "SET",
+        "collection": [
+          "pawn"
+        ],
+        "property": "x",
+        "value": 625
+      },
+      {
+        "note": "Move the pawn to the Start space 2/2",
+        "func": "SET",
+        "collection": [
+          "pawn"
+        ],
+        "property": "y",
+        "value": 900
+      },
+      {
+        "note": "Set a random player as start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "setupBoardSegmentRoutine": [
+      {
+        "note": "Select the card in the active holder",
+        "func": "SELECT",
+        "property": "parent",
+        "value": "setup-holder-active"
+      },
+      {
+        "note": "Determine which squares list to used based on the active face",
+        "func": "GET",
+        "property": "squareList"
+      },
+      {
+        "note": "Get the relevant list of squares",
+        "func": "GET",
+        "property": "${squareList}",
+        "variable": "squares"
+      },
+      {
+        "note": "Loop through the squares and place each of them",
+        "func": "FOREACH",
+        "in": "${squares}",
+        "loopRoutine": [
+          "var pos = ${key} + 1",
+          {
+            "func": "MOVE",
+            "from": "setup-holder-${value}",
+            "to": "${holderPrefix}${pos}",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "resetSquaresRoutine": [
+      {
+        "note": "Recall the board squares",
+        "func": "RECALL",
+        "holder": "setup-holder-start"
+      },
+      {
+        "note": "Move each card type into its own holder",
+        "func": "FOREACH",
+        "in": [
+          "goal",
+          "red",
+          "green",
+          "blue",
+          "yellow",
+          "almighty",
+          "president",
+          "event",
+          "dividend"
+        ],
+        "loopRoutine": [
+          {
+            "note": "Select all the squares of the given type",
+            "func": "SELECT",
+            "property": "cardType",
+            "value": "cardtype-square-${value}"
+          },
+          {
+            "note": "...and move them to their holder",
+            "func": "SET",
+            "property": "parent",
+            "value": "setup-holder-${value}"
+          }
+        ]
+      }
+    ]
+  },
+  "button-end-game": {
+    "id": "button-end-game",
+    "type": "button",
+    "parent": "board",
+    "x": 382.5,
+    "y": 314,
+    "width": 100,
+    "height": 30,
+    "css": {
+      "font-size": "15px"
+    },
+    "text": "END GAME",
+    "clickRoutine": [
+      {
+        "note": "Check that the user really wants to end the game",
+        "func": "INPUT",
+        "header": "Sell all shares and end the game?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Are you sure that you want to sell all shares and end the game?"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          "var cash = 'cash-p' + ${value}",
+          "var score = ${PROPERTY text OF $cash}",
+          "var counterPrefix = 'shares-p' + ${value}",
+          "var counterPrefix = ${counterPrefix} + '-'",
+          {
+            "func": "FOREACH",
+            "in": [
+              "red",
+              "green",
+              "blue",
+              "yellow"
+            ],
+            "loopRoutine": [
+              "var marker = 'share-price-' + ${value}",
+              "var counter = ${counterPrefix} + ${value}",
+              "var subtotal = ${PROPERTY price OF $marker} * ${PROPERTY text OF $counter}",
+              "var score = ${score} + ${subtotal}"
+            ]
+          },
+          {
+            "func": "LABEL",
+            "label": "${cash}",
+            "value": "${score}"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "shares-p1-red",
+          "shares-p1-green",
+          "shares-p1-blue",
+          "shares-p1-yellow",
+          "shares-p2-red",
+          "shares-p2-green",
+          "shares-p2-blue",
+          "shares-p2-yellow",
+          "shares-p3-red",
+          "shares-p3-green",
+          "shares-p3-blue",
+          "shares-p3-yellow",
+          "shares-p4-red",
+          "shares-p4-green",
+          "shares-p4-blue",
+          "shares-p4-yellow",
+          "shares-p5-red",
+          "shares-p5-green",
+          "shares-p5-blue",
+          "shares-p5-yellow"
+        ],
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "shares-bank-red",
+          "shares-bank-green",
+          "shares-bank-blue",
+          "shares-bank-yellow"
+        ],
+        "value": 15
+      }
+    ]
+  },
+  "pawn": {
+    "id": "pawn",
+    "x": 625,
+    "y": 900,
+    "width": 50.4,
+    "height": 90,
+    "color": "#ba55d3",
+    "borderColor": "black",
+    "borderWidth": 1,
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    }
+  }
+}
