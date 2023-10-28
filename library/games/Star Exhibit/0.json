@@ -1533,7 +1533,11 @@
     "y": 0,
     "width": 50,
     "height": 50,
-    "movable": false
+    "movable": false,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "laurel-1-01": {
     "type": "card",
@@ -1983,7 +1987,13 @@
     "type": "deck",
     "cardDefaults": {
       "width": 50,
-      "height": 50
+      "height": 50,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        }
+      }
     },
     "cardTypes": {
       "cardtype-laurel-1": {
@@ -2060,7 +2070,15 @@
     "y": 0,
     "width": 50,
     "height": 50,
-    "movable": false
+    "movable": false,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "laurel-5-01": {
     "type": "card",
@@ -2382,7 +2400,13 @@
     "movableInEdit": false,
     "cardDefaults": {
       "width": 60,
-      "height": 60
+      "height": 60,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        }
+      }
     },
     "faceTemplates": [
       {
@@ -2435,8 +2459,11 @@
     "y": 0,
     "width": 60,
     "height": 60,
-    "z": 1,
-    "parent": "holder-peacock"
+    "parent": "holder-peacock",
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "animal-peacock-1": {
     "id": "animal-peacock-1",
@@ -2505,7 +2532,13 @@
     "height": 200,
     "cardDefaults": {
       "width": 200,
-      "height": 200
+      "height": 200,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        }
+      }
     },
     "cardTypes": {
       "cardtype-playmat-armadillo": {
@@ -2567,7 +2600,11 @@
     "x": 0,
     "y": 0,
     "width": 200,
-    "height": 200
+    "height": 200,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "playmat-armadillo": {
     "id": "playmat-armadillo",
@@ -2599,7 +2636,11 @@
     "x": 0,
     "y": 0,
     "width": 60,
-    "height": 60
+    "height": 60,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "animal-armadillo-1": {
     "id": "animal-armadillo-1",
@@ -2698,7 +2739,11 @@
     "x": 0,
     "y": 0,
     "width": 60,
-    "height": 60
+    "height": 60,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "animal-crocodile-1": {
     "id": "animal-crocodile-1",
@@ -2797,7 +2842,11 @@
     "x": 0,
     "y": 0,
     "width": 60,
-    "height": 60
+    "height": 60,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "animal-hyena-1": {
     "id": "animal-hyena-1",
@@ -2896,7 +2945,11 @@
     "x": 0,
     "y": 0,
     "width": 60,
-    "height": 60
+    "height": 60,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "animal-ibis-1": {
     "id": "animal-ibis-1",
@@ -2995,7 +3048,11 @@
     "x": 0,
     "y": 0,
     "width": 60,
-    "height": 60
+    "height": 60,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "animal-monkey-1": {
     "id": "animal-monkey-1",
@@ -3094,7 +3151,11 @@
     "x": 0,
     "y": 0,
     "width": 60,
-    "height": 60
+    "height": 60,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "animal-rhino-1": {
     "id": "animal-rhino-1",
@@ -3193,7 +3254,11 @@
     "x": 0,
     "y": 0,
     "width": 60,
-    "height": 60
+    "height": 60,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
   },
   "animal-tiger-1": {
     "id": "animal-tiger-1",
