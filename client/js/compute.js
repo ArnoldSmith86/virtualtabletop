@@ -754,6 +754,13 @@ const compute_ops = [
     sample: 'var a = colorCreateHue',
     call: function(v, x) { return v = randomHue(x); },
     hash: '29a04e79e53168e3680ee1483a451f4e'
+  },
+  {
+    name: 'fetch',
+    desc: 'downloads a given URL and returns its content as a string',
+    sample: 'var a = fetch ${x}',
+    call: async function(v, x, y) { return v = await ((typeof y === 'object' && y !== null) ? await fetch(x, y) : await fetch(x)).text() },
+    hash: 'e1aebce1c5225dc5f624f3ccb3ff104d'
   }
 ];
 
