@@ -21,7 +21,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1698513871502,
+      "lastUpdate": 1698514404515,
       "showName": false,
       "skill": "",
       "description": "",
@@ -122,7 +122,7 @@
         "loopRoutine": [
           "var name = ${value.name}",
           "var cardNum = ${key} + 1",
-          "var cardNum = ${cardNum} + ''//This converts the numerical value of key to a string in order to match the cardType.",
+          "var cardNum = ${cardNum} + '' //This converts the numerical value of key to a string in order to match the cardType.",
           {
             "func": "SELECT",
             "type": "card",
