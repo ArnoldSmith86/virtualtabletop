@@ -1,0 +1,3324 @@
+{
+  "_meta": {
+    "version": 11,
+    "info": {
+      "name": "Star Exhibit",
+      "image": "/assets/708410678_139305",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/368061/zoo-vadis",
+      "year": "2023",
+      "mode": "vs",
+      "time": "40",
+      "attribution": "<div>Game layout and scripting by Andy Pymont, released to the public domain under CC0.</div><div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"a crocodile is crowned Olympic champion, Pixar\".\n</div>\nTile graphics are from https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nCraig\n- Curved Arrow https://thenounproject.com/icon/arrow-8828/\nEucalpy\n- Ibis https://thenounproject.com/icon/ibis-4931541/\nJaime Serra\n- Laurel Wreath https://thenounproject.com/icon/laurel-5380453/\nGhan Khoon Lay\n- Zoo Keeper https://thenounproject.com/icon/keeper-977741/\nLauren\n- Claw https://thenounproject.com/icon/claw-2259408/\nLeo Kennedy\n- Tunnel https://thenounproject.com/icon/tunnel-1193154/\nMade\n- Zoo Sign https://thenounproject.com/icon/zoo-3800771/\nOlivier Guin\n- Laurel https://thenounproject.com/icon/laurel-1177/\nSmalllike\n- Hyena https://thenounproject.com/icon/hyena-3449040/\nSymbolon\n- Crocodile https://thenounproject.com/icon/crocodile-3263724/\n- Monkey https://thenounproject.com/icon/monkkey-3263835/\n- Peacock https://thenounproject.com/icon/peacock-3263843/\n- Rhino https://thenounproject.com/icon/rhinoceros-3263865/\n- Tiger https://thenounproject.com/icon/tiger-3263881/\nThomas Völker\n- Armadillo https://thenounproject.com/icon/armadillo-2826467/",
+      "lastUpdate": 1675767589531,
+      "showName": true,
+      "description": "Can you be voted the zoo's star exhibit?",
+      "helpText": "Have all players take a seat and then click the Setup button to select the appropriate board and set it up for the number of players, and to also distribute random animals to the players.\n\nLaurels you collect should be placed in your hand (bottom of the screen) and only revealed to other players at game end.<br>",
+      "id": "r30p",
+      "skill": "",
+      "similarImage": "",
+      "similarName": "Zoo Vadis",
+      "similarAwards": "",
+      "ruleText": "Earn laurels as you negotiate your animals into the Star Exhibit. The game ends immediately when the Star Exhibit is filled. Amongst players who have at least one animal in the Star Exhibit, the player with the most laurels wins the game.\n\nOn your turn, either:\n1. Add an animal to one of the four exhibits at the bottom of the board.\n2. Advance one of your animals along the zookeeper's path or from an exhibit where you have majority agreement. (Peacocks may be bribed to vote for you, if you pay to the bank one 2+-value laurel token for each.) Collect any non-zookeeper-covered laurel passed and replace it from the supply. Any player other than you that voted for you receives a 1-value laurel in exchange.\n3. Advance a peacock and collect a 1-value laurel.\n<div>4. Move the zookeeper to cover any laurel token on the board.</div><div><br></div><div>Players may negotiate at any time for laurels in exchange from one another and for promises on actions this turn or in future.<br></div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-UN",
+      "players": "3-7"
+    }
+  },
+  "p1-area": {
+    "id": "p1-area",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "controls-area"
+  },
+  "p2-area": {
+    "id": "p2-area",
+    "x": 0,
+    "y": 250,
+    "inheritFrom": "controls-area"
+  },
+  "p3-area": {
+    "id": "p3-area",
+    "x": 0,
+    "y": 500,
+    "inheritFrom": "controls-area"
+  },
+  "p4-area": {
+    "id": "p4-area",
+    "x": 0,
+    "y": 750,
+    "inheritFrom": "controls-area"
+  },
+  "p5-area": {
+    "id": "p5-area",
+    "x": 1200,
+    "y": 0,
+    "inheritFrom": "controls-area"
+  },
+  "p6-area": {
+    "id": "p6-area",
+    "x": 1200,
+    "y": 250,
+    "inheritFrom": "controls-area"
+  },
+  "p7-area": {
+    "id": "p7-area",
+    "x": 1200,
+    "y": 500,
+    "inheritFrom": "controls-area"
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 25,
+    "stackOffsetX": 40,
+    "childrenPerOwner": true,
+    "x": 400,
+    "y": 900,
+    "width": 800,
+    "height": 100,
+    "id": "hand",
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-laurel"
+    },
+    "movableInEdit": false
+  },
+  "p1-seat": {
+    "type": "seat",
+    "id": "p1-seat",
+    "x": 5,
+    "y": 90,
+    "parent": "p1-area",
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "playmat-holder": "p1-holder-playmat"
+  },
+  "p2-seat": {
+    "type": "seat",
+    "id": "p2-seat",
+    "index": 2,
+    "x": 5,
+    "y": 90,
+    "parent": "p2-area",
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "playmat-holder": "p2-holder-playmat"
+  },
+  "p3-seat": {
+    "type": "seat",
+    "id": "p3-seat",
+    "index": 3,
+    "x": 5,
+    "y": 90,
+    "parent": "p3-area",
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "playmat-holder": "p3-holder-playmat"
+  },
+  "p4-seat": {
+    "type": "seat",
+    "id": "p4-seat",
+    "index": 4,
+    "x": 5,
+    "y": 90,
+    "parent": "p4-area",
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "playmat-holder": "p4-holder-playmat"
+  },
+  "p5-seat": {
+    "type": "seat",
+    "id": "p5-seat",
+    "index": 5,
+    "x": 5,
+    "y": 90,
+    "parent": "p5-area",
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "playmat-holder": "p5-holder-playmat"
+  },
+  "p6-seat": {
+    "type": "seat",
+    "id": "p6-seat",
+    "index": 6,
+    "x": 5,
+    "y": 90,
+    "movableInEdit": false,
+    "parent": "p6-area",
+    "hideWhenUnused": true,
+    "playmat-holder": "p6-holder-playmat"
+  },
+  "p7-seat": {
+    "type": "seat",
+    "id": "p7-seat",
+    "index": 7,
+    "x": 5,
+    "y": 90,
+    "parent": "p7-area",
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "playmat-holder": "p7-holder-playmat"
+  },
+  "board-345": {
+    "id": "board-345",
+    "x": -1000,
+    "y": 0,
+    "layer": -4,
+    "width": 800,
+    "height": 900,
+    "movable": false,
+    "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/board-345.svg"
+  },
+  "board-345-holder-animal-A1-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-A1-1",
+    "parent": "board-345",
+    "x": 36.5,
+    "y": 17,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0.5,
+    "dropOffsetY": 0.5,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-animal"
+    }
+  },
+  "board-345-holder-animal-A1-2": {
+    "type": "holder",
+    "id": "board-345-holder-animal-A1-2",
+    "x": 36.5,
+    "y": 84,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-A1-3": {
+    "type": "holder",
+    "id": "board-345-holder-animal-A1-3",
+    "x": 36.5,
+    "y": 151,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B1-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B1-1",
+    "x": 269.5,
+    "y": 17,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B1-2": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B1-2",
+    "x": 336.5,
+    "y": 17,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B1-3": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B1-3",
+    "x": 403.5,
+    "y": 17,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B1-4": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B1-4",
+    "x": 302.75,
+    "y": 84,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B1-5": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B1-5",
+    "x": 369.75,
+    "y": 84,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-D1-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-D1-1",
+    "x": 636.5,
+    "y": 17,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-D1-2": {
+    "type": "holder",
+    "id": "board-345-holder-animal-D1-2",
+    "x": 703.5,
+    "y": 17,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-D1-3": {
+    "type": "holder",
+    "id": "board-345-holder-animal-D1-3",
+    "x": 703.5,
+    "y": 84,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-A2-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-A2-1",
+    "x": 36.5,
+    "y": 321,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-A2-2": {
+    "type": "holder",
+    "id": "board-345-holder-animal-A2-2",
+    "x": 36.5,
+    "y": 389,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-A2-3": {
+    "type": "holder",
+    "id": "board-345-holder-animal-A2-3",
+    "x": 103.5,
+    "y": 389,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B2-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B2-1",
+    "x": 202,
+    "y": 247,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B2-2": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B2-2",
+    "x": 269,
+    "y": 247,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B2-3": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B2-3",
+    "x": 336,
+    "y": 247,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B2-4": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B2-4",
+    "x": 235.5,
+    "y": 314,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B2-5": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B2-5",
+    "x": 302.5,
+    "y": 314,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-C2-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-C2-1",
+    "x": 470,
+    "y": 250.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-D2-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-D2-1",
+    "x": 670,
+    "y": 250.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-A3-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-A3-1",
+    "x": 70,
+    "y": 585.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B3-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B3-1",
+    "x": 270,
+    "y": 412,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-C3-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-C3-1",
+    "x": 436.5,
+    "y": 486.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-C3-2": {
+    "type": "holder",
+    "id": "board-345-holder-animal-C3-2",
+    "x": 503.5,
+    "y": 486.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-C3-3": {
+    "type": "holder",
+    "id": "board-345-holder-animal-C3-3",
+    "x": 470,
+    "y": 553.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-D3-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-D3-1",
+    "x": 670,
+    "y": 450.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-A4-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-A4-1",
+    "x": 70,
+    "y": 789.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B4-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B4-1",
+    "x": 236.5,
+    "y": 655.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B4-2": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B4-2",
+    "x": 303.5,
+    "y": 655.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B4-3": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B4-3",
+    "x": 236.5,
+    "y": 722.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B4-4": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B4-4",
+    "x": 303.5,
+    "y": 722.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-B4-5": {
+    "type": "holder",
+    "id": "board-345-holder-animal-B4-5",
+    "x": 270,
+    "y": 789.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-C4-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-C4-1",
+    "x": 470,
+    "y": 789.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-D4-1": {
+    "type": "holder",
+    "id": "board-345-holder-animal-D4-1",
+    "x": 703.5,
+    "y": 722.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-D4-2": {
+    "type": "holder",
+    "id": "board-345-holder-animal-D4-2",
+    "x": 636.5,
+    "y": 789.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-animal-D4-3": {
+    "type": "holder",
+    "id": "board-345-holder-animal-D4-3",
+    "x": 703.5,
+    "y": 789.5,
+    "inheritFrom": "board-345-holder-animal-A1-1"
+  },
+  "board-345-holder-laurel-01": {
+    "type": "holder",
+    "id": "board-345-holder-laurel-01",
+    "parent": "board-345",
+    "x": 139.125,
+    "y": 20,
+    "width": 54,
+    "height": 54,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 3,
+    "dropOffsetY": 3,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-laurel"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "board-345-holder-laurel-02": {
+    "type": "holder",
+    "id": "board-345-holder-laurel-02",
+    "x": 106.5,
+    "y": 222.5,
+    "inheritFrom": "board-345-holder-laurel-01"
+  },
+  "board-345-holder-laurel-03": {
+    "type": "holder",
+    "id": "board-345-holder-laurel-03",
+    "x": 539.625,
+    "y": 20,
+    "inheritFrom": "board-345-holder-laurel-01"
+  },
+  "board-345-holder-laurel-04": {
+    "type": "holder",
+    "id": "board-345-holder-laurel-04",
+    "x": 272,
+    "y": 168.5,
+    "inheritFrom": "board-345-holder-laurel-01"
+  },
+  "board-345-holder-laurel-05": {
+    "type": "holder",
+    "id": "board-345-holder-laurel-05",
+    "x": 239.5,
+    "y": 528,
+    "inheritFrom": "board-345-holder-laurel-01"
+  },
+  "board-345-holder-laurel-06": {
+    "type": "holder",
+    "id": "board-345-holder-laurel-06",
+    "x": 439.5,
+    "y": 415,
+    "inheritFrom": "board-345-holder-laurel-01"
+  },
+  "board-345-holder-laurel-07": {
+    "type": "holder",
+    "id": "board-345-holder-laurel-07",
+    "x": 506.5,
+    "y": 415,
+    "inheritFrom": "board-345-holder-laurel-01"
+  },
+  "board-345-holder-laurel-08": {
+    "type": "holder",
+    "id": "board-345-holder-laurel-08",
+    "x": 306.5,
+    "y": 528,
+    "inheritFrom": "board-345-holder-laurel-01"
+  },
+  "board-345-holder-laurel-09": {
+    "type": "holder",
+    "id": "board-345-holder-laurel-09",
+    "x": 706.5,
+    "y": 587.75,
+    "inheritFrom": "board-345-holder-laurel-01"
+  },
+  "board-345-holder-laurel-10": {
+    "type": "holder",
+    "id": "board-345-holder-laurel-10",
+    "x": 606.6,
+    "y": 657.75,
+    "inheritFrom": "board-345-holder-laurel-01"
+  },
+  "board-67": {
+    "id": "board-67",
+    "x": 400,
+    "y": 0,
+    "layer": -4,
+    "width": 800,
+    "height": 900,
+    "movable": false,
+    "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/board-67.svg"
+  },
+  "board-67-holder-animal-A1-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-A1-1",
+    "parent": "board-67",
+    "x": 36.5,
+    "y": 17,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0.5,
+    "dropOffsetY": 0.5,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-animal"
+    }
+  },
+  "board-67-holder-animal-A1-2": {
+    "type": "holder",
+    "id": "board-67-holder-animal-A1-2",
+    "x": 36.5,
+    "y": 84,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-A1-3": {
+    "type": "holder",
+    "id": "board-67-holder-animal-A1-3",
+    "x": 36.5,
+    "y": 151,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B1-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B1-1",
+    "x": 235.75,
+    "y": 17,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B1-2": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B1-2",
+    "x": 302.75,
+    "y": 17,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B1-3": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B1-3",
+    "x": 369.75,
+    "y": 17,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B1-4": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B1-4",
+    "x": 436.75,
+    "y": 17,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B1-5": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B1-5",
+    "x": 269.25,
+    "y": 84,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B1-6": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B1-6",
+    "x": 336.25,
+    "y": 84,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B1-7": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B1-7",
+    "x": 403.25,
+    "y": 84,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-D1-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-D1-1",
+    "x": 636.5,
+    "y": 17,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-D1-2": {
+    "type": "holder",
+    "id": "board-67-holder-animal-D1-2",
+    "x": 703.5,
+    "y": 17,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-D1-3": {
+    "type": "holder",
+    "id": "board-67-holder-animal-D1-3",
+    "x": 703.5,
+    "y": 84,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-A2-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-A2-1",
+    "x": 36.5,
+    "y": 288,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-A2-2": {
+    "type": "holder",
+    "id": "board-67-holder-animal-A2-2",
+    "x": 36.5,
+    "y": 354,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-A2-3": {
+    "type": "holder",
+    "id": "board-67-holder-animal-A2-3",
+    "x": 103.5,
+    "y": 354,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-A2-4": {
+    "type": "holder",
+    "id": "board-67-holder-animal-A2-4",
+    "x": 36.5,
+    "y": 422,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-A2-5": {
+    "type": "holder",
+    "id": "board-67-holder-animal-A2-5",
+    "x": 103.5,
+    "y": 422,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B2-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B2-1",
+    "x": 202,
+    "y": 247,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B2-2": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B2-2",
+    "x": 269,
+    "y": 247,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B2-3": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B2-3",
+    "x": 336,
+    "y": 247,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B2-4": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B2-4",
+    "x": 235.5,
+    "y": 314,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B2-5": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B2-5",
+    "x": 302.5,
+    "y": 314,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-C2-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-C2-1",
+    "x": 470,
+    "y": 250.5,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-D2-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-D2-1",
+    "x": 670,
+    "y": 250.5,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-A3-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-A3-1",
+    "x": 70,
+    "y": 585.5,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B3-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B3-1",
+    "x": 270,
+    "y": 412,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-C3-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-C3-1",
+    "x": 436.5,
+    "y": 486.5,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-C3-2": {
+    "type": "holder",
+    "id": "board-67-holder-animal-C3-2",
+    "x": 503.5,
+    "y": 486.5,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-C3-3": {
+    "type": "holder",
+    "id": "board-67-holder-animal-C3-3",
+    "x": 470,
+    "y": 553.5,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-D3-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-D3-1",
+    "x": 670,
+    "y": 450.5,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-A4-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-A4-1",
+    "x": 70,
+    "y": 789.5,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B4-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B4-1",
+    "x": 236.5,
+    "y": 622,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B4-2": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B4-2",
+    "x": 303.5,
+    "y": 622,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B4-3": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B4-3",
+    "x": 236.5,
+    "y": 689,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B4-4": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B4-4",
+    "x": 303.5,
+    "y": 689,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B4-5": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B4-5",
+    "x": 236.5,
+    "y": 756,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B4-6": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B4-6",
+    "x": 303.5,
+    "y": 756,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-B4-7": {
+    "type": "holder",
+    "id": "board-67-holder-animal-B4-7",
+    "x": 270,
+    "y": 823,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-C4-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-C4-1",
+    "x": 436.5,
+    "y": 756,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-C4-2": {
+    "type": "holder",
+    "id": "board-67-holder-animal-C4-2",
+    "x": 503.5,
+    "y": 756,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-C4-3": {
+    "type": "holder",
+    "id": "board-67-holder-animal-C4-3",
+    "x": 470,
+    "y": 823,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-D4-1": {
+    "type": "holder",
+    "id": "board-67-holder-animal-D4-1",
+    "x": 703.5,
+    "y": 689,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-D4-2": {
+    "type": "holder",
+    "id": "board-67-holder-animal-D4-2",
+    "x": 636.5,
+    "y": 756,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-D4-3": {
+    "type": "holder",
+    "id": "board-67-holder-animal-D4-3",
+    "x": 703.5,
+    "y": 756,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-D4-4": {
+    "type": "holder",
+    "id": "board-67-holder-animal-D4-4",
+    "x": 636.5,
+    "y": 823,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-animal-D4-5": {
+    "type": "holder",
+    "id": "board-67-holder-animal-D4-5",
+    "x": 703.5,
+    "y": 823,
+    "inheritFrom": "board-67-holder-animal-A1-1"
+  },
+  "board-67-holder-laurel-01": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-01",
+    "parent": "board-67",
+    "x": 139.125,
+    "y": 20,
+    "width": 54,
+    "height": 54,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 3,
+    "dropOffsetY": 3,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-laurel"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "board-67-holder-laurel-02": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-02",
+    "x": 106.5,
+    "y": 222.5,
+    "inheritFrom": "board-67-holder-laurel-01"
+  },
+  "board-67-holder-laurel-03": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-03",
+    "x": 539.625,
+    "y": 20,
+    "inheritFrom": "board-67-holder-laurel-01"
+  },
+  "board-67-holder-laurel-04": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-04",
+    "x": 272,
+    "y": 168.5,
+    "inheritFrom": "board-67-holder-laurel-01"
+  },
+  "board-67-holder-laurel-05": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-05",
+    "x": 239.5,
+    "y": 528,
+    "inheritFrom": "board-67-holder-laurel-01"
+  },
+  "board-67-holder-laurel-06": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-06",
+    "x": 439.5,
+    "y": 415,
+    "inheritFrom": "board-67-holder-laurel-01"
+  },
+  "board-67-holder-laurel-07": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-07",
+    "x": 506.5,
+    "y": 415,
+    "inheritFrom": "board-67-holder-laurel-01"
+  },
+  "board-67-holder-laurel-08": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-08",
+    "x": 306.5,
+    "y": 528,
+    "inheritFrom": "board-67-holder-laurel-01"
+  },
+  "board-67-holder-laurel-09": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-09",
+    "x": 706.5,
+    "y": 587.75,
+    "inheritFrom": "board-67-holder-laurel-01"
+  },
+  "board-67-holder-laurel-10": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-10",
+    "x": 606.6,
+    "y": 657.75,
+    "inheritFrom": "board-67-holder-laurel-01"
+  },
+  "board-67-holder-laurel-11": {
+    "type": "holder",
+    "id": "board-67-holder-laurel-11",
+    "x": 473,
+    "y": 657.75,
+    "inheritFrom": "board-67-holder-laurel-01"
+  },
+  "controls-area": {
+    "id": "controls-area",
+    "y": 750,
+    "x": 1200,
+    "width": 400,
+    "height": 250,
+    "movable": false,
+    "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/player-area.svg",
+    "layer": -4
+  },
+  "button-end-turn": {
+    "type": "button",
+    "id": "button-end-turn",
+    "x": 10,
+    "y": 10,
+    "width": 150,
+    "height": 40,
+    "text": "END TURN",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "parent": "controls-area"
+  },
+  "button-setup": {
+    "type": "button",
+    "id": "button-setup",
+    "x": 10,
+    "y": 205,
+    "width": 150,
+    "height": 40,
+    "text": "SETUP",
+    "parent": "controls-area",
+    "clickRoutine": [
+      {
+        "note": "Check that the user really wants to set up a fresh game",
+        "func": "INPUT",
+        "header": "Set up a new game?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Are you sure that you want to erase any progress and start a new game?"
+          }
+        ]
+      },
+      {
+        "note": "Recall the animal playmats",
+        "func": "RECALL",
+        "holder": "holder-playmats"
+      },
+      {
+        "note": "Shuffle the animal playmats",
+        "func": "SHUFFLE",
+        "holder": "holder-playmats"
+      },
+      {
+        "note": "Recall the laurel tokens",
+        "func": "RECALL",
+        "holder": "holder-laurel-multi"
+      },
+      {
+        "note": "Make a separate pile of 1-value laurels 1/2",
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "cardtype-laurel-1"
+      },
+      {
+        "note": "Make a separate pile of 1-value laurels 2/2",
+        "func": "SET",
+        "property": "parent",
+        "value": "holder-laurel-1"
+      },
+      {
+        "note": "Shuffle the laurel tokens",
+        "func": "SHUFFLE",
+        "holder": "holder-laurel-multi"
+      },
+      {
+        "note": "Return the peacocks to their holder 1/2",
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "cardtype-animal-peacock"
+      },
+      {
+        "note": "Return the peacocks to their holder 2/2",
+        "func": "SET",
+        "property": "parent",
+        "value": "holder-peacock"
+      },
+      {
+        "note": "Get player count 1/3: select all player seats",
+        "func": "SELECT",
+        "property": "type",
+        "value": "seat"
+      },
+      {
+        "note": "Get player count 2/3: filter out empty seats",
+        "func": "SELECT",
+        "mode": "remove",
+        "source": "DEFAULT",
+        "property": "player",
+        "relation": "==",
+        "value": ""
+      },
+      {
+        "note": "Get player count 3/3: now count the seats",
+        "func": "COUNT",
+        "collection": "DEFAULT"
+      },
+      {
+        "note": "Distribute starting playmats and laurels",
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "note": "Check if a player is seated",
+            "func": "GET",
+            "property": "player"
+          },
+          {
+            "note": "If a player is seated...",
+            "func": "IF",
+            "operand1": "${player}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "note": "Give the player two 1-value laurels",
+                "func": "MOVE",
+                "from": "holder-laurel-1",
+                "to": "${widgetID}",
+                "count": 2
+              },
+              {
+                "note": "Find the seat's playmat holder",
+                "func": "GET",
+                "property": "playmat-holder"
+              },
+              {
+                "note": "Give the player an animal playmat",
+                "func": "MOVE",
+                "from": "holder-playmats",
+                "to": "${playmat-holder}",
+                "count": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Set a random player as start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "note": "Use the appropriate board for the player count",
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">=",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "note": "6-7 player game: select the 3-5 player board...",
+            "func": "SELECT",
+            "property": "id",
+            "value": "board-345"
+          },
+          {
+            "note": "...and move it outside of the player area",
+            "func": "SET",
+            "property": "x",
+            "value": -1000
+          },
+          {
+            "note": "then select the 6-7 player board...",
+            "func": "SELECT",
+            "property": "id",
+            "value": "board-67"
+          },
+          {
+            "note": "...and move it into position",
+            "func": "SET",
+            "property": "x",
+            "value": 400
+          },
+          {
+            "note": "Place laurel 1/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-01",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 2/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-02",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 3/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-03",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 4/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-04",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 5/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-05",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 6/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-06",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 7/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-07",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 8/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-08",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 9/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-09",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 10/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-10",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 11/11",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-67-holder-laurel-11",
+            "count": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "note": "3-5 player game: select the 6-7 player board...",
+            "func": "SELECT",
+            "property": "id",
+            "value": "board-67"
+          },
+          {
+            "note": "...and move it outside of the player area",
+            "func": "SET",
+            "property": "x",
+            "value": -1000
+          },
+          {
+            "note": "then select the 3-5 player board...",
+            "func": "SELECT",
+            "property": "id",
+            "value": "board-345"
+          },
+          {
+            "note": "...and move it into position",
+            "func": "SET",
+            "property": "x",
+            "value": 400
+          },
+          {
+            "note": "Place laurel 1/10",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-345-holder-laurel-01",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 2/10",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-345-holder-laurel-02",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 3/10",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-345-holder-laurel-03",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 4/10",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-345-holder-laurel-04",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 5/10",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-345-holder-laurel-05",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 6/10",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-345-holder-laurel-06",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 7/10",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-345-holder-laurel-07",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 8/10",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-345-holder-laurel-08",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 9/10",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-345-holder-laurel-09",
+            "count": 1
+          },
+          {
+            "note": "Place laurel 10/10",
+            "func": "MOVE",
+            "from": "holder-laurel-multi",
+            "to": "board-345-holder-laurel-10",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "note": "Place peacocks for a 3-player game",
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "==",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-A3-1",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-B4-1",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-B4-2",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-C3-1",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-D2-1",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-D4-1",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "note": "Place peacocks for a 4-player game",
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "==",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-A2-2",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-B4-3",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-C3-3",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-D4-2",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "note": "Place peacocks for a 5-player game",
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-B4-5",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-345-holder-animal-D4-3",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "note": "Place peacocks for a 6-player game",
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "==",
+        "operand2": 6,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-67-holder-animal-A2-1",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-67-holder-animal-B4-1",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-67-holder-animal-B4-2",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-67-holder-animal-C4-1",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-67-holder-animal-D4-1",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "note": "Place peacocks for a 7-player game",
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "==",
+        "operand2": 7,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-67-holder-animal-B4-7",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder-peacock",
+            "to": "board-67-holder-animal-D4-5",
+            "count": 1
+          }
+        ]
+      }
+    ]
+  },
+  "holder-laurel-discard": {
+    "type": "holder",
+    "id": "holder-laurel-discard",
+    "parent": "controls-area",
+    "x": 99,
+    "y": 60,
+    "inheritFrom": "holder-laurel-multi",
+    "movable": false,
+    "movableInEdit": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "holder-laurel-1": {
+    "type": "holder",
+    "id": "holder-laurel-1",
+    "x": 20,
+    "y": 130,
+    "inheritFrom": "holder-laurel-multi",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "pile-laurel-1": {
+    "type": "pile",
+    "id": "pile-laurel-1",
+    "parent": "holder-laurel-1",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "movable": false
+  },
+  "laurel-1-01": {
+    "type": "card",
+    "id": "laurel-1-01",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-02": {
+    "type": "card",
+    "id": "laurel-1-02",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-03": {
+    "type": "card",
+    "id": "laurel-1-03",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-04": {
+    "type": "card",
+    "id": "laurel-1-04",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-05": {
+    "type": "card",
+    "id": "laurel-1-05",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-06": {
+    "type": "card",
+    "id": "laurel-1-06",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-07": {
+    "type": "card",
+    "id": "laurel-1-07",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-08": {
+    "type": "card",
+    "id": "laurel-1-08",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-09": {
+    "type": "card",
+    "id": "laurel-1-09",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-10": {
+    "type": "card",
+    "id": "laurel-1-10",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-11": {
+    "type": "card",
+    "id": "laurel-1-11",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-12": {
+    "type": "card",
+    "id": "laurel-1-12",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-13": {
+    "type": "card",
+    "id": "laurel-1-13",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-14": {
+    "type": "card",
+    "id": "laurel-1-14",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-15": {
+    "type": "card",
+    "id": "laurel-1-15",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-16": {
+    "type": "card",
+    "id": "laurel-1-16",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-17": {
+    "type": "card",
+    "id": "laurel-1-17",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-18": {
+    "type": "card",
+    "id": "laurel-1-18",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-19": {
+    "type": "card",
+    "id": "laurel-1-19",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-20": {
+    "type": "card",
+    "id": "laurel-1-20",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-21": {
+    "type": "card",
+    "id": "laurel-1-21",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-22": {
+    "type": "card",
+    "id": "laurel-1-22",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-23": {
+    "type": "card",
+    "id": "laurel-1-23",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-24": {
+    "type": "card",
+    "id": "laurel-1-24",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-25": {
+    "type": "card",
+    "id": "laurel-1-25",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-26": {
+    "type": "card",
+    "id": "laurel-1-26",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-27": {
+    "type": "card",
+    "id": "laurel-1-27",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-28": {
+    "type": "card",
+    "id": "laurel-1-28",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-29": {
+    "type": "card",
+    "id": "laurel-1-29",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-30": {
+    "type": "card",
+    "id": "laurel-1-30",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-31": {
+    "type": "card",
+    "id": "laurel-1-31",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-32": {
+    "type": "card",
+    "id": "laurel-1-32",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-33": {
+    "type": "card",
+    "id": "laurel-1-33",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-34": {
+    "type": "card",
+    "id": "laurel-1-34",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-35": {
+    "type": "card",
+    "id": "laurel-1-35",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-36": {
+    "type": "card",
+    "id": "laurel-1-36",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-37": {
+    "type": "card",
+    "id": "laurel-1-37",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-38": {
+    "type": "card",
+    "id": "laurel-1-38",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-39": {
+    "type": "card",
+    "id": "laurel-1-39",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-40": {
+    "type": "card",
+    "id": "laurel-1-40",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-41": {
+    "type": "card",
+    "id": "laurel-1-41",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-42": {
+    "type": "card",
+    "id": "laurel-1-42",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-43": {
+    "type": "card",
+    "id": "laurel-1-43",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-44": {
+    "type": "card",
+    "id": "laurel-1-44",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-45": {
+    "type": "card",
+    "id": "laurel-1-45",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-46": {
+    "type": "card",
+    "id": "laurel-1-46",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-47": {
+    "type": "card",
+    "id": "laurel-1-47",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-48": {
+    "type": "card",
+    "id": "laurel-1-48",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-49": {
+    "type": "card",
+    "id": "laurel-1-49",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-50": {
+    "type": "card",
+    "id": "laurel-1-50",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-51": {
+    "type": "card",
+    "id": "laurel-1-51",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-52": {
+    "type": "card",
+    "id": "laurel-1-52",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-53": {
+    "type": "card",
+    "id": "laurel-1-53",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-54": {
+    "type": "card",
+    "id": "laurel-1-54",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-55": {
+    "type": "card",
+    "id": "laurel-1-55",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-56": {
+    "type": "card",
+    "id": "laurel-1-56",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-57": {
+    "type": "card",
+    "id": "laurel-1-57",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-58": {
+    "type": "card",
+    "id": "laurel-1-58",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-59": {
+    "type": "card",
+    "id": "laurel-1-59",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "laurel-1-60": {
+    "type": "card",
+    "id": "laurel-1-60",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-1",
+    "parent": "pile-laurel-1"
+  },
+  "holder-laurel-multi": {
+    "type": "holder",
+    "id": "holder-laurel-multi",
+    "parent": "controls-area",
+    "x": 20,
+    "y": 60,
+    "width": 52,
+    "height": 52,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-laurel"
+    },
+    "dropOffsetX": 0.5,
+    "dropOffsetY": 0.5,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "deck-laurel": {
+    "id": "deck-laurel",
+    "parent": "holder-laurel-multi",
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "movableInEdit": false,
+    "type": "deck",
+    "cardDefaults": {
+      "width": 50,
+      "height": 50
+    },
+    "cardTypes": {
+      "cardtype-laurel-1": {
+        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-1.svg",
+        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-1.svg"
+      },
+      "cardtype-laurel-2": {
+        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-2.svg",
+        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+      },
+      "cardtype-laurel-2-zoo-keeper": {
+        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-2-zoo-keeper.svg",
+        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+      },
+      "cardtype-laurel-2-peacock": {
+        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-2-peacock.svg",
+        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+      },
+      "cardtype-laurel-2-ability": {
+        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-2-ability.svg",
+        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+      },
+      "cardtype-laurel-3": {
+        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-3.svg",
+        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+      },
+      "cardtype-laurel-4": {
+        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-4.svg",
+        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+      },
+      "cardtype-laurel-5": {
+        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-5.svg",
+        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "color": "transparent",
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 50,
+            "height": 50,
+            "dynamicProperties": {
+              "value": "back"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "color": "transparent",
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 50,
+            "height": 50,
+            "dynamicProperties": {
+              "value": "front"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "pile-laurel-multi": {
+    "type": "pile",
+    "id": "pile-laurel-multi",
+    "parent": "holder-laurel-multi",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "movable": false
+  },
+  "laurel-5-01": {
+    "type": "card",
+    "id": "laurel-5-01",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-5",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-5-02": {
+    "type": "card",
+    "id": "laurel-5-02",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-5",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-5-03": {
+    "type": "card",
+    "id": "laurel-5-03",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-5",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-5-04": {
+    "type": "card",
+    "id": "laurel-5-04",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-5",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-5-05": {
+    "type": "card",
+    "id": "laurel-5-05",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-5",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-5-06": {
+    "type": "card",
+    "id": "laurel-5-06",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-5",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-4-01": {
+    "type": "card",
+    "id": "laurel-4-01",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-4",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-4-02": {
+    "type": "card",
+    "id": "laurel-4-02",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-4",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-4-03": {
+    "type": "card",
+    "id": "laurel-4-03",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-4",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-4-04": {
+    "type": "card",
+    "id": "laurel-4-04",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-4",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-4-05": {
+    "type": "card",
+    "id": "laurel-4-05",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-4",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-4-06": {
+    "type": "card",
+    "id": "laurel-4-06",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-4",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-4-07": {
+    "type": "card",
+    "id": "laurel-4-07",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-4",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-4-08": {
+    "type": "card",
+    "id": "laurel-4-08",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-4",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-4-09": {
+    "type": "card",
+    "id": "laurel-4-09",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-4",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-01": {
+    "type": "card",
+    "id": "laurel-3-01",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-02": {
+    "type": "card",
+    "id": "laurel-3-02",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-03": {
+    "type": "card",
+    "id": "laurel-3-03",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-04": {
+    "type": "card",
+    "id": "laurel-3-04",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-05": {
+    "type": "card",
+    "id": "laurel-3-05",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-06": {
+    "type": "card",
+    "id": "laurel-3-06",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-07": {
+    "type": "card",
+    "id": "laurel-3-07",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-08": {
+    "type": "card",
+    "id": "laurel-3-08",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-09": {
+    "type": "card",
+    "id": "laurel-3-09",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-10": {
+    "type": "card",
+    "id": "laurel-3-10",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-11": {
+    "type": "card",
+    "id": "laurel-3-11",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-3-12": {
+    "type": "card",
+    "id": "laurel-3-12",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-3",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-ability-01": {
+    "type": "card",
+    "id": "laurel-2-ability-01",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-ability",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-ability-02": {
+    "type": "card",
+    "id": "laurel-2-ability-02",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-ability",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-ability-03": {
+    "type": "card",
+    "id": "laurel-2-ability-03",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-ability",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-ability-04": {
+    "type": "card",
+    "id": "laurel-2-ability-04",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-ability",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-peacock-01": {
+    "type": "card",
+    "id": "laurel-2-peacock-01",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-peacock",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-peacock-02": {
+    "type": "card",
+    "id": "laurel-2-peacock-02",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-peacock",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-peacock-03": {
+    "type": "card",
+    "id": "laurel-2-peacock-03",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-peacock",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-zoo-keeper-01": {
+    "type": "card",
+    "id": "laurel-2-zoo-keeper-01",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-zoo-keeper",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-zoo-keeper-02": {
+    "type": "card",
+    "id": "laurel-2-zoo-keeper-02",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-zoo-keeper",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-zoo-keeper-03": {
+    "type": "card",
+    "id": "laurel-2-zoo-keeper-03",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-zoo-keeper",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-zoo-keeper-04": {
+    "type": "card",
+    "id": "laurel-2-zoo-keeper-04",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2-zoo-keeper",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-01": {
+    "type": "card",
+    "id": "laurel-2-01",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-02": {
+    "type": "card",
+    "id": "laurel-2-02",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-03": {
+    "type": "card",
+    "id": "laurel-2-03",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2",
+    "parent": "pile-laurel-multi"
+  },
+  "laurel-2-04": {
+    "type": "card",
+    "id": "laurel-2-04",
+    "deck": "deck-laurel",
+    "cardType": "cardtype-laurel-2",
+    "parent": "pile-laurel-multi"
+  },
+  "holder-peacock": {
+    "type": "holder",
+    "id": "holder-peacock",
+    "parent": "controls-area",
+    "width": 60,
+    "height": 60,
+    "x": 95,
+    "y": 126,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-animal",
+      "cardType": "cardtype-animal-peacock"
+    }
+  },
+  "deck-animal": {
+    "id": "deck-animal",
+    "type": "deck",
+    "parent": "holder-peacock",
+    "width": 60,
+    "height": 60,
+    "movable": false,
+    "movableInEdit": false,
+    "cardDefaults": {
+      "width": 60,
+      "height": 60
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "color": "transparent",
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "cardtype-animal-armadillo": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-armadillo.svg"
+      },
+      "cardtype-animal-crocodile": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-crocodile.svg"
+      },
+      "cardtype-animal-hyena": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-hyena.svg"
+      },
+      "cardtype-animal-ibis": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-ibis.svg"
+      },
+      "cardtype-animal-monkey": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-monkey.svg"
+      },
+      "cardtype-animal-peacock": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-peacock.svg"
+      },
+      "cardtype-animal-rhino": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-rhino.svg"
+      },
+      "cardtype-animal-tiger": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-tiger.svg"
+      }
+    }
+  },
+  "pile-peacock": {
+    "id": "pile-peacock",
+    "type": "pile",
+    "parent": "holder-peacock",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60
+  },
+  "animal-peacock-1": {
+    "id": "animal-peacock-1",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-peacock",
+    "parent": "pile-peacock"
+  },
+  "animal-peacock-2": {
+    "id": "animal-peacock-2",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-peacock",
+    "parent": "pile-peacock"
+  },
+  "animal-peacock-3": {
+    "id": "animal-peacock-3",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-peacock",
+    "parent": "pile-peacock"
+  },
+  "animal-peacock-4": {
+    "id": "animal-peacock-4",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-peacock",
+    "parent": "pile-peacock"
+  },
+  "animal-peacock-5": {
+    "id": "animal-peacock-5",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-peacock",
+    "parent": "pile-peacock"
+  },
+  "animal-peacock-6": {
+    "id": "animal-peacock-6",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-peacock",
+    "parent": "pile-peacock"
+  },
+  "holder-playmats": {
+    "id": "holder-playmats",
+    "type": "holder",
+    "parent": "controls-area",
+    "x": 185,
+    "y": 25,
+    "width": 200,
+    "height": 200,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-playmats"
+    }
+  },
+  "deck-playmats": {
+    "id": "deck-playmats",
+    "type": "deck",
+    "parent": "holder-playmats",
+    "x": 0,
+    "y": 0,
+    "width": 200,
+    "height": 200,
+    "cardDefaults": {
+      "width": 200,
+      "height": 200
+    },
+    "cardTypes": {
+      "cardtype-playmat-armadillo": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-armadillo.svg"
+      },
+      "cardtype-playmat-crocodile": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-crocodile.svg"
+      },
+      "cardtype-playmat-hyena": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-hyena.svg"
+      },
+      "cardtype-playmat-ibis": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-ibis.svg"
+      },
+      "cardtype-playmat-monkey": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-monkey.svg"
+      },
+      "cardtype-playmat-rhino": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-rhino.svg"
+      },
+      "cardtype-playmat-tiger": {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-tiger.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "color": "transparent",
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 200,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "color": "transparent",
+            "type": "image",
+            "value": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/playmat-stripe.svg",
+            "x": 130,
+            "y": 0,
+            "width": 50,
+            "height": 200,
+            "css": {
+              "opacity": "75%"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "pile-playmats": {
+    "id": "pile-playmats",
+    "type": "pile",
+    "parent": "holder-playmats",
+    "x": 0,
+    "y": 0,
+    "width": 200,
+    "height": 200
+  },
+  "playmat-armadillo": {
+    "id": "playmat-armadillo",
+    "type": "card",
+    "deck": "deck-playmats",
+    "cardType": "cardtype-playmat-armadillo",
+    "parent": "pile-playmats"
+  },
+  "holder-armadillo": {
+    "id": "holder-armadillo",
+    "type": "holder",
+    "parent": "playmat-armadillo",
+    "x": 10,
+    "y": 130,
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-animal",
+      "cardType": "cardtype-animal-armadillo"
+    }
+  },
+  "pile-armadillo": {
+    "id": "pile-armadillo",
+    "type": "pile",
+    "parent": "holder-armadillo",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60
+  },
+  "animal-armadillo-1": {
+    "id": "animal-armadillo-1",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-armadillo",
+    "parent": "pile-armadillo"
+  },
+  "animal-armadillo-2": {
+    "id": "animal-armadillo-2",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-armadillo",
+    "parent": "pile-armadillo"
+  },
+  "animal-armadillo-3": {
+    "id": "animal-armadillo-3",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-armadillo",
+    "parent": "pile-armadillo"
+  },
+  "animal-armadillo-4": {
+    "id": "animal-armadillo-4",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-armadillo",
+    "parent": "pile-armadillo"
+  },
+  "animal-armadillo-5": {
+    "id": "animal-armadillo-5",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-armadillo",
+    "parent": "pile-armadillo"
+  },
+  "animal-armadillo-6": {
+    "id": "animal-armadillo-6",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-armadillo",
+    "parent": "pile-armadillo"
+  },
+  "laurel-armadillo-1": {
+    "id": "laurel-armadillo-1",
+    "parent": "playmat-armadillo",
+    "x": 130,
+    "y": 20,
+    "width": 50,
+    "height": 70,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-armadillo-b.svg"
+      },
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-armadillo-f.svg"
+      }
+    ],
+    "activeFace": 1
+  },
+  "laurel-armadillo-2": {
+    "id": "laurel-armadillo-2",
+    "inheritFrom": "laurel-armadillo-1",
+    "y": 110,
+    "activeFace": 1
+  },
+  "playmat-crocodile": {
+    "id": "playmat-crocodile",
+    "type": "card",
+    "deck": "deck-playmats",
+    "cardType": "cardtype-playmat-crocodile",
+    "parent": "pile-playmats"
+  },
+  "holder-crocodile": {
+    "id": "holder-crocodile",
+    "type": "holder",
+    "parent": "playmat-crocodile",
+    "x": 10,
+    "y": 130,
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-animal",
+      "cardType": "cardtype-animal-crocodile"
+    }
+  },
+  "pile-crocodile": {
+    "id": "pile-crocodile",
+    "type": "pile",
+    "parent": "holder-crocodile",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60
+  },
+  "animal-crocodile-1": {
+    "id": "animal-crocodile-1",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-crocodile",
+    "parent": "pile-crocodile"
+  },
+  "animal-crocodile-2": {
+    "id": "animal-crocodile-2",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-crocodile",
+    "parent": "pile-crocodile"
+  },
+  "animal-crocodile-3": {
+    "id": "animal-crocodile-3",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-crocodile",
+    "parent": "pile-crocodile"
+  },
+  "animal-crocodile-4": {
+    "id": "animal-crocodile-4",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-crocodile",
+    "parent": "pile-crocodile"
+  },
+  "animal-crocodile-5": {
+    "id": "animal-crocodile-5",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-crocodile",
+    "parent": "pile-crocodile"
+  },
+  "animal-crocodile-6": {
+    "id": "animal-crocodile-6",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-crocodile",
+    "parent": "pile-crocodile"
+  },
+  "laurel-crocodile-1": {
+    "id": "laurel-crocodile-1",
+    "parent": "playmat-crocodile",
+    "x": 130,
+    "y": 20,
+    "width": 50,
+    "height": 70,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-crocodile-b.svg"
+      },
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-crocodile-f.svg"
+      }
+    ],
+    "activeFace": 1
+  },
+  "laurel-crocodile-2": {
+    "id": "laurel-crocodile-2",
+    "inheritFrom": "laurel-crocodile-1",
+    "y": 110,
+    "activeFace": 1
+  },
+  "playmat-hyena": {
+    "id": "playmat-hyena",
+    "type": "card",
+    "deck": "deck-playmats",
+    "cardType": "cardtype-playmat-hyena",
+    "parent": "pile-playmats"
+  },
+  "holder-hyena": {
+    "id": "holder-hyena",
+    "type": "holder",
+    "parent": "playmat-hyena",
+    "x": 10,
+    "y": 130,
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-animal",
+      "cardType": "cardtype-animal-hyena"
+    }
+  },
+  "pile-hyena": {
+    "id": "pile-hyena",
+    "type": "pile",
+    "parent": "holder-hyena",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60
+  },
+  "animal-hyena-1": {
+    "id": "animal-hyena-1",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-hyena",
+    "parent": "pile-hyena"
+  },
+  "animal-hyena-2": {
+    "id": "animal-hyena-2",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-hyena",
+    "parent": "pile-hyena"
+  },
+  "animal-hyena-3": {
+    "id": "animal-hyena-3",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-hyena",
+    "parent": "pile-hyena"
+  },
+  "animal-hyena-4": {
+    "id": "animal-hyena-4",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-hyena",
+    "parent": "pile-hyena"
+  },
+  "animal-hyena-5": {
+    "id": "animal-hyena-5",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-hyena",
+    "parent": "pile-hyena"
+  },
+  "animal-hyena-6": {
+    "id": "animal-hyena-6",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-hyena",
+    "parent": "pile-hyena"
+  },
+  "laurel-hyena-1": {
+    "id": "laurel-hyena-1",
+    "parent": "playmat-hyena",
+    "x": 130,
+    "y": 20,
+    "width": 50,
+    "height": 70,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-hyena-b.svg"
+      },
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-hyena-f.svg"
+      }
+    ],
+    "activeFace": 1
+  },
+  "laurel-hyena-2": {
+    "id": "laurel-hyena-2",
+    "inheritFrom": "laurel-hyena-1",
+    "y": 110,
+    "activeFace": 1
+  },
+  "playmat-ibis": {
+    "id": "playmat-ibis",
+    "type": "card",
+    "deck": "deck-playmats",
+    "cardType": "cardtype-playmat-ibis",
+    "parent": "pile-playmats"
+  },
+  "holder-ibis": {
+    "id": "holder-ibis",
+    "type": "holder",
+    "parent": "playmat-ibis",
+    "x": 10,
+    "y": 130,
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-animal",
+      "cardType": "cardtype-animal-ibis"
+    }
+  },
+  "pile-ibis": {
+    "id": "pile-ibis",
+    "type": "pile",
+    "parent": "holder-ibis",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60
+  },
+  "animal-ibis-1": {
+    "id": "animal-ibis-1",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-ibis",
+    "parent": "pile-ibis"
+  },
+  "animal-ibis-2": {
+    "id": "animal-ibis-2",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-ibis",
+    "parent": "pile-ibis"
+  },
+  "animal-ibis-3": {
+    "id": "animal-ibis-3",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-ibis",
+    "parent": "pile-ibis"
+  },
+  "animal-ibis-4": {
+    "id": "animal-ibis-4",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-ibis",
+    "parent": "pile-ibis"
+  },
+  "animal-ibis-5": {
+    "id": "animal-ibis-5",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-ibis",
+    "parent": "pile-ibis"
+  },
+  "animal-ibis-6": {
+    "id": "animal-ibis-6",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-ibis",
+    "parent": "pile-ibis"
+  },
+  "laurel-ibis-1": {
+    "id": "laurel-ibis-1",
+    "parent": "playmat-ibis",
+    "x": 130,
+    "y": 20,
+    "width": 50,
+    "height": 70,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-ibis-b.svg"
+      },
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-ibis-f.svg"
+      }
+    ],
+    "activeFace": 1
+  },
+  "laurel-ibis-2": {
+    "id": "laurel-ibis-2",
+    "inheritFrom": "laurel-ibis-1",
+    "y": 110,
+    "activeFace": 1
+  },
+  "playmat-monkey": {
+    "id": "playmat-monkey",
+    "type": "card",
+    "deck": "deck-playmats",
+    "cardType": "cardtype-playmat-monkey",
+    "parent": "pile-playmats"
+  },
+  "holder-monkey": {
+    "id": "holder-monkey",
+    "type": "holder",
+    "parent": "playmat-monkey",
+    "x": 10,
+    "y": 130,
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-animal",
+      "cardType": "cardtype-animal-monkey"
+    }
+  },
+  "pile-monkey": {
+    "id": "pile-monkey",
+    "type": "pile",
+    "parent": "holder-monkey",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60
+  },
+  "animal-monkey-1": {
+    "id": "animal-monkey-1",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-monkey",
+    "parent": "pile-monkey"
+  },
+  "animal-monkey-2": {
+    "id": "animal-monkey-2",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-monkey",
+    "parent": "pile-monkey"
+  },
+  "animal-monkey-3": {
+    "id": "animal-monkey-3",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-monkey",
+    "parent": "pile-monkey"
+  },
+  "animal-monkey-4": {
+    "id": "animal-monkey-4",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-monkey",
+    "parent": "pile-monkey"
+  },
+  "animal-monkey-5": {
+    "id": "animal-monkey-5",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-monkey",
+    "parent": "pile-monkey"
+  },
+  "animal-monkey-6": {
+    "id": "animal-monkey-6",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-monkey",
+    "parent": "pile-monkey"
+  },
+  "laurel-monkey-1": {
+    "id": "laurel-monkey-1",
+    "parent": "playmat-monkey",
+    "x": 130,
+    "y": 20,
+    "width": 50,
+    "height": 70,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-monkey-b.svg"
+      },
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-monkey-f.svg"
+      }
+    ],
+    "activeFace": 1
+  },
+  "laurel-monkey-2": {
+    "id": "laurel-monkey-2",
+    "inheritFrom": "laurel-monkey-1",
+    "y": 110,
+    "activeFace": 1
+  },
+  "playmat-rhino": {
+    "id": "playmat-rhino",
+    "type": "card",
+    "deck": "deck-playmats",
+    "cardType": "cardtype-playmat-rhino",
+    "parent": "pile-playmats"
+  },
+  "holder-rhino": {
+    "id": "holder-rhino",
+    "type": "holder",
+    "parent": "playmat-rhino",
+    "x": 10,
+    "y": 130,
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-animal",
+      "cardType": "cardtype-animal-rhino"
+    }
+  },
+  "pile-rhino": {
+    "id": "pile-rhino",
+    "type": "pile",
+    "parent": "holder-rhino",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60
+  },
+  "animal-rhino-1": {
+    "id": "animal-rhino-1",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-rhino",
+    "parent": "pile-rhino"
+  },
+  "animal-rhino-2": {
+    "id": "animal-rhino-2",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-rhino",
+    "parent": "pile-rhino"
+  },
+  "animal-rhino-3": {
+    "id": "animal-rhino-3",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-rhino",
+    "parent": "pile-rhino"
+  },
+  "animal-rhino-4": {
+    "id": "animal-rhino-4",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-rhino",
+    "parent": "pile-rhino"
+  },
+  "animal-rhino-5": {
+    "id": "animal-rhino-5",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-rhino",
+    "parent": "pile-rhino"
+  },
+  "animal-rhino-6": {
+    "id": "animal-rhino-6",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-rhino",
+    "parent": "pile-rhino"
+  },
+  "laurel-rhino-1": {
+    "id": "laurel-rhino-1",
+    "parent": "playmat-rhino",
+    "x": 130,
+    "y": 20,
+    "width": 50,
+    "height": 70,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-rhino-b.svg"
+      },
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-rhino-f.svg"
+      }
+    ],
+    "activeFace": 1
+  },
+  "laurel-rhino-2": {
+    "id": "laurel-rhino-2",
+    "inheritFrom": "laurel-rhino-1",
+    "y": 110,
+    "activeFace": 1
+  },
+  "playmat-tiger": {
+    "id": "playmat-tiger",
+    "type": "card",
+    "deck": "deck-playmats",
+    "cardType": "cardtype-playmat-tiger",
+    "parent": "pile-playmats"
+  },
+  "holder-tiger": {
+    "id": "holder-tiger",
+    "type": "holder",
+    "parent": "playmat-tiger",
+    "x": 10,
+    "y": 130,
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-animal",
+      "cardType": "cardtype-animal-tiger"
+    }
+  },
+  "pile-tiger": {
+    "id": "pile-tiger",
+    "type": "pile",
+    "parent": "holder-tiger",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60
+  },
+  "animal-tiger-1": {
+    "id": "animal-tiger-1",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-tiger",
+    "parent": "pile-tiger"
+  },
+  "animal-tiger-2": {
+    "id": "animal-tiger-2",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-tiger",
+    "parent": "pile-tiger"
+  },
+  "animal-tiger-3": {
+    "id": "animal-tiger-3",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-tiger",
+    "parent": "pile-tiger"
+  },
+  "animal-tiger-4": {
+    "id": "animal-tiger-4",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-tiger",
+    "parent": "pile-tiger"
+  },
+  "animal-tiger-5": {
+    "id": "animal-tiger-5",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-tiger",
+    "parent": "pile-tiger"
+  },
+  "animal-tiger-6": {
+    "id": "animal-tiger-6",
+    "type": "card",
+    "deck": "deck-animal",
+    "cardType": "cardtype-animal-tiger",
+    "parent": "pile-tiger"
+  },
+  "laurel-tiger-1": {
+    "id": "laurel-tiger-1",
+    "parent": "playmat-tiger",
+    "x": 130,
+    "y": 20,
+    "width": 50,
+    "height": 70,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-tiger-b.svg"
+      },
+      {
+        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-tiger-f.svg"
+      }
+    ],
+    "activeFace": 1
+  },
+  "laurel-tiger-2": {
+    "id": "laurel-tiger-2",
+    "inheritFrom": "laurel-tiger-1",
+    "y": 110,
+    "activeFace": 1
+  },
+  "p1-holder-playmat": {
+    "id": "p1-holder-playmat",
+    "type": "holder",
+    "parent": "p1-area",
+    "x": 185,
+    "y": 25,
+    "width": 200,
+    "height": 200,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropLimit": 1,
+    "dropTarget": {
+      "type": "card",
+      "deck": "deck-playmats"
+    }
+  },
+  "p2-holder-playmat": {
+    "id": "p2-holder-playmat",
+    "type": "holder",
+    "parent": "p2-area",
+    "inheritFrom": "p1-holder-playmat"
+  },
+  "p3-holder-playmat": {
+    "id": "p3-holder-playmat",
+    "type": "holder",
+    "parent": "p3-area",
+    "inheritFrom": "p1-holder-playmat"
+  },
+  "p4-holder-playmat": {
+    "id": "p4-holder-playmat",
+    "type": "holder",
+    "parent": "p4-area",
+    "inheritFrom": "p1-holder-playmat"
+  },
+  "p5-holder-playmat": {
+    "id": "p5-holder-playmat",
+    "type": "holder",
+    "parent": "p5-area",
+    "inheritFrom": "p1-holder-playmat"
+  },
+  "p6-holder-playmat": {
+    "id": "p6-holder-playmat",
+    "type": "holder",
+    "parent": "p6-area",
+    "inheritFrom": "p1-holder-playmat"
+  },
+  "p7-holder-playmat": {
+    "id": "p7-holder-playmat",
+    "type": "holder",
+    "parent": "p7-area",
+    "inheritFrom": "p1-holder-playmat"
+  },
+  "zookeeper": {
+    "id": "zookeeper",
+    "layer": 2,
+    "x": 667,
+    "y": 163.5,
+    "width": 60,
+    "height": 60,
+    "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/zoo-keeper.svg"
+  }
+}
