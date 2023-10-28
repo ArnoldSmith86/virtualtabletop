@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 11,
+    "version": 14,
     "info": {
       "name": "Star Exhibit",
       "image": "/assets/708410678_139305",
@@ -36,7 +36,8 @@
     "id": "p2-area",
     "x": 0,
     "y": 250,
-    "inheritFrom": "controls-area"
+    "inheritFrom": "controls-area",
+    "activeFace": 0
   },
   "p3-area": {
     "id": "p3-area",
@@ -66,7 +67,8 @@
     "id": "p7-area",
     "x": 1200,
     "y": 500,
-    "inheritFrom": "controls-area"
+    "inheritFrom": "controls-area",
+    "activeFace": 0
   },
   "hand": {
     "type": "holder",
@@ -86,7 +88,8 @@
       "type": "card",
       "deck": "deck-laurel"
     },
-    "movableInEdit": false
+    "movableInEdit": false,
+    "hidePlayerCursors": true
   },
   "p1-seat": {
     "type": "seat",
@@ -167,12 +170,11 @@
   "board-345": {
     "id": "board-345",
     "x": -1000,
-    "y": 0,
     "layer": -4,
     "width": 800,
     "height": 900,
     "movable": false,
-    "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/board-345.svg"
+    "image": "/assets/1913972351_27704"
   },
   "board-345-holder-animal-A1-1": {
     "type": "holder",
@@ -535,12 +537,11 @@
   "board-67": {
     "id": "board-67",
     "x": 400,
-    "y": 0,
     "layer": -4,
     "width": 800,
     "height": 900,
     "movable": false,
-    "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/board-67.svg"
+    "image": "/assets/-1162558247_32303"
   },
   "board-67-holder-animal-A1-1": {
     "type": "holder",
@@ -984,7 +985,7 @@
     "width": 400,
     "height": 250,
     "movable": false,
-    "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/player-area.svg",
+    "image": "/assets/583624054_259",
     "layer": -4
   },
   "button-end-turn": {
@@ -1986,36 +1987,36 @@
     },
     "cardTypes": {
       "cardtype-laurel-1": {
-        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-1.svg",
-        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-1.svg"
+        "front": "/assets/-2126219631_4062",
+        "back": "/assets/-2126219631_4062"
       },
       "cardtype-laurel-2": {
-        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-2.svg",
-        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+        "front": "/assets/293232559_4527",
+        "back": "/assets/440246415_3812"
       },
       "cardtype-laurel-2-zoo-keeper": {
-        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-2-zoo-keeper.svg",
-        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+        "front": "/assets/-1270821421_7587",
+        "back": "/assets/440246415_3812"
       },
       "cardtype-laurel-2-peacock": {
-        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-2-peacock.svg",
-        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+        "front": "/assets/760414833_10909",
+        "back": "/assets/440246415_3812"
       },
       "cardtype-laurel-2-ability": {
-        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-2-ability.svg",
-        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+        "front": "/assets/751959099_4868",
+        "back": "/assets/440246415_3812"
       },
       "cardtype-laurel-3": {
-        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-3.svg",
-        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+        "front": "/assets/-106307968_4808",
+        "back": "/assets/440246415_3812"
       },
       "cardtype-laurel-4": {
-        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-4.svg",
-        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+        "front": "/assets/-1219224563_4112",
+        "back": "/assets/440246415_3812"
       },
       "cardtype-laurel-5": {
-        "front": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-5.svg",
-        "back": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/laurel-back.svg"
+        "front": "/assets/-562727132_4491",
+        "back": "/assets/440246415_3812"
       }
     },
     "faceTemplates": [
@@ -2402,39 +2403,40 @@
     ],
     "cardTypes": {
       "cardtype-animal-armadillo": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-armadillo.svg"
+        "image": "/assets/244715587_2575"
       },
       "cardtype-animal-crocodile": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-crocodile.svg"
+        "image": "/assets/-1679125421_3409"
       },
       "cardtype-animal-hyena": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-hyena.svg"
+        "image": "/assets/1477299409_5116"
       },
       "cardtype-animal-ibis": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-ibis.svg"
+        "image": "/assets/-1089676803_3836"
       },
       "cardtype-animal-monkey": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-monkey.svg"
+        "image": "/assets/238079702_5893"
       },
       "cardtype-animal-peacock": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-peacock.svg"
+        "image": "/assets/-879747006_7050"
       },
       "cardtype-animal-rhino": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-rhino.svg"
+        "image": "/assets/1528314348_4240"
       },
       "cardtype-animal-tiger": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-tiger.svg"
+        "image": "/assets/852625193_7723"
       }
     }
   },
   "pile-peacock": {
     "id": "pile-peacock",
     "type": "pile",
-    "parent": "holder-peacock",
     "x": 0,
     "y": 0,
     "width": 60,
-    "height": 60
+    "height": 60,
+    "z": 1,
+    "parent": "holder-peacock"
   },
   "animal-peacock-1": {
     "id": "animal-peacock-1",
@@ -2507,25 +2509,25 @@
     },
     "cardTypes": {
       "cardtype-playmat-armadillo": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-armadillo.svg"
+        "image": "/assets/244715587_2575"
       },
       "cardtype-playmat-crocodile": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-crocodile.svg"
+        "image": "/assets/-1679125421_3409"
       },
       "cardtype-playmat-hyena": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-hyena.svg"
+        "image": "/assets/1477299409_5116"
       },
       "cardtype-playmat-ibis": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-ibis.svg"
+        "image": "/assets/-1089676803_3836"
       },
       "cardtype-playmat-monkey": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-monkey.svg"
+        "image": "/assets/238079702_5893"
       },
       "cardtype-playmat-rhino": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-rhino.svg"
+        "image": "/assets/1528314348_4240"
       },
       "cardtype-playmat-tiger": {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/animal-tiger.svg"
+        "image": "/assets/852625193_7723"
       }
     },
     "faceTemplates": [
@@ -2545,7 +2547,7 @@
           {
             "color": "transparent",
             "type": "image",
-            "value": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/playmat-stripe.svg",
+            "value": "/assets/-975305677_235",
             "x": 130,
             "y": 0,
             "width": 50,
@@ -2652,10 +2654,10 @@
     "movableInEdit": false,
     "faces": [
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-armadillo-b.svg"
+        "image": "/assets/1705382689_367"
       },
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-armadillo-f.svg"
+        "image": "/assets/-1157108733_4201"
       }
     ],
     "activeFace": 1
@@ -2751,10 +2753,10 @@
     "movableInEdit": false,
     "faces": [
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-crocodile-b.svg"
+        "image": "/assets/1865010259_367"
       },
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-crocodile-f.svg"
+        "image": "/assets/1323627045_4743"
       }
     ],
     "activeFace": 1
@@ -2850,10 +2852,10 @@
     "movableInEdit": false,
     "faces": [
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-hyena-b.svg"
+        "image": "/assets/-901862059_367"
       },
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-hyena-f.svg"
+        "image": "/assets/1663521268_7689"
       }
     ],
     "activeFace": 1
@@ -2949,10 +2951,10 @@
     "movableInEdit": false,
     "faces": [
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-ibis-b.svg"
+        "image": "/assets/438246090_367"
       },
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-ibis-f.svg"
+        "image": "/assets/-814413493_11255"
       }
     ],
     "activeFace": 1
@@ -3048,10 +3050,10 @@
     "movableInEdit": false,
     "faces": [
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-monkey-b.svg"
+        "image": "/assets/-242450138_367"
       },
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-monkey-f.svg"
+        "image": "/assets/983120683_8336"
       }
     ],
     "activeFace": 1
@@ -3147,10 +3149,10 @@
     "movableInEdit": false,
     "faces": [
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-rhino-b.svg"
+        "image": "/assets/1823122573_367"
       },
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-rhino-f.svg"
+        "image": "/assets/-760766042_7846"
       }
     ],
     "activeFace": 1
@@ -3246,10 +3248,10 @@
     "movableInEdit": false,
     "faces": [
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-tiger-b.svg"
+        "image": "/assets/-840377408_367"
       },
       {
-        "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/ability-tiger-f.svg"
+        "image": "/assets/1838260712_9365"
       }
     ],
     "activeFace": 1
@@ -3319,6 +3321,6 @@
     "y": 163.5,
     "width": 60,
     "height": 60,
-    "image": "https://raw.githubusercontent.com/andypymont/vtt-games/main/zoovadis/assets/zoo-keeper.svg"
+    "image": "/assets/1249896531_3383"
   }
 }
