@@ -951,6 +951,8 @@ function jeAddCommands() {
   jeAddFieldCommand('min', 'number', 0);
   jeAddFieldCommand('max', 'number', 10);
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
+  jeAddFieldCommand('regex', 'string', '');
+  jeAddFieldCommand('regexHint', 'string', '');
 
   jeAddFieldCommand('source', 'choose', 'DEFAULT');
   jeAddFieldCommand('collection', 'choose', 'DEFAULT');
