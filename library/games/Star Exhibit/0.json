@@ -1064,7 +1064,7 @@
     "type": "button",
     "id": "button-end-turn",
     "x": 10,
-    "y": 10,
+    "y": 4,
     "width": 150,
     "height": 40,
     "text": "END TURN",
