@@ -350,11 +350,15 @@ MinifyHTML().then(function(result) {
   });
 
   router.put('/asset/:link', async function(req, res) {
-    const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
-    const filename = `/${CRC32.buf(content)}_${content.length}`;
-    if(!Config.resolveAsset(filename.substr(1)))
-      fs.writeFileSync(assetsdir + filename, content);
-    res.send(`/assets${filename}`);
+    try {
+      const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
+      const filename = `/${CRC32.buf(content)}_${content.length}`;
+      if(!Config.resolveAsset(filename.substr(1)))
+        fs.writeFileSync(assetsdir + filename, content);
+      res.send(`/assets${filename}`);
+    } catch(e) {
+      res.status(404).send('Downloading external asset failed.');
+    }
   });
 
   router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {

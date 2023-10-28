@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 12,
+    "version": 14,
     "info": {
       "name": "Functions - INPUT",
       "image": "/assets/86171241_6035",
@@ -11,18 +11,18 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1676594694159,
+      "lastUpdate": 1698268886094,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "8fr3": {
@@ -45,7 +45,7 @@
     "layer": -3,
     "z": 129,
     "css": "font-size: 25px; ",
-    "text": "INPUT is used to prompt a user to enter data that can be stored in a variable and acted upon. At its most basic form, it can serve as a confirmation prompt. Even if the variable is not stored, unless the user presses the continue/go button, the routine will not continue. Each of the examples immediately below demonstrates one of the 7 possible field types of INPUT. They are each presented in their most basic and default form. The result is displayed in the button text. The lower buttons show how you can change the visual appearance of an INPUT function.",
+    "text": "INPUT is used to prompt a user to enter data that can be stored in a variable and acted upon. At its most basic form, it can serve as a confirmation prompt. Even if the variable is not stored, unless the user presses the continue/go button, the routine will not continue. Each of the examples immediately below demonstrates 7 of the 8 possible field types of INPUT (the 'choose' type is in another variant of this tutorial). They are each presented in their most basic and default form. The result is displayed in the button text. The lower buttons show how you can change the visual appearance of an INPUT function.",
     "y": 80,
     "movable": false,
     "movableInEdit": false
@@ -53,7 +53,7 @@
   "bm4j": {
     "text": "The INPUT above shows how to use the 'title' and 'subtitle' areas to provide information to the players. You can also use the css background-color property to change the color of the input rows. Number fields with min-max values will automatically show the range.",
     "id": "bm4j",
-    "x": 60,
+    "x": 4,
     "y": 700,
     "z": 185,
     "width": 300,
@@ -236,7 +236,7 @@
   "bm5j": {
     "text": "The INPUT above shows how to use css to color the 'title' and 'subtitle' areas. The input box area will automatically adjust height and width to fit the content. You can also use variables in the 'value' parameter to pre-fill in data.",
     "id": "bm5j",
-    "x": 410,
+    "x": 325,
     "y": 700,
     "z": 121,
     "width": 300,
@@ -246,7 +246,7 @@
   },
   "bm6j": {
     "id": "bm6j",
-    "x": 808,
+    "x": 651,
     "y": 700,
     "z": 9732,
     "width": 300,
@@ -297,7 +297,7 @@
         ]
       }
     ],
-    "x": 151,
+    "x": 95,
     "y": 550,
     "z": 22841,
     "id": "jkmt",
@@ -355,7 +355,7 @@
         ]
       }
     ],
-    "x": 501,
+    "x": 416,
     "y": 550,
     "z": 22839,
     "id": "jkmt1",
@@ -396,7 +396,7 @@
         "cancelButtonIcon": "cancel"
       }
     ],
-    "x": 900,
+    "x": 743,
     "y": 550,
     "z": 22840,
     "id": "jkmt2",
@@ -436,7 +436,7 @@
         "cancelButtonIcon": "cancel exit_fullscreen grid"
       }
     ],
-    "x": 1280,
+    "x": 1386,
     "y": 550,
     "z": 11,
     "id": "jkmt3",
@@ -444,7 +444,7 @@
   },
   "bm7j": {
     "id": "bm7j",
-    "x": 1188,
+    "x": 1294,
     "y": 700,
     "z": 9732,
     "width": 300,
@@ -755,5 +755,61 @@
       }
     ],
     "text": "#800080"
+  },
+  "bm8j": {
+    "id": "bm8j",
+    "x": 964,
+    "y": 700,
+    "z": 9732,
+    "width": 300,
+    "text": "This button shows how you can remove the option for a Cancel button. This will force players to continue with the selection and not give them a chance to return to the game without confirming.",
+    "movable": false,
+    "css": "font-size: 22px; ",
+    "movableInEdit": false
+  },
+  "jkmt4": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "No cancel button."
+          },
+          {
+            "type": "subtitle",
+            "text": "Set cancelButtonText and cancelButtonIcon to null."
+          },
+          {
+            "type": "select",
+            "label": "Options are just arrays of options. Have as many as you need.",
+            "variable": "select",
+            "value": "${PROPERTY text}",
+            "options": [
+              {
+                "value": 1,
+                "text": "Input this"
+              },
+              {
+                "value": 2,
+                "text": "Input that"
+              },
+              {
+                "value": 3,
+                "text": "Input this and that"
+              }
+            ]
+          }
+        ],
+        "cancelButtonIcon": null,
+        "cancelButtonText": null
+      }
+    ],
+    "x": 1062,
+    "y": 550,
+    "z": 22840,
+    "id": "jkmt4",
+    "text": "INPUT"
   }
 }

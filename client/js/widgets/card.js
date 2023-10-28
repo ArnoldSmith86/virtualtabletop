@@ -166,6 +166,8 @@ class Card extends Widget {
           } else {
             objectDiv.textContent = object.value;
             objectDiv.style.color = object.color;
+            if(!objectDiv.style.color)
+              objectDiv.style.color = 'black';
           }
           return usedProperties;
         }
@@ -216,5 +218,9 @@ class Card extends Widget {
         return d;
     }
     return super.getDefaultValue(property);
+  }
+
+  getFaceCount() {
+    return this.deck.get('faceTemplates').length;
   }
 }

@@ -180,7 +180,7 @@ export function formField(field, dom, id) {
 
   if(field.type == 'palette') {
     const input = document.createElement('div');
-    for(const option of field.colors) {
+    for(const option of asArray(field.colors || '#000000')) {
       const optionlabel = document.createElement('label');
       optionlabel.htmlFor = option;
       optionlabel.textContent = ' ';
@@ -198,6 +198,50 @@ export function formField(field, dom, id) {
         optionElement.checked = 'checked';
       input.appendChild(optionElement);
       input.appendChild(optionlabel);
+    }
+    dom.appendChild(input);
+    input.id = id;
+  }
+
+  if(field.type == 'choose') {
+    const input = document.createElement('div');
+    for (const widgetID of field.widgets) {
+      const widget = widgets.get(widgetID);
+      for(let face=0; face<(field.mode == 'faces'?widget.getFaceCount():1); ++face) {
+        if(Array.isArray(field.faces) && field.faces.indexOf(face) == -1)
+          continue;
+        let propertyOverride = Object.assign({}, field.propertyOverride || {});
+        if(field.mode == 'faces')
+          propertyOverride.activeFace = face;
+
+        const widgetContainer = div(input, 'inputchooseWidgetWrapper');
+        const widgetClone = widget.renderReadonlyCopy(propertyOverride, $('body'));
+        const widgetDOM = widgetClone.domElement;
+        widgetClone.state.scale = scale * (field.scale || 1);
+        widgetClone.domElement.style.cssText = mapAssetURLs(widgetClone.css());
+        widgetDOM.dataset.source = widgetID;
+        widgetDOM.dataset.face = face;
+
+        const rect = widgetDOM.getBoundingClientRect();
+        widgetContainer.style.width  = `${rect.width }px`;
+        widgetContainer.style.height = `${rect.height}px`;
+        widgetContainer.append(widgetDOM);
+
+        if (asArray(field.value || []).indexOf(widgetID) !== -1) {
+          widgetContainer.classList.add('selected');
+        }
+        widgetContainer.onclick = _=>{
+          if(widgetContainer.classList.contains('selected')) {
+            widgetContainer.classList.remove('selected');
+          } else if($a('.selected', input).length < (field.max === undefined ? 1 : field.max)) {
+            widgetContainer.classList.add('selected');
+          } else if(field.max === undefined || field.max === 1) {
+            for(const previousSelected of $a('.selected', input))
+              previousSelected.classList.remove('selected');
+            widgetContainer.classList.add('selected');
+          }
+        };
+      }
     }
     dom.appendChild(input);
     input.id = id;

@@ -90,8 +90,6 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener('mousedown',  e => this.selected(), false);
-    this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
 
@@ -282,7 +280,7 @@ export class Widget extends StateManaged {
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
     for(const key in sourceDelta)
       if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
-        targetDelta[key] = sourceDelta[key];
+        targetDelta[key] = JSON.stringify(sourceDelta[key]) === JSON.stringify(this.defaults[key]) ? null : sourceDelta[key];
   }
 
   applyInheritedValuesToDOM(inheritFrom, pushasArray) {
@@ -650,43 +648,65 @@ export class Widget extends StateManaged {
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
-    const result = {};
+    const variables = {};
+    const collections = {};
     if(go) {
       for(const field of o.fields) {
+        const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
+        const isSingleWidget = field.source && Array.isArray(field.source) && field.source.length == 1;
         if(field.type == 'checkbox') {
-          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
+          variables[field.variable] = dom.checked;
         } else if(field.type == 'switch') {
-          let thisresult = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
-          if(thisresult){
-            result[field.variable] = 'on';
-          } else {
-            result[field.variable] = 'off';
-          }
+          variables[field.variable] = dom.checked ? 'on' : 'off';
         } else if(field.type == 'palette') {
-          let thisresult = document.getElementsByName('INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
-          for (var i=0;i<thisresult.length;i++){
-            if ( thisresult[i].checked ) {
-              result[field.variable] = thisresult[i].value;
-            }
-          }
+          variables[field.variable] = $(':checked', dom) ? $(':checked', dom).value : null;
+        } else if(field.type == 'choose') {
+          variables[field.variable] = [...$a('.selected .widget', dom)].map(w=>w.dataset.source);
+          collections[field.collection || 'DEFAULT'] = variables[field.variable].map(w=>widgets.get(w));
+          if(field.mode == 'faces')
+            variables[field.variable] = [...$a('.selected .widget', dom)].map(w=>(isSingleWidget?w.dataset.face:{ widget: w.dataset.source, face: w.dataset.face }));
+          if(variables[field.variable].length == 1 && (field.max || 1) === 1)
+            variables[field.variable] = Object.values(variables[field.variable]).length ? Object.values(variables[field.variable])[0] : null;
         } else if(field.type == 'number') {
-          let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
-          if(thisvalue > field.max)
-            thisvalue = field.max;
-          if(thisvalue < field.min)
-            thisvalue = field.min;
-          result[field.variable] = thisvalue
+          variables[field.variable] = dom.value
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
-          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
+          variables[field.variable] = dom.value;
         }
       }
     }
 
-    showOverlay(null);
-    if(go)
-      resolve(result);
-    else
-      reject(result);
+    if(!go || this.evaluateInputOverlayErrors(o, variables)) {
+      showOverlay(null);
+      if(go)
+        resolve({ variables, collections });
+      else
+        reject({ variables, collections });
+      return true;
+    }
+  }
+
+  evaluateInputOverlayErrors(o, variables) {
+    removeFromDOM('#buttonInputOverlay .inputError');
+
+    let isValid = true;
+
+    const displayError = (field, error) => {
+      const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
+      div(dom.parentElement, 'inputError', error);
+    };
+
+    for(const field of o.fields) {
+      if(field.type == 'choose' && asArray(variables[field.variable]).length < field.min)
+        isValid = displayError(field, `Please select at least ${field.min}.`);
+      if(field.type == 'choose' && asArray(variables[field.variable]).length > (field.max || 1))
+        isValid = displayError(field, `Please select at most ${field.min}.`);
+      if(field.type == 'number' && variables[field.variable] < field.min)
+        isValid = displayError(field, `Please enter a number above ${field.min}.`);
+      if(field.type == 'number' && variables[field.variable] > field.max)
+        isValid = displayError(field, `Please enter a number below ${field.max}.`);
+    }
+
+    return isValid;
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
@@ -1038,7 +1058,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CLICK') {
-        setDefaults(a, { collection: 'DEFAULT', count: 1 , mode: 'respect' });
+        setDefaults(a, { collection: 'DEFAULT', count: 1, mode: 'respect' });
         const collection = getCollection(a.collection);
 
         if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
@@ -1322,14 +1342,16 @@ export class Widget extends StateManaged {
 
       if(a.func == 'INPUT') {
         try {
-          Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
+          const result = await this.showInputOverlay(a, widgets, variables, collections, getCollection, problems);
+          Object.assign(variables, result.variables);
+          Object.assign(collections, result.collections);
           if(jeRoutineLogging) {
             let varList = [];
             let valueList = [];
             a.fields.forEach(f=>{
               if(f.variable) {
                 varList.push(f.variable);
-                valueList.push(variables[f.variable]);
+                valueList.push(JSON.stringify(variables[f.variable]));
               }
             });
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
@@ -1379,8 +1401,8 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: 1, face: null });
-        const count = a.count || 999999;
+        setDefaults(a, { count: 1, face: null, fillTo: null });
+        const count = a.fillTo || a.count || 999999;
 
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
@@ -1392,7 +1414,7 @@ export class Widget extends StateManaged {
               if(source == target) {
                 await applyFlip();
                 await c.bringToFront();
-              } else {
+              } else if(!a.fillTo || target.children().length < a.fillTo) {
                 c.movedByButton = true;
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
@@ -1420,8 +1442,8 @@ export class Widget extends StateManaged {
             }
           }));
           if(jeRoutineLogging) {
-            const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
-            jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to '${a.to}'`)
+            const logCount = count==1 ? '1 widget' : `${count} widgets`;
+            jeLoggingRoutineOperationSummary(`${logCount} from '${a.from}' to '${a.to}'`)
           }
         }
       }
@@ -1643,7 +1665,7 @@ export class Widget extends StateManaged {
           }
         }
         if(jeRoutineLogging)
-          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} '${a.value}' for widgets in '${a.collection}'`);
+          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
       }
 
       if(a.func == 'SHUFFLE') {
@@ -1653,7 +1675,7 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await shuffleWidgets(holder.children());
-              if(holder.get('type') == 'holder')
+              if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
@@ -1683,7 +1705,7 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              if(holder.get('type') == 'holder')
+              if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
           }
@@ -1693,7 +1715,7 @@ export class Widget extends StateManaged {
           if(collections[collection].length) {
             await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{
-              if(holder.get('type') == 'holder')
+              if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
           } else {
@@ -1875,6 +1897,10 @@ export class Widget extends StateManaged {
           return super.get(property);
       }
     }
+  }
+
+  getFaceCount() {
+    return 1;
   }
 
   hideEnlarged() {
@@ -2192,6 +2218,28 @@ export class Widget extends StateManaged {
     return readOnlyProperties;
   }
 
+  renderReadonlyCopyRaw(state, target) {
+    delete state.id;
+    delete state.x;
+    delete state.y;
+    delete state.rotation;
+    delete state.scale;
+    delete state.parent;
+    delete state.owner;
+    delete state.linkedToSeat;
+    delete state.onlyVisibleForSeat;
+
+    this.applyInitialDelta(state);
+    target.appendChild(this.domElement);
+    if(this instanceof Card)
+      this.deck.removeCard(this);
+    return this;
+  }
+
+  renderReadonlyCopy(propertyOverride, target) {
+    return new this.constructor(generateUniqueWidgetID()).renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target);
+  }
+
   requiresHiddenCursor() {
     if(this.get('hidePlayerCursors'))
       return true;
@@ -2239,14 +2287,6 @@ export class Widget extends StateManaged {
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
 
-  selected() {
-    this.domElement.classList.add('selected');
-  }
-
-  notSelected() {
-    this.domElement.classList.remove('selected');
-  }
-
   showEnlarged(event, delta) {
     if(this.get('enlarge')) {
       const id = this.get('id');
@@ -2274,6 +2314,9 @@ export class Widget extends StateManaged {
 
       e.className = this.domElement.className;
       e.dataset.id = id;
+
+      if(this.get('_ancestor') && widgets.has(this.get('_ancestor')) && widgets.get(this.get('_ancestor')).domElement.classList.contains('showCardBack'))
+        e.classList.add('showCardBack');
 
       for(const clone of $a('canvas', e)) {
         const original = $(`canvas[data-id = '${clone.dataset.id}']`, this.domElement);
@@ -2311,8 +2354,9 @@ export class Widget extends StateManaged {
       event.preventDefault();
   }
 
-  async showInputOverlay(o, widgets, variables, problems) {
+  async showInputOverlay(o, widgets, variables, collections, getCollection, problems) {
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
+    $('#buttonInputCancel').style.visibility = "visible";
     return new Promise((resolve, reject) => {
       const maxRandomRotate = o.randomRotation || 0;
       const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
@@ -2330,9 +2374,10 @@ export class Widget extends StateManaged {
       if(!o.confirmButtonText && !o.confirmButtonIcon){
         confirmButtonText = "Go";
       }
-      if(!o.cancelButtonText && !o.cancelButtonIcon){
+      if (o.cancelButtonText === null && o.cancelButtonIcon === null) {
+        $('#buttonInputCancel').style.visibility = "hidden";
+      } else if (!o.cancelButtonText && !o.cancelButtonIcon)
         cancelButtonText = "Cancel";
-      }
 
       $('#buttonInputGo label').textContent = o.confirmButtonText || confirmButtonText;
       $('#buttonInputCancel label').textContent = o.cancelButtonText || cancelButtonText;
@@ -2344,21 +2389,32 @@ export class Widget extends StateManaged {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
+
+        if(field.type == 'choose') {
+          if(field.holder) {
+            field.widgets = [].concat(...asArray(field.holder).map(w=>widgets.has(w)?widgets.get(w).children():[])).map(w=>w.id);
+          } else {
+            field.widgets = collections[getCollection(field.source || 'DEFAULT')].map(w=>w.id);
+          }
+        }
+
         formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
       const goHandler = e=>{
-        this.evaluateInputOverlay(o, resolve, reject, true)
-        $('#buttonInputGo').removeEventListener('click', goHandler);
-        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
-        delete $('#activeGameButton').dataset.overlay;
+        if(this.evaluateInputOverlay(o, resolve, reject, true)) {
+          $('#buttonInputGo').removeEventListener('click', goHandler);
+          $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+          delete $('#activeGameButton').dataset.overlay;
+        }
       };
       const cancelHandler = e=>{
-        this.evaluateInputOverlay(o, resolve, reject, false)
-        $('#buttonInputGo').removeEventListener('click', goHandler);
-        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
-        delete $('#activeGameButton').dataset.overlay;
+        if(this.evaluateInputOverlay(o, resolve, reject, false)) {
+          $('#buttonInputGo').removeEventListener('click', goHandler);
+          $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+          delete $('#activeGameButton').dataset.overlay;
+        }
       };
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);

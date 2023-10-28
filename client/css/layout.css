@@ -1096,6 +1096,29 @@ button:disabled:hover {
 .ui-button.blue {
   background-color: var(--neutralInput);
 }
+#gridOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
+.gridFields {
+  color: #fff;
+  background-color: var(--VTTblue);
+  width: 60px;
+}
+.gridFields::placeholder{
+  color: #a9a;
+}
+#gridOverlay .modal{
+  width: 200px;
+}
+#gridOverlay > .modal button.ui-button{
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
 #pileOverlay{
   color: black;
   align-items: center;
@@ -1334,7 +1357,8 @@ button:disabled:hover {
 .inputnumber,
 .inputstring,
 .inputselect,
-.inputpalette{
+.inputpalette,
+.inputchoose{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -1344,7 +1368,8 @@ button:disabled:hover {
 .inputnumber label,
 .inputstring label,
 .inputselect label,
-.inputpalette label{
+.inputpalette label,
+.inputchoose label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1595,7 +1620,7 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
 input:invalid{
   color: red;
 }
-input:invalid+span:after {
+input:invalid+span::after, .inputError::before {
   font-family: 'Material Icons';
   content: 'error';
   position: absolute;
@@ -1605,7 +1630,15 @@ input:invalid+span:after {
   color: red;
   letter-spacing: -1px;
 }
-.inputpalette > div{
+.inputError {
+  color: red;
+  align-items: center;
+}
+.inputError::before {
+  position: unset;
+  margin-right: 5px;
+}
+.inputpalette > div, .inputchoose > div, .inputError {
   display: flex;
   flex-wrap: wrap;
   padding: 0 3px;
@@ -1623,10 +1656,10 @@ input:invalid+span:after {
   padding: 0;
   margin: -1.5px;
 }
-.inputpalette > div input[type="radio"]:checked+label{
+.inputpalette > div input[type="radio"]:checked+label, .inputchoose .selected.inputchooseWidgetWrapper {
   border: 3px solid var(--VTTblue);
 }
-.inputpalette > div input[type="radio"]:checked+label::after{
+.inputpalette > div input[type="radio"]:checked+label::after, .inputchoose .selected.inputchooseWidgetWrapper::after {
   font-family: 'Material Icons';
   line-height: 1.25em;
   text-align: center;
@@ -1659,4 +1692,24 @@ input:invalid+span:after {
   background-color: inherit;
   border-radius: 5px;
   z-index: -2;
+}
+
+.inputchoose .inputchooseWidgetWrapper {
+  position: relative;
+  border: 3px solid transparent;
+  border-radius: 8px;
+}
+
+.inputchoose .selected.inputchooseWidgetWrapper {
+  overflow: hidden;
+}
+.inputchoose .selected.inputchooseWidgetWrapper::after {
+  border: unset;
+  z-index: 2;
+}
+
+.inputchoose .widget {
+  position: relative !important;
+  transform-origin: top left !important;
+  z-index: 1 !important;
 }
