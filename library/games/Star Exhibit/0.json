@@ -10,11 +10,11 @@
       "mode": "vs",
       "time": "40",
       "attribution": "<div>Game layout and scripting by Andy Pymont, released to the public domain under CC0.</div><div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"a crocodile is crowned Olympic champion, Pixar\".\n</div>\nTile graphics are from https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nCraig\n- Curved Arrow https://thenounproject.com/icon/arrow-8828/\nEucalpy\n- Ibis https://thenounproject.com/icon/ibis-4931541/\nJaime Serra\n- Laurel Wreath https://thenounproject.com/icon/laurel-5380453/\nGhan Khoon Lay\n- Zoo Keeper https://thenounproject.com/icon/keeper-977741/\nLauren\n- Claw https://thenounproject.com/icon/claw-2259408/\nLeo Kennedy\n- Tunnel https://thenounproject.com/icon/tunnel-1193154/\nMade\n- Zoo Sign https://thenounproject.com/icon/zoo-3800771/\nOlivier Guin\n- Laurel https://thenounproject.com/icon/laurel-1177/\nSmalllike\n- Hyena https://thenounproject.com/icon/hyena-3449040/\nSymbolon\n- Crocodile https://thenounproject.com/icon/crocodile-3263724/\n- Monkey https://thenounproject.com/icon/monkkey-3263835/\n- Peacock https://thenounproject.com/icon/peacock-3263843/\n- Rhino https://thenounproject.com/icon/rhinoceros-3263865/\n- Tiger https://thenounproject.com/icon/tiger-3263881/\nThomas Völker\n- Armadillo https://thenounproject.com/icon/armadillo-2826467/",
-      "lastUpdate": 1675767589531,
+      "lastUpdate": 1698500967285,
       "showName": true,
       "description": "Can you be voted the zoo's star exhibit?",
       "helpText": "Have all players take a seat and then click the Setup button to select the appropriate board and set it up for the number of players, and to also distribute random animals to the players.\n\nLaurels you collect should be placed in your hand (bottom of the screen) and only revealed to other players at game end.<br>",
-      "id": "r30p",
+      "id": "b24e",
       "skill": "",
       "similarImage": "",
       "similarName": "Zoo Vadis",
@@ -36,8 +36,7 @@
     "id": "p2-area",
     "x": 0,
     "y": 250,
-    "inheritFrom": "controls-area",
-    "activeFace": 0
+    "inheritFrom": "controls-area"
   },
   "p3-area": {
     "id": "p3-area",
@@ -67,8 +66,7 @@
     "id": "p7-area",
     "x": 1200,
     "y": 500,
-    "inheritFrom": "controls-area",
-    "activeFace": 0
+    "inheritFrom": "controls-area"
   },
   "hand": {
     "type": "holder",
@@ -99,73 +97,147 @@
     "parent": "p1-area",
     "movableInEdit": false,
     "hideWhenUnused": true,
-    "playmat-holder": "p1-holder-playmat"
+    "playmat-holder": "p1-holder-playmat",
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "28px"
+      },
+      ".seated": {
+        "background": "${PROPERTY mainColor}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY secondaryColor}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted #000000"
+      }
+    },
+    "height": 50,
+    "width": 170,
+    "mainColor": "#ffffff"
   },
   "p2-seat": {
     "type": "seat",
     "id": "p2-seat",
     "index": 2,
-    "x": 5,
-    "y": 90,
     "parent": "p2-area",
-    "movableInEdit": false,
-    "hideWhenUnused": true,
-    "playmat-holder": "p2-holder-playmat"
+    "playmat-holder": "p2-holder-playmat",
+    "inheritFrom": {
+      "p1-seat": [
+        "css",
+        "x",
+        "y",
+        "width",
+        "height",
+        "hideWhenUnused",
+        "movableInEdit"
+      ]
+    },
+    "mainColor": "#ffffff",
+    "color": "#999999"
   },
   "p3-seat": {
     "type": "seat",
     "id": "p3-seat",
     "index": 3,
-    "x": 5,
-    "y": 90,
     "parent": "p3-area",
-    "movableInEdit": false,
-    "hideWhenUnused": true,
-    "playmat-holder": "p3-holder-playmat"
+    "playmat-holder": "p3-holder-playmat",
+    "inheritFrom": {
+      "p1-seat": [
+        "css",
+        "x",
+        "y",
+        "width",
+        "height",
+        "hideWhenUnused",
+        "movableInEdit"
+      ]
+    },
+    "mainColor": "#ffffff",
+    "color": "#999999"
   },
   "p4-seat": {
     "type": "seat",
     "id": "p4-seat",
     "index": 4,
-    "x": 5,
-    "y": 90,
     "parent": "p4-area",
-    "movableInEdit": false,
-    "hideWhenUnused": true,
-    "playmat-holder": "p4-holder-playmat"
+    "playmat-holder": "p4-holder-playmat",
+    "inheritFrom": {
+      "p1-seat": [
+        "css",
+        "x",
+        "y",
+        "width",
+        "height",
+        "hideWhenUnused",
+        "movableInEdit"
+      ]
+    },
+    "mainColor": "#ffffff",
+    "color": "#999999"
   },
   "p5-seat": {
     "type": "seat",
     "id": "p5-seat",
     "index": 5,
-    "x": 5,
-    "y": 90,
     "parent": "p5-area",
-    "movableInEdit": false,
-    "hideWhenUnused": true,
-    "playmat-holder": "p5-holder-playmat"
+    "playmat-holder": "p5-holder-playmat",
+    "inheritFrom": {
+      "p1-seat": [
+        "css",
+        "x",
+        "y",
+        "width",
+        "height",
+        "hideWhenUnused",
+        "movableInEdit"
+      ]
+    },
+    "mainColor": "#ffffff",
+    "color": "#999999"
   },
   "p6-seat": {
     "type": "seat",
     "id": "p6-seat",
     "index": 6,
-    "x": 5,
-    "y": 90,
-    "movableInEdit": false,
     "parent": "p6-area",
-    "hideWhenUnused": true,
-    "playmat-holder": "p6-holder-playmat"
+    "playmat-holder": "p6-holder-playmat",
+    "inheritFrom": {
+      "p1-seat": [
+        "css",
+        "x",
+        "y",
+        "width",
+        "height",
+        "hideWhenUnused",
+        "movableInEdit"
+      ]
+    },
+    "mainColor": "#ffffff",
+    "color": "#999999"
   },
   "p7-seat": {
     "type": "seat",
     "id": "p7-seat",
     "index": 7,
-    "x": 5,
-    "y": 90,
     "parent": "p7-area",
-    "movableInEdit": false,
-    "hideWhenUnused": true,
-    "playmat-holder": "p7-holder-playmat"
+    "playmat-holder": "p7-holder-playmat",
+    "inheritFrom": {
+      "p1-seat": [
+        "css",
+        "x",
+        "y",
+        "width",
+        "height",
+        "hideWhenUnused",
+        "movableInEdit"
+      ]
+    },
+    "mainColor": "#ffffff",
+    "color": "#999999"
   },
   "board-345": {
     "id": "board-345",
@@ -2074,10 +2146,6 @@
     "handleCSS": {
       "background": "black",
       "color": "white"
-    },
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
     }
   },
   "laurel-5-01": {
@@ -2526,8 +2594,6 @@
     "id": "deck-playmats",
     "type": "deck",
     "parent": "holder-playmats",
-    "x": 0,
-    "y": 0,
     "width": 200,
     "height": 200,
     "cardDefaults": {
@@ -2542,25 +2608,32 @@
     },
     "cardTypes": {
       "cardtype-playmat-armadillo": {
-        "image": "/assets/244715587_2575"
+        "image": "/assets/244715587_2575",
+        "mainColor": "#cd7f32"
       },
       "cardtype-playmat-crocodile": {
-        "image": "/assets/-1679125421_3409"
+        "image": "/assets/-1679125421_3409",
+        "mainColor": "#f0e130"
       },
       "cardtype-playmat-hyena": {
-        "image": "/assets/1477299409_5116"
+        "image": "/assets/1477299409_5116",
+        "mainColor": "#0d98ba"
       },
       "cardtype-playmat-ibis": {
-        "image": "/assets/-1089676803_3836"
+        "image": "/assets/-1089676803_3836",
+        "mainColor": "#f88379"
       },
       "cardtype-playmat-monkey": {
-        "image": "/assets/238079702_5893"
+        "image": "/assets/238079702_5893",
+        "mainColor": "#91a3b0"
       },
       "cardtype-playmat-rhino": {
-        "image": "/assets/1528314348_4240"
+        "image": "/assets/1528314348_4240",
+        "mainColor": "#228b22"
       },
       "cardtype-playmat-tiger": {
-        "image": "/assets/852625193_7723"
+        "image": "/assets/852625193_7723",
+        "mainColor": "#dbd7d2"
       }
     },
     "faceTemplates": [
@@ -3341,7 +3414,38 @@
     "dropTarget": {
       "type": "card",
       "deck": "deck-playmats"
-    }
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "mainColor"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "parent",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "property": "mainColor",
+        "value": "${mainColor}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "parent",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "property": "mainColor",
+        "value": "#ffffff"
+      }
+    ]
   },
   "p2-holder-playmat": {
     "id": "p2-holder-playmat",
