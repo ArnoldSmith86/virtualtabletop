@@ -704,6 +704,12 @@ export class Widget extends StateManaged {
         isValid = displayError(field, `Please enter a number above ${field.min}.`);
       if(field.type == 'number' && variables[field.variable] > field.max)
         isValid = displayError(field, `Please enter a number below ${field.max}.`);
+      try {
+        if(field.type == 'string' && field.regex && !variables[field.variable].match(field.regex))
+          isValid = displayError(field, field.regexHint || `Input does not match regular expression ${field.regex}.`);
+      } catch(e) {
+        isValid = displayError(field, `Regular expression ${field.regex} is invalid.`);
+      }
     }
 
     return isValid;
