@@ -21,20 +21,19 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1698513512104,
-      "id": "736i",
-      "showName": true,
+      "lastUpdate": 1698513871502,
+      "showName": false,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "string": {
