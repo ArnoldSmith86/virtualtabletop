@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-GB",
-      "players": "2-4"
+      "players": "2-4",
+      "similarDesigner": "Reiner Knizia"
     }
   },
   "board-4": {
@@ -3558,7 +3559,9 @@
         "loopRoutine": [
           {
             "func": "GET",
-            "collection": ["${value}"],
+            "collection": [
+              "${value}"
+            ],
             "property": "player",
             "variable": "pID"
           },
@@ -3768,7 +3771,7 @@
     },
     "editable": false,
     "text": 0
- },
+  },
   "label-score-p1": {
     "id": "label-score-p1",
     "type": "label",
@@ -4186,14 +4189,6 @@
     "cardType": "disc-farmer",
     "playerIndex": 1
   },
-  "disc-farmer-p1-04": {
-    "id": "disc-farmer-p1-04",
-    "parent": "pile-discs-p1",
-    "type": "card",
-    "deck": "deck-discs",
-    "cardType": "disc-farmer",
-    "playerIndex": 1
-  },
   "disc-farmer-p1-05": {
     "id": "disc-farmer-p1-05",
     "parent": "pile-discs-p1",
@@ -4218,7 +4213,7 @@
     "cardType": "disc-farmer",
     "playerIndex": 1
   },
-   "disc-farmer-p1-08": {
+  "disc-farmer-p1-08": {
     "id": "disc-farmer-p1-08",
     "parent": "pile-discs-p1",
     "type": "card",
@@ -4455,14 +4450,6 @@
     "cardType": "disc-farmer",
     "playerIndex": 2
   },
-  "disc-farmer-p2-04": {
-    "id": "disc-farmer-p2-04",
-    "parent": "pile-discs-p2",
-    "type": "card",
-    "deck": "deck-discs",
-    "cardType": "disc-farmer",
-    "playerIndex": 2
-  },
   "disc-farmer-p2-05": {
     "id": "disc-farmer-p2-05",
     "parent": "pile-discs-p2",
@@ -4487,7 +4474,7 @@
     "cardType": "disc-farmer",
     "playerIndex": 2
   },
-   "disc-farmer-p2-08": {
+  "disc-farmer-p2-08": {
     "id": "disc-farmer-p2-08",
     "parent": "pile-discs-p2",
     "type": "card",
@@ -4724,14 +4711,6 @@
     "cardType": "disc-farmer",
     "playerIndex": 3
   },
-  "disc-farmer-p3-04": {
-    "id": "disc-farmer-p3-04",
-    "parent": "pile-discs-p3",
-    "type": "card",
-    "deck": "deck-discs",
-    "cardType": "disc-farmer",
-    "playerIndex": 3
-  },
   "disc-farmer-p3-05": {
     "id": "disc-farmer-p3-05",
     "parent": "pile-discs-p3",
@@ -4756,7 +4735,7 @@
     "cardType": "disc-farmer",
     "playerIndex": 3
   },
-   "disc-farmer-p3-08": {
+  "disc-farmer-p3-08": {
     "id": "disc-farmer-p3-08",
     "parent": "pile-discs-p3",
     "type": "card",
@@ -4993,14 +4972,6 @@
     "cardType": "disc-farmer",
     "playerIndex": 4
   },
-  "disc-farmer-p4-04": {
-    "id": "disc-farmer-p4-04",
-    "parent": "pile-discs-p4",
-    "type": "card",
-    "deck": "deck-discs",
-    "cardType": "disc-farmer",
-    "playerIndex": 4
-  },
   "disc-farmer-p4-05": {
     "id": "disc-farmer-p4-05",
     "parent": "pile-discs-p4",
@@ -5025,7 +4996,7 @@
     "cardType": "disc-farmer",
     "playerIndex": 4
   },
-   "disc-farmer-p4-08": {
+  "disc-farmer-p4-08": {
     "id": "disc-farmer-p4-08",
     "parent": "pile-discs-p4",
     "type": "card",
