@@ -19,7 +19,8 @@
       "similarAwards": "1994 Fairplay À la carte Runner-up\n2003 Japan Boardgame Prize Best Foreign Game for Beginners Nominee",
       "ruleText": "",
       "players": "2-5",
-      "language": "en-GB"
+      "language": "en-GB",
+      "similarDesigner": "Reiner Knizia"
     }
   },
   "hand": {
@@ -183,7 +184,7 @@
         ]
       }
     ]
- },
+  },
   "holder-cards": {
     "id": "holder-cards",
     "type": "holder",
@@ -438,7 +439,7 @@
         "bgcolor": "#eeeeee",
         "fgcolor": "#000000",
         "image": "/assets/2083982857_6862"
-      } 
+      }
     },
     "faceTemplates": [
       {
@@ -555,7 +556,7 @@
     "onEnter": {
       "activeFace": 1
     }
- },
+  },
   "holder-cards-leopard": {
     "id": "holder-cards-leopard",
     "type": "holder",
@@ -608,7 +609,7 @@
       "font-size": "14px"
     },
     "hideWhenUnused": true
- },
+  },
   "hand-counter-p1": {
     "id": "hand-counter-p1",
     "parent": "seat-p1",
@@ -803,7 +804,7 @@
     "inheritFrom": "holder-elephant",
     "x": 980,
     "linkedToSeat": "seat-p1"
- },
+  },
   "holder-elephant-p2": {
     "id": "holder-elephant-p2",
     "type": "holder",
@@ -1076,7 +1077,7 @@
     "inheritFrom": {
       "holder-elephant-p4": [
         "x",
-        "linkedToSeat" 
+        "linkedToSeat"
       ],
       "holder-zebra": "*"
     }
@@ -1206,13 +1207,6 @@
   },
   "tile-lion-1": {
     "id": "tile-lion-1",
-    "type": "card",
-    "parent": "pile-tile-lion",
-    "deck": "deck-tiles",
-    "cardType": "tile-lion"
-  },
-  "tile-lion-2": {
-    "id": "tile-lion-2",
     "type": "card",
     "parent": "pile-tile-lion",
     "deck": "deck-tiles",
