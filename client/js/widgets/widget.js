@@ -1410,46 +1410,65 @@ export class Widget extends StateManaged {
         setDefaults(a, { count: 1, face: null, fillTo: null });
         const count = a.fillTo || a.count || 999999;
 
-        if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
-          await w(a.from, async source=>await w(a.to, async target=>{
-            for(const c of source.children().slice(0, count).reverse()) {
-              const applyFlip = async function() {
-                if(a.face !== null && c.flip)
-                  await c.flip(a.face);
-              };
-              if(source == target) {
-                await applyFlip();
-                await c.bringToFront();
-              } else if(!a.fillTo || target.children().length < a.fillTo) {
-                c.movedByButton = true;
-                if(target.get('type') == 'seat') {
-                  if(target.get('hand') && target.get('player')) {
-                    if(widgets.has(target.get('hand'))) {
-                      const targetHand = widgets.get(target.get('hand'));
-                      await applyFlip();
-                      c.targetPlayer = target.get('player');
-                      await c.moveToHolder(targetHand);
-                      delete c.targetPlayer;
-                      await c.bringToFront();
-                      if(targetHand.get('type') == 'holder')
-                        await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
-                    } else {
-                      problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
-                    }
-                  } else {
-                    problems.push(`Seat ${target.id} is empty or does not define a hand.`);
-                  }
-                } else {
+        async function applyMove(source, target, c) {
+          let moved = 0;
+          const applyFlip = async function() {
+            if(a.face !== null && c.flip)
+              await c.flip(a.face);
+          };
+          if(source == target) {
+            await applyFlip();
+            await c.bringToFront();
+            ++moved;
+          } else if(!a.fillTo || target.children().length < a.fillTo) {
+            c.movedByButton = true;
+            if(target.get('type') == 'seat') {
+              if(target.get('hand') && target.get('player')) {
+                if(widgets.has(target.get('hand'))) {
+                  const targetHand = widgets.get(target.get('hand'));
                   await applyFlip();
-                  await c.moveToHolder(target);
+                  c.targetPlayer = target.get('player');
+                  await c.moveToHolder(targetHand);
+                  delete c.targetPlayer;
+                  await c.bringToFront();
+                  ++moved;
+                  if(targetHand.get('type') == 'holder')
+                    await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                } else {
+                  problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                 }
-                delete c.movedByButton;
+              } else {
+                problems.push(`Seat ${target.id} is empty or does not define a hand.`);
               }
+            } else {
+              await applyFlip();
+              await c.moveToHolder(target);
+              ++moved;
             }
-          }));
+            delete c.movedByButton;
+          }
+          return moved;
+        }
+
+        const fromIsHolder = a.from && this.isValidID(a.from, problems);
+        if((a.collection || fromIsHolder) && this.isValidID(a.to, problems)) {
+          if(fromIsHolder) {
+            await w(a.from, async source=>await w(a.to, async target=>{
+              for(const c of source.children().slice(0, count).reverse()) {
+                await applyMove(source, target, c);
+              }
+            }));
+          } else {
+            let offset = 0;
+            await w(a.to, async target=>{
+              for(const c of collections[getCollection(a.collection)].slice(offset, offset+count)) {
+                offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
+              }
+            });
+          }
           if(jeRoutineLogging) {
             const logCount = count==1 ? '1 widget' : `${count} widgets`;
-            jeLoggingRoutineOperationSummary(`${logCount} from '${a.from}' to '${a.to}'`)
+            jeLoggingRoutineOperationSummary(`${logCount} from '${a.from || a.collection}' to '${a.to}'`)
           }
         }
       }
