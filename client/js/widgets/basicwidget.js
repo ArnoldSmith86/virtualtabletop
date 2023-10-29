@@ -41,11 +41,11 @@ class BasicWidget extends Widget {
         this.previouslyActiveFace = face;
       }
     }
-    if(delta.html !== undefined || delta.text !== undefined) {
+    if(delta.html !== undefined || delta.text !== undefined || this.getWithPropertyReplacements_checkDelta('html', delta)) {
       if(this.get('html') === null)
         setText(this.domElement, this.get('text'));
       else
-        this.domElement.innerHTML = DOMPurify.sanitize(mapAssetURLs(this.get('html')), { USE_PROFILES: { html: true } });
+        this.domElement.innerHTML = DOMPurify.sanitize(mapAssetURLs(this.getWithPropertyReplacements('html')), { USE_PROFILES: { html: true } });
     }
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
