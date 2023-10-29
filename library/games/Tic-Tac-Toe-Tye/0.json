@@ -1110,7 +1110,8 @@
       "similarName": "Otrio",
       "description": "Classic game of X's and O's with a twist; 3 different size markers fit in each square.  Link 3 colored tokens in one of 3 ways to win.",
       "showName": true,
-      "lastUpdate": 1622231298000
+      "lastUpdate": 1622231298000,
+      "similarDesigner": "Brady Peterson"
     }
   }
 }
