@@ -1407,7 +1407,8 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: 1, face: null, fillTo: null });
+        const fromIsHolder = a.from && this.isValidID(a.from, problems);
+        setDefaults(a, { count: fromIsHolder ? 1 : 0, face: null, fillTo: null });
         const count = a.fillTo || a.count || 999999;
 
         async function applyMove(source, target, c) {
@@ -1450,7 +1451,6 @@ export class Widget extends StateManaged {
           return moved;
         }
 
-        const fromIsHolder = a.from && this.isValidID(a.from, problems);
         if((a.collection || fromIsHolder) && this.isValidID(a.to, problems)) {
           if(fromIsHolder) {
             await w(a.from, async source=>await w(a.to, async target=>{
