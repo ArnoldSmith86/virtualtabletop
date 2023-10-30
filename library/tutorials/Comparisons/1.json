@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 13,
     "info": {
       "name": "Comparisons",
       "image": "/assets/1840951925_7348",
@@ -9,12 +9,20 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Logical",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1623354701000
+      "lastUpdate": 1689019732432,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Logical",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "8fr3": {
@@ -35,7 +43,7 @@
     "width": 1000,
     "z": 14,
     "css": "font-size: 20px; ",
-    "text": "These functions can also be used compare alphanumeric strings, but these functions are usually used with boolean values (true and false).  && (logical AND) returns true if both values are true, or returns the value of one of the variables if not boolean.  || (logical OR) returns true if either value is true, or returns the value of one of the variables if not boolean.  ! (logical NOT) returns true if the given value is false, and otherwise returns false.  Press each button to see how the function compares the strings to produce the output at the bottom of the screen. The buttons will convert the string \"true\" from the textbox into the boolean true and do the same for false."
+    "text": "These functions can also be used compare alphanumeric strings, but these functions are usually used with boolean values (true and false).  && (logical AND) returns true if both values are true, or returns the value of one of the variables if not boolean.  || (logical OR) returns true if either value is true, or returns the value of one of the variables if not boolean.  ! (logical NOT) returns true if the given value is false, and otherwise returns false.  Press each button to see how the function compares the strings to produce the output at the bottom of the screen. The buttons will convert the string \"true\" from the textbox into the boolean true and do the same for false. Although not demonstrated here, you can also use these comparisons in nested operations. For example, '${a} && !${b} || ${c} && ${d}' would be a valid expression."
   },
   "lr6y": {
     "id": "lr6y",

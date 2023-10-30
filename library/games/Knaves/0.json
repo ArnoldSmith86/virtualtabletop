@@ -18,10 +18,10 @@
       "similarAwards": "",
       "ruleText": "Deal 17 cards to each player. The leftover card is turned face up and the suit of this card is trump for the hand.&nbsp;<div><br></div><div>First player rotates in each round, starting with player 1. Any card can be led. Each player going clockwise, plays a card to the trick. If you can follow suit, you must and if you can't, you may play anything.&nbsp;&nbsp;</div><div><br></div><div>When everyone has played a card to the trick the winner is the player who played the highest trump or (if no trumps were played to the trick) the highest led suit. The winner leads to the next trick.&nbsp;</div><div><br></div><div>At the end of the hand, when all cards have been played, each player's score is determined as follows:&nbsp;</div><div><ul><li>&nbsp;1 point for each trick they have won&nbsp;</li><li>-4 if they won a trick with the Jack of Hearts in it</li><li>-3 if they won a trick with the Jack of Diamonds in it</li><li>-2 if they won a trick with the Jack of Clubs in it</li><li>-1 if they won a trick with the Jack of Spades in it</li></ul></div><div><div>Keep playing rounds until a player has a total score of 20 or more. The player with the highest score wins.&nbsp;</div></div>",
       "helpText": "Players take seats. Press deal button. Click cards to play. Only cards that are legal plays can be clicked. At the end of the round, press Score button and won tricks are returned to players' hands. Scorekeeping is automatic. Press deal to begin next round.",
-      "lastUpdate": 1682703768594,
+      "lastUpdate": 1683913996209,
       "variantImage": "",
       "variant": "Main",
-      "language": "en-UK",
+      "language": "en-GB",
       "players": "3"
     }
   },

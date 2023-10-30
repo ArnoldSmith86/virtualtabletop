@@ -1,36 +1,5 @@
-import { contrastAnyColor } from "./color";
+let vmEditOverlay;
 
-let edit = false;
-
-function generateUniqueWidgetID() {
-  let id;
-  do {
-    id = Math.random().toString(36).substring(3, 7);
-  } while (widgets.has(id));
-  return id;
-}
-
-async function addWidgetLocal(widget) {
-  if (!widget.id)
-    widget.id = generateUniqueWidgetID();
-
-  if(widget.parent && !widgets.has(widget.parent)) {
-    console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
-    return null;
-  }
-
-  const isNewWidget = !widgets.has(widget.id);
-  if(isNewWidget)
-    addWidget(widget);
-  sendPropertyUpdate(widget.id, widget);
-  sendDelta();
-  batchStart();
-  if(isNewWidget)
-    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
-      await w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
-  batchEnd();
-  return widget.id;
-}
 //This section holds the edit overlays for each widget
 //basic widget functions
 function populateEditOptionsBasic(widget) {
@@ -408,47 +377,6 @@ async function applyEditOptions(widget) {
     applyEditOptionsTimer(widget);
 }
 
-function editClick(widget) {
-  $('#editWidgetJSON').value = JSON.stringify(widget.state, null, '  ');
-  $('#editWidgetJSON').dataset.previousState = $('#editWidgetJSON').value;
-
-  $a('#editOverlay > div').forEach(d=>d.style.display = 'none');
-
-  var type = widget.state.type||'piece';
-  if (type=='piece' && widget.state.image)
-    type = 'basic';
-
-  const typeSpecific = $(`#editOverlay > .${type}Edit`);
-
-  if(!typeSpecific)
-    return showOverlay('editJSONoverlay');
-
-  typeSpecific.style.display = 'block';
-
-  vmEditOverlay.selectedWidget = widget
-
-  if(type == 'basic')
-    populateEditOptionsBasic(widget.state);
-  if(type == 'button')
-    populateEditOptionsButton(widget.state);
-  if(type == 'canvas')
-    populateEditOptionsCanvas(widget.state);
-  if(type == 'holder')
-    populateEditOptionsHolder(widget.state);
-  if(type == 'label')
-    populateEditOptionsLabel(widget.state);
-  if(type == 'piece')
-    populateEditOptionsPiece(widget.state);
-  if(type == 'seat')
-    populateEditOptionsSeat(widget.state);
-  if(type == 'spinner')
-    populateEditOptionsSpinner(widget.state);
-  if(type == 'timer')
-    populateEditOptionsTimer(widget.state);
-
-  showOverlay('editOverlay');
-}
-
 //This section holds the functions that generate the JSON of the widgets in the add widget overlay
 function generateCardDeckWidgets(id, x, y, addCards) {
   const widgets = [
@@ -776,6 +704,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} added new ${wi.type || 'basic widget'} in editor: ${w.id}`);
         overlayDone(await onClick());
         batchEnd();
       });
@@ -805,11 +734,13 @@ function addPieceToAddWidgetOverlay(w, wi) {
       });
       const toAdd = {...wi};
       toAdd.z = getMaxZ(w.get('layer')) + 1;
-      toAdd.color = result.color;
+      toAdd.color = result.variables.color;
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
-    } catch(e) {}
+    } catch(e) {
+      console.log(e);
+    }
   });
   w.domElement.id = w.id;
   $('#addOverlay').appendChild(w.domElement);
@@ -830,8 +761,8 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 // Called by most routines that add widgets. If the widget add came from the JSON editor,
 // call a routine in the JSON editor to clean up. Then hide the add widget overlay.
 function overlayDone(id) {
-  if(jeEnabled)
-    jeAddWidgetDone(id);
+  if(getEdit())
+    setSelection([ widgets.get(id) ]);
   showOverlay();
 }
 
@@ -1380,7 +1311,7 @@ function populateAddWidgetOverlay() {
           }
         ]
       });
-      const sides = result.sides;
+      const sides = result.variables.sides;
       const toAdd = {...dice2DAttrs};
       toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
@@ -1454,10 +1385,10 @@ function populateAddWidgetOverlay() {
       });
       const toAdd = {...dice2DCubeAttrs};
       toAdd.z = getMaxZ(dice2DCube.get('layer')) + 1;
-      toAdd.cT = result.color;
-      toAdd.cL = contrastAnyColor(result.color, 0.2);
-      toAdd.cR = contrastAnyColor(result.color, 0.4);
-      toAdd.cP = contrastAnyColor(result.color, 1);
+      toAdd.cT = result.variables.color;
+      toAdd.cL = contrastAnyColor(result.variables.color, 0.2);
+      toAdd.cR = contrastAnyColor(result.variables.color, 0.4);
+      toAdd.cP = contrastAnyColor(result.variables.color, 1);
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
@@ -1489,7 +1420,7 @@ function populateAddWidgetOverlay() {
           }
         ]
       });
-      const sides = result.sides;
+      const sides = result.variables.sides;
       const toAdd = {...dice3DAttrs};
       toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
@@ -1530,7 +1461,7 @@ function populateAddWidgetOverlay() {
           }
         ]
       });
-      const values = result.values;
+      const values = result.variables.values;
       const toAdd = {...spinAttrs};
       toAdd.z = getMaxZ(spinner.get('layer')) + 1;
       toAdd.value = values;
@@ -1606,30 +1537,6 @@ function populateAddWidgetOverlay() {
 }
 // end of JSON generators
 
-async function removeWidgetLocal(widgetID, keepChildren) {
-  function getWidgetsToRemove(widgetID) {
-    const children = [];
-    if(!keepChildren)
-      for(const [ childWidgetID, childWidget ] of widgets)
-        if(!childWidget.inRemovalQueue && (childWidget.get('parent') == widgetID || childWidget.get('deck') == widgetID))
-          children.push(...getWidgetsToRemove(childWidgetID));
-    widgets.get(widgetID).inRemovalQueue = true;
-    children.push(widgets.get(widgetID));
-    return children;
-  }
-
-  if(widgets.get(widgetID).inRemovalQueue)
-    return;
-
-  for(const w of getWidgetsToRemove(widgetID)) {
-    w.isBeingRemoved = true;
-    // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
-    await w.onPropertyChange('deck', w.get('deck'), null);
-    await w.onPropertyChange('parent', w.get('parent'), null);
-    sendPropertyUpdate(w.id, null);
-  }
-}
-
 function uploadWidget(preset) {
   uploadAsset().then(async function(asset) {
     let id;
@@ -1657,6 +1564,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   const previousState = JSON.parse(oldState);
   try {
     var widget = JSON.parse(currentState);
+    setDeltaCause(`${getPlayerDetails().playerName} updated ${widget.id} in editor`);
   } catch(e) {
     alert(e.toString());
     batchEnd();
@@ -1701,6 +1609,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   } else {
     for(const key in widget) {
       if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
+        widgets.get(widget.id).state[key] = widget[key];
         sendPropertyUpdate(widget.id, key, widget[key]);
       }
     }
@@ -1788,17 +1697,18 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
     } else {
       const currentId = await addWidgetLocal(currentWidget);
 
+      const clonedWidgets = [ widgets.get(currentId) ];
       if(recursive)
         for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-          await clone(child, true, currentId, 0, 0);
+          clonedWidgets.push(...await clone(child, true, currentId, 0, 0));
 
-      if(currentId)
-        return currentWidget;
+      return clonedWidgets;
     }
   };
 
   const gridX = xCopies + 1;
   const gridY = yCopies + 1;
+  const clonedWidgets = [];
   for(let i=1; i<gridX*gridY; ++i) {
     let x = xOffset*(i%gridX);
     let y = yOffset*Math.floor(i/gridX);
@@ -1806,9 +1716,9 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
       x = xOffset;
       y = yOffset;
     }
-    var clonedWidget = await clone(widget, recursive, false, x, y);
+    clonedWidgets.push(...await clone(widget, recursive, false, x, y));
   }
-  return clonedWidget;
+  return clonedWidgets;
 }
 
 async function onClickDuplicateWidget() {
@@ -1827,6 +1737,7 @@ async function onClickRemoveWidget() {
 }
 
 function onClickManualEditWidget() {
+  $('#legacy-link').href += `#${roomID}`;
   showOverlay('editJSONoverlay')
 }
 
@@ -1849,16 +1760,24 @@ function addCardType(cardType, value) {
     $('#editWidgetJSON').value = JSON.stringify(widget)
 }
 
-function toggleEditMode() {
-  if(edit)
-    $('body').classList.remove('edit');
-  else
-    $('body').classList.add('edit');
-  edit = !edit;
-  showOverlay();
-}
+export function initializeEditMode() {
+  window.Vue = Vue;
 
-onLoad(function() {
+  const div = document.createElement('div');
+  div.innerHTML = ' //*** HTML ***// ';
+  $('body').append(div);
+
+  const style = document.createElement('style');
+  style.appendChild(document.createTextNode(' //*** CSS ***// '));
+  $('head').appendChild(style);
+
+  for(const overlay of $a('#editorOverlays > *'))
+    $('#roomArea').append(overlay);
+
+  jeInitEventListeners();
+  initializeTraceViewer();
+  initializeEditor();
+
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
     const id = await addWidgetLocal({
@@ -1877,6 +1796,7 @@ onLoad(function() {
       stackOffsetX: 40,
       childrenPerOwner: true,
       dropShadow: true,
+      hidePlayerCursors: true,
       x: 50,
       y: 820,
       width: 1500,
@@ -2113,4 +2033,4 @@ onLoad(function() {
   }));
 
   populateAddWidgetOverlay();
-});
+};

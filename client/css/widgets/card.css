@@ -2,10 +2,6 @@
   overflow: hidden;
 }
 
-body.edit .card {
-  display: none;
-}
-
 .card > .cardFace {
   display: none;
 }
@@ -19,7 +15,7 @@ body.edit .card {
   box-sizing: border-box;
 }
 
-.card > .active.cardFace > .cardFaceObject {
+.card > .cardFace > .cardFaceObject {
   position: absolute;
   background-size: contain;
   background-repeat: no-repeat;

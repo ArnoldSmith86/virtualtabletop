@@ -16,7 +16,8 @@
       "similarName": "Quarto",
       "description": "A 3-D twist on the classic game of X's and O's. Use a 4x4 grid board with 16 different pieces with one of two attributes in each of these categories: color, height, shape, and hollowness. Opponent chooses the piece the other player places on board. First to get 4 in a row with at least one attribute in common wins.",
       "showName": true,
-      "lastUpdate": 1659650063000
+      "lastUpdate": 1659650063000,
+      "similarDesigner": "Blaise Muller"
     }
   },
   "table": {
