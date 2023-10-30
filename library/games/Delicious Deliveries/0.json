@@ -14,7 +14,7 @@
       "id": "blr8",
       "showName": true,
       "skill": "",
-      "description": "Can you have the most delicious deliveries of the very freshest goods?",
+      "description": "Can you serve the city with the most delicious deliveries?",
       "similarImage": "",
       "similarName": "Fresh Fish",
       "similarAwards": "",
@@ -463,6 +463,14 @@
         ],
         "property": "activeFace",
         "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "scoreboard"
+        ],
+        "property": "y",
+        "value": -1000
       },
       {
         "func": "CALL",
