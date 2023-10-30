@@ -5776,6 +5776,7 @@
       "Games",
       "Sandwiches"
     ],
+    "movable": false,
     "showAllRounds": true,
     "verticalHeader": true
   }
