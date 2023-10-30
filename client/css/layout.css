@@ -1294,6 +1294,9 @@ button:disabled:hover {
 #buttonInputFields input{
   position: relative;
 }
+#buttonInputFields label:empty: {
+  display: none;
+}
 .modal *:focus {
   outline: none;
   box-shadow: 0 0 0 3px #159ce4;
