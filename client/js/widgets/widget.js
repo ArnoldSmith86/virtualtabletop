@@ -2226,14 +2226,14 @@ export class Widget extends StateManaged {
 
   renderReadonlyCopyRaw(state, target) {
     delete state.id;
-    delete state.x;
-    delete state.y;
-    delete state.rotation;
-    delete state.scale;
-    delete state.parent;
-    delete state.owner;
-    delete state.linkedToSeat;
-    delete state.onlyVisibleForSeat;
+    state.x = 0;
+    state.y = 0;
+    state.rotation = 0;
+    state.scale = 1;
+    state.parent = null;
+    state.owner = null;
+    state.linkedToSeat = null;
+    state.onlyVisibleForSeat = null;
 
     this.applyInitialDelta(state);
     target.appendChild(this.domElement);
