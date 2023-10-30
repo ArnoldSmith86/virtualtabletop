@@ -1,0 +1,193 @@
+{
+  "_meta": {
+    "version": 14,
+    "info": {
+      "name": "HTML",
+      "image": "/assets/-1962061517_1696",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1698634011889,
+      "id": "f4zd",
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Basic Widgets",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    }
+  },
+  "8fr3": {
+    "type": "label",
+    "css": {
+      "font-size": "60px",
+      "color": "black"
+    },
+    "height": 70,
+    "width": 1000,
+    "x": 290,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1,
+    "text": "HTML: Basic Widgets"
+  },
+  "example1": {
+    "id": "example1",
+    "x": 20,
+    "y": 208,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "html": "<p><b>Bold Text</b></p><p><i>Italicized Text</i></p><p><b><i>Bold and Italics</b></i></p><p><u>Underlined Text</u></p><p><mark>Highlighted Text</mark></p><p style='color:red'>Colored Text</p><p><span style='color:red'>Color</span><span style='color:blue'> Per</span><span style='color:green'> Word</span></p><p style='background-color:red;color:white'>Colored Background</p><p><p> <sup>Super</sup>scripted Text</p><p><sub>Sub</sub>scripted Text</p><p><del>Deleted</del> Text</p><p><q>Quoted</q> Text</p><p style='font-size:30px'>Change Font-Size</p></p><p style='font-family:${PROPERTY newFont}'>Change Font-Family</p>",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 700,
+    "newFont": "courier"
+  },
+  "example2": {
+    "id": "example2",
+    "x": 300,
+    "y": 208,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "html": "<h1>Heading 1</h1><h2>Heading 2</h2><h3>Heading 3</h3><h4>Heading 4</h4><h5>Heading 5</h5><h6>Heading 6</h6>",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 350
+  },
+  "example3": {
+    "id": "example3",
+    "x": 300,
+    "y": 567,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "html": "<p>This shows how to use the <q style='color:teal'>${PROPERTY}</q> feature to build a list. You could then make or update the list dynamically by changing the properties. Click on this widget to see an example.</p><ul><li>${PROPERTY item1}</li><li><span style='color:${PROPERTY item2Color}'>${PROPERTY item2}</span></li><li>${PROPERTY item3}</li></ul>",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 342,
+    "item2": "playerColor",
+    "item1": "playerName",
+    "item3": "mouseCoords",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "item1",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "item2",
+        "value": "${playerColor}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "item2Color",
+        "value": "${playerColor}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "item3",
+        "value": "${mouseCoords}"
+      }
+    ],
+    "item2Color": ""
+  },
+  "example4": {
+    "id": "example4",
+    "x": 580,
+    "y": 208,
+    "width": 450,
+    "z": 440,
+    "movable": false,
+    "html": "<p style='text-align:center'>You can make tables using static or dynamically generated data. Click to add your name.</p><table style='width: 100%; text-align:left'><tr><th>Player Name</th><th>Player Team</th><th>Player Color</th></tr><tr><td>Greg</td><td>Kangaroos</td><td>Teal</td></tr><tr><td>Katie</td><td>Koalas</td><td>Gold</td></tr></tr><tr><td>Alex</td><td>Dingos</td><td>Purple</td></tr></tr><tr><td>${PROPERTY player4}</td><td>Kookaburras</td><td>Silver</td></tr></table>",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 350,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "player4",
+        "value": "${playerName}"
+      }
+    ]
+  },
+  "basicInfo": {
+    "id": "basicInfo",
+    "x": 200,
+    "y": 79,
+    "width": 1200,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "20px"
+    },
+    "html": "You can use most html functions for formatting and stylying of basic widgets (but not buttons, labels, etc). You can also use inline css styling within the html and/or use the css property on the widget. There are many examples in this room. Open the JSON Editor and have a look. One limitation you will see is that you must cram all the text together and cannot use line breaks to help visually separate elements. Everything you see in the first column of text on the left is a single widget. You can use the <q style='color:teal'>${PROPERTY}</q> feature anywhere."
+  },
+  "example5": {
+    "id": "example5",
+    "x": 580,
+    "y": 567,
+    "width": 450,
+    "z": 440,
+    "movable": false,
+    "html": "<p>You can insert images on their own, or inline with the text. You can change their color with an inline css filter. Because the VTT icons start as black, the filter is complicated. Try experimenting with the hue-rotate value, but you will not get all colors.<p style='text-align:center; filter: invert(100%) sepia() saturate(10000%) hue-rotate(270deg)'><img src='i/icons/face.svg' height='50'></img><img src='i/icons/people.svg' height='50'></img><img src='i/icons/group.svg' height='50'></img></p>You can also put images inline <img src='i/icons/vtt_logo.svg' style='vertical-align:middle'</img> with text, but you will have to adjust the size manually as they will not change size <img src='i/icons/auto_awesome.svg' style='vertical-align:middle'</img> if you adjust the font size<p></p>",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 342
+  },
+  "example6": {
+    "id": "example6",
+    "x": 1060,
+    "y": 208,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "html": "<h3><center>Tooltips</h3></center><p title='See, I told you there was a tooltip.'>This paragraph has a tooltip if you hover over it. But changing the appearance of the tooltip, if it is even possible, it beyond the scope of this tutorial.</p><p><abbr title='VirtualTabletop'>VTT</abbr> has an excellent wiki and many tutorials. Did you hover ove the dashed underlined VTT above?</p>",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 350
+  },
+  "example7": {
+    "id": "example7",
+    "x": 1060,
+    "y": 567,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "html": "<p>You can also incorporate links into your rooms.</p><p>For example, here is a link to the VTT <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki'>wiki page</a>. It opens in a new tab</p><p>You could use this, for example, to reference another VTT room that has additional resources related to your game.</p>",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 342
+  }
+}
