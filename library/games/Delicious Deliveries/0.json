@@ -9,7 +9,7 @@
       "year": "1997",
       "mode": "vs",
       "time": "60",
-      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain under CC0.\n\nLibrary image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"a modern day marketplace selling fish and boardgames, delivery truck in the background, cartoon\".\n\nTile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• City buildings https://game-icons.net/1x1/delapouite/modern-city.html\n• Donut https://game-icons.net/1x1/delapouite/donut.html\n• Fish https://game-icons.net/1x1/delapouite/double-fish.html\n• Meeple https://game-icons.net/1x1/delapouite/meeple.html\n<div>• Sandwich https://game-icons.net/1x1/delapouite/sandwich.html</div><div><br></div><div>Umer Younas</div><div>• Bank Note https://thenounproject.com/icon/bank-note-3947508<br></div>",
+      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain under CC0.\n\nLibrary image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"a modern day marketplace selling fish and boardgames, delivery truck in the background, cartoon\".\n\nTile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• City buildings https://game-icons.net/1x1/delapouite/modern-city.html\n• Delivery truck https://game-icons.net/1x1/delapouite/truck.html\n• Donut https://game-icons.net/1x1/delapouite/donut.html\n• Fish https://game-icons.net/1x1/delapouite/double-fish.html\n• Meeple https://game-icons.net/1x1/delapouite/meeple.html\n• Sandwich https://game-icons.net/1x1/delapouite/sandwich.html\n\nUmer Younas\n• Bank Note https://thenounproject.com/icon/bank-note-3947508",
       "lastUpdate": 1698495567192,
       "id": "blr8",
       "showName": true,
@@ -1263,6 +1263,24 @@
       ]
     }
   },
+  "board-5p-label": {
+    "id": "board-5p-label",
+    "type": "label",
+    "parent": "board-5p",
+    "fixedParent": true,
+    "x": 10,
+    "y": -21,
+    "width": 250,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "14px",
+      "text-align": "left"
+    },
+    "text": "5P Game: maximum distance 14"
+  },
   "space-5p-a1": {
     "id": "space-5p-a1",
     "type": "holder",
@@ -2154,6 +2172,13 @@
       ]
     }
   },
+  "board-4p-label": {
+    "id": "board-4p-label",
+    "type": "label",
+    "parent": "board-4p",
+    "inheritFrom": "board-5p-label",
+    "text": "4P Game: maximum distance 12"
+  },
   "space-4p-a1": {
     "id": "space-4p-a1",
     "type": "holder",
@@ -2891,6 +2916,13 @@
       ]
     }
   },
+  "board-3p-label": {
+    "id": "board-3p-label",
+    "type": "label",
+    "parent": "board-3p",
+    "inheritFrom": "board-5p-label",
+    "text": "3P Game: maximum distance 10"
+  },
   "space-3p-a1": {
     "id": "space-3p-a1",
     "type": "holder",
@@ -3465,6 +3497,13 @@
         "space-2p-g3"
       ]
     }
+  },
+  "board-2p-label": {
+    "id": "board-2p-label",
+    "type": "label",
+    "parent": "board-2p",
+    "inheritFrom": "board-5p-label",
+    "text": "2P Game: maximum distance 8"
   },
   "space-2p-a1": {
     "id": "space-2p-a1",
