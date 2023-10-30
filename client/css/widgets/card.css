@@ -1,5 +1,6 @@
 .card {
   overflow: hidden;
+  color: black;
 }
 
 .card > .cardFace {
