@@ -10,21 +10,20 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1698634011889,
-      "id": "f4zd",
+      "lastUpdate": 1698634374139,
       "showName": false,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Basic Widgets",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic Widgets",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "8fr3": {
@@ -169,7 +168,7 @@
     "width": 250,
     "z": 440,
     "movable": false,
-    "html": "<h3><center>Tooltips</h3></center><p title='See, I told you there was a tooltip.'>This paragraph has a tooltip if you hover over it. But changing the appearance of the tooltip, if it is even possible, it beyond the scope of this tutorial.</p><p><abbr title='VirtualTabletop'>VTT</abbr> has an excellent wiki and many tutorials. Did you hover ove the dashed underlined VTT above?</p>",
+    "html": "<h3><center>Tooltips</h3></center><p title='See, I told you there was a tooltip.'>This paragraph has a tooltip if you hover over it. But changing the appearance of the tooltip, (if it is even possible) is beyond the scope of this tutorial.</p><p><abbr title='VirtualTabletop'>VTT</abbr> has an excellent wiki and many tutorials. Did you hover over the dashed underlined VTT above?</p>",
     "css": {
       "font-size": "20px",
       "border": "1px solid black"
@@ -183,7 +182,7 @@
     "width": 250,
     "z": 440,
     "movable": false,
-    "html": "<p>You can also incorporate links into your rooms.</p><p>For example, here is a link to the VTT <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki'>wiki page</a>. It opens in a new tab</p><p>You could use this, for example, to reference another VTT room that has additional resources related to your game.</p>",
+    "html": "<p>You can also incorporate links into your rooms.</p><p>For example, here are links to the VTT <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki'>wiki page</a> and <a href='https://virtualtabletop.io/Tutorials#tutorials'>tutorials room</a>. They open in new tabs.</p><p>You could use this, for example, to reference another VTT room that has additional resources related to your game.</p>",
     "css": {
       "font-size": "20px",
       "border": "1px solid black"
