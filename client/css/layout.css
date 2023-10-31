@@ -1294,7 +1294,7 @@ button:disabled:hover {
 #buttonInputFields input{
   position: relative;
 }
-#buttonInputFields label:empty: {
+#buttonInputFields label:empty {
   display: none;
 }
 .modal *:focus {
