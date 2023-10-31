@@ -19,9 +19,10 @@
     "y": 157,
     "z": 11,
     "css": "font-size: 20px; ",
-    "html": "This example uses 'fetch' and 'jsonParse' to get the JSON from another page at: <a href='https://virtualtabletop.io/TutorialExampleScore'>https://virtualtabletop.io/TutorialExampleScore</a>. Open that page in another tab by clicking on the link. Imagine that page is a game with very simple rules. Whoever has the most cards in their holder wins. On that other page, you can move cards around and see the card count change at the bottom of the holder. When ready, press the Update Scores button below. It will retrieve the scores for the current players (Jane and Steve) and update their scores on the master scoreboard shown in this room. This would keep a record of all plays of the game. To add a new player, just sit in one of the seats in both rooms and click the Update Scores button.",
+    "html": "This example uses 'fetch' and 'jsonParse' to get the JSON from another page at: <a href='https://virtualtabletop.io/TutorialExampleScore'>https://virtualtabletop.io/TutorialExampleScore</a>. Open that page in another tab by clicking on the link. You should reload that room from its saved state.\n\nImagine that page is a game with very simple rules. Whoever has the most cards in their holder wins. On that other page, you can move cards around and see the card count change at the bottom of the holder. When ready, press the Update Scores button below. It will retrieve the scores for the current players (Jane and Steve) and update their scores on the master scoreboard shown in this room. This would keep a record of all plays of the game. To add yourself as new player, just sit in one of the seats in both rooms and click the Update Scores button.",
     "width": 1200,
-    "height": 150
+    "height": 150,
+    "movable": false
   },
   "jsonButton2": {
     "type": "button",
@@ -111,7 +112,10 @@
       0,
       0,
       0,
-      0
+      0,
+      7,
+      0,
+      7
     ]
   },
   "seat2": {
@@ -129,7 +133,10 @@
       0,
       0,
       0,
-      9
+      9,
+      7,
+      0,
+      7
     ],
     "y": 90
   },
@@ -158,7 +165,10 @@
       0,
       0,
       6,
-      0
+      0,
+      7,
+      0,
+      7
     ],
     "y": 160,
     "player": "Fred"
@@ -178,7 +188,10 @@
       2,
       0,
       0,
-      0
+      0,
+      7,
+      0,
+      7
     ],
     "y": 231
   },
@@ -197,7 +210,10 @@
       0,
       5,
       0,
-      5
+      5,
+      2,
+      2,
+      2
     ],
     "y": 301
   },
@@ -216,7 +232,10 @@
       0,
       0,
       0,
-      8
+      8,
+      7,
+      0,
+      7
     ],
     "y": 372
   },
@@ -234,7 +253,10 @@
       0,
       4,
       0,
-      0
+      0,
+      7,
+      0,
+      7
     ],
     "y": 442,
     "player": "Ted"
@@ -253,7 +275,10 @@
       0,
       0,
       7,
-      0
+      0,
+      7,
+      0,
+      7
     ],
     "y": 513,
     "player": "Michelle"
@@ -272,7 +297,10 @@
       0,
       0,
       0,
-      1
+      1,
+      7,
+      0,
+      7
     ],
     "y": 584,
     "player": "Alex"
@@ -291,7 +319,10 @@
       9,
       0,
       0,
-      0
+      0,
+      7,
+      0,
+      7
     ],
     "player": "Tiffany",
     "color": "teal"
@@ -303,7 +334,17 @@
     "z": 24,
     "index": 11,
     "hideWhenUnused": true,
-    "score": [],
+    "score": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      7,
+      7,
+      7
+    ],
     "y": 720
   },
   "seat12": {
@@ -313,7 +354,17 @@
     "z": 25,
     "index": 12,
     "hideWhenUnused": true,
-    "score": [],
+    "score": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      7,
+      0,
+      7
+    ],
     "y": 786
   },
   "seat13": {
@@ -323,7 +374,17 @@
     "z": 26,
     "index": 13,
     "hideWhenUnused": true,
-    "score": [],
+    "score": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      7,
+      0,
+      7
+    ],
     "y": 853
   },
   "_meta": {
@@ -337,7 +398,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1698713320036,
+      "lastUpdate": 1698723543660,
       "showName": false,
       "skill": "",
       "description": "",
