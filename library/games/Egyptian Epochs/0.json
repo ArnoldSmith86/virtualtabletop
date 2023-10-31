@@ -23,7 +23,8 @@
       "similarName": "Ra",
       "similarAwards": "2016 Juego del Año Recommended\n2000 International Gamers Awards - General Strategy; Multi-player Nominee\n1999 Meeples' Choice Award",
       "ruleText": "",
-      "helpText": "- Have players take seats and press the Setup button in the top right to set the track lengths, distribute starting suns, and assign the start player appropriately.\n- Within player areas you have a top row for suns available to bid and a bottom row for suns won during this epoch and not usable until the next.\n- At the top of the board, the top row is for Ra tiles and the second row for tiles in the auction lot.\n- After each player's turn, press the End Turn button to advance the turn indicator.\n- At the end of the epoch, score using the counter in your player areas and then discard your tiles without red scarab symbols to the discard pile in the top right corner."
+      "helpText": "- Have players take seats and press the Setup button in the top right to set the track lengths, distribute starting suns, and assign the start player appropriately.\n- Within player areas you have a top row for suns available to bid and a bottom row for suns won during this epoch and not usable until the next.\n- At the top of the board, the top row is for Ra tiles and the second row for tiles in the auction lot.\n- After each player's turn, press the End Turn button to advance the turn indicator.\n- At the end of the epoch, score using the counter in your player areas and then discard your tiles without red scarab symbols to the discard pile in the top right corner.",
+      "similarDesigner": "Reiner Knizia"
     }
   },
   "button-end-turn": {
