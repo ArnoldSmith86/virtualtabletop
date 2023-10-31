@@ -21,7 +21,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1698514404515,
+      "lastUpdate": 1698713320035,
       "showName": false,
       "skill": "",
       "description": "",
@@ -30,8 +30,9 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "similarDesigner": "",
       "variantImage": "",
-      "variant": "",
+      "variant": "Basic",
       "language": "en-US",
       "players": "1"
     }
@@ -112,7 +113,6 @@
     "x": 540,
     "y": 250,
     "z": 273,
-    "url": "https://jsonplaceholder.typicode.com/users",
     "clickRoutine": [
       "var json = fetch ${PROPERTY url OF jsonButton1}",
       "var parsed = jsonParse ${json} //This converts the data retrieved from the url into useable JSON.",
@@ -422,7 +422,6 @@
     "x": 1030,
     "y": 250,
     "z": 273,
-    "url": "https://jsonplaceholder.typicode.com/users",
     "clickRoutine": [
       "var json = fetch ${PROPERTY url OF jsonButton1}",
       "var parsed = jsonParse ${json}",
