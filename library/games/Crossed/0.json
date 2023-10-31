@@ -3148,364 +3148,6 @@
     "value": 3,
     "player": 4
   },
-  "Die 1": {
-    "id": "Die 1",
-    "x": 770,
-    "y": 676.5,
-    "css": "--size:60px; --rotX:270deg; --rotY:720deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
-    "updateRoutine": [
-      "var value = randInt 1 6",
-      "var valueX = ${PROPERTY xRotations} getIndex ${value}",
-      "var valueY = ${PROPERTY yRotations} getIndex ${value}",
-      "var randX = randInt 0 3",
-      "var randY = randInt 0 3",
-      "var randX = ${randX} * 360",
-      "var randY = ${randY} * 360",
-      "var sumX = ${randX} + ${valueX}",
-      "var sumY = ${randY} + ${valueY}",
-      "var css = '--size:' + ${PROPERTY width}",
-      "var css = ${css} + 'px; --rotX:'",
-      "var css = ${css} + ${sumX}",
-      "var css = ${css} + 'deg; --rotY:'",
-      "var css = ${css} + ${sumY}",
-      "var css = ${css} + 'deg; --rotZ:0deg; background: none !important; perspective: 1600px;'",
-      {
-        "func": "SET",
-        "property": "css",
-        "value": "${css}",
-        "collection": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "value",
-        "value": "${value}",
-        "collection": "thisButton"
-      }
-    ],
-    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='100' height='100'%3E%3Cpath d='M1 1h100v100H1z' fill='b'/%3E%3Cuse xlink:href='%23A' fill='p1' x='20' y='20'/%3E%3Cuse xlink:href='%23A' fill='p2' x='20' y='50'/%3E%3Cuse xlink:href='%23A' fill='p3' x='20' y='80'/%3E%3Cuse xlink:href='%23A' fill='p4' x='50' y='20'/%3E%3Cuse xlink:href='%23A' fill='p5' x='50' y='50'/%3E%3Cuse xlink:href='%23A' fill='p6' x='50' y='80'/%3E%3Cuse xlink:href='%23A' fill='p7' x='80' y='20'/%3E%3Cuse xlink:href='%23A' fill='p8' x='80' y='50'/%3E%3Cuse xlink:href='%23A' fill='p9' x='80' y='80'/%3E%3Cdefs%3E%3Ccircle id='A' r='10'/%3E%3C/defs%3E%3C/svg%3E",
-    "backgroundColor": "#000",
-    "yRotations": [
-      0,
-      0,
-      90,
-      0,
-      0,
-      -90,
-      180
-    ],
-    "value": 4,
-    "xRotations": [
-      0,
-      0,
-      0,
-      90,
-      -90,
-      0,
-      0
-    ],
-    "width": 60,
-    "height": 60,
-    "layer": 5,
-    "z": 11,
-    "pipColor": "#fff",
-    "movable": false
-  },
-  "Base": {
-    "id": "Base",
-    "css": "width:var(--size) !important;height:var(--size) !important;transform-style: preserve-3d;  transform: translateZ(calc(var(--size) / -2)) rotateX(   var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ)) !important;  transition: transform 0.5s;",
-    "movable": false,
-    "parent": "Die 1"
-  },
-  "Front": {
-    "id": "Front",
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(  0deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
-    "parent": "Base",
-    "movable": false,
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "backgroundColor",
-      "p2": "backgroundColor",
-      "p3": "backgroundColor",
-      "p4": "backgroundColor",
-      "p5": "pipColor",
-      "p6": "backgroundColor",
-      "p7": "backgroundColor",
-      "p8": "backgroundColor",
-      "p9": "backgroundColor"
-    },
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    }
-  },
-  "Back": {
-    "id": "Back",
-    "parent": "Base",
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(180deg) translateZ(calc(var(--size) / 2)) !important;background-size:cover;color:white;font-size:54px;font-weight:bold;text-align:center;background-color:${PROPERTY backgroundColor}",
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "text": "?",
-    "image": ""
-  },
-  "Right": {
-    "id": "Right",
-    "parent": "Base",
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY( 90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "pipColor",
-      "p4": "backgroundColor",
-      "p5": "pipColor",
-      "p6": "backgroundColor",
-      "p7": "pipColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "Left": {
-    "id": "Left",
-    "parent": "Base",
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "backgroundColor",
-      "p4": "backgroundColor",
-      "p5": "backgroundColor",
-      "p6": "backgroundColor",
-      "p7": "backgroundColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "Top": {
-    "id": "Top",
-    "parent": "Base",
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black; transform: rotateX( 90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "pipColor",
-      "p4": "backgroundColor",
-      "p5": "backgroundColor",
-      "p6": "backgroundColor",
-      "p7": "pipColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "Bottom": {
-    "id": "Bottom",
-    "parent": "Base",
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateX( -90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "backgroundColor",
-      "p4": "backgroundColor",
-      "p5": "pipColor",
-      "p6": "backgroundColor",
-      "p7": "backgroundColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "Cover": {
-    "id": "Cover",
-    "layer": 9,
-    "css": "width:var(--size) !important;height:var(--size) !important;background-color:${PROPERTY backgroundColor}",
-    "movable": false,
-    "parent": "Die 1",
-    "faces": [
-      {
-        "backgroundColor": "transparent"
-      },
-      {
-        "backgroundColor": "#111"
-      }
-    ],
-    "isCover": true
-  },
-  "Die 2": {
-    "inheritFrom": "Die 1",
-    "id": "Die 2",
-    "x": 770,
-    "css": "--size:60px; --rotX:1170deg; --rotY:0deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
-    "value": 3,
-    "z": 10,
-    "y": 766.5
-  },
-  "Base1": {
-    "inheritFrom": "Base",
-    "id": "Base1",
-    "parent": "Die 2"
-  },
-  "Front1": {
-    "inheritFrom": "Front",
-    "id": "Front1",
-    "parent": "Base1"
-  },
-  "Back1": {
-    "inheritFrom": "Back",
-    "id": "Back1",
-    "parent": "Base1"
-  },
-  "Right1": {
-    "inheritFrom": "Right",
-    "id": "Right1",
-    "parent": "Base1",
-    "activeFace": 0
-  },
-  "Left1": {
-    "inheritFrom": "Left",
-    "id": "Left1",
-    "parent": "Base1"
-  },
-  "Top1": {
-    "inheritFrom": "Top",
-    "id": "Top1",
-    "parent": "Base1"
-  },
-  "Bottom1": {
-    "inheritFrom": "Bottom",
-    "id": "Bottom1",
-    "parent": "Base1",
-    "activeFace": 0
-  },
-  "Cover1": {
-    "inheritFrom": "Cover",
-    "id": "Cover1",
-    "parent": "Die 2",
-    "activeFace": 0
-  },
-  "Die 3": {
-    "inheritFrom": "Die 1",
-    "id": "Die 3",
-    "x": 770,
-    "css": "--size:60px; --rotX:1080deg; --rotY:810deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
-    "value": 2,
-    "z": 9,
-    "y": 856.5
-  },
-  "Base2": {
-    "inheritFrom": "Base",
-    "id": "Base2",
-    "parent": "Die 3"
-  },
-  "Front2": {
-    "inheritFrom": "Front",
-    "id": "Front2",
-    "parent": "Base2"
-  },
-  "Back2": {
-    "inheritFrom": "Back",
-    "id": "Back2",
-    "parent": "Base2"
-  },
-  "Right2": {
-    "inheritFrom": "Right",
-    "id": "Right2",
-    "parent": "Base2",
-    "activeFace": 0
-  },
-  "Left2": {
-    "inheritFrom": "Left",
-    "id": "Left2",
-    "parent": "Base2"
-  },
-  "Top2": {
-    "inheritFrom": "Top",
-    "id": "Top2",
-    "parent": "Base2"
-  },
-  "Bottom2": {
-    "inheritFrom": "Bottom",
-    "id": "Bottom2",
-    "parent": "Base2",
-    "activeFace": 0
-  },
-  "Cover2": {
-    "inheritFrom": "Cover",
-    "id": "Cover2",
-    "parent": "Die 3",
-    "activeFace": 0
-  },
   "kqh9": {
     "type": "button",
     "text": "Roll\nDice",
@@ -3545,22 +3187,12 @@
         "func": "TURN"
       },
       {
-        "func": "FOREACH",
-        "in": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
-        ],
-        "loopRoutine": [
-          {
-            "func": "CALL",
-            "widget": "Die ${value}",
-            "routine": "updateRoutine"
-          }
-        ]
+        "func": "SELECT",
+        "property": "type",
+        "value": "dice"
+      },
+      {
+        "func": "CLICK"
       }
     ],
     "x": 740,
@@ -3572,187 +3204,6 @@
     "css": "font-weight:bold;font-size:30px",
     "width": 120,
     "height": 120
-  },
-  "Die 4": {
-    "inheritFrom": "Die 1",
-    "id": "Die 4",
-    "x": 770,
-    "css": "--size:60px; --rotX:450deg; --rotY:720deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
-    "value": 3,
-    "z": 12,
-    "y": 261.5,
-    "pipColor": "black"
-  },
-  "Base3": {
-    "inheritFrom": "Base",
-    "id": "Base3",
-    "parent": "Die 4",
-    "activeFace": 0
-  },
-  "Front3": {
-    "id": "Front3",
-    "parent": "Base3",
-    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 415.2 415.2'%3E%3Cpath fill='C' d='M413 79c3.4-6.6 2.8-14.2-.1-20.4.8-7-1-14.3-7.7-20l-18.8-15.5c-11-9-28.2-12-39 0L195 179 77 70a27 27 0 0 0-42.5 6.4A72 72 0 0 0 2.9 105c-4 6.7-3.7 15 0 21.8 25.4 45.6 74.6 85.7 115 122.5l-16.3 14.5c-54.4 46.7-91 76.4-23 124.3 1 .6 2 .5 2.8 1 1.3.6 2.6 1 4 1.3.5 0 1 .1 1.3.1 1.4.1 2.8.5 4.2.2 36.6-7.2 70.7-36 101.6-67.5 30 29.7 62.2 58 97.4 74.8 8.4 4 18.4 1.7 25-4 10.8.8 20.7-6 25.7-15.6.7-.5 1.2-.7 2-1.2 15.7-9.8 17.2-29.4 5.5-43l-82.8-88C316.4 196 380.5 142 413 79z'/%3E%3C/svg%3E",
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(  0deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;background:${PROPERTY backgroundColor}",
-    "svgReplaces": {
-      "C": "color"
-    },
-    "backgroundColor": "#ddd"
-  },
-  "Back3": {
-    "inheritFrom": "Front3",
-    "id": "Back3",
-    "parent": "Base3",
-    "color": "#58c5ee",
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(180deg) translateZ(calc(var(--size) / 2)) !important;background:${PROPERTY backgroundColor}",
-    "text": ""
-  },
-  "Right3": {
-    "inheritFrom": "Front3",
-    "id": "Right3",
-    "parent": "Base3",
-    "color": "#e70042",
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY( 90deg) translateZ(calc(var(--size) / 2)) !important; background:${PROPERTY backgroundColor};"
-  },
-  "Left3": {
-    "inheritFrom": "Front3",
-    "id": "Left3",
-    "parent": "Base3",
-    "color": "#94bd21",
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)) !important; background:${PROPERTY backgroundColor};",
-    "activeFace": 0
-  },
-  "Top3": {
-    "inheritFrom": "Front3",
-    "id": "Top3",
-    "parent": "Base3",
-    "color": "#ee7a00",
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black; transform: rotateX( 90deg) translateZ(calc(var(--size) / 2)) !important; background:${PROPERTY backgroundColor};"
-  },
-  "Bottom3": {
-    "inheritFrom": "Front3",
-    "id": "Bottom3",
-    "parent": "Base3",
-    "color": "#ffcd00",
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateX( -90deg) translateZ(calc(var(--size) / 2)) !important; background:${PROPERTY backgroundColor};"
-  },
-  "Cover3": {
-    "inheritFrom": "Cover",
-    "id": "Cover3",
-    "parent": "Die 4",
-    "activeFace": 0,
-    "backgroundColor": "transparent",
-    "faces": [
-      {
-        "backgroundColor": "transparent"
-      },
-      {
-        "backgroundColor": "#ddd"
-      }
-    ]
-  },
-  "Die 5": {
-    "inheritFrom": "Die 4",
-    "id": "Die 5",
-    "x": 770,
-    "y": 171.5,
-    "z": 13,
-    "css": "--size:60px; --rotX:270deg; --rotY:360deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
-    "value": 4
-  },
-  "Base4": {
-    "inheritFrom": "Base3",
-    "id": "Base4",
-    "parent": "Die 5"
-  },
-  "Front4": {
-    "inheritFrom": "Front3",
-    "id": "Front4",
-    "parent": "Base4"
-  },
-  "Back4": {
-    "inheritFrom": "Back3",
-    "id": "Back4",
-    "parent": "Base4"
-  },
-  "Right4": {
-    "inheritFrom": "Right3",
-    "id": "Right4",
-    "parent": "Base4"
-  },
-  "Left4": {
-    "inheritFrom": "Left3",
-    "id": "Left4",
-    "parent": "Base4"
-  },
-  "Top4": {
-    "inheritFrom": "Top3",
-    "id": "Top4",
-    "parent": "Base4"
-  },
-  "Bottom4": {
-    "inheritFrom": "Bottom3",
-    "id": "Bottom4",
-    "parent": "Base4"
-  },
-  "Cover4": {
-    "inheritFrom": "Cover3",
-    "id": "Cover4",
-    "parent": "Die 5",
-    "activeFace": 0,
-    "backgroundColor": "transparent"
-  },
-  "Die 6": {
-    "inheritFrom": "Die 4",
-    "id": "Die 6",
-    "x": 770,
-    "y": 81.5,
-    "z": 14,
-    "css": "--size:60px; --rotX:0deg; --rotY:0deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
-    "value": 1
-  },
-  "Base5": {
-    "inheritFrom": "Base3",
-    "id": "Base5",
-    "parent": "Die 6",
-    "activeFace": 0
-  },
-  "Front5": {
-    "inheritFrom": "Front3",
-    "id": "Front5",
-    "parent": "Base5"
-  },
-  "Back5": {
-    "inheritFrom": "Back3",
-    "id": "Back5",
-    "parent": "Base5"
-  },
-  "Right5": {
-    "inheritFrom": "Right3",
-    "id": "Right5",
-    "parent": "Base5"
-  },
-  "Left5": {
-    "inheritFrom": "Left3",
-    "id": "Left5",
-    "parent": "Base5"
-  },
-  "Top5": {
-    "inheritFrom": "Top3",
-    "id": "Top5",
-    "parent": "Base5"
-  },
-  "Bottom5": {
-    "inheritFrom": "Bottom3",
-    "id": "Bottom5",
-    "parent": "Base5"
-  },
-  "Cover5": {
-    "inheritFrom": "Cover3",
-    "id": "Cover5",
-    "parent": "Die 6",
-    "activeFace": 0,
-    "backgroundColor": "transparent"
   },
   "scoreClickButton": {
     "type": "button",
@@ -3795,7 +3246,7 @@
     "text": "Score"
   },
   "_meta": {
-    "version": 6,
+    "version": 12,
     "info": {
       "name": "Crossed",
       "image": "/assets/1786145751_17624",
@@ -3804,14 +3255,21 @@
       "year": "2016",
       "mode": "vs",
       "time": "20",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
       "attribution": "Board layout and library image by ArnoldSmith86 and released to public domain (CC0).\n\nCross image is CC0: https://www.svgrepo.com/svg/28063/cross",
       "similarName": "Encore!",
       "description": "Take turns rolling dice to figure out which sections on scoresheet to mark off. Player rolling dice can remove two dice and other players choose from remaining dice. Highest score wins.",
       "showName": true,
-      "lastUpdate": 1647839274000
+      "lastUpdate": 1677689043054,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "similarDesigner": "Inka Brand, Markus Brand"
     }
   },
   "Player 2 - Joker 1": {
@@ -9287,5 +8745,137 @@
     "linkedToSeat": "Player 4 - Seat",
     "clonedFrom": "yTemplate",
     "id": "by4a"
+  },
+  "Die 4": {
+    "type": "dice",
+    "id": "Die 4",
+    "y": 261.5,
+    "faces": [
+      {
+        "crossColor": "#58c5ee"
+      },
+      {
+        "crossColor": "#e70042"
+      },
+      {
+        "crossColor": "#94bd21"
+      },
+      {
+        "crossColor": "#ee7a00"
+      },
+      {
+        "crossColor": "black"
+      },
+      {
+        "crossColor": "#ffcd00"
+      }
+    ],
+    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 415.2 415.2'%3E%3Cpath fill='C' d='M413 79c3.4-6.6 2.8-14.2-.1-20.4.8-7-1-14.3-7.7-20l-18.8-15.5c-11-9-28.2-12-39 0L195 179 77 70a27 27 0 0 0-42.5 6.4A72 72 0 0 0 2.9 105c-4 6.7-3.7 15 0 21.8 25.4 45.6 74.6 85.7 115 122.5l-16.3 14.5c-54.4 46.7-91 76.4-23 124.3 1 .6 2 .5 2.8 1 1.3.6 2.6 1 4 1.3.5 0 1 .1 1.3.1 1.4.1 2.8.5 4.2.2 36.6-7.2 70.7-36 101.6-67.5 30 29.7 62.2 58 97.4 74.8 8.4 4 18.4 1.7 25-4 10.8.8 20.7-6 25.7-15.6.7-.5 1.2-.7 2-1.2 15.7-9.8 17.2-29.4 5.5-43l-82.8-88C316.4 196 380.5 142 413 79z'/%3E%3C/svg%3E",
+    "svgReplaces": {
+      "C": "crossColor"
+    },
+    "borderColor": "#888",
+    "inheritFrom": "Die 1",
+    "color": "#ddd"
+  },
+  "Die 5": {
+    "type": "dice",
+    "id": "Die 5",
+    "y": 171.5,
+    "inheritFrom": "Die 4"
+  },
+  "Die 6": {
+    "type": "dice",
+    "id": "Die 6",
+    "y": 81.5,
+    "inheritFrom": "Die 4"
+  },
+  "Die 1": {
+    "type": "dice",
+    "id": "Die 1",
+    "x": 770,
+    "y": 676.5,
+    "width": 60,
+    "height": 60,
+    "borderColor": "#000",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "?"
+    ],
+    "pipColor": "#fff",
+    "shape3d": true,
+    "color": "#000"
+  },
+  "Die 2": {
+    "type": "dice",
+    "id": "Die 2",
+    "y": 766.5,
+    "inheritFrom": "Die 1"
+  },
+  "Die 3": {
+    "type": "dice",
+    "id": "Die 3",
+    "y": 856.5,
+    "inheritFrom": "Die 1"
+  },
+  "Cover 1": {
+    "id": "Cover 1",
+    "parent": "Die 1",
+    "movable": false,
+    "faces": [
+      {
+        "css": "background-color: transparent"
+      },
+      {
+        "css": "background-color: #000"
+      }
+    ],
+    "isCover": true,
+    "width": 60,
+    "height": 60
+  },
+  "Cover 2": {
+    "id": "Cover 2",
+    "parent": "Die 2",
+    "activeFace": 0,
+    "isCover": true,
+    "inheritFrom": "Cover 1"
+  },
+  "Cover 3": {
+    "id": "Cover 3",
+    "parent": "Die 3",
+    "activeFace": 0,
+    "isCover": true,
+    "inheritFrom": "Cover 1"
+  },
+  "Cover 4": {
+    "id": "Cover 4",
+    "parent": "Die 4",
+    "activeFace": 0,
+    "faces": [
+      {
+        "css": "background-color: transparent"
+      },
+      {
+        "css": "background-color: #ddd"
+      }
+    ],
+    "inheritFrom": "Cover 1"
+  },
+  "Cover 5": {
+    "id": "Cover 5",
+    "parent": "Die 5",
+    "activeFace": 0,
+    "inheritFrom": "Cover 4"
+  },
+  "Cover 6": {
+    "id": "Cover 6",
+    "parent": "Die 6",
+    "inheritFrom": "Cover 4",
+    "activeFace": 0
   }
 }

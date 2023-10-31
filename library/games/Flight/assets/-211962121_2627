@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 540 540" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <g transform="translate(0 -512.36)">
+  <g transform="matrix(1 -7.0423e-9 5.9564e-9 1 -96.089 201.43)">
+   <g fill="#faa" font-family="MA Sexy" font-size="387.74" letter-spacing="0" word-spacing="0">
+    <text transform="translate(96.089 310.93)" x="-639.78455" y="243.45752" fill="#000" font-family="MA Sexy" font-size="36" letter-spacing="0" word-spacing="0">
+     <tspan x="-639.78455" y="243.45752"/>
+    </text>
+    <g transform="translate(-69.542 -145.34)">
+     <g fill="#000" font-family="MA Sexy" font-size="104.26" letter-spacing="0" word-spacing="0">
+      <g transform="matrix(.54234 .84016 -.84016 .54234 817.55 100.48)" fill="#ff8080">
+       <g transform="matrix(.33144 -.51345 .51345 .33144 473.94 314.56)">
+        <path transform="matrix(-1.2517 -1.304 1.304 -1.2517 -572.37 1476.4)" d="m735.57 384.31-268.52-114.52-157.98 161.68 147.64 249.15 279.08-6.6465z" fill="#f0e68c"/>
+        <path d="m-1008.2 83.79-57.43-4.1743 443.03-455 411.61 437.82c38.916 28.019-25.942 12.696-46.524 17.184l-360.99-400.73z" fill="#800000"/>
+        <path d="m-832.12 499.38h454.72v39.541h-454.72z" fill="#556b2f"/>
+        <path transform="matrix(1.8661 0 0 1.8661 -1314.8 -401.79)" d="m339.02 154.49h74.161v60.918h-74.161z" fill="#000"/>
+        <path transform="matrix(-.89393 .0184 -.01874 -.87784 -741.16 -.21167)" d="m-68.864 118.73a76.809 83.431 0 1 1 -153.61 -1.3963l76.799 1.3963z" fill="#000"/>
+        <path transform="matrix(1.8661 0 0 1.8661 -1314.8 -401.79)" d="m373.45 117.41h6.6215v97.998h-6.6215z" fill="#f5fffa"/>
+        <path transform="rotate(90)" d="m-60.369 545.02h12.356v138.39h-12.356z" fill="#f5fffa"/>
+        <path transform="rotate(90)" d="m-127.09 542.55h12.356v138.39h-12.356z" fill="#f5fffa"/>
+        <path transform="matrix(1.6363 0 0 1.6363 -103.91 -8.7956)" d="m-267.48 204.01a38.8 38.8 0 1 1 -77.601 0 38.8 38.8 0 1 1 77.601 0z" fill="#000"/>
+        <path transform="rotate(-90)" d="m-279.91-487.25h138.39v113.68h-138.39z" fill="#000"/>
+        <path transform="rotate(-90)" d="m-209.11-491.6h12.356v118.03h-12.356z" fill="#f5fffa"/>
+        <path d="m-437.39 142.75h12.356v138.39h-12.356z" fill="#f5fffa"/>
+        <path transform="rotate(-90)" d="m-280.48-838.47h138.39v113.68h-138.39z" fill="#000"/>
+        <path transform="rotate(-90)" d="m-206.04-842.82h12.356v118.03h-12.356z" fill="#f5fffa"/>
+        <path d="m-788.61 139.68h12.356v138.39h-12.356z" fill="#f5fffa"/>
+       </g>
+      </g>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

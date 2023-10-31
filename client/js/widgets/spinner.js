@@ -54,7 +54,7 @@ class Spinner extends Widget {
 
     const bg = document.createElementNS(ns, 'svg');
     bg.setAttribute('class', 'background');
-    bg.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('backgroundCSS'),true)));
+    bg.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('backgroundCSS'),null,true)));
     bg.setAttribute('viewBox', '0 0 100 100');
 
     const options = this.get('options');
@@ -64,7 +64,7 @@ class Spinner extends Widget {
       line.setAttribute('y1', 50);
       line.setAttribute('x2', 50 + Math.sin(0.5*Math.PI+2*Math.PI/options.length*i)*50);
       line.setAttribute('y2', 50 + Math.cos(0.5*Math.PI+2*Math.PI/options.length*i)*50);
-      line.setAttribute('stroke', this.get('lineColor'));
+      line.setAttribute('stroke', 'var(--lineColor)');
 
       const text = document.createElementNS(ns, 'text');
       text.setAttribute('x', 50 + Math.sin(0.5*Math.PI-2*Math.PI/options.length*(+i+0.5))*38);
@@ -72,7 +72,7 @@ class Spinner extends Widget {
       text.setAttribute('dominant-baseline', 'central');
       text.setAttribute('text-anchor', 'middle');
       text.setAttribute('font-size', 20-options.length/2);
-      text.setAttribute('fill', this.get('textColor'));
+      text.setAttribute('fill', 'var(--textColor)');
 
       text.textContent = options[i];
 
@@ -84,12 +84,12 @@ class Spinner extends Widget {
 
     this.spinner = document.createElement('div');
     this.spinner.setAttribute('class', 'spinningPart');
-    this.spinner.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('spinnerCSS'),true)));
+    this.spinner.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('spinnerCSS'),null,true)));
     this.domElement.appendChild(this.spinner);
 
     this.value = document.createElement('div');
     this.value.setAttribute('class', 'value');
-    this.value.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('valueCSS'),true)));
+    this.value.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('valueCSS'),null,true)));
     this.value.textContent = this.get('value');
     this.domElement.appendChild(this.value);
 
@@ -101,6 +101,16 @@ class Spinner extends Widget {
   css() {
     let css = super.css();
     css += `; font-size:${Math.min(this.get('width'), this.get('height')) * 0.4}px`;
+    if(this.get('textColor'))
+      css += '; --textColor:' + this.get('textColor');
+    if(this.get('lineColor'))
+      css += '; --lineColor:' + this.get('lineColor');
     return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('lineColor', 'textColor');
+    return p;
   }
 }

@@ -525,16 +525,19 @@
   },
   "m247": {
     "type": "label",
-    "text": "The button creates an array using Split. Then uses the RANDOM function to choose one random word from that list.",
+    "text": "The button creates an array using Split. Then uses Shuffle to choose one random word from that list.",
     "x": 501,
     "y": 421,
     "z": 26425,
     "id": "m247",
     "width": 500,
-    "height": 150
+    "height": 150,
+    "css": {
+      "font-size": "26px"
+    }
   },
   "_meta": {
-    "version": 3,
+    "version": 13,
     "info": {
       "name": "Arrays",
       "image": "/assets/-2001287493_6748",
@@ -543,36 +546,21 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Example: Random Word",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1625237253000
+      "lastUpdate": 1686752644515,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Example: Random Word",
+      "language": "en-US",
+      "players": "1"
     }
-  },
-  "Word Button": {
-    "type": "button",
-    "text": "Random Word",
-    "clickRoutine": [
-      "var words = 'alpha,bravo,charlie,delta,echo,foxtrot,golf,hotel,india,juliet,kilo,lima,mike,november,oscar,papa,quebec,romeo,sierra,tango,uniform,victor,whiskey,x-ray,yankee,zulu' split ',' //Split the list of words into an array using commas as a split point",
-      "var wordCount = ${words} length //Calculate the length of (number of words in) the array",
-      "var wordCount = ${wordCount} - 1 //Subtract one from the previous value since the array positions start with an index of 0",
-      "var RANDOM = randInt 0 ${wordCount} //Calculate a random integer between 0 and the number of words in the array",
-      "var word = ${words} getIndex ${RANDOM} //Get the word at the index position of the random number",
-      "var word = ${word} toUpperCase //convert the word to uppercase",
-      "var target = ${PROPERTY target}",
-      {
-        "func": "LABEL",
-        "label": "${target}",
-        "value": "${word}"
-      }
-    ],
-    "x": 717,
-    "y": 264,
-    "z": 19,
-    "id": "Word Button",
-    "target": "Word 5-5"
   },
   "Word 5-5": {
     "type": "label",
@@ -583,6 +571,25 @@
     "y": 284,
     "z": 26428,
     "id": "Word 5-5",
-    "text": "ECHO"
+    "text": "alpha"
+  },
+  "Word Button": {
+    "type": "button",
+    "id": "Word Button",
+    "x": 717,
+    "y": 264,
+    "z": 19,
+    "text": "Random Word",
+    "target": "Word 5-5",
+    "clickRoutine": [
+      "var words = 'alpha,bravo,charlie,delta,echo,foxtrot,golf,hotel,india,juliet,kilo,lima,mike,november,oscar,papa,quebec,romeo,sierra,tango,uniform,victor,whiskey,x-ray,yankee,zulu' split ',' //Split the list of words into an array using commas as a split point",
+      "var wordsShuffled = ${words} shuffle",
+      "var wordsShuffled = ${wordsShuffled} pop",
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY target}",
+        "value": "${wordsShuffled}"
+      }
+    ]
   }
 }

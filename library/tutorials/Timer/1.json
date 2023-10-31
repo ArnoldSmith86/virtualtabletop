@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 9,
     "info": {
       "name": "Timer",
       "image": "/assets/509206781_3477",
@@ -8,13 +8,21 @@
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
-      "time": "0",
-      "players": "",
-      "language": "en-US",
-      "variant": "Card Deal Animation",
+      "time": "",
       "attribution": "The clock face, by temas, is in the Public Domain under CC0, and is available at https://openclipart.org/detail/134335/diy-clock-face-by-temas-134335.\n\nThe stopwatch face is the based on the clock face, but the numbers were modified by LawDawg96.  It is released to the Public Domain under CC0.\n\nThe hour and minute hands are in the Public Domain under CC0, and are available at https://freesvg.org/minute-hand-mitchell-joh.",
       "showName": false,
-      "lastUpdate": 1638938699000
+      "lastUpdate": 1677731215883,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Card Deal Animation",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "moveTimer": {
@@ -821,7 +829,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -837,9 +844,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1363,5 +1371,19 @@
     "width": 103,
     "height": 160,
     "id": "6jz9"
+  },
+  "2zod": {
+    "text": "Note: While this tutorial is still a useful exercise in the potential capabilities of timers, new features of VTT have made this particular technique obsolete. To create a transition animiation effect on cards, see the tutorial in CSS: Transitions. ",
+    "id": "2zod",
+    "z": 325,
+    "x": 94,
+    "y": 111,
+    "width": 400,
+    "css": {
+      "font-size": "18px",
+      "color": "red"
+    },
+    "movable": false,
+    "movableInEdit": false
   }
 }

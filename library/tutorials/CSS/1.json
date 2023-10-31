@@ -8,13 +8,21 @@
       "bgg": "",
       "year": "2022",
       "mode": "Tutorial",
-      "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Advanced",
+      "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1645740859000
+      "lastUpdate": 1676865317861,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Advanced",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "8fr3": {

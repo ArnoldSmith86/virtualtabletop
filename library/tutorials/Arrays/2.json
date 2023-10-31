@@ -503,12 +503,20 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Modifying - Basic",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1625237253000
+      "lastUpdate": 1686752644514,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Modifying - Basic",
+      "language": "en-US",
+      "players": "1"
     }
   }
 }

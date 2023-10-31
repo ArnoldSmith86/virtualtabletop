@@ -1482,7 +1482,7 @@
     "id": "playerSitIn",
     "activePlayers": [],
     "dropTarget": {
-      "not": "allowed"
+      "id": "u7h3"
     },
     "dropOffsetX": 0,
     "dropOffsetY": 0,
@@ -3563,7 +3563,7 @@
     "width": 100,
     "height": 80,
     "dropTarget": {
-      "not": "allowed"
+      "id": "marker"
     },
     "parent": "player1Zone",
     "dropOffsetX": 0,
@@ -6234,7 +6234,8 @@
       "similarName": "UNO",
       "description": "Play cards onto discard stack matching color or number.  Use cards with powers to influence play.  First to get rid of all cards wins.",
       "showName": true,
-      "lastUpdate": 1624286591000
+      "lastUpdate": 1673381158873,
+      "similarDesigner": "Merle Robbins"
     }
   }
 }
