@@ -1464,9 +1464,9 @@ export class Widget extends StateManaged {
           } else {
             let offset = 0;
             await w(a.to, async target=>{
-              for(const c of collections[getCollection(a.collection)].slice(offset, offset+count)) {
+              for(const c of collections[getCollection(a.collection)].slice(offset, offset+count))
                 offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
-              }
+              await target.updateAfterShuffle();
             });
           }
           if(jeRoutineLogging) {
