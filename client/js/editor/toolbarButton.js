@@ -24,22 +24,18 @@ class ToolbarButton {
       this.onClick();
   }
 
+  onMetaReceived(data) {
+  }
+
   onSelectionChanged(newSelection, oldSelection) {
     this.setMinimumSelection(this.minimumSelection);
   }
 
   render(target) {
-    const tooltip = document.createElement('span');
-    tooltip.innerText = this.tooltip;
-
-    if(this.hotkey)
-      tooltip.innerHTML += `<br><br>Hotkey: ${this.hotkey}`;
-
-    this.domElement = document.createElement('button');
-    this.domElement.setAttribute('icon', this.icon);
-    this.domElement.append(tooltip);
-    target.append(this.domElement);
-    this.domElement.onclick = e=>this.onClick();
+    this.domElement = div(target, 'editorToolbarButton', `
+      <button icon=${this.icon}><span>${this.tooltip}${this.hotkey ? '<br><br>Hotkey: '+this.hotkey : ''}</span>
+    `);
+    $('button', this.domElement).onclick = e=>this.onClick();
 
     this.setMinimumSelection(this.minimumSelection);
   }
@@ -77,12 +73,12 @@ class ToolbarToggleButton extends ToolbarButton {
   render(target) {
     super.render(target);
     if(this.active)
-      this.domElement.classList.add('active');
+      $('button', this.domElement).classList.add('active');
   }
 
   setState(state) {
     this.active = state;
-    this.domElement.classList.toggle('active', state);
+    $('button', this.domElement).classList.toggle('active', state);
   }
 }
 
@@ -117,6 +113,21 @@ class PersistentToolbarToggleButton extends ToolbarToggleButton {
       editorState.toggleButtons = {};
     editorState.toggleButtons[this.name] = this.active;
     localStorage.setItem('editorState', JSON.stringify(editorState));
+  }
+}
+
+class ToolbarButtonWithContent extends ToolbarToggleButton {
+  render(target) {
+    super.render(target);
+    this.domContentElement = div(this.domElement, 'editorToolbarButtonContent');
+    this.renderContent(this.domContentElement);
+  }
+
+  renderContent(target) {
+  }
+
+  toggle(state) {
+    $('.editorToolbarButtonContent', this.domElement).classList.toggle('active', state);
   }
 }
 

@@ -17,6 +17,35 @@ export function div(parent, className, html) {
   return div;
 }
 
+export function progressButton(button, clickHandler) {
+  const initialIcon = button.getAttribute('icon');
+  const initialText = button.innerText;
+
+  button.onclick = async function() {
+    button.disabled = true;
+    button.classList.add('progress');
+    button.innerText = 'Working...';
+    button.setAttribute('icon', 'hourglass_empty');
+    try {
+      await clickHandler(s=>button.innerText=s);
+      button.setAttribute('icon', 'check');
+      button.innerText = 'Done';
+      button.classList.add('green');
+    } catch(e) {
+      button.setAttribute('icon', 'error');
+      button.innerText = e.toString();
+      button.classList.add('red');
+    }
+    await sleep(5000);
+    button.disabled = false;
+    button.setAttribute('icon', initialIcon);
+    button.innerText = initialText;
+    button.classList.remove('progress');
+    button.classList.remove('green');
+    button.classList.remove('red');
+  };
+}
+
 const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
 
 export function regexEscape(string) {
