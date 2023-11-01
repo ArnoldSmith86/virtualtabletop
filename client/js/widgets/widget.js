@@ -29,7 +29,7 @@ export class Widget extends StateManaged {
     this.dropShadowWidget = null;
     this.targetTransform = '';
     this.childArray = [];
-    this.propertiesUsedInCSS = [];
+    this.propertiesUsedInProperty = {};
 
     if(StateManaged.inheritFromMapping[id] === undefined)
       StateManaged.inheritFromMapping[id] = [];
@@ -70,6 +70,7 @@ export class Widget extends StateManaged {
       dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
+      hoverParent: null,
       hidePlayerCursors: false,
 
       linkedToSeat: null,
@@ -359,6 +360,7 @@ export class Widget extends StateManaged {
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       await this.set('parent', null);
+      await this.set('hoverParent', null);
       if(this.currentParent.get('childrenPerOwner'))
         await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
@@ -378,7 +380,7 @@ export class Widget extends StateManaged {
     let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
 
     // If the element is currently being dragged we may inherit restricted seat visibility.
-    const hoverTarget = this.get('hoverTarget') ? widgets.get(this.get('hoverTarget')) : null;
+    const hoverTarget = this.get('hoverTarget') && widgets.has(this.get('hoverTarget')) ? widgets.get(this.get('hoverTarget')) : null;
     if (hoverTarget)
       onlyVisibleForSeat = hoverTarget.inheritSeatVisibility(onlyVisibleForSeat);
 
@@ -397,7 +399,7 @@ export class Widget extends StateManaged {
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
-    if(hoverTarget && hoverTarget.domElement.classList.contains('showCardBack'))
+    if(this.get('hoverParent') && widgets.has(this.get('hoverParent')) && widgets.get(this.get('hoverParent')).domElement.classList.contains('showCardBack'))
       className += ' showCardBack';
 
     if(typeof this.get('dragging') == 'string')
@@ -530,7 +532,7 @@ export class Widget extends StateManaged {
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     const usedProperties = new Set();
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
-    this.propertiesUsedInCSS = Array.from(usedProperties);
+    this.propertiesUsedInProperty['css'] = Array.from(usedProperties);
 
     css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
@@ -578,7 +580,7 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInProperty['css']||[]);
   }
 
   cssReplaceProperties(css, usedProperties) {
@@ -1928,6 +1930,20 @@ export class Widget extends StateManaged {
     }
   }
 
+  getWithPropertyReplacements(property) {
+    const properties = new Set();
+    let result = this.cssReplaceProperties(this.get(property), properties);
+    this.propertiesUsedInProperty[property] = Array.from(properties);
+    return result;
+  }
+
+  getWithPropertyReplacements_checkDelta(property, delta) {
+    for(const usedProperty of (this.propertiesUsedInProperty[property]||[]))
+      if(delta[usedProperty] !== undefined)
+        return true;
+    return false;
+  }
+
   getFaceCount() {
     return 1;
   }
@@ -2038,6 +2054,8 @@ export class Widget extends StateManaged {
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('_ancestor'));
+      if(this.currentParent)
+        await this.set('hoverParent', this.get('_ancestor'));
       this.hoverTarget = null;
       this.disablePileUpdateAfterParentChange = true;
       await this.set('parent', null);
@@ -2249,14 +2267,14 @@ export class Widget extends StateManaged {
 
   renderReadonlyCopyRaw(state, target) {
     delete state.id;
-    delete state.x;
-    delete state.y;
-    delete state.rotation;
-    delete state.scale;
-    delete state.parent;
-    delete state.owner;
-    delete state.linkedToSeat;
-    delete state.onlyVisibleForSeat;
+    state.x = 0;
+    state.y = 0;
+    state.rotation = 0;
+    state.scale = 1;
+    state.parent = null;
+    state.owner = null;
+    state.linkedToSeat = null;
+    state.onlyVisibleForSeat = null;
 
     this.applyInitialDelta(state);
     target.appendChild(this.domElement);
