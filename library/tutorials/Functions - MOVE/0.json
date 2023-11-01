@@ -47,7 +47,7 @@
     "layer": -3,
     "z": 15,
     "css": "font-size: 25px; ",
-    "text": "MOVE is used to move widgets, usually from from one holder to another. It works on any type of widget, but cards are a typical type. Use the count parameter to specify the number of widgets (the default is 1). As of when this tutorial was prepared, collections are not supported (but plans are in the works).",
+    "text": "MOVE is used to move widgets, usually from from one holder to another. It works on any type of widget, but cards are a typical type. Use the count parameter to specify the number of widgets (the default is 1).",
     "movable": false
   },
   "bm4j": {
