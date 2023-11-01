@@ -31,7 +31,7 @@
   margin: 0;
 }
 
-#editorToolbar button:disabled::before, #editorDragToolbar button:disabled::before {
+#editorToolbar > div > button:disabled::before, #editorDragToolbar > div > button:disabled::before {
   opacity: 0.2;
 }
 
