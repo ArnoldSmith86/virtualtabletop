@@ -9179,7 +9179,8 @@
       "similarName": "Lost Cities",
       "description": "Play cards into columns in ascending numerical order. Gamble with wager cards that will multiply your positive or negative score. Highest score wins.",
       "showName": true,
-      "lastUpdate": 1636735750000
+      "lastUpdate": 1636735750000,
+      "similarDesigner": "Reiner Knizia"
     }
   },
   "coma": {

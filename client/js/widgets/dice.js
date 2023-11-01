@@ -291,6 +291,10 @@ class Dice extends Widget {
     return super.get(property);
   }
 
+  getFaceCount() {
+    return this.faces().length || 1;
+  }
+
   getFaceProperty(face, property) {
     if(typeof face == 'object' && face !== null && typeof face[property] != 'undefined')
       return face[property];

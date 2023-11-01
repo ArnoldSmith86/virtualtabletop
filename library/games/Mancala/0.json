@@ -3676,7 +3676,8 @@
       "similarName": "Mancala",
       "description": "Move marbles around pits in board to collect your own and opponents marbles.  Player with most marbles wins.",
       "showName": true,
-      "lastUpdate": 1619036880000
+      "lastUpdate": 1619036880000,
+      "similarDesigner": "William Julius Champion Jr."
     }
   },
   "oo4f": {

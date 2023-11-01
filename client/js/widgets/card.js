@@ -217,4 +217,8 @@ class Card extends Widget {
     }
     return super.getDefaultValue(property);
   }
+
+  getFaceCount() {
+    return this.deck.get('faceTemplates').length;
+  }
 }

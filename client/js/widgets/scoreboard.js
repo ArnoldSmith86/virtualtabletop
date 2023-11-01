@@ -119,13 +119,13 @@ class Scoreboard extends Widget {
             }
           ]
         });
-        const seat = widgets.get(result.player);
+        const seat = widgets.get(result.variables.player);
         let scores = seat.get(scoreProperty);
         if(!this.totalsOnly) {
           scores = [...scores];
-          scores[result.round-1] = +result.score;
+          scores[result.variables.round-1] = +result.variables.score;
         } else
-          scores = +result.score;
+          scores = +result.variables.score;
         await seat.set(scoreProperty, scores);
       } catch(e) {
         console.log('The input overlay for the scoreboard failed to load.', e);

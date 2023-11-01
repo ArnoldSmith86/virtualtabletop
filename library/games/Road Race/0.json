@@ -25,7 +25,8 @@
       "description": "Play cards with various distance values until one player reaches exactly 1,000 kilometers. Play stop sign, accident, fuel, speed limit, and flat tire cards to limit opponents' travel and corresponding repair cards to resume your own travel. Highest score wins.",
       "showName": true,
       "helpText": "Players take seats. 2-3 can play solo. 4 players or 6 players are in teams of 2. Press play button. 5 specified cards are removed if less than 4 players. Each player will be dealt 6 cards and random player chosen to start. During player's turn, press +1 button to add one card to hand. Then play or discard one card. Turn indicator will update automatically, but press Next Turn button if it gets out of synch. Press small rotate button in safety area if coup conditions are met. Distance travelled and some score elements are tracked during the game. When the round is over, press Score / End Round button to complete scoring.",
-      "lastUpdate": 1652065010000
+      "lastUpdate": 1652065010000,
+      "similarDesigner": "Edmond Dujardin"
     }
   },
   "deckHolder": {

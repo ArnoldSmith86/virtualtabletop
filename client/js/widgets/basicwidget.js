@@ -15,7 +15,8 @@ class BasicWidget extends Widget {
       color: 'black',
       svgReplaces: {},
       layer: 1,
-      text: ''
+      text: '',
+      html: null
     });
   }
 
@@ -40,8 +41,12 @@ class BasicWidget extends Widget {
         this.previouslyActiveFace = face;
       }
     }
-    if(delta.text !== undefined)
-      setText(this.domElement, this.get('text'));
+    if(delta.html !== undefined || delta.text !== undefined || this.getWithPropertyReplacements_checkDelta('html', delta)) {
+      if(this.get('html') === null)
+        setText(this.domElement, this.get('text'));
+      else
+        this.domElement.innerHTML = DOMPurify.sanitize(mapAssetURLs(this.getWithPropertyReplacements('html')), { USE_PROFILES: { html: true } });
+    }
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined)
@@ -109,6 +114,10 @@ class BasicWidget extends Widget {
     if(d !== undefined)
       return d;
     return super.get(property);
+  }
+
+  getFaceCount() {
+    return this.faces().length || 1;
   }
 
   getImage() {
