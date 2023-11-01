@@ -1276,7 +1276,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: 1, face: null });
+        setDefaults(a, { count: 1, face: null, target: 'DEFAULT'  });
         const count = a.count || 999999;
 
         let fromCollection;
