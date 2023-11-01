@@ -29,7 +29,7 @@ export class Widget extends StateManaged {
     this.dropShadowWidget = null;
     this.targetTransform = '';
     this.childArray = [];
-    this.propertiesUsedInCSS = [];
+    this.propertiesUsedInProperty = {};
 
     if(StateManaged.inheritFromMapping[id] === undefined)
       StateManaged.inheritFromMapping[id] = [];
@@ -530,7 +530,7 @@ export class Widget extends StateManaged {
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     const usedProperties = new Set();
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
-    this.propertiesUsedInCSS = Array.from(usedProperties);
+    this.propertiesUsedInProperty['css'] = Array.from(usedProperties);
 
     css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
@@ -578,7 +578,7 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInProperty['css']||[]);
   }
 
   cssReplaceProperties(css, usedProperties) {
@@ -1905,6 +1905,20 @@ export class Widget extends StateManaged {
     }
   }
 
+  getWithPropertyReplacements(property) {
+    const properties = new Set();
+    let result = this.cssReplaceProperties(this.get(property), properties);
+    this.propertiesUsedInProperty[property] = Array.from(properties);
+    return result;
+  }
+
+  getWithPropertyReplacements_checkDelta(property, delta) {
+    for(const usedProperty of (this.propertiesUsedInProperty[property]||[]))
+      if(delta[usedProperty] !== undefined)
+        return true;
+    return false;
+  }
+
   getFaceCount() {
     return 1;
   }
@@ -2226,14 +2240,14 @@ export class Widget extends StateManaged {
 
   renderReadonlyCopyRaw(state, target) {
     delete state.id;
-    delete state.x;
-    delete state.y;
-    delete state.rotation;
-    delete state.scale;
-    delete state.parent;
-    delete state.owner;
-    delete state.linkedToSeat;
-    delete state.onlyVisibleForSeat;
+    state.x = 0;
+    state.y = 0;
+    state.rotation = 0;
+    state.scale = 1;
+    state.parent = null;
+    state.owner = null;
+    state.linkedToSeat = null;
+    state.onlyVisibleForSeat = null;
 
     this.applyInitialDelta(state);
     target.appendChild(this.domElement);
