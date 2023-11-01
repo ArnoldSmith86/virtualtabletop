@@ -302,7 +302,7 @@ function updateLibraryFilter() {
 
 function parsePlayers(players) {
   const validPlayers = [];
-  for(const token of players.split(',')) {
+  for(const token of String(players||'').split(',')) {
     const match = token.match(/^([0-9]+)(-([0-9]+)|\+)?$/);
     if(match)
       for(let i=+match[1]; i<=(match[2] ? +match[3]||20 : +match[1]); ++i)
@@ -477,7 +477,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
       validPlayers.push(...parsePlayers(variant.players));
       validLanguages.push(variant.language);
-      for(const lang of variant.language.split(/[,;] */)) {
+      for(const lang of String(variant.language||'').split(/[,;] */)) {
         languageOptions[lang] = true;
         if(lang && !lang.match(/^en/))
           languageOptions[`${lang} + None`] = true;
