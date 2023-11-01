@@ -1450,6 +1450,7 @@ export class Widget extends StateManaged {
           return moved;
         }
 
+        let collection;
         if((a.collection || a.from) && this.isValidID(a.to, problems)) {
           if(a.from) {
             if(this.isValidID(a.from, problems)) {
@@ -1461,10 +1462,10 @@ export class Widget extends StateManaged {
             } else {
               problems.push(`Source ${a.from} is invalid.`);
             }
-          } else {
+          } else if(collection = getCollection(a.collection)) {
             let offset = 0;
             await w(a.to, async target=>{
-              for(const c of collections[getCollection(a.collection)].slice(offset, offset+count))
+              for(const c of collections[collection].slice(offset, offset+count))
                 offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
               await target.updateAfterShuffle();
             });
