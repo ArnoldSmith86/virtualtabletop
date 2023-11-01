@@ -70,6 +70,7 @@ export class Widget extends StateManaged {
       dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
+      hoverParent: null,
       hidePlayerCursors: false,
 
       linkedToSeat: null,
@@ -359,6 +360,7 @@ export class Widget extends StateManaged {
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       await this.set('parent', null);
+      await this.set('hoverParent', null);
       if(this.currentParent.get('childrenPerOwner'))
         await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
@@ -378,7 +380,7 @@ export class Widget extends StateManaged {
     let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
 
     // If the element is currently being dragged we may inherit restricted seat visibility.
-    const hoverTarget = this.get('hoverTarget') ? widgets.get(this.get('hoverTarget')) : null;
+    const hoverTarget = this.get('hoverTarget') && widgets.has(this.get('hoverTarget')) ? widgets.get(this.get('hoverTarget')) : null;
     if (hoverTarget)
       onlyVisibleForSeat = hoverTarget.inheritSeatVisibility(onlyVisibleForSeat);
 
@@ -397,7 +399,7 @@ export class Widget extends StateManaged {
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
-    if(hoverTarget && hoverTarget.domElement.classList.contains('showCardBack'))
+    if(this.get('hoverParent') && widgets.has(this.get('hoverParent')) && widgets.get(this.get('hoverParent')).domElement.classList.contains('showCardBack'))
       className += ' showCardBack';
 
     if(typeof this.get('dragging') == 'string')
@@ -2029,6 +2031,8 @@ export class Widget extends StateManaged {
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('_ancestor'));
+      if(this.currentParent)
+        await this.set('hoverParent', this.get('_ancestor'));
       this.hoverTarget = null;
       this.disablePileUpdateAfterParentChange = true;
       await this.set('parent', null);
