@@ -813,10 +813,20 @@ export default class Room {
 
   saveCurrentState(mode) {
     const active = this.state._meta.activeState;
-    if(mode == 'activeVariant' && active)
+    if(mode == 'activeVariant' && active) {
+      if(active.stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
+        return;
       this.saveCurrentState_write(active.stateID, active.variantID, this.getVariantMetadata(active.stateID, active.variantID));
-    if(mode == 'addVariant' && active)
+      if(active.stateID.match(/^PL:/))
+        this.writePublicLibraryAssetsToFilesystem(active.stateID);
+    }
+    if(mode == 'addVariant' && active) {
+      if(active.stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
+        return;
       this.saveCurrentState_write(active.stateID, this.state._meta.states[active.stateID].variants.length, Object.assign(this.getVariantMetadata(active.stateID, active.variantID), { language: '', variant: '', players: '' }));
+      if(active.stateID.match(/^PL:/))
+        this.writePublicLibraryAssetsToFilesystem(active.stateID);
+    }
     if(mode == 'addState')
       this.saveCurrentState_write(Math.random().toString(36).substring(3, 7), 0, { name: `New Game ${new Date().toISOString().substr(11,5)}` });
     if(mode == 'quickSave')

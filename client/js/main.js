@@ -378,7 +378,7 @@ async function loadEditMode() {
       addWidgetLocal, removeWidgetLocal,
       loadJSZip, waitForJSZip,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
-      getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,

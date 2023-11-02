@@ -12,7 +12,7 @@ class SaveButton extends ToolbarButtonWithContent {
   onMetaReceived(data) {
     this.activeState = data.meta.activeState;
     for(const button of $a('.onlyIfActive', this.domContentElement))
-      button.disabled = !data.meta.activeState;
+      button.disabled = !data.meta.activeState || data.meta.activeState.stateID.match(/^PL:/) && !config.allowPublicLibraryEdits;
   }
 
   renderContent(target) {
