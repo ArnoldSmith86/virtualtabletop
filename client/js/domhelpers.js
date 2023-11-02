@@ -576,6 +576,18 @@ export function selectFile(getContents, multipleCallback) {
   });
 }
 
+export function triggerDownload(url, filename) {
+  var link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link); // Required for Firefox
+  link.click();
+  setTimeout(function(){
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  }, 100);
+}
+
 export function asArray(variable) {
   return Array.isArray(variable) ? variable : [ variable ];
 }

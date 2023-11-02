@@ -9,8 +9,27 @@ class SaveButton extends ToolbarButtonWithContent {
       throw new Error('Saving failed.');
   }
 
+  async button_quickDownload(updateProgress, mode) {
+    loadJSZip();
+    updateProgress('Fetching state...');
+    const state = await (await fetch(`state/${roomID}`)).json();
+    state._meta = {
+      version: this.currentVersion,
+      info: this.currentMetadata
+    }
+    updateProgress('Loading JSZip...');
+    await waitForJSZip();
+    updateProgress('Building file...');
+    const zip = new JSZip();
+    zip.file('0.json', JSON.stringify(state));
+    updateProgress('Saving...');
+    triggerDownload(URL.createObjectURL(await zip.generateAsync({type:"blob"})), `QuickDownload ${new Date().toISOString().substr(0,16).replace(/T/, ' ').replace(/:/, '')} - ${this.currentMetadata.name}.vtt`);
+  }
+
   onMetaReceived(data) {
     this.activeState = data.meta.activeState;
+    this.currentMetadata = this.activeState ? Object.assign({}, data.meta.states[this.activeState.stateID], data.meta.states[this.activeState.stateID].variants[this.activeState.variantID]) : { name: 'Unnamed' };
+    this.currentVersion = data.meta.version;
     for(const button of $a('.onlyIfActive', this.domContentElement))
       button.disabled = !data.meta.activeState || data.meta.activeState.stateID.match(/^PL:/) && !config.allowPublicLibraryEdits;
   }
@@ -27,6 +46,7 @@ class SaveButton extends ToolbarButtonWithContent {
 
     for(const button of $a('[data-mode]', target))
       progressButton(button, async updateProgress=>await this.button_saveCurrentState(updateProgress, button.dataset.mode));
+    progressButton($('[icon=download]', target), async updateProgress=>await this.button_quickDownload(updateProgress));
   }
 
   timer_tick() {
