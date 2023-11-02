@@ -4,7 +4,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "3774",
-    "z": 51906,
+    "z": 12348,
     "parent": "p93s"
   },
   "_meta": {
@@ -18,21 +18,21 @@
       "mode": "vs",
       "time": "15 - 45",
       "attribution": "The game room, game design, and game layout are by Jonathan Cox. Art assets used with permission from the rights holder, Jonathan Cox. Illustrations created by Lananh Vo. No permission is given for the further use of any Spring Cleaning art assets.",
-      "lastUpdate": 1698856388613,
-      "id": "xf6e",
-      "showName": true,
+      "lastUpdate": 1698881340408,
+      "id": "3c3w",
+      "showName": false,
       "skill": "low",
       "description": "In this climbing/shedding game you must offer your cards to opponents, and play each others cards as you race to play them all.",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "Jonathan Cox",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "Have every player take a seat and then click the \"SETUP NEW GAME\" button. This will randomly a starting player and deal each player their starting hand of cards.<div><br></div><div>Once done with their turn, the player should click the \"CLICK TO END TURN\" arrow button, which will move to the next player in order.<br><div><br></div><div>When offering cards, click and drag them to the \"Offered Cards\" window under the player's name.&nbsp;</div><div><br></div><div>Once a trick is over, the winner of the trick should click the \"CLEAR CARDS\" button in the bottom left. This will remove all played cards, and also assign the current turn to the trick winner.</div></div><div><br></div><div>The \"Total Cards: #\" value counts all cards in that player's hidden hand as well as all cards in their offer area.</div><div><br></div><div>At the end of a round players will score trash by taking the appropriate value token from the \"Trash Supply\". Place gained track tokens into the skinny vertical column to the right of the player's name.</div><div><br></div><div>Once trash has been scored at the end of the round, if the game isn't over then click the \"CLICK FOR NEW ROUND\" button. The turn order arrow will be moved to the player with the most total trash, who will take the first turn of the next round.</div><div><br></div><div>2 Player Implementation Note:</div><div>After both players have selected seats, click on an unused seat and give it a name like \"Neutral Player\". This implementation does not currently automatically deal with and refresh the neutral offer, so this must be done manually by the players.</div>",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
-      "variantImage": ""
+      "helpText": "Have every player take a seat and then click the \"SETUP NEW GAME\" button. This will randomly a starting player and deal each player their starting hand of cards.<div><div><br></div><div>Once done with their turn, the player should click the \"CLICK TO END TURN\" arrow button, which will move to the next player in order.<br><div><br></div><div>When playing cards, click and drag them into the large open area in the middle of the screen. It is best to line them up horizontally with your seat name and offered cards area.</div><div><br></div><div>When offering cards, click and drag them to the \"Offered Cards\" window under the player's name.&nbsp;</div><div><br></div><div>Once a trick is over, the winner of the trick should click the \"CLEAR CARDS\" button in the bottom left. This will remove all played cards, and also assign the current turn to the trick winner.</div></div><div><br></div><div>The \"Total Cards: #\" value counts all cards in that player's hidden hand as well as all cards in their offer area.</div><div><br></div><div>At the end of a round players will score trash by taking the appropriate value token from the \"Trash Supply\". Place gained track tokens into the skinny vertical column to the right of the player's name.</div><div><br></div><div>Once trash has been scored at the end of the round, if the game isn't over then click the \"CLICK FOR NEW ROUND\" button. The turn order arrow will be moved to the player with the most total trash, who will take the first turn of the next round.</div><div><br></div><div>2 Player Implementation Note:</div><div>After both players have selected seats, click on an unused seat and give it a name like \"Neutral Player\". This implementation does not currently automatically deal with and refresh the neutral offer, so this must be done manually by the players.</div></div>"
     }
   },
   "2jur": {
@@ -62,7 +62,8 @@
     "cardDefaults": {
       "width": 107,
       "height": 170,
-      "borderRadius": 13
+      "borderRadius": 13,
+      "layer": 1
     },
     "cardTypes": {
       "dykj": {
@@ -133,7 +134,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "vjcj",
-    "z": 51903,
+    "z": 12376,
     "parent": "p93s"
   },
   "0w7t": {
@@ -141,7 +142,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "0w7t",
-    "z": 51900,
+    "z": 12321,
     "parent": "p93s"
   },
   "mqgj": {
@@ -149,7 +150,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "mqgj",
-    "z": 51919,
+    "z": 12326,
     "parent": "p93s"
   },
   "hd6g": {
@@ -157,7 +158,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "hd6g",
-    "z": 51894,
+    "z": 12377,
     "parent": "p93s"
   },
   "zoh4": {
@@ -165,7 +166,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "zoh4",
-    "z": 51921,
+    "z": 12325,
     "parent": "p93s"
   },
   "89ui": {
@@ -173,7 +174,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "89ui",
-    "z": 51884,
+    "z": 12324,
     "parent": "p93s"
   },
   "cips": {
@@ -181,7 +182,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "cips",
-    "z": 51871,
+    "z": 12337,
     "parent": "p93s"
   },
   "95x9": {
@@ -189,7 +190,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "95x9",
-    "z": 51911,
+    "z": 12369,
     "parent": "p93s"
   },
   "uoyg": {
@@ -197,7 +198,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "uoyg",
-    "z": 51912,
+    "z": 12351,
     "parent": "p93s"
   },
   "dpvg": {
@@ -205,7 +206,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "dpvg",
-    "z": 51907,
+    "z": 12370,
     "parent": "p93s"
   },
   "gysf": {
@@ -213,7 +214,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "gysf",
-    "z": 51866,
+    "z": 12338,
     "parent": "p93s"
   },
   "j8qx": {
@@ -221,7 +222,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "j8qx",
-    "z": 51893,
+    "z": 12328,
     "parent": "p93s"
   },
   "hvc9": {
@@ -229,7 +230,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "hvc9",
-    "z": 51908,
+    "z": 12329,
     "parent": "p93s"
   },
   "6tgi": {
@@ -237,7 +238,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "6tgi",
-    "z": 51891,
+    "z": 12340,
     "parent": "p93s"
   },
   "28b4": {
@@ -245,7 +246,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "28b4",
-    "z": 51915,
+    "z": 12365,
     "parent": "p93s"
   },
   "kwrt": {
@@ -253,7 +254,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "kwrt",
-    "z": 51872,
+    "z": 12349,
     "parent": "p93s"
   },
   "0k5i": {
@@ -261,7 +262,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "0k5i",
-    "z": 51925,
+    "z": 12322,
     "parent": "p93s"
   },
   "9d08": {
@@ -269,7 +270,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "9d08",
-    "z": 51887,
+    "z": 12353,
     "parent": "p93s"
   },
   "yxmx": {
@@ -277,7 +278,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "yxmx",
-    "z": 51878,
+    "z": 12346,
     "parent": "p93s"
   },
   "krzj": {
@@ -285,7 +286,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "krzj",
-    "z": 51905,
+    "z": 12368,
     "parent": "p93s"
   },
   "sv8o": {
@@ -293,7 +294,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "sv8o",
-    "z": 51892,
+    "z": 12378,
     "parent": "p93s"
   },
   "1i5n": {
@@ -301,7 +302,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "1i5n",
-    "z": 51904,
+    "z": 12319,
     "parent": "p93s"
   },
   "6agt": {
@@ -309,7 +310,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "6agt",
-    "z": 51875,
+    "z": 12330,
     "parent": "p93s"
   },
   "mkv8": {
@@ -317,7 +318,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "mkv8",
-    "z": 51877,
+    "z": 12344,
     "parent": "p93s"
   },
   "hu3a": {
@@ -325,7 +326,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "hu3a",
-    "z": 51882,
+    "z": 12335,
     "parent": "p93s"
   },
   "scdy": {
@@ -333,7 +334,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "scdy",
-    "z": 51897,
+    "z": 12363,
     "parent": "p93s"
   },
   "q0oo": {
@@ -341,7 +342,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "q0oo",
-    "z": 51914,
+    "z": 12356,
     "parent": "p93s"
   },
   "tg41": {
@@ -349,7 +350,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "tg41",
-    "z": 51922,
+    "z": 12380,
     "parent": "p93s"
   },
   "ryr2": {
@@ -357,7 +358,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "ryr2",
-    "z": 51926,
+    "z": 12333,
     "parent": "p93s"
   },
   "1fx0": {
@@ -365,7 +366,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "1fx0",
-    "z": 51879,
+    "z": 12371,
     "parent": "p93s"
   },
   "ck6d": {
@@ -373,7 +374,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "ck6d",
-    "z": 51902,
+    "z": 12334,
     "parent": "p93s"
   },
   "3cqj": {
@@ -381,7 +382,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "3cqj",
-    "z": 51886,
+    "z": 12341,
     "parent": "p93s"
   },
   "k6cn": {
@@ -389,7 +390,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "k6cn",
-    "z": 51868,
+    "z": 12359,
     "parent": "p93s"
   },
   "ngmq": {
@@ -397,7 +398,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "ngmq",
-    "z": 51874,
+    "z": 12381,
     "parent": "p93s"
   },
   "ugqo": {
@@ -405,7 +406,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "ugqo",
-    "z": 51869,
+    "z": 12355,
     "parent": "p93s"
   },
   "hxmb": {
@@ -413,7 +414,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "hxmb",
-    "z": 51865,
+    "z": 12332,
     "parent": "p93s"
   },
   "q998": {
@@ -421,7 +422,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "q998",
-    "z": 51898,
+    "z": 12357,
     "parent": "p93s"
   },
   "f43c": {
@@ -429,7 +430,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "f43c",
-    "z": 51909,
+    "z": 12373,
     "parent": "p93s"
   },
   "jgjt": {
@@ -437,7 +438,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "jgjt",
-    "z": 51920,
+    "z": 12374,
     "parent": "p93s"
   },
   "ngz6": {
@@ -445,7 +446,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "ngz6",
-    "z": 51867,
+    "z": 12350,
     "parent": "p93s"
   },
   "qzrh": {
@@ -453,7 +454,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "qzrh",
-    "z": 51895,
+    "z": 12327,
     "parent": "p93s"
   },
   "1u26": {
@@ -461,7 +462,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "1u26",
-    "z": 51901,
+    "z": 12372,
     "parent": "p93s"
   },
   "lq4c": {
@@ -469,7 +470,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "lq4c",
-    "z": 51883,
+    "z": 12360,
     "parent": "p93s"
   },
   "keoj": {
@@ -477,7 +478,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "keoj",
-    "z": 51918,
+    "z": 12362,
     "parent": "p93s"
   },
   "e8gg": {
@@ -485,7 +486,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "e8gg",
-    "z": 51870,
+    "z": 12358,
     "parent": "p93s"
   },
   "6sub": {
@@ -493,7 +494,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "6sub",
-    "z": 51890,
+    "z": 12367,
     "parent": "p93s"
   },
   "dnlb": {
@@ -501,7 +502,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "dnlb",
-    "z": 51888,
+    "z": 12366,
     "parent": "p93s"
   },
   "ipmw": {
@@ -509,7 +510,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "ipmw",
-    "z": 51880,
+    "z": 12364,
     "parent": "p93s"
   },
   "ytu6": {
@@ -517,7 +518,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "ytu6",
-    "z": 51896,
+    "z": 12379,
     "parent": "p93s"
   },
   "48o4": {
@@ -525,7 +526,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "48o4",
-    "z": 51881,
+    "z": 12320,
     "parent": "p93s"
   },
   "ay3c": {
@@ -533,7 +534,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "ay3c",
-    "z": 51924,
+    "z": 12361,
     "parent": "p93s"
   },
   "u595": {
@@ -541,7 +542,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "u595",
-    "z": 51910,
+    "z": 12343,
     "parent": "p93s"
   },
   "nkzc": {
@@ -549,7 +550,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "nkzc",
-    "z": 51923,
+    "z": 12345,
     "parent": "p93s"
   },
   "gk31": {
@@ -557,7 +558,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "gk31",
-    "z": 51927,
+    "z": 12354,
     "parent": "p93s"
   },
   "x7xi": {
@@ -565,7 +566,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "x7xi",
-    "z": 51876,
+    "z": 12336,
     "parent": "p93s"
   },
   "5z49": {
@@ -573,7 +574,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "5z49",
-    "z": 51885,
+    "z": 12323,
     "parent": "p93s"
   },
   "q4cz": {
@@ -581,7 +582,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "q4cz",
-    "z": 51916,
+    "z": 12342,
     "parent": "p93s"
   },
   "hftn": {
@@ -589,7 +590,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "hftn",
-    "z": 51917,
+    "z": 12339,
     "parent": "p93s"
   },
   "mr7v": {
@@ -597,7 +598,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "mr7v",
-    "z": 51889,
+    "z": 12375,
     "parent": "p93s"
   },
   "vjjx": {
@@ -605,7 +606,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "vjjx",
-    "z": 51873,
+    "z": 12331,
     "parent": "p93s"
   },
   "uh2r": {
@@ -613,7 +614,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "uh2r",
-    "z": 51899,
+    "z": 12352,
     "parent": "p93s"
   },
   "bord": {
@@ -621,7 +622,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "bord",
-    "z": 51913,
+    "z": 12347,
     "parent": "p93s"
   },
   "1hand": {
@@ -631,7 +632,7 @@
     "fixedParent": true,
     "z": 6,
     "movableInEdit": false,
-    "width": 600,
+    "width": 590,
     "y": 60,
     "onlyVisibleForSeat": "1seat",
     "stackOffsetX": 123,
@@ -699,12 +700,13 @@
       }
     ],
     "height": 180,
-    "x": 800
+    "x": 810,
+    "layer": -1
   },
   "draw_deck_holder": {
     "type": "holder",
     "id": "draw_deck_holder",
-    "x": 260,
+    "x": 272,
     "y": 818,
     "z": 667,
     "dropTarget": {
@@ -869,7 +871,7 @@
     "id": "1_card_count",
     "parent": "1seat",
     "fixedParent": true,
-    "width": 180,
+    "width": 200,
     "height": 40,
     "layer": 4,
     "z": 34,
@@ -886,7 +888,7 @@
       }
     },
     "text": "Total Cards: 0",
-    "x": 188,
+    "x": 172,
     "linkedToSeat": "1seat",
     "offer_count": 0,
     "changeRoutine": [
@@ -938,7 +940,6 @@
       }
     ],
     "hand_count": 0,
-    "y": 2,
     "movableInEdit": false
   },
   "2seat": {
@@ -947,21 +948,16 @@
     "x": 82,
     "y": 216,
     "index": 2,
-    "inheritFrom": "1seat",
+    "inheritFrom": {
+      "1seat": [
+        "!color"
+      ]
+    },
     "turn": false,
     "player": "",
     "mainColor": "#dddddd",
     "textColor": "#000000",
     "z": 78316
-  },
-  "2offer": {
-    "type": "holder",
-    "id": "2offer",
-    "parent": "2seat",
-    "fixedParent": true,
-    "inheritFrom": "1offer",
-    "stackOffsetX": 170,
-    "linkedToSeat": "2seat"
   },
   "2_card_count": {
     "type": "label",
@@ -978,7 +974,11 @@
     "type": "seat",
     "id": "3seat",
     "index": 3,
-    "inheritFrom": "1seat",
+    "inheritFrom": {
+      "1seat": [
+        "!color"
+      ]
+    },
     "z": 78311,
     "x": 82,
     "y": 423,
@@ -1011,7 +1011,11 @@
     "type": "seat",
     "id": "4seat",
     "index": 4,
-    "inheritFrom": "1seat",
+    "inheritFrom": {
+      "1seat": [
+        "!color"
+      ]
+    },
     "z": 78313,
     "x": 82,
     "y": 629,
@@ -1311,15 +1315,15 @@
     },
     "text": "Trash Supply",
     "rotation": 270,
-    "x": 349
+    "x": 361
   },
   "setup": {
     "type": "button",
     "id": "setup",
-    "x": 1413,
+    "x": 1412,
     "y": 834,
     "width": 120,
-    "z": 302,
+    "z": 324,
     "text": "SETUP\nNEW GAME",
     "clickRoutine": [
       {
@@ -1655,7 +1659,7 @@
   "discard_holder": {
     "type": "holder",
     "id": "discard_holder",
-    "x": 117,
+    "x": 129,
     "y": 818,
     "width": 115,
     "height": 180,
@@ -1663,7 +1667,6 @@
     "dropTarget": {
       "type": "card"
     },
-    "recall_with_setup": true,
     "onEnter": {
       "activeFace": 1
     }
@@ -1784,7 +1787,7 @@
     ],
     "x": 13,
     "y": 834,
-    "z": 289,
+    "z": 321,
     "id": "h8up",
     "borderRadius": 20,
     "layer": 2,
@@ -1795,10 +1798,9 @@
   },
   "arrow": {
     "id": "arrow",
-    "width": 80,
-    "z": 1357,
-    "image": "/assets/-1936595495_15102",
-    "height": 60,
+    "width": 70,
+    "z": 78319,
+    "height": 37,
     "clickRoutine": [
       {
         "func": "TURN",
@@ -1810,7 +1812,6 @@
       }
     ],
     "parent": "1current_turn",
-    "movable": false,
     "clearRoutine": [
       {
         "func": "TURN",
@@ -1859,22 +1860,65 @@
     "NewRoundRoutine": [
       "var index = ${PROPERTY highest_trash_ID OF new_round_button} charAt 0",
       {
-        "func": "TURN",
-        "turn": "${index}",
-        "turnCycle": "position"
+        "func": "SELECT",
+        "property": "type",
+        "value": "seat",
+        "relation": "==",
+        "collection": "all_seats"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "all_seats",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "turn",
+            "relation": "=",
+            "value": false
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${index}seat"
+        ],
+        "property": "turn",
+        "relation": "=",
+        "value": true
       },
       {
         "func": "CALL",
         "routine": "MoveArrowRoutine"
       }
-    ]
+    ],
+    "type": "button",
+    "borderRadius": 10,
+    "backgroundColor": "grey",
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "13px",
+        "border": "0px solid #d12027",
+        "text-shadow": "none"
+      },
+      " > textarea": {
+        "text-shadow": "0px 0px 0 #000000, 0px 0px 0 #000000, 0px 0px 0 #000000, 0px 0px 0 #000000, 0 0px 0px #00000099"
+      }
+    },
+    "text": "CLICK TO\nEND TURN",
+    "x": 2,
+    "y": 13
   },
   "1current_turn": {
     "type": "holder",
     "id": "1current_turn",
     "z": 1351,
-    "dropOffsetY": 0,
-    "dropOffsetX": 0,
+    "dropOffsetY": 13,
+    "dropOffsetX": 2,
     "dropTarget": {
       "id": "arrow"
     },
@@ -1914,7 +1958,7 @@
     "id": "fd3j",
     "z": 1336,
     "y": 813,
-    "x": 452,
+    "x": 464,
     "width": 40,
     "height": 40,
     "movable": false
@@ -1926,7 +1970,7 @@
     "fixedParent": true,
     "x": 379,
     "y": -11,
-    "width": 43,
+    "width": 45,
     "height": 166,
     "z": 1410,
     "movableInEdit": false,
@@ -2053,7 +2097,7 @@
     "inheritFrom": "1trash_holder",
     "trash_value": 0,
     "trash_array": [],
-    "doubleLeaveRoutineCompensation": true,
+    "doubleLeaveRoutineCompensation": false,
     "total_trash_value": 0
   },
   "3trash_holder": {
@@ -2066,7 +2110,7 @@
     "trash_value": 0,
     "total_trash_value": 0,
     "trash_array": [],
-    "doubleLeaveRoutineCompensation": true
+    "doubleLeaveRoutineCompensation": false
   },
   "4trash_holder": {
     "type": "holder",
@@ -2099,7 +2143,7 @@
     "id": "new_round_button",
     "x": 1153,
     "y": 939,
-    "z": 300,
+    "z": 319,
     "text": "CLICK FOR\nNEW ROUND",
     "clickRoutine": [
       {
@@ -2136,12 +2180,6 @@
         "func": "RECALL",
         "inHolder": true,
         "holder": "draw_deck_holder",
-        "owned": false
-      },
-      {
-        "func": "RECALL",
-        "inHolder": true,
-        "holder": "discard_holder",
         "owned": false
       },
       {
@@ -2635,7 +2673,7 @@
   "n7z2": {
     "type": "label",
     "text": "Draw",
-    "x": 267,
+    "x": 279,
     "y": 791,
     "z": 620,
     "id": "n7z2",
@@ -2651,7 +2689,7 @@
   "n7z3": {
     "type": "label",
     "text": "Discard",
-    "x": 126,
+    "x": 138,
     "y": 791,
     "z": 622,
     "id": "n7z3",
@@ -2663,36 +2701,6 @@
       }
     },
     "height": 30
-  },
-  "pmq6": {
-    "image": "/assets/-1437369679_17872",
-    "z": 1323,
-    "width": 35,
-    "height": 40,
-    "trash": true,
-    "borderRadius": 5,
-    "clonedFrom": "2ko6",
-    "x": 2,
-    "dragging": "Jonathan",
-    "trash_value": 3,
-    "y": 2,
-    "id": "pmq6",
-    "parent": "infinite_trash3"
-  },
-  "2ufu": {
-    "image": "/assets/2132500640_14972",
-    "z": 1327,
-    "width": 35,
-    "height": 40,
-    "trash": true,
-    "borderRadius": 5,
-    "y": 2,
-    "clonedFrom": "fgnl",
-    "x": 2,
-    "trash_value": 2,
-    "dragging": "Jonathan",
-    "id": "2ufu",
-    "parent": "infinite_trash2"
   },
   "1_offered_cards_image_holder": {
     "id": "1_offered_cards_image_holder",
@@ -2721,7 +2729,11 @@
     "inheritFrom": "1_offered_cards_image_holder",
     "parent": "2seat",
     "fixedParent": true,
-    "linkedToSeat": "2seat"
+    "linkedToSeat": "2seat",
+    "css": {
+      "background": "var(--color)",
+      "border-color": ""
+    }
   },
   "3_offered_cards_image_holder": {
     "id": "3_offered_cards_image_holder",
@@ -2729,7 +2741,11 @@
     "inheritFrom": "1_offered_cards_image_holder",
     "parent": "3seat",
     "fixedParent": true,
-    "linkedToSeat": "3seat"
+    "linkedToSeat": "3seat",
+    "css": {
+      "background": "var(--color)",
+      "border-color": ""
+    }
   },
   "4_offered_cards_image_holder": {
     "id": "4_offered_cards_image_holder",
@@ -2737,22 +2753,11 @@
     "inheritFrom": "1_offered_cards_image_holder",
     "parent": "4seat",
     "fixedParent": true,
-    "linkedToSeat": "4seat"
-  },
-  "kbf4": {
-    "image": "/assets/-1877962591_11360",
-    "z": 1353,
-    "width": 35,
-    "height": 40,
-    "trash": true,
-    "borderRadius": 5,
-    "y": 2,
-    "clonedFrom": "i69h",
-    "x": 2,
-    "dragging": "Jonathan",
-    "trash_value": 1,
-    "id": "kbf4",
-    "parent": "infinite_trash1"
+    "linkedToSeat": "4seat",
+    "css": {
+      "background": "var(--color)",
+      "border-color": ""
+    }
   },
   "1seat": {
     "type": "seat",
@@ -2762,7 +2767,7 @@
     "width": 185,
     "height": 31,
     "borderRadius": 8,
-    "z": 78314,
+    "z": 78318,
     "css": {
       "default": {
         "min-width": "172px",
@@ -2782,6 +2787,11 @@
       },
       ".seated.turn::after": {
         "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "white",
         "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
         "background-size": "200% auto",
         "color": "${PROPERTY mainColor}",
@@ -2792,14 +2802,13 @@
         "text-transform": "uppercase",
         "position": "absolute",
         "right": "-12px",
-        "top": "-12px",
+        "top": "1px",
         "padding": "2px",
         "border-radius": "100px",
         "box-shadow": "0 0 5px #000000bb",
         "pointer-events": "none"
       }
     },
-    "hideWhenUnused": true,
     "colorContrast": "#000000",
     "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
@@ -3044,8 +3053,7 @@
         ],
         "elseRoutine": []
       }
-    ],
-    "turn": true
+    ]
   },
   "1_offered_cards_asset": {
     "id": "1_offered_cards_asset",
@@ -3079,5 +3087,62 @@
     "parent": "4_offered_cards_image_holder",
     "fixedParent": true,
     "inheritFrom": "1_offered_cards_asset"
+  },
+  "2offer": {
+    "type": "holder",
+    "id": "2offer",
+    "parent": "2seat",
+    "fixedParent": true,
+    "inheritFrom": "1offer",
+    "linkedToSeat": "2seat",
+    "stackOffsetX": 170
+  },
+  "nbdt": {
+    "image": "/assets/2132500640_14972",
+    "z": 10558,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "clonedFrom": "her0",
+    "x": 2,
+    "trash_value": 2,
+    "dragging": "gvfdsdf",
+    "hoverParent": "infinite_trash2",
+    "id": "nbdt",
+    "parent": "infinite_trash2"
+  },
+  "w67j": {
+    "image": "/assets/-1877962591_11360",
+    "z": 11296,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "clonedFrom": "togb",
+    "x": 2,
+    "dragging": "Mike",
+    "trash_value": 1,
+    "hoverParent": "infinite_trash1",
+    "id": "w67j",
+    "parent": "infinite_trash1"
+  },
+  "8a95": {
+    "image": "/assets/-1437369679_17872",
+    "z": 11533,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "clonedFrom": "x76i",
+    "x": 2,
+    "dragging": "Mike",
+    "trash_value": 3,
+    "y": 2,
+    "hoverParent": "infinite_trash3",
+    "id": "8a95",
+    "parent": "infinite_trash3"
   }
 }
