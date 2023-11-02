@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1698776997732,
+      "lastUpdate": 1698932316900,
       "showName": false,
       "skill": "",
       "description": "",
@@ -26,23 +26,9 @@
       "players": "1"
     }
   },
-  "8fr3": {
-    "type": "label",
-    "css": {
-      "font-size": "60px",
-      "color": "black"
-    },
-    "height": 70,
-    "width": 1000,
-    "x": 290,
-    "z": 26392,
-    "id": "8fr3",
-    "y": 1,
-    "text": "HTML: Basic Widgets"
-  },
   "example1": {
     "id": "example1",
-    "x": 20,
+    "x": 7,
     "y": 208,
     "width": 250,
     "z": 440,
@@ -57,7 +43,7 @@
   },
   "example2": {
     "id": "example2",
-    "x": 300,
+    "x": 271,
     "y": 208,
     "width": 250,
     "z": 440,
@@ -71,7 +57,7 @@
   },
   "example3": {
     "id": "example3",
-    "x": 300,
+    "x": 271,
     "y": 567,
     "width": 250,
     "z": 440,
@@ -115,7 +101,7 @@
   },
   "example4": {
     "id": "example4",
-    "x": 580,
+    "x": 536,
     "y": 208,
     "width": 450,
     "z": 440,
@@ -149,21 +135,27 @@
   },
   "example5": {
     "id": "example5",
-    "x": 580,
+    "x": 536,
     "y": 567,
     "width": 450,
     "z": 440,
     "movable": false,
-    "html": "<p>You can insert images on their own, or inline with the text. You can change their color with an inline css filter. Because the VTT icons start as black, the filter is complicated. Try experimenting with the hue-rotate value, but you will not get all colors.<p style='text-align:center; filter: invert(100%) sepia() saturate(10000%) hue-rotate(270deg)'><img src='i/icons/face.svg' height='50'></img><img src='i/icons/people.svg' height='50'></img><img src='i/icons/group.svg' height='50'></img></p>You can also put images inline <img src='i/icons/vtt_logo.svg' style='vertical-align:middle'</img> with text, but you will have to adjust the size manually as they will not change size <img src='i/icons/auto_awesome.svg' style='vertical-align:middle'</img> if you adjust the font size<p></p>",
+    "html": "<p>You can insert images on their own, or inline with the text. You can change their color with an inline css filter. Because the VTT icons start as black, the filter is complicated. Try experimenting with the hue-rotate value, but you will not get all colors.</p><div style='text-align:center; filter: invert(100%) sepia() saturate(10000%) hue-rotate(270deg)'><img src='i/icons/face.svg' height='50' /><img src='i/icons/people.svg' height='50' /><img src='i/icons/group.svg' height='50' /></div><p>You can also put images inline <img src='i/icons/vtt_logo.svg' style='vertical-align:middle'/> with text. Use 'height:1em' (inline or by using the img selector) to have the<span style='font-size:25px'> size adjust automatically <img src='i/icons/auto_awesome.svg'/> as the size of the font changes.</p>",
     "css": {
-      "font-size": "20px",
-      "border": "1px solid black"
+      "default": {
+        "font-size": "20px",
+        "border": "1px solid black"
+      },
+      " p > img": {
+        "height": "1em",
+        "vertical-align": "middle"
+      }
     },
     "height": 342
   },
   "example6": {
     "id": "example6",
-    "x": 1060,
+    "x": 1007,
     "y": 208,
     "width": 250,
     "z": 440,
@@ -177,16 +169,72 @@
   },
   "example7": {
     "id": "example7",
-    "x": 1060,
+    "x": 1007,
     "y": 567,
     "width": 250,
     "z": 440,
     "movable": false,
-    "html": "<p>You can also incorporate links into your rooms.</p><p>For example, here are links to the VTT <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki'>wiki page</a> and <a href='https://virtualtabletop.io/Tutorials#tutorials'>tutorials room</a>. They open in new tabs.</p><p>You could use this, for example, to reference another VTT room that has additional resources related to your game.</p>",
+    "html": "<p>Links also work.</p><p>For example, here are links to the VTT <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki'>wiki page</a> and <a href='https://virtualtabletop.io/Tutorials#tutorials'>tutorials room</a>. They open in new tabs.</p><p>You could use this, for example, to reference another VTT room related to your game.</p><p>Scrolling does not work on mobile. But you can enable that by setting the 'overflow' property of the widget's css.</p>",
     "css": {
       "font-size": "20px",
-      "border": "1px solid black"
+      "border": "1px solid black",
+      "overflow": "auto"
     },
     "height": 342
+  },
+  "example8": {
+    "id": "example8",
+    "x": 1277,
+    "y": 208,
+    "width": 300,
+    "z": 442,
+    "movable": false,
+    "html": "<h2>Style Sheets vs Inline</h2><p>This area shows how to use a style sheet (css) to control the layout of most of the widget, and inline css to override the style sheet settings.</p><p>The widget gets its overall formatting in the css 'defaut' section. Additional formatting for the 'p', 'h2', and 'li' elements are defined in the css with those labelsand a class is added. You must have the space between the first quotation mark and the element like this: <q> h2</q>.</p><p>Following the rules for css specificity you can see the default font for this widget is 20px. The 'p' element overrides that and sets 19px. But this inline css set with 'span' snd 'style' has the <span style='font-size:23px'>hightest specificity</span> and overrides anything else. This works for any html elements, such as lists:</p><ul><li>Item 1 is blue because of the 'li' setting in the widget css</li><li style='color:red'>Item 2 is red because of the inline css in the html property</li><li class='special'>Item 3 is green because of a class specified in the css property</li></ul>",
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "border": "1px solid black"
+      },
+      " h2": {
+        "font-weight": "Bold",
+        "text-align": "center",
+        "font-size": "25px",
+        "line-height": "1.1em",
+        "color": "maroon",
+        "border-bottom": "1px solid maroon",
+        "padding": "0 0 0 0",
+        "margin": "5px 0 5px 0"
+      },
+      " p": {
+        "line-height": "1.1em",
+        "margin": "5px",
+        "padding": "0",
+        "text-align": "left",
+        "font-size": "19px"
+      },
+      " li": {
+        "color": "blue",
+        "font-size": "17px"
+      },
+      " .special": {
+        "color": "green"
+      }
+    },
+    "height": 700
+  },
+  "8fr3": {
+    "type": "label",
+    "id": "8fr3",
+    "x": 290,
+    "y": 1,
+    "width": 1000,
+    "height": 70,
+    "z": 26392,
+    "movable": false,
+    "css": {
+      "font-size": "60px",
+      "color": "black"
+    },
+    "text": "HTML: Basic Widgets"
   }
 }
