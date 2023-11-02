@@ -26,6 +26,10 @@ class SaveButton extends ToolbarButtonWithContent {
     triggerDownload(URL.createObjectURL(await zip.generateAsync({type:"blob"})), `QuickDownload without assets ${new Date().toISOString().substr(0,16).replace(/T/, ' ').replace(/:/, '')} - ${this.currentMetadata.name}.vtt`);
   }
 
+  onEditorClose() {
+    this.timer_tick();
+  }
+
   onMetaReceived(data) {
     this.activeState = data.meta.activeState;
     this.currentMetadata = this.activeState ? Object.assign({}, data.meta.states[this.activeState.stateID], data.meta.states[this.activeState.stateID].variants[this.activeState.variantID]) : { name: 'Unnamed' };

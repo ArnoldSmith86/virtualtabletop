@@ -90,6 +90,8 @@ function closeEditor() {
 
   for(const module of sidebarModules)
     module.onEditorClose();
+  for(const button of toolbarButtons)
+    button.onEditorClose();
 
   $('#activeGameButton').click();
   setScale();

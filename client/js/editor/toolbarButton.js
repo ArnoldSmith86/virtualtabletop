@@ -16,6 +16,9 @@ class ToolbarButton {
     batchEnd();
   }
 
+  onEditorClose() {
+  }
+
   onEditorOpen() {
   }
 
