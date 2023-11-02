@@ -18,21 +18,20 @@
       "mode": "vs",
       "time": "15 - 45",
       "attribution": "The game room, game design, and game layout are by Jonathan Cox. Art assets used with permission from the rights holder, Jonathan Cox. Illustrations created by Lananh Vo. No permission is given for the further use of any Spring Cleaning art assets.",
-      "lastUpdate": 1698881340408,
-      "id": "3c3w",
-      "showName": false,
+      "lastUpdate": 1698886067234,
+      "showName": true,
       "skill": "low",
       "description": "In this climbing/shedding game you must offer your cards to opponents, and play each others cards as you race to play them all.",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-4",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "Jonathan Cox",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "Have every player take a seat and then click the \"SETUP NEW GAME\" button. This will randomly a starting player and deal each player their starting hand of cards.<div><div><br></div><div>Once done with their turn, the player should click the \"CLICK TO END TURN\" arrow button, which will move to the next player in order.<br><div><br></div><div>When playing cards, click and drag them into the large open area in the middle of the screen. It is best to line them up horizontally with your seat name and offered cards area.</div><div><br></div><div>When offering cards, click and drag them to the \"Offered Cards\" window under the player's name.&nbsp;</div><div><br></div><div>Once a trick is over, the winner of the trick should click the \"CLEAR CARDS\" button in the bottom left. This will remove all played cards, and also assign the current turn to the trick winner.</div></div><div><br></div><div>The \"Total Cards: #\" value counts all cards in that player's hidden hand as well as all cards in their offer area.</div><div><br></div><div>At the end of a round players will score trash by taking the appropriate value token from the \"Trash Supply\". Place gained track tokens into the skinny vertical column to the right of the player's name.</div><div><br></div><div>Once trash has been scored at the end of the round, if the game isn't over then click the \"CLICK FOR NEW ROUND\" button. The turn order arrow will be moved to the player with the most total trash, who will take the first turn of the next round.</div><div><br></div><div>2 Player Implementation Note:</div><div>After both players have selected seats, click on an unused seat and give it a name like \"Neutral Player\". This implementation does not currently automatically deal with and refresh the neutral offer, so this must be done manually by the players.</div></div>"
+      "helpText": "Have every player take a seat and then click the \"SETUP NEW GAME\" button. This will randomly a starting player and deal each player their starting hand of cards.<div><div><br></div><div>Once done with their turn, the player should click the \"CLICK TO END TURN\" arrow button, which will move to the next player in order.<br><div><br></div><div>When playing cards, click and drag them into the large open area in the middle of the screen. It is best to line them up horizontally with your seat name and offered cards area.</div><div><br></div><div>When offering cards, click and drag them to the \"Offered Cards\" window under the player's name.&nbsp;</div><div><br></div><div>Once a trick is over, the winner of the trick should click the \"CLEAR CARDS\" button in the bottom left. This will remove all played cards, and also assign the current turn to the trick winner.</div></div><div><br></div><div>The \"Total Cards: #\" value counts all cards in that player's hidden hand as well as all cards in their offer area.</div><div><br></div><div>At the end of a round players will score trash by taking the appropriate value token from the \"Trash Supply\". Place gained track tokens into the skinny vertical column to the right of the player's name.</div><div><br></div><div>Once trash has been scored at the end of the round, if the game isn't over then click the \"CLICK FOR NEW ROUND\" button. The turn order arrow will be moved to the player with the most total trash, who will take the first turn of the next round.</div><div><br></div><div>2 Player Implementation Note:</div><div>After both players have selected seats, click on an unused seat and give it a name like \"Neutral Player\". This implementation does not currently automatically deal with and refresh the neutral offer, so this must be done manually by the players.</div></div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4"
     }
   },
   "2jur": {
