@@ -830,10 +830,10 @@ export default class Room {
     if(mode == 'addState')
       this.saveCurrentState_write(Math.random().toString(36).substring(3, 7), 0, { name: `New Game ${new Date().toISOString().substr(11,5)}` });
     if(mode == 'quickSave')
-      this.saveCurrentState_write('quicksave', this.state._meta.states['quicksave'] ? this.state._meta.states['quicksave'].variants.length : 0, { name: 'Quicksave', variant: `${new Date().toISOString().substr(0,16).replace(/T/, ' ')}` });
+      this.saveCurrentState_write('quicksave', this.state._meta.states['quicksave'] ? this.state._meta.states['quicksave'].variants.length : 0, { name: 'Quicksave', variant: `${new Date().toISOString().substr(0,16).replace(/T/, ' ')}` }, false);
   }
 
-  saveCurrentState_write(stateID, variantID, metadata) {
+  saveCurrentState_write(stateID, variantID, metadata, setToActiveState=true) {
     const newState = {...this.state};
     newState._meta = {
       version: this.state._meta.version,
@@ -852,7 +852,8 @@ export default class Room {
       variant:  metadata.variant
     };
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(newState, null, '  '));
-    this.state._meta.activeState = { stateID, variantID };
+    if(setToActiveState)
+      this.state._meta.activeState = { stateID, variantID };
     this.sendMetaUpdate();
   }
 
