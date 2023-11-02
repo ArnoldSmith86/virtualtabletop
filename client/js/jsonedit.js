@@ -2485,7 +2485,7 @@ function jeInitEventListeners() {
     $('#jeWidgetLayer1').parentNode.scrollTop = $('#jeWidgetLayer1').offsetTop;
 
     if((getRoomRectangle().left <= e.clientX && e.clientX <= getRoomRectangle().right && getRoomRectangle().top <= e.clientY && e.clientY <= getRoomRectangle().bottom)) {
-      $('#jeMouseCoords').innerHTML = "(" + jeState.mouseX + ", " + jeState.mouseY + ")";
+      $('#jeMouseCoords').innerHTML = "Cursor at " + jeState.mouseX + ", " + jeState.mouseY;
     } else {
       $('#jeMouseCoords').innerHTML = ""
     }
