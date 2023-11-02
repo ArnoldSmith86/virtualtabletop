@@ -6,11 +6,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
+import fetch from 'node-fetch';
+import crawlers from 'crawler-user-agents' assert { type: 'json' };;
 
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
-import MinifyRoom from './server/minify.mjs';
+import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
 import Statistics from './server/statistics.mjs';
@@ -39,6 +41,10 @@ async function ensureRoomIsLoaded(id) {
   if(!activeRooms.has(id)) {
     const room = new Room(id, function() {
       activeRooms.delete(id);
+    }, function() {
+      Logging.log(`The public library was edited in room ${id}. Reloading in every room...`);
+      for(const [ _, room ] of activeRooms)
+        room.reloadPublicLibraryGames();
     });
     await room.load();
     activeRooms.set(id, room);
@@ -79,8 +85,21 @@ function autosaveRooms() {
   }, 60*1000);
 }
 
-MinifyRoom().then(function(result) {
+MinifyHTML().then(function(result) {
   router.use('/', express.static(path.resolve() + '/client'));
+
+  if(Config.get('adminURL')) {
+    router.get(Config.get('adminURL'), function(req, res, next) {
+      let output = '<h1>Active rooms</h1>';
+      for(const [ roomID, room ] of activeRooms) {
+        let game = '';
+        if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
+          game = ` playing ${room.state._meta.states[room.state._meta.activeState.stateID].name}`;
+        output += `<p><b><a href='${roomID}'>${roomID}</a></b>${game}: ${room.players.map(p=>p.name).join(', ')} (${room.deltaID} deltas transmitted)</p>`;
+      }
+      res.send(output);
+    });
+  }
 
   // fonts.css is specifically made available for use from card html iframe. It must
   // be fetched from the root in order for the relative paths to fonts to work.
@@ -261,21 +280,60 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
+  router.get('/edit.js', function(req, res, next) {
+    res.setHeader('Content-Type', 'text/javascript');
+    if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+      res.setHeader('Content-Encoding', 'gzip');
+      res.send(result.editorJSgzipped);
+    } else {
+      res.send(result.editorJSmin);
+    }
+  });
+
+  function createBotPattern(crawlers) {
+    // Join all the patterns using the | operator
+    const combinedPattern = crawlers.filter(c => c.pattern!='HeadlessChrome').map(c => c.pattern).join('|');
+
+    // Create and return the compiled regex pattern
+    return new RegExp(combinedPattern);
+  }
+  const botPattern = createBotPattern(crawlers);
+
   router.get('/:room', gameRoomHandler);
   router.get('/game/:id', gameRoomHandler);
   router.get('/game/:id/:junk', gameRoomHandler);
   function gameRoomHandler(req, res, next) {
     ensureRoomIsLoaded(req.params.room || req.params.id).then(function(isLoaded) {
-      if (!isLoaded) {
+      if(!isLoaded) {
         res.send('Invalid characters in room ID.');
         return;
       }
-      if (req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-        res.setHeader('Content-Encoding', 'gzip');
+
+      if(botPattern.test(req.headers['user-agent'])) {
+        const room = activeRooms.get(req.params.room);
+        let game = null;
+        if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
+          game = room.state._meta.states[room.state._meta.activeState.stateID];
+
         res.setHeader('Content-Type', 'text/html');
-        res.send(result.gzipped);
+        let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
+        if(game) {
+          ogOutput += `<meta property="og:description" content="Come play the game ${game.name} with me!" />`;
+          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
+        } else {
+          ogOutput += `<meta property="og:description" content="Come play with me!" />`;
+          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
+        }
+        ogOutput += `<p>Your browser identifies as a bot and therefor only receives metadata. Please use a different browser and/or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a>.</p>`;
+        res.send(ogOutput);
       } else {
-        res.send(result.min);
+        res.setHeader('Content-Type', 'text/html');
+        if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+          res.setHeader('Content-Encoding', 'gzip');
+          res.send(result.gzipped);
+        } else {
+          res.send(result.min);
+        }
       }
     }).catch(next);
   }
@@ -292,6 +350,18 @@ MinifyRoom().then(function(result) {
       if(isLoaded && req.params.tempID.match(/^[a-z0-9]{8}$/))
         res.send(await activeRooms.get(req.params.room).createTempState(req.params.tempID, req.body));
     }).catch(next);
+  });
+
+  router.put('/asset/:link', async function(req, res) {
+    try {
+      const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
+      const filename = `/${CRC32.buf(content)}_${content.length}`;
+      if(!Config.resolveAsset(filename.substr(1)))
+        fs.writeFileSync(assetsdir + filename, content);
+      res.send(`/assets${filename}`);
+    } catch(e) {
+      res.status(404).send('Downloading external asset failed.');
+    }
   });
 
   router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {

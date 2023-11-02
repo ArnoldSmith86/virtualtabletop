@@ -16,7 +16,8 @@
       "similarName": "Othello",
       "description": "Classic strategy game using two-sided discs on an 8x8 board placed to try and capture opponent pieces. Player with most of colored discs on board wins.",
       "showName": true,
-      "lastUpdate": 1632628665000
+      "lastUpdate": 1632628665000,
+      "similarDesigner": "Goro Hasegawa, John W. Mollett, Lewis Waterman"
     }
   },
   "arpd": {

@@ -24,7 +24,6 @@ export function startWebSocket() {
       toServer('room', { playerName, roomID });
       if(urlProperties.trace)
         toServer('enableTrace');
-      $('#legacy-link').href += `#${roomID}`;
     }
   };
 
