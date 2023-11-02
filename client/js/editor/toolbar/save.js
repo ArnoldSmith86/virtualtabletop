@@ -23,7 +23,7 @@ class SaveButton extends ToolbarButtonWithContent {
     const zip = new JSZip();
     zip.file('0.json', JSON.stringify(state));
     updateProgress('Saving...');
-    triggerDownload(URL.createObjectURL(await zip.generateAsync({type:"blob"})), `QuickDownload ${new Date().toISOString().substr(0,16).replace(/T/, ' ').replace(/:/, '')} - ${this.currentMetadata.name}.vtt`);
+    triggerDownload(URL.createObjectURL(await zip.generateAsync({type:"blob"})), `QuickDownload without assets ${new Date().toISOString().substr(0,16).replace(/T/, ' ').replace(/:/, '')} - ${this.currentMetadata.name}.vtt`);
   }
 
   onMetaReceived(data) {
