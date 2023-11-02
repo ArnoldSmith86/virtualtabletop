@@ -56,11 +56,16 @@
   margin: 5px;
 }
 
+.editorToolbarContentButton button.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
 
 .editorToolbarButtonContent {
   color: white;
   margin-left: 1px;
   margin-top: -2px;
+  border-top-left-radius: 0;
 }
 
 .editorToolbarButtonContent.active {

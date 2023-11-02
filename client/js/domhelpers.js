@@ -36,7 +36,7 @@ export function progressButton(button, clickHandler) {
       button.innerText = e.toString();
       button.classList.add('red');
     }
-    await sleep(5000);
+    await sleep(2500);
     button.disabled = false;
     button.setAttribute('icon', initialIcon);
     button.innerText = initialText;

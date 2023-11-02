@@ -117,10 +117,17 @@ class PersistentToolbarToggleButton extends ToolbarToggleButton {
 }
 
 class ToolbarButtonWithContent extends ToolbarToggleButton {
+  onDocumentClick(e) {
+    if(this.active && !this.domContentElement.contains(e.target) && !this.domElement.contains(e.target))
+      this.click();
+  }
+
   render(target) {
     super.render(target);
     this.domContentElement = div(this.domElement, 'editorToolbarButtonContent');
     this.renderContent(this.domContentElement);
+    this.domElement.classList.add('editorToolbarContentButton');
+    document.addEventListener('click', e=>this.onDocumentClick(e));
   }
 
   renderContent(target) {
