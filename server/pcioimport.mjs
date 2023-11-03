@@ -862,10 +862,26 @@ export default async function convertPCIO(content) {
           let from = null;
           let collection = null;
           if(c.args.objects) {
-            if(c.args.objects.type == 'reference')
+            if(c.args.objects.type == 'reference') {
               collection = c.args.objects.questionId;
-            else
+            } else if(c.args.objects.collections && c.args.objects.collections.length) {
+              w.clickRoutine.push({
+                func: 'SELECT',
+                property: 'parent',
+                relation: 'in',
+                value: c.args.objects.holders,
+                type: 'card'
+              });
+              w.clickRoutine.push({
+                func: 'SELECT',
+                source: 'DEFAULT',
+                property: 'deck',
+                relation: 'in',
+                value: c.args.objects.collections
+              });
+            } else {
               from = c.args.objects.holders;
+            }
           } else {
             from = c.args.from.value;
           }
