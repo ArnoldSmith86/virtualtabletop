@@ -34,6 +34,7 @@ class SaveButton extends ToolbarButtonWithContent {
     this.activeState = data.meta.activeState;
     this.currentMetadata = this.activeState ? Object.assign({}, data.meta.states[this.activeState.stateID], data.meta.states[this.activeState.stateID].variants[this.activeState.variantID]) : { name: 'Unnamed' };
     this.currentVersion = data.meta.version;
+    $('[data-mode=addVariant]', this.domContentElement).innerText = this.activeState ? `Save as new variant of ${this.currentMetadata.name}` : 'Save as new variant';
     for(const button of $a('.onlyIfActive', this.domContentElement))
       button.disabled = !data.meta.activeState || data.meta.activeState.stateID.match(/^PL:/) && !config.allowPublicLibraryEdits;
   }
