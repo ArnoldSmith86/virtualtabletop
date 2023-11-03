@@ -421,6 +421,24 @@ export default async function convertPCIO(content) {
         w.cardDefaults.movable = false;
         w.cardDefaults.borderRadius = 12;
         w.cardDefaults.css = 'border: 4px solid #dedede';
+        w.cardDefaults.clickRoutine = [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "choose",
+                "source": [ "${PROPERTY id}" ],
+                "mode": "faces",
+                "variable": "face"
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": "${face}"
+          }
+        ];
       }
 
       let sortingOrder = 0;
