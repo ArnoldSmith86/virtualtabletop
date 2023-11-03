@@ -1342,7 +1342,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
   return clonedWidgets;
 }
 
-export function initializeEditMode() {
+export function initializeEditMode(currentMetaData) {
   const div = document.createElement('div');
   div.innerHTML = ' //*** HTML ***// ';
   $('body').append(div);
@@ -1356,7 +1356,7 @@ export function initializeEditMode() {
 
   jeInitEventListeners();
   initializeTraceViewer();
-  initializeEditor();
+  initializeEditor(currentMetaData);
 
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
