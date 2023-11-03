@@ -62,6 +62,34 @@ export default async function convertPCIO(content) {
       w.height = widget.height;
   }
 
+  function importWidgetQuery(routine, args, legacySource, holdersParam, collectionParam, target) {
+    if(args.objects) {
+      if(args.objects.type == 'reference') {
+        target[collectionParam] = args.objects.questionId;
+      } else if(args.objects.collections && args.objects.collections.length) {
+        routine.push({
+          func: 'SELECT',
+          property: 'parent',
+          relation: 'in',
+          value: args.objects.holders,
+          type: 'card'
+        });
+        routine.push({
+          func: 'SELECT',
+          source: 'DEFAULT',
+          property: 'deck',
+          relation: 'in',
+          value: args.objects.collections
+        });
+      } else {
+        target[holdersParam] = args.objects.holders;
+      }
+    } else {
+      target[holdersParam] = args[legacySource].from.value;
+    }
+    return target;
+  }
+
   const pileHasDeck = {};
   const pileOverlaps = {};
   const pileTransparent = {};
@@ -859,43 +887,12 @@ export default async function convertPCIO(content) {
               quantity = c.args.quantity.value;
           }
 
-          let from = null;
-          let collection = null;
-          if(c.args.objects) {
-            if(c.args.objects.type == 'reference') {
-              collection = c.args.objects.questionId;
-            } else if(c.args.objects.collections && c.args.objects.collections.length) {
-              w.clickRoutine.push({
-                func: 'SELECT',
-                property: 'parent',
-                relation: 'in',
-                value: c.args.objects.holders,
-                type: 'card'
-              });
-              w.clickRoutine.push({
-                func: 'SELECT',
-                source: 'DEFAULT',
-                property: 'deck',
-                relation: 'in',
-                value: c.args.objects.collections
-              });
-            } else {
-              from = c.args.objects.holders;
-            }
-          } else {
-            from = c.args.from.value;
-          }
-
-          c = {
+          c = importWidgetQuery(w.clickRoutine, c.args, 'from', 'from', 'collection', {
             func:  'MOVE',
             count: quantity,
             to:    c.args.to.value,
             fillTo: c.args.fillAdd && c.args.fillAdd.value == 'fill' ? quantity : null
-          };
-          if(from !== null)
-            c.from = from;
-          if(collection !== null)
-            c.collection = collection;
+          });
           if(c.from && c.from.length == 1)
             c.from = c.from[0];
           if(c.count == 1)
@@ -994,15 +991,16 @@ export default async function convertPCIO(content) {
             delete c.reverse;
         }
         if(c.func == "FLIP_CARDS") {
-          if(!c.args.holders)
+          if(!c.args.holders && !c.args.objects)
             continue;
           const flipFace = c.args.flipFace;
-          c = {
+
+
+          c = importWidgetQuery(w.clickRoutine, c.args, 'holders', 'holder', 'collection', {
             func:   'FLIP',
-            holder: c.args.holders.value,
             count:  !c.args.flipMode || c.args.flipMode.value == 'pile' ? 0 : 1
-          };
-          if(c.holder.length == 1)
+          });
+          if(c.holder && c.holder.length == 1)
             c.holder = c.holder[0];
           if(!c.count)
             delete c.count;
