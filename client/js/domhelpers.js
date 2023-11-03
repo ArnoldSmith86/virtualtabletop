@@ -166,7 +166,7 @@ export function formField(field, dom, id) {
 
   if(field.type == 'select') {
     const input = document.createElement('select');
-    for(const option of field.options) {
+    for(const option of asArray(field.options || [])) {
       const optionElement = document.createElement('option');
       optionElement.value = option.value || '';
       optionElement.textContent = option.text || option.value || '';
