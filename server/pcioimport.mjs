@@ -889,7 +889,8 @@ export default async function convertPCIO(content) {
           c = {
             func:  'MOVE',
             count: quantity,
-            to:    c.args.to.value
+            to:    c.args.to.value,
+            fillTo: c.args.fillAdd && c.args.fillAdd.value == 'fill' ? quantity : null
           };
           if(from !== null)
             c.from = from;
@@ -898,6 +899,10 @@ export default async function convertPCIO(content) {
           if(c.from && c.from.length == 1)
             c.from = c.from[0];
           if(c.count == 1)
+            delete c.count;
+          if(c.fillTo === null)
+            delete c.fillTo;
+          else
             delete c.count;
           if(c.to.length == 1)
             c.to = c.to[0];
