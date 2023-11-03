@@ -807,7 +807,7 @@ export default async function convertPCIO(content) {
       w.clickRoutine = [];
 
       if(widget.clickRoutine && widget.clickRoutine.popupMessage) {
-        w.clickRoutine.push({
+        const popup = {
           func: 'INPUT',
           fields: [
             {
@@ -816,7 +816,18 @@ export default async function convertPCIO(content) {
             }
           ],
           confirmButtonText: widget.label
-        });
+        };
+        for(const question of widget.clickRoutine.questions || []) {
+          if(question.type == 'number') {
+            popup.fields.push({
+              type: 'number',
+              label: question.label,
+              value: question.defaultValue,
+              variable: question.id
+            });
+          }
+        }
+        w.clickRoutine.push(popup);
       }
 
       if(widget.type == 'turnButton') {
@@ -827,13 +838,22 @@ export default async function convertPCIO(content) {
 
       for(let c of widget.clickRoutine ? (widget.clickRoutine.steps || widget.clickRoutine) : []) {
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
-          if(!c.args.from || !c.args.to)
+          if((!c.args.from && !c.args.objects) || !c.args.to)
             continue;
           const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
+
+          let quantity = 1;
+          if(c.args.quantity) {
+            if(c.args.quantity.type == 'reference')
+              quantity = '${' + c.args.quantity.questionId + '}';
+            else
+              quantity = c.args.quantity.value;
+          }
+
           c = {
             func:  'MOVE',
-            from:  c.args.from.value,
-            count: (c.args.quantity || { value: 1 }).value,
+            from:  c.args.from ? c.args.from.value : c.args.objects.holders,
+            count: quantity,
             to:    c.args.to.value
           };
           if(c.from.length == 1)
