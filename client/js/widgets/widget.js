@@ -2438,10 +2438,13 @@ export class Widget extends StateManaged {
         dom.className = "input"+field.type;
 
         if(field.type == 'choose') {
+          let collection;
           if(field.holder) {
             field.widgets = [].concat(...asArray(field.holder).map(w=>widgets.has(w)?widgets.get(w).children():[])).map(w=>w.id);
+          } else if(collection = collections[getCollection(field.source || 'DEFAULT')]) {
+            field.widgets = collection.map(w=>w.id);
           } else {
-            field.widgets = collections[getCollection(field.source || 'DEFAULT')].map(w=>w.id);
+            field.widgets = [];
           }
         }
 
