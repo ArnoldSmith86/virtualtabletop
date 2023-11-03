@@ -5,7 +5,12 @@ class SaveButton extends ToolbarButtonWithContent {
   }
 
   async button_saveCurrentState(updateProgress, mode) {
-    if((await (await fetch(`saveCurrentState/${roomID}/${mode}`)).text()) != 'OK')
+    let name = mode == 'addState' ? prompt('Enter a name', this.activeState ? this.currentMetadata.name : 'Unnamed') : '';
+    if(name === null)
+      throw new Error('Canceled.');
+    if(!name)
+      name = `New Game ${new Date().toISOString().substr(11,5)}`;
+    if((await (await fetch(`saveCurrentState/${roomID}/${mode}/${encodeURIComponent(name)}`)).text()) != 'OK')
       throw new Error('Saving failed.');
   }
 

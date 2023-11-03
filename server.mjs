@@ -379,11 +379,11 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
-  router.get('/saveCurrentState/:room/:mode', async function(req, res, next) {
+  router.get('/saveCurrentState/:room/:mode/:name', async function(req, res, next) {
     if(!validateInput(res, next, [ req.params.mode ])) return;
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
-        activeRooms.get(req.params.room).saveCurrentState(req.params.mode);
+        activeRooms.get(req.params.room).saveCurrentState(req.params.mode, req.params.name);
         res.send('OK');
       }
     }).catch(next);

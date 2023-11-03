@@ -811,7 +811,7 @@ export default class Room {
     return Config.directory('save') + '/rooms/' + this.id + '.json';
   }
 
-  saveCurrentState(mode) {
+  saveCurrentState(mode, name) {
     const active = this.state._meta.activeState;
     if(mode == 'activeVariant' && active) {
       if(active.stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
@@ -828,7 +828,7 @@ export default class Room {
         this.writePublicLibraryAssetsToFilesystem(active.stateID);
     }
     if(mode == 'addState')
-      this.saveCurrentState_write(Math.random().toString(36).substring(3, 7), 0, { name: `New Game ${new Date().toISOString().substr(11,5)}` });
+      this.saveCurrentState_write(Math.random().toString(36).substring(3, 7), 0, { name });
     if(mode == 'quickSave')
       this.saveCurrentState_write('quicksave', this.state._meta.states['quicksave'] ? this.state._meta.states['quicksave'].variants.length : 0, { name: 'Quicksave', variant: `${new Date().toISOString().substr(0,16).replace(/T/, ' ')}` }, false);
   }
