@@ -17,6 +17,35 @@ export function div(parent, className, html) {
   return div;
 }
 
+export function progressButton(button, clickHandler) {
+  const initialIcon = button.getAttribute('icon');
+  const initialText = button.innerText;
+
+  button.onclick = async function() {
+    button.disabled = true;
+    button.classList.add('progress');
+    button.innerText = 'Working...';
+    button.setAttribute('icon', 'hourglass_empty');
+    try {
+      await clickHandler(s=>button.innerText=s);
+      button.setAttribute('icon', 'check');
+      button.innerText = 'Done';
+      button.classList.add('green');
+    } catch(e) {
+      button.setAttribute('icon', 'error');
+      button.innerText = e.toString();
+      button.classList.add('red');
+    }
+    await sleep(2500);
+    button.disabled = false;
+    button.setAttribute('icon', initialIcon);
+    button.innerText = initialText;
+    button.classList.remove('progress');
+    button.classList.remove('green');
+    button.classList.remove('red');
+  };
+}
+
 const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
 
 export function regexEscape(string) {
@@ -545,6 +574,18 @@ export function selectFile(getContents, multipleCallback) {
     });
     upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
+}
+
+export function triggerDownload(url, filename) {
+  var link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link); // Required for Firefox
+  link.click();
+  setTimeout(function(){
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  }, 100);
 }
 
 export function asArray(variable) {

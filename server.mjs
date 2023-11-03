@@ -379,6 +379,16 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
+  router.get('/saveCurrentState/:room/:mode/:name', async function(req, res, next) {
+    if(!validateInput(res, next, [ req.params.mode ])) return;
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).saveCurrentState(req.params.mode, req.params.name);
+        res.send('OK');
+      }
+    }).catch(next);
+  });
+
   router.put('/moveServer/:room/:returnServer/:returnState', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {

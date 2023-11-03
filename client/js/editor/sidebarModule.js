@@ -83,6 +83,9 @@ class SidebarModule {
   onEditorOpen() {
   }
 
+  onMetaReceived(data) {
+  }
+
   onSelectionChanged(newSelection, oldSelection) {
     if(this.moduleDOM)
       this.onSelectionChangedWhileActive(newSelection, oldSelection);
