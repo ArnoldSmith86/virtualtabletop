@@ -806,16 +806,12 @@ export default async function convertPCIO(content) {
 
       w.clickRoutine = [];
 
-      if(widget.clickRoutine && widget.clickRoutine.popupMessage) {
+      if(widget.clickRoutine && (widget.clickRoutine.popupMessage || widget.clickRoutine.questions)) {
         const popup = {
           func: 'INPUT',
-          fields: [
-            {
-              type: 'text',
-              text: widget.clickRoutine.popupMessage
-            }
-          ],
-          confirmButtonText: widget.label
+          header: widget.clickRoutine.popupMessage,
+          confirmButtonText: widget.label,
+          fields: []
         };
         for(const question of widget.clickRoutine.questions || []) {
           if(question.type == 'number') {
@@ -824,6 +820,19 @@ export default async function convertPCIO(content) {
               label: question.label,
               value: question.defaultValue,
               variable: question.id
+            });
+          }
+          if(question.type == 'widgets') {
+            popup.fields.push({
+              type: 'choose',
+              label: question.label,
+              holder: question.holders.length == 1 ? question.holders[0] : question.holders,
+              variable: question.id,
+              max: question.widgetSelectionLimit || 99999,
+              collection: question.id,
+              propertyOverride: {
+                activeFace: question.showWidgetSide == 'back' ? 0 : 1
+              }
             });
           }
         }
@@ -850,13 +859,27 @@ export default async function convertPCIO(content) {
               quantity = c.args.quantity.value;
           }
 
+          let from = null;
+          let collection = null;
+          if(c.args.objects) {
+            if(c.args.objects.type == 'reference')
+              collection = c.args.objects.questionId;
+            else
+              from = c.args.objects.holders;
+          } else {
+            from = c.args.from.value;
+          }
+
           c = {
             func:  'MOVE',
-            from:  c.args.from ? c.args.from.value : c.args.objects.holders,
             count: quantity,
             to:    c.args.to.value
           };
-          if(c.from.length == 1)
+          if(from !== null)
+            c.from = from;
+          if(collection !== null)
+            c.collection = collection;
+          if(c.from && c.from.length == 1)
             c.from = c.from[0];
           if(c.count == 1)
             delete c.count;
