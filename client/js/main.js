@@ -372,13 +372,14 @@ async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, div, on, onMessage, showOverlay,
+      $, $a, div, progressButton, on, onMessage, showOverlay, sleep,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,
       loadJSZip, waitForJSZip,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
-      getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
+      uploadAsset, selectFile, triggerDownload,
+      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
@@ -389,7 +390,7 @@ async function loadEditMode() {
     const editmode = await import('./edit.js');
     $('body').classList.remove('loadingEditMode');
     Object.assign(window, editmode);
-    initializeEditMode();
+    initializeEditMode(currentMetaData);
   }
 }
 

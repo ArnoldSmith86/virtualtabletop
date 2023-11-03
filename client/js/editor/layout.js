@@ -4,7 +4,7 @@ let sidebarModules = null;
 
 let fullToolbarWidth = 0;
 
-function initializeEditor() {
+function initializeEditor(currentMetaData) {
   registerSelectionEventHandlers();
 
   renderToolbar(toolbarButtons = [
@@ -64,7 +64,17 @@ function initializeEditor() {
     new ToolboxModule()
   ]);
 
+  onMessage('meta', metaReceived);
+  metaReceived(currentMetaData);
+
   openEditor();
+}
+
+function metaReceived(data) {
+  for(const module of sidebarModules)
+    module.onMetaReceived(data);
+  for(const button of toolbarButtons)
+    button.onMetaReceived(data);
 }
 
 export function openEditor() {
@@ -80,6 +90,8 @@ function closeEditor() {
 
   for(const module of sidebarModules)
     module.onEditorClose();
+  for(const button of toolbarButtons)
+    button.onEditorClose();
 
   $('#activeGameButton').click();
   setScale();
