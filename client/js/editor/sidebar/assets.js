@@ -28,16 +28,7 @@ class AssetsModule extends SidebarModule {
       zip.file((usePropertyFilenames ? filename : `asset ${asset.match(/[^\/]+$/)[0]}`) + '.' + blob.type.match(/[^\/]+$/)[0], blob);
     }
 
-    var url = URL.createObjectURL(await zip.generateAsync({type:"blob"}));
-    var link = document.createElement("a");
-    link.href = url;
-    link.download = 'assets.zip';
-    document.body.appendChild(link); // Required for Firefox
-    link.click();
-    setTimeout(function(){
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    }, 100);
+    triggerDownload(URL.createObjectURL(await zip.generateAsync({type:"blob"})), 'assets.zip');
   }
 
   button_assetUpload() {
