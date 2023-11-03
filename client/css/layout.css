@@ -1294,7 +1294,7 @@ button:disabled:hover {
 #buttonInputFields input{
   position: relative;
 }
-#buttonInputFields label:empty {
+#buttonInputFields label:not(.switchbox):empty {
   display: none;
 }
 .modal *:focus {
@@ -1406,6 +1406,13 @@ button:disabled:hover {
   border: 0px none transparent;
   line-height: 36px;
   border-radius: 4px;
+}
+.inputnumber label:empty ~ input,
+.inputstring label:empty ~ input,
+.inputselect label:empty ~ select
+{
+  padding: 0 5px 0px 5px;
+  margin: 0;
 }
 .inputselect select option{
   background-color: var(--modalBackgroundColor);
