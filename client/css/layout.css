@@ -6,7 +6,6 @@
   --roomLeft: 0px;
   --toolbarSize: 44px;
   --roomColor: #f0f0f0;
-  --editColor: #7ba5f5;
   --overlayFontColor: #222326;
   --VTTblue: #1f5ca6;
   --VTTblueDark: #0d2f5e;
@@ -32,6 +31,10 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: 'Roboto', sans-serif;
+}
+
+body.loadingEditMode * {
+  cursor: wait;
 }
 
 #roomArea {
@@ -137,7 +140,7 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    @media (min-height: 440px) {
+    @media (min-height: 350px) {
       body.wideToolbar #toolbar > img {
         display: block;
         margin: 10px 20px 3px 20px;
@@ -146,6 +149,45 @@ body.aspectTooGood.hiddenToolbar {
       body.wideToolbar #toolbar .divider:nth-child(2) {
         display: block;
         margin: 20px 10%;
+      }
+    }
+
+    @media (max-height: 450px) {
+      body.wideToolbar #toolbar .divider:nth-child(2) {
+        margin: 10px 10%;
+      }
+    }
+
+    @media (max-height: 430px) {
+      body.wideToolbar #toolbar {
+        padding: 0;
+      }
+      body.wideToolbar #toolbar > img {
+        margin: 10px 20px;
+      }
+    }
+
+    @media (max-height: 415px) {
+      body.wideToolbar #toolbar .divider:nth-child(2) {
+        display: none;
+      }
+    }
+
+    @media (max-height: 420px) {
+      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #toolbar {
+        padding: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body.aspectTooGood #toolbar {
+        padding: 0;
+      }
+    }
+
+    @media (max-width: 530px) {
+      body.horizontalToolbar #toolbar {
+        padding: 0 5px;
       }
     }
 
@@ -168,6 +210,24 @@ body.aspectTooGood.hiddenToolbar {
       border-left: 1px solid #fff8;
       height: 80%;
       margin: auto 10px;
+    }
+
+    @media (max-height: 415px) {
+      body.wideToolbar #toolbar .divider {
+        display: none;
+      }
+    }
+
+    @media (max-height: 420px) {
+      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #toolbar .divider {
+        display: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body.aspectTooGood #toolbar .divider {
+        display: none;
+      }
     }
 
   /* buttons */
@@ -217,6 +277,31 @@ body.aspectTooGood.hiddenToolbar {
       justify-content: flex-end;
     }
 
+    @media (max-height: 520px) {
+      body.wideToolbar .toolbarButton:not(.toolbarTab) {
+        padding: 0 10%;
+      }
+    }
+
+    @media (max-height: 420px) {
+      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) .toolbarButton:not(.toolbarTab) {
+        padding: 2px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body.aspectTooGood #toolbar .toolbarButton:not(.toolbarTab) {
+        padding: 2px;
+      }
+    }
+
+    @media (max-width: 530px) {
+      body.horizontalToolbar .toolbarButton:not(.toolbarTab) {
+        padding: 2px;
+        margin: 0;
+      }
+    }
+
   /* tabs */
 
     .toolbarTab {
@@ -246,9 +331,33 @@ body.aspectTooGood.hiddenToolbar {
       width: unset;
     }
 
-    @media (min-width: 760px) {
+    @media (max-height: 400px) {
+      body.wideToolbar .toolbarTab {
+        height: 30px;
+      }
+    }
+
+    @media (max-height: 420px) {
+      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) .toolbarTab {
+        height: 30px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body.aspectTooGood #toolbar .toolbarTab {
+        height: 30px;
+      }
+    }
+
+    @media (min-width: 950px) {
       body.horizontalToolbar .toolbarTab::before {
         font-size: 24px;
+      }
+    }
+
+    @media (max-width: 530px) {
+      body.horizontalToolbar .toolbarTab {
+        padding: 0 8px;
       }
     }
 
@@ -295,7 +404,7 @@ body.aspectTooGood.hiddenToolbar {
       bottom: 46px;
     }
 
-    @media (min-width: 760px) {
+    @media (min-width: 950px) {
       body.horizontalToolbar .toolbarTab .tooltip {
         box-shadow: unset;
         background: none;
@@ -395,97 +504,103 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    @media (max-height: 520px) {
+    @media (max-height: 120px) {
       body.wideToolbar #editButton, body.wideToolbar #addButton {
         display: none;
       }
     }
 
-    @media (max-width: 760px) {
-      body.aspectTooGood #editButton, body.aspectTooGood #addButton {
+    @media (max-height: 290px) {
+      body:not(.horizontalToolbar,.aspectTooGood) #toolbar .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
         display: none;
       }
     }
 
-    @media (max-height: 420px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #editButton, body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #addButton {
+    @media (max-width: 550px) {
+      body.aspectTooGood #toolbar .divider, body.aspectTooGood #optionsButton, body.aspectTooGood #lightsButton {
         display: none;
       }
     }
 
-    @media (max-height: 340px) {
-      body:not(.horizontalToolbar,.aspectTooGood) .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
+    @media (max-width: 460px) {
+      body.aspectTooGood #addButton {
         display: none;
       }
     }
 
-    @media (max-width: 630px) {
-      body.aspectTooGood .divider, body.aspectTooGood #optionsButton, body.aspectTooGood #lightsButton {
-        display: none;
-      }
-    }
-
-    @media (max-height: 240px) {
-      body:not(.horizontalToolbar) #aboutButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 490px) {
-      body.aspectTooGood #aboutButton {
+    @media (max-height: 230px) {
+      body:not(.horizontalToolbar) #addButton {
         display: none;
       }
     }
 
     @media (max-height: 200px) {
+      body:not(.horizontalToolbar) #aboutButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 410px) {
+      body.aspectTooGood #aboutButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 360px) {
+      body.aspectTooGood #editButton {
+        display: none;
+      }
+    }
+
+    @media (max-height: 170px) {
+      body:not(.horizontalToolbar) #editButton {
+        display: none;
+      }
+    }
+
+    @media (max-height: 140px) {
       body:not(.horizontalToolbar) #playersButton {
         display: none;
       }
     }
 
-    @media (max-width: 420px) {
+    @media (max-width: 300px) {
       body.aspectTooGood #playersButton {
         display: none;
       }
     }
 
-    @media (max-width: 350px) {
+    @media (max-width: 250px) {
       body.aspectTooGood #hideToolbarButton {
         display: none;
       }
     }
 
-    @media (max-width: 960px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
+    @media (max-width: 390px) {
+      body.horizontalToolbar #toolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
         display: none;
       }
     }
 
-    @media (max-width: 759px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
-        display: flex;
-      }
-    }
-
-    @media (max-width: 530px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
+    @media (max-width: 320px) {
+      body.horizontalToolbar #addButton {
         display: none;
       }
     }
 
-    @media (max-width: 430px) {
-      body.horizontalToolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 340px) {
+    @media (max-width: 300px) {
       body.horizontalToolbar #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 270px) {
+    @media (max-width: 245px) {
+      body.horizontalToolbar #editButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 190px) {
       body.horizontalToolbar #playersButton {
         display: none;
       }
@@ -745,6 +860,8 @@ button[icon]::before {
   font-size: 24px;
   font-weight: normal;
   line-height: 1;
+  width: 24px;
+  overflow: clip;
 }
 button[icon]:empty {
   padding: 5px;
@@ -799,6 +916,7 @@ button[icon].green:hover {
   border-radius: 4px;
   padding: 2px;
   font-size: 0;
+  z-index: 1;
 }
 
 .richtext-controls button {
@@ -829,17 +947,23 @@ button[icon].green:hover {
   margin: 0 20px 20px 0;
 }
 
-.richtextSymbol.richtextSymbol {
-  font-size: 18px;
+.richtextSymbol.richtextSymbol:not(.emoji), img.emoji {
+  display: inline-block;
+  font-size: 1.15em;
   position: relative;
-  line-height: 10px;
+  line-height: 1em;
   font-style: normal;
+  height: 1em;
+  width: 1em;
 }
 .richtextSymbol.symbols {
-  top: 2px;
+  top: 0.1em;
 }
 .richtextSymbol.material-icons {
-  top: 4px;
+  top: 0.2em;
+}
+.richtextSymbol.gameicons, img.emoji {
+  vertical-align: bottom;
 }
 
 .symbols {
@@ -971,6 +1095,29 @@ button:disabled:hover {
 
 .ui-button.blue {
   background-color: var(--neutralInput);
+}
+#gridOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
+.gridFields {
+  color: #fff;
+  background-color: var(--VTTblue);
+  width: 60px;
+}
+.gridFields::placeholder{
+  color: #a9a;
+}
+#gridOverlay .modal{
+  width: 200px;
+}
+#gridOverlay > .modal button.ui-button{
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
 }
 #pileOverlay{
   color: black;
@@ -1147,6 +1294,9 @@ button:disabled:hover {
 #buttonInputFields input{
   position: relative;
 }
+#buttonInputFields label:not(.switchbox):empty {
+  display: none;
+}
 .modal *:focus {
   outline: none;
   box-shadow: 0 0 0 3px #159ce4;
@@ -1210,7 +1360,8 @@ button:disabled:hover {
 .inputnumber,
 .inputstring,
 .inputselect,
-.inputpalette{
+.inputpalette,
+.inputchoose{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -1220,7 +1371,8 @@ button:disabled:hover {
 .inputnumber label,
 .inputstring label,
 .inputselect label,
-.inputpalette label{
+.inputpalette label,
+.inputchoose label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1254,6 +1406,13 @@ button:disabled:hover {
   border: 0px none transparent;
   line-height: 36px;
   border-radius: 4px;
+}
+.inputnumber label:empty ~ input,
+.inputstring label:empty ~ input,
+.inputselect label:empty ~ select
+{
+  padding: 0 5px 0px 5px;
+  margin: 0;
 }
 .inputselect select option{
   background-color: var(--modalBackgroundColor);
@@ -1471,7 +1630,7 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
 input:invalid{
   color: red;
 }
-input:invalid+span:after {
+input:invalid+span::after, .inputError::before {
   font-family: 'Material Icons';
   content: 'error';
   position: absolute;
@@ -1481,7 +1640,15 @@ input:invalid+span:after {
   color: red;
   letter-spacing: -1px;
 }
-.inputpalette > div{
+.inputError {
+  color: red;
+  align-items: center;
+}
+.inputError::before {
+  position: unset;
+  margin-right: 5px;
+}
+.inputpalette > div, .inputchoose > div, .inputError {
   display: flex;
   flex-wrap: wrap;
   padding: 0 3px;
@@ -1499,10 +1666,10 @@ input:invalid+span:after {
   padding: 0;
   margin: -1.5px;
 }
-.inputpalette > div input[type="radio"]:checked+label{
+.inputpalette > div input[type="radio"]:checked+label, .inputchoose .selected.inputchooseWidgetWrapper {
   border: 3px solid var(--VTTblue);
 }
-.inputpalette > div input[type="radio"]:checked+label::after{
+.inputpalette > div input[type="radio"]:checked+label::after, .inputchoose .selected.inputchooseWidgetWrapper::after {
   font-family: 'Material Icons';
   line-height: 1.25em;
   text-align: center;
@@ -1535,4 +1702,24 @@ input:invalid+span:after {
   background-color: inherit;
   border-radius: 5px;
   z-index: -2;
+}
+
+.inputchoose .inputchooseWidgetWrapper {
+  position: relative;
+  border: 3px solid transparent;
+  border-radius: 8px;
+}
+
+.inputchoose .selected.inputchooseWidgetWrapper {
+  overflow: hidden;
+}
+.inputchoose .selected.inputchooseWidgetWrapper::after {
+  border: unset;
+  z-index: 2;
+}
+
+.inputchoose .widget {
+  position: relative !important;
+  transform-origin: top left !important;
+  z-index: 1 !important;
 }
