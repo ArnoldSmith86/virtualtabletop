@@ -1397,7 +1397,6 @@ button:disabled:hover {
 .inputstring input,
 .inputselect select
 {
-  appearance: none;
   padding: 20.6px 5px 0px 5px;
   margin: -20.6px 0 0 0;
   font-size: 16px;
@@ -1406,6 +1405,11 @@ button:disabled:hover {
   border: 0px none transparent;
   line-height: 36px;
   border-radius: 4px;
+}
+.inputnumber input,
+.inputstring input
+{
+  appearance: none;
 }
 .inputnumber label:empty ~ input,
 .inputstring label:empty ~ input,
