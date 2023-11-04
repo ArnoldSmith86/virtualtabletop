@@ -89,28 +89,6 @@
       },
       ".seated.turn": {
         "border": "5px dotted #000000"
-      },
-      ".seated.turn::after": {
-        "xcontent": "'Active Player'",
-        "content": "'★'",
-        "font-size": "18px",
-        "line-height": "1em",
-        "white-space": "wrap",
-        "background-color": "#000000",
-        "border": "1px solid #333333",
-        "color": "${PROPERTY mainColor}",
-        "text-shadow": "0 1px 5px #000000cc",
-        "width": "15px",
-        "height": "15px",
-        "text-align": "center",
-        "text-transform": "uppercase",
-        "position": "absolute",
-        "right": "-2px",
-        "top": "-8px",
-        "padding": "2px",
-        "border-radius": "100px",
-        "box-shadow": "0 0 5px #000000bb",
-        "pointer-events": "none"
       }
     },
     "mainColor": "#6495ed",
