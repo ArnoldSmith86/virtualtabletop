@@ -7499,6 +7499,16 @@
         ]
       },
       {
+        "func": "LABEL",
+        "label": [
+          "score-p1",
+          "score-p2",
+          "score-p3",
+          "score-p4"
+        ],
+        "value": 0
+      },
+      {
         "func": "RECALL",
         "holder": "holder-p1-tents"
       },
