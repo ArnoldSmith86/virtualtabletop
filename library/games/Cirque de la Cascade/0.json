@@ -92,8 +92,7 @@
       }
     },
     "mainColor": "#6495ed",
-    "hideWhenUnused": true,
-    "turn": true
+    "hideWhenUnused": true
   },
   "seat-p2": {
     "type": "seat",
