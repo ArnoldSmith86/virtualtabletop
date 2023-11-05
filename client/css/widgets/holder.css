@@ -13,7 +13,7 @@
 
 .holder.transparent {
   background: none;
-  border: none;
+  border-color: transparent;
 }
 
 .holder.transparent > .widget {
