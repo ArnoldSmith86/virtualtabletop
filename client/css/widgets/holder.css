@@ -7,7 +7,7 @@
 }
 
 .holder.droppable.droptarget{
-  border-color: #333;
+  border-color: #333!important;
 }
 
 .holder > .widget {
