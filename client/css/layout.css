@@ -1182,8 +1182,7 @@ button:disabled:hover {
 }
 
 .modal .footer {
-  margin-top: 16px;
-  padding: 4px;
+  padding: 16px 4px 4px 4px;
   position: relative;
   box-sizing: border-box;
   display: flex;
@@ -1307,23 +1306,9 @@ button:disabled:hover {
   display: flex;
   position: relative;
   padding: 3px;
+  border-bottom: 1px solid var(--modalBorderColor);
 }
-#buttonInputFields > div::after {
-    content: '';
-    position: absolute;
-    background-color: var(--modalBorderColor);
-    display: block;
-    z-index: 15;
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    width: 100%;
-}
-#buttonInputFields > div:last-of-type::after {
-    background-color: transparent;
-}
+
 .inputtitle{
   background: var(--VTTblue);
   color: white;
@@ -1357,6 +1342,13 @@ button:disabled:hover {
   font-style: italic;
   margin: 0;
 }
+
+.inputunderline{
+  background-color: #aaaaaa;
+  margin: -5px 5px 5px 5px;
+  height: 1px;
+}
+
 .inputnumber,
 .inputstring,
 .inputselect,
@@ -1399,8 +1391,8 @@ button:disabled:hover {
 .inputselect select
 {
   appearance: none;
-  padding: 20.6px 5px 0px 5px;
-  margin: -20.6px 0 0 0;
+  padding: 0 5px 0px 5px;
+  margin: 0 0 0 0;
   font-size: 16px;
   color: var(--modalTextColor);
   background-color: transparent;
@@ -1413,14 +1405,13 @@ button:disabled:hover {
   padding-right: 25px;
 }
 
-.inputselect::before {
-  content: "expand_more";
+.inputexpandselect {
   font-family: "Material Icons";
   font-size: 20px;
   line-height: 20px;
   position: absolute;
   right: 10px;
-  bottom: 11px;
+  bottom: 12px;
   z-index: -1;
 }
 
