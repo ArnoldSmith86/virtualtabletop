@@ -62,6 +62,34 @@ export default async function convertPCIO(content) {
       w.height = widget.height;
   }
 
+  function importWidgetQuery(routine, args, legacySource, holdersParam, collectionParam, target) {
+    if(args.objects) {
+      if(args.objects.type == 'reference') {
+        target[collectionParam] = args.objects.questionId;
+      } else if(args.objects.collections && args.objects.collections.length) {
+        routine.push({
+          func: 'SELECT',
+          property: 'parent',
+          relation: 'in',
+          value: args.objects.holders,
+          type: 'card'
+        });
+        routine.push({
+          func: 'SELECT',
+          source: 'DEFAULT',
+          property: 'deck',
+          relation: 'in',
+          value: args.objects.collections
+        });
+      } else {
+        target[holdersParam] = args.objects.holders;
+      }
+    } else {
+      target[holdersParam] = args[legacySource].from.value;
+    }
+    return target;
+  }
+
   const pileHasDeck = {};
   const pileOverlaps = {};
   const pileTransparent = {};
@@ -824,17 +852,37 @@ export default async function convertPCIO(content) {
 
       w.clickRoutine = [];
 
-      if(widget.clickRoutine && widget.clickRoutine.popupMessage) {
-        w.clickRoutine.push({
+      if(widget.clickRoutine && (widget.clickRoutine.popupMessage || widget.clickRoutine.questions)) {
+        const popup = {
           func: 'INPUT',
-          fields: [
-            {
-              type: 'text',
-              text: widget.clickRoutine.popupMessage
-            }
-          ],
-          confirmButtonText: widget.label
-        });
+          header: widget.clickRoutine.popupMessage,
+          confirmButtonText: widget.label,
+          fields: []
+        };
+        for(const question of widget.clickRoutine.questions || []) {
+          if(question.type == 'number') {
+            popup.fields.push({
+              type: 'number',
+              label: question.label,
+              value: question.defaultValue,
+              variable: question.id
+            });
+          }
+          if(question.type == 'widgets') {
+            popup.fields.push({
+              type: 'choose',
+              label: question.label,
+              holder: question.holders.length == 1 ? question.holders[0] : question.holders,
+              variable: question.id,
+              max: question.widgetSelectionLimit || 99999,
+              collection: question.id,
+              propertyOverride: {
+                activeFace: question.showWidgetSide == 'back' ? 0 : 1
+              }
+            });
+          }
+        }
+        w.clickRoutine.push(popup);
       }
 
       if(widget.type == 'turnButton') {
@@ -845,18 +893,31 @@ export default async function convertPCIO(content) {
 
       for(let c of widget.clickRoutine ? (widget.clickRoutine.steps || widget.clickRoutine) : []) {
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
-          if(!c.args.from || !c.args.to)
+          if((!c.args.from && !c.args.objects) || !c.args.to)
             continue;
           const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
-          c = {
+
+          let quantity = 1;
+          if(c.args.quantity) {
+            if(c.args.quantity.type == 'reference')
+              quantity = '${' + c.args.quantity.questionId + '}';
+            else
+              quantity = c.args.quantity.value;
+          }
+
+          c = importWidgetQuery(w.clickRoutine, c.args, 'from', 'from', 'collection', {
             func:  'MOVE',
-            from:  c.args.from.value,
-            count: (c.args.quantity || { value: 1 }).value,
-            to:    c.args.to.value
-          };
-          if(c.from.length == 1)
+            count: quantity,
+            to:    c.args.to.value,
+            fillTo: c.args.fillAdd && c.args.fillAdd.value == 'fill' ? quantity : null
+          });
+          if(c.from && c.from.length == 1)
             c.from = c.from[0];
           if(c.count == 1)
+            delete c.count;
+          if(c.fillTo === null)
+            delete c.fillTo;
+          else
             delete c.count;
           if(c.to.length == 1)
             c.to = c.to[0];
@@ -948,15 +1009,16 @@ export default async function convertPCIO(content) {
             delete c.reverse;
         }
         if(c.func == "FLIP_CARDS") {
-          if(!c.args.holders)
+          if(!c.args.holders && !c.args.objects)
             continue;
           const flipFace = c.args.flipFace;
-          c = {
+
+
+          c = importWidgetQuery(w.clickRoutine, c.args, 'holders', 'holder', 'collection', {
             func:   'FLIP',
-            holder: c.args.holders.value,
             count:  !c.args.flipMode || c.args.flipMode.value == 'pile' ? 0 : 1
-          };
-          if(c.holder.length == 1)
+          });
+          if(c.holder && c.holder.length == 1)
             c.holder = c.holder[0];
           if(!c.count)
             delete c.count;
