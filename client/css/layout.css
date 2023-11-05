@@ -1393,6 +1393,7 @@ button:disabled:hover {
   flex-shrink: 0;
   order: 1;
 }
+
 .inputnumber input,
 .inputstring input,
 .inputselect select
@@ -1406,6 +1407,10 @@ button:disabled:hover {
   border: 0px none transparent;
   line-height: 36px;
   border-radius: 4px;
+}
+
+.inputselect select{
+  padding-right: 25px;
 }
 
 .inputselect::before {
