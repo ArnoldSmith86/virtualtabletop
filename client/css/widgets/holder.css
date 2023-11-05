@@ -6,7 +6,9 @@
   border-color: #d8d8d8 #ccc #ccc #d8d8d8;
 }
 
-.holder.droppable.droptarget
+.holder.droppable.droptarget{
+  border-color: #333!important;
+}
 
 .holder > .widget {
   left: -1px;
