@@ -1406,11 +1406,12 @@ button:disabled:hover {
 }
 
 .inputexpandselect {
+  text-align: right;
   font-family: "Material Icons";
   font-size: 20px;
   line-height: 20px;
   position: absolute;
-  right: 10px;
+  right: 5px;
   bottom: 12px;
   z-index: -1;
 }
