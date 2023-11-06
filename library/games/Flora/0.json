@@ -1153,7 +1153,7 @@
           },
           {
             "type": "subtitle",
-            "text": "Select card types you do NOT want to use. Choose 4 type to exclude for 2 players, 2 type for 3 players, and none for 4 players. Press confirm to recall all cards and deal 7 to each seated player."
+            "text": "Select card types you do NOT want to use. Choose 4 types to exclude for 2 players, 2 types for 3 players, and none for 4 players. Press confirm to recall all cards and deal 7 to each seated player."
           },
           {
             "type": "choose",
