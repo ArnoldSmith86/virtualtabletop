@@ -4,11 +4,11 @@
     "type": "card",
     "cardType": "D 06",
     "id": "7798",
-    "z": 1512,
-    "parent": "wqi8"
+    "z": 13507,
+    "parent": "5b0r"
   },
   "_meta": {
-    "version": 5,
+    "version": 14,
     "info": {
       "name": "Functions - RECALL and SHUFFLE",
       "image": "/assets/-741199259_9178",
@@ -17,12 +17,21 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "1",
-      "players": "",
-      "language": "en-US",
-      "variant": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1639024855000
+      "lastUpdate": 1699233251784,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "8fr3": {
@@ -51,16 +60,17 @@
   "bm4j": {
     "text": "A Recall and Shuffle button is included with every standard deck of cards widget. The button recalls all cards in the deck that is in that holder.  Recall only works on decks. The button then flips the cards face down and finally performs a shuffle. Shuffling the widgets in a holder randomizes their stacking order ('z' position).",
     "id": "bm4j",
-    "x": 60,
+    "x": 24,
     "y": 600,
     "z": 185,
     "width": 300,
-    "movable": false
+    "movable": false,
+    "layer": -1
   },
   "fzoq": {
     "type": "holder",
     "id": "fzoq",
-    "x": 139.5,
+    "x": 103,
     "y": 300,
     "dropTarget": {
       "type": "card"
@@ -627,436 +637,439 @@
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 4K",
-    "z": 1989,
+    "z": 13534,
     "myCustomProperty": "Will be cloned.",
-    "parent": "wqi8"
+    "parent": "5b0r"
   },
   "bm5j": {
     "text": "Holders can contain more than one deck. The holder above contains 2 standard decks and RECALL will recall them all and mix the decks. Recall also offers an 'owned' parameter. It is true by default. If set to false, it will not recall cards that have an 'owner' property set (typically those in a player's hand). Test that by moving some cards from the deck above into the hand below and pressing the button.",
     "id": "bm5j",
-    "x": 410,
+    "x": 362,
     "y": 600,
     "z": 121,
     "width": 300,
-    "movable": false
+    "movable": false,
+    "layer": -1
   },
   "bm6j": {
     "id": "bm6j",
-    "x": 808,
+    "x": 959,
     "y": 600,
     "z": 9732,
     "width": 300,
     "text": "SHUFFLE can be used on holders that contain widgets other than cards. The holder above has 8 checkers with a vertical stackOffset so you can see what is happening. The checker closest to the top of the screen has a 'z' value of 1 and the others have 'z' in ascending order. Press the button and the widgets are shuffled. No x,y movement is taking place. The only change is to randomize 'z'.",
-    "movable": false
+    "movable": false,
+    "layer": -1
   },
   "bm7j": {
     "id": "bm7j",
-    "x": 1222,
+    "x": 1288,
     "y": 600,
     "z": 119,
     "width": 300,
     "text": "SHUFFLE also works on widgets outside of holders. The button above gathers the assortment of widgets into a collection. The items are sorted by 'z' value, which you can see if you stack them on top of each other. The id's from lowest to highest z are then displayed in the text area below the items.",
-    "movable": false
+    "movable": false,
+    "layer": -1
   },
   "ewi7": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 01",
     "id": "ewi7",
-    "z": 8502,
-    "parent": "wqi8"
+    "z": 13514,
+    "parent": "5b0r"
   },
   "wlcp": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 02",
     "id": "wlcp",
-    "z": 987,
-    "parent": "wqi8"
+    "z": 13503,
+    "parent": "5b0r"
   },
   "qk38": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 03",
     "id": "qk38",
-    "z": 2353,
-    "parent": "wqi8"
+    "z": 13523,
+    "parent": "5b0r"
   },
   "pg6n": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 04",
     "id": "pg6n",
-    "z": 5977,
-    "parent": "wqi8"
+    "z": 13516,
+    "parent": "5b0r"
   },
   "48xs": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 05",
     "id": "48xs",
-    "z": 3190,
-    "parent": "wqi8"
+    "z": 13492,
+    "parent": "5b0r"
   },
   "r197": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 06",
     "id": "r197",
-    "z": 444,
-    "parent": "wqi8"
+    "z": 13502,
+    "parent": "5b0r"
   },
   "ufvz": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 07",
     "id": "ufvz",
-    "z": 5459,
-    "parent": "wqi8"
+    "z": 13525,
+    "parent": "5b0r"
   },
   "ezn1": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 08",
     "id": "ezn1",
-    "z": 2879,
-    "parent": "wqi8"
+    "z": 13526,
+    "parent": "5b0r"
   },
   "950u": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 09",
     "id": "950u",
-    "z": 1328,
-    "parent": "wqi8"
+    "z": 13517,
+    "parent": "5b0r"
   },
   "2dis": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 10",
     "id": "2dis",
-    "z": 4555,
-    "parent": "wqi8"
+    "z": 13521,
+    "parent": "5b0r"
   },
   "n0ua": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 2J",
     "id": "n0ua",
-    "z": 7899,
-    "parent": "wqi8"
+    "z": 13531,
+    "parent": "5b0r"
   },
   "f8w3": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 3Q",
     "id": "f8w3",
-    "z": 7281,
-    "parent": "wqi8"
+    "z": 13490,
+    "parent": "5b0r"
   },
   "zt8v": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "C 4K",
     "id": "zt8v",
-    "z": 4475,
-    "parent": "wqi8"
+    "z": 13504,
+    "parent": "5b0r"
   },
   "w7tt": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 01",
     "id": "w7tt",
-    "z": 547,
-    "parent": "wqi8"
+    "z": 13538,
+    "parent": "5b0r"
   },
   "sq2n": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 02",
     "id": "sq2n",
-    "z": 4457,
-    "parent": "wqi8"
+    "z": 13524,
+    "parent": "5b0r"
   },
   "sjhr": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 03",
     "id": "sjhr",
-    "z": 6518,
-    "parent": "wqi8"
+    "z": 13509,
+    "parent": "5b0r"
   },
   "ab1l": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 04",
     "id": "ab1l",
-    "z": 3852,
-    "parent": "wqi8"
+    "z": 13519,
+    "parent": "5b0r"
   },
   "9lt6": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 05",
     "id": "9lt6",
-    "z": 6763,
-    "parent": "wqi8"
+    "z": 13491,
+    "parent": "5b0r"
   },
   "nv4c": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 07",
     "id": "nv4c",
-    "z": 387,
-    "parent": "wqi8"
+    "z": 13495,
+    "parent": "5b0r"
   },
   "gf68": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 08",
     "id": "gf68",
-    "z": 8453,
-    "parent": "wqi8"
+    "z": 13522,
+    "parent": "5b0r"
   },
   "u4ep": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 09",
     "id": "u4ep",
-    "z": 6397,
-    "parent": "wqi8"
+    "z": 13506,
+    "parent": "5b0r"
   },
   "0sbf": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 10",
     "id": "0sbf",
-    "z": 4208,
-    "parent": "wqi8"
+    "z": 13508,
+    "parent": "5b0r"
   },
   "k99v": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 2J",
     "id": "k99v",
-    "z": 335,
-    "parent": "wqi8"
+    "z": 13512,
+    "parent": "5b0r"
   },
   "18if": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 3Q",
     "id": "18if",
-    "z": 5832,
-    "parent": "wqi8"
+    "z": 13505,
+    "parent": "5b0r"
   },
   "38fv": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "D 4K",
     "id": "38fv",
-    "z": 8941,
-    "parent": "wqi8"
+    "z": 13518,
+    "parent": "5b0r"
   },
   "pfyy": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 01",
     "id": "pfyy",
-    "z": 4020,
-    "parent": "wqi8"
+    "z": 13515,
+    "parent": "5b0r"
   },
   "lx8o": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 02",
     "id": "lx8o",
-    "z": 8292,
-    "parent": "wqi8"
+    "z": 13494,
+    "parent": "5b0r"
   },
   "2iw6": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 03",
     "id": "2iw6",
-    "z": 9814,
-    "parent": "wqi8"
+    "z": 13497,
+    "parent": "5b0r"
   },
   "vrla": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 04",
     "id": "vrla",
-    "z": 6744,
-    "parent": "wqi8"
+    "z": 13530,
+    "parent": "5b0r"
   },
   "cjms": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 05",
     "id": "cjms",
-    "z": 15,
-    "parent": "wqi8"
+    "z": 13499,
+    "parent": "5b0r"
   },
   "3tgs": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 06",
     "id": "3tgs",
-    "z": 6204,
-    "parent": "wqi8"
+    "z": 13498,
+    "parent": "5b0r"
   },
   "agq3": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 07",
     "id": "agq3",
-    "z": 9786,
-    "parent": "wqi8"
+    "z": 13539,
+    "parent": "5b0r"
   },
   "vpdb": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 08",
     "id": "vpdb",
-    "z": 7436,
-    "parent": "wqi8"
+    "z": 13511,
+    "parent": "5b0r"
   },
   "9e3c": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 09",
     "id": "9e3c",
-    "z": 5232,
-    "parent": "wqi8"
+    "z": 13513,
+    "parent": "5b0r"
   },
   "shtz": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 10",
     "id": "shtz",
-    "z": 3726,
-    "parent": "wqi8"
+    "z": 13493,
+    "parent": "5b0r"
   },
   "4ry3": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 2J",
     "id": "4ry3",
-    "z": 7551,
-    "parent": "wqi8"
+    "z": 13520,
+    "parent": "5b0r"
   },
   "lwms": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 3Q",
     "id": "lwms",
-    "z": 3868,
-    "parent": "wqi8"
+    "z": 13540,
+    "parent": "5b0r"
   },
   "m2em": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "H 4K",
     "id": "m2em",
-    "z": 711,
-    "parent": "wqi8"
+    "z": 13489,
+    "parent": "5b0r"
   },
   "40by": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 01",
     "id": "40by",
-    "z": 5120,
-    "parent": "wqi8"
+    "z": 13527,
+    "parent": "5b0r"
   },
   "atp2": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 02",
     "id": "atp2",
-    "z": 1084,
-    "parent": "wqi8"
+    "z": 13496,
+    "parent": "5b0r"
   },
   "o37i": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 03",
     "id": "o37i",
-    "z": 6334,
-    "parent": "wqi8"
+    "z": 13537,
+    "parent": "5b0r"
   },
   "f4dx": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 04",
     "id": "f4dx",
-    "z": 5710,
-    "parent": "wqi8"
+    "z": 13533,
+    "parent": "5b0r"
   },
   "6vca": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 05",
     "id": "6vca",
-    "z": 3693,
-    "parent": "wqi8"
+    "z": 13535,
+    "parent": "5b0r"
   },
   "0z8x": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 06",
     "id": "0z8x",
-    "z": 4085,
-    "parent": "wqi8"
+    "z": 13500,
+    "parent": "5b0r"
   },
   "22zn": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 07",
     "id": "22zn",
-    "z": 7097,
-    "parent": "wqi8"
+    "z": 13532,
+    "parent": "5b0r"
   },
   "0a10": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 08",
     "id": "0a10",
-    "z": 6274,
-    "parent": "wqi8"
+    "z": 13528,
+    "parent": "5b0r"
   },
   "4z9x": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 09",
     "id": "4z9x",
-    "z": 1938,
-    "parent": "wqi8"
+    "z": 13501,
+    "parent": "5b0r"
   },
   "f221": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 10",
     "id": "f221",
-    "z": 5033,
-    "parent": "wqi8"
+    "z": 13536,
+    "parent": "5b0r"
   },
   "vvxi": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 2J",
     "id": "vvxi",
-    "z": 3739,
-    "parent": "wqi8"
+    "z": 13529,
+    "parent": "5b0r"
   },
   "01a5": {
     "deck": "fzoqD",
     "type": "card",
     "cardType": "S 3Q",
     "id": "01a5",
-    "z": 6865,
-    "parent": "wqi8"
+    "z": 13510,
+    "parent": "5b0r"
   },
   "hand": {
     "type": "holder",
@@ -1074,12 +1087,14 @@
     "y": 820,
     "width": 1500,
     "height": 180,
-    "id": "hand"
+    "id": "hand",
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "0oea": {
     "type": "holder",
     "id": "0oea",
-    "x": 500.5,
+    "x": 453,
     "y": 300,
     "dropTarget": {
       "type": "card"
@@ -3006,7 +3021,7 @@
   },
   "zs5p": {
     "type": "holder",
-    "x": 899,
+    "x": 1050,
     "y": 248,
     "z": 121,
     "id": "zs5p",
@@ -3177,7 +3192,7 @@
         "holder": "zs5p"
       }
     ],
-    "x": 810,
+    "x": 961,
     "y": 445,
     "z": 2,
     "id": "k8jt",
@@ -3218,7 +3233,7 @@
         "value": "${myResult}"
       }
     ],
-    "x": 1327,
+    "x": 1393,
     "y": 441,
     "z": 4,
     "id": "k9jt",
@@ -3226,7 +3241,7 @@
   },
   "outputLabel": {
     "id": "outputLabel",
-    "x": 1265,
+    "x": 1331,
     "y": 399,
     "width": 200,
     "height": 40,
@@ -3243,8 +3258,8 @@
   },
   "pin": {
     "id": "pin",
-    "x": 1290.075,
-    "y": 241.085,
+    "x": 1357,
+    "y": 241,
     "width": 35.85,
     "height": 43.83,
     "z": 6,
@@ -3254,10 +3269,10 @@
   },
   "pawn": {
     "id": "pawn",
-    "x": 1362,
-    "y": 214,
-    "width": 90,
-    "height": 90,
+    "x": 1445,
+    "y": 217,
+    "width": 56,
+    "height": 84,
     "z": 5,
     "assortment": true,
     "classes": "classicPiece",
@@ -3265,7 +3280,7 @@
   },
   "fire": {
     "id": "fire",
-    "x": 1268,
+    "x": 1334,
     "y": 320,
     "width": 50,
     "height": 50,
@@ -3276,8 +3291,8 @@
   },
   "bear": {
     "id": "bear",
-    "x": 1347.5,
-    "y": 342.5,
+    "x": 1414,
+    "y": 342,
     "width": 25,
     "height": 25,
     "z": 4,
@@ -3287,21 +3302,12 @@
   },
   "horse": {
     "id": "horse",
-    "x": 1378,
+    "x": 1444,
     "y": 288,
     "z": 3,
     "assortment": true,
     "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
     "text": "♞"
-  },
-  "wqi8": {
-    "type": "pile",
-    "parent": "fzoq",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "wqi8"
   },
   "fntq": {
     "type": "pile",
@@ -3311,5 +3317,57 @@
     "width": 103,
     "height": 160,
     "id": "fntq"
+  },
+  "recallExclude": {
+    "type": "button",
+    "id": "recallExclude",
+    "x": 768,
+    "y": 445,
+    "z": 5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "fzoqD"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "type": "card",
+        "property": "rank",
+        "relation": "in",
+        "value": [
+          "2J",
+          "3Q",
+          "4K"
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "fzoq",
+        "excludeCollection": "DEFAULT"
+      }
+    ],
+    "text": "Recall Exclude"
+  },
+  "bm8j": {
+    "text": "Recall buttons can also exclude cards in a collection. If the 'excludeCollection' paramter is present and is a valid collection, cards in the collection will not be recalled. For example, the button above excludes all face cards from the recall of the deck on the far left. Drag the entire pile into the hand and press the button above to see that demonstrated.",
+    "id": "bm8j",
+    "x": 678,
+    "y": 600,
+    "z": 121,
+    "width": 250,
+    "movable": false,
+    "layer": -1
+  },
+  "5b0r": {
+    "type": "pile",
+    "parent": "fzoq",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "5b0r"
   }
 }
