@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "Game layout, design, and scripting by Andy Pymont and released to the Public Domain by CC0.\n\nTile graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• Blue city / Tightrope icon: https://game-icons.net/1x1/delapouite/tightrope.html\n• Meeple icon on Farm tiles: https://game-icons.net/1x1/delapouite/meeple.html\n• Orange city / Strongman icon: https://game-icons.net/1x1/delapouite/strong-man.html\n• Purple city / Jumping Dog icon: https://game-icons.net/1x1/delapouite/jumping-dog.html\n• Seal icon: https://game-icons.net/1x1/delapouite/juggling-seal.html\n• Tent icon: https://game-icons.net/1x1/delapouite/medieval-pavilion.html\n• Track progress / Fleur de Lys icon: https://game-icons.net/1x1/delapouite/fleur-de-lys.html\n• White city / Magic Trick icon: https://game-icons.net/1x1/delapouite/magick-trick.html\n• Achievement / Trophy icon: https://game-icons.net/1x1/lorc/trophy.html\n• Yellow city / Juggler icon: https://game-icons.net/1x1/lorc/juggler.html\n\nThe library image was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"A circus master juggles in front of a red and yellow tent in a forest clearing\".",
-      "lastUpdate": 1697461586977,
+      "lastUpdate": 1699281916000,
       "id": "ni76",
       "showName": true,
       "skill": "",
@@ -1669,8 +1669,14 @@
       "image": "/assets/1327072617_3264"
     },
     "css": {
-      "background": "transparent",
-      "border": "transparent"
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%)"
+      },
+      ".droptarget": {
+        "background": "#00000050"
+      }
     },
     "layer": -2
   },
@@ -3371,8 +3377,14 @@
     "width": 64,
     "height": 55.43,
     "css": {
-      "background": "transparent",
-      "border-color": "transparent"
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%)"
+      },
+      ".droptarget": {
+        "background": "#00000050"
+      }
     },
     "dropLimit": 1,
     "dropOffsetX": 9.5,
