@@ -57,12 +57,7 @@
 }
 
 #jeMouseCoords {
-  grid-column: 2 / span 1;
-  grid-row: 1 /span 1;
-  display: block;
-  text-align: right;
-  right: calc(var(--commandPaneWidth) + 20px);
-  border-bottom: 1px solid white;
+  margin: 5px;
 }
 
 #jeTree {

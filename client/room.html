@@ -42,6 +42,10 @@
       <div id="topSurface" class="surface"></div>
     </div>
 
+    <div id="gridOverlay" class="overlay">
+      <div class="modal"></div>
+    </div>
+
     <div id="pileOverlay" class="overlay">
       <div class="modal"></div>
     </div>
@@ -278,7 +282,7 @@
         <div class="variantsList"></div>
         <button icon="add" class="onlyForEdit">Add variant</button>
       </div>
-      <div id="similarDetails" data-showfor="similarImage|similarName|similarAwards|bgg|rules">
+      <div id="similarDetails" data-showfor="similarImage|similarName|similarDesigner|similarAwards|bgg|rules">
         <div id="similarImage">
           <img data-field="similarImage" data-target="src" class="uneditable">
           <div class="onlyForEdit">
@@ -287,6 +291,7 @@
         </div>
         <div class="details">
           <h1 data-showfor="similarName">Similar to: <span data-field="similarName"></span><span data-showfor="year"> (<span data-field="year"></span>)</span></h1>
+          <div data-showfor="similarDesigner"><i class="material-icons">person</i> Designer: <span data-field="similarDesigner"></span></div>
           <div data-showfor="similarAwards" class="hideForEdit"><i class="material-icons">emoji_events</i> <span data-field="similarAwards"></span></div>
           <div class="onlyForEdit"><i class="material-icons">emoji_events</i> Awards: <span data-field="similarAwards"></span></div>
           <div data-showfor="bgg" class="hideForEdit"><i class="material-icons">info</i> <a data-field="bgg" data-target="href">Game details on <nobr><i class="material-icons intext">launch</i> <span id="similarDetailsDomain"></span></nobr></a></div>

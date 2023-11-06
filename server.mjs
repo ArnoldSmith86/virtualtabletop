@@ -350,11 +350,15 @@ MinifyHTML().then(function(result) {
   });
 
   router.put('/asset/:link', async function(req, res) {
-    const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
-    const filename = `/${CRC32.buf(content)}_${content.length}`;
-    if(!Config.resolveAsset(filename.substr(1)))
-      fs.writeFileSync(assetsdir + filename, content);
-    res.send(`/assets${filename}`);
+    try {
+      const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
+      const filename = `/${CRC32.buf(content)}_${content.length}`;
+      if(!Config.resolveAsset(filename.substr(1)))
+        fs.writeFileSync(assetsdir + filename, content);
+      res.send(`/assets${filename}`);
+    } catch(e) {
+      res.status(404).send('Downloading external asset failed.');
+    }
   });
 
   router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
@@ -371,6 +375,16 @@ MinifyHTML().then(function(result) {
         activeRooms.get(req.params.room).addState(req.params.id, req.params.type, req.body, req.params.name, req.params.addAsVariant).then(function() {
           res.send('OK');
         }).catch(next);
+      }
+    }).catch(next);
+  });
+
+  router.get('/saveCurrentState/:room/:mode/:name', async function(req, res, next) {
+    if(!validateInput(res, next, [ req.params.mode ])) return;
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).saveCurrentState(req.params.mode, req.params.name);
+        res.send('OK');
       }
     }).catch(next);
   });

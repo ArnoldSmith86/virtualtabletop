@@ -3,23 +3,28 @@
     "version": 13,
     "info": {
       "name": "Safari Scramble",
-      "image": "/assets/-1235949203_61376",
+      "image": "/assets/1513438080_189203",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/398/flinke-pinke",
-      "year": 1994,
+      "year": "1994",
       "mode": "vs",
-      "time": 30,
-      "attribution": "Game layout and scripting by Andy Pymont, provided under the MIT License.\n\nAnimal graphics are from https:///thenounproject.com/ and are used under the CC BY 3.0 license:\n\nEucalyp:\n- Safari https://thenounproject.com/icon/safari-4932030/\nFran Couto:\n- Zebra https://thenounproject.com/icon/zebra-3785903/\nIconic:\n- Elephant https://thenounproject.com/icon/elephant-1046624/\nIronSV:\n- Lion https://thenounproject.com/icon/lion-3063323/\ntulpahn:\n- Leopard https://thenounproject.com/icon/leopard-3839691/\n- Rhino https://thenounproject.com/icon/rhino-3839674/",
+      "time": "30",
+      "attribution": "Game layout and scripting by Andy Pymont, released to public domain under CC0.\n\nLibrary image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"going on safari, watercolor\".\n\nAnimal graphics are from https:///thenounproject.com/ and are used under the CC BY 3.0 license:\n\nEucalyp:\n- Safari https://thenounproject.com/icon/safari-4932030/\nFran Couto:\n- Zebra https://thenounproject.com/icon/zebra-3785903/\nIconic:\n- Elephant https://thenounproject.com/icon/elephant-1046624/\nIronSV:\n- Lion https://thenounproject.com/icon/lion-3063323/\ntulpahn:\n- Leopard https://thenounproject.com/icon/leopard-3839691/\n- Rhino https://thenounproject.com/icon/rhino-3839674/",
       "lastUpdate": 1680963140205,
       "showName": true,
       "description": "Can you collect the most valuable animals?",
-      "helpText": "Have each player take a seat and then click the New Round button to deal a hand of cards.<br><br>On your turn:<br>- Drag and drop a card from your hand at the bottom of the screen into the area for the appropriate animal/suit, such that the latest played is the visible/right most card. (The other cards will be fanned so all players can see what has been played.)<br>- Drag and drop an animal tile from the supply column into your holder for that type of animal (vertically in line with the supply and horizontally in line with your seat/player name.)<br><br>At the end of each round, click New Round again to record current scores (based on played cards and collected tiles) and collect back, shuffle, and re deal cards. Also press this at the end of the final round to finish scoring (you'll be dealt a new hand but can simply ignore this).",
+      "helpText": "Have each player take a seat and then click the New Round button to deal a hand of cards.\nOn your turn:\n• Drag and drop a card from your hand at the bottom of the screen into the area for the appropriate animal/suit, such that the latest played is the visible/right most card. (The other cards will be stacked such that all players can see what has been played.)\n• Drag and drop an animal tile from the supply column into your holder for that type of animal (vertically in line with the supply and horizontally in line with your seat/player name.)>\n\nAt the end of each round, click New Round again to record current scores (based on played cards and collected tiles) and collect back, shuffle, and re deal cards. Also press this at the end of the final round to finish scoring (you'll be dealt a new hand but can simply ignore this).",
       "similarImage": "",
       "similarName": "Flinke Pinke",
       "similarAwards": "1994 Fairplay À la carte Runner-up\n2003 Japan Boardgame Prize Best Foreign Game for Beginners Nominee",
-      "ruleText": "",
-      "players": "2-5",
-      "language": "en-GB"
+      "ruleText": "Play one hand per player, with each player being start player once.\n\nOn your turn, you must play a card into the area for the matching animal on the table. You must then take any one animal (not necessarily the same animal as the card you played) into your personal area, unless there are no animals remaining.\n\nIf, after a player's turn, all 6 cards (0, 1, 2, 3, 4, and 5) for any single animal have been played, the hand ends.\n\nWhen the hand ends, players score each animal in their personal area. Each animal is worth the value printed on the latest card of that animal that was played. If no cards have been played for that animal, then it is worth 0.",
+      "similarDesigner": "Reiner Knizia",
+      "id": "9gz4",
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-5"
     }
   },
   "hand": {
@@ -183,7 +188,7 @@
         ]
       }
     ]
- },
+  },
   "holder-cards": {
     "id": "holder-cards",
     "type": "holder",
@@ -438,7 +443,7 @@
         "bgcolor": "#eeeeee",
         "fgcolor": "#000000",
         "image": "/assets/2083982857_6862"
-      } 
+      }
     },
     "faceTemplates": [
       {
@@ -555,7 +560,7 @@
     "onEnter": {
       "activeFace": 1
     }
- },
+  },
   "holder-cards-leopard": {
     "id": "holder-cards-leopard",
     "type": "holder",
@@ -602,13 +607,44 @@
     "index": 1,
     "x": 960,
     "y": 35,
-    "width": 100,
-    "height": 30,
+    "width": 110,
+    "height": 45,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      }
+    ],
     "css": {
-      "font-size": "14px"
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "18px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
     },
+    "foreground": "#000000",
     "hideWhenUnused": true
- },
+  },
   "hand-counter-p1": {
     "id": "hand-counter-p1",
     "parent": "seat-p1",
@@ -621,13 +657,13 @@
     "movableInEdit": false,
     "clickable": false,
     "css": {
-      "font-size": "16px",
+      "font-size": "18px",
       "display": "flex",
       "align-items": "center",
       "justify-content": "center",
-      "color": "#6d6d6d",
-      "background": "#e4e4e4",
-      "border": "2px solid #999999"
+      "color": "#000000",
+      "background": "#ffffff",
+      "border": "2px solid #000000"
     },
     "text": 0
   },
@@ -636,11 +672,13 @@
     "type": "seat",
     "index": 2,
     "x": 1090,
+    "foreground": "#000000",
     "inheritFrom": {
       "seat-p1": [
         "y",
         "width",
         "height",
+        "clickRoutine",
         "css",
         "hideWhenUnused"
       ]
@@ -657,11 +695,13 @@
     "type": "seat",
     "index": 3,
     "x": 1220,
+    "foreground": "#000000",
     "inheritFrom": {
       "seat-p1": [
         "y",
         "width",
         "height",
+        "clickRoutine",
         "css",
         "hideWhenUnused"
       ]
@@ -678,11 +718,13 @@
     "type": "seat",
     "index": 4,
     "x": 1350,
+    "foreground": "#000000",
     "inheritFrom": {
       "seat-p1": [
         "y",
         "width",
         "height",
+        "clickRoutine",
         "css",
         "hideWhenUnused"
       ]
@@ -699,11 +741,13 @@
     "type": "seat",
     "index": 5,
     "x": 1480,
+    "foreground": "#000000",
     "inheritFrom": {
       "seat-p1": [
         "y",
         "width",
         "height",
+        "clickRoutine",
         "css",
         "hideWhenUnused"
       ]
@@ -803,7 +847,7 @@
     "inheritFrom": "holder-elephant",
     "x": 980,
     "linkedToSeat": "seat-p1"
- },
+  },
   "holder-elephant-p2": {
     "id": "holder-elephant-p2",
     "type": "holder",
@@ -1076,7 +1120,7 @@
     "inheritFrom": {
       "holder-elephant-p4": [
         "x",
-        "linkedToSeat" 
+        "linkedToSeat"
       ],
       "holder-zebra": "*"
     }
@@ -1206,13 +1250,6 @@
   },
   "tile-lion-1": {
     "id": "tile-lion-1",
-    "type": "card",
-    "parent": "pile-tile-lion",
-    "deck": "deck-tiles",
-    "cardType": "tile-lion"
-  },
-  "tile-lion-2": {
-    "id": "tile-lion-2",
     "type": "card",
     "parent": "pile-tile-lion",
     "deck": "deck-tiles",

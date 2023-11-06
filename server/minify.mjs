@@ -101,6 +101,7 @@ export default async function minifyHTML() {
     'client/js/editor/toolbar/delete.js',
     'client/js/editor/toolbar/align.js',
     'client/js/editor/toolbar/group.js',
+    'client/js/editor/toolbar/grid.js',
     'client/js/editor/dragButton.js',
     'client/js/editor/dragbuttons/drag.js',
     'client/js/editor/dragbuttons/clone.js',
@@ -114,15 +115,9 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/assets.js',
     'client/js/editor/sidebar/toolbox.js',
 
-    'node_modules/vue/dist/vue.global.js',
-
     'client/js/editmode.js',
     'client/js/jsonedit.js',
-    'client/js/traceviewer.js',
-
-    'client/components/baseEditOverlay.js',
-    'client/components/deckEditor.js',
-    'client/components/loadComponents.js'
+    'client/js/traceviewer.js'
   ]);
 
   const editorHTML = await minify({

@@ -1022,10 +1022,7 @@ class PropertiesModule extends SidebarModule {
         const objectDiv = document.createElement('div');
         objectDiv.className = 'faceTemplateEdit';
 
-        const card = this.cardLayerCards[face][object] = new Card();
-        const newState = {...widget.state};
-        newState.activeFace = face;
-        this.renderWidget(card, newState, objectDiv);
+        const card = this.cardLayerCards[face][object] = widget.renderReadonlyCopy({ activeFace: face }, objectDiv);
         const removeObjects = function(card, object) {
           for(const objectDOM of $a(`.active.cardFace .cardFaceObject:nth-child(n+${+object+2})`, card.domElement))
             objectDOM.remove();
@@ -1144,21 +1141,6 @@ class PropertiesModule extends SidebarModule {
     };
   }
 
-  renderWidget(widget, state, target) {
-    delete state.id;
-    delete state.x;
-    delete state.y;
-    delete state.rotation;
-    delete state.scale;
-    delete state.parent;
-
-    widget.applyInitialDelta(state);
-    target.appendChild(widget.domElement);
-    if(widget instanceof Card)
-      widget.deck.removeCard(widget);
-    return widget.domElement;
-  }
-
   renderWidgetButton(widget, state, target) {
     const button = document.createElement('button');
     button.className = 'widgetSelectionButton';
@@ -1166,13 +1148,13 @@ class PropertiesModule extends SidebarModule {
 
     let deckDOM = null;
     if(widget instanceof Deck && widget.get('type') != 'deck')
-      deckDOM = this.renderWidget(widget, state, button);
+      deckDOM = widget.renderReadonlyCopyRaw(state, button).domElement;
 
     if(widget.get('type') == 'deck') {
-      const parent = this.renderWidget(new BasicWidget(), {}, button);
+      const parent = new BasicWidget().renderReadonlyCopyRaw({}, button).domElement;
       widgets.set(widget.id, widget);
       for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
-        this.renderWidget(new Card(), Object.assign({
+        new Card().renderReadonlyCopyRaw(Object.assign({
           deck: widget.id,
           cardType,
           activeFace: widget.get('faceTemplates').length > 1 ? 1 : 0
@@ -1181,7 +1163,7 @@ class PropertiesModule extends SidebarModule {
       widgets.delete(widget.id, widget);
       positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
     } else {
-      this.renderWidget(widget, state, button);
+      widget.renderReadonlyCopyRaw(state, button);
     }
 
     if(deckDOM)

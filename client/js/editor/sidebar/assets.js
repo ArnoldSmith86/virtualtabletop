@@ -103,28 +103,19 @@ class AssetsModule extends SidebarModule {
   }
 
   async button_assetDownload(usePropertyFilenames) {
-      loadJSZip();
+    loadJSZip();
 
-      await waitForJSZip();
-      const zip = new JSZip();
-      const assets = getAllAssets();
+    await waitForJSZip();
+    const zip = new JSZip();
+    const assets = getAllAssets();
 
-      for (const assetObj of assets) {
-          const blob = await (await fetch(assetObj.asset.substr(1))).blob();
-          const assetFileName = usePropertyFilenames ? `${assetObj.type} ${assetObj.widget} - ${assetObj.keys.join(' - ')}` : `asset ${assetObj.asset.match(/[^\/]+$/)[0]}`;
-          zip.file(assetFileName + '.' + blob.type.match(/[^\/]+$/)[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin'), blob);
-      }
+    for(const assetObj of assets) {
+      const blob = await (await fetch(assetObj.asset.substr(1))).blob();
+      const assetFileName = usePropertyFilenames ? `${assetObj.type} ${assetObj.widget} - ${assetObj.keys.join(' - ')}` : `asset ${assetObj.asset.match(/[^\/]+$/)[0]}`;
+      zip.file(assetFileName + '.' + blob.type.match(/[^\/]+$/)[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin'), blob);
+    }
 
-      var url = URL.createObjectURL(await zip.generateAsync({ type: "blob" }));
-      var link = document.createElement("a");
-      link.href = url;
-      link.download = 'assets.zip';
-      document.body.appendChild(link); // Required for Firefox
-      link.click();
-      setTimeout(function () {
-          document.body.removeChild(link);
-          window.URL.revokeObjectURL(url);
-      }, 100);
+    triggerDownload(URL.createObjectURL(await zip.generateAsync({type:"blob"})), 'assets.zip');
   }
 
   button_assetUpload() {
@@ -327,8 +318,9 @@ class AssetsModule extends SidebarModule {
       div.classList.remove('queued');
       div.classList.add('processing');
       const asset = await this.externalLinkToAsset(url);
-      for(const id of this.urlMap[url])
-        await this.replaceLinkInWidget(id, url, asset);
+      if(asset.match(/^\/asset/))
+        for(const id of this.urlMap[url])
+          await this.replaceLinkInWidget(id, url, asset);
       $('span', div).innerText = asset;
       div.classList.remove('processing');
       div.classList.add('done');
@@ -351,7 +343,7 @@ class AssetsModule extends SidebarModule {
     this.urlMap = {};
     this.urlDIVs = {};
     for(const widget of widgets.values()) {
-      for(const url of JSON.stringify(widget.state).match(/http[^'") ]+/g) || []) {
+      for(const url of JSON.stringify(widget.state).match(/https?:\/\/[^'") ]+/g) || []) {
         if(!this.urlMap[url])
           this.urlMap[url] = [];
         this.urlMap[url].push(widget.get('id'));

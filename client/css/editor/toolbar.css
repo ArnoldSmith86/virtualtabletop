@@ -18,24 +18,24 @@
   padding: 5px;
 }
 
-#editorToolbar button.active, #editorDragToolbar button.active {
+#editorToolbar > div > button.active, #editorDragToolbar > div > button.active {
   background: var(--VTTblueDark);
 }
 
-#editorToolbar button:disabled, #editorDragToolbar button:disabled {
+#editorToolbar > div > button:disabled, #editorDragToolbar > div > button:disabled {
   background: var(--VTTblue);
   color: white;
 }
 
-#editorToolbar button::before, #editorDragToolbar button::before {
+#editorToolbar > div > button::before, #editorDragToolbar > div > button::before {
   margin: 0;
 }
 
-#editorToolbar button:disabled::before, #editorDragToolbar button:disabled::before {
+#editorToolbar > div > button:disabled::before, #editorDragToolbar > div > button:disabled::before {
   opacity: 0.2;
 }
 
-#editorToolbar button span, #editorDragToolbar button span {
+#editorToolbar button span, #editorDragToolbar button span, .editorToolbarButtonContent {
   display: none;
   position: absolute;
   top: calc(var(--editToolbarHeight) + 1px);
@@ -56,6 +56,21 @@
   margin: 5px;
 }
 
+.editorToolbarContentButton button.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.editorToolbarButtonContent {
+  color: white;
+  margin-left: 1px;
+  margin-top: -2px;
+  border-top-left-radius: 0;
+}
+
+.editorToolbarButtonContent.active {
+  display: block;
+}
 
 
 body.compactEditorToolbar #editorToolbar {
@@ -68,4 +83,12 @@ body.compactEditorToolbar #editorToolbar button {
 
 body.compactEditorToolbar #editorToolbar button::before {
   font-size: 20px;
+}
+
+
+
+
+.saveContent {
+  display: flex;
+  flex-direction: column;
 }

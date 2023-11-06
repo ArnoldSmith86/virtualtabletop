@@ -560,6 +560,20 @@ const compute_ops = [
     hash: 'fef9edc84f4e64e3ea51c35520be35d0'
   },
   {
+    name: 'jsonParse',
+    desc: 'parses a JSON string',
+    sample: 'var a = jsonParse ${x}',
+    call: function(v, x, y, z) { return v = JSON.parse(x) },
+    hash: '3e11e14212173cd56ec8b69f83576631'
+  },
+  {
+    name: 'jsonStringify',
+    desc: 'turns any type of variable into a JSON string',
+    sample: 'var a = jsonStringify ${x}',
+    call: function(v, x, y, z) { return v = JSON.stringify(x) },
+    hash: '35f5463c508a58eeaff4deccc25a33c7'
+  },
+  {
     name: 'getIndex',
     desc: 'returns index y of a string or array x',
     sample: 'var a = ${x.$y}\nvar a = ${x} getIndex ${y}',
@@ -740,6 +754,13 @@ const compute_ops = [
     sample: 'var a = colorCreateHue',
     call: function(v, x) { return v = randomHue(x); },
     hash: '29a04e79e53168e3680ee1483a451f4e'
+  },
+  {
+    name: 'fetch',
+    desc: 'downloads a given URL and returns its content as a string',
+    sample: 'var a = fetch ${x}',
+    call: async function(v, x, y) { return v = await ((typeof y === 'object' && y !== null) ? await fetch(x, y) : await fetch(x)).text() },
+    hash: 'e1aebce1c5225dc5f624f3ccb3ff104d'
   }
 ];
 

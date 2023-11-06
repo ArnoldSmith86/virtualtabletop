@@ -375,13 +375,14 @@ async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, div, on, onMessage, showOverlay,
+      $, $a, div, progressButton, on, onMessage, showOverlay, sleep,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,
       loadJSZip, waitForJSZip,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, _uploadAsset, selectFile,
-      getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
+      uploadAsset, _uploadAsset, selectFile, triggerDownload,
+      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
@@ -392,7 +393,7 @@ async function loadEditMode() {
     const editmode = await import('./edit.js');
     $('body').classList.remove('loadingEditMode');
     Object.assign(window, editmode);
-    initializeEditMode();
+    initializeEditMode(currentMetaData);
   }
 }
 
@@ -428,13 +429,15 @@ async function toggleEditMode() {
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
+  on('#gridOverlay', 'click', e=>e.target.id=='gridOverlay'&&showOverlay());
+
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
 
   on('.toolbarTab', 'click', function(e) {
     if(e.currentTarget.classList.contains('active')) {
       if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
         showStatesOverlay('statesOverlay');
-      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display != 'none')
+      if(e.currentTarget == $('#activeGameButton'))
         showOverlay();
       e.stopImmediatePropagation();
       return;
