@@ -292,18 +292,18 @@ class AssetsModule extends SidebarModule {
     div(compressDiv, 'buttonBar', `
       <button icon=checkmark id=executeCompressionButton>Replace selected images</button>
     `);
-    $('#executeCompressionButton').onclick = e=>this.button_compressAssetsExecute();
+    progressButton($('#executeCompressionButton'), async updateProgess=>await this.button_compressAssetsExecute(updateProgess));
   }
 
-  async button_compressAssetsExecute() {
+  async button_compressAssetsExecute(updateProgress) {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} compressed assets in editor`);
     const assets = getAllAssetsGrouped();
-    for(const checkbox of $a('input[type=checkbox]', this.moduleDOM)) {
-      if(checkbox.checked) {
-        const img = $('img', checkbox.parentNode)
-        await this.replaceAsset(assets[img.dataset.sourceAsset], await _uploadAsset(img.src));
-      }
+    const checkedBoxes = $a('input[type=checkbox]:checked', this.moduleDOM);
+    for(const [ i, checkbox ] of Object.entries(checkedBoxes)) {
+      const img = $('img', checkbox.parentNode)
+      updateProgress(`Uploading ${+i+1}/${checkedBoxes.length}`)
+      await this.replaceAsset(assets[img.dataset.sourceAsset], await _uploadAsset(img.src));
     }
     batchEnd();
   }
