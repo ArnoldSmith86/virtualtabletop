@@ -1502,25 +1502,25 @@ export class Widget extends StateManaged {
         }
       }
 
-      if (a.func === 'RECALL') {
+      if(a.func === 'RECALL') {
         setDefaults(a, { owned: true, inHolder: true, excludeCollection: null });
         let excludeCollection;
-        if (this.isValidID(a.holder, problems)) {
-          for (const holder of asArray(a.holder)) {
+        if(this.isValidID(a.holder, problems)) {
+          for(const holder of asArray(a.holder)) {
             const decks = widgetFilter(w => w.get('type') === 'deck' && w.get('parent') === holder);
-            if (decks.length) {
+            if(decks.length) {
               let cards = [];
-              for (const deck of decks) {
+              for(const deck of decks) {
                 cards.push(...widgetFilter(w => w.get('deck') === deck.get('id')));
               }
       
-              if (!a.owned)
+              if(!a.owned)
                 cards = cards.filter(c => !c.get('owner'));
-              if (!a.inHolder)
+              if(!a.inHolder)
                 cards = cards.filter(c => !c.get('_ancestor'));
       
-              if (a.excludeCollection !== null && (excludeCollection = getCollection(a.excludeCollection))) {
-                if (collections[excludeCollection] && collections[excludeCollection].length > 0) {
+              if(a.excludeCollection !== null && (excludeCollection = getCollection(a.excludeCollection))) {
+                if(collections[excludeCollection] && collections[excludeCollection].length > 0) {
                   const excludeCards = collections[excludeCollection].map(e => widgets.get(e.id));
                   cards = cards.filter(c => !excludeCards.includes(c));
                 } else {
@@ -1528,13 +1528,13 @@ export class Widget extends StateManaged {
                 }
               }
       
-              for (const c of cards)
+              for(const c of cards)
                 await c.moveToHolder(widgets.get(holder));
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
             }
-          }
-          if (jeRoutineLogging) {
+          };
+          if(jeRoutineLogging) {
             jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`);
           }
         }
