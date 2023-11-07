@@ -101,7 +101,8 @@ export class Widget extends StateManaged {
       if (!this.timer) {
         this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
       }
-      if (!document.body.classList.contains('edit'))
+      const addOverlay = document.getElementById('addOverlay');
+      if (!addOverlay || window.getComputedStyle(addOverlay).display === 'none')
         this.set('selectedBy', playerName);
     }
 
@@ -109,7 +110,8 @@ export class Widget extends StateManaged {
       clearTimeout(this.timer);
       this.timer = null;
       this.hideEnlarged();
-      if (!document.body.classList.contains('edit'))
+      const addOverlay = document.getElementById('addOverlay');
+      if (!addOverlay || window.getComputedStyle(addOverlay).display === 'none')
         this.set('selectedBy', null);
     }
 
@@ -2310,12 +2312,14 @@ export class Widget extends StateManaged {
   }
 
   async selected() {
-    if (!document.body.classList.contains('edit'))
+    const addOverlay = document.getElementById('addOverlay');
+    if (!addOverlay || window.getComputedStyle(addOverlay).display === 'none')
       await this.set('selectedBy', playerName);
   }
 
   async selectedEnd() {
-    if (!document.body.classList.contains('edit'))
+    const addOverlay = document.getElementById('addOverlay');
+    if (!addOverlay || window.getComputedStyle(addOverlay).display === 'none')
       await this.set('selectedBy', null);
   }
 
