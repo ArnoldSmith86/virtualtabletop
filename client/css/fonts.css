@@ -1,31 +1,18 @@
 @font-face {
-    font-family: "Roboto Flex";
+    font-family: "Roboto";
     src: url("i/fonts/RobotoFlex.ttf") format("truetype");
     font-style: normal;
     font-stretch: 90%;
 }
 
-i, em, .italic {
-    /* Should be font-style: italic; */
-    font-variation-settings: 'slnt' 4;
-}
-
-.font-robotoFlex {
-    font-family: "Roboto Flex";
-}
-
 @font-face {
-    font-family: "Roboto Flex Condensed";
+    font-family: "Roboto Condensed";
     src: url("i/fonts/RobotoFlex.ttf") format("truetype");
     font-stretch: 40%;
 }
 
-.font-robotoFlex-condensed {
-    font-family: "Roboto Flex Condensed";
-}
-
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
@@ -33,7 +20,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-Bold.ttf") format("truetype");
     font-weight: bold;
     font-style: normal;
@@ -41,7 +28,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-Italic.ttf") format("truetype");
     font-weight: normal;
     font-style: italic;
@@ -49,7 +36,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-BoldItalic.ttf") format("truetype");
     font-weight: bold;
     font-style: italic;
@@ -57,7 +44,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-LightItalic.ttf") format("truetype");
     font-weight: 300;
     font-style: italic;
@@ -65,7 +52,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-Black.ttf") format("truetype");
     font-weight: 900;
     font-style: normal;
@@ -73,7 +60,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-Medium.ttf") format("truetype");
     font-weight: 500;
     font-style: normal;
@@ -81,7 +68,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-Light.ttf") format("truetype");
     font-weight: 300;
     font-style: normal;
@@ -89,7 +76,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-BlackItalic.ttf") format("truetype");
     font-weight: 900;
     font-style: italic;
@@ -97,7 +84,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-Thin.ttf") format("truetype");
     font-weight: 100;
     font-style: normal;
@@ -105,7 +92,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-MediumItalic.ttf") format("truetype");
     font-weight: 500;
     font-style: italic;
@@ -113,7 +100,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto";
+    font-family: "RobotoOld";
     src: url("i/fonts/Roboto-ThinItalic.ttf") format("truetype");
     font-weight: 100;
     font-style: italic;
@@ -125,7 +112,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto Condensed";
+    font-family: "RobotoOld Condensed";
     src: url("i/fonts/RobotoCondensed-LightItalic.ttf") format("truetype");
     font-weight: 300;
     font-style: italic;
@@ -133,7 +120,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto Condensed";
+    font-family: "RobotoOld Condensed";
     src: url("i/fonts/RobotoCondensed-Italic.ttf") format("truetype");
     font-weight: normal;
     font-style: italic;
@@ -141,7 +128,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto Condensed";
+    font-family: "RobotoOld Condensed";
     src: url("i/fonts/RobotoCondensed-Bold.ttf") format("truetype");
     font-weight: bold;
     font-style: normal;
@@ -149,7 +136,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto Condensed";
+    font-family: "RobotoOld Condensed";
     src: url("i/fonts/RobotoCondensed-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
@@ -157,7 +144,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto Condensed";
+    font-family: "RobotoOld Condensed";
     src: url("i/fonts/RobotoCondensed-BoldItalic.ttf") format("truetype");
     font-weight: bold;
     font-style: italic;
@@ -165,7 +152,7 @@ i, em, .italic {
 }
 
 @font-face {
-    font-family: "Roboto Condensed";
+    font-family: "RobotoOld Condensed";
     src: url("i/fonts/RobotoCondensed-Light.ttf") format("truetype");
     font-weight: 300;
     font-style: normal;
@@ -175,6 +162,21 @@ i, em, .italic {
 .condensed_font, .font-condensed, .font-roboto-condensed {
     font-family: "Roboto Condensed";
 }
+
+
+i, em, .italic {
+    /* Should be font-style: italic; */
+    font-variation-settings: 'slnt' 4;
+}
+
+.font-robotoOld {
+    font-family: "RobotoOld";
+}
+
+.font-robotoOld-condensed {
+    font-family: "RobotoOld Condensed";
+}
+
 
 @font-face {
     font-family: "Neuton";
