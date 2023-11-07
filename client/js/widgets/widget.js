@@ -30,6 +30,7 @@ export class Widget extends StateManaged {
     this.targetTransform = '';
     this.childArray = [];
     this.propertiesUsedInProperty = {};
+    this.addOverlay = document.getElementById('addOverlay');
 
     if(StateManaged.inheritFromMapping[id] === undefined)
       StateManaged.inheritFromMapping[id] = [];
@@ -101,8 +102,7 @@ export class Widget extends StateManaged {
       if (!this.timer) {
         this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
       }
-      const addOverlay = document.getElementById('addOverlay');
-      if (!addOverlay || window.getComputedStyle(addOverlay).display === 'none')
+      if (!this.addOverlay || window.getComputedStyle(addOverlay).display === 'none')
         this.set('selectedBy', playerName);
     }
 
@@ -110,8 +110,7 @@ export class Widget extends StateManaged {
       clearTimeout(this.timer);
       this.timer = null;
       this.hideEnlarged();
-      const addOverlay = document.getElementById('addOverlay');
-      if (!addOverlay || window.getComputedStyle(addOverlay).display === 'none')
+      if (!this.addOverlay || window.getComputedStyle(addOverlay).display === 'none')
         this.set('selectedBy', null);
     }
 
@@ -2312,14 +2311,12 @@ export class Widget extends StateManaged {
   }
 
   async selected() {
-    const addOverlay = document.getElementById('addOverlay');
-    if (!addOverlay || window.getComputedStyle(addOverlay).display === 'none')
+    if (!this.addOverlay || window.getComputedStyle(addOverlay).display === 'none')
       await this.set('selectedBy', playerName);
   }
 
   async selectedEnd() {
-    const addOverlay = document.getElementById('addOverlay');
-    if (!addOverlay || window.getComputedStyle(addOverlay).display === 'none')
+    if (!this.addOverlay || window.getComputedStyle(addOverlay).display === 'none')
       await this.set('selectedBy', null);
   }
 
