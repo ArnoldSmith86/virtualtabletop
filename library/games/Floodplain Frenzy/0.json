@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "Game layout and scripting by Andy Pymont, released to the Public Domain under CC0. Tile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nAaron A. Kim:\n- Hand: https://thenounproject.com/icon/hand-123919/\n\nAndy Pymont\n- Ziggurat: originates in this project.\n\nAyub Irawan\n- Scythe: https://thenounproject.com/icon/scythe-4338250/\n\nDelapouite:\n- Amphora: https://game-icons.net/1x1/delapouite/amphora.html/\n\nLorc:\n- Crown: https://game-icons.net/1x1/lorc/queen-crown.html\n\nNorbert Kucsera:\n- Corn: https://thenounproject.com/icon/corn-2144640/\n\nPaul Verhulst:\n- Circle arrow: https://thenounproject.com/icon/circle-arrow-1979672/\n\nSiri Masriatun:\n- Star: https://thenounproject.com/icon/star-5662351/",
-      "lastUpdate": 1681595644894,
+      "lastUpdate": 1699281916000,
       "showName": true,
       "description": "Compete for the land and cities between the rivers while commanding mighty ziggurats",
       "helpText": "Have every player take a seat and then press the Setup button to select the appropriate board for the player count, set up initial city and crop tiles, deal every player a starting hand and randomly select a start player.\n\nWhen you take a seat, your player pieces will be changed to match your player colour set in virtualtabletop. You can stand up, change your colour, and sit down again if you need to update these to e.g. ensure good contrast with other players.\n\nPlayers can use the +1 and +X buttons to add to their score. The +X prompts you for how many points you are scoring and adds them to your existing score.\n\nAfter scoring a crop tile, or if a city is scored and then not collected by a player (because of a tie for a majority of surrounding tiles), you can discard the tile to original draw pile for city & crop tiles on the right hand side of the table, below the Setup button.\n\nStore your collected city tiles and ziggurat tiles in the appropriate holders in your player area. After adding a city, click the Score Cities button to score every player's city tiles. (This will also take into account ziggurat 7 for a player that owns it and has placed it in their ziggurat holder.)\n\nAt the end of your turn, press the End Turn button to re-draw to your hand size and set the next player as active.",
@@ -90,8 +90,14 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "background-color": "transparent",
-      "border": "transparent"
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%)"
+      },
+      ".droptarget": {
+        "background": "#00000050"
+      }
     }
   },
   "board-4-space-a4": {
