@@ -2525,6 +2525,14 @@ export class Widget extends StateManaged {
     return true;
   }
 
+  async touchstart() {
+    await selected();
+  }
+
+  async touchend() {
+    await selectedEnd();
+  }
+
   updateOwner() {
     this.domElement.className = this.classes();
   }
