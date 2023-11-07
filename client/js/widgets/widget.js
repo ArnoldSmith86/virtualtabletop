@@ -101,12 +101,16 @@ export class Widget extends StateManaged {
       if (!this.timer) {
         this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
       }
+      if (!document.body.classList.contains('edit'))
+        this.set('selectedBy', playerName);
     }
 
     this.touchend = function() {
       clearTimeout(this.timer);
       this.timer = null;
       this.hideEnlarged();
+      if (!document.body.classList.contains('edit'))
+        this.set('selectedBy', null);
     }
 
     this.onlongtouch = function() {
