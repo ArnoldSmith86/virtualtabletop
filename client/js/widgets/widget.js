@@ -104,6 +104,7 @@ export class Widget extends StateManaged {
       }
       if (!this.addOverlay || window.getComputedStyle(addOverlay).display === 'none')
         this.set('selectedBy', playerName);
+        this.domElement.classList.add('selected');
     }
 
     this.touchend = function() {
@@ -112,6 +113,7 @@ export class Widget extends StateManaged {
       this.hideEnlarged();
       if (!this.addOverlay || window.getComputedStyle(addOverlay).display === 'none')
         this.set('selectedBy', null);
+        this.domElement.classList.remove('selected');
     }
 
     this.onlongtouch = function() {
@@ -2312,12 +2314,14 @@ export class Widget extends StateManaged {
 
   async selected() {
     if (!this.addOverlay || window.getComputedStyle(addOverlay).display === 'none')
-      await this.set('selectedBy', playerName);
+      this.set('selectedBy', playerName);
+      this.domElement.classList.add('selected');
   }
 
   async selectedEnd() {
     if (!this.addOverlay || window.getComputedStyle(addOverlay).display === 'none')
-      await this.set('selectedBy', null);
+      this.set('selectedBy', null);
+      this.domElement.classList.remove('selected');
   }
 
   setHighlighted(isHighlighted) {
