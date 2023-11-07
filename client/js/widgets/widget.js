@@ -72,6 +72,7 @@ export class Widget extends StateManaged {
       hoverTarget: null,
       hoverParent: null,
       hidePlayerCursors: false,
+      selectedBy: null,
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
@@ -93,6 +94,8 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
+    this.domElement.addEventListener('mousedown', e => this.selected(), false);
+    this.domElement.addEventListener('mouseup', e => this.notSelected(), false);
 
     this.touchstart = function() {
       if (!this.timer) {
@@ -115,6 +118,14 @@ export class Widget extends StateManaged {
 
     this.animateTimeouts = {};
     this.animateClasses = new Set;
+  }
+
+  selected() {
+    this.set('selectedBy', playerName);
+  }
+
+  notSelected() {
+    this.set('selectedBy', null);
   }
 
   absoluteCoord(coord) {
