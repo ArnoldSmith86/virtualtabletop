@@ -1,4 +1,30 @@
 @font-face {
+    font-family: "Roboto Flex";
+    src: url("i/fonts/RobotoFlex.ttf") format("truetype");
+    font-style: normal;
+    font-stretch: 90%;
+}
+
+i, em, .italic {
+    /* Should be font-style: italic; */
+    font-variation-settings: 'slnt' 4;
+}
+
+.font-robotoFlex {
+    font-family: "Roboto Flex";
+}
+
+@font-face {
+    font-family: "Roboto Flex Condensed";
+    src: url("i/fonts/RobotoFlex.ttf") format("truetype");
+    font-stretch: 40%;
+}
+
+.font-robotoFlex-condensed {
+    font-family: "Roboto Flex Condensed";
+}
+
+@font-face {
     font-family: "Roboto";
     src: url("i/fonts/Roboto-Regular.ttf") format("truetype");
     font-weight: normal;
