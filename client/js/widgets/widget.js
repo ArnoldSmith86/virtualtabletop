@@ -95,7 +95,7 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
     this.domElement.addEventListener('mousedown', e => this.selected(), false);
-    this.domElement.addEventListener('mouseup', e => this.notSelected(), false);
+    this.domElement.addEventListener('mouseup', e => this.selectedEnd(), false);
 
     this.touchstart = function() {
       if (!this.timer) {
@@ -118,14 +118,6 @@ export class Widget extends StateManaged {
 
     this.animateTimeouts = {};
     this.animateClasses = new Set;
-  }
-
-  selected() {
-    this.set('selectedBy', playerName);
-  }
-
-  notSelected() {
-    this.set('selectedBy', null);
   }
 
   absoluteCoord(coord) {
@@ -2311,6 +2303,16 @@ export class Widget extends StateManaged {
       await this.set('rotation', (this.get('rotation') + degrees) % 360);
     else
       await this.set('rotation', degrees);
+  }
+
+  async selected() {
+    if (!document.body.classList.contains('edit'))
+      await this.set('selectedBy', playerName);
+  }
+
+  async selectedEnd() {
+    if (!document.body.classList.contains('edit'))
+      await this.set('selectedBy', null);
   }
 
   setHighlighted(isHighlighted) {
