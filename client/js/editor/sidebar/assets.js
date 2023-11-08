@@ -172,7 +172,7 @@ class AssetsModule extends SidebarModule {
     });
   }
 
-  async button_compressAssets(updateProgess) {
+  async button_compressAssets(updateProgress) {
     for(const oldContainer of $a('.compressAssetsContainer'))
       oldContainer.remove();
 
@@ -186,7 +186,7 @@ class AssetsModule extends SidebarModule {
 
     const assets = Object.values(getAllAssetsGrouped());
     for(const [ i, asset ] of Object.entries(assets)) {
-      updateProgess(`Compressing ${+i+1}/${assets.length}`, (+i+1)/assets.length);
+      updateProgress(`Compressing ${+i+1}/${assets.length}`, (+i+1)/assets.length);
       const row = table.insertRow();
 
       const processImage = (checkbox) => {
@@ -286,7 +286,7 @@ class AssetsModule extends SidebarModule {
     div(compressDiv, 'buttonBar', `
       <button icon=checkmark id=executeCompressionButton>Replace selected images</button>
     `);
-    progressButton($('#executeCompressionButton'), async updateProgess=>await this.button_compressAssetsExecute(updateProgess), false);
+    progressButton($('#executeCompressionButton'), async updateProgress=>await this.button_compressAssetsExecute(updateProgress), false);
   }
 
   async button_compressAssetsExecute(updateProgress) {
@@ -369,7 +369,7 @@ class AssetsModule extends SidebarModule {
     $('#downloadAllAssetsButton').onclick = e=>this.button_assetDownload(false);
     $('#downloadAllAssetsByPropertyButton').onclick = e=>this.button_assetDownload(true);
     $('#uploadAllAssetsButton').onclick = e=>this.button_assetUpload();
-    progressButton($('#compressAssetsButton'), async updateProgess=>await this.button_compressAssets(updateProgess));
+    progressButton($('#compressAssetsButton'), async updateProgress=>await this.button_compressAssets(updateProgress));
   }
 
   async replaceAsset(asset, newAsset) {
