@@ -274,6 +274,8 @@ class AssetsModule extends SidebarModule {
           processImage(checkbox);
         }
       }
+      while(row.childElementCount < 3)
+        row.insertCell();
     }
 
     const compressDiv = div(this.moduleDOM, 'compressAssetsContainer', `
