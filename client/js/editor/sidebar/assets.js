@@ -215,15 +215,15 @@ class AssetsModule extends SidebarModule {
       const createOriginalCell = (isSVG, asset, blob) => {
         const cell = row.insertCell();
         const img = new Image();
-        const sizeLabel = document.createElement('span');
+        const sizeLabel = document.createElement('label');
 
         sizeLabel.textContent = `${asset.asset} (${blob.type})`;
         img.onload = function() {
           const sizeInKB = (blob.size / 1024).toFixed(2);
           if (isSVG) {
-            sizeLabel.textContent = `SVG: ${sizeInKB} KB`;
+            sizeLabel.textContent = `SVG\n\n${sizeInKB} KB`;
           } else {
-            sizeLabel.textContent = `${blob.type.replace(/image\//, '').toUpperCase()} (${img.naturalWidth}x${img.naturalHeight}): ${sizeInKB} KB`;
+            sizeLabel.textContent = `${blob.type.replace(/image\//, '').toUpperCase()}\n${img.naturalWidth}x${img.naturalHeight}\n${sizeInKB} KB`;
           }
         };
         img.src = URL.createObjectURL(blob);
@@ -245,7 +245,8 @@ class AssetsModule extends SidebarModule {
           const cell = row.insertCell();
           const checkbox = document.createElement('input');
           checkbox.type = 'checkbox';
-          const sizeLabel = document.createElement('span');
+          const sizeLabel = document.createElement('label');
+          checkbox.id = sizeLabel.htmlFor = generateUniqueWidgetID();
 
           const img = await loadImage(new Image(), URL.createObjectURL(imageBlob));
           const [targetWidth, targetHeight] = getAssetTargetSize(asset, img.naturalWidth, img.naturalHeight);
@@ -261,13 +262,13 @@ class AssetsModule extends SidebarModule {
           const sizeInKB = (compressedBlob.size / 1024).toFixed(2);
 
           const formatString = format === 'original' ? 'Original' : format.toUpperCase();
-          sizeLabel.textContent = `${formatString} (${targetWidth}x${targetHeight}): ${sizeInKB} KB`;
+          sizeLabel.textContent = `${formatString}\n${targetWidth}x${targetHeight}\n${sizeInKB} KB`;
 
           img.src = compressedDataUrl;
           img.dataset.sourceAsset = asset.asset;
 
-          cell.appendChild(checkbox);
           cell.appendChild(img);
+          cell.appendChild(checkbox);
           cell.appendChild(sizeLabel);
 
           processImage(checkbox);
