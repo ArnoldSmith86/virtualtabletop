@@ -881,6 +881,9 @@ button[icon].green {
 button[icon].green:hover {
   background-color: #004f00;
 }
+button[icon].green:disabled:hover {
+  background-color: darkgreen;
+}
 
 .prettyButton {
   border: 5px;

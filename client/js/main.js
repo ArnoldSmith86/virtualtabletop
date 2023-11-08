@@ -375,7 +375,7 @@ async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, div, progressButton, on, onMessage, showOverlay, sleep,
+      $, $a, div, progressButton, loadImage, on, onMessage, showOverlay, sleep,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,

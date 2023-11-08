@@ -172,7 +172,10 @@ class AssetsModule extends SidebarModule {
     });
   }
 
-  button_compressAssets() {
+  async button_compressAssets(updateProgess) {
+    for(const oldContainer of $a('.compressAssetsContainer'))
+      oldContainer.remove();
+
     const table = document.createElement('table');
     const headerRow = table.insertRow();
     ['Original', /*'JPG',*/ 'WebP', 'PNG'].forEach(col => {
@@ -181,7 +184,9 @@ class AssetsModule extends SidebarModule {
       headerRow.appendChild(th);
     });
 
-    Object.values(getAllAssetsGrouped()).forEach(asset => {
+    const assets = Object.values(getAllAssetsGrouped());
+    for(const [ i, asset ] of Object.entries(assets)) {
+      updateProgess(`Compressing ${+i+1}/${assets.length}`, (+i+1)/assets.length);
       const row = table.insertRow();
 
       const processImage = (checkbox) => {
@@ -227,59 +232,48 @@ class AssetsModule extends SidebarModule {
         cell.appendChild(sizeLabel);
       };
 
-      fetch(asset.asset.substr(1))
-        .then(res => res.blob())
-        .then(blob => {
-          if (blob.type === "image/svg+xml" || !blob.type.match(/^image/)) {
-            createOriginalCell(true, asset, blob);
-          } else {
-            createOriginalCell(false, asset, blob);
-            const targets = [/*'jpeg',*/ 'webp' ];
-            if(blob.type != 'image/jpeg')
-              targets.push('png');
+      const imageBlob = await (await fetch(asset.asset.substr(1))).blob();
+      if (imageBlob.type === "image/svg+xml" || !imageBlob.type.match(/^image/)) {
+        createOriginalCell(true, asset, imageBlob);
+      } else {
+        createOriginalCell(false, asset, imageBlob);
+        const targets = [/*'jpeg',*/ 'webp' ];
+        if(imageBlob.type != 'image/jpeg')
+          targets.push('png');
 
-            targets.forEach((format, idx) => {
-              const cell = row.insertCell();
-              const checkbox = document.createElement('input');
-              checkbox.type = 'checkbox';
-              const img = new Image();
-              const sizeLabel = document.createElement('span');
+        for(const format of targets) {
+          const cell = row.insertCell();
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          const sizeLabel = document.createElement('span');
 
-              img.onload = async function() {
-                img.onload = null;
-                const [targetWidth, targetHeight] = getAssetTargetSize(asset, img.naturalWidth, img.naturalHeight);
-                const canvas = document.createElement('canvas');
-                canvas.width = targetWidth;
-                canvas.height = targetHeight;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+          const img = await loadImage(new Image(), URL.createObjectURL(imageBlob));
+          const [targetWidth, targetHeight] = getAssetTargetSize(asset, img.naturalWidth, img.naturalHeight);
+          const canvas = document.createElement('canvas');
+          canvas.width = targetWidth;
+          canvas.height = targetHeight;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
-                const compressedDataUrl = canvas.toDataURL(`image/${format}`, 0.7);
-                const res = await fetch(compressedDataUrl);
-                const blob = await res.blob();
-                const sizeInKB = (blob.size / 1024).toFixed(2);
+          const compressedDataUrl = canvas.toDataURL(`image/${format}`, 0.7);
+          const res = await fetch(compressedDataUrl);
+          const compressedBlob = await res.blob();
+          const sizeInKB = (compressedBlob.size / 1024).toFixed(2);
 
-                const formatString = format === 'original' ? 'Original' : format.toUpperCase();
-                sizeLabel.textContent = `${formatString} (${targetWidth}x${targetHeight}): ${sizeInKB} KB`;
+          const formatString = format === 'original' ? 'Original' : format.toUpperCase();
+          sizeLabel.textContent = `${formatString} (${targetWidth}x${targetHeight}): ${sizeInKB} KB`;
 
-                processImage(checkbox);
+          processImage(checkbox);
 
-                img.src = compressedDataUrl;
-                img.dataset.sourceAsset = asset.asset;
-              };
-              img.onerror = _=>img.remove();
-              img.src = URL.createObjectURL(blob);
+          img.src = compressedDataUrl;
+          img.dataset.sourceAsset = asset.asset;
 
-              cell.appendChild(checkbox);
-              cell.appendChild(img);
-              cell.appendChild(sizeLabel);
-            });
-          }
-        });
-    });
-
-    for(const oldContainer of $a('.compressAssetsContainer'))
-      oldContainer.remove();
+          cell.appendChild(checkbox);
+          cell.appendChild(img);
+          cell.appendChild(sizeLabel);
+        }
+      }
+    }
 
     const compressDiv = div(this.moduleDOM, 'compressAssetsContainer', `
       <h2>Compress Assets</h2>
@@ -292,7 +286,7 @@ class AssetsModule extends SidebarModule {
     div(compressDiv, 'buttonBar', `
       <button icon=checkmark id=executeCompressionButton>Replace selected images</button>
     `);
-    progressButton($('#executeCompressionButton'), async updateProgess=>await this.button_compressAssetsExecute(updateProgess));
+    progressButton($('#executeCompressionButton'), async updateProgess=>await this.button_compressAssetsExecute(updateProgess), false);
   }
 
   async button_compressAssetsExecute(updateProgress) {
@@ -302,7 +296,7 @@ class AssetsModule extends SidebarModule {
     const checkedBoxes = $a('input[type=checkbox]:checked', this.moduleDOM);
     for(const [ i, checkbox ] of Object.entries(checkedBoxes)) {
       const img = $('img', checkbox.parentNode)
-      updateProgress(`Uploading ${+i+1}/${checkedBoxes.length}`)
+      updateProgress(`Uploading ${+i+1}/${checkedBoxes.length}`, (+i+1)/checkedBoxes.length)
       await this.replaceAsset(assets[img.dataset.sourceAsset], await _uploadAsset(img.src));
     }
     batchEnd();
@@ -375,7 +369,7 @@ class AssetsModule extends SidebarModule {
     $('#downloadAllAssetsButton').onclick = e=>this.button_assetDownload(false);
     $('#downloadAllAssetsByPropertyButton').onclick = e=>this.button_assetDownload(true);
     $('#uploadAllAssetsButton').onclick = e=>this.button_assetUpload();
-    $('#compressAssetsButton').onclick = e => this.button_compressAssets();
+    progressButton($('#compressAssetsButton'), async updateProgess=>await this.button_compressAssets(updateProgess));
   }
 
   async replaceAsset(asset, newAsset) {
