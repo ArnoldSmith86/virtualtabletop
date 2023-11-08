@@ -263,14 +263,14 @@ class AssetsModule extends SidebarModule {
           const formatString = format === 'original' ? 'Original' : format.toUpperCase();
           sizeLabel.textContent = `${formatString} (${targetWidth}x${targetHeight}): ${sizeInKB} KB`;
 
-          processImage(checkbox);
-
           img.src = compressedDataUrl;
           img.dataset.sourceAsset = asset.asset;
 
           cell.appendChild(checkbox);
           cell.appendChild(img);
           cell.appendChild(sizeLabel);
+
+          processImage(checkbox);
         }
       }
     }
