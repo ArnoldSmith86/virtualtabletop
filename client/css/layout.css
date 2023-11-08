@@ -911,6 +911,15 @@ button[icon].green:disabled:hover {
   line-height: 18px;
 }
 
+button.visualProgress {
+  --stripesColor1: #006400;
+  --stripesColor2: #006400;
+  position: relative;
+  background-image: linear-gradient(135deg, #006400 0%, #006400 100%);
+  background-size: calc(var(--progress) * 100%) 100%;
+  background-repeat: no-repeat;
+}
+
 .richtext-controls {
   position: sticky;
   top: 10px;
@@ -1063,7 +1072,7 @@ button.add::before {
 
 button:disabled,
 button:disabled:hover {
-  background: #808080;
+  background-color: #808080;
   color: #d3d3d3;
   cursor: not-allowed;
 }
