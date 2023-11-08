@@ -281,6 +281,8 @@ class AssetsModule extends SidebarModule {
       <p>Beside compression, asset dimensions will also be reduced <b>based on their widget sizes</b> (and enlarge value).</p>
       <p>This does not take everything into consideration so check the results.</p>
       <p>For compressing <b>SVGs</b>, we recommend using <a href="https://vecta.io/nano">vecta.io</a>. For most SVGs, you can even set the precision to 1 which makes the compression a bit lossy. Just use the asset download and upload buttons above.</p>
+      <p>For compressing <b>PNGs</b>, you can usually get better results by using <a href="https://tinypng.com/">tinypng.com</a>.</p>
+      <p>Another good tool for compression is <a href="https://squoosh.app/">squoosh.app</a>.</p>
     `)
     compressDiv.appendChild(table);
 
