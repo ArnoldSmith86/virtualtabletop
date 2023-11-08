@@ -4403,10 +4403,10 @@
               "monument-pyramids",
               "monument-sphinx",
               "monument-temple",
-              "monument-pryamid",
+              "monument-pyramid",
               "monument-djedpillar",
               "monument-obelisk",
-              "monument-canopicjar",
+              "monument-canopicjars",
               "monument-stargate"
             ],
             "loopRoutine": [
