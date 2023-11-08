@@ -191,8 +191,8 @@ class AssetsModule extends SidebarModule {
 
       const processImage = (checkbox) => {
         // Extract sizes from the DOM
-        const sizesFromDOM = Array.from(row.querySelectorAll('span')) // adjust the selector accordingly
-                                  .map(label => parseFloat(label.textContent.split(' ')[2]));
+        const sizesFromDOM = Array.from(row.querySelectorAll('label')) // adjust the selector accordingly
+                                  .map(label => parseFloat(label.textContent.split('\n')[2]));
 
         // Get the original size
         const originalSize = sizesFromDOM[0];
