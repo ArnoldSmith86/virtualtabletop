@@ -3945,6 +3945,50 @@
         ],
         "value": 10
       },
+      "var horusTrackLength = ${playerCount} + 5",
+      {
+        "func": "IF",
+        "operand1": "${playerCount}",
+        "operand2": 2,
+        "thenRoutine": [
+          "var horusTrackLength = 6"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "horus-track"
+        ],
+        "property": "dropLimit",
+        "value": "${horusTrackLength}"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          7,
+          10
+        ],
+        "loopRoutine": [
+          "var y = 1",
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "relation": ">",
+            "operand2": "${horusTrackLength}",
+            "thenRoutine": [
+              "var y = -100"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "horus-track-image-${value}"
+            ],
+            "property": "y",
+            "value": "${y}"
+          }
+        ]
+      },
       {
         "func": "RECALL",
         "holder": "holder-tiles-draw"
