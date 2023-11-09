@@ -1,7 +1,7 @@
 .holder {
   background: white;
   box-sizing: border-box;
-  border-width: calc(1px / var(--scale));
+  border-width: 1px;
   border-style: solid;
   border-color: #d8d8d8 #ccc #ccc #d8d8d8;
 }
