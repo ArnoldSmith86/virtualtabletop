@@ -9,8 +9,8 @@
       "year": "1931",
       "mode": "vs",
       "time": "30",
-      "attribution": "Room layout and design by LawDawg and released to the public domain by CC0.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"world war 2 battleship on fire, oil on canvas \"<br></div><div><br></div>",
-      "lastUpdate": 1699509791934,
+      "attribution": "Room layout and design by LawDawg and released to the public domain by CC0.<div><br></div><div>Background water image by Michelle_Raponi is available under the Pixabay license at&nbsp;https://pixabay.com/photos/water-sea-caribbean-background-1330252/.<br><div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"world war 2 battleship on fire, oil on canvas \"<br></div><div><br></div></div>",
+      "lastUpdate": 1699562384403,
       "showName": true,
       "skill": "",
       "description": "Find and sink your opponent's ships before they sink yours.",
@@ -20,10 +20,10 @@
       "similarAwards": "",
       "ruleText": "Sit in a seat. Place your ships onto the area of the colored grid that corresponds to your seat color and map border color.&nbsp; Click on the ship to rotate it. Place the meeple on one of the tan land spaces in the same section.<div><br></div><div>One player begins by naming a grid space (for example H6) that corresponds to the other player's color. The other player verifies whether the shot was a hit or miss.&nbsp; Both players mark hits with red pegs. If you miss, you should mark it on your grid with a white peg so you do not target that grid space again. Players take turns calling out shots.</div><div><br></div><div>Once all the spaces (they range from 2-5) of a ship have been hit, the player must tell the opponent which ship was sunk.&nbsp; Once all ships have been sunk, target the tan land spaces until you hit the one with the opponent's meeple. That player wins.</div><div><br></div><div>Variation<span style=\"color: var(--overlayFontColor);\">:</span></div><div><span style=\"color: var(--overlayFontColor);\">&nbsp;- Call out shots in groups of 5. After the group is completed, the opponent tells you which hits were made.</span></div><div><span style=\"color: var(--overlayFontColor);\">&nbsp;- For each ship that is sunk in your own fleet, you get one less shot during your turn. So, for example, if three ships are lost, you only fire two shots per round.</span></div>",
       "helpText": "",
-      "players": "2",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "",
+      "players": "2"
     }
   },
   "hex-a1": {
@@ -54,7 +54,12 @@
     "fixedParent": true,
     "num": 1,
     "bColor": "#284df5",
-    "scale": 0.98
+    "scale": 0.98,
+    "dropTarget": {
+      "peg": true
+    },
+    "dropOffsetX": 12,
+    "dropOffsetY": 10
   },
   "hex-a2": {
     "inheritFrom": {
@@ -99,36 +104,43 @@
   },
   "hex-a6": {
     "inheritFrom": {
-      "hex-a1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-a6",
     "x": 1,
     "y": 502,
     "num": 6,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-a7": {
     "inheritFrom": {
-      "hex-a1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-a7",
     "x": 1,
     "y": 558,
-    "num": 7,
-    "bColor": "#7aa385"
+    "num": 7
   },
   "hex-a8": {
     "inheritFrom": {
-      "hex-a1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-a8",
     "x": 1,
     "y": 613,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-b1": {
     "type": "holder",
@@ -141,88 +153,123 @@
   },
   "hex-b2": {
     "inheritFrom": {
-      "hex-b1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-b2",
     "x": 49,
     "y": 254,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-b3": {
     "inheritFrom": {
-      "hex-b1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-b3",
     "x": 49,
     "y": 310,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-b4": {
     "inheritFrom": {
-      "hex-b1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-b4",
     "x": 49,
     "y": 365,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-b5": {
     "inheritFrom": {
-      "hex-b1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-b5",
     "x": 49,
     "y": 421,
     "num": 5,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-b6": {
     "inheritFrom": {
-      "hex-b1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-b6",
     "x": 49,
     "y": 476,
     "num": 6,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-b7": {
     "inheritFrom": {
-      "hex-b1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-b7",
     "x": 49,
     "y": 532,
     "num": 7,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-b8": {
     "inheritFrom": {
-      "hex-b1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-b8",
     "x": 49,
     "y": 587,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-b9": {
     "inheritFrom": {
-      "hex-b1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-b9",
     "x": 49,
     "y": 643,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-c1": {
     "type": "holder",
@@ -230,104 +277,152 @@
     "x": 97,
     "y": 173,
     "inheritFrom": {
-      "hex-b1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-c2": {
     "inheritFrom": {
-      "hex-c1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-c2",
     "x": 97,
     "y": 228,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-c3": {
     "inheritFrom": {
-      "hex-c1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-c3",
     "x": 97,
     "y": 284,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-c4": {
     "inheritFrom": {
-      "hex-c1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-c4",
     "x": 97,
     "y": 339,
     "num": 4,
-    "bColor": "#cc9051"
+    "bColor": "#cc9051",
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "dropTarget": {
+      "meeple": true
+    }
   },
   "hex-c5": {
     "inheritFrom": {
-      "hex-c1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-c5",
     "x": 97,
     "y": 395,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-c6": {
     "inheritFrom": {
-      "hex-c1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-c6",
     "x": 97,
     "y": 450,
     "num": 6,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-c7": {
     "inheritFrom": {
-      "hex-c1": "*"
+      "hex-c4": "*"
     },
     "type": "holder",
     "id": "hex-c7",
     "x": 97,
     "y": 506,
     "num": 7,
-    "bColor": "#cc9051"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-c8": {
     "inheritFrom": {
-      "hex-c1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-c8",
     "x": 97,
     "y": 561,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-c9": {
     "inheritFrom": {
-      "hex-c1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-c9",
     "x": 97,
     "y": 617,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-c10": {
     "inheritFrom": {
-      "hex-c1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-c10",
     "x": 97,
     "y": 672,
     "num": 10,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d1": {
     "type": "holder",
@@ -335,113 +430,163 @@
     "x": 145,
     "y": 147,
     "inheritFrom": {
-      "hex-c1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d2": {
     "inheritFrom": {
-      "hex-d1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-d2",
     "x": 145,
     "y": 202,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d3": {
     "inheritFrom": {
-      "hex-d1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-d3",
     "x": 145,
     "y": 258,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d4": {
     "inheritFrom": {
-      "hex-d1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-d4",
     "x": 145,
     "y": 313,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d5": {
     "inheritFrom": {
-      "hex-d1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-d5",
     "x": 145,
     "y": 369,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d6": {
     "inheritFrom": {
-      "hex-d1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-d6",
     "x": 145,
     "y": 424,
-    "num": 6
+    "num": 6,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d7": {
     "inheritFrom": {
-      "hex-d1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-d7",
     "x": 145,
     "y": 480,
     "num": 7,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d8": {
     "inheritFrom": {
-      "hex-d1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-d8",
     "x": 145,
     "y": 535,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d9": {
     "inheritFrom": {
-      "hex-d1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-d9",
     "x": 145,
     "y": 591,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d10": {
     "inheritFrom": {
-      "hex-d1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-d10",
     "x": 145,
     "y": 646,
     "num": 10,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-d11": {
     "inheritFrom": {
-      "hex-d1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-d11",
     "x": 145,
     "y": 702,
     "num": 11,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e1": {
     "type": "holder",
@@ -449,124 +594,178 @@
     "x": 193,
     "y": 121,
     "inheritFrom": {
-      "hex-d1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e2": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-e2",
     "x": 193,
     "y": 176,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e3": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-e3",
     "x": 193,
     "y": 232,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e4": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-e4",
     "x": 193,
     "y": 287,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e5": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-e5",
     "x": 193,
     "y": 343,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e6": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-e6",
     "x": 193,
     "y": 398,
-    "num": 6
+    "num": 6,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e7": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-e7",
     "x": 193,
     "y": 454,
     "num": 7,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e8": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-e8",
     "x": 193,
     "y": 509,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e9": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-e9",
     "x": 193,
     "y": 565,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e10": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-e10",
     "x": 193,
     "y": 620,
     "num": 10,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e11": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-e11",
     "x": 193,
     "y": 676,
     "num": 11,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-e12": {
     "inheritFrom": {
-      "hex-e1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-e12",
     "x": 193,
     "y": 731,
     "num": 12,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f1": {
     "type": "holder",
@@ -574,8 +773,13 @@
     "x": 241,
     "y": 95,
     "inheritFrom": {
-      "hex-e1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g1": {
     "type": "holder",
@@ -583,8 +787,13 @@
     "x": 289,
     "y": 69,
     "inheritFrom": {
-      "hex-f1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h1": {
     "type": "holder",
@@ -592,411 +801,578 @@
     "x": 337,
     "y": 43,
     "inheritFrom": {
-      "hex-g1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f2": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-f2",
     "x": 241,
     "y": 150,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f3": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-f3",
     "x": 241,
     "y": 206,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f4": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-f4",
     "x": 241,
     "y": 261,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f5": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-f5",
     "x": 241,
     "y": 317,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f6": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-f6",
     "x": 241,
     "y": 372,
-    "num": 6
+    "num": 6,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f7": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-f7",
     "x": 241,
     "y": 428,
     "num": 7,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f8": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-f8",
     "x": 241,
     "y": 483,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f9": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-f9",
     "x": 241,
     "y": 539,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f10": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-c4": "*"
     },
     "type": "holder",
     "id": "hex-f10",
     "x": 241,
     "y": 594,
     "num": 10,
-    "bColor": "#cc9051"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f11": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-f11",
     "x": 241,
     "y": 650,
     "num": 11,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f12": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-f12",
     "x": 241,
     "y": 705,
     "num": 12,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-f13": {
     "inheritFrom": {
-      "hex-f1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-f13",
     "x": 241,
     "y": 761,
     "num": 13,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g2": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-c4": "*"
     },
     "type": "holder",
     "id": "hex-g2",
     "x": 289,
     "y": 124,
     "num": 2,
-    "bColor": "#cc9051"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g3": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-g3",
     "x": 289,
     "y": 180,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g4": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-g4",
     "x": 289,
     "y": 235,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g5": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-g5",
     "x": 289,
     "y": 291,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g6": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-c4": "*"
     },
     "type": "holder",
     "id": "hex-g6",
     "x": 289,
     "y": 346,
     "num": 6,
-    "bColor": "#cc9051"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g7": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-g7",
     "x": 289,
     "y": 402,
-    "num": 7
+    "num": 7,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g8": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-g8",
     "x": 289,
     "y": 457,
-    "num": 8,
-    "bColor": "#7aa385"
+    "num": 8
   },
   "hex-g9": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-g9",
     "x": 289,
     "y": 513,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g10": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-g10",
     "x": 289,
     "y": 568,
     "num": 10,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g11": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-g11",
     "x": 289,
     "y": 624,
     "num": 11,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g12": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-g12",
     "x": 289,
     "y": 679,
     "num": 12,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g13": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-g13",
     "x": 289,
     "y": 735,
     "num": 13,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-g14": {
     "inheritFrom": {
-      "hex-g1": "*"
+      "hex-c4": "*"
     },
     "type": "holder",
     "id": "hex-g14",
     "x": 289,
     "y": 790,
     "num": 14,
-    "bColor": "#cc9051"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h2": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-h2",
     "x": 337,
     "y": 98,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h3": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-h3",
     "x": 337,
     "y": 154,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h4": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-h4",
     "x": 337,
     "y": 209,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h5": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-h5",
     "x": 337,
     "y": 265,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h6": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-h6",
     "x": 337,
     "y": 320,
-    "num": 6
+    "num": 6,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h7": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-h7",
     "x": 337,
     "y": 376,
-    "num": 7
+    "num": 7,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h8": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-h8",
     "x": 337,
     "y": 431,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h9": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-h9",
     "x": 337,
     "y": 487,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h10": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-h10",
     "x": 337,
     "y": 542,
     "num": 10,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h11": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-h11",
     "x": 337,
     "y": 598,
     "num": 11,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h12": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-h12",
     "x": 337,
     "y": 653,
     "num": 12,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h13": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-h13",
     "x": 337,
     "y": 709,
     "num": 13,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-h14": {
     "inheritFrom": {
-      "hex-h1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-h14",
     "x": 337,
     "y": 764,
     "num": 14,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i1": {
     "type": "holder",
@@ -1004,8 +1380,13 @@
     "x": 385,
     "y": 69,
     "inheritFrom": {
-      "hex-h1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j1": {
     "type": "holder",
@@ -1013,8 +1394,13 @@
     "x": 433,
     "y": 95,
     "inheritFrom": {
-      "hex-i1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k1": {
     "type": "holder",
@@ -1022,8 +1408,13 @@
     "x": 481,
     "y": 121,
     "inheritFrom": {
-      "hex-j1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l1": {
     "type": "holder",
@@ -1031,8 +1422,13 @@
     "x": 529,
     "y": 147,
     "inheritFrom": {
-      "hex-k1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-m1": {
     "type": "holder",
@@ -1040,590 +1436,833 @@
     "x": 577,
     "y": 173,
     "inheritFrom": {
-      "hex-l1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i2": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-i2",
     "x": 385,
     "y": 124,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i3": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-i3",
     "x": 385,
     "y": 180,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i4": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-i4",
     "x": 385,
     "y": 235,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i5": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-i5",
     "x": 385,
     "y": 291,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i6": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-i6",
     "x": 385,
     "y": 346,
-    "num": 6
+    "num": 6,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i7": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-i7",
     "x": 385,
     "y": 402,
-    "num": 7
+    "num": 7,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i8": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-i8",
     "x": 385,
     "y": 457,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i9": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-i9",
     "x": 385,
     "y": 513,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i10": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-i10",
     "x": 385,
     "y": 568,
     "num": 10,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i11": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-i11",
     "x": 385,
     "y": 624,
     "num": 11,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i12": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-i12",
     "x": 385,
     "y": 679,
     "num": 12,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i13": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-i13",
     "x": 385,
     "y": 735,
     "num": 13,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-i14": {
     "inheritFrom": {
-      "hex-i1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-i14",
     "x": 385,
     "y": 790,
-    "num": 14,
-    "bColor": "#7aa385"
+    "num": 14
   },
   "hex-j2": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-j2",
     "x": 433,
     "y": 150,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j3": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-j3",
     "x": 433,
     "y": 206,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j4": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-j4",
     "x": 433,
     "y": 261,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j5": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-j5",
     "x": 433,
     "y": 317,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j6": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-j6",
     "x": 433,
     "y": 372,
-    "num": 6
+    "num": 6,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j7": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-j7",
     "x": 433,
     "y": 428,
     "num": 7,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j8": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-c4": "*"
     },
     "type": "holder",
     "id": "hex-j8",
     "x": 433,
     "y": 483,
     "num": 8,
-    "bColor": "#cc9051"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j9": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-j9",
     "x": 433,
     "y": 539,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j10": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-j10",
     "x": 433,
     "y": 594,
     "num": 10,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j11": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-j11",
     "x": 433,
     "y": 650,
     "num": 11,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j12": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-j12",
     "x": 433,
     "y": 705,
     "num": 12,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-j13": {
     "inheritFrom": {
-      "hex-j1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-j13",
     "x": 433,
     "y": 761,
     "num": 13,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k2": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-k2",
     "x": 481,
     "y": 176,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k3": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-c4": "*"
     },
     "type": "holder",
     "id": "hex-k3",
     "x": 481,
     "y": 232,
     "num": 3,
-    "bColor": "#cc9051"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k4": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-k4",
     "x": 481,
     "y": 287,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k5": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-k5",
     "x": 481,
     "y": 343,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k6": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-k6",
     "x": 481,
     "y": 398,
-    "num": 6
+    "num": 6,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k7": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-k7",
     "x": 481,
     "y": 454,
     "num": 7,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k8": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-k8",
     "x": 481,
     "y": 509,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k9": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-k9",
     "x": 481,
     "y": 565,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k10": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-k10",
     "x": 481,
     "y": 620,
     "num": 10,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k11": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-k11",
     "x": 481,
     "y": 676,
     "num": 11,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-k12": {
     "inheritFrom": {
-      "hex-k1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-k12",
     "x": 481,
     "y": 731,
     "num": 12,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l2": {
     "inheritFrom": {
-      "hex-l1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-l2",
     "x": 529,
     "y": 202,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l3": {
     "inheritFrom": {
-      "hex-l1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-l3",
     "x": 529,
     "y": 258,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l4": {
     "inheritFrom": {
-      "hex-l1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-l4",
     "x": 529,
     "y": 313,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l5": {
     "inheritFrom": {
-      "hex-l1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-l5",
     "x": 529,
     "y": 369,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l6": {
     "inheritFrom": {
-      "hex-l1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-l6",
     "x": 529,
     "y": 424,
-    "num": 6
+    "num": 6,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l7": {
     "inheritFrom": {
-      "hex-l1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-l7",
     "x": 529,
     "y": 480,
     "num": 7,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l8": {
     "inheritFrom": {
-      "hex-l1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-l8",
     "x": 529,
     "y": 535,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l9": {
     "inheritFrom": {
-      "hex-l1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-l9",
     "x": 529,
     "y": 591,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l10": {
     "inheritFrom": {
-      "hex-l1": "*"
+      "hex-c4": "*"
     },
     "type": "holder",
     "id": "hex-l10",
     "x": 529,
     "y": 646,
     "num": 10,
-    "bColor": "#cc9051"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-l11": {
     "inheritFrom": {
-      "hex-l1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-l11",
     "x": 529,
     "y": 702,
     "num": 11,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-m2": {
     "inheritFrom": {
-      "hex-m1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-m2",
     "x": 577,
     "y": 228,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-m3": {
     "inheritFrom": {
-      "hex-m1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-m3",
     "x": 577,
     "y": 284,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-m4": {
     "inheritFrom": {
-      "hex-m1": "*"
+      "hex-c4": "*"
     },
     "type": "holder",
     "id": "hex-m4",
     "x": 577,
     "y": 339,
     "num": 4,
-    "bColor": "#cc9051"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-m5": {
     "inheritFrom": {
-      "hex-m1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-m5",
     "x": 577,
     "y": 395,
-    "num": 5
+    "num": 5,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-m6": {
     "inheritFrom": {
-      "hex-m1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-m6",
     "x": 577,
     "y": 450,
     "num": 6,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-m7": {
     "inheritFrom": {
-      "hex-m1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-m7",
     "x": 577,
     "y": 506,
     "num": 7,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-m8": {
     "inheritFrom": {
-      "hex-m1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-m8",
     "x": 577,
     "y": 561,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-m9": {
     "inheritFrom": {
-      "hex-m1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-m9",
     "x": 577,
     "y": 617,
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-m10": {
     "inheritFrom": {
-      "hex-m1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-m10",
     "x": 577,
     "y": 672,
     "num": 10,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "board1": {
     "id": "board1",
@@ -1635,7 +2274,7 @@
       "background": "lightgray"
     },
     "z": 4,
-    "x": 1,
+    "x": 2,
     "onlyVisibleForSeat": "seat1",
     "hidePlayerCursors": true,
     "borderRadius": 8,
@@ -1776,8 +2415,13 @@
     "x": 625,
     "y": 199,
     "inheritFrom": {
-      "hex-m1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-n2": {
     "type": "holder",
@@ -1785,7 +2429,7 @@
     "x": 625,
     "y": 254,
     "inheritFrom": {
-      "hex-n1": "*"
+      "hex-a1": "*"
     },
     "num": 2
   },
@@ -1795,7 +2439,7 @@
     "x": 625,
     "y": 310,
     "inheritFrom": {
-      "hex-n1": "*"
+      "hex-a1": "*"
     },
     "num": 3
   },
@@ -1805,9 +2449,14 @@
     "x": 625,
     "y": 365,
     "inheritFrom": {
-      "hex-n1": "*"
+      "hex-a1": "*"
     },
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-n5": {
     "type": "holder",
@@ -1815,10 +2464,14 @@
     "x": 625,
     "y": 421,
     "inheritFrom": {
-      "hex-n1": "*"
+      "hex-a5": "*"
     },
     "num": 5,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-n6": {
     "type": "holder",
@@ -1826,10 +2479,14 @@
     "x": 625,
     "y": 476,
     "inheritFrom": {
-      "hex-n1": "*"
+      "hex-a5": "*"
     },
     "num": 6,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-n7": {
     "type": "holder",
@@ -1837,10 +2494,14 @@
     "x": 625,
     "y": 532,
     "inheritFrom": {
-      "hex-n1": "*"
+      "hex-a5": "*"
     },
     "num": 7,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-n8": {
     "type": "holder",
@@ -1848,10 +2509,14 @@
     "x": 625,
     "y": 587,
     "inheritFrom": {
-      "hex-n1": "*"
+      "hex-a5": "*"
     },
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-n9": {
     "type": "holder",
@@ -1859,10 +2524,14 @@
     "x": 625,
     "y": 643,
     "inheritFrom": {
-      "hex-n1": "*"
+      "hex-a5": "*"
     },
     "num": 9,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-o1": {
     "type": "holder",
@@ -1870,82 +2539,118 @@
     "x": 673,
     "y": 225,
     "inheritFrom": {
-      "hex-n1": "*"
-    }
+      "hex-a1": "*"
+    },
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-o2": {
     "inheritFrom": {
-      "hex-o1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-o2",
     "x": 673,
     "y": 280.5,
-    "num": 2
+    "num": 2,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-o3": {
     "inheritFrom": {
-      "hex-o1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-o3",
     "x": 673,
     "y": 336,
-    "num": 3
+    "num": 3,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-o4": {
     "inheritFrom": {
-      "hex-o1": "*"
+      "hex-a1": "*"
     },
     "type": "holder",
     "id": "hex-o4",
     "x": 673,
     "y": 391.5,
-    "num": 4
+    "num": 4,
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-o5": {
     "inheritFrom": {
-      "hex-o1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-o5",
     "x": 673,
     "y": 447,
     "num": 5,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-o6": {
     "inheritFrom": {
-      "hex-o1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-o6",
     "x": 673,
     "y": 502.5,
     "num": 6,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-o7": {
     "inheritFrom": {
-      "hex-o1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-o7",
     "x": 673,
     "y": 558,
     "num": 7,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "hex-o8": {
     "inheritFrom": {
-      "hex-o1": "*"
+      "hex-a5": "*"
     },
     "type": "holder",
     "id": "hex-o8",
     "x": 673,
     "y": 613.5,
     "num": 8,
-    "bColor": "#7aa385"
+    "parent": "board1",
+    "z": 0,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
   },
   "labelColO": {
     "inheritFrom": {
@@ -1964,7 +2669,7 @@
     "width": 40,
     "height": 111,
     "borderRadius": 20,
-    "z": 170,
+    "z": 188,
     "movable": true,
     "css": {
       "default": {
@@ -1981,9 +2686,9 @@
       }
     },
     "dropTarget": {
-      "peg": true
+      "none": "none"
     },
-    "layer": 3,
+    "layer": 1,
     "clickRoutine": [
       {
         "func": "IF",
@@ -2043,7 +2748,7 @@
       "patrol1": "*"
     },
     "height": 166,
-    "z": 166,
+    "z": 10,
     "rotation": -120,
     "shipType": "Submarine",
     "resetProperties": {
@@ -2063,7 +2768,7 @@
     "shipType": "Battleship",
     "height": 222,
     "rotation": -120,
-    "z": 169,
+    "z": 14,
     "resetProperties": {
       "x": 825,
       "y": 664,
@@ -2080,7 +2785,7 @@
     },
     "shipType": "Destoyer",
     "height": 166,
-    "z": 167,
+    "z": 12,
     "rotation": -120,
     "resetProperties": {
       "x": 801,
@@ -2098,7 +2803,7 @@
     },
     "shipType": "Carrier",
     "height": 277,
-    "z": 164,
+    "z": 15,
     "rotation": -120,
     "resetProperties": {
       "x": 849,
@@ -2113,7 +2818,7 @@
     "width": 40,
     "height": 40,
     "layer": 4,
-    "z": 256,
+    "z": 410,
     "color": "#000000",
     "css": "border-radius: 100% 100% 25% 25%; ",
     "image": "i/game-pieces/2D/Meeple-2D.svg",
@@ -2129,7 +2834,9 @@
       "y": 655
     },
     "onlyVisibleForSeat": "seat1",
-    "hidePlayerCursors": true
+    "hidePlayerCursors": true,
+    "meeple": true,
+    "parent": "hex-c4"
   },
   "seat1": {
     "type": "seat",
@@ -2171,7 +2878,8 @@
         ]
       }
     ],
-    "bColor": "#284df5"
+    "bColor": "#284df5",
+    "hideWhenUnused": true
   },
   "seat2": {
     "type": "seat",
@@ -2184,1469 +2892,8 @@
     },
     "color": "#999999",
     "player": "",
-    "bColor": "#7aa385"
-  },
-  "board2": {
-    "inheritFrom": {
-      "board1": "*"
-    },
-    "id": "board2",
-    "x": 854,
-    "y": 60,
-    "css": {
-      "border": "3px solid #7aa385",
-      "background": "lightgray"
-    },
-    "onlyVisibleForSeat": "seat2"
-  },
-  "hex-a9": {
-    "inheritFrom": {
-      "hex-a2": "*"
-    },
-    "type": "holder",
-    "id": "hex-a9",
-    "parent": "board2"
-  },
-  "hex-a10": {
-    "inheritFrom": {
-      "hex-a3": "*"
-    },
-    "type": "holder",
-    "id": "hex-a10",
-    "parent": "board2"
-  },
-  "hex-a11": {
-    "inheritFrom": {
-      "hex-a4": "*"
-    },
-    "type": "holder",
-    "id": "hex-a11",
-    "parent": "board2"
-  },
-  "hex-a12": {
-    "inheritFrom": {
-      "hex-a5": "*"
-    },
-    "type": "holder",
-    "id": "hex-a12",
-    "parent": "board2"
-  },
-  "hex-a13": {
-    "inheritFrom": {
-      "hex-a6": "*"
-    },
-    "type": "holder",
-    "id": "hex-a13",
-    "parent": "board2"
-  },
-  "hex-a14": {
-    "inheritFrom": {
-      "hex-a7": "*"
-    },
-    "type": "holder",
-    "id": "hex-a14",
-    "parent": "board2"
-  },
-  "hex-a15": {
-    "inheritFrom": {
-      "hex-a8": "*"
-    },
-    "type": "holder",
-    "id": "hex-a15",
-    "parent": "board2"
-  },
-  "hex-b10": {
-    "inheritFrom": {
-      "hex-b1": "*"
-    },
-    "type": "holder",
-    "id": "hex-b10",
-    "parent": "board2"
-  },
-  "hex-b11": {
-    "inheritFrom": {
-      "hex-b2": "*"
-    },
-    "type": "holder",
-    "id": "hex-b11",
-    "parent": "board2"
-  },
-  "hex-b12": {
-    "inheritFrom": {
-      "hex-b3": "*"
-    },
-    "type": "holder",
-    "id": "hex-b12",
-    "parent": "board2"
-  },
-  "hex-b13": {
-    "inheritFrom": {
-      "hex-b4": "*"
-    },
-    "type": "holder",
-    "id": "hex-b13",
-    "parent": "board2"
-  },
-  "hex-b14": {
-    "inheritFrom": {
-      "hex-b5": "*"
-    },
-    "type": "holder",
-    "id": "hex-b14",
-    "parent": "board2"
-  },
-  "hex-b15": {
-    "inheritFrom": {
-      "hex-b6": "*"
-    },
-    "type": "holder",
-    "id": "hex-b15",
-    "parent": "board2"
-  },
-  "hex-b16": {
-    "inheritFrom": {
-      "hex-b7": "*"
-    },
-    "type": "holder",
-    "id": "hex-b16",
-    "parent": "board2"
-  },
-  "hex-b17": {
-    "inheritFrom": {
-      "hex-b8": "*"
-    },
-    "type": "holder",
-    "id": "hex-b17",
-    "parent": "board2"
-  },
-  "hex-b18": {
-    "inheritFrom": {
-      "hex-b9": "*"
-    },
-    "type": "holder",
-    "id": "hex-b18",
-    "parent": "board2"
-  },
-  "hex-c11": {
-    "inheritFrom": {
-      "hex-c1": "*"
-    },
-    "type": "holder",
-    "id": "hex-c11",
-    "parent": "board2"
-  },
-  "hex-c12": {
-    "inheritFrom": {
-      "hex-c2": "*"
-    },
-    "type": "holder",
-    "id": "hex-c12",
-    "parent": "board2"
-  },
-  "hex-c13": {
-    "inheritFrom": {
-      "hex-c3": "*"
-    },
-    "type": "holder",
-    "id": "hex-c13",
-    "parent": "board2"
-  },
-  "hex-c14": {
-    "inheritFrom": {
-      "hex-c4": "*"
-    },
-    "type": "holder",
-    "id": "hex-c14",
-    "parent": "board2"
-  },
-  "hex-c15": {
-    "inheritFrom": {
-      "hex-c5": "*"
-    },
-    "type": "holder",
-    "id": "hex-c15",
-    "parent": "board2"
-  },
-  "hex-c16": {
-    "inheritFrom": {
-      "hex-c6": "*"
-    },
-    "type": "holder",
-    "id": "hex-c16",
-    "parent": "board2"
-  },
-  "hex-c17": {
-    "inheritFrom": {
-      "hex-c7": "*"
-    },
-    "type": "holder",
-    "id": "hex-c17",
-    "parent": "board2"
-  },
-  "hex-c18": {
-    "inheritFrom": {
-      "hex-c8": "*"
-    },
-    "type": "holder",
-    "id": "hex-c18",
-    "parent": "board2"
-  },
-  "hex-c19": {
-    "inheritFrom": {
-      "hex-c9": "*"
-    },
-    "type": "holder",
-    "id": "hex-c19",
-    "parent": "board2"
-  },
-  "hex-c20": {
-    "inheritFrom": {
-      "hex-c10": "*"
-    },
-    "type": "holder",
-    "id": "hex-c20",
-    "parent": "board2"
-  },
-  "hex-d12": {
-    "inheritFrom": {
-      "hex-d1": "*"
-    },
-    "type": "holder",
-    "id": "hex-d12",
-    "parent": "board2"
-  },
-  "hex-d13": {
-    "inheritFrom": {
-      "hex-d2": "*"
-    },
-    "type": "holder",
-    "id": "hex-d13",
-    "parent": "board2"
-  },
-  "hex-d14": {
-    "inheritFrom": {
-      "hex-d3": "*"
-    },
-    "type": "holder",
-    "id": "hex-d14",
-    "parent": "board2"
-  },
-  "hex-d15": {
-    "inheritFrom": {
-      "hex-d4": "*"
-    },
-    "type": "holder",
-    "id": "hex-d15",
-    "parent": "board2"
-  },
-  "hex-d16": {
-    "inheritFrom": {
-      "hex-d5": "*"
-    },
-    "type": "holder",
-    "id": "hex-d16",
-    "parent": "board2"
-  },
-  "hex-d17": {
-    "inheritFrom": {
-      "hex-d6": "*"
-    },
-    "type": "holder",
-    "id": "hex-d17",
-    "parent": "board2"
-  },
-  "hex-d18": {
-    "inheritFrom": {
-      "hex-d7": "*"
-    },
-    "type": "holder",
-    "id": "hex-d18",
-    "parent": "board2"
-  },
-  "hex-d19": {
-    "inheritFrom": {
-      "hex-d8": "*"
-    },
-    "type": "holder",
-    "id": "hex-d19",
-    "parent": "board2"
-  },
-  "hex-d20": {
-    "inheritFrom": {
-      "hex-d9": "*"
-    },
-    "type": "holder",
-    "id": "hex-d20",
-    "parent": "board2"
-  },
-  "hex-d21": {
-    "inheritFrom": {
-      "hex-d10": "*"
-    },
-    "type": "holder",
-    "id": "hex-d21",
-    "parent": "board2"
-  },
-  "hex-d22": {
-    "inheritFrom": {
-      "hex-d11": "*"
-    },
-    "type": "holder",
-    "id": "hex-d22",
-    "parent": "board2"
-  },
-  "hex-e13": {
-    "inheritFrom": {
-      "hex-e1": "*"
-    },
-    "type": "holder",
-    "id": "hex-e13",
-    "parent": "board2"
-  },
-  "hex-e14": {
-    "inheritFrom": {
-      "hex-e2": "*"
-    },
-    "type": "holder",
-    "id": "hex-e14",
-    "parent": "board2"
-  },
-  "hex-e15": {
-    "inheritFrom": {
-      "hex-e3": "*"
-    },
-    "type": "holder",
-    "id": "hex-e15",
-    "parent": "board2"
-  },
-  "hex-e16": {
-    "inheritFrom": {
-      "hex-e4": "*"
-    },
-    "type": "holder",
-    "id": "hex-e16",
-    "parent": "board2"
-  },
-  "hex-e17": {
-    "inheritFrom": {
-      "hex-e5": "*"
-    },
-    "type": "holder",
-    "id": "hex-e17",
-    "parent": "board2"
-  },
-  "hex-e18": {
-    "inheritFrom": {
-      "hex-e6": "*"
-    },
-    "type": "holder",
-    "id": "hex-e18",
-    "parent": "board2"
-  },
-  "hex-e19": {
-    "inheritFrom": {
-      "hex-e7": "*"
-    },
-    "type": "holder",
-    "id": "hex-e19",
-    "parent": "board2"
-  },
-  "hex-e20": {
-    "inheritFrom": {
-      "hex-e8": "*"
-    },
-    "type": "holder",
-    "id": "hex-e20",
-    "parent": "board2"
-  },
-  "hex-e21": {
-    "inheritFrom": {
-      "hex-e9": "*"
-    },
-    "type": "holder",
-    "id": "hex-e21",
-    "parent": "board2"
-  },
-  "hex-e22": {
-    "inheritFrom": {
-      "hex-e10": "*"
-    },
-    "type": "holder",
-    "id": "hex-e22",
-    "parent": "board2"
-  },
-  "hex-e23": {
-    "inheritFrom": {
-      "hex-e11": "*"
-    },
-    "type": "holder",
-    "id": "hex-e23",
-    "parent": "board2"
-  },
-  "hex-e24": {
-    "inheritFrom": {
-      "hex-e12": "*"
-    },
-    "type": "holder",
-    "id": "hex-e24",
-    "parent": "board2"
-  },
-  "hex-f14": {
-    "inheritFrom": {
-      "hex-f1": "*"
-    },
-    "type": "holder",
-    "id": "hex-f14",
-    "parent": "board2"
-  },
-  "hex-g15": {
-    "inheritFrom": {
-      "hex-g1": "*"
-    },
-    "type": "holder",
-    "id": "hex-g15",
-    "parent": "board2"
-  },
-  "hex-h15": {
-    "inheritFrom": {
-      "hex-h1": "*"
-    },
-    "type": "holder",
-    "id": "hex-h15",
-    "parent": "board2"
-  },
-  "hex-f15": {
-    "inheritFrom": {
-      "hex-f2": "*"
-    },
-    "type": "holder",
-    "id": "hex-f15",
-    "parent": "board2"
-  },
-  "hex-f16": {
-    "inheritFrom": {
-      "hex-f3": "*"
-    },
-    "type": "holder",
-    "id": "hex-f16",
-    "parent": "board2"
-  },
-  "hex-f17": {
-    "inheritFrom": {
-      "hex-f4": "*"
-    },
-    "type": "holder",
-    "id": "hex-f17",
-    "parent": "board2"
-  },
-  "hex-f18": {
-    "inheritFrom": {
-      "hex-f5": "*"
-    },
-    "type": "holder",
-    "id": "hex-f18",
-    "parent": "board2"
-  },
-  "hex-f19": {
-    "inheritFrom": {
-      "hex-f6": "*"
-    },
-    "type": "holder",
-    "id": "hex-f19",
-    "parent": "board2"
-  },
-  "hex-f20": {
-    "inheritFrom": {
-      "hex-f7": "*"
-    },
-    "type": "holder",
-    "id": "hex-f20",
-    "parent": "board2"
-  },
-  "hex-f21": {
-    "inheritFrom": {
-      "hex-f8": "*"
-    },
-    "type": "holder",
-    "id": "hex-f21",
-    "parent": "board2"
-  },
-  "hex-f22": {
-    "inheritFrom": {
-      "hex-f9": "*"
-    },
-    "type": "holder",
-    "id": "hex-f22",
-    "parent": "board2"
-  },
-  "hex-f23": {
-    "inheritFrom": {
-      "hex-f10": "*"
-    },
-    "type": "holder",
-    "id": "hex-f23",
-    "parent": "board2"
-  },
-  "hex-f24": {
-    "inheritFrom": {
-      "hex-f11": "*"
-    },
-    "type": "holder",
-    "id": "hex-f24",
-    "parent": "board2"
-  },
-  "hex-f25": {
-    "inheritFrom": {
-      "hex-f12": "*"
-    },
-    "type": "holder",
-    "id": "hex-f25",
-    "parent": "board2"
-  },
-  "hex-f26": {
-    "inheritFrom": {
-      "hex-f13": "*"
-    },
-    "type": "holder",
-    "id": "hex-f26",
-    "parent": "board2"
-  },
-  "hex-g16": {
-    "inheritFrom": {
-      "hex-g2": "*"
-    },
-    "type": "holder",
-    "id": "hex-g16",
-    "parent": "board2"
-  },
-  "hex-g17": {
-    "inheritFrom": {
-      "hex-g3": "*"
-    },
-    "type": "holder",
-    "id": "hex-g17",
-    "parent": "board2"
-  },
-  "hex-g18": {
-    "inheritFrom": {
-      "hex-g4": "*"
-    },
-    "type": "holder",
-    "id": "hex-g18",
-    "parent": "board2"
-  },
-  "hex-g19": {
-    "inheritFrom": {
-      "hex-g5": "*"
-    },
-    "type": "holder",
-    "id": "hex-g19",
-    "parent": "board2"
-  },
-  "hex-g20": {
-    "inheritFrom": {
-      "hex-g6": "*"
-    },
-    "type": "holder",
-    "id": "hex-g20",
-    "parent": "board2"
-  },
-  "hex-g21": {
-    "inheritFrom": {
-      "hex-g7": "*"
-    },
-    "type": "holder",
-    "id": "hex-g21",
-    "parent": "board2"
-  },
-  "hex-g22": {
-    "inheritFrom": {
-      "hex-g8": "*"
-    },
-    "type": "holder",
-    "id": "hex-g22",
-    "parent": "board2"
-  },
-  "hex-g23": {
-    "inheritFrom": {
-      "hex-g9": "*"
-    },
-    "type": "holder",
-    "id": "hex-g23",
-    "parent": "board2"
-  },
-  "hex-g24": {
-    "inheritFrom": {
-      "hex-g10": "*"
-    },
-    "type": "holder",
-    "id": "hex-g24",
-    "parent": "board2"
-  },
-  "hex-g25": {
-    "inheritFrom": {
-      "hex-g11": "*"
-    },
-    "type": "holder",
-    "id": "hex-g25",
-    "parent": "board2"
-  },
-  "hex-g26": {
-    "inheritFrom": {
-      "hex-g12": "*"
-    },
-    "type": "holder",
-    "id": "hex-g26",
-    "parent": "board2"
-  },
-  "hex-g27": {
-    "inheritFrom": {
-      "hex-g13": "*"
-    },
-    "type": "holder",
-    "id": "hex-g27",
-    "parent": "board2"
-  },
-  "hex-g28": {
-    "inheritFrom": {
-      "hex-g14": "*"
-    },
-    "type": "holder",
-    "id": "hex-g28",
-    "parent": "board2"
-  },
-  "hex-h16": {
-    "inheritFrom": {
-      "hex-h2": "*"
-    },
-    "type": "holder",
-    "id": "hex-h16",
-    "parent": "board2"
-  },
-  "hex-h17": {
-    "inheritFrom": {
-      "hex-h3": "*"
-    },
-    "type": "holder",
-    "id": "hex-h17",
-    "parent": "board2"
-  },
-  "hex-h18": {
-    "inheritFrom": {
-      "hex-h4": "*"
-    },
-    "type": "holder",
-    "id": "hex-h18",
-    "parent": "board2"
-  },
-  "hex-h19": {
-    "inheritFrom": {
-      "hex-h5": "*"
-    },
-    "type": "holder",
-    "id": "hex-h19",
-    "parent": "board2"
-  },
-  "hex-h20": {
-    "inheritFrom": {
-      "hex-h6": "*"
-    },
-    "type": "holder",
-    "id": "hex-h20",
-    "parent": "board2"
-  },
-  "hex-h21": {
-    "inheritFrom": {
-      "hex-h7": "*"
-    },
-    "type": "holder",
-    "id": "hex-h21",
-    "parent": "board2"
-  },
-  "hex-h22": {
-    "inheritFrom": {
-      "hex-h8": "*"
-    },
-    "type": "holder",
-    "id": "hex-h22",
-    "parent": "board2"
-  },
-  "hex-h23": {
-    "inheritFrom": {
-      "hex-h9": "*"
-    },
-    "type": "holder",
-    "id": "hex-h23",
-    "parent": "board2"
-  },
-  "hex-h24": {
-    "inheritFrom": {
-      "hex-h10": "*"
-    },
-    "type": "holder",
-    "id": "hex-h24",
-    "parent": "board2"
-  },
-  "hex-h25": {
-    "inheritFrom": {
-      "hex-h11": "*"
-    },
-    "type": "holder",
-    "id": "hex-h25",
-    "parent": "board2"
-  },
-  "hex-h26": {
-    "inheritFrom": {
-      "hex-h12": "*"
-    },
-    "type": "holder",
-    "id": "hex-h26",
-    "parent": "board2"
-  },
-  "hex-h27": {
-    "inheritFrom": {
-      "hex-h13": "*"
-    },
-    "type": "holder",
-    "id": "hex-h27",
-    "parent": "board2"
-  },
-  "hex-h28": {
-    "inheritFrom": {
-      "hex-h14": "*"
-    },
-    "type": "holder",
-    "id": "hex-h28",
-    "parent": "board2"
-  },
-  "hex-i15": {
-    "inheritFrom": {
-      "hex-i1": "*"
-    },
-    "type": "holder",
-    "id": "hex-i15",
-    "parent": "board2"
-  },
-  "hex-j14": {
-    "inheritFrom": {
-      "hex-j1": "*"
-    },
-    "type": "holder",
-    "id": "hex-j14",
-    "parent": "board2"
-  },
-  "hex-k13": {
-    "inheritFrom": {
-      "hex-k1": "*"
-    },
-    "type": "holder",
-    "id": "hex-k13",
-    "parent": "board2"
-  },
-  "hex-l12": {
-    "inheritFrom": {
-      "hex-l1": "*"
-    },
-    "type": "holder",
-    "id": "hex-l12",
-    "parent": "board2"
-  },
-  "hex-m11": {
-    "inheritFrom": {
-      "hex-m1": "*"
-    },
-    "type": "holder",
-    "id": "hex-m11",
-    "parent": "board2"
-  },
-  "hex-i16": {
-    "inheritFrom": {
-      "hex-i2": "*"
-    },
-    "type": "holder",
-    "id": "hex-i16",
-    "parent": "board2"
-  },
-  "hex-i17": {
-    "inheritFrom": {
-      "hex-i3": "*"
-    },
-    "type": "holder",
-    "id": "hex-i17",
-    "parent": "board2"
-  },
-  "hex-i18": {
-    "inheritFrom": {
-      "hex-i4": "*"
-    },
-    "type": "holder",
-    "id": "hex-i18",
-    "parent": "board2"
-  },
-  "hex-i19": {
-    "inheritFrom": {
-      "hex-i5": "*"
-    },
-    "type": "holder",
-    "id": "hex-i19",
-    "parent": "board2"
-  },
-  "hex-i20": {
-    "inheritFrom": {
-      "hex-i6": "*"
-    },
-    "type": "holder",
-    "id": "hex-i20",
-    "parent": "board2"
-  },
-  "hex-i21": {
-    "inheritFrom": {
-      "hex-i7": "*"
-    },
-    "type": "holder",
-    "id": "hex-i21",
-    "parent": "board2"
-  },
-  "hex-i22": {
-    "inheritFrom": {
-      "hex-i8": "*"
-    },
-    "type": "holder",
-    "id": "hex-i22",
-    "parent": "board2"
-  },
-  "hex-i23": {
-    "inheritFrom": {
-      "hex-i9": "*"
-    },
-    "type": "holder",
-    "id": "hex-i23",
-    "parent": "board2"
-  },
-  "hex-i24": {
-    "inheritFrom": {
-      "hex-i10": "*"
-    },
-    "type": "holder",
-    "id": "hex-i24",
-    "parent": "board2"
-  },
-  "hex-i25": {
-    "inheritFrom": {
-      "hex-i11": "*"
-    },
-    "type": "holder",
-    "id": "hex-i25",
-    "parent": "board2"
-  },
-  "hex-i26": {
-    "inheritFrom": {
-      "hex-i12": "*"
-    },
-    "type": "holder",
-    "id": "hex-i26",
-    "parent": "board2"
-  },
-  "hex-i27": {
-    "inheritFrom": {
-      "hex-i13": "*"
-    },
-    "type": "holder",
-    "id": "hex-i27",
-    "parent": "board2"
-  },
-  "hex-i28": {
-    "inheritFrom": {
-      "hex-i14": "*"
-    },
-    "type": "holder",
-    "id": "hex-i28",
-    "parent": "board2"
-  },
-  "hex-j15": {
-    "inheritFrom": {
-      "hex-j2": "*"
-    },
-    "type": "holder",
-    "id": "hex-j15",
-    "parent": "board2"
-  },
-  "hex-j16": {
-    "inheritFrom": {
-      "hex-j3": "*"
-    },
-    "type": "holder",
-    "id": "hex-j16",
-    "parent": "board2"
-  },
-  "hex-j17": {
-    "inheritFrom": {
-      "hex-j4": "*"
-    },
-    "type": "holder",
-    "id": "hex-j17",
-    "parent": "board2"
-  },
-  "hex-j18": {
-    "inheritFrom": {
-      "hex-j5": "*"
-    },
-    "type": "holder",
-    "id": "hex-j18",
-    "parent": "board2"
-  },
-  "hex-j19": {
-    "inheritFrom": {
-      "hex-j6": "*"
-    },
-    "type": "holder",
-    "id": "hex-j19",
-    "parent": "board2"
-  },
-  "hex-j20": {
-    "inheritFrom": {
-      "hex-j7": "*"
-    },
-    "type": "holder",
-    "id": "hex-j20",
-    "parent": "board2"
-  },
-  "hex-j21": {
-    "inheritFrom": {
-      "hex-j8": "*"
-    },
-    "type": "holder",
-    "id": "hex-j21",
-    "parent": "board2"
-  },
-  "hex-j22": {
-    "inheritFrom": {
-      "hex-j9": "*"
-    },
-    "type": "holder",
-    "id": "hex-j22",
-    "parent": "board2"
-  },
-  "hex-j23": {
-    "inheritFrom": {
-      "hex-j10": "*"
-    },
-    "type": "holder",
-    "id": "hex-j23",
-    "parent": "board2"
-  },
-  "hex-j24": {
-    "inheritFrom": {
-      "hex-j11": "*"
-    },
-    "type": "holder",
-    "id": "hex-j24",
-    "parent": "board2"
-  },
-  "hex-j25": {
-    "inheritFrom": {
-      "hex-j12": "*"
-    },
-    "type": "holder",
-    "id": "hex-j25",
-    "parent": "board2"
-  },
-  "hex-j26": {
-    "inheritFrom": {
-      "hex-j13": "*"
-    },
-    "type": "holder",
-    "id": "hex-j26",
-    "parent": "board2"
-  },
-  "hex-k14": {
-    "inheritFrom": {
-      "hex-k2": "*"
-    },
-    "type": "holder",
-    "id": "hex-k14",
-    "parent": "board2"
-  },
-  "hex-k15": {
-    "inheritFrom": {
-      "hex-k3": "*"
-    },
-    "type": "holder",
-    "id": "hex-k15",
-    "parent": "board2"
-  },
-  "hex-k16": {
-    "inheritFrom": {
-      "hex-k4": "*"
-    },
-    "type": "holder",
-    "id": "hex-k16",
-    "parent": "board2"
-  },
-  "hex-k17": {
-    "inheritFrom": {
-      "hex-k5": "*"
-    },
-    "type": "holder",
-    "id": "hex-k17",
-    "parent": "board2"
-  },
-  "hex-k18": {
-    "inheritFrom": {
-      "hex-k6": "*"
-    },
-    "type": "holder",
-    "id": "hex-k18",
-    "parent": "board2"
-  },
-  "hex-k19": {
-    "inheritFrom": {
-      "hex-k7": "*"
-    },
-    "type": "holder",
-    "id": "hex-k19",
-    "parent": "board2"
-  },
-  "hex-k20": {
-    "inheritFrom": {
-      "hex-k8": "*"
-    },
-    "type": "holder",
-    "id": "hex-k20",
-    "parent": "board2"
-  },
-  "hex-k21": {
-    "inheritFrom": {
-      "hex-k9": "*"
-    },
-    "type": "holder",
-    "id": "hex-k21",
-    "parent": "board2"
-  },
-  "hex-k22": {
-    "inheritFrom": {
-      "hex-k10": "*"
-    },
-    "type": "holder",
-    "id": "hex-k22",
-    "parent": "board2"
-  },
-  "hex-k23": {
-    "inheritFrom": {
-      "hex-k11": "*"
-    },
-    "type": "holder",
-    "id": "hex-k23",
-    "parent": "board2"
-  },
-  "hex-k24": {
-    "inheritFrom": {
-      "hex-k12": "*"
-    },
-    "type": "holder",
-    "id": "hex-k24",
-    "parent": "board2"
-  },
-  "hex-l13": {
-    "inheritFrom": {
-      "hex-l2": "*"
-    },
-    "type": "holder",
-    "id": "hex-l13",
-    "parent": "board2"
-  },
-  "hex-l14": {
-    "inheritFrom": {
-      "hex-l3": "*"
-    },
-    "type": "holder",
-    "id": "hex-l14",
-    "parent": "board2"
-  },
-  "hex-l15": {
-    "inheritFrom": {
-      "hex-l4": "*"
-    },
-    "type": "holder",
-    "id": "hex-l15",
-    "parent": "board2"
-  },
-  "hex-l16": {
-    "inheritFrom": {
-      "hex-l5": "*"
-    },
-    "type": "holder",
-    "id": "hex-l16",
-    "parent": "board2"
-  },
-  "hex-l17": {
-    "inheritFrom": {
-      "hex-l6": "*"
-    },
-    "type": "holder",
-    "id": "hex-l17",
-    "parent": "board2"
-  },
-  "hex-l18": {
-    "inheritFrom": {
-      "hex-l7": "*"
-    },
-    "type": "holder",
-    "id": "hex-l18",
-    "parent": "board2"
-  },
-  "hex-l19": {
-    "inheritFrom": {
-      "hex-l8": "*"
-    },
-    "type": "holder",
-    "id": "hex-l19",
-    "parent": "board2"
-  },
-  "hex-l20": {
-    "inheritFrom": {
-      "hex-l9": "*"
-    },
-    "type": "holder",
-    "id": "hex-l20",
-    "parent": "board2"
-  },
-  "hex-l21": {
-    "inheritFrom": {
-      "hex-l10": "*"
-    },
-    "type": "holder",
-    "id": "hex-l21",
-    "parent": "board2"
-  },
-  "hex-l22": {
-    "inheritFrom": {
-      "hex-l11": "*"
-    },
-    "type": "holder",
-    "id": "hex-l22",
-    "parent": "board2"
-  },
-  "hex-m12": {
-    "inheritFrom": {
-      "hex-m2": "*"
-    },
-    "type": "holder",
-    "id": "hex-m12",
-    "parent": "board2"
-  },
-  "hex-m13": {
-    "inheritFrom": {
-      "hex-m3": "*"
-    },
-    "type": "holder",
-    "id": "hex-m13",
-    "parent": "board2"
-  },
-  "hex-m14": {
-    "inheritFrom": {
-      "hex-m4": "*"
-    },
-    "type": "holder",
-    "id": "hex-m14",
-    "parent": "board2"
-  },
-  "hex-m15": {
-    "inheritFrom": {
-      "hex-m5": "*"
-    },
-    "type": "holder",
-    "id": "hex-m15",
-    "parent": "board2"
-  },
-  "hex-m16": {
-    "inheritFrom": {
-      "hex-m6": "*"
-    },
-    "type": "holder",
-    "id": "hex-m16",
-    "parent": "board2"
-  },
-  "hex-m17": {
-    "inheritFrom": {
-      "hex-m7": "*"
-    },
-    "type": "holder",
-    "id": "hex-m17",
-    "parent": "board2"
-  },
-  "hex-m18": {
-    "inheritFrom": {
-      "hex-m8": "*"
-    },
-    "type": "holder",
-    "id": "hex-m18",
-    "parent": "board2"
-  },
-  "hex-m19": {
-    "inheritFrom": {
-      "hex-m9": "*"
-    },
-    "type": "holder",
-    "id": "hex-m19",
-    "parent": "board2"
-  },
-  "hex-m20": {
-    "inheritFrom": {
-      "hex-m10": "*"
-    },
-    "type": "holder",
-    "id": "hex-m20",
-    "parent": "board2"
-  },
-  "hex-a16": {
-    "inheritFrom": {
-      "hex-a1": "*"
-    },
-    "type": "holder",
-    "id": "hex-a16",
-    "parent": "board2"
-  },
-  "labelColA1": {
-    "inheritFrom": {
-      "labelColA": "*"
-    },
-    "id": "labelColA1",
-    "parent": "board2"
-  },
-  "labelColB1": {
-    "inheritFrom": {
-      "labelColB": "*"
-    },
-    "id": "labelColB1",
-    "parent": "board2"
-  },
-  "labelColC1": {
-    "inheritFrom": {
-      "labelColC": "*"
-    },
-    "id": "labelColC1",
-    "parent": "board2"
-  },
-  "labelColD1": {
-    "inheritFrom": {
-      "labelColD": "*"
-    },
-    "id": "labelColD1",
-    "parent": "board2"
-  },
-  "labelColE1": {
-    "inheritFrom": {
-      "labelColE": "*"
-    },
-    "id": "labelColE1",
-    "parent": "board2"
-  },
-  "labelColF1": {
-    "inheritFrom": {
-      "labelColF": "*"
-    },
-    "id": "labelColF1",
-    "parent": "board2"
-  },
-  "labelColG1": {
-    "inheritFrom": {
-      "labelColG": "*"
-    },
-    "id": "labelColG1",
-    "parent": "board2"
-  },
-  "labelColH1": {
-    "inheritFrom": {
-      "labelColH": "*"
-    },
-    "id": "labelColH1",
-    "parent": "board2"
-  },
-  "labelColI1": {
-    "inheritFrom": {
-      "labelColI": "*"
-    },
-    "id": "labelColI1",
-    "parent": "board2"
-  },
-  "labelColJ1": {
-    "inheritFrom": {
-      "labelColJ": "*"
-    },
-    "id": "labelColJ1",
-    "parent": "board2"
-  },
-  "labelColK1": {
-    "inheritFrom": {
-      "labelColK": "*"
-    },
-    "id": "labelColK1",
-    "parent": "board2"
-  },
-  "labelColL1": {
-    "inheritFrom": {
-      "labelColL": "*"
-    },
-    "id": "labelColL1",
-    "parent": "board2"
-  },
-  "labelColM1": {
-    "inheritFrom": {
-      "labelColM": "*"
-    },
-    "id": "labelColM1",
-    "parent": "board2"
-  },
-  "labelColN1": {
-    "inheritFrom": {
-      "labelColN": "*"
-    },
-    "id": "labelColN1",
-    "parent": "board2"
-  },
-  "hex-n10": {
-    "inheritFrom": {
-      "hex-n1": "*"
-    },
-    "type": "holder",
-    "id": "hex-n10",
-    "parent": "board2"
-  },
-  "hex-n11": {
-    "inheritFrom": {
-      "hex-n2": "*"
-    },
-    "type": "holder",
-    "id": "hex-n11",
-    "parent": "board2"
-  },
-  "hex-n12": {
-    "inheritFrom": {
-      "hex-n3": "*"
-    },
-    "type": "holder",
-    "id": "hex-n12",
-    "parent": "board2"
-  },
-  "hex-n13": {
-    "inheritFrom": {
-      "hex-n4": "*"
-    },
-    "type": "holder",
-    "id": "hex-n13",
-    "parent": "board2"
-  },
-  "hex-n14": {
-    "inheritFrom": {
-      "hex-n5": "*"
-    },
-    "type": "holder",
-    "id": "hex-n14",
-    "parent": "board2"
-  },
-  "hex-n15": {
-    "inheritFrom": {
-      "hex-n6": "*"
-    },
-    "type": "holder",
-    "id": "hex-n15",
-    "parent": "board2"
-  },
-  "hex-n16": {
-    "inheritFrom": {
-      "hex-n7": "*"
-    },
-    "type": "holder",
-    "id": "hex-n16",
-    "parent": "board2"
-  },
-  "hex-n17": {
-    "inheritFrom": {
-      "hex-n8": "*"
-    },
-    "type": "holder",
-    "id": "hex-n17",
-    "parent": "board2"
-  },
-  "hex-n18": {
-    "inheritFrom": {
-      "hex-n9": "*"
-    },
-    "type": "holder",
-    "id": "hex-n18",
-    "parent": "board2"
-  },
-  "hex-o9": {
-    "inheritFrom": {
-      "hex-o1": "*"
-    },
-    "type": "holder",
-    "id": "hex-o9",
-    "parent": "board2"
-  },
-  "hex-o10": {
-    "inheritFrom": {
-      "hex-o2": "*"
-    },
-    "type": "holder",
-    "id": "hex-o10",
-    "parent": "board2"
-  },
-  "hex-o11": {
-    "inheritFrom": {
-      "hex-o3": "*"
-    },
-    "type": "holder",
-    "id": "hex-o11",
-    "parent": "board2"
-  },
-  "hex-o12": {
-    "inheritFrom": {
-      "hex-o4": "*"
-    },
-    "type": "holder",
-    "id": "hex-o12",
-    "parent": "board2"
-  },
-  "hex-o13": {
-    "inheritFrom": {
-      "hex-o5": "*"
-    },
-    "type": "holder",
-    "id": "hex-o13",
-    "parent": "board2"
-  },
-  "hex-o14": {
-    "inheritFrom": {
-      "hex-o6": "*"
-    },
-    "type": "holder",
-    "id": "hex-o14",
-    "parent": "board2"
-  },
-  "hex-o15": {
-    "inheritFrom": {
-      "hex-o7": "*"
-    },
-    "type": "holder",
-    "id": "hex-o15",
-    "parent": "board2"
-  },
-  "hex-o16": {
-    "inheritFrom": {
-      "hex-o8": "*"
-    },
-    "type": "holder",
-    "id": "hex-o16",
-    "parent": "board2"
-  },
-  "labelColO1": {
-    "inheritFrom": {
-      "labelColO": "*"
-    },
-    "id": "labelColO1",
-    "parent": "board2"
+    "bColor": "#7aa385",
+    "hideWhenUnused": true
   },
   "redHolder": {
     "type": "holder",
@@ -3795,7 +3042,7 @@
     "width": 40,
     "height": 40,
     "layer": 4,
-    "z": 264,
+    "z": 413,
     "color": "#000000",
     "css": "border-radius: 100% 100% 25% 25%; ",
     "image": "i/game-pieces/2D/Meeple-2D.svg",
@@ -3811,7 +3058,9 @@
       "y": 764
     },
     "onlyVisibleForSeat": "seat2",
-    "hidePlayerCursors": true
+    "hidePlayerCursors": true,
+    "meeple": true,
+    "parent": "hex-f23"
   },
   "restart": {
     "type": "button",
@@ -3888,13 +3137,13 @@
     "type": "holder",
     "id": "carrier2",
     "x": 711,
-    "y": 752,
+    "y": 760,
     "onlyVisibleForSeat": "seat2",
-    "z": 175,
+    "z": 180,
     "rotation": -120,
     "resetProperties": {
       "x": 711,
-      "y": 752,
+      "y": 760,
       "rotation": -120
     }
   },
@@ -3905,12 +3154,12 @@
     "type": "holder",
     "id": "patrol3",
     "x": 736,
-    "y": 702,
+    "y": 710,
     "onlyVisibleForSeat": "seat2",
-    "z": 176,
+    "z": 181,
     "resetProperties": {
       "x": 736,
-      "y": 702,
+      "y": 710,
       "rotation": -120
     },
     "rotation": -120
@@ -3922,12 +3171,12 @@
     "type": "holder",
     "id": "destroyer2",
     "x": 758,
-    "y": 656,
+    "y": 662,
     "onlyVisibleForSeat": "seat2",
-    "z": 177,
+    "z": 183,
     "resetProperties": {
       "x": 758,
-      "y": 656,
+      "y": 662,
       "rotation": -120
     },
     "rotation": -120
@@ -3939,12 +3188,12 @@
     "type": "holder",
     "id": "sub2",
     "x": 759,
-    "y": 598,
+    "y": 601,
     "onlyVisibleForSeat": "seat2",
-    "z": 174,
+    "z": 185,
     "resetProperties": {
       "x": 759,
-      "y": 598,
+      "y": 601,
       "rotation": -120
     },
     "rotation": -120
@@ -3958,7 +3207,7 @@
     "x": 782,
     "y": 558,
     "onlyVisibleForSeat": "seat2",
-    "z": 178,
+    "z": 187,
     "resetProperties": {
       "x": 782,
       "y": 558,
@@ -3966,7 +3215,2488 @@
     },
     "rotation": -120
   },
-  "4lnj": {
+  "board2": {
+    "inheritFrom": {
+      "board1": "*"
+    },
+    "id": "board2",
+    "x": 854,
+    "y": 60,
+    "css": {
+      "border": "3px solid #7aa385",
+      "background": "lightgray"
+    },
+    "onlyVisibleForSeat": "seat2"
+  },
+  "hex-a9": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-a9",
+    "parent": "board2",
+    "x": 1,
+    "y": 280,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-a10": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-a10",
+    "parent": "board2",
+    "x": 1,
+    "y": 336,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-a11": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-a11",
+    "parent": "board2",
+    "x": 1,
+    "y": 391,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-a12": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-a12",
+    "parent": "board2"
+  },
+  "hex-a13": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-a13",
+    "parent": "board2",
+    "x": 1,
+    "y": 502,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-a14": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-a14",
+    "parent": "board2",
+    "x": 1,
+    "y": 558,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-a15": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-a15",
+    "parent": "board2",
+    "x": 1,
+    "y": 613,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-b10": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-b10",
+    "parent": "board2",
+    "x": 49,
+    "y": 199,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-b11": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-b11",
+    "parent": "board2",
+    "x": 49,
+    "y": 254,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-b12": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-b12",
+    "parent": "board2",
+    "x": 49,
+    "y": 310,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-b13": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-b13",
+    "parent": "board2",
+    "x": 49,
+    "y": 365,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-b14": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-b14",
+    "parent": "board2",
+    "x": 49,
+    "y": 421,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-b15": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-b15",
+    "parent": "board2",
+    "x": 49,
+    "y": 476,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-b16": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-b16",
+    "parent": "board2",
+    "x": 49,
+    "y": 532,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-b17": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-b17",
+    "parent": "board2",
+    "x": 49,
+    "y": 587,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-b18": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-b18",
+    "parent": "board2",
+    "x": 49,
+    "y": 643,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-c11": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-c11",
+    "parent": "board2",
+    "x": 97,
+    "y": 173,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-c12": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-c12",
+    "parent": "board2",
+    "x": 97,
+    "y": 228,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-c13": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-c13",
+    "parent": "board2",
+    "x": 97,
+    "y": 284,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-c14": {
+    "inheritFrom": {
+      "hex-c4": "*"
+    },
+    "type": "holder",
+    "id": "hex-c14",
+    "parent": "board2",
+    "x": 97,
+    "y": 339,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-c15": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-c15",
+    "parent": "board2",
+    "x": 97,
+    "y": 395,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-c16": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-c16",
+    "parent": "board2",
+    "x": 97,
+    "y": 450,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-c17": {
+    "inheritFrom": {
+      "hex-c4": "*"
+    },
+    "type": "holder",
+    "id": "hex-c17",
+    "parent": "board2",
+    "x": 97,
+    "y": 506,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-c18": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-c18",
+    "parent": "board2",
+    "x": 97,
+    "y": 561,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-c19": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-c19",
+    "parent": "board2",
+    "x": 97,
+    "y": 617,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-c20": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-c20",
+    "parent": "board2",
+    "y": 672,
+    "x": 97,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-d12": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-d12",
+    "parent": "board2",
+    "x": 145,
+    "y": 147,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-d13": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-d13",
+    "parent": "board2",
+    "x": 145,
+    "y": 202,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-d14": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-d14",
+    "parent": "board2",
+    "x": 145,
+    "y": 258,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-d15": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-d15",
+    "parent": "board2",
+    "x": 145,
+    "y": 313,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-d16": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-d16",
+    "parent": "board2",
+    "x": 145,
+    "y": 369,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-d17": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-d17",
+    "parent": "board2",
+    "x": 145,
+    "y": 424,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-d18": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-d18",
+    "parent": "board2",
+    "x": 145,
+    "y": 480,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-d19": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-d19",
+    "parent": "board2",
+    "x": 145,
+    "y": 535,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-d20": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-d20",
+    "parent": "board2",
+    "x": 145,
+    "y": 591,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-d21": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-d21",
+    "parent": "board2",
+    "y": 646,
+    "x": 145,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-d22": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-d22",
+    "parent": "board2",
+    "y": 702,
+    "x": 145,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 11
+  },
+  "hex-e13": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-e13",
+    "parent": "board2",
+    "x": 193,
+    "y": 121,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-e14": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-e14",
+    "parent": "board2",
+    "x": 193,
+    "y": 176,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-e15": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-e15",
+    "parent": "board2",
+    "x": 193,
+    "y": 232,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-e16": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-e16",
+    "parent": "board2",
+    "x": 193,
+    "y": 287,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-e17": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-e17",
+    "parent": "board2",
+    "x": 193,
+    "y": 343,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-e18": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-e18",
+    "parent": "board2",
+    "x": 193,
+    "y": 398,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-e19": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-e19",
+    "parent": "board2",
+    "x": 193,
+    "y": 454,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-e20": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-e20",
+    "parent": "board2",
+    "x": 193,
+    "y": 509,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-e21": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-e21",
+    "parent": "board2",
+    "x": 193,
+    "y": 565,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-e22": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-e22",
+    "parent": "board2",
+    "y": 620,
+    "x": 193,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-e23": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-e23",
+    "parent": "board2",
+    "y": 676,
+    "x": 193,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 11
+  },
+  "hex-e24": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-e24",
+    "parent": "board2",
+    "y": 731,
+    "x": 193,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 12
+  },
+  "hex-f14": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-f14",
+    "parent": "board2",
+    "x": 241,
+    "y": 95,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-g15": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-g15",
+    "parent": "board2",
+    "x": 289,
+    "y": 69,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-h15": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-h15",
+    "parent": "board2",
+    "x": 337,
+    "y": 43,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-f15": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-f15",
+    "parent": "board2",
+    "x": 241,
+    "y": 150,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-f16": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-f16",
+    "parent": "board2",
+    "x": 241,
+    "y": 206,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-f17": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-f17",
+    "parent": "board2",
+    "x": 241,
+    "y": 261,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-f18": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-f18",
+    "parent": "board2",
+    "x": 241,
+    "y": 317,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-f19": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-f19",
+    "parent": "board2",
+    "x": 241,
+    "y": 372,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-f20": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-f20",
+    "parent": "board2",
+    "x": 241,
+    "y": 428,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-f21": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-f21",
+    "parent": "board2",
+    "x": 241,
+    "y": 483,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-f22": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-f22",
+    "parent": "board2",
+    "x": 241,
+    "y": 539,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-f23": {
+    "inheritFrom": {
+      "hex-c4": "*"
+    },
+    "type": "holder",
+    "id": "hex-f23",
+    "parent": "board2",
+    "y": 594,
+    "x": 241,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-f24": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-f24",
+    "parent": "board2",
+    "y": 650,
+    "x": 241,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 11
+  },
+  "hex-f25": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-f25",
+    "parent": "board2",
+    "y": 705,
+    "x": 241,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 12
+  },
+  "hex-f26": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-f26",
+    "parent": "board2",
+    "y": 761,
+    "x": 241,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 13
+  },
+  "hex-g16": {
+    "inheritFrom": {
+      "hex-c4": "*"
+    },
+    "type": "holder",
+    "id": "hex-g16",
+    "parent": "board2",
+    "x": 289,
+    "y": 124,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-g17": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-g17",
+    "parent": "board2",
+    "x": 289,
+    "y": 180,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-g18": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-g18",
+    "parent": "board2",
+    "x": 289,
+    "y": 235,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-g19": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-g19",
+    "parent": "board2",
+    "x": 289,
+    "y": 291,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-g20": {
+    "inheritFrom": {
+      "hex-c4": "*"
+    },
+    "type": "holder",
+    "id": "hex-g20",
+    "parent": "board2",
+    "x": 289,
+    "y": 346,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-g21": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-g21",
+    "parent": "board2",
+    "x": 289,
+    "y": 402,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-g22": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-g22",
+    "parent": "board2",
+    "x": 289,
+    "y": 457,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-g23": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-g23",
+    "parent": "board2",
+    "x": 289,
+    "y": 513,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-g24": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-g24",
+    "parent": "board2",
+    "y": 568,
+    "x": 289,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-g25": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-g25",
+    "parent": "board2",
+    "y": 624,
+    "x": 289,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 11
+  },
+  "hex-g26": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-g26",
+    "parent": "board2",
+    "y": 679,
+    "x": 289,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 12
+  },
+  "hex-g27": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-g27",
+    "parent": "board2",
+    "y": 735,
+    "x": 289,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 13
+  },
+  "hex-g28": {
+    "inheritFrom": {
+      "hex-c4": "*"
+    },
+    "type": "holder",
+    "id": "hex-g28",
+    "parent": "board2",
+    "y": 790,
+    "x": 289,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 14
+  },
+  "hex-h16": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-h16",
+    "parent": "board2",
+    "x": 337,
+    "y": 98,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-h17": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-h17",
+    "parent": "board2",
+    "x": 337,
+    "y": 154,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-h18": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-h18",
+    "parent": "board2",
+    "x": 337,
+    "y": 209,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-h19": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-h19",
+    "parent": "board2",
+    "x": 337,
+    "y": 265,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-h20": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-h20",
+    "parent": "board2",
+    "x": 337,
+    "y": 320,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-h21": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-h21",
+    "parent": "board2",
+    "x": 337,
+    "y": 376,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-h22": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-h22",
+    "parent": "board2",
+    "x": 337,
+    "y": 431,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-h23": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-h23",
+    "parent": "board2",
+    "x": 337,
+    "y": 487,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-h24": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-h24",
+    "parent": "board2",
+    "y": 542,
+    "x": 337,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-h25": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-h25",
+    "parent": "board2",
+    "y": 598,
+    "x": 337,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 11
+  },
+  "hex-h26": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-h26",
+    "parent": "board2",
+    "y": 653,
+    "x": 337,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 12
+  },
+  "hex-h27": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-h27",
+    "parent": "board2",
+    "y": 709,
+    "x": 337,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 13
+  },
+  "hex-h28": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-h28",
+    "parent": "board2",
+    "y": 764,
+    "x": 337,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 14
+  },
+  "hex-i15": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-i15",
+    "parent": "board2",
+    "x": 385,
+    "y": 69,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-j14": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-j14",
+    "parent": "board2",
+    "x": 433,
+    "y": 95,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-k13": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-k13",
+    "parent": "board2",
+    "x": 481,
+    "y": 121,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-l12": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-l12",
+    "parent": "board2",
+    "x": 529,
+    "y": 147,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-m11": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-m11",
+    "parent": "board2",
+    "x": 577,
+    "y": 173,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-i16": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-i16",
+    "parent": "board2",
+    "x": 385,
+    "y": 124,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-i17": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-i17",
+    "parent": "board2",
+    "x": 385,
+    "y": 180,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-i18": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-i18",
+    "parent": "board2",
+    "x": 385,
+    "y": 235,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-i19": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-i19",
+    "parent": "board2",
+    "x": 385,
+    "y": 291,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-i20": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-i20",
+    "parent": "board2",
+    "x": 385,
+    "y": 346,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-i21": {
+    "inheritFrom": {
+      "hex-i7": "*"
+    },
+    "type": "holder",
+    "id": "hex-i21",
+    "parent": "board2"
+  },
+  "hex-i22": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-i22",
+    "parent": "board2",
+    "x": 385,
+    "y": 457,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-i23": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-i23",
+    "parent": "board2",
+    "x": 385,
+    "y": 513,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-i24": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-i24",
+    "parent": "board2",
+    "y": 568,
+    "x": 385,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-i25": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-i25",
+    "parent": "board2",
+    "y": 624,
+    "x": 385,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 11
+  },
+  "hex-i26": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-i26",
+    "parent": "board2",
+    "y": 679,
+    "x": 385,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 12
+  },
+  "hex-i27": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-i27",
+    "parent": "board2",
+    "y": 735,
+    "x": 385,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 13
+  },
+  "hex-i28": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-i28",
+    "parent": "board2",
+    "y": 790,
+    "x": 385,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 14
+  },
+  "hex-j15": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-j15",
+    "parent": "board2",
+    "x": 433,
+    "y": 150,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-j16": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-j16",
+    "parent": "board2",
+    "x": 433,
+    "y": 206,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-j17": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-j17",
+    "parent": "board2",
+    "x": 433,
+    "y": 261,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-j18": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-j18",
+    "parent": "board2",
+    "x": 433,
+    "y": 317,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-j19": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-j19",
+    "parent": "board2",
+    "x": 433,
+    "y": 372,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-j20": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-j20",
+    "parent": "board2",
+    "x": 433,
+    "y": 428,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-j21": {
+    "inheritFrom": {
+      "hex-c4": "*"
+    },
+    "type": "holder",
+    "id": "hex-j21",
+    "parent": "board2",
+    "x": 433,
+    "y": 483,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-j22": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-j22",
+    "parent": "board2",
+    "x": 433,
+    "y": 539,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-j23": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-j23",
+    "parent": "board2",
+    "y": 594,
+    "x": 433,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-j24": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-j24",
+    "parent": "board2",
+    "y": 650,
+    "x": 433,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 11
+  },
+  "hex-j25": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-j25",
+    "parent": "board2",
+    "y": 705,
+    "x": 433,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 12
+  },
+  "hex-j26": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-j26",
+    "parent": "board2",
+    "y": 761,
+    "x": 433,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 13
+  },
+  "hex-k14": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-k14",
+    "parent": "board2",
+    "x": 481,
+    "y": 176,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-k15": {
+    "inheritFrom": {
+      "hex-c4": "*"
+    },
+    "type": "holder",
+    "id": "hex-k15",
+    "parent": "board2",
+    "x": 481,
+    "y": 232,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-k16": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-k16",
+    "parent": "board2",
+    "x": 481,
+    "y": 287,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-k17": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-k17",
+    "parent": "board2",
+    "x": 481,
+    "y": 343,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-k18": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-k18",
+    "parent": "board2",
+    "x": 481,
+    "y": 398,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-k19": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-k19",
+    "parent": "board2",
+    "x": 481,
+    "y": 454,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-k20": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-k20",
+    "parent": "board2",
+    "x": 481,
+    "y": 509,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-k21": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-k21",
+    "parent": "board2",
+    "x": 481,
+    "y": 565,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-k22": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-k22",
+    "parent": "board2",
+    "y": 620,
+    "x": 481,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-k23": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-k23",
+    "parent": "board2",
+    "y": 676,
+    "x": 481,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 11
+  },
+  "hex-k24": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-k24",
+    "parent": "board2",
+    "y": 731,
+    "x": 481,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 12
+  },
+  "hex-l13": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-l13",
+    "parent": "board2",
+    "x": 529,
+    "y": 202,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-l14": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-l14",
+    "parent": "board2",
+    "x": 529,
+    "y": 258,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-l15": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-l15",
+    "parent": "board2",
+    "x": 529,
+    "y": 313,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-l16": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-l16",
+    "parent": "board2",
+    "x": 529,
+    "y": 369,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-l17": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-l17",
+    "parent": "board2",
+    "x": 529,
+    "y": 424,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-l18": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-l18",
+    "parent": "board2",
+    "x": 529,
+    "y": 480,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-l19": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-l19",
+    "parent": "board2",
+    "x": 529,
+    "y": 535,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-l20": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-l20",
+    "parent": "board2",
+    "x": 529,
+    "y": 591,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-l21": {
+    "inheritFrom": {
+      "hex-c4": "*"
+    },
+    "type": "holder",
+    "id": "hex-l21",
+    "parent": "board2",
+    "y": 646,
+    "x": 529,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-l22": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-l22",
+    "parent": "board2",
+    "y": 702,
+    "x": 529,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 11
+  },
+  "hex-m12": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-m12",
+    "parent": "board2",
+    "x": 577,
+    "y": 228,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-m13": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-m13",
+    "parent": "board2",
+    "x": 577,
+    "y": 284,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-m14": {
+    "inheritFrom": {
+      "hex-c4": "*"
+    },
+    "type": "holder",
+    "id": "hex-m14",
+    "parent": "board2",
+    "x": 577,
+    "y": 339,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-m15": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-m15",
+    "parent": "board2",
+    "x": 577,
+    "y": 395,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 5
+  },
+  "hex-m16": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-m16",
+    "parent": "board2",
+    "x": 577,
+    "y": 450,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-m17": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-m17",
+    "parent": "board2",
+    "x": 577,
+    "y": 506,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-m18": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-m18",
+    "parent": "board2",
+    "x": 577,
+    "y": 561,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-m19": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-m19",
+    "parent": "board2",
+    "x": 577,
+    "y": 617,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-m20": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-m20",
+    "parent": "board2",
+    "y": 672,
+    "x": 577,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 10
+  },
+  "hex-a16": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-a16",
+    "parent": "board2"
+  },
+  "labelColA1": {
+    "inheritFrom": {
+      "labelColA": "*"
+    },
+    "id": "labelColA1",
+    "parent": "board2"
+  },
+  "labelColB1": {
+    "inheritFrom": {
+      "labelColB": "*"
+    },
+    "id": "labelColB1",
+    "parent": "board2"
+  },
+  "labelColC1": {
+    "inheritFrom": {
+      "labelColC": "*"
+    },
+    "id": "labelColC1",
+    "parent": "board2"
+  },
+  "labelColD1": {
+    "inheritFrom": {
+      "labelColD": "*"
+    },
+    "id": "labelColD1",
+    "parent": "board2"
+  },
+  "labelColE1": {
+    "inheritFrom": {
+      "labelColE": "*"
+    },
+    "id": "labelColE1",
+    "parent": "board2"
+  },
+  "labelColF1": {
+    "inheritFrom": {
+      "labelColF": "*"
+    },
+    "id": "labelColF1",
+    "parent": "board2"
+  },
+  "labelColG1": {
+    "inheritFrom": {
+      "labelColG": "*"
+    },
+    "id": "labelColG1",
+    "parent": "board2"
+  },
+  "labelColH1": {
+    "inheritFrom": {
+      "labelColH": "*"
+    },
+    "id": "labelColH1",
+    "parent": "board2"
+  },
+  "labelColI1": {
+    "inheritFrom": {
+      "labelColI": "*"
+    },
+    "id": "labelColI1",
+    "parent": "board2"
+  },
+  "labelColJ1": {
+    "inheritFrom": {
+      "labelColJ": "*"
+    },
+    "id": "labelColJ1",
+    "parent": "board2"
+  },
+  "labelColK1": {
+    "inheritFrom": {
+      "labelColK": "*"
+    },
+    "id": "labelColK1",
+    "parent": "board2"
+  },
+  "labelColL1": {
+    "inheritFrom": {
+      "labelColL": "*"
+    },
+    "id": "labelColL1",
+    "parent": "board2"
+  },
+  "labelColM1": {
+    "inheritFrom": {
+      "labelColM": "*"
+    },
+    "id": "labelColM1",
+    "parent": "board2"
+  },
+  "labelColN1": {
+    "inheritFrom": {
+      "labelColN": "*"
+    },
+    "id": "labelColN1",
+    "parent": "board2"
+  },
+  "hex-n10": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-n10",
+    "parent": "board2",
+    "x": 625,
+    "y": 199,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-n11": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-n11",
+    "parent": "board2",
+    "x": 625,
+    "y": 254,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-n12": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-n12",
+    "parent": "board2",
+    "x": 625,
+    "y": 310,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-n13": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-n13",
+    "parent": "board2",
+    "x": 625,
+    "y": 365,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-n14": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-n14",
+    "parent": "board2",
+    "x": 625,
+    "y": 421,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-n15": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-n15",
+    "parent": "board2",
+    "x": 625,
+    "y": 476,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-n16": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-n16",
+    "parent": "board2",
+    "x": 625,
+    "y": 532,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-n17": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-n17",
+    "parent": "board2",
+    "x": 625,
+    "y": 587,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "hex-n18": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-n18",
+    "parent": "board2",
+    "x": 625,
+    "y": 643,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 9
+  },
+  "hex-o9": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-o9",
+    "parent": "board2",
+    "x": 673,
+    "y": 225,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-o10": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-o10",
+    "parent": "board2",
+    "x": 673,
+    "y": 280.5,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 2
+  },
+  "hex-o11": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-o11",
+    "parent": "board2",
+    "x": 673,
+    "y": 336,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 3
+  },
+  "hex-o12": {
+    "inheritFrom": {
+      "hex-a1": "*"
+    },
+    "type": "holder",
+    "id": "hex-o12",
+    "parent": "board2",
+    "x": 673,
+    "y": 391.5,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 4
+  },
+  "hex-o13": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-o13",
+    "parent": "board2",
+    "x": 673,
+    "y": 447,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2
+  },
+  "hex-o14": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-o14",
+    "parent": "board2",
+    "x": 673,
+    "y": 502.5,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 6
+  },
+  "hex-o15": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-o15",
+    "parent": "board2",
+    "x": 673,
+    "y": 558,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 7
+  },
+  "hex-o16": {
+    "inheritFrom": {
+      "hex-a5": "*"
+    },
+    "type": "holder",
+    "id": "hex-o16",
+    "parent": "board2",
+    "x": 673,
+    "y": 613.5,
+    "width": 64,
+    "height": 55.5,
+    "layer": -2,
+    "num": 8
+  },
+  "labelColO1": {
+    "inheritFrom": {
+      "labelColO": "*"
+    },
+    "id": "labelColO1",
+    "parent": "board2"
+  },
+  "backgroundImage": {
+    "id": "backgroundImage",
+    "y": -20,
+    "width": 1620,
+    "height": 1040,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1534889400_406792",
+    "movableInEdit": false
+  },
+  "backgroundFilter": {
+    "id": "backgroundFilter",
+    "width": 1600,
+    "height": 1000,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#00000040"
+    },
+    "layer": -4
+  },
+  "pbdz": {
+    "y": 4,
+    "width": 35,
+    "height": 40,
+    "z": 435,
+    "color": "#ff0000",
+    "css": "border-radius: 80% 80% 40% 110%",
+    "image": "/i/game-pieces/3D/Pin-3D.svg",
+    "svgReplaces": {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "black",
+    "borderWidth": "1",
+    "peg": true,
+    "layer": 4,
+    "x": 4,
+    "dragging": "Mike",
+    "hoverParent": "redHolder",
+    "clonedFrom": "17kh",
+    "hidePlayerCursors": true,
+    "id": "pbdz",
+    "parent": "redHolder"
+  },
+  "gub2": {
     "x": 4,
     "y": 4,
     "width": 35,
@@ -3981,39 +5711,14 @@
     },
     "borderColor": "black",
     "borderWidth": "1",
-    "z": 272,
+    "z": 437,
     "layer": 4,
-    "dragging": "Guest822",
+    "dragging": "Mike",
     "hoverParent": "whiteHolder",
-    "clonedFrom": "09l2",
+    "clonedFrom": "t9t0",
     "peg": true,
     "hidePlayerCursors": true,
-    "id": "4lnj",
+    "id": "gub2",
     "parent": "whiteHolder"
-  },
-  "p6nq": {
-    "y": 4,
-    "width": 35,
-    "height": 40,
-    "z": 274,
-    "color": "#ff0000",
-    "css": "border-radius: 80% 80% 40% 110%",
-    "image": "/i/game-pieces/3D/Pin-3D.svg",
-    "svgReplaces": {
-      "#borderWidth": "borderWidth",
-      "#borderColor": "borderColor",
-      "#primaryColor": "color"
-    },
-    "borderColor": "black",
-    "borderWidth": "1",
-    "peg": true,
-    "layer": 4,
-    "x": 4,
-    "dragging": "Guest822",
-    "hoverParent": "redHolder",
-    "clonedFrom": "jg3h",
-    "hidePlayerCursors": true,
-    "id": "p6nq",
-    "parent": "redHolder"
   }
 }
