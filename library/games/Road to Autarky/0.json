@@ -1,0 +1,7105 @@
+{
+  "_meta": {
+    "version": 14,
+    "info": {
+      "name": "Road to Autarky",
+      "image": "/assets/-1356446689_40704",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/8190/bridges-shangri-la",
+      "year": "2003",
+      "mode": "vs",
+      "time": "60",
+      "attribution": "<div><div>Room layout, custom game pieces and scripting by Nicolas Weiss / PaladinOfCats, under a CCBY 3.0 licence.</div><div>http://paladinofcats.free.fr/vtio.htm<br></div><div><br></div><div>---<br></div><div><br></div>Icons by the following people under a CCBY 3.0 licence.</div><div><br></div><div><b>Delapouite</b></div><i>Rod of Asclepius</i><br>https://game-icons.net/1x1/delapouite/rod-of-asclepius.htm<br><i>Sasquatch</i><br>https://game-icons.net/1x1/delapouite/sasquatch.html<br><i>Spiked dragon head</i><br>https://game-icons.net/1x1/delapouite/spiked-dragon-head.html<br><i>Stars stack</i><br>https://game-icons.net/1x1/delapouite/stars-stack.html<br><br><b>Lorc</b><br><i>Campfire</i><br>https://game-icons.net/1x1/lorc/campfire.html<br><i>Raining</i><br>https://game-icons.net/1x1/lorc/raining.html<br><br><b>Skoll</b><br><i>Spinning top</i><br>https://game-icons.net/1x1/skoll/spinning-top.html",
+      "lastUpdate": 1699398189089,
+      "showName": true,
+      "skill": "",
+      "description": "Send your apprentices on a journey to burn the very bridge that led them to success, so that no one can challenge them in the future.",
+      "similarImage": "",
+      "similarName": "The Bridges of Shangri-La",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Click on a bridge icon to flip the road on/off.<br>",
+      "similarDesigner": "Leo Colovini",
+      "players": "3-4",
+      "language": "en-GB",
+      "variant": "Default",
+      "variantImage": ""
+    }
+  },
+  "board": {
+    "id": "board",
+    "x": 300,
+    "width": 1000,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-834146794_25243"
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "y": 10,
+    "width": 200,
+    "x": 44,
+    "hideWhenUnused": true,
+    "css": {
+      ".seated": {
+        "border": "7px solid #2f9fdf"
+      }
+    }
+  },
+  "score-p1": {
+    "type": "label",
+    "id": "score-p1",
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "fixedParent": true,
+    "parent": "seat-p1",
+    "y": 50,
+    "x": 67
+  },
+  "score-p1D": {
+    "type": "button",
+    "id": "score-p1D",
+    "parent": "score-p1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "score-p1U": {
+    "type": "button",
+    "id": "score-p1U",
+    "parent": "score-p1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "bridge-2": {
+    "id": "bridge-2",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 105,
+    "y": 585,
+    "width": 50,
+    "height": 200,
+    "layer": -3,
+    "movable": false,
+    "faces": [
+      {
+        "image": "/assets/186656607_3451"
+      },
+      {
+        "image": "/assets/1271245588_3107"
+      }
+    ],
+    "clickable": false,
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-2": {
+    "id": "bridge-button-2",
+    "parent": "bridge-2",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 16,
+    "y": 74,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 4,
+    "movable": false
+  },
+  "bridge-3": {
+    "id": "bridge-3",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 845,
+    "y": 215,
+    "width": 50,
+    "height": 200,
+    "layer": -3,
+    "movable": false,
+    "faces": [
+      {
+        "image": "/assets/186656607_3451"
+      },
+      {
+        "image": "/assets/1271245588_3107"
+      }
+    ],
+    "clickable": false,
+    "tag": "3p",
+    "activeFace": 1
+  },
+  "bridge-button-3": {
+    "id": "bridge-button-3",
+    "parent": "bridge-3",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 14,
+    "y": 75,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 3,
+    "movable": false
+  },
+  "bridge-4": {
+    "id": "bridge-4",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 290,
+    "y": 400,
+    "width": 50,
+    "height": 200,
+    "layer": -3,
+    "movable": false,
+    "faces": [
+      {
+        "image": "/assets/186656607_3451"
+      },
+      {
+        "image": "/assets/1271245588_3107"
+      }
+    ],
+    "clickable": false,
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-4": {
+    "id": "bridge-button-4",
+    "parent": "bridge-4",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 13,
+    "y": 75,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 3,
+    "movable": false
+  },
+  "bridge-button-1": {
+    "id": "bridge-button-1",
+    "parent": "bridge-1",
+    "fixedParent": true,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 19,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": -1,
+    "movable": false
+  },
+  "bridge-1": {
+    "id": "bridge-1",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 105,
+    "y": 215,
+    "width": 50,
+    "height": 200,
+    "layer": -3,
+    "movable": false,
+    "faces": [
+      {
+        "image": "/assets/186656607_3451"
+      },
+      {
+        "image": "/assets/1271245588_3107"
+      }
+    ],
+    "clickable": false,
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-5": {
+    "id": "bridge-5",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 215,
+    "y": 105,
+    "width": 200,
+    "height": 50,
+    "layer": -3,
+    "movable": false,
+    "faces": [
+      {
+        "image": "/assets/919646864_3515"
+      },
+      {
+        "image": "/assets/776553839_3181"
+      }
+    ],
+    "clickable": false,
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-5": {
+    "id": "bridge-button-5",
+    "parent": "bridge-5",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 6,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 75,
+    "movable": false
+  },
+  "bridge-6": {
+    "id": "bridge-6",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 585,
+    "y": 105,
+    "width": 200,
+    "height": 50,
+    "layer": -3,
+    "movable": false,
+    "faces": [
+      {
+        "image": "/assets/919646864_3515"
+      },
+      {
+        "image": "/assets/776553839_3181"
+      }
+    ],
+    "clickable": false,
+    "tag": "3p",
+    "activeFace": 1
+  },
+  "bridge-button-6": {
+    "id": "bridge-button-6",
+    "parent": "bridge-6",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 17,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 74,
+    "movable": false
+  },
+  "bridge-7": {
+    "id": "bridge-7",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 400,
+    "y": 290,
+    "width": 200,
+    "height": 50,
+    "layer": -3,
+    "movable": false,
+    "faces": [
+      {
+        "image": "/assets/919646864_3515"
+      },
+      {
+        "image": "/assets/776553839_3181"
+      }
+    ],
+    "clickable": false,
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-7": {
+    "id": "bridge-button-7",
+    "parent": "bridge-7",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 6,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 75,
+    "movable": false
+  },
+  "bridge-8": {
+    "id": "bridge-8",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 585,
+    "y": 475,
+    "width": 200,
+    "height": 50,
+    "layer": -3,
+    "movable": false,
+    "faces": [
+      {
+        "image": "/assets/919646864_3515"
+      },
+      {
+        "image": "/assets/776553839_3181"
+      }
+    ],
+    "clickable": false,
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-8": {
+    "id": "bridge-button-8",
+    "parent": "bridge-8",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 6,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 75,
+    "movable": false
+  },
+  "bridge-9": {
+    "id": "bridge-9",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 215,
+    "y": 845,
+    "width": 200,
+    "height": 50,
+    "layer": -3,
+    "movable": false,
+    "faces": [
+      {
+        "image": "/assets/919646864_3515"
+      },
+      {
+        "image": "/assets/776553839_3181"
+      }
+    ],
+    "clickable": false,
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-9": {
+    "id": "bridge-button-9",
+    "parent": "bridge-9",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 21,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 75,
+    "movable": false
+  },
+  "bridge-10": {
+    "id": "bridge-10",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 585,
+    "y": 845,
+    "width": 200,
+    "height": 50,
+    "layer": -3,
+    "movable": false,
+    "faces": [
+      {
+        "image": "/assets/919646864_3515"
+      },
+      {
+        "image": "/assets/776553839_3181"
+      }
+    ],
+    "clickable": false,
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-10": {
+    "id": "bridge-button-10",
+    "parent": "bridge-10",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 6,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 75,
+    "movable": false
+  },
+  "bridge-button-11": {
+    "id": "bridge-button-11",
+    "parent": "bridge-11",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 18,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "y": 347,
+    "movable": false
+  },
+  "bridge-11": {
+    "id": "bridge-11",
+    "parent": "board",
+    "fixedParent": true,
+    "x": -25,
+    "y": 130,
+    "width": 70,
+    "height": 740,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/-989171491_3699"
+      },
+      {
+        "image": "/assets/1866860942_3130"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-12": {
+    "id": "bridge-button-12",
+    "parent": "bridge-12",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bridge-12a"
+      },
+      {
+        "func": "FLIP"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bridge-12b"
+      },
+      {
+        "func": "FLIP"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bridge-12c"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "movable": false
+  },
+  "bridge-12": {
+    "id": "bridge-12",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 201.5,
+    "y": 753.5,
+    "width": 50,
+    "height": 50,
+    "layer": -2,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/1307253568_2853"
+      },
+      {
+        "image": "/assets/1300862990_2081"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-13": {
+    "id": "bridge-13",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 567.928,
+    "y": 739.983,
+    "width": 50,
+    "height": 50,
+    "layer": -2,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/1307253568_2853"
+      },
+      {
+        "image": "/assets/1300862990_2081"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-13": {
+    "id": "bridge-button-13",
+    "parent": "bridge-13",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bridge-13a"
+      },
+      {
+        "func": "FLIP"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bridge-13b"
+      },
+      {
+        "func": "FLIP"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bridge-13c"
+      },
+      {
+        "func": "FLIP"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bridge-13d"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "movable": false
+  },
+  "bridge-14": {
+    "id": "bridge-14",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 183.17,
+    "y": 159.378,
+    "width": 78.66,
+    "height": 126.244,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/1740064862_4028"
+      },
+      {
+        "image": "/assets/909924468_3649"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-14": {
+    "id": "bridge-button-14",
+    "parent": "bridge-14",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 14.33,
+    "y": 38.122,
+    "movable": false
+  },
+  "bridge-15": {
+    "id": "bridge-15",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 553.17,
+    "y": 159.378,
+    "width": 78.66,
+    "height": 126.244,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/1740064862_4028"
+      },
+      {
+        "image": "/assets/909924468_3649"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-15": {
+    "id": "bridge-button-15",
+    "parent": "bridge-15",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 14.33,
+    "y": 38.122,
+    "movable": false
+  },
+  "bridge-16": {
+    "id": "bridge-16",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 553.17,
+    "y": 529.378,
+    "width": 78.66,
+    "height": 126.244,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/1740064862_4028"
+      },
+      {
+        "image": "/assets/909924468_3649"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-16": {
+    "id": "bridge-button-16",
+    "parent": "bridge-16",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 14.33,
+    "y": 38.122,
+    "movable": false
+  },
+  "bridge-17": {
+    "id": "bridge-17",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 368.17,
+    "y": 714.378,
+    "width": 78.66,
+    "height": 126.244,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/1740064862_4028"
+      },
+      {
+        "image": "/assets/909924468_3649"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-17": {
+    "id": "bridge-button-17",
+    "parent": "bridge-17",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 14.33,
+    "y": 38.122,
+    "movable": false
+  },
+  "bridge-18": {
+    "id": "bridge-18",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 738.17,
+    "y": 714.378,
+    "width": 78.66,
+    "height": 126.244,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/1740064862_4028"
+      },
+      {
+        "image": "/assets/909924468_3649"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-18": {
+    "id": "bridge-button-18",
+    "parent": "bridge-18",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 14.33,
+    "y": 38.122,
+    "movable": false
+  },
+  "bridge-19": {
+    "id": "bridge-19",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 738.17,
+    "y": 159.378,
+    "width": 78.66,
+    "height": 126.244,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/-96261885_4058"
+      },
+      {
+        "image": "/assets/909924468_3649"
+      }
+    ],
+    "tag": "3p",
+    "activeFace": 1
+  },
+  "bridge-button-19": {
+    "id": "bridge-button-19",
+    "parent": "bridge-19",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 14.33,
+    "y": 38.122,
+    "movable": false
+  },
+  "bridge-20": {
+    "id": "bridge-20",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 183.17,
+    "y": 344.378,
+    "width": 78.66,
+    "height": 126.244,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/-96261885_4058"
+      },
+      {
+        "image": "/assets/909924468_3649"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-20": {
+    "id": "bridge-button-20",
+    "parent": "bridge-20",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 14.33,
+    "y": 38.122,
+    "movable": false
+  },
+  "bridge-21": {
+    "id": "bridge-21",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 553.17,
+    "y": 344.378,
+    "width": 78.66,
+    "height": 126.244,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/-96261885_4058"
+      },
+      {
+        "image": "/assets/909924468_3649"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-21": {
+    "id": "bridge-button-21",
+    "parent": "bridge-21",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 14.33,
+    "y": 38.122,
+    "movable": false
+  },
+  "bridge-22": {
+    "id": "bridge-22",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 368.17,
+    "y": 529.378,
+    "width": 78.66,
+    "height": 126.244,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/-96261885_4058"
+      },
+      {
+        "image": "/assets/909924468_3649"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-22": {
+    "id": "bridge-button-22",
+    "parent": "bridge-22",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 14.33,
+    "y": 38.122,
+    "movable": false
+  },
+  "bridge-23": {
+    "id": "bridge-23",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 738.17,
+    "y": 529.378,
+    "width": 78.66,
+    "height": 126.244,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/-96261885_4058"
+      },
+      {
+        "image": "/assets/909924468_3649"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-button-23": {
+    "id": "bridge-button-23",
+    "parent": "bridge-23",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP"
+      }
+    ],
+    "x": 14.33,
+    "y": 38.122,
+    "movable": false
+  },
+  "paranoia-holder": {
+    "type": "holder",
+    "id": "paranoia-holder",
+    "x": 50,
+    "y": 790,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    }
+  },
+  "deck": {
+    "type": "deck",
+    "id": "deck",
+    "parent": "paranoia-holder",
+    "x": 12,
+    "y": 41,
+    "cardDefaults": {
+      "width": 200,
+      "height": 200,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        }
+      }
+    },
+    "cardTypes": {
+      "paranoia-3p": {
+        "image": "/assets/-219298534_1801",
+        "suit": "paranoia"
+      },
+      "paranoia 4p": {
+        "image": "/assets/-219298534_1801",
+        "suit": "paranoia"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 200,
+            "value": "/assets/-219298534_1801",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 200,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "fixedParent": true
+  },
+  "oe0a": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia-3p",
+    "id": "oe0a",
+    "z": 18997,
+    "activeFace": 1,
+    "parent": "3uur"
+  },
+  "8g88": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia 4p",
+    "id": "8g88",
+    "z": 18999,
+    "parent": "3uur"
+  },
+  "ajpm": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia 4p",
+    "id": "ajpm",
+    "z": 19001,
+    "parent": "3uur"
+  },
+  "gret": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia 4p",
+    "id": "gret",
+    "z": 19003,
+    "parent": "3uur"
+  },
+  "m0zq": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia 4p",
+    "id": "m0zq",
+    "z": 19005,
+    "parent": "3uur"
+  },
+  "4pho": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia 4p",
+    "id": "4pho",
+    "z": 19007,
+    "parent": "3uur"
+  },
+  "t5cc": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia 4p",
+    "id": "t5cc",
+    "z": 19009,
+    "parent": "3uur"
+  },
+  "po4f": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia 4p",
+    "id": "po4f",
+    "z": 19011,
+    "parent": "3uur"
+  },
+  "s25o": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia 4p",
+    "id": "s25o",
+    "z": 19013,
+    "parent": "3uur"
+  },
+  "irbq": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia 4p",
+    "id": "irbq",
+    "z": 19015,
+    "parent": "3uur"
+  },
+  "3aev": {
+    "deck": "paranoia-deck",
+    "type": "card",
+    "cardType": "paranoia 4p",
+    "id": "3aev",
+    "z": 19507,
+    "parent": "3uur"
+  },
+  "label-paranoia": {
+    "type": "label",
+    "id": "label-paranoia",
+    "parent": "paranoia-holder",
+    "fixedParent": true,
+    "y": 81,
+    "width": 200,
+    "height": 42,
+    "z": 1,
+    "css": "font-size: 30px",
+    "text": "Paranoia"
+  },
+  "village-1": {
+    "type": "holder",
+    "id": "village-1",
+    "x": 30,
+    "y": 30,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -9
+  },
+  "deck-tokens": {
+    "type": "deck",
+    "id": "deck-tokens",
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "handlePosition": "top right",
+        "handleSize": 30
+      }
+    },
+    "cardTypes": {
+      "1b": {
+        "image": "/assets/-329651359_4316",
+        "value": "1",
+        "suit": "b"
+      },
+      "2b": {
+        "image": "/assets/1602808946_4016",
+        "value": "2",
+        "suit": "b"
+      },
+      "3b": {
+        "image": "/assets/1269357420_4182",
+        "value": "3",
+        "suit": "b"
+      },
+      "4b": {
+        "image": "/assets/629580994_3143",
+        "value": "4",
+        "suit": "b"
+      },
+      "5b": {
+        "image": "/assets/-832379327_3663",
+        "value": "5",
+        "suit": "b"
+      },
+      "6b": {
+        "image": "/assets/-1819431517_3796",
+        "value": "6",
+        "suit": "b"
+      },
+      "7b": {
+        "image": "/assets/1079905356_4615",
+        "value": "7",
+        "suit": "b"
+      },
+      "1r": {
+        "image": "/assets/1338415951_4316",
+        "value": "1",
+        "suit": "r"
+      },
+      "2r": {
+        "image": "/assets/-1869666224_4016",
+        "value": "2",
+        "suit": "r"
+      },
+      "3r": {
+        "image": "/assets/-1264171161_4182",
+        "value": "3",
+        "suit": "r"
+      },
+      "4r": {
+        "image": "/assets/1431321666_3143",
+        "value": "4",
+        "suit": "r"
+      },
+      "5r": {
+        "image": "/assets/1299642304_3663",
+        "value": "5",
+        "suit": "r"
+      },
+      "6r": {
+        "image": "/assets/-1640955989_3796",
+        "value": "6",
+        "suit": "r"
+      },
+      "7r": {
+        "image": "/assets/180861341_4615",
+        "value": "7",
+        "suit": "r"
+      },
+      "1y": {
+        "image": "/assets/364733853_4316",
+        "value": "1",
+        "suit": "y"
+      },
+      "2y": {
+        "image": "/assets/2105516701_4016",
+        "value": "2",
+        "suit": "y"
+      },
+      "3y": {
+        "image": "/assets/1182854684_4182",
+        "value": "3",
+        "suit": "y"
+      },
+      "4y": {
+        "image": "/assets/571720854_3143",
+        "value": "4",
+        "suit": "y"
+      },
+      "5y": {
+        "image": "/assets/-840458265_3663",
+        "value": "5",
+        "suit": "y"
+      },
+      "6y": {
+        "image": "/assets/1924581243_3796",
+        "value": "6",
+        "suit": "y"
+      },
+      "7y": {
+        "image": "/assets/897284333_4615",
+        "value": "7",
+        "suit": "y"
+      },
+      "1p": {
+        "image": "/assets/-1351645227_4316",
+        "value": "1",
+        "suit": "p"
+      },
+      "2p": {
+        "image": "/assets/68193836_4016",
+        "value": "2",
+        "suit": "p"
+      },
+      "3p": {
+        "image": "/assets/-723537290_4182",
+        "value": "3",
+        "suit": "p"
+      },
+      "4p": {
+        "image": "/assets/-26898137_3143",
+        "value": "4",
+        "suit": "p"
+      },
+      "5p": {
+        "image": "/assets/-1598393362_3663",
+        "value": "5",
+        "suit": "p"
+      },
+      "6p": {
+        "image": "/assets/1993997275_3796",
+        "value": "6",
+        "suit": "p"
+      },
+      "7p": {
+        "image": "/assets/646249520_4615",
+        "value": "7",
+        "suit": "p"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 50,
+            "height": 50,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "parent": "oob",
+    "fixedParent": true
+  },
+  "y5hg": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1b",
+    "id": "y5hg",
+    "parent": "h7rc",
+    "z": 19018
+  },
+  "gdyf": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2b",
+    "id": "gdyf",
+    "z": 19030,
+    "parent": "zxbi"
+  },
+  "n9id": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3b",
+    "id": "n9id",
+    "z": 19042,
+    "parent": "mh9z"
+  },
+  "uv1o": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4b",
+    "id": "uv1o",
+    "z": 19054,
+    "parent": "ay32"
+  },
+  "p6h8": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5b",
+    "id": "p6h8",
+    "z": 19066,
+    "parent": "5xxw"
+  },
+  "aze0": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6b",
+    "id": "aze0",
+    "z": 19078,
+    "parent": "luzm"
+  },
+  "6r6p": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7b",
+    "id": "6r6p",
+    "z": 19090,
+    "parent": "yzd4"
+  },
+  "djoa": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1r",
+    "id": "djoa",
+    "z": 19102,
+    "parent": "gbxm"
+  },
+  "84ky": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2r",
+    "id": "84ky",
+    "z": 19114,
+    "parent": "n3u6"
+  },
+  "kwnx": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3r",
+    "id": "kwnx",
+    "z": 19126,
+    "parent": "14oo"
+  },
+  "iad6": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4r",
+    "id": "iad6",
+    "z": 19138,
+    "parent": "orrt"
+  },
+  "m5wr": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5r",
+    "id": "m5wr",
+    "z": 19150,
+    "parent": "7qoh"
+  },
+  "a4zz": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6r",
+    "id": "a4zz",
+    "z": 19162,
+    "parent": "vpmx"
+  },
+  "prrl": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7r",
+    "id": "prrl",
+    "z": 19174,
+    "parent": "7xfv"
+  },
+  "gf6n": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1y",
+    "id": "gf6n",
+    "z": 19186,
+    "parent": "6yfb"
+  },
+  "rnnh": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2y",
+    "id": "rnnh",
+    "z": 19198,
+    "parent": "9i4v"
+  },
+  "li7t": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3y",
+    "id": "li7t",
+    "z": 19210,
+    "parent": "ea4t"
+  },
+  "l13e": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4y",
+    "id": "l13e",
+    "z": 19222,
+    "parent": "dugb"
+  },
+  "tu99": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5y",
+    "id": "tu99",
+    "z": 19234,
+    "parent": "upy4"
+  },
+  "cbwh": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6y",
+    "id": "cbwh",
+    "z": 19246,
+    "parent": "c4sx"
+  },
+  "k5h3": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7y",
+    "id": "k5h3",
+    "z": 19258,
+    "parent": "ut3s"
+  },
+  "d5nq": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1p",
+    "id": "d5nq",
+    "z": 19270,
+    "parent": "3rp6"
+  },
+  "ads4": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2p",
+    "id": "ads4",
+    "z": 19282,
+    "parent": "4agp"
+  },
+  "21xa": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3p",
+    "id": "21xa",
+    "z": 19294,
+    "parent": "u3j3"
+  },
+  "kfdp": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4p",
+    "id": "kfdp",
+    "z": 19306,
+    "parent": "2s4d"
+  },
+  "vc5p": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5p",
+    "id": "vc5p",
+    "z": 19318,
+    "parent": "ga1c"
+  },
+  "2yw8": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6p",
+    "id": "2yw8",
+    "z": 19330,
+    "parent": "wsx5"
+  },
+  "2ntn": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7p",
+    "id": "2ntn",
+    "z": 19342,
+    "parent": "b179"
+  },
+  "tytj": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1b",
+    "id": "tytj",
+    "z": 19353,
+    "parent": "h7rc"
+  },
+  "fc5b": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2b",
+    "id": "fc5b",
+    "z": 19358,
+    "parent": "zxbi"
+  },
+  "2kfd": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3b",
+    "id": "2kfd",
+    "z": 19363,
+    "parent": "mh9z"
+  },
+  "l8cy": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4b",
+    "id": "l8cy",
+    "z": 19368,
+    "parent": "ay32"
+  },
+  "vobl": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5b",
+    "id": "vobl",
+    "z": 19373,
+    "parent": "5xxw"
+  },
+  "7s3w": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6b",
+    "id": "7s3w",
+    "z": 19378,
+    "parent": "luzm"
+  },
+  "yugn": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7b",
+    "id": "yugn",
+    "z": 19383,
+    "parent": "yzd4"
+  },
+  "8rar": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1r",
+    "id": "8rar",
+    "z": 19388,
+    "parent": "gbxm"
+  },
+  "ytml": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2r",
+    "id": "ytml",
+    "z": 19393,
+    "parent": "n3u6"
+  },
+  "98dg": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3r",
+    "id": "98dg",
+    "z": 19398,
+    "parent": "14oo"
+  },
+  "2jd7": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4r",
+    "id": "2jd7",
+    "z": 19403,
+    "parent": "orrt"
+  },
+  "y9uj": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5r",
+    "id": "y9uj",
+    "z": 19408,
+    "parent": "7qoh"
+  },
+  "4thp": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6r",
+    "id": "4thp",
+    "z": 19413,
+    "parent": "vpmx"
+  },
+  "8zcv": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7r",
+    "id": "8zcv",
+    "z": 19418,
+    "parent": "7xfv"
+  },
+  "e2qn": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1y",
+    "id": "e2qn",
+    "z": 19423,
+    "parent": "6yfb"
+  },
+  "zpjl": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2y",
+    "id": "zpjl",
+    "z": 19428,
+    "parent": "9i4v"
+  },
+  "0b4l": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3y",
+    "id": "0b4l",
+    "z": 19433,
+    "parent": "ea4t"
+  },
+  "pm9s": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4y",
+    "id": "pm9s",
+    "z": 19438,
+    "parent": "dugb"
+  },
+  "rdcs": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5y",
+    "id": "rdcs",
+    "z": 19443,
+    "parent": "upy4"
+  },
+  "dncy": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6y",
+    "id": "dncy",
+    "z": 19448,
+    "parent": "c4sx"
+  },
+  "rzgm": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7y",
+    "id": "rzgm",
+    "z": 19453,
+    "parent": "ut3s"
+  },
+  "xcwd": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1p",
+    "id": "xcwd",
+    "z": 19458,
+    "parent": "3rp6"
+  },
+  "or98": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2p",
+    "id": "or98",
+    "z": 19463,
+    "parent": "4agp"
+  },
+  "r1ce": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3p",
+    "id": "r1ce",
+    "z": 19468,
+    "parent": "u3j3"
+  },
+  "rg6g": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4p",
+    "id": "rg6g",
+    "z": 19473,
+    "parent": "2s4d"
+  },
+  "oii8": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5p",
+    "id": "oii8",
+    "z": 19478,
+    "parent": "ga1c"
+  },
+  "ztkc": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6p",
+    "id": "ztkc",
+    "z": 19483,
+    "parent": "wsx5"
+  },
+  "2zrm": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7p",
+    "id": "2zrm",
+    "z": 19488,
+    "parent": "b179"
+  },
+  "inan": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1b",
+    "id": "inan",
+    "z": 19354,
+    "parent": "h7rc"
+  },
+  "z7v9": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2b",
+    "id": "z7v9",
+    "z": 19359,
+    "parent": "zxbi"
+  },
+  "1r8d": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3b",
+    "id": "1r8d",
+    "z": 19364,
+    "parent": "mh9z"
+  },
+  "7tcw": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4b",
+    "id": "7tcw",
+    "z": 19369,
+    "parent": "ay32"
+  },
+  "w1o6": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5b",
+    "id": "w1o6",
+    "z": 19374,
+    "parent": "5xxw"
+  },
+  "itoz": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6b",
+    "id": "itoz",
+    "z": 19379,
+    "parent": "luzm"
+  },
+  "qc6p": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7b",
+    "id": "qc6p",
+    "z": 19384,
+    "parent": "yzd4"
+  },
+  "33tb": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1r",
+    "id": "33tb",
+    "z": 19389,
+    "parent": "gbxm"
+  },
+  "1atx": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2r",
+    "id": "1atx",
+    "z": 19394,
+    "parent": "n3u6"
+  },
+  "bp39": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3r",
+    "id": "bp39",
+    "z": 19399,
+    "parent": "14oo"
+  },
+  "ybk6": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4r",
+    "id": "ybk6",
+    "z": 19404,
+    "parent": "orrt"
+  },
+  "7fqv": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5r",
+    "id": "7fqv",
+    "z": 19409,
+    "parent": "7qoh"
+  },
+  "rals": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6r",
+    "id": "rals",
+    "z": 19414,
+    "parent": "vpmx"
+  },
+  "meqy": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7r",
+    "id": "meqy",
+    "z": 19419,
+    "parent": "7xfv"
+  },
+  "249m": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1y",
+    "id": "249m",
+    "z": 19424,
+    "parent": "6yfb"
+  },
+  "1ecf": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2y",
+    "id": "1ecf",
+    "z": 19429,
+    "parent": "9i4v"
+  },
+  "el19": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3y",
+    "id": "el19",
+    "z": 19434,
+    "parent": "ea4t"
+  },
+  "1xg0": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4y",
+    "id": "1xg0",
+    "z": 19439,
+    "parent": "dugb"
+  },
+  "87e6": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5y",
+    "id": "87e6",
+    "z": 19444,
+    "parent": "upy4"
+  },
+  "p9w1": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6y",
+    "id": "p9w1",
+    "z": 19449,
+    "parent": "c4sx"
+  },
+  "a2du": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7y",
+    "id": "a2du",
+    "z": 19454,
+    "parent": "ut3s"
+  },
+  "3zlk": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1p",
+    "id": "3zlk",
+    "z": 19459,
+    "parent": "3rp6"
+  },
+  "iu2o": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2p",
+    "id": "iu2o",
+    "z": 19464,
+    "parent": "4agp"
+  },
+  "gded": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3p",
+    "id": "gded",
+    "z": 19469,
+    "parent": "u3j3"
+  },
+  "zcdh": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4p",
+    "id": "zcdh",
+    "z": 19474,
+    "parent": "2s4d"
+  },
+  "3j2u": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5p",
+    "id": "3j2u",
+    "z": 19479,
+    "parent": "ga1c"
+  },
+  "irub": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6p",
+    "id": "irub",
+    "z": 19484,
+    "parent": "wsx5"
+  },
+  "jouj": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7p",
+    "id": "jouj",
+    "z": 19489,
+    "parent": "b179"
+  },
+  "m5xj": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1b",
+    "id": "m5xj",
+    "z": 19355,
+    "parent": "h7rc"
+  },
+  "9gyd": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2b",
+    "id": "9gyd",
+    "z": 19360,
+    "parent": "zxbi"
+  },
+  "za9i": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3b",
+    "id": "za9i",
+    "z": 19365,
+    "parent": "mh9z"
+  },
+  "irue": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4b",
+    "id": "irue",
+    "z": 19370,
+    "parent": "ay32"
+  },
+  "t9qr": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5b",
+    "id": "t9qr",
+    "z": 19375,
+    "parent": "5xxw"
+  },
+  "whau": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6b",
+    "id": "whau",
+    "z": 19380,
+    "parent": "luzm"
+  },
+  "0rgv": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7b",
+    "id": "0rgv",
+    "z": 19385,
+    "parent": "yzd4"
+  },
+  "r3yj": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1r",
+    "id": "r3yj",
+    "z": 19390,
+    "parent": "gbxm"
+  },
+  "o04q": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2r",
+    "id": "o04q",
+    "z": 19395,
+    "parent": "n3u6"
+  },
+  "ni63": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3r",
+    "id": "ni63",
+    "z": 19400,
+    "parent": "14oo"
+  },
+  "cxpx": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4r",
+    "id": "cxpx",
+    "z": 19405,
+    "parent": "orrt"
+  },
+  "pzuw": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5r",
+    "id": "pzuw",
+    "z": 19410,
+    "parent": "7qoh"
+  },
+  "f821": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6r",
+    "id": "f821",
+    "z": 19415,
+    "parent": "vpmx"
+  },
+  "rxpc": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7r",
+    "id": "rxpc",
+    "z": 19420,
+    "parent": "7xfv"
+  },
+  "q6hw": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1y",
+    "id": "q6hw",
+    "z": 19425,
+    "parent": "6yfb"
+  },
+  "em6o": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2y",
+    "id": "em6o",
+    "z": 19430,
+    "parent": "9i4v"
+  },
+  "5ldu": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3y",
+    "id": "5ldu",
+    "z": 19435,
+    "parent": "ea4t"
+  },
+  "auj5": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4y",
+    "id": "auj5",
+    "z": 19440,
+    "parent": "dugb"
+  },
+  "qwsu": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5y",
+    "id": "qwsu",
+    "z": 19445,
+    "parent": "upy4"
+  },
+  "9zub": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6y",
+    "id": "9zub",
+    "z": 19450,
+    "parent": "c4sx"
+  },
+  "jecw": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7y",
+    "id": "jecw",
+    "z": 19455,
+    "parent": "ut3s"
+  },
+  "xy1h": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1p",
+    "id": "xy1h",
+    "z": 19460,
+    "parent": "3rp6"
+  },
+  "nw23": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2p",
+    "id": "nw23",
+    "z": 19465,
+    "parent": "4agp"
+  },
+  "dnwi": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3p",
+    "id": "dnwi",
+    "z": 19470,
+    "parent": "u3j3"
+  },
+  "ybw1": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4p",
+    "id": "ybw1",
+    "z": 19475,
+    "parent": "2s4d"
+  },
+  "fyps": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5p",
+    "id": "fyps",
+    "z": 19480,
+    "parent": "ga1c"
+  },
+  "hq7g": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6p",
+    "id": "hq7g",
+    "z": 19485,
+    "parent": "wsx5"
+  },
+  "q15f": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7p",
+    "id": "q15f",
+    "z": 19490,
+    "parent": "b179"
+  },
+  "seat-h1-p1": {
+    "type": "holder",
+    "id": "seat-h1-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": -16,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 4,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "b",
+      "value": "1"
+    }
+  },
+  "seat-h2-p1": {
+    "type": "holder",
+    "id": "seat-h2-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 44,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 3,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "b",
+      "value": "2"
+    }
+  },
+  "seat-h3-p1": {
+    "type": "holder",
+    "id": "seat-h3-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 104,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "b",
+      "value": "3"
+    }
+  },
+  "seat-h4-p1": {
+    "type": "holder",
+    "id": "seat-h4-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 164,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "b",
+      "value": "4"
+    }
+  },
+  "seat-h5-p1": {
+    "type": "holder",
+    "id": "seat-h5-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 19,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 4,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "b",
+      "value": "5"
+    }
+  },
+  "seat-h6-p1": {
+    "type": "holder",
+    "id": "seat-h6-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 79,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 3,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "b",
+      "value": "6"
+    }
+  },
+  "seat-h7-p1": {
+    "type": "holder",
+    "id": "seat-h7-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 139,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "b",
+      "value": "7"
+    }
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "y": 260,
+    "width": 200,
+    "x": 44,
+    "index": 2,
+    "hideWhenUnused": true,
+    "css": {
+      ".seated": {
+        "border": "7px solid #df2f2f"
+      }
+    }
+  },
+  "score-p2": {
+    "type": "label",
+    "id": "score-p2",
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "fixedParent": true,
+    "parent": "seat-p2",
+    "y": 50,
+    "x": 67
+  },
+  "score-p2D": {
+    "type": "button",
+    "id": "score-p2D",
+    "parent": "score-p2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "score-p2U": {
+    "type": "button",
+    "id": "score-p2U",
+    "parent": "score-p2",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "seat-h1-p2": {
+    "type": "holder",
+    "id": "seat-h1-p2",
+    "parent": "seat-p2",
+    "fixedParent": true,
+    "x": -16,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 4,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "r",
+      "value": "1"
+    }
+  },
+  "seat-h2-p2": {
+    "type": "holder",
+    "id": "seat-h2-p2",
+    "parent": "seat-p2",
+    "fixedParent": true,
+    "x": 44,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 3,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "r",
+      "value": "2"
+    }
+  },
+  "seat-h3-p2": {
+    "type": "holder",
+    "id": "seat-h3-p2",
+    "parent": "seat-p2",
+    "fixedParent": true,
+    "x": 104,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "r",
+      "value": "3"
+    }
+  },
+  "seat-h4-p2": {
+    "type": "holder",
+    "id": "seat-h4-p2",
+    "parent": "seat-p2",
+    "fixedParent": true,
+    "x": 164,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "r",
+      "value": "4"
+    }
+  },
+  "seat-h5-p2": {
+    "type": "holder",
+    "id": "seat-h5-p2",
+    "parent": "seat-p2",
+    "fixedParent": true,
+    "x": 19,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 4,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "r",
+      "value": "5"
+    }
+  },
+  "seat-h6-p2": {
+    "type": "holder",
+    "id": "seat-h6-p2",
+    "parent": "seat-p2",
+    "fixedParent": true,
+    "x": 79,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 3,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "r",
+      "value": "6"
+    }
+  },
+  "seat-h7-p2": {
+    "type": "holder",
+    "id": "seat-h7-p2",
+    "parent": "seat-p2",
+    "fixedParent": true,
+    "x": 139,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "r",
+      "value": "7"
+    }
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "y": 10,
+    "width": 200,
+    "x": 1344,
+    "index": 3,
+    "hideWhenUnused": true,
+    "css": {
+      ".seated": {
+        "border": "7px solid #dfdf2f"
+      }
+    }
+  },
+  "score-p3": {
+    "type": "label",
+    "id": "score-p3",
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "fixedParent": true,
+    "parent": "seat-p3",
+    "y": 50,
+    "x": 67
+  },
+  "score-p3D": {
+    "type": "button",
+    "id": "score-p3D",
+    "parent": "score-p3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "score-p3U": {
+    "type": "button",
+    "id": "score-p3U",
+    "parent": "score-p3",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "seat-h1-p3": {
+    "type": "holder",
+    "id": "seat-h1-p3",
+    "parent": "seat-p3",
+    "fixedParent": true,
+    "x": -16,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 4,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "y",
+      "value": "1"
+    }
+  },
+  "seat-h2-p3": {
+    "type": "holder",
+    "id": "seat-h2-p3",
+    "parent": "seat-p3",
+    "fixedParent": true,
+    "x": 44,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 3,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "y",
+      "value": "2"
+    }
+  },
+  "seat-h3-p3": {
+    "type": "holder",
+    "id": "seat-h3-p3",
+    "parent": "seat-p3",
+    "fixedParent": true,
+    "x": 104,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "y",
+      "value": "3"
+    }
+  },
+  "seat-h4-p3": {
+    "type": "holder",
+    "id": "seat-h4-p3",
+    "parent": "seat-p3",
+    "fixedParent": true,
+    "x": 164,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "y",
+      "value": "4"
+    }
+  },
+  "seat-h5-p3": {
+    "type": "holder",
+    "id": "seat-h5-p3",
+    "parent": "seat-p3",
+    "fixedParent": true,
+    "x": 19,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 4,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "y",
+      "value": "5"
+    }
+  },
+  "seat-h6-p3": {
+    "type": "holder",
+    "id": "seat-h6-p3",
+    "parent": "seat-p3",
+    "fixedParent": true,
+    "x": 79,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 3,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "y",
+      "value": "6"
+    }
+  },
+  "seat-h7-p3": {
+    "type": "holder",
+    "id": "seat-h7-p3",
+    "parent": "seat-p3",
+    "fixedParent": true,
+    "x": 139,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "y",
+      "value": "7"
+    }
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "y": 260,
+    "width": 200,
+    "x": 1344,
+    "index": 4,
+    "hideWhenUnused": true,
+    "css": {
+      ".seated": {
+        "border": "7px solid #9f2fff"
+      }
+    }
+  },
+  "score-p4": {
+    "type": "label",
+    "id": "score-p4",
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "fixedParent": true,
+    "parent": "seat-p4",
+    "y": 50,
+    "x": 67
+  },
+  "score-p4D": {
+    "type": "button",
+    "id": "score-p4D",
+    "parent": "score-p4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "score-p4U": {
+    "type": "button",
+    "id": "score-p4U",
+    "parent": "score-p4",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "seat-h1-p4": {
+    "type": "holder",
+    "id": "seat-h1-p4",
+    "parent": "seat-p4",
+    "fixedParent": true,
+    "x": -16,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 4,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "p",
+      "value": "1"
+    }
+  },
+  "seat-h2-p4": {
+    "type": "holder",
+    "id": "seat-h2-p4",
+    "parent": "seat-p4",
+    "fixedParent": true,
+    "x": 44,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 3,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "p",
+      "value": "2"
+    }
+  },
+  "seat-h3-p4": {
+    "type": "holder",
+    "id": "seat-h3-p4",
+    "parent": "seat-p4",
+    "fixedParent": true,
+    "x": 104,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "p",
+      "value": "3"
+    }
+  },
+  "seat-h4-p4": {
+    "type": "holder",
+    "id": "seat-h4-p4",
+    "parent": "seat-p4",
+    "fixedParent": true,
+    "x": 164,
+    "y": 105,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "p",
+      "value": "4"
+    }
+  },
+  "seat-h5-p4": {
+    "type": "holder",
+    "id": "seat-h5-p4",
+    "parent": "seat-p4",
+    "fixedParent": true,
+    "x": 19,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 4,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "p",
+      "value": "5"
+    }
+  },
+  "seat-h6-p4": {
+    "type": "holder",
+    "id": "seat-h6-p4",
+    "parent": "seat-p4",
+    "fixedParent": true,
+    "x": 79,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 3,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "p",
+      "value": "6"
+    }
+  },
+  "seat-h7-p4": {
+    "type": "holder",
+    "id": "seat-h7-p4",
+    "parent": "seat-p4",
+    "fixedParent": true,
+    "x": 139,
+    "y": 165,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "p",
+      "value": "7"
+    }
+  },
+  "new-game": {
+    "type": "button",
+    "id": "new-game",
+    "x": 1375,
+    "y": 950,
+    "width": 150,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "New game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Setup a new game?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Are you sure that you want to start a new game and that all players have already taken a seat?"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "score-p1",
+          "score-p2",
+          "score-p3",
+          "score-p4"
+        ],
+        "value": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "paranoia-holder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "oob"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "1b"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h1-p1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "2b"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h2-p1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "3b"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h3-p1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "4b"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h4-p1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "5b"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h5-p1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "6b"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h6-p1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "7b"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h7-p1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "1r"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h1-p2"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "2r"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h2-p2"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "3r"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h3-p2"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "4r"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h4-p2"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "5r"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h5-p2"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "6r"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h6-p2"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "7r"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h7-p2"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "1y"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h1-p3"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "2y"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h2-p3"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "3y"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h3-p3"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "4y"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h4-p3"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "5y"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h5-p3"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "6y"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h6-p3"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "7y"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h7-p3"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "1p"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h1-p4"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "2p"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h2-p4"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "3p"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h3-p4"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "4p"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h4-p4"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "5p"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h5-p4"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "6p"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h6-p4"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "7p"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "seat-h7-p4"
+      },
+      {
+        "func": "SELECT",
+        "property": "tag",
+        "value": "4p"
+      },
+      {
+        "func": "FLIP",
+        "face": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "tag",
+        "value": "3p"
+      },
+      {
+        "func": "FLIP",
+        "face": 1
+      },
+      {
+        "note": "Count players"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "seat"
+      },
+      {
+        "func": "SELECT",
+        "mode": "remove",
+        "source": "DEFAULT",
+        "property": "player",
+        "value": ""
+      },
+      {
+        "func": "COUNT",
+        "collection": "DEFAULT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "tag",
+            "value": "4p"
+          },
+          {
+            "func": "FLIP",
+            "face": 0
+          },
+          {
+            "func": "SELECT",
+            "property": "tag",
+            "value": "3p"
+          },
+          {
+            "func": "FLIP",
+            "face": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "tag",
+                "value": "4p"
+              },
+              {
+                "func": "FLIP",
+                "face": 0
+              },
+              {
+                "func": "SELECT",
+                "property": "tag",
+                "value": "3p"
+              },
+              {
+                "func": "FLIP",
+                "face": 1
+              },
+              {
+                "func": "SELECT",
+                "property": "cardType",
+                "value": "paranoia-3p"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "village-3"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "paranoia-deck": {
+    "type": "deck",
+    "id": "paranoia-deck",
+    "parent": "paranoia-holder",
+    "x": 12,
+    "y": 41,
+    "cardDefaults": {
+      "width": 200,
+      "height": 200,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        }
+      }
+    },
+    "cardTypes": {
+      "paranoia-3p": {
+        "image": "/assets/-219298534_1801",
+        "suit": "paranoia"
+      },
+      "paranoia 4p": {
+        "image": "/assets/-219298534_1801",
+        "suit": "paranoia"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 200,
+            "value": "/assets/-219298534_1801",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 200,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "color": "transparent"
+          }
+        ]
+      }
+    ]
+  },
+  "3uur": {
+    "type": "pile",
+    "parent": "paranoia-holder",
+    "x": 0,
+    "y": 0,
+    "width": 200,
+    "height": 200,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "id": "3uur"
+  },
+  "villboard-1": {
+    "id": "villboard-1",
+    "parent": "village-1",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-1": {
+    "type": "holder",
+    "id": "t3-village-1",
+    "parent": "village-1",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    }
+  },
+  "t4-village-1": {
+    "type": "holder",
+    "id": "t4-village-1",
+    "parent": "village-1",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    }
+  },
+  "t5-village-1": {
+    "type": "holder",
+    "id": "t5-village-1",
+    "parent": "village-1",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    }
+  },
+  "t1-village-1": {
+    "type": "holder",
+    "id": "t1-village-1",
+    "parent": "village-1",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    }
+  },
+  "t2-village-1": {
+    "type": "holder",
+    "id": "t2-village-1",
+    "parent": "village-1",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    }
+  },
+  "t6-village-1": {
+    "type": "holder",
+    "id": "t6-village-1",
+    "parent": "village-1",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    }
+  },
+  "t7-village-1": {
+    "type": "holder",
+    "id": "t7-village-1",
+    "parent": "village-1",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    }
+  },
+  "oob": {
+    "type": "holder",
+    "id": "oob",
+    "x": -300,
+    "y": -300,
+    "z": 3
+  },
+  "yfi7": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1b",
+    "id": "yfi7",
+    "z": 19356,
+    "parent": "h7rc"
+  },
+  "kur1": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2b",
+    "id": "kur1",
+    "z": 19361,
+    "parent": "zxbi"
+  },
+  "sg9y": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3b",
+    "id": "sg9y",
+    "z": 19366,
+    "parent": "mh9z"
+  },
+  "w8qf": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4b",
+    "id": "w8qf",
+    "z": 19371,
+    "parent": "ay32"
+  },
+  "1c5s": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5b",
+    "id": "1c5s",
+    "z": 19376,
+    "parent": "5xxw"
+  },
+  "fjyt": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6b",
+    "id": "fjyt",
+    "z": 19381,
+    "parent": "luzm"
+  },
+  "h5uk": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7b",
+    "id": "h5uk",
+    "z": 19386,
+    "parent": "yzd4"
+  },
+  "ijsi": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1r",
+    "id": "ijsi",
+    "z": 19391,
+    "parent": "gbxm"
+  },
+  "rsbs": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2r",
+    "id": "rsbs",
+    "z": 19396,
+    "parent": "n3u6"
+  },
+  "0r2p": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3r",
+    "id": "0r2p",
+    "z": 19401,
+    "parent": "14oo"
+  },
+  "lxim": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4r",
+    "id": "lxim",
+    "z": 19406,
+    "parent": "orrt"
+  },
+  "dnjs": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5r",
+    "id": "dnjs",
+    "z": 19411,
+    "parent": "7qoh"
+  },
+  "mt6w": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6r",
+    "id": "mt6w",
+    "z": 19416,
+    "parent": "vpmx"
+  },
+  "f19i": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7r",
+    "id": "f19i",
+    "z": 19421,
+    "parent": "7xfv"
+  },
+  "pdpp": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1y",
+    "id": "pdpp",
+    "z": 19426,
+    "parent": "6yfb"
+  },
+  "wepk": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2y",
+    "id": "wepk",
+    "z": 19431,
+    "parent": "9i4v"
+  },
+  "86ul": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3y",
+    "id": "86ul",
+    "z": 19436,
+    "parent": "ea4t"
+  },
+  "67w5": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4y",
+    "id": "67w5",
+    "z": 19441,
+    "parent": "dugb"
+  },
+  "8dk0": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5y",
+    "id": "8dk0",
+    "z": 19446,
+    "parent": "upy4"
+  },
+  "m0z8": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6y",
+    "id": "m0z8",
+    "z": 19451,
+    "parent": "c4sx"
+  },
+  "gtfe": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7y",
+    "id": "gtfe",
+    "z": 19456,
+    "parent": "ut3s"
+  },
+  "611p": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1p",
+    "id": "611p",
+    "z": 19461,
+    "parent": "3rp6"
+  },
+  "zrr8": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2p",
+    "id": "zrr8",
+    "z": 19466,
+    "parent": "4agp"
+  },
+  "iadp": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3p",
+    "id": "iadp",
+    "z": 19471,
+    "parent": "u3j3"
+  },
+  "7ptc": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4p",
+    "id": "7ptc",
+    "z": 19476,
+    "parent": "2s4d"
+  },
+  "t0sb": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5p",
+    "id": "t0sb",
+    "z": 19481,
+    "parent": "ga1c"
+  },
+  "jxo0": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6p",
+    "id": "jxo0",
+    "z": 19486,
+    "parent": "wsx5"
+  },
+  "rzbs": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7p",
+    "id": "rzbs",
+    "z": 19491,
+    "parent": "b179"
+  },
+  "i60a": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1b",
+    "id": "i60a",
+    "z": 19357,
+    "parent": "h7rc"
+  },
+  "y48l": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2b",
+    "id": "y48l",
+    "z": 19362,
+    "parent": "zxbi"
+  },
+  "pgto": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3b",
+    "id": "pgto",
+    "z": 19367,
+    "parent": "mh9z"
+  },
+  "sn49": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4b",
+    "id": "sn49",
+    "z": 19372,
+    "parent": "ay32"
+  },
+  "e1xr": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5b",
+    "id": "e1xr",
+    "z": 19377,
+    "parent": "5xxw"
+  },
+  "juil": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6b",
+    "id": "juil",
+    "z": 19382,
+    "parent": "luzm"
+  },
+  "qodo": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7b",
+    "id": "qodo",
+    "z": 19387,
+    "parent": "yzd4"
+  },
+  "lzfw": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1r",
+    "id": "lzfw",
+    "z": 19392,
+    "parent": "gbxm"
+  },
+  "vr6k": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2r",
+    "id": "vr6k",
+    "z": 19397,
+    "parent": "n3u6"
+  },
+  "wnwh": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3r",
+    "id": "wnwh",
+    "z": 19402,
+    "parent": "14oo"
+  },
+  "l5kq": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4r",
+    "id": "l5kq",
+    "z": 19407,
+    "parent": "orrt"
+  },
+  "s7lb": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5r",
+    "id": "s7lb",
+    "z": 19412,
+    "parent": "7qoh"
+  },
+  "bwbj": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6r",
+    "id": "bwbj",
+    "z": 19417,
+    "parent": "vpmx"
+  },
+  "o2qo": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7r",
+    "id": "o2qo",
+    "z": 19422,
+    "parent": "7xfv"
+  },
+  "84dy": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1y",
+    "id": "84dy",
+    "z": 19427,
+    "parent": "6yfb"
+  },
+  "qbo7": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2y",
+    "id": "qbo7",
+    "z": 19432,
+    "parent": "9i4v"
+  },
+  "3btv": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3y",
+    "id": "3btv",
+    "z": 19437,
+    "parent": "ea4t"
+  },
+  "vsvm": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4y",
+    "id": "vsvm",
+    "z": 19442,
+    "parent": "dugb"
+  },
+  "36ld": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5y",
+    "id": "36ld",
+    "z": 19447,
+    "parent": "upy4"
+  },
+  "020j": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6y",
+    "id": "020j",
+    "z": 19452,
+    "parent": "c4sx"
+  },
+  "u0nc": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7y",
+    "id": "u0nc",
+    "z": 19457,
+    "parent": "ut3s"
+  },
+  "5m8c": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "1p",
+    "id": "5m8c",
+    "z": 19462,
+    "parent": "3rp6"
+  },
+  "1zcl": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "2p",
+    "id": "1zcl",
+    "z": 19467,
+    "parent": "4agp"
+  },
+  "7w9w": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "3p",
+    "id": "7w9w",
+    "z": 19472,
+    "parent": "u3j3"
+  },
+  "ypo4": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "4p",
+    "id": "ypo4",
+    "z": 19477,
+    "parent": "2s4d"
+  },
+  "m7uc": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "5p",
+    "id": "m7uc",
+    "z": 19482,
+    "parent": "ga1c"
+  },
+  "m2vx": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "6p",
+    "id": "m2vx",
+    "z": 19487,
+    "parent": "wsx5"
+  },
+  "avmt": {
+    "deck": "deck-tokens",
+    "type": "card",
+    "cardType": "7p",
+    "id": "avmt",
+    "z": 19492,
+    "parent": "b179"
+  },
+  "village-2": {
+    "type": "holder",
+    "id": "village-2",
+    "x": 400,
+    "y": 30,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-2": {
+    "id": "villboard-2",
+    "parent": "village-2",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-2": {
+    "type": "holder",
+    "id": "t3-village-2",
+    "parent": "village-2",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    }
+  },
+  "t4-village-2": {
+    "type": "holder",
+    "id": "t4-village-2",
+    "parent": "village-2",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    }
+  },
+  "t5-village-2": {
+    "type": "holder",
+    "id": "t5-village-2",
+    "parent": "village-2",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    }
+  },
+  "t1-village-2": {
+    "type": "holder",
+    "id": "t1-village-2",
+    "parent": "village-2",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    }
+  },
+  "t2-village-2": {
+    "type": "holder",
+    "id": "t2-village-2",
+    "parent": "village-2",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    }
+  },
+  "t6-village-2": {
+    "type": "holder",
+    "id": "t6-village-2",
+    "parent": "village-2",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    }
+  },
+  "t7-village-2": {
+    "type": "holder",
+    "id": "t7-village-2",
+    "parent": "village-2",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    }
+  },
+  "village-3": {
+    "type": "holder",
+    "id": "village-3",
+    "x": 770,
+    "y": 30,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-3": {
+    "id": "villboard-3",
+    "parent": "village-3",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-3": {
+    "type": "holder",
+    "id": "t3-village-3",
+    "parent": "village-3",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    }
+  },
+  "t4-village-3": {
+    "type": "holder",
+    "id": "t4-village-3",
+    "parent": "village-3",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    }
+  },
+  "t5-village-3": {
+    "type": "holder",
+    "id": "t5-village-3",
+    "parent": "village-3",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    }
+  },
+  "t1-village-3": {
+    "type": "holder",
+    "id": "t1-village-3",
+    "parent": "village-3",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    }
+  },
+  "t2-village-3": {
+    "type": "holder",
+    "id": "t2-village-3",
+    "parent": "village-3",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    }
+  },
+  "t6-village-3": {
+    "type": "holder",
+    "id": "t6-village-3",
+    "parent": "village-3",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    }
+  },
+  "t7-village-3": {
+    "type": "holder",
+    "id": "t7-village-3",
+    "parent": "village-3",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    }
+  },
+  "village-4": {
+    "type": "holder",
+    "id": "village-4",
+    "x": 215,
+    "y": 215,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-4": {
+    "id": "villboard-4",
+    "parent": "village-4",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-4": {
+    "type": "holder",
+    "id": "t3-village-4",
+    "parent": "village-4",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    }
+  },
+  "t4-village-4": {
+    "type": "holder",
+    "id": "t4-village-4",
+    "parent": "village-4",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    }
+  },
+  "t5-village-4": {
+    "type": "holder",
+    "id": "t5-village-4",
+    "parent": "village-4",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    }
+  },
+  "t1-village-4": {
+    "type": "holder",
+    "id": "t1-village-4",
+    "parent": "village-4",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    }
+  },
+  "t2-village-4": {
+    "type": "holder",
+    "id": "t2-village-4",
+    "parent": "village-4",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    }
+  },
+  "t6-village-4": {
+    "type": "holder",
+    "id": "t6-village-4",
+    "parent": "village-4",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    }
+  },
+  "t7-village-4": {
+    "type": "holder",
+    "id": "t7-village-4",
+    "parent": "village-4",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    }
+  },
+  "village-5": {
+    "type": "holder",
+    "id": "village-5",
+    "x": 585,
+    "y": 215,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-5": {
+    "id": "villboard-5",
+    "parent": "village-5",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-5": {
+    "type": "holder",
+    "id": "t3-village-5",
+    "parent": "village-5",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    }
+  },
+  "t4-village-5": {
+    "type": "holder",
+    "id": "t4-village-5",
+    "parent": "village-5",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    }
+  },
+  "t5-village-5": {
+    "type": "holder",
+    "id": "t5-village-5",
+    "parent": "village-5",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    }
+  },
+  "t1-village-5": {
+    "type": "holder",
+    "id": "t1-village-5",
+    "parent": "village-5",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    }
+  },
+  "t2-village-5": {
+    "type": "holder",
+    "id": "t2-village-5",
+    "parent": "village-5",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    }
+  },
+  "t6-village-5": {
+    "type": "holder",
+    "id": "t6-village-5",
+    "parent": "village-5",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    }
+  },
+  "t7-village-5": {
+    "type": "holder",
+    "id": "t7-village-5",
+    "parent": "village-5",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    }
+  },
+  "village-6": {
+    "type": "holder",
+    "id": "village-6",
+    "x": 30,
+    "y": 400,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-6": {
+    "id": "villboard-6",
+    "parent": "village-6",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-6": {
+    "type": "holder",
+    "id": "t3-village-6",
+    "parent": "village-6",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    }
+  },
+  "t4-village-6": {
+    "type": "holder",
+    "id": "t4-village-6",
+    "parent": "village-6",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    }
+  },
+  "t5-village-6": {
+    "type": "holder",
+    "id": "t5-village-6",
+    "parent": "village-6",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    }
+  },
+  "t1-village-6": {
+    "type": "holder",
+    "id": "t1-village-6",
+    "parent": "village-6",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    }
+  },
+  "t2-village-6": {
+    "type": "holder",
+    "id": "t2-village-6",
+    "parent": "village-6",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    }
+  },
+  "t6-village-6": {
+    "type": "holder",
+    "id": "t6-village-6",
+    "parent": "village-6",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    }
+  },
+  "t7-village-6": {
+    "type": "holder",
+    "id": "t7-village-6",
+    "parent": "village-6",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    }
+  },
+  "village-7": {
+    "type": "holder",
+    "id": "village-7",
+    "x": 400,
+    "y": 400,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-7": {
+    "id": "villboard-7",
+    "parent": "village-7",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-7": {
+    "type": "holder",
+    "id": "t3-village-7",
+    "parent": "village-7",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    }
+  },
+  "t4-village-7": {
+    "type": "holder",
+    "id": "t4-village-7",
+    "parent": "village-7",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    }
+  },
+  "t5-village-7": {
+    "type": "holder",
+    "id": "t5-village-7",
+    "parent": "village-7",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    }
+  },
+  "t1-village-7": {
+    "type": "holder",
+    "id": "t1-village-7",
+    "parent": "village-7",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    }
+  },
+  "t2-village-7": {
+    "type": "holder",
+    "id": "t2-village-7",
+    "parent": "village-7",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    }
+  },
+  "t6-village-7": {
+    "type": "holder",
+    "id": "t6-village-7",
+    "parent": "village-7",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    }
+  },
+  "t7-village-7": {
+    "type": "holder",
+    "id": "t7-village-7",
+    "parent": "village-7",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    }
+  },
+  "village-8": {
+    "type": "holder",
+    "id": "village-8",
+    "x": 770,
+    "y": 400,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-8": {
+    "id": "villboard-8",
+    "parent": "village-8",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-8": {
+    "type": "holder",
+    "id": "t3-village-8",
+    "parent": "village-8",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    }
+  },
+  "t4-village-8": {
+    "type": "holder",
+    "id": "t4-village-8",
+    "parent": "village-8",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    }
+  },
+  "t5-village-8": {
+    "type": "holder",
+    "id": "t5-village-8",
+    "parent": "village-8",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    }
+  },
+  "t1-village-8": {
+    "type": "holder",
+    "id": "t1-village-8",
+    "parent": "village-8",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    }
+  },
+  "t2-village-8": {
+    "type": "holder",
+    "id": "t2-village-8",
+    "parent": "village-8",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    }
+  },
+  "t6-village-8": {
+    "type": "holder",
+    "id": "t6-village-8",
+    "parent": "village-8",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    }
+  },
+  "t7-village-8": {
+    "type": "holder",
+    "id": "t7-village-8",
+    "parent": "village-8",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    }
+  },
+  "village-9": {
+    "type": "holder",
+    "id": "village-9",
+    "x": 215,
+    "y": 585,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-9": {
+    "id": "villboard-9",
+    "parent": "village-9",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-9": {
+    "type": "holder",
+    "id": "t3-village-9",
+    "parent": "village-9",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    },
+    "layer": -2
+  },
+  "t4-village-9": {
+    "type": "holder",
+    "id": "t4-village-9",
+    "parent": "village-9",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    },
+    "layer": -2
+  },
+  "t5-village-9": {
+    "type": "holder",
+    "id": "t5-village-9",
+    "parent": "village-9",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    },
+    "layer": -2
+  },
+  "t1-village-9": {
+    "type": "holder",
+    "id": "t1-village-9",
+    "parent": "village-9",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    },
+    "layer": -2
+  },
+  "t2-village-9": {
+    "type": "holder",
+    "id": "t2-village-9",
+    "parent": "village-9",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    },
+    "layer": -2
+  },
+  "t6-village-9": {
+    "type": "holder",
+    "id": "t6-village-9",
+    "parent": "village-9",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    },
+    "layer": -2
+  },
+  "t7-village-9": {
+    "type": "holder",
+    "id": "t7-village-9",
+    "parent": "village-9",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    },
+    "layer": -2
+  },
+  "village-10": {
+    "type": "holder",
+    "id": "village-10",
+    "x": 585,
+    "y": 585,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-10": {
+    "id": "villboard-10",
+    "parent": "village-10",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-10": {
+    "type": "holder",
+    "id": "t3-village-10",
+    "parent": "village-10",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    },
+    "layer": -2
+  },
+  "t4-village-10": {
+    "type": "holder",
+    "id": "t4-village-10",
+    "parent": "village-10",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    },
+    "layer": -2
+  },
+  "t5-village-10": {
+    "type": "holder",
+    "id": "t5-village-10",
+    "parent": "village-10",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    },
+    "layer": -2
+  },
+  "t1-village-10": {
+    "type": "holder",
+    "id": "t1-village-10",
+    "parent": "village-10",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    },
+    "layer": -2
+  },
+  "t2-village-10": {
+    "type": "holder",
+    "id": "t2-village-10",
+    "parent": "village-10",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    },
+    "layer": -2
+  },
+  "t6-village-10": {
+    "type": "holder",
+    "id": "t6-village-10",
+    "parent": "village-10",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    },
+    "layer": -2
+  },
+  "t7-village-10": {
+    "type": "holder",
+    "id": "t7-village-10",
+    "parent": "village-10",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    },
+    "layer": -2
+  },
+  "village-11": {
+    "type": "holder",
+    "id": "village-11",
+    "x": 30,
+    "y": 770,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-11": {
+    "id": "villboard-11",
+    "parent": "village-11",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-11": {
+    "type": "holder",
+    "id": "t3-village-11",
+    "parent": "village-11",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    },
+    "layer": -2
+  },
+  "t4-village-11": {
+    "type": "holder",
+    "id": "t4-village-11",
+    "parent": "village-11",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    },
+    "layer": -2
+  },
+  "t5-village-11": {
+    "type": "holder",
+    "id": "t5-village-11",
+    "parent": "village-11",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    },
+    "layer": -2
+  },
+  "t1-village-11": {
+    "type": "holder",
+    "id": "t1-village-11",
+    "parent": "village-11",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    },
+    "layer": -2
+  },
+  "t2-village-11": {
+    "type": "holder",
+    "id": "t2-village-11",
+    "parent": "village-11",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    },
+    "layer": -2
+  },
+  "t6-village-11": {
+    "type": "holder",
+    "id": "t6-village-11",
+    "parent": "village-11",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    },
+    "layer": -2
+  },
+  "t7-village-11": {
+    "type": "holder",
+    "id": "t7-village-11",
+    "parent": "village-11",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    },
+    "layer": -2
+  },
+  "village-12": {
+    "type": "holder",
+    "id": "village-12",
+    "x": 400,
+    "y": 770,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-12": {
+    "id": "villboard-12",
+    "parent": "village-12",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-12": {
+    "type": "holder",
+    "id": "t3-village-12",
+    "parent": "village-12",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    },
+    "layer": -2
+  },
+  "t4-village-12": {
+    "type": "holder",
+    "id": "t4-village-12",
+    "parent": "village-12",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    },
+    "layer": -2
+  },
+  "t5-village-12": {
+    "type": "holder",
+    "id": "t5-village-12",
+    "parent": "village-12",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    },
+    "layer": -2
+  },
+  "t1-village-12": {
+    "type": "holder",
+    "id": "t1-village-12",
+    "parent": "village-12",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    },
+    "layer": -2
+  },
+  "t2-village-12": {
+    "type": "holder",
+    "id": "t2-village-12",
+    "parent": "village-12",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    },
+    "layer": -2
+  },
+  "t6-village-12": {
+    "type": "holder",
+    "id": "t6-village-12",
+    "parent": "village-12",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    },
+    "layer": -2
+  },
+  "t7-village-12": {
+    "type": "holder",
+    "id": "t7-village-12",
+    "parent": "village-12",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    },
+    "layer": -2
+  },
+  "village-13": {
+    "type": "holder",
+    "id": "village-13",
+    "x": 770,
+    "y": 770,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "paranoia"
+    },
+    "parent": "board",
+    "fixedParent": true,
+    "dropLimit": 1,
+    "layer": -4
+  },
+  "villboard-13": {
+    "id": "villboard-13",
+    "parent": "village-13",
+    "fixedParent": true,
+    "width": 200,
+    "height": 200,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1633888079_18719"
+  },
+  "t3-village-13": {
+    "type": "holder",
+    "id": "t3-village-13",
+    "parent": "village-13",
+    "fixedParent": true,
+    "x": 20,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "3"
+    },
+    "layer": -2
+  },
+  "t4-village-13": {
+    "type": "holder",
+    "id": "t4-village-13",
+    "parent": "village-13",
+    "fixedParent": true,
+    "x": 75,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "4"
+    },
+    "layer": -2
+  },
+  "t5-village-13": {
+    "type": "holder",
+    "id": "t5-village-13",
+    "parent": "village-13",
+    "fixedParent": true,
+    "x": 130,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "5"
+    },
+    "layer": -2
+  },
+  "t1-village-13": {
+    "type": "holder",
+    "id": "t1-village-13",
+    "parent": "village-13",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "1"
+    },
+    "layer": -2
+  },
+  "t2-village-13": {
+    "type": "holder",
+    "id": "t2-village-13",
+    "parent": "village-13",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "2"
+    },
+    "layer": -2
+  },
+  "t6-village-13": {
+    "type": "holder",
+    "id": "t6-village-13",
+    "parent": "village-13",
+    "fixedParent": true,
+    "x": 47.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "6"
+    },
+    "layer": -2
+  },
+  "t7-village-13": {
+    "type": "holder",
+    "id": "t7-village-13",
+    "parent": "village-13",
+    "fixedParent": true,
+    "x": 102.5,
+    "y": 130,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 2,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "value": "7"
+    },
+    "layer": -2
+  },
+  "bridge-13a": {
+    "id": "bridge-13a",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 397,
+    "y": 680,
+    "width": 140,
+    "height": 60,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/1984531056_2571"
+      },
+      {
+        "image": "/assets/-558563022_2127"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-13b": {
+    "id": "bridge-13b",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 592.28,
+    "y": 764.983,
+    "width": 150,
+    "height": 70,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/1890335505_2576"
+      },
+      {
+        "image": "/assets/-558563022_2127"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-12a": {
+    "id": "bridge-12a",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 155,
+    "y": 585,
+    "width": 71.5,
+    "height": 193.5,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/1944928904_2778"
+      },
+      {
+        "image": "/assets/-558563022_2127"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-12b": {
+    "id": "bridge-12b",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 226.5,
+    "y": 778.5,
+    "width": 150,
+    "height": 60,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/-269672361_2777"
+      },
+      {
+        "image": "/assets/-558563022_2127"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "aid-a": {
+    "id": "aid-a",
+    "x": 30,
+    "y": 500,
+    "width": 240,
+    "height": 276,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/251432062_122378"
+  },
+  "aid-b": {
+    "id": "aid-b",
+    "width": 240,
+    "height": 420,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-316295982_283482",
+    "x": 1330,
+    "y": 500
+  },
+  "h7rc": {
+    "type": "pile",
+    "parent": "seat-h1-p1",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "h7rc"
+  },
+  "zxbi": {
+    "type": "pile",
+    "parent": "seat-h2-p1",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "zxbi"
+  },
+  "mh9z": {
+    "type": "pile",
+    "parent": "seat-h3-p1",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "mh9z"
+  },
+  "ay32": {
+    "type": "pile",
+    "parent": "seat-h4-p1",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "ay32"
+  },
+  "5xxw": {
+    "type": "pile",
+    "parent": "seat-h5-p1",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "5xxw"
+  },
+  "luzm": {
+    "type": "pile",
+    "parent": "seat-h6-p1",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "luzm"
+  },
+  "yzd4": {
+    "type": "pile",
+    "parent": "seat-h7-p1",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "yzd4"
+  },
+  "gbxm": {
+    "type": "pile",
+    "parent": "seat-h1-p2",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "gbxm"
+  },
+  "n3u6": {
+    "type": "pile",
+    "parent": "seat-h2-p2",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "n3u6"
+  },
+  "14oo": {
+    "type": "pile",
+    "parent": "seat-h3-p2",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "14oo"
+  },
+  "orrt": {
+    "type": "pile",
+    "parent": "seat-h4-p2",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "orrt"
+  },
+  "7qoh": {
+    "type": "pile",
+    "parent": "seat-h5-p2",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "7qoh"
+  },
+  "vpmx": {
+    "type": "pile",
+    "parent": "seat-h6-p2",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "vpmx"
+  },
+  "7xfv": {
+    "type": "pile",
+    "parent": "seat-h7-p2",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "7xfv"
+  },
+  "6yfb": {
+    "type": "pile",
+    "parent": "seat-h1-p3",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "6yfb"
+  },
+  "9i4v": {
+    "type": "pile",
+    "parent": "seat-h2-p3",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "9i4v"
+  },
+  "ea4t": {
+    "type": "pile",
+    "parent": "seat-h3-p3",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "ea4t"
+  },
+  "dugb": {
+    "type": "pile",
+    "parent": "seat-h4-p3",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "dugb"
+  },
+  "upy4": {
+    "type": "pile",
+    "parent": "seat-h5-p3",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "upy4"
+  },
+  "c4sx": {
+    "type": "pile",
+    "parent": "seat-h6-p3",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "c4sx"
+  },
+  "ut3s": {
+    "type": "pile",
+    "parent": "seat-h7-p3",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "ut3s"
+  },
+  "3rp6": {
+    "type": "pile",
+    "parent": "seat-h1-p4",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "3rp6"
+  },
+  "4agp": {
+    "type": "pile",
+    "parent": "seat-h2-p4",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "4agp"
+  },
+  "u3j3": {
+    "type": "pile",
+    "parent": "seat-h3-p4",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "u3j3"
+  },
+  "2s4d": {
+    "type": "pile",
+    "parent": "seat-h4-p4",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "2s4d"
+  },
+  "ga1c": {
+    "type": "pile",
+    "parent": "seat-h5-p4",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "ga1c"
+  },
+  "wsx5": {
+    "type": "pile",
+    "parent": "seat-h6-p4",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "wsx5"
+  },
+  "b179": {
+    "type": "pile",
+    "parent": "seat-h7-p4",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "b179"
+  },
+  "bridge-13c": {
+    "id": "bridge-13c",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 517,
+    "y": 720,
+    "width": 75.928,
+    "height": 44.983,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/-532029911_2588"
+      },
+      {
+        "image": "/assets/-558563022_2127"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-13d": {
+    "id": "bridge-13d",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 712.28,
+    "y": 804.983,
+    "width": 75.928,
+    "height": 44.983,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/15806512_2589"
+      },
+      {
+        "image": "/assets/-558563022_2127"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  },
+  "bridge-12c": {
+    "id": "bridge-12c",
+    "parent": "board",
+    "fixedParent": true,
+    "x": 355,
+    "y": 820,
+    "width": 60,
+    "height": 30,
+    "layer": -3,
+    "movable": false,
+    "clickable": false,
+    "faces": [
+      {
+        "image": "/assets/929287207_2777"
+      },
+      {
+        "image": "/assets/-558563022_2127"
+      }
+    ],
+    "tag": "4p",
+    "activeFace": 1
+  }
+}
