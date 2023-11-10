@@ -163,6 +163,8 @@ export function formField(field, dom, id) {
     const input = document.createElement('input');
     const spanafter = document.createElement('span');
     const labelExplainer = document.createElement('span');
+    const underlineelement = document.createElement('div');
+    underlineelement.classList.add('inputunderline');
     labelExplainer.classList.add('numberInputRange');
     input.type = 'number';
     input.step = 'any';
@@ -189,12 +191,17 @@ export function formField(field, dom, id) {
       input.max = maxset ? field.max : false;
     }
     dom.appendChild(input);
+    dom.appendChild(underlineelement);
     dom.appendChild(spanafter);
     input.id = id;
   }
 
   if(field.type == 'select') {
     const input = document.createElement('select');
+    const underlineelement = document.createElement('div');
+    const inputexpandselect = document.createElement('div');
+    underlineelement.classList.add('inputunderline');
+    inputexpandselect.classList.add('inputexpandselect');
     for(const option of asArray(field.options || [])) {
       const optionElement = document.createElement('option');
       optionElement.value = option.value || '';
@@ -203,7 +210,10 @@ export function formField(field, dom, id) {
         optionElement.selected = true;
       input.appendChild(optionElement);
     }
+    inputexpandselect.textContent = "expand_more";
     dom.appendChild(input);
+    dom.appendChild(underlineelement);
+    dom.appendChild(inputexpandselect);
     input.id = id;
   }
 
@@ -278,8 +288,11 @@ export function formField(field, dom, id) {
 
   if(field.type == 'string') {
     const input = document.createElement('input');
+    const underlineelement = document.createElement('div');
+    underlineelement.classList.add('inputunderline');
     input.value = field.value || '';
     dom.appendChild(input);
+    dom.appendChild(underlineelement);
     input.id = id;
   }
 
