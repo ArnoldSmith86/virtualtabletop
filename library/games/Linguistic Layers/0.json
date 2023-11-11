@@ -1,0 +1,2367 @@
+{
+  "_meta": {
+    "version": 14,
+    "info": {
+      "name": "Linguistic Layers",
+      "image": "/assets/-612553612_37232",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/350335/word-stax",
+      "year": "2021",
+      "mode": "vs, solo",
+      "time": "30-45",
+      "attribution": "Room layout and design by LawDawg and released to the public domain by CC0.<div><br></div><div>The library image and card back image&nbsp;<span style=\"color: var(--overlayFontColor);\">generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"a staircase made from books, pastel watercolor painting\"</span></div>",
+      "lastUpdate": 1699689038170,
+      "showName": true,
+      "skill": "",
+      "description": "Build layers of cards and try to think of words that fit into the increasingly complex restrictions. Use special cards to shake things up. Claim the stack to steal the points from other players.",
+      "similarImage": "",
+      "similarName": "Word Stax",
+      "similarDesigner": "D. Teuber",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Sit in seats. Press restart button in upper right hand corner. Cards will automatically be dealt to player hands and to either 5 (1-2 player) or 7 (3-4 players) starting stacks. Points for each stack are indicated at the top. To claim the stack, drag a cube to the holder at the top of the stack. If a cube is already there, it will automatically be moved to the discard pile.",
+      "players": "1-4",
+      "language": "en--US",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "mainDeck": {
+    "type": "deck",
+    "id": "mainDeck",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 41,
+    "cardDefaults": {
+      "width": 120,
+      "height": 160,
+      "classes": "condensed_font",
+      "clickRoutine": [
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "rotation",
+          "relation": "+",
+          "value": 180
+        }
+      ]
+    },
+    "cardTypes": {
+      "1": {
+        "top": "#009e9b80",
+        "bottom": "#f0e44280",
+        "textTop": "Cold\n\n",
+        "textBottom": "\nHas exactly 2 vowels"
+      },
+      "2": {
+        "top": "#009e9b80",
+        "bottom": "#d55e0080",
+        "textTop": "Starts with B\n\n",
+        "textBottom": "\nHeavy"
+      },
+      "3": {
+        "top": "#f0e44280",
+        "bottom": "#d55e0080",
+        "textTop": "8 Letters\n\n",
+        "textBottom": "\nHas 2 of the same letter",
+        "limitTop": "L",
+        "limitColor": "red"
+      },
+      "4": {
+        "top": "#d55e0080",
+        "bottom": "#f0f8ff",
+        "textTop": "Has a D\n\n",
+        "textBottom": "\nSWAP"
+      },
+      "5": {
+        "top": "#d55e0080",
+        "bottom": "#009e9b80",
+        "textTop": "Made up of 2 or more words\n\n",
+        "textBottom": "Changing 1 letter will make a new word",
+        "limitTop": "W",
+        "limitColor": "blue"
+      },
+      "6": {
+        "top": "#d55e0080",
+        "bottom": "#f0e44280",
+        "textTop": "Uses electricity\n",
+        "textBottom": "\nOn a tour"
+      },
+      "7": {
+        "top": "#f0e44280",
+        "bottom": "#cc79a780",
+        "textTop": "Odd number of letters\n",
+        "textBottom": "\nHas exactly 5 consonants",
+        "limitTop": "L",
+        "limitColor": "red"
+      },
+      "8": {
+        "top": "#f0e44280",
+        "bottom": "#f0f8ff",
+        "textTop": "Something that gets worn\n",
+        "textBottom": "\nLOOK"
+      },
+      "9": {
+        "top": "#009e9b80",
+        "bottom": "#cc79a780",
+        "textTop": "An action\n\n",
+        "textBottom": "Same number of vowels and consonants"
+      },
+      "10": {
+        "top": "#f0e44280",
+        "bottom": "#d55e0080",
+        "textTop": "4 syllables\n\n",
+        "textBottom": "\nLoud",
+        "limitTop": "S",
+        "limitColor": "green"
+      },
+      "11": {
+        "top": "#d55e0080",
+        "bottom": "#f0f8ff",
+        "textTop": "\nHas 3 different vowels",
+        "textBottom": "\nLOOK"
+      },
+      "12": {
+        "top": "#f0e44280",
+        "bottom": "#cc79a780",
+        "textTop": "Has a J, M, or X\n",
+        "textBottom": "\nHas wings"
+      },
+      "13": {
+        "top": "#d55e0080",
+        "bottom": "#00a85980",
+        "textTop": "1st letter before last alphabetically",
+        "textBottom": "\nIn a house"
+      },
+      "14": {
+        "top": "#009e9b80",
+        "bottom": "#f0e44280",
+        "textTop": "A pastime\n\n",
+        "textBottom": "\nAn animal"
+      },
+      "15": {
+        "top": "#cc79a780",
+        "bottom": "#009e9b80",
+        "textTop": "Does not have ST or CH\n",
+        "textBottom": "\n Has a Z"
+      },
+      "16": {
+        "top": "#f0e44280",
+        "bottom": "#00a8e880",
+        "textTop": "In a school\n\n",
+        "textBottom": "\nHas exactly 3 vowels"
+      },
+      "17": {
+        "top": "#009e9b80",
+        "bottom": "#cc79a780",
+        "textTop": "Has 5 or fewer letters\n",
+        "textBottom": "\nStarts with G",
+        "limitTop": "L",
+        "limitColor": "red"
+      },
+      "18": {
+        "top": "#cc79a780",
+        "bottom": "#f0f8ff",
+        "textTop": "Unusual\n\n",
+        "textBottom": "\nSWITCH"
+      },
+      "19": {
+        "top": "#cc79a780",
+        "bottom": "#d55e0080",
+        "textTop": "Has an F or V\n\n",
+        "textBottom": "\nAll letters are different"
+      },
+      "20": {
+        "top": "#cc79a780",
+        "bottom": "#009e9b80",
+        "textTop": "2 syllables\n\n",
+        "textBottom": "\nDoes not have an O or U",
+        "limitTop": "S",
+        "limitColor": "green"
+      },
+      "21": {
+        "top": "#d55e0080",
+        "bottom": "#f0f8ff",
+        "textTop": "Starts with S\n\n",
+        "textBottom": "\nMOVE"
+      },
+      "22": {
+        "top": "#f0e44280",
+        "bottom": "#009e9b80",
+        "textTop": "8 or 9 letters\n\n",
+        "textBottom": "Adding a letter makes a new word",
+        "limitTop": "L",
+        "limitColor": "red"
+      },
+      "23": {
+        "top": "#f0e44280",
+        "bottom": "#cc79a780",
+        "textTop": "Even number of letters\n",
+        "textBottom": "\nOne middle letter is C",
+        "limitTop": "L",
+        "limitColor": "red"
+      },
+      "24": {
+        "top": "#cc79a780",
+        "bottom": "#f0e44280",
+        "textTop": "Has ES or TH\n\n",
+        "textBottom": "\nA vehicle"
+      },
+      "25": {
+        "top": "#f0e44280",
+        "bottom": "#cc79a780",
+        "textTop": "Made up of 2 words\n",
+        "textBottom": "\nStarts with C",
+        "limitTop": "W",
+        "limitColor": "blue"
+      },
+      "26": {
+        "top": "#009e9b80",
+        "bottom": "#f0f8ff",
+        "textTop": "Ends with 2 consonants\n",
+        "textBottom": "\nREMOVE"
+      },
+      "27": {
+        "top": "#009e9b80",
+        "bottom": "#d55e0080",
+        "textTop": "Green\n\n",
+        "textBottom": "\nDoes not have an S"
+      },
+      "28": {
+        "top": "#cc79a780",
+        "bottom": "#f0e44280",
+        "textTop": "One middle letter is N\n",
+        "textBottom": "\nHas a suffix"
+      },
+      "29": {
+        "top": "#cc79a780",
+        "bottom": "#f0f8ff",
+        "textTop": "Red\n\n",
+        "textBottom": "\nROTATE"
+      },
+      "30": {
+        "top": "#d55e0080",
+        "bottom": "#cc79a780",
+        "textTop": "Starts with T\n\n",
+        "textBottom": "\nEnds in ON"
+      },
+      "31": {
+        "top": "#f0e44280",
+        "bottom": "#f0f8ff",
+        "textTop": "Has exactly 4 vowels\n",
+        "textBottom": "\nSWITCH"
+      },
+      "32": {
+        "top": "#009e9b80",
+        "bottom": "#f0e44280",
+        "textTop": "One middle letter is T\n",
+        "textBottom": "\nScary"
+      },
+      "33": {
+        "top": "#cc79a780",
+        "bottom": "#d55e0080",
+        "textTop": "9 or more letters\n",
+        "textBottom": "\nFood",
+        "limitTop": "L",
+        "limitColor": "red"
+      },
+      "34": {
+        "top": "#d55e0080",
+        "bottom": "#009e9b80",
+        "textTop": "4 or more syllables\n",
+        "textBottom": "\n Ends with S",
+        "limitTop": "S",
+        "limitColor": "green"
+      },
+      "35": {
+        "top": "#f0e44280",
+        "bottom": "#009e9b80",
+        "textTop": "2 syllables\n\n",
+        "textBottom": "\nStarts with a vowel",
+        "limitTop": "S",
+        "limitColor": "green"
+      },
+      "36": {
+        "top": "#009e9b80",
+        "bottom": "#cc79a780",
+        "textTop": "7 Letters\n\n",
+        "textBottom": "\n3 syllables",
+        "limitTop": "L",
+        "limitBottom": "S",
+        "limitColor": "red",
+        "limitColorBottom": "green"
+      },
+      "37": {
+        "top": "#009e9b80",
+        "bottom": "#f0f8ff",
+        "textTop": "Does not have EA or ND\n",
+        "textBottom": "\nROTATE"
+      },
+      "38": {
+        "top": "#d55e0080",
+        "bottom": "#009e9b80",
+        "textTop": "Ends in ER\n\n",
+        "textBottom": "Has more vowels than consonants"
+      },
+      "39": {
+        "top": "#d55e0080",
+        "bottom": "#f0e44280",
+        "textTop": "10 or more letters\n",
+        "textBottom": "\nHard",
+        "limitTop": "L",
+        "limitColor": "red"
+      },
+      "40": {
+        "top": "#d55e0080",
+        "bottom": "#cc79a780",
+        "textTop": "Ends with C, L, or W\n\n",
+        "textBottom": "\nHas a Y"
+      },
+      "41": {
+        "top": "#d55e0080",
+        "bottom": "#009e9b80",
+        "textTop": "6 Letters\n\n",
+        "textBottom": "1st letter is after 2nd letter alphabetically",
+        "limitTop": "L",
+        "limitColor": "red"
+      },
+      "42": {
+        "top": "#009e9b80",
+        "bottom": "#cc79a780",
+        "textTop": "3 syllables\n\n",
+        "textBottom": "\nHas a silent letter",
+        "limitTop": "S",
+        "limitColor": "green"
+      },
+      "43": {
+        "top": "#f0e44280",
+        "bottom": "#cc79a780",
+        "textTop": "Starts with 2 consonants\n",
+        "textBottom": "\nCan be a noun or a verb"
+      },
+      "44": {
+        "top": "#f0e44280",
+        "bottom": "#009e9b80",
+        "textTop": "A job\n\n",
+        "textBottom": "Has 3 consonants in a row"
+      },
+      "45": {
+        "top": "#f0e44280",
+        "bottom": "#cc79a780",
+        "textTop": "Starts with N\n\n",
+        "textBottom": "\nStarts with P"
+      },
+      "46": {
+        "top": "#d55e0080",
+        "bottom": "#cc79a780",
+        "textTop": "Has a Q or K\n\n",
+        "textBottom": "\nDoes not have an A"
+      },
+      "47": {
+        "top": "#009e9b80",
+        "bottom": "#cc79a780",
+        "textTop": "7 Letters\n\n",
+        "textBottom": "\nEnds with a vowel",
+        "limitTop": "L",
+        "limitColor": "red"
+      },
+      "48": {
+        "top": "#f0e44280",
+        "bottom": "#009e9b80",
+        "textTop": "Has exactly 4 consonants\n",
+        "textBottom": "\nOn TV"
+      },
+      "49": {
+        "top": "#009e9b80",
+        "bottom": "#f0f8ff",
+        "textTop": "A place\n\n",
+        "textBottom": "\nSWAP"
+      },
+      "50": {
+        "top": "#cc79a780",
+        "bottom": "#d55e0080",
+        "textTop": "An instrument\n\n",
+        "textBottom": "\nHas 2 of the same vowel"
+      },
+      "51": {
+        "top": "#f0e44280",
+        "bottom": "#d55e0080",
+        "textTop": "Has an H\n\n",
+        "textBottom": "Removing 1-2 letters makes a new word"
+      },
+      "52": {
+        "top": "#f0e44280",
+        "bottom": "#f0f8ff",
+        "textTop": "Does not have any double letters",
+        "textBottom": "\nMOVE"
+      },
+      "53": {
+        "top": "#d55e0080",
+        "bottom": "#f0f8ff",
+        "textTop": "One middle letter is R\n",
+        "textBottom": "\nREMOVE"
+      },
+      "54": {
+        "top": "#d55e0080",
+        "bottom": "#f0e44280",
+        "textTop": "5 letters\n\n",
+        "textBottom": "\nIn nature",
+        "limitTop": "L",
+        "limitColor": "red"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": -5,
+            "y": -10,
+            "width": 130,
+            "height": 180,
+            "color": "white",
+            "value": "/assets/-612553612_37232"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "properties": {
+          "enlarge": 3
+        },
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "width": 120,
+            "height": 160,
+            "color": "#fff"
+          },
+          {
+            "type": "image",
+            "width": 120,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "top"
+            }
+          },
+          {
+            "type": "image",
+            "y": 80,
+            "width": 120,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "bottom"
+            }
+          },
+          {
+            "type": "text",
+            "color": "black",
+            "y": 5,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 120,
+            "rotation": 180,
+            "dynamicProperties": {
+              "value": "textTop"
+            }
+          },
+          {
+            "type": "text",
+            "y": 1,
+            "x": -102,
+            "fontSize": 20,
+            "width": 120,
+            "rotation": 180,
+            "dynamicProperties": {
+              "value": "limitTop",
+              "color": "limitColor"
+            }
+          },
+          {
+            "type": "text",
+            "y": 80,
+            "color": "black",
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 120,
+            "dynamicProperties": {
+              "value": "textBottom"
+            }
+          },
+          {
+            "type": "text",
+            "x": 100,
+            "y": 135,
+            "fontSize": 20,
+            "width": 120,
+            "dynamicProperties": {
+              "value": "limitBottom",
+              "color": "limitColorBottom"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "3c1r": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "1",
+    "id": "3c1r",
+    "z": 5697,
+    "parent": "sl5b"
+  },
+  "cmcc": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "2",
+    "id": "cmcc",
+    "z": 5719,
+    "parent": "sl5b"
+  },
+  "aqgv": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "3",
+    "id": "aqgv",
+    "z": 5683,
+    "parent": "sl5b"
+  },
+  "l2pe": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "4",
+    "id": "l2pe",
+    "z": 5691,
+    "parent": "sl5b"
+  },
+  "gllo": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "5",
+    "id": "gllo",
+    "z": 5706,
+    "parent": "sl5b"
+  },
+  "8a8e": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "8a8e",
+    "z": 5688,
+    "parent": "sl5b"
+  },
+  "2eds": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "7",
+    "id": "2eds",
+    "z": 5806,
+    "parent": "sl5b"
+  },
+  "h9dl": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "8",
+    "id": "h9dl",
+    "z": 5701,
+    "parent": "sl5b"
+  },
+  "rv39": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "9",
+    "id": "rv39",
+    "z": 5731,
+    "parent": "sl5b"
+  },
+  "rel4": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "10",
+    "id": "rel4",
+    "z": 5684,
+    "parent": "sl5b"
+  },
+  "fd96": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "11",
+    "id": "fd96",
+    "z": 5722,
+    "parent": "sl5b"
+  },
+  "rggn": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "12",
+    "id": "rggn",
+    "z": 5700,
+    "parent": "sl5b"
+  },
+  "2iz0": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "13",
+    "id": "2iz0",
+    "z": 5725,
+    "parent": "sl5b"
+  },
+  "wpd4": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "14",
+    "id": "wpd4",
+    "z": 5721,
+    "parent": "sl5b"
+  },
+  "4g8g": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "15",
+    "id": "4g8g",
+    "z": 5694,
+    "parent": "sl5b"
+  },
+  "iwgt": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "16",
+    "id": "iwgt",
+    "z": 5720,
+    "parent": "sl5b"
+  },
+  "u5v6": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "17",
+    "id": "u5v6",
+    "z": 5693,
+    "parent": "sl5b"
+  },
+  "gssl": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "18",
+    "id": "gssl",
+    "z": 5705,
+    "parent": "sl5b"
+  },
+  "pgfr": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "19",
+    "id": "pgfr",
+    "z": 5685,
+    "parent": "sl5b"
+  },
+  "94cg": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "20",
+    "id": "94cg",
+    "z": 5698,
+    "parent": "sl5b"
+  },
+  "8gv0": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "21",
+    "id": "8gv0",
+    "z": 5686,
+    "parent": "sl5b"
+  },
+  "lufk": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "22",
+    "id": "lufk",
+    "z": 5811,
+    "parent": "sl5b"
+  },
+  "f8h6": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "23",
+    "id": "f8h6",
+    "z": 5801,
+    "parent": "sl5b"
+  },
+  "gdow": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "24",
+    "id": "gdow",
+    "z": 5723,
+    "parent": "sl5b"
+  },
+  "7emx": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "7emx",
+    "z": 5709,
+    "parent": "sl5b"
+  },
+  "asu9": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "26",
+    "id": "asu9",
+    "z": 5715,
+    "parent": "sl5b"
+  },
+  "ltfp": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "27",
+    "id": "ltfp",
+    "z": 5695,
+    "parent": "sl5b"
+  },
+  "mn3h": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "28",
+    "id": "mn3h",
+    "z": 5727,
+    "parent": "sl5b"
+  },
+  "ysct": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "29",
+    "id": "ysct",
+    "z": 5713,
+    "parent": "sl5b"
+  },
+  "cx4b": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "30",
+    "id": "cx4b",
+    "z": 5714,
+    "parent": "sl5b"
+  },
+  "1uq1": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "31",
+    "id": "1uq1",
+    "z": 5712,
+    "parent": "sl5b"
+  },
+  "une5": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "32",
+    "id": "une5",
+    "z": 5717,
+    "parent": "sl5b"
+  },
+  "1a6p": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "33",
+    "id": "1a6p",
+    "z": 5708,
+    "parent": "sl5b"
+  },
+  "cq7r": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "34",
+    "id": "cq7r",
+    "z": 5692,
+    "parent": "sl5b"
+  },
+  "o205": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "35",
+    "id": "o205",
+    "z": 5702,
+    "parent": "sl5b"
+  },
+  "aray": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "36",
+    "id": "aray",
+    "z": 5724,
+    "parent": "sl5b"
+  },
+  "uxs9": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "37",
+    "id": "uxs9",
+    "z": 5707,
+    "parent": "sl5b"
+  },
+  "48mj": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "38",
+    "id": "48mj",
+    "z": 5710,
+    "parent": "sl5b"
+  },
+  "63ws": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "39",
+    "id": "63ws",
+    "z": 5726,
+    "parent": "sl5b"
+  },
+  "z0wa": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "40",
+    "id": "z0wa",
+    "z": 5689,
+    "parent": "sl5b"
+  },
+  "972y": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "41",
+    "id": "972y",
+    "z": 5699,
+    "parent": "sl5b"
+  },
+  "i7on": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "42",
+    "id": "i7on",
+    "z": 5690,
+    "parent": "sl5b"
+  },
+  "ytsk": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "43",
+    "id": "ytsk",
+    "z": 5687,
+    "parent": "sl5b"
+  },
+  "zjlf": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "44",
+    "id": "zjlf",
+    "z": 5730,
+    "parent": "sl5b"
+  },
+  "qej2": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "45",
+    "id": "qej2",
+    "z": 5728,
+    "parent": "sl5b"
+  },
+  "p2ll": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "46",
+    "id": "p2ll",
+    "z": 5796,
+    "parent": "sl5b"
+  },
+  "2ypd": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "47",
+    "id": "2ypd",
+    "z": 5703,
+    "parent": "sl5b"
+  },
+  "eea4": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "48",
+    "id": "eea4",
+    "z": 5716,
+    "parent": "sl5b"
+  },
+  "yq27": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "49",
+    "id": "yq27",
+    "z": 5729,
+    "parent": "sl5b"
+  },
+  "whux": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "whux",
+    "z": 5696,
+    "parent": "sl5b"
+  },
+  "b449": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "51",
+    "id": "b449",
+    "z": 5758,
+    "parent": "sl5b"
+  },
+  "5c4f": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "52",
+    "id": "5c4f",
+    "z": 5718,
+    "parent": "sl5b"
+  },
+  "gga1": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "53",
+    "id": "gga1",
+    "z": 5711,
+    "parent": "sl5b"
+  },
+  "m10o": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "54",
+    "id": "m10o",
+    "z": 5704,
+    "parent": "sl5b"
+  },
+  "stack1": {
+    "type": "holder",
+    "id": "stack1",
+    "x": 506,
+    "y": -95,
+    "width": 120,
+    "height": 1250,
+    "scale": 0.75,
+    "z": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 1085,
+    "stackOffsetY": -80,
+    "scoreArray": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      18,
+      21,
+      24,
+      27,
+      30
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "scoreRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "scoreRoutine"
+      }
+    ],
+    "scoreRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      "var stackScore = ${PROPERTY scoreArray} getIndex ${COUNT}",
+      {
+        "func": "SET",
+        "collection": [
+          "score${PROPERTY thisStack}"
+        ],
+        "property": "text",
+        "value": "${stackScore}"
+      }
+    ],
+    "thisStack": 1,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 2,
+    "y": 5,
+    "parent": "seatArea1",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "cubeOwner",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "${playerColor}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seatArea${PROPERTY index}"
+            ],
+            "property": "bColor",
+            "value": "${playerColor}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "#999999"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seatArea${PROPERTY index}"
+            ],
+            "property": "bColor",
+            "value": "#000"
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "hand": "hand1"
+  },
+  "seatArea1": {
+    "id": "seatArea1",
+    "x": 5,
+    "y": 7,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "border": "1px dashed ${PROPERTY bColor}"
+    },
+    "width": 363,
+    "height": 228,
+    "borderRadius": 9,
+    "layer": -1,
+    "bColor": "#000"
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 384,
+    "y": 291,
+    "width": 120,
+    "height": 160,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "css": {
+      "background": "#ffffff80"
+    },
+    "onEnter": {
+      "rotation": 0
+    }
+  },
+  "hand1": {
+    "type": "holder",
+    "id": "hand1",
+    "parent": "seatArea1",
+    "x": 2,
+    "y": 65,
+    "width": 360,
+    "height": 160,
+    "z": 2,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 120,
+    "dropLimit": 3,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "childrenPerOwner": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "cubes1": {
+    "type": "holder",
+    "id": "cubes1",
+    "parent": "seatArea1",
+    "x": 181,
+    "y": 6,
+    "width": 175,
+    "height": 50,
+    "z": 3,
+    "dropTarget": {
+      "cubeOwner": 1
+    },
+    "stackOffsetX": 33,
+    "classes": "transparent"
+  },
+  "cubeP1-1": {
+    "id": "cubeP1-1",
+    "x": 4,
+    "width": 36,
+    "height": 40,
+    "z": 1,
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 1,
+    "secondaryColor": "black",
+    "color": "#999999",
+    "parent": "cubes1",
+    "y": 4
+  },
+  "cubeP1-2": {
+    "id": "cubeP1-2",
+    "x": 37,
+    "width": 36,
+    "height": 40,
+    "z": 2,
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 1,
+    "secondaryColor": "black",
+    "color": "#999999",
+    "parent": "cubes1",
+    "y": 4
+  },
+  "cubeP1-3": {
+    "id": "cubeP1-3",
+    "x": 70,
+    "width": 36,
+    "height": 40,
+    "z": 3,
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 1,
+    "secondaryColor": "black",
+    "color": "#999999",
+    "y": 4,
+    "parent": "cubes1"
+  },
+  "cubeP1-4": {
+    "id": "cubeP1-4",
+    "x": 103,
+    "width": 36,
+    "height": 40,
+    "z": 4,
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 1,
+    "secondaryColor": "black",
+    "color": "#999999",
+    "y": 4,
+    "parent": "cubes1"
+  },
+  "cubeP1-5": {
+    "id": "cubeP1-5",
+    "x": 136,
+    "width": 36,
+    "height": 40,
+    "z": 5,
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 1,
+    "secondaryColor": "black",
+    "color": "#999999",
+    "y": 4,
+    "parent": "cubes1"
+  },
+  "seatArea2": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea2",
+    "x": 5,
+    "y": 257,
+    "bColor": "#000"
+  },
+  "seat2": {
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color"
+      ]
+    },
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "parent": "seatArea2",
+    "color": "#999999",
+    "hand": "hand2"
+  },
+  "hand2": {
+    "inheritFrom": {
+      "hand1": "*"
+    },
+    "type": "holder",
+    "id": "hand2",
+    "parent": "seatArea2"
+  },
+  "cubes2": {
+    "inheritFrom": {
+      "cubes1": "*"
+    },
+    "type": "holder",
+    "id": "cubes2",
+    "parent": "seatArea2",
+    "dropTarget": {
+      "cubeOwner": 2
+    }
+  },
+  "seatArea3": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea3",
+    "x": 5,
+    "y": 507,
+    "bColor": "#000"
+  },
+  "seat3": {
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color"
+      ]
+    },
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "parent": "seatArea3",
+    "color": "#999999",
+    "hand": "hand3"
+  },
+  "hand3": {
+    "inheritFrom": {
+      "hand1": "*"
+    },
+    "type": "holder",
+    "id": "hand3",
+    "parent": "seatArea3"
+  },
+  "cubes3": {
+    "inheritFrom": {
+      "cubes1": "*"
+    },
+    "type": "holder",
+    "id": "cubes3",
+    "parent": "seatArea3",
+    "dropTarget": {
+      "cubeOwner": 3
+    }
+  },
+  "seatArea4": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea4",
+    "x": 5,
+    "y": 757,
+    "bColor": "#000"
+  },
+  "seat4": {
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color"
+      ]
+    },
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "parent": "seatArea4",
+    "color": "#999999",
+    "hand": "hand4"
+  },
+  "hand4": {
+    "inheritFrom": {
+      "hand1": "*"
+    },
+    "type": "holder",
+    "id": "hand4",
+    "parent": "seatArea4"
+  },
+  "cubes4": {
+    "inheritFrom": {
+      "cubes1": "*"
+    },
+    "type": "holder",
+    "id": "cubes4",
+    "parent": "seatArea4",
+    "dropTarget": {
+      "cubeOwner": 4
+    }
+  },
+  "cubeP2-1": {
+    "id": "cubeP2-1",
+    "parent": "cubes2",
+    "x": 4,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 1,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 2,
+    "secondaryColor": "black"
+  },
+  "cubeP2-2": {
+    "id": "cubeP2-2",
+    "parent": "cubes2",
+    "x": 37,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 2,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 2,
+    "secondaryColor": "black"
+  },
+  "cubeP2-3": {
+    "id": "cubeP2-3",
+    "x": 70,
+    "width": 36,
+    "height": 40,
+    "z": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 2,
+    "secondaryColor": "black",
+    "y": 4,
+    "parent": "cubes2"
+  },
+  "cubeP2-4": {
+    "id": "cubeP2-4",
+    "x": 103,
+    "width": 36,
+    "height": 40,
+    "z": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 2,
+    "secondaryColor": "black",
+    "y": 4,
+    "parent": "cubes2"
+  },
+  "cubeP2-5": {
+    "id": "cubeP2-5",
+    "width": 36,
+    "height": 40,
+    "z": 5,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 2,
+    "secondaryColor": "black",
+    "x": 136,
+    "y": 4,
+    "parent": "cubes2"
+  },
+  "cubeP3-1": {
+    "id": "cubeP3-1",
+    "x": 4,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 1,
+    "cubeOwner": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "parent": "cubes3"
+  },
+  "cubeP3-2": {
+    "id": "cubeP3-2",
+    "x": 37,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 2,
+    "cubeOwner": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "parent": "cubes3"
+  },
+  "cubeP3-3": {
+    "id": "cubeP3-3",
+    "x": 70,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 3,
+    "cubeOwner": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "parent": "cubes3"
+  },
+  "cubeP3-4": {
+    "id": "cubeP3-4",
+    "x": 103,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 4,
+    "cubeOwner": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "parent": "cubes3"
+  },
+  "cubeP3-5": {
+    "id": "cubeP3-5",
+    "x": 136,
+    "width": 36,
+    "height": 40,
+    "z": 5,
+    "cubeOwner": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "y": 4,
+    "parent": "cubes3"
+  },
+  "cubeP4-1": {
+    "id": "cubeP4-1",
+    "x": 4,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 1,
+    "cubeOwner": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "hoverParent": "cubes4",
+    "parent": "cubes4"
+  },
+  "cubeP4-2": {
+    "id": "cubeP4-2",
+    "x": 37,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 2,
+    "cubeOwner": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "hoverParent": "cubes4",
+    "parent": "cubes4"
+  },
+  "cubeP4-3": {
+    "id": "cubeP4-3",
+    "x": 70,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 3,
+    "cubeOwner": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "hoverParent": "cubes4",
+    "parent": "cubes4"
+  },
+  "cubeP4-4": {
+    "id": "cubeP4-4",
+    "x": 103,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 4,
+    "cubeOwner": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "parent": "cubes4"
+  },
+  "cubeP4-5": {
+    "id": "cubeP4-5",
+    "x": 136,
+    "width": 36,
+    "height": 40,
+    "z": 5,
+    "cubeOwner": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "y": 4,
+    "parent": "cubes4"
+  },
+  "cubeStack1": {
+    "type": "holder",
+    "id": "cubeStack1",
+    "x": 567,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "dropTarget": [
+      {
+        "cubeOwner": 1
+      },
+      {
+        "cubeOwner": 2
+      },
+      {
+        "cubeOwner": 3
+      },
+      {
+        "cubeOwner": 4
+      }
+    ],
+    "dropOffsetX": 2,
+    "dropOffsetY": 0,
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "id",
+        "relation": "!=",
+        "value": "${id}"
+      },
+      {
+        "func": "MOVE",
+        "to": "cubeDiscard"
+      }
+    ],
+    "css": {
+      "background": "#ffffff80"
+    }
+  },
+  "score1": {
+    "id": "score1",
+    "x": 526,
+    "width": 25,
+    "height": 25,
+    "movable": false,
+    "css": {
+      "font-size": "25px"
+    },
+    "y": 3,
+    "text": 0
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1545,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will reset the board and start a new game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "cubeOwner",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "cubeOwner"
+          },
+          {
+            "func": "MOVE",
+            "to": "cubes${cubeOwner}"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "count": 3
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score1",
+          "score2",
+          "score3",
+          "score4",
+          "score5"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "stack6",
+          "score6",
+          "cubeStack6",
+          "stack7",
+          "score7",
+          "cubeStack7"
+        ],
+        "collection": "extraStacks"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "<",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "extraStacks",
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "stack6",
+              "stack7"
+            ],
+            "property": "dropTarget",
+            "value": null
+          },
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "stack1",
+              "stack2",
+              "stack3",
+              "stack4",
+              "stack5"
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "extraStacks",
+            "property": "scale",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "stack6",
+              "stack7"
+            ],
+            "property": "scale",
+            "value": 0.75
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "stack6",
+              "stack7"
+            ],
+            "property": "dropTarget",
+            "value": {
+              "type": "card"
+            }
+          },
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "stack1",
+              "stack2",
+              "stack3",
+              "stack4",
+              "stack5",
+              "stack6",
+              "stack7"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "stack1",
+          "stack2",
+          "stack3",
+          "stack4",
+          "stack5",
+          "stack6",
+          "stack7"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "property": "bottom"
+          },
+          {
+            "func": "IF",
+            "operand1": "${bottom}",
+            "operand2": "#f0f8ff",
+            "thenRoutine": [
+              {
+                "func": "CLICK"
+              }
+            ],
+            "elseRoutine": [
+              "var random = randInt 0 1",
+              {
+                "func": "CLICK",
+                "count": "${random}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "classes": "symbols",
+    "text": "restart",
+    "css": {
+      "font-size": "41px"
+    },
+    "gameStartRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      }
+    ]
+  },
+  "discardHolder": {
+    "type": "holder",
+    "id": "discardHolder",
+    "x": 384,
+    "y": 539,
+    "width": 120,
+    "height": 160,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 0
+    },
+    "css": {
+      "background": "#ffffff80"
+    }
+  },
+  "cubeDiscard": {
+    "type": "holder",
+    "id": "cubeDiscard",
+    "x": 422,
+    "y": 705,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "dropOffsetX": 2,
+    "dropOffsetY": 0,
+    "dropTarget": [
+      {
+        "cubeOwner": 1
+      },
+      {
+        "cubeOwner": 2
+      },
+      {
+        "cubeOwner": 3
+      },
+      {
+        "cubeOwner": 4
+      }
+    ],
+    "css": {
+      "background": "#ffffff80"
+    }
+  },
+  "stack2": {
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "type": "holder",
+    "id": "stack2",
+    "x": 622,
+    "y": -95,
+    "thisStack": 2
+  },
+  "stack3": {
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "type": "holder",
+    "id": "stack3",
+    "x": 739,
+    "y": -95,
+    "thisStack": 3
+  },
+  "stack4": {
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "type": "holder",
+    "id": "stack4",
+    "x": 856,
+    "y": -95,
+    "thisStack": 4
+  },
+  "stack5": {
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "type": "holder",
+    "id": "stack5",
+    "x": 973,
+    "y": -95,
+    "thisStack": 5
+  },
+  "cubeStack2": {
+    "inheritFrom": {
+      "cubeStack1": "*"
+    },
+    "type": "holder",
+    "id": "cubeStack2",
+    "x": 684,
+    "y": 0
+  },
+  "cubeStack3": {
+    "inheritFrom": {
+      "cubeStack1": "*"
+    },
+    "type": "holder",
+    "id": "cubeStack3",
+    "x": 801,
+    "y": 0
+  },
+  "cubeStack4": {
+    "inheritFrom": {
+      "cubeStack1": "*"
+    },
+    "type": "holder",
+    "id": "cubeStack4",
+    "x": 918,
+    "y": 0
+  },
+  "cubeStack5": {
+    "inheritFrom": {
+      "cubeStack1": "*"
+    },
+    "type": "holder",
+    "id": "cubeStack5",
+    "x": 1035,
+    "y": 0
+  },
+  "score2": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score2",
+    "x": 643,
+    "y": 3,
+    "text": 0
+  },
+  "score3": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score3",
+    "x": 760,
+    "y": 3,
+    "text": 0
+  },
+  "score4": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score4",
+    "x": 877,
+    "y": 3,
+    "text": 0
+  },
+  "score5": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score5",
+    "x": 994,
+    "y": 3,
+    "text": 0
+  },
+  "discardLabel": {
+    "id": "discardLabel",
+    "x": 387,
+    "y": 500,
+    "height": 30,
+    "layer": -1,
+    "movable": false,
+    "css": {
+      "font-size": "30px"
+    },
+    "text": "Discards"
+  },
+  "drawLabel": {
+    "id": "drawLabel",
+    "x": 407,
+    "y": 249,
+    "height": 30,
+    "layer": -1,
+    "movable": false,
+    "css": {
+      "font-size": "30px"
+    },
+    "text": "Draw"
+  },
+  "fgnj": {
+    "id": "fgnj",
+    "x": 1325,
+    "html": "<h2>Special Cards</h2><h4>Look</h4><h5>Press button to look at the top 4 cards in deck. Choose one for your hand. The rest are returned to the top of the deck. You can manually rearrange the order of those 3 cards if you want. Do not claim a stack.</h5><h4>Move</h4><h5>Take any uncovered card from a stack and move it to top of another stack and claim that stack. You may rotate the card if it is not a special card. If you move the only card in a stack, start a new stack with next card from deck but do not claim it.</h5><h4>Remove</h4><h5>Take any card from any stack and suffle it into the deck. Do not claim a stack. Draw card from deck and take another turn. If you move the only card in a stack, start a new stack with the next card from the deck but do not claim it.</h5><h4>Rotate</h4><h5>Rotate any uncovered non-special card. Claim the stack.</h5><h4>Swap</h4><h5>Swap any two uncovered cards and claim both stacks. Do not rotate the cards.</h5><h4>Switch</h4><h5>Take any card from any stack into your hand. Place another card from your hand onto the top of that stack and claim it.</h5>",
+    "width": 250,
+    "z": 6,
+    "movable": false,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "border": "1px solid brown",
+        "padding": "0px 5px 5px 5px"
+      },
+      " h2": {
+        "font-weight": "Bold",
+        "text-align": "center",
+        "font-size": "25px",
+        "line-height": "1.1em",
+        "color": "brown",
+        "border-bottom": "1px solid maroon",
+        "padding": "0 0 0 0",
+        "margin": "5px 0 5px 0"
+      },
+      " h4": {
+        "margin": "0px 0 0px 0"
+      },
+      " h5": {
+        "font-size": "16px",
+        "font-weight": "normal",
+        "margin": "5px 0 10px 0"
+      }
+    },
+    "height": 850,
+    "borderRadius": 8,
+    "y": 65
+  },
+  "lookButton": {
+    "type": "button",
+    "id": "lookButton",
+    "x": 1382,
+    "y": 100,
+    "width": 35,
+    "height": 35,
+    "z": 1,
+    "classes": "symbols",
+    "css": {
+      "font-size": "31px"
+    },
+    "text": "visibility",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "deckHolder",
+        "sortBy": {
+          "key": "z",
+          "reverse": true
+        },
+        "collection": "top4"
+      },
+      {
+        "func": "SELECT",
+        "source": "top4",
+        "property": "id",
+        "relation": "!=",
+        "value": null,
+        "max": 4,
+        "collection": "top4"
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Looking at top 4 cards"
+          },
+          {
+            "type": "subtitle",
+            "text": "Cards shown in order with top card first."
+          },
+          {
+            "type": "choose",
+            "source": "top4",
+            "propertyOverride": {
+              "activeFace": 1
+            },
+            "max": 1,
+            "label": "Choose one"
+          }
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "Take card"
+      },
+      {
+        "func": "MOVE",
+        "collection": "DEFAULT",
+        "to": "hand${seatIndex}"
+      }
+    ],
+    "layer": 3
+  },
+  "score6": {
+    "id": "score6",
+    "x": 1111,
+    "y": 3,
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "text": 0,
+    "scale": 0
+  },
+  "score7": {
+    "id": "score7",
+    "x": 1228,
+    "y": 3,
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "text": 0,
+    "scale": 0
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "${PROPERTY bgColor}"
+    },
+    "bgColor": "#deeaf0"
+  },
+  "cubeStack6": {
+    "type": "holder",
+    "id": "cubeStack6",
+    "x": 1152,
+    "y": 0,
+    "inheritFrom": {
+      "cubeStack1": "*"
+    },
+    "scale": 0
+  },
+  "cubeStack7": {
+    "type": "holder",
+    "id": "cubeStack7",
+    "x": 1269,
+    "y": 0,
+    "inheritFrom": {
+      "cubeStack1": "*"
+    },
+    "scale": 0
+  },
+  "stack6": {
+    "type": "holder",
+    "id": "stack6",
+    "x": 1090,
+    "y": -95,
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "thisStack": 4,
+    "scale": 0
+  },
+  "stack7": {
+    "type": "holder",
+    "id": "stack7",
+    "x": 1207,
+    "y": -95,
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "thisStack": 7,
+    "scale": 0
+  },
+  "sl5b": {
+    "type": "pile",
+    "parent": "deckHolder",
+    "x": 0,
+    "y": 0,
+    "width": 120,
+    "height": 160,
+    "id": "sl5b"
+  }
+}
