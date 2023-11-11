@@ -4,7 +4,7 @@
     "type": "card",
     "cardType": "148",
     "id": "7393",
-    "z": 10814,
+    "z": 11767,
     "parent": "6qnb"
   },
   "_meta": {
@@ -18,7 +18,7 @@
       "mode": "vs, solo",
       "time": "30-45",
       "attribution": "Room layout and design by LawDawg and released to the public domain by CC0.<div><br></div><div>Original cards, artwork, and instructions by D. Teuber. Used with permission of the creator.</div>",
-      "lastUpdate": 1699722354110,
+      "lastUpdate": 1699724017853,
       "showName": true,
       "skill": "",
       "description": "Build stacks of cards, trying to find words that fit an increasing number of conditions. Use special cards to manipulate the stacks. Claim a stack and all its points ... for now.",
@@ -28,10 +28,10 @@
       "similarAwards": "",
       "ruleText": "<b>OVERVIEW</b><div><br></div><div>What’s a word that starts with two consonants ... and ends in ON ... and is found in nature ... AND one middle letter is C? Stumped yet?<br><div><div><br></div><div>In WORD STAX (just a fun way to write \"stacks), players build stacks of cards, trying to find words that fit an increasing number of conditions. Each card in hand gives players 2 choices of conditions to add to the conditions on the WORD STAX in play. The more conditions, the more the STAX are worth. If they can think of a WORD or PHRASE that fits all the conditions, they can claim the STACK and all its points…for now! Players are aided by special cards which allow them to manipulate the STAX and claim them for their own!<br></div><div><br></div><div><b>OBJECTIVE</b></div><div><b><br></b></div><div>Players compete to claim WORD STAX by adding new conditions to existing STAX and finding words that meet all the conditions of a STACK. Points are awarded for each WORD STACK claimed at the end of the game, based on the length of each STACK.<b><br></b></div><div><br></div><div><b>CARD ANATOMY</b></div><div><b><br></b></div><div>The deck consists of 42 Regular Cards and 12 Special Cards.</div><div><img src=\"/assets/192442629_93115\" class=\"richtextAsset\"></div><div><b>SET UP</b></div><div><b><br></b></div><div>Players sit facing the table in the same direction and have 5 cubes in their own color. Shuffle the cards and deal 3 cards to each player. Players should keep the cards in their hands and not show them to their opponent. Deal 5 cards from the deck face-up on the table next to each other. <b>For 3 or 4 players, deal 7.</b> These are the initial WORD STAX. Rotate any Special Cards so that the condition side is on the bottom. Place the remaining deck within reach of the players. The player whose life involves the most stacking goes first. (Note, set up is handled automatically in the room).<b><br></b></div><div><br></div><div><b>GAMEPLAY</b></div><div><b><br></b></div><div>On each turn:<span style=\"color: var(--overlayFontColor);\">&nbsp;</span></div><div><ul><li>(1A) Play a card into any stack.</li></ul><span style=\"color: var(--overlayFontColor);\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;OR</span><br></div><div><ul><li>(1B) Play a special card to manipulate the stax. Perform the action as written on the card. Special cards are discarded after use. Depending on the card, steps 2 and 3 may not apply as written.</li></ul><ul><li>(2) Claim the stack for yourself by saying a word that satisfies all the conditions in the stack, removing any cubes from the stack, and placing a cube of your color on the top card of the stack.</li></ul><ul><li>(3) Draw a new card from the deck.</li></ul><div>For Casual Play, allow words to be reused. For Advanced Play, do not allow words to be reused. If playing a word that can only be used once per game, you may wish to keep a record of words used.</div></div><div><br></div><div>(1A) <u>Playing a card onto a stack</u></div><div><br></div><div>&nbsp; &nbsp; &nbsp;A player can play on any stack, claimed or unclaimed. To play, a player must first choose a condition from a card in their hand. Cards in hands may be rotated and conditions on either side of a card may be used. Cards should be placed onto an existing stack such that the chosen condition covers the top half of the top card of the stack. You can only play a card if you can also claim the stack (see next).</div><div><br></div><div><div>(2) <u>Claiming a stack</u></div><div><br></div><div>&nbsp; &nbsp; &nbsp;To claim a stack, state a word that fits all of the conditions on the stack, including the condition of the card being added to the stack. If the stack was previously claimed by your opponent, remove their cube from the stack and return it to them. Then place your cube on the stack. If your own cube was already on the stack, simply move it to the top card of the stack. A stack remains claimed until another player claims it or all the cards in the stack are removed.</div><div><br></div><div><div>(3) <u>Ending a turn</u></div><div><br></div><div>&nbsp; &nbsp; &nbsp;At the end of a turn, take a card from the deck to add to your hand. Begin each turn with three cards in your hand.\n</div></div><div><br></div><div><div>(1B) <u>Playing a special card</u>&nbsp;&nbsp;</div><div><br></div><div>&nbsp; &nbsp; &nbsp;There are 6 special card types, each appearing twice.</div></div><div><ul><li><i>LOOK</i>.&nbsp;Look at the top 4 cards from the deck and choose one for your hand, returning the rest in any order to the top of the deck. Do NOT claim a stack this turn.</li><li><i>MOVE</i>.&nbsp;Take an uncovered card from any stack and place it on any other stack. Unless it is a special card, you may also rotate the card before placing it. You claim only the stack to which you moved the card. If moving the last card of a stack, start a new stack with the next card from the deck (but do not claim it).</li><li><i>REMOVE</i>.&nbsp;Take any card from any stack and shuffle it into the deck. Do NOT claim a stack or remove any cubes. Draw a card from the deck and take another turn. If removing the last card of a stack, start a new stack with the next card from the deck (but do not claim it).</li><li><i>ROTATE</i>.&nbsp;Rotate any uncovered regular card and claim the stack.</li><li><i>SWAP</i>.&nbsp;Swap any two uncovered cards and claim both stax. You cannot rotate the cards.</li><li><i>SWITCH</i>.&nbsp;Take any card from any stack and put it in your hand. Then place another card from your hand onto that same stack and claim it.</li></ul><div><b>RESTRICTIONS ON PLAY</b></div></div><div><br></div></div><div>Some conditions are marked with a label. A particular label can only appear once in a stack.</div><div><br></div><div><ul><li><i>W</i>. A stack may only have one condition regarding the number of words.</li><li><i>L</i>. A stack may only have one condition regarding the number of letters.</li><li><i>S</i>. A stack may only have one condition regarding the number of syllables.</li></ul></div><div><b>WINNING THE GAME</b></div><div><b><br></b></div><div><u>When You Cannot Play A Card</u><i>. </i>Whenever a player cannot play&nbsp;on a stack, they discard one card from their hand AND also remove one cube from their hand. Do not remove cubes from stax. Removed cubes cannot be used again for the remainder of the game. After discarding, a player draws a new card, and their turn ends.</div><div><br></div><div><u>Game End</u><i>.&nbsp;</i><span style=\"color: var(--overlayFontColor);\">The game ends when the deck has been depleted and&nbsp;</span><span style=\"color: var(--overlayFontColor);\">all players have spent their hands, or when no players&nbsp;</span><span style=\"color: var(--overlayFontColor);\">have cubes in their hands.</span></div></div></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\"><u>Scoring</u>.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Players score points for each claimed stack they have&nbsp;</span><span style=\"color: var(--overlayFontColor);\">at the end of the game. The amount of points each&nbsp;</span><span style=\"color: var(--overlayFontColor);\">stack is worth depends on the number of cards in the&nbsp;</span><span style=\"color: var(--overlayFontColor);\">stack, according to the table below.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The player with the HIGHEST score wins. In the case of a tie, the player with the FEWEST number of stax wins. If the players are still tied, they share the victory.<span style=\"color: var(--overlayFontColor);\"><br></span></div><div><br></div><div><img src=\"/assets/-1206456240_39019\" class=\"richtextAsset\"></div><div><b>THE CONDITIONS</b></div><div><b><br></b></div><div>In general, the conditions are deliberately open to interpretation, and several of the conditions have multiple meanings (vehicle, instrument, hard, etc.). Players should try to use this to their advantage whenever possible. This section serves to clarify some conditions.<b><br></b></div><div><br></div><div><img src=\"/assets/-830930845_218295\" class=\"richtextAsset\"></div><div><b>SOLO PLAY</b></div><div><b><br></b></div><div><u>Objective</u>. To score as many points as you can.</div><div><br></div><div><u>Set Up</u>.&nbsp;Deal yourself 3 cards, and then place 5 cards on the table. Cubes are not used. </div><div><br></div><div><u>Gameplay</u>.&nbsp;Starting with the leftmost stack, play as many cards as you can on each stack, drawing a new card after playing each card. When you can no longer play on a stack, discard one card from your hand, draw a new card, and move to the next stack on the right. After exhausting all your plays on the rightmost stack, return to the leftmost stack again for a second attempt through the stax to add more cards.\n</div><div><br></div><div><u>Special Rule for Special Cards</u>.&nbsp;ALL Special Cards may be used on ANY CARDS (covered or uncovered) in ANY STACK in play.</div><div><br></div><div><u>Game End</u>. After the second time through the stax, tally up your points for each stack, using the scoring table above.&nbsp; How did you stack up?</div><div><br></div><div>&lt;35&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; At a Loss for Words</div><div>35-49&nbsp; &nbsp; &nbsp; For Want of a Better Word</div><div>50-64&nbsp; &nbsp; &nbsp; Have a Way with Words</div><div>65-79&nbsp; &nbsp; &nbsp; Word of Honor</div><div>80+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; The Last Word</div>",
       "helpText": "Sit in seats. Press restart button in upper right-hand corner to begin. Cards will automatically be dealt to player hands and to either 5 (1-2 player) or 7 (3-4 players) starting stacks.<div><br></div><div>Points for each stack are automatically counted and displayed above each stack. To claim the stack, drag a cube to the holder at the top of the stack. If a cube is already there, it will automatically be moved to the discard pile.</div><div><br></div><div>Drag and drop cards into holders. Click a card to rotate it.</div>",
-      "players": "1-4",
-      "language": "en--US",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "en--US",
+      "players": "1-4"
     }
   },
   "stack1": {
@@ -186,7 +186,7 @@
       "border": "1px dashed ${PROPERTY bColor}"
     },
     "width": 363,
-    "height": 228,
+    "height": 236,
     "borderRadius": 9,
     "layer": -1,
     "bColor": "transparent"
@@ -216,7 +216,6 @@
     "x": 2,
     "y": 65,
     "width": 360,
-    "height": 160,
     "z": 2,
     "dropOffsetX": 0,
     "dropOffsetY": 0,
@@ -879,10 +878,17 @@
     "height": 25,
     "movable": false,
     "css": {
-      "font-size": "25px"
+      "font-size": "25px",
+      "background": "${PROPERTY bColor}",
+      "color": "white",
+      "text-align": "center",
+      "line-height": "1em"
     },
     "y": 3,
-    "text": 0
+    "text": 0,
+    "borderRadius": 4,
+    "bColor": "#e43d2e",
+    "rotation": 10
   },
   "restart": {
     "type": "button",
@@ -1248,7 +1254,9 @@
     "id": "score2",
     "x": 643,
     "y": 3,
-    "text": 0
+    "text": 0,
+    "bColor": "#ea762c",
+    "rotation": -10
   },
   "score3": {
     "inheritFrom": {
@@ -1257,7 +1265,8 @@
     "id": "score3",
     "x": 760,
     "y": 3,
-    "text": 0
+    "text": 0,
+    "bColor": "#82c039"
   },
   "score4": {
     "inheritFrom": {
@@ -1266,7 +1275,9 @@
     "id": "score4",
     "x": 877,
     "y": 3,
-    "text": 0
+    "text": 0,
+    "bColor": "#3293d1",
+    "rotation": -10
   },
   "score5": {
     "inheritFrom": {
@@ -1275,29 +1286,32 @@
     "id": "score5",
     "x": 994,
     "y": 3,
-    "text": 0
+    "text": 0,
+    "bColor": "#82c039"
   },
   "discardLabel": {
     "id": "discardLabel",
-    "x": 387,
+    "x": 393,
     "y": 500,
     "height": 30,
     "layer": -1,
     "movable": false,
     "css": {
-      "font-size": "30px"
+      "font-size": "30px",
+      "color": "#e43d2e"
     },
-    "text": "Discards"
+    "text": "Discard"
   },
   "drawLabel": {
     "id": "drawLabel",
-    "x": 407,
+    "x": 409,
     "y": 249,
     "height": 30,
     "layer": -1,
     "movable": false,
     "css": {
-      "font-size": "30px"
+      "font-size": "30px",
+      "color": "#e43d2e"
     },
     "text": "Draw"
   },
@@ -1375,6 +1389,8 @@
       "score1": "*"
     },
     "text": 0,
+    "bColor": "#ea762c",
+    "rotation": -10,
     "scale": 0
   },
   "score7": {
@@ -1385,6 +1401,7 @@
       "score1": "*"
     },
     "text": 0,
+    "bColor": "#e43d2e",
     "scale": 0
   },
   "background": {
@@ -1488,7 +1505,7 @@
     "type": "card",
     "cardType": "100",
     "id": "flwv",
-    "z": 10863,
+    "z": 11766,
     "parent": "6qnb"
   },
   "8r2x": {
@@ -1496,15 +1513,18 @@
     "type": "card",
     "cardType": "101",
     "id": "8r2x",
-    "z": 10847,
-    "parent": "6qnb"
+    "z": 3,
+    "parent": "hand2",
+    "activeFace": 1,
+    "owner": "Guest912",
+    "x": 240
   },
   "6aua": {
     "deck": "mainDeck",
     "type": "card",
     "cardType": "102",
     "id": "6aua",
-    "z": 10850,
+    "z": 11775,
     "parent": "6qnb"
   },
   "fwvc": {
@@ -1512,7 +1532,7 @@
     "type": "card",
     "cardType": "103",
     "id": "fwvc",
-    "z": 10860,
+    "z": 11771,
     "parent": "6qnb"
   },
   "nc8w": {
@@ -1520,7 +1540,7 @@
     "type": "card",
     "cardType": "104",
     "id": "nc8w",
-    "z": 10841,
+    "z": 11791,
     "parent": "6qnb"
   },
   "63v0": {
@@ -1528,7 +1548,7 @@
     "type": "card",
     "cardType": "105",
     "id": "63v0",
-    "z": 10827,
+    "z": 11785,
     "parent": "6qnb"
   },
   "uu83": {
@@ -1536,7 +1556,7 @@
     "type": "card",
     "cardType": "106",
     "id": "uu83",
-    "z": 10858,
+    "z": 11789,
     "parent": "6qnb"
   },
   "k56b": {
@@ -1544,7 +1564,7 @@
     "type": "card",
     "cardType": "107",
     "id": "k56b",
-    "z": 10811,
+    "z": 11838,
     "parent": "6qnb"
   },
   "2i60": {
@@ -1552,15 +1572,17 @@
     "type": "card",
     "cardType": "108",
     "id": "2i60",
-    "z": 10819,
-    "parent": "6qnb"
+    "z": 1,
+    "parent": "hand2",
+    "owner": "Guest912",
+    "activeFace": 1
   },
   "i3il": {
     "deck": "mainDeck",
     "type": "card",
     "cardType": "109",
     "id": "i3il",
-    "z": 10839,
+    "z": 11762,
     "parent": "6qnb"
   },
   "1yrv": {
@@ -1568,7 +1590,7 @@
     "type": "card",
     "cardType": "110",
     "id": "1yrv",
-    "z": 10843,
+    "z": 11776,
     "parent": "6qnb"
   },
   "en8y": {
@@ -1576,7 +1598,7 @@
     "type": "card",
     "cardType": "111",
     "id": "en8y",
-    "z": 10823,
+    "z": 11841,
     "parent": "6qnb"
   },
   "6vfk": {
@@ -1584,7 +1606,7 @@
     "type": "card",
     "cardType": "112",
     "id": "6vfk",
-    "z": 10810,
+    "z": 11779,
     "parent": "6qnb"
   },
   "jx0a": {
@@ -1592,7 +1614,7 @@
     "type": "card",
     "cardType": "113",
     "id": "jx0a",
-    "z": 10837,
+    "z": 11772,
     "parent": "6qnb"
   },
   "6jjk": {
@@ -1600,7 +1622,7 @@
     "type": "card",
     "cardType": "114",
     "id": "6jjk",
-    "z": 10812,
+    "z": 11840,
     "parent": "6qnb"
   },
   "gsz2": {
@@ -1608,7 +1630,7 @@
     "type": "card",
     "cardType": "115",
     "id": "gsz2",
-    "z": 10844,
+    "z": 11783,
     "parent": "6qnb"
   },
   "cgfg": {
@@ -1616,7 +1638,7 @@
     "type": "card",
     "cardType": "116",
     "id": "cgfg",
-    "z": 10842,
+    "z": 11758,
     "parent": "6qnb"
   },
   "0krd": {
@@ -1624,7 +1646,7 @@
     "type": "card",
     "cardType": "117",
     "id": "0krd",
-    "z": 10834,
+    "z": 11784,
     "parent": "6qnb"
   },
   "7pq0": {
@@ -1632,15 +1654,18 @@
     "type": "card",
     "cardType": "118",
     "id": "7pq0",
-    "z": 10853,
-    "parent": "6qnb"
+    "z": 2,
+    "parent": "hand1",
+    "x": 120,
+    "owner": "Mike",
+    "activeFace": 1
   },
   "ci2t": {
     "deck": "mainDeck",
     "type": "card",
     "cardType": "119",
     "id": "ci2t",
-    "z": 10852,
+    "z": 11778,
     "parent": "6qnb"
   },
   "is79": {
@@ -1648,7 +1673,7 @@
     "type": "card",
     "cardType": "120",
     "id": "is79",
-    "z": 10855,
+    "z": 11780,
     "parent": "6qnb"
   },
   "whcn": {
@@ -1656,7 +1681,7 @@
     "type": "card",
     "cardType": "121",
     "id": "whcn",
-    "z": 10826,
+    "z": 11759,
     "parent": "6qnb"
   },
   "e90k": {
@@ -1664,7 +1689,7 @@
     "type": "card",
     "cardType": "122",
     "id": "e90k",
-    "z": 10830,
+    "z": 11777,
     "parent": "6qnb"
   },
   "dd4l": {
@@ -1672,7 +1697,7 @@
     "type": "card",
     "cardType": "123",
     "id": "dd4l",
-    "z": 10857,
+    "z": 11768,
     "parent": "6qnb"
   },
   "0uni": {
@@ -1680,7 +1705,7 @@
     "type": "card",
     "cardType": "124",
     "id": "0uni",
-    "z": 10861,
+    "z": 11790,
     "parent": "6qnb"
   },
   "zhx6": {
@@ -1688,7 +1713,7 @@
     "type": "card",
     "cardType": "125",
     "id": "zhx6",
-    "z": 10856,
+    "z": 11757,
     "parent": "6qnb"
   },
   "svqr": {
@@ -1696,7 +1721,7 @@
     "type": "card",
     "cardType": "126",
     "id": "svqr",
-    "z": 10829,
+    "z": 11753,
     "parent": "6qnb"
   },
   "86bc": {
@@ -1704,7 +1729,7 @@
     "type": "card",
     "cardType": "127",
     "id": "86bc",
-    "z": 10824,
+    "z": 11782,
     "parent": "6qnb"
   },
   "fh76": {
@@ -1712,7 +1737,7 @@
     "type": "card",
     "cardType": "128",
     "id": "fh76",
-    "z": 10817,
+    "z": 11774,
     "parent": "6qnb"
   },
   "dpqh": {
@@ -1720,7 +1745,7 @@
     "type": "card",
     "cardType": "129",
     "id": "dpqh",
-    "z": 10836,
+    "z": 11760,
     "parent": "6qnb"
   },
   "7zzy": {
@@ -1728,7 +1753,7 @@
     "type": "card",
     "cardType": "130",
     "id": "7zzy",
-    "z": 10832,
+    "z": 11773,
     "parent": "6qnb"
   },
   "4u95": {
@@ -1736,7 +1761,7 @@
     "type": "card",
     "cardType": "131",
     "id": "4u95",
-    "z": 10845,
+    "z": 11765,
     "parent": "6qnb"
   },
   "m08c": {
@@ -1744,7 +1769,7 @@
     "type": "card",
     "cardType": "132",
     "id": "m08c",
-    "z": 10833,
+    "z": 11836,
     "parent": "6qnb"
   },
   "ltzv": {
@@ -1752,7 +1777,7 @@
     "type": "card",
     "cardType": "133",
     "id": "ltzv",
-    "z": 10849,
+    "z": 11781,
     "parent": "6qnb"
   },
   "usx9": {
@@ -1760,7 +1785,7 @@
     "type": "card",
     "cardType": "134",
     "id": "usx9",
-    "z": 10838,
+    "z": 11787,
     "parent": "6qnb"
   },
   "fi0r": {
@@ -1768,7 +1793,7 @@
     "type": "card",
     "cardType": "135",
     "id": "fi0r",
-    "z": 10851,
+    "z": 11764,
     "parent": "6qnb"
   },
   "s2ud": {
@@ -1776,15 +1801,17 @@
     "type": "card",
     "cardType": "136",
     "id": "s2ud",
-    "z": 10835,
-    "parent": "6qnb"
+    "z": 1,
+    "parent": "hand1",
+    "activeFace": 1,
+    "owner": "Mike"
   },
   "gk1b": {
     "deck": "mainDeck",
     "type": "card",
     "cardType": "137",
     "id": "gk1b",
-    "z": 10848,
+    "z": 11751,
     "parent": "6qnb"
   },
   "evog": {
@@ -1792,7 +1819,7 @@
     "type": "card",
     "cardType": "138",
     "id": "evog",
-    "z": 10825,
+    "z": 11756,
     "parent": "6qnb"
   },
   "aawu": {
@@ -1800,7 +1827,7 @@
     "type": "card",
     "cardType": "139",
     "id": "aawu",
-    "z": 10820,
+    "z": 11750,
     "parent": "6qnb"
   },
   "iyaj": {
@@ -1808,7 +1835,7 @@
     "type": "card",
     "cardType": "140",
     "id": "iyaj",
-    "z": 10828,
+    "z": 11752,
     "parent": "6qnb"
   },
   "fhew": {
@@ -1816,7 +1843,7 @@
     "type": "card",
     "cardType": "141",
     "id": "fhew",
-    "z": 10859,
+    "z": 11770,
     "parent": "6qnb"
   },
   "492j": {
@@ -1824,7 +1851,7 @@
     "type": "card",
     "cardType": "142",
     "id": "492j",
-    "z": 10846,
+    "z": 11749,
     "parent": "6qnb"
   },
   "k7au": {
@@ -1832,7 +1859,7 @@
     "type": "card",
     "cardType": "143",
     "id": "k7au",
-    "z": 10822,
+    "z": 11837,
     "parent": "6qnb"
   },
   "stw0": {
@@ -1840,7 +1867,7 @@
     "type": "card",
     "cardType": "144",
     "id": "stw0",
-    "z": 10818,
+    "z": 11786,
     "parent": "6qnb"
   },
   "us1n": {
@@ -1848,7 +1875,7 @@
     "type": "card",
     "cardType": "145",
     "id": "us1n",
-    "z": 10815,
+    "z": 11769,
     "parent": "6qnb"
   },
   "yxql": {
@@ -1856,7 +1883,7 @@
     "type": "card",
     "cardType": "146",
     "id": "yxql",
-    "z": 10821,
+    "z": 11788,
     "parent": "6qnb"
   },
   "ahwu": {
@@ -1864,7 +1891,7 @@
     "type": "card",
     "cardType": "147",
     "id": "ahwu",
-    "z": 10816,
+    "z": 11755,
     "parent": "6qnb"
   },
   "r947": {
@@ -1872,7 +1899,7 @@
     "type": "card",
     "cardType": "149",
     "id": "r947",
-    "z": 10813,
+    "z": 11763,
     "parent": "6qnb"
   },
   "0jz3": {
@@ -1880,15 +1907,18 @@
     "type": "card",
     "cardType": "150",
     "id": "0jz3",
-    "z": 10840,
-    "parent": "6qnb"
+    "z": 2,
+    "parent": "hand2",
+    "owner": "Guest912",
+    "activeFace": 1,
+    "x": 120
   },
   "cguh": {
     "deck": "mainDeck",
     "type": "card",
     "cardType": "151",
     "id": "cguh",
-    "z": 10854,
+    "z": 11754,
     "parent": "6qnb"
   },
   "jnc0": {
@@ -1896,15 +1926,18 @@
     "type": "card",
     "cardType": "152",
     "id": "jnc0",
-    "z": 10831,
-    "parent": "6qnb"
+    "z": 3,
+    "parent": "hand1",
+    "x": 240,
+    "owner": "Mike",
+    "activeFace": 1
   },
   "mfoa": {
     "deck": "mainDeck",
     "type": "card",
     "cardType": "153",
     "id": "mfoa",
-    "z": 10862,
+    "z": 11761,
     "parent": "6qnb"
   },
   "6qnb": {
