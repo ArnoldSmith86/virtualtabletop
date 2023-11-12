@@ -4433,6 +4433,12 @@
                 "to": "holder-suns-active-p${value}"
               }
             ]
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "button-end-turn"
+            ]
           }
         ]
       }
