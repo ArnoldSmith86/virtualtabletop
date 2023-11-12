@@ -205,6 +205,7 @@
     "y": 120,
     "width": 350,
     "height": 610,
+    "movable": false,
     "css": {
       "default": {
         "background": "#e7feff",
@@ -247,7 +248,7 @@
               "player-aid"
             ],
             "property": "endGame",
-            "value": "After 2 rounds, no shuffle inbetween"
+            "value": "After 2 rounds, no shuffle in-between"
           }
         ],
         "elseRoutine": [
