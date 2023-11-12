@@ -280,6 +280,23 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_symbolPickerText',
+    name: 'pick an asset from the symbol picker',
+    context: '^button ↦ text$',
+    call: async function() {
+      const a = await pickSymbol('fonts');
+      if(a) {
+        jeStateNow.classes = a.type;
+        jeStateNow.text = a.symbol;
+        jeSetAndSelect();
+        await jeApplyChanges();
+      }
+    },
+    show: function() {
+      return [ 'symbols', 'material-icons' ].indexOf(jeStateNow.classes) != -1;
+    }
+  },
+  {
     id: 'je_uploadAudio',
     name: 'upload audio file',
     context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
