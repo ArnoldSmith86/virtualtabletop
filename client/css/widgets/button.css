@@ -24,3 +24,18 @@
   background-image: var(--wcImageOH);
   color: var(--wcFontOH);
 }
+
+.autoIconAlignImage {
+  background-size: calc(100% * var(--iconScale)) calc(100% * var(--iconScale));
+}
+
+.autoIconAlignFont {
+  font-family: "Material Icons";
+  text-transform: lowercase;
+  font-weight: normal;
+  line-height: 1;
+}
+
+.autoIconAlignSymbols {
+  font-family: "VTT-Symbols";
+}

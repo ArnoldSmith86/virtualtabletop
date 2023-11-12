@@ -297,6 +297,19 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_symbolPickerIcon',
+    name: 'pick an asset from the symbol picker',
+    context: '^button ↦ icon',
+    call: async function() {
+      const a = await pickSymbol();
+      if(a) {
+        jeStateNow.icon = a.symbol;
+        jeSetAndSelect();
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
     id: 'je_uploadAudio',
     name: 'upload audio file',
     context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
