@@ -281,14 +281,14 @@
     "movable": "true",
     "width": 80,
     "height": 80,
-    "y": 314,
+    "y": 150,
     "secondaryColor": "#ffffff",
     "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
     "rollTimes": "--",
     "originalRollTimes": 3,
     "clickable": false,
     "color": "#B6B6B6",
-    "x": 59,
+    "x": 294,
     "hoverParent": "diceRollerHolder",
     "parent": "diceRollerHolder",
     "rotation": -287,
@@ -1025,7 +1025,7 @@
     "type": "card",
     "cardType": "b3.png",
     "id": "x3wf",
-    "z": 58050,
+    "z": 58158,
     "activeFace": 1,
     "x": 4,
     "y": 4,
@@ -1047,11 +1047,10 @@
     "type": "card",
     "cardType": "p2.png",
     "id": "x3ir",
-    "z": 58147,
+    "z": 58171,
     "activeFace": 1,
-    "x": 4,
     "y": 4,
-    "hoverParent": "base29",
+    "x": 4,
     "parent": "base29"
   },
   "22zkx": {
@@ -1074,10 +1073,10 @@
     "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
     "rollTimes": "--",
     "originalRollTimes": 5,
-    "x": 253,
+    "x": 391,
     "clickable": false,
     "color": "#B6B6B6",
-    "y": 240,
+    "y": 76,
     "parent": "diceRollerHolder",
     "rotation": -43,
     "activeFace": 2,
@@ -1099,12 +1098,12 @@
     "movable": "true",
     "width": 80,
     "height": 80,
-    "y": 87,
+    "y": 196,
     "secondaryColor": "#ffffff",
     "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
     "rollTimes": "--",
     "originalRollTimes": 3,
-    "x": 651,
+    "x": 19,
     "clickable": false,
     "color": "#B6B6B6",
     "activeFace": 3,
@@ -1127,12 +1126,12 @@
     "movable": "true",
     "width": 80,
     "height": 80,
-    "y": 42,
+    "y": 156,
     "secondaryColor": "#ffffff",
     "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
     "rollTimes": "--",
     "originalRollTimes": 6,
-    "x": 540,
+    "x": 562,
     "clickable": false,
     "color": "#B6B6B6",
     "rotation": -51,
@@ -1160,10 +1159,10 @@
     "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
     "rollTimes": "--",
     "originalRollTimes": 2,
-    "x": 131,
+    "x": 646,
     "clickable": false,
     "color": "#B6B6B6",
-    "y": 129,
+    "y": 163,
     "activeFace": 1,
     "parent": "diceRollerHolder",
     "rotation": -235,
@@ -1185,14 +1184,14 @@
     "movable": "true",
     "width": 80,
     "height": 80,
-    "y": 59,
+    "y": 91,
     "secondaryColor": "#ffffff",
     "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
     "rollTimes": "--",
     "originalRollTimes": 4,
     "clickable": false,
     "color": "#B6B6B6",
-    "x": 195,
+    "x": 149,
     "parent": "diceRollerHolder",
     "rotation": 259,
     "scale": "1",
@@ -1214,12 +1213,12 @@
     "movable": "true",
     "width": 80,
     "height": 80,
-    "y": 284,
+    "y": 228,
     "secondaryColor": "#ffffff",
     "css": "box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;",
     "rollTimes": "--",
     "originalRollTimes": 5,
-    "x": 383,
+    "x": 13,
     "clickable": false,
     "color": "#B6B6B6",
     "activeFace": 1,
@@ -1264,7 +1263,7 @@
     "type": "card",
     "cardType": "R3.png",
     "id": "x5yf",
-    "z": 58119,
+    "z": 58162,
     "x": 4,
     "y": 4,
     "activeFace": 1,
@@ -1874,9 +1873,9 @@
   "base15": {
     "type": "holder",
     "id": "base15",
-    "x": 1144,
-    "width": 160,
-    "height": 240,
+    "x": 1179,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -1888,15 +1887,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8,
-    "y": -20
+    "scale": 0.77,
+    "y": -26
   },
   "base16": {
     "type": "holder",
     "id": "base16",
-    "x": 1293,
-    "width": 160,
-    "height": 240,
+    "x": 1312,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -1908,15 +1907,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8,
-    "y": -20
+    "scale": 0.77,
+    "y": -26
   },
   "base17": {
     "type": "holder",
     "id": "base17",
-    "x": 1441,
-    "width": 160,
-    "height": 240,
+    "x": 1446,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -1928,16 +1927,16 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8,
-    "y": -20
+    "scale": 0.77,
+    "y": -26
   },
   "base18": {
     "type": "holder",
     "id": "base18",
-    "x": 1144,
-    "y": 182,
-    "width": 160,
-    "height": 240,
+    "x": 1179,
+    "y": 172,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -1949,15 +1948,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   },
   "base19": {
     "type": "holder",
     "id": "base19",
-    "x": 1144,
-    "y": 384,
-    "width": 160,
-    "height": 240,
+    "x": 1179,
+    "y": 371,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -1969,15 +1968,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   },
   "base20": {
     "type": "holder",
     "id": "base20",
-    "x": 1144,
-    "y": 585,
-    "width": 160,
-    "height": 240,
+    "x": 1179,
+    "y": 570,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -1989,15 +1988,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   },
   "base22": {
     "type": "holder",
     "id": "base22",
-    "x": 1293,
-    "y": 182,
-    "width": 160,
-    "height": 240,
+    "x": 1312,
+    "y": 172,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -2009,15 +2008,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   },
   "base23": {
     "type": "holder",
     "id": "base23",
-    "x": 1293,
-    "y": 384,
-    "width": 160,
-    "height": 240,
+    "x": 1312,
+    "y": 371,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -2029,15 +2028,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   },
   "base24": {
     "type": "holder",
     "id": "base24",
-    "x": 1293,
-    "y": 585,
-    "width": 160,
-    "height": 240,
+    "x": 1312,
+    "y": 570,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -2049,15 +2048,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   },
   "base25": {
     "type": "holder",
     "id": "base25",
-    "x": 1296,
-    "y": 787,
-    "width": 160,
-    "height": 240,
+    "x": 1312,
+    "y": 768,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -2069,15 +2068,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   },
   "base26": {
     "type": "holder",
     "id": "base26",
-    "x": 1441,
-    "y": 182,
-    "width": 160,
-    "height": 240,
+    "x": 1446,
+    "y": 172,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -2089,15 +2088,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   },
   "base27": {
     "type": "holder",
     "id": "base27",
-    "x": 1441,
-    "y": 384,
-    "width": 160,
-    "height": 240,
+    "x": 1446,
+    "y": 371,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -2109,15 +2108,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   },
   "base28": {
     "type": "holder",
     "id": "base28",
-    "x": 1441,
-    "y": 585,
-    "width": 160,
-    "height": 240,
+    "x": 1446,
+    "y": 570,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -2129,15 +2128,15 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   },
   "base29": {
     "type": "holder",
     "id": "base29",
-    "x": 1444,
-    "y": 787,
-    "width": 160,
-    "height": 240,
+    "x": 1446,
+    "y": 768,
+    "width": 170,
+    "height": 258,
     "z": 26279,
     "movableInEdit": false,
     "css": {
@@ -2149,6 +2148,6 @@
     "dropTarget": {
       "type": "card"
     },
-    "scale": 0.8
+    "scale": 0.77
   }
 }
