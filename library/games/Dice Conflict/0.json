@@ -93,8 +93,7 @@
     "id": "rollDiceButton",
     "y": 666,
     "z": 35105,
-    "backgroundColor": "#0d2f5e",
-    "css": "font-size:2em;",
+    "css": "background-size: 80%",
     "clickRoutine": [
       {
         "func": "SET",
@@ -138,10 +137,14 @@
         "value": "transition: ease-out 0.2s;box-shadow:0 0 5px rgba(0 0 0 / 0.5);border-radius:10px;"
       }
     ],
-    "image": "/assets/-655129137_25962",
+    "image": "/i/game-icons.net/delapouite/rolling-dices.svg",
     "width": 100,
     "height": 100,
-    "x": 374
+    "x": 374,
+    "textColor": "white",
+    "svgReplaces": {
+      "#000": "textColor"
+    }
   },
   "xk2v": {
     "deck": "rcyrD",
