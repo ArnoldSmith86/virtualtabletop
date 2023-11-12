@@ -269,6 +269,19 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_symbolPickerAsset',
+    name: 'pick an asset from the symbol picker',
+    context: '.*"(/assets/[0-9_-]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
+    call: async function() {
+      pickSymbol('images').then(a=> {
+        if(a) {
+          jeInsert(null, jeGetLastKey(), a.url);
+          jeApplyChanges();
+        }
+      });
+    }
+  },
+  {
     id: 'je_uploadAudio',
     name: 'upload audio file',
     context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
