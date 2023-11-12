@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "Room layout and design by LawDawg and released to the public domain by CC0.<div><br></div><div>Background water image by Michelle_Raponi is available under the Pixabay license at&nbsp;https://pixabay.com/photos/water-sea-caribbean-background-1330252/.<br><div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"world war 2 battleship on fire, oil on canvas \"<br></div><div><br></div></div>",
-      "lastUpdate": 1699562737129,
+      "lastUpdate": 1699747207690,
       "showName": true,
       "skill": "",
       "description": "Find and sink your opponent's ships before they sink yours.",
@@ -2303,7 +2303,7 @@
   },
   "labelColC": {
     "inheritFrom": {
-      "labelColB": "*"
+      "labelColA": "*"
     },
     "id": "labelColC",
     "x": 115,
@@ -2312,7 +2312,7 @@
   },
   "labelColD": {
     "inheritFrom": {
-      "labelColC": "*"
+      "labelColA": "*"
     },
     "id": "labelColD",
     "x": 163,
@@ -2321,7 +2321,7 @@
   },
   "labelColE": {
     "inheritFrom": {
-      "labelColD": "*"
+      "labelColA": "*"
     },
     "id": "labelColE",
     "x": 211,
@@ -2330,7 +2330,7 @@
   },
   "labelColF": {
     "inheritFrom": {
-      "labelColE": "*"
+      "labelColA": "*"
     },
     "id": "labelColF",
     "x": 259,
@@ -2339,7 +2339,7 @@
   },
   "labelColG": {
     "inheritFrom": {
-      "labelColF": "*"
+      "labelColA": "*"
     },
     "id": "labelColG",
     "x": 307,
@@ -2348,7 +2348,7 @@
   },
   "labelColH": {
     "inheritFrom": {
-      "labelColG": "*"
+      "labelColA": "*"
     },
     "id": "labelColH",
     "x": 355,
@@ -2357,7 +2357,7 @@
   },
   "labelColI": {
     "inheritFrom": {
-      "labelColH": "*"
+      "labelColA": "*"
     },
     "id": "labelColI",
     "x": 403,
@@ -2366,7 +2366,7 @@
   },
   "labelColJ": {
     "inheritFrom": {
-      "labelColI": "*"
+      "labelColA": "*"
     },
     "id": "labelColJ",
     "x": 451,
@@ -2375,7 +2375,7 @@
   },
   "labelColK": {
     "inheritFrom": {
-      "labelColJ": "*"
+      "labelColA": "*"
     },
     "id": "labelColK",
     "x": 499,
@@ -2384,7 +2384,7 @@
   },
   "labelColL": {
     "inheritFrom": {
-      "labelColK": "*"
+      "labelColA": "*"
     },
     "id": "labelColL",
     "x": 547,
@@ -2393,7 +2393,7 @@
   },
   "labelColM": {
     "inheritFrom": {
-      "labelColL": "*"
+      "labelColA": "*"
     },
     "id": "labelColM",
     "x": 595,
@@ -2402,7 +2402,7 @@
   },
   "labelColN": {
     "inheritFrom": {
-      "labelColM": "*"
+      "labelColA": "*"
     },
     "id": "labelColN",
     "x": 643,
@@ -2654,7 +2654,7 @@
   },
   "labelColO": {
     "inheritFrom": {
-      "labelColN": "*"
+      "labelColA": "*"
     },
     "id": "labelColO",
     "x": 691,
@@ -5316,98 +5316,139 @@
       "labelColA": "*"
     },
     "id": "labelColA1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 19,
+    "y": 186
   },
   "labelColB1": {
     "inheritFrom": {
-      "labelColB": "*"
+      "labelColA": "*"
     },
     "id": "labelColB1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 67,
+    "y": 160,
+    "col": "B"
   },
   "labelColC1": {
     "inheritFrom": {
-      "labelColC": "*"
+      "labelColA": "*"
     },
     "id": "labelColC1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 115,
+    "y": 134,
+    "col": "C"
   },
   "labelColD1": {
     "inheritFrom": {
-      "labelColD": "*"
+      "labelColA": "*"
     },
     "id": "labelColD1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 163,
+    "y": 108,
+    "col": "D"
   },
   "labelColE1": {
     "inheritFrom": {
-      "labelColE": "*"
+      "labelColA": "*"
     },
     "id": "labelColE1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 211,
+    "y": 82,
+    "col": "E"
   },
   "labelColF1": {
     "inheritFrom": {
-      "labelColF": "*"
+      "labelColA": "*"
     },
     "id": "labelColF1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 259,
+    "y": 56,
+    "col": "F"
   },
   "labelColG1": {
     "inheritFrom": {
-      "labelColG": "*"
+      "labelColA": "*"
     },
     "id": "labelColG1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 307,
+    "y": 30,
+    "col": "G"
   },
   "labelColH1": {
     "inheritFrom": {
-      "labelColH": "*"
+      "labelColA": "*"
     },
     "id": "labelColH1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 355,
+    "y": 4,
+    "col": "H"
   },
   "labelColI1": {
     "inheritFrom": {
-      "labelColI": "*"
+      "labelColA": "*"
     },
     "id": "labelColI1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 403,
+    "y": 30,
+    "col": "I"
   },
   "labelColJ1": {
     "inheritFrom": {
-      "labelColJ": "*"
+      "labelColA": "*"
     },
     "id": "labelColJ1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 451,
+    "y": 56,
+    "col": "J"
   },
   "labelColK1": {
     "inheritFrom": {
-      "labelColK": "*"
+      "labelColA": "*"
     },
     "id": "labelColK1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 499,
+    "y": 82,
+    "col": "K"
   },
   "labelColL1": {
     "inheritFrom": {
-      "labelColL": "*"
+      "labelColA": "*"
     },
     "id": "labelColL1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 547,
+    "y": 108,
+    "col": "L"
   },
   "labelColM1": {
     "inheritFrom": {
-      "labelColM": "*"
+      "labelColA": "*"
     },
     "id": "labelColM1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 595,
+    "y": 134,
+    "col": "M"
   },
   "labelColN1": {
     "inheritFrom": {
-      "labelColN": "*"
+      "labelColA": "*"
     },
     "id": "labelColN1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 643,
+    "y": 160,
+    "col": "N"
   },
   "hex-n10": {
     "inheritFrom": {
@@ -5645,10 +5686,13 @@
   },
   "labelColO1": {
     "inheritFrom": {
-      "labelColO": "*"
+      "labelColA": "*"
     },
     "id": "labelColO1",
-    "parent": "board2"
+    "parent": "board2",
+    "x": 691,
+    "y": 186,
+    "col": "O"
   },
   "backgroundImage": {
     "id": "backgroundImage",
