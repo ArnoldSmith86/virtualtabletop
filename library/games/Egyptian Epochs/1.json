@@ -980,7 +980,7 @@
       ],
       "label-example-pharaoh-quantity": "*"
     },
-    "text": "Most: 5VP\nLeast: -2VP"
+    "text": "Most 5VP\nLeast -2VP"
   },
   "label-example-nile-scoring": {
     "type": "label",
@@ -1007,7 +1007,7 @@
       ],
       "label-example-civ-quantity": "*"
     },
-    "text": "None: -5VP\n3/4/5 different types: 5/10/15VP",
+    "text": "None -5VP\n3/4/5 different types 5/10/15VP",
     "height": 40
   },
   "label-example-civ-quantity": {
@@ -1040,7 +1040,7 @@
       ],
       "label-example-monument-quantity": "*"
     },
-    "text": "🟆 FINAL EPOCH ONLY 🟆\n1/2/3/4/5/6/7 different types: 1/2/3/4/5/6/10VP\nEach 3/4 of a kind: 5/10VP",
+    "text": "🟆 FINAL EPOCH ONLY 🟆\n1/2/3/4/5/6/7 different types 1/2/3/4/5/6/10VP\nEach 3/4 of a kind 5/10VP",
     "x": 1210
   },
   "pile-suns": {
