@@ -436,7 +436,7 @@
   overflow-y: auto;
   word-wrap: anywhere;
 }
-#symbolPickerOverlay.bigPreviews #symbolList {
+#symbolPickerOverlay.bigPreviews.fewResults #symbolList {
   --symbolSize: 64px;
 }
 
