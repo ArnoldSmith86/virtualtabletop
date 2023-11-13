@@ -831,6 +831,20 @@ function jeAddRoutineExpressionCommands(variable, expression) {
   });
 }
 
+function jeAddRoutineCommentCommand() {
+  jeCommands.push({
+    id: 'comment_',
+    name: 'Comment',
+    class: 'comment',
+    context: '^.*Routine',
+    call: jeRoutineCall(function (routineIndex, routine, operationIndex) {
+      routine.splice(operationIndex+1, 0, `// ###SELECT ME###`);
+      jeSetAndSelect('Comment', true);
+    }),
+    show: jeRoutineCall((_, routine) => Array.isArray(routine), true)
+  });
+}
+
 function jeAddRoutineOperationCommands(command, defaults) {
   jeCommands.push({
     id: 'operation_' + command,
@@ -916,6 +930,8 @@ function jeAddCommands() {
 
   jeAddRoutineExpressionCommands('random', 'randInt 1 10');
   jeAddRoutineExpressionCommands('increment', '${variableName} + 1');
+
+  jeAddRoutineCommentCommand();
 
   jeAddCSScommands();
 
