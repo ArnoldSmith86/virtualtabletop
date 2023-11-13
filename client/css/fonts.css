@@ -436,7 +436,7 @@
   overflow-y: auto;
   word-wrap: anywhere;
 }
-#symbolPickerOverlay.bigPreviews #symbolList {
+#symbolPickerOverlay.bigPreviews.fewResults #symbolList {
   --symbolSize: 64px;
 }
 
@@ -461,7 +461,7 @@
   word-break: break-all;
 }
 
-#symbolPickerOverlay .emoji:hover, #symbolPickerOverlay.fewResults .emoji {
+#symbolPickerOverlay .emoji:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji {
   background: var(--url) center no-repeat;
   color: transparent;
 }
