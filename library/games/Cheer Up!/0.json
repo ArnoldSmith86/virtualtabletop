@@ -67,7 +67,8 @@
       },
       {
         "func": "CALL",
-        "widget": "it2o"
+        "widget": "it2o",
+        "routine": "newGridsRoutine"
       }
     ],
     "x": 255,
@@ -3334,7 +3335,20 @@
       {
         "func": "LABEL"
       },
-      "// new grids",
+      {
+        "func": "CALL",
+        "routine": "newGridsRoutine"
+      }
+    ],
+    "x": 1273,
+    "y": 461,
+    "id": "it2o",
+    "text": "skip_next",
+    "classes": "material-icons",
+    "css": {
+      "font-size": "74px"
+    },
+    "newGridsRoutine": [
       {
         "func": "RECALL",
         "holder": "iozm"
@@ -3394,15 +3408,7 @@
         "from": "iozm",
         "to": "tl39"
       }
-    ],
-    "x": 1273,
-    "y": 461,
-    "id": "it2o",
-    "text": "skip_next",
-    "classes": "material-icons",
-    "css": {
-      "font-size": "74px"
-    }
+    ]
   },
   "tl39": {
     "type": "holder",
