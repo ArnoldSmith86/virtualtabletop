@@ -642,7 +642,15 @@
     "height": 70,
     "movableInEdit": false,
     "css": {
-      "border-color": "#888888"
+      "default": {
+        "border-color": "#888888"
+      },
+      ".droppable": {
+        "background": "#00000050"
+      },
+      ".droptarget": {
+        "background": "#000000aa"
+      }
     },
     "y": 70,
     "dropTarget": {
