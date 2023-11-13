@@ -64,7 +64,7 @@ export class Button extends Widget {
       css += '; --wcMain:' + this.get('backgroundColor');
     if(this.get('borderColor'))
       css += '; --wcBorder:' + this.get('borderColor');
-    if(this.get('textColor'))
+    if(this.get('textColor') && this.get('textColor') != '#ffffff')
       css += '; --wcFont:' + this.get('textColor');
     if(this.get('backgroundColorOH'))
       css += '; --wcMainOH:' + this.get('backgroundColorOH');
