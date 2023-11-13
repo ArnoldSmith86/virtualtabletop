@@ -1,18 +1,23 @@
 .holder {
   background: white;
   box-sizing: border-box;
-  border: calc(1px / var(--scale)) solid #333;
+  border-width: 1px;
+  border-style: solid;
   border-color: #d8d8d8 #ccc #ccc #d8d8d8;
 }
 
-.holder > .widget, .widget.droppable.droptarget.holder.transparent > .widget {
+.holder.droppable.droptarget{
+  border-color: #333!important;
+}
+
+.holder > .widget {
   left: -1px;
   top: -1px;
 }
 
 .holder.transparent {
   background: none;
-  border: none;
+  border-color: transparent;
 }
 
 .holder.transparent > .widget {
@@ -30,8 +35,4 @@
 
 .holder.showCardBack > .card.widget > :not(.active).cardFace, .card.widget.showCardBack > :not(.active).cardFace {
   display: block;
-}
-
-.widget.droppable.droptarget {
-  border: calc(1px / var(--scale)) solid #333 !important;
 }
