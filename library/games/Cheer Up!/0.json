@@ -270,7 +270,7 @@
     "type": "card",
     "cardType": "0",
     "id": "lo9q",
-    "z": 26881,
+    "z": 28396,
     "parent": "iig4"
   },
   "pcj8": {
@@ -278,7 +278,7 @@
     "type": "card",
     "cardType": "1",
     "id": "pcj8",
-    "z": 26880,
+    "z": 28450,
     "parent": "iig4"
   },
   "wgg9": {
@@ -286,7 +286,7 @@
     "type": "card",
     "cardType": "2",
     "id": "wgg9",
-    "z": 26893,
+    "z": 28406,
     "parent": "iig4"
   },
   "g7xa": {
@@ -294,7 +294,7 @@
     "type": "card",
     "cardType": "3",
     "id": "g7xa",
-    "z": 26878,
+    "z": 28386,
     "parent": "iig4"
   },
   "u3sk": {
@@ -302,7 +302,7 @@
     "type": "card",
     "cardType": "4",
     "id": "u3sk",
-    "z": 26954,
+    "z": 28318,
     "parent": "iig4"
   },
   "0fy4": {
@@ -310,7 +310,7 @@
     "type": "card",
     "cardType": "5",
     "id": "0fy4",
-    "z": 26844,
+    "z": 28313,
     "parent": "iig4"
   },
   "z49v": {
@@ -318,7 +318,7 @@
     "type": "card",
     "cardType": "6",
     "id": "z49v",
-    "z": 26925,
+    "z": 28380,
     "parent": "iig4"
   },
   "h3z1": {
@@ -326,7 +326,7 @@
     "type": "card",
     "cardType": "7",
     "id": "h3z1",
-    "z": 26962,
+    "z": 28417,
     "parent": "iig4"
   },
   "2cde": {
@@ -334,7 +334,7 @@
     "type": "card",
     "cardType": "8",
     "id": "2cde",
-    "z": 26876,
+    "z": 28404,
     "parent": "iig4"
   },
   "erzt": {
@@ -342,7 +342,7 @@
     "type": "card",
     "cardType": "9",
     "id": "erzt",
-    "z": 26835,
+    "z": 28317,
     "parent": "iig4"
   },
   "frat": {
@@ -350,7 +350,7 @@
     "type": "card",
     "cardType": "10",
     "id": "frat",
-    "z": 26882,
+    "z": 28372,
     "parent": "iig4"
   },
   "nsra": {
@@ -358,7 +358,7 @@
     "type": "card",
     "cardType": "11",
     "id": "nsra",
-    "z": 26831,
+    "z": 28329,
     "parent": "iig4"
   },
   "sbmo": {
@@ -366,7 +366,7 @@
     "type": "card",
     "cardType": "12",
     "id": "sbmo",
-    "z": 26848,
+    "z": 28330,
     "parent": "iig4"
   },
   "4ibc": {
@@ -374,7 +374,7 @@
     "type": "card",
     "cardType": "-1",
     "id": "4ibc",
-    "z": 26937,
+    "z": 28422,
     "parent": "iig4"
   },
   "qazh": {
@@ -2093,7 +2093,7 @@
     "type": "card",
     "cardType": "0",
     "id": "jwzu",
-    "z": 26849,
+    "z": 28423,
     "parent": "iig4"
   },
   "ukq9": {
@@ -2101,7 +2101,7 @@
     "type": "card",
     "cardType": "1",
     "id": "ukq9",
-    "z": 26957,
+    "z": 28426,
     "parent": "iig4"
   },
   "4qio": {
@@ -2109,7 +2109,7 @@
     "type": "card",
     "cardType": "2",
     "id": "4qio",
-    "z": 26956,
+    "z": 28445,
     "parent": "iig4"
   },
   "vjk4": {
@@ -2117,7 +2117,7 @@
     "type": "card",
     "cardType": "3",
     "id": "vjk4",
-    "z": 26906,
+    "z": 28338,
     "parent": "iig4"
   },
   "63u4": {
@@ -2125,7 +2125,7 @@
     "type": "card",
     "cardType": "4",
     "id": "63u4",
-    "z": 26958,
+    "z": 28448,
     "parent": "iig4"
   },
   "ksun": {
@@ -2133,7 +2133,7 @@
     "type": "card",
     "cardType": "5",
     "id": "ksun",
-    "z": 26855,
+    "z": 28432,
     "parent": "iig4"
   },
   "ynb7": {
@@ -2141,7 +2141,7 @@
     "type": "card",
     "cardType": "6",
     "id": "ynb7",
-    "z": 26852,
+    "z": 28325,
     "parent": "iig4"
   },
   "2e5t": {
@@ -2149,7 +2149,7 @@
     "type": "card",
     "cardType": "7",
     "id": "2e5t",
-    "z": 26860,
+    "z": 28363,
     "parent": "iig4"
   },
   "9vcn": {
@@ -2157,7 +2157,7 @@
     "type": "card",
     "cardType": "8",
     "id": "9vcn",
-    "z": 26898,
+    "z": 28384,
     "parent": "iig4"
   },
   "clvt": {
@@ -2165,7 +2165,7 @@
     "type": "card",
     "cardType": "9",
     "id": "clvt",
-    "z": 26912,
+    "z": 28416,
     "parent": "iig4"
   },
   "26n3": {
@@ -2173,7 +2173,7 @@
     "type": "card",
     "cardType": "10",
     "id": "26n3",
-    "z": 26887,
+    "z": 28430,
     "parent": "iig4"
   },
   "pzme": {
@@ -2181,7 +2181,7 @@
     "type": "card",
     "cardType": "11",
     "id": "pzme",
-    "z": 26964,
+    "z": 28343,
     "parent": "iig4"
   },
   "ozwq": {
@@ -2189,7 +2189,7 @@
     "type": "card",
     "cardType": "12",
     "id": "ozwq",
-    "z": 26841,
+    "z": 28353,
     "parent": "iig4"
   },
   "q0yh": {
@@ -2197,7 +2197,7 @@
     "type": "card",
     "cardType": "-1",
     "id": "q0yh",
-    "z": 26949,
+    "z": 28444,
     "parent": "iig4"
   },
   "5dv7": {
@@ -2205,7 +2205,7 @@
     "type": "card",
     "cardType": "0",
     "id": "5dv7",
-    "z": 26857,
+    "z": 28370,
     "parent": "iig4"
   },
   "vww0": {
@@ -2213,7 +2213,7 @@
     "type": "card",
     "cardType": "1",
     "id": "vww0",
-    "z": 26910,
+    "z": 28323,
     "parent": "iig4"
   },
   "xrlj": {
@@ -2221,7 +2221,7 @@
     "type": "card",
     "cardType": "2",
     "id": "xrlj",
-    "z": 26909,
+    "z": 28312,
     "parent": "iig4"
   },
   "kyf4": {
@@ -2229,7 +2229,7 @@
     "type": "card",
     "cardType": "3",
     "id": "kyf4",
-    "z": 26890,
+    "z": 28333,
     "parent": "iig4"
   },
   "vdvv": {
@@ -2237,7 +2237,7 @@
     "type": "card",
     "cardType": "4",
     "id": "vdvv",
-    "z": 26873,
+    "z": 28402,
     "parent": "iig4"
   },
   "udst": {
@@ -2245,7 +2245,7 @@
     "type": "card",
     "cardType": "5",
     "id": "udst",
-    "z": 26978,
+    "z": 28437,
     "parent": "iig4"
   },
   "0o3y": {
@@ -2253,7 +2253,7 @@
     "type": "card",
     "cardType": "6",
     "id": "0o3y",
-    "z": 26892,
+    "z": 28354,
     "parent": "iig4"
   },
   "pkvk": {
@@ -2261,7 +2261,7 @@
     "type": "card",
     "cardType": "7",
     "id": "pkvk",
-    "z": 26879,
+    "z": 28316,
     "parent": "iig4"
   },
   "47dc": {
@@ -2269,7 +2269,7 @@
     "type": "card",
     "cardType": "8",
     "id": "47dc",
-    "z": 26942,
+    "z": 28365,
     "parent": "iig4"
   },
   "fpyz": {
@@ -2277,7 +2277,7 @@
     "type": "card",
     "cardType": "9",
     "id": "fpyz",
-    "z": 26916,
+    "z": 28310,
     "parent": "iig4"
   },
   "nncw": {
@@ -2285,7 +2285,7 @@
     "type": "card",
     "cardType": "10",
     "id": "nncw",
-    "z": 26924,
+    "z": 28346,
     "parent": "iig4"
   },
   "w9lh": {
@@ -2293,7 +2293,7 @@
     "type": "card",
     "cardType": "11",
     "id": "w9lh",
-    "z": 26955,
+    "z": 28359,
     "parent": "iig4"
   },
   "nm33": {
@@ -2301,7 +2301,7 @@
     "type": "card",
     "cardType": "12",
     "id": "nm33",
-    "z": 26904,
+    "z": 28447,
     "parent": "iig4"
   },
   "vr6y": {
@@ -2309,7 +2309,7 @@
     "type": "card",
     "cardType": "-1",
     "id": "vr6y",
-    "z": 26834,
+    "z": 28347,
     "parent": "iig4"
   },
   "q5la": {
@@ -2317,7 +2317,7 @@
     "type": "card",
     "cardType": "0",
     "id": "q5la",
-    "z": 26847,
+    "z": 28434,
     "parent": "iig4"
   },
   "mxk6": {
@@ -2325,7 +2325,7 @@
     "type": "card",
     "cardType": "1",
     "id": "mxk6",
-    "z": 26859,
+    "z": 28351,
     "parent": "iig4"
   },
   "wx8g": {
@@ -2333,7 +2333,7 @@
     "type": "card",
     "cardType": "2",
     "id": "wx8g",
-    "z": 26923,
+    "z": 28308,
     "parent": "iig4"
   },
   "osrt": {
@@ -2341,7 +2341,7 @@
     "type": "card",
     "cardType": "3",
     "id": "osrt",
-    "z": 26951,
+    "z": 28368,
     "parent": "iig4"
   },
   "0fkz": {
@@ -2349,7 +2349,7 @@
     "type": "card",
     "cardType": "4",
     "id": "0fkz",
-    "z": 26960,
+    "z": 28304,
     "parent": "iig4"
   },
   "mtk3": {
@@ -2357,7 +2357,7 @@
     "type": "card",
     "cardType": "5",
     "id": "mtk3",
-    "z": 26886,
+    "z": 28331,
     "parent": "iig4"
   },
   "9id6": {
@@ -2365,7 +2365,7 @@
     "type": "card",
     "cardType": "6",
     "id": "9id6",
-    "z": 26862,
+    "z": 28388,
     "parent": "iig4"
   },
   "xc55": {
@@ -2373,7 +2373,7 @@
     "type": "card",
     "cardType": "7",
     "id": "xc55",
-    "z": 26963,
+    "z": 28391,
     "parent": "iig4"
   },
   "dqux": {
@@ -2381,7 +2381,7 @@
     "type": "card",
     "cardType": "8",
     "id": "dqux",
-    "z": 26965,
+    "z": 28421,
     "parent": "iig4"
   },
   "00df": {
@@ -2389,7 +2389,7 @@
     "type": "card",
     "cardType": "9",
     "id": "00df",
-    "z": 26921,
+    "z": 28376,
     "parent": "iig4"
   },
   "qkhr": {
@@ -2397,7 +2397,7 @@
     "type": "card",
     "cardType": "10",
     "id": "qkhr",
-    "z": 26959,
+    "z": 28387,
     "parent": "iig4"
   },
   "q60o": {
@@ -2405,7 +2405,7 @@
     "type": "card",
     "cardType": "11",
     "id": "q60o",
-    "z": 26917,
+    "z": 28400,
     "parent": "iig4"
   },
   "f1fh": {
@@ -2413,7 +2413,7 @@
     "type": "card",
     "cardType": "12",
     "id": "f1fh",
-    "z": 26891,
+    "z": 28379,
     "parent": "iig4"
   },
   "49oi": {
@@ -2421,7 +2421,7 @@
     "type": "card",
     "cardType": "-1",
     "id": "49oi",
-    "z": 26838,
+    "z": 28337,
     "parent": "iig4"
   },
   "w6ym": {
@@ -2429,7 +2429,7 @@
     "type": "card",
     "cardType": "0",
     "id": "w6ym",
-    "z": 26895,
+    "z": 28373,
     "parent": "iig4"
   },
   "2bch": {
@@ -2437,7 +2437,7 @@
     "type": "card",
     "cardType": "1",
     "id": "2bch",
-    "z": 26885,
+    "z": 28398,
     "parent": "iig4"
   },
   "5zsw": {
@@ -2445,7 +2445,7 @@
     "type": "card",
     "cardType": "2",
     "id": "5zsw",
-    "z": 26936,
+    "z": 28361,
     "parent": "iig4"
   },
   "839a": {
@@ -2453,7 +2453,7 @@
     "type": "card",
     "cardType": "3",
     "id": "839a",
-    "z": 26952,
+    "z": 28309,
     "parent": "iig4"
   },
   "swxy": {
@@ -2461,7 +2461,7 @@
     "type": "card",
     "cardType": "4",
     "id": "swxy",
-    "z": 26902,
+    "z": 28427,
     "parent": "iig4"
   },
   "iiwl": {
@@ -2469,7 +2469,7 @@
     "type": "card",
     "cardType": "5",
     "id": "iiwl",
-    "z": 26888,
+    "z": 28394,
     "parent": "iig4"
   },
   "zddm": {
@@ -2477,7 +2477,7 @@
     "type": "card",
     "cardType": "6",
     "id": "zddm",
-    "z": 26911,
+    "z": 28348,
     "parent": "iig4"
   },
   "95fj": {
@@ -2485,7 +2485,7 @@
     "type": "card",
     "cardType": "7",
     "id": "95fj",
-    "z": 26837,
+    "z": 28344,
     "parent": "iig4"
   },
   "aihp": {
@@ -2493,7 +2493,7 @@
     "type": "card",
     "cardType": "8",
     "id": "aihp",
-    "z": 26928,
+    "z": 28324,
     "parent": "iig4"
   },
   "pww5": {
@@ -2501,7 +2501,7 @@
     "type": "card",
     "cardType": "9",
     "id": "pww5",
-    "z": 26864,
+    "z": 28435,
     "parent": "iig4"
   },
   "87wc": {
@@ -2509,7 +2509,7 @@
     "type": "card",
     "cardType": "10",
     "id": "87wc",
-    "z": 26943,
+    "z": 28392,
     "parent": "iig4"
   },
   "kxna": {
@@ -2517,7 +2517,7 @@
     "type": "card",
     "cardType": "11",
     "id": "kxna",
-    "z": 26950,
+    "z": 28322,
     "parent": "iig4"
   },
   "zt1o": {
@@ -2525,7 +2525,7 @@
     "type": "card",
     "cardType": "12",
     "id": "zt1o",
-    "z": 26970,
+    "z": 28339,
     "parent": "iig4"
   },
   "k4nc": {
@@ -2533,7 +2533,7 @@
     "type": "card",
     "cardType": "-1",
     "id": "k4nc",
-    "z": 26971,
+    "z": 28390,
     "parent": "iig4"
   },
   "lviu": {
@@ -2541,7 +2541,7 @@
     "type": "card",
     "cardType": "0",
     "id": "lviu",
-    "z": 26931,
+    "z": 28438,
     "parent": "iig4"
   },
   "immh": {
@@ -2549,7 +2549,7 @@
     "type": "card",
     "cardType": "1",
     "id": "immh",
-    "z": 26972,
+    "z": 28456,
     "parent": "iig4"
   },
   "arun": {
@@ -2557,7 +2557,7 @@
     "type": "card",
     "cardType": "2",
     "id": "arun",
-    "z": 26843,
+    "z": 28377,
     "parent": "iig4"
   },
   "qtz0": {
@@ -2565,7 +2565,7 @@
     "type": "card",
     "cardType": "3",
     "id": "qtz0",
-    "z": 26915,
+    "z": 28420,
     "parent": "iig4"
   },
   "eerx": {
@@ -2573,7 +2573,7 @@
     "type": "card",
     "cardType": "4",
     "id": "eerx",
-    "z": 26929,
+    "z": 28335,
     "parent": "iig4"
   },
   "hpcw": {
@@ -2581,7 +2581,7 @@
     "type": "card",
     "cardType": "5",
     "id": "hpcw",
-    "z": 26975,
+    "z": 28395,
     "parent": "iig4"
   },
   "jflm": {
@@ -2589,7 +2589,7 @@
     "type": "card",
     "cardType": "6",
     "id": "jflm",
-    "z": 26867,
+    "z": 28314,
     "parent": "iig4"
   },
   "c07j": {
@@ -2597,7 +2597,7 @@
     "type": "card",
     "cardType": "7",
     "id": "c07j",
-    "z": 26953,
+    "z": 28431,
     "parent": "iig4"
   },
   "e9ux": {
@@ -2605,7 +2605,7 @@
     "type": "card",
     "cardType": "8",
     "id": "e9ux",
-    "z": 26832,
+    "z": 28413,
     "parent": "iig4"
   },
   "sbj6": {
@@ -2613,7 +2613,7 @@
     "type": "card",
     "cardType": "9",
     "id": "sbj6",
-    "z": 26872,
+    "z": 28446,
     "parent": "iig4"
   },
   "8e8z": {
@@ -2621,7 +2621,7 @@
     "type": "card",
     "cardType": "10",
     "id": "8e8z",
-    "z": 26930,
+    "z": 28315,
     "parent": "iig4"
   },
   "c90z": {
@@ -2629,7 +2629,7 @@
     "type": "card",
     "cardType": "11",
     "id": "c90z",
-    "z": 26914,
+    "z": 28336,
     "parent": "iig4"
   },
   "el2k": {
@@ -2637,7 +2637,7 @@
     "type": "card",
     "cardType": "12",
     "id": "el2k",
-    "z": 26839,
+    "z": 28356,
     "parent": "iig4"
   },
   "fac0": {
@@ -2645,7 +2645,7 @@
     "type": "card",
     "cardType": "-2",
     "id": "fac0",
-    "z": 26934,
+    "z": 28418,
     "parent": "iig4"
   },
   "a6cf": {
@@ -2653,7 +2653,7 @@
     "type": "card",
     "cardType": "-1",
     "id": "a6cf",
-    "z": 26939,
+    "z": 28451,
     "parent": "iig4"
   },
   "v4j8": {
@@ -2661,7 +2661,7 @@
     "type": "card",
     "cardType": "0",
     "id": "v4j8",
-    "z": 26968,
+    "z": 28319,
     "parent": "iig4"
   },
   "ux3f": {
@@ -2669,7 +2669,7 @@
     "type": "card",
     "cardType": "1",
     "id": "ux3f",
-    "z": 26846,
+    "z": 28345,
     "parent": "iig4"
   },
   "tsn0": {
@@ -2677,7 +2677,7 @@
     "type": "card",
     "cardType": "2",
     "id": "tsn0",
-    "z": 26836,
+    "z": 28412,
     "parent": "iig4"
   },
   "slon": {
@@ -2685,7 +2685,7 @@
     "type": "card",
     "cardType": "3",
     "id": "slon",
-    "z": 26919,
+    "z": 28443,
     "parent": "iig4"
   },
   "x4nd": {
@@ -2693,7 +2693,7 @@
     "type": "card",
     "cardType": "4",
     "id": "x4nd",
-    "z": 26853,
+    "z": 28307,
     "parent": "iig4"
   },
   "cmtq": {
@@ -2701,7 +2701,7 @@
     "type": "card",
     "cardType": "5",
     "id": "cmtq",
-    "z": 26946,
+    "z": 28385,
     "parent": "iig4"
   },
   "m4qv": {
@@ -2709,7 +2709,7 @@
     "type": "card",
     "cardType": "6",
     "id": "m4qv",
-    "z": 26926,
+    "z": 28409,
     "parent": "iig4"
   },
   "rwj7": {
@@ -2717,7 +2717,7 @@
     "type": "card",
     "cardType": "7",
     "id": "rwj7",
-    "z": 26933,
+    "z": 28327,
     "parent": "iig4"
   },
   "4gqi": {
@@ -2725,7 +2725,7 @@
     "type": "card",
     "cardType": "8",
     "id": "4gqi",
-    "z": 26869,
+    "z": 28371,
     "parent": "iig4"
   },
   "9f3c": {
@@ -2733,7 +2733,7 @@
     "type": "card",
     "cardType": "9",
     "id": "9f3c",
-    "z": 26896,
+    "z": 28449,
     "parent": "iig4"
   },
   "511n": {
@@ -2741,7 +2741,7 @@
     "type": "card",
     "cardType": "10",
     "id": "511n",
-    "z": 26897,
+    "z": 28411,
     "parent": "iig4"
   },
   "ujx9": {
@@ -2749,7 +2749,7 @@
     "type": "card",
     "cardType": "11",
     "id": "ujx9",
-    "z": 26989,
+    "z": 28381,
     "parent": "iig4"
   },
   "omda": {
@@ -2757,7 +2757,7 @@
     "type": "card",
     "cardType": "12",
     "id": "omda",
-    "z": 26905,
+    "z": 28441,
     "parent": "iig4"
   },
   "gotg": {
@@ -2765,7 +2765,7 @@
     "type": "card",
     "cardType": "-2",
     "id": "gotg",
-    "z": 26856,
+    "z": 28332,
     "parent": "iig4"
   },
   "kz1c": {
@@ -2773,7 +2773,7 @@
     "type": "card",
     "cardType": "-1",
     "id": "kz1c",
-    "z": 26842,
+    "z": 28369,
     "parent": "iig4"
   },
   "oaii": {
@@ -2781,7 +2781,7 @@
     "type": "card",
     "cardType": "0",
     "id": "oaii",
-    "z": 26922,
+    "z": 28419,
     "parent": "iig4"
   },
   "kr3g": {
@@ -2789,7 +2789,7 @@
     "type": "card",
     "cardType": "1",
     "id": "kr3g",
-    "z": 26868,
+    "z": 28358,
     "parent": "iig4"
   },
   "m13l": {
@@ -2797,7 +2797,7 @@
     "type": "card",
     "cardType": "2",
     "id": "m13l",
-    "z": 26940,
+    "z": 28366,
     "parent": "iig4"
   },
   "g3nt": {
@@ -2805,7 +2805,7 @@
     "type": "card",
     "cardType": "3",
     "id": "g3nt",
-    "z": 26938,
+    "z": 28401,
     "parent": "iig4"
   },
   "tv30": {
@@ -2813,7 +2813,7 @@
     "type": "card",
     "cardType": "4",
     "id": "tv30",
-    "z": 26945,
+    "z": 28364,
     "parent": "iig4"
   },
   "i2tr": {
@@ -2821,7 +2821,7 @@
     "type": "card",
     "cardType": "5",
     "id": "i2tr",
-    "z": 26850,
+    "z": 28393,
     "parent": "iig4"
   },
   "euq1": {
@@ -2829,7 +2829,7 @@
     "type": "card",
     "cardType": "6",
     "id": "euq1",
-    "z": 26944,
+    "z": 28425,
     "parent": "iig4"
   },
   "ap76": {
@@ -2837,7 +2837,7 @@
     "type": "card",
     "cardType": "7",
     "id": "ap76",
-    "z": 26976,
+    "z": 28340,
     "parent": "iig4"
   },
   "ydwa": {
@@ -2845,7 +2845,7 @@
     "type": "card",
     "cardType": "8",
     "id": "ydwa",
-    "z": 26851,
+    "z": 28342,
     "parent": "iig4"
   },
   "igws": {
@@ -2853,7 +2853,7 @@
     "type": "card",
     "cardType": "9",
     "id": "igws",
-    "z": 26927,
+    "z": 28352,
     "parent": "iig4"
   },
   "yv6b": {
@@ -2861,7 +2861,7 @@
     "type": "card",
     "cardType": "10",
     "id": "yv6b",
-    "z": 26947,
+    "z": 28414,
     "parent": "iig4"
   },
   "7fhh": {
@@ -2869,7 +2869,7 @@
     "type": "card",
     "cardType": "11",
     "id": "7fhh",
-    "z": 26877,
+    "z": 28424,
     "parent": "iig4"
   },
   "31wv": {
@@ -2877,7 +2877,7 @@
     "type": "card",
     "cardType": "12",
     "id": "31wv",
-    "z": 26903,
+    "z": 28367,
     "parent": "iig4"
   },
   "gfr7": {
@@ -2885,7 +2885,7 @@
     "type": "card",
     "cardType": "-2",
     "id": "gfr7",
-    "z": 26875,
+    "z": 28320,
     "parent": "iig4"
   },
   "96gb": {
@@ -2893,7 +2893,7 @@
     "type": "card",
     "cardType": "-1",
     "id": "96gb",
-    "z": 26966,
+    "z": 28389,
     "parent": "iig4"
   },
   "y9w2": {
@@ -2901,7 +2901,7 @@
     "type": "card",
     "cardType": "0",
     "id": "y9w2",
-    "z": 26858,
+    "z": 28306,
     "parent": "iig4"
   },
   "wrbs": {
@@ -2909,7 +2909,7 @@
     "type": "card",
     "cardType": "1",
     "id": "wrbs",
-    "z": 26871,
+    "z": 28442,
     "parent": "iig4"
   },
   "u006": {
@@ -2917,7 +2917,7 @@
     "type": "card",
     "cardType": "2",
     "id": "u006",
-    "z": 26907,
+    "z": 28410,
     "parent": "iig4"
   },
   "cysg": {
@@ -2925,7 +2925,7 @@
     "type": "card",
     "cardType": "3",
     "id": "cysg",
-    "z": 26845,
+    "z": 28415,
     "parent": "iig4"
   },
   "corv": {
@@ -2933,7 +2933,7 @@
     "type": "card",
     "cardType": "4",
     "id": "corv",
-    "z": 26973,
+    "z": 28382,
     "parent": "iig4"
   },
   "t2yn": {
@@ -2941,7 +2941,7 @@
     "type": "card",
     "cardType": "5",
     "id": "t2yn",
-    "z": 26884,
+    "z": 28334,
     "parent": "iig4"
   },
   "j7kv": {
@@ -2949,7 +2949,7 @@
     "type": "card",
     "cardType": "6",
     "id": "j7kv",
-    "z": 26913,
+    "z": 28375,
     "parent": "iig4"
   },
   "ljxx": {
@@ -2957,7 +2957,7 @@
     "type": "card",
     "cardType": "7",
     "id": "ljxx",
-    "z": 26854,
+    "z": 28403,
     "parent": "iig4"
   },
   "migo": {
@@ -2965,7 +2965,7 @@
     "type": "card",
     "cardType": "8",
     "id": "migo",
-    "z": 26900,
+    "z": 28349,
     "parent": "iig4"
   },
   "utuv": {
@@ -2973,7 +2973,7 @@
     "type": "card",
     "cardType": "9",
     "id": "utuv",
-    "z": 26918,
+    "z": 28436,
     "parent": "iig4"
   },
   "3wb6": {
@@ -2981,7 +2981,7 @@
     "type": "card",
     "cardType": "10",
     "id": "3wb6",
-    "z": 26861,
+    "z": 28397,
     "parent": "iig4"
   },
   "avjm": {
@@ -2989,7 +2989,7 @@
     "type": "card",
     "cardType": "11",
     "id": "avjm",
-    "z": 26899,
+    "z": 28355,
     "parent": "iig4"
   },
   "cad4": {
@@ -2997,7 +2997,7 @@
     "type": "card",
     "cardType": "12",
     "id": "cad4",
-    "z": 26969,
+    "z": 28374,
     "parent": "iig4"
   },
   "b108": {
@@ -3005,7 +3005,7 @@
     "type": "card",
     "cardType": "-2",
     "id": "b108",
-    "z": 26833,
+    "z": 28405,
     "parent": "iig4"
   },
   "vlr6": {
@@ -3013,7 +3013,7 @@
     "type": "card",
     "cardType": "-1",
     "id": "vlr6",
-    "z": 26941,
+    "z": 28321,
     "parent": "iig4"
   },
   "ci6q": {
@@ -3021,7 +3021,7 @@
     "type": "card",
     "cardType": "0",
     "id": "ci6q",
-    "z": 26961,
+    "z": 28357,
     "parent": "iig4"
   },
   "1yhl": {
@@ -3029,7 +3029,7 @@
     "type": "card",
     "cardType": "1",
     "id": "1yhl",
-    "z": 26932,
+    "z": 28362,
     "parent": "iig4"
   },
   "uqi9": {
@@ -3037,7 +3037,7 @@
     "type": "card",
     "cardType": "2",
     "id": "uqi9",
-    "z": 26920,
+    "z": 28407,
     "parent": "iig4"
   },
   "dqmz": {
@@ -3045,7 +3045,7 @@
     "type": "card",
     "cardType": "3",
     "id": "dqmz",
-    "z": 26901,
+    "z": 28408,
     "parent": "iig4"
   },
   "q9ni": {
@@ -3053,7 +3053,7 @@
     "type": "card",
     "cardType": "4",
     "id": "q9ni",
-    "z": 26865,
+    "z": 28383,
     "parent": "iig4"
   },
   "pdxa": {
@@ -3061,7 +3061,7 @@
     "type": "card",
     "cardType": "5",
     "id": "pdxa",
-    "z": 26889,
+    "z": 28399,
     "parent": "iig4"
   },
   "whwd": {
@@ -3069,7 +3069,7 @@
     "type": "card",
     "cardType": "6",
     "id": "whwd",
-    "z": 26974,
+    "z": 28341,
     "parent": "iig4"
   },
   "jf7k": {
@@ -3077,7 +3077,7 @@
     "type": "card",
     "cardType": "7",
     "id": "jf7k",
-    "z": 26908,
+    "z": 28429,
     "parent": "iig4"
   },
   "0z2v": {
@@ -3085,7 +3085,7 @@
     "type": "card",
     "cardType": "8",
     "id": "0z2v",
-    "z": 26866,
+    "z": 28440,
     "parent": "iig4"
   },
   "jkhr": {
@@ -3093,7 +3093,7 @@
     "type": "card",
     "cardType": "9",
     "id": "jkhr",
-    "z": 26863,
+    "z": 28326,
     "parent": "iig4"
   },
   "b04e": {
@@ -3101,7 +3101,7 @@
     "type": "card",
     "cardType": "10",
     "id": "b04e",
-    "z": 26979,
+    "z": 28305,
     "parent": "iig4"
   },
   "fw9i": {
@@ -3109,7 +3109,7 @@
     "type": "card",
     "cardType": "11",
     "id": "fw9i",
-    "z": 26977,
+    "z": 28311,
     "parent": "iig4"
   },
   "eqb8": {
@@ -3117,7 +3117,7 @@
     "type": "card",
     "cardType": "12",
     "id": "eqb8",
-    "z": 26967,
+    "z": 28433,
     "parent": "iig4"
   },
   "89vg": {
@@ -3125,7 +3125,7 @@
     "type": "card",
     "cardType": "-2",
     "id": "89vg",
-    "z": 26883,
+    "z": 28360,
     "parent": "iig4"
   },
   "htj2": {
@@ -3133,7 +3133,7 @@
     "type": "card",
     "cardType": "-1",
     "id": "htj2",
-    "z": 26894,
+    "z": 28428,
     "parent": "iig4"
   },
   "92wh": {
@@ -3141,7 +3141,7 @@
     "type": "card",
     "cardType": "0",
     "id": "92wh",
-    "z": 26874,
+    "z": 28303,
     "parent": "iig4"
   },
   "e27c": {
@@ -3149,7 +3149,7 @@
     "type": "card",
     "cardType": "0",
     "id": "e27c",
-    "z": 26935,
+    "z": 28350,
     "parent": "iig4"
   },
   "3ocy": {
@@ -3157,7 +3157,7 @@
     "type": "card",
     "cardType": "0",
     "id": "3ocy",
-    "z": 26948,
+    "z": 28328,
     "parent": "iig4"
   },
   "o5ov": {
@@ -3165,7 +3165,7 @@
     "type": "card",
     "cardType": "0",
     "id": "o5ov",
-    "z": 26840,
+    "z": 28378,
     "parent": "iig4"
   },
   "bhes": {
@@ -3173,7 +3173,7 @@
     "type": "card",
     "cardType": "0",
     "id": "bhes",
-    "z": 26870,
+    "z": 28439,
     "parent": "iig4"
   },
   "halb": {
@@ -3244,11 +3244,44 @@
     "type": "button",
     "clickRoutine": [
       {
+        "func": "SELECT",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "type": "seat"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "aggregation": "array"
+      },
+      "var options = []",
+      "var option = {}",
+      "var option.value = null",
+      "var option.text = 'NOBODY'",
+      "var options = push ${option}",
+      {
+        "func": "FOREACH",
+        "in": "${player}",
+        "loopRoutine": [
+          "var option = {}",
+          "var option.value = ${value}",
+          "var option.text = ${value}",
+          "var options = push ${option}"
+        ]
+      },
+      {
         "func": "INPUT",
         "fields": [
           {
             "type": "text",
             "text": "This will add the current score to the total and reshuffle for the next round."
+          },
+          {
+            "type": "select",
+            "options": "${options}",
+            "label": "Double score of player:",
+            "variable": "doubleScore"
           }
         ],
         "confirmButtonText": "Next Round",
@@ -3266,6 +3299,7 @@
       {
         "func": "FOREACH",
         "loopRoutine": [
+          "var seatID = ${PROPERTY linkedToSeat OF $widgetID}",
           {
             "func": "SELECT",
             "property": "editable",
@@ -3276,12 +3310,24 @@
             "func": "SELECT",
             "source": "DEFAULT",
             "property": "linkedToSeat",
-            "value": "${PROPERTY linkedToSeat OF $widgetID}"
+            "value": "${seatID}"
           },
           {
             "func": "LABEL",
             "mode": "inc",
             "value": "${PROPERTY text OF $widgetID}"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player OF $seatID}",
+            "operand2": "${doubleScore}",
+            "thenRoutine": [
+              {
+                "func": "LABEL",
+                "mode": "inc",
+                "value": "${PROPERTY text OF $widgetID}"
+              }
+            ]
           }
         ]
       },
