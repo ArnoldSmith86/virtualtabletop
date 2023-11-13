@@ -861,6 +861,18 @@ function jeAddRoutineOperationCommands(command, defaults) {
     show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
   });
 
+  jeCommands.push({
+    id: 'default_' + command + '_comment',
+    name: 'comment',
+    context: `^.* ↦ \\(${command}\\) ↦ `,
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeInsert(jeContext.slice(1, routineIndex+2), 'comment', 'Write a quick comment to make the operation more human-readable.');
+    }),
+    show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      return operation && operation['comment'] === undefined;
+    }, true)
+  });
+
   for(const property in defaults) {
     jeCommands.push({
       id: 'default_' + command + '_' + property,
