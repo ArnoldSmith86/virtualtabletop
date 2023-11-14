@@ -1,0 +1,7821 @@
+{
+  "4255": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "4255",
+    "parent": "fnlg",
+    "z": 18697
+  },
+  "5795": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "5795",
+    "parent": "6gj2",
+    "z": 18660
+  },
+  "Tiles Real": {
+    "type": "deck",
+    "id": "Tiles Real",
+    "cardTypes": {
+      "C": {
+        "image": "/assets/-126126741_56719"
+      },
+      "D": {
+        "image": "/assets/425736110_41453"
+      },
+      "F": {
+        "image": "/assets/220859627_97097"
+      },
+      "G": {
+        "image": "/assets/-1926169272_54900"
+      },
+      "M": {
+        "image": "/assets/-1822468622_54759"
+      },
+      "R": {
+        "image": "/assets/-311499793_82807"
+      },
+      "S": {
+        "image": "/assets/1669210676_60695"
+      },
+      "W": {
+        "image": "/assets/1528555926_62937"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "static",
+            "value": "",
+            "width": 173.20508075700002,
+            "height": 200,
+            "css": "background-size: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 173.20508075700002,
+            "height": 200,
+            "css": "background-size: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 173.20508075700002,
+      "height": 200,
+      "movable": false,
+      "layer": -5
+    },
+    "y": 200
+  },
+  "Card Template": {
+    "type": "card",
+    "id": "Card Template",
+    "deck": "Tiles Real",
+    "cardType": "F",
+    "x": 37.39745962149999,
+    "y": 332,
+    "parent": "Switch Board"
+  },
+  "Create Tile Button": {
+    "type": "button",
+    "id": "Create Tile Button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Random Tile Button"
+      },
+      {
+        "func": "SET",
+        "property": "paramType",
+        "value": "${PROPERTY paramType}"
+      },
+      {
+        "func": "SET",
+        "property": "paramChip",
+        "value": "${PROPERTY paramChip}"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "GET",
+        "property": "resultType",
+        "variable": "paramType"
+      },
+      {
+        "func": "GET",
+        "property": "resultChip",
+        "variable": "paramChip"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Card Template"
+      },
+      {
+        "func": "CLONE",
+        "source": "DEFAULT"
+      },
+      "var UPPER_TYPE = ${paramType} toUpperCase",
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "cardType",
+        "value": "${UPPER_TYPE}"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": "${PROPERTY paramX}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": "${PROPERTY paramY}"
+      },
+      "var FACE_DOWN = ${UPPER_TYPE} != ${paramType}",
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1,
+        "skip": "${FACE_DOWN}"
+      },
+      "var NO_CHIP = ${paramChip} == ' '",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Chip Template",
+        "skip": "${NO_CHIP}"
+      },
+      {
+        "func": "CLONE",
+        "source": "DEFAULT",
+        "skip": "${NO_CHIP}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "cardType",
+        "skip": "${NO_CHIP}",
+        "value": "${paramChip}"
+      },
+      "var x = ${PROPERTY paramX} + 57",
+      "var y = ${PROPERTY paramY} + 70",
+      {
+        "func": "SET",
+        "property": "x",
+        "skip": "${NO_CHIP}",
+        "value": "${x}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "skip": "${NO_CHIP}",
+        "value": "${y}"
+      }
+    ],
+    "text": "Create Tile",
+    "paramX": 1666.025403783,
+    "paramY": 850,
+    "paramType": "S",
+    "x": 1000,
+    "paramChip": " ",
+    "parent": "Switch Board"
+  },
+  "Tile Row Button": {
+    "type": "button",
+    "id": "Tile Row Button",
+    "x": 900,
+    "clickRoutine": [
+      "var TYPE = ${PROPERTY paramTypes} substr 0 1",
+      "var CHIP = ${PROPERTY paramChips} substr 0 1",
+      "var COUNT = ${PROPERTY paramTypes} length",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Create Tile Button"
+      },
+      {
+        "func": "SET",
+        "property": "paramType",
+        "value": "${TYPE}"
+      },
+      {
+        "func": "SET",
+        "property": "paramChip",
+        "value": "${CHIP}"
+      },
+      {
+        "func": "SET",
+        "property": "paramX",
+        "value": "${PROPERTY paramX}"
+      },
+      {
+        "func": "SET",
+        "property": "paramY",
+        "value": "${PROPERTY paramY}"
+      },
+      {
+        "func": "CLICK"
+      },
+      "var REMAIN = ${PROPERTY paramTypes} substr 1 100",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramTypes",
+        "value": "${REMAIN}"
+      },
+      "var REMAIN = ${PROPERTY paramChips} substr 1 100",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramChips",
+        "value": "${REMAIN}"
+      },
+      "var NEWX = ${PROPERTY paramX} + ${PROPERTY paramXoffset}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramX",
+        "value": "${NEWX}"
+      },
+      "var DONE = ${COUNT} <= 1",
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "skip": "${DONE}"
+      }
+    ],
+    "paramTypes": "",
+    "paramX": 1839.23048454,
+    "paramXoffset": 173.20508075700002,
+    "paramY": 850,
+    "text": "Tile Row",
+    "paramChips": "",
+    "parent": "Switch Board"
+  },
+  "Clear Button": {
+    "type": "button",
+    "id": "Clear Button",
+    "x": 400,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "in",
+        "value": [
+          "Card Template",
+          "Chip Template"
+        ]
+      },
+      {
+        "func": "DELETE"
+      }
+    ],
+    "text": "Clear",
+    "parent": "Switch Board"
+  },
+  "Build Tiles Button": {
+    "type": "button",
+    "id": "Build Tiles Button",
+    "x": 600,
+    "text": "Build Tiles",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramIsOddRow",
+        "value": true,
+        "skip": "${PROPERTY paramSkipInit}"
+      },
+      "var paramX = ${PROPERTY paramLevel} getIndex 'x'",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramX",
+        "value": "${paramX}"
+      },
+      "var paramY = ${PROPERTY paramLevel} getIndex 'y'",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramY",
+        "value": "${paramY}",
+        "skip": "${PROPERTY paramSkipInit}"
+      },
+      "var paramXoffset = ${PROPERTY paramSize} * 1.73205080757",
+      "var paramYoffset = ${PROPERTY paramSize} * 1.5",
+      "var paramTiles = ${PROPERTY paramLevel} getIndex 'tiles'",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramTiles",
+        "value": "${paramTiles}",
+        "skip": "${PROPERTY paramSkipInit}"
+      },
+      "var paramChips = ${PROPERTY paramLevel} getIndex 'chips'",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramChips",
+        "value": "${paramChips}",
+        "skip": "${PROPERTY paramSkipInit}"
+      },
+      "var paramTilesRow1 = ${PROPERTY paramTiles} getIndex 0",
+      "var paramChipsRow1 = ${PROPERTY paramChips} getIndex 0",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Tile Row Button"
+      },
+      {
+        "func": "SET",
+        "property": "paramTypes",
+        "value": "${paramTilesRow1}"
+      },
+      {
+        "func": "SET",
+        "property": "paramChips",
+        "value": "${paramChipsRow1}"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "paramX"
+      },
+      "var shiftX = ${paramXoffset} / 2",
+      {
+        "note": "This was added by the automatic file migration because the new expression syntax does not support skip.",
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "internal_computeMigration_skip",
+        "value": "${PROPERTY paramIsOddRow}"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY internal_computeMigration_skip}",
+        "elseRoutine": [
+          "var paramX = ${paramX} - ${shiftX}"
+        ]
+      },
+      {
+        "note": "This was added by the automatic file migration because the new expression syntax does not support skip.",
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "internal_computeMigration_skip",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "paramX",
+        "value": "${paramX}"
+      },
+      {
+        "func": "SET",
+        "property": "paramXoffset",
+        "value": "${paramXoffset}"
+      },
+      {
+        "func": "SET",
+        "property": "paramY",
+        "value": "${PROPERTY paramY}"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramSkipInit",
+        "value": true
+      },
+      "var paramTiles = ${PROPERTY paramTiles} slice 1 1000",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramTiles",
+        "value": "${paramTiles}"
+      },
+      "var paramChips = ${PROPERTY paramChips} slice 1 1000",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramChips",
+        "value": "${paramChips}"
+      },
+      "var countRows = ${paramTiles} length",
+      "var done = ${countRows} <= 0",
+      "var paramY = ${PROPERTY paramY} + ${paramYoffset}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramY",
+        "value": "${paramY}"
+      },
+      "var paramIsOddRow = ! ${PROPERTY paramIsOddRow}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "paramIsOddRow",
+        "value": "${paramIsOddRow}"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "skip": "${done}"
+      }
+    ],
+    "paramSkipInit": true,
+    "paramSize": 100,
+    "paramLevel": {
+      "tiles": [
+        "SSSSSSSSSSS",
+        "SSSSWFWSSSS",
+        "SSSCFGGSSSS",
+        "SSSGCDMGSSS",
+        "SSSFMCFSSSS",
+        "SSSSWWMSSSS",
+        "SSSSSSSSSSS"
+      ],
+      "chips": [
+        "           ",
+        "    469    ",
+        "   25C4    ",
+        "   98 8A   ",
+        "   35AB    ",
+        "    36B    ",
+        "           "
+      ],
+      "randomTiles": {},
+      "randomChips": {},
+      "x": -66.025403787,
+      "y": -50,
+      "size": 100
+    },
+    "paramIsOddRow": false,
+    "paramX": -66.025403787,
+    "paramY": 1000,
+    "paramTiles": [],
+    "paramChips": [],
+    "parent": "Switch Board"
+  },
+  "Map 1 Button": {
+    "type": "button",
+    "id": "Map 1 Button",
+    "x": 300,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Build Button"
+      },
+      {
+        "func": "SET",
+        "property": "paramLevel",
+        "value": "${PROPERTY paramLevel}"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "paramLevel": {
+      "tiles": [
+        "XSfSSwmSSSRSDDFM",
+        "MmcwSSRSDDRSDDGM",
+        "SSfSSwmSSSRSDDWM",
+        "MmcwSSRSDDRSXXSM",
+        "SSfSSwmSSSRSXXMM",
+        "MmcwSSRSDDRSXXGG",
+        "MmcwScRSWDRSDDSM",
+        "SSfSSwmSSSRSDDMM",
+        "MmcwSSRSDDRSDDGG",
+        "SMMMMwmSSSRSDDGS",
+        "MmcwSSRSDDRSDDSS",
+        "SWWyyyWWWSRSDDCC"
+      ],
+      "chips": [
+        "     234        ",
+        "                ",
+        "                ",
+        "                ",
+        "        689     ",
+        "                ",
+        "                ",
+        "   XXX          ",
+        "                ",
+        "                ",
+        "        YYYY    ",
+        "                "
+      ],
+      "randomTiles": {
+        "X": "SSSWMFR",
+        "Y": "FCDS"
+      },
+      "randomChips": {
+        "X": "2223346",
+        "Y": "4A38"
+      },
+      "x": 0,
+      "y": -30,
+      "size": 60
+    },
+    "text": "Test Map",
+    "parent": "Switch Board"
+  },
+  "Build Button": {
+    "type": "button",
+    "id": "Build Button",
+    "x": 500,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Random Tile Button"
+      },
+      "var paramRandomTiles = ${PROPERTY paramLevel} getIndex 'randomTiles'",
+      {
+        "func": "SET",
+        "property": "paramRandomTiles",
+        "value": "${paramRandomTiles}"
+      },
+      "var paramRandomChips = ${PROPERTY paramLevel} getIndex 'randomChips'",
+      {
+        "func": "SET",
+        "property": "paramRandomChips",
+        "value": "${paramRandomChips}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Clear Button"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Set Size Button"
+      },
+      "var paramSize = ${PROPERTY paramLevel} getIndex 'size'",
+      {
+        "func": "SET",
+        "property": "paramSize",
+        "value": "${paramSize}"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Build Tiles Button"
+      },
+      {
+        "func": "SET",
+        "property": "paramSkipInit",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "property": "paramSize",
+        "value": "${paramSize}"
+      },
+      {
+        "func": "SET",
+        "property": "paramLevel",
+        "value": "${PROPERTY paramLevel}"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "paramLevel": {
+      "tiles": [
+        "SSSSSSSSSSS",
+        "SSSSWFWSSSS",
+        "SSSCFGGSSSS",
+        "SSSGCDMGSSS",
+        "SSSFMCFSSSS",
+        "SSSSWWMSSSS",
+        "SSSSSSSSSSS"
+      ],
+      "chips": [
+        "           ",
+        "    469    ",
+        "   25C4    ",
+        "   98 8A   ",
+        "   35AB    ",
+        "    36B    ",
+        "           "
+      ],
+      "randomTiles": {},
+      "randomChips": {},
+      "x": -66.025403787,
+      "y": -50,
+      "size": 100
+    },
+    "text": "Build",
+    "parent": "Switch Board"
+  },
+  "Settings": {
+    "type": "button",
+    "id": "Settings",
+    "y": 200,
+    "text": "Settings",
+    "tiles": "Real",
+    "parent": "Switch Board"
+  },
+  "Set Size Button": {
+    "type": "button",
+    "id": "Set Size Button",
+    "y": 100,
+    "x": 600,
+    "text": "Set Size",
+    "paramSize": 100,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Tiles Real"
+      },
+      {
+        "func": "GET",
+        "property": "cardDefaults"
+      },
+      "var WIDTH = ${PROPERTY paramSize} * 1.73205080757",
+      "var HEIGHT = ${PROPERTY paramSize} * 2",
+      "var cardDefaults = setIndex 'width' ${WIDTH}",
+      "var cardDefaults = setIndex 'height' ${HEIGHT}",
+      {
+        "func": "SET",
+        "property": "cardDefaults",
+        "value": "${cardDefaults}"
+      },
+      {
+        "note": " ### face objects ### "
+      },
+      {
+        "func": "GET",
+        "property": "faceTemplates"
+      },
+      "var FACE = ${faceTemplates} getIndex 0",
+      "var OBJECTS = ${FACE} getIndex 'objects'",
+      "var OBJECT = ${OBJECTS} getIndex 0",
+      "var OBJECT = setIndex 'width' ${WIDTH}",
+      "var OBJECT = setIndex 'height' ${HEIGHT}",
+      "var OBJECTS = setIndex 0 ${OBJECT}",
+      "var FACE = setIndex 'objects' ${OBJECTS}",
+      "var faceTemplates = setIndex 0 ${FACE}",
+      "var FACE = ${faceTemplates} getIndex 1",
+      "var OBJECTS = ${FACE} getIndex 'objects'",
+      "var OBJECT = ${OBJECTS} getIndex 0",
+      "var OBJECT = setIndex 'width' ${WIDTH}",
+      "var OBJECT = setIndex 'height' ${HEIGHT}",
+      "var OBJECTS = setIndex 0 ${OBJECT}",
+      "var FACE = setIndex 'objects' ${OBJECTS}",
+      "var faceTemplates = setIndex 1 ${FACE}",
+      {
+        "func": "SET",
+        "property": "faceTemplates",
+        "value": "${faceTemplates}"
+      }
+    ],
+    "parent": "Switch Board"
+  },
+  "Map 2 Button": {
+    "type": "button",
+    "id": "Map 2 Button",
+    "x": 300,
+    "y": 100,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Build Button"
+      },
+      {
+        "func": "SET",
+        "property": "paramLevel",
+        "value": "${PROPERTY paramLevel}"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "paramLevel": {
+      "tiles": [
+        "SSSSSSSSSSS",
+        "SSSSWFWSSSS",
+        "SSSCFGGSSSS",
+        "SSSGCDMGSSS",
+        "SSSFMCFSSSS",
+        "SSSSWWMSSSS",
+        "SSSSSSSSSSS"
+      ],
+      "chips": [
+        "           ",
+        "    469    ",
+        "   25C4    ",
+        "   98 8A   ",
+        "   35AB    ",
+        "    36B    ",
+        "           "
+      ],
+      "randomTiles": {},
+      "randomChips": {},
+      "x": -66.025403787,
+      "y": -50,
+      "size": 100
+    },
+    "text": "Starter Map",
+    "parent": "Switch Board"
+  },
+  "Random Tile Button": {
+    "type": "button",
+    "id": "Random Tile Button",
+    "x": 1200,
+    "text": "Random Tile",
+    "paramRandomTiles": {
+      "S": 0,
+      "W": 0,
+      "F": 0,
+      "C": 0,
+      "G": 0,
+      "D": 0,
+      "M": 0
+    },
+    "paramType": "S",
+    "clickRoutine": [
+      "var upperType = ${PROPERTY paramType} toUpperCase",
+      "var isUpper = ${upperType} == ${PROPERTY paramType}",
+      "var pool = ${PROPERTY paramRandomTiles} getIndex ${upperType}",
+      "var poolSize = ${pool} length",
+      "var index = randInt 1 ${poolSize}",
+      "var index = ${index} - 1",
+      "var selected = ${pool} getIndex ${index}",
+      {
+        "note": "This was added by the automatic file migration because the new expression syntax does not support skip.",
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "internal_computeMigration_skip",
+        "value": "${isUpper}"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY internal_computeMigration_skip}",
+        "elseRoutine": [
+          "var selected = ${selected} toLowerCase"
+        ]
+      },
+      {
+        "note": "This was added by the automatic file migration because the new expression syntax does not support skip.",
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "internal_computeMigration_skip",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "resultType",
+        "collection": "thisButton",
+        "value": "${selected}"
+      },
+      {
+        "func": "SET",
+        "property": "resultChip",
+        "collection": "thisButton",
+        "value": "${paramChip}"
+      },
+      "var resultTypeValid = ${PROPERTY resultType} != null",
+      {
+        "func": "SET",
+        "property": "resultType",
+        "collection": "thisButton",
+        "skip": "${resultTypeValid}",
+        "value": "${PROPERTY paramType}"
+      },
+      "var resultChipValid = ${PROPERTY resultChip} != null",
+      {
+        "func": "SET",
+        "property": "resultChip",
+        "collection": "thisButton",
+        "skip": "${resultChipValid}",
+        "value": "${PROPERTY paramChip}"
+      },
+      "var restFirst = ${pool} substr 0 ${index}",
+      "var indexPlusOne = ${index} + 1",
+      "var restLast = ${pool} substr ${indexPlusOne} 1000",
+      "var newPool = ${restFirst} concat ${restLast}",
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "paramRandomTiles"
+      },
+      "var paramRandomTiles = setIndex ${upperType} ${newPool}",
+      {
+        "func": "SET",
+        "property": "paramRandomTiles",
+        "collection": "thisButton",
+        "value": "${paramRandomTiles}"
+      }
+    ],
+    "paramChip": " ",
+    "paramRandomChips": {},
+    "resultType": "S",
+    "resultChip": " ",
+    "parent": "Switch Board"
+  },
+  "Chips": {
+    "type": "deck",
+    "id": "Chips",
+    "y": 400,
+    "cardDefaults": {
+      "width": 60,
+      "height": 60
+    },
+    "faceTemplates": [
+      {
+        "objects": []
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ECCCA0",
+            "valueType": "static",
+            "value": "",
+            "width": 60,
+            "height": 60
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "fontSize": 20,
+            "valueType": "dynamic",
+            "value": "number",
+            "textAlign": "center",
+            "width": 60,
+            "css": "transform: scale(var(--size)); color: var(--color)"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 25,
+            "fontSize": 30,
+            "valueType": "dynamic",
+            "value": "dots",
+            "textAlign": "center",
+            "width": 60,
+            "css": "letter-spacing: -3px; color: var(--color); transform: translate(-1px, var(--offset)); color: var(--color)"
+          }
+        ],
+        "radius": 1000
+      }
+    ],
+    "cardTypes": {
+      "2": {
+        "number": "2",
+        "dots": ".",
+        "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 1; --offset: -12px"
+      },
+      "3": {
+        "number": "3",
+        "dots": "..",
+        "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 1.5; --offset: -9px"
+      },
+      "4": {
+        "number": "4",
+        "dots": "...",
+        "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 2; --offset: -6px"
+      },
+      "5": {
+        "number": "5",
+        "dots": "....",
+        "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 2.5; --offset: -3px"
+      },
+      "6": {
+        "number": "6",
+        "dots": ".....",
+        "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 3; --color: red"
+      },
+      "8": {
+        "number": "8",
+        "dots": ".....",
+        "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 3; --color: red"
+      },
+      "9": {
+        "number": "9",
+        "dots": "....",
+        "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 2.5; --offset: -3px"
+      },
+      "A": {
+        "number": "10",
+        "dots": "...",
+        "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 2; --offset: -6px"
+      },
+      "B": {
+        "number": "11",
+        "dots": "..",
+        "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 1.5; --offset: -9px"
+      },
+      "C": {
+        "number": "12",
+        "dots": ".",
+        "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 1; --offset: -12px"
+      }
+    }
+  },
+  "Chip Template": {
+    "type": "card",
+    "id": "Chip Template",
+    "deck": "Chips",
+    "cardType": "6",
+    "activeFace": 1,
+    "x": 120,
+    "y": 846,
+    "parent": "Switch Board"
+  },
+  "Base Map Button": {
+    "type": "button",
+    "id": "Base Map Button",
+    "x": 300,
+    "y": 200,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Build Button"
+      },
+      {
+        "func": "SET",
+        "property": "paramLevel",
+        "value": "${PROPERTY paramLevel}"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "paramLevel": {
+      "tiles": [
+        "SSSSSSSSSSS",
+        "SSSSXXXSSSS",
+        "SSSXXXXSSSS",
+        "SSSXXDXXSSS",
+        "SSSXXXXSSSS",
+        "SSSSXXXSSSS",
+        "SSSSSSSSSSS"
+      ],
+      "chips": [
+        "           ",
+        "    XXX    ",
+        "   XXXX    ",
+        "   XX XX   ",
+        "   XXXX    ",
+        "    XXX    ",
+        "           "
+      ],
+      "randomTiles": {
+        "X": "WFWCFGGGCMGFMCFWWM"
+      },
+      "randomChips": {
+        "X": "46925C4988A35AB36B"
+      },
+      "x": -66.025403787,
+      "y": -50,
+      "size": 100
+    },
+    "text": "Base Map",
+    "parent": "Switch Board"
+  },
+  "Base Island Map Button": {
+    "type": "button",
+    "id": "Base Island Map Button",
+    "x": 300,
+    "y": 300,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Build Button"
+      },
+      {
+        "func": "SET",
+        "property": "paramLevel",
+        "value": "${PROPERTY paramLevel}"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "paramLevel": {
+      "tiles": [
+        "SSSSSSSSSSS",
+        "SSySXXXSySS",
+        "SySXXXXSySS",
+        "SySXXDXXSyS",
+        "SySXXXXSySS",
+        "SSySXXXSySS",
+        "SSSSSSSSSSS"
+      ],
+      "chips": [
+        "           ",
+        "    469    ",
+        "   25C4    ",
+        "   98 8A   ",
+        "   35AB    ",
+        "    36B    ",
+        "           "
+      ],
+      "randomTiles": {
+        "X": "WFWCFGGGCMGFMCFWWM",
+        "Y": "RRRSDCGFMW"
+      },
+      "randomChips": {},
+      "x": -66.025403787,
+      "y": -50,
+      "size": 100
+    },
+    "text": "Base Island Map",
+    "parent": "Switch Board"
+  },
+  "Pick From String Button": {
+    "type": "button",
+    "id": "Pick From String Button",
+    "x": 1400,
+    "clickRoutine": [
+      "var stringSize = ${PROPERTY paramString} length",
+      "var index = randInt 1 ${stringSize}",
+      "var index = ${index} - 1",
+      "var selected = ${PROPERTY paramString} getIndex ${index}",
+      {
+        "func": "SET",
+        "property": "resultChar",
+        "collection": "thisButton",
+        "value": "${selected}"
+      },
+      "var restFirst = ${PROPERTY paramString} substr 0 ${index}",
+      "var indexPlusOne = ${index} + 1",
+      "var restLast = ${PROPERTY paramString} substr ${indexPlusOne} 1000",
+      "var newPool = ${restFirst} concat ${restLast}",
+      {
+        "func": "SET",
+        "property": "resultRemainder",
+        "collection": "thisButton",
+        "value": "${newPool}"
+      }
+    ],
+    "text": "Pick From String",
+    "paramString": "ASD",
+    "resultChar": "D",
+    "resultRemainder": "AS",
+    "parent": "Switch Board"
+  },
+  "Resources": {
+    "type": "deck",
+    "id": "Resources",
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "background",
+            "width": 80,
+            "height": 120,
+            "css": "background-size: cover; border-radius:8px;border:3px solid white;"
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 30,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "resource",
+            "width": 60,
+            "height": 60,
+            "css": "background-size: cover; border-radius: 100%; border: 4px solid black;background-color:white;"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "background",
+            "width": 80,
+            "height": 120,
+            "css": "background-size: cover; border-radius:8px;border:3px solid white;"
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 30,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "resource",
+            "width": 60,
+            "height": 60,
+            "css": "background-size: cover; border-radius: 100%; border: 4px solid black;background-color:white;"
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "Wood": {
+        "background": "/assets/2140985520_33573",
+        "resource": "/assets/-1898333693_192161"
+      },
+      "Bricks": {
+        "background": "/assets/981379664_23485",
+        "resource": "/assets/1446073117_15347"
+      },
+      "Wool": {
+        "background": "/assets/-1514828793_28486",
+        "resource": "/assets/2135464284_49960"
+      },
+      "Ore": {
+        "background": "/assets/1892519167_27574",
+        "resource": "/assets/568388134_11881"
+      },
+      "Wheat": {
+        "background": "/assets/-360856728_30578",
+        "resource": "/assets/-364662411_24599"
+      },
+      "Coins": {
+        "background": "/assets/1892519167_27574",
+        "resource": "/assets/876283773_705095"
+      },
+      "Books": {
+        "background": "/assets/2140985520_33573",
+        "resource": "/assets/-1592704727_1842"
+      },
+      "Cloth": {
+        "background": "/assets/-1514828793_28486",
+        "resource": "/assets/424202445_7079"
+      }
+    },
+    "cardDefaults": {
+      "width": 80,
+      "height": 120,
+      "layer": 4
+    },
+    "parent": "Bricks"
+  },
+  "rl2f": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "rl2f",
+    "parent": "yzva",
+    "z": 18641
+  },
+  "kiow": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "kiow",
+    "parent": "6ttf",
+    "z": 18623
+  },
+  "hrm0": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "hrm0",
+    "parent": "6gj2",
+    "z": 18661
+  },
+  "Switch Board": {
+    "id": "Switch Board",
+    "width": 1600,
+    "height": 1000,
+    "css": "background: #000000c0; ",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": [],
+        "collection": "thisButton"
+      }
+    ],
+    "movable": false,
+    "layer": 6,
+    "owner": []
+  },
+  "Toggle Switch Board": {
+    "type": "button",
+    "id": "Toggle Switch Board",
+    "x": 120,
+    "height": 40,
+    "text": "Internals",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Switch Board"
+      },
+      {
+        "func": "SET",
+        "property": "owner"
+      }
+    ],
+    "y": 950
+  },
+  "e1tx": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "e1tx",
+    "parent": "fnlg",
+    "z": 18698
+  },
+  "uzz1": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "uzz1",
+    "parent": "b75l",
+    "z": 18679
+  },
+  "Resources2": {
+    "inheritFrom": "Resources",
+    "id": "Resources2",
+    "type": "deck",
+    "parent": "Wool"
+  },
+  "Resources3": {
+    "inheritFrom": "Resources",
+    "id": "Resources3",
+    "type": "deck",
+    "parent": "Wheat"
+  },
+  "Resources4": {
+    "inheritFrom": "Resources",
+    "id": "Resources4",
+    "type": "deck",
+    "parent": "Ore"
+  },
+  "Bricks": {
+    "type": "holder",
+    "id": "Bricks",
+    "x": 1341,
+    "y": 697,
+    "width": 88,
+    "height": 128,
+    "dropTarget": {
+      "cardType": "Bricks"
+    },
+    "css": "background: #00000080; border-color: #000000c0",
+    "z": 129,
+    "rotation": 10
+  },
+  "Wood": {
+    "type": "holder",
+    "id": "Wood",
+    "x": 1395,
+    "y": 412,
+    "dropTarget": {
+      "cardType": "Wood"
+    },
+    "inheritFrom": "Bricks",
+    "z": 127
+  },
+  "Resources5": {
+    "inheritFrom": "Resources",
+    "id": "Resources5",
+    "type": "deck",
+    "parent": "Wood"
+  },
+  "Wool": {
+    "type": "holder",
+    "id": "Wool",
+    "x": 1368,
+    "y": 554,
+    "inheritFrom": "Bricks",
+    "dropTarget": {
+      "cardType": "Wool"
+    },
+    "z": 128
+  },
+  "Wheat": {
+    "type": "holder",
+    "id": "Wheat",
+    "x": 1459,
+    "y": 644,
+    "inheritFrom": "Bricks",
+    "dropTarget": {
+      "cardType": "Wheat"
+    },
+    "z": 130
+  },
+  "Ore": {
+    "type": "holder",
+    "id": "Ore",
+    "x": 1485,
+    "y": 500,
+    "inheritFrom": "Bricks",
+    "dropTarget": {
+      "cardType": "Ore"
+    },
+    "z": 115
+  },
+  "j8dc": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "j8dc",
+    "parent": "yzva",
+    "z": 18642
+  },
+  "iob3": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "iob3",
+    "parent": "6ttf",
+    "z": 18624
+  },
+  "q243": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "q243",
+    "parent": "6gj2",
+    "z": 18662
+  },
+  "uo75": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "uo75",
+    "parent": "fnlg",
+    "z": 18699
+  },
+  "zd9i": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "zd9i",
+    "parent": "b75l",
+    "z": 18680
+  },
+  "xhaz": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "xhaz",
+    "parent": "yzva",
+    "z": 18643
+  },
+  "hxs4": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "hxs4",
+    "parent": "6ttf",
+    "z": 18625
+  },
+  "kes3": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "kes3",
+    "parent": "6gj2",
+    "z": 18663
+  },
+  "mpn9": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "mpn9",
+    "parent": "fnlg",
+    "z": 18700
+  },
+  "b4i5": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "b4i5",
+    "parent": "b75l",
+    "z": 18681
+  },
+  "wxdx": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "wxdx",
+    "parent": "yzva",
+    "z": 18644
+  },
+  "4xyt": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "4xyt",
+    "parent": "6ttf",
+    "z": 18626
+  },
+  "r5o2": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "r5o2",
+    "parent": "6gj2",
+    "z": 18664
+  },
+  "w5x8": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "w5x8",
+    "parent": "fnlg",
+    "z": 18701
+  },
+  "h9qt": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "h9qt",
+    "parent": "b75l",
+    "z": 18682
+  },
+  "ugkt": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "ugkt",
+    "parent": "yzva",
+    "z": 18645
+  },
+  "wnjy": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "wnjy",
+    "parent": "6ttf",
+    "z": 18627
+  },
+  "rmtq": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "rmtq",
+    "parent": "6gj2",
+    "z": 18665
+  },
+  "yn5o": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "yn5o",
+    "parent": "fnlg",
+    "z": 18702
+  },
+  "akml": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "akml",
+    "parent": "b75l",
+    "z": 18683
+  },
+  "w9wp": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "w9wp",
+    "parent": "yzva",
+    "z": 18646
+  },
+  "ktqb": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "ktqb",
+    "parent": "6ttf",
+    "z": 18628
+  },
+  "qf6a": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "qf6a",
+    "parent": "6gj2",
+    "z": 18666
+  },
+  "4m17": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "4m17",
+    "parent": "fnlg",
+    "z": 18703
+  },
+  "sk9p": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "sk9p",
+    "parent": "b75l",
+    "z": 18684
+  },
+  "9oec": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "9oec",
+    "parent": "yzva",
+    "z": 18647
+  },
+  "roae": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "roae",
+    "parent": "6ttf",
+    "z": 18629
+  },
+  "hvc2": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "hvc2",
+    "parent": "6gj2",
+    "z": 18667
+  },
+  "7dzt": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "7dzt",
+    "parent": "b75l",
+    "z": 18685
+  },
+  "m1yn": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "m1yn",
+    "parent": "yzva",
+    "z": 18648
+  },
+  "07b0": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "07b0",
+    "parent": "6ttf",
+    "z": 18630
+  },
+  "8ca5": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "8ca5",
+    "parent": "6gj2",
+    "z": 18668
+  },
+  "q19u": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "q19u",
+    "parent": "fnlg",
+    "z": 18704
+  },
+  "ric5": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "ric5",
+    "parent": "b75l",
+    "z": 18686
+  },
+  "xad5": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "xad5",
+    "parent": "yzva",
+    "z": 18649
+  },
+  "yn2h": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "yn2h",
+    "parent": "6ttf",
+    "z": 18631
+  },
+  "1ive": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "1ive",
+    "parent": "fnlg",
+    "z": 18705
+  },
+  "2u11": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "2u11",
+    "parent": "b75l",
+    "z": 18687
+  },
+  "piuy": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "piuy",
+    "parent": "yzva",
+    "z": 18650
+  },
+  "gsug": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "gsug",
+    "parent": "6ttf",
+    "z": 18632
+  },
+  "os0k": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "os0k",
+    "parent": "6gj2",
+    "z": 18669
+  },
+  "5qhq": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "5qhq",
+    "parent": "fnlg",
+    "z": 18706
+  },
+  "e8sc": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "e8sc",
+    "parent": "b75l",
+    "z": 18688
+  },
+  "ettw": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "ettw",
+    "parent": "yzva",
+    "z": 18651
+  },
+  "x1pc": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "x1pc",
+    "parent": "6ttf",
+    "z": 18633
+  },
+  "0ls2": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "0ls2",
+    "parent": "6gj2",
+    "z": 18670
+  },
+  "8me2": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "8me2",
+    "parent": "fnlg",
+    "z": 18707
+  },
+  "u9sz": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "u9sz",
+    "parent": "b75l",
+    "z": 18689
+  },
+  "173c": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "173c",
+    "parent": "yzva",
+    "z": 18652
+  },
+  "omfe": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "omfe",
+    "parent": "6ttf",
+    "z": 18634
+  },
+  "owhq": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "owhq",
+    "parent": "6gj2",
+    "z": 18671
+  },
+  "y1q7": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "y1q7",
+    "parent": "fnlg",
+    "z": 18708
+  },
+  "8gkm": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "8gkm",
+    "parent": "b75l",
+    "z": 18690
+  },
+  "9j5j": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "9j5j",
+    "parent": "yzva",
+    "z": 18653
+  },
+  "galp": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "galp",
+    "parent": "6ttf",
+    "z": 18635
+  },
+  "o3hy": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "o3hy",
+    "parent": "6gj2",
+    "z": 18672
+  },
+  "sgjq": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "sgjq",
+    "parent": "fnlg",
+    "z": 18709
+  },
+  "o5sm": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "o5sm",
+    "parent": "b75l",
+    "z": 18691
+  },
+  "3lql": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "3lql",
+    "z": 18654,
+    "parent": "yzva"
+  },
+  "e8yv": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "e8yv",
+    "parent": "6ttf",
+    "z": 18636
+  },
+  "qoqx": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "qoqx",
+    "parent": "6gj2",
+    "z": 18673
+  },
+  "bf9n": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "bf9n",
+    "z": 18710,
+    "parent": "fnlg"
+  },
+  "6cgv": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "6cgv",
+    "z": 18692,
+    "parent": "b75l"
+  },
+  "v239": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "v239",
+    "z": 18655,
+    "parent": "yzva"
+  },
+  "3wwl": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "3wwl",
+    "z": 18637,
+    "parent": "6ttf"
+  },
+  "yree": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "yree",
+    "z": 18674,
+    "owner": "Guest533",
+    "activeFace": 1,
+    "parent": "sii7"
+  },
+  "earj": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "earj",
+    "z": 18711,
+    "parent": "fnlg"
+  },
+  "yjal": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "yjal",
+    "z": 18693,
+    "parent": "b75l"
+  },
+  "z4tr": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "z4tr",
+    "z": 18656,
+    "parent": "yzva"
+  },
+  "j9y4": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "j9y4",
+    "z": 18638,
+    "parent": "6ttf"
+  },
+  "j0wl": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "j0wl",
+    "z": 18675,
+    "parent": "sii7",
+    "owner": "Guest533",
+    "activeFace": 1
+  },
+  "qew1": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "qew1",
+    "z": 18712,
+    "parent": "fnlg"
+  },
+  "wzx3": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "wzx3",
+    "z": 18694,
+    "parent": "b75l"
+  },
+  "s870": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "s870",
+    "z": 18657,
+    "parent": "yzva"
+  },
+  "d1h1": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "d1h1",
+    "z": 18639,
+    "parent": "6ttf"
+  },
+  "mz5j": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "mz5j",
+    "z": 18676,
+    "parent": "sii7",
+    "owner": "Guest533",
+    "activeFace": 1
+  },
+  "vjp3": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "vjp3",
+    "z": 18713,
+    "parent": "fnlg"
+  },
+  "2gs1": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "2gs1",
+    "z": 11,
+    "x": 4,
+    "y": 4,
+    "owner": "Guest533",
+    "activeFace": 1,
+    "parent": "Wheat"
+  },
+  "9x10": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "9x10",
+    "z": 18659,
+    "parent": "f1uy",
+    "owner": "Guest533",
+    "activeFace": 1
+  },
+  "kp1x": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "kp1x",
+    "z": 18640,
+    "parent": "6ttf"
+  },
+  "9heq": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "9heq",
+    "z": 18677,
+    "parent": "sii7",
+    "owner": "Guest533",
+    "activeFace": 1
+  },
+  "e07b": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "e07b",
+    "z": 18714,
+    "parent": "fnlg"
+  },
+  "zzc2": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "zzc2",
+    "z": 18695,
+    "parent": "b75l"
+  },
+  "f6j7": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "f6j7",
+    "z": 18658,
+    "owner": "Guest533",
+    "activeFace": 1,
+    "parent": "f1uy",
+    "x": 4,
+    "y": 4
+  },
+  "0fgb": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "0fgb",
+    "z": 10,
+    "x": 4,
+    "y": 4,
+    "parent": "Bricks",
+    "owner": "Guest533",
+    "activeFace": 1
+  },
+  "p0yy": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "p0yy",
+    "z": 18678,
+    "owner": "Guest533",
+    "activeFace": 1,
+    "parent": "sii7"
+  },
+  "u3cm": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "u3cm",
+    "z": 12,
+    "x": 4,
+    "y": 4,
+    "owner": "Guest533",
+    "activeFace": 1,
+    "parent": "Ore"
+  },
+  "uid4": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "uid4",
+    "z": 18696,
+    "parent": "b75l"
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "y": 950,
+    "inheritFrom": "Toggle Switch Board",
+    "text": "Reset",
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          "Bricks",
+          "Wood",
+          "Wool",
+          "Wheat",
+          "Ore"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "cardType",
+            "value": "${value}"
+          },
+          {
+            "func": "SET",
+            "value": "${value}"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "Longest Road Holder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "Largest Army Holder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "Development Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Development Draw",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Development Draw"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "player",
+            "value": "${value}",
+            "collection": "PIECES"
+          },
+          "var player = ${value}",
+          {
+            "func": "FOREACH",
+            "in": [
+              "Settlements",
+              "Cities",
+              "Roads"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "PIECES",
+                "property": "home",
+                "value": "${value}"
+              },
+              {
+                "func": "SET",
+                "value": "Player ${player} - ${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Robber"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 752.8203230285
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 456
+      }
+    ],
+    "x": 20
+  },
+  "Development": {
+    "type": "deck",
+    "id": "Development",
+    "cardDefaults": {
+      "width": 80,
+      "height": 120,
+      "layer": 4
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/-376157308_4525",
+            "width": 80,
+            "height": 120,
+            "css": "background-size: cover;border:4px solid black;border-radius:8px;"
+          }
+        ],
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 80,
+            "height": 120,
+            "css": "background-size: cover; border:4px solid black;border-radius:8px;"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 94,
+            "fontSize": 16,
+            "valueType": "dynamic",
+            "value": "text1",
+            "textAlign": "center",
+            "width": 80,
+            "css": "color:white"
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "Knight": {
+        "image": "/assets/-1189891060_51936",
+        "text": "Knight"
+      },
+      "Victory Point": {
+        "image": "/assets/-1521875004_33484",
+        "text": "1 Point"
+      },
+      "Roads": {
+        "image": "/assets/204036147_40672",
+        "text": "2 Roads"
+      },
+      "Monopoly": {
+        "image": "/assets/1954353812_44605",
+        "text": "Monopoly"
+      },
+      "Gift": {
+        "image": "/assets/971674355_31667",
+        "text": "2 Cards"
+      }
+    },
+    "parent": "Development Draw"
+  },
+  "Settlement Template": {
+    "id": "Settlement Template",
+    "x": 1045.6279441635002,
+    "y": 520,
+    "width": 40,
+    "height": 40,
+    "color": "pink",
+    "grid": [
+      {
+        "offsetX": 83,
+        "offsetY": 80,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 83,
+        "offsetY": -25,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": -70,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": 130,
+        "y": 300,
+        "x": 173.20508075700002
+      }
+    ],
+    "image": "/assets/-83262525_1527",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "home": "Settlements",
+    "parent": "Switch Board",
+    "layer": 3,
+    "borderColor": "black",
+    "borderWidth": 3
+  },
+  "Road Template": {
+    "id": "Road Template",
+    "x": 1010.4228634065,
+    "y": 545,
+    "color": "pink",
+    "grid": [
+      {
+        "offsetX": 101,
+        "offsetY": 20,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 0,
+        "image": "/assets/-1486155561_696"
+      },
+      {
+        "offsetX": 187.602540379,
+        "offsetY": 170,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 0,
+        "image": "/assets/-1486155561_696"
+      },
+      {
+        "offsetX": 143,
+        "offsetY": 95,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": -60,
+        "image": "/assets/1466053893_1105"
+      },
+      {
+        "offsetX": 229,
+        "offsetY": 245,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": -60,
+        "image": "/assets/1466053893_1105"
+      },
+      {
+        "offsetX": 317,
+        "offsetY": 245,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 60,
+        "image": "/assets/1615791162_1102"
+      },
+      {
+        "offsetX": 231,
+        "offsetY": 95,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 60,
+        "image": "/assets/1615791162_1102"
+      }
+    ],
+    "svgReplaces": {
+      "red": "color"
+    },
+    "home": "Roads",
+    "parent": "Switch Board",
+    "layer": 2,
+    "width": 13,
+    "height": 60,
+    "image": "/assets/-1486155561_696"
+  },
+  "City Template": {
+    "id": "City Template",
+    "x": 603.0127018925,
+    "y": 375,
+    "width": 50,
+    "height": 50,
+    "color": "pink",
+    "grid": [
+      {
+        "offsetX": 83,
+        "offsetY": 70,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 83,
+        "offsetY": -30,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": -75,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": 125,
+        "y": 300,
+        "x": 173.20508075700002
+      }
+    ],
+    "image": "/assets/-679093699_2340",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "home": "Cities",
+    "parent": "Switch Board",
+    "layer": 3,
+    "borderColor": "black",
+    "borderWidth": 3
+  },
+  "Background": {
+    "id": "Background",
+    "width": 1600,
+    "height": 1000,
+    "css": "background: black; ",
+    "layer": -6,
+    "movable": false
+  },
+  "Hand": {
+    "type": "holder",
+    "id": "Hand",
+    "y": 920,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": 316,
+    "width": 968,
+    "stackOffsetX": 40,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "childrenPerOwner": true,
+    "rotation": 0,
+    "inheritFrom": "Bricks"
+  },
+  "gtlq": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "gtlq",
+    "z": 7402,
+    "parent": "ah0h"
+  },
+  "jtdj": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Roads",
+    "id": "jtdj",
+    "z": 2256,
+    "parent": "ah0h"
+  },
+  "n15g": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Monopoly",
+    "id": "n15g",
+    "z": 4087,
+    "parent": "ah0h"
+  },
+  "98hz": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Gift",
+    "id": "98hz",
+    "z": 4418,
+    "parent": "ah0h"
+  },
+  "1hwh": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "1hwh",
+    "z": 3261,
+    "parent": "ah0h"
+  },
+  "eysb": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Victory Point",
+    "id": "eysb",
+    "z": 8839,
+    "parent": "ah0h"
+  },
+  "h8j6": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Roads",
+    "id": "h8j6",
+    "z": 5785,
+    "parent": "ah0h"
+  },
+  "m7x2": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Monopoly",
+    "id": "m7x2",
+    "z": 6649,
+    "parent": "ah0h"
+  },
+  "poq3": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Gift",
+    "id": "poq3",
+    "z": 7624,
+    "parent": "ah0h"
+  },
+  "1sih": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Victory Point",
+    "id": "1sih",
+    "z": 7485,
+    "parent": "ah0h"
+  },
+  "6ixl": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Victory Point",
+    "id": "6ixl",
+    "z": 2265,
+    "parent": "ah0h"
+  },
+  "chq8": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Victory Point",
+    "id": "chq8",
+    "z": 3477,
+    "parent": "ah0h"
+  },
+  "u44k": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Victory Point",
+    "id": "u44k",
+    "z": 838,
+    "parent": "ah0h"
+  },
+  "jht6": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "jht6",
+    "z": 4304,
+    "parent": "ah0h"
+  },
+  "22cj": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "22cj",
+    "z": 6160,
+    "parent": "ah0h"
+  },
+  "i069": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "i069",
+    "z": 4192,
+    "parent": "ah0h"
+  },
+  "4m7f": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "4m7f",
+    "z": 2661,
+    "parent": "ah0h"
+  },
+  "p27u": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "p27u",
+    "z": 8820,
+    "parent": "ah0h"
+  },
+  "qda1": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "qda1",
+    "z": 7155,
+    "parent": "ah0h"
+  },
+  "z8e2": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "z8e2",
+    "z": 658,
+    "parent": "ah0h"
+  },
+  "0p3n": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "0p3n",
+    "z": 6918,
+    "parent": "ah0h"
+  },
+  "wtxz": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "wtxz",
+    "z": 1217,
+    "parent": "ah0h"
+  },
+  "5lp1": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "5lp1",
+    "z": 1239,
+    "parent": "ah0h"
+  },
+  "xqi8": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "xqi8",
+    "z": 8152,
+    "parent": "ah0h"
+  },
+  "eo2c": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "eo2c",
+    "z": 9497,
+    "parent": "ah0h"
+  },
+  "Harbor Template": {
+    "id": "Harbor Template",
+    "x": 347,
+    "y": 300,
+    "width": 80,
+    "rotation": 630,
+    "css": "background: url(/assets/-1893264675_2943);background-size: cover;background-repeat:no-repeat; background-position: center center",
+    "layer": -4,
+    "image": "/assets/1706672985_296413",
+    "basic": "/assets/-1062389589_16281",
+    "z": 15,
+    "clickRoutine": [
+      "var newRot = ${PROPERTY rotation} + 60",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${newRot}"
+      }
+    ]
+  },
+  "Harbor Template1": {
+    "id": "Harbor Template1",
+    "x": 510,
+    "y": 22,
+    "width": 80,
+    "rotation": 330,
+    "css": "background: url(/assets/-702772627_3102);background-size: cover;background-repeat:no-repeat; background-position: center center",
+    "layer": -4,
+    "image": "/assets/-1557821007_92195",
+    "z": 16,
+    "clickRoutine": [
+      "var newRot = ${PROPERTY rotation} + 60",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${newRot}"
+      }
+    ]
+  },
+  "Harbor Template2": {
+    "id": "Harbor Template2",
+    "x": 835,
+    "y": 17,
+    "width": 80,
+    "rotation": 750,
+    "css": "background: url(/assets/-1313099217_109295);background-size: cover;background-repeat:no-repeat; background-position: center center",
+    "layer": -4,
+    "image": "/assets/-609772913_122240",
+    "z": 26,
+    "clickRoutine": [
+      "var newRot = ${PROPERTY rotation} + 60",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${newRot}"
+      }
+    ]
+  },
+  "Harbor Template3": {
+    "id": "Harbor Template3",
+    "x": 1087,
+    "y": 148,
+    "width": 80,
+    "rotation": 450,
+    "css": "background: url(/assets/-425068549_4309);background-size: cover;background-repeat:no-repeat; background-position: center center",
+    "layer": -4,
+    "z": 8,
+    "image": "/assets/-1578141657_23133",
+    "clickRoutine": [
+      "var newRot = ${PROPERTY rotation} + 60",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${newRot}"
+      }
+    ]
+  },
+  "Harbor Template4": {
+    "id": "Harbor Template4",
+    "x": 1248,
+    "y": 453,
+    "width": 80,
+    "rotation": 450,
+    "css": "background: url(/assets/-425068549_4309);background-size: cover;background-repeat:no-repeat; background-position: center center",
+    "layer": -4,
+    "image": "/assets/-1578141657_23133",
+    "z": 13,
+    "clickRoutine": [
+      "var newRot = ${PROPERTY rotation} + 60",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${newRot}"
+      }
+    ]
+  },
+  "Harbor Template5": {
+    "id": "Harbor Template5",
+    "x": 1087,
+    "y": 739,
+    "width": 80,
+    "rotation": 450,
+    "css": "background: url(/assets/1642357274_3029);background-size: cover;background-repeat:no-repeat; background-position: center center",
+    "layer": -4,
+    "image": "/assets/1653453721_76477",
+    "z": 32,
+    "clickRoutine": [
+      "var newRot = ${PROPERTY rotation} + 60",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${newRot}"
+      }
+    ]
+  },
+  "Harbor Template6": {
+    "id": "Harbor Template6",
+    "x": 854,
+    "y": 880,
+    "width": 80,
+    "css": "background: url(/assets/-425068549_4309);background-size: cover;background-repeat:no-repeat; background-position: center center",
+    "rotation": 570,
+    "layer": -4,
+    "image": "/assets/-1578141657_23133",
+    "z": 27,
+    "clickRoutine": [
+      "var newRot = ${PROPERTY rotation} + 60",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${newRot}"
+      }
+    ]
+  },
+  "Harbor Template7": {
+    "id": "Harbor Template7",
+    "x": 337,
+    "y": 577,
+    "width": 80,
+    "css": "background: url(/assets/-425068549_4309);background-size: cover;background-repeat:no-repeat; background-position: center center",
+    "rotation": 930,
+    "layer": -4,
+    "z": 30,
+    "image": "/assets/-1578141657_23133",
+    "clickRoutine": [
+      "var newRot = ${PROPERTY rotation} + 60",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${newRot}"
+      }
+    ]
+  },
+  "Harbor Template8": {
+    "id": "Harbor Template8",
+    "x": 508,
+    "y": 875,
+    "width": 80,
+    "css": "background: url(/assets/1377496004_2701);background-size: cover;background-repeat:no-repeat; background-position: center center",
+    "layer": -4,
+    "image": "/assets/-969319947_74305",
+    "clickRoutine": [
+      "var newRot = ${PROPERTY rotation} + 60",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${newRot}"
+      }
+    ],
+    "z": 29,
+    "rotation": 1650
+  },
+  "Player 1": {
+    "type": "holder",
+    "id": "Player 1",
+    "width": 120,
+    "x": 60,
+    "y": 14,
+    "dropTarget": [
+      {
+        "player": 1
+      },
+      {
+        "deck": "Bonus Deck"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "player": 1,
+    "classes": "transparentX",
+    "height": 140,
+    "linkedToSeat": "Player 1 - Seat",
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Player 1 - Seat": [
+        "color"
+      ]
+    }
+  },
+  "Knight B Template": {
+    "id": "Knight B Template",
+    "x": 1035.6279441635002,
+    "y": 420,
+    "width": 50,
+    "height": 50,
+    "color": "pink",
+    "grid": [
+      {
+        "offsetX": 83,
+        "offsetY": 70,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 83,
+        "offsetY": -30,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": -75,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": 125,
+        "y": 300,
+        "x": 173.20508075700002
+      }
+    ],
+    "home": "Knights",
+    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72' stroke='black' stroke-width='2'%3E%3Ccircle cx='36' cy='36' r='35' fill='currentColor'/%3E%3Cellipse cx='26' cy='42' rx='9' ry='10'/%3E%3Cellipse cx='50' cy='31' rx='10' ry='10'/%3E%3C/svg%3E",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "parent": "Switch Board",
+    "layer": 3
+  },
+  "Knight A Template": {
+    "id": "Knight A Template",
+    "x": 949.4228634065,
+    "y": 275,
+    "width": 50,
+    "height": 50,
+    "color": "pink",
+    "grid": [
+      {
+        "offsetX": 83,
+        "offsetY": 70,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 83,
+        "offsetY": -30,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": -75,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": 125,
+        "y": 300,
+        "x": 173.20508075700002
+      }
+    ],
+    "home": "Knights",
+    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72' stroke='black' stroke-width='2'%3E%3Ccircle cx='36' cy='36' r='35' fill='currentColor'/%3E%3Cellipse cx='50' cy='31' rx='10' ry='10'/%3E%3C/svg%3E",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "parent": "Switch Board",
+    "layer": 3
+  },
+  "Knight C Template": {
+    "id": "Knight C Template",
+    "x": 689.2177826495,
+    "y": 220,
+    "width": 50,
+    "height": 50,
+    "color": "pink",
+    "grid": [
+      {
+        "offsetX": 83,
+        "offsetY": 70,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 83,
+        "offsetY": -30,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": -75,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": 125,
+        "y": 300,
+        "x": 173.20508075700002
+      }
+    ],
+    "home": "Knights",
+    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72' stroke='black' stroke-width='2'%3E%3Ccircle cx='36' cy='36' r='35' fill='currentColor'/%3E%3Cellipse cx='35' cy='52' rx='9' ry='10'/%3E%3Cellipse cx='50' cy='31' rx='10' ry='10'/%3E%3Cellipse cx='25' cy='31' rx='10' ry='10'/%3E%3C/svg%3E",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "parent": "Switch Board",
+    "layer": 3
+  },
+  "Ship Template": {
+    "id": "Ship Template",
+    "x": 1158.6279441635002,
+    "y": 395,
+    "width": 60,
+    "height": 48,
+    "rotation": 210,
+    "color": "pink",
+    "grid": [
+      {
+        "offsetX": 78,
+        "offsetY": 20,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 270
+      },
+      {
+        "offsetX": 164.602540379,
+        "offsetY": 170,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 270
+      },
+      {
+        "offsetX": 120,
+        "offsetY": 95,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 210
+      },
+      {
+        "offsetX": 206,
+        "offsetY": 245,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 210
+      },
+      {
+        "offsetX": 294,
+        "offsetY": 245,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 330
+      },
+      {
+        "offsetX": 208,
+        "offsetY": 95,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 330
+      }
+    ],
+    "home": "Ships",
+    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 83.612 59.997'%3E%3Cpath d='M0 44S12 59 44 59s38-15 38-15l-34-1V33h20S63.0.9 46.0.144 28 33 28 33v10z' fill='currentColor' stroke='black' stroke-width='2'/%3E%3C/svg%3E",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "parent": "Switch Board",
+    "layer": 2
+  },
+  "Wall Template": {
+    "id": "Wall Template",
+    "x": 776.2177826495,
+    "y": 375,
+    "width": 50,
+    "height": 50,
+    "color": "pink",
+    "grid": [
+      {
+        "offsetX": 83,
+        "offsetY": 70,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 83,
+        "offsetY": -30,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": -75,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": 125,
+        "y": 300,
+        "x": 173.20508075700002
+      }
+    ],
+    "home": "Walls",
+    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52.649 52.649' %3E%3Cpath d='M1 1h50.649v50.649H1z' stroke='black' fill='currentColor' stroke-width='2'/%3E%3C/svg%3E",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "parent": "Switch Board",
+    "layer": 3
+  },
+  "Player 1 - Settlements": {
+    "type": "holder",
+    "id": "Player 1 - Settlements",
+    "parent": "Player 1",
+    "fixedParent": true,
+    "y": 4,
+    "width": 32,
+    "height": 95,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "home": "Settlements"
+    },
+    "stackOffsetY": 10,
+    "x": 23.5
+  },
+  "Player 1 - Settlement A": {
+    "id": "Player 1 - Settlement A",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "parent": "Player 1 - Settlements"
+  },
+  "Player 1 - Cities": {
+    "type": "holder",
+    "id": "Player 1 - Cities",
+    "parent": "Player 1",
+    "x": 62,
+    "width": 50,
+    "height": 75,
+    "dropTarget": {
+      "home": "Cities"
+    },
+    "inheritFrom": "Player 1 - Settlements"
+  },
+  "Player 1 - City A": {
+    "id": "Player 1 - City A",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "parent": "Player 1 - Cities"
+  },
+  "Player 1 - Road A": {
+    "id": "Player 1 - Road A",
+    "x": 0,
+    "y": 4,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Roads": {
+    "type": "holder",
+    "id": "Player 1 - Roads",
+    "parent": "Player 1",
+    "height": 92,
+    "dropTarget": {
+      "home": "Roads"
+    },
+    "expansion": 2,
+    "inheritFrom": "Player 1 - Settlements",
+    "stackOffsetY": 2,
+    "x": 4,
+    "width": 13,
+    "y": 4,
+    "onEnter": {
+      "rotation": 0
+    }
+  },
+  "Die 1": {
+    "id": "Die 1",
+    "css": "--size:60px; --rotX:360deg; --rotY:1080deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
+    "updateRoutine": [
+      "var value = randInt 1 6",
+      "var valueX = ${PROPERTY xRotations} getIndex ${value}",
+      "var valueY = ${PROPERTY yRotations} getIndex ${value}",
+      "var randX = randInt 0 3",
+      "var randY = randInt 0 3",
+      "var randX = ${randX} * 360",
+      "var randY = ${randY} * 360",
+      "var sumX = ${randX} + ${valueX}",
+      "var sumY = ${randY} + ${valueY}",
+      "var css = '--size:' + ${PROPERTY width}",
+      "var css = ${css} + 'px; --rotX:'",
+      "var css = ${css} + ${sumX}",
+      "var css = ${css} + 'deg; --rotY:'",
+      "var css = ${css} + ${sumY}",
+      "var css = ${css} + 'deg; --rotZ:0deg; background: none !important; perspective: 1600px;'",
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${css}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "value",
+        "value": "${value}",
+        "collection": "thisButton"
+      }
+    ],
+    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='100' height='100'%3E%3Cpath d='M1 1h100v100H1z' fill='b'/%3E%3Cuse xlink:href='%23A' fill='p1' x='20' y='20'/%3E%3Cuse xlink:href='%23A' fill='p2' x='20' y='50'/%3E%3Cuse xlink:href='%23A' fill='p3' x='20' y='80'/%3E%3Cuse xlink:href='%23A' fill='p4' x='50' y='20'/%3E%3Cuse xlink:href='%23A' fill='p5' x='50' y='50'/%3E%3Cuse xlink:href='%23A' fill='p6' x='50' y='80'/%3E%3Cuse xlink:href='%23A' fill='p7' x='80' y='20'/%3E%3Cuse xlink:href='%23A' fill='p8' x='80' y='50'/%3E%3Cuse xlink:href='%23A' fill='p9' x='80' y='80'/%3E%3Cdefs%3E%3Ccircle id='A' r='10'/%3E%3C/defs%3E%3C/svg%3E",
+    "backgroundColor": "white",
+    "yRotations": [
+      0,
+      0,
+      90,
+      0,
+      0,
+      -90,
+      180
+    ],
+    "value": 1,
+    "xRotations": [
+      0,
+      0,
+      0,
+      90,
+      -90,
+      0,
+      0
+    ],
+    "width": 60,
+    "height": 60,
+    "layer": 5,
+    "z": 1,
+    "movable": false,
+    "x": 1420,
+    "y": 9,
+    "rotation": 10
+  },
+  "Base": {
+    "id": "Base",
+    "css": "width:var(--size) !important;height:var(--size) !important;transform-style: preserve-3d;  transform: translateZ(calc(var(--size) / -2)) rotateX(   var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ)) !important;  transition: transform 0.5s;",
+    "movable": false,
+    "parent": "Die 1"
+  },
+  "Front": {
+    "id": "Front",
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(  0deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
+    "parent": "Base",
+    "movable": false,
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "backgroundColor",
+      "p2": "backgroundColor",
+      "p3": "backgroundColor",
+      "p4": "backgroundColor",
+      "p5": "pipColor",
+      "p6": "backgroundColor",
+      "p7": "backgroundColor",
+      "p8": "backgroundColor",
+      "p9": "backgroundColor"
+    },
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Die 1": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "activeFace": 0
+  },
+  "Back": {
+    "id": "Back",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(180deg) translateZ(calc(var(--size) / 2)) !important;background-size:cover;",
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "pipColor",
+      "p3": "pipColor",
+      "p4": "backgroundColor",
+      "p5": "backgroundColor",
+      "p6": "backgroundColor",
+      "p7": "pipColor",
+      "p8": "pipColor",
+      "p9": "pipColor"
+    },
+    "x": 1398,
+    "y": -11,
+    "width": 100,
+    "height": 100,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Die 1": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "z": 35
+  },
+  "Right": {
+    "id": "Right",
+    "parent": "Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY( 90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Die 1": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "pipColor",
+      "p4": "backgroundColor",
+      "p5": "pipColor",
+      "p6": "backgroundColor",
+      "p7": "pipColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    },
+    "activeFace": 0
+  },
+  "Left": {
+    "id": "Left",
+    "parent": "Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Die 1": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "backgroundColor",
+      "p4": "backgroundColor",
+      "p5": "backgroundColor",
+      "p6": "backgroundColor",
+      "p7": "backgroundColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    }
+  },
+  "Top": {
+    "id": "Top",
+    "parent": "Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black; transform: rotateX( 90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Die 1": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "pipColor",
+      "p4": "backgroundColor",
+      "p5": "backgroundColor",
+      "p6": "backgroundColor",
+      "p7": "pipColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    }
+  },
+  "Bottom": {
+    "id": "Bottom",
+    "parent": "Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateX( -90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Die 1": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "backgroundColor",
+      "p4": "backgroundColor",
+      "p5": "pipColor",
+      "p6": "backgroundColor",
+      "p7": "backgroundColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    }
+  },
+  "Cover": {
+    "id": "Cover",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Die 1",
+        "routine": "updateRoutine"
+      },
+      {
+        "func": "CALL",
+        "widget": "Die 2",
+        "routine": "updateRoutine"
+      }
+    ],
+    "layer": 9,
+    "css": "width:var(--size) !important;height:var(--size) !important;",
+    "movable": false,
+    "z": 2,
+    "fixedParent": true,
+    "parent": "Die 1"
+  },
+  "Die 2": {
+    "inheritFrom": "Die 1",
+    "id": "Die 2",
+    "x": 1500,
+    "css": "--size:60px; --rotX:0deg; --rotY:1080deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
+    "value": 1,
+    "rotation": -5
+  },
+  "Base1": {
+    "inheritFrom": "Base",
+    "id": "Base1",
+    "parent": "Die 2",
+    "activeFace": 0
+  },
+  "Front1": {
+    "inheritFrom": "Front",
+    "id": "Front1",
+    "parent": "Base1"
+  },
+  "Back1": {
+    "inheritFrom": "Back",
+    "id": "Back1",
+    "parent": "Base1",
+    "activeFace": 0
+  },
+  "Right1": {
+    "inheritFrom": "Right",
+    "id": "Right1",
+    "parent": "Base1",
+    "activeFace": 0
+  },
+  "Left1": {
+    "inheritFrom": "Left",
+    "id": "Left1",
+    "parent": "Base1"
+  },
+  "Top1": {
+    "inheritFrom": "Top",
+    "id": "Top1",
+    "parent": "Base1"
+  },
+  "Bottom1": {
+    "inheritFrom": "Bottom",
+    "id": "Bottom1",
+    "parent": "Base1",
+    "activeFace": 0
+  },
+  "Cover1": {
+    "inheritFrom": "Cover",
+    "id": "Cover1",
+    "parent": "Die 2"
+  },
+  "Player 1 - Seat": {
+    "type": "seat",
+    "id": "Player 1 - Seat",
+    "parent": "Player 1",
+    "rotation": -90,
+    "x": -110,
+    "y": 44
+  },
+  "Player 1 - Road B": {
+    "id": "Player 1 - Road B",
+    "x": 0,
+    "y": 6,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road C": {
+    "id": "Player 1 - Road C",
+    "x": 0,
+    "y": 8,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 5,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road D": {
+    "id": "Player 1 - Road D",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 6,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road E": {
+    "id": "Player 1 - Road E",
+    "x": 0,
+    "y": 12,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 7,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road F": {
+    "id": "Player 1 - Road F",
+    "x": 0,
+    "y": 14,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 8,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road G": {
+    "id": "Player 1 - Road G",
+    "x": 0,
+    "y": 16,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 9,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road H": {
+    "id": "Player 1 - Road H",
+    "x": 0,
+    "y": 18,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 10,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road I": {
+    "id": "Player 1 - Road I",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 11,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road J": {
+    "id": "Player 1 - Road J",
+    "x": 0,
+    "y": 22,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 12,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road K": {
+    "id": "Player 1 - Road K",
+    "x": 0,
+    "y": 24,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 13,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road L": {
+    "id": "Player 1 - Road L",
+    "x": 0,
+    "y": 26,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 14,
+    "image": "/assets/1615791162_1102",
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road M": {
+    "id": "Player 1 - Road M",
+    "x": 0,
+    "y": 2,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Roads",
+    "z": 2
+  },
+  "Player 1 - Road N": {
+    "id": "Player 1 - Road N",
+    "x": 0,
+    "y": 28,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 15,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road O": {
+    "id": "Player 1 - Road O",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Settlement B": {
+    "id": "Player 1 - Settlement B",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "parent": "Player 1 - Settlements"
+  },
+  "Player 1 - Settlement C": {
+    "id": "Player 1 - Settlement C",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "parent": "Player 1 - Settlements"
+  },
+  "Player 1 - Settlement D": {
+    "id": "Player 1 - Settlement D",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "parent": "Player 1 - Settlements"
+  },
+  "Player 1 - City B": {
+    "id": "Player 1 - City B",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "parent": "Player 1 - Cities"
+  },
+  "Player 1 - City C": {
+    "id": "Player 1 - City C",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "parent": "Player 1 - Cities"
+  },
+  "Player 1 - City D": {
+    "id": "Player 1 - City D",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "parent": "Player 1 - Cities"
+  },
+  "Player 2": {
+    "type": "holder",
+    "id": "Player 2",
+    "width": 120,
+    "x": 60,
+    "y": 214,
+    "dropTarget": [
+      {
+        "player": 2
+      },
+      {
+        "deck": "Bonus Deck"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "player": 2,
+    "classes": "transparentX",
+    "height": 140,
+    "linkedToSeat": "Player 2 - Seat",
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Player 2 - Seat": [
+        "color"
+      ]
+    }
+  },
+  "Player 2 - Settlements": {
+    "type": "holder",
+    "id": "Player 2 - Settlements",
+    "parent": "Player 2",
+    "fixedParent": true,
+    "y": 4,
+    "width": 32,
+    "height": 95,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "home": "Settlements"
+    },
+    "stackOffsetY": 10,
+    "x": 23.5
+  },
+  "Player 2 - Settlement A": {
+    "id": "Player 2 - Settlement A",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "parent": "Player 2 - Settlements"
+  },
+  "Player 2 - Settlement B": {
+    "id": "Player 2 - Settlement B",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "parent": "Player 2 - Settlements"
+  },
+  "Player 2 - Settlement C": {
+    "id": "Player 2 - Settlement C",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "parent": "Player 2 - Settlements"
+  },
+  "Player 2 - Settlement D": {
+    "id": "Player 2 - Settlement D",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 5,
+    "parent": "Player 2 - Settlements"
+  },
+  "Player 2 - Cities": {
+    "type": "holder",
+    "id": "Player 2 - Cities",
+    "parent": "Player 2",
+    "x": 62,
+    "width": 50,
+    "height": 75,
+    "dropTarget": {
+      "home": "Cities"
+    },
+    "inheritFrom": "Player 2 - Settlements"
+  },
+  "Player 2 - City A": {
+    "id": "Player 2 - City A",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Cities",
+    "z": 3
+  },
+  "Player 2 - City B": {
+    "id": "Player 2 - City B",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "parent": "Player 2 - Cities"
+  },
+  "Player 2 - City C": {
+    "id": "Player 2 - City C",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "parent": "Player 2 - Cities"
+  },
+  "Player 2 - City D": {
+    "id": "Player 2 - City D",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Cities",
+    "z": 2
+  },
+  "Player 2 - Roads": {
+    "type": "holder",
+    "id": "Player 2 - Roads",
+    "parent": "Player 2",
+    "height": 92,
+    "dropTarget": {
+      "home": "Roads"
+    },
+    "expansion": 2,
+    "inheritFrom": "Player 2 - Settlements",
+    "stackOffsetY": 2,
+    "x": 4,
+    "width": 13,
+    "y": 4,
+    "onEnter": {
+      "rotation": 0
+    }
+  },
+  "Player 2 - Road A": {
+    "id": "Player 2 - Road A",
+    "x": 0,
+    "y": 28,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 15,
+    "image": "/assets/1466053893_1105",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road B": {
+    "id": "Player 2 - Road B",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 11,
+    "image": "/assets/1615791162_1102",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road C": {
+    "id": "Player 2 - Road C",
+    "x": 0,
+    "y": 4,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road D": {
+    "id": "Player 2 - Road D",
+    "x": 0,
+    "y": 6,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road E": {
+    "id": "Player 2 - Road E",
+    "x": 0,
+    "y": 8,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 5,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road F": {
+    "id": "Player 2 - Road F",
+    "x": 0,
+    "y": 22,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 12,
+    "image": "/assets/1615791162_1102",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road G": {
+    "id": "Player 2 - Road G",
+    "x": 0,
+    "y": 24,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 13,
+    "image": "/assets/1615791162_1102",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road H": {
+    "id": "Player 2 - Road H",
+    "x": 0,
+    "y": 26,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 14,
+    "image": "/assets/1466053893_1105",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road I": {
+    "id": "Player 2 - Road I",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "image": "/assets/1615791162_1102",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road J": {
+    "id": "Player 2 - Road J",
+    "x": 0,
+    "y": 12,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Roads",
+    "z": 7
+  },
+  "Player 2 - Road K": {
+    "id": "Player 2 - Road K",
+    "x": 0,
+    "y": 2,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road L": {
+    "id": "Player 2 - Road L",
+    "x": 0,
+    "y": 14,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Roads",
+    "z": 8
+  },
+  "Player 2 - Road M": {
+    "id": "Player 2 - Road M",
+    "x": 0,
+    "y": 18,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Roads",
+    "z": 10
+  },
+  "Player 2 - Road N": {
+    "id": "Player 2 - Road N",
+    "x": 0,
+    "y": 16,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Roads",
+    "z": 9
+  },
+  "Player 2 - Road O": {
+    "id": "Player 2 - Road O",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 6,
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Seat": {
+    "type": "seat",
+    "id": "Player 2 - Seat",
+    "parent": "Player 2",
+    "rotation": -90,
+    "x": -110,
+    "y": 44,
+    "index": 2
+  },
+  "Player 3": {
+    "type": "holder",
+    "id": "Player 3",
+    "width": 120,
+    "x": 60,
+    "y": 414,
+    "dropTarget": [
+      {
+        "player": 3
+      },
+      {
+        "deck": "Bonus Deck"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "player": 3,
+    "classes": "transparentX",
+    "height": 140,
+    "linkedToSeat": "Player 3 - Seat",
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Player 3 - Seat": [
+        "color"
+      ]
+    }
+  },
+  "Player 3 - Settlements": {
+    "type": "holder",
+    "id": "Player 3 - Settlements",
+    "parent": "Player 3",
+    "fixedParent": true,
+    "y": 4,
+    "width": 32,
+    "height": 95,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "home": "Settlements"
+    },
+    "stackOffsetY": 10,
+    "x": 23.5
+  },
+  "Player 3 - Settlement A": {
+    "id": "Player 3 - Settlement A",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 5,
+    "parent": "Player 3 - Settlements"
+  },
+  "Player 3 - Settlement B": {
+    "id": "Player 3 - Settlement B",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "parent": "Player 3 - Settlements"
+  },
+  "Player 3 - Settlement C": {
+    "id": "Player 3 - Settlement C",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "parent": "Player 3 - Settlements"
+  },
+  "Player 3 - Settlement D": {
+    "id": "Player 3 - Settlement D",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "parent": "Player 3 - Settlements"
+  },
+  "Player 3 - Cities": {
+    "type": "holder",
+    "id": "Player 3 - Cities",
+    "parent": "Player 3",
+    "x": 62,
+    "width": 50,
+    "height": 75,
+    "dropTarget": {
+      "home": "Cities"
+    },
+    "inheritFrom": "Player 3 - Settlements"
+  },
+  "Player 3 - City A": {
+    "id": "Player 3 - City A",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "parent": "Player 3 - Cities"
+  },
+  "Player 3 - City B": {
+    "id": "Player 3 - City B",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "parent": "Player 3 - Cities"
+  },
+  "Player 3 - City C": {
+    "id": "Player 3 - City C",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "parent": "Player 3 - Cities"
+  },
+  "Player 3 - City D": {
+    "id": "Player 3 - City D",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "parent": "Player 3 - Cities"
+  },
+  "Player 3 - Roads": {
+    "type": "holder",
+    "id": "Player 3 - Roads",
+    "parent": "Player 3",
+    "height": 92,
+    "dropTarget": {
+      "home": "Roads"
+    },
+    "expansion": 2,
+    "inheritFrom": "Player 3 - Settlements",
+    "stackOffsetY": 2,
+    "x": 4,
+    "width": 13,
+    "y": 4,
+    "onEnter": {
+      "rotation": 0
+    }
+  },
+  "Player 3 - Road A": {
+    "id": "Player 3 - Road A",
+    "x": 0,
+    "y": 14,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 8
+  },
+  "Player 3 - Road B": {
+    "id": "Player 3 - Road B",
+    "x": 0,
+    "y": 16,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 9
+  },
+  "Player 3 - Road C": {
+    "id": "Player 3 - Road C",
+    "x": 0,
+    "y": 18,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 10
+  },
+  "Player 3 - Road D": {
+    "id": "Player 3 - Road D",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 11
+  },
+  "Player 3 - Road E": {
+    "id": "Player 3 - Road E",
+    "x": 0,
+    "y": 22,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 12
+  },
+  "Player 3 - Road F": {
+    "id": "Player 3 - Road F",
+    "x": 0,
+    "y": 2,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road G": {
+    "id": "Player 3 - Road G",
+    "x": 0,
+    "y": 24,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 13
+  },
+  "Player 3 - Road H": {
+    "id": "Player 3 - Road H",
+    "x": 0,
+    "y": 26,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 14
+  },
+  "Player 3 - Road I": {
+    "id": "Player 3 - Road I",
+    "x": 0,
+    "y": 28,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 15
+  },
+  "Player 3 - Road J": {
+    "id": "Player 3 - Road J",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "image": "/assets/1466053893_1105",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road K": {
+    "id": "Player 3 - Road K",
+    "x": 0,
+    "y": 6,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "image": "/assets/1615791162_1102",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road L": {
+    "id": "Player 3 - Road L",
+    "x": 0,
+    "y": 4,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "image": "/assets/1466053893_1105",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road M": {
+    "id": "Player 3 - Road M",
+    "x": 0,
+    "y": 12,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 7
+  },
+  "Player 3 - Road N": {
+    "id": "Player 3 - Road N",
+    "x": 0,
+    "y": 8,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 5,
+    "image": "/assets/1466053893_1105",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road O": {
+    "id": "Player 3 - Road O",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 6,
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Seat": {
+    "type": "seat",
+    "id": "Player 3 - Seat",
+    "parent": "Player 3",
+    "rotation": -90,
+    "x": -110,
+    "y": 44,
+    "index": 3
+  },
+  "Player 4": {
+    "type": "holder",
+    "id": "Player 4",
+    "width": 120,
+    "x": 60,
+    "y": 614,
+    "dropTarget": [
+      {
+        "player": 4
+      },
+      {
+        "deck": "Bonus Deck"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "home",
+        "collection": "child"
+      },
+      {
+        "func": "IF",
+        "condition": "${home}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "value": "${PROPERTY id} - ${home}",
+            "collection": "child"
+          },
+          {
+            "func": "IF",
+            "operand1": "${home}",
+            "operand2": "Barrels",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "${PROPERTY id} - ${home}",
+                "key": "cardType"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "player": 4,
+    "classes": "transparentX",
+    "height": 140,
+    "linkedToSeat": "Player 4 - Seat",
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Player 4 - Seat": [
+        "color"
+      ]
+    }
+  },
+  "Player 4 - Settlements": {
+    "type": "holder",
+    "id": "Player 4 - Settlements",
+    "parent": "Player 4",
+    "fixedParent": true,
+    "y": 4,
+    "width": 32,
+    "height": 95,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "home": "Settlements"
+    },
+    "stackOffsetY": 10,
+    "x": 23.5
+  },
+  "Player 4 - Settlement A": {
+    "id": "Player 4 - Settlement A",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "parent": "Player 4 - Settlements"
+  },
+  "Player 4 - Settlement B": {
+    "id": "Player 4 - Settlement B",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 5,
+    "parent": "Player 4 - Settlements"
+  },
+  "Player 4 - Settlement C": {
+    "id": "Player 4 - Settlement C",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "parent": "Player 4 - Settlements"
+  },
+  "Player 4 - Settlement D": {
+    "id": "Player 4 - Settlement D",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "parent": "Player 4 - Settlements"
+  },
+  "Player 4 - Cities": {
+    "type": "holder",
+    "id": "Player 4 - Cities",
+    "parent": "Player 4",
+    "x": 62,
+    "width": 50,
+    "height": 75,
+    "dropTarget": {
+      "home": "Cities"
+    },
+    "inheritFrom": "Player 4 - Settlements"
+  },
+  "Player 4 - City A": {
+    "id": "Player 4 - City A",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Cities",
+    "z": 3
+  },
+  "Player 4 - City B": {
+    "id": "Player 4 - City B",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Cities",
+    "z": 4
+  },
+  "Player 4 - City C": {
+    "id": "Player 4 - City C",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "parent": "Player 4 - Cities"
+  },
+  "Player 4 - City D": {
+    "id": "Player 4 - City D",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "parent": "Player 4 - Cities"
+  },
+  "Player 4 - Roads": {
+    "type": "holder",
+    "id": "Player 4 - Roads",
+    "parent": "Player 4",
+    "height": 92,
+    "dropTarget": {
+      "home": "Roads"
+    },
+    "expansion": 2,
+    "inheritFrom": "Player 4 - Settlements",
+    "stackOffsetY": 2,
+    "x": 4,
+    "width": 13,
+    "y": 4,
+    "onEnter": {
+      "rotation": 0
+    }
+  },
+  "Player 4 - Road A": {
+    "id": "Player 4 - Road A",
+    "x": 0,
+    "y": 14,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 8
+  },
+  "Player 4 - Road B": {
+    "id": "Player 4 - Road B",
+    "x": 0,
+    "y": 16,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 9
+  },
+  "Player 4 - Road C": {
+    "id": "Player 4 - Road C",
+    "x": 0,
+    "y": 18,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 10
+  },
+  "Player 4 - Road D": {
+    "id": "Player 4 - Road D",
+    "x": 0,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 11
+  },
+  "Player 4 - Road E": {
+    "id": "Player 4 - Road E",
+    "x": 0,
+    "y": 22,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 12
+  },
+  "Player 4 - Road F": {
+    "id": "Player 4 - Road F",
+    "x": 0,
+    "y": 24,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 13
+  },
+  "Player 4 - Road G": {
+    "id": "Player 4 - Road G",
+    "x": 0,
+    "y": 26,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 14
+  },
+  "Player 4 - Road H": {
+    "id": "Player 4 - Road H",
+    "x": 0,
+    "y": 28,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 15
+  },
+  "Player 4 - Road I": {
+    "id": "Player 4 - Road I",
+    "x": 0,
+    "y": 6,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "image": "/assets/1466053893_1105",
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Road J": {
+    "id": "Player 4 - Road J",
+    "x": 0,
+    "y": 4,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "image": "/assets/1466053893_1105",
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Road K": {
+    "id": "Player 4 - Road K",
+    "x": 0,
+    "y": 8,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 5,
+    "image": "/assets/1466053893_1105",
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Road L": {
+    "id": "Player 4 - Road L",
+    "x": 0,
+    "y": 2,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "image": "/assets/1615791162_1102",
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Road M": {
+    "id": "Player 4 - Road M",
+    "x": 0,
+    "y": 12,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 7
+  },
+  "Player 4 - Road N": {
+    "id": "Player 4 - Road N",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "image": "/assets/1466053893_1105",
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Road O": {
+    "id": "Player 4 - Road O",
+    "x": 0,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 6,
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Seat": {
+    "type": "seat",
+    "id": "Player 4 - Seat",
+    "parent": "Player 4",
+    "rotation": -90,
+    "x": -110,
+    "y": 44,
+    "index": 4
+  },
+  "Robber": {
+    "id": "Robber",
+    "x": 752.8203230285,
+    "y": 456,
+    "width": 90,
+    "height": 90,
+    "grid": [
+      {
+        "offsetX": 146.602540379,
+        "offsetY": 6,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 60,
+        "offsetY": 156,
+        "y": 300,
+        "x": 173.20508075700002
+      }
+    ],
+    "z": 34,
+    "image": "/assets/-1484376603_2156",
+    "svgReplaces": {
+      "red": "color"
+    }
+  },
+  "Player 1 - Bonuses": {
+    "type": "holder",
+    "id": "Player 1 - Bonuses",
+    "x": 4,
+    "y": 96,
+    "inheritFrom": "Bonus Cards",
+    "parent": "Player 1",
+    "css": "",
+    "classes": "transparent"
+  },
+  "Player 2 - Bonuses": {
+    "type": "holder",
+    "id": "Player 2 - Bonuses",
+    "x": 4,
+    "y": 96,
+    "inheritFrom": "Bonus Cards",
+    "parent": "Player 2",
+    "classes": "transparent",
+    "css": ""
+  },
+  "Player 3 - Bonuses": {
+    "type": "holder",
+    "id": "Player 3 - Bonuses",
+    "x": 4,
+    "y": 96,
+    "inheritFrom": "Bonus Cards",
+    "parent": "Player 3",
+    "classes": "transparent",
+    "css": ""
+  },
+  "Player 4 - Bonuses": {
+    "type": "holder",
+    "id": "Player 4 - Bonuses",
+    "x": 4,
+    "y": 96,
+    "inheritFrom": "Bonus Cards",
+    "parent": "Player 4",
+    "classes": "transparent",
+    "css": ""
+  },
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Frontiers",
+      "image": "https://media.discordapp.net/attachments/1018847840635719702/1114867295664209920/ArnoldSmith86_catan_water_color_painting_0b4f9d11-87fd-4e00-b712-962c0e6a9760.png?width=810&height=810",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/13/catan",
+      "year": "1995",
+      "mode": "vs",
+      "time": "60",
+      "showName": true,
+      "attribution": "https://www.piqsels.com/en/public-domain-photo-fmixo\nhttps://pixabay.com/photos/sheep-meadow-aerial-view-drone-939566/\nhttps://pixabay.com/photos/wheat-wheat-field-crop-spikelets-5581130/\nhttps://pixabay.com/photos/central-tien-shan-china-landscape-92365/\nhttps://pixabay.com/de/photos/erde-trocken-lehm-lehmhaltig-d%C3%BCrre-3483470/\n\nhttps://pixabay.com/photos/wood-logs-bole-pieces-of-timber-1846059/\nhttps://pixabay.com/photos/brick-wall-red-brick-wall-wall-3353764/\nhttps://pixabay.com/photos/fleece-hide-wool-sheep-fluffy-1524448/\nhttps://pixabay.com/photos/pyrite-pyrites-mineral-sulfides-345639/\nhttps://pixabay.com/photos/wheat-cereal-grain-crop-cereal-crop-5533960/\nhttps://pixabay.com/photos/money-metal-wood-table-old-indian-1214945/\nhttps://pixabay.com/photos/books-old-library-antique-vintage-22832/\nhttps://pixabay.com/photos/cloth-fabric-textile-silk-4669151/\n\nhttps://pixabay.com/photos/gear-wooden-gear-mill-windmill-323615/\nhttps://pixabay.com/photos/knight-armor-iron-chevalier-metal-1283910/\nhttps://pixabay.com/photos/rainbow-london-flag-queer-lgbtq-4563053/\nhttps://pixabay.com/photos/tree-avenue-path-nature-hike-3092026/\n\nhttps://www.piqsels.com/en/public-domain-photo-sqflp\n\nhttps://www.flickr.com/photos/ricephotos/2281373834\nhttps://pixabay.com/photos/sand-texture-dune-beach-desert-5085975/\n\nhttps://commons.wikimedia.org/wiki/File:Basic_hexagon.svg\n\nhttps://game-icons.net/1x1/delapouite/sailboat.html",
+      "lastUpdate": 1699963850751,
+      "skill": "",
+      "description": "Roll the dice to determine your harvest, engage in resource trading, and expand your colony to gain victory points. The player with the most victory points wins.",
+      "similarImage": "",
+      "similarName": "Catan",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "players": "2-4",
+      "language": "en-US",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "Development Draw": {
+    "type": "holder",
+    "id": "Development Draw",
+    "y": 853,
+    "dropTarget": {
+      "deck": "Development"
+    },
+    "inheritFrom": "Bricks",
+    "x": 1500,
+    "rotation": 0
+  },
+  "Development Discard": {
+    "type": "holder",
+    "id": "Development Discard",
+    "x": 1395,
+    "y": 852,
+    "inheritFrom": "Development Draw",
+    "z": 4,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "Player 1 - Settlement E": {
+    "id": "Player 1 - Settlement E",
+    "x": 0,
+    "y": 40,
+    "rotation": 0,
+    "z": 5,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 1 - Settlements"
+  },
+  "Player 2 - Settlement E": {
+    "id": "Player 2 - Settlement E",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Settlements"
+  },
+  "Player 3 - Settlement E": {
+    "id": "Player 3 - Settlement E",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Settlements"
+  },
+  "Player 4 - Settlement E": {
+    "id": "Player 4 - Settlement E",
+    "x": 0,
+    "y": 30,
+    "rotation": 0,
+    "z": 4,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Settlements"
+  },
+  "Shuffle": {
+    "type": "button",
+    "id": "Shuffle",
+    "parent": "Development Draw",
+    "x": 14,
+    "y": 34,
+    "width": 60,
+    "height": 60,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Development Discard",
+        "to": "Development Draw",
+        "count": 0
+      },
+      {
+        "func": "FLIP",
+        "holder": "Development Draw",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Development Draw"
+      }
+    ],
+    "inheritFrom": "Toggle Switch Board",
+    "text": "Shuffle"
+  },
+  "ah0h": {
+    "type": "pile",
+    "width": 80,
+    "height": 120,
+    "id": "ah0h",
+    "z": 56,
+    "parent": "Development Draw"
+  },
+  "Longest Road Holder": {
+    "type": "holder",
+    "id": "Longest Road Holder",
+    "x": 10,
+    "y": 35,
+    "width": 58,
+    "height": 43,
+    "z": 8,
+    "dropTarget": {
+      "deck": "Longest Road Deck"
+    },
+    "css": "border: 0px none transparent;background:none;",
+    "parent": "Exchange Rates"
+  },
+  "Largest Army Holder": {
+    "type": "holder",
+    "id": "Largest Army Holder",
+    "x": 10,
+    "y": 230,
+    "width": 58,
+    "height": 43,
+    "z": 9,
+    "dropTarget": {
+      "deck": "Largest Army Deck"
+    },
+    "stackOffsetX": 54,
+    "css": "border: 0px none transparent;background:none;",
+    "parent": "Exchange Rates"
+  },
+  "Longest Road Deck": {
+    "type": "deck",
+    "id": "Longest Road Deck",
+    "parent": "Longest Road Holder",
+    "cardDefaults": {
+      "width": 50,
+      "height": 35,
+      "home": "Longest Road Holder"
+    },
+    "cardTypes": {
+      "Roads": {
+        "image": "/assets/1992812108_11913"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 50,
+            "height": 35,
+            "css": "background-size: cover"
+          }
+        ],
+        "radius": 4
+      }
+    ]
+  },
+  "Largest Army Deck": {
+    "type": "deck",
+    "id": "Largest Army Deck",
+    "parent": "Largest Army Holder",
+    "cardDefaults": {
+      "width": 50,
+      "height": 35,
+      "home": "Largest Army Holder"
+    },
+    "cardTypes": {
+      "Knights": {
+        "image": "/assets/-1665218875_74289"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 50,
+            "height": 35,
+            "css": "background-size: cover"
+          }
+        ],
+        "radius": 4
+      }
+    ]
+  },
+  "n2l5": {
+    "deck": "Largest Army Deck",
+    "type": "card",
+    "cardType": "Knights",
+    "id": "n2l5",
+    "z": 574,
+    "x": 4,
+    "y": 4,
+    "parent": "Largest Army Holder"
+  },
+  "k0z5": {
+    "deck": "Longest Road Deck",
+    "type": "card",
+    "cardType": "Roads",
+    "id": "k0z5",
+    "z": 573,
+    "x": 4,
+    "y": 4,
+    "parent": "Longest Road Holder"
+  },
+  "Exchange Rates": {
+    "type": "holder",
+    "id": "Exchange Rates",
+    "x": 1341,
+    "y": 80.75,
+    "width": 260,
+    "height": 322.5,
+    "z": 131,
+    "css": "border:0px none transparent;background:url(/assets/1450298960_901171);background-size: cover;background-repeat:no-repeat; background-position: center center,border-radius:0;",
+    "dropTarget": {
+      "cardType": "none"
+    },
+    "image": "/assets/1450298960_901171",
+    "radius": 0,
+    "rotation": -5
+  },
+  "fnlg": {
+    "type": "pile",
+    "width": 80,
+    "height": 120,
+    "id": "fnlg",
+    "z": 84,
+    "parent": "Ore"
+  },
+  "6gj2": {
+    "type": "pile",
+    "parent": "Wool",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 120,
+    "id": "6gj2"
+  },
+  "b75l": {
+    "type": "pile",
+    "parent": "Wheat",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 120,
+    "id": "b75l"
+  },
+  "6ttf": {
+    "type": "pile",
+    "parent": "Bricks",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 120,
+    "id": "6ttf"
+  },
+  "yzva": {
+    "type": "pile",
+    "parent": "Wood",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 120,
+    "id": "yzva"
+  },
+  "cyn3": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Coins",
+    "id": "cyn3",
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "Hand",
+    "owner": "Jan",
+    "activeFace": 1
+  },
+  "np0a": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Books",
+    "id": "np0a",
+    "z": 3,
+    "x": 84,
+    "y": 4,
+    "parent": "Hand",
+    "owner": "Jan",
+    "activeFace": 1
+  },
+  "jxg1": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Cloth",
+    "id": "jxg1",
+    "z": 2,
+    "x": 44,
+    "y": 4,
+    "parent": "Hand",
+    "owner": "Jan",
+    "activeFace": 1
+  },
+  "Metro Template": {
+    "id": "Metro Template",
+    "x": 689.2177826495,
+    "y": 420,
+    "width": 60,
+    "height": 60,
+    "layer": 3,
+    "color": "pink",
+    "grid": [
+      {
+        "offsetX": 83,
+        "offsetY": 70,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 83,
+        "offsetY": -30,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": -75,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 170,
+        "offsetY": 125,
+        "y": 300,
+        "x": 173.20508075700002
+      }
+    ],
+    "home": "Cities",
+    "image": "/assets/-1689474207_3199",
+    "svgReplaces": {
+      "red": "color"
+    },
+    "z": 35,
+    "parent": "Switch Board"
+  },
+  "569d": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -66.025403787,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "569d",
+    "z": 2927,
+    "activeFace": 1
+  },
+  "9rqr": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 107.17967697000002,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "9rqr",
+    "z": 2929,
+    "activeFace": 1
+  },
+  "9fu4": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 280.384757727,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "9fu4",
+    "z": 2931,
+    "activeFace": 1
+  },
+  "rxry": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 453.58983848400004,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "rxry",
+    "z": 2933,
+    "activeFace": 1
+  },
+  "6u7h": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 626.7949192410001,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "6u7h",
+    "z": 2935,
+    "activeFace": 1
+  },
+  "mcux": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 799.9999999980001,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "mcux",
+    "z": 2937,
+    "activeFace": 1
+  },
+  "acs1": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 973.2050807550002,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "acs1",
+    "z": 2939,
+    "activeFace": 1
+  },
+  "2bun": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1146.4101615120003,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "2bun",
+    "z": 2941,
+    "activeFace": 1
+  },
+  "bt5c": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1319.6152422690002,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "bt5c",
+    "z": 2943,
+    "activeFace": 1
+  },
+  "wlgk": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1492.820323026,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "wlgk",
+    "z": 2945,
+    "activeFace": 1
+  },
+  "u0ju": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1666.025403783,
+    "y": -50,
+    "clonedFrom": "Card Template",
+    "id": "u0ju",
+    "z": 2947,
+    "activeFace": 1
+  },
+  "gfyv": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -152.62794416550003,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "gfyv",
+    "z": 2949,
+    "activeFace": 1
+  },
+  "8fad": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 20.577136591499993,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "8fad",
+    "z": 2951,
+    "activeFace": 1
+  },
+  "cb50": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 193.7822173485,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "cb50",
+    "z": 2953,
+    "activeFace": 1
+  },
+  "uzu8": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 366.98729810550003,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "uzu8",
+    "z": 2955,
+    "activeFace": 1
+  },
+  "8abq": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "W",
+    "x": 540.1923788625,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "8abq",
+    "z": 2957,
+    "activeFace": 1
+  },
+  "npsw": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "4",
+    "activeFace": 1,
+    "x": 597.1923788625,
+    "y": 170,
+    "clonedFrom": "Chip Template",
+    "id": "npsw",
+    "z": 532
+  },
+  "u834": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "F",
+    "x": 713.3974596195001,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "u834",
+    "z": 2959,
+    "activeFace": 1
+  },
+  "qkhn": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "6",
+    "activeFace": 1,
+    "x": 770.3974596195001,
+    "y": 170,
+    "clonedFrom": "Chip Template",
+    "id": "qkhn",
+    "z": 534
+  },
+  "mp4z": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "W",
+    "x": 886.6025403765001,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "mp4z",
+    "z": 2961,
+    "activeFace": 1
+  },
+  "p1n8": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "9",
+    "activeFace": 1,
+    "x": 943.6025403765001,
+    "y": 170,
+    "clonedFrom": "Chip Template",
+    "id": "p1n8",
+    "z": 536
+  },
+  "jie9": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1059.8076211335,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "jie9",
+    "z": 2963,
+    "activeFace": 1
+  },
+  "lp1s": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1233.0127018905,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "lp1s",
+    "z": 2965,
+    "activeFace": 1
+  },
+  "qs14": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1406.2177826475,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "qs14",
+    "z": 2967,
+    "activeFace": 1
+  },
+  "dqth": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1579.4228634044998,
+    "y": 100,
+    "clonedFrom": "Card Template",
+    "id": "dqth",
+    "z": 2969,
+    "activeFace": 1
+  },
+  "0h4g": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -66.025403787,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "0h4g",
+    "z": 2971,
+    "activeFace": 1
+  },
+  "5b1o": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 107.17967697000002,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "5b1o",
+    "z": 2973,
+    "activeFace": 1
+  },
+  "1ljt": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 280.384757727,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "1ljt",
+    "z": 2975,
+    "activeFace": 1
+  },
+  "ld6y": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "C",
+    "x": 453.58983848400004,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "ld6y",
+    "z": 2977,
+    "activeFace": 1
+  },
+  "nor7": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "2",
+    "activeFace": 1,
+    "x": 510.58983848400004,
+    "y": 320,
+    "clonedFrom": "Chip Template",
+    "id": "nor7",
+    "z": 538
+  },
+  "1j8x": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "F",
+    "x": 626.7949192410001,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "1j8x",
+    "z": 2979,
+    "activeFace": 1
+  },
+  "rjjx": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "5",
+    "activeFace": 1,
+    "x": 683.7949192410001,
+    "y": 320,
+    "clonedFrom": "Chip Template",
+    "id": "rjjx",
+    "z": 540
+  },
+  "bk9j": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "G",
+    "x": 799.9999999980001,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "bk9j",
+    "z": 2981,
+    "activeFace": 1
+  },
+  "nubu": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "C",
+    "activeFace": 1,
+    "x": 856.9999999980001,
+    "y": 320,
+    "clonedFrom": "Chip Template",
+    "id": "nubu",
+    "z": 542
+  },
+  "1meu": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "G",
+    "x": 973.2050807550002,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "1meu",
+    "z": 2983,
+    "activeFace": 1
+  },
+  "m3bs": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "4",
+    "activeFace": 1,
+    "x": 1030.2050807550002,
+    "y": 320,
+    "clonedFrom": "Chip Template",
+    "id": "m3bs",
+    "z": 544
+  },
+  "z4bi": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1146.4101615120003,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "z4bi",
+    "z": 2985,
+    "activeFace": 1
+  },
+  "j3pm": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1319.6152422690002,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "j3pm",
+    "z": 2987,
+    "activeFace": 1
+  },
+  "xwn6": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1492.820323026,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "xwn6",
+    "z": 2989,
+    "activeFace": 1
+  },
+  "pi7z": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1666.025403783,
+    "y": 250,
+    "clonedFrom": "Card Template",
+    "id": "pi7z",
+    "z": 2991,
+    "activeFace": 1
+  },
+  "rphd": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -152.62794416550003,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "rphd",
+    "z": 2993,
+    "activeFace": 1
+  },
+  "dcqa": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 20.577136591499993,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "dcqa",
+    "z": 2995,
+    "activeFace": 1
+  },
+  "07do": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 193.7822173485,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "07do",
+    "z": 2997,
+    "activeFace": 1
+  },
+  "jok6": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "G",
+    "x": 366.98729810550003,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "jok6",
+    "z": 2999,
+    "activeFace": 1
+  },
+  "00uj": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "9",
+    "activeFace": 1,
+    "x": 423.98729810550003,
+    "y": 470,
+    "clonedFrom": "Chip Template",
+    "id": "00uj",
+    "z": 546
+  },
+  "fx8e": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "C",
+    "x": 540.1923788625,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "fx8e",
+    "z": 3001,
+    "activeFace": 1
+  },
+  "2z6x": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "8",
+    "activeFace": 1,
+    "x": 597.1923788625,
+    "y": 470,
+    "clonedFrom": "Chip Template",
+    "id": "2z6x",
+    "z": 548
+  },
+  "iu3r": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "D",
+    "x": 713.3974596195001,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "iu3r",
+    "z": 3003,
+    "activeFace": 1
+  },
+  "j8xq": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "M",
+    "x": 886.6025403765001,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "j8xq",
+    "z": 3005,
+    "activeFace": 1
+  },
+  "t7vu": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "8",
+    "activeFace": 1,
+    "x": 943.6025403765001,
+    "y": 470,
+    "clonedFrom": "Chip Template",
+    "id": "t7vu",
+    "z": 550
+  },
+  "h76i": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "G",
+    "x": 1059.8076211335,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "h76i",
+    "z": 3007,
+    "activeFace": 1
+  },
+  "o28i": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "A",
+    "activeFace": 1,
+    "x": 1116.8076211335,
+    "y": 470,
+    "clonedFrom": "Chip Template",
+    "id": "o28i",
+    "z": 552
+  },
+  "9ubt": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1233.0127018905,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "9ubt",
+    "z": 3009,
+    "activeFace": 1
+  },
+  "sksk": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1406.2177826475,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "sksk",
+    "z": 3011,
+    "activeFace": 1
+  },
+  "dwhp": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1579.4228634044998,
+    "y": 400,
+    "clonedFrom": "Card Template",
+    "id": "dwhp",
+    "z": 3013,
+    "activeFace": 1
+  },
+  "yynt": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -66.025403787,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "yynt",
+    "z": 3015,
+    "activeFace": 1
+  },
+  "fzzf": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 107.17967697000002,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "fzzf",
+    "z": 3017,
+    "activeFace": 1
+  },
+  "sa65": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 280.384757727,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "sa65",
+    "z": 3019,
+    "activeFace": 1
+  },
+  "jhkw": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "F",
+    "x": 453.58983848400004,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "jhkw",
+    "z": 3021,
+    "activeFace": 1
+  },
+  "rqcw": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "3",
+    "activeFace": 1,
+    "x": 510.58983848400004,
+    "y": 620,
+    "clonedFrom": "Chip Template",
+    "id": "rqcw",
+    "z": 554
+  },
+  "3eih": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "M",
+    "x": 626.7949192410001,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "3eih",
+    "z": 3023,
+    "activeFace": 1
+  },
+  "mn9o": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "5",
+    "activeFace": 1,
+    "x": 683.7949192410001,
+    "y": 620,
+    "clonedFrom": "Chip Template",
+    "id": "mn9o",
+    "z": 556
+  },
+  "ej2a": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "C",
+    "x": 799.9999999980001,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "ej2a",
+    "z": 3025,
+    "activeFace": 1
+  },
+  "y62p": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "A",
+    "activeFace": 1,
+    "x": 856.9999999980001,
+    "y": 620,
+    "clonedFrom": "Chip Template",
+    "id": "y62p",
+    "z": 558
+  },
+  "vuin": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "F",
+    "x": 973.2050807550002,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "vuin",
+    "z": 3027,
+    "activeFace": 1
+  },
+  "aeqv": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "B",
+    "activeFace": 1,
+    "x": 1030.2050807550002,
+    "y": 620,
+    "clonedFrom": "Chip Template",
+    "id": "aeqv",
+    "z": 560
+  },
+  "7ycm": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1146.4101615120003,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "7ycm",
+    "z": 3029,
+    "activeFace": 1
+  },
+  "xi23": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1319.6152422690002,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "xi23",
+    "z": 3031,
+    "activeFace": 1
+  },
+  "xazk": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1492.820323026,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "xazk",
+    "z": 3033,
+    "activeFace": 1
+  },
+  "3bo8": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1666.025403783,
+    "y": 550,
+    "clonedFrom": "Card Template",
+    "id": "3bo8",
+    "z": 3035,
+    "activeFace": 1
+  },
+  "9fb3": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -152.62794416550003,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "9fb3",
+    "z": 3037,
+    "activeFace": 1
+  },
+  "imp4": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 20.577136591499993,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "imp4",
+    "z": 3039,
+    "activeFace": 1
+  },
+  "cxob": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 193.7822173485,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "cxob",
+    "z": 3041,
+    "activeFace": 1
+  },
+  "gwnk": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 366.98729810550003,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "gwnk",
+    "z": 3043,
+    "activeFace": 1
+  },
+  "aq76": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "W",
+    "x": 540.1923788625,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "aq76",
+    "z": 3045,
+    "activeFace": 1
+  },
+  "2v3r": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "3",
+    "activeFace": 1,
+    "x": 597.1923788625,
+    "y": 770,
+    "clonedFrom": "Chip Template",
+    "id": "2v3r",
+    "z": 562
+  },
+  "8j95": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "W",
+    "x": 713.3974596195001,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "8j95",
+    "z": 3047,
+    "activeFace": 1
+  },
+  "bwzc": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "6",
+    "activeFace": 1,
+    "x": 770.3974596195001,
+    "y": 770,
+    "clonedFrom": "Chip Template",
+    "id": "bwzc",
+    "z": 564
+  },
+  "4ewm": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "M",
+    "x": 886.6025403765001,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "4ewm",
+    "z": 3049,
+    "activeFace": 1
+  },
+  "l4kx": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "B",
+    "activeFace": 1,
+    "x": 943.6025403765001,
+    "y": 770,
+    "clonedFrom": "Chip Template",
+    "id": "l4kx",
+    "z": 566
+  },
+  "aeri": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1059.8076211335,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "aeri",
+    "z": 3051,
+    "activeFace": 1
+  },
+  "nw77": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1233.0127018905,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "nw77",
+    "z": 3053,
+    "activeFace": 1
+  },
+  "cm7b": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1406.2177826475,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "cm7b",
+    "z": 3055,
+    "activeFace": 1
+  },
+  "65la": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1579.4228634044998,
+    "y": 700,
+    "clonedFrom": "Card Template",
+    "id": "65la",
+    "z": 3057,
+    "activeFace": 1
+  },
+  "k2i2": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -66.025403787,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "k2i2",
+    "z": 3059,
+    "activeFace": 1
+  },
+  "wide": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 107.17967697000002,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "wide",
+    "z": 3061,
+    "activeFace": 1
+  },
+  "jig7": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 280.384757727,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "jig7",
+    "z": 3063,
+    "activeFace": 1
+  },
+  "i71p": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 453.58983848400004,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "i71p",
+    "z": 3065,
+    "activeFace": 1
+  },
+  "kibr": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 626.7949192410001,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "kibr",
+    "z": 3067,
+    "activeFace": 1
+  },
+  "krwu": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 799.9999999980001,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "krwu",
+    "z": 3069,
+    "activeFace": 1
+  },
+  "d7o5": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 973.2050807550002,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "d7o5",
+    "z": 3071,
+    "activeFace": 1
+  },
+  "1ce6": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1146.4101615120003,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "1ce6",
+    "z": 3073,
+    "activeFace": 1
+  },
+  "ah0i": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1319.6152422690002,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "ah0i",
+    "z": 3075,
+    "activeFace": 1
+  },
+  "0cfg": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1492.820323026,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "0cfg",
+    "z": 3077,
+    "activeFace": 1
+  },
+  "hy3e": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1666.025403783,
+    "y": 850,
+    "clonedFrom": "Card Template",
+    "id": "hy3e",
+    "z": 3079,
+    "activeFace": 1
+  },
+  "sii7": {
+    "type": "pile",
+    "parent": "Wool",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 120,
+    "owner": "Guest533",
+    "id": "sii7"
+  },
+  "f1uy": {
+    "type": "pile",
+    "parent": "Wood",
+    "x": 0,
+    "y": 0,
+    "width": 80,
+    "height": 120,
+    "owner": "Guest533",
+    "id": "f1uy"
+  }
+}
