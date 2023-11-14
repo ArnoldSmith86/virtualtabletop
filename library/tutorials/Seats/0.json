@@ -178,7 +178,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1674019701887,
+      "lastUpdate": 1699934743290,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -189,7 +189,8 @@
       "variantImage": "",
       "variant": "Basic",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "similarDesigner": ""
     }
   },
   "qaui": {

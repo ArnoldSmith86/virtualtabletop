@@ -41,7 +41,7 @@
     "y": 4
   },
   "_meta": {
-    "version": 4,
+    "version": 14,
     "info": {
       "name": "Seats",
       "image": "/assets/-65508335_6985",
@@ -52,7 +52,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1674019701889,
+      "lastUpdate": 1699934743293,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -63,7 +63,8 @@
       "variantImage": "",
       "variant": "Turns",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "similarDesigner": ""
     }
   },
   "qaui": {
@@ -73,7 +74,7 @@
     "y": 257,
     "css": "font-size: 25px; ",
     "height": 600,
-    "text": "For this tutorial, you can use a single browser window and should 'sit' in every seat at the same time. (But also try with one seat empty to see how that changes things). The 'hideWhenUnused' property is left in its default false state so you can do this. The default `TURN` behavior is to move forward one seat each turn. Turn is indicated by a glow around the seat.\n\nThe key parameter is `turnCycle`.  While sitting in all 4 seats simultaneously, click each of the buttons and examine the JSON to see details of this paramater.\n\n\n\n\n\n\nYou can also set the parameter programmatically as in the example button below which sets up a 'snake' turn pattern: 1,2,3,4 then 4,3,2,1. This button also takes into account situations when a seat (including the first or last seat) is empty.",
+    "text": "For this tutorial, you can use a single browser window and should 'sit' in every seat at the same time. (But also try with one seat empty to see how that changes things). The 'hideWhenUnused' property is left in its default false state so you can do this. The default `TURN` behavior is to move forward one seat each turn. Turn is indicated by a glow around the seat.\n\nThe key parameter is `turnCycle`.  While sitting in all 4 seats simultaneously, click each of the buttons and examine the JSON to see details of this paramater.\n\n\n\n\nYou can also set the parameter programmatically as in the example button below which sets up a 'snake' turn pattern: 1,2,3,4 then 4,3,2,1. This button also takes into account situations when a seat (including the first or last seat) is empty.\n\n\n\nIn this final button, you can set the 'turn' parameter to the 'id' of a seat. Pressing this button uses the predefined variable 'seatID', which is the id of the first seat the player is sitting in. So if you are in all the seats in the room, this will set the turn to the first seat. Try sitting in a seat using a different browser to see how that works.",
     "movable": false,
     "width": 1200,
     "layer": -1
@@ -282,11 +283,26 @@
       }
     ],
     "x": 357,
-    "y": 753,
+    "y": 683,
     "z": 117,
     "id": "7gbf",
     "layer": 1,
     "text": "Snake",
     "direction": "backward"
+  },
+  "8gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turn": "${seatID}"
+      }
+    ],
+    "x": 357,
+    "y": 897,
+    "z": 109,
+    "id": "8gbf",
+    "layer": 1,
+    "text": "Seat 'id'"
   }
 }
