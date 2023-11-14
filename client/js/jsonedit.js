@@ -258,14 +258,42 @@ const jeCommands = [
   {
     id: 'je_uploadAsset',
     name: 'upload a different asset',
-    context: '.*"(/assets/[0-9_-]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
+    context: '.*"(/assets/[0-9_-]+|/i/[^"]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
     call: async function() {
-      uploadAsset().then(a=> {
-        if(a) {
-          jeInsert(null, jeGetLastKey(), a);
-          jeApplyChanges();
-        }
-      });
+      const a = await uploadAsset();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
+    id: 'je_symbolPickerAsset',
+    name: 'pick an asset from the symbol picker',
+    context: '.*"(/assets/[0-9_-]+|/i/[^"]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
+    call: async function() {
+      const a = await pickSymbol('images');
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a.url);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
+    id: 'je_symbolPickerText',
+    name: 'pick an asset from the symbol picker',
+    context: '^button ↦ text$',
+    call: async function() {
+      const a = await pickSymbol('fonts');
+      if(a) {
+        jeStateNow.classes = a.type;
+        jeStateNow.text = a.symbol;
+        jeSetAndSelect();
+        await jeApplyChanges();
+      }
+    },
+    show: function() {
+      return [ 'symbols', 'material-icons' ].indexOf(jeStateNow.classes) != -1;
     }
   },
   {
@@ -273,12 +301,11 @@ const jeCommands = [
     name: 'upload audio file',
     context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
     call: async function() {
-      uploadAsset().then(a=> {
-        if(a) {
-          jeInsert(null, jeGetLastKey(), a);
-          jeApplyChanges();
-        }
-      });
+      const a = await uploadAsset();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
     }
   },
   {
