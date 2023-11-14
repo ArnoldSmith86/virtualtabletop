@@ -1832,6 +1832,8 @@ export class Widget extends StateManaged {
         }
         let c = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
         c = c.filter(w => w.get('type') === 'seat');
+        const turnID = c.map(w => w.get('id'));
+        const turnIDIndex = turnID.indexOf(a.turn);
 
         //this get the list of valid index
         const indexList = [];
@@ -1848,7 +1850,10 @@ export class Widget extends StateManaged {
           let nextTurnIndex = 0;
 
           if(a.turnCycle == 'position') {
-            if(a.turn == 'first') {
+            if (turnIDIndex !== -1) {
+              nextTurnIndex = c.findIndex(w => w.get('id') === a.turn);
+            }
+              else if(a.turn == 'first') {
               nextTurnIndex = 0;
             } else if(a.turn == 'last') {
               nextTurnIndex = indexList.length - 1;
