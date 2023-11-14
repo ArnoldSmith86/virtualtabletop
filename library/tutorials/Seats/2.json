@@ -4,8 +4,7 @@
     "id": "seat1",
     "x": 104,
     "y": 175,
-    "z": 23,
-    "turn": true
+    "z": 23
   },
   "seat2": {
     "type": "seat",
@@ -21,7 +20,8 @@
     "x": 875,
     "y": 175,
     "z": 25,
-    "index": 3
+    "index": 3,
+    "turn": true
   },
   "seat4": {
     "type": "seat",
@@ -52,7 +52,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1699934743293,
+      "lastUpdate": 1699935039744,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -60,11 +60,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "similarDesigner": "",
       "variantImage": "",
       "variant": "Turns",
       "language": "en-US",
-      "players": "1",
-      "similarDesigner": ""
+      "players": "1"
     }
   },
   "qaui": {
@@ -293,8 +293,10 @@
   "8gbf": {
     "type": "button",
     "clickRoutine": [
+      "var increment = ${seatID}",
       {
         "func": "TURN",
+        "turnCycle": "position",
         "turn": "${seatID}"
       }
     ],
