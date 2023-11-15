@@ -109,6 +109,7 @@ export function showOverlay(id, forced) {
   } else {
     overlayActive = false;
   }
+  $('body').classList.toggle('overlayActive', overlayActive);
 }
 
 export function showStatesOverlay(id) {
@@ -378,7 +379,7 @@ async function loadEditMode() {
       addWidgetLocal, removeWidgetLocal,
       loadJSZip, waitForJSZip,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
-      uploadAsset, selectFile, triggerDownload,
+      uploadAsset, pickSymbol, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
