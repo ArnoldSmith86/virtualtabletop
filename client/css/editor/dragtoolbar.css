@@ -6,7 +6,7 @@
   z-index: 1;
 }
 
-#editorDragToolbar.active {
+body:not(.overlayActive) #editorDragToolbar.active {
   display: flex;
 }
 

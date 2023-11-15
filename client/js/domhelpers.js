@@ -434,11 +434,11 @@ export async function loadSymbolPicker() {
     let list = '';
     let gameIconsIndex = 0;
     for(const [ category, symbols ] of Object.entries(symbolData)) {
-      list += `<h2>${category}</h2>`;
+      list += `<h2 class="${category.match(/Material|VTT/)?'fontCategory':'imageCategory'}">${category}</h2>`;
       for(const [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+          list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
           ++gameIconsIndex;
         } else {
           let className = 'emoji';
@@ -446,7 +446,9 @@ export async function loadSymbolPicker() {
             className = 'symbols';
           else if(symbol.match(/^[a-z0-9_]+$/))
             className = 'material-icons';
-          list += `<i class="${className}" title="${className}: ${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+          if(category == 'Emoji - Flags')
+            className += ' emojiFlag';
+          list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
         }
       }
     }
@@ -461,6 +463,40 @@ export async function loadSymbolPicker() {
       toggleClass($('#symbolPickerOverlay'), 'fewResults', $a('#symbolList i:not(.hidden)').length < 100);
     };
   }
+}
+
+export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true) {
+  await loadSymbolPicker();
+  return new Promise((resolve, reject) => {
+    showOverlay('symbolPickerOverlay');
+    $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
+    $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
+    $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
+    $('#symbolPickerOverlay').scrollTop = 0;
+    $('#symbolPickerOverlay input').value = '';
+    $('#symbolPickerOverlay input').focus();
+    $('#symbolPickerOverlay input').onkeyup();
+
+    $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
+      if(closeOverlay)
+        showOverlay(null);
+      resolve(null);
+    };
+
+    for(const icon of $a('#symbolList i')) {
+      icon.onclick = function(e) {
+        if(closeOverlay)
+          showOverlay(null);
+        const isImage = ['emoji','game-icons'].indexOf(icon.dataset.type) != -1;
+        let url = null;
+        if(icon.dataset.type == 'emoji')
+          url = `/i/noto-emoji/emoji_u${emojiToFilename(icon.dataset.symbol)}.svg`;
+        if(icon.dataset.type == 'game-icons')
+          url = `/i/game-icons.net/${icon.dataset.symbol}.svg`;
+        resolve(Object.assign({...icon.dataset}, { isImage, url }));
+      };
+    }
+  });
 }
 
 export function addRichtextControls(dom) {
