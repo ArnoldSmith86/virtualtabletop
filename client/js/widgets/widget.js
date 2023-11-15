@@ -1526,6 +1526,7 @@ export class Widget extends StateManaged {
                   cards = cards.filter(c=>!c.get('_ancestor'));
                 if(a.excludeCollection && excludeCollection)
                   cards = cards.filter(c=>!excludeCollection.includes(c));
+                cards = cards.filter(c=>c.get('_ancestor')!=holder&&!c.get('owner'));
                 for(const c of cards)
                   await c.moveToHolder(widgets.get(holder));
               }
