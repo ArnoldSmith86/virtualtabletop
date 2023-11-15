@@ -52,7 +52,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1699935039744,
+      "lastUpdate": 1700007542269,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -293,7 +293,6 @@
   "8gbf": {
     "type": "button",
     "clickRoutine": [
-      "var increment = ${seatID}",
       {
         "func": "TURN",
         "turnCycle": "position",
