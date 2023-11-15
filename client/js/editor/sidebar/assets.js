@@ -212,12 +212,23 @@ class AssetsModule extends SidebarModule {
         });
       };
 
+      const addPreviewEvents = (row, cell, targetWidth) => {
+        cell.onmouseover = _=>{
+          this.compressAssetsPreviewDOM.style.display = 'block';
+          $('.originalImage', this.compressAssetsPreviewDOM).src = $('img', row ).src;
+          $('.hoveredImage',  this.compressAssetsPreviewDOM).src = $('img', cell).src;
+          for(const i of $a('img',  this.compressAssetsPreviewDOM))
+            i.style.width = `${targetWidth}px`;
+        };
+        cell.onmouseout = _=>this.compressAssetsPreviewDOM.style.display = 'none';
+      };
+
       const createOriginalCell = (isSVG, asset, blob) => {
         const cell = row.insertCell();
         const img = new Image();
         const sizeLabel = document.createElement('label');
 
-        sizeLabel.textContent = `${asset.asset} (${blob.type})`;
+        sizeLabel.textContent = `${asset.asset}\n${blob.type}`;
         img.onload = function() {
           const sizeInKB = (blob.size / 1024).toFixed(2);
           if (isSVG) {
@@ -225,6 +236,8 @@ class AssetsModule extends SidebarModule {
           } else {
             sizeLabel.textContent = `${blob.type.replace(/image\//, '').toUpperCase()}\n${img.naturalWidth}x${img.naturalHeight}\n${sizeInKB} KB`;
           }
+          const [targetWidth, targetHeight] = getAssetTargetSize(asset, img.naturalWidth, img.naturalHeight);
+          addPreviewEvents(row, cell, targetWidth);
         };
         img.src = URL.createObjectURL(blob);
 
@@ -272,6 +285,7 @@ class AssetsModule extends SidebarModule {
           cell.appendChild(sizeLabel);
 
           processImage(checkbox);
+          addPreviewEvents(row, cell, targetWidth);
         }
       }
       while(row.childElementCount < 3)
@@ -375,6 +389,13 @@ class AssetsModule extends SidebarModule {
     $('#downloadAllAssetsByPropertyButton').onclick = e=>this.button_assetDownload(true);
     $('#uploadAllAssetsButton').onclick = e=>this.button_assetUpload();
     progressButton($('#compressAssetsButton'), async updateProgress=>await this.button_compressAssets(updateProgress));
+    this.compressAssetsPreviewDOM = div($('#roomArea'), 'compressAssetsPreview overlay', `
+      <h2>Compression preview</h2>
+      <p>This shows the asset in the size it would be displayed on a 3200x2000 screen. On the left is the current version, on the right the image you hovered with your mouse:</p>
+      <img class=originalImage>
+      <img class=hoveredImage>
+    `);
+    this.compressAssetsPreviewDOM.onmouseover = _=>this.compressAssetsPreviewDOM.style.display='none';
   }
 
   async replaceAsset(asset, newAsset) {
