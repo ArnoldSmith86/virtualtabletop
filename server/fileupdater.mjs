@@ -453,16 +453,14 @@ function v14HidePlayerCursors(properties) {
     properties.hidePlayerCursors = true;
 }
 
+// There are 2 functions for v15 for skipTurn
 function v15SkipTurnProperty(properties) {
-  if(properties.skipTurn !== null && properties.skipTurn !== undefined) {
+  if(properties.skipTurn !== undefined) {
     properties.skipTurnFileUpdater = properties.skipTurn;
-    properties.skipTurn = false;
+    delete properties.skipTurn;
   }
 }
-
 function v15SkipTurnRoutine(routine) {
-  // There are 2 functions for v15 for skipTurn
   for(const key in routine)
-    if(typeof routine[key] === 'string')
-      routine[key] = routine[key].replace('skipTurn', 'skipTurnFileUpdater');
+    routine[key] = JSON.parse(JSON.stringify(routine[key]).replace(/\bskipTurn\b/g, 'skipTurnFileUpdater'));
 }
