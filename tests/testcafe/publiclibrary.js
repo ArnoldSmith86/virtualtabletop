@@ -46,7 +46,7 @@ function publicLibraryButtons(game, variant, md5, tests) {
   });
 }
 
-publicLibraryButtons('Blue',               0, '406bd986ff21ab9fd5047a57b07a7117', ["player1Seat","player2Seat","player3Seat","player4Seat",
+publicLibraryButtons('Blue',               0, '2d1b053f7f73edbbe67230c624c63a9a', ["player1Seat","player2Seat","player3Seat","player4Seat",
   'Deal_button', 'e36b',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', '#buttonInputGo', 'visibility_button'
@@ -69,14 +69,14 @@ publicLibraryButtons('Reward',             0, '5290d9113f42a3c0e458a788b5a1ea99'
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', 'seat1', 'next'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '2625ca4661785ca9a75cdf93d6379427', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, '8512b8cb117a694ee7e201869999e571', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Undercover',         1, '5c9b915862ef7443a04add178271b9f9', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Functions - CALL',   0, '15bc313f5adc00d310adb07ee2d6059a', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'd44e77e0782cadbc9594494e5a83dde0', [ '7u2q' ]);
 publicLibraryButtons('Functions - ROTATE', 0, '93b985659f164300d871c37fc2635a0b', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
-publicLibraryButtons('Functions - SELECT', 2, '3e4652080a097cce27106579afa90e50', [ 'jkmt1']);
-publicLibraryButtons('Functions - SORT',   1, '9e83c7e238dcab8a28f59f8d1ccc5b97', [
+publicLibraryButtons('Functions - SELECT', 2, '82d63d5c39dd9157b2ebb9e178d24f0c', [ 'jkmt1']);
+publicLibraryButtons('Functions - SORT',   1, 'fdc756a0a1a2b359dcf51f5504a99fc9', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
