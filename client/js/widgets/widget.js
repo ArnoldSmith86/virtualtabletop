@@ -1849,9 +1849,9 @@ export class Widget extends StateManaged {
           let nextTurnIndex = 0;
 
           if(a.turnCycle == 'position') {
-            if (setSeat)
+            if(setSeat) {
               nextTurnIndex = indexList.indexOf(setSeat.get('index'));
-              else if(a.turn == 'first') {
+            } else if(a.turn == 'first') {
               nextTurnIndex = 0;
             } else if(a.turn == 'last') {
               nextTurnIndex = indexList.length - 1;
