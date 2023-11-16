@@ -3,13 +3,16 @@
 
 <head>
   <meta charset="utf-8">
-  <title>VirtualTabletop.io</title>
+  <title> /*** TITLE ***/ </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="icon" sizes="any" href="i/branding/favicon-32.png"/>
   <link rel="icon" type="image/svg+xml" href="i/branding/favicon.svg"/>
   <link rel="apple-touch-icon" sizes="180x180" href="i/branding/ios-icon.png">
   <link rel="manifest" href="i/branding/manifest.json">
   <link rel="mask-icon" href="i/branding/mask-icon.svg">
+  <meta property="og:title" content=" /*** TITLE ***/ " />
+  <meta property="og:description" content="Come play with me!" />
+  <meta property="og:image" content=" /*** EXTERNAL_URL ***/ /i/branding/android-512.png" />
   <base target="_blank">
   <style> /*** CSS ***/ </style>
 </head>
@@ -37,6 +40,10 @@
   <div id="roomArea">
     <div id="room">
       <div id="topSurface" class="surface"></div>
+    </div>
+
+    <div id="gridOverlay" class="overlay">
+      <div class="modal"></div>
     </div>
 
     <div id="pileOverlay" class="overlay">
@@ -162,7 +169,7 @@
           <button icon="upload">Upload files</button>
         </div>
         <div icon="link">
-          <p>If you have a direct link to a VTT or PCIO file (for example by sharing a link from virtualtabletop.io), you can add the game using the link and you will always play the latest version.</p>
+          <p>If you have a direct link to a VTT or PCIO file (for example by sharing a link from virtualtabletop.io), you can add the game using the link and you will always play the latest version.<br><br>You can also enter a Tabletop Simulator workshop link in order to import the widgets from it, but the imported game will not have any automation.</p>
           <input placeholder="URL">
           <button icon="link">Add link</button>
         </div>
@@ -275,7 +282,7 @@
         <div class="variantsList"></div>
         <button icon="add" class="onlyForEdit">Add variant</button>
       </div>
-      <div id="similarDetails" data-showfor="similarImage|similarName|similarAwards|bgg|rules">
+      <div id="similarDetails" data-showfor="similarImage|similarName|similarDesigner|similarAwards|bgg|rules">
         <div id="similarImage">
           <img data-field="similarImage" data-target="src" class="uneditable">
           <div class="onlyForEdit">
@@ -284,6 +291,7 @@
         </div>
         <div class="details">
           <h1 data-showfor="similarName">Similar to: <span data-field="similarName"></span><span data-showfor="year"> (<span data-field="year"></span>)</span></h1>
+          <div data-showfor="similarDesigner"><i class="material-icons">person</i> Designer: <span data-field="similarDesigner"></span></div>
           <div data-showfor="similarAwards" class="hideForEdit"><i class="material-icons">emoji_events</i> <span data-field="similarAwards"></span></div>
           <div class="onlyForEdit"><i class="material-icons">emoji_events</i> Awards: <span data-field="similarAwards"></span></div>
           <div data-showfor="bgg" class="hideForEdit"><i class="material-icons">info</i> <a data-field="bgg" data-target="href">Game details on <nobr><i class="material-icons intext">launch</i> <span id="similarDetailsDomain"></span></nobr></a></div>

@@ -11,6 +11,10 @@ class JsonModule extends SidebarModule {
     $('#jsonEditor').append($('#jeWidgetLayers'));
   }
 
+  onDeltaReceivedWhileActive(delta) {
+    jeApplyDelta(delta);
+  }
+
   onEditorClose() {
     super.onEditorClose();
     if(this.moduleDOM && jeEnabled)
@@ -53,6 +57,10 @@ class TreeModule extends SidebarModule {
     $('#jsonEditor').append($('#jeTree'));
   }
 
+  onDeltaReceivedWhileActive(delta) {
+    jeUpdateTree(delta.s);
+  }
+
   onSelectionChangedWhileActive(newSelection) {
     if(newSelection.length) {
       jeSelectWidget(newSelection[0]);
@@ -60,9 +68,13 @@ class TreeModule extends SidebarModule {
         jeSelectWidget(newSelection[i], true);
     } else {
       jeEmpty();
+      jeCenterSelection();
     }
-    jeDisplayTree();
     $('#jeText').blur();
+  }
+
+  onStateReceivedWhileActive() {
+    jeDisplayTree();
   }
 
   renderModule(target) {
@@ -77,11 +89,35 @@ class DebugModule extends SidebarModule {
     super('pest_control', 'Debug', 'View debug information for the most recent routine execution.');
   }
 
+  button_clearButton() {
+    jeLoggingHTML = '';
+    $('#jeLog').innerHTML = '';
+  }
+
+  button_clearCheckbox() {
+    jeRoutineAutoReset = !$('#clearLogButton').disabled;
+
+    $('#clearLogButton').disabled = $('#autoClearLog').checked;
+    if($('#clearLogButton').disabled)
+      jeLoggingHTML = '';
+  }
+
   onClose() {
     $('#jsonEditor').append($('#jeLog'));
   }
 
+  onStateReceivedWhileActive() {
+    this.button_clearButton();
+  }
+
   renderModule(target) {
+    div(target, 'buttonBar', `
+      <input type=checkbox id=autoClearLog checked><label for=autoClearLog> Clear after each interaction</label>
+      <button icon=backspace id=clearLogButton disabled>Clear</button>
+    `);
     target.append($('#jeLog'));
+
+    on('#autoClearLog', 'change', e=>this.button_clearCheckbox());
+    on('#clearLogButton', 'click', e=>this.button_clearButton());
   }
 }

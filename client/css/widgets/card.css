@@ -1,5 +1,6 @@
 .card {
   overflow: hidden;
+  color: black;
 }
 
 .card > .cardFace {
@@ -15,7 +16,7 @@
   box-sizing: border-box;
 }
 
-.card > .active.cardFace > .cardFaceObject {
+.card > .cardFace > .cardFaceObject {
   position: absolute;
   background-size: contain;
   background-repeat: no-repeat;

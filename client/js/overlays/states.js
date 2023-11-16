@@ -1,3 +1,5 @@
+let currentMetaData = null;
+
 let waitingForStateCreation = null;
 let variantIDjustUpdated = null;
 
@@ -300,7 +302,7 @@ function updateLibraryFilter() {
 
 function parsePlayers(players) {
   const validPlayers = [];
-  for(const token of players.split(',')) {
+  for(const token of String(players||'').split(',')) {
     const match = token.match(/^([0-9]+)(-([0-9]+)|\+)?$/);
     if(match)
       for(let i=+match[1]; i<=(match[2] ? +match[3]||20 : +match[1]); ++i)
@@ -475,7 +477,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
       validPlayers.push(...parsePlayers(variant.players));
       validLanguages.push(variant.language);
-      for(const lang of variant.language.split(/[,;] */)) {
+      for(const lang of String(variant.language||'').split(/[,;] */)) {
         languageOptions[lang] = true;
         if(lang && !lang.match(/^en/))
           languageOptions[`${lang} + None`] = true;
@@ -515,7 +517,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.year = state.year;
     entry.dataset.stars = state.stars;
     entry.dataset.timePlayed = state.timePlayed;
-    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
+    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarDesigner} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.lastUpdate = state.saveDate || state.lastUpdate || 0;
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
@@ -841,7 +843,7 @@ function fillStateDetails(states, state, dom) {
     document.addEventListener('click', e=>$('#stateDetailsOverlay .buttons > div').classList.add('hidden'));
   };
   $('#stateDetailsOverlay .buttons [icon=download]').onclick = function() {
-    window.open(`dl/${roomID}/${state.id}`);
+    window.open(`dl/${roomID}/${encodeURIComponent(state.id)}`);
   };
   $('#stateDetailsOverlay .buttons [icon=link]').onclick = function() {
     shareLink(state);
@@ -1054,7 +1056,10 @@ async function shareLink(state) {
 onLoad(function() {
   setSidebar();
 
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers));
+  onMessage('meta', args=>{
+    currentMetaData = args;
+    fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers);
+  });
 
   on('#filterOverflow > div', 'click', e=>e.stopPropagation());
   on('#filterOverflow > button', 'click', function(e) {

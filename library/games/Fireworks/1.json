@@ -17,14 +17,16 @@
         "holder": "deck"
       },
       {
-        "func": "SELECT",
-        "property": "cover",
-        "value": "yes"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": []
+        "func": "MOVE",
+        "from": "deck",
+        "to": [
+          "p1Seat",
+          "p2Seat",
+          "p3Seat",
+          "p4Seat",
+          "p5Seat"
+        ],
+        "count": 4
       }
     ],
     "x": 1512,
@@ -45,8 +47,8 @@
     "color": "#4c5fea",
     "width": 73.5,
     "height": 73.5,
-    "x": 617.25,
-    "y": 262,
+    "x": 610,
+    "y": 285,
     "z": 87,
     "id": "aq3x",
     "movable": false
@@ -63,8 +65,8 @@
     "color": "#4c5fea",
     "width": 73.5,
     "height": 73.5,
-    "x": 617.25,
-    "y": 348.85714285714283,
+    "x": 610,
+    "y": 371,
     "z": 88,
     "classes": "checkersPiece",
     "id": "sk9g",
@@ -82,8 +84,8 @@
     "color": "#4c5fea",
     "width": 73.5,
     "height": 73.5,
-    "x": 617.25,
-    "y": 435.71428571428567,
+    "x": 610,
+    "y": 458,
     "z": 89,
     "classes": "checkersPiece",
     "id": "egvh",
@@ -101,8 +103,8 @@
     "color": "#4c5fea",
     "width": 73.5,
     "height": 73.5,
-    "x": 617.25,
-    "y": 522.5714285714286,
+    "x": 610,
+    "y": 545,
     "z": 90,
     "classes": "checkersPiece",
     "id": "p7ko",
@@ -120,8 +122,8 @@
     "color": "#4c5fea",
     "width": 73.5,
     "height": 73.5,
-    "x": 617.25,
-    "y": 609.4285714285713,
+    "x": 610,
+    "y": 632,
     "z": 91,
     "classes": "checkersPiece crowned",
     "id": "lthq",
@@ -139,8 +141,8 @@
     "color": "#4c5fea",
     "width": 73.5,
     "height": 73.5,
-    "x": 617.25,
-    "y": 696.2857142857142,
+    "x": 610,
+    "y": 719,
     "z": 92,
     "classes": "checkersPiece",
     "id": "9wuq",
@@ -158,8 +160,8 @@
     "color": "#4c5fea",
     "width": 73.5,
     "height": 73.5,
-    "x": 617.25,
-    "y": 783.1428571428571,
+    "x": 610,
+    "y": 806,
     "z": 93,
     "classes": "checkersPiece",
     "id": "1xyj",
@@ -177,8 +179,8 @@
     "color": "#4c5fea",
     "width": 73.5,
     "height": 73.5,
-    "x": 617.25,
-    "y": 870,
+    "x": 610,
+    "y": 893,
     "z": 94,
     "classes": "checkersPiece",
     "id": "6lwp",
@@ -196,8 +198,8 @@
     "color": "#e84242",
     "width": 73.5,
     "height": 73.5,
-    "x": 1446.25,
-    "y": 262,
+    "x": 1439,
+    "y": 285,
     "z": 99,
     "id": "cemn",
     "movable": false
@@ -214,8 +216,8 @@
     "color": "#e84242",
     "width": 73.5,
     "height": 73.5,
-    "x": 1446.25,
-    "y": 435.71428571428567,
+    "x": 1439,
+    "y": 458,
     "z": 97,
     "classes": "checkersPiece",
     "id": "y4gf",
@@ -233,8 +235,8 @@
     "color": "#e84242",
     "width": 73.5,
     "height": 73.5,
-    "x": 1446.25,
-    "y": 348.85714285714283,
+    "x": 1439,
+    "y": 371,
     "z": 96,
     "classes": "checkersPiece",
     "id": "1jkb",
@@ -252,43 +254,53 @@
   },
   "wz8k": {
     "type": "holder",
-    "x": 1253,
-    "y": 262,
-    "z": 27,
+    "x": 1246,
+    "y": 285,
     "id": "wz8k",
-    "stackOffsetX": 0.0001
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
   },
   "hxnc": {
     "type": "holder",
-    "x": 1132,
-    "y": 262,
-    "z": 28,
+    "x": 1125,
+    "y": 285,
     "id": "hxnc",
-    "stackOffsetX": 0.0001
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
   },
   "nk9t": {
     "type": "holder",
-    "x": 1012,
-    "y": 262,
-    "z": 29,
+    "x": 1005,
+    "y": 285,
     "id": "nk9t",
-    "stackOffsetX": 0.0001
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
   },
   "q6fp": {
     "type": "holder",
-    "x": 892,
-    "y": 262,
-    "z": 30,
+    "x": 885,
+    "y": 285,
     "id": "q6fp",
-    "stackOffsetX": 0.0001
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
   },
   "wngl": {
     "type": "holder",
-    "x": 772,
-    "y": 262,
-    "z": 31,
+    "x": 765,
+    "y": 285,
     "id": "wngl",
-    "stackOffsetX": 0.0001
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
   },
   "Fireworks Deck": {
     "type": "deck",
@@ -432,7 +444,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -445,7 +456,6 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "static",
             "value": "",
             "width": 103,
             "height": 160
@@ -455,11 +465,12 @@
             "x": 0,
             "y": 0,
             "fontSize": 140,
-            "valueType": "dynamic",
-            "value": "value",
             "textAlign": "center",
             "width": 103,
-            "css": "color: var(--color); "
+            "css": "color: var(--color); ",
+            "dynamicProperties": {
+              "value": "value"
+            }
           }
         ]
       }
@@ -472,7 +483,7 @@
     "type": "card",
     "cardType": "Red 1",
     "id": "4q9l",
-    "z": 4138,
+    "z": 11052,
     "parent": "texm"
   },
   "qnfb": {
@@ -480,7 +491,7 @@
     "type": "card",
     "cardType": "Red 1",
     "id": "qnfb",
-    "z": 8830,
+    "z": 11050,
     "parent": "texm"
   },
   "texm": {
@@ -497,7 +508,7 @@
     "type": "card",
     "cardType": "Red 2",
     "id": "wssr",
-    "z": 6215,
+    "z": 11078,
     "parent": "texm"
   },
   "k302": {
@@ -505,7 +516,7 @@
     "type": "card",
     "cardType": "Red 2",
     "id": "k302",
-    "z": 3106,
+    "z": 11088,
     "parent": "texm"
   },
   "qmsj": {
@@ -513,7 +524,7 @@
     "type": "card",
     "cardType": "Red 3",
     "id": "qmsj",
-    "z": 8656,
+    "z": 11076,
     "parent": "texm"
   },
   "n2ll": {
@@ -521,7 +532,7 @@
     "type": "card",
     "cardType": "Red 3",
     "id": "n2ll",
-    "z": 6136,
+    "z": 11040,
     "parent": "texm"
   },
   "12xl": {
@@ -529,7 +540,7 @@
     "type": "card",
     "cardType": "Red 4",
     "id": "12xl",
-    "z": 2592,
+    "z": 11064,
     "parent": "texm"
   },
   "rvcf": {
@@ -537,7 +548,7 @@
     "type": "card",
     "cardType": "Red 4",
     "id": "rvcf",
-    "z": 8842,
+    "z": 11072,
     "parent": "texm"
   },
   "nr7c": {
@@ -545,7 +556,7 @@
     "type": "card",
     "cardType": "Red 5",
     "id": "nr7c",
-    "z": 1247,
+    "z": 11070,
     "parent": "texm"
   },
   "0snw": {
@@ -553,7 +564,7 @@
     "type": "card",
     "cardType": "Blue 1",
     "id": "0snw",
-    "z": 3789,
+    "z": 11073,
     "parent": "texm"
   },
   "n35k": {
@@ -561,7 +572,7 @@
     "type": "card",
     "cardType": "Blue 1",
     "id": "n35k",
-    "z": 9477,
+    "z": 11067,
     "parent": "texm"
   },
   "iaku": {
@@ -569,7 +580,7 @@
     "type": "card",
     "cardType": "Blue 2",
     "id": "iaku",
-    "z": 6117,
+    "z": 11061,
     "parent": "texm"
   },
   "dp36": {
@@ -577,7 +588,7 @@
     "type": "card",
     "cardType": "Blue 2",
     "id": "dp36",
-    "z": 7614,
+    "z": 11085,
     "parent": "texm"
   },
   "qzyp": {
@@ -585,7 +596,7 @@
     "type": "card",
     "cardType": "Blue 3",
     "id": "qzyp",
-    "z": 4508,
+    "z": 11041,
     "parent": "texm"
   },
   "yjsd": {
@@ -593,7 +604,7 @@
     "type": "card",
     "cardType": "Blue 3",
     "id": "yjsd",
-    "z": 347,
+    "z": 11057,
     "parent": "texm"
   },
   "wguf": {
@@ -601,7 +612,7 @@
     "type": "card",
     "cardType": "Blue 4",
     "id": "wguf",
-    "z": 435,
+    "z": 11063,
     "parent": "texm"
   },
   "gw4d": {
@@ -609,7 +620,7 @@
     "type": "card",
     "cardType": "Blue 4",
     "id": "gw4d",
-    "z": 806,
+    "z": 11081,
     "parent": "texm"
   },
   "zj9f": {
@@ -617,7 +628,7 @@
     "type": "card",
     "cardType": "Blue 5",
     "id": "zj9f",
-    "z": 7819,
+    "z": 11086,
     "parent": "texm"
   },
   "ghgl": {
@@ -625,7 +636,7 @@
     "type": "card",
     "cardType": "Green 1",
     "id": "ghgl",
-    "z": 5140,
+    "z": 11049,
     "parent": "texm"
   },
   "tgh1": {
@@ -633,7 +644,7 @@
     "type": "card",
     "cardType": "Green 1",
     "id": "tgh1",
-    "z": 843,
+    "z": 11048,
     "parent": "texm"
   },
   "u942": {
@@ -641,7 +652,7 @@
     "type": "card",
     "cardType": "Green 2",
     "id": "u942",
-    "z": 883,
+    "z": 11060,
     "parent": "texm"
   },
   "n6hh": {
@@ -649,7 +660,7 @@
     "type": "card",
     "cardType": "Green 2",
     "id": "n6hh",
-    "z": 2648,
+    "z": 11042,
     "parent": "texm"
   },
   "fxxl": {
@@ -657,7 +668,7 @@
     "type": "card",
     "cardType": "Green 3",
     "id": "fxxl",
-    "z": 7240,
+    "z": 11077,
     "parent": "texm"
   },
   "p28l": {
@@ -665,7 +676,7 @@
     "type": "card",
     "cardType": "Green 3",
     "id": "p28l",
-    "z": 5591,
+    "z": 11062,
     "parent": "texm"
   },
   "rzcn": {
@@ -673,7 +684,7 @@
     "type": "card",
     "cardType": "Green 4",
     "id": "rzcn",
-    "z": 6083,
+    "z": 11047,
     "parent": "texm"
   },
   "4qst": {
@@ -681,7 +692,7 @@
     "type": "card",
     "cardType": "Green 4",
     "id": "4qst",
-    "z": 5134,
+    "z": 11084,
     "parent": "texm"
   },
   "o22o": {
@@ -689,7 +700,7 @@
     "type": "card",
     "cardType": "Green 5",
     "id": "o22o",
-    "z": 9502,
+    "z": 11080,
     "parent": "texm"
   },
   "5vxd": {
@@ -697,7 +708,7 @@
     "type": "card",
     "cardType": "Orange 1",
     "id": "5vxd",
-    "z": 1493,
+    "z": 11071,
     "parent": "texm"
   },
   "ykxv": {
@@ -705,7 +716,7 @@
     "type": "card",
     "cardType": "Orange 1",
     "id": "ykxv",
-    "z": 8089,
+    "z": 11075,
     "parent": "texm"
   },
   "qqto": {
@@ -713,7 +724,7 @@
     "type": "card",
     "cardType": "Orange 2",
     "id": "qqto",
-    "z": 9541,
+    "z": 11055,
     "parent": "texm"
   },
   "rd4m": {
@@ -721,7 +732,7 @@
     "type": "card",
     "cardType": "Orange 2",
     "id": "rd4m",
-    "z": 9426,
+    "z": 11065,
     "parent": "texm"
   },
   "2k4p": {
@@ -729,7 +740,7 @@
     "type": "card",
     "cardType": "Orange 3",
     "id": "2k4p",
-    "z": 2130,
+    "z": 11074,
     "parent": "texm"
   },
   "fqe0": {
@@ -737,7 +748,7 @@
     "type": "card",
     "cardType": "Orange 3",
     "id": "fqe0",
-    "z": 675,
+    "z": 11066,
     "parent": "texm"
   },
   "yq9l": {
@@ -745,7 +756,7 @@
     "type": "card",
     "cardType": "Orange 4",
     "id": "yq9l",
-    "z": 3445,
+    "z": 11083,
     "parent": "texm"
   },
   "o5fw": {
@@ -753,7 +764,7 @@
     "type": "card",
     "cardType": "Orange 4",
     "id": "o5fw",
-    "z": 7899,
+    "z": 11059,
     "parent": "texm"
   },
   "u9i6": {
@@ -761,7 +772,7 @@
     "type": "card",
     "cardType": "Orange 5",
     "id": "u9i6",
-    "z": 152,
+    "z": 11045,
     "parent": "texm"
   },
   "posg": {
@@ -769,7 +780,7 @@
     "type": "card",
     "cardType": "Pink 1",
     "id": "posg",
-    "z": 4261,
+    "z": 11044,
     "parent": "texm"
   },
   "yvsh": {
@@ -777,7 +788,7 @@
     "type": "card",
     "cardType": "Pink 1",
     "id": "yvsh",
-    "z": 9092,
+    "z": 11079,
     "parent": "texm"
   },
   "sum7": {
@@ -785,7 +796,7 @@
     "type": "card",
     "cardType": "Pink 2",
     "id": "sum7",
-    "z": 361,
+    "z": 11058,
     "parent": "texm"
   },
   "fget": {
@@ -793,7 +804,7 @@
     "type": "card",
     "cardType": "Pink 2",
     "id": "fget",
-    "z": 1844,
+    "z": 11039,
     "parent": "texm"
   },
   "t6yx": {
@@ -801,7 +812,7 @@
     "type": "card",
     "cardType": "Pink 3",
     "id": "t6yx",
-    "z": 7230,
+    "z": 11068,
     "parent": "texm"
   },
   "0pd3": {
@@ -809,7 +820,7 @@
     "type": "card",
     "cardType": "Pink 3",
     "id": "0pd3",
-    "z": 1121,
+    "z": 11053,
     "parent": "texm"
   },
   "sqy4": {
@@ -817,7 +828,7 @@
     "type": "card",
     "cardType": "Pink 4",
     "id": "sqy4",
-    "z": 986,
+    "z": 11043,
     "parent": "texm"
   },
   "zwse": {
@@ -825,7 +836,7 @@
     "type": "card",
     "cardType": "Pink 4",
     "id": "zwse",
-    "z": 9719,
+    "z": 11051,
     "parent": "texm"
   },
   "f5fe": {
@@ -833,7 +844,7 @@
     "type": "card",
     "cardType": "Pink 5",
     "id": "f5fe",
-    "z": 892,
+    "z": 11082,
     "parent": "texm"
   },
   "teap": {
@@ -841,7 +852,7 @@
     "type": "card",
     "cardType": "Red 1",
     "id": "teap",
-    "z": 5186,
+    "z": 11056,
     "parent": "texm"
   },
   "tchh": {
@@ -849,7 +860,7 @@
     "type": "card",
     "cardType": "Blue 1",
     "id": "tchh",
-    "z": 586,
+    "z": 11046,
     "parent": "texm"
   },
   "vrky": {
@@ -857,7 +868,7 @@
     "type": "card",
     "cardType": "Green 1",
     "id": "vrky",
-    "z": 6478,
+    "z": 11054,
     "parent": "texm"
   },
   "1mfl": {
@@ -865,7 +876,7 @@
     "type": "card",
     "cardType": "Orange 1",
     "id": "1mfl",
-    "z": 1625,
+    "z": 11087,
     "parent": "texm"
   },
   "d3u4": {
@@ -873,18 +884,19 @@
     "type": "card",
     "cardType": "Pink 1",
     "id": "d3u4",
-    "z": 3667,
+    "z": 11069,
     "parent": "texm"
   },
   "kbdg": {
     "type": "holder",
-    "x": 892,
-    "y": 194,
-    "z": 10443,
+    "x": 885,
+    "y": 217,
     "id": "kbdg",
     "scale": 0.5,
     "height": 1000,
-    "stackOffsetY": 165
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "bpuz": {
     "faces": [
@@ -898,12 +910,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 41,
     "z": 1,
     "id": "bpuz",
     "layer": 50,
-    "classes": "checkersPiece"
+    "classes": "checkersPiece",
+    "y": 83,
+    "x": 18
   },
   "4zek": {
     "faces": [
@@ -917,12 +929,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 135,
+    "y": 177,
     "z": 4,
     "classes": "checkersPiece",
     "layer": 50,
-    "id": "4zek"
+    "id": "4zek",
+    "x": 18
   },
   "wg3c": {
     "faces": [
@@ -936,12 +948,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 104,
+    "y": 146,
     "z": 3,
     "classes": "checkersPiece",
     "layer": 50,
-    "id": "wg3c"
+    "id": "wg3c",
+    "x": 18
   },
   "tq0t": {
     "faces": [
@@ -955,12 +967,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 72,
+    "y": 114,
     "z": 2,
     "classes": "checkersPiece",
     "layer": 50,
-    "id": "tq0t"
+    "id": "tq0t",
+    "x": 18
   },
   "bpuz-copy001": {
     "faces": [
@@ -974,12 +986,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 297.6,
     "id": "bpuz-copy001",
     "layer": 50,
     "classes": "checkersPiece",
-    "z": 1
+    "z": 1,
+    "y": 327,
+    "x": 18
   },
   "4zek-copy001": {
     "faces": [
@@ -993,12 +1005,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 391.6,
+    "y": 421,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "4zek-copy001",
-    "z": 4
+    "z": 4,
+    "x": 18
   },
   "wg3c-copy001": {
     "faces": [
@@ -1012,12 +1024,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 360.6,
+    "y": 390,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "wg3c-copy001",
-    "z": 3
+    "z": 3,
+    "x": 18
   },
   "tq0t-copy001": {
     "faces": [
@@ -1031,12 +1043,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 328.6,
+    "y": 358,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "tq0t-copy001",
-    "z": 2
+    "z": 2,
+    "x": 18
   },
   "bpuz-copy002": {
     "faces": [
@@ -1050,12 +1062,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 554.3,
     "id": "bpuz-copy002",
     "layer": 50,
     "classes": "checkersPiece",
-    "z": 1
+    "z": 1,
+    "y": 571,
+    "x": 18
   },
   "4zek-copy002": {
     "faces": [
@@ -1069,12 +1081,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 648.3,
+    "y": 665,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "4zek-copy002",
-    "z": 4
+    "z": 4,
+    "x": 18
   },
   "wg3c-copy002": {
     "faces": [
@@ -1088,12 +1100,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 617.3,
+    "y": 634,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "wg3c-copy002",
-    "z": 3
+    "z": 3,
+    "x": 18
   },
   "tq0t-copy002": {
     "faces": [
@@ -1107,12 +1119,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 585.3,
+    "y": 602,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "tq0t-copy002",
-    "z": 2
+    "z": 2,
+    "x": 18
   },
   "bpuz-copy003": {
     "faces": [
@@ -1126,12 +1138,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 605,
-    "y": 103.66666666666667,
+    "y": 145,
     "id": "bpuz-copy003",
     "layer": 50,
     "classes": "checkersPiece",
-    "z": 3
+    "z": 3,
+    "x": 609
   },
   "4zek-copy003": {
     "faces": [
@@ -1145,12 +1157,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 605,
-    "y": 72.33333333333334,
+    "y": 114,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "4zek-copy003",
-    "z": 2
+    "z": 2,
+    "x": 609
   },
   "wg3c-copy003": {
     "faces": [
@@ -1164,12 +1176,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 605,
-    "y": 135,
+    "y": 177,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "wg3c-copy003",
-    "z": 4
+    "z": 4,
+    "x": 609
   },
   "tq0t-copy003": {
     "faces": [
@@ -1183,12 +1195,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 605,
-    "y": 41,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "tq0t-copy003",
-    "z": 1
+    "z": 1,
+    "x": 609,
+    "y": 83
   },
   "bpuz-copy004": {
     "faces": [
@@ -1202,12 +1214,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 811,
     "id": "bpuz-copy004",
     "layer": 50,
     "classes": "checkersPiece",
-    "z": 1
+    "z": 1,
+    "y": 814,
+    "x": 18
   },
   "4zek-copy004": {
     "faces": [
@@ -1221,12 +1233,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 905,
+    "y": 908,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "4zek-copy004",
-    "z": 4
+    "z": 4,
+    "x": 18
   },
   "wg3c-copy004": {
     "faces": [
@@ -1240,12 +1252,12 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 874,
+    "y": 877,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "wg3c-copy004",
-    "z": 3
+    "z": 3,
+    "x": 18
   },
   "tq0t-copy004": {
     "faces": [
@@ -1259,395 +1271,149 @@
     "color": "#e0cb0b",
     "width": 73.5,
     "height": 73.5,
-    "x": 18,
-    "y": 842,
+    "y": 845,
     "classes": "checkersPiece",
     "layer": 50,
     "id": "tq0t-copy004",
-    "z": 2
-  },
-  "p1Name": {
-    "type": "label",
-    "id": "p1Name",
-    "x": 110,
-    "y": 11,
-    "width": 426,
-    "z": 8,
-    "text": "Player 1"
-  },
-  "p2Name": {
-    "type": "label",
-    "id": "p2Name",
-    "x": 110,
-    "y": 267.66666666666663,
-    "width": 426,
-    "z": 10414,
-    "text": "Player 2"
-  },
-  "p3Name": {
-    "type": "label",
-    "id": "p3Name",
-    "x": 110,
-    "y": 524.3333333333333,
-    "width": 426,
-    "z": 10422,
-    "text": "Player 3"
-  },
-  "p4Name": {
-    "type": "label",
-    "id": "p4Name",
-    "x": 110,
-    "y": 780.9999999999999,
-    "width": 426,
-    "z": 10438,
-    "text": "Player 4"
-  },
-  "p5Name": {
-    "type": "label",
-    "id": "p5Name",
-    "x": 697,
-    "y": 11,
-    "width": 426,
-    "z": 10430,
-    "text": "Player 5"
+    "z": 2,
+    "x": 18
   },
   "p1": {
     "type": "holder",
     "id": "p1",
     "x": 110,
-    "y": 41,
     "width": 426,
-    "z": 37,
     "onEnter": {
+      "clickable": false,
       "activeFace": 1
     },
     "stackOffsetX": 105,
-    "inheritChildZ": true
+    "dropShadow": true,
+    "onLeave": {
+      "clickable": true,
+      "activeFace": 0
+    },
+    "showInactiveFaceToSeat": "p1Seat",
+    "y": 83
   },
   "p2": {
     "type": "holder",
     "id": "p2",
     "x": 110,
-    "y": 297.6666666666667,
+    "y": 327.06640625,
     "width": 426,
-    "z": 10409,
-    "inheritChildZ": true,
     "onEnter": {
+      "clickable": false,
       "activeFace": 1
     },
-    "stackOffsetX": 105
+    "stackOffsetX": 105,
+    "dropShadow": true,
+    "onLeave": {
+      "clickable": true,
+      "activeFace": 0
+    },
+    "showInactiveFaceToSeat": "p2Seat"
   },
   "p3": {
     "type": "holder",
     "id": "p3",
     "x": 110,
-    "y": 554.3333333333334,
+    "y": 571.033203125,
     "width": 426,
-    "z": 10417,
-    "inheritChildZ": true,
     "onEnter": {
+      "clickable": false,
       "activeFace": 1
     },
-    "stackOffsetX": 105
+    "stackOffsetX": 105,
+    "dropShadow": true,
+    "onLeave": {
+      "clickable": true,
+      "activeFace": 0
+    },
+    "showInactiveFaceToSeat": "p3Seat"
   },
   "p4": {
     "type": "holder",
     "id": "p4",
     "x": 110,
-    "y": 811,
     "width": 426,
-    "z": 10433,
-    "inheritChildZ": true,
     "onEnter": {
+      "clickable": false,
       "activeFace": 1
     },
-    "stackOffsetX": 105
+    "stackOffsetX": 105,
+    "dropShadow": true,
+    "onLeave": {
+      "clickable": true,
+      "activeFace": 0
+    },
+    "showInactiveFaceToSeat": "p4Seat",
+    "y": 814
   },
   "p5": {
     "type": "holder",
     "id": "p5",
-    "x": 697,
-    "y": 41,
+    "x": 701,
     "width": 426,
-    "z": 10425,
-    "inheritChildZ": true,
     "onEnter": {
+      "clickable": false,
       "activeFace": 1
     },
-    "stackOffsetX": 105
-  },
-  "p1Button": {
-    "type": "button",
-    "id": "p1Button",
-    "x": 283,
-    "y": 95,
-    "height": 60,
-    "z": 24,
-    "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": "p1",
-        "count": 4
-      },
-      {
-        "func": "LABEL",
-        "label": "p1Name",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "p1Cover"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "text": "Join"
-  },
-  "p2Button": {
-    "type": "button",
-    "id": "p2Button",
-    "x": 283,
-    "y": 351.66666666666663,
-    "height": 60,
-    "z": 10416,
-    "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": "p2",
-        "count": 4
-      },
-      {
-        "func": "LABEL",
-        "label": "p2Name",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "p2Cover"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "text": "Join"
-  },
-  "p3Button": {
-    "type": "button",
-    "id": "p3Button",
-    "x": 283,
-    "y": 608.3333333333333,
-    "height": 60,
-    "z": 10424,
-    "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": "p3",
-        "count": 4
-      },
-      {
-        "func": "LABEL",
-        "label": "p3Name",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "p3Cover"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "text": "Join"
-  },
-  "p4Button": {
-    "type": "button",
-    "id": "p4Button",
-    "x": 283,
-    "y": 864.9999999999999,
-    "height": 60,
-    "z": 10440,
-    "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": "p4",
-        "count": 4
-      },
-      {
-        "func": "LABEL",
-        "label": "p4Name",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "p4Cover"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "text": "Join"
-  },
-  "p5Button": {
-    "type": "button",
-    "id": "p5Button",
-    "x": 870,
-    "y": 95,
-    "height": 60,
-    "z": 10432,
-    "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": "p5",
-        "count": 4
-      },
-      {
-        "func": "LABEL",
-        "label": "p5Name",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "p5Cover"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "text": "Join"
-  },
-  "p5Cover": {
-    "id": "p5Cover",
-    "owner": [],
-    "x": 701,
-    "y": 44,
-    "width": 418,
-    "height": 160,
-    "layer": 10,
-    "z": 10431,
-    "movable": false,
-    "movableInEdit": null,
-    "cover": "yes",
-    "css": "background-repeat: space;background-image:url(/i/cards-default/2B.svg);background-color:white"
-  },
-  "p3Cover": {
-    "id": "p3Cover",
-    "owner": [],
-    "x": 114,
-    "y": 557.3333333333334,
-    "width": 418,
-    "height": 160,
-    "layer": 10,
-    "z": 10423,
-    "movable": false,
-    "movableInEdit": null,
-    "cover": "yes",
-    "css": "background-repeat: space;background-image:url(/i/cards-default/2B.svg);background-color:white"
-  },
-  "p2Cover": {
-    "id": "p2Cover",
-    "owner": [],
-    "x": 114,
-    "y": 300.6666666666667,
-    "width": 418,
-    "height": 160,
-    "layer": 10,
-    "z": 10415,
-    "movable": false,
-    "movableInEdit": null,
-    "cover": "yes",
-    "css": "background-repeat: space;background-image:url(/i/cards-default/2B.svg);background-color:white"
-  },
-  "p1Cover": {
-    "id": "p1Cover",
-    "owner": [],
-    "x": 114,
-    "y": 44,
-    "width": 418,
-    "height": 160,
-    "layer": 10,
-    "z": 304,
-    "movable": false,
-    "movableInEdit": null,
-    "cover": "yes",
-    "css": "background-repeat: space;background-image:url(/i/cards-default/2B.svg);background-color:white"
-  },
-  "p4Cover": {
-    "id": "p4Cover",
-    "owner": [],
-    "x": 114,
-    "y": 814,
-    "width": 418,
-    "height": 160,
-    "layer": 10,
-    "z": 10439,
-    "movable": false,
-    "movableInEdit": null,
-    "cover": "yes",
-    "css": "background-repeat: space;background-image:url(/i/cards-default/2B.svg);background-color:white"
+    "stackOffsetX": 105,
+    "dropShadow": true,
+    "onLeave": {
+      "clickable": true,
+      "activeFace": 0
+    },
+    "showInactiveFaceToSeat": "p5Seat",
+    "y": 83
   },
   "g8c2": {
     "type": "holder",
-    "x": 1012,
-    "y": 194,
-    "z": 10446,
+    "x": 1005,
+    "y": 217,
     "id": "g8c2",
     "scale": 0.5,
     "height": 1000,
-    "stackOffsetY": 165
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "o48b": {
     "type": "holder",
-    "x": 1132,
-    "y": 194,
-    "z": 10445,
+    "x": 1125,
+    "y": 217,
     "id": "o48b",
     "scale": 0.5,
     "height": 1000,
-    "stackOffsetY": 165
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "hxt5": {
     "type": "holder",
-    "x": 1253,
-    "y": 194,
-    "z": 10447,
+    "x": 1246,
+    "y": 217,
     "id": "hxt5",
     "scale": 0.5,
     "height": 1000,
-    "stackOffsetY": 165
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "bpqh": {
     "type": "holder",
-    "x": 772,
-    "y": 194,
-    "z": 10448,
+    "x": 765,
+    "y": 217,
     "id": "bpqh",
     "scale": 0.5,
     "height": 1000,
-    "stackOffsetY": 165
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "_meta": {
-    "version": 3,
+    "version": 13,
     "info": {
       "name": "Fireworks",
       "image": "/assets/222053642_15760",
@@ -1656,15 +1422,65 @@
       "year": "2010",
       "mode": "coop",
       "time": "25",
-      "players": "4-5",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The layout was created by ArnoldSmith86 and is released to the public domain using CC0. It does not use custom assets.\n\nThe library image is CC0 by Christina Pinckard: https://www.publicdomainpictures.net/en/view-image.php?image=33560&picture=fireworks",
+      "attribution": "The layout was created by ArnoldSmith86 and is released to the public domain using CC0. It does not use custom assets.\n\nThe library image is CC0 by Christina Pinckard: https://www.publicdomainpictures.net/en/view-image.php?image=33560&amp;picture=fireworks",
       "similarName": "Hanabi",
       "similarAwards": "2015 Årets Spill Best Family Game Nominee\n2014 Nederlandse Spellenprijs Best Family Game Nominee\n2014 MinD-Spieletipp Winner\n2014 Hra roku Nominee\n2014 Guldbrikken Best Adult Game Nominee\n2013 Spiel des Jahres Winner\n2013 Fairplay À la carte Winner\n2012 Juego del Año Finalist",
-      "description": "Cooperative card tile laying game.  Work together to complete the pattern before running out of cards and while never looking at your own cards.",
+      "description": "Cooperative card tile laying game. Work together to complete the pattern before running out of cards and while never looking at your own cards.",
       "showName": true,
-      "lastUpdate": 1625237157000
+      "lastUpdate": 1695893233017,
+      "skill": "",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "4-5",
+      "similarDesigner": "Antoine Bauza"
     }
+  },
+  "p1Seat": {
+    "type": "seat",
+    "id": "p1Seat",
+    "x": 241,
+    "z": 10454,
+    "hand": "p1",
+    "y": 18
+  },
+  "p2Seat": {
+    "type": "seat",
+    "id": "p2Seat",
+    "x": 241,
+    "z": 10453,
+    "hand": "p2",
+    "index": 2,
+    "y": 262
+  },
+  "p3Seat": {
+    "type": "seat",
+    "id": "p3Seat",
+    "x": 241,
+    "z": 10452,
+    "hand": "p3",
+    "index": 3,
+    "y": 506
+  },
+  "p4Seat": {
+    "type": "seat",
+    "id": "p4Seat",
+    "x": 241,
+    "z": 10451,
+    "hand": "p4",
+    "index": 4,
+    "y": 750
+  },
+  "p5Seat": {
+    "type": "seat",
+    "id": "p5Seat",
+    "x": 832,
+    "z": 10450,
+    "hand": "p5",
+    "index": 5,
+    "y": 18
   }
 }

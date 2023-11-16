@@ -101,6 +101,7 @@ export default async function minifyHTML() {
     'client/js/editor/toolbar/delete.js',
     'client/js/editor/toolbar/align.js',
     'client/js/editor/toolbar/group.js',
+    'client/js/editor/toolbar/grid.js',
     'client/js/editor/dragButton.js',
     'client/js/editor/dragbuttons/drag.js',
     'client/js/editor/dragbuttons/clone.js',
@@ -112,16 +113,11 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/undo.js',
     'client/js/editor/sidebar/json.js',
     'client/js/editor/sidebar/assets.js',
-
-    'node_modules/vue/dist/vue.global.js',
+    'client/js/editor/sidebar/toolbox.js',
 
     'client/js/editmode.js',
     'client/js/jsonedit.js',
-    'client/js/traceviewer.js',
-
-    'client/components/baseEditOverlay.js',
-    'client/components/deckEditor.js',
-    'client/components/loadComponents.js'
+    'client/js/traceviewer.js'
   ]);
 
   const editorHTML = await minify({
@@ -161,6 +157,8 @@ async function compressJS(jsFiles) {
 
 async function compress(htmlFile, cssFiles, jsFiles) {
   let htmlString = fs.readFileSync(path.resolve() + '/' + htmlFile, {encoding:'utf8'});
+  htmlString = htmlString.replace(/\ \/\*\*\*\ TITLE\ \*\*\*\/\ /g, _=>Config.get('serverName'));
+  htmlString = htmlString.replace(/\ \/\*\*\*\ EXTERNAL_URL\ \*\*\*\/\ /g, _=>Config.get('externalURL'));
 
   const css = await compressCSS(cssFiles);
   htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, _=>css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, _=>`const config = ${JSON.stringify(Config.config)};`);

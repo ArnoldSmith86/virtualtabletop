@@ -17,6 +17,7 @@ class Holder extends Widget {
       alignChildren: true,
       preventPiles: false,
       childrenPerOwner: false,
+      showInactiveFaceToSeat: null,
 
       onEnter: {},
       onLeave: {},
@@ -41,6 +42,22 @@ class Holder extends Widget {
 
       return compareDropTarget(w, this, true);
     });
+  }
+
+  classes() {
+    let className = super.classes();
+
+    if(this.get('showInactiveFaceToSeat'))
+      if(widgetFilter(w=>asArray(this.get('showInactiveFaceToSeat')).indexOf(w.get('id'))!=-1&&w.get('player')==playerName).length)
+        className += ' showCardBack';
+
+    return className;
+  }
+
+  classesProperties() {
+    const p = super.classesProperties();
+    p.push('showInactiveFaceToSeat');
+    return p;
   }
 
   async dispenseCard(card) {
