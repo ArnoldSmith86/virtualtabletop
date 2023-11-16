@@ -85,7 +85,7 @@ export default async function convertPCIO(content) {
         target[holdersParam] = args.objects.holders;
       }
     } else {
-      target[holdersParam] = args[legacySource].from.value;
+      target[holdersParam] = args[legacySource].value;
     }
     return target;
   }
