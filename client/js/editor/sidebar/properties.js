@@ -1121,7 +1121,7 @@ class PropertiesModule extends SidebarModule {
       const newState = {...widget.state};
       newState.activeFace = faceTemplates.length>1?1:0;
       newState.cardType = cardType;
-      this.renderWidget(card, newState, cardTypeDiv);
+      card.renderReadonlyCopyRaw(newState, cardTypeDiv);
 
       this.cardTypeCards[cardType] = card;
 
