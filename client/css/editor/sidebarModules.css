@@ -140,6 +140,18 @@
   display: none;
 }
 
+
+.genericInput input, .genericInput textarea {
+  width: 200px;
+  min-width: 200px;
+}
+.genericInput textarea {
+  height: 200px;
+}
+.genericInput > * {
+  vertical-align: top;
+}
+
 /* undo */
 
 .undo.editorModule > .undoEntry {
