@@ -1098,7 +1098,10 @@ class PropertiesModule extends SidebarModule {
   }
 
   dynamicPropertyInputValueUpdated(deck, cardType, prop, value) {
-      this.cardTypes[cardType][prop] = value;
+      if(typeof value === undefined)
+        delete this.cardTypes[cardType][prop];
+      else
+        this.cardTypes[cardType][prop] = value;
 
       const oCard = this.cardTypeCards[cardType];
       oCard.domElement.innerHTML = '';
@@ -1117,7 +1120,10 @@ class PropertiesModule extends SidebarModule {
   }
 
   faceObjectInputValueUpdated(deck, face, object, property, value, card, removeObjects) {
-    this.faceTemplates[face].objects[object][property] = value;
+    if(typeof value === undefined)
+      delete this.faceTemplates[face].objects[object][property];
+    else
+      this.faceTemplates[face].objects[object][property] = value;
 
     //card.applyDeltaToDOM({ deck: card.get('deck') });
     for(let objectCard=object; objectCard<this.cardLayerCards[face].length; ++objectCard) {
@@ -1221,7 +1227,7 @@ class PropertiesModule extends SidebarModule {
             if(faceTemplates[face].objects[object].dynamicProperties) {
               const dynamicProps = faceTemplates[face].objects[object].dynamicProperties;
               for(const prop in dynamicProps) {
-                const dynamicValue = cardTypeProperties[dynamicProps[prop]] || '';
+                const dynamicValue = cardTypeProperties[dynamicProps[prop]];
                 this.addInput(dynamicProps[prop], dynamicValue, v=>this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], v), $('.cardTypeProperties > div', cardTypeDiv));
               }
             }
