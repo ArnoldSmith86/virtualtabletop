@@ -103,6 +103,14 @@
   width: 50px;
 }
 
+
+.tune.editorModule .cardTypeEdit {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+}
 .tune.editorModule .cardCountDiv {
   float: left;
 }
@@ -111,10 +119,26 @@
 }
 .tune.editorModule .cardCountDiv input {
   font-size: 30px;
-  width: 40px;
+  width: 54px;
   text-align: right;
 }
-
+.tune.editorModule .renderedWidget {
+  margin: 5px;
+}
+.tune.editorModule .cardCountDivEditing {
+  background: var(--backgroundHighlightColor1);
+  border: 1px solid var(--textColor);
+  border-radius: 5px;
+}
+.tune.editorModule .cardCountDivEditing [icon=create] {
+  display: none;
+}
+.tune.editorModule .cardTypeProperties {
+  padding: 10px;
+}
+.tune.editorModule .cardTypeEdit:not(.cardCountDivEditing) .cardTypeProperties {
+  display: none;
+}
 
 /* undo */
 

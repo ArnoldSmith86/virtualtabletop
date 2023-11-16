@@ -1187,14 +1187,23 @@ class PropertiesModule extends SidebarModule {
 
     this.addHeader('Card types');
     for(const [ cardType, cardTypeProperties ] of Object.entries(cardTypes)) {
-      const cardTypeDiv = div(this.moduleDOM, 'faceTemplateEdit', `
+      const cardTypeDiv = div(this.moduleDOM, 'cardTypeEdit', `
         <div class=cardCountDiv>
           <button icon=remove></button>
           <button icon=add></button>
         </div>
         <div class=renderedWidget></div>
-        <div class=faceTemplateProperties></div>
+        <button icon=create>Edit</button>
+        <div class=cardTypeProperties>
+          <div></div>
+          <button icon=check>Apply changes</button>
+        </div>
       `);
+      $('[icon=create]', cardTypeDiv).onclick = _=>cardTypeDiv.classList.add('cardCountDivEditing');
+      $('[icon=check]',  cardTypeDiv).onclick = _=>{
+        cardTypeDiv.classList.remove('cardCountDivEditing');
+        this.applyCardTypeChanges(deck);
+      };
 
       this.cardTypeCards[cardType] = [];
 
@@ -1213,7 +1222,7 @@ class PropertiesModule extends SidebarModule {
               const dynamicProps = faceTemplates[face].objects[object].dynamicProperties;
               for(const prop in dynamicProps) {
                 const dynamicValue = cardTypeProperties[dynamicProps[prop]] || '';
-                this.addInput(dynamicProps[prop], dynamicValue, v=>this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], v), $('.faceTemplateProperties', cardTypeDiv));
+                this.addInput(dynamicProps[prop], dynamicValue, v=>this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], v), $('.cardTypeProperties > div', cardTypeDiv));
               }
             }
           }
@@ -1236,11 +1245,6 @@ class PropertiesModule extends SidebarModule {
       $('.cardCountDiv', cardTypeDiv).insertBefore($('input', input.dom), $('[icon=add]', cardTypeDiv));
       input.dom.remove();
     }
-
-    const applyButton = document.createElement('button');
-    applyButton.innerText = 'Apply changes';
-    applyButton.onclick = e => this.applyCardTypeChanges(deck);
-    this.moduleDOM.appendChild(applyButton);
   }
 
   renderForHolder(widget) {
