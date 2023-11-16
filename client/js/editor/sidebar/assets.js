@@ -236,8 +236,10 @@ class AssetsModule extends SidebarModule {
           } else {
             sizeLabel.textContent = `${blob.type.replace(/image\//, '').toUpperCase()}\n${img.naturalWidth}x${img.naturalHeight}\n${sizeInKB} KB`;
           }
-          const [targetWidth, targetHeight] = getAssetTargetSize(asset, img.naturalWidth, img.naturalHeight);
-          addPreviewEvents(row, cell, targetWidth);
+          if(img.naturalWidth) {
+            const [targetWidth, targetHeight] = getAssetTargetSize(asset, img.naturalWidth, img.naturalHeight);
+            addPreviewEvents(row, cell, targetWidth);
+          }
         };
         img.src = URL.createObjectURL(blob);
 
