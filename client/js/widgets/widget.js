@@ -1861,7 +1861,12 @@ export class Widget extends StateManaged {
             nextTurnIndex = Math.floor(Math.random() * indexList.length);
           } else if(a.turnCycle == 'seat') {
             let setSeat = c.find(w => w.get('id') === a.turn);
-            nextTurnIndex = indexList.indexOf(setSeat.get('index'));
+            if(setSeat){
+              nextTurnIndex = indexList.indexOf(setSeat.get('index'));
+              console.log(nextTurnIndex)
+            } else {
+              problems.push(`Seat ${a.turn} is not a valid seat id.`);
+            }            
           } else {
             const turnIndexOffset = a.turnCycle == 'forward' ? a.turn : -a.turn;
             nextTurnIndex = indexList.indexOf(previousTurn) + turnIndexOffset;
