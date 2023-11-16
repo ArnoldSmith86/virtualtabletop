@@ -1863,7 +1863,6 @@ export class Widget extends StateManaged {
             let setSeat = c.find(w => w.get('id') === a.turn);
             if(setSeat){
               nextTurnIndex = indexList.indexOf(setSeat.get('index'));
-              console.log(nextTurnIndex)
             } else {
               problems.push(`Seat ${a.turn} is not a valid seat id.`);
             }            
