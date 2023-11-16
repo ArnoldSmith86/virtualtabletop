@@ -1042,7 +1042,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
-  jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position']);
+  jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
 
   jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ collection', collectionNames.slice(1));
