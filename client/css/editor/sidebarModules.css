@@ -170,3 +170,24 @@
   word-break: break-all;
   padding: 5px;
 }
+.image.editorModule tr:nth-child(2n) {
+  background: var(--backgroundHighlightColor1);
+}
+.image.editorModule td {
+  padding: 10px;
+}
+.image.editorModule td > img {
+  display: block;
+  width: 100px;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
+  background-position: 0px 0, 5px 5px;
+  background-size: 10px 10px, 10px 10px;
+  margin-bottom: 5px;
+}
+.image.editorModule td > input[type=checkbox] {
+  float: left;
+}
+.image.editorModule td > label {
+  white-space: pre;
+  display: inline-block;
+}
