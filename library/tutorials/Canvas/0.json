@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 5,
+    "version": 14,
     "info": {
       "name": "Canvas",
       "image": "/assets/-1622611255_5589",
@@ -9,12 +9,21 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1639024855000
+      "lastUpdate": 1700168290818,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "k8ek": {
@@ -37,7 +46,9 @@
     ],
     "width": 300,
     "height": 300,
-    "movable": false
+    "movable": false,
+    "resolution": 300,
+    "brushSize": 2
   },
   "k8ek-Reset": {
     "type": "button",
@@ -583,18 +594,18 @@
   "10gpn": {
     "id": "10gpn",
     "x": 35,
-    "y": 275,
+    "y": 225,
     "width": 350,
     "height": 50,
     "z": 26435,
     "css": "font-size: 18px; ",
-    "text": "The CANVAS function has 6 modes, each of which is demonstrated in the buttons below except for 'dec' which is the opposite of 'inc'.  Check the JSON in each button for an explanation of what the button does and then use the canvas below to see the result of the button's action.",
+    "text": "The CANVAS function has 6 modes, each of which is demonstrated in the buttons below except for 'dec' which is the opposite of 'inc'.  Check the JSON in each button for an explanation of what the button does and then use the canvas below to see the result of the button's action. You can also use the + and - buttons below to see what happens when you change 'brushSize'.",
     "movable": false
   },
   "11gpn": {
     "id": "11gpn",
     "x": 446,
-    "y": 275,
+    "y": 225,
     "width": 350,
     "height": 50,
     "z": 26437,
@@ -605,7 +616,7 @@
   "12gpn": {
     "id": "12gpn",
     "x": 847,
-    "y": 275,
+    "y": 225,
     "width": 350,
     "height": 50,
     "z": 26438,
@@ -616,7 +627,7 @@
   "13gpn": {
     "id": "13gpn",
     "x": 1247,
-    "y": 275,
+    "y": 225,
     "width": 350,
     "height": 50,
     "z": 26439,
@@ -633,5 +644,76 @@
     "css": "font-size:18px",
     "text": "The term canvas applies to both a `CANVAS` function and a composed widget.  When you add a canvas widget from the add widget screen, you get a default canvas of a size of 800x800 with a reset button and color changer button like you see in the examples below. By default a canvas can be moved around the screen by clicking and dragging on either of the buttons.  Clicking anywhere in the blue square will be part of the drawing. The pixels that make up the drawing are stored in the canvas widget in properties c00 to c99 that are created on the fly as needed. You should not modify those properties.",
     "width": 1500
+  },
+  "t46pD": {
+    "id": "t46pD",
+    "parent": "brushSize",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 2
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "k8ek"
+        ],
+        "property": "brushSize",
+        "value": "${PROPERTY text OF brushSize}"
+      }
+    ]
+  },
+  "t46pU": {
+    "id": "t46pU",
+    "parent": "brushSize",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 2
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "k8ek"
+        ],
+        "property": "brushSize",
+        "value": "${PROPERTY text OF brushSize}"
+      }
+    ]
+  },
+  "brushSize": {
+    "type": "label",
+    "id": "brushSize",
+    "x": 187,
+    "y": 431,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 2
   }
 }
