@@ -1829,7 +1829,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'TURN') {
         setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
-        if([ 'forward', 'backward', 'random', 'position' ].indexOf(a.turnCycle) == -1) {
+        if([ 'forward', 'backward', 'random', 'position', 'seat' ].indexOf(a.turnCycle) == -1) {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
@@ -1862,6 +1862,13 @@ export class Widget extends StateManaged {
             }
           } else if(a.turnCycle == 'random') {
             nextTurnIndex = Math.floor(Math.random() * indexList.length);
+          } else if(a.turnCycle == 'seat') {
+            let setSeat = c.find(w => w.get('id') === a.turn);
+            if(setSeat){
+              nextTurnIndex = indexList.indexOf(setSeat.get('index'));
+            } else {
+              problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.source}.`);
+            }
           } else {
             const turnIndexOffset = a.turnCycle == 'forward' ? a.turn : -a.turn;
             nextTurnIndex = indexList.indexOf(previousTurn) + turnIndexOffset;
@@ -1884,7 +1891,7 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
         } else if(jeRoutineLogging) {
-          jeLoggingRoutineOperationSummary(`no active seats found`);
+          jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
         }
       }
 
