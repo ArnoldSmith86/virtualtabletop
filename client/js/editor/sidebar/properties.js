@@ -1187,8 +1187,14 @@ class PropertiesModule extends SidebarModule {
 
     this.addHeader('Card types');
     for(const [ cardType, cardTypeProperties ] of Object.entries(cardTypes)) {
-      const cardTypeDiv = document.createElement('div');
-      cardTypeDiv.className = 'faceTemplateEdit';
+      const cardTypeDiv = div(this.moduleDOM, 'faceTemplateEdit', `
+        <div class=cardCountDiv>
+          <button icon=remove></button>
+          <button icon=add></button>
+        </div>
+        <div class=renderedWidget></div>
+        <div class=faceTemplateProperties></div>
+      `);
 
       this.cardTypeCards[cardType] = [];
 
@@ -1196,12 +1202,9 @@ class PropertiesModule extends SidebarModule {
       const newState = {...widget.state};
       newState.activeFace = faceTemplates.length>1?1:0;
       newState.cardType = cardType;
-      card.renderReadonlyCopyRaw(newState, cardTypeDiv);
+      card.renderReadonlyCopyRaw(newState, $('.renderedWidget', cardTypeDiv));
 
       this.cardTypeCards[cardType] = card;
-
-      const propsDiv = document.createElement('div');
-      propsDiv.className = 'faceTemplateProperties';
 
       for(const face in faceTemplates) {
         if(faceTemplates[face].objects) {
@@ -1210,18 +1213,15 @@ class PropertiesModule extends SidebarModule {
               const dynamicProps = faceTemplates[face].objects[object].dynamicProperties;
               for(const prop in dynamicProps) {
                 const dynamicValue = cardTypeProperties[dynamicProps[prop]] || '';
-                this.addInput(dynamicProps[prop], dynamicValue, v=>this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], v), propsDiv);
+                this.addInput(dynamicProps[prop], dynamicValue, v=>this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], v), $('.faceTemplateProperties', cardTypeDiv));
               }
             }
           }
         }
       }
 
-      const cardCountDiv = document.createElement('div');
-      cardCountDiv.className = 'cardCountDiv';
-
       let cardCount = widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length;
-      const input = this.addInput('Card Count', cardCount, v=>updateCount(0, v), cardCountDiv, 'number');
+      const input = this.addInput('Card Count', cardCount, v=>updateCount(0, v), $('.cardCountDiv', cardTypeDiv), 'number');
 
       function updateCount(delta, setValue) {
         // Parse the value, ensure it's non-negative
@@ -1230,22 +1230,11 @@ class PropertiesModule extends SidebarModule {
         setCardCount(deck, cardType, cardCount);
       }
 
-      const minusButton = document.createElement('button');
-      minusButton.setAttribute('icon', 'remove');
-      minusButton.onclick = e => updateCount(-1);
+      $('[icon=remove]', cardTypeDiv).onclick = e => updateCount(-1);
+      $('[icon=add]', cardTypeDiv).onclick = e => updateCount(1);
 
-      const plusButton = document.createElement('button');
-      plusButton.setAttribute('icon', 'add');
-      plusButton.onclick = e => updateCount(1);
-
-      cardCountDiv.appendChild(minusButton);
-      cardCountDiv.appendChild($('input', input.dom));
+      $('.cardCountDiv', cardTypeDiv).insertBefore($('input', input.dom), $('[icon=add]', cardTypeDiv));
       input.dom.remove();
-      cardCountDiv.appendChild(plusButton);
-
-      cardTypeDiv.appendChild(propsDiv);
-      cardTypeDiv.appendChild(cardCountDiv);
-      this.moduleDOM.appendChild(cardTypeDiv);
     }
 
     const applyButton = document.createElement('button');
