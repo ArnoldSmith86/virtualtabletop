@@ -1,3 +1,5 @@
+let currentMetaData = null;
+
 let waitingForStateCreation = null;
 let variantIDjustUpdated = null;
 
@@ -300,7 +302,7 @@ function updateLibraryFilter() {
 
 function parsePlayers(players) {
   const validPlayers = [];
-  for(const token of players.split(',')) {
+  for(const token of String(players||'').split(',')) {
     const match = token.match(/^([0-9]+)(-([0-9]+)|\+)?$/);
     if(match)
       for(let i=+match[1]; i<=(match[2] ? +match[3]||20 : +match[1]); ++i)
@@ -314,7 +316,7 @@ function loadGameFromURLproperties(states) {
   if(widgets.size || !urlProperties.load)
     return;
 
-  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?`+String.fromCharCode(36));
+  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?$`);
   if(match) {
     let targetStateID = 'PL:games:' + match[1].substr(0, match[1].length-4);
     if(match[1].match(/^Tutorial%20-%20/))
@@ -330,7 +332,7 @@ function loadGameFromURLproperties(states) {
     addState(null, 'link', urlProperties.load);
     loadedFromURLproperties = true;
   } else if(urlProperties.load) {
-    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\\.json)?)?`+String.fromCharCode(36))
+    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\\.json)?)?$`)
     const foundStates = (Object.values(states).filter(s=>s.link && s.link.match(`^${regexEscape(urlMatch[1])}`)));
     if(foundStates.length) {
       toServer('loadState', { stateID: foundStates[0].id, variantID: urlMatch[3] || 0 });
@@ -350,6 +352,7 @@ function fillStateTileTitles(dom, name, similarName, savePlayers, saveDate) {
   } else {
     $('h4', dom).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
   }
+  emojis2images(dom);
 }
 
 let sortBy = $('#librarySort').value;
@@ -454,12 +457,12 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
         updateSaveButton.style.display = 'inline-flex';
     }
 
-    if(state.image) {
-      $('img', entry).dataset.src = mapAssetURLs(state.image);
-      lazyImageObserver.observe($('img', entry));
-    }
-
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
+
+    if(state.image) {
+      $('img:not(.emoji)', entry).dataset.src = mapAssetURLs(state.image);
+      lazyImageObserver.observe($('img:not(.emoji)', entry));
+    }
 
     const validPlayers = [];
     const validLanguages = [];
@@ -474,7 +477,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
       validPlayers.push(...parsePlayers(variant.players));
       validLanguages.push(variant.language);
-      for(const lang of variant.language.split(/[,;] */)) {
+      for(const lang of String(variant.language||'').split(/[,;] */)) {
         languageOptions[lang] = true;
         if(lang && !lang.match(/^en/))
           languageOptions[`${lang} + None`] = true;
@@ -514,7 +517,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.year = state.year;
     entry.dataset.stars = state.stars;
     entry.dataset.timePlayed = state.timePlayed;
-    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
+    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarDesigner} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.lastUpdate = state.saveDate || state.lastUpdate || 0;
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
@@ -622,7 +625,7 @@ function fillStateDetails(states, state, dom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
     if(targetDom) {
       arrowDom.dataset.id = targetDom.dataset.id;
-      $('img', arrowDom).src = $('img', targetDom).src;
+      $('img', arrowDom).src = $('img', targetDom).dataset.src;
       toggleClass($('img', arrowDom), 'hidden', $('img', arrowDom).src == location.href);
       $('h3', arrowDom).innerText = $('h3', targetDom).innerText;
       $('h4', arrowDom).innerText = $('h4', targetDom).innerText;
@@ -649,6 +652,7 @@ function fillStateDetails(states, state, dom) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('#similarRulesDomain').innerText = String(state.rules).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('.hideForEdit [data-field=similarAwards]').innerText = String(state.similarAwards);
+    emojis2images($('.hideForEdit [data-field=similarAwards]'));
   }
   updateStateDetailsDomains(state);
 
@@ -839,7 +843,7 @@ function fillStateDetails(states, state, dom) {
     document.addEventListener('click', e=>$('#stateDetailsOverlay .buttons > div').classList.add('hidden'));
   };
   $('#stateDetailsOverlay .buttons [icon=download]').onclick = function() {
-    window.open(`dl/${roomID}/${state.id}`);
+    window.open(`dl/${roomID}/${encodeURIComponent(state.id)}`);
   };
   $('#stateDetailsOverlay .buttons [icon=link]').onclick = function() {
     shareLink(state);
@@ -1052,7 +1056,10 @@ async function shareLink(state) {
 onLoad(function() {
   setSidebar();
 
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers));
+  onMessage('meta', args=>{
+    currentMetaData = args;
+    fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers);
+  });
 
   on('#filterOverflow > div', 'click', e=>e.stopPropagation());
   on('#filterOverflow > button', 'click', function(e) {

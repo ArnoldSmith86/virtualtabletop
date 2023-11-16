@@ -29,7 +29,7 @@ export class Widget extends StateManaged {
     this.dropShadowWidget = null;
     this.targetTransform = '';
     this.childArray = [];
-    this.propertiesUsedInCSS = [];
+    this.propertiesUsedInProperty = {};
 
     if(StateManaged.inheritFromMapping[id] === undefined)
       StateManaged.inheritFromMapping[id] = [];
@@ -70,6 +70,8 @@ export class Widget extends StateManaged {
       dropShadowWidget: null,
       inheritChildZ: false,
       hoverTarget: null,
+      hoverParent: null,
+      hidePlayerCursors: false,
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
@@ -89,8 +91,6 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener('mousedown',  e => this.selected(), false);
-    this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
 
@@ -258,7 +258,7 @@ export class Widget extends StateManaged {
     for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
       const inheritedDelta = {};
       this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
-      inheriting.applyDeltaToDOM(inheritedDelta);
+      inheriting.applyInheritedDeltaToDOM(inheritedDelta);
     }
 
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
@@ -266,10 +266,22 @@ export class Widget extends StateManaged {
     }
   }
 
+  applyInheritedDeltaToDOM(delta) {
+    if(!this.inheritedProperties)
+      this.inheritedProperties = {};
+    for(const [ property, value ] of Object.entries(delta)) {
+      if(value === null)
+        delete this.inheritedProperties[property];
+      else
+        this.inheritedProperties[property] = true;
+    }
+    this.applyDeltaToDOM(delta);
+  }
+
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
     for(const key in sourceDelta)
       if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
-          targetDelta[key] = sourceDelta[key];
+        targetDelta[key] = JSON.stringify(sourceDelta[key]) === JSON.stringify(this.defaults[key]) ? null : sourceDelta[key];
   }
 
   applyInheritedValuesToDOM(inheritFrom, pushasArray) {
@@ -288,7 +300,7 @@ export class Widget extends StateManaged {
         StateManaged.inheritFromMapping[id].push(this);
       }
     }
-    this.applyDeltaToDOM(delta);
+    this.applyInheritedDeltaToDOM(delta);
   }
 
   applyInitialDelta(delta) {
@@ -348,6 +360,7 @@ export class Widget extends StateManaged {
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       await this.set('parent', null);
+      await this.set('hoverParent', null);
       if(this.currentParent.get('childrenPerOwner'))
         await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
@@ -367,7 +380,7 @@ export class Widget extends StateManaged {
     let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
 
     // If the element is currently being dragged we may inherit restricted seat visibility.
-    const hoverTarget = this.get('hoverTarget') ? widgets.get(this.get('hoverTarget')) : null;
+    const hoverTarget = this.get('hoverTarget') && widgets.has(this.get('hoverTarget')) ? widgets.get(this.get('hoverTarget')) : null;
     if (hoverTarget)
       onlyVisibleForSeat = hoverTarget.inheritSeatVisibility(onlyVisibleForSeat);
 
@@ -385,6 +398,9 @@ export class Widget extends StateManaged {
     if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
+
+    if(this.get('hoverParent') && widgets.has(this.get('hoverParent')) && widgets.get(this.get('hoverParent')).domElement.classList.contains('showCardBack'))
+      className += ' showCardBack';
 
     if(typeof this.get('dragging') == 'string')
       className += ' dragging';
@@ -516,7 +532,7 @@ export class Widget extends StateManaged {
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     const usedProperties = new Set();
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
-    this.propertiesUsedInCSS = Array.from(usedProperties);
+    this.propertiesUsedInProperty['css'] = Array.from(usedProperties);
 
     css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
@@ -564,7 +580,7 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInProperty['css']||[]);
   }
 
   cssReplaceProperties(css, usedProperties) {
@@ -634,43 +650,74 @@ export class Widget extends StateManaged {
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
-    const result = {};
+    const variables = {};
+    const collections = {};
     if(go) {
       for(const field of o.fields) {
+        const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
+        const isSingleWidget = field.source && Array.isArray(field.source) && field.source.length == 1;
         if(field.type == 'checkbox') {
-          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
+          variables[field.variable] = dom.checked;
         } else if(field.type == 'switch') {
-          let thisresult = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
-          if(thisresult){
-            result[field.variable] = 'on';
-          } else {
-            result[field.variable] = 'off';
-          }
+          variables[field.variable] = dom.checked ? 'on' : 'off';
         } else if(field.type == 'palette') {
-          let thisresult = document.getElementsByName('INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
-          for (var i=0;i<thisresult.length;i++){
-            if ( thisresult[i].checked ) {
-              result[field.variable] = thisresult[i].value;
-            }
-          }
+          variables[field.variable] = $(':checked', dom) ? $(':checked', dom).value : null;
+        } else if(field.type == 'choose') {
+          variables[field.variable] = [...$a('.selected .widget', dom)].map(w=>w.dataset.source);
+          collections[field.collection || 'DEFAULT'] = variables[field.variable].map(w=>widgets.get(w));
+          if(field.mode == 'faces')
+            variables[field.variable] = [...$a('.selected .widget', dom)].map(w=>(isSingleWidget?w.dataset.face:{ widget: w.dataset.source, face: w.dataset.face }));
+          if(variables[field.variable].length == 1 && (field.max || 1) === 1)
+            variables[field.variable] = Object.values(variables[field.variable]).length ? Object.values(variables[field.variable])[0] : null;
         } else if(field.type == 'number') {
-          let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
-          if(thisvalue > field.max)
-            thisvalue = field.max;
-          if(thisvalue < field.min)
-            thisvalue = field.min;
-          result[field.variable] = thisvalue
+          variables[field.variable] = dom.value
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
-          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
+          variables[field.variable] = dom.value;
         }
       }
     }
 
-    showOverlay(null);
-    if(go)
-      resolve(result);
-    else
-      reject(result);
+    if(!go || this.evaluateInputOverlayErrors(o, variables)) {
+      this.showInputOverlayWorkingState(true);
+      sleep(1).then(function() {
+        showOverlay(null);
+        if(go)
+          resolve({ variables, collections });
+        else
+          reject({ variables, collections });
+      })
+      return true;
+    }
+  }
+
+  evaluateInputOverlayErrors(o, variables) {
+    removeFromDOM('#buttonInputOverlay .inputError');
+
+    let isValid = true;
+
+    const displayError = (field, error) => {
+      const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
+      div(dom.parentElement, 'inputError', error);
+    };
+
+    for(const field of o.fields) {
+      if(field.type == 'choose' && asArray(variables[field.variable]).length < field.min)
+        isValid = displayError(field, `Please select at least ${field.min}.`);
+      if(field.type == 'choose' && asArray(variables[field.variable]).length > (field.max || 1))
+        isValid = displayError(field, `Please select at most ${field.min}.`);
+      if(field.type == 'number' && variables[field.variable] < field.min)
+        isValid = displayError(field, `Please enter a number above ${field.min}.`);
+      if(field.type == 'number' && variables[field.variable] > field.max)
+        isValid = displayError(field, `Please enter a number below ${field.max}.`);
+      try {
+        if(field.type == 'string' && field.regex && !variables[field.variable].match(field.regex))
+          isValid = displayError(field, field.regexHint || `Input does not match regular expression ${field.regex}.`);
+      } catch(e) {
+        isValid = displayError(field, `Regular expression ${field.regex} is invalid.`);
+      }
+    }
+
+    return isValid;
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
@@ -854,12 +901,12 @@ export class Widget extends StateManaged {
               return 1;
             }
           };
-          const getValue = function(input) {
+          const getValue = async function(input) {
             const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
             if(match[14] && match[9] !== undefined)
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
+              return await compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
             else if(match[14])
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
+              return await compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
             else
               return getParam(5, null);
           };
@@ -867,11 +914,11 @@ export class Widget extends StateManaged {
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
           const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
           if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
-            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
+            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
           else if(index !== undefined)
-            variables[variable][index] = getValue(variables[variable][index]);
+            variables[variable][index] = await getValue(variables[variable][index]);
           else
-            variables[variable] = getValue(variables[variable]);
+            variables[variable] = await getValue(variables[variable]);
           if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else {
           const comment = a.match(new RegExp('^(?://(.*))?\x24'));
@@ -879,7 +926,28 @@ export class Widget extends StateManaged {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
-            problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
+            const withoutVars = evaluateVariables(a).replace(/false|null/g, 0).replace(/true/g, 1);
+            const mathExpression = withoutVars.match(new RegExp(`^${left} += +([() 0-9.&|!*/+-]+)(?: +//.*)?`+'\x24'));
+            if(mathExpression) {
+              let result = null;
+              try {
+                result = +eval(mathExpression[5]);
+              } catch(e) {
+                problems.push(`The expression "${mathExpression[5]}" threw an exception: ${e}.`);
+                result = null;
+              }
+              const variable = mathExpression[1] !== undefined ? variables[unescape(mathExpression[2])] : unescape(mathExpression[2]);
+              const index = mathExpression[3] !== undefined ? variables[unescape(mathExpression[4])] : unescape(mathExpression[4]);
+              if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
+                problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
+              else if(index !== undefined)
+                variables[variable][index] = result;
+              else
+                variables[variable] = result;
+              if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], JSON.stringify(result));
+            } else {
+              problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
+            }
           }
         }
       }
@@ -1001,7 +1069,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CLICK') {
-        setDefaults(a, { collection: 'DEFAULT', count: 1 , mode: 'respect' });
+        setDefaults(a, { collection: 'DEFAULT', count: 1, mode: 'respect' });
         const collection = getCollection(a.collection);
 
         if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
@@ -1035,10 +1103,10 @@ export class Widget extends StateManaged {
         }
       }
 
-      function compute(o, v, x, y, z) {
+      async function compute(o, v, x, y, z) {
         try {
           if (compute_ops.find(op => op.name == o) !== undefined) {
-            v = compute_ops.find(op => op.name == o).call(v, x, y, z);
+            v = await compute_ops.find(op => op.name == o).call(v, x, y, z);
           }else {
             problems.push(`Operation ${o} is unsupported.`);
             return v = null;
@@ -1080,7 +1148,7 @@ export class Widget extends StateManaged {
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
+          jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
 
       }
 
@@ -1099,7 +1167,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: 0, face: null, faceCycle: null, collection: 'DEFAULT' });
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
@@ -1109,7 +1177,7 @@ export class Widget extends StateManaged {
             });
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
+            jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
             for(const c of collections[collection].slice(0, a.count || 999999))
@@ -1118,7 +1186,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
 
@@ -1269,7 +1337,7 @@ export class Widget extends StateManaged {
         if(a.condition !== undefined || a.operand1 !== undefined) {
           let condition = a.condition;
           if (condition === undefined)
-            condition = compute(a.relation, null, a.operand1, a.operand2);
+            condition = await compute(a.relation, null, a.operand1, a.operand2);
           const branch = condition ? 'thenRoutine' : 'elseRoutine';
           if(Array.isArray(a[branch]))
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
@@ -1285,14 +1353,16 @@ export class Widget extends StateManaged {
 
       if(a.func == 'INPUT') {
         try {
-          Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
+          const result = await this.showInputOverlay(a, widgets, variables, collections, getCollection, problems);
+          Object.assign(variables, result.variables);
+          Object.assign(collections, result.collections);
           if(jeRoutineLogging) {
             let varList = [];
             let valueList = [];
             a.fields.forEach(f=>{
               if(f.variable) {
                 varList.push(f.variable);
-                valueList.push(variables[f.variable]);
+                valueList.push(JSON.stringify(variables[f.variable]));
               }
             });
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
@@ -1342,49 +1412,72 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: 1, face: null });
-        const count = a.count || 999999;
+        setDefaults(a, { count: a.from ? 1 : 0, face: null, fillTo: null, collection: 'DEFAULT' });
+        const count = a.fillTo || a.count || 999999;
 
-        if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
-          await w(a.from, async source=>await w(a.to, async target=>{
-            for(const c of source.children().slice(0, count).reverse()) {
-              const applyFlip = async function() {
-                if(a.face !== null && c.flip)
-                  await c.flip(a.face);
-              };
-              if(source == target) {
-                await applyFlip();
-                await c.bringToFront();
-              } else {
-                c.movedByButton = true;
-                if(target.get('type') == 'seat') {
-                  if(target.get('hand') && target.get('player')) {
-                    if(widgets.has(target.get('hand'))) {
-                      const targetHand = widgets.get(target.get('hand'));
-                      await applyFlip();
-                      c.targetPlayer = target.get('player')
-                      await c.moveToHolder(targetHand);
-                      delete c.targetPlayer
-                      c.bringToFront()
-                      if(targetHand.get('type') == 'holder')
-                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
-                    } else {
-                      problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
-                    }
-                  } else {
-                    problems.push(`Seat ${target.id} is empty or does not define a hand.`);
-                  }
-                } else {
+        async function applyMove(source, target, c) {
+          let moved = 0;
+          const applyFlip = async function() {
+            if(a.face !== null && c.flip)
+              await c.flip(a.face);
+          };
+          if(source == target) {
+            await applyFlip();
+            await c.bringToFront();
+            ++moved;
+          } else if(!a.fillTo || target.children().length < a.fillTo) {
+            c.movedByButton = true;
+            if(target.get('type') == 'seat') {
+              if(target.get('hand') && target.get('player')) {
+                if(widgets.has(target.get('hand'))) {
+                  const targetHand = widgets.get(target.get('hand'));
                   await applyFlip();
-                  await c.moveToHolder(target);
+                  c.targetPlayer = target.get('player');
+                  await c.moveToHolder(targetHand);
+                  delete c.targetPlayer;
+                  await c.bringToFront();
+                  ++moved;
+                  if(targetHand.get('type') == 'holder')
+                    await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                } else {
+                  problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                 }
-                delete c.movedByButton;
+              } else {
+                problems.push(`Seat ${target.id} is empty or does not define a hand.`);
               }
+            } else {
+              await applyFlip();
+              await c.moveToHolder(target);
+              ++moved;
             }
-          }));
+            delete c.movedByButton;
+          }
+          return moved;
+        }
+
+        let collection;
+        if((a.collection || a.from) && this.isValidID(a.to, problems)) {
+          if(a.from) {
+            if(this.isValidID(a.from, problems)) {
+              await w(a.from, async source=>await w(a.to, async target=>{
+                for(const c of source.children().slice(0, count).reverse()) {
+                  await applyMove(source, target, c);
+                }
+              }));
+            } else {
+              problems.push(`Source ${a.from} is invalid.`);
+            }
+          } else if(collection = getCollection(a.collection)) {
+            let offset = 0;
+            await w(a.to, async target=>{
+              for(const c of collections[collection].slice(offset, offset+count))
+                offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
+              await target.updateAfterShuffle();
+            });
+          }
           if(jeRoutineLogging) {
-            const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
-            jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to '${a.to}'`)
+            const logCount = count==1 ? '1 widget' : `${count} widgets`;
+            jeLoggingRoutineOperationSummary(`${logCount} from '${a.from || a.collection}' to '${a.to}'`)
           }
         }
       }
@@ -1413,7 +1506,17 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true });
+        setDefaults(a, { owned: true, inHolder: true, excludeCollection: null });
+
+        let excludeCollection = null;
+        if(a.excludeCollection) {
+          if(excludeCollection = getCollection(a.excludeCollection)) {
+            excludeCollection = collections[excludeCollection].map(e => widgets.get(e.id));
+          } else {
+            problems.push(`The collection ${a.excludeCollection} you want to exclude does not exist.`);
+          }
+        }
+
         if(this.isValidID(a.holder, problems)) {
           for(const holder of asArray(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
@@ -1422,6 +1525,10 @@ export class Widget extends StateManaged {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
+                if(!a.inHolder)
+                  cards = cards.filter(c=>!c.get('_ancestor'));
+                if(a.excludeCollection && excludeCollection)
+                  cards = cards.filter(c=>!excludeCollection.includes(c));
                 for(const c of cards)
                   await c.moveToHolder(widgets.get(holder));
               }
@@ -1430,7 +1537,7 @@ export class Widget extends StateManaged {
             }
           };
           if(jeRoutineLogging) {
-            jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`)
+            jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`);
           }
         }
       }
@@ -1490,7 +1597,7 @@ export class Widget extends StateManaged {
           const seatRound = a.round === null ? newScore.length + 1 : a.round;
           if(a.round > newScore.length)
             newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
-          newScore[seatRound-1] = compute(relation, null, newScore[seatRound-1] || 0, a.value);
+          newScore[seatRound-1] = await compute(relation, null, newScore[seatRound-1] || 0, a.value);
           await seats[i].set(String(a.property), newScore);
         }
 
@@ -1576,7 +1683,7 @@ export class Widget extends StateManaged {
               const oldID = oldWidget.get('id');
               var newState = JSON.parse(oldState);
 
-              newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
+              newState.id = await compute(a.relation, null, oldWidget.get(a.property), a.value);
               if(!widgets.has(newState.id)) {
                 $('#editWidgetJSON').dataset.previousState = oldState;
                 $('#editWidgetJSON').value = JSON.stringify(newState);
@@ -1599,12 +1706,12 @@ export class Widget extends StateManaged {
               if(a.relation == '+' && a.value == null)
                 problems.push(`null value being appended, SET ignored`);
               else
-                await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+                await w.set(String(a.property), await compute(a.relation, null, w.get(String(a.property)), a.value));
             }
           }
         }
         if(jeRoutineLogging)
-          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} '${a.value}' for widgets in '${a.collection}'`);
+          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
       }
 
       if(a.func == 'SHUFFLE') {
@@ -1614,7 +1721,7 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await shuffleWidgets(holder.children());
-              if(holder.get('type') == 'holder')
+              if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
@@ -1627,7 +1734,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
 
@@ -1644,7 +1751,7 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              if(holder.get('type') == 'holder')
+              if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
           }
@@ -1654,7 +1761,7 @@ export class Widget extends StateManaged {
           if(collections[collection].length) {
             await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{
-              if(holder.get('type') == 'holder')
+              if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
           } else {
@@ -1667,7 +1774,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
-        let collection;
+        const collection = a.timer === undefined && getCollection(a.collection);
         if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
           a.mode = 'toggle'
@@ -1680,7 +1787,7 @@ export class Widget extends StateManaged {
                   await widget.setPaused(a.mode);
               });
             }
-          } else if(collection = getCollection(a.collection)) {
+          } else if(collection) {
             if(collections[collection].length) {
               for(const c of collections[collection])
                 if(c.setPaused)
@@ -1726,8 +1833,8 @@ export class Widget extends StateManaged {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
-        //copied from select
-        let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(w=>w.get('type')=='seat');
+        let c = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
+        c = c.filter(w => w.get('type') === 'seat');
 
         //this get the list of valid index
         const indexList = [];
@@ -1782,6 +1889,7 @@ export class Widget extends StateManaged {
           collections[a.collection] = c.filter(w=>w.get('index')==turn && w.get('player'));
 
         } else {
+
           jeLoggingRoutineOperationSummary(`no active seats found`);
         }
       }
@@ -1841,6 +1949,24 @@ export class Widget extends StateManaged {
           return super.get(property);
       }
     }
+  }
+
+  getWithPropertyReplacements(property) {
+    const properties = new Set();
+    let result = this.cssReplaceProperties(this.get(property), properties);
+    this.propertiesUsedInProperty[property] = Array.from(properties);
+    return result;
+  }
+
+  getWithPropertyReplacements_checkDelta(property, delta) {
+    for(const usedProperty of (this.propertiesUsedInProperty[property]||[]))
+      if(delta[usedProperty] !== undefined)
+        return true;
+    return false;
+  }
+
+  getFaceCount() {
+    return 1;
   }
 
   hideEnlarged() {
@@ -1949,6 +2075,8 @@ export class Widget extends StateManaged {
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('_ancestor'));
+      if(this.currentParent)
+        await this.set('hoverParent', this.get('_ancestor'));
       this.hoverTarget = null;
       this.disablePileUpdateAfterParentChange = true;
       await this.set('parent', null);
@@ -2158,6 +2286,36 @@ export class Widget extends StateManaged {
     return readOnlyProperties;
   }
 
+  renderReadonlyCopyRaw(state, target) {
+    delete state.id;
+    state.x = 0;
+    state.y = 0;
+    state.rotation = 0;
+    state.scale = 1;
+    state.parent = null;
+    state.owner = null;
+    state.linkedToSeat = null;
+    state.onlyVisibleForSeat = null;
+
+    this.applyInitialDelta(state);
+    target.appendChild(this.domElement);
+    if(this instanceof Card)
+      this.deck.removeCard(this);
+    return this;
+  }
+
+  renderReadonlyCopy(propertyOverride, target) {
+    return new this.constructor(generateUniqueWidgetID()).renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target);
+  }
+
+  requiresHiddenCursor() {
+    if(this.get('hidePlayerCursors'))
+      return true;
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      return widgets.get(this.get('parent')).requiresHiddenCursor();
+    return false;
+  }
+
   async rotate(degrees, mode) {
     if(!mode || mode == 'add')
       await this.set('rotation', (this.get('rotation') + degrees) % 360);
@@ -2197,14 +2355,6 @@ export class Widget extends StateManaged {
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
 
-  selected() {
-    this.domElement.classList.add('selected');
-  }
-
-  notSelected() {
-    this.domElement.classList.remove('selected');
-  }
-
   showEnlarged(event, delta) {
     if(this.get('enlarge')) {
       const id = this.get('id');
@@ -2232,13 +2382,23 @@ export class Widget extends StateManaged {
 
       e.className = this.domElement.className;
       e.dataset.id = id;
-      for(const clone of e.querySelectorAll('canvas')) {
-        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+
+      if(this.get('_ancestor') && widgets.has(this.get('_ancestor')) && widgets.get(this.get('_ancestor')).domElement.classList.contains('showCardBack'))
+        e.classList.add('showCardBack');
+
+      for(const clone of $a('canvas', e)) {
+        const original = $(`canvas[data-id = '${clone.dataset.id}']`, this.domElement);
         const context = clone.getContext('2d');
         clone.width = original.width;
         clone.height = original.height;
         context.drawImage(original, 0, 0);
       }
+
+      const originalTextareas = [...$a('textarea', this.domElement)];
+      const clonedTextareas   = [...$a('textarea', e)];
+      for(const i in originalTextareas)
+        clonedTextareas[i].value = originalTextareas[i].value;
+
       e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
@@ -2262,8 +2422,11 @@ export class Widget extends StateManaged {
       event.preventDefault();
   }
 
-  async showInputOverlay(o, widgets, variables, problems) {
+  async showInputOverlay(o, widgets, variables, collections, getCollection, problems) {
+    this.showInputOverlayWorkingState(false);
+
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
+    $('#buttonInputCancel').style.visibility = "visible";
     return new Promise((resolve, reject) => {
       const maxRandomRotate = o.randomRotation || 0;
       const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
@@ -2281,9 +2444,10 @@ export class Widget extends StateManaged {
       if(!o.confirmButtonText && !o.confirmButtonIcon){
         confirmButtonText = "Go";
       }
-      if(!o.cancelButtonText && !o.cancelButtonIcon){
+      if (o.cancelButtonText === null && o.cancelButtonIcon === null) {
+        $('#buttonInputCancel').style.visibility = "hidden";
+      } else if (!o.cancelButtonText && !o.cancelButtonIcon)
         cancelButtonText = "Cancel";
-      }
 
       $('#buttonInputGo label').textContent = o.confirmButtonText || confirmButtonText;
       $('#buttonInputCancel label').textContent = o.cancelButtonText || cancelButtonText;
@@ -2295,26 +2459,50 @@ export class Widget extends StateManaged {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
+
+        if(field.type == 'choose') {
+          let collection;
+          if(field.holder) {
+            field.widgets = [].concat(...asArray(field.holder).map(w=>widgets.has(w)?widgets.get(w).children():[])).map(w=>w.id);
+          } else if(collection = collections[getCollection(field.source || 'DEFAULT')]) {
+            field.widgets = collection.map(w=>w.id);
+          } else {
+            field.widgets = [];
+          }
+        }
+
         formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
       const goHandler = e=>{
-        this.evaluateInputOverlay(o, resolve, reject, true)
-        $('#buttonInputGo').removeEventListener('click', goHandler);
-        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
-        delete $('#activeGameButton').dataset.overlay;
+        if(this.evaluateInputOverlay(o, resolve, reject, true)) {
+          $('#buttonInputGo').removeEventListener('click', goHandler);
+          $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+          delete $('#activeGameButton').dataset.overlay;
+        }
       };
       const cancelHandler = e=>{
-        this.evaluateInputOverlay(o, resolve, reject, false)
-        $('#buttonInputGo').removeEventListener('click', goHandler);
-        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
-        delete $('#activeGameButton').dataset.overlay;
+        if(this.evaluateInputOverlay(o, resolve, reject, false)) {
+          $('#buttonInputGo').removeEventListener('click', goHandler);
+          $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+          delete $('#activeGameButton').dataset.overlay;
+        }
       };
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  showInputOverlayWorkingState(isWorking) {
+    for(const b of $a('#buttonInputOverlay button'))
+      b.style.disabled = isWorking;
+
+    if(isWorking) {
+      $('#buttonInputGo label').textContent = 'Working...';
+      $('#buttonInputCancel').style.visibility = 'hidden';
+    }
   }
 
   async snapToGrid() {

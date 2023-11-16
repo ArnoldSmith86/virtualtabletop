@@ -1,0 +1,7940 @@
+{
+  "_meta": {
+    "version": 14,
+    "info": {
+      "name": "Cirque de la Cascade",
+      "image": "/assets/-1765449141_209069",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/401216",
+      "year": "2024",
+      "mode": "vs",
+      "time": "60",
+      "attribution": "Game layout, design, and scripting by Andy Pymont and released to the Public Domain by CC0.\n\nTile graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• Blue city / Tightrope icon: https://game-icons.net/1x1/delapouite/tightrope.html\n• Meeple icon on Farm tiles: https://game-icons.net/1x1/delapouite/meeple.html\n• Orange city / Strongman icon: https://game-icons.net/1x1/delapouite/strong-man.html\n• Purple city / Jumping Dog icon: https://game-icons.net/1x1/delapouite/jumping-dog.html\n• Seal icon: https://game-icons.net/1x1/delapouite/juggling-seal.html\n• Tent icon: https://game-icons.net/1x1/delapouite/medieval-pavilion.html\n• Track progress / Fleur de Lys icon: https://game-icons.net/1x1/delapouite/fleur-de-lys.html\n• White city / Magic Trick icon: https://game-icons.net/1x1/delapouite/magick-trick.html\n• Achievement / Trophy icon: https://game-icons.net/1x1/lorc/trophy.html\n• Yellow city / Juggler icon: https://game-icons.net/1x1/lorc/juggler.html\n\nThe library image was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"A circus master juggles in front of a red and yellow tent in a forest clearing\".",
+      "lastUpdate": 1699281916000,
+      "id": "ni76",
+      "showName": true,
+      "skill": "",
+      "description": "Cascade and combo your way to running the greatest circus of them all!",
+      "variantImage": "",
+      "variant": "Cirque de la Cascade",
+      "language": "en-US",
+      "players": "2-4",
+      "similarImage": "",
+      "similarName": "Cascadero",
+      "similarAwards": "",
+      "similarDesigner": "Reiner Knizia",
+      "ruleText": "PREMISE\nAssemble the greatest circus by managing your recruitment of all five types of performer and beating your competitors to a series of awards. Your circus has a strong historical association with one particular type of performer, so make sure that your circus lives up to its reputation or you'll be disqualified from winning the game!\n\nOBJECTIVE\nHave the most points when the game end is triggered. Each player is also associated with one of the four non-white colored tracks on the right hand side of the board, and a player cannot win unless they have reached the top of their own track.\n\nThe game end will be triggered when either one player has reached 50 or more points at the end of their turn, or when a player begins a turn and has no remaining tent pieces to place.\n\nPLAYER TURNS\nOn your turn, place one tent piece on the board. If you own one or more seals, you may place this along with your tent in the same space. Either way, your placement may cause cities to be scored and other actions to take place, after which play continues with the next player around the table.\n\nPLACING A TENT\nA tent may be placed on any unoccupied, plains (green non-city) hex on the board.\n\nSCORING CITIES\nIf the tent you place during your turn forms part of a group of 2 or more tents of your color connected contiguously, and this tent is the first of that group to be placed next to a particular city, then that city is scored.\n\nIf you place a seal with a tent, then this tent counts as a group even if it is not connected to one or more other tents of your color.\n\nScoring a city entitles you to move your cube up the track with the same icon and color on the right hand side of the board.\n\nADVANCING ON THE TRACKS\nIf the tent placed is the first tent next to the city being scored, the player advances one space on the matching track. If it is not the first tent (of any player) but does meet the requirements for scoring, then the player instead moves two spaces on the matching track. In both cases, if there is a circus scout (white meeple) present in the city, then advance one additional space, i.e two or three spaces in total.\n\nADVANCEMENT REWARDS\nWhenever you advance to or beyond a lighter, non-shaded space on a track, you receive the corresponding reward. The rewards for the blue tightrope artist, yellow juggler, orange strongman, and purple animal trainer tracks are the same at each level and are shown to the left of the tracks; the rewards for the white magician track are different and are shown to the right of the tracks.\n\nTo receive the reward for a darker, shaded space, you must advance exactly to this space, i.e. these rewards, unlike the others, are not awarded if you pass through and beyond them during a city scoring.\n\nThe spaces marked with an X which break up the tracks are still spaces and you must count them when advancing. However, you may not move into these spaces except as part of a scoring that moves you beyond them - if you gain a single move and are in the space before an X, then you do not advance your cube.\n\nIf there are two rewards listed with a forwardslash \"/\" between them, then the reward to the left of the slash is given to the first player to reach this level of the track and the reward to the right is given to any subsequent players to do so.\n\nDETAILS OF THE REWARDS\nGain the rewards in order from lower on the track to higher, with the exception of extra turns, which you take at the conclusion of this turn.\n\n• Numbers indicate points, which are scored immediately.\n• A cube with an upwards arrow indicates that you immediately advance your cube on any one track by one space, gaining the reward as usual.\n• The tent with a plus symbol indicates that you take an additional turn at the conclusion of this turn.\n• The seal icon means that you collect the seal from this track and place it in your player area. You may place this alongside your tent on any future turn as discussed above.\n• The tent with a right arrow icon allows you to move one of your tent pieces on the board to an unoccupied space directly adjacent to it. Unlike placing a new tent, moving a tent in this way does not trigger city scoring.\n\nAWARDS\nIn the middle section of the board are a series of awards which any player may claim at any point when they have achieved it. Place one of your trophy markers next to the corresponding award and receive the number of points indicated.\n\nEXCLUSIVE AWARDS\nThe white awards at the top of the awards column are exclusive awards which are claimed by the first player to achieve them. Once claimed, no other player may claim them. The claiming player receives 3 points.\n\n• 5 x 1 Fleur: Have all 5 of your cubes at the 1-Fleur level of the tracks (4 advances from the start).\n• 3 x 2 Fleur: Have 3 different cubes at the 2-Fleur level of the tracks (10 advances from the start).\n• 1 x 3 Fleur: Have 1 cube at the 3-Fleur level of a track (the top space, 15 advances from the start).\n• 3 Seals: Have 3 seals in your player area (i.e. do not count those placed on the board).\n• Connect 5 ≠: Have a group of your connected tents which is adjacent to 5 different cities, i.e. one of each color.\n• Connect 3 =: Have a group of your connected tents which is adjacent to 3 cities of the same color.\n\nNON-EXCLUSIVE AWARDS\nThe green award section contains awards which are not exclusive, but instead each player can claim each non-exclusive award once per game.\n\nThe first five awards in this section each require having a group of your connected tents which is adjacent to 2 cities of the same, corresponding color and awards 2 points.\n\nThe sixth and final award is given for having achieved the five other non-exclusive (green section) awards and awards 10 points.\n\nVARIANT: MOVING SCOUTS\nPlay with only two scouts instead of four. They begin on the two white cities in the horizontal centre of the board. Any time when a city containing a scout is scored, moved the scout to another city which:\n• Is within 3 hexes of the city that was scored;\n• Does not already contain a scout; and\n• Is not fully surrounded by tent pieces.\n\nVARIANT: ALTERNATIVE BOARD\nThe alternative board shows farms (randomly distributed each game among spaces between cities) where your circus can resupply and engage with the community. In order to place a tent piece in a farm space you must already have a tent piece in an adjacent hex.\n\nWhen placing on the farm hex, you immediately gain the corresponding reward:\n• 2: Gain 2 points\n• 3: Gain 3 points\n• Cube with upwards arrow: Advance your cube on any one track, gaining rewards as usual.\n• Plus Tent: Take another turn immediately after the conclusion of this turn.\n• Circus Scout Meeple: Move one of the circus scouts to any other city on the board that does not already have a scout and is not fully surrounded by tent pieces.\n\nYou may move a tent piece onto an adjacent farm with the Move a Tent track reward and in this case you do immmediately gain the benefit of the farm.",
+      "helpText": "Have all players take a seat and then press the New Game button and select the setup which you would like to use."
+    }
+  },
+  "board-map": {
+    "id": "board-map",
+    "x": 5,
+    "y": 28.845,
+    "width": 736,
+    "height": 942.31,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/1956322477_103637",
+    "cities-★": [
+      "holder-hex-e8",
+      "holder-hex-k10",
+      "holder-hex-e22",
+      "holder-hex-k24"
+    ],
+    "cities-⏺": [
+      "holder-hex-b7",
+      "holder-hex-m6",
+      "holder-hex-c26",
+      "holder-hex-n25"
+    ],
+    "cities-✖": [
+      "holder-hex-j5",
+      "holder-hex-d17",
+      "holder-hex-l15",
+      "holder-hex-f27"
+    ],
+    "cities-M": [
+      "holder-hex-h9",
+      "holder-hex-h23"
+    ]
+  },
+  "board-tracks": {
+    "id": "board-tracks",
+    "width": 680,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-934154697_92275",
+    "height": 732,
+    "x": 915,
+    "y": 263
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "x": 1000,
+    "y": 5,
+    "width": 96,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "16px"
+      },
+      ".seated": {
+        "background": "${PROPERTY mainColor}",
+        "border": "5px solid #000000"
+      },
+      ".seated.turn": {
+        "border": "5px dotted #000000"
+      }
+    },
+    "mainColor": "#6495ed",
+    "hideWhenUnused": true
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "x": 1096,
+    "y": 5,
+    "width": 96,
+    "index": 2,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seat-p1": [
+        "css",
+        "hideWhenUnused"
+      ]
+    },
+    "mainColor": "#ffff66",
+    "color": "#999999",
+    "turn": false
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "x": 1192,
+    "y": 5,
+    "width": 96,
+    "index": 3,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seat-p1": [
+        "css",
+        "hideWhenUnused"
+      ]
+    },
+    "mainColor": "#ff9f00",
+    "color": "#999999",
+    "turn": false
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "x": 1288,
+    "y": 5,
+    "width": 96,
+    "index": 4,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seat-p1": [
+        "css",
+        "hideWhenUnused"
+      ]
+    },
+    "mainColor": "#da70d6",
+    "color": "#999999",
+    "turn": false
+  },
+  "score-p1": {
+    "type": "label",
+    "id": "score-p1",
+    "x": 1000,
+    "y": 55,
+    "width": 96,
+    "height": 35,
+    "text": 0,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "linkedToSeat": "seat-p1"
+  },
+  "score-p2": {
+    "type": "label",
+    "id": "score-p2",
+    "x": 1096,
+    "y": 55,
+    "text": 0,
+    "inheritFrom": "score-p1",
+    "movable": false,
+    "movableInEdit": true,
+    "linkedToSeat": "seat-p2"
+  },
+  "score-p3": {
+    "type": "label",
+    "id": "score-p3",
+    "x": 1192,
+    "y": 55,
+    "text": 0,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "score-p1",
+    "linkedToSeat": "seat-p3"
+  },
+  "score-p4": {
+    "type": "label",
+    "id": "score-p4",
+    "x": 1288,
+    "y": 55,
+    "text": 0,
+    "inheritFrom": "score-p1",
+    "movable": false,
+    "movableInEdit": true,
+    "linkedToSeat": "seat-p4"
+  },
+  "button-score-p1-dec": {
+    "type": "button",
+    "id": "button-score-p1-dec",
+    "text": "remove",
+    "clickRoutine": [
+      "var counter = ${PROPERTY parent}",
+      "var current = ${PROPERTY text OF $counter}",
+      {
+        "func": "IF",
+        "operand1": "${current}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${counter}",
+            "mode": "dec",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "parent": "score-p1",
+    "fixedParent": true,
+    "width": 22,
+    "height": 22,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "border": "1px solid #333333",
+      "font-size": "15px"
+    },
+    "y": 6.5,
+    "x": 6,
+    "borderRadius": 5
+  },
+  "button-score-p1-inc": {
+    "type": "button",
+    "id": "button-score-p1-inc",
+    "parent": "score-p1",
+    "fixedParent": true,
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "inheritFrom": "button-score-p1-dec",
+    "x": 68
+  },
+  "button-score-p2-dec": {
+    "type": "button",
+    "id": "button-score-p2-dec",
+    "parent": "score-p2",
+    "fixedParent": true,
+    "inheritFrom": "button-score-p1-dec"
+  },
+  "button-score-p3-dec": {
+    "type": "button",
+    "id": "button-score-p3-dec",
+    "parent": "score-p3",
+    "fixedParent": true,
+    "inheritFrom": "button-score-p1-dec"
+  },
+  "button-score-p4-dec": {
+    "type": "button",
+    "id": "button-score-p4-dec",
+    "parent": "score-p4",
+    "fixedParent": true,
+    "inheritFrom": "button-score-p1-dec"
+  },
+  "button-score-p2-inc": {
+    "type": "button",
+    "id": "button-score-p2-inc",
+    "parent": "score-p2",
+    "fixedParent": true,
+    "inheritFrom": "button-score-p1-inc"
+  },
+  "button-score-p3-inc": {
+    "type": "button",
+    "id": "button-score-p3-inc",
+    "parent": "score-p3",
+    "fixedParent": true,
+    "inheritFrom": "button-score-p1-inc"
+  },
+  "button-score-p4-inc": {
+    "type": "button",
+    "id": "button-score-p4-inc",
+    "parent": "score-p4",
+    "fixedParent": true,
+    "inheritFrom": "button-score-p1-inc"
+  },
+  "holder-p1-seals": {
+    "type": "holder",
+    "id": "holder-p1-seals",
+    "x": 1040,
+    "y": 200,
+    "linkedToSeat": "seat-p1",
+    "inheritFrom": "holder-p1-tents",
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "cardType": "seal"
+    }
+  },
+  "label-p1-seals": {
+    "type": "basic",
+    "id": "label-p1-seals",
+    "parent": "holder-p1-seals",
+    "inheritFrom": "label-p1-tents",
+    "image": "/assets/-200578267_2266"
+  },
+  "holder-p1-trophies": {
+    "type": "holder",
+    "id": "holder-p1-trophies",
+    "x": 1040,
+    "y": 150,
+    "linkedToSeat": "seat-p1",
+    "inheritFrom": "holder-p1-tents",
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "cardType": "blue-trophy"
+    }
+  },
+  "holder-p2-trophies": {
+    "type": "holder",
+    "id": "holder-p2-trophies",
+    "inheritFrom": "holder-p1-trophies",
+    "linkedToSeat": "seat-p2",
+    "x": 1136,
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "cardType": "yellow-trophy"
+    }
+  },
+  "holder-p3-trophies": {
+    "type": "holder",
+    "id": "holder-p3-trophies",
+    "x": 1232,
+    "inheritFrom": "holder-p1-trophies",
+    "linkedToSeat": "seat-p3",
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "cardType": "orange-trophy"
+    }
+  },
+  "holder-p4-trophies": {
+    "type": "holder",
+    "id": "holder-p4-trophies",
+    "x": 1328,
+    "linkedToSeat": "seat-p4",
+    "inheritFrom": "holder-p1-trophies",
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "cardType": "purple-trophy"
+    }
+  },
+  "label-p1-trophies": {
+    "type": "basic",
+    "id": "label-p1-trophies",
+    "parent": "holder-p1-trophies",
+    "image": "/assets/1259151166_2177",
+    "inheritFrom": "label-p1-tents"
+  },
+  "label-p2-trophies": {
+    "type": "basic",
+    "id": "label-p2-trophies",
+    "parent": "holder-p2-trophies",
+    "inheritFrom": "label-p1-trophies"
+  },
+  "label-p3-trophies": {
+    "type": "basic",
+    "id": "label-p3-trophies",
+    "parent": "holder-p3-trophies",
+    "inheritFrom": "label-p1-trophies"
+  },
+  "label-p4-trophies": {
+    "type": "basic",
+    "id": "label-p4-trophies",
+    "parent": "holder-p4-trophies",
+    "inheritFrom": "label-p1-trophies"
+  },
+  "label-p1-tents": {
+    "type": "basic",
+    "id": "label-p1-tents",
+    "parent": "holder-p1-tents",
+    "x": -35,
+    "width": 30,
+    "height": 30,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/1327072617_3264",
+    "y": 5
+  },
+  "holder-p1-tents": {
+    "type": "holder",
+    "id": "holder-p1-tents",
+    "x": 1040,
+    "y": 100,
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "linkedToSeat": "seat-p1",
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "cardType": "blue-tent"
+    }
+  },
+  "holder-p2-tents": {
+    "type": "holder",
+    "id": "holder-p2-tents",
+    "x": 1136,
+    "y": 100,
+    "inheritFrom": "holder-p1-tents",
+    "linkedToSeat": "seat-p2",
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "cardType": "yellow-tent"
+    }
+  },
+  "holder-p3-tents": {
+    "type": "holder",
+    "id": "holder-p3-tents",
+    "x": 1232,
+    "y": 100,
+    "inheritFrom": "holder-p1-tents",
+    "linkedToSeat": "seat-p3",
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "cardType": "orange-tent"
+    }
+  },
+  "holder-p4-tents": {
+    "type": "holder",
+    "id": "holder-p4-tents",
+    "x": 1328,
+    "y": 100,
+    "inheritFrom": "holder-p1-tents",
+    "linkedToSeat": "seat-p4",
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "cardType": "purple-tent"
+    }
+  },
+  "label-p2-tents": {
+    "type": "basic",
+    "id": "label-p2-tents",
+    "parent": "holder-p2-tents",
+    "inheritFrom": "label-p1-tents"
+  },
+  "label-p3-tents": {
+    "type": "basic",
+    "id": "label-p3-tents",
+    "parent": "holder-p3-tents",
+    "inheritFrom": "label-p1-tents"
+  },
+  "label-p4-tents": {
+    "type": "basic",
+    "id": "label-p4-tents",
+    "parent": "holder-p4-tents",
+    "inheritFrom": "label-p1-tents"
+  },
+  "holder-p2-seals": {
+    "type": "holder",
+    "id": "holder-p2-seals",
+    "x": 1136,
+    "y": 200,
+    "linkedToSeat": "seat-p2",
+    "inheritFrom": "holder-p1-seals"
+  },
+  "label-p2-seals": {
+    "type": "basic",
+    "id": "label-p2-seals",
+    "parent": "holder-p2-seals",
+    "inheritFrom": "label-p2-tents",
+    "image": "/assets/-200578267_2266"
+  },
+  "holder-p3-seals": {
+    "type": "holder",
+    "id": "holder-p3-seals",
+    "x": 1232,
+    "y": 200,
+    "linkedToSeat": "seat-p3",
+    "inheritFrom": "holder-p1-seals"
+  },
+  "label-p3-seals": {
+    "type": "basic",
+    "id": "label-p3-seals",
+    "parent": "holder-p3-seals",
+    "inheritFrom": "label-p3-tents",
+    "image": "/assets/-200578267_2266"
+  },
+  "holder-p4-seals": {
+    "type": "holder",
+    "id": "holder-p4-seals",
+    "x": 1328,
+    "y": 200,
+    "linkedToSeat": "seat-p4",
+    "inheritFrom": "holder-p1-seals"
+  },
+  "label-p4-seals": {
+    "type": "basic",
+    "id": "label-p4-seals",
+    "parent": "holder-p4-seals",
+    "inheritFrom": "label-p4-tents",
+    "image": "/assets/-200578267_2266"
+  },
+  "deck-tokens": {
+    "type": "deck",
+    "id": "deck-tokens",
+    "parent": "holder-p1-tents",
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "cardDefaults": {
+      "layer": 1,
+      "width": 35,
+      "height": 35,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white",
+          "width": "25px",
+          "height": "25px",
+          "font-size": "16px"
+        },
+        "handlePosition": "middle right"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 35,
+            "height": 35,
+            "css": {
+              "border-color": "#333333",
+              "border-radius": "8px",
+              "border-style": "solid",
+              "border-width": "0.5px"
+            },
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "x": 2.5,
+            "y": 2.5,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "blue-tent": {
+        "color": "#6495ed",
+        "image": "/assets/1327072617_3264"
+      },
+      "orange-tent": {
+        "color": "#ff9f00",
+        "image": "/assets/1327072617_3264"
+      },
+      "purple-tent": {
+        "color": "#da70d6",
+        "image": "/assets/1327072617_3264"
+      },
+      "yellow-tent": {
+        "color": "#ffff66",
+        "image": "/assets/1327072617_3264"
+      },
+      "blue-trophy": {
+        "color": "#6495ed",
+        "image": "/assets/1259151166_2177"
+      },
+      "orange-trophy": {
+        "color": "#ff9f00",
+        "image": "/assets/1259151166_2177"
+      },
+      "purple-trophy": {
+        "color": "#da70d6",
+        "image": "/assets/1259151166_2177"
+      },
+      "yellow-trophy": {
+        "color": "#ffff66",
+        "image": "/assets/1259151166_2177"
+      },
+      "seal": {
+        "color": "#dddddd",
+        "image": "/assets/-200578267_2266",
+        "layer": 0
+      }
+    }
+  },
+  "holder-cubes-blue-15": {
+    "type": "holder",
+    "id": "holder-cubes-blue-15",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 60,
+    "width": 86,
+    "height": 42,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropTarget": {
+      "deck": "deck-cubes"
+    },
+    "dropOffsetY": 8.5,
+    "stackOffsetX": 18
+  },
+  "deck-cubes": {
+    "type": "deck",
+    "id": "deck-cubes",
+    "parent": "holder-cubes-blue-15",
+    "width": 25,
+    "height": 25,
+    "movable": false,
+    "movableInEdit": false,
+    "cardDefaults": {
+      "width": 25,
+      "height": 25,
+      "css": {
+        "border-radius": "50%/35%"
+      },
+      "borderColor": "#333333",
+      "borderWidth": 1,
+      "secondaryColor": "black"
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 25,
+            "height": 25,
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#secondaryColor": "secondaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            },
+            "value": "/i/game-pieces/3D/Cube-3D.svg"
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "blue-cube": {
+        "color": "#6495ed"
+      },
+      "orange-cube": {
+        "color": "#ff9f00"
+      },
+      "purple-cube": {
+        "color": "#da70d6"
+      },
+      "yellow-cube": {
+        "color": "#ffff66"
+      }
+    }
+  },
+  "holder-cubes-blue-14": {
+    "type": "holder",
+    "id": "holder-cubes-blue-14",
+    "parent": "board-tracks",
+    "inheritFrom": "holder-cubes-blue-15",
+    "x": 90,
+    "y": 102
+  },
+  "holder-cubes-blue-13": {
+    "type": "holder",
+    "id": "holder-cubes-blue-13",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 144,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-12": {
+    "type": "holder",
+    "id": "holder-cubes-blue-12",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 186,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-10": {
+    "type": "holder",
+    "id": "holder-cubes-blue-10",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 270,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-9": {
+    "type": "holder",
+    "id": "holder-cubes-blue-9",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 312,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-8": {
+    "type": "holder",
+    "id": "holder-cubes-blue-8",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 354,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-7": {
+    "type": "holder",
+    "id": "holder-cubes-blue-7",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 396,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-6": {
+    "type": "holder",
+    "id": "holder-cubes-blue-6",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 438,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-4": {
+    "type": "holder",
+    "id": "holder-cubes-blue-4",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 522,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-3": {
+    "type": "holder",
+    "id": "holder-cubes-blue-3",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 564,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-2": {
+    "type": "holder",
+    "id": "holder-cubes-blue-2",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 606,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-1": {
+    "type": "holder",
+    "id": "holder-cubes-blue-1",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 648,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-blue-0": {
+    "type": "holder",
+    "id": "holder-cubes-blue-0",
+    "parent": "board-tracks",
+    "x": 90,
+    "y": 690,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-15": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-15",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 60,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-14": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-14",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 102,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-13": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-13",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 144,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-12": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-12",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 186,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-10": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-10",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 270,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-9": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-9",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 312,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-7": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-7",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 396,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-8": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-8",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 354,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-6": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-6",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 438,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-4": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-4",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 522,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-3": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-3",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 564,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-2": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-2",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 606,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-1": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-1",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 648,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-yellow-0": {
+    "type": "holder",
+    "id": "holder-cubes-yellow-0",
+    "parent": "board-tracks",
+    "x": 186,
+    "y": 690,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-15": {
+    "type": "holder",
+    "id": "holder-cubes-orange-15",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 60,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-14": {
+    "type": "holder",
+    "id": "holder-cubes-orange-14",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 102,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-13": {
+    "type": "holder",
+    "id": "holder-cubes-orange-13",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 144,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-12": {
+    "type": "holder",
+    "id": "holder-cubes-orange-12",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 186,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-9": {
+    "type": "holder",
+    "id": "holder-cubes-orange-9",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 312,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-7": {
+    "type": "holder",
+    "id": "holder-cubes-orange-7",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 396,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-8": {
+    "type": "holder",
+    "id": "holder-cubes-orange-8",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 354,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-6": {
+    "type": "holder",
+    "id": "holder-cubes-orange-6",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 438,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-3": {
+    "type": "holder",
+    "id": "holder-cubes-orange-3",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 564,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-2": {
+    "type": "holder",
+    "id": "holder-cubes-orange-2",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 606,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-1": {
+    "type": "holder",
+    "id": "holder-cubes-orange-1",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 648,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-0": {
+    "type": "holder",
+    "id": "holder-cubes-orange-0",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 690,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-4": {
+    "type": "holder",
+    "id": "holder-cubes-orange-4",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 522,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-orange-10": {
+    "type": "holder",
+    "id": "holder-cubes-orange-10",
+    "parent": "board-tracks",
+    "x": 282,
+    "y": 270,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-15": {
+    "type": "holder",
+    "id": "holder-cubes-purple-15",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 60,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-14": {
+    "type": "holder",
+    "id": "holder-cubes-purple-14",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 102,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-13": {
+    "type": "holder",
+    "id": "holder-cubes-purple-13",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 144,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-12": {
+    "type": "holder",
+    "id": "holder-cubes-purple-12",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 186,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-10": {
+    "type": "holder",
+    "id": "holder-cubes-purple-10",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 270,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-9": {
+    "type": "holder",
+    "id": "holder-cubes-purple-9",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 312,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-8": {
+    "type": "holder",
+    "id": "holder-cubes-purple-8",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 354,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-7": {
+    "type": "holder",
+    "id": "holder-cubes-purple-7",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 396,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-6": {
+    "type": "holder",
+    "id": "holder-cubes-purple-6",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 438,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-0": {
+    "type": "holder",
+    "id": "holder-cubes-purple-0",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 690,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-1": {
+    "type": "holder",
+    "id": "holder-cubes-purple-1",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 648,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-2": {
+    "type": "holder",
+    "id": "holder-cubes-purple-2",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 606,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-3": {
+    "type": "holder",
+    "id": "holder-cubes-purple-3",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 564,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-purple-4": {
+    "type": "holder",
+    "id": "holder-cubes-purple-4",
+    "parent": "board-tracks",
+    "x": 378,
+    "y": 522,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-0": {
+    "type": "holder",
+    "id": "holder-cubes-white-0",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 690,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-1": {
+    "type": "holder",
+    "id": "holder-cubes-white-1",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 648,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-2": {
+    "type": "holder",
+    "id": "holder-cubes-white-2",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 606,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-3": {
+    "type": "holder",
+    "id": "holder-cubes-white-3",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 564,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-4": {
+    "type": "holder",
+    "id": "holder-cubes-white-4",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 522,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-6": {
+    "type": "holder",
+    "id": "holder-cubes-white-6",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 438,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-7": {
+    "type": "holder",
+    "id": "holder-cubes-white-7",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 396,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-8": {
+    "type": "holder",
+    "id": "holder-cubes-white-8",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 354,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-9": {
+    "type": "holder",
+    "id": "holder-cubes-white-9",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 312,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-10": {
+    "type": "holder",
+    "id": "holder-cubes-white-10",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 270,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-12": {
+    "type": "holder",
+    "id": "holder-cubes-white-12",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 186,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-13": {
+    "type": "holder",
+    "id": "holder-cubes-white-13",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 144,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-14": {
+    "type": "holder",
+    "id": "holder-cubes-white-14",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 102,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "holder-cubes-white-15": {
+    "type": "holder",
+    "id": "holder-cubes-white-15",
+    "parent": "board-tracks",
+    "x": 514,
+    "y": 60,
+    "inheritFrom": "holder-cubes-blue-15"
+  },
+  "blue-cube-1": {
+    "type": "card",
+    "id": "blue-cube-1",
+    "parent": "holder-cubes-blue-0",
+    "deck": "deck-cubes",
+    "cardType": "blue-cube",
+    "x": 4,
+    "y": 8.5,
+    "z": 1
+  },
+  "blue-cube-2": {
+    "type": "card",
+    "id": "blue-cube-2",
+    "parent": "holder-cubes-yellow-0",
+    "deck": "deck-cubes",
+    "cardType": "blue-cube",
+    "x": 4,
+    "y": 8.5,
+    "z": 1
+  },
+  "blue-cube-3": {
+    "type": "card",
+    "id": "blue-cube-3",
+    "parent": "holder-cubes-orange-0",
+    "deck": "deck-cubes",
+    "cardType": "blue-cube",
+    "x": 4,
+    "y": 8.5,
+    "z": 1
+  },
+  "blue-cube-5": {
+    "type": "card",
+    "id": "blue-cube-5",
+    "parent": "holder-cubes-white-0",
+    "deck": "deck-cubes",
+    "cardType": "blue-cube",
+    "x": 4,
+    "y": 8.5,
+    "z": 1
+  },
+  "blue-cube-4": {
+    "type": "card",
+    "id": "blue-cube-4",
+    "parent": "holder-cubes-purple-0",
+    "deck": "deck-cubes",
+    "cardType": "blue-cube",
+    "x": 4,
+    "y": 8.5,
+    "z": 1
+  },
+  "orange-cube-1": {
+    "type": "card",
+    "id": "orange-cube-1",
+    "parent": "holder-cubes-blue-0",
+    "deck": "deck-cubes",
+    "cardType": "orange-cube",
+    "x": 40,
+    "y": 8.5,
+    "z": 3
+  },
+  "yellow-cube-1": {
+    "type": "card",
+    "id": "yellow-cube-1",
+    "parent": "holder-cubes-blue-0",
+    "deck": "deck-cubes",
+    "cardType": "yellow-cube",
+    "x": 22,
+    "y": 8.5,
+    "z": 2
+  },
+  "purple-cube-1": {
+    "type": "card",
+    "id": "purple-cube-1",
+    "parent": "holder-cubes-blue-0",
+    "deck": "deck-cubes",
+    "cardType": "purple-cube",
+    "x": 58,
+    "y": 8.5,
+    "z": 4
+  },
+  "yellow-cube-3": {
+    "type": "card",
+    "id": "yellow-cube-3",
+    "parent": "holder-cubes-orange-0",
+    "deck": "deck-cubes",
+    "cardType": "yellow-cube",
+    "x": 22,
+    "y": 8.5,
+    "z": 2
+  },
+  "purple-cube-3": {
+    "type": "card",
+    "id": "purple-cube-3",
+    "parent": "holder-cubes-orange-0",
+    "deck": "deck-cubes",
+    "cardType": "purple-cube",
+    "x": 58,
+    "y": 8.5,
+    "z": 4
+  },
+  "orange-cube-3": {
+    "type": "card",
+    "id": "orange-cube-3",
+    "deck": "deck-cubes",
+    "cardType": "orange-cube",
+    "x": 40,
+    "y": 8.5,
+    "z": 3,
+    "parent": "holder-cubes-orange-0"
+  },
+  "purple-cube-4": {
+    "type": "card",
+    "id": "purple-cube-4",
+    "parent": "holder-cubes-purple-0",
+    "deck": "deck-cubes",
+    "cardType": "purple-cube",
+    "x": 58,
+    "y": 8.5,
+    "z": 4
+  },
+  "orange-cube-4": {
+    "type": "card",
+    "id": "orange-cube-4",
+    "parent": "holder-cubes-purple-0",
+    "deck": "deck-cubes",
+    "cardType": "orange-cube",
+    "x": 40,
+    "y": 8.5,
+    "z": 3
+  },
+  "yellow-cube-4": {
+    "type": "card",
+    "id": "yellow-cube-4",
+    "parent": "holder-cubes-purple-0",
+    "deck": "deck-cubes",
+    "cardType": "yellow-cube",
+    "x": 22,
+    "y": 8.5,
+    "z": 2
+  },
+  "yellow-cube-5": {
+    "type": "card",
+    "id": "yellow-cube-5",
+    "parent": "holder-cubes-white-0",
+    "deck": "deck-cubes",
+    "cardType": "yellow-cube",
+    "x": 22,
+    "y": 8.5,
+    "z": 2
+  },
+  "purple-cube-2": {
+    "type": "card",
+    "id": "purple-cube-2",
+    "parent": "holder-cubes-yellow-0",
+    "deck": "deck-cubes",
+    "cardType": "purple-cube",
+    "x": 58,
+    "y": 8.5,
+    "z": 4
+  },
+  "orange-cube-2": {
+    "type": "card",
+    "id": "orange-cube-2",
+    "parent": "holder-cubes-yellow-0",
+    "deck": "deck-cubes",
+    "cardType": "orange-cube",
+    "x": 40,
+    "y": 8.5,
+    "z": 3
+  },
+  "purple-cube-5": {
+    "type": "card",
+    "id": "purple-cube-5",
+    "parent": "holder-cubes-white-0",
+    "deck": "deck-cubes",
+    "cardType": "purple-cube",
+    "x": 58,
+    "y": 8.5,
+    "z": 4
+  },
+  "yellow-cube-2": {
+    "type": "card",
+    "id": "yellow-cube-2",
+    "parent": "holder-cubes-yellow-0",
+    "deck": "deck-cubes",
+    "cardType": "yellow-cube",
+    "x": 22,
+    "y": 8.5,
+    "z": 2
+  },
+  "orange-cube-5": {
+    "type": "card",
+    "id": "orange-cube-5",
+    "parent": "holder-cubes-white-0",
+    "deck": "deck-cubes",
+    "cardType": "orange-cube",
+    "x": 40,
+    "y": 8.5,
+    "z": 3
+  },
+  "holder-trophy-achievement-01": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-01",
+    "x": 16.75,
+    "y": 3.5,
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "image": "/assets/1259151166_2177"
+    },
+    "inheritFrom": "holder-p1-tents",
+    "parent": "board-trophies",
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1
+  },
+  "board-trophies": {
+    "id": "board-trophies",
+    "x": 750,
+    "y": 55,
+    "width": 155,
+    "height": 890,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1775305545_68632"
+  },
+  "holder-trophy-achievement-02": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-02",
+    "parent": "board-trophies",
+    "x": 99.25,
+    "y": 3.5,
+    "inheritFrom": "holder-trophy-achievement-01"
+  },
+  "holder-trophy-achievement-03": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-03",
+    "parent": "board-trophies",
+    "x": 16.75,
+    "y": 93.5,
+    "inheritFrom": "holder-trophy-achievement-01"
+  },
+  "holder-trophy-achievement-04": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-04",
+    "parent": "board-trophies",
+    "x": 99.25,
+    "y": 93.5,
+    "inheritFrom": "holder-trophy-achievement-01"
+  },
+  "holder-trophy-achievement-05": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-05",
+    "parent": "board-trophies",
+    "x": 16.75,
+    "y": 183.5,
+    "inheritFrom": "holder-trophy-achievement-01"
+  },
+  "holder-trophy-achievement-06": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-06",
+    "parent": "board-trophies",
+    "x": 99.25,
+    "y": 183.5,
+    "inheritFrom": "holder-trophy-achievement-01"
+  },
+  "holder-trophy-achievement-07": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-07",
+    "parent": "board-trophies",
+    "x": 16.75,
+    "y": 273.5,
+    "inheritFrom": "holder-trophy-achievement-01",
+    "dropLimit": 4,
+    "stackOffsetY": 40,
+    "height": 160
+  },
+  "holder-trophy-achievement-08": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-08",
+    "parent": "board-trophies",
+    "x": 99.25,
+    "y": 273.5,
+    "inheritFrom": "holder-trophy-achievement-07"
+  },
+  "holder-trophy-achievement-09": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-09",
+    "parent": "board-trophies",
+    "x": 16.75,
+    "y": 483.5,
+    "inheritFrom": "holder-trophy-achievement-07"
+  },
+  "holder-trophy-achievement-10": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-10",
+    "parent": "board-trophies",
+    "x": 99.25,
+    "y": 483.5,
+    "inheritFrom": "holder-trophy-achievement-07"
+  },
+  "holder-trophy-achievement-11": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-11",
+    "parent": "board-trophies",
+    "x": 16.75,
+    "y": 693.5,
+    "inheritFrom": "holder-trophy-achievement-07"
+  },
+  "holder-trophy-achievement-12": {
+    "type": "holder",
+    "id": "holder-trophy-achievement-12",
+    "parent": "board-trophies",
+    "x": 99.25,
+    "y": 693.5,
+    "inheritFrom": "holder-trophy-achievement-07"
+  },
+  "holder-meeples": {
+    "type": "holder",
+    "id": "holder-meeples",
+    "x": 1450,
+    "y": -100,
+    "width": 50,
+    "height": 50,
+    "dropOffsetX": 2.5,
+    "dropOffsetY": 2.5,
+    "dropTarget": {
+      "deck": "deck-meeples"
+    }
+  },
+  "deck-meeples": {
+    "type": "deck",
+    "id": "deck-meeples",
+    "parent": "holder-meeples",
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "movableInEdit": false,
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 45,
+            "height": 45,
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            },
+            "value": "i/game-pieces/3D/Meeple-3D.svg"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 45,
+      "height": 45,
+      "color": "#fefefe",
+      "borderColor": "#333333",
+      "borderWidth": "0.5px",
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white",
+          "width": "25px",
+          "height": "25px",
+          "font-size": "16px"
+        },
+        "handlePosition": "middle right"
+      }
+    },
+    "cardTypes": {
+      "meeple": {}
+    }
+  },
+  "meeple-1": {
+    "type": "card",
+    "id": "meeple-1",
+    "deck": "deck-meeples",
+    "cardType": "meeple",
+    "z": 3906,
+    "parent": "holder-hex-k10",
+    "x": 9.5,
+    "y": 5.215
+  },
+  "meeple-2": {
+    "type": "card",
+    "id": "meeple-2",
+    "deck": "deck-meeples",
+    "cardType": "meeple",
+    "z": 3907,
+    "parent": "holder-hex-e22",
+    "x": 9.5,
+    "y": 5.215
+  },
+  "meeple-3": {
+    "type": "card",
+    "id": "meeple-3",
+    "deck": "deck-meeples",
+    "cardType": "meeple",
+    "z": 3905,
+    "parent": "holder-hex-e8",
+    "x": 9.5,
+    "y": 5.215
+  },
+  "meeple-4": {
+    "type": "card",
+    "id": "meeple-4",
+    "deck": "deck-meeples",
+    "cardType": "meeple",
+    "z": 3908,
+    "parent": "holder-hex-k24",
+    "x": 9.5,
+    "y": 5.215
+  },
+  "holder-hex-a4": {
+    "type": "holder",
+    "id": "holder-hex-a4",
+    "parent": "board-map",
+    "y": 110.86,
+    "width": 64,
+    "height": 55.43,
+    "dropLimit": 1,
+    "dropOffsetX": 14.5,
+    "dropOffsetY": 10.215,
+    "dropTarget": {
+      "deck": "deck-tokens",
+      "image": "/assets/1327072617_3264"
+    },
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%)"
+      },
+      ".droptarget": {
+        "background": "#00000050"
+      }
+    },
+    "layer": -2
+  },
+  "holder-hex-a6": {
+    "type": "holder",
+    "id": "holder-hex-a6",
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "pile-blue-tents": {
+    "type": "pile",
+    "id": "pile-blue-tents",
+    "x": 2.5,
+    "y": 2.5,
+    "width": 35,
+    "height": 35,
+    "handleCSS": {
+      "background": "black",
+      "color": "white",
+      "width": "25px",
+      "height": "25px",
+      "font-size": "16px"
+    },
+    "handlePosition": "middle right",
+    "z": 75,
+    "parent": "holder-p1-tents",
+    "movable": false
+  },
+  "blue-tent-01": {
+    "type": "card",
+    "id": "blue-tent-01",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7193
+  },
+  "blue-tent-02": {
+    "type": "card",
+    "id": "blue-tent-02",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7195
+  },
+  "blue-tent-03": {
+    "type": "card",
+    "id": "blue-tent-03",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7197,
+    "parent": "pile-blue-tents"
+  },
+  "blue-tent-04": {
+    "type": "card",
+    "id": "blue-tent-04",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7199
+  },
+  "blue-tent-05": {
+    "type": "card",
+    "id": "blue-tent-05",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7201
+  },
+  "blue-tent-06": {
+    "type": "card",
+    "id": "blue-tent-06",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7203
+  },
+  "blue-tent-07": {
+    "type": "card",
+    "id": "blue-tent-07",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7205
+  },
+  "blue-tent-08": {
+    "type": "card",
+    "id": "blue-tent-08",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7207
+  },
+  "blue-tent-09": {
+    "type": "card",
+    "id": "blue-tent-09",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7209
+  },
+  "blue-tent-10": {
+    "type": "card",
+    "id": "blue-tent-10",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7211
+  },
+  "blue-tent-11": {
+    "type": "card",
+    "id": "blue-tent-11",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7213
+  },
+  "blue-tent-12": {
+    "type": "card",
+    "id": "blue-tent-12",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7215
+  },
+  "blue-tent-13": {
+    "type": "card",
+    "id": "blue-tent-13",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7217
+  },
+  "blue-tent-14": {
+    "type": "card",
+    "id": "blue-tent-14",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7219
+  },
+  "blue-tent-15": {
+    "type": "card",
+    "id": "blue-tent-15",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7221,
+    "parent": "pile-blue-tents"
+  },
+  "blue-tent-16": {
+    "type": "card",
+    "id": "blue-tent-16",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7223
+  },
+  "blue-tent-17": {
+    "type": "card",
+    "id": "blue-tent-17",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7225
+  },
+  "blue-tent-19": {
+    "type": "card",
+    "id": "blue-tent-19",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7227
+  },
+  "blue-tent-18": {
+    "type": "card",
+    "id": "blue-tent-18",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7229
+  },
+  "blue-tent-20": {
+    "type": "card",
+    "id": "blue-tent-20",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7231
+  },
+  "blue-tent-21": {
+    "type": "card",
+    "id": "blue-tent-21",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7233
+  },
+  "blue-tent-22": {
+    "type": "card",
+    "id": "blue-tent-22",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7235
+  },
+  "blue-tent-23": {
+    "type": "card",
+    "id": "blue-tent-23",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7237
+  },
+  "blue-tent-24": {
+    "type": "card",
+    "id": "blue-tent-24",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7239
+  },
+  "blue-tent-25": {
+    "type": "card",
+    "id": "blue-tent-25",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7241
+  },
+  "blue-tent-26": {
+    "type": "card",
+    "id": "blue-tent-26",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7243
+  },
+  "blue-tent-28": {
+    "type": "card",
+    "id": "blue-tent-28",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7245
+  },
+  "blue-tent-27": {
+    "type": "card",
+    "id": "blue-tent-27",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7247
+  },
+  "blue-tent-29": {
+    "type": "card",
+    "id": "blue-tent-29",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7249
+  },
+  "blue-tent-30": {
+    "type": "card",
+    "id": "blue-tent-30",
+    "parent": "pile-blue-tents",
+    "deck": "deck-tokens",
+    "cardType": "blue-tent",
+    "z": 7251
+  },
+  "orange-tent-01": {
+    "type": "card",
+    "id": "orange-tent-01",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7313
+  },
+  "orange-tent-02": {
+    "type": "card",
+    "id": "orange-tent-02",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7557
+  },
+  "orange-tent-03": {
+    "type": "card",
+    "id": "orange-tent-03",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7558
+  },
+  "orange-tent-04": {
+    "type": "card",
+    "id": "orange-tent-04",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7559
+  },
+  "orange-tent-05": {
+    "type": "card",
+    "id": "orange-tent-05",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7560
+  },
+  "orange-tent-06": {
+    "type": "card",
+    "id": "orange-tent-06",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7561
+  },
+  "orange-tent-07": {
+    "type": "card",
+    "id": "orange-tent-07",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7562
+  },
+  "orange-tent-08": {
+    "type": "card",
+    "id": "orange-tent-08",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7563
+  },
+  "orange-tent-09": {
+    "type": "card",
+    "id": "orange-tent-09",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7564
+  },
+  "orange-tent-10": {
+    "type": "card",
+    "id": "orange-tent-10",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7565
+  },
+  "orange-tent-11": {
+    "type": "card",
+    "id": "orange-tent-11",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7566
+  },
+  "orange-tent-12": {
+    "type": "card",
+    "id": "orange-tent-12",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7567
+  },
+  "orange-tent-13": {
+    "type": "card",
+    "id": "orange-tent-13",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7568
+  },
+  "orange-tent-14": {
+    "type": "card",
+    "id": "orange-tent-14",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7569
+  },
+  "orange-tent-15": {
+    "type": "card",
+    "id": "orange-tent-15",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7570
+  },
+  "orange-tent-16": {
+    "type": "card",
+    "id": "orange-tent-16",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7571
+  },
+  "orange-tent-17": {
+    "type": "card",
+    "id": "orange-tent-17",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7572
+  },
+  "orange-tent-18": {
+    "type": "card",
+    "id": "orange-tent-18",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7573
+  },
+  "orange-tent-19": {
+    "type": "card",
+    "id": "orange-tent-19",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7574
+  },
+  "orange-tent-20": {
+    "type": "card",
+    "id": "orange-tent-20",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7575
+  },
+  "orange-tent-21": {
+    "type": "card",
+    "id": "orange-tent-21",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7576
+  },
+  "orange-tent-22": {
+    "type": "card",
+    "id": "orange-tent-22",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7577
+  },
+  "orange-tent-24": {
+    "type": "card",
+    "id": "orange-tent-24",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7578
+  },
+  "orange-tent-23": {
+    "type": "card",
+    "id": "orange-tent-23",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7579
+  },
+  "orange-tent-25": {
+    "type": "card",
+    "id": "orange-tent-25",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7580
+  },
+  "orange-tent-26": {
+    "type": "card",
+    "id": "orange-tent-26",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7581
+  },
+  "orange-tent-27": {
+    "type": "card",
+    "id": "orange-tent-27",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7582
+  },
+  "orange-tent-29": {
+    "type": "card",
+    "id": "orange-tent-29",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7583
+  },
+  "orange-tent-28": {
+    "type": "card",
+    "id": "orange-tent-28",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7584
+  },
+  "orange-tent-30": {
+    "type": "card",
+    "id": "orange-tent-30",
+    "parent": "u5lj",
+    "deck": "deck-tokens",
+    "cardType": "orange-tent",
+    "z": 7585
+  },
+  "purple-tent-01": {
+    "type": "card",
+    "id": "purple-tent-01",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7373
+  },
+  "purple-tent-02": {
+    "type": "card",
+    "id": "purple-tent-02",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7586
+  },
+  "purple-tent-03": {
+    "type": "card",
+    "id": "purple-tent-03",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7587
+  },
+  "purple-tent-04": {
+    "type": "card",
+    "id": "purple-tent-04",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7588
+  },
+  "purple-tent-05": {
+    "type": "card",
+    "id": "purple-tent-05",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7589
+  },
+  "purple-tent-06": {
+    "type": "card",
+    "id": "purple-tent-06",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7590
+  },
+  "purple-tent-07": {
+    "type": "card",
+    "id": "purple-tent-07",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7591
+  },
+  "purple-tent-08": {
+    "type": "card",
+    "id": "purple-tent-08",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7592
+  },
+  "purple-tent-09": {
+    "type": "card",
+    "id": "purple-tent-09",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7593
+  },
+  "purple-tent-10": {
+    "type": "card",
+    "id": "purple-tent-10",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7594
+  },
+  "purple-tent-11": {
+    "type": "card",
+    "id": "purple-tent-11",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7595
+  },
+  "purple-tent-12": {
+    "type": "card",
+    "id": "purple-tent-12",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7596
+  },
+  "purple-tent-13": {
+    "type": "card",
+    "id": "purple-tent-13",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7597
+  },
+  "purple-tent-14": {
+    "type": "card",
+    "id": "purple-tent-14",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7598
+  },
+  "purple-tent-15": {
+    "type": "card",
+    "id": "purple-tent-15",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7599
+  },
+  "purple-tent-16": {
+    "type": "card",
+    "id": "purple-tent-16",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7600
+  },
+  "purple-tent-17": {
+    "type": "card",
+    "id": "purple-tent-17",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7601
+  },
+  "purple-tent-18": {
+    "type": "card",
+    "id": "purple-tent-18",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7602
+  },
+  "purple-tent-19": {
+    "type": "card",
+    "id": "purple-tent-19",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7603
+  },
+  "purple-tent-20": {
+    "type": "card",
+    "id": "purple-tent-20",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7604
+  },
+  "purple-tent-21": {
+    "type": "card",
+    "id": "purple-tent-21",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7605
+  },
+  "purple-tent-22": {
+    "type": "card",
+    "id": "purple-tent-22",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7606
+  },
+  "purple-tent-23": {
+    "type": "card",
+    "id": "purple-tent-23",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7607
+  },
+  "purple-tent-24": {
+    "type": "card",
+    "id": "purple-tent-24",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7608
+  },
+  "purple-tent-25": {
+    "type": "card",
+    "id": "purple-tent-25",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7609
+  },
+  "purple-tent-26": {
+    "type": "card",
+    "id": "purple-tent-26",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7610
+  },
+  "purple-tent-27": {
+    "type": "card",
+    "id": "purple-tent-27",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7611
+  },
+  "purple-tent-28": {
+    "type": "card",
+    "id": "purple-tent-28",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7612
+  },
+  "purple-tent-29": {
+    "type": "card",
+    "id": "purple-tent-29",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7613
+  },
+  "purple-tent-30": {
+    "type": "card",
+    "id": "purple-tent-30",
+    "parent": "e0n4",
+    "deck": "deck-tokens",
+    "cardType": "purple-tent",
+    "z": 7614
+  },
+  "yellow-tent-01": {
+    "type": "card",
+    "id": "yellow-tent-01",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7253
+  },
+  "yellow-tent-02": {
+    "type": "card",
+    "id": "yellow-tent-02",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7528
+  },
+  "yellow-tent-03": {
+    "type": "card",
+    "id": "yellow-tent-03",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7529
+  },
+  "yellow-tent-04": {
+    "type": "card",
+    "id": "yellow-tent-04",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7530
+  },
+  "yellow-tent-05": {
+    "type": "card",
+    "id": "yellow-tent-05",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7531
+  },
+  "yellow-tent-06": {
+    "type": "card",
+    "id": "yellow-tent-06",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7532
+  },
+  "yellow-tent-07": {
+    "type": "card",
+    "id": "yellow-tent-07",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7533
+  },
+  "yellow-tent-08": {
+    "type": "card",
+    "id": "yellow-tent-08",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7534
+  },
+  "yellow-tent-09": {
+    "type": "card",
+    "id": "yellow-tent-09",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7535
+  },
+  "yellow-tent-10": {
+    "type": "card",
+    "id": "yellow-tent-10",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7536
+  },
+  "yellow-tent-11": {
+    "type": "card",
+    "id": "yellow-tent-11",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7537,
+    "parent": "jdnt"
+  },
+  "yellow-tent-12": {
+    "type": "card",
+    "id": "yellow-tent-12",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7538
+  },
+  "yellow-tent-13": {
+    "type": "card",
+    "id": "yellow-tent-13",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7539
+  },
+  "yellow-tent-14": {
+    "type": "card",
+    "id": "yellow-tent-14",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7540
+  },
+  "yellow-tent-15": {
+    "type": "card",
+    "id": "yellow-tent-15",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7541
+  },
+  "yellow-tent-16": {
+    "type": "card",
+    "id": "yellow-tent-16",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7542
+  },
+  "yellow-tent-17": {
+    "type": "card",
+    "id": "yellow-tent-17",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7543
+  },
+  "yellow-tent-18": {
+    "type": "card",
+    "id": "yellow-tent-18",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7544
+  },
+  "yellow-tent-19": {
+    "type": "card",
+    "id": "yellow-tent-19",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7545
+  },
+  "yellow-tent-20": {
+    "type": "card",
+    "id": "yellow-tent-20",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7546
+  },
+  "yellow-tent-21": {
+    "type": "card",
+    "id": "yellow-tent-21",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7547
+  },
+  "yellow-tent-22": {
+    "type": "card",
+    "id": "yellow-tent-22",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7548
+  },
+  "yellow-tent-23": {
+    "type": "card",
+    "id": "yellow-tent-23",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7549
+  },
+  "yellow-tent-24": {
+    "type": "card",
+    "id": "yellow-tent-24",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7550
+  },
+  "yellow-tent-26": {
+    "type": "card",
+    "id": "yellow-tent-26",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7551
+  },
+  "yellow-tent-27": {
+    "type": "card",
+    "id": "yellow-tent-27",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7552
+  },
+  "yellow-tent-28": {
+    "type": "card",
+    "id": "yellow-tent-28",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7553
+  },
+  "yellow-tent-29": {
+    "type": "card",
+    "id": "yellow-tent-29",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7554
+  },
+  "yellow-tent-30": {
+    "type": "card",
+    "id": "yellow-tent-30",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7555
+  },
+  "yellow-tent-25": {
+    "type": "card",
+    "id": "yellow-tent-25",
+    "parent": "jdnt",
+    "deck": "deck-tokens",
+    "cardType": "yellow-tent",
+    "z": 7556
+  },
+  "blue-trophy-01": {
+    "type": "card",
+    "id": "blue-trophy-01",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7433
+  },
+  "blue-trophy-02": {
+    "type": "card",
+    "id": "blue-trophy-02",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7615
+  },
+  "blue-trophy-03": {
+    "type": "card",
+    "id": "blue-trophy-03",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7616
+  },
+  "blue-trophy-04": {
+    "type": "card",
+    "id": "blue-trophy-04",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7617
+  },
+  "blue-trophy-05": {
+    "type": "card",
+    "id": "blue-trophy-05",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7618,
+    "parent": "lpte"
+  },
+  "blue-trophy-06": {
+    "type": "card",
+    "id": "blue-trophy-06",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7619
+  },
+  "blue-trophy-07": {
+    "type": "card",
+    "id": "blue-trophy-07",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7620
+  },
+  "blue-trophy-08": {
+    "type": "card",
+    "id": "blue-trophy-08",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7621
+  },
+  "blue-trophy-09": {
+    "type": "card",
+    "id": "blue-trophy-09",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7622
+  },
+  "blue-trophy-10": {
+    "type": "card",
+    "id": "blue-trophy-10",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7623
+  },
+  "blue-trophy-11": {
+    "type": "card",
+    "id": "blue-trophy-11",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7624
+  },
+  "blue-trophy-12": {
+    "type": "card",
+    "id": "blue-trophy-12",
+    "parent": "lpte",
+    "deck": "deck-tokens",
+    "cardType": "blue-trophy",
+    "z": 7625
+  },
+  "yellow-trophy-01": {
+    "type": "card",
+    "id": "yellow-trophy-01",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7457
+  },
+  "yellow-trophy-02": {
+    "type": "card",
+    "id": "yellow-trophy-02",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7626
+  },
+  "yellow-trophy-03": {
+    "type": "card",
+    "id": "yellow-trophy-03",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7627
+  },
+  "yellow-trophy-04": {
+    "type": "card",
+    "id": "yellow-trophy-04",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7628
+  },
+  "yellow-trophy-05": {
+    "type": "card",
+    "id": "yellow-trophy-05",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7629
+  },
+  "yellow-trophy-06": {
+    "type": "card",
+    "id": "yellow-trophy-06",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7630
+  },
+  "yellow-trophy-07": {
+    "type": "card",
+    "id": "yellow-trophy-07",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7631
+  },
+  "yellow-trophy-08": {
+    "type": "card",
+    "id": "yellow-trophy-08",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7632
+  },
+  "yellow-trophy-10": {
+    "type": "card",
+    "id": "yellow-trophy-10",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7633
+  },
+  "yellow-trophy-09": {
+    "type": "card",
+    "id": "yellow-trophy-09",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7634
+  },
+  "yellow-trophy-11": {
+    "type": "card",
+    "id": "yellow-trophy-11",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7635,
+    "parent": "k1q0"
+  },
+  "yellow-trophy-12": {
+    "type": "card",
+    "id": "yellow-trophy-12",
+    "parent": "k1q0",
+    "deck": "deck-tokens",
+    "cardType": "yellow-trophy",
+    "z": 7636
+  },
+  "orange-trophy-01": {
+    "type": "card",
+    "id": "orange-trophy-01",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7481
+  },
+  "orange-trophy-02": {
+    "type": "card",
+    "id": "orange-trophy-02",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7637
+  },
+  "orange-trophy-03": {
+    "type": "card",
+    "id": "orange-trophy-03",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7638
+  },
+  "orange-trophy-04": {
+    "type": "card",
+    "id": "orange-trophy-04",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7639
+  },
+  "orange-trophy-05": {
+    "type": "card",
+    "id": "orange-trophy-05",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7640
+  },
+  "orange-trophy-06": {
+    "type": "card",
+    "id": "orange-trophy-06",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7641,
+    "parent": "2b2z"
+  },
+  "orange-trophy-07": {
+    "type": "card",
+    "id": "orange-trophy-07",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7642
+  },
+  "orange-trophy-08": {
+    "type": "card",
+    "id": "orange-trophy-08",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7643
+  },
+  "orange-trophy-09": {
+    "type": "card",
+    "id": "orange-trophy-09",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7644
+  },
+  "orange-trophy-10": {
+    "type": "card",
+    "id": "orange-trophy-10",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7645
+  },
+  "orange-trophy-12": {
+    "type": "card",
+    "id": "orange-trophy-12",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7646
+  },
+  "orange-trophy-11": {
+    "type": "card",
+    "id": "orange-trophy-11",
+    "parent": "2b2z",
+    "deck": "deck-tokens",
+    "cardType": "orange-trophy",
+    "z": 7647
+  },
+  "purple-trophy-01": {
+    "type": "card",
+    "id": "purple-trophy-01",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7505
+  },
+  "purple-trophy-02": {
+    "type": "card",
+    "id": "purple-trophy-02",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7648
+  },
+  "purple-trophy-03": {
+    "type": "card",
+    "id": "purple-trophy-03",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7649
+  },
+  "purple-trophy-04": {
+    "type": "card",
+    "id": "purple-trophy-04",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7650
+  },
+  "purple-trophy-05": {
+    "type": "card",
+    "id": "purple-trophy-05",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7651
+  },
+  "purple-trophy-06": {
+    "type": "card",
+    "id": "purple-trophy-06",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7652
+  },
+  "purple-trophy-08": {
+    "type": "card",
+    "id": "purple-trophy-08",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7653
+  },
+  "purple-trophy-07": {
+    "type": "card",
+    "id": "purple-trophy-07",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7654
+  },
+  "purple-trophy-09": {
+    "type": "card",
+    "id": "purple-trophy-09",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7655
+  },
+  "purple-trophy-10": {
+    "type": "card",
+    "id": "purple-trophy-10",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7656
+  },
+  "purple-trophy-11": {
+    "type": "card",
+    "id": "purple-trophy-11",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7657,
+    "parent": "y8dt"
+  },
+  "purple-trophy-12": {
+    "type": "card",
+    "id": "purple-trophy-12",
+    "parent": "y8dt",
+    "deck": "deck-tokens",
+    "cardType": "purple-trophy",
+    "z": 7658
+  },
+  "holder-hex-a13": {
+    "type": "holder",
+    "id": "holder-hex-a13",
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-a30": {
+    "type": "holder",
+    "id": "holder-hex-a30",
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-a28": {
+    "type": "holder",
+    "id": "holder-hex-a28",
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-a26": {
+    "type": "holder",
+    "id": "holder-hex-a26",
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-a24": {
+    "type": "holder",
+    "id": "holder-hex-a24",
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-a22": {
+    "type": "holder",
+    "id": "holder-hex-a22",
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-a20": {
+    "type": "holder",
+    "id": "holder-hex-a20",
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-a18": {
+    "type": "holder",
+    "id": "holder-hex-a18",
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-a14": {
+    "type": "holder",
+    "id": "holder-hex-a14",
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-a12": {
+    "type": "holder",
+    "id": "holder-hex-a12",
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-a10": {
+    "type": "holder",
+    "id": "holder-hex-a10",
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-a8": {
+    "type": "holder",
+    "id": "holder-hex-a8",
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b3": {
+    "type": "holder",
+    "id": "holder-hex-b3",
+    "parent": "board-map",
+    "x": 48,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b1": {
+    "type": "holder",
+    "id": "holder-hex-b1",
+    "parent": "board-map",
+    "inheritFrom": "holder-hex-a4",
+    "x": 48,
+    "y": 27.715
+  },
+  "holder-hex-b5": {
+    "type": "holder",
+    "id": "holder-hex-b5",
+    "parent": "board-map",
+    "x": 48,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b31": {
+    "type": "holder",
+    "id": "holder-hex-b31",
+    "parent": "board-map",
+    "x": 48,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b29": {
+    "type": "holder",
+    "id": "holder-hex-b29",
+    "parent": "board-map",
+    "x": 48,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b27": {
+    "type": "holder",
+    "id": "holder-hex-b27",
+    "parent": "board-map",
+    "x": 48,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b25": {
+    "type": "holder",
+    "id": "holder-hex-b25",
+    "parent": "board-map",
+    "x": 48,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b23": {
+    "type": "holder",
+    "id": "holder-hex-b23",
+    "parent": "board-map",
+    "x": 48,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b21": {
+    "type": "holder",
+    "id": "holder-hex-b21",
+    "parent": "board-map",
+    "x": 48,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-b19": {
+    "type": "holder",
+    "id": "holder-hex-b19",
+    "parent": "board-map",
+    "x": 48,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b17": {
+    "type": "holder",
+    "id": "holder-hex-b17",
+    "parent": "board-map",
+    "x": 48,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b15": {
+    "type": "holder",
+    "id": "holder-hex-b15",
+    "parent": "board-map",
+    "x": 48,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b13": {
+    "type": "holder",
+    "id": "holder-hex-b13",
+    "parent": "board-map",
+    "x": 48,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b11": {
+    "type": "holder",
+    "id": "holder-hex-b11",
+    "parent": "board-map",
+    "x": 48,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b9": {
+    "type": "holder",
+    "id": "holder-hex-b9",
+    "parent": "board-map",
+    "x": 48,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-b7": {
+    "type": "holder",
+    "id": "holder-hex-b7",
+    "parent": "board-map",
+    "x": 48,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-c2": {
+    "type": "holder",
+    "id": "holder-hex-c2",
+    "parent": "board-map",
+    "x": 96,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c30": {
+    "type": "holder",
+    "id": "holder-hex-c30",
+    "parent": "board-map",
+    "x": 96,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c28": {
+    "type": "holder",
+    "id": "holder-hex-c28",
+    "parent": "board-map",
+    "x": 96,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c26": {
+    "type": "holder",
+    "id": "holder-hex-c26",
+    "parent": "board-map",
+    "x": 96,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-c24": {
+    "type": "holder",
+    "id": "holder-hex-c24",
+    "parent": "board-map",
+    "x": 96,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c22": {
+    "type": "holder",
+    "id": "holder-hex-c22",
+    "parent": "board-map",
+    "x": 96,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c20": {
+    "type": "holder",
+    "id": "holder-hex-c20",
+    "parent": "board-map",
+    "x": 96,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c18": {
+    "type": "holder",
+    "id": "holder-hex-c18",
+    "parent": "board-map",
+    "x": 96,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c16": {
+    "type": "holder",
+    "id": "holder-hex-c16",
+    "parent": "board-map",
+    "x": 96,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c14": {
+    "type": "holder",
+    "id": "holder-hex-c14",
+    "parent": "board-map",
+    "x": 96,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c12": {
+    "type": "holder",
+    "id": "holder-hex-c12",
+    "parent": "board-map",
+    "x": 96,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-c10": {
+    "type": "holder",
+    "id": "holder-hex-c10",
+    "parent": "board-map",
+    "x": 96,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c8": {
+    "type": "holder",
+    "id": "holder-hex-c8",
+    "parent": "board-map",
+    "x": 96,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c6": {
+    "type": "holder",
+    "id": "holder-hex-c6",
+    "parent": "board-map",
+    "x": 96,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-c4": {
+    "type": "holder",
+    "id": "holder-hex-c4",
+    "parent": "board-map",
+    "x": 96,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-a2": {
+    "type": "holder",
+    "id": "holder-hex-a2",
+    "parent": "board-map",
+    "y": 55.43,
+    "width": 64,
+    "height": 55.43,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%)"
+      },
+      ".droptarget": {
+        "background": "#00000050"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 9.5,
+    "dropOffsetY": 5.215,
+    "dropTarget": {
+      "deck": "deck-meeples"
+    },
+    "layer": -2
+  },
+  "holder-hex-d1": {
+    "type": "holder",
+    "id": "holder-hex-d1",
+    "parent": "board-map",
+    "x": 144,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d31": {
+    "type": "holder",
+    "id": "holder-hex-d31",
+    "parent": "board-map",
+    "x": 144,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-d29": {
+    "type": "holder",
+    "id": "holder-hex-d29",
+    "parent": "board-map",
+    "x": 144,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d27": {
+    "type": "holder",
+    "id": "holder-hex-d27",
+    "parent": "board-map",
+    "x": 144,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d25": {
+    "type": "holder",
+    "id": "holder-hex-d25",
+    "parent": "board-map",
+    "x": 144,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d23": {
+    "type": "holder",
+    "id": "holder-hex-d23",
+    "parent": "board-map",
+    "x": 144,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d21": {
+    "type": "holder",
+    "id": "holder-hex-d21",
+    "parent": "board-map",
+    "x": 144,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d19": {
+    "type": "holder",
+    "id": "holder-hex-d19",
+    "parent": "board-map",
+    "x": 144,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d17": {
+    "type": "holder",
+    "id": "holder-hex-d17",
+    "parent": "board-map",
+    "x": 144,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-d15": {
+    "type": "holder",
+    "id": "holder-hex-d15",
+    "parent": "board-map",
+    "x": 144,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d13": {
+    "type": "holder",
+    "id": "holder-hex-d13",
+    "parent": "board-map",
+    "x": 144,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d11": {
+    "type": "holder",
+    "id": "holder-hex-d11",
+    "parent": "board-map",
+    "x": 144,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d9": {
+    "type": "holder",
+    "id": "holder-hex-d9",
+    "parent": "board-map",
+    "x": 144,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d7": {
+    "type": "holder",
+    "id": "holder-hex-d7",
+    "parent": "board-map",
+    "x": 144,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d5": {
+    "type": "holder",
+    "id": "holder-hex-d5",
+    "parent": "board-map",
+    "x": 144,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-d3": {
+    "type": "holder",
+    "id": "holder-hex-d3",
+    "parent": "board-map",
+    "x": 144,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-e2": {
+    "type": "holder",
+    "id": "holder-hex-e2",
+    "parent": "board-map",
+    "x": 192,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e4": {
+    "type": "holder",
+    "id": "holder-hex-e4",
+    "parent": "board-map",
+    "x": 192,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e6": {
+    "type": "holder",
+    "id": "holder-hex-e6",
+    "parent": "board-map",
+    "x": 192,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e8": {
+    "type": "holder",
+    "id": "holder-hex-e8",
+    "parent": "board-map",
+    "x": 192,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-e10": {
+    "type": "holder",
+    "id": "holder-hex-e10",
+    "parent": "board-map",
+    "x": 192,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e12": {
+    "type": "holder",
+    "id": "holder-hex-e12",
+    "parent": "board-map",
+    "x": 192,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e14": {
+    "type": "holder",
+    "id": "holder-hex-e14",
+    "parent": "board-map",
+    "x": 192,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e16": {
+    "type": "holder",
+    "id": "holder-hex-e16",
+    "parent": "board-map",
+    "x": 192,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e18": {
+    "type": "holder",
+    "id": "holder-hex-e18",
+    "parent": "board-map",
+    "x": 192,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e20": {
+    "type": "holder",
+    "id": "holder-hex-e20",
+    "parent": "board-map",
+    "x": 192,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e22": {
+    "type": "holder",
+    "id": "holder-hex-e22",
+    "parent": "board-map",
+    "x": 192,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-e24": {
+    "type": "holder",
+    "id": "holder-hex-e24",
+    "parent": "board-map",
+    "x": 192,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e26": {
+    "type": "holder",
+    "id": "holder-hex-e26",
+    "parent": "board-map",
+    "x": 192,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e28": {
+    "type": "holder",
+    "id": "holder-hex-e28",
+    "parent": "board-map",
+    "x": 192,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-e30": {
+    "type": "holder",
+    "id": "holder-hex-e30",
+    "parent": "board-map",
+    "x": 192,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f1": {
+    "type": "holder",
+    "id": "holder-hex-f1",
+    "parent": "board-map",
+    "x": 240,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f3": {
+    "type": "holder",
+    "id": "holder-hex-f3",
+    "parent": "board-map",
+    "x": 240,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f5": {
+    "type": "holder",
+    "id": "holder-hex-f5",
+    "parent": "board-map",
+    "x": 240,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f7": {
+    "type": "holder",
+    "id": "holder-hex-f7",
+    "parent": "board-map",
+    "x": 240,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f9": {
+    "type": "holder",
+    "id": "holder-hex-f9",
+    "parent": "board-map",
+    "x": 240,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f11": {
+    "type": "holder",
+    "id": "holder-hex-f11",
+    "parent": "board-map",
+    "x": 240,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f13": {
+    "type": "holder",
+    "id": "holder-hex-f13",
+    "parent": "board-map",
+    "x": 240,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f15": {
+    "type": "holder",
+    "id": "holder-hex-f15",
+    "parent": "board-map",
+    "x": 240,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f17": {
+    "type": "holder",
+    "id": "holder-hex-f17",
+    "parent": "board-map",
+    "x": 240,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f19": {
+    "type": "holder",
+    "id": "holder-hex-f19",
+    "parent": "board-map",
+    "x": 240,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f21": {
+    "type": "holder",
+    "id": "holder-hex-f21",
+    "parent": "board-map",
+    "x": 240,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f23": {
+    "type": "holder",
+    "id": "holder-hex-f23",
+    "parent": "board-map",
+    "x": 240,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f25": {
+    "type": "holder",
+    "id": "holder-hex-f25",
+    "parent": "board-map",
+    "x": 240,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f27": {
+    "type": "holder",
+    "id": "holder-hex-f27",
+    "parent": "board-map",
+    "x": 240,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f29": {
+    "type": "holder",
+    "id": "holder-hex-f29",
+    "parent": "board-map",
+    "x": 240,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f31": {
+    "type": "holder",
+    "id": "holder-hex-f31",
+    "parent": "board-map",
+    "x": 240,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "seal-01": {
+    "type": "card",
+    "id": "seal-01",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1454.5,
+    "y": 410.5,
+    "z": 3829
+  },
+  "seal-03": {
+    "type": "card",
+    "id": "seal-03",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1454.5,
+    "y": 578.5,
+    "z": 3828
+  },
+  "seal-02": {
+    "type": "card",
+    "id": "seal-02",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1454.5,
+    "y": 662.5,
+    "z": 3827
+  },
+  "seal-04": {
+    "type": "card",
+    "id": "seal-04",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1454.5,
+    "y": 830.5,
+    "z": 3826
+  },
+  "seal-05": {
+    "type": "card",
+    "id": "seal-05",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1318.5,
+    "y": 620.5,
+    "z": 3825
+  },
+  "seal-06": {
+    "type": "card",
+    "id": "seal-06",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1318.5,
+    "y": 830.5,
+    "z": 3824
+  },
+  "seal-07": {
+    "type": "card",
+    "id": "seal-07",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1222.5,
+    "y": 620.5,
+    "z": 3823
+  },
+  "seal-08": {
+    "type": "card",
+    "id": "seal-08",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1222.5,
+    "y": 830.5,
+    "z": 3822
+  },
+  "seal-09": {
+    "type": "card",
+    "id": "seal-09",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1126.5,
+    "y": 620.5,
+    "z": 3821
+  },
+  "seal-10": {
+    "type": "card",
+    "id": "seal-10",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1126.5,
+    "y": 830.5,
+    "z": 3820
+  },
+  "seal-11": {
+    "type": "card",
+    "id": "seal-11",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1030.5,
+    "y": 620.5,
+    "z": 3819
+  },
+  "seal-12": {
+    "type": "card",
+    "id": "seal-12",
+    "deck": "deck-tokens",
+    "cardType": "seal",
+    "x": 1030.5,
+    "y": 830.5,
+    "z": 3818
+  },
+  "holder-hex-g2": {
+    "type": "holder",
+    "id": "holder-hex-g2",
+    "parent": "board-map",
+    "x": 288,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g32": {
+    "type": "holder",
+    "id": "holder-hex-g32",
+    "parent": "board-map",
+    "x": 288,
+    "y": 886.88,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-g30": {
+    "type": "holder",
+    "id": "holder-hex-g30",
+    "parent": "board-map",
+    "x": 288,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g28": {
+    "type": "holder",
+    "id": "holder-hex-g28",
+    "parent": "board-map",
+    "x": 288,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g26": {
+    "type": "holder",
+    "id": "holder-hex-g26",
+    "parent": "board-map",
+    "x": 288,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g24": {
+    "type": "holder",
+    "id": "holder-hex-g24",
+    "parent": "board-map",
+    "x": 288,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g22": {
+    "type": "holder",
+    "id": "holder-hex-g22",
+    "parent": "board-map",
+    "x": 288,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g20": {
+    "type": "holder",
+    "id": "holder-hex-g20",
+    "parent": "board-map",
+    "x": 288,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g18": {
+    "type": "holder",
+    "id": "holder-hex-g18",
+    "parent": "board-map",
+    "x": 288,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-g16": {
+    "type": "holder",
+    "id": "holder-hex-g16",
+    "parent": "board-map",
+    "x": 288,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g14": {
+    "type": "holder",
+    "id": "holder-hex-g14",
+    "parent": "board-map",
+    "x": 288,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g12": {
+    "type": "holder",
+    "id": "holder-hex-g12",
+    "parent": "board-map",
+    "x": 288,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g10": {
+    "type": "holder",
+    "id": "holder-hex-g10",
+    "parent": "board-map",
+    "x": 288,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g8": {
+    "type": "holder",
+    "id": "holder-hex-g8",
+    "parent": "board-map",
+    "x": 288,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g6": {
+    "type": "holder",
+    "id": "holder-hex-g6",
+    "parent": "board-map",
+    "x": 288,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-g4": {
+    "type": "holder",
+    "id": "holder-hex-g4",
+    "parent": "board-map",
+    "x": 288,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-h1": {
+    "type": "holder",
+    "id": "holder-hex-h1",
+    "parent": "board-map",
+    "x": 336,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h31": {
+    "type": "holder",
+    "id": "holder-hex-h31",
+    "parent": "board-map",
+    "x": 336,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h29": {
+    "type": "holder",
+    "id": "holder-hex-h29",
+    "parent": "board-map",
+    "x": 336,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h27": {
+    "type": "holder",
+    "id": "holder-hex-h27",
+    "parent": "board-map",
+    "x": 336,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h25": {
+    "type": "holder",
+    "id": "holder-hex-h25",
+    "parent": "board-map",
+    "x": 336,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h23": {
+    "type": "holder",
+    "id": "holder-hex-h23",
+    "parent": "board-map",
+    "x": 336,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-h21": {
+    "type": "holder",
+    "id": "holder-hex-h21",
+    "parent": "board-map",
+    "x": 336,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h19": {
+    "type": "holder",
+    "id": "holder-hex-h19",
+    "parent": "board-map",
+    "x": 336,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h17": {
+    "type": "holder",
+    "id": "holder-hex-h17",
+    "parent": "board-map",
+    "x": 336,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h15": {
+    "type": "holder",
+    "id": "holder-hex-h15",
+    "parent": "board-map",
+    "x": 336,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h13": {
+    "type": "holder",
+    "id": "holder-hex-h13",
+    "parent": "board-map",
+    "x": 336,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h11": {
+    "type": "holder",
+    "id": "holder-hex-h11",
+    "parent": "board-map",
+    "x": 336,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h9": {
+    "type": "holder",
+    "id": "holder-hex-h9",
+    "parent": "board-map",
+    "x": 336,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-h7": {
+    "type": "holder",
+    "id": "holder-hex-h7",
+    "parent": "board-map",
+    "x": 336,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h5": {
+    "type": "holder",
+    "id": "holder-hex-h5",
+    "parent": "board-map",
+    "x": 336,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-h3": {
+    "type": "holder",
+    "id": "holder-hex-h3",
+    "parent": "board-map",
+    "x": 336,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i30": {
+    "type": "holder",
+    "id": "holder-hex-i30",
+    "parent": "board-map",
+    "x": 384,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i28": {
+    "type": "holder",
+    "id": "holder-hex-i28",
+    "parent": "board-map",
+    "x": 384,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-i26": {
+    "type": "holder",
+    "id": "holder-hex-i26",
+    "parent": "board-map",
+    "x": 384,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i24": {
+    "type": "holder",
+    "id": "holder-hex-i24",
+    "parent": "board-map",
+    "x": 384,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i22": {
+    "type": "holder",
+    "id": "holder-hex-i22",
+    "parent": "board-map",
+    "x": 384,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i20": {
+    "type": "holder",
+    "id": "holder-hex-i20",
+    "parent": "board-map",
+    "x": 384,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i18": {
+    "type": "holder",
+    "id": "holder-hex-i18",
+    "parent": "board-map",
+    "x": 384,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i16": {
+    "type": "holder",
+    "id": "holder-hex-i16",
+    "parent": "board-map",
+    "x": 384,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i14": {
+    "type": "holder",
+    "id": "holder-hex-i14",
+    "parent": "board-map",
+    "x": 384,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-i12": {
+    "type": "holder",
+    "id": "holder-hex-i12",
+    "parent": "board-map",
+    "x": 384,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i10": {
+    "type": "holder",
+    "id": "holder-hex-i10",
+    "parent": "board-map",
+    "x": 384,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i8": {
+    "type": "holder",
+    "id": "holder-hex-i8",
+    "parent": "board-map",
+    "x": 384,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i6": {
+    "type": "holder",
+    "id": "holder-hex-i6",
+    "parent": "board-map",
+    "x": 384,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i4": {
+    "type": "holder",
+    "id": "holder-hex-i4",
+    "parent": "board-map",
+    "x": 384,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i2": {
+    "type": "holder",
+    "id": "holder-hex-i2",
+    "parent": "board-map",
+    "x": 384,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-i0": {
+    "type": "holder",
+    "id": "holder-hex-i0",
+    "parent": "board-map",
+    "x": 384,
+    "y": 0,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-j1": {
+    "type": "holder",
+    "id": "holder-hex-j1",
+    "parent": "board-map",
+    "x": 432,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j31": {
+    "type": "holder",
+    "id": "holder-hex-j31",
+    "parent": "board-map",
+    "x": 432,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j29": {
+    "type": "holder",
+    "id": "holder-hex-j29",
+    "parent": "board-map",
+    "x": 432,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j27": {
+    "type": "holder",
+    "id": "holder-hex-j27",
+    "parent": "board-map",
+    "x": 432,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j25": {
+    "type": "holder",
+    "id": "holder-hex-j25",
+    "parent": "board-map",
+    "x": 432,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j23": {
+    "type": "holder",
+    "id": "holder-hex-j23",
+    "parent": "board-map",
+    "x": 432,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j21": {
+    "type": "holder",
+    "id": "holder-hex-j21",
+    "parent": "board-map",
+    "x": 432,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j19": {
+    "type": "holder",
+    "id": "holder-hex-j19",
+    "parent": "board-map",
+    "x": 432,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-j17": {
+    "type": "holder",
+    "id": "holder-hex-j17",
+    "parent": "board-map",
+    "x": 432,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j15": {
+    "type": "holder",
+    "id": "holder-hex-j15",
+    "parent": "board-map",
+    "x": 432,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j13": {
+    "type": "holder",
+    "id": "holder-hex-j13",
+    "parent": "board-map",
+    "x": 432,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j11": {
+    "type": "holder",
+    "id": "holder-hex-j11",
+    "parent": "board-map",
+    "x": 432,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j9": {
+    "type": "holder",
+    "id": "holder-hex-j9",
+    "parent": "board-map",
+    "x": 432,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j7": {
+    "type": "holder",
+    "id": "holder-hex-j7",
+    "parent": "board-map",
+    "x": 432,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-j5": {
+    "type": "holder",
+    "id": "holder-hex-j5",
+    "parent": "board-map",
+    "x": 432,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-j3": {
+    "type": "holder",
+    "id": "holder-hex-j3",
+    "parent": "board-map",
+    "x": 432,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k2": {
+    "type": "holder",
+    "id": "holder-hex-k2",
+    "parent": "board-map",
+    "x": 480,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k30": {
+    "type": "holder",
+    "id": "holder-hex-k30",
+    "parent": "board-map",
+    "x": 480,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k28": {
+    "type": "holder",
+    "id": "holder-hex-k28",
+    "parent": "board-map",
+    "x": 480,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k26": {
+    "type": "holder",
+    "id": "holder-hex-k26",
+    "parent": "board-map",
+    "x": 480,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k24": {
+    "type": "holder",
+    "id": "holder-hex-k24",
+    "parent": "board-map",
+    "x": 480,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-k22": {
+    "type": "holder",
+    "id": "holder-hex-k22",
+    "parent": "board-map",
+    "x": 480,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k20": {
+    "type": "holder",
+    "id": "holder-hex-k20",
+    "parent": "board-map",
+    "x": 480,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k18": {
+    "type": "holder",
+    "id": "holder-hex-k18",
+    "parent": "board-map",
+    "x": 480,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k16": {
+    "type": "holder",
+    "id": "holder-hex-k16",
+    "parent": "board-map",
+    "x": 480,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k14": {
+    "type": "holder",
+    "id": "holder-hex-k14",
+    "parent": "board-map",
+    "x": 480,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k12": {
+    "type": "holder",
+    "id": "holder-hex-k12",
+    "parent": "board-map",
+    "x": 480,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k10": {
+    "type": "holder",
+    "id": "holder-hex-k10",
+    "parent": "board-map",
+    "x": 480,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-k8": {
+    "type": "holder",
+    "id": "holder-hex-k8",
+    "parent": "board-map",
+    "x": 480,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k6": {
+    "type": "holder",
+    "id": "holder-hex-k6",
+    "parent": "board-map",
+    "x": 480,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-k4": {
+    "type": "holder",
+    "id": "holder-hex-k4",
+    "parent": "board-map",
+    "x": 480,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l1": {
+    "type": "holder",
+    "id": "holder-hex-l1",
+    "parent": "board-map",
+    "x": 528,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-l31": {
+    "type": "holder",
+    "id": "holder-hex-l31",
+    "parent": "board-map",
+    "x": 528,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l29": {
+    "type": "holder",
+    "id": "holder-hex-l29",
+    "parent": "board-map",
+    "x": 528,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-l27": {
+    "type": "holder",
+    "id": "holder-hex-l27",
+    "parent": "board-map",
+    "x": 528,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l25": {
+    "type": "holder",
+    "id": "holder-hex-l25",
+    "parent": "board-map",
+    "x": 528,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l23": {
+    "type": "holder",
+    "id": "holder-hex-l23",
+    "parent": "board-map",
+    "x": 528,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l21": {
+    "type": "holder",
+    "id": "holder-hex-l21",
+    "parent": "board-map",
+    "x": 528,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l19": {
+    "type": "holder",
+    "id": "holder-hex-l19",
+    "parent": "board-map",
+    "x": 528,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l17": {
+    "type": "holder",
+    "id": "holder-hex-l17",
+    "parent": "board-map",
+    "x": 528,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l15": {
+    "type": "holder",
+    "id": "holder-hex-l15",
+    "parent": "board-map",
+    "x": 528,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-l13": {
+    "type": "holder",
+    "id": "holder-hex-l13",
+    "parent": "board-map",
+    "x": 528,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l11": {
+    "type": "holder",
+    "id": "holder-hex-l11",
+    "parent": "board-map",
+    "x": 528,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l9": {
+    "type": "holder",
+    "id": "holder-hex-l9",
+    "parent": "board-map",
+    "x": 528,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l7": {
+    "type": "holder",
+    "id": "holder-hex-l7",
+    "parent": "board-map",
+    "x": 528,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l5": {
+    "type": "holder",
+    "id": "holder-hex-l5",
+    "parent": "board-map",
+    "x": 528,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-l3": {
+    "type": "holder",
+    "id": "holder-hex-l3",
+    "parent": "board-map",
+    "x": 528,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m2": {
+    "type": "holder",
+    "id": "holder-hex-m2",
+    "parent": "board-map",
+    "x": 576,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m30": {
+    "type": "holder",
+    "id": "holder-hex-m30",
+    "parent": "board-map",
+    "x": 576,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m28": {
+    "type": "holder",
+    "id": "holder-hex-m28",
+    "parent": "board-map",
+    "x": 576,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m26": {
+    "type": "holder",
+    "id": "holder-hex-m26",
+    "parent": "board-map",
+    "x": 576,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m24": {
+    "type": "holder",
+    "id": "holder-hex-m24",
+    "parent": "board-map",
+    "x": 576,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m22": {
+    "type": "holder",
+    "id": "holder-hex-m22",
+    "parent": "board-map",
+    "x": 576,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m20": {
+    "type": "holder",
+    "id": "holder-hex-m20",
+    "parent": "board-map",
+    "x": 576,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-m18": {
+    "type": "holder",
+    "id": "holder-hex-m18",
+    "parent": "board-map",
+    "x": 576,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m16": {
+    "type": "holder",
+    "id": "holder-hex-m16",
+    "parent": "board-map",
+    "x": 576,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m14": {
+    "type": "holder",
+    "id": "holder-hex-m14",
+    "parent": "board-map",
+    "x": 576,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m12": {
+    "type": "holder",
+    "id": "holder-hex-m12",
+    "parent": "board-map",
+    "x": 576,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m10": {
+    "type": "holder",
+    "id": "holder-hex-m10",
+    "parent": "board-map",
+    "x": 576,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m8": {
+    "type": "holder",
+    "id": "holder-hex-m8",
+    "parent": "board-map",
+    "x": 576,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-m6": {
+    "type": "holder",
+    "id": "holder-hex-m6",
+    "parent": "board-map",
+    "x": 576,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-m4": {
+    "type": "holder",
+    "id": "holder-hex-m4",
+    "parent": "board-map",
+    "x": 576,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n1": {
+    "type": "holder",
+    "id": "holder-hex-n1",
+    "parent": "board-map",
+    "x": 624,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n31": {
+    "type": "holder",
+    "id": "holder-hex-n31",
+    "parent": "board-map",
+    "x": 624,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n29": {
+    "type": "holder",
+    "id": "holder-hex-n29",
+    "parent": "board-map",
+    "x": 624,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n27": {
+    "type": "holder",
+    "id": "holder-hex-n27",
+    "parent": "board-map",
+    "x": 624,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n25": {
+    "type": "holder",
+    "id": "holder-hex-n25",
+    "parent": "board-map",
+    "x": 624,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-n23": {
+    "type": "holder",
+    "id": "holder-hex-n23",
+    "parent": "board-map",
+    "x": 624,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n21": {
+    "type": "holder",
+    "id": "holder-hex-n21",
+    "parent": "board-map",
+    "x": 624,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n19": {
+    "type": "holder",
+    "id": "holder-hex-n19",
+    "parent": "board-map",
+    "x": 624,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n17": {
+    "type": "holder",
+    "id": "holder-hex-n17",
+    "parent": "board-map",
+    "x": 624,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n15": {
+    "type": "holder",
+    "id": "holder-hex-n15",
+    "parent": "board-map",
+    "x": 624,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n13": {
+    "type": "holder",
+    "id": "holder-hex-n13",
+    "parent": "board-map",
+    "x": 624,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n11": {
+    "type": "holder",
+    "id": "holder-hex-n11",
+    "parent": "board-map",
+    "x": 624,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-n9": {
+    "type": "holder",
+    "id": "holder-hex-n9",
+    "parent": "board-map",
+    "x": 624,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n7": {
+    "type": "holder",
+    "id": "holder-hex-n7",
+    "parent": "board-map",
+    "x": 624,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n5": {
+    "type": "holder",
+    "id": "holder-hex-n5",
+    "parent": "board-map",
+    "x": 624,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-n3": {
+    "type": "holder",
+    "id": "holder-hex-n3",
+    "parent": "board-map",
+    "x": 624,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o2": {
+    "type": "holder",
+    "id": "holder-hex-o2",
+    "parent": "board-map",
+    "x": 672,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-o30": {
+    "type": "holder",
+    "id": "holder-hex-o30",
+    "parent": "board-map",
+    "x": 672,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-o28": {
+    "type": "holder",
+    "id": "holder-hex-o28",
+    "parent": "board-map",
+    "x": 672,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o26": {
+    "type": "holder",
+    "id": "holder-hex-o26",
+    "parent": "board-map",
+    "x": 672,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o24": {
+    "type": "holder",
+    "id": "holder-hex-o24",
+    "parent": "board-map",
+    "x": 672,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o22": {
+    "type": "holder",
+    "id": "holder-hex-o22",
+    "parent": "board-map",
+    "x": 672,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o20": {
+    "type": "holder",
+    "id": "holder-hex-o20",
+    "parent": "board-map",
+    "x": 672,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o18": {
+    "type": "holder",
+    "id": "holder-hex-o18",
+    "parent": "board-map",
+    "x": 672,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o16": {
+    "type": "holder",
+    "id": "holder-hex-o16",
+    "parent": "board-map",
+    "x": 672,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-o14": {
+    "type": "holder",
+    "id": "holder-hex-o14",
+    "parent": "board-map",
+    "x": 672,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o12": {
+    "type": "holder",
+    "id": "holder-hex-o12",
+    "parent": "board-map",
+    "x": 672,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o10": {
+    "type": "holder",
+    "id": "holder-hex-o10",
+    "parent": "board-map",
+    "x": 672,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o8": {
+    "type": "holder",
+    "id": "holder-hex-o8",
+    "parent": "board-map",
+    "x": 672,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o6": {
+    "type": "holder",
+    "id": "holder-hex-o6",
+    "parent": "board-map",
+    "x": 672,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-o4": {
+    "type": "holder",
+    "id": "holder-hex-o4",
+    "parent": "board-map",
+    "x": 672,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "board-map-farmer": {
+    "type": "basic",
+    "id": "board-map-farmer",
+    "image": "/assets/-1488381648_85942",
+    "x": 5,
+    "y": -1000,
+    "width": 736,
+    "height": 942.31,
+    "layer": -4,
+    "movable": false,
+    "cities-⏺": [
+      "holder-hex-f-a12",
+      "holder-hex-f-a22",
+      "holder-hex-f-o4",
+      "holder-hex-f-o14"
+    ],
+    "cities-★": [
+      "holder-hex-f-k2",
+      "holder-hex-f-c18",
+      "holder-hex-f-m18",
+      "holder-hex-f-g30"
+    ],
+    "cities-✖": [
+      "holder-hex-f-c8",
+      "holder-hex-f-k12",
+      "holder-hex-f-e24",
+      "holder-hex-f-m28"
+    ],
+    "cities-M": []
+  },
+  "holder-hex-f-a2": {
+    "type": "holder",
+    "id": "holder-hex-f-a2",
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a2",
+    "parent": "board-map-farmer",
+    "x": 0
+  },
+  "holder-hex-f-a30": {
+    "type": "holder",
+    "id": "holder-hex-f-a30",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a28": {
+    "type": "holder",
+    "id": "holder-hex-f-a28",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a26": {
+    "type": "holder",
+    "id": "holder-hex-f-a26",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a24": {
+    "type": "holder",
+    "id": "holder-hex-f-a24",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a22": {
+    "type": "holder",
+    "id": "holder-hex-f-a22",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-a20": {
+    "type": "holder",
+    "id": "holder-hex-f-a20",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a18": {
+    "type": "holder",
+    "id": "holder-hex-f-a18",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a16": {
+    "type": "holder",
+    "id": "holder-hex-f-a16",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a14": {
+    "type": "holder",
+    "id": "holder-hex-f-a14",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a12": {
+    "type": "holder",
+    "id": "holder-hex-f-a12",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-a10": {
+    "type": "holder",
+    "id": "holder-hex-f-a10",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a8": {
+    "type": "holder",
+    "id": "holder-hex-f-a8",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a6": {
+    "type": "holder",
+    "id": "holder-hex-f-a6",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-a4": {
+    "type": "holder",
+    "id": "holder-hex-f-a4",
+    "parent": "board-map-farmer",
+    "x": 0,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b1": {
+    "type": "holder",
+    "id": "holder-hex-f-b1",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c2": {
+    "type": "holder",
+    "id": "holder-hex-f-c2",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b31": {
+    "type": "holder",
+    "id": "holder-hex-f-b31",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b29": {
+    "type": "holder",
+    "id": "holder-hex-f-b29",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b27": {
+    "type": "holder",
+    "id": "holder-hex-f-b27",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b25": {
+    "type": "holder",
+    "id": "holder-hex-f-b25",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b23": {
+    "type": "holder",
+    "id": "holder-hex-f-b23",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b21": {
+    "type": "holder",
+    "id": "holder-hex-f-b21",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b19": {
+    "type": "holder",
+    "id": "holder-hex-f-b19",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b17": {
+    "type": "holder",
+    "id": "holder-hex-f-b17",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b15": {
+    "type": "holder",
+    "id": "holder-hex-f-b15",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b13": {
+    "type": "holder",
+    "id": "holder-hex-f-b13",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b11": {
+    "type": "holder",
+    "id": "holder-hex-f-b11",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b9": {
+    "type": "holder",
+    "id": "holder-hex-f-b9",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b7": {
+    "type": "holder",
+    "id": "holder-hex-f-b7",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b5": {
+    "type": "holder",
+    "id": "holder-hex-f-b5",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-b3": {
+    "type": "holder",
+    "id": "holder-hex-f-b3",
+    "parent": "board-map-farmer",
+    "x": 48,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c30": {
+    "type": "holder",
+    "id": "holder-hex-f-c30",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c28": {
+    "type": "holder",
+    "id": "holder-hex-f-c28",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-c26": {
+    "type": "holder",
+    "id": "holder-hex-f-c26",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c24": {
+    "type": "holder",
+    "id": "holder-hex-f-c24",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c22": {
+    "type": "holder",
+    "id": "holder-hex-f-c22",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c20": {
+    "type": "holder",
+    "id": "holder-hex-f-c20",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c18": {
+    "type": "holder",
+    "id": "holder-hex-f-c18",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-c16": {
+    "type": "holder",
+    "id": "holder-hex-f-c16",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c14": {
+    "type": "holder",
+    "id": "holder-hex-f-c14",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c12": {
+    "type": "holder",
+    "id": "holder-hex-f-c12",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c10": {
+    "type": "holder",
+    "id": "holder-hex-f-c10",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c8": {
+    "type": "holder",
+    "id": "holder-hex-f-c8",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-c6": {
+    "type": "holder",
+    "id": "holder-hex-f-c6",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-c4": {
+    "type": "holder",
+    "id": "holder-hex-f-c4",
+    "parent": "board-map-farmer",
+    "x": 96,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d1": {
+    "type": "holder",
+    "id": "holder-hex-f-d1",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d31": {
+    "type": "holder",
+    "id": "holder-hex-f-d31",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d29": {
+    "type": "holder",
+    "id": "holder-hex-f-d29",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d27": {
+    "type": "holder",
+    "id": "holder-hex-f-d27",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d25": {
+    "type": "holder",
+    "id": "holder-hex-f-d25",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d23": {
+    "type": "holder",
+    "id": "holder-hex-f-d23",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d21": {
+    "type": "holder",
+    "id": "holder-hex-f-d21",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d19": {
+    "type": "holder",
+    "id": "holder-hex-f-d19",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d17": {
+    "type": "holder",
+    "id": "holder-hex-f-d17",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d15": {
+    "type": "holder",
+    "id": "holder-hex-f-d15",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d13": {
+    "type": "holder",
+    "id": "holder-hex-f-d13",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d11": {
+    "type": "holder",
+    "id": "holder-hex-f-d11",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d9": {
+    "type": "holder",
+    "id": "holder-hex-f-d9",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d7": {
+    "type": "holder",
+    "id": "holder-hex-f-d7",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d5": {
+    "type": "holder",
+    "id": "holder-hex-f-d5",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-d3": {
+    "type": "holder",
+    "id": "holder-hex-f-d3",
+    "parent": "board-map-farmer",
+    "x": 144,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e30": {
+    "type": "holder",
+    "id": "holder-hex-f-e30",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e28": {
+    "type": "holder",
+    "id": "holder-hex-f-e28",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e26": {
+    "type": "holder",
+    "id": "holder-hex-f-e26",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e24": {
+    "type": "holder",
+    "id": "holder-hex-f-e24",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-e22": {
+    "type": "holder",
+    "id": "holder-hex-f-e22",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e20": {
+    "type": "holder",
+    "id": "holder-hex-f-e20",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e18": {
+    "type": "holder",
+    "id": "holder-hex-f-e18",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e16": {
+    "type": "holder",
+    "id": "holder-hex-f-e16",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e14": {
+    "type": "holder",
+    "id": "holder-hex-f-e14",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-e12": {
+    "type": "holder",
+    "id": "holder-hex-f-e12",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e10": {
+    "type": "holder",
+    "id": "holder-hex-f-e10",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e8": {
+    "type": "holder",
+    "id": "holder-hex-f-e8",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e6": {
+    "type": "holder",
+    "id": "holder-hex-f-e6",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-e4": {
+    "type": "holder",
+    "id": "holder-hex-f-e4",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-e2": {
+    "type": "holder",
+    "id": "holder-hex-f-e2",
+    "parent": "board-map-farmer",
+    "x": 192,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f1": {
+    "type": "holder",
+    "id": "holder-hex-f-f1",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f31": {
+    "type": "holder",
+    "id": "holder-hex-f-f31",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f29": {
+    "type": "holder",
+    "id": "holder-hex-f-f29",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f27": {
+    "type": "holder",
+    "id": "holder-hex-f-f27",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f25": {
+    "type": "holder",
+    "id": "holder-hex-f-f25",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f23": {
+    "type": "holder",
+    "id": "holder-hex-f-f23",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f21": {
+    "type": "holder",
+    "id": "holder-hex-f-f21",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f19": {
+    "type": "holder",
+    "id": "holder-hex-f-f19",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f17": {
+    "type": "holder",
+    "id": "holder-hex-f-f17",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f15": {
+    "type": "holder",
+    "id": "holder-hex-f-f15",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f13": {
+    "type": "holder",
+    "id": "holder-hex-f-f13",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f11": {
+    "type": "holder",
+    "id": "holder-hex-f-f11",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f9": {
+    "type": "holder",
+    "id": "holder-hex-f-f9",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f7": {
+    "type": "holder",
+    "id": "holder-hex-f-f7",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f5": {
+    "type": "holder",
+    "id": "holder-hex-f-f5",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-f3": {
+    "type": "holder",
+    "id": "holder-hex-f-f3",
+    "parent": "board-map-farmer",
+    "x": 240,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g0": {
+    "type": "holder",
+    "id": "holder-hex-f-g0",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 0,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-g30": {
+    "type": "holder",
+    "id": "holder-hex-f-g30",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-g28": {
+    "type": "holder",
+    "id": "holder-hex-f-g28",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g26": {
+    "type": "holder",
+    "id": "holder-hex-f-g26",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g24": {
+    "type": "holder",
+    "id": "holder-hex-f-g24",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g22": {
+    "type": "holder",
+    "id": "holder-hex-f-g22",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g20": {
+    "type": "holder",
+    "id": "holder-hex-f-g20",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-g18": {
+    "type": "holder",
+    "id": "holder-hex-f-g18",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g16": {
+    "type": "holder",
+    "id": "holder-hex-f-g16",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g14": {
+    "type": "holder",
+    "id": "holder-hex-f-g14",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g12": {
+    "type": "holder",
+    "id": "holder-hex-f-g12",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g10": {
+    "type": "holder",
+    "id": "holder-hex-f-g10",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-g8": {
+    "type": "holder",
+    "id": "holder-hex-f-g8",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g6": {
+    "type": "holder",
+    "id": "holder-hex-f-g6",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g4": {
+    "type": "holder",
+    "id": "holder-hex-f-g4",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-g2": {
+    "type": "holder",
+    "id": "holder-hex-f-g2",
+    "parent": "board-map-farmer",
+    "x": 288,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h1": {
+    "type": "holder",
+    "id": "holder-hex-f-h1",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h31": {
+    "type": "holder",
+    "id": "holder-hex-f-h31",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h29": {
+    "type": "holder",
+    "id": "holder-hex-f-h29",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h27": {
+    "type": "holder",
+    "id": "holder-hex-f-h27",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h25": {
+    "type": "holder",
+    "id": "holder-hex-f-h25",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h23": {
+    "type": "holder",
+    "id": "holder-hex-f-h23",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h21": {
+    "type": "holder",
+    "id": "holder-hex-f-h21",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h19": {
+    "type": "holder",
+    "id": "holder-hex-f-h19",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h17": {
+    "type": "holder",
+    "id": "holder-hex-f-h17",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h15": {
+    "type": "holder",
+    "id": "holder-hex-f-h15",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h13": {
+    "type": "holder",
+    "id": "holder-hex-f-h13",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h11": {
+    "type": "holder",
+    "id": "holder-hex-f-h11",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h9": {
+    "type": "holder",
+    "id": "holder-hex-f-h9",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h7": {
+    "type": "holder",
+    "id": "holder-hex-f-h7",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h5": {
+    "type": "holder",
+    "id": "holder-hex-f-h5",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-h3": {
+    "type": "holder",
+    "id": "holder-hex-f-h3",
+    "parent": "board-map-farmer",
+    "x": 336,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i2": {
+    "type": "holder",
+    "id": "holder-hex-f-i2",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i30": {
+    "type": "holder",
+    "id": "holder-hex-f-i30",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i28": {
+    "type": "holder",
+    "id": "holder-hex-f-i28",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i26": {
+    "type": "holder",
+    "id": "holder-hex-f-i26",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-i24": {
+    "type": "holder",
+    "id": "holder-hex-f-i24",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i22": {
+    "type": "holder",
+    "id": "holder-hex-f-i22",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i20": {
+    "type": "holder",
+    "id": "holder-hex-f-i20",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i18": {
+    "type": "holder",
+    "id": "holder-hex-f-i18",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i16": {
+    "type": "holder",
+    "id": "holder-hex-f-i16",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-i14": {
+    "type": "holder",
+    "id": "holder-hex-f-i14",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i12": {
+    "type": "holder",
+    "id": "holder-hex-f-i12",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i10": {
+    "type": "holder",
+    "id": "holder-hex-f-i10",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i8": {
+    "type": "holder",
+    "id": "holder-hex-f-i8",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-i6": {
+    "type": "holder",
+    "id": "holder-hex-f-i6",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-i4": {
+    "type": "holder",
+    "id": "holder-hex-f-i4",
+    "parent": "board-map-farmer",
+    "x": 384,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j1": {
+    "type": "holder",
+    "id": "holder-hex-f-j1",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k2": {
+    "type": "holder",
+    "id": "holder-hex-f-k2",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-j31": {
+    "type": "holder",
+    "id": "holder-hex-f-j31",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j29": {
+    "type": "holder",
+    "id": "holder-hex-f-j29",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j27": {
+    "type": "holder",
+    "id": "holder-hex-f-j27",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j25": {
+    "type": "holder",
+    "id": "holder-hex-f-j25",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j23": {
+    "type": "holder",
+    "id": "holder-hex-f-j23",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j21": {
+    "type": "holder",
+    "id": "holder-hex-f-j21",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j19": {
+    "type": "holder",
+    "id": "holder-hex-f-j19",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j17": {
+    "type": "holder",
+    "id": "holder-hex-f-j17",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j15": {
+    "type": "holder",
+    "id": "holder-hex-f-j15",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j13": {
+    "type": "holder",
+    "id": "holder-hex-f-j13",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j11": {
+    "type": "holder",
+    "id": "holder-hex-f-j11",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j9": {
+    "type": "holder",
+    "id": "holder-hex-f-j9",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j7": {
+    "type": "holder",
+    "id": "holder-hex-f-j7",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j5": {
+    "type": "holder",
+    "id": "holder-hex-f-j5",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-j3": {
+    "type": "holder",
+    "id": "holder-hex-f-j3",
+    "parent": "board-map-farmer",
+    "x": 432,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k32": {
+    "type": "holder",
+    "id": "holder-hex-f-k32",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 886.88,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-k30": {
+    "type": "holder",
+    "id": "holder-hex-f-k30",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k28": {
+    "type": "holder",
+    "id": "holder-hex-f-k28",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k26": {
+    "type": "holder",
+    "id": "holder-hex-f-k26",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k24": {
+    "type": "holder",
+    "id": "holder-hex-f-k24",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k22": {
+    "type": "holder",
+    "id": "holder-hex-f-k22",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-k20": {
+    "type": "holder",
+    "id": "holder-hex-f-k20",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k18": {
+    "type": "holder",
+    "id": "holder-hex-f-k18",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k16": {
+    "type": "holder",
+    "id": "holder-hex-f-k16",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k14": {
+    "type": "holder",
+    "id": "holder-hex-f-k14",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k12": {
+    "type": "holder",
+    "id": "holder-hex-f-k12",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-k10": {
+    "type": "holder",
+    "id": "holder-hex-f-k10",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k8": {
+    "type": "holder",
+    "id": "holder-hex-f-k8",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k6": {
+    "type": "holder",
+    "id": "holder-hex-f-k6",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-k4": {
+    "type": "holder",
+    "id": "holder-hex-f-k4",
+    "parent": "board-map-farmer",
+    "x": 480,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l1": {
+    "type": "holder",
+    "id": "holder-hex-f-l1",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l31": {
+    "type": "holder",
+    "id": "holder-hex-f-l31",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l29": {
+    "type": "holder",
+    "id": "holder-hex-f-l29",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l27": {
+    "type": "holder",
+    "id": "holder-hex-f-l27",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l25": {
+    "type": "holder",
+    "id": "holder-hex-f-l25",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l23": {
+    "type": "holder",
+    "id": "holder-hex-f-l23",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l21": {
+    "type": "holder",
+    "id": "holder-hex-f-l21",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l19": {
+    "type": "holder",
+    "id": "holder-hex-f-l19",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l17": {
+    "type": "holder",
+    "id": "holder-hex-f-l17",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l15": {
+    "type": "holder",
+    "id": "holder-hex-f-l15",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l13": {
+    "type": "holder",
+    "id": "holder-hex-f-l13",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l11": {
+    "type": "holder",
+    "id": "holder-hex-f-l11",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l9": {
+    "type": "holder",
+    "id": "holder-hex-f-l9",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l7": {
+    "type": "holder",
+    "id": "holder-hex-f-l7",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l5": {
+    "type": "holder",
+    "id": "holder-hex-f-l5",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-l3": {
+    "type": "holder",
+    "id": "holder-hex-f-l3",
+    "parent": "board-map-farmer",
+    "x": 528,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m2": {
+    "type": "holder",
+    "id": "holder-hex-f-m2",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m30": {
+    "type": "holder",
+    "id": "holder-hex-f-m30",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m28": {
+    "type": "holder",
+    "id": "holder-hex-f-m28",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-m26": {
+    "type": "holder",
+    "id": "holder-hex-f-m26",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m24": {
+    "type": "holder",
+    "id": "holder-hex-f-m24",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m22": {
+    "type": "holder",
+    "id": "holder-hex-f-m22",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m20": {
+    "type": "holder",
+    "id": "holder-hex-f-m20",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m18": {
+    "type": "holder",
+    "id": "holder-hex-f-m18",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-m16": {
+    "type": "holder",
+    "id": "holder-hex-f-m16",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m14": {
+    "type": "holder",
+    "id": "holder-hex-f-m14",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m12": {
+    "type": "holder",
+    "id": "holder-hex-f-m12",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m10": {
+    "type": "holder",
+    "id": "holder-hex-f-m10",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m8": {
+    "type": "holder",
+    "id": "holder-hex-f-m8",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-m6": {
+    "type": "holder",
+    "id": "holder-hex-f-m6",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-m4": {
+    "type": "holder",
+    "id": "holder-hex-f-m4",
+    "parent": "board-map-farmer",
+    "x": 576,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n1": {
+    "type": "holder",
+    "id": "holder-hex-f-n1",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 27.715,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n31": {
+    "type": "holder",
+    "id": "holder-hex-f-n31",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 859.165,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n29": {
+    "type": "holder",
+    "id": "holder-hex-f-n29",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 803.735,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n27": {
+    "type": "holder",
+    "id": "holder-hex-f-n27",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 748.305,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n25": {
+    "type": "holder",
+    "id": "holder-hex-f-n25",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 692.875,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n23": {
+    "type": "holder",
+    "id": "holder-hex-f-n23",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 637.445,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n21": {
+    "type": "holder",
+    "id": "holder-hex-f-n21",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 582.015,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n19": {
+    "type": "holder",
+    "id": "holder-hex-f-n19",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 526.585,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n17": {
+    "type": "holder",
+    "id": "holder-hex-f-n17",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 471.155,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n15": {
+    "type": "holder",
+    "id": "holder-hex-f-n15",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 415.725,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n13": {
+    "type": "holder",
+    "id": "holder-hex-f-n13",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 360.295,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n11": {
+    "type": "holder",
+    "id": "holder-hex-f-n11",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 304.865,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n9": {
+    "type": "holder",
+    "id": "holder-hex-f-n9",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 249.435,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n7": {
+    "type": "holder",
+    "id": "holder-hex-f-n7",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 194.005,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n5": {
+    "type": "holder",
+    "id": "holder-hex-f-n5",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 138.575,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-n3": {
+    "type": "holder",
+    "id": "holder-hex-f-n3",
+    "parent": "board-map-farmer",
+    "x": 624,
+    "y": 83.145,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o30": {
+    "type": "holder",
+    "id": "holder-hex-f-o30",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 831.45,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o28": {
+    "type": "holder",
+    "id": "holder-hex-f-o28",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 776.02,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o26": {
+    "type": "holder",
+    "id": "holder-hex-f-o26",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 720.59,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o2": {
+    "type": "holder",
+    "id": "holder-hex-f-o2",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 55.43,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o4": {
+    "type": "holder",
+    "id": "holder-hex-f-o4",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 110.86,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-o6": {
+    "type": "holder",
+    "id": "holder-hex-f-o6",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 166.29,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o8": {
+    "type": "holder",
+    "id": "holder-hex-f-o8",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 221.72,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o10": {
+    "type": "holder",
+    "id": "holder-hex-f-o10",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 277.15,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o12": {
+    "type": "holder",
+    "id": "holder-hex-f-o12",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 332.58,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o14": {
+    "type": "holder",
+    "id": "holder-hex-f-o14",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 388.01,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-hex-f-o16": {
+    "type": "holder",
+    "id": "holder-hex-f-o16",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 443.44,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o18": {
+    "type": "holder",
+    "id": "holder-hex-f-o18",
+    "parent": "board-map-farmer",
+    "inheritFrom": "holder-farm-a6",
+    "x": 672,
+    "y": 498.87
+  },
+  "holder-hex-f-o20": {
+    "type": "holder",
+    "id": "holder-hex-f-o20",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 554.3,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o22": {
+    "type": "holder",
+    "id": "holder-hex-f-o22",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 609.73,
+    "inheritFrom": "holder-hex-a4"
+  },
+  "holder-hex-f-o24": {
+    "type": "holder",
+    "id": "holder-hex-f-o24",
+    "parent": "board-map-farmer",
+    "x": 672,
+    "y": 665.16,
+    "inheritFrom": "holder-hex-a2"
+  },
+  "holder-farms": {
+    "type": "holder",
+    "id": "holder-farms",
+    "width": 64,
+    "height": 55.43,
+    "x": 1525,
+    "y": -100,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-farms"
+    }
+  },
+  "deck-farms": {
+    "type": "deck",
+    "id": "deck-farms",
+    "parent": "holder-farms",
+    "width": 64,
+    "height": 55.43,
+    "cardDefaults": {
+      "width": 64,
+      "height": 55.43,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 64,
+            "height": 55.43,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "farm-2": {
+        "image": "/assets/348544498_1277"
+      },
+      "farm-3": {
+        "image": "/assets/-161405276_1282"
+      },
+      "farm-cube": {
+        "image": "/assets/-1162266932_633"
+      },
+      "farm-meeple": {
+        "image": "/assets/-439984525_1556"
+      },
+      "farm-tent": {
+        "image": "/assets/-1724205410_3302"
+      }
+    }
+  },
+  "holder-farm-a6": {
+    "type": "holder",
+    "id": "holder-farm-a6",
+    "parent": "board-map-farmer",
+    "y": 166.29,
+    "width": 64,
+    "height": 55.43,
+    "css": {
+      "background": "transparent",
+      "border-color": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-farms"
+    }
+  },
+  "farm-cube-1": {
+    "type": "card",
+    "id": "farm-cube-1",
+    "deck": "deck-farms",
+    "cardType": "farm-cube",
+    "z": 3851,
+    "parent": "u8z0"
+  },
+  "farm-meeple-1": {
+    "type": "card",
+    "id": "farm-meeple-1",
+    "deck": "deck-farms",
+    "cardType": "farm-meeple",
+    "z": 3853,
+    "parent": "u8z0"
+  },
+  "farm-3-1": {
+    "type": "card",
+    "id": "farm-3-1",
+    "deck": "deck-farms",
+    "cardType": "farm-3",
+    "z": 3855,
+    "parent": "u8z0"
+  },
+  "farm-2-1": {
+    "type": "card",
+    "id": "farm-2-1",
+    "deck": "deck-farms",
+    "cardType": "farm-2",
+    "z": 3857,
+    "parent": "u8z0"
+  },
+  "farm-tent-1": {
+    "type": "card",
+    "id": "farm-tent-1",
+    "deck": "deck-farms",
+    "cardType": "farm-tent",
+    "z": 3859,
+    "parent": "u8z0"
+  },
+  "holder-farm-o28": {
+    "type": "holder",
+    "id": "holder-farm-o28",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-o28": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-o18": {
+    "type": "holder",
+    "id": "holder-farm-o18",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-o18": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-o8": {
+    "type": "holder",
+    "id": "holder-farm-o8",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-o8": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-m2": {
+    "type": "holder",
+    "id": "holder-farm-m2",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-m2": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-m12": {
+    "type": "holder",
+    "id": "holder-farm-m12",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-m12": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-m22": {
+    "type": "holder",
+    "id": "holder-farm-m22",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-m22": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-k6": {
+    "type": "holder",
+    "id": "holder-farm-k6",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-k6": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-k16": {
+    "type": "holder",
+    "id": "holder-farm-k16",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-k16": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-k26": {
+    "type": "holder",
+    "id": "holder-farm-k26",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-k26": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-i10": {
+    "type": "holder",
+    "id": "holder-farm-i10",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-i10": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-i20": {
+    "type": "holder",
+    "id": "holder-farm-i20",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-i20": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-i30": {
+    "type": "holder",
+    "id": "holder-farm-i30",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-i30": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-g4": {
+    "type": "holder",
+    "id": "holder-farm-g4",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-g4": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-g14": {
+    "type": "holder",
+    "id": "holder-farm-g14",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-g14": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-g24": {
+    "type": "holder",
+    "id": "holder-farm-g24",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-g24": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-e8": {
+    "type": "holder",
+    "id": "holder-farm-e8",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-e8": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-e18": {
+    "type": "holder",
+    "id": "holder-farm-e18",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-e18": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-e28": {
+    "type": "holder",
+    "id": "holder-farm-e28",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-e28": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-c2": {
+    "type": "holder",
+    "id": "holder-farm-c2",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-c2": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-c12": {
+    "type": "holder",
+    "id": "holder-farm-c12",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-c12": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-c22": {
+    "type": "holder",
+    "id": "holder-farm-c22",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-c22": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-a16": {
+    "type": "holder",
+    "id": "holder-farm-a16",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-a16": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "holder-farm-a26": {
+    "type": "holder",
+    "id": "holder-farm-a26",
+    "parent": "board-map-farmer",
+    "inheritFrom": {
+      "holder-hex-f-a26": [
+        "x",
+        "y"
+      ],
+      "holder-farm-a6": "*"
+    }
+  },
+  "farm-cube-2": {
+    "type": "card",
+    "id": "farm-cube-2",
+    "deck": "deck-farms",
+    "cardType": "farm-cube",
+    "z": 3861,
+    "parent": "u8z0"
+  },
+  "farm-cube-3": {
+    "type": "card",
+    "id": "farm-cube-3",
+    "deck": "deck-farms",
+    "cardType": "farm-cube",
+    "z": 3863,
+    "parent": "u8z0"
+  },
+  "farm-cube-4": {
+    "type": "card",
+    "id": "farm-cube-4",
+    "deck": "deck-farms",
+    "cardType": "farm-cube",
+    "z": 3865,
+    "parent": "u8z0"
+  },
+  "farm-cube-5": {
+    "type": "card",
+    "id": "farm-cube-5",
+    "deck": "deck-farms",
+    "cardType": "farm-cube",
+    "z": 3867,
+    "parent": "u8z0"
+  },
+  "farm-2-2": {
+    "type": "card",
+    "id": "farm-2-2",
+    "deck": "deck-farms",
+    "cardType": "farm-2",
+    "z": 3869,
+    "parent": "u8z0"
+  },
+  "farm-2-3": {
+    "type": "card",
+    "id": "farm-2-3",
+    "deck": "deck-farms",
+    "cardType": "farm-2",
+    "z": 3871,
+    "parent": "u8z0"
+  },
+  "farm-2-4": {
+    "type": "card",
+    "id": "farm-2-4",
+    "deck": "deck-farms",
+    "cardType": "farm-2",
+    "z": 3873,
+    "parent": "u8z0"
+  },
+  "farm-2-5": {
+    "type": "card",
+    "id": "farm-2-5",
+    "deck": "deck-farms",
+    "cardType": "farm-2",
+    "z": 3875,
+    "parent": "u8z0"
+  },
+  "farm-3-2": {
+    "type": "card",
+    "id": "farm-3-2",
+    "deck": "deck-farms",
+    "cardType": "farm-3",
+    "z": 3877,
+    "parent": "u8z0"
+  },
+  "farm-3-3": {
+    "type": "card",
+    "id": "farm-3-3",
+    "deck": "deck-farms",
+    "cardType": "farm-3",
+    "z": 3879,
+    "parent": "u8z0"
+  },
+  "farm-3-4": {
+    "type": "card",
+    "id": "farm-3-4",
+    "deck": "deck-farms",
+    "cardType": "farm-3",
+    "z": 3881,
+    "parent": "u8z0"
+  },
+  "farm-3-5": {
+    "type": "card",
+    "id": "farm-3-5",
+    "deck": "deck-farms",
+    "cardType": "farm-3",
+    "z": 3883,
+    "parent": "u8z0"
+  },
+  "farm-meeple-2": {
+    "type": "card",
+    "id": "farm-meeple-2",
+    "deck": "deck-farms",
+    "cardType": "farm-meeple",
+    "z": 3885,
+    "parent": "u8z0"
+  },
+  "farm-meeple-3": {
+    "type": "card",
+    "id": "farm-meeple-3",
+    "deck": "deck-farms",
+    "cardType": "farm-meeple",
+    "z": 3887,
+    "parent": "u8z0"
+  },
+  "farm-meeple-4": {
+    "type": "card",
+    "id": "farm-meeple-4",
+    "deck": "deck-farms",
+    "cardType": "farm-meeple",
+    "z": 3889,
+    "parent": "u8z0"
+  },
+  "farm-meeple-5": {
+    "type": "card",
+    "id": "farm-meeple-5",
+    "deck": "deck-farms",
+    "cardType": "farm-meeple",
+    "z": 3891,
+    "parent": "u8z0"
+  },
+  "farm-tent-2": {
+    "type": "card",
+    "id": "farm-tent-2",
+    "deck": "deck-farms",
+    "cardType": "farm-tent",
+    "z": 3893,
+    "parent": "u8z0"
+  },
+  "farm-tent-3": {
+    "type": "card",
+    "id": "farm-tent-3",
+    "deck": "deck-farms",
+    "cardType": "farm-tent",
+    "z": 3895,
+    "parent": "u8z0"
+  },
+  "farm-tent-4": {
+    "type": "card",
+    "id": "farm-tent-4",
+    "deck": "deck-farms",
+    "cardType": "farm-tent",
+    "z": 3897,
+    "parent": "u8z0"
+  },
+  "button-setup": {
+    "type": "button",
+    "id": "button-setup",
+    "x": 1462,
+    "y": 19,
+    "text": "New Game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Set up a new game",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "label": "Use the alternative board?",
+            "type": "switch",
+            "variable": "useAltBoard"
+          },
+          {
+            "label": "Which circus scout (white meeple) setup should be used?",
+            "type": "select",
+            "variable": "scoutConfig",
+            "options": [
+              {
+                "value": "★",
+                "text": "4 Scouts, ★ Cities (Standard)",
+                "select": true
+              },
+              {
+                "value": "⏺",
+                "text": "4 Scouts, ⏺ Cities"
+              },
+              {
+                "value": "✖",
+                "text": "4 Scouts, ✖ Cities"
+              },
+              {
+                "value": "R",
+                "text": "4 Scouts, Random ★/⏺/✖"
+              },
+              {
+                "value": "M",
+                "text": "2 Scouts, Moving"
+              }
+            ]
+          },
+          {
+            "text": "NB: The alternative board cannot be combined with 2 moving Scouts; if this combination is selected, then a random 4 Scout configuration (★/⏺/✖) will be used instead.",
+            "type": "subtitle"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "score-p1",
+          "score-p2",
+          "score-p3",
+          "score-p4"
+        ],
+        "value": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-p1-tents"
+      },
+      {
+        "func": "FOREACH",
+        "in": {
+          "yellow-tent": "holder-p2-tents",
+          "orange-tent": "holder-p3-tents",
+          "purple-tent": "holder-p4-tents",
+          "blue-trophy": "holder-p1-trophies",
+          "yellow-trophy": "holder-p2-trophies",
+          "orange-trophy": "holder-p3-trophies",
+          "purple-trophy": "holder-p4-trophies",
+          "seal": "holder-p1-seals"
+        },
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "cardType",
+            "value": "${key}"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${value}"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          [
+            1030.5,
+            830.5
+          ],
+          [
+            1030.5,
+            620.5
+          ],
+          [
+            1126.5,
+            830.5
+          ],
+          [
+            1126.5,
+            620.5
+          ],
+          [
+            1222.5,
+            830.5
+          ],
+          [
+            1222.5,
+            620.5
+          ],
+          [
+            1318.5,
+            830.5
+          ],
+          [
+            1318.5,
+            620.5
+          ],
+          [
+            1454.5,
+            830.5
+          ],
+          [
+            1454.5,
+            662.5
+          ],
+          [
+            1454.5,
+            578.5
+          ],
+          [
+            1454.5,
+            410.5
+          ]
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVEXY",
+            "from": "holder-p1-seals",
+            "x": "${value.0}",
+            "y": "${value.1}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-cubes-blue-15"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "purple",
+          "orange",
+          "yellow",
+          "blue"
+        ],
+        "loopRoutine": [
+          "var cubeColor = ${value}",
+          {
+            "func": "FOREACH",
+            "in": {
+              "1": "blue",
+              "2": "yellow",
+              "3": "orange",
+              "4": "purple",
+              "5": "white"
+            },
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${cubeColor}-cube-${key}"
+                ],
+                "property": "parent",
+                "value": "holder-cubes-${value}-0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-farms"
+      },
+      "var activeBoard = 'board-map'",
+      {
+        "func": "IF",
+        "operand1": "${useAltBoard}",
+        "operand2": "on",
+        "thenRoutine": [
+          "var activeBoard = 'board-map-farmer'",
+          {
+            "func": "IF",
+            "operand1": "${scoutConfig}",
+            "operand2": "M",
+            "thenRoutine": [
+              "var scoutConfig = 'R'"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "board-map"
+            ],
+            "property": "y",
+            "value": -1000
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "board-map-farmer"
+            ],
+            "property": "y",
+            "value": 28.845
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "holder-farms"
+          },
+          {
+            "func": "FOREACH",
+            "in": [
+              "holder-farm-a6",
+              "holder-farm-a16",
+              "holder-farm-a26",
+              "holder-farm-c2",
+              "holder-farm-c12",
+              "holder-farm-c22",
+              "holder-farm-e8",
+              "holder-farm-e18",
+              "holder-farm-e28",
+              "holder-farm-g4",
+              "holder-farm-g14",
+              "holder-farm-g24",
+              "holder-farm-i10",
+              "holder-farm-i20",
+              "holder-farm-i30",
+              "holder-farm-k6",
+              "holder-farm-k16",
+              "holder-farm-k26",
+              "holder-farm-m2",
+              "holder-farm-m12",
+              "holder-farm-m22",
+              "holder-farm-o8",
+              "holder-farm-o18",
+              "holder-farm-o28"
+            ],
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "holder-farms",
+                "to": "${value}",
+                "count": 1
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "board-map"
+            ],
+            "property": "y",
+            "value": 28.845
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "board-map-farmer"
+            ],
+            "property": "y",
+            "value": -1000
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-meeples"
+      },
+      {
+        "func": "IF",
+        "operand1": "${scoutConfig}",
+        "operand2": "R",
+        "thenRoutine": [
+          "var possibilities = from ${PROPERTY fourScoutConfigs}",
+          "var shuffled = shuffle ${possibilities}",
+          "var scoutConfig = getIndex ${shuffled} 0"
+        ]
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${activeBoard}"
+        ],
+        "property": "cities-${scoutConfig}",
+        "variable": "scoutCities"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${scoutCities}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-meeples",
+            "to": "${value}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "height": 30,
+    "width": 120,
+    "fourScoutConfigs": [
+      "★",
+      "⏺",
+      "✖"
+    ]
+  },
+  "u8z0": {
+    "type": "pile",
+    "parent": "holder-farms",
+    "x": 0,
+    "y": 0,
+    "width": 64,
+    "height": 55.43,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "id": "u8z0"
+  },
+  "button-end-turn": {
+    "type": "button",
+    "id": "button-end-turn",
+    "x": 770,
+    "y": 19,
+    "width": 120,
+    "height": 30,
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ]
+  },
+  "jdnt": {
+    "type": "pile",
+    "parent": "holder-p2-tents",
+    "x": 2,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "handleCSS": {
+      "background": "black",
+      "color": "white",
+      "width": "25px",
+      "height": "25px",
+      "font-size": "16px"
+    },
+    "handlePosition": "middle right",
+    "id": "jdnt"
+  },
+  "u5lj": {
+    "type": "pile",
+    "parent": "holder-p3-tents",
+    "x": 2,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "handleCSS": {
+      "background": "black",
+      "color": "white",
+      "width": "25px",
+      "height": "25px",
+      "font-size": "16px"
+    },
+    "handlePosition": "middle right",
+    "id": "u5lj"
+  },
+  "e0n4": {
+    "type": "pile",
+    "parent": "holder-p4-tents",
+    "x": 2,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "handleCSS": {
+      "background": "black",
+      "color": "white",
+      "width": "25px",
+      "height": "25px",
+      "font-size": "16px"
+    },
+    "handlePosition": "middle right",
+    "id": "e0n4"
+  },
+  "lpte": {
+    "type": "pile",
+    "parent": "holder-p1-trophies",
+    "x": 2,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "handleCSS": {
+      "background": "black",
+      "color": "white",
+      "width": "25px",
+      "height": "25px",
+      "font-size": "16px"
+    },
+    "handlePosition": "middle right",
+    "id": "lpte"
+  },
+  "k1q0": {
+    "type": "pile",
+    "parent": "holder-p2-trophies",
+    "x": 2,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "handleCSS": {
+      "background": "black",
+      "color": "white",
+      "width": "25px",
+      "height": "25px",
+      "font-size": "16px"
+    },
+    "handlePosition": "middle right",
+    "id": "k1q0"
+  },
+  "2b2z": {
+    "type": "pile",
+    "parent": "holder-p3-trophies",
+    "x": 2,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "handleCSS": {
+      "background": "black",
+      "color": "white",
+      "width": "25px",
+      "height": "25px",
+      "font-size": "16px"
+    },
+    "handlePosition": "middle right",
+    "id": "2b2z"
+  },
+  "y8dt": {
+    "type": "pile",
+    "parent": "holder-p4-trophies",
+    "x": 2,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "handleCSS": {
+      "background": "black",
+      "color": "white",
+      "width": "25px",
+      "height": "25px",
+      "font-size": "16px"
+    },
+    "handlePosition": "middle right",
+    "id": "y8dt"
+  }
+}

@@ -40,7 +40,7 @@
         "value": "${str}"
       }
     ],
-    "x": 619,
+    "x": 574,
     "y": 250,
     "z": 289,
     "id": "2rti",
@@ -64,7 +64,7 @@
         "value": "${str}"
       }
     ],
-    "x": 872,
+    "x": 774,
     "y": 250,
     "z": 288,
     "id": "0zgn",
@@ -88,7 +88,7 @@
         "value": "${str}"
       }
     ],
-    "x": 1115,
+    "x": 1174,
     "y": 250,
     "z": 287,
     "id": "l1ak",
@@ -270,7 +270,7 @@
     "height": 200,
     "z": 26449,
     "css": "border: 2px dashed black; font-size:20px; color:black;text-align:left ",
-    "text": "  These functions can be used to modify strings. Press each button to see how the function works with the string (this intro text) to output the result below. For functions with a white box, you have an option to modify the value(s) on the screen without entering into the JSON and then pressing the button to see the revised output. This string also begins and ends with empty spaces to illustrate the trim functions."
+    "text": "  These functions can be used to modify strings. Press each button to see how the function works with the string (this intro text) to output the result below. For functions with a white box, you have an option to modify the value(s) on the screen without entering into the JSON and then pressing the button to see the revised output. This string also begins and ends with empty spaces to illustrate the trim functions.    These functions can be used to modify strings. Press each button to see how the function works with the string (this intro text) to output the result below. For functions with a white box, you have an option to modify the value(s) on the screen without entering into the JSON and then pressing the button to see the revised output. This string also begins and ends with empty spaces to illustrate the trim functions.  "
   },
   "8fr3": {
     "type": "label",
@@ -284,7 +284,7 @@
     "y": 1
   },
   "_meta": {
-    "version": 3,
+    "version": 13,
     "info": {
       "name": "Strings",
       "image": "/assets/-1494076321_5309",
@@ -293,12 +293,20 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Modifying",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1623354701000
+      "lastUpdate": 1686752898870,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Modifying",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "string": {
@@ -334,7 +342,7 @@
   "atString2": {
     "type": "label",
     "id": "atString2",
-    "x": 364,
+    "x": 360,
     "y": 361,
     "height": 40,
     "z": 26420,
@@ -345,7 +353,7 @@
   "atString3b": {
     "type": "label",
     "id": "atString3b",
-    "x": 609,
+    "x": 560,
     "y": 411,
     "height": 40,
     "z": 26434,
@@ -356,7 +364,7 @@
   "atString3a": {
     "type": "label",
     "id": "atString3a",
-    "x": 609,
+    "x": 560,
     "y": 361,
     "height": 40,
     "z": 26434,
@@ -367,7 +375,7 @@
   "atString4b": {
     "type": "label",
     "id": "atString4b",
-    "x": 862,
+    "x": 762,
     "y": 411,
     "height": 40,
     "z": 26433,
@@ -378,7 +386,7 @@
   "atString4a": {
     "type": "label",
     "id": "atString4a",
-    "x": 862,
+    "x": 762,
     "y": 361,
     "height": 40,
     "z": 26433,
@@ -398,7 +406,7 @@
   "atString5a": {
     "type": "label",
     "id": "atString5a",
-    "x": 1105,
+    "x": 1160,
     "y": 361,
     "height": 40,
     "z": 26432,
@@ -409,7 +417,7 @@
   "atString5b": {
     "type": "label",
     "id": "atString5b",
-    "x": 1105,
+    "x": 1160,
     "y": 411,
     "height": 40,
     "z": 26432,
@@ -482,5 +490,28 @@
     "z": 291,
     "id": "z4l2",
     "text": "padStart"
+  },
+  "l2ak": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var str =  ${string} shuffle //Randomly shuffles the characters in the string",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 974,
+    "y": 250,
+    "z": 287,
+    "id": "l2ak",
+    "var": "string. ",
+    "text": "shuffle"
   }
 }

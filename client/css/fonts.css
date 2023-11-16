@@ -232,6 +232,7 @@
     font-family: "Material Icons";
     font-style: normal;
     font-weight: 400;
+    font-display: block;
     src: url("i/fonts/MaterialIcons-Regular.ttf") format("truetype");
     font-display: block;
 }
@@ -416,11 +417,27 @@
   box-sizing: border-box;
 }
 
+#symbolPickerOverlay:not(.bigPreviews) p span {
+  display: none;
+}
+
+#symbolPickerOverlay.fewResults p {
+  display: none;
+}
+
+#symbolPickerOverlay.fewResults input {
+  margin-bottom: 20px;
+}
+
 #symbolList {
+  --symbolSize: 24px;
   color: black;
   overflow-x: hidden;
   overflow-y: auto;
   word-wrap: anywhere;
+}
+#symbolPickerOverlay.bigPreviews.fewResults #symbolList {
+  --symbolSize: 64px;
 }
 
 #symbolPickerOverlay h1 {
@@ -435,16 +452,47 @@
 
 #symbolPickerOverlay i {
   font-style: normal;
-  font-size: 24px;
+  font-size: var(--symbolSize);
   margin-left: 4px;
   cursor: pointer;
 }
 
-#symbolPickerOverlay i.emoji {
+#symbolPickerOverlay .emoji {
   word-break: break-all;
 }
 
-#symbolPickerOverlay .hidden {
+#symbolPickerOverlay .emoji:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji {
+  background: var(--url) center no-repeat;
+  color: transparent;
+}
+
+#symbolPickerOverlay .gameicons {
+  --spritesheetX: 60;
+  --spritesheetY: 69;
+
+  display: inline-block;
+  background: url(i/game-icons.net/overview24.png);
+  background-position: calc(-1 * var(--symbolSize) * var(--x)) calc(-1 * var(--symbolSize) * var(--y));
+  background-size: calc(var(--spritesheetX) * var(--symbolSize)) calc(var(--spritesheetY) * var(--symbolSize));
+  width: var(--symbolSize);
+  height: var(--symbolSize);
+}
+
+#symbolPickerOverlay.bigPreviews .gameicons {
+  background-image: url(i/game-icons.net/overview48.png);
+}
+
+#symbolPickerOverlay.bigPreviews .gameicons:hover, #symbolPickerOverlay.fewResults .gameicons {
+  background: var(--url);
+}
+
+#symbolPickerOverlay .hidden,
+#symbolPickerOverlay.hideImages h2.imageCategory,
+#symbolPickerOverlay.hideImages .emoji,
+#symbolPickerOverlay.hideImages .gameicons,
+#symbolPickerOverlay.hideFonts h2.fontCategory,
+#symbolPickerOverlay.hideFonts .symbols,
+#symbolPickerOverlay.hideFonts .material-icons {
   display: none;
 }
 
