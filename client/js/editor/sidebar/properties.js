@@ -1115,7 +1115,7 @@ class PropertiesModule extends SidebarModule {
   async applyCardTypeChanges(deck) {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} updated card types of deck ${deck.id} in editor`);
-    await deck.set('cardTypes', this.cardTypes);
+    await deck.set('cardTypes', JSON.parse(JSON.stringify(this.cardTypes)));
     batchEnd();
   }
 
@@ -1139,7 +1139,7 @@ class PropertiesModule extends SidebarModule {
   async applyFaceTemplateChanges(deck) {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} updated face templates of deck ${deck.id} in editor`);
-    await deck.set('faceTemplates', this.faceTemplates);
+    await deck.set('faceTemplates', JSON.parse(JSON.stringify(this.faceTemplates)));
     batchEnd();
   }
 
