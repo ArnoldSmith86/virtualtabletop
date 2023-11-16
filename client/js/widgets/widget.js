@@ -678,11 +678,14 @@ export class Widget extends StateManaged {
     }
 
     if(!go || this.evaluateInputOverlayErrors(o, variables)) {
-      showOverlay(null);
-      if(go)
-        resolve({ variables, collections });
-      else
-        reject({ variables, collections });
+      this.showInputOverlayWorkingState(true);
+      sleep(1).then(function() {
+        showOverlay(null);
+        if(go)
+          resolve({ variables, collections });
+        else
+          reject({ variables, collections });
+      })
       return true;
     }
   }
@@ -2421,6 +2424,8 @@ export class Widget extends StateManaged {
   }
 
   async showInputOverlay(o, widgets, variables, collections, getCollection, problems) {
+    this.showInputOverlayWorkingState(false);
+
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
     $('#buttonInputCancel').style.visibility = "visible";
     return new Promise((resolve, reject) => {
@@ -2489,6 +2494,16 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  showInputOverlayWorkingState(isWorking) {
+    for(const b of $a('#buttonInputOverlay button'))
+      b.style.disabled = isWorking;
+
+    if(isWorking) {
+      $('#buttonInputGo label').textContent = 'Working...';
+      $('#buttonInputCancel').style.visibility = 'hidden';
+    }
   }
 
   async snapToGrid() {
