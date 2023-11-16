@@ -1834,7 +1834,7 @@ export class Widget extends StateManaged {
           a.turnCycle = 'forward'
         }
         let c = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
-        c = c.filter(w => w.get('type') === 'seat');
+        c = c.filter(w => w.get('type') === 'seat' && !w.get('skipTurn'));
 
         //this get the list of valid index
         const indexList = [];
