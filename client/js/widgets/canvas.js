@@ -12,6 +12,7 @@ class Canvas extends Widget {
       artist: null,
 
       resolution: 100,
+      brushSize: 1,
       activeColor: 1,
       colorMap: Canvas.defaultColors
     };
@@ -125,9 +126,9 @@ class Canvas extends Widget {
     if(this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY));
       for(let i=0; i<steps; ++i)
-        this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
+        await this.setPixelBrush(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
     } else {
-      this.setPixel(pixelX, pixelY);
+      await this.setPixelBrush(pixelX, pixelY);
     }
 
     this.lastPixelX = pixelX;
@@ -140,9 +141,21 @@ class Canvas extends Widget {
         await this.set(`c${x}${y}`, null);
   }
 
+  async setPixelBrush(x, y, colorIndex, regionRes) {
+    const size = this.get('brushSize');
+    const radius = size / 2;
+    for(let dx = -radius; dx <= radius; ++dx)
+      for(let dy = -radius; dy <= radius; ++dy)
+        if (dx * dx + dy * dy <= radius * radius)
+          await this.setPixel(x + dx, y + dy, colorIndex, regionRes);
+  }
+
   async setPixel(x, y, colorIndex, regionRes) {
     if(!regionRes)
       regionRes = Math.floor(this.getResolution()/10);
+
+    if(x < 0 || y < 0 || x >= regionRes*10 || y >= regionRes*10)
+      return;
 
     const regionX = Math.floor(x/regionRes);
     const regionY = Math.floor(y/regionRes);
@@ -154,7 +167,7 @@ class Canvas extends Widget {
 
     let currentState = this.decompress(this.get(`c${regionX}${regionY}`));
     currentState = currentState.substring(0,pY*regionRes+pX) + color + currentState.substring(pY*regionRes+pX+1);
-    this.set(`c${regionX}${regionY}`, this.compress(currentState));
+    await this.set(`c${regionX}${regionY}`, this.compress(currentState));
   }
 }
 
