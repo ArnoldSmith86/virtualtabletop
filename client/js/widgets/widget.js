@@ -1891,7 +1891,7 @@ export class Widget extends StateManaged {
 
           //sets turn = false on any seats with skipTurn = true
           for (const seat of cSkip) {
-            seat.set('turn', false);
+            await seat.set('turn', false);
           }
 
           if(jeRoutineLogging)
