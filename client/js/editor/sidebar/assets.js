@@ -391,9 +391,13 @@ class AssetsModule extends SidebarModule {
     progressButton($('#compressAssetsButton'), async updateProgress=>await this.button_compressAssets(updateProgress));
     this.compressAssetsPreviewDOM = div($('#roomArea'), 'compressAssetsPreview overlay', `
       <h2>Compression preview</h2>
-      <p>This shows the asset in the size it would be displayed on a 3200x2000 screen. On the left is the current version, on the right the image you hovered with your mouse:</p>
-      <img class=originalImage>
-      <img class=hoveredImage>
+      <p>This shows the asset in the size it would be displayed on a 3200x2000 screen. On the left is the image you hovered with your mouse, on the right the current version:</p>
+      <div style="overflow:hidden">
+        <div style="width:10000px">
+          <img class=hoveredImage>
+          <img class=originalImage>
+        </div>
+      </div>
     `);
     this.compressAssetsPreviewDOM.onmouseover = _=>this.compressAssetsPreviewDOM.style.display='none';
   }
