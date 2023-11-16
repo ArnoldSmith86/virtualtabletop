@@ -119,26 +119,118 @@ class PropertiesModule extends SidebarModule {
     super('tune', 'Properties', 'Edit widget properties.');
   }
 
-  addInput(type, labelText, value, target) {
-    const div = document.createElement('div');
-    const idPost = Math.random().toString(36).substring(3, 12);
+  addInput(labelText, value, onValueChanged, target, type='auto') {
+    const id = 'genericInput' + Math.random().toString(36).substring(3, 12);
+    let currentValue = null;
+    let inputDOM = null;
 
-    const label = document.createElement('label');
-    label.htmlFor = "propertyModule"+idPost;
-    label.textContent = labelText;
-    label.style.display = 'inline-block';
-    label.style.width = '100px';
-    div.appendChild(label);
+    const wrapperDOM = div(target || this.moduleDOM, 'genericInput', `
+      <label for=${id} style="display:inline-block;width:100px">${html(labelText)}</label>
+      <select>
+        <option>not set</option>
+        <option>text</option>
+        <option>number</option>
+        <option>NULL</option>
+        <option>false</option>
+        <option>true</option>
+        <option>object/array</option>
+      </select>
+    `);
 
-    (target || this.moduleDOM).append(div);
+    const setType = function(t) {
+      $('select', wrapperDOM).value = t;
+      if(t == 'object/array' && (!inputDOM || inputDOM.tagName != 'TEXTAREA')) {
+        if(inputDOM)
+          inputDOM.remove();
+        inputDOM = document.createElement('textarea');
+        inputDOM.id = id;
+        wrapperDOM.appendChild(inputDOM);
+        inputDOM.onkeyup = inputDOM.oninput = inputDOM.onchange = e=>{
+          try {
+            const newValue = JSON.parse(inputDOM.value);
+            setValue(newValue, true);
+            inputDOM.classList.remove('inputError');
+          } catch(e) {
+            inputDOM.classList.add('inputError');
+          }
+        };
+      } else if(t == 'text' || t == 'number') {
+        if(!inputDOM || inputDOM.tagName != 'INPUT') {
+          if(inputDOM)
+            inputDOM.remove();
+          inputDOM = document.createElement('input');
+          inputDOM.id = id;
+          wrapperDOM.appendChild(inputDOM);
+        }
+        inputDOM.type = t;
+        inputDOM.onkeyup = inputDOM.oninput = inputDOM.onchange = _=>{
+          if(inputDOM) // it might have been removed by another event
+            setValue(t=='number'?+inputDOM.value||0:inputDOM.value, true);
+        };
+      } else if(t != 'object/array') {
+        if(inputDOM)
+          inputDOM.remove();
+        inputDOM = null;
+      }
+    };
 
-    if(typeof value != 'object') {
-      const input = document.createElement('input');
-      input.id = "propertyModule"+idPost;
-      input.value = String(value);
-      div.appendChild(input);
-      return input;
-    }
+    const setValue = function(v, triggerCallback=false) {
+      const json = typeof v === 'undefined' ? undefined : JSON.stringify(v, null, '  ');
+      if(json !== currentValue) {
+        currentValue = json;
+        if(typeof v === 'undefined')
+          setType('not set');
+        else if(typeof v === 'string')
+          setType('text');
+        else if(typeof v === 'number')
+          setType('number');
+        else if(v === null)
+          setType('NULL');
+        else if(v === true)
+          setType('true');
+        else if(v === false)
+          setType('false');
+        else if(typeof v === 'object')
+          setType('object/array');
+
+        if(typeof v === 'string' || typeof v === 'number')
+          inputDOM.value = v;
+        if(typeof v === 'object' && v !== null)
+          inputDOM.value = json;
+
+        if(triggerCallback)
+          onValueChanged(v);
+      }
+    };
+
+    const getValue = _=>typeof currentValue === 'undefined' ? undefined : JSON.parse(currentValue);
+
+    setValue(value);
+
+    $('select', wrapperDOM).onchange = _=>{
+      switch($('select', wrapperDOM).value) {
+        case 'not set':
+          setValue(undefined, true); break;
+        case 'text':
+          setValue(String(getValue()||""), true); break;
+        case 'number':
+          setValue(+String(getValue())||0, true); break;
+        case 'NULL':
+          setValue(null, true); break;
+        case 'false':
+          setValue(false, true); break;
+        case 'true':
+          setValue(true, true); break;
+        case 'object/array':
+          setValue({}, true); break;
+      }
+    };
+
+    return {
+      dom: wrapperDOM,
+      setValue,
+      getValue
+    };
   }
 
   addPropertyListener(widget, property, updater) {
@@ -153,10 +245,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   inputValueUpdated(widget, property, value) {
-    if(value.match(/^(-?[0-9]+(\.[0-9]+)?|null|true|false)$/))
-      widget.set(property, JSON.parse(value));
-    else
-      widget.set(property, value);
+    widget.set(property, typeof value === 'undefined' ? null : value);
   }
 
   onDeltaReceivedWhileActive(delta) {
@@ -187,14 +276,11 @@ class PropertiesModule extends SidebarModule {
         if([ 'id', 'type', 'parent' ].indexOf(property) != -1)
           continue;
 
-        const input = this.addInput('text', property, widget.state[property])
-        if(input) {
-          if(!this.inputUpdaters[widget.id][property])
-            this.inputUpdaters[widget.id][property] = [];
+        const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
+        if(!this.inputUpdaters[widget.id][property])
+          this.inputUpdaters[widget.id][property] = [];
 
-          input.onkeyup = e=>this.inputValueUpdated(widget, property, input.value);
-          this.inputUpdaters[widget.id][property].push(v=>input.value=String(v));
-        }
+        this.inputUpdaters[widget.id][property].push(input.setValue);
       }
     }
 
@@ -1012,12 +1098,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   dynamicPropertyInputValueUpdated(deck, cardType, prop, value) {
-      // If the value matches a number, null, true, or false, we JSON parse it. Otherwise, we use the string value.
-      if (value.match(/^(-?[0-9]+(\.[0-9]+)?|null|true|false)$/)) {
-          this.cardTypes[cardType][prop] = JSON.parse(value);
-      } else {
-          this.cardTypes[cardType][prop] = value;
-      }
+      this.cardTypes[cardType][prop] = value;
 
       const oCard = this.cardTypeCards[cardType];
       oCard.domElement.innerHTML = '';
@@ -1036,10 +1117,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   faceObjectInputValueUpdated(deck, face, object, property, value, card, removeObjects) {
-    if(value.match(/^(-?[0-9]+(\.[0-9]+)?|null|true|false)$/))
-      this.faceTemplates[face].objects[object][property] = JSON.parse(value);
-    else
-      this.faceTemplates[face].objects[object][property] = value;
+    this.faceTemplates[face].objects[object][property] = value;
 
     //card.applyDeltaToDOM({ deck: card.get('deck') });
     for(let objectCard=object; objectCard<this.cardLayerCards[face].length; ++objectCard) {
@@ -1087,11 +1165,8 @@ class PropertiesModule extends SidebarModule {
         removeObjects(card, object);
         const propsDiv = document.createElement('div');
         propsDiv.className = 'faceTemplateProperty';
-        for(const prop in faceTemplates[face].objects[object]) {
-          const input = this.addInput('text', prop, faceTemplates[face].objects[object][prop], propsDiv);
-          if(input)
-            input.onkeyup = e=>this.faceObjectInputValueUpdated(deck, face, object, prop, input.value, card, removeObjects);
-        }
+        for(const prop in faceTemplates[face].objects[object])
+          this.addInput(prop, faceTemplates[face].objects[object][prop], v=>this.faceObjectInputValueUpdated(deck, face, object, prop, v, card, removeObjects), propsDiv);
         objectDiv.appendChild(propsDiv);
         this.moduleDOM.appendChild(objectDiv);
       }
@@ -1135,10 +1210,7 @@ class PropertiesModule extends SidebarModule {
               const dynamicProps = faceTemplates[face].objects[object].dynamicProperties;
               for(const prop in dynamicProps) {
                 const dynamicValue = cardTypeProperties[dynamicProps[prop]] || '';
-                const input = this.addInput('text', dynamicProps[prop], dynamicValue, propsDiv);
-                if(input) {
-                  input.onkeyup = e => this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], input.value);
-                }
+                this.addInput(dynamicProps[prop], dynamicValue, v=>this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], v), propsDiv);
               }
             }
           }
@@ -1148,17 +1220,15 @@ class PropertiesModule extends SidebarModule {
       const cardCountDiv = document.createElement('div');
       cardCountDiv.className = 'cardCountDiv';
 
-      const cardCount = widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length;
-      const cardCountInput = this.addInput('number', 'Card Count', cardCount, cardCountDiv);
+      let cardCount = widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length;
+      const input = this.addInput('Card Count', cardCount, v=>updateCount(0, v), cardCountDiv, 'number');
 
-      function updateCount(delta) {
+      function updateCount(delta, setValue) {
         // Parse the value, ensure it's non-negative
-        const newValue = Math.max(0, (parseInt(cardCountInput.value, 10)||0)+delta);
-        cardCountInput.value = newValue; // Update the input value in case it was negative
-        setCardCount(deck, cardType, newValue);
+        cardCount = Math.max(0, (parseInt(typeof setValue === 'number' ? setValue : cardCount, 10)||0)+delta);
+        input.setValue(cardCount);
+        setCardCount(deck, cardType, cardCount);
       }
-
-      cardCountInput.oninput = e => updateCount(0);
 
       const minusButton = document.createElement('button');
       minusButton.setAttribute('icon', 'remove');
@@ -1169,7 +1239,8 @@ class PropertiesModule extends SidebarModule {
       plusButton.onclick = e => updateCount(1);
 
       cardCountDiv.appendChild(minusButton);
-      cardCountDiv.appendChild(cardCountInput);
+      cardCountDiv.appendChild($('input', input.dom));
+      input.dom.remove();
       cardCountDiv.appendChild(plusButton);
 
       cardTypeDiv.appendChild(propsDiv);
