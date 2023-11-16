@@ -1227,8 +1227,10 @@ class PropertiesModule extends SidebarModule {
             if(faceTemplates[face].objects[object].dynamicProperties) {
               const dynamicProps = faceTemplates[face].objects[object].dynamicProperties;
               for(const prop in dynamicProps) {
-                const dynamicValue = cardTypeProperties[dynamicProps[prop]];
-                this.addInput(dynamicProps[prop], dynamicValue, v=>this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], v), $('.cardTypeProperties > div', cardTypeDiv));
+                if([ 'cardType', 'id' ].indexOf(dynamicProps[prop]) == -1) {
+                  const dynamicValue = cardTypeProperties[dynamicProps[prop]];
+                  this.addInput(dynamicProps[prop], dynamicValue, v=>this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], v), $('.cardTypeProperties > div', cardTypeDiv));
+                }
               }
             }
           }
