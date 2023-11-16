@@ -1867,8 +1867,8 @@ export class Widget extends StateManaged {
             if(setSeat){
               nextTurnIndex = indexList.indexOf(setSeat.get('index'));
             } else {
-              problems.push(`Seat ${a.turn} is not a valid seat id.`);
-            }            
+              problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.source}.`);
+            }
           } else {
             const turnIndexOffset = a.turnCycle == 'forward' ? a.turn : -a.turn;
             nextTurnIndex = indexList.indexOf(previousTurn) + turnIndexOffset;
@@ -1891,7 +1891,7 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
         } else if(jeRoutineLogging) {
-          jeLoggingRoutineOperationSummary(`no active seats found`);
+          jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
         }
       }
 
