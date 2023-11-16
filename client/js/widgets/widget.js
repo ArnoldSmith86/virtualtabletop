@@ -1881,16 +1881,18 @@ export class Widget extends StateManaged {
             for(const w of c) {
               await w.set('turn', w.get('index') == turn);
             }
-            jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
           } else {
-            jeLoggingRoutineOperationSummary(`SIMULATED turn of seats: from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`SIMULATED turn of seats: from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
           }
 
           collections[a.collection] = c.filter(w=>w.get('index')==turn && w.get('player'));
 
         } else {
-
-          jeLoggingRoutineOperationSummary(`no active seats found`);
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`no active seats found`);
         }
       }
 
