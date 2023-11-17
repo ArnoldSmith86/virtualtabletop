@@ -466,6 +466,9 @@ export async function loadSymbolPicker() {
 }
 
 export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true) {
+  if($('#statesButton').dataset.overlay == 'symbolPickerOverlay')
+    $('#statesButton').dataset.overlay = detailsOverlay;
+
   await loadSymbolPicker();
   return new Promise((resolve, reject) => {
     showOverlay('symbolPickerOverlay');
@@ -561,6 +564,8 @@ export function addRichtextControls(dom) {
 
     showStatesOverlay('symbolPickerOverlay');
     $('#symbolPickerOverlay').scrollTop = 0;
+    for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
+      $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
     $('#symbolPickerOverlay input').onkeyup();
