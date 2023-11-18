@@ -1890,16 +1890,12 @@ export class Widget extends StateManaged {
             }
             if(jeRoutineLogging)
               jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
-          } else {
-            if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`SIMULATED turn of seats: from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+          } else if(jeRoutineLogging) {
+            jeLoggingRoutineOperationSummary(`SIMULATED turn of seats: from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
           }
 
           collections[a.collection] = c.filter(w=>w.get('index')==turn && w.get('player'));
 
-        } else {
-          if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
         } else if(jeRoutineLogging) {
           jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
         }
