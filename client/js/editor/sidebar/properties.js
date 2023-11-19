@@ -262,25 +262,17 @@ class PropertiesModule extends SidebarModule {
     this.inputUpdaters = {};
 
     for(const widget of newSelection) {
-      this.addHeader(widget.id);
       this.inputUpdaters[widget.id] = {};
 
-      if(widget.get('type') == 'card') {
-        this.renderCardLayers(widget);
-        this.renderCardTypes(widget);
-      }
-      if(widget.get('type') == 'holder')
-        this.renderForHolder(widget);
+      switch(widget.get('type')) {
+        case 'card':   this.renderForCard(widget);   break;
+        case 'deck':   this.renderForDeck(widget);   break;
+        case 'holder': this.renderForHolder(widget); break;
 
-      for(const property in widget.state) {
-        if([ 'id', 'type', 'parent' ].indexOf(property) != -1)
-          continue;
-
-        const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
-        if(!this.inputUpdaters[widget.id][property])
-          this.inputUpdaters[widget.id][property] = [];
-
-        this.inputUpdaters[widget.id][property].push(input.setValue);
+        default:
+          this.addHeader(widget.id);
+          this.renderGenericProperties(widget);
+          break;
       }
     }
 
@@ -1143,8 +1135,8 @@ class PropertiesModule extends SidebarModule {
     batchEnd();
   }
 
-  renderCardLayers(widget) {
-    const deck = widgets.get(widget.get('deck'));
+  renderCardLayers(deck) {
+    const card = widgetFilter(w=>w.get('deck')==deck.get('id'))[0];
     const faceTemplates = this.faceTemplates = JSON.parse(JSON.stringify(deck.get('faceTemplates')));
 
     this.cardLayerCards = [];
@@ -1163,12 +1155,12 @@ class PropertiesModule extends SidebarModule {
         const objectDiv = document.createElement('div');
         objectDiv.className = 'faceTemplateEdit';
 
-        const card = this.cardLayerCards[face][object] = widget.renderReadonlyCopy({ activeFace: face }, objectDiv);
+        const cardClone = this.cardLayerCards[face][object] = card.renderReadonlyCopy({ activeFace: face }, objectDiv);
         const removeObjects = function(card, object) {
           for(const objectDOM of $a(`.active.cardFace .cardFaceObject:nth-child(n+${+object+2})`, card.domElement))
             objectDOM.remove();
         };
-        removeObjects(card, object);
+        removeObjects(cardClone, object);
         const propsDiv = document.createElement('div');
         propsDiv.className = 'faceTemplateProperty';
         for(const prop in faceTemplates[face].objects[object])
@@ -1184,15 +1176,17 @@ class PropertiesModule extends SidebarModule {
     this.moduleDOM.appendChild(applyButton);
   }
 
-  renderCardTypes(widget) {
-    const deck = widgets.get(widget.get('deck'));
+  renderCardTypes(deck, onlyCardType=null) {
+    const card = widgetFilter(w=>w.get('deck')==deck.get('id'))[0];
     const faceTemplates = JSON.parse(JSON.stringify(deck.get('faceTemplates')));
     const cardTypes = this.cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
 
     this.cardTypeCards = [];
 
-    this.addHeader('Card types');
     for(const [ cardType, cardTypeProperties ] of Object.entries(cardTypes)) {
+      if(onlyCardType !== null && onlyCardType != cardType)
+        continue;
+
       const cardTypeDiv = div(this.moduleDOM, 'cardTypeEdit', `
         <div class=cardCountDiv>
           <button icon=remove></button>
@@ -1213,13 +1207,13 @@ class PropertiesModule extends SidebarModule {
 
       this.cardTypeCards[cardType] = [];
 
-      const card = new Card();
-      const newState = {...widget.state};
+      const cardClone = new Card();
+      const newState = {...card.state};
       newState.activeFace = faceTemplates.length>1?1:0;
       newState.cardType = cardType;
-      card.renderReadonlyCopyRaw(newState, $('.renderedWidget', cardTypeDiv));
+      cardClone.renderReadonlyCopyRaw(newState, $('.renderedWidget', cardTypeDiv));
 
-      this.cardTypeCards[cardType] = card;
+      this.cardTypeCards[cardType] = cardClone;
 
       for(const face in faceTemplates) {
         if(faceTemplates[face].objects) {
@@ -1255,7 +1249,47 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
+  renderForCard(widget) {
+    this.addHeader(`Card ${widget.id}`);
+    this.addSubHeader(`Card properties`);
+    this.renderGenericProperties(widget, [ 'deck', 'x', 'y', 'z' ]);
+    this.addSubHeader(`Card type`);
+    this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
+    div(this.moduleDOM, '', `
+      <p>Open the deck of this card to edit what card types exist and how the cards look like.</p>
+      <div class=buttonBar>
+        <button icon=style>Open deck</button>
+      </div>
+    `);
+    $('[icon=style]', this.moduleDOM).onclick = _=>setSelection([ widgets.get(widget.get('deck')) ]);
+  }
+
+  renderForDeck(widget) {
+    this.addHeader(`Deck ${widget.id}`);
+    this.addSubHeader(`Card types`);
+    this.renderCardTypes(widget);
+
+    this.addSubHeader(`Card layers`);
+    this.renderCardLayers(widget);
+
+    this.addSubHeader(`Card default properties`);
+    for(const [ prop, value ] of Object.entries(widget.get('cardDefaults'))) {
+      this.addInput(prop, value, v=>{
+        const defaults = JSON.parse(JSON.stringify(widget.get('cardDefaults')));
+        defaults[prop] = value;
+        widget.set('cardDefaults', defaults);
+      });
+    }
+
+    this.addSubHeader(`Deck properties`);
+    div(this.moduleDOM, '', `
+      <p>These are properties acting on the deck widget itself which has no influence on gameplay. These properties do not apply to the cards. Which is why this section is usually empty.</p>
+    `);
+    this.renderGenericProperties(widget, [ 'cardTypes', 'faceTemplates', 'cardDefaults', 'x', 'y', 'z' ]);
+  }
+
   renderForHolder(widget) {
+    this.addHeader(`Holder ${widget.id}`);
     this.addSubHeader('Target widgets');
     for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
       if(!Object.keys(deck.get('cardTypes')).length)
@@ -1348,6 +1382,19 @@ class PropertiesModule extends SidebarModule {
         widget.set('css', null);
       }
     };
+  }
+
+  renderGenericProperties(widget, exclude) {
+    for(const property in widget.state) {
+      if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1)
+        continue;
+
+      const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
+      if(!this.inputUpdaters[widget.id][property])
+        this.inputUpdaters[widget.id][property] = [];
+
+      this.inputUpdaters[widget.id][property].push(input.setValue);
+    }
   }
 
   renderWidgetButton(widget, state, target) {
