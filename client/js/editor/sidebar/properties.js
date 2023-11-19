@@ -1382,6 +1382,9 @@ class PropertiesModule extends SidebarModule {
         widget.set('css', null);
       }
     };
+
+    this.addSubHeader(`Holder properties`);
+    this.renderGenericProperties(widget, [ 'dropTarget' ]);
   }
 
   renderGenericProperties(widget, exclude) {
