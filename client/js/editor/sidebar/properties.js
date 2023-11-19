@@ -1276,7 +1276,7 @@ class PropertiesModule extends SidebarModule {
     for(const [ prop, value ] of Object.entries(widget.get('cardDefaults'))) {
       this.addInput(prop, value, v=>{
         const defaults = JSON.parse(JSON.stringify(widget.get('cardDefaults')));
-        defaults[prop] = value;
+        defaults[prop] = v;
         widget.set('cardDefaults', defaults);
       });
     }
