@@ -1192,7 +1192,6 @@ class PropertiesModule extends SidebarModule {
 
       this.cardTypeCards[cardType] = cardClone;
 
-
       let cardCount = widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length;
       const input = this.addInput('Card Count', cardCount, v=>updateCount(0, v), $('.cardCountDiv', cardTypeDiv), 'number');
 
@@ -1217,22 +1216,24 @@ class PropertiesModule extends SidebarModule {
 
     const cardTypeProperties = JSON.parse(JSON.stringify(deck.get('cardTypes')))[cardType];
 
-    for(const face of deck.get('faceTemplates')) {
-      for(const object of face.objects || []) {
-        for(const prop of Object.values(object.dynamicProperties || {})) {
-          if([ 'cardType', 'id' ].indexOf(prop) == -1) {
-            const dynamicValue = cardTypeProperties[prop];
-            this.addInput(prop, dynamicValue, v=>{
-              if(typeof v === undefined)
-                delete cardTypeProperties[prop];
-              else
-                cardTypeProperties[prop] = v;
-              this.renderCardTypes_updateCardVisualization(deck, cardType, { [prop]: v });
-            }, $('.cardTypeProperties > div', cardTypeDiv));
-          }
-        }
-      }
-    }
+    const addPropertyInput = (property, value)=>{
+      this.addInput(property, value, v=>{
+        if(typeof v === undefined)
+          delete cardTypeProperties[property];
+        else
+          cardTypeProperties[property] = v;
+        this.renderCardTypes_updateCardVisualization(deck, cardType, { [property]: v });
+      }, $('.cardTypeProperties > div', cardTypeDiv));
+    };
+
+    for(const [ property, value ] of Object.entries(cardTypeProperties))
+      addPropertyInput(property, value);
+
+    for(const face of deck.get('faceTemplates'))
+      for(const object of face.objects || [])
+        for(const prop of Object.values(object.dynamicProperties || {}))
+          if(typeof cardTypeProperties[prop] === 'undefined' && [ 'cardType', 'id' ].indexOf(prop) == -1)
+            addPropertyInput(prop, cardTypeProperties[prop]);
 
     $('[icon=check]', cardTypeDiv).onclick = async _=>{
       cardTypeDiv.classList.remove('cardCountDivEditing');
