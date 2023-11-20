@@ -1089,28 +1089,6 @@ class PropertiesModule extends SidebarModule {
     return deck;
   }
 
-  dynamicPropertyInputValueUpdated(deck, cardType, prop, value) {
-      if(typeof value === undefined)
-        delete this.cardTypes[cardType][prop];
-      else
-        this.cardTypes[cardType][prop] = value;
-
-      const oCard = this.cardTypeCards[cardType];
-      oCard.domElement.innerHTML = '';
-      oCard.state[prop] = value;
-      oCard.createFaces(this.faceTemplates);
-      for (let i = 0; i < oCard.domElement.children.length; ++i) {
-          oCard.domElement.children[i].classList.toggle('active', i == oCard.get('activeFace'));
-      }
-  }
-
-  async applyCardTypeChanges(deck) {
-    batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} updated card types of deck ${deck.id} in editor`);
-    await deck.set('cardTypes', JSON.parse(JSON.stringify(this.cardTypes)));
-    batchEnd();
-  }
-
   faceObjectInputValueUpdated(deck, face, object, property, value, card, removeObjects) {
     if(typeof value === undefined)
       delete this.faceTemplates[face].objects[object][property];
@@ -1172,18 +1150,18 @@ class PropertiesModule extends SidebarModule {
 
     const applyButton = document.createElement('button');
     applyButton.innerText = 'Apply changes';
+    applyButton.setAttribute('icon', 'check');
     applyButton.onclick = e=>this.applyFaceTemplateChanges(deck);
     this.moduleDOM.appendChild(applyButton);
   }
 
   renderCardTypes(deck, onlyCardType=null) {
     const card = widgetFilter(w=>w.get('deck')==deck.get('id'))[0];
-    const faceTemplates = JSON.parse(JSON.stringify(deck.get('faceTemplates')));
     const cardTypes = this.cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
 
     this.cardTypeCards = [];
 
-    for(const [ cardType, cardTypeProperties ] of Object.entries(cardTypes)) {
+    for(const cardType in cardTypes) {
       if(onlyCardType !== null && onlyCardType != cardType)
         continue;
 
@@ -1196,40 +1174,24 @@ class PropertiesModule extends SidebarModule {
         <button icon=create>Edit</button>
         <div class=cardTypeProperties>
           <div></div>
-          <button icon=check>Apply changes</button>
+          <div class=buttonBar>
+            <button icon=close class=red>Discard changes</button>
+            <button icon=check class=green>Apply changes</button>
+          </div>
         </div>
       `);
-      $('[icon=create]', cardTypeDiv).onclick = _=>cardTypeDiv.classList.add('cardCountDivEditing');
-      $('[icon=check]',  cardTypeDiv).onclick = _=>{
-        cardTypeDiv.classList.remove('cardCountDivEditing');
-        this.applyCardTypeChanges(deck);
-      };
+      $('[icon=create]', cardTypeDiv).onclick = _=>this.renderCardTypes_editProperties(deck, cardType, cardTypeDiv);
 
       this.cardTypeCards[cardType] = [];
 
       const cardClone = new Card();
       const newState = {...card.state};
-      newState.activeFace = faceTemplates.length>1?1:0;
+      newState.activeFace = deck.get('faceTemplates').length>1?1:0;
       newState.cardType = cardType;
       cardClone.renderReadonlyCopyRaw(newState, $('.renderedWidget', cardTypeDiv));
 
       this.cardTypeCards[cardType] = cardClone;
 
-      for(const face in faceTemplates) {
-        if(faceTemplates[face].objects) {
-          for(const object in faceTemplates[face].objects) {
-            if(faceTemplates[face].objects[object].dynamicProperties) {
-              const dynamicProps = faceTemplates[face].objects[object].dynamicProperties;
-              for(const prop in dynamicProps) {
-                if([ 'cardType', 'id' ].indexOf(dynamicProps[prop]) == -1) {
-                  const dynamicValue = cardTypeProperties[dynamicProps[prop]];
-                  this.addInput(dynamicProps[prop], dynamicValue, v=>this.dynamicPropertyInputValueUpdated(deck, cardType, dynamicProps[prop], v), $('.cardTypeProperties > div', cardTypeDiv));
-                }
-              }
-            }
-          }
-        }
-      }
 
       let cardCount = widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length;
       const input = this.addInput('Card Count', cardCount, v=>updateCount(0, v), $('.cardCountDiv', cardTypeDiv), 'number');
@@ -1247,6 +1209,56 @@ class PropertiesModule extends SidebarModule {
       $('.cardCountDiv', cardTypeDiv).insertBefore($('input', input.dom), $('[icon=add]', cardTypeDiv));
       input.dom.remove();
     }
+  }
+
+  renderCardTypes_editProperties(deck, cardType, cardTypeDiv) {
+    $('.cardTypeProperties > div', cardTypeDiv).innerHTML = '';
+    cardTypeDiv.classList.add('cardCountDivEditing');
+
+    const cardTypeProperties = JSON.parse(JSON.stringify(deck.get('cardTypes')))[cardType];
+
+    for(const face of deck.get('faceTemplates')) {
+      for(const object of face.objects || []) {
+        for(const prop of Object.values(object.dynamicProperties || {})) {
+          if([ 'cardType', 'id' ].indexOf(prop) == -1) {
+            const dynamicValue = cardTypeProperties[prop];
+            this.addInput(prop, dynamicValue, v=>{
+              if(typeof v === undefined)
+                delete cardTypeProperties[prop];
+              else
+                cardTypeProperties[prop] = v;
+              this.renderCardTypes_updateCardVisualization(deck, cardType, { [prop]: v });
+            }, $('.cardTypeProperties > div', cardTypeDiv));
+          }
+        }
+      }
+    }
+
+    $('[icon=check]', cardTypeDiv).onclick = async _=>{
+      cardTypeDiv.classList.remove('cardCountDivEditing');
+
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} updated card types of deck ${deck.id} in editor`);
+      const cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
+      cardTypes[cardType] = cardTypeProperties;
+      await deck.set('cardTypes', cardTypes);
+      batchEnd();
+    };
+
+    $('[icon=close]', cardTypeDiv).onclick = _=>{
+      cardTypeDiv.classList.remove('cardCountDivEditing');
+      this.renderCardTypes_updateCardVisualization(deck, cardType, deck.get('cardTypes')[cardType]);
+    };
+  }
+
+  renderCardTypes_updateCardVisualization(deck, cardType, changes) {
+      const oCard = this.cardTypeCards[cardType];
+      oCard.domElement.innerHTML = '';
+      Object.assign(oCard.state, changes);
+      oCard.createFaces(deck.get('faceTemplates'));
+      for (let i = 0; i < oCard.domElement.children.length; ++i) {
+          oCard.domElement.children[i].classList.toggle('active', i == oCard.get('activeFace'));
+      }
   }
 
   renderForCard(widget) {
