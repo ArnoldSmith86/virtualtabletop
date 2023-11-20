@@ -17,7 +17,7 @@
       "bgg": "https://boardgamegeek.com/boardgame/111",
       "rules": "",
       "ruleText": "<div><b>Premise &amp; Objective<br></b></div><div>During the course of the game you will place your knights&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i> onto spaces on the game board. Groups of knights will form kingdoms, with the player with the most knights present in a kingdom declared its ruler <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i>. By being ruler of the most valuable duchies, you will collect points during and at the end of the game. The player with the most points wins the game.<br></div><div><br></div><div><b>The Board<br></b></div><div>The board consists of spaces marked with a black outline. Each space is either a land (green) or river (blue) space. The river spaces are numbered.</div><div><br></div><div>Two spaces are adjacent to one another if their edges touch - but not if they touch only at a corner.</div><div><br></div><div>Landmarks - gray circular features marked with a number or symbol - are also present on the board. A landmark is not a space, but rather modifies those spaces that it touches.<br></div><div><br></div><div><b>The Deck</b></div><div>The card deck consists of 55 cards: one card for each of the 54 numbered river spaces, and one extra card which is red and marked with the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/cycle.svg\"></i> icon.</div><div><br></div><b>Kingdoms</b><div>A group of 2 or more contiguously-connected spaces occupied by knights (irrespective of which players' knights) forms a kingdom. When a new kingdom is formed, if one player has more knights&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i> within it than each other player, then they place a ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> nearby to indicate that they rule this kingdom.<b><br></b></div><div><b><br></b></div><b>Player Turns</b><div>One player is appointed start player and takes a turn first. Each player in turn around the table will take one turn, repeating until the game ends.<br></div><div><br></div><div>A player's turn consists of the following steps in this order:<br></div><div>• Play one card from your hand and place a knight <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i>;</div><div>• Optionally, place one of your bastions <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-rook.svg\"></i>;</div><div>• If you now have no knights&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i> remaining, final scoring takes place and then the game ends;</div><div>• If the game has not ended, you draw a new card to replenish your hand to 5 cards.</div><div>• If you drew the card marked <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/cycle.svg\"></i>, then you re-shuffle the discards into the deck and draw again, continuing this process until you draw a numbered card.<br></div><div><br></div><div><b>Placing a Knight </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i></div><div>The main part of your turn consists of playing a card and placing a knight. You play one numbered card from your hand. This allows you to play a knight on one of the two land spaces next to the correspondingly-numbered river space. If all such land spaces are occupied, you may instead place your knight into the river space with the matching number.</div><div><br></div><div>Alternatively, when playing your card you may instead state that you are using it to reinforce one of your existing knights. In this case, ignore the number on the card and instead place a knight into any unoccupied land (not river) space which is adjacent to one of your existing knights and not adjacent to any other player's knight.</div><div><br></div><div>Through placing your knights, a new kingdom may be formed, two kingdoms may be merged, or ownership of existing kingdoms may change. Check for these things immediately after placing your knight.</div><div><br></div><div><b>Forming a New Kingdom</b></div><div>If the knight forms a new group of 2 or more contiguously-connected knights that were not part of an existing kingdom, then a kingdom is now formed. If one player has more knights in the kingdom than all other players, then they are appointed ruler and place one of their rulers&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> nearby to the kingdom to indicate this.</div><div><br></div><div><b>Changing Ownership of a Kingdom</b></div><div>If the new knight causes a player to now have more knights in a kingdom than all other players, then they become the ruler of the kingdom, replacing any existing ruler. The owner of the old ruler removes that ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> and scores the value of the kingdom as assessed before this placement. The new ruler places their ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> next to the kingdom instead.</div><div><br></div><div>Note that you must have more knights than the existing ruler - equaling their number of knights is not sufficient.</div><div><br></div><div><b>Merging two Kingdoms</b></div><div>If you place a knight that combines two existing kingdoms, then determine which player - if any - has more knights than all other players in the new, larger, kingdom. This player retains one of their rulers&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> next to the kingdom (or places one, if they were not ruler of either of the original kingdoms). All other rulers&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> are removed.</div><div><br></div><div>In the case where a player was the ruler of both kingdoms involved in a merger, they remove the ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> of the lesser-valued (in points, see below) of the two kingdoms.</div><div><br></div><div><b>Scoring for Ruler&nbsp;</b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i><b> Removal</b></div><div>Whenever a player's ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> is removed from the board, they score the value of the kingdom in question before the latest placement. The value of a kingdom is calculated by summing the following values:</div><div>• 1 point for the ruler <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i>;</div><div>• 1 point for each church&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/church.svg\"></i> and/or castle&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/castle.svg\"></i> landmark adjacent to any knight in the kingdom;</div><div>• 2, 3, or 4 points for each numbered town landmark adjacent to any knight in the kingdom, as shown on the town itself.<br></div><div><br></div><div><b>Church Landmarks </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/church.svg\"></i></div><div>As described above, the church landmarks&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/church.svg\"></i> contribute 1 point to the value of a kingdom.</div><div><br>Additionally, each ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> who has one or more churches in their kingdom also appoints a bishop <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-bishop.svg\"></i>. Place the bishop&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-bishop.svg\"></i> next to the ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> token to indicate this.</div><div><br></div><div>At all times during the game, the single player who controls the most rulers with bishops&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-bishop.svg\"></i> has control of the Archbishop marker <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pope-crown.svg\"></i>. Note that you must retain a lead in the number of bishops to keep hold of the Archbishop&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pope-crown.svg\"></i> - if another player ties your count of bishops, then return the Archbishop marker to the board, near the draw deck, until a player has more bishops than any other and can claim it.<br></div><div><b><br></b></div><div><b>Power of the Archbishop </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pope-crown.svg\"></i></div><div>The player that controls the Archbishop&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pope-crown.svg\"></i> has the power of conversion. When playing a numbered card, instead of placing a knight, they may replace an existing knight of another player on a land space next to the river with the corresponding number.<br></div><div><br></div><div>The archbishop is also worth 5 points for a player that controls it at the end of the game.</div><div><b><br></b></div><div><b>Castle Landmarks </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/castle.svg\"></i></div><div><div>As described above, the castle landmarks&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/castle.svg\"></i> contribute 1 point to the value of a kingdom.</div><br></div><div>Whenever a knight is placed next to a castle, then this will lead to an additional knight being placed, on the castle landmark itself. This knight forms part of a kingdom with the knights in the spaces that the castle touches.</div><div><br></div><div>Determine which player will place the additional knight before checking for new owners of kingdoms.</div><div><br>If the standard knight placed during the turn forms part of an existing kingdom, then the additional knight will be placed by the player that rules that kingdom. Otherwise or if there is no ruler of such an existing kingdom, the active player who placed the knight next to the castle places the additional knight.</div><div><br></div><div>Whenever a new ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> takes over the kingdom containing one or more castles, they also take over all castles in the kingdom. Remove the existing knights from the castles and replace them with knights of the new ruler.<br></div><div><br></div><div><div><b>Placing a Bastion </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-rook.svg\"></i></div><div>After placing your knight, you may also place one bastion&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-rook.svg\"></i> on a single empty land space on the board. Bastions occupy spaces, stopping knights from being placed there. Bastions are never part of a kingdom, effectively acting as walls/barriers.<br></div></div><div><br></div><div><b>End Game Scoring</b></div><div>When the game ends, all rulers&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> remaining on the board score their kingdom. The same scoring is used as described above for a ruler being removed, except that the ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> is worth 5 points instead of 1 during this end-game scoring.<br></div><div><br></div><div>Additionally, award 5 points to the current owner of the Archbishop <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pope-crown.svg\"></i>, if there is one.</div><div><br></div><div>Once this scoring is complete, the player with the most points wins.</div>",
-      "helpText": "<div>Have all players take a seat and press the New Game button to shuffle the deck, distribute starting hands, give the players the appropriate number of knights&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i> for the player count, and select a random start player.</div><div><br></div><div>Use the —, +1, and +X buttons next to the player seats to adjust players' scores as required during play.</div><div><br></div><div>Press the End Turn button at the end of your turn to change which seat is highlighted and to draw your hand back to five cards automatically. If you draw the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/cycle.svg\"></i> card, press the Reshuffle button to shuffle that card and the discards back into the deck. You should then drag a card into your hand as a replacement so that you have 5 cards in hand.<br></div>",
+      "helpText": "<div>Have all players take a seat and press the New Game button to shuffle the deck, distribute starting hands, give the players the appropriate number of knights&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i> for the player count, and select a random start player.</div><div><br></div><div>Use the —, +1, and +X buttons next to the player seats to adjust players' scores as required during play.</div><div><br></div><div>Press the End Turn button at the end of your turn to change which seat is highlighted and to draw your hand back to five cards automatically. If you draw the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/cycle.svg\"></i> card, press the Reshuffle button to shuffle that card and the discards back into the deck and draw back to 5 cards.<br></div>",
       "attribution": "Game layout and scripting, plus game board image, by Andy Pymont, released to the Public Domain by CC0.\n\nLibrary image generated using the Midjourney artificial intelligence \nimage generator, https://www.midjourney.com/home/, using the following prompt: \"a duke and bishop in front of a river, cartoon\". The card back is a cropped section of the same image.\n\nIcon graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• Archbishop card icon: https://game-icons.net/1x1/delapouite/pope-crown.html\n<div>• Castle https://game-icons.net/1x1/delapouite/castle.html</div><div>• Church https://game-icons.net/1x1/delapouite/church.html</div>\nLorc\n<div>• Cycle icon for reshuffle card: https://game-icons.net/1x1/lorc/cycle.html</div><div><br></div><div>Skoll</div><div>• Bishop https://game-icons.net/1x1/skoll/chess-bishop.html</div><div>• King https://game-icons.net/1x1/skoll/chess-king.html</div><div>• Knight https://game-icons.net/1x1/skoll/chess-knight.html</div><div>• Rook https://game-icons.net/1x1/skoll/chess-rook.html</div>",
       "lastUpdate": 1700055087053,
       "variantImage": "",
@@ -188,7 +188,7 @@
     "id": "card-shuffle",
     "deck": "deck-cards",
     "cardType": "shuffle",
-    "z": 23427,
+    "z": 24510,
     "parent": "ewjg"
   },
   "card-01": {
@@ -196,7 +196,7 @@
     "id": "card-01",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23469,
+    "z": 24480,
     "value": 1,
     "parent": "ewjg"
   },
@@ -205,7 +205,7 @@
     "id": "card-10",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23442,
+    "z": 24470,
     "value": 10,
     "parent": "ewjg"
   },
@@ -214,7 +214,7 @@
     "id": "card-11",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23445,
+    "z": 24491,
     "value": 11,
     "parent": "ewjg"
   },
@@ -223,7 +223,7 @@
     "id": "card-12",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23447,
+    "z": 24482,
     "value": 12,
     "parent": "ewjg"
   },
@@ -232,7 +232,7 @@
     "id": "card-13",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23464,
+    "z": 24473,
     "value": 13,
     "parent": "ewjg"
   },
@@ -241,7 +241,7 @@
     "id": "card-14",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23425,
+    "z": 24503,
     "value": 14,
     "parent": "ewjg"
   },
@@ -250,7 +250,7 @@
     "id": "card-15",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23417,
+    "z": 24493,
     "value": 15,
     "parent": "ewjg"
   },
@@ -259,7 +259,7 @@
     "id": "card-16",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23457,
+    "z": 24507,
     "value": 16,
     "parent": "ewjg"
   },
@@ -268,7 +268,7 @@
     "id": "card-17",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23424,
+    "z": 24475,
     "value": 17,
     "parent": "ewjg"
   },
@@ -277,7 +277,7 @@
     "id": "card-18",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23441,
+    "z": 24484,
     "value": 18,
     "parent": "ewjg"
   },
@@ -286,7 +286,7 @@
     "id": "card-19",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23460,
+    "z": 24511,
     "value": 19,
     "parent": "ewjg"
   },
@@ -295,7 +295,7 @@
     "id": "card-20",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23456,
+    "z": 24477,
     "value": 20,
     "parent": "ewjg"
   },
@@ -304,7 +304,7 @@
     "id": "card-21",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23468,
+    "z": 24486,
     "value": 21,
     "parent": "ewjg"
   },
@@ -313,7 +313,7 @@
     "id": "card-22",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23439,
+    "z": 24459,
     "value": 22,
     "parent": "ewjg"
   },
@@ -322,7 +322,7 @@
     "id": "card-23",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23452,
+    "z": 24467,
     "value": 23,
     "parent": "ewjg"
   },
@@ -331,7 +331,7 @@
     "id": "card-24",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23434,
+    "z": 24506,
     "value": 24,
     "parent": "ewjg"
   },
@@ -340,7 +340,7 @@
     "id": "card-25",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23461,
+    "z": 24512,
     "value": 25,
     "parent": "ewjg"
   },
@@ -349,7 +349,7 @@
     "id": "card-26",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23446,
+    "z": 24501,
     "value": 26,
     "parent": "ewjg"
   },
@@ -358,7 +358,7 @@
     "id": "card-27",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23465,
+    "z": 24499,
     "value": 27,
     "parent": "ewjg"
   },
@@ -367,7 +367,7 @@
     "id": "card-28",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23455,
+    "z": 24488,
     "value": 28,
     "parent": "ewjg"
   },
@@ -376,7 +376,7 @@
     "id": "card-29",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23467,
+    "z": 24504,
     "value": 29,
     "parent": "ewjg"
   },
@@ -385,7 +385,7 @@
     "id": "card-30",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23430,
+    "z": 24478,
     "value": 30,
     "parent": "ewjg"
   },
@@ -394,7 +394,7 @@
     "id": "card-31",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23419,
+    "z": 24461,
     "value": 31,
     "parent": "ewjg"
   },
@@ -403,7 +403,7 @@
     "id": "card-32",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23453,
+    "z": 24465,
     "value": 32,
     "parent": "ewjg"
   },
@@ -412,7 +412,7 @@
     "id": "card-33",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23440,
+    "z": 24469,
     "value": 33,
     "parent": "ewjg"
   },
@@ -421,7 +421,7 @@
     "id": "card-34",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23423,
+    "z": 24509,
     "value": 34,
     "parent": "ewjg"
   },
@@ -430,7 +430,7 @@
     "id": "card-35",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23431,
+    "z": 24474,
     "value": 35,
     "parent": "ewjg"
   },
@@ -439,7 +439,7 @@
     "id": "card-36",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23435,
+    "z": 24462,
     "value": 36,
     "parent": "ewjg"
   },
@@ -448,7 +448,7 @@
     "id": "card-37",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23443,
+    "z": 24483,
     "value": 37,
     "parent": "ewjg"
   },
@@ -457,7 +457,7 @@
     "id": "card-38",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23422,
+    "z": 24497,
     "value": 38,
     "parent": "ewjg"
   },
@@ -466,7 +466,7 @@
     "id": "card-39",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23454,
+    "z": 24479,
     "value": 39,
     "parent": "ewjg"
   },
@@ -475,7 +475,7 @@
     "id": "card-40",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23448,
+    "z": 24464,
     "value": 40,
     "parent": "ewjg"
   },
@@ -484,7 +484,7 @@
     "id": "card-41",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23444,
+    "z": 24468,
     "value": 41,
     "parent": "ewjg"
   },
@@ -493,7 +493,7 @@
     "id": "card-42",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23450,
+    "z": 24481,
     "value": 42,
     "parent": "ewjg"
   },
@@ -502,7 +502,7 @@
     "id": "card-43",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23433,
+    "z": 24495,
     "value": 43,
     "parent": "ewjg"
   },
@@ -511,7 +511,7 @@
     "id": "card-44",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23438,
+    "z": 24492,
     "value": 44,
     "parent": "ewjg"
   },
@@ -520,7 +520,7 @@
     "id": "card-45",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23459,
+    "z": 24489,
     "value": 45,
     "parent": "ewjg"
   },
@@ -529,7 +529,7 @@
     "id": "card-46",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23416,
+    "z": 24487,
     "value": 46,
     "parent": "ewjg"
   },
@@ -538,7 +538,7 @@
     "id": "card-47",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23418,
+    "z": 24476,
     "value": 47,
     "parent": "ewjg"
   },
@@ -547,7 +547,7 @@
     "id": "card-48",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23466,
+    "z": 24496,
     "value": 48,
     "parent": "ewjg"
   },
@@ -556,7 +556,7 @@
     "id": "card-49",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23437,
+    "z": 24494,
     "value": 49,
     "parent": "ewjg"
   },
@@ -565,7 +565,7 @@
     "id": "card-50",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23463,
+    "z": 24460,
     "value": 50,
     "parent": "ewjg"
   },
@@ -574,7 +574,7 @@
     "id": "card-51",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23420,
+    "z": 24505,
     "value": 51,
     "parent": "ewjg"
   },
@@ -583,7 +583,7 @@
     "id": "card-52",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23470,
+    "z": 24472,
     "value": 52,
     "parent": "ewjg"
   },
@@ -592,7 +592,7 @@
     "id": "card-53",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23426,
+    "z": 24485,
     "value": 53,
     "parent": "ewjg"
   },
@@ -601,7 +601,7 @@
     "id": "card-54",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23421,
+    "z": 24471,
     "value": 54,
     "parent": "ewjg"
   },
@@ -610,7 +610,7 @@
     "id": "card-02",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23462,
+    "z": 24500,
     "value": 2,
     "parent": "ewjg"
   },
@@ -619,7 +619,7 @@
     "id": "card-03",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23429,
+    "z": 24513,
     "value": 3,
     "parent": "ewjg"
   },
@@ -628,7 +628,7 @@
     "id": "card-04",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23428,
+    "z": 24498,
     "value": 4,
     "parent": "ewjg"
   },
@@ -637,7 +637,7 @@
     "id": "card-05",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23458,
+    "z": 24463,
     "value": 5,
     "parent": "ewjg"
   },
@@ -646,7 +646,7 @@
     "id": "card-06",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23451,
+    "z": 24502,
     "value": 6,
     "parent": "ewjg"
   },
@@ -655,7 +655,7 @@
     "id": "card-07",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23449,
+    "z": 24466,
     "value": 7,
     "parent": "ewjg"
   },
@@ -664,7 +664,7 @@
     "id": "card-09",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23432,
+    "z": 24490,
     "value": 9,
     "parent": "ewjg"
   },
@@ -673,7 +673,7 @@
     "id": "card-08",
     "deck": "deck-cards",
     "cardType": "number",
-    "z": 23436,
+    "z": 24508,
     "value": 8,
     "parent": "ewjg"
   },
@@ -1119,13 +1119,6 @@
         }
       },
       {
-        "func": "RECALL",
-        "holder": "holder-draw",
-        "excludeCollection": [
-          "card-archbishop"
-        ]
-      },
-      {
         "func": "SET",
         "collection": [
           "card-archbishop"
@@ -1142,44 +1135,20 @@
         "value": 650
       },
       {
-        "func": "SHUFFLE",
-        "holder": "holder-draw"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "card-shuffle"
-        ],
-        "property": "parent",
-        "value": "holder-discard"
-      },
-      {
-        "func": "FOREACH",
-        "collection": "players",
-        "loopRoutine": [
-          {
-            "func": "MOVE",
-            "from": "holder-draw",
-            "to": "${widgetID}",
-            "count": 5
-          }
+        "func": "RECALL",
+        "holder": "holder-draw",
+        "excludeCollection": [
+          "card-archbishop"
         ]
+      },
+      {
+        "func": "CALL",
+        "widget": "button-shuffle",
+        "routine": "reshuffleRoutine"
       },
       {
         "func": "SORT",
         "holder": "hand"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "card-shuffle"
-        ],
-        "property": "parent",
-        "value": "holder-draw"
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "holder-draw"
       },
       {
         "func": "TURN",
@@ -1375,210 +1344,210 @@
   "landmark-city-2-1": {
     "type": "card",
     "id": "landmark-city-2-1",
-    "parent": "holder-landmark-20",
+    "parent": "holder-landmark-7",
     "deck": "deck-landmarks",
     "cardType": "city-2",
-    "z": 22525
+    "z": 23555
   },
   "landmark-city-2-2": {
     "type": "card",
     "id": "landmark-city-2-2",
-    "parent": "holder-landmark-19",
+    "parent": "holder-landmark-15",
     "deck": "deck-landmarks",
     "cardType": "city-2",
-    "z": 22524
+    "z": 23563
   },
   "landmark-city-2-3": {
     "type": "card",
     "id": "landmark-city-2-3",
-    "parent": "holder-landmark-25",
+    "parent": "holder-landmark-13",
     "deck": "deck-landmarks",
     "cardType": "city-2",
-    "z": 22530
+    "z": 23561
   },
   "landmark-city-2-4": {
     "type": "card",
     "id": "landmark-city-2-4",
     "deck": "deck-landmarks",
     "cardType": "city-2",
-    "z": 22527,
-    "parent": "holder-landmark-22"
+    "z": 23556,
+    "parent": "holder-landmark-8"
   },
   "landmark-city-3-1": {
     "type": "card",
     "id": "landmark-city-3-1",
-    "parent": "holder-landmark-17",
+    "parent": "holder-landmark-4",
     "deck": "deck-landmarks",
     "cardType": "city-3",
-    "z": 22522
+    "z": 23552
   },
   "landmark-city-3-2": {
     "type": "card",
     "id": "landmark-city-3-2",
-    "parent": "holder-landmark-4",
+    "parent": "holder-landmark-14",
     "deck": "deck-landmarks",
     "cardType": "city-3",
-    "z": 22509
+    "z": 23562
   },
   "landmark-city-3-3": {
     "type": "card",
     "id": "landmark-city-3-3",
     "deck": "deck-landmarks",
     "cardType": "city-3",
-    "z": 22507,
-    "parent": "holder-landmark-2"
+    "z": 23554,
+    "parent": "holder-landmark-6"
   },
   "landmark-city-3-4": {
     "type": "card",
     "id": "landmark-city-3-4",
     "deck": "deck-landmarks",
     "cardType": "city-3",
-    "z": 22517,
-    "parent": "holder-landmark-12"
+    "z": 23549,
+    "parent": "holder-landmark-1"
   },
   "landmark-city-4-1": {
     "type": "card",
     "id": "landmark-city-4-1",
-    "parent": "holder-landmark-7",
+    "parent": "holder-landmark-25",
     "deck": "deck-landmarks",
     "cardType": "city-4",
-    "z": 22512
+    "z": 23573
   },
   "landmark-city-4-2": {
     "type": "card",
     "id": "landmark-city-4-2",
     "deck": "deck-landmarks",
     "cardType": "city-4",
-    "z": 22506,
-    "parent": "holder-landmark-1"
+    "z": 23567,
+    "parent": "holder-landmark-19"
   },
   "landmark-city-4-3": {
     "type": "card",
     "id": "landmark-city-4-3",
-    "parent": "holder-landmark-9",
+    "parent": "holder-landmark-10",
     "deck": "deck-landmarks",
     "cardType": "city-4",
-    "z": 22514
+    "z": 23558
   },
   "landmark-city-4-4": {
     "type": "card",
     "id": "landmark-city-4-4",
-    "parent": "holder-landmark-15",
+    "parent": "holder-landmark-26",
     "deck": "deck-landmarks",
     "cardType": "city-4",
-    "z": 22520
+    "z": 23574
   },
   "landmark-castle-1": {
     "type": "card",
     "id": "landmark-castle-1",
     "deck": "deck-landmarks",
     "cardType": "castle",
-    "z": 22510,
-    "parent": "holder-landmark-5"
+    "z": 23564,
+    "parent": "holder-landmark-16"
   },
   "landmark-castle-2": {
     "type": "card",
     "id": "landmark-castle-2",
     "deck": "deck-landmarks",
     "cardType": "castle",
-    "z": 22523,
-    "parent": "holder-landmark-18"
+    "z": 23551,
+    "parent": "holder-landmark-3"
   },
   "landmark-castle-4": {
     "type": "card",
     "id": "landmark-castle-4",
-    "parent": "holder-landmark-10",
+    "parent": "holder-landmark-9",
     "deck": "deck-landmarks",
     "cardType": "castle",
-    "z": 22515
+    "z": 23557
   },
   "landmark-castle-3": {
     "type": "card",
     "id": "landmark-castle-3",
-    "parent": "holder-landmark-6",
+    "parent": "holder-landmark-20",
     "deck": "deck-landmarks",
     "cardType": "castle",
-    "z": 22511
+    "z": 23568
   },
   "landmark-castle-5": {
     "type": "card",
     "id": "landmark-castle-5",
-    "parent": "holder-landmark-16",
+    "parent": "holder-landmark-17",
     "deck": "deck-landmarks",
     "cardType": "castle",
-    "z": 22521
+    "z": 23565
   },
   "landmark-castle-6": {
     "type": "card",
     "id": "landmark-castle-6",
-    "parent": "holder-landmark-8",
+    "parent": "holder-landmark-24",
     "deck": "deck-landmarks",
     "cardType": "castle",
-    "z": 22513
+    "z": 23572
   },
   "landmark-castle-7": {
     "type": "card",
     "id": "landmark-castle-7",
-    "parent": "holder-landmark-26",
+    "parent": "holder-landmark-21",
     "deck": "deck-landmarks",
     "cardType": "castle",
-    "z": 22531
+    "z": 23569
   },
   "landmark-church-1": {
     "type": "card",
     "id": "landmark-church-1",
     "deck": "deck-landmarks",
     "cardType": "church",
-    "z": 22516,
-    "parent": "holder-landmark-11"
+    "z": 23566,
+    "parent": "holder-landmark-18"
   },
   "landmark-church-2": {
     "type": "card",
     "id": "landmark-church-2",
-    "parent": "holder-landmark-24",
+    "parent": "holder-landmark-11",
     "deck": "deck-landmarks",
     "cardType": "church",
-    "z": 22529
+    "z": 23559
   },
   "landmark-church-3": {
     "type": "card",
     "id": "landmark-church-3",
     "deck": "deck-landmarks",
     "cardType": "church",
-    "z": 22519,
-    "parent": "holder-landmark-14"
+    "z": 23550,
+    "parent": "holder-landmark-2"
   },
   "landmark-church-4": {
     "type": "card",
     "id": "landmark-church-4",
-    "parent": "holder-landmark-3",
+    "parent": "holder-landmark-23",
     "deck": "deck-landmarks",
     "cardType": "church",
-    "z": 22508
+    "z": 23571
   },
   "landmark-church-5": {
     "type": "card",
     "id": "landmark-church-5",
-    "parent": "holder-landmark-13",
+    "parent": "holder-landmark-5",
     "deck": "deck-landmarks",
     "cardType": "church",
-    "z": 22518
+    "z": 23553
   },
   "landmark-church-6": {
     "type": "card",
     "id": "landmark-church-6",
-    "parent": "holder-landmark-23",
+    "parent": "holder-landmark-22",
     "deck": "deck-landmarks",
     "cardType": "church",
-    "z": 22528
+    "z": 23570
   },
   "landmark-church-7": {
     "type": "card",
     "id": "landmark-church-7",
-    "parent": "holder-landmark-21",
+    "parent": "holder-landmark-12",
     "deck": "deck-landmarks",
     "cardType": "church",
-    "z": 22526
+    "z": 23560
   },
   "holder-landmark-1": {
     "type": "holder",
@@ -1915,56 +1884,56 @@
     "id": "piece-bishop-1",
     "deck": "deck-pieces",
     "cardType": "bishop",
-    "z": 22885,
-    "parent": "byzi"
+    "z": 23928,
+    "parent": "xuwr"
   },
   "piece-bishop-2": {
     "type": "card",
     "id": "piece-bishop-2",
     "deck": "deck-pieces",
     "cardType": "bishop",
-    "z": 22887,
-    "parent": "byzi"
+    "z": 23930,
+    "parent": "xuwr"
   },
   "piece-bishop-4": {
     "type": "card",
     "id": "piece-bishop-4",
     "deck": "deck-pieces",
     "cardType": "bishop",
-    "z": 22889,
-    "parent": "byzi"
+    "z": 23932,
+    "parent": "xuwr"
   },
   "piece-bishop-3": {
     "type": "card",
     "id": "piece-bishop-3",
     "deck": "deck-pieces",
     "cardType": "bishop",
-    "z": 22891,
-    "parent": "byzi"
+    "z": 23934,
+    "parent": "xuwr"
   },
   "piece-bishop-5": {
     "type": "card",
     "id": "piece-bishop-5",
     "deck": "deck-pieces",
     "cardType": "bishop",
-    "z": 22893,
-    "parent": "byzi"
+    "z": 23936,
+    "parent": "xuwr"
   },
   "piece-bishop-6": {
     "type": "card",
     "id": "piece-bishop-6",
     "deck": "deck-pieces",
     "cardType": "bishop",
-    "z": 22895,
-    "parent": "byzi"
+    "z": 23938,
+    "parent": "xuwr"
   },
   "piece-bishop-7": {
     "type": "card",
     "id": "piece-bishop-7",
     "deck": "deck-pieces",
     "cardType": "bishop",
-    "z": 22897,
-    "parent": "byzi"
+    "z": 23940,
+    "parent": "xuwr"
   },
   "holder-knights-p1": {
     "type": "holder",
@@ -2040,122 +2009,122 @@
   "piece-rook-1": {
     "type": "card",
     "id": "piece-rook-1",
-    "parent": "wm3d",
+    "parent": "0kvk",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 23185
+    "z": 24033
   },
   "piece-rook-2": {
     "type": "card",
     "id": "piece-rook-2",
-    "parent": "wm3d",
+    "parent": "0kvk",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 23187
+    "z": 24035
   },
   "piece-rook-3": {
     "type": "card",
     "id": "piece-rook-3",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 23189,
-    "parent": "wm3d"
+    "z": 24037,
+    "parent": "0kvk"
   },
   "piece-rook-4": {
     "type": "card",
     "id": "piece-rook-4",
-    "parent": "3cru",
+    "parent": "pyke",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 23120
+    "z": 24098
   },
   "piece-rook-5": {
     "type": "card",
     "id": "piece-rook-5",
-    "parent": "3cru",
+    "parent": "pyke",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 23122
+    "z": 24100
   },
   "piece-rook-6": {
     "type": "card",
     "id": "piece-rook-6",
-    "parent": "3cru",
+    "parent": "pyke",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 23124
+    "z": 24102
   },
   "piece-rook-7": {
     "type": "card",
     "id": "piece-rook-7",
-    "parent": "tb7v",
+    "parent": "lkjq",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 22898
+    "z": 23941
   },
   "piece-rook-8": {
     "type": "card",
     "id": "piece-rook-8",
-    "parent": "tb7v",
+    "parent": "lkjq",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 22900
+    "z": 23943
   },
   "piece-rook-9": {
     "type": "card",
     "id": "piece-rook-9",
-    "parent": "tb7v",
+    "parent": "lkjq",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 22902
+    "z": 23945
   },
   "piece-rook-10": {
     "type": "card",
     "id": "piece-rook-10",
-    "parent": "b7rr",
+    "parent": "w4mi",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 23055
+    "z": 24163
   },
   "piece-rook-11": {
     "type": "card",
     "id": "piece-rook-11",
-    "parent": "b7rr",
+    "parent": "w4mi",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 23057
+    "z": 24165
   },
   "piece-rook-12": {
     "type": "card",
     "id": "piece-rook-12",
-    "parent": "b7rr",
+    "parent": "w4mi",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 23059
+    "z": 24167
   },
   "piece-rook-13": {
     "type": "card",
     "id": "piece-rook-13",
-    "parent": "yi7m",
+    "parent": "nllx",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 22990
+    "z": 24228
   },
   "piece-rook-14": {
     "type": "card",
     "id": "piece-rook-14",
-    "parent": "yi7m",
+    "parent": "nllx",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 22992
+    "z": 24230
   },
   "piece-rook-15": {
     "type": "card",
     "id": "piece-rook-15",
-    "parent": "yi7m",
+    "parent": "nllx",
     "deck": "deck-pieces",
     "cardType": "rook",
-    "z": 22994
+    "z": 24232
   },
   "holder-kings-p1": {
     "type": "holder",
@@ -2200,10 +2169,10 @@
   "piece-king-p1-1": {
     "type": "card",
     "id": "piece-king-p1-1",
-    "parent": "gxea",
+    "parent": "1b2e",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 22930,
+    "z": 23973,
     "playerIndex": 1,
     "width": 40,
     "height": 40
@@ -2211,28 +2180,28 @@
   "piece-king-p1-2": {
     "type": "card",
     "id": "piece-king-p1-2",
-    "parent": "gxea",
+    "parent": "1b2e",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 22932,
+    "z": 23975,
     "playerIndex": 1
   },
   "piece-king-p1-3": {
     "type": "card",
     "id": "piece-king-p1-3",
-    "parent": "gxea",
+    "parent": "1b2e",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 22934,
+    "z": 23977,
     "playerIndex": 1
   },
   "piece-king-p1-4": {
     "type": "card",
     "id": "piece-king-p1-4",
-    "parent": "gxea",
+    "parent": "1b2e",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 22936,
+    "z": 23979,
     "playerIndex": 1
   },
   "piece-king-p1-5": {
@@ -2240,161 +2209,161 @@
     "id": "piece-king-p1-5",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 22938,
+    "z": 23981,
     "playerIndex": 1,
-    "parent": "gxea"
+    "parent": "1b2e"
   },
   "piece-king-p1-6": {
     "type": "card",
     "id": "piece-king-p1-6",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 22940,
+    "z": 23983,
     "playerIndex": 1,
-    "parent": "gxea"
+    "parent": "1b2e"
   },
   "piece-king-p2-1": {
     "type": "card",
     "id": "piece-king-p2-1",
-    "parent": "cob6",
+    "parent": "e6h1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 22995,
+    "z": 24038,
     "playerIndex": 2
   },
   "piece-king-p2-2": {
     "type": "card",
     "id": "piece-king-p2-2",
-    "parent": "cob6",
+    "parent": "e6h1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 22997,
+    "z": 24040,
     "playerIndex": 2
   },
   "piece-king-p2-3": {
     "type": "card",
     "id": "piece-king-p2-3",
-    "parent": "cob6",
+    "parent": "e6h1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 22999,
+    "z": 24042,
     "playerIndex": 2
   },
   "piece-king-p2-4": {
     "type": "card",
     "id": "piece-king-p2-4",
-    "parent": "cob6",
+    "parent": "e6h1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23001,
+    "z": 24044,
     "playerIndex": 2
   },
   "piece-king-p2-5": {
     "type": "card",
     "id": "piece-king-p2-5",
-    "parent": "cob6",
+    "parent": "e6h1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23003,
+    "z": 24046,
     "playerIndex": 2
   },
   "piece-king-p2-6": {
     "type": "card",
     "id": "piece-king-p2-6",
-    "parent": "cob6",
+    "parent": "e6h1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23005,
+    "z": 24048,
     "playerIndex": 2
   },
   "piece-king-p3-1": {
     "type": "card",
     "id": "piece-king-p3-1",
-    "parent": "e9rh",
+    "parent": "yihr",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23060,
+    "z": 24103,
     "playerIndex": 3
   },
   "piece-king-p3-2": {
     "type": "card",
     "id": "piece-king-p3-2",
-    "parent": "e9rh",
+    "parent": "yihr",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23062,
+    "z": 24105,
     "playerIndex": 3
   },
   "piece-king-p3-3": {
     "type": "card",
     "id": "piece-king-p3-3",
-    "parent": "e9rh",
+    "parent": "yihr",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23064,
+    "z": 24107,
     "playerIndex": 3
   },
   "piece-king-p3-4": {
     "type": "card",
     "id": "piece-king-p3-4",
-    "parent": "e9rh",
+    "parent": "yihr",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23066,
+    "z": 24109,
     "playerIndex": 3
   },
   "piece-king-p3-5": {
     "type": "card",
     "id": "piece-king-p3-5",
-    "parent": "e9rh",
+    "parent": "yihr",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23068,
+    "z": 24111,
     "playerIndex": 3
   },
   "piece-king-p3-6": {
     "type": "card",
     "id": "piece-king-p3-6",
-    "parent": "e9rh",
+    "parent": "yihr",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23070,
+    "z": 24113,
     "playerIndex": 3
   },
   "piece-king-p4-1": {
     "type": "card",
     "id": "piece-king-p4-1",
-    "parent": "77y4",
+    "parent": "i5pb",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23125,
+    "z": 24168,
     "playerIndex": 4
   },
   "piece-king-p4-2": {
     "type": "card",
     "id": "piece-king-p4-2",
-    "parent": "77y4",
+    "parent": "i5pb",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23127,
+    "z": 24170,
     "playerIndex": 4
   },
   "piece-king-p4-4": {
     "type": "card",
     "id": "piece-king-p4-4",
-    "parent": "77y4",
+    "parent": "i5pb",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23129,
+    "z": 24172,
     "playerIndex": 4
   },
   "piece-king-p4-3": {
     "type": "card",
     "id": "piece-king-p4-3",
-    "parent": "77y4",
+    "parent": "i5pb",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23131,
+    "z": 24174,
     "playerIndex": 4
   },
   "piece-king-p4-5": {
@@ -2402,53 +2371,53 @@
     "id": "piece-king-p4-5",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23133,
+    "z": 24176,
     "playerIndex": 4,
-    "parent": "77y4"
+    "parent": "i5pb"
   },
   "piece-king-p4-6": {
     "type": "card",
     "id": "piece-king-p4-6",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23135,
+    "z": 24178,
     "playerIndex": 4,
-    "parent": "77y4"
+    "parent": "i5pb"
   },
   "piece-king-p5-1": {
     "type": "card",
     "id": "piece-king-p5-1",
-    "parent": "vrvk",
+    "parent": "oszu",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23190,
+    "z": 24233,
     "playerIndex": 5
   },
   "piece-king-p5-2": {
     "type": "card",
     "id": "piece-king-p5-2",
-    "parent": "vrvk",
+    "parent": "oszu",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23192,
+    "z": 24235,
     "playerIndex": 5
   },
   "piece-king-p5-3": {
     "type": "card",
     "id": "piece-king-p5-3",
-    "parent": "vrvk",
+    "parent": "oszu",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23194,
+    "z": 24237,
     "playerIndex": 5
   },
   "piece-king-p5-4": {
     "type": "card",
     "id": "piece-king-p5-4",
-    "parent": "vrvk",
+    "parent": "oszu",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23196,
+    "z": 24239,
     "playerIndex": 5
   },
   "piece-king-p5-5": {
@@ -2456,233 +2425,233 @@
     "id": "piece-king-p5-5",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23198,
+    "z": 24241,
     "playerIndex": 5,
-    "parent": "vrvk"
+    "parent": "oszu"
   },
   "piece-king-p5-6": {
     "type": "card",
     "id": "piece-king-p5-6",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23200,
+    "z": 24243,
     "playerIndex": 5,
-    "parent": "vrvk"
+    "parent": "oszu"
   },
   "piece-knight-p1-1": {
     "type": "card",
     "id": "piece-knight-p1-1",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22941,
+    "z": 23984,
     "playerIndex": 1
   },
   "piece-knight-p1-2": {
     "type": "card",
     "id": "piece-knight-p1-2",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22943,
+    "z": 23986,
     "playerIndex": 1
   },
   "piece-knight-p1-3": {
     "type": "card",
     "id": "piece-knight-p1-3",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22945,
+    "z": 23988,
     "playerIndex": 1
   },
   "piece-knight-p1-4": {
     "type": "card",
     "id": "piece-knight-p1-4",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22947,
+    "z": 23990,
     "playerIndex": 1
   },
   "piece-knight-p1-5": {
     "type": "card",
     "id": "piece-knight-p1-5",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22949,
+    "z": 23992,
     "playerIndex": 1
   },
   "piece-knight-p1-6": {
     "type": "card",
     "id": "piece-knight-p1-6",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22951,
+    "z": 23994,
     "playerIndex": 1
   },
   "piece-knight-p1-7": {
     "type": "card",
     "id": "piece-knight-p1-7",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22953,
+    "z": 23996,
     "playerIndex": 1
   },
   "piece-knight-p1-8": {
     "type": "card",
     "id": "piece-knight-p1-8",
     "playerIndex": 1,
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22955
+    "z": 23998
   },
   "piece-knight-p1-9": {
     "type": "card",
     "id": "piece-knight-p1-9",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22957,
+    "z": 24000,
     "playerIndex": 1
   },
   "piece-knight-p1-10": {
     "type": "card",
     "id": "piece-knight-p1-10",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22959,
+    "z": 24002,
     "playerIndex": 1
   },
   "piece-knight-p1-11": {
     "type": "card",
     "id": "piece-knight-p1-11",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22961,
+    "z": 24004,
     "playerIndex": 1
   },
   "piece-knight-p1-13": {
     "type": "card",
     "id": "piece-knight-p1-13",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22963,
+    "z": 24006,
     "playerIndex": 1
   },
   "piece-knight-p1-15": {
     "type": "card",
     "id": "piece-knight-p1-15",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22965,
+    "z": 24008,
     "playerIndex": 1
   },
   "piece-knight-p1-14": {
     "type": "card",
     "id": "piece-knight-p1-14",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22967,
+    "z": 24010,
     "playerIndex": 1
   },
   "piece-knight-p1-16": {
     "type": "card",
     "id": "piece-knight-p1-16",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22969,
+    "z": 24012,
     "playerIndex": 1
   },
   "piece-knight-p1-17": {
     "type": "card",
     "id": "piece-knight-p1-17",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22971,
+    "z": 24014,
     "playerIndex": 1
   },
   "piece-knight-p1-18": {
     "type": "card",
     "id": "piece-knight-p1-18",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22973,
+    "z": 24016,
     "playerIndex": 1
   },
   "piece-knight-p1-19": {
     "type": "card",
     "id": "piece-knight-p1-19",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22975,
+    "z": 24018,
     "playerIndex": 1
   },
   "piece-knight-p1-20": {
     "type": "card",
     "id": "piece-knight-p1-20",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22977,
+    "z": 24020,
     "playerIndex": 1
   },
   "piece-knight-p1-21": {
     "type": "card",
     "id": "piece-knight-p1-21",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22979,
+    "z": 24022,
     "playerIndex": 1
   },
   "piece-knight-p1-22": {
     "type": "card",
     "id": "piece-knight-p1-22",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22981,
+    "z": 24024,
     "playerIndex": 1
   },
   "piece-knight-p1-23": {
     "type": "card",
     "id": "piece-knight-p1-23",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22983,
+    "z": 24026,
     "playerIndex": 1
   },
   "piece-knight-p1-24": {
     "type": "card",
     "id": "piece-knight-p1-24",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22985,
+    "z": 24028,
     "playerIndex": 1
   },
   "piece-knight-p1-25": {
     "type": "card",
     "id": "piece-knight-p1-25",
-    "parent": "gw8h",
+    "parent": "7f3r",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22987,
+    "z": 24030,
     "playerIndex": 1
   },
   "piece-knight-p1-12": {
@@ -2690,908 +2659,908 @@
     "id": "piece-knight-p1-12",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 22989,
+    "z": 24032,
     "playerIndex": 1,
-    "parent": "gw8h"
+    "parent": "7f3r"
   },
   "piece-knight-p2-1": {
     "type": "card",
     "id": "piece-knight-p2-1",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23006,
+    "z": 24049,
     "playerIndex": 2
   },
   "piece-knight-p2-2": {
     "type": "card",
     "id": "piece-knight-p2-2",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23008,
+    "z": 24051,
     "playerIndex": 2
   },
   "piece-knight-p2-3": {
     "type": "card",
     "id": "piece-knight-p2-3",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23010,
+    "z": 24053,
     "playerIndex": 2
   },
   "piece-knight-p2-4": {
     "type": "card",
     "id": "piece-knight-p2-4",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23012,
+    "z": 24055,
     "playerIndex": 2
   },
   "piece-knight-p2-5": {
     "type": "card",
     "id": "piece-knight-p2-5",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23014,
+    "z": 24057,
     "playerIndex": 2
   },
   "piece-knight-p2-6": {
     "type": "card",
     "id": "piece-knight-p2-6",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23016,
+    "z": 24059,
     "playerIndex": 2
   },
   "piece-knight-p2-7": {
     "type": "card",
     "id": "piece-knight-p2-7",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23018,
+    "z": 24061,
     "playerIndex": 2
   },
   "piece-knight-p2-8": {
     "type": "card",
     "id": "piece-knight-p2-8",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23020,
+    "z": 24063,
     "playerIndex": 2
   },
   "piece-knight-p2-9": {
     "type": "card",
     "id": "piece-knight-p2-9",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23022,
+    "z": 24065,
     "playerIndex": 2
   },
   "piece-knight-p2-10": {
     "type": "card",
     "id": "piece-knight-p2-10",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23024,
+    "z": 24067,
     "playerIndex": 2
   },
   "piece-knight-p2-11": {
     "type": "card",
     "id": "piece-knight-p2-11",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23026,
+    "z": 24069,
     "playerIndex": 2
   },
   "piece-knight-p2-12": {
     "type": "card",
     "id": "piece-knight-p2-12",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23028,
+    "z": 24071,
     "playerIndex": 2
   },
   "piece-knight-p2-13": {
     "type": "card",
     "id": "piece-knight-p2-13",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23030,
+    "z": 24073,
     "playerIndex": 2
   },
   "piece-knight-p2-14": {
     "type": "card",
     "id": "piece-knight-p2-14",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23032,
+    "z": 24075,
     "playerIndex": 2
   },
   "piece-knight-p2-15": {
     "type": "card",
     "id": "piece-knight-p2-15",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23034,
+    "z": 24077,
     "playerIndex": 2
   },
   "piece-knight-p2-16": {
     "type": "card",
     "id": "piece-knight-p2-16",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23036,
+    "z": 24079,
     "playerIndex": 2
   },
   "piece-knight-p2-17": {
     "type": "card",
     "id": "piece-knight-p2-17",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23038,
+    "z": 24081,
     "playerIndex": 2
   },
   "piece-knight-p2-18": {
     "type": "card",
     "id": "piece-knight-p2-18",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23040,
+    "z": 24083,
     "playerIndex": 2
   },
   "piece-knight-p2-20": {
     "type": "card",
     "id": "piece-knight-p2-20",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23042,
+    "z": 24085,
     "playerIndex": 2
   },
   "piece-knight-p2-19": {
     "type": "card",
     "id": "piece-knight-p2-19",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23044,
+    "z": 24087,
     "playerIndex": 2
   },
   "piece-knight-p2-21": {
     "type": "card",
     "id": "piece-knight-p2-21",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23046,
+    "z": 24089,
     "playerIndex": 2
   },
   "piece-knight-p2-22": {
     "type": "card",
     "id": "piece-knight-p2-22",
     "playerIndex": 2,
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23048
+    "z": 24091
   },
   "piece-knight-p2-23": {
     "type": "card",
     "id": "piece-knight-p2-23",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23050,
+    "z": 24093,
     "playerIndex": 2
   },
   "piece-knight-p2-24": {
     "type": "card",
     "id": "piece-knight-p2-24",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23052,
+    "z": 24095,
     "playerIndex": 2
   },
   "piece-knight-p2-25": {
     "type": "card",
     "id": "piece-knight-p2-25",
-    "parent": "yl4y",
+    "parent": "oaru",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23054,
+    "z": 24097,
     "playerIndex": 2
   },
   "piece-knight-p3-1": {
     "type": "card",
     "id": "piece-knight-p3-1",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23071,
+    "z": 24114,
     "playerIndex": 3
   },
   "piece-knight-p3-2": {
     "type": "card",
     "id": "piece-knight-p3-2",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23073,
+    "z": 24116,
     "playerIndex": 3
   },
   "piece-knight-p3-3": {
     "type": "card",
     "id": "piece-knight-p3-3",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23075,
+    "z": 24118,
     "playerIndex": 3
   },
   "piece-knight-p3-4": {
     "type": "card",
     "id": "piece-knight-p3-4",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23077,
+    "z": 24120,
     "playerIndex": 3
   },
   "piece-knight-p3-5": {
     "type": "card",
     "id": "piece-knight-p3-5",
     "playerIndex": 3,
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23079
+    "z": 24122
   },
   "piece-knight-p3-6": {
     "type": "card",
     "id": "piece-knight-p3-6",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23081,
+    "z": 24124,
     "playerIndex": 3
   },
   "piece-knight-p3-7": {
     "type": "card",
     "id": "piece-knight-p3-7",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23083,
+    "z": 24126,
     "playerIndex": 3
   },
   "piece-knight-p3-9": {
     "type": "card",
     "id": "piece-knight-p3-9",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23085,
+    "z": 24128,
     "playerIndex": 3
   },
   "piece-knight-p3-10": {
     "type": "card",
     "id": "piece-knight-p3-10",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23087,
+    "z": 24130,
     "playerIndex": 3
   },
   "piece-knight-p3-11": {
     "type": "card",
     "id": "piece-knight-p3-11",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23089,
+    "z": 24132,
     "playerIndex": 3
   },
   "piece-knight-p3-12": {
     "type": "card",
     "id": "piece-knight-p3-12",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23091,
+    "z": 24134,
     "playerIndex": 3
   },
   "piece-knight-p3-13": {
     "type": "card",
     "id": "piece-knight-p3-13",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23093,
+    "z": 24136,
     "playerIndex": 3
   },
   "piece-knight-p3-14": {
     "type": "card",
     "id": "piece-knight-p3-14",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23095,
+    "z": 24138,
     "playerIndex": 3
   },
   "piece-knight-p3-15": {
     "type": "card",
     "id": "piece-knight-p3-15",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23097,
+    "z": 24140,
     "playerIndex": 3
   },
   "piece-knight-p3-16": {
     "type": "card",
     "id": "piece-knight-p3-16",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23099,
+    "z": 24142,
     "playerIndex": 3
   },
   "piece-knight-p3-17": {
     "type": "card",
     "id": "piece-knight-p3-17",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23101,
+    "z": 24144,
     "playerIndex": 3
   },
   "piece-knight-p3-19": {
     "type": "card",
     "id": "piece-knight-p3-19",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23103,
+    "z": 24146,
     "playerIndex": 3
   },
   "piece-knight-p3-20": {
     "type": "card",
     "id": "piece-knight-p3-20",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23105,
+    "z": 24148,
     "playerIndex": 3
   },
   "piece-knight-p3-21": {
     "type": "card",
     "id": "piece-knight-p3-21",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23107,
+    "z": 24150,
     "playerIndex": 3
   },
   "piece-knight-p3-23": {
     "type": "card",
     "id": "piece-knight-p3-23",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23109,
+    "z": 24152,
     "playerIndex": 3
   },
   "piece-knight-p3-24": {
     "type": "card",
     "id": "piece-knight-p3-24",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23111,
+    "z": 24154,
     "playerIndex": 3
   },
   "piece-knight-p3-8": {
     "type": "card",
     "id": "piece-knight-p3-8",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23113,
+    "z": 24156,
     "playerIndex": 3
   },
   "piece-knight-p3-18": {
     "type": "card",
     "id": "piece-knight-p3-18",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23115,
+    "z": 24158,
     "playerIndex": 3
   },
   "piece-knight-p3-22": {
     "type": "card",
     "id": "piece-knight-p3-22",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23117,
+    "z": 24160,
     "playerIndex": 3
   },
   "piece-knight-p3-25": {
     "type": "card",
     "id": "piece-knight-p3-25",
-    "parent": "h4vy",
+    "parent": "voto",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23119,
+    "z": 24162,
     "playerIndex": 3
   },
   "piece-knight-p4-1": {
     "type": "card",
     "id": "piece-knight-p4-1",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23136,
+    "z": 24179,
     "playerIndex": 4
   },
   "piece-knight-p4-2": {
     "type": "card",
     "id": "piece-knight-p4-2",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23138,
+    "z": 24181,
     "playerIndex": 4
   },
   "piece-knight-p4-3": {
     "type": "card",
     "id": "piece-knight-p4-3",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23140,
+    "z": 24183,
     "playerIndex": 4
   },
   "piece-knight-p4-4": {
     "type": "card",
     "id": "piece-knight-p4-4",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23142,
+    "z": 24185,
     "playerIndex": 4
   },
   "piece-knight-p4-5": {
     "type": "card",
     "id": "piece-knight-p4-5",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23144,
+    "z": 24187,
     "playerIndex": 4
   },
   "piece-knight-p4-6": {
     "type": "card",
     "id": "piece-knight-p4-6",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23146,
+    "z": 24189,
     "playerIndex": 4
   },
   "piece-knight-p4-7": {
     "type": "card",
     "id": "piece-knight-p4-7",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23148,
+    "z": 24191,
     "playerIndex": 4
   },
   "piece-knight-p4-8": {
     "type": "card",
     "id": "piece-knight-p4-8",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23150,
+    "z": 24193,
     "playerIndex": 4
   },
   "piece-knight-p4-9": {
     "type": "card",
     "id": "piece-knight-p4-9",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23152,
+    "z": 24195,
     "playerIndex": 4
   },
   "piece-knight-p4-10": {
     "type": "card",
     "id": "piece-knight-p4-10",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23154,
+    "z": 24197,
     "playerIndex": 4
   },
   "piece-knight-p4-11": {
     "type": "card",
     "id": "piece-knight-p4-11",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23156,
+    "z": 24199,
     "playerIndex": 4
   },
   "piece-knight-p4-12": {
     "type": "card",
     "id": "piece-knight-p4-12",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23158,
+    "z": 24201,
     "playerIndex": 4
   },
   "piece-knight-p4-13": {
     "type": "card",
     "id": "piece-knight-p4-13",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23160,
+    "z": 24203,
     "playerIndex": 4
   },
   "piece-knight-p4-14": {
     "type": "card",
     "id": "piece-knight-p4-14",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23162,
+    "z": 24205,
     "playerIndex": 4
   },
   "piece-knight-p4-15": {
     "type": "card",
     "id": "piece-knight-p4-15",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23164,
+    "z": 24207,
     "playerIndex": 4
   },
   "piece-knight-p4-16": {
     "type": "card",
     "id": "piece-knight-p4-16",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23166,
+    "z": 24209,
     "playerIndex": 4
   },
   "piece-knight-p4-17": {
     "type": "card",
     "id": "piece-knight-p4-17",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23168,
+    "z": 24211,
     "playerIndex": 4
   },
   "piece-knight-p4-18": {
     "type": "card",
     "id": "piece-knight-p4-18",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23170,
+    "z": 24213,
     "playerIndex": 4
   },
   "piece-knight-p4-19": {
     "type": "card",
     "id": "piece-knight-p4-19",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23172,
+    "z": 24215,
     "playerIndex": 4
   },
   "piece-knight-p4-20": {
     "type": "card",
     "id": "piece-knight-p4-20",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23174,
+    "z": 24217,
     "playerIndex": 4
   },
   "piece-knight-p4-21": {
     "type": "card",
     "id": "piece-knight-p4-21",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23176,
+    "z": 24219,
     "playerIndex": 4
   },
   "piece-knight-p4-22": {
     "type": "card",
     "id": "piece-knight-p4-22",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23178,
+    "z": 24221,
     "playerIndex": 4
   },
   "piece-knight-p4-23": {
     "type": "card",
     "id": "piece-knight-p4-23",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23180,
+    "z": 24223,
     "playerIndex": 4
   },
   "piece-knight-p4-24": {
     "type": "card",
     "id": "piece-knight-p4-24",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23182,
+    "z": 24225,
     "playerIndex": 4
   },
   "piece-knight-p4-25": {
     "type": "card",
     "id": "piece-knight-p4-25",
-    "parent": "nxm0",
+    "parent": "z418",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23184,
+    "z": 24227,
     "playerIndex": 4
   },
   "piece-knight-p5-1": {
     "type": "card",
     "id": "piece-knight-p5-1",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23201,
+    "z": 24244,
     "playerIndex": 5
   },
   "piece-knight-p5-2": {
     "type": "card",
     "id": "piece-knight-p5-2",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23203,
+    "z": 24246,
     "playerIndex": 5
   },
   "piece-knight-p5-3": {
     "type": "card",
     "id": "piece-knight-p5-3",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23205,
+    "z": 24248,
     "playerIndex": 5
   },
   "piece-knight-p5-4": {
     "type": "card",
     "id": "piece-knight-p5-4",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23207,
+    "z": 24250,
     "playerIndex": 5
   },
   "piece-knight-p5-5": {
     "type": "card",
     "id": "piece-knight-p5-5",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23209,
+    "z": 24252,
     "playerIndex": 5
   },
   "piece-knight-p5-6": {
     "type": "card",
     "id": "piece-knight-p5-6",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23211,
+    "z": 24254,
     "playerIndex": 5
   },
   "piece-knight-p5-7": {
     "type": "card",
     "id": "piece-knight-p5-7",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23213,
+    "z": 24256,
     "playerIndex": 5
   },
   "piece-knight-p5-8": {
     "type": "card",
     "id": "piece-knight-p5-8",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23215,
+    "z": 24258,
     "playerIndex": 5
   },
   "piece-knight-p5-9": {
     "type": "card",
     "id": "piece-knight-p5-9",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23217,
+    "z": 24260,
     "playerIndex": 5
   },
   "piece-knight-p5-10": {
     "type": "card",
     "id": "piece-knight-p5-10",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23219,
+    "z": 24262,
     "playerIndex": 5
   },
   "piece-knight-p5-11": {
     "type": "card",
     "id": "piece-knight-p5-11",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23221,
+    "z": 24264,
     "playerIndex": 5
   },
   "piece-knight-p5-12": {
     "type": "card",
     "id": "piece-knight-p5-12",
     "playerIndex": 5,
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23223
+    "z": 24266
   },
   "piece-knight-p5-15": {
     "type": "card",
     "id": "piece-knight-p5-15",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23225,
+    "z": 24268,
     "playerIndex": 5
   },
   "piece-knight-p5-13": {
     "type": "card",
     "id": "piece-knight-p5-13",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23227,
+    "z": 24270,
     "playerIndex": 5
   },
   "piece-knight-p5-14": {
     "type": "card",
     "id": "piece-knight-p5-14",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23229,
+    "z": 24272,
     "playerIndex": 5
   },
   "piece-knight-p5-16": {
     "type": "card",
     "id": "piece-knight-p5-16",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23231,
+    "z": 24274,
     "playerIndex": 5
   },
   "piece-knight-p5-17": {
     "type": "card",
     "id": "piece-knight-p5-17",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23233,
+    "z": 24276,
     "playerIndex": 5
   },
   "piece-knight-p5-18": {
     "type": "card",
     "id": "piece-knight-p5-18",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23235,
+    "z": 24278,
     "playerIndex": 5
   },
   "piece-knight-p5-19": {
     "type": "card",
     "id": "piece-knight-p5-19",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23237,
+    "z": 24280,
     "playerIndex": 5
   },
   "piece-knight-p5-20": {
     "type": "card",
     "id": "piece-knight-p5-20",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23239,
+    "z": 24282,
     "playerIndex": 5
   },
   "piece-knight-p5-21": {
     "type": "card",
     "id": "piece-knight-p5-21",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23241,
+    "z": 24284,
     "playerIndex": 5
   },
   "piece-knight-p5-22": {
     "type": "card",
     "id": "piece-knight-p5-22",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23243,
+    "z": 24286,
     "playerIndex": 5
   },
   "piece-knight-p5-23": {
     "type": "card",
     "id": "piece-knight-p5-23",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23245,
+    "z": 24288,
     "playerIndex": 5
   },
   "piece-knight-p5-24": {
     "type": "card",
     "id": "piece-knight-p5-24",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23247,
+    "z": 24290,
     "playerIndex": 5
   },
   "piece-knight-p5-25": {
     "type": "card",
     "id": "piece-knight-p5-25",
-    "parent": "yjwh",
+    "parent": "pfbp",
     "deck": "deck-pieces",
     "cardType": "knight",
-    "z": 23249,
+    "z": 24292,
     "playerIndex": 5
   },
   "button-end-turn": {
@@ -3682,22 +3651,61 @@
         "thenRoutine": [
           {
             "func": "MOVE",
-            "collection": [
-              "card-shuffle"
-            ],
-            "to": "holder-draw"
-          },
-          {
-            "func": "MOVE",
             "from": "holder-discard",
             "to": "holder-draw",
             "count": 0
           },
           {
-            "func": "SHUFFLE",
-            "holder": "holder-draw"
+            "func": "CALL",
+            "routine": "reshuffleRoutine"
           }
         ]
+      }
+    ],
+    "reshuffleRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "players"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "card-shuffle"
+        ],
+        "property": "parent",
+        "value": "holder-discard"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-draw"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "players",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-draw",
+            "to": "${widgetID}",
+            "fillTo": 5
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "card-shuffle"
+        ],
+        "property": "parent",
+        "value": "holder-draw"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-draw"
       }
     ]
   },
@@ -3756,10 +3764,10 @@
           {
             "type": "image",
             "x": 2,
-            "y": 2,
+            "y": 0,
             "color": "transparent",
             "width": 36,
-            "height": 36,
+            "height": 34,
             "dynamicProperties": {
               "value": "image"
             },
@@ -3771,7 +3779,7 @@
       }
     ]
   },
-  "byzi": {
+  "xuwr": {
     "type": "pile",
     "parent": "holder-bishops",
     "x": 0,
@@ -3783,9 +3791,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "byzi"
+    "id": "xuwr"
   },
-  "tb7v": {
+  "lkjq": {
     "type": "pile",
     "parent": "holder-rooks-p1",
     "x": 0,
@@ -3797,9 +3805,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "tb7v"
+    "id": "lkjq"
   },
-  "gxea": {
+  "1b2e": {
     "type": "pile",
     "parent": "holder-kings-p1",
     "x": 0,
@@ -3811,9 +3819,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "gxea"
+    "id": "1b2e"
   },
-  "gw8h": {
+  "7f3r": {
     "type": "pile",
     "parent": "holder-knights-p1",
     "x": 0,
@@ -3825,9 +3833,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "gw8h"
+    "id": "7f3r"
   },
-  "yi7m": {
+  "0kvk": {
     "type": "pile",
     "parent": "holder-rooks-p2",
     "x": 0,
@@ -3839,9 +3847,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "yi7m"
+    "id": "0kvk"
   },
-  "cob6": {
+  "e6h1": {
     "type": "pile",
     "parent": "holder-kings-p2",
     "x": 0,
@@ -3853,9 +3861,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "cob6"
+    "id": "e6h1"
   },
-  "yl4y": {
+  "oaru": {
     "type": "pile",
     "parent": "holder-knights-p2",
     "x": 0,
@@ -3867,9 +3875,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "yl4y"
+    "id": "oaru"
   },
-  "b7rr": {
+  "pyke": {
     "type": "pile",
     "parent": "holder-rooks-p3",
     "x": 0,
@@ -3881,9 +3889,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "b7rr"
+    "id": "pyke"
   },
-  "e9rh": {
+  "yihr": {
     "type": "pile",
     "parent": "holder-kings-p3",
     "x": 0,
@@ -3895,9 +3903,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "e9rh"
+    "id": "yihr"
   },
-  "h4vy": {
+  "voto": {
     "type": "pile",
     "parent": "holder-knights-p3",
     "x": 0,
@@ -3909,9 +3917,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "h4vy"
+    "id": "voto"
   },
-  "3cru": {
+  "w4mi": {
     "type": "pile",
     "parent": "holder-rooks-p4",
     "x": 0,
@@ -3923,9 +3931,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "3cru"
+    "id": "w4mi"
   },
-  "77y4": {
+  "i5pb": {
     "type": "pile",
     "parent": "holder-kings-p4",
     "x": 0,
@@ -3937,9 +3945,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "77y4"
+    "id": "i5pb"
   },
-  "nxm0": {
+  "z418": {
     "type": "pile",
     "parent": "holder-knights-p4",
     "x": 0,
@@ -3951,9 +3959,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "nxm0"
+    "id": "z418"
   },
-  "wm3d": {
+  "nllx": {
     "type": "pile",
     "parent": "holder-rooks-p5",
     "x": 0,
@@ -3965,9 +3973,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "wm3d"
+    "id": "nllx"
   },
-  "vrvk": {
+  "oszu": {
     "type": "pile",
     "parent": "holder-kings-p5",
     "x": 0,
@@ -3979,9 +3987,9 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "vrvk"
+    "id": "oszu"
   },
-  "yjwh": {
+  "pfbp": {
     "type": "pile",
     "parent": "holder-knights-p5",
     "x": 0,
@@ -3993,6 +4001,6 @@
       "color": "white"
     },
     "handleSize": 30,
-    "id": "yjwh"
+    "id": "pfbp"
   }
 }
