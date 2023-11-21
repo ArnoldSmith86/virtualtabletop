@@ -1280,7 +1280,19 @@ class PropertiesModule extends SidebarModule {
   renderForDeck(widget) {
     this.addHeader(`Deck ${widget.id}`);
     this.addSubHeader(`Card types`);
+    div(this.moduleDOM, 'buttonBar', `
+      <button icon=remove class=removeAll>All</button>
+      <button icon=add class=addAll>All</button>
+    `);
     this.renderCardTypes(widget);
+    $('.removeAll', this.moduleDOM).onclick = _=>{
+      for(const b of $a('.cardCountDiv [icon=remove]', this.moduleDOM))
+        b.click();
+    };
+    $('.addAll', this.moduleDOM).onclick = _=>{
+      for(const b of $a('.cardCountDiv [icon=add]', this.moduleDOM))
+        b.click();
+    };
 
     this.addSubHeader(`Card layers`);
     this.renderCardLayers(widget);
