@@ -136,6 +136,9 @@
 .tune.editorModule .cardTypeProperties {
   padding: 10px;
 }
+.tune.editorModule .cardTypeProperties .buttonBar {
+  margin-top: 10px;
+}
 .tune.editorModule .cardTypeEdit:not(.cardCountDivEditing) .cardTypeProperties {
   display: none;
 }
