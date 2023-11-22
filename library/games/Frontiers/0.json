@@ -49,13 +49,13 @@
         "objects": [
           {
             "type": "image",
-            "x": 0,
-            "y": 0,
             "color": "white",
             "value": "",
-            "width": 173.20508075700002,
-            "height": 200,
-            "css": "background-size: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
+            "css": "background-size: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+            "dynamicProperties": {
+              "width": "width",
+              "height": "height"
+            }
           }
         ]
       },
@@ -63,14 +63,12 @@
         "objects": [
           {
             "type": "image",
-            "x": 0,
-            "y": 0,
             "color": "transparent",
-            "width": 173.20508075700002,
-            "height": 200,
             "css": "background-size: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
             "dynamicProperties": {
-              "value": "image"
+              "value": "image",
+              "width": "width",
+              "height": "height"
             }
           }
         ]
@@ -685,34 +683,6 @@
         "func": "SET",
         "property": "cardDefaults",
         "value": "${cardDefaults}"
-      },
-      {
-        "note": " ### face objects ### "
-      },
-      {
-        "func": "GET",
-        "property": "faceTemplates"
-      },
-      "var FACE = ${faceTemplates} getIndex 0",
-      "var OBJECTS = ${FACE} getIndex 'objects'",
-      "var OBJECT = ${OBJECTS} getIndex 0",
-      "var OBJECT = setIndex 'width' ${WIDTH}",
-      "var OBJECT = setIndex 'height' ${HEIGHT}",
-      "var OBJECTS = setIndex 0 ${OBJECT}",
-      "var FACE = setIndex 'objects' ${OBJECTS}",
-      "var faceTemplates = setIndex 0 ${FACE}",
-      "var FACE = ${faceTemplates} getIndex 1",
-      "var OBJECTS = ${FACE} getIndex 'objects'",
-      "var OBJECT = ${OBJECTS} getIndex 0",
-      "var OBJECT = setIndex 'width' ${WIDTH}",
-      "var OBJECT = setIndex 'height' ${HEIGHT}",
-      "var OBJECTS = setIndex 0 ${OBJECT}",
-      "var FACE = setIndex 'objects' ${OBJECTS}",
-      "var faceTemplates = setIndex 1 ${FACE}",
-      {
-        "func": "SET",
-        "property": "faceTemplates",
-        "value": "${faceTemplates}"
       }
     ],
     "parent": "Switch Board"
@@ -879,12 +849,12 @@
         "objects": [
           {
             "type": "image",
-            "x": 0,
-            "y": 0,
             "color": "#ECCCA0",
             "value": "",
-            "width": 60,
-            "height": 60
+            "dynamicProperties": {
+              "width": "width",
+              "height": "height"
+            }
           },
           {
             "type": "text",
@@ -892,10 +862,10 @@
             "y": 15,
             "fontSize": 20,
             "textAlign": "center",
-            "width": 60,
             "css": "transform: scale(var(--size)); color: var(--color)",
             "dynamicProperties": {
-              "value": "number"
+              "value": "number",
+              "width": "width"
             }
           },
           {
@@ -904,10 +874,10 @@
             "y": 25,
             "fontSize": 30,
             "textAlign": "center",
-            "width": 60,
             "css": "letter-spacing: -3px; color: var(--color); transform: translate(-1px, var(--offset)); color: var(--color)",
             "dynamicProperties": {
-              "value": "dots"
+              "value": "dots",
+              "width": "width"
             }
           }
         ],
