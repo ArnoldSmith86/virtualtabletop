@@ -77,6 +77,9 @@
       }
     ],
     "cardDefaults": {
+      "onPileCreation": {
+        "no tile": "piles"
+      },
       "width": 173.20508075700002,
       "height": 200,
       "movable": false,
@@ -862,6 +865,9 @@
     "id": "Chips",
     "y": 400,
     "cardDefaults": {
+      "onPileCreation": {
+        "no chip": "piles"
+      },
       "width": 60,
       "height": 60
     },
@@ -1851,8 +1857,8 @@
     "type": "card",
     "cardType": "Wool",
     "id": "qoqx",
-    "parent": "6gj2",
-    "z": 18673
+    "z": 18843,
+    "parent": "6gj2"
   },
   "bf9n": {
     "deck": "Resources",
@@ -6884,12 +6890,12 @@
     "type": "card",
     "deck": "Tiles Real",
     "cardType": "G",
-    "x": 1059.8076211335,
-    "y": 400,
     "clonedFrom": "Card Template",
     "id": "h76i",
     "z": 3007,
-    "activeFace": 1
+    "activeFace": 1,
+    "x": 1059.8076211335,
+    "y": 400
   },
   "o28i": {
     "type": "card",
