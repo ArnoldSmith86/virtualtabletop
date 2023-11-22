@@ -52,7 +52,6 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "static",
             "value": "",
             "width": 173.20508075700002,
             "height": 200,
@@ -67,11 +66,12 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 173.20508075700002,
             "height": 200,
-            "css": "background-size: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
+            "css": "background-size: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -876,7 +876,6 @@
             "x": 0,
             "y": 0,
             "color": "#ECCCA0",
-            "valueType": "static",
             "value": "",
             "width": 60,
             "height": 60
@@ -886,22 +885,24 @@
             "x": 0,
             "y": 15,
             "fontSize": 20,
-            "valueType": "dynamic",
-            "value": "number",
             "textAlign": "center",
             "width": 60,
-            "css": "transform: scale(var(--size)); color: var(--color)"
+            "css": "transform: scale(var(--size)); color: var(--color)",
+            "dynamicProperties": {
+              "value": "number"
+            }
           },
           {
             "type": "text",
             "x": 0,
             "y": 25,
             "fontSize": 30,
-            "valueType": "dynamic",
-            "value": "dots",
             "textAlign": "center",
             "width": 60,
-            "css": "letter-spacing: -3px; color: var(--color); transform: translate(-1px, var(--offset)); color: var(--color)"
+            "css": "letter-spacing: -3px; color: var(--color); transform: translate(-1px, var(--offset)); color: var(--color)",
+            "dynamicProperties": {
+              "value": "dots"
+            }
           }
         ],
         "radius": 1000
@@ -1116,22 +1117,24 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "background",
             "width": 80,
             "height": 120,
-            "css": "background-size: cover; border-radius:8px;border:3px solid white;"
+            "css": "background-size: cover; border-radius:8px;border:3px solid white;",
+            "dynamicProperties": {
+              "value": "background"
+            }
           },
           {
             "type": "image",
             "x": 10,
             "y": 30,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "resource",
             "width": 60,
             "height": 60,
-            "css": "background-size: cover; border-radius: 100%; border: 4px solid black;background-color:white;"
+            "css": "background-size: cover; border-radius: 100%; border: 4px solid black;background-color:white;",
+            "dynamicProperties": {
+              "value": "resource"
+            }
           }
         ]
       },
@@ -1142,22 +1145,24 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "background",
             "width": 80,
             "height": 120,
-            "css": "background-size: cover; border-radius:8px;border:3px solid white;"
+            "css": "background-size: cover; border-radius:8px;border:3px solid white;",
+            "dynamicProperties": {
+              "value": "background"
+            }
           },
           {
             "type": "image",
             "x": 10,
             "y": 30,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "resource",
             "width": 60,
             "height": 60,
-            "css": "background-size: cover; border-radius: 100%; border: 4px solid black;background-color:white;"
+            "css": "background-size: cover; border-radius: 100%; border: 4px solid black;background-color:white;",
+            "dynamicProperties": {
+              "value": "resource"
+            }
           }
         ]
       }
@@ -2214,7 +2219,6 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/-376157308_4525",
             "width": 80,
             "height": 120,
@@ -2230,22 +2234,24 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 80,
             "height": 120,
-            "css": "background-size: cover; border:4px solid black;border-radius:8px;"
+            "css": "background-size: cover; border:4px solid black;border-radius:8px;",
+            "dynamicProperties": {
+              "value": "image"
+            }
           },
           {
             "type": "text",
             "x": 0,
             "y": 94,
             "fontSize": 16,
-            "valueType": "dynamic",
-            "value": "text1",
             "textAlign": "center",
             "width": 80,
-            "css": "color:white"
+            "css": "color:white",
+            "dynamicProperties": {
+              "value": "text1"
+            }
           }
         ]
       }
@@ -2283,26 +2289,26 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": 83,
-        "offsetY": 80,
-        "y": 300,
-        "x": 173.20508075700002
-      },
-      {
-        "offsetX": 83,
-        "offsetY": -25,
-        "y": 300,
-        "x": 173.20508075700002
-      },
-      {
-        "offsetX": 170,
+        "offsetX": -3.6025403785000094,
         "offsetY": -70,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": 130,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -175,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 83.39745962149999,
+        "offsetY": -220,
+        "y": 300,
+        "x": 173.20508075700002
+      },
+      {
+        "offsetX": 83.39745962149999,
+        "offsetY": -20,
         "y": 300,
         "x": 173.20508075700002
       }
@@ -2326,7 +2332,15 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": 101,
+        "offsetX": 14.39745962149999,
+        "offsetY": -130,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 0,
+        "image": "/assets/-1486155561_696"
+      },
+      {
+        "offsetX": 101.0000000005,
         "offsetY": 20,
         "y": 300,
         "x": 173.20508075700002,
@@ -2334,15 +2348,15 @@
         "image": "/assets/-1486155561_696"
       },
       {
-        "offsetX": 187.602540379,
-        "offsetY": 170,
+        "offsetX": 56.39745962149999,
+        "offsetY": -55,
         "y": 300,
         "x": 173.20508075700002,
-        "rotation": 0,
-        "image": "/assets/-1486155561_696"
+        "rotation": -60,
+        "image": "/assets/1466053893_1105"
       },
       {
-        "offsetX": 143,
+        "offsetX": 142.3974596215,
         "offsetY": 95,
         "y": 300,
         "x": 173.20508075700002,
@@ -2350,24 +2364,16 @@
         "image": "/assets/1466053893_1105"
       },
       {
-        "offsetX": 229,
-        "offsetY": 245,
-        "y": 300,
-        "x": 173.20508075700002,
-        "rotation": -60,
-        "image": "/assets/1466053893_1105"
-      },
-      {
-        "offsetX": 317,
-        "offsetY": 245,
+        "offsetX": 230.3974596215,
+        "offsetY": 95,
         "y": 300,
         "x": 173.20508075700002,
         "rotation": 60,
         "image": "/assets/1615791162_1102"
       },
       {
-        "offsetX": 231,
-        "offsetY": 95,
+        "offsetX": 144.3974596215,
+        "offsetY": -55,
         "y": 300,
         "x": 173.20508075700002,
         "rotation": 60,
@@ -2393,26 +2399,26 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": 83,
-        "offsetY": 70,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -80,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 83,
-        "offsetY": -30,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -180,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": -75,
+        "offsetX": 83.39745962149999,
+        "offsetY": -225,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": 125,
+        "offsetX": 83.39745962149999,
+        "offsetY": -25,
         "y": 300,
         "x": 173.20508075700002
       }
@@ -2455,7 +2461,9 @@
     },
     "childrenPerOwner": true,
     "rotation": 0,
-    "inheritFrom": "Bricks"
+    "inheritFrom": "Bricks",
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "gtlq": {
     "deck": "Development",
@@ -2903,26 +2911,26 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": 83,
-        "offsetY": 70,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -80,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 83,
-        "offsetY": -30,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -180,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": -75,
+        "offsetX": 83.39745962149999,
+        "offsetY": -225,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": 125,
+        "offsetX": 83.39745962149999,
+        "offsetY": -25,
         "y": 300,
         "x": 173.20508075700002
       }
@@ -2944,26 +2952,26 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": 83,
-        "offsetY": 70,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -80,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 83,
-        "offsetY": -30,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -180,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": -75,
+        "offsetX": 83.39745962149999,
+        "offsetY": -225,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": 125,
+        "offsetX": 83.39745962149999,
+        "offsetY": -25,
         "y": 300,
         "x": 173.20508075700002
       }
@@ -2985,26 +2993,26 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": 83,
-        "offsetY": 70,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -80,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 83,
-        "offsetY": -30,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -180,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": -75,
+        "offsetX": 83.39745962149999,
+        "offsetY": -225,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": 125,
+        "offsetX": 83.39745962149999,
+        "offsetY": -25,
         "y": 300,
         "x": 173.20508075700002
       }
@@ -3027,43 +3035,43 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": 78,
+        "offsetX": -8.60254037850001,
+        "offsetY": -130,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 270
+      },
+      {
+        "offsetX": 78.0000000005,
         "offsetY": 20,
         "y": 300,
         "x": 173.20508075700002,
         "rotation": 270
       },
       {
-        "offsetX": 164.602540379,
-        "offsetY": 170,
+        "offsetX": 33.39745962149999,
+        "offsetY": -55,
         "y": 300,
         "x": 173.20508075700002,
-        "rotation": 270
+        "rotation": 210
       },
       {
-        "offsetX": 120,
+        "offsetX": 119.39745962149999,
         "offsetY": 95,
         "y": 300,
         "x": 173.20508075700002,
         "rotation": 210
       },
       {
-        "offsetX": 206,
-        "offsetY": 245,
-        "y": 300,
-        "x": 173.20508075700002,
-        "rotation": 210
-      },
-      {
-        "offsetX": 294,
-        "offsetY": 245,
+        "offsetX": 207.3974596215,
+        "offsetY": 95,
         "y": 300,
         "x": 173.20508075700002,
         "rotation": 330
       },
       {
-        "offsetX": 208,
-        "offsetY": 95,
+        "offsetX": 121.39745962149999,
+        "offsetY": -55,
         "y": 300,
         "x": 173.20508075700002,
         "rotation": 330
@@ -3086,26 +3094,26 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": 83,
-        "offsetY": 70,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -80,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 83,
-        "offsetY": -30,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -180,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": -75,
+        "offsetX": 83.39745962149999,
+        "offsetY": -225,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": 125,
+        "offsetX": 83.39745962149999,
+        "offsetY": -25,
         "y": 300,
         "x": 173.20508075700002
       }
@@ -3243,105 +3251,6 @@
       "rotation": 0
     }
   },
-  "Die 1": {
-    "id": "Die 1",
-    "css": "--size:60px; --rotX:360deg; --rotY:1080deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
-    "updateRoutine": [
-      "var value = randInt 1 6",
-      "var valueX = ${PROPERTY xRotations} getIndex ${value}",
-      "var valueY = ${PROPERTY yRotations} getIndex ${value}",
-      "var randX = randInt 0 3",
-      "var randY = randInt 0 3",
-      "var randX = ${randX} * 360",
-      "var randY = ${randY} * 360",
-      "var sumX = ${randX} + ${valueX}",
-      "var sumY = ${randY} + ${valueY}",
-      "var css = '--size:' + ${PROPERTY width}",
-      "var css = ${css} + 'px; --rotX:'",
-      "var css = ${css} + ${sumX}",
-      "var css = ${css} + 'deg; --rotY:'",
-      "var css = ${css} + ${sumY}",
-      "var css = ${css} + 'deg; --rotZ:0deg; background: none !important; perspective: 1600px;'",
-      {
-        "func": "SET",
-        "property": "css",
-        "value": "${css}",
-        "collection": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "value",
-        "value": "${value}",
-        "collection": "thisButton"
-      }
-    ],
-    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='100' height='100'%3E%3Cpath d='M1 1h100v100H1z' fill='b'/%3E%3Cuse xlink:href='%23A' fill='p1' x='20' y='20'/%3E%3Cuse xlink:href='%23A' fill='p2' x='20' y='50'/%3E%3Cuse xlink:href='%23A' fill='p3' x='20' y='80'/%3E%3Cuse xlink:href='%23A' fill='p4' x='50' y='20'/%3E%3Cuse xlink:href='%23A' fill='p5' x='50' y='50'/%3E%3Cuse xlink:href='%23A' fill='p6' x='50' y='80'/%3E%3Cuse xlink:href='%23A' fill='p7' x='80' y='20'/%3E%3Cuse xlink:href='%23A' fill='p8' x='80' y='50'/%3E%3Cuse xlink:href='%23A' fill='p9' x='80' y='80'/%3E%3Cdefs%3E%3Ccircle id='A' r='10'/%3E%3C/defs%3E%3C/svg%3E",
-    "backgroundColor": "white",
-    "yRotations": [
-      0,
-      0,
-      90,
-      0,
-      0,
-      -90,
-      180
-    ],
-    "value": 1,
-    "xRotations": [
-      0,
-      0,
-      0,
-      90,
-      -90,
-      0,
-      0
-    ],
-    "width": 60,
-    "height": 60,
-    "layer": 5,
-    "z": 1,
-    "movable": false,
-    "x": 1420,
-    "y": 9,
-    "rotation": 10
-  },
-  "Base": {
-    "id": "Base",
-    "css": "width:var(--size) !important;height:var(--size) !important;transform-style: preserve-3d;  transform: translateZ(calc(var(--size) / -2)) rotateX(   var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ)) !important;  transition: transform 0.5s;",
-    "movable": false,
-    "parent": "Die 1"
-  },
-  "Front": {
-    "id": "Front",
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(  0deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
-    "parent": "Base",
-    "movable": false,
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "backgroundColor",
-      "p2": "backgroundColor",
-      "p3": "backgroundColor",
-      "p4": "backgroundColor",
-      "p5": "pipColor",
-      "p6": "backgroundColor",
-      "p7": "backgroundColor",
-      "p8": "backgroundColor",
-      "p9": "backgroundColor"
-    },
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "activeFace": 0
-  },
   "Back": {
     "id": "Back",
     "movable": false,
@@ -3372,199 +3281,25 @@
     },
     "z": 35
   },
-  "Right": {
-    "id": "Right",
-    "parent": "Base",
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY( 90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "pipColor",
-      "p4": "backgroundColor",
-      "p5": "pipColor",
-      "p6": "backgroundColor",
-      "p7": "pipColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    },
-    "activeFace": 0
-  },
-  "Left": {
-    "id": "Left",
-    "parent": "Base",
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "backgroundColor",
-      "p4": "backgroundColor",
-      "p5": "backgroundColor",
-      "p6": "backgroundColor",
-      "p7": "backgroundColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "Top": {
-    "id": "Top",
-    "parent": "Base",
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black; transform: rotateX( 90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "pipColor",
-      "p4": "backgroundColor",
-      "p5": "backgroundColor",
-      "p6": "backgroundColor",
-      "p7": "pipColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "Bottom": {
-    "id": "Bottom",
-    "parent": "Base",
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateX( -90deg) translateZ(calc(var(--size) / 2)) !important; background-size:cover;",
-    "x": 0,
-    "y": 0,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "backgroundColor",
-      "p3": "backgroundColor",
-      "p4": "backgroundColor",
-      "p5": "pipColor",
-      "p6": "backgroundColor",
-      "p7": "backgroundColor",
-      "p8": "backgroundColor",
-      "p9": "pipColor"
-    }
-  },
-  "Cover": {
-    "id": "Cover",
-    "clickRoutine": [
-      {
-        "func": "CALL",
-        "widget": "Die 1",
-        "routine": "updateRoutine"
-      },
-      {
-        "func": "CALL",
-        "widget": "Die 2",
-        "routine": "updateRoutine"
-      }
-    ],
-    "layer": 9,
-    "css": "width:var(--size) !important;height:var(--size) !important;",
-    "movable": false,
-    "z": 2,
-    "fixedParent": true,
-    "parent": "Die 1"
-  },
   "Die 2": {
-    "inheritFrom": "Die 1",
+    "inheritFrom": {
+      "Die 1": [
+        "faces",
+        "y",
+        "width",
+        "height",
+        "layer",
+        "z",
+        "shape3d",
+        "clickRoutine"
+      ]
+    },
     "id": "Die 2",
     "x": 1500,
-    "css": "--size:60px; --rotX:0deg; --rotY:1080deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
-    "value": 1,
-    "rotation": -5
-  },
-  "Base1": {
-    "inheritFrom": "Base",
-    "id": "Base1",
-    "parent": "Die 2",
-    "activeFace": 0
-  },
-  "Front1": {
-    "inheritFrom": "Front",
-    "id": "Front1",
-    "parent": "Base1"
-  },
-  "Back1": {
-    "inheritFrom": "Back",
-    "id": "Back1",
-    "parent": "Base1",
-    "activeFace": 0
-  },
-  "Right1": {
-    "inheritFrom": "Right",
-    "id": "Right1",
-    "parent": "Base1",
-    "activeFace": 0
-  },
-  "Left1": {
-    "inheritFrom": "Left",
-    "id": "Left1",
-    "parent": "Base1"
-  },
-  "Top1": {
-    "inheritFrom": "Top",
-    "id": "Top1",
-    "parent": "Base1"
-  },
-  "Bottom1": {
-    "inheritFrom": "Bottom",
-    "id": "Bottom1",
-    "parent": "Base1",
-    "activeFace": 0
-  },
-  "Cover1": {
-    "inheritFrom": "Cover",
-    "id": "Cover1",
-    "parent": "Die 2"
+    "rotation": -5,
+    "type": "dice",
+    "activeFace": 3,
+    "rollCount": 12
   },
   "Player 1 - Seat": {
     "type": "seat",
@@ -6254,14 +5989,14 @@
     "height": 90,
     "grid": [
       {
-        "offsetX": 146.602540379,
-        "offsetY": 6,
+        "offsetX": 60.000000000499995,
+        "offsetY": -144,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 60,
-        "offsetY": 156,
+        "offsetX": -26.60254037850001,
+        "offsetY": 6,
         "y": 300,
         "x": 173.20508075700002
       }
@@ -6313,7 +6048,7 @@
     "css": ""
   },
   "_meta": {
-    "version": 4,
+    "version": 15,
     "info": {
       "name": "Frontiers",
       "image": "/assets/1395803033_37648",
@@ -6332,11 +6067,11 @@
       "similarAwards": "2012 JoTa Best Game Released in Brazil Nominee\n2012 JoTa Best Game Released in Brazil Critic Award\n2011 Ludo Award Best Board Game Editor's Choice Winner\n2011 Jocul Anului în România Best Game in Romanian Winner\n2011 Jocul Anului în România Best Game in Romanian Finalist\n2005 Gra Roku Game of the Year Winner\n2004 Hra roku Winner\n2004 Hra roku Nominee\n2002 Japan Boardgame Prize Best Japanese Game Nominee\n2001 Origins Awards Hall of Fame Inductee\n1996 Origins Awards Best Fantasy or Science Fiction Board Game Winner\n1995 Spiel des Jahres Winner\n1995 Meeples' Choice Award\n1995 Essener Feder Best Written Rules Winner\n1995 Deutscher Spiele Preis Best Family/Adult Game Winner",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
+      "similarDesigner": "Klaus Teuber",
       "players": "2-4",
-      "similarDesigner": "Klaus Teuber"
+      "language": "en-US",
+      "variant": "",
+      "variantImage": ""
     }
   },
   "Development Draw": {
@@ -6552,11 +6287,12 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 50,
             "height": 35,
-            "css": "background-size: cover"
+            "css": "background-size: cover",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "radius": 4
@@ -6585,11 +6321,12 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 50,
             "height": 35,
-            "css": "background-size: cover"
+            "css": "background-size: cover",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "radius": 4
@@ -6722,26 +6459,26 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": 83,
-        "offsetY": 70,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -80,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 83,
-        "offsetY": -30,
+        "offsetX": -3.6025403785000094,
+        "offsetY": -180,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": -75,
+        "offsetX": 83.39745962149999,
+        "offsetY": -225,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": 170,
-        "offsetY": 125,
+        "offsetX": 83.39745962149999,
+        "offsetY": -25,
         "y": 300,
         "x": 173.20508075700002
       }
@@ -7818,5 +7555,37 @@
     "height": 120,
     "owner": "Guest533",
     "id": "f1uy"
+  },
+  "Die 1": {
+    "type": "dice",
+    "id": "Die 1",
+    "x": 1420,
+    "y": 9,
+    "width": 60,
+    "height": 60,
+    "rotation": 10,
+    "layer": 5,
+    "z": 1,
+    "activeFace": 5,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 12,
+    "shape3d": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "Die 1",
+          "Die 2"
+        ],
+        "mode": "ignoreClickRoutine"
+      }
+    ]
   }
 }
