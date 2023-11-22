@@ -2808,8 +2808,8 @@
     "type": "holder",
     "id": "Player 1",
     "width": 120,
-    "x": 60,
-    "y": 14,
+    "x": 96,
+    "y": 100,
     "dropTarget": [
       {
         "player": 1
@@ -2849,7 +2849,6 @@
       }
     ],
     "player": 1,
-    "classes": "transparentX",
     "height": 140,
     "linkedToSeat": "Player 1 - Seat",
     "movable": false,
@@ -2858,7 +2857,9 @@
       "Player 1 - Seat": [
         "color"
       ]
-    }
+    },
+    "rotation": -10,
+    "classes": "transparent"
   },
   "Knight B Template": {
     "id": "Knight B Template",
@@ -3089,7 +3090,7 @@
     "id": "Player 1 - Settlements",
     "parent": "Player 1",
     "fixedParent": true,
-    "y": 4,
+    "y": 13,
     "width": 32,
     "height": 95,
     "classes": "transparent",
@@ -3099,12 +3100,14 @@
       "home": "Settlements"
     },
     "stackOffsetY": 10,
-    "x": 23.5
+    "x": 30,
+    "stackOffsetX": 4,
+    "rotation": 2
   },
   "Player 1 - Settlement A": {
     "id": "Player 1 - Settlement A",
-    "x": 0,
-    "y": 10,
+    "x": 8,
+    "y": 20,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -3124,25 +3127,26 @@
         "player"
       ]
     },
-    "z": 2,
+    "z": 3,
     "parent": "Player 1 - Settlements"
   },
   "Player 1 - Cities": {
     "type": "holder",
     "id": "Player 1 - Cities",
     "parent": "Player 1",
-    "x": 62,
+    "x": 65,
     "width": 50,
     "height": 75,
     "dropTarget": {
       "home": "Cities"
     },
-    "inheritFrom": "Player 1 - Settlements"
+    "inheritFrom": "Player 1 - Settlements",
+    "y": -11
   },
   "Player 1 - City A": {
     "id": "Player 1 - City A",
-    "x": 0,
-    "y": 20,
+    "x": 4,
+    "y": 10,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -3162,13 +3166,13 @@
         "player"
       ]
     },
-    "z": 3,
+    "z": 2,
     "parent": "Player 1 - Cities"
   },
   "Player 1 - Road A": {
     "id": "Player 1 - Road A",
-    "x": 0,
-    "y": 4,
+    "x": 28,
+    "y": 28,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -3188,7 +3192,7 @@
         "player"
       ]
     },
-    "z": 3,
+    "z": 15,
     "parent": "Player 1 - Roads"
   },
   "Player 1 - Roads": {
@@ -3202,12 +3206,14 @@
     "expansion": 2,
     "inheritFrom": "Player 1 - Settlements",
     "stackOffsetY": 2,
-    "x": 4,
+    "x": -6,
     "width": 13,
-    "y": 4,
+    "y": 33,
     "onEnter": {
-      "rotation": 0
-    }
+      "rotation": 0,
+      "image": "/assets/-1486155561_696"
+    },
+    "stackOffsetX": 2
   },
   "Back": {
     "id": "Back",
@@ -3256,21 +3262,22 @@
     "x": 1500,
     "rotation": -5,
     "type": "dice",
-    "activeFace": 3,
-    "rollCount": 12
+    "activeFace": 0,
+    "rollCount": 16
   },
   "Player 1 - Seat": {
     "type": "seat",
     "id": "Player 1 - Seat",
     "parent": "Player 1",
-    "rotation": -90,
-    "x": -110,
-    "y": 44
+    "x": -69,
+    "y": -32,
+    "layer": -4,
+    "rotation": 333
   },
   "Player 1 - Road B": {
     "id": "Player 1 - Road B",
-    "x": 0,
-    "y": 6,
+    "x": 26,
+    "y": 26,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -3290,220 +3297,12 @@
         "player"
       ]
     },
-    "z": 4,
+    "z": 14,
     "parent": "Player 1 - Roads"
   },
   "Player 1 - Road C": {
     "id": "Player 1 - Road C",
-    "x": 0,
-    "y": 8,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 5,
-    "parent": "Player 1 - Roads"
-  },
-  "Player 1 - Road D": {
-    "id": "Player 1 - Road D",
-    "x": 0,
-    "y": 10,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 6,
-    "parent": "Player 1 - Roads"
-  },
-  "Player 1 - Road E": {
-    "id": "Player 1 - Road E",
-    "x": 0,
-    "y": 12,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 7,
-    "parent": "Player 1 - Roads"
-  },
-  "Player 1 - Road F": {
-    "id": "Player 1 - Road F",
-    "x": 0,
-    "y": 14,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 8,
-    "parent": "Player 1 - Roads"
-  },
-  "Player 1 - Road G": {
-    "id": "Player 1 - Road G",
-    "x": 0,
-    "y": 16,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 9,
-    "parent": "Player 1 - Roads"
-  },
-  "Player 1 - Road H": {
-    "id": "Player 1 - Road H",
-    "x": 0,
-    "y": 18,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 10,
-    "parent": "Player 1 - Roads"
-  },
-  "Player 1 - Road I": {
-    "id": "Player 1 - Road I",
-    "x": 0,
-    "y": 20,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 11,
-    "parent": "Player 1 - Roads"
-  },
-  "Player 1 - Road J": {
-    "id": "Player 1 - Road J",
-    "x": 0,
-    "y": 22,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 12,
-    "parent": "Player 1 - Roads"
-  },
-  "Player 1 - Road K": {
-    "id": "Player 1 - Road K",
-    "x": 0,
+    "x": 24,
     "y": 24,
     "rotation": 0,
     "activeFace": 0,
@@ -3527,10 +3326,10 @@
     "z": 13,
     "parent": "Player 1 - Roads"
   },
-  "Player 1 - Road L": {
-    "id": "Player 1 - Road L",
-    "x": 0,
-    "y": 26,
+  "Player 1 - Road D": {
+    "id": "Player 1 - Road D",
+    "x": 22,
+    "y": 22,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -3550,13 +3349,195 @@
         "player"
       ]
     },
-    "z": 14,
-    "image": "/assets/1615791162_1102",
+    "z": 12,
     "parent": "Player 1 - Roads"
   },
-  "Player 1 - Road M": {
-    "id": "Player 1 - Road M",
-    "x": 0,
+  "Player 1 - Road E": {
+    "id": "Player 1 - Road E",
+    "x": 20,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 11,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road F": {
+    "id": "Player 1 - Road F",
+    "x": 18,
+    "y": 18,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 10,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road G": {
+    "id": "Player 1 - Road G",
+    "x": 8,
+    "y": 8,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 5,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road H": {
+    "id": "Player 1 - Road H",
+    "x": 16,
+    "y": 16,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 9,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road I": {
+    "id": "Player 1 - Road I",
+    "x": 14,
+    "y": 14,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 8,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road J": {
+    "id": "Player 1 - Road J",
+    "x": 12,
+    "y": 12,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 7,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road K": {
+    "id": "Player 1 - Road K",
+    "x": 10,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 6,
+    "parent": "Player 1 - Roads"
+  },
+  "Player 1 - Road L": {
+    "id": "Player 1 - Road L",
+    "x": 2,
     "y": 2,
     "rotation": 0,
     "activeFace": 0,
@@ -3577,38 +3558,12 @@
         "player"
       ]
     },
-    "parent": "Player 1 - Roads",
-    "z": 2
-  },
-  "Player 1 - Road N": {
-    "id": "Player 1 - Road N",
-    "x": 0,
-    "y": 28,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 15,
+    "z": 2,
     "image": "/assets/-1486155561_696",
     "parent": "Player 1 - Roads"
   },
-  "Player 1 - Road O": {
-    "id": "Player 1 - Road O",
+  "Player 1 - Road M": {
+    "id": "Player 1 - Road M",
     "x": 0,
     "y": 0,
     "rotation": 0,
@@ -3631,16 +3586,17 @@
       ]
     },
     "z": 1,
+    "image": "/assets/-1486155561_696",
     "parent": "Player 1 - Roads"
   },
-  "Player 1 - Settlement B": {
-    "id": "Player 1 - Settlement B",
-    "x": 0,
-    "y": 20,
+  "Player 1 - Road N": {
+    "id": "Player 1 - Road N",
+    "x": 4,
+    "y": 4,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
+      "Road Template": [
         "faces",
         "image",
         "svgReplaces",
@@ -3657,16 +3613,17 @@
       ]
     },
     "z": 3,
-    "parent": "Player 1 - Settlements"
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 1 - Roads"
   },
-  "Player 1 - Settlement C": {
-    "id": "Player 1 - Settlement C",
-    "x": 0,
-    "y": 30,
+  "Player 1 - Road O": {
+    "id": "Player 1 - Road O",
+    "x": 6,
+    "y": 6,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
+      "Road Template": [
         "faces",
         "image",
         "svgReplaces",
@@ -3683,94 +3640,17 @@
       ]
     },
     "z": 4,
-    "parent": "Player 1 - Settlements"
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 1 - Roads"
   },
-  "Player 1 - Settlement D": {
-    "id": "Player 1 - Settlement D",
-    "x": 0,
-    "y": 0,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 1,
-    "parent": "Player 1 - Settlements"
-  },
-  "Player 1 - City B": {
-    "id": "Player 1 - City B",
-    "x": 0,
-    "y": 30,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 4,
-    "parent": "Player 1 - Cities"
-  },
-  "Player 1 - City C": {
-    "id": "Player 1 - City C",
-    "x": 0,
-    "y": 0,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 1": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 1,
-    "parent": "Player 1 - Cities"
-  },
-  "Player 1 - City D": {
-    "id": "Player 1 - City D",
-    "x": 0,
+  "Player 1 - Settlement B": {
+    "id": "Player 1 - Settlement B",
+    "x": 4,
     "y": 10,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
+      "Settlement Template": [
         "faces",
         "image",
         "svgReplaces",
@@ -3787,14 +3667,142 @@
       ]
     },
     "z": 2,
+    "parent": "Player 1 - Settlements"
+  },
+  "Player 1 - Settlement C": {
+    "id": "Player 1 - Settlement C",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "parent": "Player 1 - Settlements"
+  },
+  "Player 1 - Settlement D": {
+    "id": "Player 1 - Settlement D",
+    "x": 12,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "parent": "Player 1 - Settlements"
+  },
+  "Player 1 - City B": {
+    "id": "Player 1 - City B",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "parent": "Player 1 - Cities"
+  },
+  "Player 1 - City C": {
+    "id": "Player 1 - City C",
+    "x": 12,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "parent": "Player 1 - Cities"
+  },
+  "Player 1 - City D": {
+    "id": "Player 1 - City D",
+    "x": 8,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 1": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
     "parent": "Player 1 - Cities"
   },
   "Player 2": {
     "type": "holder",
     "id": "Player 2",
-    "width": 120,
-    "x": 60,
-    "y": 214,
+    "y": 300,
     "dropTarget": [
       {
         "player": 2
@@ -3803,45 +3811,19 @@
         "deck": "Bonus Deck"
       }
     ],
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "property": "home",
-        "collection": "child"
-      },
-      {
-        "func": "IF",
-        "condition": "${home}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "value": "${PROPERTY id} - ${home}",
-            "collection": "child"
-          },
-          {
-            "func": "IF",
-            "operand1": "${home}",
-            "operand2": "Barrels",
-            "thenRoutine": [
-              {
-                "func": "SORT",
-                "holder": "${PROPERTY id} - ${home}",
-                "key": "cardType"
-              }
-            ]
-          }
-        ]
-      }
-    ],
     "player": 2,
-    "classes": "transparentX",
-    "height": 140,
     "linkedToSeat": "Player 2 - Seat",
-    "movable": false,
-    "movableInEdit": true,
     "inheritFrom": {
       "Player 2 - Seat": [
         "color"
+      ],
+      "Player 1": [
+        "classes",
+        "enterRoutine",
+        "width",
+        "height",
+        "x",
+        "rotation"
       ]
     }
   },
@@ -3849,48 +3831,11 @@
     "type": "holder",
     "id": "Player 2 - Settlements",
     "parent": "Player 2",
-    "fixedParent": true,
-    "y": 4,
-    "width": 32,
-    "height": 95,
-    "classes": "transparent",
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
-    "dropTarget": {
-      "home": "Settlements"
-    },
-    "stackOffsetY": 10,
-    "x": 23.5
+    "inheritFrom": "Player 1 - Settlements"
   },
   "Player 2 - Settlement A": {
     "id": "Player 2 - Settlement A",
-    "x": 0,
-    "y": 30,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 2": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 4,
-    "parent": "Player 2 - Settlements"
-  },
-  "Player 2 - Settlement B": {
-    "id": "Player 2 - Settlement B",
-    "x": 0,
+    "x": 4,
     "y": 10,
     "rotation": 0,
     "activeFace": 0,
@@ -3914,9 +3859,35 @@
     "z": 2,
     "parent": "Player 2 - Settlements"
   },
+  "Player 2 - Settlement B": {
+    "id": "Player 2 - Settlement B",
+    "x": 12,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Settlement Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "parent": "Player 2 - Settlements"
+  },
   "Player 2 - Settlement C": {
     "id": "Player 2 - Settlement C",
-    "x": 0,
+    "x": 8,
     "y": 20,
     "rotation": 0,
     "activeFace": 0,
@@ -3943,7 +3914,7 @@
   "Player 2 - Settlement D": {
     "id": "Player 2 - Settlement D",
     "x": 0,
-    "y": 40,
+    "y": 0,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -3963,75 +3934,17 @@
         "player"
       ]
     },
-    "z": 5,
+    "z": 1,
     "parent": "Player 2 - Settlements"
   },
   "Player 2 - Cities": {
     "type": "holder",
     "id": "Player 2 - Cities",
     "parent": "Player 2",
-    "x": 62,
-    "width": 50,
-    "height": 75,
-    "dropTarget": {
-      "home": "Cities"
-    },
-    "inheritFrom": "Player 2 - Settlements"
+    "inheritFrom": "Player 1 - Cities"
   },
   "Player 2 - City A": {
     "id": "Player 2 - City A",
-    "x": 0,
-    "y": 20,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 2": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 2 - Cities",
-    "z": 3
-  },
-  "Player 2 - City B": {
-    "id": "Player 2 - City B",
-    "x": 0,
-    "y": 30,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 2": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 4,
-    "parent": "Player 2 - Cities"
-  },
-  "Player 2 - City C": {
-    "id": "Player 2 - City C",
     "x": 0,
     "y": 0,
     "rotation": 0,
@@ -4053,12 +3966,65 @@
         "player"
       ]
     },
-    "z": 1,
+    "parent": "Player 2 - Cities",
+    "z": 1
+  },
+  "Player 2 - City B": {
+    "id": "Player 2 - City B",
+    "x": 12,
+    "y": 30,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "hoverParent": "Player 2 - Cities",
+    "parent": "Player 2 - Cities"
+  },
+  "Player 2 - City C": {
+    "id": "Player 2 - City C",
+    "x": 8,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
     "parent": "Player 2 - Cities"
   },
   "Player 2 - City D": {
     "id": "Player 2 - City D",
-    "x": 0,
+    "x": 4,
     "y": 10,
     "rotation": 0,
     "activeFace": 0,
@@ -4086,24 +4052,12 @@
     "type": "holder",
     "id": "Player 2 - Roads",
     "parent": "Player 2",
-    "height": 92,
-    "dropTarget": {
-      "home": "Roads"
-    },
-    "expansion": 2,
-    "inheritFrom": "Player 2 - Settlements",
-    "stackOffsetY": 2,
-    "x": 4,
-    "width": 13,
-    "y": 4,
-    "onEnter": {
-      "rotation": 0
-    }
+    "inheritFrom": "Player 1 - Roads"
   },
   "Player 2 - Road A": {
     "id": "Player 2 - Road A",
-    "x": 0,
-    "y": 28,
+    "x": 12,
+    "y": 12,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -4123,40 +4077,13 @@
         "player"
       ]
     },
-    "z": 15,
-    "image": "/assets/1466053893_1105",
+    "z": 7,
+    "image": "/assets/-1486155561_696",
     "parent": "Player 2 - Roads"
   },
   "Player 2 - Road B": {
     "id": "Player 2 - Road B",
-    "x": 0,
-    "y": 20,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 2": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 11,
-    "image": "/assets/1615791162_1102",
-    "parent": "Player 2 - Roads"
-  },
-  "Player 2 - Road C": {
-    "id": "Player 2 - Road C",
-    "x": 0,
+    "x": 4,
     "y": 4,
     "rotation": 0,
     "activeFace": 0,
@@ -4181,10 +4108,10 @@
     "image": "/assets/-1486155561_696",
     "parent": "Player 2 - Roads"
   },
-  "Player 2 - Road D": {
-    "id": "Player 2 - Road D",
-    "x": 0,
-    "y": 6,
+  "Player 2 - Road C": {
+    "id": "Player 2 - Road C",
+    "x": 26,
+    "y": 26,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -4204,13 +4131,67 @@
         "player"
       ]
     },
-    "z": 4,
+    "z": 14,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road D": {
+    "id": "Player 2 - Road D",
+    "x": 24,
+    "y": 24,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 13,
     "image": "/assets/-1486155561_696",
     "parent": "Player 2 - Roads"
   },
   "Player 2 - Road E": {
     "id": "Player 2 - Road E",
-    "x": 0,
+    "x": 22,
+    "y": 22,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 12,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road F": {
+    "id": "Player 2 - Road F",
+    "x": 8,
     "y": 8,
     "rotation": 0,
     "activeFace": 0,
@@ -4235,143 +4216,9 @@
     "image": "/assets/-1486155561_696",
     "parent": "Player 2 - Roads"
   },
-  "Player 2 - Road F": {
-    "id": "Player 2 - Road F",
-    "x": 0,
-    "y": 22,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 2": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 12,
-    "image": "/assets/1615791162_1102",
-    "parent": "Player 2 - Roads"
-  },
   "Player 2 - Road G": {
     "id": "Player 2 - Road G",
-    "x": 0,
-    "y": 24,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 2": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 13,
-    "image": "/assets/1615791162_1102",
-    "parent": "Player 2 - Roads"
-  },
-  "Player 2 - Road H": {
-    "id": "Player 2 - Road H",
-    "x": 0,
-    "y": 26,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 2": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 14,
-    "image": "/assets/1466053893_1105",
-    "parent": "Player 2 - Roads"
-  },
-  "Player 2 - Road I": {
-    "id": "Player 2 - Road I",
-    "x": 0,
-    "y": 0,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 2": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 1,
-    "image": "/assets/1615791162_1102",
-    "parent": "Player 2 - Roads"
-  },
-  "Player 2 - Road J": {
-    "id": "Player 2 - Road J",
-    "x": 0,
-    "y": 12,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 2": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 2 - Roads",
-    "z": 7
-  },
-  "Player 2 - Road K": {
-    "id": "Player 2 - Road K",
-    "x": 0,
+    "x": 2,
     "y": 2,
     "rotation": 0,
     "activeFace": 0,
@@ -4396,10 +4243,10 @@
     "image": "/assets/-1486155561_696",
     "parent": "Player 2 - Roads"
   },
-  "Player 2 - Road L": {
-    "id": "Player 2 - Road L",
+  "Player 2 - Road H": {
+    "id": "Player 2 - Road H",
     "x": 0,
-    "y": 14,
+    "y": 0,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -4419,12 +4266,40 @@
         "player"
       ]
     },
-    "parent": "Player 2 - Roads",
-    "z": 8
+    "z": 1,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 2 - Roads"
   },
-  "Player 2 - Road M": {
-    "id": "Player 2 - Road M",
-    "x": 0,
+  "Player 2 - Road I": {
+    "id": "Player 2 - Road I",
+    "x": 10,
+    "y": 10,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 6,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road J": {
+    "id": "Player 2 - Road J",
+    "x": 18,
     "y": 18,
     "rotation": 0,
     "activeFace": 0,
@@ -4448,9 +4323,36 @@
     "parent": "Player 2 - Roads",
     "z": 10
   },
-  "Player 2 - Road N": {
-    "id": "Player 2 - Road N",
-    "x": 0,
+  "Player 2 - Road K": {
+    "id": "Player 2 - Road K",
+    "x": 28,
+    "y": 28,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 15,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road L": {
+    "id": "Player 2 - Road L",
+    "x": 16,
     "y": 16,
     "rotation": 0,
     "activeFace": 0,
@@ -4474,10 +4376,10 @@
     "parent": "Player 2 - Roads",
     "z": 9
   },
-  "Player 2 - Road O": {
-    "id": "Player 2 - Road O",
-    "x": 0,
-    "y": 10,
+  "Player 2 - Road M": {
+    "id": "Player 2 - Road M",
+    "x": 6,
+    "y": 6,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -4497,24 +4399,84 @@
         "player"
       ]
     },
-    "z": 6,
+    "z": 4,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 2 - Roads"
+  },
+  "Player 2 - Road N": {
+    "id": "Player 2 - Road N",
+    "x": 14,
+    "y": 14,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 2 - Roads",
+    "z": 8
+  },
+  "Player 2 - Road O": {
+    "id": "Player 2 - Road O",
+    "x": 20,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 2": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 11,
     "parent": "Player 2 - Roads"
   },
   "Player 2 - Seat": {
     "type": "seat",
     "id": "Player 2 - Seat",
     "parent": "Player 2",
-    "rotation": -90,
-    "x": -110,
-    "y": 44,
-    "index": 2
+    "index": 2,
+    "inheritFrom": {
+      "Player 1 - Seat": [
+        "x",
+        "y",
+        "z",
+        "width",
+        "height",
+        "rotation",
+        "layer"
+      ]
+    },
+    "color": "#999999"
   },
   "Player 3": {
     "type": "holder",
     "id": "Player 3",
-    "width": 120,
-    "x": 60,
-    "y": 414,
+    "y": 500,
     "dropTarget": [
       {
         "player": 3
@@ -4523,45 +4485,19 @@
         "deck": "Bonus Deck"
       }
     ],
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "property": "home",
-        "collection": "child"
-      },
-      {
-        "func": "IF",
-        "condition": "${home}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "value": "${PROPERTY id} - ${home}",
-            "collection": "child"
-          },
-          {
-            "func": "IF",
-            "operand1": "${home}",
-            "operand2": "Barrels",
-            "thenRoutine": [
-              {
-                "func": "SORT",
-                "holder": "${PROPERTY id} - ${home}",
-                "key": "cardType"
-              }
-            ]
-          }
-        ]
-      }
-    ],
     "player": 3,
-    "classes": "transparentX",
-    "height": 140,
     "linkedToSeat": "Player 3 - Seat",
-    "movable": false,
-    "movableInEdit": true,
     "inheritFrom": {
       "Player 3 - Seat": [
         "color"
+      ],
+      "Player 1": [
+        "classes",
+        "enterRoutine",
+        "width",
+        "height",
+        "x",
+        "rotation"
       ]
     }
   },
@@ -4569,23 +4505,12 @@
     "type": "holder",
     "id": "Player 3 - Settlements",
     "parent": "Player 3",
-    "fixedParent": true,
-    "y": 4,
-    "width": 32,
-    "height": 95,
-    "classes": "transparent",
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
-    "dropTarget": {
-      "home": "Settlements"
-    },
-    "stackOffsetY": 10,
-    "x": 23.5
+    "inheritFrom": "Player 1 - Settlements"
   },
   "Player 3 - Settlement A": {
     "id": "Player 3 - Settlement A",
     "x": 0,
-    "y": 40,
+    "y": 0,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -4605,13 +4530,13 @@
         "player"
       ]
     },
-    "z": 5,
+    "z": 1,
     "parent": "Player 3 - Settlements"
   },
   "Player 3 - Settlement B": {
     "id": "Player 3 - Settlement B",
-    "x": 0,
-    "y": 30,
+    "x": 4,
+    "y": 10,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -4631,12 +4556,12 @@
         "player"
       ]
     },
-    "z": 4,
+    "z": 2,
     "parent": "Player 3 - Settlements"
   },
   "Player 3 - Settlement C": {
     "id": "Player 3 - Settlement C",
-    "x": 0,
+    "x": 8,
     "y": 20,
     "rotation": 0,
     "activeFace": 0,
@@ -4662,8 +4587,8 @@
   },
   "Player 3 - Settlement D": {
     "id": "Player 3 - Settlement D",
-    "x": 0,
-    "y": 10,
+    "x": 12,
+    "y": 30,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -4683,23 +4608,43 @@
         "player"
       ]
     },
-    "z": 2,
+    "z": 4,
     "parent": "Player 3 - Settlements"
   },
   "Player 3 - Cities": {
     "type": "holder",
     "id": "Player 3 - Cities",
     "parent": "Player 3",
-    "x": 62,
-    "width": 50,
-    "height": 75,
-    "dropTarget": {
-      "home": "Cities"
-    },
-    "inheritFrom": "Player 3 - Settlements"
+    "inheritFrom": "Player 1 - Cities"
   },
   "Player 3 - City A": {
     "id": "Player 3 - City A",
+    "x": 8,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "parent": "Player 3 - Cities"
+  },
+  "Player 3 - City B": {
+    "id": "Player 3 - City B",
     "x": 0,
     "y": 0,
     "rotation": 0,
@@ -4724,35 +4669,9 @@
     "z": 1,
     "parent": "Player 3 - Cities"
   },
-  "Player 3 - City B": {
-    "id": "Player 3 - City B",
-    "x": 0,
-    "y": 20,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 3": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 3,
-    "parent": "Player 3 - Cities"
-  },
   "Player 3 - City C": {
     "id": "Player 3 - City C",
-    "x": 0,
+    "x": 4,
     "y": 10,
     "rotation": 0,
     "activeFace": 0,
@@ -4778,7 +4697,7 @@
   },
   "Player 3 - City D": {
     "id": "Player 3 - City D",
-    "x": 0,
+    "x": 12,
     "y": 30,
     "rotation": 0,
     "activeFace": 0,
@@ -4800,30 +4719,19 @@
       ]
     },
     "z": 4,
+    "hoverParent": "Player 3 - Cities",
     "parent": "Player 3 - Cities"
   },
   "Player 3 - Roads": {
     "type": "holder",
     "id": "Player 3 - Roads",
     "parent": "Player 3",
-    "height": 92,
-    "dropTarget": {
-      "home": "Roads"
-    },
-    "expansion": 2,
-    "inheritFrom": "Player 3 - Settlements",
-    "stackOffsetY": 2,
-    "x": 4,
-    "width": 13,
-    "y": 4,
-    "onEnter": {
-      "rotation": 0
-    }
+    "inheritFrom": "Player 1 - Roads"
   },
   "Player 3 - Road A": {
     "id": "Player 3 - Road A",
-    "x": 0,
-    "y": 14,
+    "x": 24,
+    "y": 24,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -4844,89 +4752,11 @@
       ]
     },
     "parent": "Player 3 - Roads",
-    "z": 8
+    "z": 13
   },
   "Player 3 - Road B": {
     "id": "Player 3 - Road B",
-    "x": 0,
-    "y": 16,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 3": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 3 - Roads",
-    "z": 9
-  },
-  "Player 3 - Road C": {
-    "id": "Player 3 - Road C",
-    "x": 0,
-    "y": 18,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 3": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 3 - Roads",
-    "z": 10
-  },
-  "Player 3 - Road D": {
-    "id": "Player 3 - Road D",
-    "x": 0,
-    "y": 20,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 3": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 3 - Roads",
-    "z": 11
-  },
-  "Player 3 - Road E": {
-    "id": "Player 3 - Road E",
-    "x": 0,
+    "x": 22,
     "y": 22,
     "rotation": 0,
     "activeFace": 0,
@@ -4950,9 +4780,169 @@
     "parent": "Player 3 - Roads",
     "z": 12
   },
+  "Player 3 - Road C": {
+    "id": "Player 3 - Road C",
+    "x": 20,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 11
+  },
+  "Player 3 - Road D": {
+    "id": "Player 3 - Road D",
+    "x": 18,
+    "y": 18,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 3 - Roads",
+    "z": 10
+  },
+  "Player 3 - Road E": {
+    "id": "Player 3 - Road E",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 3 - Roads"
+  },
   "Player 3 - Road F": {
     "id": "Player 3 - Road F",
-    "x": 0,
+    "x": 16,
+    "y": 16,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 9,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road G": {
+    "id": "Player 3 - Road G",
+    "x": 6,
+    "y": 6,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road H": {
+    "id": "Player 3 - Road H",
+    "x": 8,
+    "y": 8,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 5,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road I": {
+    "id": "Player 3 - Road I",
+    "x": 2,
     "y": 2,
     "rotation": 0,
     "activeFace": 0,
@@ -4977,10 +4967,10 @@
     "image": "/assets/-1486155561_696",
     "parent": "Player 3 - Roads"
   },
-  "Player 3 - Road G": {
-    "id": "Player 3 - Road G",
-    "x": 0,
-    "y": 24,
+  "Player 3 - Road J": {
+    "id": "Player 3 - Road J",
+    "x": 12,
+    "y": 12,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -5000,12 +4990,67 @@
         "player"
       ]
     },
-    "parent": "Player 3 - Roads",
-    "z": 13
+    "z": 7,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 3 - Roads"
   },
-  "Player 3 - Road H": {
-    "id": "Player 3 - Road H",
-    "x": 0,
+  "Player 3 - Road K": {
+    "id": "Player 3 - Road K",
+    "x": 14,
+    "y": 14,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 8,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road L": {
+    "id": "Player 3 - Road L",
+    "x": 4,
+    "y": 4,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road M": {
+    "id": "Player 3 - Road M",
+    "x": 26,
     "y": 26,
     "rotation": 0,
     "activeFace": 0,
@@ -5029,169 +5074,9 @@
     "parent": "Player 3 - Roads",
     "z": 14
   },
-  "Player 3 - Road I": {
-    "id": "Player 3 - Road I",
-    "x": 0,
-    "y": 28,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 3": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 3 - Roads",
-    "z": 15
-  },
-  "Player 3 - Road J": {
-    "id": "Player 3 - Road J",
-    "x": 0,
-    "y": 0,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 3": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 1,
-    "image": "/assets/1466053893_1105",
-    "parent": "Player 3 - Roads"
-  },
-  "Player 3 - Road K": {
-    "id": "Player 3 - Road K",
-    "x": 0,
-    "y": 6,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 3": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 4,
-    "image": "/assets/1615791162_1102",
-    "parent": "Player 3 - Roads"
-  },
-  "Player 3 - Road L": {
-    "id": "Player 3 - Road L",
-    "x": 0,
-    "y": 4,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 3": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 3,
-    "image": "/assets/1466053893_1105",
-    "parent": "Player 3 - Roads"
-  },
-  "Player 3 - Road M": {
-    "id": "Player 3 - Road M",
-    "x": 0,
-    "y": 12,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 3": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 3 - Roads",
-    "z": 7
-  },
   "Player 3 - Road N": {
     "id": "Player 3 - Road N",
-    "x": 0,
-    "y": 8,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 3": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 5,
-    "image": "/assets/1466053893_1105",
-    "parent": "Player 3 - Roads"
-  },
-  "Player 3 - Road O": {
-    "id": "Player 3 - Road O",
-    "x": 0,
+    "x": 10,
     "y": 10,
     "rotation": 0,
     "activeFace": 0,
@@ -5213,23 +5098,57 @@
       ]
     },
     "z": 6,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 3 - Roads"
+  },
+  "Player 3 - Road O": {
+    "id": "Player 3 - Road O",
+    "x": 28,
+    "y": 28,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 3": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 15,
     "parent": "Player 3 - Roads"
   },
   "Player 3 - Seat": {
     "type": "seat",
     "id": "Player 3 - Seat",
     "parent": "Player 3",
-    "rotation": -90,
-    "x": -110,
-    "y": 44,
-    "index": 3
+    "index": 3,
+    "inheritFrom": {
+      "Player 1 - Seat": [
+        "x",
+        "y",
+        "z",
+        "width",
+        "height",
+        "rotation",
+        "layer"
+      ]
+    },
+    "color": "#999999"
   },
   "Player 4": {
     "type": "holder",
     "id": "Player 4",
-    "width": 120,
-    "x": 60,
-    "y": 614,
+    "y": 700,
     "dropTarget": [
       {
         "player": 4
@@ -5238,45 +5157,19 @@
         "deck": "Bonus Deck"
       }
     ],
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "property": "home",
-        "collection": "child"
-      },
-      {
-        "func": "IF",
-        "condition": "${home}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "value": "${PROPERTY id} - ${home}",
-            "collection": "child"
-          },
-          {
-            "func": "IF",
-            "operand1": "${home}",
-            "operand2": "Barrels",
-            "thenRoutine": [
-              {
-                "func": "SORT",
-                "holder": "${PROPERTY id} - ${home}",
-                "key": "cardType"
-              }
-            ]
-          }
-        ]
-      }
-    ],
     "player": 4,
-    "classes": "transparentX",
-    "height": 140,
     "linkedToSeat": "Player 4 - Seat",
-    "movable": false,
-    "movableInEdit": true,
     "inheritFrom": {
       "Player 4 - Seat": [
         "color"
+      ],
+      "Player 1": [
+        "classes",
+        "enterRoutine",
+        "width",
+        "height",
+        "x",
+        "rotation"
       ]
     }
   },
@@ -5284,23 +5177,12 @@
     "type": "holder",
     "id": "Player 4 - Settlements",
     "parent": "Player 4",
-    "fixedParent": true,
-    "y": 4,
-    "width": 32,
-    "height": 95,
-    "classes": "transparent",
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
-    "dropTarget": {
-      "home": "Settlements"
-    },
-    "stackOffsetY": 10,
-    "x": 23.5
+    "inheritFrom": "Player 1 - Settlements"
   },
   "Player 4 - Settlement A": {
     "id": "Player 4 - Settlement A",
-    "x": 0,
-    "y": 20,
+    "x": 4,
+    "y": 10,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -5320,12 +5202,12 @@
         "player"
       ]
     },
-    "z": 3,
+    "z": 2,
     "parent": "Player 4 - Settlements"
   },
   "Player 4 - Settlement B": {
     "id": "Player 4 - Settlement B",
-    "x": 0,
+    "x": 16,
     "y": 40,
     "rotation": 0,
     "activeFace": 0,
@@ -5351,8 +5233,8 @@
   },
   "Player 4 - Settlement C": {
     "id": "Player 4 - Settlement C",
-    "x": 0,
-    "y": 10,
+    "x": 8,
+    "y": 20,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -5372,13 +5254,13 @@
         "player"
       ]
     },
-    "z": 2,
+    "z": 3,
     "parent": "Player 4 - Settlements"
   },
   "Player 4 - Settlement D": {
     "id": "Player 4 - Settlement D",
-    "x": 0,
-    "y": 0,
+    "x": 12,
+    "y": 30,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -5398,25 +5280,19 @@
         "player"
       ]
     },
-    "z": 1,
+    "z": 4,
     "parent": "Player 4 - Settlements"
   },
   "Player 4 - Cities": {
     "type": "holder",
     "id": "Player 4 - Cities",
     "parent": "Player 4",
-    "x": 62,
-    "width": 50,
-    "height": 75,
-    "dropTarget": {
-      "home": "Cities"
-    },
-    "inheritFrom": "Player 4 - Settlements"
+    "inheritFrom": "Player 1 - Cities"
   },
   "Player 4 - City A": {
     "id": "Player 4 - City A",
-    "x": 0,
-    "y": 20,
+    "x": 4,
+    "y": 10,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -5437,11 +5313,37 @@
       ]
     },
     "parent": "Player 4 - Cities",
-    "z": 3
+    "z": 2
   },
   "Player 4 - City B": {
     "id": "Player 4 - City B",
     "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "City Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 1,
+    "parent": "Player 4 - Cities"
+  },
+  "Player 4 - City C": {
+    "id": "Player 4 - City C",
+    "x": 12,
     "y": 30,
     "rotation": 0,
     "activeFace": 0,
@@ -5462,39 +5364,13 @@
         "player"
       ]
     },
-    "parent": "Player 4 - Cities",
-    "z": 4
-  },
-  "Player 4 - City C": {
-    "id": "Player 4 - City C",
-    "x": 0,
-    "y": 0,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 1,
+    "z": 4,
     "parent": "Player 4 - Cities"
   },
   "Player 4 - City D": {
     "id": "Player 4 - City D",
-    "x": 0,
-    "y": 10,
+    "x": 8,
+    "y": 20,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -5514,160 +5390,18 @@
         "player"
       ]
     },
-    "z": 2,
+    "z": 3,
     "parent": "Player 4 - Cities"
   },
   "Player 4 - Roads": {
     "type": "holder",
     "id": "Player 4 - Roads",
     "parent": "Player 4",
-    "height": 92,
-    "dropTarget": {
-      "home": "Roads"
-    },
-    "expansion": 2,
-    "inheritFrom": "Player 4 - Settlements",
-    "stackOffsetY": 2,
-    "x": 4,
-    "width": 13,
-    "y": 4,
-    "onEnter": {
-      "rotation": 0
-    }
+    "inheritFrom": "Player 1 - Roads"
   },
   "Player 4 - Road A": {
     "id": "Player 4 - Road A",
-    "x": 0,
-    "y": 14,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 4 - Roads",
-    "z": 8
-  },
-  "Player 4 - Road B": {
-    "id": "Player 4 - Road B",
-    "x": 0,
-    "y": 16,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 4 - Roads",
-    "z": 9
-  },
-  "Player 4 - Road C": {
-    "id": "Player 4 - Road C",
-    "x": 0,
-    "y": 18,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 4 - Roads",
-    "z": 10
-  },
-  "Player 4 - Road D": {
-    "id": "Player 4 - Road D",
-    "x": 0,
-    "y": 20,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 4 - Roads",
-    "z": 11
-  },
-  "Player 4 - Road E": {
-    "id": "Player 4 - Road E",
-    "x": 0,
-    "y": 22,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 4 - Roads",
-    "z": 12
-  },
-  "Player 4 - Road F": {
-    "id": "Player 4 - Road F",
-    "x": 0,
+    "x": 24,
     "y": 24,
     "rotation": 0,
     "activeFace": 0,
@@ -5691,169 +5425,139 @@
     "parent": "Player 4 - Roads",
     "z": 13
   },
+  "Player 4 - Road B": {
+    "id": "Player 4 - Road B",
+    "x": 22,
+    "y": 22,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 12
+  },
+  "Player 4 - Road C": {
+    "id": "Player 4 - Road C",
+    "x": 20,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 11
+  },
+  "Player 4 - Road D": {
+    "id": "Player 4 - Road D",
+    "x": 18,
+    "y": 18,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 10
+  },
+  "Player 4 - Road E": {
+    "id": "Player 4 - Road E",
+    "x": 16,
+    "y": 16,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 9
+  },
+  "Player 4 - Road F": {
+    "id": "Player 4 - Road F",
+    "x": 14,
+    "y": 14,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 8
+  },
   "Player 4 - Road G": {
     "id": "Player 4 - Road G",
-    "x": 0,
-    "y": 26,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 4 - Roads",
-    "z": 14
-  },
-  "Player 4 - Road H": {
-    "id": "Player 4 - Road H",
-    "x": 0,
-    "y": 28,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "parent": "Player 4 - Roads",
-    "z": 15
-  },
-  "Player 4 - Road I": {
-    "id": "Player 4 - Road I",
-    "x": 0,
-    "y": 6,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 4,
-    "image": "/assets/1466053893_1105",
-    "parent": "Player 4 - Roads"
-  },
-  "Player 4 - Road J": {
-    "id": "Player 4 - Road J",
-    "x": 0,
-    "y": 4,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 3,
-    "image": "/assets/1466053893_1105",
-    "parent": "Player 4 - Roads"
-  },
-  "Player 4 - Road K": {
-    "id": "Player 4 - Road K",
-    "x": 0,
-    "y": 8,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 5,
-    "image": "/assets/1466053893_1105",
-    "parent": "Player 4 - Roads"
-  },
-  "Player 4 - Road L": {
-    "id": "Player 4 - Road L",
-    "x": 0,
-    "y": 2,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
-      "Player 4": [
-        "color",
-        "player"
-      ]
-    },
-    "z": 2,
-    "image": "/assets/1615791162_1102",
-    "parent": "Player 4 - Roads"
-  },
-  "Player 4 - Road M": {
-    "id": "Player 4 - Road M",
-    "x": 0,
+    "x": 12,
     "y": 12,
     "rotation": 0,
     "activeFace": 0,
@@ -5877,8 +5581,8 @@
     "parent": "Player 4 - Roads",
     "z": 7
   },
-  "Player 4 - Road N": {
-    "id": "Player 4 - Road N",
+  "Player 4 - Road H": {
+    "id": "Player 4 - Road H",
     "x": 0,
     "y": 0,
     "rotation": 0,
@@ -5901,12 +5605,39 @@
       ]
     },
     "z": 1,
-    "image": "/assets/1466053893_1105",
+    "image": "/assets/-1486155561_696",
     "parent": "Player 4 - Roads"
   },
-  "Player 4 - Road O": {
-    "id": "Player 4 - Road O",
-    "x": 0,
+  "Player 4 - Road I": {
+    "id": "Player 4 - Road I",
+    "x": 8,
+    "y": 8,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 5,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Road J": {
+    "id": "Player 4 - Road J",
+    "x": 10,
     "y": 10,
     "rotation": 0,
     "activeFace": 0,
@@ -5928,16 +5659,159 @@
       ]
     },
     "z": 6,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Road K": {
+    "id": "Player 4 - Road K",
+    "x": 2,
+    "y": 2,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 2,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Road L": {
+    "id": "Player 4 - Road L",
+    "x": 4,
+    "y": 4,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 3,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Road M": {
+    "id": "Player 4 - Road M",
+    "x": 26,
+    "y": 26,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "parent": "Player 4 - Roads",
+    "z": 14
+  },
+  "Player 4 - Road N": {
+    "id": "Player 4 - Road N",
+    "x": 6,
+    "y": 6,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 4,
+    "image": "/assets/-1486155561_696",
+    "parent": "Player 4 - Roads"
+  },
+  "Player 4 - Road O": {
+    "id": "Player 4 - Road O",
+    "x": 28,
+    "y": 28,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Road Template": [
+        "faces",
+        "image",
+        "svgReplaces",
+        "width",
+        "height",
+        "home",
+        "shift",
+        "grid",
+        "layer"
+      ],
+      "Player 4": [
+        "color",
+        "player"
+      ]
+    },
+    "z": 15,
     "parent": "Player 4 - Roads"
   },
   "Player 4 - Seat": {
     "type": "seat",
     "id": "Player 4 - Seat",
     "parent": "Player 4",
-    "rotation": -90,
-    "x": -110,
-    "y": 44,
-    "index": 4
+    "index": 4,
+    "inheritFrom": {
+      "Player 1 - Seat": [
+        "x",
+        "y",
+        "z",
+        "width",
+        "height",
+        "rotation",
+        "layer"
+      ]
+    },
+    "color": "#999999"
   },
   "Robber": {
     "id": "Robber",
@@ -6056,7 +5930,7 @@
   },
   "Player 1 - Settlement E": {
     "id": "Player 1 - Settlement E",
-    "x": 0,
+    "x": 16,
     "y": 40,
     "rotation": 0,
     "z": 5,
@@ -6078,14 +5952,15 @@
         "player"
       ]
     },
+    "hoverParent": "Player 1 - Settlements",
     "parent": "Player 1 - Settlements"
   },
   "Player 2 - Settlement E": {
     "id": "Player 2 - Settlement E",
-    "x": 0,
-    "y": 0,
+    "x": 16,
+    "y": 40,
     "rotation": 0,
-    "z": 1,
+    "z": 5,
     "activeFace": 0,
     "inheritFrom": {
       "Settlement Template": [
@@ -6108,10 +5983,10 @@
   },
   "Player 3 - Settlement E": {
     "id": "Player 3 - Settlement E",
-    "x": 0,
-    "y": 0,
+    "x": 16,
+    "y": 40,
     "rotation": 0,
-    "z": 1,
+    "z": 5,
     "activeFace": 0,
     "inheritFrom": {
       "Settlement Template": [
@@ -6135,9 +6010,9 @@
   "Player 4 - Settlement E": {
     "id": "Player 4 - Settlement E",
     "x": 0,
-    "y": 30,
+    "y": 0,
     "rotation": 0,
-    "z": 4,
+    "z": 1,
     "activeFace": 0,
     "inheritFrom": {
       "Settlement Template": [
@@ -7516,7 +7391,7 @@
     "rotation": 10,
     "layer": 5,
     "z": 1,
-    "activeFace": 5,
+    "activeFace": 1,
     "faces": [
       1,
       2,
@@ -7525,7 +7400,7 @@
       5,
       6
     ],
-    "rollCount": 12,
+    "rollCount": 16,
     "shape3d": true,
     "clickRoutine": [
       {
