@@ -7525,6 +7525,10 @@
       },
       {
         "func": "CALL",
+        "routine": "setSizesAndGridsRoutine"
+      },
+      {
+        "func": "CALL",
         "routine": "randomizeRandomsRoutine",
         "arguments": {
           "param": "levelRandomChips"
@@ -7554,14 +7558,14 @@
       "           "
     ],
     "levelRandomTiles": {
-      "X": "MCWMWCFGGFGFMCGWFW"
+      "X": "MWCGFGFFWGCMGMWWCF"
     },
     "levelRandomChips": {
-      "X": "896598324CAB5A3B64"
+      "X": "936A654BC4583A98B2"
     },
     "levelX": -66.025403787,
     "levelY": -50,
-    "levelSize": 100,
+    "levelSize": 50,
     "createTileRoutine": [
       "// Tile",
       {
@@ -7716,7 +7720,23 @@
       }
     ],
     "levelRandomTilesCounter": 18,
-    "levelRandomChipsCounter": 18
+    "levelRandomChipsCounter": 18,
+    "setSizesAndGridsRoutine": [
+      "// Tile sizes",
+      "var cardDefaults = ${PROPERTY cardDefaults OF Tiles Real}",
+      "var WIDTH = ${PROPERTY levelSize} * 1.73205080757",
+      "var HEIGHT = ${PROPERTY levelSize} * 2",
+      "var cardDefaults.width = ${WIDTH}",
+      "var cardDefaults.height = ${HEIGHT}",
+      {
+        "func": "SET",
+        "collection": [
+          "Tiles Real"
+        ],
+        "property": "cardDefaults",
+        "value": "${cardDefaults}"
+      }
+    ]
   },
   "Starter Map Button New": {
     "type": "button",
