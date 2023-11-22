@@ -1,24 +1,25 @@
 {
-  "7940": {
-    "deck": "deck",
-    "type": "card",
-    "cardType": "card-aa",
-    "id": "7940",
-    "z": 7496,
-    "parent": "hc92"
+  "4595": {
+    "type": "pile",
+    "parent": "deck-holder",
+    "x": 0,
+    "y": 0,
+    "width": 180,
+    "height": 180,
+    "id": "4595"
   },
   "_meta": {
     "version": 15,
     "info": {
       "name": "Terra versus Aqua",
-      "image": "/assets/-1799662893_6878",
+      "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' style='background-color:%23006fdf'%3E%3Cpath d='M 0 0 L 1 1 H 4 V 0 L 6 2 V 4 L 4 2 H 3 V 4 H 5 V 5 L 4 6 V 5 H 2 V 4 H 1 L 2 5 V 6 L 0 4 L 2 2 L 1 2 L 0 3' fill='%23bf5f00'/%3E%3C/svg%3E",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/269257/chartae",
       "year": "2019",
       "mode": "vs",
       "time": "10",
       "attribution": "<div>Room layout, custom game pieces and scripting by Nicolas Weiss / PaladinOfCats, under a CCBY 3.0 licence.</div><div>http://paladinofcats.free.fr/vtio.htm</div>",
-      "lastUpdate": 1700604407175,
+      "lastUpdate": 1700646909526,
       "showName": true,
       "skill": "",
       "description": "You’re the very bored god of the land. So is your rival sibling god of the sea. Aliens are eventually going to fly close enough to your planet; and when that happens, you want *your* graffiti to be the largest on their vacation pictures.",
@@ -41,32 +42,23 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "card-aa": {
-        "image": "/assets/620793971_1863"
+      "card-a": {
+        "c": "clip-path:polygon(0 0, 50% 0, 50% 100%, 0 100%)"
       },
-      "card-ab": {
-        "image": "/assets/1700020461_1907"
-      },
-      "card-ac": {
-        "image": "/assets/485382769_1908"
-      },
-      "card-ba": {
-        "image": "/assets/-1906055459_1927"
-      },
-      "card-bb": {
-        "image": "/assets/7349061_1927"
+      "card-b": {
+        "c": "clip-path:polygon(0 0, 100% 100%, 0 100%)"
       },
       "card-c": {
-        "image": "/assets/99210285_2313"
+        "c": "clip-path:polygon(0 0, 100% 0, 50% 50%, 50% 100%, 0 100%)"
       },
       "card-d": {
-        "image": "/assets/106346348_2313"
+        "c": "clip-path:polygon(100% 100%, 100% 0, 50% 50%, 50% 100%)"
       },
       "card-e": {
-        "image": "/assets/1684839113_2254"
+        "c": "clip-path:polygon(0 0, 50% 0, 100% 50%, 100% 100%)"
       },
       "card-f": {
-        "image": "/assets/1195440936_2254"
+        "c": "clip-path:polygon(0 0, 50% 0, 100% 50%, 100% 0, 0 0, 100% 100%, 0 100%)"
       }
     },
     "faceTemplates": [
@@ -81,63 +73,10 @@
             "width": 180,
             "height": 180,
             "rotation": 0,
-            "color": "transparent",
+            "color": "#bf5f00",
+            "image": "",
             "dynamicProperties": {
-              "value": "image"
-            }
-          }
-        ]
-      },
-      {
-        "border": false,
-        "radius": false,
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "width": 180,
-            "height": 180,
-            "rotation": 90,
-            "color": "transparent",
-            "dynamicProperties": {
-              "value": "image"
-            }
-          }
-        ]
-      },
-      {
-        "border": false,
-        "radius": false,
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "width": 180,
-            "height": 180,
-            "rotation": 180,
-            "color": "transparent",
-            "dynamicProperties": {
-              "value": "image"
-            }
-          }
-        ]
-      },
-      {
-        "border": false,
-        "radius": false,
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "width": 180,
-            "height": 180,
-            "rotation": 270,
-            "color": "transparent",
-            "dynamicProperties": {
-              "value": "image"
+              "css": "c"
             }
           }
         ]
@@ -145,7 +84,14 @@
     ],
     "cardDefaults": {
       "height": 180,
-      "width": 180
+      "width": 180,
+      "css": "background: #006fdf",
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton"
+        }
+      ]
     }
   },
   "deck-holder": {
@@ -179,18 +125,31 @@
         "holder": "${PROPERTY parent}"
       },
       {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "faceCycle": "random"
-      },
-      {
         "func": "SHUFFLE",
         "holder": "${PROPERTY parent}"
       },
       {
         "func": "SELECT",
+        "property": "type",
+        "value": "card"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var rotation = randInt 0 3",
+          "var rotation = ${rotation} * 90",
+          {
+            "func": "SET",
+            "property": "rotation",
+            "value": "${rotation}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
         "property": "cardType",
-        "value": "card-ab"
+        "value": "card-a",
+        "max": 1
       },
       {
         "func": "SET",
@@ -199,7 +158,12 @@
       }
     ],
     "y": 515,
-    "x": 30
+    "x": 30,
+    "gameStartRoutine": [
+      {
+        "func": "CALL"
+      }
+    ]
   },
   "slot-1": {
     "type": "holder",
@@ -461,82 +425,83 @@
     },
     "hideWhenUnused": true
   },
-  "onw8": {
+  "depx": {
     "deck": "deck",
     "type": "card",
-    "cardType": "card-ab",
-    "id": "onw8",
-    "z": 7509,
-    "parent": "hc92"
+    "cardType": "card-a",
+    "id": "depx",
+    "z": 8574,
+    "parent": "slot-13",
+    "rotation": 90
   },
-  "hc92": {
-    "type": "pile",
-    "x": -300,
-    "y": -300,
-    "width": 180,
-    "height": 180,
-    "id": "hc92",
-    "z": 7510
-  },
-  "wnk0": {
+  "5k9h": {
     "deck": "deck",
     "type": "card",
-    "cardType": "card-ac",
-    "id": "wnk0",
-    "z": 7497,
-    "parent": "hc92"
+    "cardType": "card-a",
+    "id": "5k9h",
+    "z": 8579,
+    "parent": "4595"
   },
-  "18pr": {
+  "lgzm": {
     "deck": "deck",
     "type": "card",
-    "cardType": "card-ba",
-    "id": "18pr",
-    "z": 7502,
-    "parent": "hc92",
-    "activeFace": 1
+    "cardType": "card-a",
+    "id": "lgzm",
+    "z": 8573,
+    "parent": "4595",
+    "rotation": 270
   },
-  "b0z3": {
+  "b4ot": {
     "deck": "deck",
     "type": "card",
-    "cardType": "card-bb",
-    "id": "b0z3",
-    "z": 7503,
-    "parent": "hc92"
+    "cardType": "card-b",
+    "id": "b4ot",
+    "z": 8571,
+    "parent": "4595",
+    "rotation": 90
   },
-  "hnoq": {
+  "0gk3": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-b",
+    "id": "0gk3",
+    "z": 8576,
+    "parent": "4595"
+  },
+  "idzz": {
     "deck": "deck",
     "type": "card",
     "cardType": "card-c",
-    "id": "hnoq",
-    "z": 7501,
-    "parent": "hc92",
-    "activeFace": 3
+    "id": "idzz",
+    "z": 8578,
+    "parent": "4595",
+    "rotation": 90
   },
-  "ezzf": {
+  "wea3": {
     "deck": "deck",
     "type": "card",
     "cardType": "card-d",
-    "id": "ezzf",
-    "z": 7498,
-    "parent": "hc92",
-    "activeFace": 1
+    "id": "wea3",
+    "z": 8577,
+    "parent": "4595",
+    "rotation": 180
   },
-  "5vay": {
+  "57vw": {
     "deck": "deck",
     "type": "card",
     "cardType": "card-e",
-    "id": "5vay",
-    "z": 7499,
-    "parent": "hc92",
-    "activeFace": 2
+    "id": "57vw",
+    "z": 8572,
+    "parent": "4595",
+    "rotation": 270
   },
-  "8fck": {
+  "2hru": {
     "deck": "deck",
     "type": "card",
     "cardType": "card-f",
-    "id": "8fck",
-    "z": 7500,
-    "parent": "hc92",
-    "activeFace": 1
+    "id": "2hru",
+    "z": 8575,
+    "parent": "4595",
+    "rotation": 90
   }
 }
