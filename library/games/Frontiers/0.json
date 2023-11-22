@@ -6316,7 +6316,7 @@
     "version": 4,
     "info": {
       "name": "Frontiers",
-      "image": "https://media.discordapp.net/attachments/1018847840635719702/1114867295664209920/ArnoldSmith86_catan_water_color_painting_0b4f9d11-87fd-4e00-b712-962c0e6a9760.png?width=810&height=810",
+      "image": "/assets/1395803033_37648",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/13/catan",
       "year": "1995",
@@ -6324,18 +6324,19 @@
       "time": "60",
       "showName": true,
       "attribution": "https://www.piqsels.com/en/public-domain-photo-fmixo\nhttps://pixabay.com/photos/sheep-meadow-aerial-view-drone-939566/\nhttps://pixabay.com/photos/wheat-wheat-field-crop-spikelets-5581130/\nhttps://pixabay.com/photos/central-tien-shan-china-landscape-92365/\nhttps://pixabay.com/de/photos/erde-trocken-lehm-lehmhaltig-d%C3%BCrre-3483470/\n\nhttps://pixabay.com/photos/wood-logs-bole-pieces-of-timber-1846059/\nhttps://pixabay.com/photos/brick-wall-red-brick-wall-wall-3353764/\nhttps://pixabay.com/photos/fleece-hide-wool-sheep-fluffy-1524448/\nhttps://pixabay.com/photos/pyrite-pyrites-mineral-sulfides-345639/\nhttps://pixabay.com/photos/wheat-cereal-grain-crop-cereal-crop-5533960/\nhttps://pixabay.com/photos/money-metal-wood-table-old-indian-1214945/\nhttps://pixabay.com/photos/books-old-library-antique-vintage-22832/\nhttps://pixabay.com/photos/cloth-fabric-textile-silk-4669151/\n\nhttps://pixabay.com/photos/gear-wooden-gear-mill-windmill-323615/\nhttps://pixabay.com/photos/knight-armor-iron-chevalier-metal-1283910/\nhttps://pixabay.com/photos/rainbow-london-flag-queer-lgbtq-4563053/\nhttps://pixabay.com/photos/tree-avenue-path-nature-hike-3092026/\n\nhttps://www.piqsels.com/en/public-domain-photo-sqflp\n\nhttps://www.flickr.com/photos/ricephotos/2281373834\nhttps://pixabay.com/photos/sand-texture-dune-beach-desert-5085975/\n\nhttps://commons.wikimedia.org/wiki/File:Basic_hexagon.svg\n\nhttps://game-icons.net/1x1/delapouite/sailboat.html",
-      "lastUpdate": 1699963850751,
+      "lastUpdate": 1700661092709,
       "skill": "",
       "description": "Roll the dice to determine your harvest, engage in resource trading, and expand your colony to gain victory points. The player with the most victory points wins.",
       "similarImage": "",
       "similarName": "Catan",
-      "similarAwards": "",
+      "similarAwards": "2012 JoTa Best Game Released in Brazil Nominee\n2012 JoTa Best Game Released in Brazil Critic Award\n2011 Ludo Award Best Board Game Editor's Choice Winner\n2011 Jocul Anului în România Best Game in Romanian Winner\n2011 Jocul Anului în România Best Game in Romanian Finalist\n2005 Gra Roku Game of the Year Winner\n2004 Hra roku Winner\n2004 Hra roku Nominee\n2002 Japan Boardgame Prize Best Japanese Game Nominee\n2001 Origins Awards Hall of Fame Inductee\n1996 Origins Awards Best Fantasy or Science Fiction Board Game Winner\n1995 Spiel des Jahres Winner\n1995 Meeples' Choice Award\n1995 Essener Feder Best Written Rules Winner\n1995 Deutscher Spiele Preis Best Family/Adult Game Winner",
       "ruleText": "",
       "helpText": "",
-      "players": "2-4",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "en-US",
+      "players": "2-4",
+      "similarDesigner": "Klaus Teuber"
     }
   },
   "Development Draw": {
