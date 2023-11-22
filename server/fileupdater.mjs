@@ -1,4 +1,4 @@
-export const VERSION = 14;
+export const VERSION = 15;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -97,6 +97,7 @@ function updateProperties(properties, v, globalProperties) {
   v<12 && globalProperties.v12DropShadowAllowed && v12HandDropShadow(properties);
   v<13 && v13EnlargeTinyLabels(properties);
   v<14 && v14HidePlayerCursors(properties);
+  v<15 && v15SkipTurnProperty(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -120,6 +121,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
   v<9 && v9NumericStringSort(routine);
   v<11 && v11OwnerMOVEXY(routine);
+  v<15 && v15SkipTurnRoutine(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -449,4 +451,16 @@ function v13EnlargeTinyLabels(properties) {
 function v14HidePlayerCursors(properties) {
   if(properties.type == 'holder' && properties.childrenPerOwner)
     properties.hidePlayerCursors = true;
+}
+
+// There are 2 functions for v15 for skipTurn
+function v15SkipTurnProperty(properties) {
+  if(properties.skipTurn !== undefined) {
+    properties.skipTurnFileUpdater = properties.skipTurn;
+    delete properties.skipTurn;
+  }
+}
+function v15SkipTurnRoutine(routine) {
+  for(const key in routine)
+    routine[key] = JSON.parse(JSON.stringify(routine[key]).replace(/\bskipTurn\b/g, 'skipTurnFileUpdater'));
 }

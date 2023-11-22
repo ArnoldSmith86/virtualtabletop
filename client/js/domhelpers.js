@@ -17,7 +17,7 @@ export function div(parent, className, html) {
   return div;
 }
 
-export function progressButton(button, clickHandler) {
+export function progressButton(button, clickHandler, disableWhenDone=true) {
   const initialIcon = button.getAttribute('icon');
   const initialText = button.innerText;
 
@@ -27,23 +27,45 @@ export function progressButton(button, clickHandler) {
     button.innerText = 'Working...';
     button.setAttribute('icon', 'hourglass_empty');
     try {
-      await clickHandler(s=>button.innerText=s);
+      await clickHandler(function(status, progress) {
+        button.innerText = status;
+        if(progress) {
+          button.classList.add('visualProgress');
+          button.style.setProperty('--progress', progress);
+        }
+      });
       button.setAttribute('icon', 'check');
       button.innerText = 'Done';
+      button.classList.remove('progress');
+      button.classList.remove('visualProgress');
       button.classList.add('green');
     } catch(e) {
       button.setAttribute('icon', 'error');
       button.innerText = e.toString();
+      button.classList.remove('progress');
+      button.classList.remove('visualProgress');
       button.classList.add('red');
     }
-    await sleep(2500);
-    button.disabled = false;
-    button.setAttribute('icon', initialIcon);
-    button.innerText = initialText;
-    button.classList.remove('progress');
-    button.classList.remove('green');
-    button.classList.remove('red');
+    if(disableWhenDone) {
+      await sleep(2500);
+      button.disabled = false;
+      button.setAttribute('icon', initialIcon);
+      button.innerText = initialText;
+      button.classList.remove('green');
+      button.classList.remove('red');
+    }
   };
+}
+
+export async function loadImage(img, src) {
+  return new Promise(function(resolve, reject) {
+    img.onload = function() {
+      img.onload = null;
+      resolve(img);
+    };
+    img.onerror = e=>reject(e);
+    img.src = src;
+  });
 }
 
 const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
@@ -444,6 +466,9 @@ export async function loadSymbolPicker() {
 }
 
 export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true) {
+  if($('#statesButton').dataset.overlay == 'symbolPickerOverlay')
+    $('#statesButton').dataset.overlay = detailsOverlay;
+
   await loadSymbolPicker();
   return new Promise((resolve, reject) => {
     showOverlay('symbolPickerOverlay');
@@ -539,6 +564,8 @@ export function addRichtextControls(dom) {
 
     showStatesOverlay('symbolPickerOverlay');
     $('#symbolPickerOverlay').scrollTop = 0;
+    for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
+      $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
     $('#symbolPickerOverlay input').onkeyup();

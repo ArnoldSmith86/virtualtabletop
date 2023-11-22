@@ -104,6 +104,57 @@
 }
 
 
+.tune.editorModule .cardTypeEdit {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+}
+.tune.editorModule .cardCountDiv {
+  float: left;
+}
+.tune.editorModule .cardCountDiv button {
+  display: inline-flex;
+}
+.tune.editorModule .cardCountDiv input {
+  font-size: 30px;
+  width: 54px;
+  text-align: right;
+}
+.tune.editorModule .renderedWidget {
+  margin: 5px;
+}
+.tune.editorModule .cardCountDivEditing {
+  background: var(--backgroundHighlightColor1);
+  border: 1px solid var(--textColor);
+  border-radius: 5px;
+}
+.tune.editorModule .cardCountDivEditing [icon=create] {
+  display: none;
+}
+.tune.editorModule .cardTypeProperties {
+  padding: 10px;
+}
+.tune.editorModule .cardTypeProperties .buttonBar {
+  margin-top: 10px;
+}
+.tune.editorModule .cardTypeEdit:not(.cardCountDivEditing) .cardTypeProperties {
+  display: none;
+}
+
+
+.genericInput input, .genericInput textarea {
+  width: 200px;
+  min-width: 200px;
+}
+.genericInput textarea {
+  height: 200px;
+}
+.genericInput > * {
+  vertical-align: top;
+}
+
 /* undo */
 
 .undo.editorModule > .undoEntry {
@@ -169,4 +220,25 @@
 .image.editorModule .externalLink span {
   word-break: break-all;
   padding: 5px;
+}
+.image.editorModule tr:nth-child(2n) {
+  background: var(--backgroundHighlightColor1);
+}
+.image.editorModule td {
+  padding: 10px;
+}
+.image.editorModule td > img {
+  display: block;
+  width: 100px;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
+  background-position: 0px 0, 5px 5px;
+  background-size: 10px 10px, 10px 10px;
+  margin-bottom: 5px;
+}
+.image.editorModule td > input[type=checkbox] {
+  float: left;
+}
+.image.editorModule td > label {
+  white-space: pre;
+  display: inline-block;
 }
