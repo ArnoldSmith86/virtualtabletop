@@ -647,6 +647,7 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable || deletable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers || !!state.publicLibrary);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link_off]'), 'hidden', !state.link);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=settings]'), 'hidden', !state.savePlayers);
 
   function updateStateDetailsDomains(state) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
@@ -875,6 +876,20 @@ function fillStateDetails(states, state, dom) {
     } else {
       showStatesOverlay(detailsOverlay);
     }
+  };
+  $('#stateDetailsOverlay .buttons [icon=settings]').onclick = function() {
+    toServer('editState', {
+      id: state.id,
+      meta: {
+        saveState:     null,
+        saveVariant:   null,
+        saveLinkState: null,
+        savePlayers:   null,
+        saveDate:      null
+      },
+      variantInput: {},
+      variantOperationQueue: []
+    });
   };
   $('#stateDetailsOverlay .buttons [icon=upload]').onclick = function() {
     toServer('addStateToPublicLibrary', state.id);
