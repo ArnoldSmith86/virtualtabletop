@@ -28,14 +28,10 @@
   },
   "hand": {
     "type": "holder",
-    "dropOffsetX": 10,
-    "dropOffsetY": 14,
-    "stackOffsetX": 40,
+    "stackOffsetX": 45,
     "childrenPerOwner": true,
-    "x": 673,
-    "y": 818,
-    "width": 285,
-    "height": 180,
+    "x": 723,
+    "width": 291,
     "id": "hand",
     "z": 113,
     "leaveRoutine": [
@@ -53,11 +49,12 @@
     "onLeave": {
       "activeFace": 0
     },
-    "hidePlayerCursors": true
+    "hidePlayerCursors": true,
+    "y": 819
   },
   "siyrB": {
     "id": "siyrB",
-    "y": 920,
+    "y": 123,
     "width": 60,
     "height": 60,
     "type": "button",
@@ -65,11 +62,11 @@
     "clickRoutine": [
       {
         "func": "INPUT",
-        "header": "Recalling cards...",
+        "header": "Reset...",
         "fields": [
           {
             "type": "text",
-            "text": "You're about to recall all cards belonging into this holder. Are you sure?"
+            "text": "You're about to start a new game. Are you sure?"
           }
         ]
       },
@@ -99,7 +96,7 @@
       }
     ],
     "z": 56,
-    "x": 1015,
+    "x": 902,
     "classes": "symbols",
     "css": {
       "default": {
@@ -480,8 +477,8 @@
           },
           {
             "type": "text",
-            "x": 10,
-            "y": 120,
+            "x": 8,
+            "y": 122,
             "textAlign": "center",
             "width": 30,
             "height": 30,
@@ -504,7 +501,7 @@
     "type": "card",
     "cardType": "01-Spades-00",
     "id": "86ig",
-    "z": 12313,
+    "z": 13238,
     "parent": "hrqh"
   },
   "jjkk": {
@@ -512,7 +509,7 @@
     "type": "card",
     "cardType": "01-Spades-01",
     "id": "jjkk",
-    "z": 12339,
+    "z": 13255,
     "parent": "hrqh"
   },
   "6ads": {
@@ -520,7 +517,7 @@
     "type": "card",
     "cardType": "01-Spades-02",
     "id": "6ads",
-    "z": 12312,
+    "z": 13259,
     "parent": "hrqh"
   },
   "99r0": {
@@ -528,7 +525,7 @@
     "type": "card",
     "cardType": "01-Spades-03",
     "id": "99r0",
-    "z": 12332,
+    "z": 13230,
     "parent": "hrqh"
   },
   "cd3x": {
@@ -536,7 +533,7 @@
     "type": "card",
     "cardType": "01-Spades-04",
     "id": "cd3x",
-    "z": 12325,
+    "z": 13228,
     "parent": "hrqh"
   },
   "pd8t": {
@@ -544,7 +541,7 @@
     "type": "card",
     "cardType": "01-Spades-05",
     "id": "pd8t",
-    "z": 12316,
+    "z": 13258,
     "parent": "hrqh"
   },
   "8zjq": {
@@ -552,7 +549,7 @@
     "type": "card",
     "cardType": "01-Spades-06",
     "id": "8zjq",
-    "z": 12319,
+    "z": 13256,
     "parent": "hrqh"
   },
   "a8m3": {
@@ -560,7 +557,7 @@
     "type": "card",
     "cardType": "01-Spades-07",
     "id": "a8m3",
-    "z": 12323,
+    "z": 13289,
     "parent": "hrqh"
   },
   "xpd2": {
@@ -568,7 +565,7 @@
     "type": "card",
     "cardType": "01-Spades-08",
     "id": "xpd2",
-    "z": 12368,
+    "z": 13268,
     "parent": "hrqh"
   },
   "ir8h": {
@@ -576,7 +573,7 @@
     "type": "card",
     "cardType": "01-Spades-09",
     "id": "ir8h",
-    "z": 12333,
+    "z": 13251,
     "parent": "hrqh"
   },
   "yvmr": {
@@ -584,7 +581,7 @@
     "type": "card",
     "cardType": "01-Spades-10",
     "id": "yvmr",
-    "z": 12357,
+    "z": 13261,
     "parent": "hrqh"
   },
   "0jgt": {
@@ -592,7 +589,7 @@
     "type": "card",
     "cardType": "02-Hearts-00",
     "id": "0jgt",
-    "z": 12342,
+    "z": 13253,
     "parent": "hrqh"
   },
   "6c0v": {
@@ -600,7 +597,7 @@
     "type": "card",
     "cardType": "02-Hearts-01",
     "id": "6c0v",
-    "z": 12348,
+    "z": 13226,
     "parent": "hrqh"
   },
   "84qt": {
@@ -608,7 +605,7 @@
     "type": "card",
     "cardType": "02-Hearts-02",
     "id": "84qt",
-    "z": 12337,
+    "z": 13277,
     "parent": "hrqh"
   },
   "xfq2": {
@@ -616,7 +613,7 @@
     "type": "card",
     "cardType": "02-Hearts-03",
     "id": "xfq2",
-    "z": 12354,
+    "z": 13287,
     "parent": "hrqh"
   },
   "5tzs": {
@@ -624,7 +621,7 @@
     "type": "card",
     "cardType": "02-Hearts-04",
     "id": "5tzs",
-    "z": 12353,
+    "z": 13240,
     "parent": "hrqh"
   },
   "sqkp": {
@@ -632,7 +629,7 @@
     "type": "card",
     "cardType": "02-Hearts-05",
     "id": "sqkp",
-    "z": 12326,
+    "z": 13236,
     "parent": "hrqh"
   },
   "vqug": {
@@ -640,7 +637,7 @@
     "type": "card",
     "cardType": "02-Hearts-06",
     "id": "vqug",
-    "z": 12361,
+    "z": 13243,
     "parent": "hrqh"
   },
   "gagc": {
@@ -648,7 +645,7 @@
     "type": "card",
     "cardType": "02-Hearts-07",
     "id": "gagc",
-    "z": 12318,
+    "z": 13242,
     "parent": "hrqh"
   },
   "iccr": {
@@ -656,7 +653,7 @@
     "type": "card",
     "cardType": "02-Hearts-08",
     "id": "iccr",
-    "z": 12310,
+    "z": 13235,
     "parent": "hrqh"
   },
   "0mi6": {
@@ -664,7 +661,7 @@
     "type": "card",
     "cardType": "02-Hearts-09",
     "id": "0mi6",
-    "z": 12363,
+    "z": 13260,
     "parent": "hrqh"
   },
   "o6c0": {
@@ -672,7 +669,7 @@
     "type": "card",
     "cardType": "02-Hearts-10",
     "id": "o6c0",
-    "z": 12320,
+    "z": 13262,
     "parent": "hrqh"
   },
   "uu1e": {
@@ -680,7 +677,7 @@
     "type": "card",
     "cardType": "03-Clubs-00",
     "id": "uu1e",
-    "z": 12364,
+    "z": 13279,
     "parent": "hrqh"
   },
   "41o3": {
@@ -688,7 +685,7 @@
     "type": "card",
     "cardType": "03-Clubs-01",
     "id": "41o3",
-    "z": 12351,
+    "z": 13244,
     "parent": "hrqh"
   },
   "orr7": {
@@ -696,7 +693,7 @@
     "type": "card",
     "cardType": "03-Clubs-02",
     "id": "orr7",
-    "z": 12335,
+    "z": 13285,
     "parent": "hrqh"
   },
   "62uz": {
@@ -704,7 +701,7 @@
     "type": "card",
     "cardType": "03-Clubs-03",
     "id": "62uz",
-    "z": 12352,
+    "z": 13266,
     "parent": "hrqh"
   },
   "gtf3": {
@@ -712,7 +709,7 @@
     "type": "card",
     "cardType": "03-Clubs-04",
     "id": "gtf3",
-    "z": 12309,
+    "z": 13274,
     "parent": "hrqh"
   },
   "czsp": {
@@ -720,7 +717,7 @@
     "type": "card",
     "cardType": "03-Clubs-05",
     "id": "czsp",
-    "z": 12322,
+    "z": 13246,
     "parent": "hrqh"
   },
   "bfxl": {
@@ -728,7 +725,7 @@
     "type": "card",
     "cardType": "03-Clubs-06",
     "id": "bfxl",
-    "z": 12346,
+    "z": 13269,
     "parent": "hrqh"
   },
   "a838": {
@@ -736,7 +733,7 @@
     "type": "card",
     "cardType": "03-Clubs-07",
     "id": "a838",
-    "z": 12362,
+    "z": 13252,
     "parent": "hrqh"
   },
   "n86s": {
@@ -744,7 +741,7 @@
     "type": "card",
     "cardType": "03-Clubs-08",
     "id": "n86s",
-    "z": 12340,
+    "z": 13254,
     "parent": "hrqh"
   },
   "7v23": {
@@ -752,7 +749,7 @@
     "type": "card",
     "cardType": "03-Clubs-09",
     "id": "7v23",
-    "z": 12303,
+    "z": 13232,
     "parent": "hrqh"
   },
   "ql4q": {
@@ -760,7 +757,7 @@
     "type": "card",
     "cardType": "03-Clubs-10",
     "id": "ql4q",
-    "z": 12367,
+    "z": 13257,
     "parent": "hrqh"
   },
   "x5kd": {
@@ -768,7 +765,7 @@
     "type": "card",
     "cardType": "04-Diamonds-00",
     "id": "x5kd",
-    "z": 12344,
+    "z": 13273,
     "parent": "hrqh"
   },
   "bjy5": {
@@ -776,7 +773,7 @@
     "type": "card",
     "cardType": "04-Diamonds-01",
     "id": "bjy5",
-    "z": 12341,
+    "z": 13233,
     "parent": "hrqh"
   },
   "m1cn": {
@@ -784,7 +781,7 @@
     "type": "card",
     "cardType": "04-Diamonds-02",
     "id": "m1cn",
-    "z": 12314,
+    "z": 13272,
     "parent": "hrqh"
   },
   "s5no": {
@@ -792,7 +789,7 @@
     "type": "card",
     "cardType": "04-Diamonds-03",
     "id": "s5no",
-    "z": 12360,
+    "z": 13249,
     "parent": "hrqh"
   },
   "kqr5": {
@@ -800,7 +797,7 @@
     "type": "card",
     "cardType": "04-Diamonds-04",
     "id": "kqr5",
-    "z": 12304,
+    "z": 13265,
     "parent": "hrqh"
   },
   "17os": {
@@ -808,7 +805,7 @@
     "type": "card",
     "cardType": "04-Diamonds-05",
     "id": "17os",
-    "z": 12350,
+    "z": 13241,
     "parent": "hrqh"
   },
   "po6m": {
@@ -816,7 +813,7 @@
     "type": "card",
     "cardType": "04-Diamonds-06",
     "id": "po6m",
-    "z": 12356,
+    "z": 13245,
     "parent": "hrqh"
   },
   "budl": {
@@ -824,7 +821,7 @@
     "type": "card",
     "cardType": "04-Diamonds-07",
     "id": "budl",
-    "z": 12358,
+    "z": 13250,
     "parent": "hrqh"
   },
   "fxba": {
@@ -832,7 +829,7 @@
     "type": "card",
     "cardType": "04-Diamonds-08",
     "id": "fxba",
-    "z": 12355,
+    "z": 13237,
     "parent": "hrqh"
   },
   "187l": {
@@ -840,7 +837,7 @@
     "type": "card",
     "cardType": "04-Diamonds-09",
     "id": "187l",
-    "z": 12349,
+    "z": 13275,
     "parent": "hrqh"
   },
   "o9lb": {
@@ -848,7 +845,7 @@
     "type": "card",
     "cardType": "04-Diamonds-10",
     "id": "o9lb",
-    "z": 12338,
+    "z": 13229,
     "parent": "hrqh"
   },
   "lfbw": {
@@ -856,7 +853,7 @@
     "type": "card",
     "cardType": "05-Starts-00",
     "id": "lfbw",
-    "z": 12306,
+    "z": 13264,
     "parent": "hrqh"
   },
   "j2nr": {
@@ -864,7 +861,7 @@
     "type": "card",
     "cardType": "05-Starts-01",
     "id": "j2nr",
-    "z": 12366,
+    "z": 13239,
     "parent": "hrqh"
   },
   "6iba": {
@@ -872,7 +869,7 @@
     "type": "card",
     "cardType": "05-Starts-02",
     "id": "6iba",
-    "z": 12328,
+    "z": 13284,
     "parent": "hrqh"
   },
   "ydp6": {
@@ -880,7 +877,7 @@
     "type": "card",
     "cardType": "05-Starts-03",
     "id": "ydp6",
-    "z": 12317,
+    "z": 13231,
     "parent": "hrqh"
   },
   "b1mn": {
@@ -888,7 +885,7 @@
     "type": "card",
     "cardType": "05-Starts-04",
     "id": "b1mn",
-    "z": 12343,
+    "z": 13247,
     "parent": "hrqh"
   },
   "a594": {
@@ -896,7 +893,7 @@
     "type": "card",
     "cardType": "05-Starts-05",
     "id": "a594",
-    "z": 12311,
+    "z": 13282,
     "parent": "hrqh"
   },
   "527c": {
@@ -904,7 +901,7 @@
     "type": "card",
     "cardType": "05-Starts-06",
     "id": "527c",
-    "z": 12345,
+    "z": 13278,
     "parent": "hrqh"
   },
   "vtke": {
@@ -912,7 +909,7 @@
     "type": "card",
     "cardType": "05-Starts-07",
     "id": "vtke",
-    "z": 12330,
+    "z": 13271,
     "parent": "hrqh"
   },
   "p1x2": {
@@ -920,7 +917,7 @@
     "type": "card",
     "cardType": "05-Starts-08",
     "id": "p1x2",
-    "z": 12331,
+    "z": 13280,
     "parent": "hrqh"
   },
   "luqt": {
@@ -928,7 +925,7 @@
     "type": "card",
     "cardType": "05-Starts-09",
     "id": "luqt",
-    "z": 12315,
+    "z": 13281,
     "parent": "hrqh"
   },
   "eonc": {
@@ -936,7 +933,7 @@
     "type": "card",
     "cardType": "05-Starts-10",
     "id": "eonc",
-    "z": 12324,
+    "z": 13234,
     "parent": "hrqh"
   },
   "qq5r": {
@@ -944,7 +941,7 @@
     "type": "card",
     "cardType": "06-Moons-00",
     "id": "qq5r",
-    "z": 12359,
+    "z": 13227,
     "parent": "hrqh"
   },
   "zxm8": {
@@ -952,7 +949,7 @@
     "type": "card",
     "cardType": "06-Moons-01",
     "id": "zxm8",
-    "z": 12321,
+    "z": 13248,
     "parent": "hrqh"
   },
   "04fw": {
@@ -960,7 +957,7 @@
     "type": "card",
     "cardType": "06-Moons-02",
     "id": "04fw",
-    "z": 12347,
+    "z": 13225,
     "parent": "hrqh"
   },
   "d4af": {
@@ -968,7 +965,7 @@
     "type": "card",
     "cardType": "06-Moons-03",
     "id": "d4af",
-    "z": 12365,
+    "z": 13224,
     "parent": "hrqh"
   },
   "jws8": {
@@ -976,7 +973,7 @@
     "type": "card",
     "cardType": "06-Moons-04",
     "id": "jws8",
-    "z": 12334,
+    "z": 13288,
     "parent": "hrqh"
   },
   "bakg": {
@@ -984,7 +981,7 @@
     "type": "card",
     "cardType": "06-Moons-05",
     "id": "bakg",
-    "z": 12336,
+    "z": 13263,
     "parent": "hrqh"
   },
   "d31h": {
@@ -992,7 +989,7 @@
     "type": "card",
     "cardType": "06-Moons-06",
     "id": "d31h",
-    "z": 12327,
+    "z": 13286,
     "parent": "hrqh"
   },
   "dml1": {
@@ -1000,7 +997,7 @@
     "type": "card",
     "cardType": "06-Moons-07",
     "id": "dml1",
-    "z": 12329,
+    "z": 13283,
     "parent": "hrqh"
   },
   "8dco": {
@@ -1008,7 +1005,7 @@
     "type": "card",
     "cardType": "06-Moons-08",
     "id": "8dco",
-    "z": 12305,
+    "z": 13267,
     "parent": "hrqh"
   },
   "viq2": {
@@ -1016,7 +1013,7 @@
     "type": "card",
     "cardType": "06-Moons-09",
     "id": "viq2",
-    "z": 12307,
+    "z": 13270,
     "parent": "hrqh"
   },
   "ibxx": {
@@ -1024,20 +1021,20 @@
     "type": "card",
     "cardType": "06-Moons-10",
     "id": "ibxx",
-    "z": 12308,
+    "z": 13276,
     "parent": "hrqh"
   },
   "DEAL": {
     "type": "holder",
     "id": "DEAL",
-    "x": 534,
-    "y": 828,
     "z": 142,
     "onEnter": {
       "activeFace": 0,
       "target": null,
       "player": null
-    }
+    },
+    "x": 584,
+    "y": 819
   },
   "8jekD": {
     "id": "8jekD",
@@ -1098,7 +1095,7 @@
     "id": "TopHolder-SEAT1",
     "parent": "SEAT1",
     "y": 65,
-    "width": 435,
+    "width": 431,
     "z": 12,
     "onEnter": {
       "activeFace": 1
@@ -1107,7 +1104,6 @@
       "activeFace": 0
     },
     "stackOffsetX": 40,
-    "height": 228,
     "linkedToSeat": "SEAT1",
     "movableInEdit": false,
     "sortRoutine": [
@@ -1129,15 +1125,17 @@
         "to": "${PROPERTY id}",
         "count": 9
       }
-    ]
+    ],
+    "classes": "transparent",
+    "x": -7
   },
   "BottonHolder-SEAT1": {
     "type": "holder",
     "id": "BottonHolder-SEAT1",
     "parent": "SEAT1",
-    "y": 129,
-    "width": 435,
-    "z": 100,
+    "y": 65,
+    "width": 431,
+    "z": 6,
     "onEnter": {
       "activeFace": 1
     },
@@ -1147,10 +1145,9 @@
     "stackOffsetX": 40,
     "linkedToSeat": "SEAT1",
     "movableInEdit": false,
-    "layer": 0,
-    "dropOffsetY": 0,
-    "height": 164,
-    "classes": "transparent"
+    "dropOffsetY": 64,
+    "height": 228,
+    "x": -7
   },
   "Counter-SEAT1": {
     "type": "label",
@@ -1171,7 +1168,7 @@
     "id": "SEAT2",
     "z": 42,
     "x": 10,
-    "y": 325,
+    "y": 348,
     "index": 2,
     "movableInEdit": false,
     "hideWhenUnused": true,
@@ -1182,7 +1179,8 @@
     "id": "TopHolder-SEAT2",
     "parent": "SEAT2",
     "linkedToSeat": "SEAT2",
-    "inheritFrom": "TopHolder-SEAT1"
+    "inheritFrom": "TopHolder-SEAT1",
+    "x": -7
   },
   "BottonHolder-SEAT2": {
     "type": "holder",
@@ -1254,7 +1252,7 @@
     "id": "SEAT3",
     "z": 41,
     "x": 10,
-    "y": 640,
+    "y": 687,
     "index": 3,
     "movableInEdit": false,
     "hideWhenUnused": true,
@@ -1272,7 +1270,8 @@
     "id": "BottonHolder-SEAT3",
     "parent": "SEAT3",
     "linkedToSeat": "SEAT3",
-    "inheritFrom": "BottonHolder-SEAT1"
+    "inheritFrom": "BottonHolder-SEAT1",
+    "x": -7
   },
   "Counter-SEAT3": {
     "type": "label",
@@ -1336,7 +1335,7 @@
     "type": "seat",
     "id": "SEAT4",
     "z": 43,
-    "x": 1140,
+    "x": 1159,
     "y": 10,
     "index": 4,
     "movableInEdit": false,
@@ -1348,7 +1347,8 @@
     "id": "TopHolder-SEAT4",
     "parent": "SEAT4",
     "linkedToSeat": "SEAT4",
-    "inheritFrom": "TopHolder-SEAT1"
+    "inheritFrom": "TopHolder-SEAT1",
+    "x": -7
   },
   "BottonHolder-SEAT4": {
     "type": "holder",
@@ -1419,8 +1419,8 @@
     "type": "seat",
     "id": "SEAT5",
     "z": 44,
-    "x": 1140,
-    "y": 325,
+    "x": 1159,
+    "y": 348,
     "index": 5,
     "movableInEdit": false,
     "hideWhenUnused": true,
@@ -1431,7 +1431,8 @@
     "id": "TopHolder-SEAT5",
     "parent": "SEAT5",
     "linkedToSeat": "SEAT5",
-    "inheritFrom": "TopHolder-SEAT1"
+    "inheritFrom": "TopHolder-SEAT1",
+    "x": -7
   },
   "BottonHolder-SEAT5": {
     "type": "holder",
@@ -1502,8 +1503,8 @@
     "type": "seat",
     "id": "SEAT6",
     "z": 45,
-    "x": 1140,
-    "y": 640,
+    "x": 1159,
+    "y": 687,
     "hideWhenUnused": true,
     "index": 6,
     "movableInEdit": false,
@@ -1514,14 +1515,16 @@
     "id": "TopHolder-SEAT6",
     "parent": "SEAT6",
     "linkedToSeat": "SEAT6",
-    "inheritFrom": "TopHolder-SEAT1"
+    "inheritFrom": "TopHolder-SEAT1",
+    "x": -7
   },
   "BottonHolder-SEAT6": {
     "type": "holder",
     "id": "BottonHolder-SEAT6",
     "parent": "SEAT6",
     "linkedToSeat": "SEAT6",
-    "inheritFrom": "BottonHolder-SEAT1"
+    "inheritFrom": "BottonHolder-SEAT1",
+    "y": 65
   },
   "Counter-SEAT6": {
     "type": "label",
@@ -1604,8 +1607,8 @@
         "count": 6
       }
     ],
-    "x": 1010,
-    "y": 825,
+    "x": 637,
+    "y": 118,
     "z": 54,
     "id": "pbtc",
     "classes": "symbols",
@@ -1625,9 +1628,9 @@
   "carnivalLine": {
     "type": "holder",
     "id": "carnivalLine",
-    "x": 468,
+    "x": 474,
     "y": 306,
-    "width": 655,
+    "width": 651,
     "z": 139,
     "onEnter": {
       "activeFace": 1
@@ -1640,7 +1643,7 @@
   "temp": {
     "type": "holder",
     "id": "temp",
-    "x": 1000,
+    "x": 1014,
     "y": 550,
     "z": 145,
     "css": {
@@ -1762,8 +1765,8 @@
   },
   "Move": {
     "id": "Move",
-    "x": 1031,
-    "y": 490,
+    "x": 1044,
+    "y": 487,
     "width": 50,
     "height": 50,
     "z": 8,
