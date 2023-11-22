@@ -1258,7 +1258,7 @@
   "Toggle Switch Board": {
     "type": "button",
     "id": "Toggle Switch Board",
-    "x": 120,
+    "x": -125,
     "height": 40,
     "text": "Internals",
     "clickRoutine": [
@@ -1272,7 +1272,7 @@
         "property": "owner"
       }
     ],
-    "y": 950
+    "y": 885
   },
   "e1tx": {
     "deck": "Resources",
@@ -2107,10 +2107,23 @@
   "Reset": {
     "type": "button",
     "id": "Reset",
-    "y": 950,
+    "y": 916,
     "inheritFrom": "Toggle Switch Board",
-    "text": "Reset",
+    "text": "restart_alt",
     "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "text",
+            "text": "This will start a new game by resetting everything."
+          }
+        ],
+        "confirmButtonText": "New Game",
+        "confirmButtonIcon": "play_arrow",
+        "cancelButtonText": "Resume Game",
+        "cancelButtonIcon": "close"
+      },
       {
         "func": "FOREACH",
         "in": [
@@ -2207,7 +2220,15 @@
         "value": 456
       }
     ],
-    "x": 20
+    "x": 24,
+    "width": 60,
+    "height": 60,
+    "movable": false,
+    "movableInEdit": true,
+    "classes": "material-icons",
+    "css": {
+      "font-size": "48px"
+    }
   },
   "Development": {
     "type": "deck",
