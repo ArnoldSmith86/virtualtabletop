@@ -2209,7 +2209,8 @@
     "cardDefaults": {
       "width": 80,
       "height": 120,
-      "layer": 4
+      "layer": 4,
+      "enlarge": 3
     },
     "faceTemplates": [
       {
@@ -2244,13 +2245,27 @@
           {
             "type": "text",
             "x": 0,
-            "y": 94,
+            "y": 4,
             "fontSize": 16,
             "textAlign": "center",
             "width": 80,
-            "css": "color:white",
+            "color": "white",
+            "css": "font-weight:bold; letter-spacing: -1px",
             "dynamicProperties": {
-              "value": "text1"
+              "value": "cardType"
+            }
+          },
+          {
+            "type": "text",
+            "x": 5,
+            "y": 93,
+            "fontSize": 10,
+            "textAlign": "center",
+            "width": 70,
+            "color": "white",
+            "css": "letter-spacing: -1px",
+            "dynamicProperties": {
+              "value": "text"
             }
           }
         ]
@@ -2258,24 +2273,23 @@
     ],
     "cardTypes": {
       "Knight": {
-        "image": "/assets/-1189891060_51936",
-        "text": "Knight"
+        "image": "/assets/-1946561110_51190",
+        "text": "\nMove the robber."
       },
-      "Victory Point": {
-        "image": "/assets/-1521875004_33484",
-        "text": "1 Point"
+      "1 Point": {
+        "image": "/assets/236176922_33118"
       },
       "Roads": {
-        "image": "/assets/204036147_40672",
-        "text": "2 Roads"
+        "image": "/assets/460454568_40150",
+        "text": "Build 2 roads without paying."
       },
       "Monopoly": {
-        "image": "/assets/1954353812_44605",
-        "text": "Monopoly"
+        "image": "/assets/-169209238_31160",
+        "text": "Everyone gives you all of one resource."
       },
-      "Gift": {
-        "image": "/assets/971674355_31667",
-        "text": "2 Cards"
+      "Resources": {
+        "image": "/assets/-2123555983_30978",
+        "text": "Draw any two resources."
       }
     },
     "parent": "Development Draw"
@@ -2470,200 +2484,144 @@
     "type": "card",
     "cardType": "Knight",
     "id": "gtlq",
-    "z": 7402,
-    "parent": "ah0h"
+    "z": 18775,
+    "parent": "yjto"
   },
   "jtdj": {
     "deck": "Development",
     "type": "card",
     "cardType": "Roads",
     "id": "jtdj",
-    "z": 2256,
-    "parent": "ah0h"
+    "z": 18818,
+    "parent": "yjto"
   },
   "n15g": {
     "deck": "Development",
     "type": "card",
     "cardType": "Monopoly",
     "id": "n15g",
-    "z": 4087,
-    "parent": "ah0h"
-  },
-  "98hz": {
-    "deck": "Development",
-    "type": "card",
-    "cardType": "Gift",
-    "id": "98hz",
-    "z": 4418,
-    "parent": "ah0h"
+    "z": 18803,
+    "parent": "yjto"
   },
   "1hwh": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "1hwh",
-    "z": 3261,
-    "parent": "ah0h"
-  },
-  "eysb": {
-    "deck": "Development",
-    "type": "card",
-    "cardType": "Victory Point",
-    "id": "eysb",
-    "z": 8839,
-    "parent": "ah0h"
+    "z": 18799,
+    "parent": "yjto"
   },
   "h8j6": {
     "deck": "Development",
     "type": "card",
     "cardType": "Roads",
     "id": "h8j6",
-    "z": 5785,
-    "parent": "ah0h"
+    "z": 18761,
+    "parent": "yjto"
   },
   "m7x2": {
     "deck": "Development",
     "type": "card",
     "cardType": "Monopoly",
     "id": "m7x2",
-    "z": 6649,
-    "parent": "ah0h"
-  },
-  "poq3": {
-    "deck": "Development",
-    "type": "card",
-    "cardType": "Gift",
-    "id": "poq3",
-    "z": 7624,
-    "parent": "ah0h"
-  },
-  "1sih": {
-    "deck": "Development",
-    "type": "card",
-    "cardType": "Victory Point",
-    "id": "1sih",
-    "z": 7485,
-    "parent": "ah0h"
-  },
-  "6ixl": {
-    "deck": "Development",
-    "type": "card",
-    "cardType": "Victory Point",
-    "id": "6ixl",
-    "z": 2265,
-    "parent": "ah0h"
-  },
-  "chq8": {
-    "deck": "Development",
-    "type": "card",
-    "cardType": "Victory Point",
-    "id": "chq8",
-    "z": 3477,
-    "parent": "ah0h"
-  },
-  "u44k": {
-    "deck": "Development",
-    "type": "card",
-    "cardType": "Victory Point",
-    "id": "u44k",
-    "z": 838,
-    "parent": "ah0h"
+    "z": 18755,
+    "parent": "yjto"
   },
   "jht6": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "jht6",
-    "z": 4304,
-    "parent": "ah0h"
+    "z": 18822,
+    "parent": "yjto"
   },
   "22cj": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "22cj",
-    "z": 6160,
-    "parent": "ah0h"
+    "z": 18783,
+    "parent": "yjto"
   },
   "i069": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "i069",
-    "z": 4192,
-    "parent": "ah0h"
+    "z": 18795,
+    "parent": "yjto"
   },
   "4m7f": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "4m7f",
-    "z": 2661,
-    "parent": "ah0h"
+    "z": 18787,
+    "parent": "yjto"
   },
   "p27u": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "p27u",
-    "z": 8820,
-    "parent": "ah0h"
+    "z": 18767,
+    "parent": "yjto"
   },
   "qda1": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "qda1",
-    "z": 7155,
-    "parent": "ah0h"
+    "z": 18779,
+    "parent": "yjto"
   },
   "z8e2": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "z8e2",
-    "z": 658,
-    "parent": "ah0h"
+    "z": 18826,
+    "parent": "yjto"
   },
   "0p3n": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "0p3n",
-    "z": 6918,
-    "parent": "ah0h"
+    "z": 18814,
+    "parent": "yjto"
   },
   "wtxz": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "wtxz",
-    "z": 1217,
-    "parent": "ah0h"
+    "z": 18807,
+    "parent": "yjto"
   },
   "5lp1": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "5lp1",
-    "z": 1239,
-    "parent": "ah0h"
+    "z": 18791,
+    "parent": "yjto"
   },
   "xqi8": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "xqi8",
-    "z": 8152,
-    "parent": "ah0h"
+    "z": 18771,
+    "parent": "yjto"
   },
   "eo2c": {
     "deck": "Development",
     "type": "card",
     "cardType": "Knight",
     "id": "eo2c",
-    "z": 9497,
-    "parent": "ah0h"
+    "z": 18830,
+    "parent": "yjto"
   },
   "Harbor Template": {
     "id": "Harbor Template",
@@ -6228,14 +6186,6 @@
     "inheritFrom": "Toggle Switch Board",
     "text": "Shuffle"
   },
-  "ah0h": {
-    "type": "pile",
-    "width": 80,
-    "height": 120,
-    "id": "ah0h",
-    "z": 56,
-    "parent": "Development Draw"
-  },
   "Longest Road Holder": {
     "type": "holder",
     "id": "Longest Road Holder",
@@ -7587,5 +7537,75 @@
         "mode": "ignoreClickRoutine"
       }
     ]
+  },
+  "ldbu": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "1 Point",
+    "id": "ldbu",
+    "z": 18764,
+    "parent": "yjto"
+  },
+  "uqjm": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "1 Point",
+    "id": "uqjm",
+    "z": 5,
+    "parent": "yjto",
+    "activeFace": 1
+  },
+  "yjto": {
+    "type": "pile",
+    "parent": "Development Draw",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 120,
+    "id": "yjto"
+  },
+  "07eh": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "1 Point",
+    "id": "07eh",
+    "z": 4,
+    "parent": "yjto",
+    "activeFace": 1
+  },
+  "68gw": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "1 Point",
+    "id": "68gw",
+    "z": 3,
+    "parent": "yjto",
+    "activeFace": 1
+  },
+  "af6i": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "1 Point",
+    "id": "af6i",
+    "z": 2,
+    "parent": "yjto",
+    "activeFace": 1
+  },
+  "ktlv": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Resources",
+    "id": "ktlv",
+    "z": 1,
+    "parent": "yjto",
+    "activeFace": 1
+  },
+  "1rdy": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Resources",
+    "id": "1rdy",
+    "z": 18758,
+    "parent": "yjto"
   }
 }
