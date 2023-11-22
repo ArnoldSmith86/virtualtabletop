@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 8,
+    "version": 15,
     "info": {
       "name": "Carnival",
       "image": "/assets/-1752027825_70181",
@@ -19,11 +19,11 @@
       "ruleText": "<h4>Objective</h4><div>Players need to take turns playing cards into the line while avoiding taking cards into their hands. Sometimes getting all the cards can be rewarding!!</div><h4>Rounds and actions</h4><div><span style=\"color: var(--overlayFontColor);\">Players need to play a card at the end of the card line (right side of the line).</span><br></div><div>The value in the card played blocks equals the number of safe cards in front of the played card.</div><div>The player needs to take all unsafe cards that are equal or lower value than the played card and all unsafe cards that are of the same color as the played card.</div><div><br></div><div>Example:\nIf the player plays a Blue 4 card they count 4 cards after the played card. Those cards are safe and the player doesn't need to take them.\nFrom the unsafe card the player needs to take all cards that have values 1, 2, 3, or 4 and all cards that are Blue no matter the value.\nIn the image below the 4 cards from Green-2 to Black-5 are safe cards. No matter the value or color they will not be taken.\nAll other cards (to the left of Black-5) are not safe. The player must take all blue cards and all cards with a value 4 or lower</div><a href=\"/assets/-110176434_19834\"><img src=\"/assets/-110176434_19834\" class=\"richtextAsset\"></a><div><br></div><div><h4>End of the game&nbsp;</h4></div><div>When a player gets the last card from the draw pile, the last round begins. All players play one last card ending in the player the drew the last card from the draw pile.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">All players need to choose 2 cards to add to their pile and 2 cards to discard.</span></div><div>&nbsp;</div><h4>Counting points</h4><div>The player that have the majority of each color count 1 point for each card of that color. If two players have the majority of the same color both count 1 point per card.\n<br></div><div>All other cards points are added using their printed value\n\nThe Player with the LEAST amount of points wins&nbsp;</div>",
       "helpText": "<h4>Setup</h4><div><ul><li><span style=\"font-weight: normal;\">All players should select a seat</span><a href=\"/assets/2113431920_4817\"></a><a href=\"/assets/2113431920_4817\"><img src=\"/assets/2113431920_4817\" class=\"richtextAsset\"></a></li></ul><ul><li><span style=\"font-weight: normal;\">Click on the play button&nbsp;to deal cards<a href=\"/assets/-660941794_1759\"></a><a href=\"/assets/-660941794_1759\"><img src=\"/assets/-660941794_1759\" class=\"richtextAsset\"></a></span></li></ul><h4>Round</h4><ul><li><span style=\"font-weight: 400;\">The player puts a card in the holder under the arrow</span><a href=\"/assets/-1167444606_29205\"><img src=\"/assets/-1167444606_29205\" class=\"richtextAsset\"></a></li></ul><a href=\"/assets/-1167444606_29205\"></a><ul><li><span style=\"font-weight: normal;\">All cards that should be taken into the player's pile will be highlighted<a href=\"/assets/1294469075_15061\"></a><a href=\"/assets/1294469075_15061\"><img src=\"/assets/1294469075_15061\" class=\"richtextAsset\"></a></span></li></ul><ul><li><span style=\"font-weight: 400;\">The player can click the arrow to move the played card into the line and take the card into their pile<a href=\"/assets/1544329496_16176\"></a><a href=\"/assets/1544329496_16176\"><img src=\"/assets/1544329496_16176\" class=\"richtextAsset\"></a></span></li></ul><ul><li><span style=\"font-weight: 400;\">The player needs to buy another card from the draw pile. Players should always have 5 cards when possible<a href=\"/assets/1481698361_12786\"></a><a href=\"/assets/1481698361_12786\"><img src=\"/assets/1481698361_12786\" class=\"richtextAsset\"></a></span></li></ul><h4>Ending the game</h4><div><ul><li><span style=\"font-weight: 400;\">After the last round is played, players need to discard 2 cards into the draw pile</span></li><li><span style=\"font-weight: 400;\">When all players have chosen the remainder 2 cards in their hands, the cards can be played into their piles</span></li><li><span style=\"font-weight: 400;\">Players can use the counter to help them count their points</span></li></ul></div></div>",
       "lastUpdate": 1700651700251,
-      "variantImage": "",
-      "variant": "",
-      "language": "",
+      "similarDesigner": "",
       "players": "2-6",
-      "similarDesigner": ""
+      "language": "",
+      "variant": "",
+      "variantImage": ""
     }
   },
   "hand": {
@@ -52,7 +52,8 @@
     },
     "onLeave": {
       "activeFace": 0
-    }
+    },
+    "hidePlayerCursors": true
   },
   "siyrB": {
     "id": "siyrB",
@@ -119,333 +120,333 @@
     },
     "cardTypes": {
       "01-Spades-00": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 0
       },
       "01-Spades-01": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 1
       },
       "01-Spades-02": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 2
       },
       "01-Spades-03": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 3
       },
       "01-Spades-04": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 4
       },
       "01-Spades-05": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 5
       },
       "01-Spades-06": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 6
       },
       "01-Spades-07": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 7
       },
       "01-Spades-08": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 8
       },
       "01-Spades-09": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 9
       },
       "01-Spades-10": {
-        "image": "/assets/460238604_719",
-        "color": "#1f1f1f",
+        "image": "/assets/665835259_42474",
+        "color": "#529332",
         "text": 10
       },
       "02-Hearts-00": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 0
       },
       "02-Hearts-01": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 1
       },
       "02-Hearts-02": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 2
       },
       "02-Hearts-03": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 3
       },
       "02-Hearts-04": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 4
       },
       "02-Hearts-05": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 5
       },
       "02-Hearts-06": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 6
       },
       "02-Hearts-07": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 7
       },
       "02-Hearts-08": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 8
       },
       "02-Hearts-09": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 9
       },
       "02-Hearts-10": {
-        "image": "/assets/1005943990_876",
-        "color": "#d55e00",
+        "image": "/assets/67841891_32272",
+        "color": "#634388",
         "text": 10
       },
       "03-Clubs-00": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 0
       },
       "03-Clubs-01": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 1
       },
       "03-Clubs-02": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 2
       },
       "03-Clubs-03": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 3
       },
       "03-Clubs-04": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 4
       },
       "03-Clubs-05": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 5
       },
       "03-Clubs-06": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 6
       },
       "03-Clubs-07": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 7
       },
       "03-Clubs-08": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 8
       },
       "03-Clubs-09": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 9
       },
       "03-Clubs-10": {
-        "image": "/assets/1063142177_882",
-        "color": "#009e9b",
+        "image": "/assets/194838543_45192",
+        "color": "#b9130f",
         "text": 10
       },
       "04-Diamonds-00": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 0
       },
       "04-Diamonds-01": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 1
       },
       "04-Diamonds-02": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 2
       },
       "04-Diamonds-03": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 3
       },
       "04-Diamonds-04": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 4
       },
       "04-Diamonds-05": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 5
       },
       "04-Diamonds-06": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 6
       },
       "04-Diamonds-07": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 7
       },
       "04-Diamonds-08": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 8
       },
       "04-Diamonds-09": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 9
       },
       "04-Diamonds-10": {
-        "image": "/assets/-1953365281_828",
+        "image": "/assets/-1070193246_35008",
         "color": "#56b4e9",
         "text": 10
       },
       "05-Starts-00": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 0
       },
       "05-Starts-01": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 1
       },
       "05-Starts-02": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 2
       },
       "05-Starts-03": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 3
       },
       "05-Starts-04": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 4
       },
       "05-Starts-05": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 5
       },
       "05-Starts-06": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 6
       },
       "05-Starts-07": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 7
       },
       "05-Starts-08": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 8
       },
       "05-Starts-09": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 9
       },
       "05-Starts-10": {
-        "image": "/assets/428279725_1076",
-        "color": "#f0e442",
+        "image": "/assets/-788686654_41556",
+        "color": "#01020c",
         "text": 10
       },
       "06-Moons-00": {
-        "image": "/assets/1492718622_1026",
-        "color": "#cc79a7",
+        "image": "/assets/1312080327_26412",
+        "color": "#eed227",
         "text": 0
       },
       "06-Moons-01": {
-        "image": "/assets/1492718622_1026",
-        "color": "#cc79a7",
+        "image": "/assets/1312080327_26412",
+        "color": "#eed227",
         "text": 1
       },
       "06-Moons-02": {
-        "image": "/assets/1492718622_1026",
-        "color": "#cc79a7",
+        "image": "/assets/1312080327_26412",
+        "color": "#eed227",
         "text": 2
       },
       "06-Moons-03": {
-        "image": "/assets/1492718622_1026",
-        "color": "#cc79a7",
+        "image": "/assets/1312080327_26412",
+        "color": "#eed227",
         "text": 3
       },
       "06-Moons-04": {
-        "image": "/assets/1492718622_1026",
-        "color": "#cc79a7",
+        "image": "/assets/1312080327_26412",
+        "color": "#eed227",
         "text": 4
       },
       "06-Moons-05": {
-        "image": "/assets/1492718622_1026",
-        "color": "#cc79a7",
+        "image": "/assets/1312080327_26412",
+        "color": "#eed227",
         "text": 5
       },
       "06-Moons-06": {
-        "image": "/assets/1492718622_1026",
-        "color": "#cc79a7",
+        "image": "/assets/1312080327_26412",
+        "color": "#eed227",
         "text": 6
       },
       "06-Moons-07": {
-        "image": "/assets/1492718622_1026",
-        "color": "#cc79a7",
+        "image": "/assets/1312080327_26412",
+        "color": "#eed227",
         "text": 7
       },
       "06-Moons-08": {
-        "image": "/assets/1492718622_1026",
-        "color": "#cc79a7",
+        "image": "/assets/1312080327_26412",
+        "color": "#eed227",
         "text": 8
       },
       "06-Moons-09": {
-        "image": "/assets/1492718622_1026",
+        "image": "/assets/1312080327_26412",
         "color": "#cc79a7",
         "text": 9
       },
       "06-Moons-10": {
-        "image": "/assets/1492718622_1026",
-        "color": "#cc79a7",
+        "image": "/assets/1312080327_26412",
+        "color": "#eed227",
         "text": 10
       }
     },
@@ -455,19 +456,11 @@
         "objects": [
           {
             "type": "image",
-            "x": 0,
-            "y": 0,
             "width": 103,
             "height": 160,
-            "color": "#fff"
-          },
-          {
-            "type": "image",
-            "x": 5,
-            "y": 5,
-            "width": 93,
-            "height": 150,
-            "css": "border-radius:10px; background: linear-gradient(90deg, rgba(213,94,0,1) 14.3%, rgba(230,159,0,1) 14.4%, rgba(230,159,0,1) 28.6%, rgba(240,228,66,1) 28.7%, rgba(240,228,66,1) 42.8%, rgba(0,158,155,1) 42.9%, rgba(0,141,164,1) 57.1%, rgba(0,114,178,1) 57.2%, rgba(0,114,178,1) 71.4%, rgba(86,180,233,1) 71.5%, rgba(86,180,233,1) 85.7%, rgba(204,121,167,1) 85.8%, rgba(204,121,167,1) 100%);"
+            "color": "#fff",
+            "value": "/assets/484817980_31966",
+            "css": "background-size:cover"
           }
         ],
         "border": 1
@@ -477,61 +470,25 @@
         "objects": [
           {
             "type": "image",
-            "x": 0,
-            "y": 0,
             "width": 103,
             "height": 160,
-            "color": "#fff"
-          },
-          {
-            "type": "image",
-            "x": 5,
-            "y": 5,
-            "width": 93,
-            "height": 150,
-            "dynamicProperties": {
-              "color": "color"
-            },
-            "css": "border-radius:10px"
-          },
-          {
-            "type": "image",
-            "x": 21.5,
-            "y": 50,
-            "width": 60,
-            "height": 60,
             "color": "#fff",
-            "css": "border-radius:100%",
+            "css": "background-size:cover",
             "dynamicProperties": {
               "value": "image"
-            },
-            "svgReplaces": {
-              "#ff0000": "color"
             }
           },
           {
             "type": "text",
             "x": 10,
-            "y": 10,
-            "textAlign": "center",
-            "width": 30,
-            "height": 30,
-            "dynamicProperties": {
-              "value": "text",
-              "fontSize": "fontSize"
-            },
-            "css": "font-weight: bold !important; display: flex;justify-content: center; align-items: center;text-align: center;  border:1px solid black; border-radius:5px; background-color: #fff;"
-          },
-          {
-            "type": "text",
-            "x": 63,
             "y": 120,
             "textAlign": "center",
             "width": 30,
             "height": 30,
             "dynamicProperties": {
               "value": "text",
-              "fontSize": "fontSize"
+              "fontSize": "fontSize",
+              "color": "color"
             },
             "css": "font-weight: bold !important; display: flex;justify-content: center; align-items: center;text-align: center;  border:1px solid black; border-radius:5px; background-color: #fff;",
             "rotation": 0
@@ -547,7 +504,7 @@
     "type": "card",
     "cardType": "01-Spades-00",
     "id": "86ig",
-    "z": 11930,
+    "z": 12313,
     "parent": "hrqh"
   },
   "jjkk": {
@@ -555,7 +512,7 @@
     "type": "card",
     "cardType": "01-Spades-01",
     "id": "jjkk",
-    "z": 11889,
+    "z": 12339,
     "parent": "hrqh"
   },
   "6ads": {
@@ -563,7 +520,7 @@
     "type": "card",
     "cardType": "01-Spades-02",
     "id": "6ads",
-    "z": 11884,
+    "z": 12312,
     "parent": "hrqh"
   },
   "99r0": {
@@ -571,7 +528,7 @@
     "type": "card",
     "cardType": "01-Spades-03",
     "id": "99r0",
-    "z": 11926,
+    "z": 12332,
     "parent": "hrqh"
   },
   "cd3x": {
@@ -579,7 +536,7 @@
     "type": "card",
     "cardType": "01-Spades-04",
     "id": "cd3x",
-    "z": 11932,
+    "z": 12325,
     "parent": "hrqh"
   },
   "pd8t": {
@@ -587,7 +544,7 @@
     "type": "card",
     "cardType": "01-Spades-05",
     "id": "pd8t",
-    "z": 11883,
+    "z": 12316,
     "parent": "hrqh"
   },
   "8zjq": {
@@ -595,7 +552,7 @@
     "type": "card",
     "cardType": "01-Spades-06",
     "id": "8zjq",
-    "z": 11916,
+    "z": 12319,
     "parent": "hrqh"
   },
   "a8m3": {
@@ -603,7 +560,7 @@
     "type": "card",
     "cardType": "01-Spades-07",
     "id": "a8m3",
-    "z": 11885,
+    "z": 12323,
     "parent": "hrqh"
   },
   "xpd2": {
@@ -611,7 +568,7 @@
     "type": "card",
     "cardType": "01-Spades-08",
     "id": "xpd2",
-    "z": 11877,
+    "z": 12368,
     "parent": "hrqh"
   },
   "ir8h": {
@@ -619,7 +576,7 @@
     "type": "card",
     "cardType": "01-Spades-09",
     "id": "ir8h",
-    "z": 11903,
+    "z": 12333,
     "parent": "hrqh"
   },
   "yvmr": {
@@ -627,7 +584,7 @@
     "type": "card",
     "cardType": "01-Spades-10",
     "id": "yvmr",
-    "z": 11933,
+    "z": 12357,
     "parent": "hrqh"
   },
   "0jgt": {
@@ -635,7 +592,7 @@
     "type": "card",
     "cardType": "02-Hearts-00",
     "id": "0jgt",
-    "z": 11927,
+    "z": 12342,
     "parent": "hrqh"
   },
   "6c0v": {
@@ -643,7 +600,7 @@
     "type": "card",
     "cardType": "02-Hearts-01",
     "id": "6c0v",
-    "z": 11876,
+    "z": 12348,
     "parent": "hrqh"
   },
   "84qt": {
@@ -651,7 +608,7 @@
     "type": "card",
     "cardType": "02-Hearts-02",
     "id": "84qt",
-    "z": 11928,
+    "z": 12337,
     "parent": "hrqh"
   },
   "xfq2": {
@@ -659,7 +616,7 @@
     "type": "card",
     "cardType": "02-Hearts-03",
     "id": "xfq2",
-    "z": 11900,
+    "z": 12354,
     "parent": "hrqh"
   },
   "5tzs": {
@@ -667,7 +624,7 @@
     "type": "card",
     "cardType": "02-Hearts-04",
     "id": "5tzs",
-    "z": 11879,
+    "z": 12353,
     "parent": "hrqh"
   },
   "sqkp": {
@@ -675,7 +632,7 @@
     "type": "card",
     "cardType": "02-Hearts-05",
     "id": "sqkp",
-    "z": 11936,
+    "z": 12326,
     "parent": "hrqh"
   },
   "vqug": {
@@ -683,7 +640,7 @@
     "type": "card",
     "cardType": "02-Hearts-06",
     "id": "vqug",
-    "z": 11890,
+    "z": 12361,
     "parent": "hrqh"
   },
   "gagc": {
@@ -691,7 +648,7 @@
     "type": "card",
     "cardType": "02-Hearts-07",
     "id": "gagc",
-    "z": 11935,
+    "z": 12318,
     "parent": "hrqh"
   },
   "iccr": {
@@ -699,7 +656,7 @@
     "type": "card",
     "cardType": "02-Hearts-08",
     "id": "iccr",
-    "z": 11910,
+    "z": 12310,
     "parent": "hrqh"
   },
   "0mi6": {
@@ -707,7 +664,7 @@
     "type": "card",
     "cardType": "02-Hearts-09",
     "id": "0mi6",
-    "z": 11922,
+    "z": 12363,
     "parent": "hrqh"
   },
   "o6c0": {
@@ -715,7 +672,7 @@
     "type": "card",
     "cardType": "02-Hearts-10",
     "id": "o6c0",
-    "z": 11919,
+    "z": 12320,
     "parent": "hrqh"
   },
   "uu1e": {
@@ -723,7 +680,7 @@
     "type": "card",
     "cardType": "03-Clubs-00",
     "id": "uu1e",
-    "z": 11920,
+    "z": 12364,
     "parent": "hrqh"
   },
   "41o3": {
@@ -731,7 +688,7 @@
     "type": "card",
     "cardType": "03-Clubs-01",
     "id": "41o3",
-    "z": 11915,
+    "z": 12351,
     "parent": "hrqh"
   },
   "orr7": {
@@ -739,7 +696,7 @@
     "type": "card",
     "cardType": "03-Clubs-02",
     "id": "orr7",
-    "z": 11929,
+    "z": 12335,
     "parent": "hrqh"
   },
   "62uz": {
@@ -747,7 +704,7 @@
     "type": "card",
     "cardType": "03-Clubs-03",
     "id": "62uz",
-    "z": 11904,
+    "z": 12352,
     "parent": "hrqh"
   },
   "gtf3": {
@@ -755,7 +712,7 @@
     "type": "card",
     "cardType": "03-Clubs-04",
     "id": "gtf3",
-    "z": 11895,
+    "z": 12309,
     "parent": "hrqh"
   },
   "czsp": {
@@ -763,7 +720,7 @@
     "type": "card",
     "cardType": "03-Clubs-05",
     "id": "czsp",
-    "z": 11925,
+    "z": 12322,
     "parent": "hrqh"
   },
   "bfxl": {
@@ -771,7 +728,7 @@
     "type": "card",
     "cardType": "03-Clubs-06",
     "id": "bfxl",
-    "z": 11918,
+    "z": 12346,
     "parent": "hrqh"
   },
   "a838": {
@@ -779,7 +736,7 @@
     "type": "card",
     "cardType": "03-Clubs-07",
     "id": "a838",
-    "z": 11894,
+    "z": 12362,
     "parent": "hrqh"
   },
   "n86s": {
@@ -787,7 +744,7 @@
     "type": "card",
     "cardType": "03-Clubs-08",
     "id": "n86s",
-    "z": 11937,
+    "z": 12340,
     "parent": "hrqh"
   },
   "7v23": {
@@ -795,7 +752,7 @@
     "type": "card",
     "cardType": "03-Clubs-09",
     "id": "7v23",
-    "z": 11914,
+    "z": 12303,
     "parent": "hrqh"
   },
   "ql4q": {
@@ -803,7 +760,7 @@
     "type": "card",
     "cardType": "03-Clubs-10",
     "id": "ql4q",
-    "z": 11878,
+    "z": 12367,
     "parent": "hrqh"
   },
   "x5kd": {
@@ -811,7 +768,7 @@
     "type": "card",
     "cardType": "04-Diamonds-00",
     "id": "x5kd",
-    "z": 11902,
+    "z": 12344,
     "parent": "hrqh"
   },
   "bjy5": {
@@ -819,7 +776,7 @@
     "type": "card",
     "cardType": "04-Diamonds-01",
     "id": "bjy5",
-    "z": 11908,
+    "z": 12341,
     "parent": "hrqh"
   },
   "m1cn": {
@@ -827,7 +784,7 @@
     "type": "card",
     "cardType": "04-Diamonds-02",
     "id": "m1cn",
-    "z": 11888,
+    "z": 12314,
     "parent": "hrqh"
   },
   "s5no": {
@@ -835,7 +792,7 @@
     "type": "card",
     "cardType": "04-Diamonds-03",
     "id": "s5no",
-    "z": 11911,
+    "z": 12360,
     "parent": "hrqh"
   },
   "kqr5": {
@@ -843,7 +800,7 @@
     "type": "card",
     "cardType": "04-Diamonds-04",
     "id": "kqr5",
-    "z": 11905,
+    "z": 12304,
     "parent": "hrqh"
   },
   "17os": {
@@ -851,7 +808,7 @@
     "type": "card",
     "cardType": "04-Diamonds-05",
     "id": "17os",
-    "z": 11938,
+    "z": 12350,
     "parent": "hrqh"
   },
   "po6m": {
@@ -859,7 +816,7 @@
     "type": "card",
     "cardType": "04-Diamonds-06",
     "id": "po6m",
-    "z": 11912,
+    "z": 12356,
     "parent": "hrqh"
   },
   "budl": {
@@ -867,7 +824,7 @@
     "type": "card",
     "cardType": "04-Diamonds-07",
     "id": "budl",
-    "z": 11917,
+    "z": 12358,
     "parent": "hrqh"
   },
   "fxba": {
@@ -875,7 +832,7 @@
     "type": "card",
     "cardType": "04-Diamonds-08",
     "id": "fxba",
-    "z": 11907,
+    "z": 12355,
     "parent": "hrqh"
   },
   "187l": {
@@ -883,7 +840,7 @@
     "type": "card",
     "cardType": "04-Diamonds-09",
     "id": "187l",
-    "z": 11891,
+    "z": 12349,
     "parent": "hrqh"
   },
   "o9lb": {
@@ -891,7 +848,7 @@
     "type": "card",
     "cardType": "04-Diamonds-10",
     "id": "o9lb",
-    "z": 11896,
+    "z": 12338,
     "parent": "hrqh"
   },
   "lfbw": {
@@ -899,7 +856,7 @@
     "type": "card",
     "cardType": "05-Starts-00",
     "id": "lfbw",
-    "z": 11940,
+    "z": 12306,
     "parent": "hrqh"
   },
   "j2nr": {
@@ -907,7 +864,7 @@
     "type": "card",
     "cardType": "05-Starts-01",
     "id": "j2nr",
-    "z": 11906,
+    "z": 12366,
     "parent": "hrqh"
   },
   "6iba": {
@@ -915,7 +872,7 @@
     "type": "card",
     "cardType": "05-Starts-02",
     "id": "6iba",
-    "z": 11881,
+    "z": 12328,
     "parent": "hrqh"
   },
   "ydp6": {
@@ -923,7 +880,7 @@
     "type": "card",
     "cardType": "05-Starts-03",
     "id": "ydp6",
-    "z": 11893,
+    "z": 12317,
     "parent": "hrqh"
   },
   "b1mn": {
@@ -931,7 +888,7 @@
     "type": "card",
     "cardType": "05-Starts-04",
     "id": "b1mn",
-    "z": 11899,
+    "z": 12343,
     "parent": "hrqh"
   },
   "a594": {
@@ -939,7 +896,7 @@
     "type": "card",
     "cardType": "05-Starts-05",
     "id": "a594",
-    "z": 11923,
+    "z": 12311,
     "parent": "hrqh"
   },
   "527c": {
@@ -947,7 +904,7 @@
     "type": "card",
     "cardType": "05-Starts-06",
     "id": "527c",
-    "z": 11892,
+    "z": 12345,
     "parent": "hrqh"
   },
   "vtke": {
@@ -955,7 +912,7 @@
     "type": "card",
     "cardType": "05-Starts-07",
     "id": "vtke",
-    "z": 11880,
+    "z": 12330,
     "parent": "hrqh"
   },
   "p1x2": {
@@ -963,7 +920,7 @@
     "type": "card",
     "cardType": "05-Starts-08",
     "id": "p1x2",
-    "z": 11909,
+    "z": 12331,
     "parent": "hrqh"
   },
   "luqt": {
@@ -971,7 +928,7 @@
     "type": "card",
     "cardType": "05-Starts-09",
     "id": "luqt",
-    "z": 11875,
+    "z": 12315,
     "parent": "hrqh"
   },
   "eonc": {
@@ -979,7 +936,7 @@
     "type": "card",
     "cardType": "05-Starts-10",
     "id": "eonc",
-    "z": 11901,
+    "z": 12324,
     "parent": "hrqh"
   },
   "qq5r": {
@@ -987,7 +944,7 @@
     "type": "card",
     "cardType": "06-Moons-00",
     "id": "qq5r",
-    "z": 11887,
+    "z": 12359,
     "parent": "hrqh"
   },
   "zxm8": {
@@ -995,7 +952,7 @@
     "type": "card",
     "cardType": "06-Moons-01",
     "id": "zxm8",
-    "z": 11939,
+    "z": 12321,
     "parent": "hrqh"
   },
   "04fw": {
@@ -1003,7 +960,7 @@
     "type": "card",
     "cardType": "06-Moons-02",
     "id": "04fw",
-    "z": 11931,
+    "z": 12347,
     "parent": "hrqh"
   },
   "d4af": {
@@ -1011,7 +968,7 @@
     "type": "card",
     "cardType": "06-Moons-03",
     "id": "d4af",
-    "z": 11921,
+    "z": 12365,
     "parent": "hrqh"
   },
   "jws8": {
@@ -1019,7 +976,7 @@
     "type": "card",
     "cardType": "06-Moons-04",
     "id": "jws8",
-    "z": 11886,
+    "z": 12334,
     "parent": "hrqh"
   },
   "bakg": {
@@ -1027,7 +984,7 @@
     "type": "card",
     "cardType": "06-Moons-05",
     "id": "bakg",
-    "z": 11897,
+    "z": 12336,
     "parent": "hrqh"
   },
   "d31h": {
@@ -1035,7 +992,7 @@
     "type": "card",
     "cardType": "06-Moons-06",
     "id": "d31h",
-    "z": 11882,
+    "z": 12327,
     "parent": "hrqh"
   },
   "dml1": {
@@ -1043,7 +1000,7 @@
     "type": "card",
     "cardType": "06-Moons-07",
     "id": "dml1",
-    "z": 11924,
+    "z": 12329,
     "parent": "hrqh"
   },
   "8dco": {
@@ -1051,7 +1008,7 @@
     "type": "card",
     "cardType": "06-Moons-08",
     "id": "8dco",
-    "z": 11913,
+    "z": 12305,
     "parent": "hrqh"
   },
   "viq2": {
@@ -1059,7 +1016,7 @@
     "type": "card",
     "cardType": "06-Moons-09",
     "id": "viq2",
-    "z": 11898,
+    "z": 12307,
     "parent": "hrqh"
   },
   "ibxx": {
@@ -1067,7 +1024,7 @@
     "type": "card",
     "cardType": "06-Moons-10",
     "id": "ibxx",
-    "z": 11934,
+    "z": 12308,
     "parent": "hrqh"
   },
   "DEAL": {
