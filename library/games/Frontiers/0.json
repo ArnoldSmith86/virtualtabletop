@@ -7523,5 +7523,262 @@
     "id": "1rdy",
     "z": 18758,
     "parent": "yjto"
+  },
+  "Base Map Button New": {
+    "type": "button",
+    "id": "Base Map Button New",
+    "parent": "Switch Board",
+    "x": 768,
+    "y": 550,
+    "text": "Base\nMap",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Clear Button"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "levelRandomTilesCounter"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "levelRandomChipsCounter"
+      },
+      {
+        "func": "CALL",
+        "routine": "randomizeRandomsRoutine",
+        "arguments": {
+          "param": "levelRandomTiles"
+        }
+      },
+      {
+        "func": "CALL",
+        "routine": "randomizeRandomsRoutine",
+        "arguments": {
+          "param": "levelRandomChips"
+        }
+      },
+      {
+        "func": "CALL",
+        "routine": "buildLevelRoutine"
+      }
+    ],
+    "levelTiles": [
+      "SSSSSSSSSSS",
+      "SSSSXXXSSSS",
+      "SSSXXXXSSSS",
+      "SSSXXDXXSSS",
+      "SSSXXXXSSSS",
+      "SSSSXXXSSSS",
+      "SSSSSSSSSSS"
+    ],
+    "levelChips": [
+      "           ",
+      "    XXX    ",
+      "   XXXX    ",
+      "   XX XX   ",
+      "   XXXX    ",
+      "    XXX    ",
+      "           "
+    ],
+    "levelRandomTiles": {
+      "X": "MCWMWCFGGFGFMCGWFW"
+    },
+    "levelRandomChips": {
+      "X": "896598324CAB5A3B64"
+    },
+    "levelX": -66.025403787,
+    "levelY": -50,
+    "levelSize": 100,
+    "createTileRoutine": [
+      "// Tile",
+      {
+        "func": "CALL",
+        "routine": "resolveRandomRoutine",
+        "variable": "tileType",
+        "arguments": {
+          "randomSource": "levelRandomTiles",
+          "type": "${tileType}"
+        }
+      },
+      "var upperType = ${tileType} toUpperCase",
+      "var isUpper = ${upperType} == ${tileType}",
+      {
+        "func": "CLONE",
+        "source": [
+          "Card Template"
+        ],
+        "properties": {
+          "parent": null,
+          "x": "${x}",
+          "y": "${y}",
+          "cardType": "${upperType}",
+          "activeFace": "${isUpper}"
+        }
+      },
+      "// Chip",
+      {
+        "func": "IF",
+        "operand1": "${chipType}",
+        "operand2": " ",
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "resolveRandomRoutine",
+            "variable": "chipType",
+            "arguments": {
+              "randomSource": "levelRandomChips",
+              "type": "${chipType}"
+            }
+          },
+          "var chipWithString = 'A' concat ${chipType}",
+          "var upperType = ${chipWithString} toUpperCase",
+          "var isUpper = ${upperType} == ${chipWithString}",
+          "var x = ${x} + 57",
+          "var y = ${y} + 70",
+          {
+            "func": "CLONE",
+            "source": [
+              "Chip Template"
+            ],
+            "properties": {
+              "parent": null,
+              "x": "${x}",
+              "y": "${y}",
+              "cardType": "${upperType.1}",
+              "activeFace": "${isUpper}"
+            }
+          }
+        ]
+      }
+    ],
+    "randomizeRandomsRoutine": [
+      "var map = ${PROPERTY $param}",
+      {
+        "func": "FOREACH",
+        "in": "${map}",
+        "loopRoutine": [
+          "var map.$key = shuffle ${value}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "${param}",
+        "value": "${map}"
+      }
+    ],
+    "resolveRandomRoutine": [
+      "var map = ${PROPERTY $randomSource}",
+      "var result = ${type}",
+      {
+        "func": "IF",
+        "condition": "${map.$type}",
+        "operand2": null,
+        "thenRoutine": [
+          "var counterProperty = ${randomSource} concat 'Counter'",
+          "var counter = ${PROPERTY $counterProperty}",
+          "var counter = ${counter} + 0 // to resolve null",
+          "var result = ${map.$type}",
+          "var result = ${result.$counter}",
+          "var counter = ${counter} + 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "${counterProperty}",
+            "value": "${counter}"
+          }
+        ]
+      }
+    ],
+    "buildRowRoutine": [
+      "var rowTiles = ${PROPERTY levelTiles} getIndex ${row}",
+      "var rowChips = ${PROPERTY levelChips} getIndex ${row}",
+      "var xOffset = ${PROPERTY levelSize} * 1.73205080757",
+      {
+        "func": "FOREACH",
+        "in": "${rowTiles}",
+        "loopRoutine": [
+          {
+            "func": "CALL",
+            "routine": "createTileRoutine",
+            "arguments": {
+              "x": "${x}",
+              "y": "${y}",
+              "tileType": "${value}",
+              "chipType": "${rowChips.$key}"
+            }
+          },
+          "var x = ${x} + ${xOffset}"
+        ]
+      }
+    ],
+    "buildLevelRoutine": [
+      "var y = ${PROPERTY levelY}",
+      "var yOffset = ${PROPERTY levelSize} * 1.5",
+      "var xShift = ${PROPERTY levelSize} * 1.73205080757 / 2",
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY levelTiles}",
+        "loopRoutine": [
+          "var xStart = ${PROPERTY levelX}",
+          "var isOdd = ${key} % 2",
+          {
+            "func": "IF",
+            "condition": "${isOdd}",
+            "thenRoutine": [
+              "var xStart = ${PROPERTY levelX} - ${xShift}"
+            ]
+          },
+          {
+            "func": "CALL",
+            "routine": "buildRowRoutine",
+            "arguments": {
+              "x": "${xStart}",
+              "y": "${y}",
+              "row": "${key}"
+            }
+          },
+          "var y = ${y} + ${yOffset}"
+        ]
+      }
+    ],
+    "levelRandomTilesCounter": 18,
+    "levelRandomChipsCounter": 18
+  },
+  "Starter Map Button New": {
+    "type": "button",
+    "id": "Starter Map Button New",
+    "parent": "Switch Board",
+    "x": 848,
+    "y": 550,
+    "text": "Starter\nMap",
+    "levelChips": [
+      "           ",
+      "    469    ",
+      "   25C4    ",
+      "   98 8A   ",
+      "   35AB    ",
+      "    36B    ",
+      "           "
+    ],
+    "levelRandomChips": {},
+    "levelRandomTiles": {},
+    "levelTiles": [
+      "SSSSSSSSSSS",
+      "SSSSWFWSSSS",
+      "SSSCFGGSSSS",
+      "SSSGCDMGSSS",
+      "SSSFMCFSSSS",
+      "SSSSWWMSSSS",
+      "SSSSSSSSSSS"
+    ],
+    "inheritFrom": "Base Map Button New",
+    "width": 80,
+    "height": 80,
+    "movable": false,
+    "movableInEdit": true
   }
 }
