@@ -86,8 +86,8 @@
       "movable": false,
       "layer": -5
     },
-    "y": 908,
-    "x": 94
+    "y": -1,
+    "x": 637
   },
   "Card Template": {
     "type": "card",
@@ -101,7 +101,7 @@
   "Chips": {
     "type": "deck",
     "id": "Chips",
-    "y": 908,
+    "y": -1,
     "cardDefaults": {
       "onPileCreation": {
         "no chip": "piles"
@@ -207,7 +207,7 @@
         "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 1; --offset: -12px"
       }
     },
-    "x": 161
+    "x": 704
   },
   "Chip Template": {
     "type": "card",
@@ -1167,7 +1167,7 @@
   "Reset": {
     "type": "button",
     "id": "Reset",
-    "y": 916,
+    "y": 920,
     "inheritFrom": "Toggle Switch Board",
     "text": "restart_alt",
     "clickRoutine": [
@@ -1316,6 +1316,10 @@
         "func": "SET",
         "property": "y",
         "value": 456
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
       }
     ],
     "x": 24,
@@ -1634,7 +1638,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "gtlq",
-    "z": 18991,
+    "z": 19325,
     "parent": "yjto"
   },
   "jtdj": {
@@ -1642,7 +1646,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "jtdj",
-    "z": 19003,
+    "z": 19315,
     "parent": "yjto"
   },
   "n15g": {
@@ -1650,7 +1654,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "n15g",
-    "z": 18994,
+    "z": 19311,
     "parent": "yjto"
   },
   "1hwh": {
@@ -1658,7 +1662,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "1hwh",
-    "z": 19007,
+    "z": 19316,
     "parent": "yjto"
   },
   "h8j6": {
@@ -1666,7 +1670,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "h8j6",
-    "z": 18998,
+    "z": 19319,
     "parent": "yjto"
   },
   "m7x2": {
@@ -1674,7 +1678,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "m7x2",
-    "z": 19010,
+    "z": 19327,
     "parent": "yjto"
   },
   "jht6": {
@@ -1682,7 +1686,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "jht6",
-    "z": 19009,
+    "z": 19321,
     "parent": "yjto"
   },
   "22cj": {
@@ -1690,7 +1694,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "22cj",
-    "z": 18997,
+    "z": 19322,
     "parent": "yjto"
   },
   "i069": {
@@ -1698,7 +1702,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "i069",
-    "z": 19000,
+    "z": 19317,
     "parent": "yjto"
   },
   "4m7f": {
@@ -1706,7 +1710,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "4m7f",
-    "z": 18992,
+    "z": 19314,
     "parent": "yjto"
   },
   "p27u": {
@@ -1714,7 +1718,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "p27u",
-    "z": 18995,
+    "z": 19333,
     "parent": "yjto"
   },
   "qda1": {
@@ -1722,7 +1726,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "qda1",
-    "z": 19006,
+    "z": 19329,
     "parent": "yjto"
   },
   "z8e2": {
@@ -1730,7 +1734,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "z8e2",
-    "z": 19002,
+    "z": 19331,
     "parent": "yjto"
   },
   "0p3n": {
@@ -1738,7 +1742,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "0p3n",
-    "z": 19015,
+    "z": 19323,
     "parent": "yjto"
   },
   "wtxz": {
@@ -1746,7 +1750,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "wtxz",
-    "z": 18999,
+    "z": 19318,
     "parent": "yjto"
   },
   "5lp1": {
@@ -1754,7 +1758,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "5lp1",
-    "z": 18993,
+    "z": 19334,
     "parent": "yjto"
   },
   "xqi8": {
@@ -1762,7 +1766,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "xqi8",
-    "z": 18996,
+    "z": 19320,
     "parent": "yjto"
   },
   "eo2c": {
@@ -1770,7 +1774,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "eo2c",
-    "z": 19001,
+    "z": 19330,
     "parent": "yjto"
   },
   "Harbor Template": {
@@ -5000,36 +5004,6 @@
       "red": "color"
     }
   },
-  "Player 2 - Bonuses": {
-    "type": "holder",
-    "id": "Player 2 - Bonuses",
-    "x": 4,
-    "y": 96,
-    "inheritFrom": "Bonus Cards",
-    "parent": "Player 2",
-    "classes": "transparent",
-    "css": ""
-  },
-  "Player 3 - Bonuses": {
-    "type": "holder",
-    "id": "Player 3 - Bonuses",
-    "x": 4,
-    "y": 96,
-    "inheritFrom": "Bonus Cards",
-    "parent": "Player 3",
-    "classes": "transparent",
-    "css": ""
-  },
-  "Player 4 - Bonuses": {
-    "type": "holder",
-    "id": "Player 4 - Bonuses",
-    "x": 4,
-    "y": 96,
-    "inheritFrom": "Bonus Cards",
-    "parent": "Player 4",
-    "classes": "transparent",
-    "css": ""
-  },
   "_meta": {
     "version": 15,
     "info": {
@@ -6344,7 +6318,7 @@
     "type": "card",
     "deck": "Tiles Real",
     "cardType": "S",
-    "x": 107.17967697000002,
+    "x": 107,
     "y": 850,
     "clonedFrom": "Card Template",
     "id": "wide",
@@ -6505,7 +6479,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "ldbu",
-    "z": 19011,
+    "z": 19332,
     "parent": "yjto"
   },
   "uqjm": {
@@ -6513,7 +6487,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "uqjm",
-    "z": 19012,
+    "z": 19328,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6531,7 +6505,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "07eh",
-    "z": 19013,
+    "z": 19310,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6540,7 +6514,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "68gw",
-    "z": 19008,
+    "z": 19326,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6549,7 +6523,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "af6i",
-    "z": 19005,
+    "z": 19312,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6558,7 +6532,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "ktlv",
-    "z": 19004,
+    "z": 19324,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6567,7 +6541,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "1rdy",
-    "z": 19014,
+    "z": 19313,
     "parent": "yjto"
   },
   "Base Map Button New": {
@@ -7180,5 +7154,21 @@
     ],
     "levelX": -66.025403787,
     "levelY": -50
+  },
+  "Turn": {
+    "type": "button",
+    "id": "Turn",
+    "x": 154,
+    "y": 910,
+    "classes": "material-icons",
+    "css": {
+      "font-size": "68px"
+    },
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ]
   }
 }
