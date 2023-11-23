@@ -1606,9 +1606,14 @@
     "type": "holder",
     "id": "Hand",
     "y": 920,
-    "dropTarget": {
-      "type": "card"
-    },
+    "dropTarget": [
+      {
+        "deck": "Resources"
+      },
+      {
+        "deck": "Development"
+      }
+    ],
     "x": 316,
     "width": 968,
     "stackOffsetX": 40,
@@ -1629,7 +1634,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "gtlq",
-    "z": 18775,
+    "z": 18962,
     "parent": "yjto"
   },
   "jtdj": {
@@ -1637,7 +1642,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "jtdj",
-    "z": 18818,
+    "z": 18949,
     "parent": "yjto"
   },
   "n15g": {
@@ -1645,7 +1650,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "n15g",
-    "z": 18803,
+    "z": 18956,
     "parent": "yjto"
   },
   "1hwh": {
@@ -1653,7 +1658,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "1hwh",
-    "z": 18799,
+    "z": 18946,
     "parent": "yjto"
   },
   "h8j6": {
@@ -1661,7 +1666,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "h8j6",
-    "z": 18761,
+    "z": 18942,
     "parent": "yjto"
   },
   "m7x2": {
@@ -1669,7 +1674,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "m7x2",
-    "z": 18755,
+    "z": 18951,
     "parent": "yjto"
   },
   "jht6": {
@@ -1677,7 +1682,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "jht6",
-    "z": 18822,
+    "z": 18955,
     "parent": "yjto"
   },
   "22cj": {
@@ -1685,7 +1690,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "22cj",
-    "z": 18783,
+    "z": 18950,
     "parent": "yjto"
   },
   "i069": {
@@ -1693,7 +1698,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "i069",
-    "z": 18795,
+    "z": 18959,
     "parent": "yjto"
   },
   "4m7f": {
@@ -1701,7 +1706,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "4m7f",
-    "z": 18787,
+    "z": 18948,
     "parent": "yjto"
   },
   "p27u": {
@@ -1709,7 +1714,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "p27u",
-    "z": 18767,
+    "z": 18964,
     "parent": "yjto"
   },
   "qda1": {
@@ -1717,7 +1722,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "qda1",
-    "z": 18779,
+    "z": 18943,
     "parent": "yjto"
   },
   "z8e2": {
@@ -1725,7 +1730,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "z8e2",
-    "z": 18826,
+    "z": 18965,
     "parent": "yjto"
   },
   "0p3n": {
@@ -1733,7 +1738,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "0p3n",
-    "z": 18814,
+    "z": 18952,
     "parent": "yjto"
   },
   "wtxz": {
@@ -1741,7 +1746,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "wtxz",
-    "z": 18807,
+    "z": 18953,
     "parent": "yjto"
   },
   "5lp1": {
@@ -1749,7 +1754,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "5lp1",
-    "z": 18791,
+    "z": 18944,
     "parent": "yjto"
   },
   "xqi8": {
@@ -1757,7 +1762,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "xqi8",
-    "z": 18771,
+    "z": 18947,
     "parent": "yjto"
   },
   "eo2c": {
@@ -1765,7 +1770,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "eo2c",
-    "z": 18830,
+    "z": 18957,
     "parent": "yjto"
   },
   "Harbor Template": {
@@ -6508,7 +6513,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "ldbu",
-    "z": 18764,
+    "z": 18960,
     "parent": "yjto"
   },
   "uqjm": {
@@ -6516,7 +6521,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "uqjm",
-    "z": 5,
+    "z": 18958,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6534,7 +6539,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "07eh",
-    "z": 4,
+    "z": 18954,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6543,7 +6548,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "68gw",
-    "z": 3,
+    "z": 18963,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6552,7 +6557,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "af6i",
-    "z": 2,
+    "z": 18941,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6561,7 +6566,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "ktlv",
-    "z": 1,
+    "z": 18945,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6570,7 +6575,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "1rdy",
-    "z": 18758,
+    "z": 18961,
     "parent": "yjto"
   },
   "Base Map Button New": {
