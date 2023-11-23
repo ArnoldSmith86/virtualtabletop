@@ -1638,7 +1638,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "gtlq",
-    "z": 19325,
+    "z": 19358,
     "parent": "yjto"
   },
   "jtdj": {
@@ -1646,7 +1646,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "jtdj",
-    "z": 19315,
+    "z": 19347,
     "parent": "yjto"
   },
   "n15g": {
@@ -1654,7 +1654,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "n15g",
-    "z": 19311,
+    "z": 19351,
     "parent": "yjto"
   },
   "1hwh": {
@@ -1662,7 +1662,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "1hwh",
-    "z": 19316,
+    "z": 19349,
     "parent": "yjto"
   },
   "h8j6": {
@@ -1670,7 +1670,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "h8j6",
-    "z": 19319,
+    "z": 19338,
     "parent": "yjto"
   },
   "m7x2": {
@@ -1678,7 +1678,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "m7x2",
-    "z": 19327,
+    "z": 19344,
     "parent": "yjto"
   },
   "jht6": {
@@ -1686,7 +1686,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "jht6",
-    "z": 19321,
+    "z": 19348,
     "parent": "yjto"
   },
   "22cj": {
@@ -1694,7 +1694,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "22cj",
-    "z": 19322,
+    "z": 19352,
     "parent": "yjto"
   },
   "i069": {
@@ -1702,7 +1702,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "i069",
-    "z": 19317,
+    "z": 19354,
     "parent": "yjto"
   },
   "4m7f": {
@@ -1710,7 +1710,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "4m7f",
-    "z": 19314,
+    "z": 19339,
     "parent": "yjto"
   },
   "p27u": {
@@ -1718,7 +1718,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "p27u",
-    "z": 19333,
+    "z": 19357,
     "parent": "yjto"
   },
   "qda1": {
@@ -1726,7 +1726,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "qda1",
-    "z": 19329,
+    "z": 19337,
     "parent": "yjto"
   },
   "z8e2": {
@@ -1734,7 +1734,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "z8e2",
-    "z": 19331,
+    "z": 19343,
     "parent": "yjto"
   },
   "0p3n": {
@@ -1742,7 +1742,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "0p3n",
-    "z": 19323,
+    "z": 19353,
     "parent": "yjto"
   },
   "wtxz": {
@@ -1750,7 +1750,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "wtxz",
-    "z": 19318,
+    "z": 19345,
     "parent": "yjto"
   },
   "5lp1": {
@@ -1758,7 +1758,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "5lp1",
-    "z": 19334,
+    "z": 19335,
     "parent": "yjto"
   },
   "xqi8": {
@@ -1766,7 +1766,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "xqi8",
-    "z": 19320,
+    "z": 19355,
     "parent": "yjto"
   },
   "eo2c": {
@@ -1774,7 +1774,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "eo2c",
-    "z": 19330,
+    "z": 19342,
     "parent": "yjto"
   },
   "Harbor Template": {
@@ -6479,7 +6479,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "ldbu",
-    "z": 19332,
+    "z": 19359,
     "parent": "yjto"
   },
   "uqjm": {
@@ -6487,7 +6487,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "uqjm",
-    "z": 19328,
+    "z": 19350,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6505,7 +6505,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "07eh",
-    "z": 19310,
+    "z": 19341,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6514,7 +6514,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "68gw",
-    "z": 19326,
+    "z": 19336,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6523,7 +6523,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "af6i",
-    "z": 19312,
+    "z": 19340,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6532,7 +6532,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "ktlv",
-    "z": 19324,
+    "z": 19346,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6541,7 +6541,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "1rdy",
-    "z": 19313,
+    "z": 19356,
     "parent": "yjto"
   },
   "Base Map Button New": {
@@ -6649,6 +6649,14 @@
           "cardType": "${upperType}",
           "activeFace": "${isUpper}"
         }
+      },
+      {
+        "func": "IF",
+        "operand1": "${upperType}",
+        "operand2": "D",
+        "thenRoutine": [
+          "var chipType = ' '"
+        ]
       },
       "// Chip",
       {
@@ -7129,7 +7137,7 @@
       "           ",
       "    XXX    ",
       "   XXXX    ",
-      "   XX XX   ",
+      "   XXXXX   ",
       "   XXXX    ",
       "    XXX    ",
       "           "
@@ -7139,7 +7147,7 @@
     },
     "levelRandomChipsCounter": 18,
     "levelRandomTiles": {
-      "X": "MWCGFGFFWGCMGMWWCFMWCGFGFFWGCMGMWWCF"
+      "X": "MWCGFGFFWGCMGMWWCFMWCGFGFFWGCMGMWWCFDD"
     },
     "levelRandomTilesCounter": 18,
     "levelSize": 100,
@@ -7147,7 +7155,7 @@
       "SSSSSSSSSSS",
       "SSSSXXXSSSS",
       "SSSXXXXSSSS",
-      "SSSXXDXXSSS",
+      "SSSXXXXXSSS",
       "SSSXXXXSSSS",
       "SSSSXXXSSSS",
       "SSSSSSSSSSS"
