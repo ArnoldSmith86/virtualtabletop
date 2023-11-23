@@ -71,7 +71,10 @@
               "height": "height"
             }
           }
-        ]
+        ],
+        "properties": {
+          "clickable": false
+        }
       }
     ],
     "cardDefaults": {
@@ -145,7 +148,10 @@
             }
           }
         ],
-        "radius": 1000
+        "radius": 1000,
+        "properties": {
+          "clickable": false
+        }
       }
     ],
     "cardTypes": {
