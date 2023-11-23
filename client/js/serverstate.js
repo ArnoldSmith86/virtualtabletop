@@ -115,6 +115,16 @@ async function addWidgetLocal(widget) {
     return null;
   }
 
+  if(widget.deck && !widgets.has(widget.deck)) {
+    console.error(`Refusing to add widget ${widget.id} with invalid deck ${widget.deck}.`);
+    return null;
+  }
+
+  if(widget.deck && !widgets.get(widget.deck).get('cardTypes')[widget.cardType]) {
+    console.error(`Refusing to add widget ${widget.id} with invalid cardType ${widget.cardType}.`);
+    return null;
+  }
+
   const isNewWidget = !widgets.has(widget.id);
   if(isNewWidget)
     addWidget(widget);
