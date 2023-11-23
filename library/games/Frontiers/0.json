@@ -5,7 +5,7 @@
     "cardType": "Ore",
     "id": "4255",
     "parent": "fnlg",
-    "z": 18913
+    "z": 19224
   },
   "5795": {
     "deck": "Resources",
@@ -13,7 +13,7 @@
     "cardType": "Wool",
     "id": "5795",
     "parent": "sii7",
-    "z": 18862
+    "z": 19148
   },
   "Tiles Real": {
     "type": "deck",
@@ -327,15 +327,15 @@
     "cardType": "Wood",
     "id": "rl2f",
     "parent": "f1uy",
-    "z": 18844
+    "z": 19110
   },
   "kiow": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "kiow",
-    "parent": "6ttf",
-    "z": 18877
+    "z": 19072,
+    "parent": "pzgz"
   },
   "hrm0": {
     "deck": "Resources",
@@ -343,7 +343,7 @@
     "cardType": "Wool",
     "id": "hrm0",
     "parent": "sii7",
-    "z": 18863
+    "z": 19150
   },
   "Switch Board": {
     "id": "Switch Board",
@@ -387,7 +387,7 @@
     "cardType": "Ore",
     "id": "e1tx",
     "parent": "fnlg",
-    "z": 18914
+    "z": 19226
   },
   "uzz1": {
     "deck": "Resources",
@@ -395,7 +395,7 @@
     "cardType": "Wheat",
     "id": "uzz1",
     "parent": "b75l",
-    "z": 18895
+    "z": 19186
   },
   "Bricks": {
     "type": "holder",
@@ -461,15 +461,15 @@
     "cardType": "Wood",
     "id": "j8dc",
     "parent": "f1uy",
-    "z": 18845
+    "z": 19112
   },
   "iob3": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "iob3",
-    "parent": "6ttf",
-    "z": 18878
+    "z": 19074,
+    "parent": "pzgz"
   },
   "q243": {
     "deck": "Resources",
@@ -477,7 +477,7 @@
     "cardType": "Wool",
     "id": "q243",
     "parent": "sii7",
-    "z": 18864
+    "z": 19152
   },
   "uo75": {
     "deck": "Resources",
@@ -485,7 +485,7 @@
     "cardType": "Ore",
     "id": "uo75",
     "parent": "fnlg",
-    "z": 18915
+    "z": 19228
   },
   "zd9i": {
     "deck": "Resources",
@@ -493,7 +493,7 @@
     "cardType": "Wheat",
     "id": "zd9i",
     "parent": "b75l",
-    "z": 18896
+    "z": 19188
   },
   "xhaz": {
     "deck": "Resources",
@@ -501,15 +501,15 @@
     "cardType": "Wood",
     "id": "xhaz",
     "parent": "f1uy",
-    "z": 18846
+    "z": 19114
   },
   "hxs4": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "hxs4",
-    "parent": "6ttf",
-    "z": 18879
+    "z": 19289,
+    "parent": "pzgz"
   },
   "kes3": {
     "deck": "Resources",
@@ -517,7 +517,7 @@
     "cardType": "Wool",
     "id": "kes3",
     "parent": "sii7",
-    "z": 18865
+    "z": 19154
   },
   "mpn9": {
     "deck": "Resources",
@@ -525,7 +525,7 @@
     "cardType": "Ore",
     "id": "mpn9",
     "parent": "fnlg",
-    "z": 18916
+    "z": 19230
   },
   "b4i5": {
     "deck": "Resources",
@@ -533,7 +533,7 @@
     "cardType": "Wheat",
     "id": "b4i5",
     "parent": "b75l",
-    "z": 18897
+    "z": 19190
   },
   "wxdx": {
     "deck": "Resources",
@@ -541,15 +541,15 @@
     "cardType": "Wood",
     "id": "wxdx",
     "parent": "f1uy",
-    "z": 18847
+    "z": 19116
   },
   "4xyt": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "4xyt",
-    "parent": "6ttf",
-    "z": 18880
+    "z": 19076,
+    "parent": "pzgz"
   },
   "r5o2": {
     "deck": "Resources",
@@ -557,7 +557,7 @@
     "cardType": "Wool",
     "id": "r5o2",
     "parent": "sii7",
-    "z": 18866
+    "z": 19156
   },
   "w5x8": {
     "deck": "Resources",
@@ -565,7 +565,7 @@
     "cardType": "Ore",
     "id": "w5x8",
     "parent": "fnlg",
-    "z": 18917
+    "z": 19232
   },
   "h9qt": {
     "deck": "Resources",
@@ -573,7 +573,7 @@
     "cardType": "Wheat",
     "id": "h9qt",
     "parent": "b75l",
-    "z": 18898
+    "z": 19192
   },
   "ugkt": {
     "deck": "Resources",
@@ -581,15 +581,15 @@
     "cardType": "Wood",
     "id": "ugkt",
     "parent": "f1uy",
-    "z": 18848
+    "z": 19118
   },
   "wnjy": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "wnjy",
-    "parent": "6ttf",
-    "z": 18881
+    "z": 19078,
+    "parent": "pzgz"
   },
   "rmtq": {
     "deck": "Resources",
@@ -597,7 +597,7 @@
     "cardType": "Wool",
     "id": "rmtq",
     "parent": "sii7",
-    "z": 18867
+    "z": 19158
   },
   "yn5o": {
     "deck": "Resources",
@@ -605,7 +605,7 @@
     "cardType": "Ore",
     "id": "yn5o",
     "parent": "fnlg",
-    "z": 18918
+    "z": 19234
   },
   "akml": {
     "deck": "Resources",
@@ -613,7 +613,7 @@
     "cardType": "Wheat",
     "id": "akml",
     "parent": "b75l",
-    "z": 18899
+    "z": 19194
   },
   "w9wp": {
     "deck": "Resources",
@@ -621,15 +621,15 @@
     "cardType": "Wood",
     "id": "w9wp",
     "parent": "f1uy",
-    "z": 18849
+    "z": 19120
   },
   "ktqb": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "ktqb",
-    "parent": "6ttf",
-    "z": 18882
+    "z": 19080,
+    "parent": "pzgz"
   },
   "qf6a": {
     "deck": "Resources",
@@ -637,7 +637,7 @@
     "cardType": "Wool",
     "id": "qf6a",
     "parent": "sii7",
-    "z": 18868
+    "z": 19160
   },
   "4m17": {
     "deck": "Resources",
@@ -645,7 +645,7 @@
     "cardType": "Ore",
     "id": "4m17",
     "parent": "fnlg",
-    "z": 18919
+    "z": 19236
   },
   "sk9p": {
     "deck": "Resources",
@@ -653,7 +653,7 @@
     "cardType": "Wheat",
     "id": "sk9p",
     "parent": "b75l",
-    "z": 18900
+    "z": 19196
   },
   "9oec": {
     "deck": "Resources",
@@ -661,15 +661,15 @@
     "cardType": "Wood",
     "id": "9oec",
     "parent": "f1uy",
-    "z": 18850
+    "z": 19122
   },
   "roae": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "roae",
-    "parent": "6ttf",
-    "z": 18883
+    "z": 19082,
+    "parent": "pzgz"
   },
   "hvc2": {
     "deck": "Resources",
@@ -677,7 +677,7 @@
     "cardType": "Wool",
     "id": "hvc2",
     "parent": "sii7",
-    "z": 18869
+    "z": 19162
   },
   "7dzt": {
     "deck": "Resources",
@@ -685,7 +685,7 @@
     "cardType": "Wheat",
     "id": "7dzt",
     "parent": "b75l",
-    "z": 18901
+    "z": 19198
   },
   "m1yn": {
     "deck": "Resources",
@@ -693,15 +693,15 @@
     "cardType": "Wood",
     "id": "m1yn",
     "parent": "f1uy",
-    "z": 18851
+    "z": 19124
   },
   "07b0": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "07b0",
-    "parent": "6ttf",
-    "z": 18884
+    "z": 19084,
+    "parent": "pzgz"
   },
   "8ca5": {
     "deck": "Resources",
@@ -709,7 +709,7 @@
     "cardType": "Wool",
     "id": "8ca5",
     "parent": "sii7",
-    "z": 18870
+    "z": 19164
   },
   "q19u": {
     "deck": "Resources",
@@ -717,7 +717,7 @@
     "cardType": "Ore",
     "id": "q19u",
     "parent": "fnlg",
-    "z": 18920
+    "z": 19238
   },
   "ric5": {
     "deck": "Resources",
@@ -725,7 +725,7 @@
     "cardType": "Wheat",
     "id": "ric5",
     "parent": "b75l",
-    "z": 18902
+    "z": 19200
   },
   "xad5": {
     "deck": "Resources",
@@ -733,15 +733,15 @@
     "cardType": "Wood",
     "id": "xad5",
     "parent": "f1uy",
-    "z": 18852
+    "z": 19126
   },
   "yn2h": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "yn2h",
-    "parent": "6ttf",
-    "z": 18885
+    "z": 19309,
+    "parent": "pzgz"
   },
   "1ive": {
     "deck": "Resources",
@@ -749,7 +749,7 @@
     "cardType": "Ore",
     "id": "1ive",
     "parent": "fnlg",
-    "z": 18921
+    "z": 19240
   },
   "2u11": {
     "deck": "Resources",
@@ -757,7 +757,7 @@
     "cardType": "Wheat",
     "id": "2u11",
     "parent": "b75l",
-    "z": 18903
+    "z": 19202
   },
   "piuy": {
     "deck": "Resources",
@@ -765,15 +765,15 @@
     "cardType": "Wood",
     "id": "piuy",
     "parent": "f1uy",
-    "z": 18853
+    "z": 19128
   },
   "gsug": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "gsug",
-    "parent": "6ttf",
-    "z": 18886
+    "parent": "pzgz",
+    "z": 19092
   },
   "os0k": {
     "deck": "Resources",
@@ -781,7 +781,7 @@
     "cardType": "Wool",
     "id": "os0k",
     "parent": "sii7",
-    "z": 18871
+    "z": 19166
   },
   "5qhq": {
     "deck": "Resources",
@@ -789,7 +789,7 @@
     "cardType": "Ore",
     "id": "5qhq",
     "parent": "fnlg",
-    "z": 18922
+    "z": 19242
   },
   "e8sc": {
     "deck": "Resources",
@@ -797,7 +797,7 @@
     "cardType": "Wheat",
     "id": "e8sc",
     "parent": "b75l",
-    "z": 18904
+    "z": 19204
   },
   "ettw": {
     "deck": "Resources",
@@ -805,15 +805,15 @@
     "cardType": "Wood",
     "id": "ettw",
     "parent": "f1uy",
-    "z": 18854
+    "z": 19130
   },
   "x1pc": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "x1pc",
-    "parent": "6ttf",
-    "z": 18887
+    "z": 19086,
+    "parent": "pzgz"
   },
   "0ls2": {
     "deck": "Resources",
@@ -821,7 +821,7 @@
     "cardType": "Wool",
     "id": "0ls2",
     "parent": "sii7",
-    "z": 18872
+    "z": 19168
   },
   "8me2": {
     "deck": "Resources",
@@ -829,7 +829,7 @@
     "cardType": "Ore",
     "id": "8me2",
     "parent": "fnlg",
-    "z": 18923
+    "z": 19244
   },
   "u9sz": {
     "deck": "Resources",
@@ -837,7 +837,7 @@
     "cardType": "Wheat",
     "id": "u9sz",
     "parent": "b75l",
-    "z": 18905
+    "z": 19206
   },
   "173c": {
     "deck": "Resources",
@@ -845,15 +845,15 @@
     "cardType": "Wood",
     "id": "173c",
     "parent": "f1uy",
-    "z": 18855
+    "z": 19132
   },
   "omfe": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "omfe",
-    "parent": "6ttf",
-    "z": 18888
+    "z": 19088,
+    "parent": "pzgz"
   },
   "owhq": {
     "deck": "Resources",
@@ -861,7 +861,7 @@
     "cardType": "Wool",
     "id": "owhq",
     "parent": "sii7",
-    "z": 18873
+    "z": 19170
   },
   "y1q7": {
     "deck": "Resources",
@@ -869,7 +869,7 @@
     "cardType": "Ore",
     "id": "y1q7",
     "parent": "fnlg",
-    "z": 18924
+    "z": 19246
   },
   "8gkm": {
     "deck": "Resources",
@@ -877,7 +877,7 @@
     "cardType": "Wheat",
     "id": "8gkm",
     "parent": "b75l",
-    "z": 18906
+    "z": 19208
   },
   "9j5j": {
     "deck": "Resources",
@@ -885,15 +885,15 @@
     "cardType": "Wood",
     "id": "9j5j",
     "parent": "f1uy",
-    "z": 18856
+    "z": 19134
   },
   "galp": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "galp",
-    "parent": "6ttf",
-    "z": 18889
+    "z": 19090,
+    "parent": "pzgz"
   },
   "o3hy": {
     "deck": "Resources",
@@ -901,7 +901,7 @@
     "cardType": "Wool",
     "id": "o3hy",
     "parent": "sii7",
-    "z": 18875
+    "z": 19172
   },
   "sgjq": {
     "deck": "Resources",
@@ -909,7 +909,7 @@
     "cardType": "Ore",
     "id": "sgjq",
     "parent": "fnlg",
-    "z": 18925
+    "z": 19248
   },
   "o5sm": {
     "deck": "Resources",
@@ -917,14 +917,14 @@
     "cardType": "Wheat",
     "id": "o5sm",
     "parent": "b75l",
-    "z": 18907
+    "z": 19210
   },
   "3lql": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Wood",
     "id": "3lql",
-    "z": 18857,
+    "z": 19136,
     "parent": "f1uy"
   },
   "e8yv": {
@@ -932,15 +932,15 @@
     "type": "card",
     "cardType": "Bricks",
     "id": "e8yv",
-    "parent": "6ttf",
-    "z": 18890
+    "parent": "pzgz",
+    "z": 19094
   },
   "qoqx": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Wool",
     "id": "qoqx",
-    "z": 18940,
+    "z": 19174,
     "parent": "sii7"
   },
   "bf9n": {
@@ -948,7 +948,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "bf9n",
-    "z": 18926,
+    "z": 19250,
     "parent": "fnlg"
   },
   "6cgv": {
@@ -956,7 +956,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "6cgv",
-    "z": 18908,
+    "z": 19212,
     "parent": "b75l"
   },
   "v239": {
@@ -964,7 +964,7 @@
     "type": "card",
     "cardType": "Wood",
     "id": "v239",
-    "z": 18858,
+    "z": 19138,
     "parent": "f1uy"
   },
   "3wwl": {
@@ -972,15 +972,15 @@
     "type": "card",
     "cardType": "Bricks",
     "id": "3wwl",
-    "z": 18891,
-    "parent": "6ttf"
+    "z": 19096,
+    "parent": "pzgz"
   },
   "yree": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Wool",
     "id": "yree",
-    "z": 18674,
+    "z": 19176,
     "activeFace": 1,
     "parent": "sii7"
   },
@@ -989,7 +989,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "earj",
-    "z": 18927,
+    "z": 19252,
     "parent": "fnlg"
   },
   "yjal": {
@@ -997,7 +997,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "yjal",
-    "z": 18909,
+    "z": 19214,
     "parent": "b75l"
   },
   "z4tr": {
@@ -1005,7 +1005,7 @@
     "type": "card",
     "cardType": "Wood",
     "id": "z4tr",
-    "z": 18860,
+    "z": 19140,
     "parent": "f1uy"
   },
   "j9y4": {
@@ -1013,15 +1013,15 @@
     "type": "card",
     "cardType": "Bricks",
     "id": "j9y4",
-    "z": 18892,
-    "parent": "6ttf"
+    "z": 19098,
+    "parent": "pzgz"
   },
   "j0wl": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Wool",
     "id": "j0wl",
-    "z": 18675,
+    "z": 19178,
     "parent": "sii7",
     "activeFace": 1
   },
@@ -1030,7 +1030,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "qew1",
-    "z": 18928,
+    "z": 19254,
     "parent": "fnlg"
   },
   "wzx3": {
@@ -1038,7 +1038,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "wzx3",
-    "z": 18910,
+    "z": 19216,
     "parent": "b75l"
   },
   "s870": {
@@ -1046,7 +1046,7 @@
     "type": "card",
     "cardType": "Wood",
     "id": "s870",
-    "z": 18861,
+    "z": 19142,
     "parent": "f1uy"
   },
   "d1h1": {
@@ -1054,15 +1054,15 @@
     "type": "card",
     "cardType": "Bricks",
     "id": "d1h1",
-    "z": 18893,
-    "parent": "6ttf"
+    "z": 19100,
+    "parent": "pzgz"
   },
   "mz5j": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Wool",
     "id": "mz5j",
-    "z": 18676,
+    "z": 19180,
     "parent": "sii7",
     "activeFace": 1
   },
@@ -1071,7 +1071,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "vjp3",
-    "z": 18929,
+    "z": 19256,
     "parent": "fnlg"
   },
   "2gs1": {
@@ -1079,7 +1079,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "2gs1",
-    "z": 11,
+    "z": 19218,
     "activeFace": 1,
     "parent": "b75l"
   },
@@ -1088,33 +1088,31 @@
     "type": "card",
     "cardType": "Wood",
     "id": "9x10",
-    "z": 18659,
-    "parent": "f1uy",
-    "activeFace": 1
+    "z": 19293,
+    "parent": "f1uy"
   },
   "kp1x": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "kp1x",
-    "z": 18894,
-    "parent": "6ttf"
+    "z": 19102,
+    "parent": "pzgz"
   },
   "9heq": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Wool",
     "id": "9heq",
-    "z": 18677,
-    "parent": "sii7",
-    "activeFace": 1
+    "z": 19297,
+    "parent": "sii7"
   },
   "e07b": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Ore",
     "id": "e07b",
-    "z": 18930,
+    "z": 19258,
     "parent": "fnlg"
   },
   "zzc2": {
@@ -1122,7 +1120,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "zzc2",
-    "z": 18911,
+    "z": 19220,
     "parent": "b75l"
   },
   "f6j7": {
@@ -1130,9 +1128,7 @@
     "type": "card",
     "cardType": "Wood",
     "id": "f6j7",
-    "z": 18933,
-    "activeFace": 1,
-    "hoverParent": "Wood",
+    "z": 19301,
     "parent": "f1uy"
   },
   "0fgb": {
@@ -1140,17 +1136,15 @@
     "type": "card",
     "cardType": "Bricks",
     "id": "0fgb",
-    "z": 10,
-    "parent": "6ttf",
-    "activeFace": 1
+    "z": 19104,
+    "parent": "pzgz"
   },
   "p0yy": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Wool",
     "id": "p0yy",
-    "z": 18678,
-    "activeFace": 1,
+    "z": 19305,
     "parent": "sii7"
   },
   "u3cm": {
@@ -1158,7 +1152,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "u3cm",
-    "z": 12,
+    "z": 19260,
     "activeFace": 1,
     "parent": "fnlg"
   },
@@ -1167,7 +1161,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "uid4",
-    "z": 18912,
+    "z": 19222,
     "parent": "b75l"
   },
   "Reset": {
@@ -2426,7 +2420,8 @@
     "x": -35,
     "y": 2,
     "layer": -4,
-    "rotation": 333
+    "rotation": 333,
+    "hand": "Hand"
   },
   "Player 1 - Road B": {
     "id": "Player 1 - Road B",
@@ -3624,7 +3619,8 @@
         "width",
         "height",
         "rotation",
-        "layer"
+        "layer",
+        "hand"
       ]
     },
     "color": "#999999"
@@ -4297,7 +4293,8 @@
         "width",
         "height",
         "rotation",
-        "layer"
+        "layer",
+        "hand"
       ]
     },
     "color": "#999999"
@@ -4967,7 +4964,8 @@
         "width",
         "height",
         "rotation",
-        "layer"
+        "layer",
+        "hand"
       ]
     },
     "color": "#999999"
@@ -5360,15 +5358,6 @@
     "z": 587,
     "hoverParent": "Wheat",
     "parent": "Wheat"
-  },
-  "6ttf": {
-    "type": "pile",
-    "width": 80,
-    "height": 120,
-    "id": "6ttf",
-    "z": 583,
-    "hoverParent": "Bricks",
-    "parent": "Bricks"
   },
   "Metro Template": {
     "id": "Metro Template",
@@ -6925,8 +6914,8 @@
     "type": "holder",
     "id": "Player 1 - Army Bonus",
     "parent": "Player 1",
-    "x": 28,
-    "y": -51,
+    "x": 18,
+    "y": -44,
     "width": 50,
     "height": 35,
     "rotation": -40,
@@ -6982,5 +6971,168 @@
     "id": "Player 4 - Army Bonus",
     "parent": "Player 4",
     "inheritFrom": "Player 1 - Army Bonus"
+  },
+  "Player 1 - Draw Card": {
+    "type": "button",
+    "id": "Player 1 - Draw Card",
+    "parent": "Player 1",
+    "fixedParent": true,
+    "x": 67,
+    "y": -57,
+    "width": 60,
+    "height": 60,
+    "classes": "symbols",
+    "css": {
+      "font-size": "58px"
+    },
+    "text": "[card_0]",
+    "clickRoutine": [
+      "var seatID = ${PROPERTY parent} concat ' - Seat'",
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${PROPERTY player OF $seatID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "dropShadowWidget",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "deck",
+        "value": "Resources"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "condition": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "text",
+                "text": "This will draw a random card from ${PROPERTY player OF $seatID}'s hand. Are you allowed to do that?"
+              }
+            ],
+            "confirmButtonText": "Draw Card",
+            "confirmButtonIcon": "play_arrow",
+            "cancelButtonText": "Nope",
+            "cancelButtonIcon": "close"
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "aggregation": "array"
+          },
+          "var shuffled = shuffle ${id}",
+          {
+            "func": "GET",
+            "collection": "playerSeats",
+            "variable": "playerSeat"
+          },
+          {
+            "func": "MOVE",
+            "collection": [
+              "${shuffled.0}"
+            ],
+            "to": "Temp Holder",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "Temp Holder",
+            "to": "${playerSeat}"
+          }
+        ]
+      }
+    ],
+    "ownerGlobalUpdateRoutine": [
+      "var seatID = ${PROPERTY parent} concat ' - Seat'",
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${PROPERTY player OF $seatID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "dropShadowWidget",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "deck",
+        "value": "Resources"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 10,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "[card_10plus]"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "[card_${COUNT}]"
+          }
+        ]
+      }
+    ]
+  },
+  "Player 2 - Draw Card": {
+    "type": "button",
+    "id": "Player 2 - Draw Card",
+    "parent": "Player 2",
+    "inheritFrom": "Player 1 - Draw Card",
+    "text": "[card_0]"
+  },
+  "Player 3 - Draw Card": {
+    "type": "button",
+    "id": "Player 3 - Draw Card",
+    "parent": "Player 3",
+    "inheritFrom": "Player 1 - Draw Card",
+    "text": "[card_0]"
+  },
+  "Player 4 - Draw Card": {
+    "type": "button",
+    "id": "Player 4 - Draw Card",
+    "parent": "Player 4",
+    "inheritFrom": "Player 1 - Draw Card",
+    "text": "[card_0]"
+  },
+  "pzgz": {
+    "type": "pile",
+    "parent": "Bricks",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 120,
+    "id": "pzgz"
+  },
+  "Temp Holder": {
+    "type": "holder",
+    "id": "Temp Holder",
+    "x": -176,
+    "y": 166,
+    "z": 132
   }
 }
