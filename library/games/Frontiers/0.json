@@ -1197,6 +1197,10 @@
               {
                 "value": "Base Map Button New",
                 "text": "Generate randomized board"
+              },
+              {
+                "value": "High Random Button",
+                "text": "Even more random board "
               }
             ],
             "variable": "board"
@@ -7134,5 +7138,47 @@
     "x": -176,
     "y": 166,
     "z": 132
+  },
+  "High Random Button": {
+    "type": "button",
+    "id": "High Random Button",
+    "parent": "Switch Board",
+    "x": 848,
+    "y": 550,
+    "width": 80,
+    "height": 80,
+    "movable": false,
+    "movableInEdit": true,
+    "text": "Base\nMap",
+    "inheritFrom": "Base Map Button New",
+    "levelChips": [
+      "           ",
+      "    XXX    ",
+      "   XXXX    ",
+      "   XX XX   ",
+      "   XXXX    ",
+      "    XXX    ",
+      "           "
+    ],
+    "levelRandomChips": {
+      "X": "936A654BC4583A98B2936A654BC4583A98B2"
+    },
+    "levelRandomChipsCounter": 18,
+    "levelRandomTiles": {
+      "X": "MWCGFGFFWGCMGMWWCFMWCGFGFFWGCMGMWWCF"
+    },
+    "levelRandomTilesCounter": 18,
+    "levelSize": 100,
+    "levelTiles": [
+      "SSSSSSSSSSS",
+      "SSSSXXXSSSS",
+      "SSSXXXXSSSS",
+      "SSSXXDXXSSS",
+      "SSSXXXXSSSS",
+      "SSSSXXXSSSS",
+      "SSSSSSSSSSS"
+    ],
+    "levelX": -66.025403787,
+    "levelY": -50
   }
 }
