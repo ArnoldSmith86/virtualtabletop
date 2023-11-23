@@ -1091,7 +1091,7 @@ onLoad(function() {
     updateFilterOverflow();
   });
   document.addEventListener('dragover', function(e) {
-    if(e.dataTransfer.types.includes('Files')) {
+    if($('#statesOverlay').style.display == 'flex' && e.dataTransfer.types.includes('Files')) {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'copy';
       $('#statesButton').click();
