@@ -1334,15 +1334,15 @@ export class Widget extends StateManaged {
           problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
           a.relation = '==';
         }
-        if(a.condition !== undefined || a.operand1 !== undefined) {
+        if(original.condition !== undefined || original.operand1 !== undefined) {
           let condition = a.condition;
-          if (condition === undefined)
+          if (original.condition === undefined)
             condition = await compute(a.relation, null, a.operand1, a.operand2);
           const branch = condition ? 'thenRoutine' : 'elseRoutine';
           if(Array.isArray(a[branch]))
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           if(jeRoutineLogging) {
-            if (a.condition === undefined)
+            if (original.condition === undefined)
               jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
             else
               jeLoggingRoutineOperationSummary(`'${original.condition}'`, `${JSON.stringify(condition)}`)
