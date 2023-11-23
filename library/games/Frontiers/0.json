@@ -6666,8 +6666,16 @@
     "text": "Base\nMap",
     "clickRoutine": [
       {
-        "func": "CALL",
-        "widget": "Clear Button"
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "in",
+        "value": [
+          "Card Template",
+          "Chip Template"
+        ]
+      },
+      {
+        "func": "DELETE"
       },
       {
         "func": "SET",
