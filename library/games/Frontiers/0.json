@@ -2087,12 +2087,42 @@
           {
             "type": "text",
             "text": "This will start a new game by resetting everything."
+          },
+          {
+            "type": "select",
+            "label": "Board",
+            "options": [
+              {
+                "value": "keep",
+                "text": "Play on the same board"
+              },
+              {
+                "value": "Starter Map Button New",
+                "text": "Use fixed beginner board"
+              },
+              {
+                "value": "Base Map Button New",
+                "text": "Generate randomized board"
+              }
+            ],
+            "variable": "board"
           }
         ],
         "confirmButtonText": "New Game",
         "confirmButtonIcon": "play_arrow",
         "cancelButtonText": "Resume Game",
         "cancelButtonIcon": "close"
+      },
+      {
+        "func": "IF",
+        "operand1": "${board}",
+        "operand2": "keep",
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${board}"
+          }
+        ]
       },
       {
         "func": "FOREACH",
@@ -7565,7 +7595,7 @@
     },
     "levelX": -66.025403787,
     "levelY": -50,
-    "levelSize": 50,
+    "levelSize": 100,
     "createTileRoutine": [
       "// Tile",
       {
