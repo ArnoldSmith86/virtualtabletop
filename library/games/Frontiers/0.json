@@ -395,24 +395,6 @@
     "parent": "b75l",
     "z": 18895
   },
-  "Resources2": {
-    "inheritFrom": "Resources",
-    "id": "Resources2",
-    "type": "deck",
-    "parent": "Wool"
-  },
-  "Resources3": {
-    "inheritFrom": "Resources",
-    "id": "Resources3",
-    "type": "deck",
-    "parent": "Wheat"
-  },
-  "Resources4": {
-    "inheritFrom": "Resources",
-    "id": "Resources4",
-    "type": "deck",
-    "parent": "Ore"
-  },
   "Bricks": {
     "type": "holder",
     "id": "Bricks",
@@ -437,12 +419,6 @@
     },
     "inheritFrom": "Bricks",
     "z": 127
-  },
-  "Resources5": {
-    "inheritFrom": "Resources",
-    "id": "Resources5",
-    "type": "deck",
-    "parent": "Wood"
   },
   "Wool": {
     "type": "holder",
