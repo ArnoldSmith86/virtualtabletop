@@ -1326,7 +1326,13 @@
     "classes": "material-icons",
     "css": {
       "font-size": "48px"
-    }
+    },
+    "gameStartRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "Development Draw"
+      }
+    ]
   },
   "Development": {
     "type": "deck",
