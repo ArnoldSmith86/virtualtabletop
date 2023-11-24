@@ -84,9 +84,12 @@ function updateProperties(properties, v, globalProperties) {
     for(const cardType in properties.cardTypes)
       updateProperties(properties.cardTypes[cardType], v, globalProperties);
 
-  for(const property in properties)
-    if(property.match(/Routine$/))
+  for(const property in properties) {
+    if(property.match(/Routine$/)) {
       updateRoutine(properties[property], v, globalProperties);
+      v<16 && v16IfImprovements(properties[property]); // this one does the recursion into sub-routines itself because it keeps track of variables
+    }
+  }
 
   v<4 && v4ModifyDropTargetEmptyArray(properties);
   v<5 && v5DynamicFaceProperties(properties);
@@ -463,4 +466,155 @@ function v15SkipTurnProperty(properties) {
 function v15SkipTurnRoutine(routine) {
   for(const key in routine)
     routine[key] = JSON.parse(JSON.stringify(routine[key]).replace(/\bskipTurn\b/g, 'skipTurnFileUpdater'));
+}
+
+function v16IfImprovements(routine) {
+  function operationVariablesSafety(operation, safeVariables, safeCollections) {
+    const isAssignment = String(operation).match(/^var ((?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+) (?!.*(getIndex|length))/);
+    if(isAssignment)
+      safeVariables[isAssignment[1]] = !String(operation).match(/ getIndex | length /);
+
+    //console.log('---', operation.func || 'VAR');
+    if(operation.func == 'IF') {
+      const thenSafeVariables = {...safeVariables};
+      const elseSafeVariables = {...safeVariables};
+      const thenSafeCollections = {...safeCollections};
+      const elseSafeCollections = {...safeCollections};
+      //console.log('THENSAFEVARIABLES', safeVariables, thenSafeVariables);
+      if(Array.isArray(operation.thenRoutine))
+        routineVariablesSafety(operation.thenRoutine, thenSafeVariables, thenSafeCollections);
+      if(Array.isArray(operation.elseRoutine))
+        routineVariablesSafety(operation.elseRoutine, elseSafeVariables, elseSafeCollections);
+      for(const variable of Object.keys(thenSafeVariables).concat(Object.keys(elseSafeVariables))) {
+        if(thenSafeVariables[variable] && elseSafeVariables[variable])
+          safeVariables[variable] = true;
+        if(thenSafeVariables[variable] === false || elseSafeVariables[variable] === false)
+          safeVariables[variable] = false;
+      }
+      for(const collection of Object.keys(thenSafeCollections).concat(Object.keys(elseSafeCollections))) {
+        if(thenSafeCollections[collection] && elseSafeCollections[collection])
+          safeCollections[collection] = true;
+        if(thenSafeCollections[collection] === false || elseSafeCollections[collection] === false)
+          safeCollections[collection] = false;
+      }
+      //operation.result = {thenSafeVariables: {...thenSafeVariables}, elseSafeVariables: {...elseSafeVariables}, safeVariables: {...safeVariables}};
+      //operation.result = {safeVariables: {...safeVariables}};
+    }
+    if(operation.func == 'FOREACH') {
+      const loopSafeVariables = {...safeVariables};
+      const loopSafeCollections = {...safeCollections};
+      if(Array.isArray(operation.loopRoutine))
+        routineVariablesSafety(operation.loopRoutine, loopSafeVariables, loopSafeCollections);
+      for(const variable in loopSafeVariables)
+        if(loopSafeVariables[variable] === false)
+          safeVariables[variable] = false;
+      for(const collection in loopSafeCollections)
+        if(loopSafeCollections[collection] === false)
+          safeCollections[collection] = false;
+    }
+    if(operation.func == 'COUNT' && operation.holder === undefined && safeCollections[operation.collection || 'DEFAULT'])
+      safeVariables[operation.variable || 'COUNT'] = true;
+    if(operation.func == 'GET' && operation.collection == 'thisButton')
+      safeVariables[operation.variable || operation.property || 'id'] = true;
+    if(operation.func == 'INPUT')
+      for(const field of operation.fields || [])
+        safeVariables[field.variable || 'ASDHIASHDKJH'] = true;
+    if(operation.func == 'SELECT')
+      if(operation.source === undefined || operation.source == 'all' || safeCollections[operation.source])
+        safeCollections[operation.collection || 'DEFAULT'] = true;
+  }
+
+  function routineVariablesSafety(routine, safeVariables, safeCollections) {
+    for(const operation of routine)
+      operationVariablesSafety(operation, safeVariables, safeCollections);
+  }
+
+  const safeVariables = {};
+  const safeCollections = {};
+  for(const operation of routine) {
+
+    if(operation.func == 'IF') {
+      if(['===', '!==', '&&', '||'].indexOf(operation.relation) != -1)
+        operation.relation = '==';
+
+      const conditionIsVariable = String(operation.condition).match(/^\$\{([^}]+)\}$/);
+      const conditionCouldBeUndefined = !String(operation.condition).match(/PROPERTY/) && conditionIsVariable && !safeVariables[conditionIsVariable[1]];
+
+      const operand1IsVariable = String(operation.operand1).match(/^\$\{([^}]+)\}$/);
+      const operand1CouldBeUndefined = !String(operation.operand1).match(/PROPERTY/) && operand1IsVariable && !safeVariables[operand1IsVariable[1]];
+
+      if(operation.elseRoutine) {
+        if(operation.condition === undefined && operand1CouldBeUndefined) {
+          //operation.applied = {note:'should not call elseRoutine if operand1 is undefined', safeVariables:{...safeVariables}, safeCollections:{...safeCollections} };
+          operation.elseRoutine = [
+            {
+              note1: 'added by file updater to simulate old behavior where elseRoutine would not be called if operand1 is undefined',
+              note2: 'replace this IF by its thenRoutine contents if you are sure that operand1 will never be null',
+              func: 'IF',
+              operand1: operation.operand1,
+              relation: '!==',
+              operand2: '${fileUpdaterUndefinedVariable}',
+              thenRoutine: operation.elseRoutine
+            }
+          ];
+          //console.log(routine, safeVariables);
+        }
+
+        if(operation.operand1 === undefined && conditionCouldBeUndefined) {
+          //operation.applied = {note:'should not call elseRoutine if condition is undefined', safeVariables:{...safeVariables}, safeCollections:{...safeCollections} };
+          operation.elseRoutine = [
+            {
+              note1: 'added by file updater to simulate old behavior where elseRoutine would not be called if condition is undefined',
+              note2: 'replace this IF by its thenRoutine contents if you are sure that condition will never be null',
+              func: 'IF',
+              operand1: operation.condition,
+              relation: '!==',
+              operand2: '${fileUpdaterUndefinedVariable}',
+              thenRoutine: operation.elseRoutine
+            }
+          ];
+          //console.log(routine, safeVariables);
+        }
+
+        if(operation.operand1 !== undefined && conditionCouldBeUndefined) {
+          //operation.applied = {note:`should use operand1 if condition is undefined and operand1 is defined;
+          //                           should not call elseRoutine if condition is undefined and operand1 is undefined`, safeVariables:{...safeVariables}, safeCollections:{...safeCollections} };
+          operation.elseRoutine = [
+            {
+              note: 'added by file updater to simulate old behavior where operand1 would be used if condition evaluates to undefined',
+              func: 'IF',
+              operand1: operation.condition,
+              relation: '===',
+              operand2: '${fileUpdaterUndefinedVariable}',
+              thenRoutine: [
+                {
+                  func: 'IF',
+                  operand1: operation.operand1,
+                  relation: '!==',
+                  operand2: '${fileUpdaterUndefinedVariable}',
+                  thenRoutine: [
+                    {
+                      func: 'IF',
+                      operand1: operation.operand1,
+                      relation: operation.relation,
+                      operand2: operation.operand2,
+                      thenRoutine: JSON.parse(JSON.stringify(operation.thenRoutine)),
+                      elseRoutine: JSON.parse(JSON.stringify(operation.elseRoutine))
+                    }
+                  ]
+                }
+              ],
+              elseRoutine: operation.elseRoutine
+            }
+          ];
+          //console.log(routine, safeVariables);
+        }
+      }
+    }
+
+    operationVariablesSafety(operation, safeVariables, safeCollections);
+    //operation.safeAfter = { safeVariables:{...safeVariables}, safeCollections:{...safeCollections} };
+  }
+  //routine.push({safeVariables,safeCollections});
+  //console.log(routine);
 }
