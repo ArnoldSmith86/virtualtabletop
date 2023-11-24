@@ -1398,7 +1398,7 @@
             "textAlign": "center",
             "width": 70,
             "color": "white",
-            "css": "letter-spacing: -1px",
+            "css": "letter-spacing: -1px; line-height:10px",
             "dynamicProperties": {
               "value": "text"
             }
