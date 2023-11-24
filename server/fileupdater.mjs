@@ -474,13 +474,11 @@ function v16IfImprovements(routine) {
     if(isAssignment)
       safeVariables[isAssignment[1]] = !String(operation).match(/ getIndex | length /);
 
-    //console.log('---', operation.func || 'VAR');
     if(operation.func == 'IF') {
       const thenSafeVariables = {...safeVariables};
       const elseSafeVariables = {...safeVariables};
       const thenSafeCollections = {...safeCollections};
       const elseSafeCollections = {...safeCollections};
-      //console.log('THENSAFEVARIABLES', safeVariables, thenSafeVariables);
       if(Array.isArray(operation.thenRoutine))
         routineVariablesSafety(operation.thenRoutine, thenSafeVariables, thenSafeCollections);
       if(Array.isArray(operation.elseRoutine))
@@ -497,8 +495,6 @@ function v16IfImprovements(routine) {
         if(thenSafeCollections[collection] === false || elseSafeCollections[collection] === false)
           safeCollections[collection] = false;
       }
-      //operation.result = {thenSafeVariables: {...thenSafeVariables}, elseSafeVariables: {...elseSafeVariables}, safeVariables: {...safeVariables}};
-      //operation.result = {safeVariables: {...safeVariables}};
     }
     if(operation.func == 'FOREACH') {
       const loopSafeVariables = {...safeVariables};
@@ -545,7 +541,6 @@ function v16IfImprovements(routine) {
 
       if(operation.elseRoutine) {
         if(operation.condition === undefined && operand1CouldBeUndefined) {
-          //operation.applied = {note:'should not call elseRoutine if operand1 is undefined', safeVariables:{...safeVariables}, safeCollections:{...safeCollections} };
           operation.elseRoutine = [
             {
               note1: 'added by file updater to simulate old behavior where elseRoutine would not be called if operand1 is undefined',
@@ -557,11 +552,9 @@ function v16IfImprovements(routine) {
               thenRoutine: operation.elseRoutine
             }
           ];
-          //console.log(routine, safeVariables);
         }
 
         if(operation.operand1 === undefined && conditionCouldBeUndefined) {
-          //operation.applied = {note:'should not call elseRoutine if condition is undefined', safeVariables:{...safeVariables}, safeCollections:{...safeCollections} };
           operation.elseRoutine = [
             {
               note1: 'added by file updater to simulate old behavior where elseRoutine would not be called if condition is undefined',
@@ -573,12 +566,9 @@ function v16IfImprovements(routine) {
               thenRoutine: operation.elseRoutine
             }
           ];
-          //console.log(routine, safeVariables);
         }
 
         if(operation.operand1 !== undefined && conditionCouldBeUndefined) {
-          //operation.applied = {note:`should use operand1 if condition is undefined and operand1 is defined;
-          //                           should not call elseRoutine if condition is undefined and operand1 is undefined`, safeVariables:{...safeVariables}, safeCollections:{...safeCollections} };
           operation.elseRoutine = [
             {
               note: 'added by file updater to simulate old behavior where operand1 would be used if condition evaluates to undefined',
@@ -607,14 +597,10 @@ function v16IfImprovements(routine) {
               elseRoutine: operation.elseRoutine
             }
           ];
-          //console.log(routine, safeVariables);
         }
       }
     }
 
     operationVariablesSafety(operation, safeVariables, safeCollections);
-    //operation.safeAfter = { safeVariables:{...safeVariables}, safeCollections:{...safeCollections} };
   }
-  //routine.push({safeVariables,safeCollections});
-  //console.log(routine);
 }
