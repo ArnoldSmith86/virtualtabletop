@@ -1638,7 +1638,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "gtlq",
-    "z": 19358,
+    "z": 19378,
     "parent": "yjto"
   },
   "jtdj": {
@@ -1646,7 +1646,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "jtdj",
-    "z": 19347,
+    "z": 19371,
     "parent": "yjto"
   },
   "n15g": {
@@ -1654,7 +1654,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "n15g",
-    "z": 19351,
+    "z": 19365,
     "parent": "yjto"
   },
   "1hwh": {
@@ -1662,7 +1662,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "1hwh",
-    "z": 19349,
+    "z": 19379,
     "parent": "yjto"
   },
   "h8j6": {
@@ -1670,7 +1670,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "h8j6",
-    "z": 19338,
+    "z": 19368,
     "parent": "yjto"
   },
   "m7x2": {
@@ -1678,7 +1678,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "m7x2",
-    "z": 19344,
+    "z": 19369,
     "parent": "yjto"
   },
   "jht6": {
@@ -1686,7 +1686,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "jht6",
-    "z": 19348,
+    "z": 19377,
     "parent": "yjto"
   },
   "22cj": {
@@ -1694,7 +1694,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "22cj",
-    "z": 19352,
+    "z": 19381,
     "parent": "yjto"
   },
   "i069": {
@@ -1702,7 +1702,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "i069",
-    "z": 19354,
+    "z": 19376,
     "parent": "yjto"
   },
   "4m7f": {
@@ -1710,7 +1710,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "4m7f",
-    "z": 19339,
+    "z": 19375,
     "parent": "yjto"
   },
   "p27u": {
@@ -1718,7 +1718,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "p27u",
-    "z": 19357,
+    "z": 19382,
     "parent": "yjto"
   },
   "qda1": {
@@ -1726,7 +1726,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "qda1",
-    "z": 19337,
+    "z": 19363,
     "parent": "yjto"
   },
   "z8e2": {
@@ -1734,7 +1734,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "z8e2",
-    "z": 19343,
+    "z": 19374,
     "parent": "yjto"
   },
   "0p3n": {
@@ -1742,7 +1742,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "0p3n",
-    "z": 19353,
+    "z": 19362,
     "parent": "yjto"
   },
   "wtxz": {
@@ -1750,7 +1750,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "wtxz",
-    "z": 19345,
+    "z": 19373,
     "parent": "yjto"
   },
   "5lp1": {
@@ -1758,7 +1758,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "5lp1",
-    "z": 19335,
+    "z": 19370,
     "parent": "yjto"
   },
   "xqi8": {
@@ -1766,7 +1766,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "xqi8",
-    "z": 19355,
+    "z": 19364,
     "parent": "yjto"
   },
   "eo2c": {
@@ -1774,7 +1774,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "eo2c",
-    "z": 19342,
+    "z": 19384,
     "parent": "yjto"
   },
   "Harbor Template": {
@@ -5025,10 +5025,10 @@
       "ruleText": "<h4>🛠️ Setup</h4><ol><li>Each player joins the game by clicking a seat on the left.</li><li>Press <i class=\"richtextSymbol material-icons\">restart_alt</i> in the bottom left to start a new game and select the type of board to play on.<br></li>  <li>The highlighted player begins by dragging a settlement (house) from its seat on the left to a junction point between hexes. Drag a road next to it on any adjacent edge.</li><li>Players continue clockwise placing their first settlement.</li><li>The last player may place two settlements (they don't have to be joined by roads) and placement continues counter-clockwise.</li><li>All players take matching resources for the three hex tiles next to their second settlement from the card piles on the right and drag them into their hand area at the bottom (every player sees only their own cards here).<br></li></ol><h4>🎮 Gameplay</h4><ol>  <li><strong>Roll the Dice 🎲<br></strong>The active player rolls the two six-sided dice in the top-right to determine which terrain hexes produce resources. Every player with a settlement or city adjacent to a hex with the rolled number receives one matching resource cards for each settlement and two for each city.</li>  <li><strong>Trade 🤝<br></strong>The active player may trade resources with other players or with the bank (4:1 ratio, or better if on a port).</li>  <li><strong>Build 🏗️<br></strong>Players can build new roads, settlements, or upgrade settlements to cities with their resources, or buy development cards. The costs are:    <br><br><ul>      <li>Road:<br>🧱🌲&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 Brick + 1 Lumber&nbsp;</li>      <li>Settlement:<br>🧱🌲🐑🌾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 Brick + 1 Lumber + 1 Wool + 1 Grain</li>      <li>City:<br>⛰⛰⛰🌾🌾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3 Ore + 2 Grain</li>      <li>Development Card:<br>⛰🐑🌾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 Ore️ + 1 Wool + 1 Grain<br><br></li>    </ul>  </li>  <li><strong>End Turn<br></strong>After performing actions, the active player ends their turn by pressing <i class=\"richtextSymbol material-icons\">skip_next</i> and the next player takes their turn.</li></ol><h4>🗺️ Development Cards</h4><div>Players can buy development cards by paying ⛰🐑🌾 to the bank and dragging a development card from the bottom right into their hand at the bottom.</div><div><br></div><div>Only one development card may be played per turn  and you may not play cards you bought on the same turn.<br></div><ul>  <li>🧙‍♂️ <strong>Knight</strong><br>Move the robber and steal 1 resource card from an adjacent player by clicking the <i class=\"richtextSymbol symbols\">[card]</i> button next to their name (it shows the number of resource cards in their hand).<br>The knight card stays face-up on the board next to your seat. If you have 3 knights (and nobody has more), you can drag the Largest Army token from the build cost overview to your seat, giving you 2 victory points.<br><br></li><li>🏰 <strong>1 Point</strong><br>Each card is worth 1 victory point. Keep them in your hand and reveal them as soon as you have 10 victory points in total.<br><br></li><li>💰 <b>Monopoly<br></b>Name one of the five resources. Every player has to give you all of their cards of that resource.<br><br></li><li>🌽 <b>Resources<br></b>Take two resource cards of your choice from the bank.<br><br></li><li>🛣 <b>Roads<br></b>Immediately place two roads onto the board (adjacent to your pieces) without paying for them.</li></ul><h4>🥷 The Robber</h4><p>When a player rolls a 7, no resources are distributed.</p><p>All players that have more than 7 resource cards in their hand, have to discard half of them (rounding down).<br></p><p>The player who rolled must move the robber to any other terrain hex, blocking that hex's number. The player may then steal 1 resource card from another player with a settlement or city adjacent to the robber's new location by clicking the <i class=\"richtextSymbol symbols\">[card]</i> button next to their name (it shows the number of resource cards in their hand).</p><h4>📈 Building Points</h4><ul>  <li>Settlement: <b>1</b> point 🏘️</li>  <li>City: <b>2</b> points 🏙️ (upgrades a settlement)</li>  <li>Longest Road 🛣️ (at least 5 road segments): <b>2</b> points</li>  <li>Largest Army ⚔️ (use most Knight cards): <b>2</b> points</li>  <li>Victory Point Cards: <b>1</b> point each 🏆</li></ul><h4>🏁 Winning the Game</h4><p>The first player to accumulate 10 victory points on their turn wins the game.</p><h4>🔔 Additional Rules</h4><ul><li>Settlements must be built at least 2 roads away from any other settlements or cities. So there always has to be an empty junction between them.<br></li><li>Roads must connect to your own roads, settlements or cities.</li></ul>",
       "helpText": "",
       "similarDesigner": "Klaus Teuber",
-      "variantImage": "",
-      "variant": "",
+      "players": "2-4",
       "language": "en-US",
-      "players": "2-4"
+      "variant": "",
+      "variantImage": ""
     }
   },
   "Development Draw": {
@@ -6479,7 +6479,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "ldbu",
-    "z": 19359,
+    "z": 19360,
     "parent": "yjto"
   },
   "uqjm": {
@@ -6487,7 +6487,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "uqjm",
-    "z": 19350,
+    "z": 19383,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6505,7 +6505,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "07eh",
-    "z": 19341,
+    "z": 19380,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6514,7 +6514,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "68gw",
-    "z": 19336,
+    "z": 19372,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6523,7 +6523,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "af6i",
-    "z": 19340,
+    "z": 19367,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6532,7 +6532,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "ktlv",
-    "z": 19346,
+    "z": 19361,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6541,7 +6541,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "1rdy",
-    "z": 19356,
+    "z": 19366,
     "parent": "yjto"
   },
   "Base Map Button New": {
@@ -6637,6 +6637,8 @@
       },
       "var upperType = ${tileType} toUpperCase",
       "var isUpper = ${upperType} == ${tileType}",
+      "var activeFace = ${isUpper} && 1",
+      "var activeFace = ${activeFace} || 0",
       {
         "func": "CLONE",
         "source": [
@@ -6647,7 +6649,7 @@
           "x": "${x}",
           "y": "${y}",
           "cardType": "${upperType}",
-          "activeFace": "${isUpper}"
+          "activeFace": "${activeFace}"
         }
       },
       {
@@ -6676,6 +6678,8 @@
           "var chipWithString = 'A' concat ${chipType}",
           "var upperType = ${chipWithString} toUpperCase",
           "var isUpper = ${upperType} == ${chipWithString}",
+          "var activeFace = ${isUpper} && 1",
+          "var activeFace = ${activeFace} || 0",
           "var x = ${x} + 57",
           "var y = ${y} + 70",
           {
@@ -6688,7 +6692,7 @@
               "x": "${x}",
               "y": "${y}",
               "cardType": "${upperType.1}",
-              "activeFace": "${isUpper}"
+              "activeFace": "${activeFace}"
             }
           }
         ]
