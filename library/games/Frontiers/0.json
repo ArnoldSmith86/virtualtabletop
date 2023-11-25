@@ -1638,7 +1638,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "gtlq",
-    "z": 19378,
+    "z": 19394,
     "parent": "yjto"
   },
   "jtdj": {
@@ -1646,7 +1646,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "jtdj",
-    "z": 19371,
+    "z": 19402,
     "parent": "yjto"
   },
   "n15g": {
@@ -1654,7 +1654,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "n15g",
-    "z": 19365,
+    "z": 19387,
     "parent": "yjto"
   },
   "1hwh": {
@@ -1662,7 +1662,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "1hwh",
-    "z": 19379,
+    "z": 19397,
     "parent": "yjto"
   },
   "h8j6": {
@@ -1670,7 +1670,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "h8j6",
-    "z": 19368,
+    "z": 19407,
     "parent": "yjto"
   },
   "m7x2": {
@@ -1678,7 +1678,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "m7x2",
-    "z": 19369,
+    "z": 19409,
     "parent": "yjto"
   },
   "jht6": {
@@ -1686,7 +1686,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "jht6",
-    "z": 19377,
+    "z": 19396,
     "parent": "yjto"
   },
   "22cj": {
@@ -1694,7 +1694,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "22cj",
-    "z": 19381,
+    "z": 19406,
     "parent": "yjto"
   },
   "i069": {
@@ -1702,7 +1702,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "i069",
-    "z": 19376,
+    "z": 19395,
     "parent": "yjto"
   },
   "4m7f": {
@@ -1710,7 +1710,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "4m7f",
-    "z": 19375,
+    "z": 19392,
     "parent": "yjto"
   },
   "p27u": {
@@ -1718,7 +1718,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "p27u",
-    "z": 19382,
+    "z": 19385,
     "parent": "yjto"
   },
   "qda1": {
@@ -1726,7 +1726,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "qda1",
-    "z": 19363,
+    "z": 19391,
     "parent": "yjto"
   },
   "z8e2": {
@@ -1734,7 +1734,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "z8e2",
-    "z": 19374,
+    "z": 19399,
     "parent": "yjto"
   },
   "0p3n": {
@@ -1742,7 +1742,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "0p3n",
-    "z": 19362,
+    "z": 19398,
     "parent": "yjto"
   },
   "wtxz": {
@@ -1750,7 +1750,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "wtxz",
-    "z": 19373,
+    "z": 19388,
     "parent": "yjto"
   },
   "5lp1": {
@@ -1758,7 +1758,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "5lp1",
-    "z": 19370,
+    "z": 19400,
     "parent": "yjto"
   },
   "xqi8": {
@@ -1766,7 +1766,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "xqi8",
-    "z": 19364,
+    "z": 19408,
     "parent": "yjto"
   },
   "eo2c": {
@@ -1774,7 +1774,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "eo2c",
-    "z": 19384,
+    "z": 19393,
     "parent": "yjto"
   },
   "Harbor Template": {
@@ -6479,7 +6479,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "ldbu",
-    "z": 19360,
+    "z": 19386,
     "parent": "yjto"
   },
   "uqjm": {
@@ -6487,7 +6487,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "uqjm",
-    "z": 19383,
+    "z": 19404,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6505,7 +6505,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "07eh",
-    "z": 19380,
+    "z": 19405,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6514,7 +6514,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "68gw",
-    "z": 19372,
+    "z": 19403,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6523,7 +6523,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "af6i",
-    "z": 19367,
+    "z": 19389,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6532,7 +6532,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "ktlv",
-    "z": 19361,
+    "z": 19390,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6541,13 +6541,12 @@
     "type": "card",
     "cardType": "Resources",
     "id": "1rdy",
-    "z": 19366,
+    "z": 19401,
     "parent": "yjto"
   },
   "Base Map Button New": {
     "type": "button",
     "id": "Base Map Button New",
-    "parent": "Switch Board",
     "x": 768,
     "y": 550,
     "text": "Base\nMap",
@@ -6805,8 +6804,83 @@
         ],
         "property": "cardDefaults",
         "value": "${cardDefaults}"
+      },
+      "// Piece grids",
+      {
+        "func": "FOREACH",
+        "in": [
+          "City Template",
+          "Settlement Template",
+          "Knight A Template",
+          "Knight B Template",
+          "Knight C Template",
+          "Metro Template",
+          "Wall Template"
+        ],
+        "loopRoutine": [
+          {
+            "func": "CALL",
+            "routine": "setGridForJunctionsRoutine",
+            "arguments": {
+              "widget": "${value}"
+            }
+          }
+        ]
       }
-    ]
+    ],
+    "setGridForJunctionsRoutine": [
+      "var WIDTH = ${PROPERTY levelSize} * 1.73205080757",
+      "var HEIGHT = ${PROPERTY levelSize} * 2",
+      "var GRIDHEIGHT = ${PROPERTY levelSize} * 3",
+      "var baseX = ${PROPERTY levelX} - ${PROPERTY width OF $widget} / 2",
+      "var baseY = ${PROPERTY levelY} - ${PROPERTY height OF $widget} / 2",
+      "var junctionOffsetX1 = ${baseX} + ${WIDTH} / 2",
+      "var junctionOffsetY1 = ${baseY}",
+      "var junctionOffsetX2 = ${baseX} + ${WIDTH} / 2",
+      "var junctionOffsetY2 = ${baseY} + ${HEIGHT}",
+      "var junctionOffsetX3 = ${baseX}",
+      "var junctionOffsetY3 = ${baseY} + ${HEIGHT} / 4",
+      "var junctionOffsetX4 = ${baseX}",
+      "var junctionOffsetY4 = ${baseY} + ${HEIGHT} / 4 * 3",
+      {
+        "func": "SET",
+        "collection": [
+          "${widget}"
+        ],
+        "property": "grid",
+        "value": [
+          {
+            "offsetX": "${junctionOffsetX1}",
+            "offsetY": "${junctionOffsetY1}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}",
+            "minX": 250
+          },
+          {
+            "offsetX": "${junctionOffsetX2}",
+            "offsetY": "${junctionOffsetY2}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}",
+            "minX": 250
+          },
+          {
+            "offsetX": "${junctionOffsetX3}",
+            "offsetY": "${junctionOffsetY3}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}",
+            "minX": 250
+          },
+          {
+            "offsetX": "${junctionOffsetX4}",
+            "offsetY": "${junctionOffsetY4}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}",
+            "minX": 250
+          }
+        ]
+      }
+    ],
+    "parent": "Switch Board"
   },
   "Starter Map B": {
     "type": "button",
