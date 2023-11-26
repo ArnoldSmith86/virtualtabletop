@@ -1201,6 +1201,10 @@
               {
                 "value": "High Random Button",
                 "text": "Even more random board "
+              },
+              {
+                "value": "Six Player Button",
+                "text": "Generate randomized board for 5/6 players"
               }
             ],
             "variable": "board"
@@ -7355,6 +7359,50 @@
     ],
     "levelX": -66.025403787,
     "levelY": -50
+  },
+  "Six Player Button": {
+    "type": "button",
+    "id": "Six Player Button",
+    "parent": "Switch Board",
+    "x": 848,
+    "y": 630,
+    "inheritFrom": "Base Map Button New",
+    "text": "6P\nMap",
+    "levelChips": [
+      "             ",
+      "     XXX     ",
+      "    XXXX     ",
+      "    XXXXX    ",
+      "   XXXXXX    ",
+      "    XXXXX    ",
+      "    XXXX     ",
+      "     XXX     ",
+      "             ",
+      "             "
+    ],
+    "levelRandomChips": {
+      "X": "C4C5A2A69338B9C86869B5B44A53"
+    },
+    "levelRandomChipsCounter": 28,
+    "levelRandomTiles": {
+      "X": "GFWWGDCWWFFCCWFMCCFGMDMFWMMGGG"
+    },
+    "levelRandomTilesCounter": 30,
+    "levelSize": 78,
+    "levelTiles": [
+      "SSSSSSSSSSSSS",
+      "SSSSSXXXSSSSS",
+      "SSSSXXXXSSSSS",
+      "SSSSXXXXXSSSS",
+      "SSSXXXXXXSSSS",
+      "SSSSXXXXXSSSS",
+      "SSSSXXXXSSSSS",
+      "SSSSSXXXSSSSS",
+      "SSSSSSSSSSSSS",
+      "SSSSSSSSSSSSS"
+    ],
+    "levelX": -10.6,
+    "levelY": -84
   },
   "Turn": {
     "type": "button",
