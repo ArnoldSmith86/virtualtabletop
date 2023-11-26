@@ -6813,7 +6813,7 @@
       "var junctionOffsetX3 = ${baseX} + ${WIDTH} / 4 * 3",
       "var junctionOffsetY3 = ${baseY} + ${HEIGHT} / 8 * 7",
       "var junctionOffsetX4 = ${baseX} + ${WIDTH} / 2",
-      "var junctionOffsetY4 = ${baseX} + ${HEIGHT} * 1.25",
+      "var junctionOffsetY4 = ${baseY} + ${HEIGHT} * 1.25",
       {
         "func": "SET",
         "collection": [
