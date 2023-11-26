@@ -30,7 +30,7 @@
       "helpText": "Sit in seats. Press restart button in upper right-hand corner to begin and select a random player to start. Cards will automatically be dealt to player hands and to either 5 (1-2 player) or 7 (3-4 players) starting stacks.<div><br></div><div>Points for each stack are automatically counted and displayed above each stack. To claim the stack, drag a cube to the holder at the top of the stack. If a cube is already there, it will automatically be moved to the discard pile.</div><div><br></div><div>Drag and drop cards into holders. Click a card to rotate it. Click the End Turn button to move the turn indicator to the next player.</div>",
       "variantImage": "",
       "variant": "",
-      "language": "en--US",
+      "language": "en-US",
       "players": "1-4"
     }
   },
