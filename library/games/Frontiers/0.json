@@ -2375,36 +2375,6 @@
     "stackOffsetX": -2,
     "rotation": -93
   },
-  "Back": {
-    "id": "Back",
-    "movable": false,
-    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(180deg) translateZ(calc(var(--size) / 2)) !important;background-size:cover;",
-    "svgReplaces": {
-      "b": "backgroundColor",
-      "p1": "pipColor",
-      "p2": "pipColor",
-      "p3": "pipColor",
-      "p4": "backgroundColor",
-      "p5": "backgroundColor",
-      "p6": "backgroundColor",
-      "p7": "pipColor",
-      "p8": "pipColor",
-      "p9": "pipColor"
-    },
-    "x": 1398,
-    "y": -11,
-    "width": 100,
-    "height": 100,
-    "movableInEdit": true,
-    "inheritFrom": {
-      "Die 1": [
-        "backgroundColor",
-        "pipColor",
-        "image"
-      ]
-    },
-    "z": 35
-  },
   "Die 2": {
     "inheritFrom": {
       "Die 1": [
