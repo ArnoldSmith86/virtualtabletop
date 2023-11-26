@@ -1638,7 +1638,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "gtlq",
-    "z": 19394,
+    "z": 19432,
     "parent": "yjto"
   },
   "jtdj": {
@@ -1646,7 +1646,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "jtdj",
-    "z": 19402,
+    "z": 19415,
     "parent": "yjto"
   },
   "n15g": {
@@ -1654,7 +1654,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "n15g",
-    "z": 19387,
+    "z": 19413,
     "parent": "yjto"
   },
   "1hwh": {
@@ -1662,7 +1662,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "1hwh",
-    "z": 19397,
+    "z": 19426,
     "parent": "yjto"
   },
   "h8j6": {
@@ -1670,7 +1670,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "h8j6",
-    "z": 19407,
+    "z": 19423,
     "parent": "yjto"
   },
   "m7x2": {
@@ -1678,7 +1678,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "m7x2",
-    "z": 19409,
+    "z": 19427,
     "parent": "yjto"
   },
   "jht6": {
@@ -1686,7 +1686,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "jht6",
-    "z": 19396,
+    "z": 19412,
     "parent": "yjto"
   },
   "22cj": {
@@ -1694,7 +1694,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "22cj",
-    "z": 19406,
+    "z": 19433,
     "parent": "yjto"
   },
   "i069": {
@@ -1702,7 +1702,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "i069",
-    "z": 19395,
+    "z": 19411,
     "parent": "yjto"
   },
   "4m7f": {
@@ -1710,7 +1710,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "4m7f",
-    "z": 19392,
+    "z": 19424,
     "parent": "yjto"
   },
   "p27u": {
@@ -1718,7 +1718,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "p27u",
-    "z": 19385,
+    "z": 19420,
     "parent": "yjto"
   },
   "qda1": {
@@ -1726,7 +1726,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "qda1",
-    "z": 19391,
+    "z": 19421,
     "parent": "yjto"
   },
   "z8e2": {
@@ -1734,7 +1734,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "z8e2",
-    "z": 19399,
+    "z": 19418,
     "parent": "yjto"
   },
   "0p3n": {
@@ -1742,7 +1742,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "0p3n",
-    "z": 19398,
+    "z": 19417,
     "parent": "yjto"
   },
   "wtxz": {
@@ -1750,7 +1750,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "wtxz",
-    "z": 19388,
+    "z": 19425,
     "parent": "yjto"
   },
   "5lp1": {
@@ -1758,7 +1758,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "5lp1",
-    "z": 19400,
+    "z": 19428,
     "parent": "yjto"
   },
   "xqi8": {
@@ -1766,7 +1766,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "xqi8",
-    "z": 19408,
+    "z": 19419,
     "parent": "yjto"
   },
   "eo2c": {
@@ -1774,7 +1774,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "eo2c",
-    "z": 19393,
+    "z": 19414,
     "parent": "yjto"
   },
   "Harbor Template": {
@@ -6479,7 +6479,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "ldbu",
-    "z": 19386,
+    "z": 19410,
     "parent": "yjto"
   },
   "uqjm": {
@@ -6487,7 +6487,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "uqjm",
-    "z": 19404,
+    "z": 19431,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6505,7 +6505,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "07eh",
-    "z": 19405,
+    "z": 19430,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6514,7 +6514,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "68gw",
-    "z": 19403,
+    "z": 19434,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6523,7 +6523,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "af6i",
-    "z": 19389,
+    "z": 19416,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6532,7 +6532,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "ktlv",
-    "z": 19390,
+    "z": 19429,
     "parent": "yjto",
     "activeFace": 1
   },
@@ -6541,7 +6541,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "1rdy",
-    "z": 19401,
+    "z": 19422,
     "parent": "yjto"
   },
   "Base Map Button New": {
@@ -6674,13 +6674,15 @@
               "type": "${chipType}"
             }
           },
+          "var WIDTH = ${PROPERTY levelSize} * 1.73205080757",
+          "var HEIGHT = ${PROPERTY levelSize} * 2",
           "var chipWithString = 'A' concat ${chipType}",
           "var upperType = ${chipWithString} toUpperCase",
           "var isUpper = ${upperType} == ${chipWithString}",
           "var activeFace = ${isUpper} && 1",
           "var activeFace = ${activeFace} || 0",
-          "var x = ${x} + 57",
-          "var y = ${y} + 70",
+          "var x = ${x} + ${WIDTH} / 2 - ${PROPERTY width OF Chip Template} /2",
+          "var y = ${y} + ${HEIGHT} / 2 - ${PROPERTY height OF Chip Template} /2",
           {
             "func": "CLONE",
             "source": [
@@ -6826,6 +6828,87 @@
             }
           }
         ]
+      },
+      "var GRIDHEIGHT = ${PROPERTY levelSize} * 3",
+      "var baseX = ${PROPERTY levelX} - ${PROPERTY width OF Road Template} / 2",
+      "var baseY = ${PROPERTY levelY} - ${PROPERTY height OF Road Template} / 2",
+      "var junctionOffsetX1 = ${baseX}",
+      "var junctionOffsetY1 = ${baseY} + ${HEIGHT} / 8",
+      "var junctionOffsetX2 = ${baseX} + ${WIDTH} / 4",
+      "var junctionOffsetY2 = ${baseY} + ${HEIGHT} / 2",
+      "var junctionOffsetX3 = ${baseX} + ${WIDTH} / 4 * 3",
+      "var junctionOffsetY3 = ${baseY} + ${HEIGHT} / 8 * 7",
+      "var junctionOffsetX4 = ${baseX} + ${WIDTH} / 2",
+      "var junctionOffsetY4 = ${baseX} + ${HEIGHT} * 1.25",
+      {
+        "func": "SET",
+        "collection": [
+          "Road Template"
+        ],
+        "property": "grid",
+        "value": [
+          {
+            "offsetX": "${junctionOffsetX1}",
+            "offsetY": "${junctionOffsetY2}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}",
+            "rotation": 0,
+            "image": "/assets/-1486155561_696",
+            "minX": 250
+          },
+          {
+            "offsetX": "${junctionOffsetX4}",
+            "offsetY": "${junctionOffsetY4}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}",
+            "rotation": 0,
+            "image": "/assets/-1486155561_696",
+            "minX": 250
+          },
+          {
+            "offsetX": "${junctionOffsetX3}",
+            "offsetY": "${junctionOffsetY1}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}",
+            "rotation": -60,
+            "image": "/assets/1466053893_1105",
+            "minX": 250
+          },
+          {
+            "offsetX": "${junctionOffsetX2}",
+            "offsetY": "${junctionOffsetY3}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}",
+            "rotation": -60,
+            "image": "/assets/1466053893_1105",
+            "minX": 250
+          },
+          {
+            "offsetX": "${junctionOffsetX2}",
+            "offsetY": "${junctionOffsetY1}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}",
+            "rotation": 60,
+            "image": "/assets/1615791162_1102",
+            "minX": 250
+          },
+          {
+            "offsetX": "${junctionOffsetX3}",
+            "offsetY": "${junctionOffsetY3}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}",
+            "rotation": 60,
+            "image": "/assets/1615791162_1102",
+            "minX": 250
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "setGridForTilesRoutine",
+        "arguments": {
+          "widget": "Robber"
+        }
       }
     ],
     "setGridForJunctionsRoutine": [
@@ -6880,7 +6963,39 @@
         ]
       }
     ],
-    "parent": "Switch Board"
+    "parent": "Switch Board",
+    "setGridForTilesRoutine": [
+      "var WIDTH = ${PROPERTY levelSize} * 1.73205080757",
+      "var HEIGHT = ${PROPERTY levelSize} * 2",
+      "var GRIDHEIGHT = ${PROPERTY levelSize} * 3",
+      "var baseX = ${PROPERTY levelX} - ${PROPERTY width OF $widget} / 2",
+      "var baseY = ${PROPERTY levelY} - ${PROPERTY height OF $widget} / 2",
+      "var junctionOffsetX1 = ${baseX} + ${WIDTH} / 2",
+      "var junctionOffsetY1 = ${baseY} + ${HEIGHT} / 2",
+      "var junctionOffsetX2 = ${baseX}",
+      "var junctionOffsetY2 = ${baseY} + ${HEIGHT} * 1.25",
+      {
+        "func": "SET",
+        "collection": [
+          "${widget}"
+        ],
+        "property": "grid",
+        "value": [
+          {
+            "offsetX": "${junctionOffsetX1}",
+            "offsetY": "${junctionOffsetY1}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}"
+          },
+          {
+            "offsetX": "${junctionOffsetX2}",
+            "offsetY": "${junctionOffsetY2}",
+            "y": "${GRIDHEIGHT}",
+            "x": "${WIDTH}"
+          }
+        ]
+      }
+    ]
   },
   "Starter Map B": {
     "type": "button",
