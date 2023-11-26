@@ -550,7 +550,7 @@
       "description": "Use letter tiles to build words with extra points for playing in certain locations. Play until tile bag runs out. Most points wins.",
       "showName": true,
       "helpText": "Players take seats.<div><br></div><div>Start game (and choose language) by selecting button with dashed outline of globe.</div><div><br></div><div>Play tiles on board. To exchange tiles, manually flip tiles upside down in hand then drag to swap holder. Press swap icon. New cards are added to hand; swapped cards are returned to pile and it is shuffled.</div><div><br></div><div>Click on scoreboard to enter score for that play.</div>",
-      "lastUpdate": 1700942968937,
+      "lastUpdate": 1700981515710,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",
@@ -558,7 +558,7 @@
       "similarDesigner": "Alfred Mosher Butts",
       "variantImage": "",
       "variant": "",
-      "language": "de-DE, en-US, es-ES, fr-FR, pt-BR",
+      "language": "de-DE, el-GR, en-US, es-ES, fr-FR, pt-BR",
       "players": "2-4"
     }
   },
@@ -686,7 +686,7 @@
           {
             "type": "select",
             "variable": "language",
-            "value": "English",
+            "value": "${PROPERTY language}",
             "options": [
               {
                 "value": "English",
@@ -699,6 +699,10 @@
               {
                 "value": "French",
                 "text": "Français"
+              },
+              {
+                "value": "Greek",
+                "text": "Ελληνικά"
               },
               {
                 "value": "Portuguese",
@@ -716,6 +720,12 @@
           "languageLabel"
         ],
         "property": "text",
+        "value": "${language}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "language",
         "value": "${language}"
       },
       {
@@ -894,7 +904,6 @@
       }
     },
     "textColorOH": "#ffbd74",
-    "text": "language",
     "x": 1545,
     "gameStartRoutine": [
       {
@@ -929,7 +938,9 @@
       {
         "func": "TURN"
       }
-    ]
+    ],
+    "text": "language",
+    "language": "English"
   },
   "letterCount": {
     "id": "letterCount",
@@ -2909,7 +2920,9 @@
         "FrenchPoints": 1,
         "FrenchCount": 9,
         "PortuguesePoints": 1,
-        "PortugueseCount": 14
+        "PortugueseCount": 14,
+        "GreekPoints": 1,
+        "GreekCount": 12
       },
       "B": {
         "EnglishPoints": 3,
@@ -2919,7 +2932,17 @@
         "FrenchPoints": 3,
         "FrenchCount": 2,
         "PortuguesePoints": 3,
-        "PortugueseCount": 3
+        "PortugueseCount": 3,
+        "GreekPoints": 8,
+        "GreekCount": 1
+      },
+      "Γ": {
+        "GreekPoints": 4,
+        "GreekCount": 2
+      },
+      "Δ": {
+        "GreekPoints": 4,
+        "GreekCount": 2
       },
       "C": {
         "EnglishPoints": 3,
@@ -2930,6 +2953,10 @@
         "FrenchCount": 2,
         "PortuguesePoints": 2,
         "PortugueseCount": 4
+      },
+      "Ζ": {
+        "GreekPoints": 10,
+        "GreekCount": 1
       },
       "D": {
         "EnglishPoints": 2,
@@ -2949,7 +2976,9 @@
         "FrenchPoints": 1,
         "FrenchCount": 15,
         "PortuguesePoints": 1,
-        "PortugueseCount": 11
+        "PortugueseCount": 11,
+        "GreekPoints": 1,
+        "GreekCount": 8
       },
       "F": {
         "EnglishPoints": 4,
@@ -2979,7 +3008,13 @@
         "FrenchPoints": 4,
         "FrenchCount": 2,
         "PortuguesePoints": 4,
-        "PortugueseCount": 2
+        "PortugueseCount": 2,
+        "GreekPoints": 1,
+        "GreekCount": 7
+      },
+      "Θ": {
+        "GreekPoints": 10,
+        "GreekCount": 1
       },
       "I": {
         "EnglishPoints": 1,
@@ -2989,7 +3024,9 @@
         "FrenchPoints": 1,
         "FrenchCount": 8,
         "PortuguesePoints": 1,
-        "PortugueseCount": 10
+        "PortugueseCount": 10,
+        "GreekPoints": 1,
+        "GreekCount": 8
       },
       "J": {
         "EnglishPoints": 8,
@@ -3007,7 +3044,13 @@
         "GermanPoints": 4,
         "GermanCount": 2,
         "FrenchPoints": 10,
-        "FrenchCount": 1
+        "FrenchCount": 1,
+        "GreekPoints": 2,
+        "GreekCount": 4
+      },
+      "Λ": {
+        "GreekPoints": 3,
+        "GreekCount": 3
       },
       "L": {
         "EnglishPoints": 1,
@@ -3027,7 +3070,9 @@
         "FrenchPoints": 2,
         "FrenchCount": 3,
         "PortuguesePoints": 1,
-        "PortugueseCount": 6
+        "PortugueseCount": 6,
+        "GreekPoints": 3,
+        "GreekCount": 3
       },
       "N": {
         "EnglishPoints": 1,
@@ -3037,7 +3082,13 @@
         "FrenchPoints": 1,
         "FrenchCount": 6,
         "PortuguesePoints": 3,
-        "PortugueseCount": 4
+        "PortugueseCount": 4,
+        "GreekPoints": 1,
+        "GreekCount": 6
+      },
+      "Ξ": {
+        "GreekPoints": 10,
+        "GreekCount": 1
       },
       "O": {
         "EnglishPoints": 1,
@@ -3047,7 +3098,13 @@
         "FrenchPoints": 1,
         "FrenchCount": 6,
         "PortuguesePoints": 1,
-        "PortugueseCount": 10
+        "PortugueseCount": 10,
+        "GreekPoints": 1,
+        "GreekCount": 9
+      },
+      "Π": {
+        "GreekPoints": 2,
+        "GreekCount": 4
       },
       "P": {
         "EnglishPoints": 3,
@@ -3057,7 +3114,13 @@
         "FrenchPoints": 3,
         "FrenchCount": 2,
         "PortuguesePoints": 2,
-        "PortugueseCount": 4
+        "PortugueseCount": 4,
+        "GreekPoints": 2,
+        "GreekCount": 5
+      },
+      "Σ": {
+        "GreekPoints": 1,
+        "GreekCount": 7
       },
       "Q": {
         "EnglishPoints": 10,
@@ -3097,7 +3160,17 @@
         "FrenchPoints": 1,
         "FrenchCount": 6,
         "PortuguesePoints": 1,
-        "PortugueseCount": 5
+        "PortugueseCount": 5,
+        "GreekPoints": 1,
+        "GreekCount": 8
+      },
+      "Υ": {
+        "GreekPoints": 2,
+        "GreekCount": 4
+      },
+      "Φ": {
+        "GreekPoints": 8,
+        "GreekCount": 1
       },
       "U": {
         "EnglishPoints": 1,
@@ -3135,7 +3208,17 @@
         "FrenchPoints": 10,
         "FrenchCount": 1,
         "PortuguesePoints": 8,
-        "PortugueseCount": 1
+        "PortugueseCount": 1,
+        "GreekPoints": 8,
+        "GreekCount": 1
+      },
+      "Ψ": {
+        "GreekPoints": 10,
+        "GreekCount": 1
+      },
+      "Ω": {
+        "GreekPoints": 3,
+        "GreekCount": 3
       },
       "Y": {
         "EnglishPoints": 4,
@@ -3175,7 +3258,8 @@
         "EnglishCount": 2,
         "GermanCount": 2,
         "FrenchCount": 2,
-        "PortugueseCount": 3
+        "PortugueseCount": 3,
+        "GreekCount": 2
       }
     },
     "faceTemplates": [
@@ -3458,7 +3542,7 @@
     "type": "card",
     "cardType": "A",
     "id": "t0i6",
-    "z": 70467,
+    "z": 78145,
     "parent": "sfia"
   },
   "gk3f": {
@@ -3486,7 +3570,7 @@
     "type": "card",
     "cardType": "G",
     "id": "99lw",
-    "z": 70469,
+    "z": 78147,
     "parent": "sfia"
   },
   "rm6o": {
@@ -3494,7 +3578,7 @@
     "type": "card",
     "cardType": "H",
     "id": "rm6o",
-    "z": 70471,
+    "z": 78149,
     "parent": "sfia"
   },
   "x516": {
@@ -3502,7 +3586,7 @@
     "type": "card",
     "cardType": "I",
     "id": "x516",
-    "z": 70473,
+    "z": 78151,
     "parent": "sfia"
   },
   "8n8d": {
@@ -3510,7 +3594,7 @@
     "type": "card",
     "cardType": "K",
     "id": "8n8d",
-    "z": 70475,
+    "z": 78153,
     "parent": "sfia"
   },
   "uk6s": {
@@ -3518,7 +3602,7 @@
     "type": "card",
     "cardType": "L",
     "id": "uk6s",
-    "z": 70477,
+    "z": 78155,
     "parent": "sfia"
   },
   "vrza": {
@@ -3526,7 +3610,7 @@
     "type": "card",
     "cardType": "M",
     "id": "vrza",
-    "z": 70479,
+    "z": 78157,
     "parent": "sfia"
   },
   "8o1y": {
@@ -3534,7 +3618,7 @@
     "type": "card",
     "cardType": "N",
     "id": "8o1y",
-    "z": 70481,
+    "z": 78159,
     "parent": "sfia"
   },
   "fymf": {
@@ -3542,7 +3626,7 @@
     "type": "card",
     "cardType": "O",
     "id": "fymf",
-    "z": 70483,
+    "z": 78161,
     "parent": "sfia"
   },
   "zdrs": {
@@ -3550,7 +3634,7 @@
     "type": "card",
     "cardType": "P",
     "id": "zdrs",
-    "z": 70485,
+    "z": 78163,
     "parent": "sfia"
   },
   "6uqy": {
@@ -3558,7 +3642,7 @@
     "type": "card",
     "cardType": "Q",
     "id": "6uqy",
-    "z": 70487,
+    "z": 78165,
     "parent": "sfia"
   },
   "be0k": {
@@ -3566,7 +3650,7 @@
     "type": "card",
     "cardType": "R",
     "id": "be0k",
-    "z": 70489,
+    "z": 78167,
     "parent": "sfia"
   },
   "iwqs": {
@@ -3574,7 +3658,7 @@
     "type": "card",
     "cardType": "S",
     "id": "iwqs",
-    "z": 70491,
+    "z": 78169,
     "parent": "sfia"
   },
   "ii5y": {
@@ -3582,7 +3666,7 @@
     "type": "card",
     "cardType": "T",
     "id": "ii5y",
-    "z": 70493,
+    "z": 78171,
     "parent": "sfia"
   },
   "giez": {
@@ -3590,7 +3674,7 @@
     "type": "card",
     "cardType": "U",
     "id": "giez",
-    "z": 70495,
+    "z": 78173,
     "parent": "sfia"
   },
   "r7mc": {
@@ -3598,7 +3682,7 @@
     "type": "card",
     "cardType": "V",
     "id": "r7mc",
-    "z": 70497,
+    "z": 78175,
     "parent": "sfia"
   },
   "haog": {
@@ -3606,7 +3690,7 @@
     "type": "card",
     "cardType": "W",
     "id": "haog",
-    "z": 70499,
+    "z": 78177,
     "parent": "sfia"
   },
   "74y7": {
@@ -3614,7 +3698,7 @@
     "type": "card",
     "cardType": "X",
     "id": "74y7",
-    "z": 70501,
+    "z": 78179,
     "parent": "sfia"
   },
   "8v6p": {
@@ -3622,15 +3706,7 @@
     "type": "card",
     "cardType": "Y",
     "id": "8v6p",
-    "z": 70503,
-    "parent": "sfia"
-  },
-  "wyn2": {
-    "deck": "deckTemplate",
-    "type": "card",
-    "cardType": "Z",
-    "id": "wyn2",
-    "z": 70505,
+    "z": 78181,
     "parent": "sfia"
   },
   "9ap7": {
@@ -3638,7 +3714,7 @@
     "type": "card",
     "cardType": "B",
     "id": "9ap7",
-    "z": 70507,
+    "z": 78183,
     "parent": "sfia"
   },
   "2ycx": {
@@ -3646,7 +3722,7 @@
     "type": "card",
     "cardType": "C",
     "id": "2ycx",
-    "z": 70509,
+    "z": 78185,
     "parent": "sfia"
   },
   "hk0j": {
@@ -3654,7 +3730,7 @@
     "type": "card",
     "cardType": "D",
     "id": "hk0j",
-    "z": 70511,
+    "z": 78187,
     "parent": "sfia"
   },
   "aqe9": {
@@ -3662,7 +3738,7 @@
     "type": "card",
     "cardType": "E",
     "id": "aqe9",
-    "z": 70513,
+    "z": 78189,
     "parent": "sfia"
   },
   "nfny": {
@@ -3670,7 +3746,7 @@
     "type": "card",
     "cardType": "F",
     "id": "nfny",
-    "z": 70515,
+    "z": 78191,
     "parent": "sfia"
   },
   "h0ru": {
@@ -3678,7 +3754,7 @@
     "type": "card",
     "cardType": "J",
     "id": "h0ru",
-    "z": 70517,
+    "z": 78193,
     "parent": "sfia"
   },
   "sfia": {
@@ -3697,7 +3773,7 @@
     "type": "card",
     "cardType": "Ä",
     "id": "e2cg",
-    "z": 70519,
+    "z": 78195,
     "parent": "sfia"
   },
   "wqxu": {
@@ -3705,7 +3781,7 @@
     "type": "card",
     "cardType": "Ö",
     "id": "wqxu",
-    "z": 70521,
+    "z": 78197,
     "parent": "sfia"
   },
   "u7mv": {
@@ -3713,7 +3789,7 @@
     "type": "card",
     "cardType": "Ü",
     "id": "u7mv",
-    "z": 70523,
+    "z": 78199,
     "parent": "sfia"
   },
   "lb57": {
@@ -3721,7 +3797,7 @@
     "type": "card",
     "cardType": "Ç",
     "id": "lb57",
-    "z": 70525,
+    "z": 78201,
     "parent": "sfia"
   },
   "5v71": {
@@ -3742,34 +3818,138 @@
     "type": "card",
     "cardType": " ",
     "id": "jzpj",
-    "z": 70527,
+    "z": 78203,
     "parent": "sfia"
   },
-  "ifke": {
+  "glt8": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Γ",
+    "id": "glt8",
+    "z": 78205,
+    "parent": "sfia"
+  },
+  "nh5p": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Δ",
+    "id": "nh5p",
+    "z": 78207,
+    "parent": "sfia"
+  },
+  "e6y0": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Θ",
+    "id": "e6y0",
+    "z": 78209,
+    "parent": "sfia"
+  },
+  "mi7k": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Λ",
+    "id": "mi7k",
+    "z": 78211,
+    "parent": "sfia"
+  },
+  "m6mz": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Ξ",
+    "id": "m6mz",
+    "z": 78213,
+    "parent": "sfia"
+  },
+  "f9iu": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Π",
+    "id": "f9iu",
+    "z": 78215,
+    "parent": "sfia"
+  },
+  "d6xk": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Σ",
+    "id": "d6xk",
+    "z": 78217,
+    "parent": "sfia"
+  },
+  "m961": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Φ",
+    "id": "m961",
+    "z": 78219,
+    "parent": "sfia"
+  },
+  "m7o7": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Ψ",
+    "id": "m7o7",
+    "z": 78221,
+    "parent": "sfia"
+  },
+  "ydx5": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Ω",
+    "id": "ydx5",
+    "z": 78223,
+    "parent": "sfia"
+  },
+  "ncpb": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Ζ",
+    "id": "ncpb",
+    "z": 78225,
+    "parent": "sfia"
+  },
+  "eozy": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Υ",
+    "id": "eozy",
+    "z": 78227,
+    "parent": "sfia"
+  },
+  "4pvs": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "Z",
+    "id": "4pvs",
+    "z": 78229,
+    "parent": "sfia"
+  },
+  "d3lx": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": " ",
-    "z": 70783,
+    "z": 78471,
     "points": null,
     "clonedFrom": "jzpj",
-    "id": "ifke",
-    "parent": "mo0p",
+    "id": "d3lx",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "w3aw": {
+  "w01j": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": " ",
-    "z": 70794,
+    "z": 78474,
     "points": null,
     "clonedFrom": "jzpj",
-    "id": "w3aw",
-    "parent": "mo0p",
+    "id": "w01j",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "mo0p": {
+  "nag4": {
     "type": "pile",
     "parent": "deckHolder",
     "x": 4,
@@ -3779,1181 +3959,1181 @@
     "handleCSS": "background:#b97a56;color:white",
     "handleSize": 20,
     "handleOffset": 1,
-    "id": "mo0p"
+    "id": "nag4"
   },
-  "5uz2": {
+  "93td": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "A",
-    "z": 70765,
+    "z": 78432,
     "points": 1,
     "clonedFrom": "t0i6",
-    "id": "5uz2",
-    "parent": "mo0p",
+    "id": "93td",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "psoi": {
+  "tnkp": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "A",
-    "z": 70759,
+    "z": 78439,
     "points": 1,
     "clonedFrom": "t0i6",
-    "id": "psoi",
-    "parent": "mo0p",
+    "id": "tnkp",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "bmqx": {
+  "osx1": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "A",
-    "z": 70776,
+    "z": 78496,
     "points": 1,
     "clonedFrom": "t0i6",
-    "id": "bmqx",
-    "parent": "mo0p",
+    "id": "osx1",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "ai7l": {
+  "uk1x": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "A",
-    "z": 70819,
+    "z": 78508,
     "points": 1,
     "clonedFrom": "t0i6",
-    "id": "ai7l",
-    "parent": "mo0p",
+    "id": "uk1x",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "ox6m": {
+  "l69g": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "A",
-    "z": 70751,
+    "z": 78441,
     "points": 1,
     "clonedFrom": "t0i6",
-    "id": "ox6m",
-    "parent": "mo0p",
+    "id": "l69g",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "2xwj": {
+  "ysod": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "A",
-    "z": 70786,
+    "z": 78510,
     "points": 1,
     "clonedFrom": "t0i6",
-    "id": "2xwj",
-    "parent": "mo0p",
+    "id": "ysod",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "38qi": {
+  "0cs1": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "A",
-    "z": 70813,
+    "z": 78479,
     "points": 1,
     "clonedFrom": "t0i6",
-    "id": "38qi",
-    "parent": "mo0p",
+    "id": "0cs1",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "xzgt": {
+  "jq4x": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "A",
-    "z": 70773,
+    "z": 78445,
     "points": 1,
     "clonedFrom": "t0i6",
-    "id": "xzgt",
-    "parent": "mo0p",
+    "id": "jq4x",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "5mjb": {
+  "avug": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "A",
-    "z": 70733,
+    "z": 78455,
     "points": 1,
     "clonedFrom": "t0i6",
-    "id": "5mjb",
-    "parent": "mo0p",
+    "id": "avug",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "rivl": {
+  "du2e": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "B",
-    "z": 70768,
+    "z": 78462,
     "points": 3,
     "clonedFrom": "9ap7",
-    "id": "rivl",
-    "parent": "mo0p",
+    "id": "du2e",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "nl95": {
+  "5lzc": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "B",
-    "z": 70769,
+    "z": 78478,
     "points": 3,
     "clonedFrom": "9ap7",
-    "id": "nl95",
-    "parent": "mo0p",
+    "id": "5lzc",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "9v5z": {
+  "dxdu": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "C",
-    "z": 70766,
+    "z": 78464,
     "points": 3,
     "clonedFrom": "2ycx",
-    "id": "9v5z",
-    "parent": "mo0p",
+    "id": "dxdu",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "5s0z": {
+  "f63e": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "C",
-    "z": 70745,
+    "z": 78523,
     "points": 3,
     "clonedFrom": "2ycx",
-    "id": "5s0z",
-    "parent": "mo0p",
+    "id": "f63e",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "wfx7": {
+  "crco": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "D",
-    "z": 70802,
+    "z": 78505,
     "points": 2,
     "clonedFrom": "hk0j",
-    "id": "wfx7",
-    "parent": "mo0p",
+    "id": "crco",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "n9wa": {
+  "8yo3": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "D",
-    "z": 70808,
+    "z": 78454,
     "points": 2,
     "clonedFrom": "hk0j",
-    "id": "n9wa",
-    "parent": "mo0p",
+    "id": "8yo3",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "z5fu": {
+  "1ivt": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "D",
-    "z": 70812,
+    "z": 78457,
     "points": 2,
     "clonedFrom": "hk0j",
-    "id": "z5fu",
-    "parent": "mo0p",
+    "id": "1ivt",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "r8yn": {
+  "bd9u": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "D",
-    "z": 70805,
+    "z": 78513,
     "points": 2,
     "clonedFrom": "hk0j",
-    "id": "r8yn",
-    "parent": "mo0p",
+    "id": "bd9u",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "5ki9": {
+  "0z2b": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70767,
+    "z": 78443,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "5ki9",
-    "parent": "mo0p",
+    "id": "0z2b",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "qd11": {
+  "jekt": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70791,
+    "z": 78492,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "qd11",
-    "parent": "mo0p",
+    "id": "jekt",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "09be": {
+  "cyxf": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70737,
+    "z": 78511,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "09be",
-    "parent": "mo0p",
+    "id": "cyxf",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "wl7w": {
+  "tbmx": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70772,
+    "z": 78472,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "wl7w",
-    "parent": "mo0p",
+    "id": "tbmx",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "gg5i": {
+  "pi2s": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70787,
+    "z": 78435,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "gg5i",
-    "parent": "mo0p",
+    "id": "pi2s",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "whab": {
+  "1pmj": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70771,
+    "z": 78486,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "whab",
-    "parent": "mo0p",
+    "id": "1pmj",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "zftf": {
+  "mus8": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70764,
+    "z": 78447,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "zftf",
-    "parent": "mo0p",
+    "id": "mus8",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "zjh0": {
+  "zoyn": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70749,
+    "z": 78526,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "zjh0",
-    "parent": "mo0p",
+    "id": "zoyn",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "k39r": {
+  "xlf4": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70774,
+    "z": 78468,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "k39r",
-    "parent": "mo0p",
+    "id": "xlf4",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "97cd": {
+  "7r77": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70735,
+    "z": 78514,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "97cd",
-    "parent": "mo0p",
+    "id": "7r77",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "t2pc": {
+  "k6sz": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70736,
+    "z": 78495,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "t2pc",
-    "parent": "mo0p",
+    "id": "k6sz",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "07q2": {
+  "dz59": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "E",
-    "z": 70770,
+    "z": 78527,
     "points": 1,
     "clonedFrom": "aqe9",
-    "id": "07q2",
-    "parent": "mo0p",
+    "id": "dz59",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "832e": {
+  "6gx5": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "F",
-    "z": 70729,
+    "z": 78469,
     "points": 4,
     "clonedFrom": "nfny",
-    "id": "832e",
-    "parent": "mo0p",
+    "id": "6gx5",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "9fod": {
+  "e43n": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "F",
-    "z": 70785,
+    "z": 78434,
     "points": 4,
     "clonedFrom": "nfny",
-    "id": "9fod",
-    "parent": "mo0p",
+    "id": "e43n",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "xq4j": {
+  "qy62": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "G",
-    "z": 70760,
+    "z": 78460,
     "points": 2,
     "clonedFrom": "99lw",
-    "id": "xq4j",
-    "parent": "mo0p",
+    "id": "qy62",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "rwza": {
+  "gadg": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "G",
-    "z": 70754,
+    "z": 78506,
     "points": 2,
     "clonedFrom": "99lw",
-    "id": "rwza",
-    "parent": "mo0p",
+    "id": "gadg",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "6ly3": {
+  "b3s7": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "G",
-    "z": 70741,
+    "z": 78429,
     "points": 2,
     "clonedFrom": "99lw",
-    "id": "6ly3",
-    "parent": "mo0p",
+    "id": "b3s7",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "zdqx": {
+  "jk4z": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "H",
-    "z": 70761,
+    "z": 78524,
     "points": 4,
     "clonedFrom": "rm6o",
-    "id": "zdqx",
-    "parent": "mo0p",
+    "id": "jk4z",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "7nay": {
+  "liqw": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "H",
-    "z": 70752,
+    "z": 78449,
     "points": 4,
     "clonedFrom": "rm6o",
-    "id": "7nay",
-    "parent": "mo0p",
+    "id": "liqw",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "04lt": {
+  "is5s": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "I",
-    "z": 70799,
+    "z": 78448,
     "points": 1,
     "clonedFrom": "x516",
-    "id": "04lt",
-    "parent": "mo0p",
+    "id": "is5s",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "s0xm": {
+  "pb2b": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "I",
-    "z": 70743,
+    "z": 78489,
     "points": 1,
     "clonedFrom": "x516",
-    "id": "s0xm",
-    "parent": "mo0p",
+    "id": "pb2b",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "h1t6": {
+  "q0mv": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "I",
-    "z": 70816,
+    "z": 78507,
     "points": 1,
     "clonedFrom": "x516",
-    "id": "h1t6",
-    "parent": "mo0p",
+    "id": "q0mv",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "177c": {
+  "2q9p": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "I",
-    "z": 70727,
+    "z": 78521,
     "points": 1,
     "clonedFrom": "x516",
-    "id": "177c",
-    "parent": "mo0p",
+    "id": "2q9p",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "iezg": {
+  "ajwz": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "I",
-    "z": 70756,
+    "z": 78497,
     "points": 1,
     "clonedFrom": "x516",
-    "id": "iezg",
-    "parent": "mo0p",
+    "id": "ajwz",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "u4iq": {
+  "eg60": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "I",
-    "z": 70801,
+    "z": 78442,
     "points": 1,
     "clonedFrom": "x516",
-    "id": "u4iq",
-    "parent": "mo0p",
+    "id": "eg60",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "zm5p": {
+  "2mxs": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "I",
-    "z": 70824,
+    "z": 78517,
     "points": 1,
     "clonedFrom": "x516",
-    "id": "zm5p",
-    "parent": "mo0p",
+    "id": "2mxs",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "ja04": {
+  "bdio": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "I",
-    "z": 70758,
+    "z": 78470,
     "points": 1,
     "clonedFrom": "x516",
-    "id": "ja04",
-    "parent": "mo0p",
+    "id": "bdio",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "8qn8": {
+  "rw4q": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "I",
-    "z": 70814,
+    "z": 78502,
     "points": 1,
     "clonedFrom": "x516",
-    "id": "8qn8",
-    "parent": "mo0p",
+    "id": "rw4q",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "ihm3": {
+  "pbo8": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "J",
-    "z": 70728,
+    "z": 78483,
     "points": 8,
     "clonedFrom": "h0ru",
-    "id": "ihm3",
-    "parent": "mo0p",
+    "id": "pbo8",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "e76w": {
+  "o3e6": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "K",
-    "z": 70800,
+    "z": 78446,
     "points": 5,
     "clonedFrom": "8n8d",
-    "id": "e76w",
-    "parent": "mo0p",
+    "id": "o3e6",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "yzfk": {
+  "3etr": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "L",
-    "z": 70780,
+    "z": 78433,
     "points": 1,
     "clonedFrom": "uk6s",
-    "id": "yzfk",
-    "parent": "mo0p",
+    "id": "3etr",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "3use": {
+  "6fe1": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "L",
-    "z": 70817,
+    "z": 78461,
     "points": 1,
     "clonedFrom": "uk6s",
-    "id": "3use",
-    "parent": "mo0p",
+    "id": "6fe1",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "gyw1": {
+  "a91n": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "L",
-    "z": 70781,
+    "z": 78520,
     "points": 1,
     "clonedFrom": "uk6s",
-    "id": "gyw1",
-    "parent": "mo0p",
+    "id": "a91n",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "vgnv": {
+  "8qmx": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "L",
-    "z": 70820,
+    "z": 78477,
     "points": 1,
     "clonedFrom": "uk6s",
-    "id": "vgnv",
-    "parent": "mo0p",
+    "id": "8qmx",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "bpj3": {
+  "g3gc": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "M",
-    "z": 70753,
+    "z": 78481,
     "points": 3,
     "clonedFrom": "vrza",
-    "id": "bpj3",
-    "parent": "mo0p",
+    "id": "g3gc",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "9ga3": {
+  "gl88": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "M",
-    "z": 70809,
+    "z": 78480,
     "points": 3,
     "clonedFrom": "vrza",
-    "id": "9ga3",
-    "parent": "mo0p",
+    "id": "gl88",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "nqi7": {
+  "vxjl": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "N",
-    "z": 70738,
+    "z": 78436,
     "points": 1,
     "clonedFrom": "8o1y",
-    "id": "nqi7",
-    "parent": "mo0p",
+    "id": "vxjl",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "46me": {
+  "2ssq": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "N",
-    "z": 70740,
+    "z": 78516,
     "points": 1,
     "clonedFrom": "8o1y",
-    "id": "46me",
-    "parent": "mo0p",
+    "id": "2ssq",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "m8hx": {
+  "7eni": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "N",
-    "z": 70825,
+    "z": 78487,
     "points": 1,
     "clonedFrom": "8o1y",
-    "id": "m8hx",
-    "parent": "mo0p",
+    "id": "7eni",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "ywdn": {
+  "1ztz": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "N",
-    "z": 70757,
+    "z": 78453,
     "points": 1,
     "clonedFrom": "8o1y",
-    "id": "ywdn",
-    "parent": "mo0p",
+    "id": "1ztz",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "kkei": {
+  "mc1g": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "N",
-    "z": 70788,
+    "z": 78465,
     "points": 1,
     "clonedFrom": "8o1y",
-    "id": "kkei",
-    "parent": "mo0p",
+    "id": "mc1g",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "7bly": {
+  "9i7v": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "N",
-    "z": 70798,
+    "z": 78528,
     "points": 1,
     "clonedFrom": "8o1y",
-    "id": "7bly",
-    "parent": "mo0p",
+    "id": "9i7v",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "cnd1": {
+  "siqb": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "O",
-    "z": 70775,
+    "z": 78482,
     "points": 1,
     "clonedFrom": "fymf",
-    "id": "cnd1",
-    "parent": "mo0p",
+    "id": "siqb",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "bysn": {
+  "kjk9": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "O",
-    "z": 70747,
+    "z": 78498,
     "points": 1,
     "clonedFrom": "fymf",
-    "id": "bysn",
-    "parent": "mo0p",
+    "id": "kjk9",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "a9k7": {
+  "wwk7": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "O",
-    "z": 70778,
+    "z": 78515,
     "points": 1,
     "clonedFrom": "fymf",
-    "id": "a9k7",
-    "parent": "mo0p",
+    "id": "wwk7",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "2zvz": {
+  "bqcx": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "O",
-    "z": 70755,
+    "z": 78456,
     "points": 1,
     "clonedFrom": "fymf",
-    "id": "2zvz",
-    "parent": "mo0p",
+    "id": "bqcx",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "8tbg": {
+  "rrvw": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "O",
-    "z": 70821,
+    "z": 78501,
     "points": 1,
     "clonedFrom": "fymf",
-    "id": "8tbg",
-    "parent": "mo0p",
+    "id": "rrvw",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "62kx": {
+  "jokt": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "O",
-    "z": 70818,
+    "z": 78437,
     "points": 1,
     "clonedFrom": "fymf",
-    "id": "62kx",
-    "parent": "mo0p",
+    "id": "jokt",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "ewfw": {
+  "kcnp": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "O",
-    "z": 70803,
+    "z": 78466,
     "points": 1,
     "clonedFrom": "fymf",
-    "id": "ewfw",
-    "parent": "mo0p",
+    "id": "kcnp",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "ybpb": {
+  "tsyl": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "O",
-    "z": 70782,
+    "z": 78519,
     "points": 1,
     "clonedFrom": "fymf",
-    "id": "ybpb",
-    "parent": "mo0p",
+    "id": "tsyl",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "2v81": {
+  "yr3y": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "P",
-    "z": 70823,
+    "z": 78438,
     "points": 3,
     "clonedFrom": "zdrs",
-    "id": "2v81",
-    "parent": "mo0p",
+    "id": "yr3y",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "nba9": {
+  "9fhn": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "P",
-    "z": 70732,
+    "z": 78491,
     "points": 3,
     "clonedFrom": "zdrs",
-    "id": "nba9",
-    "parent": "mo0p",
+    "id": "9fhn",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "w3o5": {
+  "xabr": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "Q",
-    "z": 70790,
+    "z": 78440,
     "points": 10,
     "clonedFrom": "6uqy",
-    "id": "w3o5",
-    "parent": "mo0p",
+    "id": "xabr",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "ielm": {
+  "62se": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "R",
-    "z": 70762,
+    "z": 78512,
     "points": 1,
     "clonedFrom": "be0k",
-    "id": "ielm",
-    "parent": "mo0p",
+    "id": "62se",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "u88n": {
+  "j7n6": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "R",
-    "z": 70746,
+    "z": 78450,
     "points": 1,
     "clonedFrom": "be0k",
-    "id": "u88n",
-    "parent": "mo0p",
+    "id": "j7n6",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "2cc6": {
+  "ukfb": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "R",
-    "z": 70792,
+    "z": 78458,
     "points": 1,
     "clonedFrom": "be0k",
-    "id": "2cc6",
-    "parent": "mo0p",
+    "id": "ukfb",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "xbte": {
+  "rjhy": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "R",
-    "z": 70797,
+    "z": 78467,
     "points": 1,
     "clonedFrom": "be0k",
-    "id": "xbte",
-    "parent": "mo0p",
+    "id": "rjhy",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "vdf0": {
+  "iy9g": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "R",
-    "z": 70739,
+    "z": 78503,
     "points": 1,
     "clonedFrom": "be0k",
-    "id": "vdf0",
-    "parent": "mo0p",
+    "id": "iy9g",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "n5zz": {
+  "up3q": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "R",
-    "z": 70742,
+    "z": 78444,
     "points": 1,
     "clonedFrom": "be0k",
-    "id": "n5zz",
-    "parent": "mo0p",
+    "id": "up3q",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "3oj5": {
+  "5jwx": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "S",
-    "z": 70731,
+    "z": 78518,
     "points": 1,
     "clonedFrom": "iwqs",
-    "id": "3oj5",
-    "parent": "mo0p",
+    "id": "5jwx",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "fzp8": {
+  "lxxn": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "S",
-    "z": 70806,
+    "z": 78431,
     "points": 1,
     "clonedFrom": "iwqs",
-    "id": "fzp8",
-    "parent": "mo0p",
+    "id": "lxxn",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "bw8l": {
+  "mhz9": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "S",
-    "z": 70777,
+    "z": 78485,
     "points": 1,
     "clonedFrom": "iwqs",
-    "id": "bw8l",
-    "parent": "mo0p",
+    "id": "mhz9",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "6un2": {
+  "9ns4": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "S",
-    "z": 70795,
+    "z": 78494,
     "points": 1,
     "clonedFrom": "iwqs",
-    "id": "6un2",
-    "parent": "mo0p",
+    "id": "9ns4",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "6h2o": {
+  "kote": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "T",
-    "z": 70811,
+    "z": 78490,
     "points": 1,
     "clonedFrom": "ii5y",
-    "id": "6h2o",
-    "parent": "mo0p",
+    "id": "kote",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "h1g5": {
+  "gxof": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "T",
-    "z": 70779,
+    "z": 78476,
     "points": 1,
     "clonedFrom": "ii5y",
-    "id": "h1g5",
-    "parent": "mo0p",
+    "id": "gxof",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "wwqe": {
+  "1ex0": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "T",
-    "z": 70744,
+    "z": 78488,
     "points": 1,
     "clonedFrom": "ii5y",
-    "id": "wwqe",
-    "parent": "mo0p",
+    "id": "1ex0",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "w7o0": {
+  "tjo7": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "T",
-    "z": 70734,
+    "z": 78475,
     "points": 1,
     "clonedFrom": "ii5y",
-    "id": "w7o0",
-    "parent": "mo0p",
+    "id": "tjo7",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "wn2l": {
+  "1i3c": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "T",
-    "z": 70822,
+    "z": 78463,
     "points": 1,
     "clonedFrom": "ii5y",
-    "id": "wn2l",
-    "parent": "mo0p",
+    "id": "1i3c",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "iz1k": {
+  "5tp6": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "T",
-    "z": 70784,
+    "z": 78525,
     "points": 1,
     "clonedFrom": "ii5y",
-    "id": "iz1k",
-    "parent": "mo0p",
+    "id": "5tp6",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "dqsa": {
+  "wsz2": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "U",
-    "z": 70750,
+    "z": 78484,
     "points": 1,
     "clonedFrom": "giez",
-    "id": "dqsa",
-    "parent": "mo0p",
+    "id": "wsz2",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "q6kj": {
+  "482q": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "U",
-    "z": 70763,
+    "z": 78500,
     "points": 1,
     "clonedFrom": "giez",
-    "id": "q6kj",
-    "parent": "mo0p",
+    "id": "482q",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "dvda": {
+  "tq7d": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "U",
-    "z": 70796,
+    "z": 78473,
     "points": 1,
     "clonedFrom": "giez",
-    "id": "dvda",
-    "parent": "mo0p",
+    "id": "tq7d",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "yrzv": {
+  "dejw": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "U",
-    "z": 70730,
+    "z": 78499,
     "points": 1,
     "clonedFrom": "giez",
-    "id": "yrzv",
-    "parent": "mo0p",
+    "id": "dejw",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "zm1f": {
+  "0wjh": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "V",
-    "z": 70807,
+    "z": 78459,
     "points": 4,
     "clonedFrom": "r7mc",
-    "id": "zm1f",
-    "parent": "mo0p",
+    "id": "0wjh",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "vfn4": {
+  "m7d3": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "V",
-    "z": 70793,
+    "z": 78430,
     "points": 4,
     "clonedFrom": "r7mc",
-    "id": "vfn4",
-    "parent": "mo0p",
+    "id": "m7d3",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "gt06": {
+  "ok5a": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "W",
-    "z": 70810,
+    "z": 78452,
     "points": 4,
     "clonedFrom": "haog",
-    "id": "gt06",
-    "parent": "mo0p",
+    "id": "ok5a",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "2wwx": {
+  "bzi3": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "W",
-    "z": 70748,
+    "z": 78493,
     "points": 4,
     "clonedFrom": "haog",
-    "id": "2wwx",
-    "parent": "mo0p",
+    "id": "bzi3",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "ttsb": {
+  "7gv5": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "X",
-    "z": 70815,
+    "z": 78522,
     "points": 8,
     "clonedFrom": "74y7",
-    "id": "ttsb",
-    "parent": "mo0p",
+    "id": "7gv5",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "62qw": {
+  "5qyj": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "Y",
-    "z": 70789,
+    "z": 78451,
     "points": 4,
     "clonedFrom": "8v6p",
-    "id": "62qw",
-    "parent": "mo0p",
+    "id": "5qyj",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "rmn5": {
+  "yp65": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "Y",
-    "z": 70826,
+    "z": 78509,
     "points": 4,
     "clonedFrom": "8v6p",
-    "id": "rmn5",
-    "parent": "mo0p",
+    "id": "yp65",
+    "parent": "nag4",
     "x": null,
     "y": null
   },
-  "488x": {
+  "hbfm": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "Z",
-    "z": 70804,
+    "z": 78504,
     "points": 10,
-    "clonedFrom": "wyn2",
-    "id": "488x",
-    "parent": "mo0p",
+    "clonedFrom": "4pvs",
+    "id": "hbfm",
+    "parent": "nag4",
     "x": null,
     "y": null
   }
