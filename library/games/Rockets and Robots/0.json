@@ -1,0 +1,3733 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Rockets and Robots",
+      "image": "/assets/1503295198_188157",
+      "showName": true,
+      "time": "30",
+      "mode": "vs",
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "Wandering Towers",
+      "year": "2022",
+      "similarDesigner": "Michael Kiesling, Wolfgang Kramer",
+      "similarAwards": "2023 Nederlandse Spellenprijs Best Family Game Winner\n2023 Nederlandse Spellenprijs Best Family Game Nominee\n2022 Tric Trac Famille Nominee",
+      "bgg": "https://boardgamegeek.com/boardgame/355483",
+      "rules": "",
+      "ruleText": "<div><b>Objective<br></b></div><div>Get all of your robots to the Golden Saucer and own no uncharged batteries.<br></div><div><br></div><div>The game will end at the end of a full round (so each player has had the same number of turns) where at least one player has achieved both objectives. If multiple players have done so, the one with the most charged batteries remaining wins.</div><div><br></div><div><b>Your Turn</b></div><div>Either:</div><div>• Play two cards, one after the other, resolving each as much as possible; <i>or</i></div><div>• Discard all three of your cards and move a rocket 1 space clockwise.</div><div><br></div><div>Before or after your action, or between your two cards if taking the first option, you may use one special program, from the menu on the right of the play area. You must spend the program's indicated number of charged batteries to do so.<br></div><div><br></div><div>At the end of your turn, draw back to 3 cards in hand.</div><div><br></div><div><b>Resolving a Card</b></div><div>If a card shows just 🤖, it must be used to move a robot if possible. If it shows just 🚀, it must be used to move a rocket if possible. If it shows both 🤖 and 🚀, you choose to either move a robot or move a rocket.</div><div><br></div><div><b>Moving a Robot</b></div><div>Move one of your visible robots clockwise the exact amount shown on the card.</div><div><br></div><div>There is a limit of six robots on board a single rocket. (But no limit for how many may be together on an unoccupied space.) You may not make a move that would exceed this.</div><div><br></div><div><b>Entering the Golden Saucer</b><br></div><div>If your robot enters the golden saucer (either through moving via a card play or through use of a special program), move the golden saucer clockwise to the next unoccupied space or rocket showing the&nbsp;🔻 symbol. If there are no such spaces, it instead stays where it is.</div><div><br></div><div><b>Moving a Rocket</b></div><div>Move any one rocket clockwise the exact amount shown on the card. If any other rockets, and/or the golden saucer, are stacked atop that rocket, they move with it - move the entire stack<b>!</b></div><div><b><br></b>A rocket may never land on top of the golden saucer. You may not make a move that would do this.<b><br></b></div><div><b><br></b></div><div><b>Charging Batteries</b></div><div>Whenever a move you make (either through a card play or through use of a special program) causes any robot or robots (irrespective of whose robots they are) to become hidden under a rocket or stack of rockets, you charge one of your uncharged batteries.</div><div><br></div><div><b>Cards with Dice</b></div><div>Cards showing the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg\"></i> icon allow you to roll the die. The number of dice pictured on the card shows the maximum number of rolls; you may make fewer than this. Each roll is made one at a time, once you roll the die again you cannot return to the results of previous rolls.</div><div><br></div><div>You may fully resolve rolling the die before declaring which robot or rocket you will move, or even whether you will move a rocket or robot if the card shows both.<br></div>",
+      "helpText": "<div>Have players take seats and then click New Game to set up a game for that player count. In the new game dialog you can choose how many randomly-selected special programs to use (or choose to use two simple programs if this is somebody's first game).<br></div><div><br></div><div>To move a robot, drag and drop it to its new location.</div><div><br></div><div>To move a single rocket, drag and drop it to its new location. To move an entire stack of rockets, drag and drop the pile handle (red square showing height of the stack) to its new location. To move just part of a stack, click the pile handle and use the VTT interface to split the stack - the left number on the slider is the number of levels you will take off the top of the stack and move.</div><div><br></div><div>Click batteries to flip them uncharged to charged. Drag them to the small holder next to the special programs menu to spend them.</div><div><br></div><div>At the end of your turn, click the End Turn button to change the current-player indicator around the seats and automatically draw your hand back to three cards.<br></div><div><br></div><div>The&nbsp;1️⃣ icon next to one of the player seats indicates which player was the start player in the game and is to help ensure that you end the game at the right time when the end is triggered. (Each player should play the same number of turns.)<br></div>",
+      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain by CC0.\n<div><br></div><div>The background image is in the public domain by CC0 from https://publicdomainpictures.net/en/view-image.php?image=125056</div><div>\n</div><div>The library image was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"robots and rockets, cartoon\". The card back is a cropped version of the same image.<br></div><div><br></div><div>The following icon graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:</div><div><br></div><div>Delapouite</div><div><span class=\"box\">• Die: </span>https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-one.html</div><div><br></div><div>priorblue</div><div><span class=\"box\">• </span>Empty Battery: https://game-icons.net/1x1/priorblue/battery-0.html</div><div><span class=\"box\">• </span>Full Battery: https://game-icons.net/1x1/priorblue/battery-100.html<br></div>",
+      "lastUpdate": 1700844466611,
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-6"
+    }
+  },
+  "hand": {
+    "type": "holder",
+    "id": "hand",
+    "childrenPerOwner": true,
+    "height": 160,
+    "width": 300,
+    "y": 830,
+    "x": 1270,
+    "css": {
+      "background": "transparent",
+      "border-color": "#888888",
+      "border-width": "2px"
+    },
+    "dropOffsetX": 11,
+    "stackOffsetX": 92,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": {
+      "deck": "deck-cards"
+    }
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "x": 5,
+    "y": 5,
+    "width": 205,
+    "css": {
+      "default": {
+        "border": "5px solid ${PROPERY foreground}",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "24px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid ${PROPERY foreground}",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "hideWhenUnused": true,
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-robots"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${PROPERTY color}"
+      }
+    ]
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "index": 2,
+    "inheritFrom": {
+      "seat-p1": [
+        "width",
+        "height",
+        "x",
+        "css",
+        "clickRoutine",
+        "hideWhenUnused"
+      ]
+    },
+    "y": 169,
+    "color": "#999999",
+    "foreground": "#000000"
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "index": 3,
+    "inheritFrom": {
+      "seat-p1": [
+        "width",
+        "height",
+        "x",
+        "css",
+        "clickRoutine",
+        "hideWhenUnused"
+      ]
+    },
+    "y": 335,
+    "color": "#999999",
+    "foreground": "#000000"
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "index": 4,
+    "inheritFrom": {
+      "seat-p1": [
+        "width",
+        "height",
+        "x",
+        "css",
+        "clickRoutine",
+        "hideWhenUnused"
+      ]
+    },
+    "y": 501,
+    "color": "#999999",
+    "foreground": "#000000"
+  },
+  "seat-p5": {
+    "type": "seat",
+    "id": "seat-p5",
+    "index": 5,
+    "inheritFrom": {
+      "seat-p1": [
+        "width",
+        "height",
+        "x",
+        "css",
+        "clickRoutine",
+        "hideWhenUnused"
+      ]
+    },
+    "y": 667,
+    "color": "#999999",
+    "foreground": "#000000"
+  },
+  "seat-p6": {
+    "type": "seat",
+    "id": "seat-p6",
+    "index": 6,
+    "inheritFrom": {
+      "seat-p1": [
+        "width",
+        "height",
+        "x",
+        "css",
+        "clickRoutine",
+        "hideWhenUnused"
+      ]
+    },
+    "y": 833,
+    "color": "#999999",
+    "foreground": "#000000"
+  },
+  "holder-planets": {
+    "type": "holder",
+    "id": "holder-planets",
+    "y": -195,
+    "width": 140,
+    "height": 140,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "z": 2,
+    "x": 8
+  },
+  "deck-planets": {
+    "type": "deck",
+    "id": "deck-planets",
+    "width": 140,
+    "height": 140,
+    "cardDefaults": {
+      "width": 140,
+      "height": 140,
+      "layer": 0,
+      "movable": false
+    },
+    "cardTypes": {
+      "planet": {
+        "mark": ""
+      },
+      "marked-planet": {
+        "mark": "/i/noto-emoji/emoji_u1f53b.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 140,
+            "height": 140,
+            "value": "/i/noto-emoji/emoji_u1f315.svg"
+          },
+          {
+            "type": "image",
+            "x": 45,
+            "y": 80,
+            "color": "transparent",
+            "width": 50,
+            "height": 50,
+            "dynamicProperties": {
+              "value": "mark"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "holder-planets"
+  },
+  "holder-rockets": {
+    "type": "holder",
+    "id": "holder-rockets",
+    "y": -180,
+    "x": 200,
+    "width": 100,
+    "height": 100,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "deck-rockets": {
+    "type": "deck",
+    "id": "deck-rockets",
+    "width": 100,
+    "height": 100,
+    "parent": "holder-rockets",
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "layer": 2,
+      "movable": true,
+      "setupRobotLimit": 1,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "red",
+          "border-color": "black",
+          "border-radius": "8px",
+          "color": "white"
+        },
+        "handleOffset": 15,
+        "handlePosition": "top right",
+        "handleSize": 35
+      },
+      "css": {
+        "border-color": "${PROPERTY borderColor}",
+        "border-radius": "20px",
+        "border-style": "solid",
+        "border-width": "1px"
+      },
+      "borderColor": "#000000"
+    },
+    "cardTypes": {
+      "rocket": {
+        "color": "#e5e4e2",
+        "mark": "",
+        "rocket": "/i/noto-emoji/emoji_u1f680.svg"
+      },
+      "marked-rocket": {
+        "color": "#e5e4e2",
+        "mark": "/i/noto-emoji/emoji_u1f53b.svg",
+        "rocket": "/i/noto-emoji/emoji_u1f680.svg"
+      },
+      "golden-rocket": {
+        "color": "#e5d378",
+        "rocket": "/i/noto-emoji/emoji_u1f6f8.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "radius": 20,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 15,
+            "color": "transparent",
+            "width": 70,
+            "height": 70,
+            "css": {
+              "opacity": 0.3
+            },
+            "dynamicProperties": {
+              "value": "rocket"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 55,
+            "color": "transparent",
+            "width": 50,
+            "height": 50,
+            "dynamicProperties": {
+              "value": "mark"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "rocket-golden": {
+    "type": "card",
+    "id": "rocket-golden",
+    "deck": "deck-rockets",
+    "cardType": "golden-rocket",
+    "z": 2217,
+    "x": 20,
+    "y": 19,
+    "parent": "holder-planet-0"
+  },
+  "rocket-marked-5": {
+    "type": "card",
+    "id": "rocket-marked-5",
+    "deck": "deck-rockets",
+    "cardType": "marked-rocket",
+    "z": 2226,
+    "x": 20,
+    "y": 19,
+    "parent": "holder-planet-9"
+  },
+  "rocket-marked-1": {
+    "type": "card",
+    "id": "rocket-marked-1",
+    "deck": "deck-rockets",
+    "cardType": "marked-rocket",
+    "z": 2249,
+    "setupRobotLimit": 3,
+    "parent": "holder-planet-1",
+    "x": 20,
+    "y": 19
+  },
+  "rocket-marked-2": {
+    "type": "card",
+    "id": "rocket-marked-2",
+    "deck": "deck-rockets",
+    "cardType": "marked-rocket",
+    "z": 2220,
+    "setupRobotLimit": 3,
+    "parent": "holder-planet-3",
+    "x": 20,
+    "y": 19
+  },
+  "rocket-marked-3": {
+    "type": "card",
+    "id": "rocket-marked-3",
+    "deck": "deck-rockets",
+    "cardType": "marked-rocket",
+    "z": 2222,
+    "setupRobotLimit": 2,
+    "parent": "holder-planet-5",
+    "x": 20,
+    "y": 19
+  },
+  "rocket-marked-4": {
+    "type": "card",
+    "id": "rocket-marked-4",
+    "deck": "deck-rockets",
+    "cardType": "marked-rocket",
+    "z": 2224,
+    "x": 20,
+    "y": 19,
+    "parent": "holder-planet-7"
+  },
+  "rocket-unmarked-1": {
+    "type": "card",
+    "id": "rocket-unmarked-1",
+    "deck": "deck-rockets",
+    "cardType": "rocket",
+    "z": 2272,
+    "setupRobotLimit": 3,
+    "x": 20,
+    "y": 19,
+    "parent": "holder-planet-2"
+  },
+  "rocket-unmarked-2": {
+    "type": "card",
+    "id": "rocket-unmarked-2",
+    "deck": "deck-rockets",
+    "cardType": "rocket",
+    "z": 2221,
+    "setupRobotLimit": 2,
+    "x": 20,
+    "y": 19,
+    "parent": "holder-planet-4"
+  },
+  "rocket-unmarked-3": {
+    "type": "card",
+    "id": "rocket-unmarked-3",
+    "deck": "deck-rockets",
+    "cardType": "rocket",
+    "z": 2223,
+    "setupRobotLimit": 2,
+    "x": 20,
+    "y": 19,
+    "parent": "holder-planet-6"
+  },
+  "rocket-unmarked-4": {
+    "type": "card",
+    "id": "rocket-unmarked-4",
+    "deck": "deck-rockets",
+    "cardType": "rocket",
+    "z": 2225,
+    "x": 20,
+    "y": 19,
+    "parent": "holder-planet-8"
+  },
+  "deck-robots": {
+    "type": "deck",
+    "id": "deck-robots",
+    "parent": "holder-robots",
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "cardDefaults": {
+      "width": 40,
+      "height": 40,
+      "layer": 0,
+      "color": "#999999",
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "border-color": "white",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "22px"
+        },
+        "handleOffset": 27,
+        "handlePosition": "bottom center",
+        "handleSize": 30
+      },
+      "draggingChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY dragging}",
+          "relation": "!=",
+          "operand2": null,
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "layer",
+              "value": 5
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "layer",
+              "value": null
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "robot": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 40,
+            "height": 40,
+            "value": "i/game-pieces/3D/Meeple-3D.svg",
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            },
+            "borderColor": "#000000",
+            "borderWidth": 1
+          }
+        ]
+      }
+    ]
+  },
+  "robot-p1-1": {
+    "type": "card",
+    "id": "robot-p1-1",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5004,
+    "playerIndex": 1,
+    "parent": "ijya"
+  },
+  "robot-p1-2": {
+    "type": "card",
+    "id": "robot-p1-2",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5006,
+    "playerIndex": 1,
+    "parent": "ijya"
+  },
+  "robot-p1-3": {
+    "type": "card",
+    "id": "robot-p1-3",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5008,
+    "playerIndex": 1,
+    "parent": "ijya"
+  },
+  "robot-p1-4": {
+    "type": "card",
+    "id": "robot-p1-4",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5516,
+    "playerIndex": 1,
+    "parent": "ijya"
+  },
+  "robot-p1-5": {
+    "type": "card",
+    "id": "robot-p1-5",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5520,
+    "playerIndex": 1,
+    "parent": "ijya"
+  },
+  "holder-rocket-marked-1": {
+    "type": "holder",
+    "id": "holder-rocket-marked-1",
+    "parent": "rocket-marked-1",
+    "width": 100,
+    "height": 100,
+    "css": {
+      "background": "transparent",
+      "border-color": "transparent",
+      "border-radius": "20px",
+      "border-width": "2px"
+    },
+    "dropLimit": 6,
+    "dropTarget": {
+      "deck": "deck-robots"
+    },
+    "z": 3,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updatePositionsRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updatePositionsRoutine"
+      }
+    ],
+    "positions": [
+      [
+        3,
+        8
+      ],
+      [
+        30,
+        8
+      ],
+      [
+        57,
+        8
+      ],
+      [
+        3,
+        42
+      ],
+      [
+        30,
+        42
+      ],
+      [
+        57,
+        42
+      ]
+    ],
+    "updatePositionsRoutine": [
+      "var positions = ${PROPERTY positions}",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      "var index = 0",
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          "var position = getIndex ${positions} ${index}",
+          "var x = getIndex ${position} 0",
+          {
+            "func": "SET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "x",
+            "value": "${x}"
+          },
+          "var y = getIndex ${position} 1",
+          {
+            "func": "SET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "y",
+            "value": "${y}"
+          },
+          "var index = ${index} + 1"
+        ]
+      }
+    ],
+    "preventPiles": true
+  },
+  "holder-rocket-unmarked-1": {
+    "type": "holder",
+    "id": "holder-rocket-unmarked-1",
+    "parent": "rocket-unmarked-1",
+    "inheritFrom": "holder-rocket-marked-1"
+  },
+  "holder-rocket-unmarked-2": {
+    "type": "holder",
+    "id": "holder-rocket-unmarked-2",
+    "parent": "rocket-unmarked-2",
+    "inheritFrom": "holder-rocket-marked-1"
+  },
+  "holder-rocket-unmarked-3": {
+    "type": "holder",
+    "id": "holder-rocket-unmarked-3",
+    "parent": "rocket-unmarked-3",
+    "inheritFrom": "holder-rocket-marked-1"
+  },
+  "holder-rocket-unmarked-4": {
+    "type": "holder",
+    "id": "holder-rocket-unmarked-4",
+    "parent": "rocket-unmarked-4",
+    "inheritFrom": "holder-rocket-marked-1"
+  },
+  "holder-rocket-marked-2": {
+    "type": "holder",
+    "id": "holder-rocket-marked-2",
+    "parent": "rocket-marked-2",
+    "inheritFrom": "holder-rocket-marked-1"
+  },
+  "holder-rocket-marked-3": {
+    "type": "holder",
+    "id": "holder-rocket-marked-3",
+    "parent": "rocket-marked-3",
+    "inheritFrom": "holder-rocket-marked-1"
+  },
+  "holder-rocket-marked-4": {
+    "type": "holder",
+    "id": "holder-rocket-marked-4",
+    "parent": "rocket-marked-4",
+    "inheritFrom": "holder-rocket-marked-1"
+  },
+  "holder-rocket-marked-5": {
+    "type": "holder",
+    "id": "holder-rocket-marked-5",
+    "parent": "rocket-marked-5",
+    "inheritFrom": "holder-rocket-marked-1"
+  },
+  "holder-rocket-golden": {
+    "type": "holder",
+    "id": "holder-rocket-golden",
+    "parent": "rocket-golden",
+    "inheritFrom": "holder-rocket-marked-1",
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "playerIndex",
+        "collection": "child",
+        "aggregation": "first"
+      },
+      {
+        "func": "MOVE",
+        "collection": "child",
+        "to": "holder-robots-p${playerIndex}"
+      }
+    ]
+  },
+  "holder-robots": {
+    "type": "holder",
+    "id": "holder-robots",
+    "y": -140,
+    "width": 40,
+    "height": 40,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-robots"
+    },
+    "x": 350,
+    "css": {
+      "background": "transparent",
+      "border-color": "white"
+    }
+  },
+  "holder-robots-p1": {
+    "type": "holder",
+    "id": "holder-robots-p1",
+    "inheritFrom": "holder-robots",
+    "y": 50,
+    "parent": "seat-p1",
+    "x": -5,
+    "fixedParent": true
+  },
+  "holder-batteries": {
+    "type": "holder",
+    "id": "holder-batteries",
+    "y": -150,
+    "x": 450,
+    "height": 50,
+    "width": 25,
+    "css": {
+      "background": "transparent",
+      "border-color": "#888888",
+      "border-width": "2px"
+    },
+    "dropOffsetX": -1,
+    "dropOffsetY": -1,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "deck-batteries": {
+    "type": "deck",
+    "id": "deck-batteries",
+    "parent": "holder-batteries",
+    "width": 25,
+    "height": 50,
+    "cardDefaults": {
+      "width": 25,
+      "height": 50,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "#39ff14",
+          "border-color": "black",
+          "border-style": "solid",
+          "border-width": "1px",
+          "color": "black",
+          "font-size": "18px"
+        },
+        "handlePosition": "top right",
+        "handleSize": 25
+      }
+    },
+    "faceTemplates": [
+      {
+        "radius": 8,
+        "border": 1,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#d3d3d3",
+            "width": 25,
+            "height": 50,
+            "value": "/i/game-icons.net/priorblue/battery-0.svg"
+          }
+        ]
+      },
+      {
+        "radius": 8,
+        "border": 1,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#39ff14",
+            "width": 25,
+            "height": 50,
+            "value": "/i/game-icons.net/priorblue/battery-100.svg"
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "battery": {}
+    }
+  },
+  "battery-p1-1": {
+    "type": "card",
+    "id": "battery-p1-1",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 1,
+    "playerIndex": 1,
+    "parent": "holder-batteries-p1"
+  },
+  "holder-batteries-p2": {
+    "type": "holder",
+    "id": "holder-batteries-p2",
+    "parent": "seat-p2",
+    "inheritFrom": "holder-batteries-p1"
+  },
+  "holder-batteries-p1": {
+    "type": "holder",
+    "id": "holder-batteries-p1",
+    "parent": "seat-p1",
+    "x": 45,
+    "y": 45,
+    "width": 150,
+    "height": 50,
+    "css": {
+      "background": "transparent",
+      "border-color": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-batteries"
+    },
+    "stackOffsetX": 25
+  },
+  "holder-batteries-p3": {
+    "type": "holder",
+    "id": "holder-batteries-p3",
+    "parent": "seat-p3",
+    "inheritFrom": "holder-batteries-p1"
+  },
+  "holder-batteries-p4": {
+    "type": "holder",
+    "id": "holder-batteries-p4",
+    "parent": "seat-p4",
+    "inheritFrom": "holder-batteries-p1"
+  },
+  "holder-batteries-p5": {
+    "type": "holder",
+    "id": "holder-batteries-p5",
+    "parent": "seat-p5",
+    "inheritFrom": "holder-batteries-p1"
+  },
+  "holder-batteries-p6": {
+    "type": "holder",
+    "id": "holder-batteries-p6",
+    "parent": "seat-p6",
+    "inheritFrom": "holder-batteries-p1"
+  },
+  "holder-robots-p2": {
+    "type": "holder",
+    "id": "holder-robots-p2",
+    "parent": "seat-p2",
+    "inheritFrom": "holder-robots-p1"
+  },
+  "holder-robots-p3": {
+    "type": "holder",
+    "id": "holder-robots-p3",
+    "parent": "seat-p3",
+    "inheritFrom": "holder-robots-p1"
+  },
+  "holder-robots-p4": {
+    "type": "holder",
+    "id": "holder-robots-p4",
+    "parent": "seat-p4",
+    "inheritFrom": "holder-robots-p1"
+  },
+  "holder-robots-p5": {
+    "type": "holder",
+    "id": "holder-robots-p5",
+    "parent": "seat-p5",
+    "inheritFrom": "holder-robots-p1"
+  },
+  "holder-robots-p6": {
+    "type": "holder",
+    "id": "holder-robots-p6",
+    "parent": "seat-p6",
+    "inheritFrom": "holder-robots-p1"
+  },
+  "robot-p2-1": {
+    "type": "card",
+    "id": "robot-p2-1",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5019,
+    "playerIndex": 2,
+    "parent": "csvl"
+  },
+  "robot-p2-2": {
+    "type": "card",
+    "id": "robot-p2-2",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5021,
+    "playerIndex": 2,
+    "parent": "csvl"
+  },
+  "robot-p2-3": {
+    "type": "card",
+    "id": "robot-p2-3",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5558,
+    "playerIndex": 2,
+    "parent": "csvl"
+  },
+  "robot-p2-4": {
+    "type": "card",
+    "id": "robot-p2-4",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5555,
+    "playerIndex": 2,
+    "parent": "csvl"
+  },
+  "robot-p2-5": {
+    "type": "card",
+    "id": "robot-p2-5",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5561,
+    "playerIndex": 2,
+    "parent": "csvl"
+  },
+  "robot-p3-1": {
+    "type": "card",
+    "id": "robot-p3-1",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5034,
+    "playerIndex": 3,
+    "parent": "gnzi"
+  },
+  "robot-p3-2": {
+    "type": "card",
+    "id": "robot-p3-2",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5036,
+    "playerIndex": 3,
+    "parent": "gnzi"
+  },
+  "robot-p3-3": {
+    "type": "card",
+    "id": "robot-p3-3",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5524,
+    "playerIndex": 3,
+    "parent": "gnzi"
+  },
+  "robot-p3-4": {
+    "type": "card",
+    "id": "robot-p3-4",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5512,
+    "playerIndex": 3,
+    "parent": "gnzi"
+  },
+  "robot-p3-5": {
+    "type": "card",
+    "id": "robot-p3-5",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5528,
+    "playerIndex": 3,
+    "parent": "gnzi"
+  },
+  "robot-p4-1": {
+    "type": "card",
+    "id": "robot-p4-1",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5049,
+    "playerIndex": 4,
+    "parent": "dozm"
+  },
+  "robot-p4-2": {
+    "type": "card",
+    "id": "robot-p4-2",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5051,
+    "playerIndex": 4,
+    "parent": "dozm"
+  },
+  "robot-p4-3": {
+    "type": "card",
+    "id": "robot-p4-3",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5053,
+    "playerIndex": 4,
+    "parent": "dozm"
+  },
+  "robot-p4-4": {
+    "type": "card",
+    "id": "robot-p4-4",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5055,
+    "playerIndex": 4,
+    "parent": "dozm"
+  },
+  "robot-p4-5": {
+    "type": "card",
+    "id": "robot-p4-5",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5508,
+    "playerIndex": 4,
+    "parent": "dozm"
+  },
+  "robot-p5-1": {
+    "type": "card",
+    "id": "robot-p5-1",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5064,
+    "playerIndex": 5,
+    "parent": "v75k"
+  },
+  "robot-p5-2": {
+    "type": "card",
+    "id": "robot-p5-2",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5066,
+    "playerIndex": 5,
+    "parent": "v75k"
+  },
+  "robot-p5-3": {
+    "type": "card",
+    "id": "robot-p5-3",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5068,
+    "playerIndex": 5,
+    "parent": "v75k"
+  },
+  "robot-p5-4": {
+    "type": "card",
+    "id": "robot-p5-4",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5070,
+    "playerIndex": 5,
+    "parent": "v75k"
+  },
+  "robot-p5-5": {
+    "type": "card",
+    "id": "robot-p5-5",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5470,
+    "playerIndex": 5,
+    "parent": "v75k"
+  },
+  "robot-p6-1": {
+    "type": "card",
+    "id": "robot-p6-1",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5079,
+    "playerIndex": 6,
+    "parent": "024r"
+  },
+  "robot-p6-2": {
+    "type": "card",
+    "id": "robot-p6-2",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5081,
+    "playerIndex": 6,
+    "parent": "024r"
+  },
+  "robot-p6-3": {
+    "type": "card",
+    "id": "robot-p6-3",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5083,
+    "playerIndex": 6,
+    "parent": "024r"
+  },
+  "robot-p6-4": {
+    "type": "card",
+    "id": "robot-p6-4",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5085,
+    "playerIndex": 6,
+    "parent": "024r"
+  },
+  "robot-p6-5": {
+    "type": "card",
+    "id": "robot-p6-5",
+    "deck": "deck-robots",
+    "cardType": "robot",
+    "z": 5474,
+    "playerIndex": 6,
+    "parent": "024r"
+  },
+  "battery-p1-2": {
+    "type": "card",
+    "id": "battery-p1-2",
+    "parent": "holder-batteries-p1",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 2,
+    "playerIndex": 1,
+    "x": 25
+  },
+  "battery-p1-3": {
+    "type": "card",
+    "id": "battery-p1-3",
+    "parent": "holder-batteries-p1",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 3,
+    "playerIndex": 1,
+    "x": 50
+  },
+  "battery-p1-4": {
+    "type": "card",
+    "id": "battery-p1-4",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 4,
+    "playerIndex": 1,
+    "x": 75,
+    "parent": "holder-batteries-p1"
+  },
+  "battery-p1-5": {
+    "type": "card",
+    "id": "battery-p1-5",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 5,
+    "playerIndex": 1,
+    "x": 100,
+    "parent": "holder-batteries-p1"
+  },
+  "battery-p1-6": {
+    "type": "card",
+    "id": "battery-p1-6",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 6,
+    "playerIndex": 1,
+    "x": 125,
+    "parent": "holder-batteries-p1"
+  },
+  "battery-p2-1": {
+    "type": "card",
+    "id": "battery-p2-1",
+    "parent": "holder-batteries-p2",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 1,
+    "playerIndex": 2
+  },
+  "battery-p2-2": {
+    "type": "card",
+    "id": "battery-p2-2",
+    "parent": "holder-batteries-p2",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 2,
+    "playerIndex": 2,
+    "x": 25
+  },
+  "battery-p2-3": {
+    "type": "card",
+    "id": "battery-p2-3",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 3,
+    "playerIndex": 2,
+    "x": 50,
+    "parent": "holder-batteries-p2"
+  },
+  "battery-p2-4": {
+    "type": "card",
+    "id": "battery-p2-4",
+    "parent": "holder-batteries-p2",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 4,
+    "playerIndex": 2,
+    "x": 75
+  },
+  "battery-p2-5": {
+    "type": "card",
+    "id": "battery-p2-5",
+    "parent": "holder-batteries-p2",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 5,
+    "playerIndex": 2,
+    "x": 100
+  },
+  "battery-p2-6": {
+    "type": "card",
+    "id": "battery-p2-6",
+    "parent": "holder-batteries-p2",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 6,
+    "playerIndex": 2,
+    "x": 125
+  },
+  "battery-p3-1": {
+    "type": "card",
+    "id": "battery-p3-1",
+    "parent": "holder-batteries-p3",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 1,
+    "playerIndex": 3
+  },
+  "battery-p3-2": {
+    "type": "card",
+    "id": "battery-p3-2",
+    "parent": "holder-batteries-p3",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 2,
+    "playerIndex": 3,
+    "x": 25
+  },
+  "battery-p3-3": {
+    "type": "card",
+    "id": "battery-p3-3",
+    "parent": "holder-batteries-p3",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 3,
+    "playerIndex": 3,
+    "x": 50
+  },
+  "battery-p3-4": {
+    "type": "card",
+    "id": "battery-p3-4",
+    "parent": "holder-batteries-p3",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 4,
+    "playerIndex": 3,
+    "x": 75
+  },
+  "battery-p3-5": {
+    "type": "card",
+    "id": "battery-p3-5",
+    "parent": "holder-batteries-p3",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 5,
+    "playerIndex": 3,
+    "x": 100
+  },
+  "battery-p3-6": {
+    "type": "card",
+    "id": "battery-p3-6",
+    "parent": "holder-batteries-p3",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 6,
+    "playerIndex": 3,
+    "x": 125
+  },
+  "battery-p4-1": {
+    "type": "card",
+    "id": "battery-p4-1",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 1,
+    "playerIndex": 4,
+    "parent": "holder-batteries-p4"
+  },
+  "battery-p4-2": {
+    "type": "card",
+    "id": "battery-p4-2",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 2,
+    "playerIndex": 4,
+    "x": 25,
+    "parent": "holder-batteries-p4"
+  },
+  "battery-p4-3": {
+    "type": "card",
+    "id": "battery-p4-3",
+    "parent": "holder-batteries-p4",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 3,
+    "playerIndex": 4,
+    "x": 50
+  },
+  "battery-p4-4": {
+    "type": "card",
+    "id": "battery-p4-4",
+    "parent": "holder-batteries-p4",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 4,
+    "playerIndex": 4,
+    "x": 75
+  },
+  "battery-p4-5": {
+    "type": "card",
+    "id": "battery-p4-5",
+    "parent": "holder-batteries-p4",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 5,
+    "playerIndex": 4,
+    "x": 100
+  },
+  "battery-p4-6": {
+    "type": "card",
+    "id": "battery-p4-6",
+    "parent": "holder-batteries-p4",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 6,
+    "playerIndex": 4,
+    "x": 125
+  },
+  "battery-p5-1": {
+    "type": "card",
+    "id": "battery-p5-1",
+    "parent": "holder-batteries-p5",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 1,
+    "playerIndex": 5
+  },
+  "battery-p5-2": {
+    "type": "card",
+    "id": "battery-p5-2",
+    "parent": "holder-batteries-p5",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 2,
+    "playerIndex": 5,
+    "x": 25
+  },
+  "battery-p5-3": {
+    "type": "card",
+    "id": "battery-p5-3",
+    "parent": "holder-batteries-p5",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 3,
+    "playerIndex": 5,
+    "x": 50
+  },
+  "battery-p5-4": {
+    "type": "card",
+    "id": "battery-p5-4",
+    "parent": "holder-batteries-p5",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 4,
+    "playerIndex": 5,
+    "x": 75
+  },
+  "battery-p5-5": {
+    "type": "card",
+    "id": "battery-p5-5",
+    "parent": "holder-batteries-p5",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 5,
+    "playerIndex": 5,
+    "x": 100
+  },
+  "battery-p5-6": {
+    "type": "card",
+    "id": "battery-p5-6",
+    "parent": "holder-batteries-p5",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 6,
+    "playerIndex": 5,
+    "x": 125
+  },
+  "battery-p6-1": {
+    "type": "card",
+    "id": "battery-p6-1",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 1,
+    "playerIndex": 6,
+    "parent": "holder-batteries-p6"
+  },
+  "battery-p6-2": {
+    "type": "card",
+    "id": "battery-p6-2",
+    "parent": "holder-batteries-p6",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 2,
+    "playerIndex": 6,
+    "x": 25
+  },
+  "battery-p6-3": {
+    "type": "card",
+    "id": "battery-p6-3",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 3,
+    "playerIndex": 6,
+    "x": 50,
+    "parent": "holder-batteries-p6"
+  },
+  "battery-p6-4": {
+    "type": "card",
+    "id": "battery-p6-4",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 4,
+    "playerIndex": 6,
+    "x": 75,
+    "parent": "holder-batteries-p6"
+  },
+  "battery-p6-5": {
+    "type": "card",
+    "id": "battery-p6-5",
+    "parent": "holder-batteries-p6",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 5,
+    "playerIndex": 6,
+    "x": 100
+  },
+  "battery-p6-6": {
+    "type": "card",
+    "id": "battery-p6-6",
+    "parent": "holder-batteries-p6",
+    "deck": "deck-batteries",
+    "cardType": "battery",
+    "z": 6,
+    "playerIndex": 6,
+    "x": 125
+  },
+  "holder-draw": {
+    "type": "holder",
+    "id": "holder-draw",
+    "x": 1280,
+    "y": 580,
+    "width": 90,
+    "height": 150,
+    "css": {
+      "background": "transparent",
+      "border-color": "#888888",
+      "border-width": "2px"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "label-draw": {
+    "type": "label",
+    "id": "label-draw",
+    "parent": "holder-draw",
+    "text": "DRAW",
+    "movableInEdit": false,
+    "css": {
+      "color": "white",
+      "font-weight": "bold",
+      "font-size": "20px",
+      "text-align": "center"
+    },
+    "y": -30,
+    "x": -5
+  },
+  "label-hand": {
+    "type": "label",
+    "id": "label-hand",
+    "parent": "hand",
+    "text": "HAND",
+    "width": 300,
+    "inheritFrom": "label-draw",
+    "x": 0
+  },
+  "holder-discard": {
+    "type": "holder",
+    "id": "holder-discard",
+    "inheritFrom": "holder-draw",
+    "x": 1470,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "label-discard": {
+    "type": "label",
+    "id": "label-discard",
+    "parent": "holder-discard",
+    "text": "DISCARD",
+    "inheritFrom": "label-draw"
+  },
+  "die": {
+    "type": "dice",
+    "id": "die",
+    "x": 1400,
+    "y": 640,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "width": 40,
+    "height": 40
+  },
+  "deck-cards": {
+    "type": "deck",
+    "id": "deck-cards",
+    "parent": "holder-draw",
+    "width": 90,
+    "height": 150,
+    "cardDefaults": {
+      "width": 90,
+      "height": 150,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "red",
+          "border-color": "black",
+          "border-radius": "8px",
+          "color": "white"
+        },
+        "handlePosition": "bottom center",
+        "movable": false
+      }
+    },
+    "cardTypes": {
+      "rocket-1": {
+        "rocket-distance": 1,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg"
+      },
+      "rocket-2": {
+        "rocket-distance": 2,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg"
+      },
+      "rocket-3": {
+        "rocket-distance": 3,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg"
+      },
+      "rocket-4": {
+        "rocket-distance": 4,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg"
+      },
+      "rocket-5": {
+        "rocket-distance": 5,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg"
+      },
+      "robot-1": {
+        "robot-distance": 1,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "robot-2": {
+        "robot-distance": 2,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "robot-3": {
+        "robot-distance": 3,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "robot-4": {
+        "robot-distance": 4,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "robot-5": {
+        "robot-distance": 5,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "rocket-1-robot-1": {
+        "rocket-distance": 1,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "robot-distance": 1,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "rocket-1-robot-5": {
+        "rocket-distance": 1,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "robot-distance": 5,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "rocket-2-robot-2": {
+        "rocket-distance": 2,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "robot-distance": 2,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "rocket-2-robot-4": {
+        "rocket-distance": 2,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "robot-distance": 4,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "rocket-3-robot-3": {
+        "rocket-distance": 3,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "robot-distance": 3,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "rocket-4-robot-2": {
+        "rocket-distance": 4,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "robot-distance": 2,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "rocket-4-robot-4": {
+        "rocket-distance": 4,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "robot-distance": 4,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "rocket-5-robot-1": {
+        "rocket-distance": 5,
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "robot-distance": 1,
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg"
+      },
+      "rocket-robot-die": {
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "rocket-die-1": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg",
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg",
+        "robot-die-1": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg"
+      },
+      "robot-2-dice": {
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg",
+        "robot-die-1": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg",
+        "robot-die-2": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg"
+      },
+      "robot-3-dice": {
+        "robot-icon": "/i/noto-emoji/emoji_u1f916.svg",
+        "robot-die-1": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg",
+        "robot-die-2": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg",
+        "robot-die-3": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg"
+      },
+      "rocket-2-dice": {
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "rocket-die-1": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg",
+        "rocket-die-2": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg"
+      },
+      "rocket-3-dice": {
+        "rocket-icon": "/i/noto-emoji/emoji_u1f680.svg",
+        "rocket-die-1": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg",
+        "rocket-die-2": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg",
+        "rocket-die-3": "/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "radius": 8,
+        "border": 1,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#e5e4e2",
+            "width": 90,
+            "height": 150,
+            "value": "/assets/-629936795_13915"
+          }
+        ]
+      },
+      {
+        "radius": 8,
+        "border": 1,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#e5e4e2",
+            "width": 90,
+            "height": 150
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 45,
+            "height": 75,
+            "fontSize": 45,
+            "css": {
+              "line-height": "75px",
+              "text-align": "center"
+            },
+            "dynamicProperties": {
+              "value": "rocket-distance"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 18,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "rocket-die-1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 14,
+            "y": 35,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "rocket-die-2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 33,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "rocket-die-3"
+            }
+          },
+          {
+            "type": "image",
+            "x": 42.5,
+            "y": 17.5,
+            "color": "transparent",
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "value": "rocket-icon"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 75,
+            "width": 45,
+            "height": 75,
+            "fontSize": 45,
+            "css": {
+              "line-height": "75px",
+              "text-align": "center"
+            },
+            "dynamicProperties": {
+              "value": "robot-distance"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 93,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "robot-die-1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 14,
+            "y": 110,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "robot-die-2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 108,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "robot-die-3"
+            }
+          },
+          {
+            "type": "image",
+            "x": 42.5,
+            "y": 92.5,
+            "color": "transparent",
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "value": "robot-icon"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "card-rocket-1-1": {
+    "type": "card",
+    "id": "card-rocket-1-1",
+    "deck": "deck-cards",
+    "cardType": "rocket-1",
+    "z": 5340,
+    "parent": "onal"
+  },
+  "card-rocket-1-2": {
+    "type": "card",
+    "id": "card-rocket-1-2",
+    "deck": "deck-cards",
+    "cardType": "rocket-1",
+    "z": 5293,
+    "parent": "onal"
+  },
+  "card-rocket-1-3": {
+    "type": "card",
+    "id": "card-rocket-1-3",
+    "deck": "deck-cards",
+    "cardType": "rocket-1",
+    "z": 5298,
+    "parent": "onal"
+  },
+  "card-rocket1-4": {
+    "type": "card",
+    "id": "card-rocket1-4",
+    "deck": "deck-cards",
+    "cardType": "rocket-1",
+    "z": 5272,
+    "parent": "onal"
+  },
+  "onal": {
+    "type": "pile",
+    "parent": "holder-draw",
+    "x": 0,
+    "y": 0,
+    "width": 90,
+    "height": 150,
+    "handleCSS": {
+      "background": "red",
+      "border-color": "black",
+      "border-radius": "8px",
+      "color": "white"
+    },
+    "handlePosition": "bottom center",
+    "movable": false,
+    "id": "onal"
+  },
+  "card-rocket-2-1": {
+    "type": "card",
+    "id": "card-rocket-2-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2",
+    "z": 5348
+  },
+  "card-rocket-2-2": {
+    "type": "card",
+    "id": "card-rocket-2-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2",
+    "z": 5337
+  },
+  "card-rocket-2-3": {
+    "type": "card",
+    "id": "card-rocket-2-3",
+    "deck": "deck-cards",
+    "cardType": "rocket-2",
+    "z": 5349,
+    "parent": "onal"
+  },
+  "card-rocket-2-4": {
+    "type": "card",
+    "id": "card-rocket-2-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2",
+    "z": 5324
+  },
+  "card-rocket-3-1": {
+    "type": "card",
+    "id": "card-rocket-3-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-3",
+    "z": 5309
+  },
+  "card-rocket-3-2": {
+    "type": "card",
+    "id": "card-rocket-3-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-3",
+    "z": 5314
+  },
+  "card-rocket-3-3": {
+    "type": "card",
+    "id": "card-rocket-3-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-3",
+    "z": 5330
+  },
+  "card-rocket-3-4": {
+    "type": "card",
+    "id": "card-rocket-3-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-3",
+    "z": 5318
+  },
+  "card-rocket-4-4": {
+    "type": "card",
+    "id": "card-rocket-4-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4",
+    "z": 5296
+  },
+  "card-rocket-4-3": {
+    "type": "card",
+    "id": "card-rocket-4-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4",
+    "z": 5274
+  },
+  "card-rocket-4-2": {
+    "type": "card",
+    "id": "card-rocket-4-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4",
+    "z": 5307
+  },
+  "card-rocket-4-1": {
+    "type": "card",
+    "id": "card-rocket-4-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4",
+    "z": 5299
+  },
+  "card-rocket-5-4": {
+    "type": "card",
+    "id": "card-rocket-5-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-5",
+    "z": 5295
+  },
+  "card-rocket-5-3": {
+    "type": "card",
+    "id": "card-rocket-5-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-5",
+    "z": 5301
+  },
+  "card-rocket-5-2": {
+    "type": "card",
+    "id": "card-rocket-5-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-5",
+    "z": 5278
+  },
+  "card-rocket-5-1": {
+    "type": "card",
+    "id": "card-rocket-5-1",
+    "deck": "deck-cards",
+    "cardType": "rocket-5",
+    "z": 5543,
+    "parent": "onal"
+  },
+  "card-robot-1-1": {
+    "type": "card",
+    "id": "card-robot-1-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-1",
+    "z": 5329
+  },
+  "card-robot-1-2": {
+    "type": "card",
+    "id": "card-robot-1-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-1",
+    "z": 5350
+  },
+  "card-robot-1-3": {
+    "type": "card",
+    "id": "card-robot-1-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-1",
+    "z": 5331
+  },
+  "card-robot-1-4": {
+    "type": "card",
+    "id": "card-robot-1-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-1",
+    "z": 5279
+  },
+  "card-robot-2-1": {
+    "type": "card",
+    "id": "card-robot-2-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-2",
+    "z": 5328
+  },
+  "card-robot-2-2": {
+    "type": "card",
+    "id": "card-robot-2-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-2",
+    "z": 5354
+  },
+  "card-robot-2-3": {
+    "type": "card",
+    "id": "card-robot-2-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-2",
+    "z": 5346
+  },
+  "card-robot-2-4": {
+    "type": "card",
+    "id": "card-robot-2-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-2",
+    "z": 5353
+  },
+  "card-robot-3-1": {
+    "type": "card",
+    "id": "card-robot-3-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-3",
+    "z": 5271
+  },
+  "card-robot-3-2": {
+    "type": "card",
+    "id": "card-robot-3-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-3",
+    "z": 5344
+  },
+  "card-robot-3-3": {
+    "type": "card",
+    "id": "card-robot-3-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-3",
+    "z": 5312
+  },
+  "card-robot-3-4": {
+    "type": "card",
+    "id": "card-robot-3-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-3",
+    "z": 5302
+  },
+  "card-robot-4-1": {
+    "type": "card",
+    "id": "card-robot-4-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-4",
+    "z": 5287
+  },
+  "card-robot-4-2": {
+    "type": "card",
+    "id": "card-robot-4-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-4",
+    "z": 5277
+  },
+  "card-robot-4-3": {
+    "type": "card",
+    "id": "card-robot-4-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-4",
+    "z": 5289
+  },
+  "card-robot-4-4": {
+    "type": "card",
+    "id": "card-robot-4-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-4",
+    "z": 5345
+  },
+  "card-robot-5-1": {
+    "type": "card",
+    "id": "card-robot-5-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-5",
+    "z": 5322
+  },
+  "card-robot-5-2": {
+    "type": "card",
+    "id": "card-robot-5-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-5",
+    "z": 5320
+  },
+  "card-robot-5-3": {
+    "type": "card",
+    "id": "card-robot-5-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-5",
+    "z": 5313
+  },
+  "card-robot-5-4": {
+    "type": "card",
+    "id": "card-robot-5-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-5",
+    "z": 5323
+  },
+  "card-rocket-1-robot-1-1": {
+    "type": "card",
+    "id": "card-rocket-1-robot-1-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-1-robot-1",
+    "z": 5310
+  },
+  "card-rocket-1-robot-1-2": {
+    "type": "card",
+    "id": "card-rocket-1-robot-1-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-1-robot-1",
+    "z": 5273
+  },
+  "card-rocket-1-robot-1-3": {
+    "type": "card",
+    "id": "card-rocket-1-robot-1-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-1-robot-1",
+    "z": 5319
+  },
+  "card-rocket-1-robot-5-1": {
+    "type": "card",
+    "id": "card-rocket-1-robot-5-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-1-robot-5",
+    "z": 5294
+  },
+  "card-rocket-1-robot-5-2": {
+    "type": "card",
+    "id": "card-rocket-1-robot-5-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-1-robot-5",
+    "z": 5333
+  },
+  "card-rocket-1-robot-5-3": {
+    "type": "card",
+    "id": "card-rocket-1-robot-5-3",
+    "deck": "deck-cards",
+    "cardType": "rocket-1-robot-5",
+    "z": 5540,
+    "parent": "onal"
+  },
+  "card-rocket-1-robot-5-4": {
+    "type": "card",
+    "id": "card-rocket-1-robot-5-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-1-robot-5",
+    "z": 5311
+  },
+  "card-rocket-1-robot-5-5": {
+    "type": "card",
+    "id": "card-rocket-1-robot-5-5",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-1-robot-5",
+    "z": 5347
+  },
+  "card-rocket-1-robot-5-6": {
+    "type": "card",
+    "id": "card-rocket-1-robot-5-6",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-1-robot-5",
+    "z": 5300
+  },
+  "card-rocket-2-robot-2-1": {
+    "type": "card",
+    "id": "card-rocket-2-robot-2-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-robot-2",
+    "z": 5342
+  },
+  "card-rocket-2-robot-2-2": {
+    "type": "card",
+    "id": "card-rocket-2-robot-2-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-robot-2",
+    "z": 5286
+  },
+  "card-rocket-2-robot-2-3": {
+    "type": "card",
+    "id": "card-rocket-2-robot-2-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-robot-2",
+    "z": 5292
+  },
+  "card-rocket-2-robot-4-1": {
+    "type": "card",
+    "id": "card-rocket-2-robot-4-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-robot-4",
+    "z": 5285
+  },
+  "card-rocket-2-robot-4-2": {
+    "type": "card",
+    "id": "card-rocket-2-robot-4-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-robot-4",
+    "z": 5339
+  },
+  "card-rocket-2-robot-4-3": {
+    "type": "card",
+    "id": "card-rocket-2-robot-4-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-robot-4",
+    "z": 5341
+  },
+  "card-rocket-2-robot-4-4": {
+    "type": "card",
+    "id": "card-rocket-2-robot-4-4",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-robot-4",
+    "z": 5537,
+    "parent": "onal"
+  },
+  "card-rocket-2-robot-4-5": {
+    "type": "card",
+    "id": "card-rocket-2-robot-4-5",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-robot-4",
+    "z": 5305
+  },
+  "card-rocket-2-robot-4-6": {
+    "type": "card",
+    "id": "card-rocket-2-robot-4-6",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-robot-4",
+    "z": 5315
+  },
+  "card-rocket-3-robot-3-1": {
+    "type": "card",
+    "id": "card-rocket-3-robot-3-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-3-robot-3",
+    "z": 5269
+  },
+  "card-rocket-3-robot-3-2": {
+    "type": "card",
+    "id": "card-rocket-3-robot-3-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-3-robot-3",
+    "z": 5326
+  },
+  "card-rocket-3-robot-3-3": {
+    "type": "card",
+    "id": "card-rocket-3-robot-3-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-3-robot-3",
+    "z": 5308
+  },
+  "card-rocket-4-robot-2-1": {
+    "type": "card",
+    "id": "card-rocket-4-robot-2-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4-robot-2",
+    "z": 5303
+  },
+  "card-rocket-4-robot-2-2": {
+    "type": "card",
+    "id": "card-rocket-4-robot-2-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4-robot-2",
+    "z": 5291
+  },
+  "card-rocket-4-robot-2-3": {
+    "type": "card",
+    "id": "card-rocket-4-robot-2-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4-robot-2",
+    "z": 5275
+  },
+  "card-rocket-4-robot-2-4": {
+    "type": "card",
+    "id": "card-rocket-4-robot-2-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4-robot-2",
+    "z": 5281
+  },
+  "card-rocket-4-robot-2-5": {
+    "type": "card",
+    "id": "card-rocket-4-robot-2-5",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4-robot-2",
+    "z": 5321
+  },
+  "card-rocket-4-robot-2-6": {
+    "type": "card",
+    "id": "card-rocket-4-robot-2-6",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4-robot-2",
+    "z": 5352
+  },
+  "card-rocket-4-robot-4-1": {
+    "type": "card",
+    "id": "card-rocket-4-robot-4-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4-robot-4",
+    "z": 5290
+  },
+  "card-rocket-4-robot-4-2": {
+    "type": "card",
+    "id": "card-rocket-4-robot-4-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4-robot-4",
+    "z": 5327
+  },
+  "card-rocket-4-robot-4-3": {
+    "type": "card",
+    "id": "card-rocket-4-robot-4-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-4-robot-4",
+    "z": 5270
+  },
+  "card-rocket-5-robot-1-1": {
+    "type": "card",
+    "id": "card-rocket-5-robot-1-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-5-robot-1",
+    "z": 5280
+  },
+  "card-rocket-5-robot-1-2": {
+    "type": "card",
+    "id": "card-rocket-5-robot-1-2",
+    "deck": "deck-cards",
+    "cardType": "rocket-5-robot-1",
+    "z": 5335,
+    "parent": "onal"
+  },
+  "card-rocket-5-robot-1-3": {
+    "type": "card",
+    "id": "card-rocket-5-robot-1-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-5-robot-1",
+    "z": 5283
+  },
+  "card-rocket-5-robot-1-4": {
+    "type": "card",
+    "id": "card-rocket-5-robot-1-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-5-robot-1",
+    "z": 5325
+  },
+  "card-rocket-5-robot-1-5": {
+    "type": "card",
+    "id": "card-rocket-5-robot-1-5",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-5-robot-1",
+    "z": 5276
+  },
+  "card-rocket-5-robot-1-6": {
+    "type": "card",
+    "id": "card-rocket-5-robot-1-6",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-5-robot-1",
+    "z": 5351
+  },
+  "card-rocket-robot-die-1": {
+    "type": "card",
+    "id": "card-rocket-robot-die-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-robot-die",
+    "z": 5284
+  },
+  "card-rocket-robot-die-2": {
+    "type": "card",
+    "id": "card-rocket-robot-die-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-robot-die",
+    "z": 5334
+  },
+  "card-rocket-robot-die-3": {
+    "type": "card",
+    "id": "card-rocket-robot-die-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-robot-die",
+    "z": 5343
+  },
+  "card-rocket-robot-die-4": {
+    "type": "card",
+    "id": "card-rocket-robot-die-4",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-robot-die",
+    "z": 5332
+  },
+  "card-rocket-robot-die-5": {
+    "type": "card",
+    "id": "card-rocket-robot-die-5",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-robot-die",
+    "z": 5288
+  },
+  "card-rocket-robot-die-6": {
+    "type": "card",
+    "id": "card-rocket-robot-die-6",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-robot-die",
+    "z": 5336
+  },
+  "card-robot-2-dice-1": {
+    "type": "card",
+    "id": "card-robot-2-dice-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-2-dice",
+    "z": 5306
+  },
+  "card-robot-2-dice-2": {
+    "type": "card",
+    "id": "card-robot-2-dice-2",
+    "deck": "deck-cards",
+    "cardType": "robot-2-dice",
+    "z": 5297,
+    "parent": "onal"
+  },
+  "card-robot-2-dice-3": {
+    "type": "card",
+    "id": "card-robot-2-dice-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-2-dice",
+    "z": 5268
+  },
+  "card-robot-3-dice-1": {
+    "type": "card",
+    "id": "card-robot-3-dice-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "robot-3-dice",
+    "z": 5282
+  },
+  "card-rocket-2-dice-1": {
+    "type": "card",
+    "id": "card-rocket-2-dice-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-dice",
+    "z": 5316
+  },
+  "card-rocket-2-dice-2": {
+    "type": "card",
+    "id": "card-rocket-2-dice-2",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-dice",
+    "z": 5317
+  },
+  "card-rocket-2-dice-3": {
+    "type": "card",
+    "id": "card-rocket-2-dice-3",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-2-dice",
+    "z": 5338
+  },
+  "card-rocket-3-dice-1": {
+    "type": "card",
+    "id": "card-rocket-3-dice-1",
+    "parent": "onal",
+    "deck": "deck-cards",
+    "cardType": "rocket-3-dice",
+    "z": 5304
+  },
+  "background": {
+    "type": "basic",
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -10,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-202895687_130887"
+  },
+  "holder-programs": {
+    "type": "holder",
+    "id": "holder-programs",
+    "x": 1250,
+    "y": -150,
+    "width": 160,
+    "height": 100,
+    "css": {
+      "background": "transparent",
+      "border-color": "transparent",
+      "border-width": "2px"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-programs"
+    }
+  },
+  "holder-program-2": {
+    "type": "holder",
+    "id": "holder-program-2",
+    "x": 1425,
+    "y": 110,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "holder-programs"
+  },
+  "holder-program-1": {
+    "type": "holder",
+    "id": "holder-program-1",
+    "x": 1250,
+    "y": 110,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "holder-programs"
+  },
+  "holder-program-3": {
+    "type": "holder",
+    "id": "holder-program-3",
+    "x": 1250,
+    "y": 220,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "holder-programs"
+  },
+  "holder-program-4": {
+    "type": "holder",
+    "id": "holder-program-4",
+    "x": 1425,
+    "y": 220,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "holder-programs"
+  },
+  "holder-program-5": {
+    "type": "holder",
+    "id": "holder-program-5",
+    "x": 1250,
+    "y": 330,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "holder-programs"
+  },
+  "holder-program-7": {
+    "type": "holder",
+    "id": "holder-program-7",
+    "x": 1250,
+    "y": 440,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "holder-programs"
+  },
+  "holder-program-6": {
+    "type": "holder",
+    "id": "holder-program-6",
+    "x": 1425,
+    "y": 330,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "holder-programs"
+  },
+  "holder-program-8": {
+    "type": "holder",
+    "id": "holder-program-8",
+    "x": 1425,
+    "y": 440,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "holder-programs"
+  },
+  "label-programs": {
+    "type": "label",
+    "id": "label-programs",
+    "text": "SPECIAL PROGRAMS",
+    "parent": "holder-program-1",
+    "width": 330,
+    "y": -40,
+    "inheritFrom": "label-draw",
+    "x": 0,
+    "movable": false,
+    "movableInEdit": true
+  },
+  "holder-batteries-spent": {
+    "type": "holder",
+    "id": "holder-batteries-spent",
+    "inheritFrom": "holder-batteries",
+    "x": 1270,
+    "y": 50
+  },
+  "deck-programs": {
+    "type": "deck",
+    "id": "deck-programs",
+    "width": 160,
+    "height": 100,
+    "parent": "holder-programs",
+    "cardDefaults": {
+      "width": 160,
+      "height": 100,
+      "movable": false,
+      "enlarge": 2.5
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 160,
+            "height": 100,
+            "color": "#e5e4e2"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 1,
+            "css": {
+              "font-weight": "bold",
+              "font-size": "14px",
+              "line-height": "16px",
+              "text-align": "center"
+            },
+            "width": 160,
+            "height": 16,
+            "dynamicProperties": {
+              "value": "title"
+            }
+          },
+          {
+            "type": "text",
+            "x": 55,
+            "y": 20,
+            "css": {
+              "font-weight": "bold",
+              "font-size": "18px",
+              "text-align": "center"
+            },
+            "width": 20,
+            "height": 18,
+            "dynamicProperties": {
+              "value": "cost"
+            }
+          },
+          {
+            "type": "image",
+            "x": 75,
+            "y": 18,
+            "color": "transparent",
+            "width": 24,
+            "height": 24,
+            "value": "/i/game-icons.net/priorblue/battery-100.svg"
+          },
+          {
+            "type": "text",
+            "x": 5,
+            "y": 45,
+            "css": {
+              "font-size": "11px",
+              "text-align": "center"
+            },
+            "width": 150,
+            "height": 58,
+            "dynamicProperties": {
+              "value": "effect"
+            }
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "program": {}
+    }
+  },
+  "program-1": {
+    "type": "card",
+    "id": "program-1",
+    "deck": "deck-programs",
+    "cardType": "program",
+    "z": 4860,
+    "title": "Advance a Robot",
+    "parent": "holder-program-1",
+    "cost": 2,
+    "effect": "Move any 1 visible robot 1 space clockwise"
+  },
+  "program-2": {
+    "type": "card",
+    "id": "program-2",
+    "deck": "deck-programs",
+    "cardType": "program",
+    "z": 4861,
+    "title": "Advance a Rocket",
+    "cost": 1,
+    "effect": "Move a rocket 1 space clockwise",
+    "parent": "holder-program-2"
+  },
+  "program-3": {
+    "type": "card",
+    "id": "program-3",
+    "deck": "deck-programs",
+    "cardType": "program",
+    "z": 4862,
+    "title": "Swap a Rocket",
+    "cost": 2,
+    "effect": "Swap the topmost rocket (and all robots aboard them) in 2 spaces",
+    "parent": "holder-program-3"
+  },
+  "program-4": {
+    "type": "card",
+    "id": "program-4",
+    "deck": "deck-programs",
+    "cardType": "program",
+    "z": 4863,
+    "title": "Reverse a Robot",
+    "cost": 2,
+    "effect": "Move any 1 visible robot 1 space counter-clockwise",
+    "parent": "holder-program-4"
+  },
+  "program-5": {
+    "type": "card",
+    "id": "program-5",
+    "deck": "deck-programs",
+    "cardType": "program",
+    "z": 4864,
+    "title": "Reverse a Rocket",
+    "cost": 1,
+    "effect": "Move a rocket 1 space counter-clockwise",
+    "parent": "holder-program-5"
+  },
+  "program-6": {
+    "type": "card",
+    "id": "program-6",
+    "deck": "deck-programs",
+    "cardType": "program",
+    "z": 4865,
+    "title": "Nudge Golden Saucer",
+    "cost": 2,
+    "effect": "Move the Golden Saucer to the next empty space/rocket in either direction",
+    "parent": "holder-program-6"
+  },
+  "program-7": {
+    "type": "card",
+    "id": "program-7",
+    "deck": "deck-programs",
+    "cardType": "program",
+    "z": 4866,
+    "title": "Piggyback",
+    "cost": 2,
+    "effect": "Move your robot alongside another that is moving out of its space/rocket",
+    "parent": "holder-program-7"
+  },
+  "program-8": {
+    "type": "card",
+    "id": "program-8",
+    "deck": "deck-programs",
+    "cardType": "program",
+    "z": 4867,
+    "title": "Free a Robot",
+    "cost": 1,
+    "effect": "Lift a rocket to free 1 of your robots from beneath it, placing the robot atop the stack",
+    "parent": "holder-program-8"
+  },
+  "button-setup": {
+    "type": "button",
+    "id": "button-setup",
+    "text": "New Game",
+    "x": 1470,
+    "height": 40,
+    "width": 120,
+    "y": 10,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "players"
+      },
+      {
+        "func": "COUNT",
+        "collection": "players",
+        "variable": "playerCount"
+      },
+      "var playerCount = min ${playerCount} 6",
+      "var playerCount = max ${playerCount} 2",
+      {
+        "func": "INPUT",
+        "confirmButtonText": "Go",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "text",
+            "text": "A new game will be set up for ${playerCount} players, replacing any game in progress."
+          },
+          {
+            "label": "Which set of special programs should be used?",
+            "type": "select",
+            "variable": "programConfig",
+            "options": [
+              {
+                "value": 0,
+                "text": "First Game Setup",
+                "select": true
+              },
+              {
+                "value": 2,
+                "text": "2 Random Programs"
+              },
+              {
+                "value": 3,
+                "text": "3 Random Programs"
+              },
+              {
+                "value": 4,
+                "text": "4 Random Programs"
+              },
+              {
+                "value": 5,
+                "text": "5 Random Programs"
+              },
+              {
+                "value": 6,
+                "text": "6 Random Programs"
+              },
+              {
+                "value": 7,
+                "text": "7 Random Programs"
+              },
+              {
+                "value": 8,
+                "text": "All 8 Programs"
+              }
+            ]
+          }
+        ],
+        "header": "New Game Setup"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-programs"
+      },
+      {
+        "func": "IF",
+        "operand1": "${programConfig}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "collection": [
+              "program-1"
+            ],
+            "to": "holder-program-1"
+          },
+          {
+            "func": "MOVE",
+            "collection": [
+              "program-2"
+            ],
+            "to": "holder-program-2"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${programConfig}",
+            "operand2": 8,
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "holder": "holder-programs",
+                "key": "id",
+                "reverse": true
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SHUFFLE",
+                "holder": "holder-programs"
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "range": "${programConfig}",
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "holder-programs",
+                "to": "holder-program-${value}",
+                "count": 1
+              }
+            ]
+          }
+        ]
+      },
+      "var robotsPerPlayer = 3",
+      "var batteriesPerPlayer = 4",
+      {
+        "func": "IF",
+        "operand1": "${playerCount}",
+        "operand2": 2,
+        "thenRoutine": [
+          "var robotsPerPlayer = 5",
+          "var batteriesPerPlayer = 6"
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${playerCount}",
+            "relation": "<=",
+            "operand2": 4,
+            "thenRoutine": [
+              "var robotsPerPlayer = 4",
+              "var batteriesPerPlayer = 5"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-batteries"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "battery",
+        "collection": "batteries"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-robots"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "robot",
+        "collection": "robots"
+      },
+      {
+        "func": "FOREACH",
+        "range": 6,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "batteries",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "holder-batteries-p${value}",
+            "count": "${batteriesPerPlayer}"
+          },
+          {
+            "func": "SELECT",
+            "source": "robots",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "holder-robots-p${value}",
+            "count": "${robotsPerPlayer}"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-rockets"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "rocket-golden",
+          "rocket-marked-1",
+          "rocket-unmarked-1",
+          "rocket-marked-2",
+          "rocket-unmarked-2",
+          "rocket-marked-3",
+          "rocket-unmarked-3",
+          "rocket-marked-4",
+          "rocket-unmarked-4",
+          "rocket-marked-5"
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "collection": [
+              "${value}"
+            ],
+            "to": "holder-planet-${key}"
+          }
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "TURN",
+        "aggregation": "first",
+        "variable": "startPlayerSeat"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "start-player-marker"
+        ],
+        "property": "parent",
+        "value": "${startPlayerSeat}"
+      },
+      "var planetNo = 1",
+      {
+        "func": "FOREACH",
+        "range": "${robotsPerPlayer}",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "range": "${playerCount}",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "parent",
+                "value": "holder-planet-${planetNo}"
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "rocket"
+              },
+              {
+                "func": "GET",
+                "collection": "TURN",
+                "property": "index",
+                "aggregation": "first"
+              },
+              {
+                "func": "MOVE",
+                "from": "holder-robots-p${index}",
+                "to": "holder-${rocket}",
+                "count": 1
+              },
+              {
+                "func": "TURN",
+                "turnCycle": "forward"
+              },
+              {
+                "func": "COUNT",
+                "holder": "holder-${rocket}"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "relation": ">=",
+                "operand2": "${PROPERTY setupRobotLimit OF $rocket}",
+                "thenRoutine": [
+                  "var planetNo = ${planetNo} + 1"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-draw"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-draw"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "players",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-draw",
+            "to": "${widgetID}",
+            "count": 3
+          }
+        ]
+      }
+    ]
+  },
+  "holder-planet-0": {
+    "type": "holder",
+    "id": "holder-planet-0",
+    "parent": "planet-0",
+    "width": 140,
+    "height": 140,
+    "css": {
+      "background": "transparent",
+      "border-color": "transparent",
+      "border-radius": "70px"
+    },
+    "dropOffsetX": 20,
+    "dropOffsetY": 19,
+    "dropTarget": {
+      "deck": "deck-rockets"
+    },
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateLayerRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "updateLayerRoutine"
+      }
+    ],
+    "updateLayerRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      "var layer = 0",
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          "var layer = 2"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "layer",
+        "value": "${layer}"
+      }
+    ]
+  },
+  "planet-0": {
+    "type": "card",
+    "id": "planet-0",
+    "deck": "deck-planets",
+    "cardType": "marked-planet",
+    "x": 650,
+    "y": 60,
+    "layer": 2
+  },
+  "holder-planet-1": {
+    "type": "holder",
+    "id": "holder-planet-1",
+    "parent": "planet-1",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-1": {
+    "type": "card",
+    "id": "planet-1",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 795,
+    "y": 89,
+    "layer": 2
+  },
+  "holder-planet-2": {
+    "type": "holder",
+    "id": "holder-planet-2",
+    "parent": "planet-2",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-2": {
+    "type": "card",
+    "id": "planet-2",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 919,
+    "y": 171,
+    "layer": 2
+  },
+  "holder-planet-3": {
+    "type": "holder",
+    "id": "holder-planet-3",
+    "parent": "planet-3",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-3": {
+    "type": "card",
+    "id": "planet-3",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 1001,
+    "y": 295,
+    "layer": 2
+  },
+  "holder-planet-4": {
+    "type": "holder",
+    "id": "holder-planet-4",
+    "parent": "planet-4",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-4": {
+    "type": "card",
+    "id": "planet-4",
+    "deck": "deck-planets",
+    "cardType": "marked-planet",
+    "x": 1030,
+    "y": 440,
+    "layer": 2
+  },
+  "planet-5": {
+    "type": "card",
+    "id": "planet-5",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 1001,
+    "y": 585,
+    "layer": 2
+  },
+  "holder-planet-5": {
+    "type": "holder",
+    "id": "holder-planet-5",
+    "parent": "planet-5",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-6": {
+    "type": "card",
+    "id": "planet-6",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 919,
+    "y": 709,
+    "layer": 2
+  },
+  "holder-planet-6": {
+    "type": "holder",
+    "id": "holder-planet-6",
+    "parent": "planet-6",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-7": {
+    "type": "card",
+    "id": "planet-7",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 795,
+    "y": 791,
+    "layer": 2
+  },
+  "holder-planet-7": {
+    "type": "holder",
+    "id": "holder-planet-7",
+    "parent": "planet-7",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-8": {
+    "type": "card",
+    "id": "planet-8",
+    "deck": "deck-planets",
+    "cardType": "marked-planet",
+    "x": 650,
+    "y": 820,
+    "layer": 2
+  },
+  "holder-planet-8": {
+    "type": "holder",
+    "id": "holder-planet-8",
+    "parent": "planet-8",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-9": {
+    "type": "card",
+    "id": "planet-9",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 505,
+    "y": 791,
+    "layer": 2
+  },
+  "holder-planet-9": {
+    "type": "holder",
+    "id": "holder-planet-9",
+    "parent": "planet-9",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-10": {
+    "type": "card",
+    "id": "planet-10",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 381,
+    "y": 709
+  },
+  "holder-planet-10": {
+    "type": "holder",
+    "id": "holder-planet-10",
+    "parent": "planet-10",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-11": {
+    "type": "card",
+    "id": "planet-11",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 299,
+    "y": 585
+  },
+  "holder-planet-11": {
+    "type": "holder",
+    "id": "holder-planet-11",
+    "parent": "planet-11",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-12": {
+    "type": "card",
+    "id": "planet-12",
+    "deck": "deck-planets",
+    "cardType": "marked-planet",
+    "x": 270,
+    "y": 440
+  },
+  "holder-planet-12": {
+    "type": "holder",
+    "id": "holder-planet-12",
+    "parent": "planet-12",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-13": {
+    "type": "card",
+    "id": "planet-13",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 299,
+    "y": 295
+  },
+  "holder-planet-13": {
+    "type": "holder",
+    "id": "holder-planet-13",
+    "parent": "planet-13",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-14": {
+    "type": "card",
+    "id": "planet-14",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 381,
+    "y": 171
+  },
+  "holder-planet-14": {
+    "type": "holder",
+    "id": "holder-planet-14",
+    "parent": "planet-14",
+    "inheritFrom": "holder-planet-0"
+  },
+  "planet-15": {
+    "type": "card",
+    "id": "planet-15",
+    "deck": "deck-planets",
+    "cardType": "planet",
+    "x": 505,
+    "y": 89
+  },
+  "holder-planet-15": {
+    "type": "holder",
+    "id": "holder-planet-15",
+    "parent": "planet-15",
+    "inheritFrom": "holder-planet-0"
+  },
+  "button-shuffle": {
+    "type": "button",
+    "id": "button-shuffle",
+    "inheritFrom": "button-setup",
+    "x": -15,
+    "y": 175,
+    "text": "Shuffle",
+    "clickRoutine": [
+      "var ready = true",
+      {
+        "func": "COUNT",
+        "holder": "holder-draw"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "confirmButtonText": "Yes",
+            "cancelButtonText": "No",
+            "fields": [
+              {
+                "type": "text",
+                "text": "The draw pile is not empty. Are you sure you want to shuffle the discards back into the deck?"
+              }
+            ],
+            "header": "Shuffle discards into deck?"
+          },
+          "var ready = true"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${ready}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-discard",
+            "to": "holder-draw",
+            "count": 0
+          },
+          {
+            "func": "SHUFFLE",
+            "from": "holder-draw"
+          }
+        ]
+      }
+    ],
+    "parent": "holder-discard"
+  },
+  "button-end-turn": {
+    "type": "button",
+    "id": "button-end-turn",
+    "parent": "holder-draw",
+    "x": -15,
+    "y": 175,
+    "inheritFrom": "button-setup",
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "aggregation": "first",
+        "variable": "seat"
+      },
+      {
+        "func": "MOVE",
+        "from": "holder-draw",
+        "to": "${seat}",
+        "fillTo": 3
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ]
+  },
+  "start-player-marker": {
+    "type": "basic",
+    "id": "start-player-marker",
+    "x": 205,
+    "width": 35,
+    "height": 35,
+    "css": {
+      "background": "transparent"
+    },
+    "image": "/i/noto-emoji/emoji_u0031_20e3.svg",
+    "y": -5,
+    "movable": false,
+    "clickable": false,
+    "parent": "seat-p1"
+  },
+  "ijya": {
+    "type": "pile",
+    "parent": "holder-robots-p1",
+    "x": 0,
+    "y": 0,
+    "width": 40,
+    "height": 40,
+    "handleCSS": {
+      "background": "black",
+      "border-color": "white",
+      "border-style": "solid",
+      "border-width": "2px",
+      "color": "white",
+      "font-size": "22px"
+    },
+    "handleOffset": 27,
+    "handlePosition": "bottom center",
+    "handleSize": 30,
+    "id": "ijya"
+  },
+  "csvl": {
+    "type": "pile",
+    "parent": "holder-robots-p2",
+    "x": 0,
+    "y": 0,
+    "width": 40,
+    "height": 40,
+    "handleCSS": {
+      "background": "black",
+      "border-color": "white",
+      "border-style": "solid",
+      "border-width": "2px",
+      "color": "white",
+      "font-size": "22px"
+    },
+    "handleOffset": 27,
+    "handlePosition": "bottom center",
+    "handleSize": 30,
+    "id": "csvl"
+  },
+  "gnzi": {
+    "type": "pile",
+    "parent": "holder-robots-p3",
+    "x": 0,
+    "y": 0,
+    "width": 40,
+    "height": 40,
+    "handleCSS": {
+      "background": "black",
+      "border-color": "white",
+      "border-style": "solid",
+      "border-width": "2px",
+      "color": "white",
+      "font-size": "22px"
+    },
+    "handleOffset": 27,
+    "handlePosition": "bottom center",
+    "handleSize": 30,
+    "id": "gnzi"
+  },
+  "dozm": {
+    "type": "pile",
+    "parent": "holder-robots-p4",
+    "x": 0,
+    "y": 0,
+    "width": 40,
+    "height": 40,
+    "handleCSS": {
+      "background": "black",
+      "border-color": "white",
+      "border-style": "solid",
+      "border-width": "2px",
+      "color": "white",
+      "font-size": "22px"
+    },
+    "handleOffset": 27,
+    "handlePosition": "bottom center",
+    "handleSize": 30,
+    "id": "dozm"
+  },
+  "v75k": {
+    "type": "pile",
+    "parent": "holder-robots-p5",
+    "x": 0,
+    "y": 0,
+    "width": 40,
+    "height": 40,
+    "handleCSS": {
+      "background": "black",
+      "border-color": "white",
+      "border-style": "solid",
+      "border-width": "2px",
+      "color": "white",
+      "font-size": "22px"
+    },
+    "handleOffset": 27,
+    "handlePosition": "bottom center",
+    "handleSize": 30,
+    "id": "v75k"
+  },
+  "024r": {
+    "type": "pile",
+    "parent": "holder-robots-p6",
+    "x": 0,
+    "y": 0,
+    "width": 40,
+    "height": 40,
+    "handleCSS": {
+      "background": "black",
+      "border-color": "white",
+      "border-style": "solid",
+      "border-width": "2px",
+      "color": "white",
+      "font-size": "22px"
+    },
+    "handleOffset": 27,
+    "handlePosition": "bottom center",
+    "handleSize": 30,
+    "id": "024r"
+  }
+}
