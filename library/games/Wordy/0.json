@@ -550,7 +550,7 @@
       "description": "Use letter tiles to build words with extra points for playing in certain locations. Play until tile bag runs out. Most points wins.",
       "showName": true,
       "helpText": "Players take seats.<div><br></div><div>Start game (and choose language) by selecting button with dashed outline of globe.</div><div><br></div><div>Play tiles on board. To exchange tiles, manually flip tiles upside down in hand then drag to swap holder. Press swap icon. New cards are added to hand; swapped cards are returned to pile and it is shuffled.</div><div><br></div><div>Click on scoreboard to enter score for that play.</div>",
-      "lastUpdate": 1701047520317,
+      "lastUpdate": 1701051185957,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",
@@ -558,7 +558,7 @@
       "similarDesigner": "Alfred Mosher Butts",
       "variantImage": "",
       "variant": "",
-      "language": "de-DE, el-GR, en-US, es, fr-FR, it-IT, pt-BR",
+      "language": "cy-GB, de-DE, el-GR, en-US, es, fr-FR, he-IL, it-IT, pt-BR, uk-UA",
       "players": "2-4"
     }
   },
@@ -595,13 +595,13 @@
     "textColorOH": "#67452f",
     "text": "recycling",
     "movableInEdit": false,
-    "y": 795
+    "y": 800
   },
   "swapHolder": {
     "type": "holder",
     "id": "swapHolder",
     "x": 1184,
-    "y": 818,
+    "y": 823,
     "width": 60,
     "height": 60,
     "z": 13921,
@@ -614,7 +614,7 @@
     "type": "holder",
     "id": "deckHolder",
     "x": 1355,
-    "y": 818,
+    "y": 823,
     "width": 60,
     "height": 60,
     "z": 13919,
@@ -969,7 +969,7 @@
     "type": "seat",
     "id": "seat1",
     "x": 1000,
-    "y": 435,
+    "y": 460,
     "z": 282,
     "hideWhenUnused": true,
     "score": [
@@ -981,8 +981,8 @@
     "type": "seat",
     "id": "seat2",
     "x": 1000,
-    "y": 532,
-    "z": 287,
+    "y": 557,
+    "z": 289,
     "index": 2,
     "hideWhenUnused": true,
     "score": [
@@ -996,7 +996,7 @@
     "z": 290,
     "index": 3,
     "hideWhenUnused": true,
-    "y": 628,
+    "y": 653,
     "score": [
       0
     ]
@@ -1005,10 +1005,10 @@
     "type": "seat",
     "id": "seat4",
     "x": 1000,
-    "z": 289,
+    "z": 291,
     "index": 4,
     "hideWhenUnused": true,
-    "y": 725,
+    "y": 750,
     "score": [
       0
     ]
@@ -2849,9 +2849,9 @@
   "exzi": {
     "type": "scoreboard",
     "x": 1175,
-    "y": 436,
+    "y": 461,
     "id": "exzi",
-    "z": 291,
+    "z": 287,
     "width": 400,
     "height": 345,
     "movable": false,
@@ -2865,7 +2865,6 @@
   "letterTable": {
     "id": "letterTable",
     "x": 982,
-    "y": 100,
     "width": 620,
     "height": 305,
     "z": 50,
@@ -3065,7 +3064,8 @@
     "cell8-15": "",
     "cell9-15": "",
     "cell10-15": "",
-    "cellnull-2": "null    "
+    "cellnull-2": "null    ",
+    "y": 90
   },
   "gk3f": {
     "deck": "deckTemplate",
@@ -3091,7 +3091,7 @@
     "text": "recycling",
     "id": "5v71",
     "x": 1184,
-    "y": 819,
+    "y": 824,
     "classes": "material-icons",
     "css": "font-size: 55px; border:none",
     "width": 55,
@@ -3253,7 +3253,7 @@
     "type": "card",
     "cardType": "master",
     "id": "fr7o",
-    "z": 6773,
+    "z": 12066,
     "parent": "homeTemplate",
     "x": 4,
     "y": 4
@@ -3393,7 +3393,7 @@
         "count": 2
       }
     },
-    "text": "Ελληνικά",
+    "text": "Greek",
     "languageSet": true
   },
   "Deutsch": {
@@ -3557,7 +3557,7 @@
         "count": 2
       }
     },
-    "text": "Deutsch"
+    "text": "German"
   },
   "Français": {
     "id": "Français",
@@ -3705,7 +3705,7 @@
         "count": 2
       }
     },
-    "text": "Français"
+    "text": "French"
   },
   "Italiano": {
     "id": "Italiano",
@@ -3828,7 +3828,7 @@
         "count": 2
       }
     },
-    "text": "Italiano"
+    "text": "Italian"
   },
   "Português": {
     "id": "Português",
@@ -3966,7 +3966,7 @@
         "count": 3
       }
     },
-    "text": "Português"
+    "text": "Portuguese"
   },
   "Español - América del Norte": {
     "id": "Español - América del Norte",
@@ -4129,7 +4129,7 @@
         "count": 2
       }
     },
-    "text": "Español - América del Norte"
+    "text": "Spanish - North America"
   },
   "Español - Internacional": {
     "id": "Español - Internacional",
@@ -4139,7 +4139,7 @@
       "background": "white",
       "font-size": "20px"
     },
-    "text": "Español-Internacional",
+    "text": "Spanish - International",
     "languageSet": true,
     "letters": {
       "1": {
@@ -4445,35 +4445,509 @@
         "count": 2
       }
     },
-    "text": "Español - América Latina"
+    "text": "Spanish - Latin America"
   },
-  "j9z2": {
+  "Cymraeg": {
+    "id": "Cymraeg",
+    "x": -171,
+    "y": 948,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "A",
+        "points": 1,
+        "count": 10
+      },
+      "2": {
+        "letter": "B",
+        "points": 3,
+        "count": 2
+      },
+      "3": {
+        "letter": "C",
+        "points": 4,
+        "count": 2
+      },
+      "4": {
+        "letter": "CH",
+        "points": 5,
+        "count": 1
+      },
+      "5": {
+        "letter": "D",
+        "points": 1,
+        "count": 6
+      },
+      "6": {
+        "letter": "DD",
+        "points": 1,
+        "count": 4
+      },
+      "7": {
+        "letter": "E",
+        "points": 1,
+        "count": 8
+      },
+      "8": {
+        "letter": "F",
+        "points": 2,
+        "count": 3
+      },
+      "9": {
+        "letter": "FF",
+        "points": 4,
+        "count": 2
+      },
+      "10": {
+        "letter": "G",
+        "points": 2,
+        "count": 3
+      },
+      "11": {
+        "letter": "H",
+        "points": 4,
+        "count": 2
+      },
+      "12": {
+        "letter": "I",
+        "points": 1,
+        "count": 7
+      },
+      "13": {
+        "letter": "J",
+        "points": 8,
+        "count": 1
+      },
+      "14": {
+        "letter": "L",
+        "points": 2,
+        "count": 3
+      },
+      "15": {
+        "letter": "LL",
+        "points": 5,
+        "count": 1
+      },
+      "16": {
+        "letter": "M",
+        "points": 3,
+        "count": 2
+      },
+      "17": {
+        "letter": "N",
+        "points": 1,
+        "count": 8
+      },
+      "18": {
+        "letter": "NG",
+        "points": 10,
+        "count": 1
+      },
+      "19": {
+        "letter": "O",
+        "points": 1,
+        "count": 6
+      },
+      "20": {
+        "letter": "P",
+        "points": 5,
+        "count": 1
+      },
+      "21": {
+        "letter": "R",
+        "points": 1,
+        "count": 7
+      },
+      "22": {
+        "letter": "RH",
+        "points": 10,
+        "count": 1
+      },
+      "23": {
+        "letter": "S",
+        "points": 3,
+        "count": 3
+      },
+      "24": {
+        "letter": "T",
+        "points": 3,
+        "count": 2
+      },
+      "25": {
+        "letter": "TH",
+        "points": 4,
+        "count": 2
+      },
+      "26": {
+        "letter": "U",
+        "points": 2,
+        "count": 3
+      },
+      "27": {
+        "letter": "W",
+        "points": 1,
+        "count": 5
+      },
+      "28": {
+        "letter": "Y",
+        "points": 1,
+        "count": 7
+      },
+      "29": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "text": "Welsh"
+  },
+  "українська мова": {
+    "id": "українська мова",
+    "x": -171,
+    "y": 1048,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "А",
+        "points": 1,
+        "count": 8
+      },
+      "2": {
+        "letter": "Б",
+        "points": 4,
+        "count": 2
+      },
+      "3": {
+        "letter": "В",
+        "points": 1,
+        "count": 4
+      },
+      "4": {
+        "letter": "Г",
+        "points": 4,
+        "count": 2
+      },
+      "5": {
+        "letter": "Д",
+        "points": 2,
+        "count": 3
+      },
+      "6": {
+        "letter": "Е",
+        "points": 1,
+        "count": 5
+      },
+      "7": {
+        "letter": "Є",
+        "points": 8,
+        "count": 1
+      },
+      "8": {
+        "letter": "Ж",
+        "points": 6,
+        "count": 1
+      },
+      "9": {
+        "letter": "З",
+        "points": 4,
+        "count": 2
+      },
+      "10": {
+        "letter": "И",
+        "points": 1,
+        "count": 7
+      },
+      "11": {
+        "letter": "І",
+        "points": 1,
+        "count": 5
+      },
+      "12": {
+        "letter": "Ї",
+        "points": 6,
+        "count": 1
+      },
+      "13": {
+        "letter": "Й",
+        "points": 5,
+        "count": 1
+      },
+      "14": {
+        "letter": "К",
+        "points": 2,
+        "count": 4
+      },
+      "15": {
+        "letter": "Л",
+        "points": 2,
+        "count": 3
+      },
+      "16": {
+        "letter": "М",
+        "points": 2,
+        "count": 4
+      },
+      "17": {
+        "letter": "Н",
+        "points": 1,
+        "count": 7
+      },
+      "18": {
+        "letter": "О",
+        "points": 1,
+        "count": 10
+      },
+      "19": {
+        "letter": "П",
+        "points": 2,
+        "count": 3
+      },
+      "20": {
+        "letter": "Р",
+        "points": 1,
+        "count": 5
+      },
+      "21": {
+        "letter": "С",
+        "points": 2,
+        "count": 4
+      },
+      "22": {
+        "letter": "Т",
+        "points": 1,
+        "count": 5
+      },
+      "23": {
+        "letter": "У",
+        "points": 3,
+        "count": 3
+      },
+      "24": {
+        "letter": "Ф",
+        "points": 8,
+        "count": 1
+      },
+      "25": {
+        "letter": "Х",
+        "points": 5,
+        "count": 1
+      },
+      "26": {
+        "letter": "Ц",
+        "points": 6,
+        "count": 1
+      },
+      "27": {
+        "letter": "Ч",
+        "points": 5,
+        "count": 1
+      },
+      "28": {
+        "letter": "Ш",
+        "points": 6,
+        "count": 1
+      },
+      "29": {
+        "letter": "Щ",
+        "points": 8,
+        "count": 1
+      },
+      "30": {
+        "letter": "Ь",
+        "points": 5,
+        "count": 1
+      },
+      "31": {
+        "letter": "Ю",
+        "points": 7,
+        "count": 1
+      },
+      "32": {
+        "letter": "Я",
+        "points": 4,
+        "count": 2
+      },
+      "33": {
+        "letter": "Ґ",
+        "points": 10,
+        "count": 1
+      },
+      "34": {
+        "letter": "'",
+        "points": 10,
+        "count": 1
+      },
+      "35": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "text": "Ukrainian"
+  },
+  "עִבְרִית": {
+    "id": "עִבְרִית",
+    "x": -171,
+    "y": 1148,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "text": "Hebrew",
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "א",
+        "points": 2,
+        "count": 6
+      },
+      "2": {
+        "letter": "ב",
+        "points": 3,
+        "count": 4
+      },
+      "3": {
+        "letter": "ג",
+        "points": 8,
+        "count": 1
+      },
+      "4": {
+        "letter": "ד",
+        "points": 3,
+        "count": 4
+      },
+      "5": {
+        "letter": "ה",
+        "points": 1,
+        "count": 8
+      },
+      "6": {
+        "letter": "ו",
+        "points": 1,
+        "count": 12
+      },
+      "7": {
+        "letter": "ז",
+        "points": 8,
+        "count": 1
+      },
+      "8": {
+        "letter": "ח",
+        "points": 5,
+        "count": 3
+      },
+      "9": {
+        "letter": "ט",
+        "points": 8,
+        "count": 1
+      },
+      "10": {
+        "letter": "י",
+        "points": 1,
+        "count": 10
+      },
+      "11": {
+        "letter": "כ",
+        "points": 5,
+        "count": 2
+      },
+      "12": {
+        "letter": "ל",
+        "points": 2,
+        "count": 6
+      },
+      "13": {
+        "letter": "מ",
+        "points": 2,
+        "count": 6
+      },
+      "14": {
+        "letter": "נ",
+        "points": 4,
+        "count": 3
+      },
+      "15": {
+        "letter": "ס",
+        "points": 8,
+        "count": 1
+      },
+      "16": {
+        "letter": "ע",
+        "points": 8,
+        "count": 2
+      },
+      "17": {
+        "letter": "פ",
+        "points": 4,
+        "count": 3
+      },
+      "18": {
+        "letter": "צ",
+        "points": 8,
+        "count": 1
+      },
+      "19": {
+        "letter": "ק",
+        "points": 5,
+        "count": 2
+      },
+      "20": {
+        "letter": "ר",
+        "points": 1,
+        "count": 8
+      },
+      "21": {
+        "letter": "ש",
+        "points": 2,
+        "count": 6
+      },
+      "22": {
+        "letter": "ת",
+        "points": 1,
+        "count": 8
+      },
+      "24": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    }
+  },
+  "gu8d": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7022,
+    "z": 12268,
     "x": null,
     "y": null,
     "letter": "A",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "j9z2",
-    "parent": "qfyq"
+    "id": "gu8d",
+    "parent": "dst0"
   },
-  "5qa3": {
+  "m11q": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6983,
+    "z": 12295,
     "x": null,
     "y": null,
     "letter": "A",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "5qa3",
-    "parent": "qfyq"
+    "id": "m11q",
+    "parent": "dst0"
   },
-  "qfyq": {
+  "dst0": {
     "type": "pile",
     "parent": "deckHolder",
     "x": 4,
@@ -4483,1280 +4957,1280 @@
     "handleCSS": "background:#b97a56;color:white",
     "handleSize": 20,
     "handleOffset": 1,
-    "id": "qfyq"
+    "id": "dst0"
   },
-  "b2j3": {
+  "zv52": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7050,
+    "z": 12319,
     "x": null,
     "y": null,
     "letter": "A",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "b2j3",
-    "parent": "qfyq"
+    "id": "zv52",
+    "parent": "dst0"
   },
-  "26x9": {
+  "wscj": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6999,
+    "z": 12270,
     "x": null,
     "y": null,
     "letter": "A",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "26x9",
-    "parent": "qfyq"
+    "id": "wscj",
+    "parent": "dst0"
   },
-  "dnxx": {
+  "nhjt": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6977,
+    "z": 12280,
     "x": null,
     "y": null,
     "letter": "A",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "dnxx",
-    "parent": "qfyq"
+    "id": "nhjt",
+    "parent": "dst0"
   },
-  "tpcx": {
+  "wdrz": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7027,
+    "z": 12356,
     "x": null,
     "y": null,
     "letter": "A",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "tpcx",
-    "parent": "qfyq"
+    "id": "wdrz",
+    "parent": "dst0"
   },
-  "z1se": {
+  "p1b7": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7020,
+    "z": 12352,
     "x": null,
     "y": null,
     "letter": "A",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "z1se",
-    "parent": "qfyq"
+    "id": "p1b7",
+    "parent": "dst0"
   },
-  "j68i": {
+  "shsq": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6995,
+    "z": 12358,
     "x": null,
     "y": null,
     "letter": "A",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "j68i",
-    "parent": "qfyq"
+    "id": "shsq",
+    "parent": "dst0"
   },
-  "gjq9": {
+  "b48q": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6993,
+    "z": 12283,
     "x": null,
     "y": null,
     "letter": "A",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "gjq9",
-    "parent": "qfyq"
+    "id": "b48q",
+    "parent": "dst0"
   },
-  "so3q": {
+  "8m5l": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7040,
+    "z": 12300,
     "x": null,
     "y": null,
     "letter": "B",
     "points": 3,
     "clonedFrom": "fr7o",
-    "id": "so3q",
-    "parent": "qfyq"
+    "id": "8m5l",
+    "parent": "dst0"
   },
-  "uq31": {
+  "6lje": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7070,
+    "z": 12293,
     "x": null,
     "y": null,
     "letter": "B",
     "points": 3,
     "clonedFrom": "fr7o",
-    "id": "uq31",
-    "parent": "qfyq"
+    "id": "6lje",
+    "parent": "dst0"
   },
-  "4qpa": {
+  "s3iz": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7062,
+    "z": 12285,
     "x": null,
     "y": null,
     "letter": "C",
     "points": 3,
     "clonedFrom": "fr7o",
-    "id": "4qpa",
-    "parent": "qfyq"
+    "id": "s3iz",
+    "parent": "dst0"
   },
-  "2nad": {
+  "13ts": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6992,
+    "z": 12312,
     "x": null,
     "y": null,
     "letter": "C",
     "points": 3,
     "clonedFrom": "fr7o",
-    "id": "2nad",
-    "parent": "qfyq"
+    "id": "13ts",
+    "parent": "dst0"
   },
-  "frcj": {
+  "exwe": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7058,
+    "z": 12317,
     "x": null,
     "y": null,
     "letter": "D",
     "points": 2,
     "clonedFrom": "fr7o",
-    "id": "frcj",
-    "parent": "qfyq"
+    "id": "exwe",
+    "parent": "dst0"
   },
-  "y0eu": {
+  "y49r": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6996,
+    "z": 12303,
     "x": null,
     "y": null,
     "letter": "D",
     "points": 2,
     "clonedFrom": "fr7o",
-    "id": "y0eu",
-    "parent": "qfyq"
+    "id": "y49r",
+    "parent": "dst0"
   },
-  "34rm": {
+  "y2dq": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6985,
+    "z": 12349,
     "x": null,
     "y": null,
     "letter": "D",
     "points": 2,
     "clonedFrom": "fr7o",
-    "id": "34rm",
-    "parent": "qfyq"
+    "id": "y2dq",
+    "parent": "dst0"
   },
-  "c6py": {
+  "zxaq": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6975,
+    "z": 12364,
     "x": null,
     "y": null,
     "letter": "D",
     "points": 2,
     "clonedFrom": "fr7o",
-    "id": "c6py",
-    "parent": "qfyq"
+    "id": "zxaq",
+    "parent": "dst0"
   },
-  "3a8f": {
+  "8hnw": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7033,
+    "z": 12354,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "3a8f",
-    "parent": "qfyq"
+    "id": "8hnw",
+    "parent": "dst0"
   },
-  "95dy": {
+  "kn89": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7039,
+    "z": 12328,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "95dy",
-    "parent": "qfyq"
+    "id": "kn89",
+    "parent": "dst0"
   },
-  "gdyt": {
+  "lf30": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7009,
+    "z": 12310,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "gdyt",
-    "parent": "qfyq"
+    "id": "lf30",
+    "parent": "dst0"
   },
-  "e3tn": {
+  "dymk": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6989,
+    "z": 12335,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "e3tn",
-    "parent": "qfyq"
+    "id": "dymk",
+    "parent": "dst0"
   },
-  "3sfs": {
+  "wc4d": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6973,
+    "z": 12298,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "3sfs",
-    "parent": "qfyq"
+    "id": "wc4d",
+    "parent": "dst0"
   },
-  "uvtu": {
+  "h3bz": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7005,
+    "z": 12321,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "uvtu",
-    "parent": "qfyq"
+    "id": "h3bz",
+    "parent": "dst0"
   },
-  "liod": {
+  "gddc": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7060,
+    "z": 12296,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "liod",
-    "parent": "qfyq"
+    "id": "gddc",
+    "parent": "dst0"
   },
-  "4il7": {
+  "mxuj": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7047,
+    "z": 12311,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "4il7",
-    "parent": "qfyq"
+    "id": "mxuj",
+    "parent": "dst0"
   },
-  "rive": {
+  "yd49": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6978,
+    "z": 12345,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "rive",
-    "parent": "qfyq"
+    "id": "yd49",
+    "parent": "dst0"
   },
-  "cqei": {
+  "w91t": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6981,
+    "z": 12276,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "cqei",
-    "parent": "qfyq"
+    "id": "w91t",
+    "parent": "dst0"
   },
-  "t47q": {
+  "og6b": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7061,
+    "z": 12291,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "t47q",
-    "parent": "qfyq"
+    "id": "og6b",
+    "parent": "dst0"
   },
-  "ay7d": {
+  "bofb": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7023,
+    "z": 12281,
     "x": null,
     "y": null,
     "letter": "E",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "ay7d",
-    "parent": "qfyq"
+    "id": "bofb",
+    "parent": "dst0"
   },
-  "h5ev": {
+  "ompb": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6991,
+    "z": 12327,
     "x": null,
     "y": null,
     "letter": "F",
     "points": 4,
     "clonedFrom": "fr7o",
-    "id": "h5ev",
-    "parent": "qfyq"
+    "id": "ompb",
+    "parent": "dst0"
   },
-  "1ujr": {
+  "1q2t": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6976,
+    "z": 12308,
     "x": null,
     "y": null,
     "letter": "F",
     "points": 4,
     "clonedFrom": "fr7o",
-    "id": "1ujr",
-    "parent": "qfyq"
+    "id": "1q2t",
+    "parent": "dst0"
   },
-  "e3m0": {
+  "8x0k": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7054,
+    "z": 12351,
     "x": null,
     "y": null,
     "letter": "G",
     "points": 2,
     "clonedFrom": "fr7o",
-    "id": "e3m0",
-    "parent": "qfyq"
+    "id": "8x0k",
+    "parent": "dst0"
   },
-  "kutl": {
+  "06km": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7052,
+    "z": 12266,
     "x": null,
     "y": null,
     "letter": "G",
     "points": 2,
     "clonedFrom": "fr7o",
-    "id": "kutl",
-    "parent": "qfyq"
+    "id": "06km",
+    "parent": "dst0"
   },
-  "0vru": {
+  "89ue": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7006,
+    "z": 12365,
     "x": null,
     "y": null,
     "letter": "G",
     "points": 2,
     "clonedFrom": "fr7o",
-    "id": "0vru",
-    "parent": "qfyq"
+    "id": "89ue",
+    "parent": "dst0"
   },
-  "0amr": {
+  "s6fd": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7025,
+    "z": 12272,
     "x": null,
     "y": null,
     "letter": "H",
     "points": 4,
     "clonedFrom": "fr7o",
-    "id": "0amr",
-    "parent": "qfyq"
+    "id": "s6fd",
+    "parent": "dst0"
   },
-  "qop4": {
+  "nqgz": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7026,
+    "z": 12350,
     "x": null,
     "y": null,
     "letter": "H",
     "points": 4,
     "clonedFrom": "fr7o",
-    "id": "qop4",
-    "parent": "qfyq"
+    "id": "nqgz",
+    "parent": "dst0"
   },
-  "ifg9": {
+  "ynmo": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7013,
+    "z": 12286,
     "x": null,
     "y": null,
     "letter": "I",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "ifg9",
-    "parent": "qfyq"
+    "id": "ynmo",
+    "parent": "dst0"
   },
-  "73fv": {
+  "sx4w": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7000,
+    "z": 12305,
     "x": null,
     "y": null,
     "letter": "I",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "73fv",
-    "parent": "qfyq"
+    "id": "sx4w",
+    "parent": "dst0"
   },
-  "dnuy": {
+  "ubdp": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7042,
+    "z": 12357,
     "x": null,
     "y": null,
     "letter": "I",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "dnuy",
-    "parent": "qfyq"
+    "id": "ubdp",
+    "parent": "dst0"
   },
-  "ppwz": {
+  "kazz": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7008,
+    "z": 12278,
     "x": null,
     "y": null,
     "letter": "I",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "ppwz",
-    "parent": "qfyq"
+    "id": "kazz",
+    "parent": "dst0"
   },
-  "2te5": {
+  "yqb3": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7037,
+    "z": 12324,
     "x": null,
     "y": null,
     "letter": "I",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "2te5",
-    "parent": "qfyq"
+    "id": "yqb3",
+    "parent": "dst0"
   },
-  "ng7r": {
+  "ejed": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7017,
+    "z": 12282,
     "x": null,
     "y": null,
     "letter": "I",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "ng7r",
-    "parent": "qfyq"
+    "id": "ejed",
+    "parent": "dst0"
   },
-  "2s8m": {
+  "l2m0": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7059,
+    "z": 12340,
     "x": null,
     "y": null,
     "letter": "I",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "2s8m",
-    "parent": "qfyq"
+    "id": "l2m0",
+    "parent": "dst0"
   },
-  "r855": {
+  "vz5n": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7031,
+    "z": 12347,
     "x": null,
     "y": null,
     "letter": "I",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "r855",
-    "parent": "qfyq"
+    "id": "vz5n",
+    "parent": "dst0"
   },
-  "1vof": {
+  "12l8": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7012,
+    "z": 12348,
     "x": null,
     "y": null,
     "letter": "I",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "1vof",
-    "parent": "qfyq"
+    "id": "12l8",
+    "parent": "dst0"
   },
-  "wkkq": {
+  "ncfp": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7032,
+    "z": 12277,
     "x": null,
     "y": null,
     "letter": "J",
     "points": 8,
     "clonedFrom": "fr7o",
-    "id": "wkkq",
-    "parent": "qfyq"
+    "id": "ncfp",
+    "parent": "dst0"
   },
-  "nost": {
+  "d2ev": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7044,
+    "z": 12309,
     "x": null,
     "y": null,
     "letter": "K",
     "points": 5,
     "clonedFrom": "fr7o",
-    "id": "nost",
-    "parent": "qfyq"
+    "id": "d2ev",
+    "parent": "dst0"
   },
-  "27s0": {
+  "vto8": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7053,
+    "z": 12294,
     "x": null,
     "y": null,
     "letter": "L",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "27s0",
-    "parent": "qfyq"
+    "id": "vto8",
+    "parent": "dst0"
   },
-  "k0vi": {
+  "xjtg": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7064,
+    "z": 12342,
     "x": null,
     "y": null,
     "letter": "L",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "k0vi",
-    "parent": "qfyq"
+    "id": "xjtg",
+    "parent": "dst0"
   },
-  "7ms8": {
+  "q44k": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7001,
+    "z": 12361,
     "x": null,
     "y": null,
     "letter": "L",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "7ms8",
-    "parent": "qfyq"
+    "id": "q44k",
+    "parent": "dst0"
   },
-  "cuhl": {
+  "f600": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7045,
+    "z": 12267,
     "x": null,
     "y": null,
     "letter": "L",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "cuhl",
-    "parent": "qfyq"
+    "id": "f600",
+    "parent": "dst0"
   },
-  "7lio": {
+  "qqgw": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7011,
+    "z": 12307,
     "x": null,
     "y": null,
     "letter": "M",
     "points": 3,
     "clonedFrom": "fr7o",
-    "id": "7lio",
-    "parent": "qfyq"
+    "id": "qqgw",
+    "parent": "dst0"
   },
-  "xjdb": {
+  "3clb": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7015,
+    "z": 12325,
     "x": null,
     "y": null,
     "letter": "M",
     "points": 3,
     "clonedFrom": "fr7o",
-    "id": "xjdb",
-    "parent": "qfyq"
+    "id": "3clb",
+    "parent": "dst0"
   },
-  "d0th": {
+  "qqd4": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7051,
+    "z": 12314,
     "x": null,
     "y": null,
     "letter": "N",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "d0th",
-    "parent": "qfyq"
+    "id": "qqd4",
+    "parent": "dst0"
   },
-  "862s": {
+  "it94": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6990,
+    "z": 12299,
     "x": null,
     "y": null,
     "letter": "N",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "862s",
-    "parent": "qfyq"
+    "id": "it94",
+    "parent": "dst0"
   },
-  "0cd0": {
+  "n9xe": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6982,
+    "z": 12316,
     "x": null,
     "y": null,
     "letter": "N",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "0cd0",
-    "parent": "qfyq"
+    "id": "n9xe",
+    "parent": "dst0"
   },
-  "ub4f": {
+  "cl47": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7068,
+    "z": 12306,
     "x": null,
     "y": null,
     "letter": "N",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "ub4f",
-    "parent": "qfyq"
+    "id": "cl47",
+    "parent": "dst0"
   },
-  "2a5e": {
+  "zb57": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7071,
+    "z": 12359,
     "x": null,
     "y": null,
     "letter": "N",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "2a5e",
-    "parent": "qfyq"
+    "id": "zb57",
+    "parent": "dst0"
   },
-  "an5w": {
+  "9coz": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7048,
+    "z": 12331,
     "x": null,
     "y": null,
     "letter": "N",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "an5w",
-    "parent": "qfyq"
+    "id": "9coz",
+    "parent": "dst0"
   },
-  "3cgk": {
+  "y1q8": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7057,
+    "z": 12269,
     "x": null,
     "y": null,
     "letter": "O",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "3cgk",
-    "parent": "qfyq"
+    "id": "y1q8",
+    "parent": "dst0"
   },
-  "l9re": {
+  "2mju": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7029,
+    "z": 12313,
     "x": null,
     "y": null,
     "letter": "O",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "l9re",
-    "parent": "qfyq"
+    "id": "2mju",
+    "parent": "dst0"
   },
-  "t3kl": {
+  "q51p": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7072,
+    "z": 12323,
     "x": null,
     "y": null,
     "letter": "O",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "t3kl",
-    "parent": "qfyq"
+    "id": "q51p",
+    "parent": "dst0"
   },
-  "et4z": {
+  "x4bg": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6980,
+    "z": 12290,
     "x": null,
     "y": null,
     "letter": "O",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "et4z",
-    "parent": "qfyq"
+    "id": "x4bg",
+    "parent": "dst0"
   },
-  "dw4e": {
+  "zcoq": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7004,
+    "z": 12271,
     "x": null,
     "y": null,
     "letter": "O",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "dw4e",
-    "parent": "qfyq"
+    "id": "zcoq",
+    "parent": "dst0"
   },
-  "ry8t": {
+  "8npp": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7019,
+    "z": 12344,
     "x": null,
     "y": null,
     "letter": "O",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "ry8t",
-    "parent": "qfyq"
+    "id": "8npp",
+    "parent": "dst0"
   },
-  "h2r2": {
+  "8ylp": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7041,
+    "z": 12288,
     "x": null,
     "y": null,
     "letter": "O",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "h2r2",
-    "parent": "qfyq"
+    "id": "8ylp",
+    "parent": "dst0"
   },
-  "d0zh": {
+  "y003": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7030,
+    "z": 12329,
     "x": null,
     "y": null,
     "letter": "O",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "d0zh",
-    "parent": "qfyq"
+    "id": "y003",
+    "parent": "dst0"
   },
-  "8jp0": {
+  "cju1": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7067,
+    "z": 12320,
     "x": null,
     "y": null,
     "letter": "P",
     "points": 3,
     "clonedFrom": "fr7o",
-    "id": "8jp0",
-    "parent": "qfyq"
+    "id": "cju1",
+    "parent": "dst0"
   },
-  "9bd6": {
+  "yt86": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7010,
+    "z": 12338,
     "x": null,
     "y": null,
     "letter": "P",
     "points": 3,
     "clonedFrom": "fr7o",
-    "id": "9bd6",
-    "parent": "qfyq"
+    "id": "yt86",
+    "parent": "dst0"
   },
-  "6tj7": {
+  "d231": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7046,
+    "z": 12284,
     "x": null,
     "y": null,
     "letter": "Q",
     "points": 10,
     "clonedFrom": "fr7o",
-    "id": "6tj7",
-    "parent": "qfyq"
+    "id": "d231",
+    "parent": "dst0"
   },
-  "q8db": {
+  "6kez": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7034,
+    "z": 12273,
     "x": null,
     "y": null,
     "letter": "R",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "q8db",
-    "parent": "qfyq"
+    "id": "6kez",
+    "parent": "dst0"
   },
-  "t8pu": {
+  "m95j": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7063,
+    "z": 12346,
     "x": null,
     "y": null,
     "letter": "R",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "t8pu",
-    "parent": "qfyq"
+    "id": "m95j",
+    "parent": "dst0"
   },
-  "tzep": {
+  "jx30": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7065,
+    "z": 12292,
     "x": null,
     "y": null,
     "letter": "R",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "tzep",
-    "parent": "qfyq"
+    "id": "jx30",
+    "parent": "dst0"
   },
-  "1bsk": {
+  "2vfj": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7024,
+    "z": 12287,
     "x": null,
     "y": null,
     "letter": "R",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "1bsk",
-    "parent": "qfyq"
+    "id": "2vfj",
+    "parent": "dst0"
   },
-  "7lhm": {
+  "9p4i": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6988,
+    "z": 12333,
     "x": null,
     "y": null,
     "letter": "R",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "7lhm",
-    "parent": "qfyq"
+    "id": "9p4i",
+    "parent": "dst0"
   },
-  "4b6t": {
+  "uz1i": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6994,
+    "z": 12301,
     "x": null,
     "y": null,
     "letter": "R",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "4b6t",
-    "parent": "qfyq"
+    "id": "uz1i",
+    "parent": "dst0"
   },
-  "80qq": {
+  "mk6z": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7035,
+    "z": 12318,
     "x": null,
     "y": null,
     "letter": "S",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "80qq",
-    "parent": "qfyq"
+    "id": "mk6z",
+    "parent": "dst0"
   },
-  "c4nm": {
+  "g0dg": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7055,
+    "z": 12332,
     "x": null,
     "y": null,
     "letter": "S",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "c4nm",
-    "parent": "qfyq"
+    "id": "g0dg",
+    "parent": "dst0"
   },
-  "vitu": {
+  "cntt": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7014,
+    "z": 12315,
     "x": null,
     "y": null,
     "letter": "S",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "vitu",
-    "parent": "qfyq"
+    "id": "cntt",
+    "parent": "dst0"
   },
-  "awt0": {
+  "ly8i": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6974,
+    "z": 12330,
     "x": null,
     "y": null,
     "letter": "S",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "awt0",
-    "parent": "qfyq"
+    "id": "ly8i",
+    "parent": "dst0"
   },
-  "ywzc": {
+  "blzn": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7043,
+    "z": 12353,
     "x": null,
     "y": null,
     "letter": "T",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "ywzc",
-    "parent": "qfyq"
+    "id": "blzn",
+    "parent": "dst0"
   },
-  "3jro": {
+  "px17": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6986,
+    "z": 12341,
     "x": null,
     "y": null,
     "letter": "T",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "3jro",
-    "parent": "qfyq"
+    "id": "px17",
+    "parent": "dst0"
   },
-  "3cye": {
+  "16ze": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6997,
+    "z": 12362,
     "x": null,
     "y": null,
     "letter": "T",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "3cye",
-    "parent": "qfyq"
+    "id": "16ze",
+    "parent": "dst0"
   },
-  "sfnf": {
+  "m4og": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7049,
+    "z": 12289,
     "x": null,
     "y": null,
     "letter": "T",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "sfnf",
-    "parent": "qfyq"
+    "id": "m4og",
+    "parent": "dst0"
   },
-  "3bwj": {
+  "de9d": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7069,
+    "z": 12363,
     "x": null,
     "y": null,
     "letter": "T",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "3bwj",
-    "parent": "qfyq"
+    "id": "de9d",
+    "parent": "dst0"
   },
-  "8wzr": {
+  "i3fe": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7066,
+    "z": 12274,
     "x": null,
     "y": null,
     "letter": "T",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "8wzr",
-    "parent": "qfyq"
+    "id": "i3fe",
+    "parent": "dst0"
   },
-  "flsk": {
+  "tjjs": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7028,
+    "z": 12355,
     "x": null,
     "y": null,
     "letter": "U",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "flsk",
-    "parent": "qfyq"
+    "id": "tjjs",
+    "parent": "dst0"
   },
-  "leix": {
+  "itt6": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6979,
+    "z": 12336,
     "x": null,
     "y": null,
     "letter": "U",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "leix",
-    "parent": "qfyq"
+    "id": "itt6",
+    "parent": "dst0"
   },
-  "ig0z": {
+  "oxit": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6987,
+    "z": 12302,
     "x": null,
     "y": null,
     "letter": "U",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "ig0z",
-    "parent": "qfyq"
+    "id": "oxit",
+    "parent": "dst0"
   },
-  "0f7f": {
+  "tizg": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7056,
+    "z": 12337,
     "x": null,
     "y": null,
     "letter": "U",
     "points": 1,
     "clonedFrom": "fr7o",
-    "id": "0f7f",
-    "parent": "qfyq"
+    "id": "tizg",
+    "parent": "dst0"
   },
-  "hq8i": {
+  "gh6y": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7036,
+    "z": 12343,
     "x": null,
     "y": null,
     "letter": "V",
     "points": 4,
     "clonedFrom": "fr7o",
-    "id": "hq8i",
-    "parent": "qfyq"
+    "id": "gh6y",
+    "parent": "dst0"
   },
-  "lilg": {
+  "8s1x": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7021,
+    "z": 12360,
     "x": null,
     "y": null,
     "letter": "V",
     "points": 4,
     "clonedFrom": "fr7o",
-    "id": "lilg",
-    "parent": "qfyq"
+    "id": "8s1x",
+    "parent": "dst0"
   },
-  "rfdq": {
+  "1egg": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7038,
+    "z": 12322,
     "x": null,
     "y": null,
     "letter": "W",
     "points": 4,
     "clonedFrom": "fr7o",
-    "id": "rfdq",
-    "parent": "qfyq"
+    "id": "1egg",
+    "parent": "dst0"
   },
-  "ldi3": {
+  "oir4": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7018,
+    "z": 12339,
     "x": null,
     "y": null,
     "letter": "W",
     "points": 4,
     "clonedFrom": "fr7o",
-    "id": "ldi3",
-    "parent": "qfyq"
+    "id": "oir4",
+    "parent": "dst0"
   },
-  "xdqi": {
+  "n42n": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7007,
+    "z": 12297,
     "x": null,
     "y": null,
     "letter": "X",
     "points": 8,
     "clonedFrom": "fr7o",
-    "id": "xdqi",
-    "parent": "qfyq"
+    "id": "n42n",
+    "parent": "dst0"
   },
-  "im8p": {
+  "isn8": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6998,
+    "z": 12326,
     "x": null,
     "y": null,
     "letter": "Y",
     "points": 4,
     "clonedFrom": "fr7o",
-    "id": "im8p",
-    "parent": "qfyq"
+    "id": "isn8",
+    "parent": "dst0"
   },
-  "zqpr": {
+  "0w73": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7003,
+    "z": 12304,
     "x": null,
     "y": null,
     "letter": "Y",
     "points": 4,
     "clonedFrom": "fr7o",
-    "id": "zqpr",
-    "parent": "qfyq"
+    "id": "0w73",
+    "parent": "dst0"
   },
-  "mp2a": {
+  "0qza": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 6984,
+    "z": 12275,
     "x": null,
     "y": null,
     "letter": "Z",
     "points": 10,
     "clonedFrom": "fr7o",
-    "id": "mp2a",
-    "parent": "qfyq"
+    "id": "0qza",
+    "parent": "dst0"
   },
-  "hbyj": {
+  "ql5i": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7016,
+    "z": 12334,
     "x": null,
     "y": null,
     "letter": "?",
     "points": 0,
     "clonedFrom": "fr7o",
-    "id": "hbyj",
-    "parent": "qfyq"
+    "id": "ql5i",
+    "parent": "dst0"
   },
-  "xpaj": {
+  "5fx8": {
     "deck": "deckTemplate",
     "type": "card",
     "cardType": "master",
-    "z": 7002,
+    "z": 12279,
     "x": null,
     "y": null,
     "letter": "?",
     "points": 0,
     "clonedFrom": "fr7o",
-    "id": "xpaj",
-    "parent": "qfyq"
+    "id": "5fx8",
+    "parent": "dst0"
   }
 }
