@@ -107,7 +107,8 @@
         "no chip": "piles"
       },
       "width": 60,
-      "height": 60
+      "height": 60,
+      "background": "#ECCCA0"
     },
     "faceTemplates": [
       {
@@ -117,11 +118,11 @@
         "objects": [
           {
             "type": "image",
-            "color": "#ECCCA0",
             "value": "",
             "dynamicProperties": {
               "width": "width",
-              "height": "height"
+              "height": "height",
+              "color": "background"
             }
           },
           {
@@ -1219,6 +1220,19 @@
         "func": "IF",
         "operand1": "${board}",
         "operand2": "keep",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "background",
+            "relation": "!=",
+            "value": null,
+            "type": "card"
+          },
+          {
+            "func": "SET",
+            "property": "background"
+          }
+        ],
         "elseRoutine": [
           {
             "func": "CALL",
@@ -6434,6 +6448,57 @@
           "Die 2"
         ],
         "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "Chips"
+      },
+      "var value = ${PROPERTY value OF Die 1} + ${PROPERTY value OF Die 2}",
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "operand2": 10,
+        "thenRoutine": [
+          "var value = 'A'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "operand2": 11,
+        "thenRoutine": [
+          "var value = 'B'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "operand2": 12,
+        "thenRoutine": [
+          "var value = 'C'"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var highlight = ${value} == ${PROPERTY cardType OF $widgetID}",
+          {
+            "func": "IF",
+            "condition": "${highlight}",
+            "thenRoutine": [
+              "var background = 'white'"
+            ],
+            "elseRoutine": [
+              "var background = null"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "background",
+            "value": "${background}"
+          }
+        ]
       }
     ]
   },
