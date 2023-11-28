@@ -1311,21 +1311,6 @@
         ]
       },
       {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Robber"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 752.8203230285
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 456
-      },
-      {
         "func": "TURN",
         "turnCycle": "random"
       }
@@ -6567,6 +6552,10 @@
       {
         "func": "CALL",
         "routine": "buildLevelRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "placeRobberRoutine"
       }
     ],
     "levelTiles": [
@@ -6967,6 +6956,45 @@
             "x": "${WIDTH}"
           }
         ]
+      }
+    ],
+    "placeRobberRoutine": [
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "D"
+      },
+      {
+        "func": "GET"
+      },
+      "var id = ${id}",
+      {
+        "func": "IF",
+        "condition": "${id}",
+        "thenRoutine": [
+          "var x = ${PROPERTY x OF $id} + ${PROPERTY width OF $id} / 2 - ${PROPERTY width OF Robber} / 2",
+          "var y = ${PROPERTY y OF $id} + ${PROPERTY height OF $id} / 2 - ${PROPERTY height OF Robber} / 2"
+        ],
+        "elseRoutine": [
+          "var x = 1317",
+          "var y = 2"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Robber"
+        ],
+        "property": "x",
+        "value": "${x}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Robber"
+        ],
+        "property": "y",
+        "value": "${y}"
       }
     ]
   },
