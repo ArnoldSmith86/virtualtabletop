@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="40"
+   height="60"
+   viewBox="0 0 10.583333 15.875"
+   version="1.1"
+   id="svg347"
+   sodipodi:docname="yellow-3.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview349"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="11.313709"
+     inkscape:cx="18.738329"
+     inkscape:cy="27.179416"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs344" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g4085"
+       style="fill:#bf9f00;fill-opacity:1">
+      <path
+         id="rect520"
+         style="fill:#bf9f00;stroke-width:0.542925;stroke-miterlimit:5;fill-opacity:1"
+         d="M 0,5.2916667 C 0,5.2916667 3.3195788,0 5.2916665,0 7.2637542,0 10.583333,5.2916667 10.583333,5.2916667 V 11.641666 H 0 Z"
+         sodipodi:nodetypes="cscccc" />
+      <circle
+         style="fill:#bf9f00;fill-opacity:1;stroke:none;stroke-width:0.564444;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
+         id="path6862-0"
+         cx="5.2916665"
+         cy="11.641666"
+         inkscape:label="path6862-0"
+         r="4.2333331" />
+    </g>
+    <path
+       style="font-weight:bold;font-size:5.29167px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;stroke-width:0.264583"
+       d="m 4.7904049,4.5123871 h 0.3979088 q 0.2842205,0 0.4211632,-0.1421103 0.1369426,-0.1421103 0.1369426,-0.3772382 0,-0.2273764 -0.1369426,-0.3539838 -0.1343588,-0.1266073 -0.3720706,-0.1266073 -0.2144573,0 -0.3591514,0.1188559 -0.1446941,0.116272 -0.1446941,0.3048911 H 3.9868359 q 0,-0.2945558 0.1576132,-0.5270999 0.1601971,-0.2351279 0.4444176,-0.3669029 0.2868044,-0.131775 0.6304529,-0.131775 0.5968631,0 0.935344,0.2868044 0.3384808,0.2842205 0.3384808,0.7854822 0,0.2583823 -0.1576132,0.4754235 Q 6.177918,4.6751679 5.9221195,4.79144 q 0.3178102,0.1136882 0.4728396,0.3410646 0.1576132,0.2273765 0.1576132,0.5374352 0,0.5012617 -0.3669029,0.803569 -0.364319,0.3023074 -0.9663498,0.3023074 -0.5632735,0 -0.9224249,-0.2971397 Q 3.9403271,6.1815368 3.9403271,5.6931942 H 4.687052 q 0,0.2118735 0.1576132,0.3462324 0.1601971,0.1343588 0.3927411,0.1343588 0.2661338,0 0.4159956,-0.1395265 0.1524455,-0.1421103 0.1524455,-0.3746544 0,-0.5632734 -0.6201175,-0.5632734 h -0.395325 z"
+       id="text1"
+       aria-label="3" />
+  </g>
+</svg>
