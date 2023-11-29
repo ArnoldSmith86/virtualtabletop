@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "20",
       "attribution": "<div>Room layout, custom game pieces and scripting by Nicolas Weiss / PaladinOfCats, under a CCBY 3.0 licence.</div><div>http://paladinofcats.free.fr/vtio.htm<br></div><div><br></div><div>---<br></div><div><br></div><div>Icons by the following people under a CCBY 3.0 licence.</div><div><br></div><div><b>Author: Delapouite</b></div><div><i>Lynx head<br></i></div>https://game-icons.net/1x1/delapouite/lynx-head.html<br><div><br></div><div><b>Author: Lorc </b></div><div><i>Mouse</i></div>https://game-icons.net/1x1/lorc/mouse.html<br><i>Owl</i><br>https://game-icons.net/1x1/lorc/owl.html<br><div><i>Skull crossed bones<br></i></div><div>https://game-icons.net/1x1/lorc/skull-crossed-bones.html<br><div><i>Wolf head<br></i></div><div>https://game-icons.net/1x1/lorc/wolf-head.html</div></div><div><br></div><div><div><b>Author: Delapouite</b></div><div><i>Bear face<br></i></div>https://game-icons.net/1x1/sparker/bear-face.html<br></div>",
-      "lastUpdate": 1701209486420,
+      "lastUpdate": 1701267729843,
       "showName": true,
       "skill": "",
       "description": "Scavenge them food points by outmanoeuvring your opponent's animals. By eating them.",
@@ -90,8 +90,8 @@
       },
       {
         "func": "SELECT",
-        "property": "image",
-        "value": "/assets/445464681_3064"
+        "property": "dedImage",
+        "value": true
       },
       {
         "func": "SET",
@@ -246,7 +246,7 @@
     "type": "card",
     "cardType": "1",
     "id": "30lj",
-    "z": 3969,
+    "z": 4229,
     "parent": "ww6h"
   },
   "r912": {
@@ -254,7 +254,7 @@
     "type": "card",
     "cardType": "2",
     "id": "r912",
-    "z": 3971,
+    "z": 4231,
     "parent": "ww6h"
   },
   "ww6h": {
@@ -272,7 +272,7 @@
     "type": "card",
     "cardType": "3",
     "id": "abg8",
-    "z": 3973,
+    "z": 4233,
     "parent": "ww6h"
   },
   "zkgm": {
@@ -280,7 +280,7 @@
     "type": "card",
     "cardType": "4",
     "id": "zkgm",
-    "z": 3975,
+    "z": 4235,
     "parent": "ww6h"
   },
   "l968": {
@@ -288,7 +288,7 @@
     "type": "card",
     "cardType": "5",
     "id": "l968",
-    "z": 3977,
+    "z": 4237,
     "parent": "ww6h"
   },
   "54fn": {
@@ -296,7 +296,7 @@
     "type": "card",
     "cardType": "6",
     "id": "54fn",
-    "z": 3979,
+    "z": 4239,
     "parent": "ww6h"
   },
   "oyhu": {
@@ -304,7 +304,7 @@
     "type": "card",
     "cardType": "7",
     "id": "oyhu",
-    "z": 3981,
+    "z": 4241,
     "parent": "ww6h"
   },
   "0map": {
@@ -312,7 +312,7 @@
     "type": "card",
     "cardType": "8",
     "id": "0map",
-    "z": 3983,
+    "z": 4243,
     "parent": "ww6h"
   },
   "tyjs": {
@@ -320,7 +320,7 @@
     "type": "card",
     "cardType": "9",
     "id": "tyjs",
-    "z": 3985,
+    "z": 4245,
     "parent": "ww6h"
   },
   "ocfd": {
@@ -328,7 +328,7 @@
     "type": "card",
     "cardType": "10",
     "id": "ocfd",
-    "z": 3987,
+    "z": 4247,
     "parent": "ww6h"
   },
   "qp68": {
@@ -336,7 +336,7 @@
     "type": "card",
     "cardType": "11",
     "id": "qp68",
-    "z": 3989,
+    "z": 4249,
     "parent": "ww6h"
   },
   "6p9a": {
@@ -344,7 +344,7 @@
     "type": "card",
     "cardType": "12",
     "id": "6p9a",
-    "z": 3991,
+    "z": 4251,
     "parent": "ww6h"
   },
   "pzsf": {
@@ -352,7 +352,7 @@
     "type": "card",
     "cardType": "13",
     "id": "pzsf",
-    "z": 3993,
+    "z": 4253,
     "parent": "ww6h"
   },
   "o3nw": {
@@ -360,7 +360,7 @@
     "type": "card",
     "cardType": "14",
     "id": "o3nw",
-    "z": 3995,
+    "z": 4255,
     "parent": "ww6h"
   },
   "owzg": {
@@ -368,7 +368,7 @@
     "type": "card",
     "cardType": "15",
     "id": "owzg",
-    "z": 3997,
+    "z": 4257,
     "parent": "ww6h"
   },
   "gace": {
@@ -376,7 +376,7 @@
     "type": "card",
     "cardType": "16",
     "id": "gace",
-    "z": 3999,
+    "z": 4259,
     "parent": "ww6h"
   },
   "57ji": {
@@ -384,7 +384,7 @@
     "type": "card",
     "cardType": "17",
     "id": "57ji",
-    "z": 4001,
+    "z": 4261,
     "parent": "ww6h"
   },
   "9k8m": {
@@ -392,7 +392,7 @@
     "type": "card",
     "cardType": "18",
     "id": "9k8m",
-    "z": 4003,
+    "z": 4263,
     "parent": "ww6h"
   },
   "48l0": {
@@ -400,7 +400,7 @@
     "type": "card",
     "cardType": "19",
     "id": "48l0",
-    "z": 4005,
+    "z": 4265,
     "parent": "ww6h"
   },
   "1vfd": {
@@ -408,7 +408,7 @@
     "type": "card",
     "cardType": "20",
     "id": "1vfd",
-    "z": 4007,
+    "z": 4267,
     "parent": "ww6h"
   },
   "1ld8": {
@@ -416,7 +416,7 @@
     "type": "card",
     "cardType": "21",
     "id": "1ld8",
-    "z": 4009,
+    "z": 4269,
     "parent": "ww6h"
   },
   "ts00": {
@@ -424,7 +424,7 @@
     "type": "card",
     "cardType": "22",
     "id": "ts00",
-    "z": 4011,
+    "z": 4271,
     "parent": "ww6h"
   },
   "tqgo": {
@@ -432,7 +432,7 @@
     "type": "card",
     "cardType": "23",
     "id": "tqgo",
-    "z": 4013,
+    "z": 4273,
     "parent": "ww6h"
   },
   "6txp": {
@@ -440,7 +440,7 @@
     "type": "card",
     "cardType": "24",
     "id": "6txp",
-    "z": 4015,
+    "z": 4275,
     "parent": "ww6h"
   },
   "nd4j": {
@@ -448,7 +448,7 @@
     "type": "card",
     "cardType": "25",
     "id": "nd4j",
-    "z": 4017,
+    "z": 4277,
     "parent": "ww6h"
   },
   "p1": {
@@ -580,7 +580,7 @@
       "#3f3f3f": "newColor"
     },
     "newColor": "#fff",
-    "x": -3000
+    "x": 75
   },
   "ded-1": {
     "id": "ded-1",
@@ -591,7 +591,8 @@
     "height": 200,
     "layer": -1,
     "movable": false,
-    "image": "/assets/445464681_3064"
+    "image": "/assets/445464681_3064",
+    "dedImage": true
   },
   "p2": {
     "type": "seat",
@@ -648,7 +649,7 @@
     },
     "newColor": "#fff",
     "width": 100,
-    "x": -3000
+    "x": 75
   },
   "ded-2": {
     "id": "ded-2",
@@ -659,7 +660,8 @@
     "height": 200,
     "layer": -1,
     "movable": false,
-    "image": "/assets/445464681_3064"
+    "image": "/assets/445464681_3064",
+    "dedImage": true
   },
   "score-p2": {
     "type": "label",
@@ -772,7 +774,7 @@
       "#3f3f3f": "newColor"
     },
     "newColor": "#fff",
-    "x": -3000
+    "x": 75
   },
   "ded-3": {
     "id": "ded-3",
@@ -783,7 +785,8 @@
     "height": 200,
     "layer": -1,
     "movable": false,
-    "image": "/assets/445464681_3064"
+    "image": "/assets/445464681_3064",
+    "dedImage": true
   },
   "score-p3": {
     "type": "label",
@@ -896,7 +899,7 @@
       "#3f3f3f": "newColor"
     },
     "newColor": "#fff",
-    "x": -3000
+    "x": 75
   },
   "ded-4": {
     "id": "ded-4",
@@ -907,7 +910,8 @@
     "height": 200,
     "layer": -1,
     "movable": false,
-    "image": "/assets/445464681_3064"
+    "image": "/assets/445464681_3064",
+    "dedImage": true
   },
   "score-p4": {
     "type": "label",
@@ -1020,7 +1024,7 @@
       "#3f3f3f": "newColor"
     },
     "newColor": "#fff",
-    "x": -3000
+    "x": 75
   },
   "ded-5": {
     "id": "ded-5",
@@ -1031,7 +1035,8 @@
     "height": 200,
     "layer": -1,
     "movable": false,
-    "image": "/assets/445464681_3064"
+    "image": "/assets/445464681_3064",
+    "dedImage": true
   },
   "score-p5": {
     "type": "label",
