@@ -1209,6 +1209,19 @@
               }
             ],
             "variable": "board"
+          },
+          {
+            "type": "subtitle",
+            "text": "Settings"
+          },
+          {
+            "type": "switch",
+            "label": "Enable 8 players no matter the board size",
+            "variable": "allSeats"
+          },
+          {
+            "type": "text",
+            "text": "Only takes effect when generating a new board"
           }
         ],
         "confirmButtonText": "New Game",
@@ -1216,6 +1229,14 @@
         "cancelButtonText": "Resume Game",
         "cancelButtonIcon": "close"
       },
+      "// Settings",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "optionAllSeats",
+        "value": "${allSeats}"
+      },
+      "// Board",
       {
         "func": "IF",
         "operand1": "${board}",
@@ -7069,6 +7090,17 @@
     ],
     "showPlayerSeatsRoutine": [
       {
+        "func": "IF",
+        "operand1": "${PROPERTY optionAllSeats OF Reset}",
+        "operand2": "on",
+        "thenRoutine": [
+          "var players = 8"
+        ],
+        "elseRoutine": [
+          "var players = ${PROPERTY levelPlayers}"
+        ]
+      },
+      {
         "func": "FOREACH",
         "in": [
           1,
@@ -7085,7 +7117,7 @@
             "func": "IF",
             "operand1": "${value}",
             "relation": "<=",
-            "operand2": "${PROPERTY levelPlayers}",
+            "operand2": "${players}",
             "thenRoutine": [
               "var owner = null"
             ],
