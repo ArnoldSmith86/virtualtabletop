@@ -6621,6 +6621,10 @@
       {
         "func": "CALL",
         "routine": "placeRobberRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "showPlayerSeatsRoutine"
       }
     ],
     "levelTiles": [
@@ -6650,6 +6654,7 @@
     "levelX": -66.025403787,
     "levelY": -50,
     "levelSize": 100,
+    "levelPlayers": 4,
     "createTileRoutine": [
       "// Tile",
       {
@@ -7061,6 +7066,43 @@
         "property": "y",
         "value": "${y}"
       }
+    ],
+    "showPlayerSeatsRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "relation": "<=",
+            "operand2": "${PROPERTY levelPlayers}",
+            "thenRoutine": [
+              "var owner = null"
+            ],
+            "elseRoutine": [
+              "var owner = []"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "Player ${value}"
+            ],
+            "property": "owner",
+            "value": "${owner}"
+          }
+        ]
+      }
     ]
   },
   "Starter Map B": {
@@ -7464,7 +7506,8 @@
       "SSSSSSSSSSSSS"
     ],
     "levelX": -10.6,
-    "levelY": -84
+    "levelY": -84,
+    "levelPlayers": 6
   },
   "Turn": {
     "type": "button",
