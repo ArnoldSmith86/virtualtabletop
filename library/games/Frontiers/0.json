@@ -6746,7 +6746,8 @@
               "x": "${x}",
               "y": "${y}",
               "cardType": "${upperType.1}",
-              "activeFace": "${activeFace}"
+              "activeFace": "${activeFace}",
+              "background": null
             }
           }
         ]
