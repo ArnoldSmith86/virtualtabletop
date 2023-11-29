@@ -2937,7 +2937,7 @@
   "Player 2": {
     "type": "holder",
     "id": "Player 2",
-    "y": 300,
+    "y": 700,
     "dropTarget": [
       {
         "player": 2
@@ -3613,7 +3613,7 @@
   "Player 3": {
     "type": "holder",
     "id": "Player 3",
-    "y": 500,
+    "y": 300,
     "dropTarget": [
       {
         "player": 3
@@ -4287,7 +4287,7 @@
   "Player 4": {
     "type": "holder",
     "id": "Player 4",
-    "y": 700,
+    "y": 500,
     "dropTarget": [
       {
         "player": 4
@@ -7485,7 +7485,7 @@
   "Player 5": {
     "type": "holder",
     "id": "Player 5",
-    "y": 762,
+    "y": 197,
     "owner": [],
     "dropTarget": [
       {
@@ -8212,7 +8212,7 @@
   "Player 6": {
     "type": "holder",
     "id": "Player 6",
-    "y": 573,
+    "y": 762,
     "owner": [],
     "dropTarget": [
       {
@@ -9668,7 +9668,7 @@
     "id": "Player 8",
     "width": 140,
     "x": 207,
-    "y": 197,
+    "y": 573,
     "owner": [],
     "dropTarget": [
       {
