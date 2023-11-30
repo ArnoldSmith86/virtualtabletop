@@ -5,7 +5,7 @@
     "cardType": "Ore",
     "id": "4255",
     "parent": "fnlg",
-    "z": 19224
+    "z": 26238
   },
   "5795": {
     "deck": "Resources",
@@ -13,7 +13,7 @@
     "cardType": "Wool",
     "id": "5795",
     "parent": "sii7",
-    "z": 19148
+    "z": 26162
   },
   "Tiles Real": {
     "type": "deck",
@@ -86,8 +86,8 @@
       "movable": false,
       "layer": -5
     },
-    "y": -1,
-    "x": 637
+    "x": 689,
+    "y": 3
   },
   "Card Template": {
     "type": "card",
@@ -101,7 +101,6 @@
   "Chips": {
     "type": "deck",
     "id": "Chips",
-    "y": -1,
     "cardDefaults": {
       "onPileCreation": {
         "no chip": "piles"
@@ -208,7 +207,8 @@
         "css": "box-shadow: 2px 2px 2px;border-radius:100%;--size: 1; --offset: -12px"
       }
     },
-    "x": 704
+    "x": 757,
+    "y": 3
   },
   "Chip Template": {
     "type": "card",
@@ -328,14 +328,14 @@
     "cardType": "Wood",
     "id": "rl2f",
     "parent": "f1uy",
-    "z": 19110
+    "z": 26124
   },
   "kiow": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "kiow",
-    "z": 19072,
+    "z": 26086,
     "parent": "pzgz"
   },
   "hrm0": {
@@ -344,7 +344,7 @@
     "cardType": "Wool",
     "id": "hrm0",
     "parent": "sii7",
-    "z": 19150
+    "z": 26164
   },
   "Switch Board": {
     "id": "Switch Board",
@@ -388,7 +388,7 @@
     "cardType": "Ore",
     "id": "e1tx",
     "parent": "fnlg",
-    "z": 19226
+    "z": 26240
   },
   "uzz1": {
     "deck": "Resources",
@@ -396,7 +396,7 @@
     "cardType": "Wheat",
     "id": "uzz1",
     "parent": "b75l",
-    "z": 19186
+    "z": 26200
   },
   "Bricks": {
     "type": "holder",
@@ -462,14 +462,14 @@
     "cardType": "Wood",
     "id": "j8dc",
     "parent": "f1uy",
-    "z": 19112
+    "z": 26126
   },
   "iob3": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "iob3",
-    "z": 19074,
+    "z": 26088,
     "parent": "pzgz"
   },
   "q243": {
@@ -478,7 +478,7 @@
     "cardType": "Wool",
     "id": "q243",
     "parent": "sii7",
-    "z": 19152
+    "z": 26166
   },
   "uo75": {
     "deck": "Resources",
@@ -486,7 +486,7 @@
     "cardType": "Ore",
     "id": "uo75",
     "parent": "fnlg",
-    "z": 19228
+    "z": 26242
   },
   "zd9i": {
     "deck": "Resources",
@@ -494,7 +494,7 @@
     "cardType": "Wheat",
     "id": "zd9i",
     "parent": "b75l",
-    "z": 19188
+    "z": 26202
   },
   "xhaz": {
     "deck": "Resources",
@@ -502,14 +502,14 @@
     "cardType": "Wood",
     "id": "xhaz",
     "parent": "f1uy",
-    "z": 19114
+    "z": 26128
   },
   "hxs4": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "hxs4",
-    "z": 19289,
+    "z": 26090,
     "parent": "pzgz"
   },
   "kes3": {
@@ -518,7 +518,7 @@
     "cardType": "Wool",
     "id": "kes3",
     "parent": "sii7",
-    "z": 19154
+    "z": 26168
   },
   "mpn9": {
     "deck": "Resources",
@@ -526,7 +526,7 @@
     "cardType": "Ore",
     "id": "mpn9",
     "parent": "fnlg",
-    "z": 19230
+    "z": 26244
   },
   "b4i5": {
     "deck": "Resources",
@@ -534,7 +534,7 @@
     "cardType": "Wheat",
     "id": "b4i5",
     "parent": "b75l",
-    "z": 19190
+    "z": 26204
   },
   "wxdx": {
     "deck": "Resources",
@@ -542,14 +542,14 @@
     "cardType": "Wood",
     "id": "wxdx",
     "parent": "f1uy",
-    "z": 19116
+    "z": 26130
   },
   "4xyt": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "4xyt",
-    "z": 19076,
+    "z": 26092,
     "parent": "pzgz"
   },
   "r5o2": {
@@ -558,7 +558,7 @@
     "cardType": "Wool",
     "id": "r5o2",
     "parent": "sii7",
-    "z": 19156
+    "z": 26170
   },
   "w5x8": {
     "deck": "Resources",
@@ -566,7 +566,7 @@
     "cardType": "Ore",
     "id": "w5x8",
     "parent": "fnlg",
-    "z": 19232
+    "z": 26246
   },
   "h9qt": {
     "deck": "Resources",
@@ -574,7 +574,7 @@
     "cardType": "Wheat",
     "id": "h9qt",
     "parent": "b75l",
-    "z": 19192
+    "z": 26206
   },
   "ugkt": {
     "deck": "Resources",
@@ -582,14 +582,14 @@
     "cardType": "Wood",
     "id": "ugkt",
     "parent": "f1uy",
-    "z": 19118
+    "z": 26132
   },
   "wnjy": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "wnjy",
-    "z": 19078,
+    "z": 26094,
     "parent": "pzgz"
   },
   "rmtq": {
@@ -598,7 +598,7 @@
     "cardType": "Wool",
     "id": "rmtq",
     "parent": "sii7",
-    "z": 19158
+    "z": 26172
   },
   "yn5o": {
     "deck": "Resources",
@@ -606,7 +606,7 @@
     "cardType": "Ore",
     "id": "yn5o",
     "parent": "fnlg",
-    "z": 19234
+    "z": 26248
   },
   "akml": {
     "deck": "Resources",
@@ -614,7 +614,7 @@
     "cardType": "Wheat",
     "id": "akml",
     "parent": "b75l",
-    "z": 19194
+    "z": 26208
   },
   "w9wp": {
     "deck": "Resources",
@@ -622,14 +622,14 @@
     "cardType": "Wood",
     "id": "w9wp",
     "parent": "f1uy",
-    "z": 19120
+    "z": 26134
   },
   "ktqb": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "ktqb",
-    "z": 19080,
+    "z": 26096,
     "parent": "pzgz"
   },
   "qf6a": {
@@ -638,7 +638,7 @@
     "cardType": "Wool",
     "id": "qf6a",
     "parent": "sii7",
-    "z": 19160
+    "z": 26174
   },
   "4m17": {
     "deck": "Resources",
@@ -646,7 +646,7 @@
     "cardType": "Ore",
     "id": "4m17",
     "parent": "fnlg",
-    "z": 19236
+    "z": 26250
   },
   "sk9p": {
     "deck": "Resources",
@@ -654,7 +654,7 @@
     "cardType": "Wheat",
     "id": "sk9p",
     "parent": "b75l",
-    "z": 19196
+    "z": 26210
   },
   "9oec": {
     "deck": "Resources",
@@ -662,14 +662,14 @@
     "cardType": "Wood",
     "id": "9oec",
     "parent": "f1uy",
-    "z": 19122
+    "z": 26136
   },
   "roae": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "roae",
-    "z": 19082,
+    "z": 26098,
     "parent": "pzgz"
   },
   "hvc2": {
@@ -678,7 +678,7 @@
     "cardType": "Wool",
     "id": "hvc2",
     "parent": "sii7",
-    "z": 19162
+    "z": 26176
   },
   "7dzt": {
     "deck": "Resources",
@@ -686,7 +686,7 @@
     "cardType": "Wheat",
     "id": "7dzt",
     "parent": "b75l",
-    "z": 19198
+    "z": 26212
   },
   "m1yn": {
     "deck": "Resources",
@@ -694,14 +694,14 @@
     "cardType": "Wood",
     "id": "m1yn",
     "parent": "f1uy",
-    "z": 19124
+    "z": 26138
   },
   "07b0": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "07b0",
-    "z": 19084,
+    "z": 26100,
     "parent": "pzgz"
   },
   "8ca5": {
@@ -710,7 +710,7 @@
     "cardType": "Wool",
     "id": "8ca5",
     "parent": "sii7",
-    "z": 19164
+    "z": 26178
   },
   "q19u": {
     "deck": "Resources",
@@ -718,7 +718,7 @@
     "cardType": "Ore",
     "id": "q19u",
     "parent": "fnlg",
-    "z": 19238
+    "z": 26252
   },
   "ric5": {
     "deck": "Resources",
@@ -726,7 +726,7 @@
     "cardType": "Wheat",
     "id": "ric5",
     "parent": "b75l",
-    "z": 19200
+    "z": 26214
   },
   "xad5": {
     "deck": "Resources",
@@ -734,14 +734,14 @@
     "cardType": "Wood",
     "id": "xad5",
     "parent": "f1uy",
-    "z": 19126
+    "z": 26140
   },
   "yn2h": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "yn2h",
-    "z": 19309,
+    "z": 26102,
     "parent": "pzgz"
   },
   "1ive": {
@@ -750,7 +750,7 @@
     "cardType": "Ore",
     "id": "1ive",
     "parent": "fnlg",
-    "z": 19240
+    "z": 26254
   },
   "2u11": {
     "deck": "Resources",
@@ -758,7 +758,7 @@
     "cardType": "Wheat",
     "id": "2u11",
     "parent": "b75l",
-    "z": 19202
+    "z": 26216
   },
   "piuy": {
     "deck": "Resources",
@@ -766,7 +766,7 @@
     "cardType": "Wood",
     "id": "piuy",
     "parent": "f1uy",
-    "z": 19128
+    "z": 26142
   },
   "gsug": {
     "deck": "Resources",
@@ -774,7 +774,7 @@
     "cardType": "Bricks",
     "id": "gsug",
     "parent": "pzgz",
-    "z": 19092
+    "z": 26104
   },
   "os0k": {
     "deck": "Resources",
@@ -782,7 +782,7 @@
     "cardType": "Wool",
     "id": "os0k",
     "parent": "sii7",
-    "z": 19166
+    "z": 26180
   },
   "5qhq": {
     "deck": "Resources",
@@ -790,7 +790,7 @@
     "cardType": "Ore",
     "id": "5qhq",
     "parent": "fnlg",
-    "z": 19242
+    "z": 26256
   },
   "e8sc": {
     "deck": "Resources",
@@ -798,7 +798,7 @@
     "cardType": "Wheat",
     "id": "e8sc",
     "parent": "b75l",
-    "z": 19204
+    "z": 26218
   },
   "ettw": {
     "deck": "Resources",
@@ -806,14 +806,14 @@
     "cardType": "Wood",
     "id": "ettw",
     "parent": "f1uy",
-    "z": 19130
+    "z": 26144
   },
   "x1pc": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "x1pc",
-    "z": 19086,
+    "z": 26106,
     "parent": "pzgz"
   },
   "0ls2": {
@@ -822,7 +822,7 @@
     "cardType": "Wool",
     "id": "0ls2",
     "parent": "sii7",
-    "z": 19168
+    "z": 26182
   },
   "8me2": {
     "deck": "Resources",
@@ -830,7 +830,7 @@
     "cardType": "Ore",
     "id": "8me2",
     "parent": "fnlg",
-    "z": 19244
+    "z": 26258
   },
   "u9sz": {
     "deck": "Resources",
@@ -838,7 +838,7 @@
     "cardType": "Wheat",
     "id": "u9sz",
     "parent": "b75l",
-    "z": 19206
+    "z": 26220
   },
   "173c": {
     "deck": "Resources",
@@ -846,14 +846,14 @@
     "cardType": "Wood",
     "id": "173c",
     "parent": "f1uy",
-    "z": 19132
+    "z": 26146
   },
   "omfe": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "omfe",
-    "z": 19088,
+    "z": 26108,
     "parent": "pzgz"
   },
   "owhq": {
@@ -862,7 +862,7 @@
     "cardType": "Wool",
     "id": "owhq",
     "parent": "sii7",
-    "z": 19170
+    "z": 26184
   },
   "y1q7": {
     "deck": "Resources",
@@ -870,7 +870,7 @@
     "cardType": "Ore",
     "id": "y1q7",
     "parent": "fnlg",
-    "z": 19246
+    "z": 26260
   },
   "8gkm": {
     "deck": "Resources",
@@ -878,7 +878,7 @@
     "cardType": "Wheat",
     "id": "8gkm",
     "parent": "b75l",
-    "z": 19208
+    "z": 26222
   },
   "9j5j": {
     "deck": "Resources",
@@ -886,14 +886,14 @@
     "cardType": "Wood",
     "id": "9j5j",
     "parent": "f1uy",
-    "z": 19134
+    "z": 26148
   },
   "galp": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Bricks",
     "id": "galp",
-    "z": 19090,
+    "z": 26110,
     "parent": "pzgz"
   },
   "o3hy": {
@@ -902,7 +902,7 @@
     "cardType": "Wool",
     "id": "o3hy",
     "parent": "sii7",
-    "z": 19172
+    "z": 26186
   },
   "sgjq": {
     "deck": "Resources",
@@ -910,7 +910,7 @@
     "cardType": "Ore",
     "id": "sgjq",
     "parent": "fnlg",
-    "z": 19248
+    "z": 26262
   },
   "o5sm": {
     "deck": "Resources",
@@ -918,14 +918,14 @@
     "cardType": "Wheat",
     "id": "o5sm",
     "parent": "b75l",
-    "z": 19210
+    "z": 26224
   },
   "3lql": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Wood",
     "id": "3lql",
-    "z": 19136,
+    "z": 26150,
     "parent": "f1uy"
   },
   "e8yv": {
@@ -934,14 +934,14 @@
     "cardType": "Bricks",
     "id": "e8yv",
     "parent": "pzgz",
-    "z": 19094
+    "z": 26112
   },
   "qoqx": {
     "deck": "Resources",
     "type": "card",
     "cardType": "Wool",
     "id": "qoqx",
-    "z": 19174,
+    "z": 26188,
     "parent": "sii7"
   },
   "bf9n": {
@@ -949,7 +949,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "bf9n",
-    "z": 19250,
+    "z": 26264,
     "parent": "fnlg"
   },
   "6cgv": {
@@ -957,7 +957,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "6cgv",
-    "z": 19212,
+    "z": 26226,
     "parent": "b75l"
   },
   "v239": {
@@ -965,7 +965,7 @@
     "type": "card",
     "cardType": "Wood",
     "id": "v239",
-    "z": 19138,
+    "z": 26152,
     "parent": "f1uy"
   },
   "3wwl": {
@@ -973,7 +973,7 @@
     "type": "card",
     "cardType": "Bricks",
     "id": "3wwl",
-    "z": 19096,
+    "z": 26114,
     "parent": "pzgz"
   },
   "yree": {
@@ -981,7 +981,7 @@
     "type": "card",
     "cardType": "Wool",
     "id": "yree",
-    "z": 19176,
+    "z": 26190,
     "activeFace": 1,
     "parent": "sii7"
   },
@@ -990,7 +990,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "earj",
-    "z": 19252,
+    "z": 26266,
     "parent": "fnlg"
   },
   "yjal": {
@@ -998,7 +998,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "yjal",
-    "z": 19214,
+    "z": 26228,
     "parent": "b75l"
   },
   "z4tr": {
@@ -1006,7 +1006,7 @@
     "type": "card",
     "cardType": "Wood",
     "id": "z4tr",
-    "z": 19140,
+    "z": 26154,
     "parent": "f1uy"
   },
   "j9y4": {
@@ -1014,7 +1014,7 @@
     "type": "card",
     "cardType": "Bricks",
     "id": "j9y4",
-    "z": 19098,
+    "z": 26116,
     "parent": "pzgz"
   },
   "j0wl": {
@@ -1022,7 +1022,7 @@
     "type": "card",
     "cardType": "Wool",
     "id": "j0wl",
-    "z": 19178,
+    "z": 26192,
     "parent": "sii7",
     "activeFace": 1
   },
@@ -1031,7 +1031,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "qew1",
-    "z": 19254,
+    "z": 26268,
     "parent": "fnlg"
   },
   "wzx3": {
@@ -1039,7 +1039,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "wzx3",
-    "z": 19216,
+    "z": 26230,
     "parent": "b75l"
   },
   "s870": {
@@ -1047,7 +1047,7 @@
     "type": "card",
     "cardType": "Wood",
     "id": "s870",
-    "z": 19142,
+    "z": 26156,
     "parent": "f1uy"
   },
   "d1h1": {
@@ -1055,7 +1055,7 @@
     "type": "card",
     "cardType": "Bricks",
     "id": "d1h1",
-    "z": 19100,
+    "z": 26118,
     "parent": "pzgz"
   },
   "mz5j": {
@@ -1063,7 +1063,7 @@
     "type": "card",
     "cardType": "Wool",
     "id": "mz5j",
-    "z": 19180,
+    "z": 26194,
     "parent": "sii7",
     "activeFace": 1
   },
@@ -1072,7 +1072,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "vjp3",
-    "z": 19256,
+    "z": 26270,
     "parent": "fnlg"
   },
   "2gs1": {
@@ -1080,7 +1080,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "2gs1",
-    "z": 19218,
+    "z": 26232,
     "activeFace": 1,
     "parent": "b75l"
   },
@@ -1089,7 +1089,7 @@
     "type": "card",
     "cardType": "Wood",
     "id": "9x10",
-    "z": 19293,
+    "z": 26158,
     "parent": "f1uy"
   },
   "kp1x": {
@@ -1097,7 +1097,7 @@
     "type": "card",
     "cardType": "Bricks",
     "id": "kp1x",
-    "z": 19102,
+    "z": 26120,
     "parent": "pzgz"
   },
   "9heq": {
@@ -1105,7 +1105,7 @@
     "type": "card",
     "cardType": "Wool",
     "id": "9heq",
-    "z": 19297,
+    "z": 26196,
     "parent": "sii7"
   },
   "e07b": {
@@ -1113,7 +1113,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "e07b",
-    "z": 19258,
+    "z": 26272,
     "parent": "fnlg"
   },
   "zzc2": {
@@ -1121,7 +1121,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "zzc2",
-    "z": 19220,
+    "z": 26234,
     "parent": "b75l"
   },
   "f6j7": {
@@ -1129,7 +1129,7 @@
     "type": "card",
     "cardType": "Wood",
     "id": "f6j7",
-    "z": 19301,
+    "z": 26160,
     "parent": "f1uy"
   },
   "0fgb": {
@@ -1137,7 +1137,7 @@
     "type": "card",
     "cardType": "Bricks",
     "id": "0fgb",
-    "z": 19104,
+    "z": 26122,
     "parent": "pzgz"
   },
   "p0yy": {
@@ -1145,7 +1145,7 @@
     "type": "card",
     "cardType": "Wool",
     "id": "p0yy",
-    "z": 19305,
+    "z": 26198,
     "parent": "sii7"
   },
   "u3cm": {
@@ -1153,7 +1153,7 @@
     "type": "card",
     "cardType": "Ore",
     "id": "u3cm",
-    "z": 19260,
+    "z": 26274,
     "activeFace": 1,
     "parent": "fnlg"
   },
@@ -1162,7 +1162,7 @@
     "type": "card",
     "cardType": "Wheat",
     "id": "uid4",
-    "z": 19222,
+    "z": 26236,
     "parent": "b75l"
   },
   "Reset": {
@@ -1206,6 +1206,10 @@
               {
                 "value": "Six Player Button",
                 "text": "Generate randomized board for 5/6 players"
+              },
+              {
+                "value": "Six Player Random Button",
+                "text": "Even more random board for 5/6 players"
               }
             ],
             "variable": "board"
@@ -1215,13 +1219,19 @@
             "text": "Settings"
           },
           {
+            "type": "text",
+            "text": "8 player option only takes effect when generating a new board"
+          },
+          {
             "type": "switch",
             "label": "Enable 8 players no matter the board size",
             "variable": "allSeats"
           },
           {
-            "type": "text",
-            "text": "Only takes effect when generating a new board"
+            "type": "switch",
+            "label": "Highlight active numbers",
+            "variable": "highlight",
+            "value": "on"
           }
         ],
         "confirmButtonText": "New Game",
@@ -1235,6 +1245,12 @@
         "collection": "thisButton",
         "property": "optionAllSeats",
         "value": "${allSeats}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "optionHighlight",
+        "value": "${highlight}"
       },
       "// Board",
       {
@@ -1364,7 +1380,9 @@
         "func": "SHUFFLE",
         "holder": "Development Draw"
       }
-    ]
+    ],
+    "optionAllSeats": "off",
+    "optionHighlight": "on"
   },
   "Development": {
     "type": "deck",
@@ -1466,29 +1484,29 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": -3.6025403785000094,
+        "offsetX": 0.5771365915000075,
         "offsetY": -70,
         "y": 300,
         "x": 173.20508075700002,
         "minX": 250
       },
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -175,
+        "offsetX": 0.5771365915000075,
+        "offsetY": 130,
         "y": 300,
         "x": 173.20508075700002,
         "minX": 250
       },
       {
-        "offsetX": 83.39745962149999,
-        "offsetY": -220,
-        "y": 300,
-        "x": 173.20508075700002,
-        "minX": 250
-      },
-      {
-        "offsetX": 83.39745962149999,
+        "offsetX": -86.025403787,
         "offsetY": -20,
+        "y": 300,
+        "x": 173.20508075700002,
+        "minX": 250
+      },
+      {
+        "offsetX": -86.025403787,
+        "offsetY": 80,
         "y": 300,
         "x": 173.20508075700002,
         "minX": 250
@@ -1513,16 +1531,7 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": 14.39745962149999,
-        "offsetY": -130,
-        "y": 300,
-        "x": 173.20508075700002,
-        "rotation": 0,
-        "image": "/assets/-1486155561_696",
-        "minX": 250
-      },
-      {
-        "offsetX": 101.0000000005,
+        "offsetX": -72.525403787,
         "offsetY": 20,
         "y": 300,
         "x": 173.20508075700002,
@@ -1531,7 +1540,16 @@
         "minX": 250
       },
       {
-        "offsetX": 56.39745962149999,
+        "offsetX": 14.077136591500008,
+        "offsetY": 170,
+        "y": 300,
+        "x": 173.20508075700002,
+        "rotation": 0,
+        "image": "/assets/-1486155561_696",
+        "minX": 250
+      },
+      {
+        "offsetX": 57.37840678075001,
         "offsetY": -55,
         "y": 300,
         "x": 173.20508075700002,
@@ -1540,7 +1558,7 @@
         "minX": 250
       },
       {
-        "offsetX": 142.3974596215,
+        "offsetX": -29.224133597749997,
         "offsetY": 95,
         "y": 300,
         "x": 173.20508075700002,
@@ -1549,8 +1567,8 @@
         "minX": 250
       },
       {
-        "offsetX": 230.3974596215,
-        "offsetY": 95,
+        "offsetX": -29.224133597749997,
+        "offsetY": -55,
         "y": 300,
         "x": 173.20508075700002,
         "rotation": 60,
@@ -1558,8 +1576,8 @@
         "minX": 250
       },
       {
-        "offsetX": 144.3974596215,
-        "offsetY": -55,
+        "offsetX": 57.37840678075001,
+        "offsetY": 95,
         "y": 300,
         "x": 173.20508075700002,
         "rotation": 60,
@@ -1586,29 +1604,29 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -80,
+        "offsetX": -4.4228634084999925,
+        "offsetY": -75,
         "y": 300,
         "x": 173.20508075700002,
         "minX": 250
       },
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -180,
+        "offsetX": -4.4228634084999925,
+        "offsetY": 125,
         "y": 300,
         "x": 173.20508075700002,
         "minX": 250
       },
       {
-        "offsetX": 83.39745962149999,
-        "offsetY": -225,
-        "y": 300,
-        "x": 173.20508075700002,
-        "minX": 250
-      },
-      {
-        "offsetX": 83.39745962149999,
+        "offsetX": -91.025403787,
         "offsetY": -25,
+        "y": 300,
+        "x": 173.20508075700002,
+        "minX": 250
+      },
+      {
+        "offsetX": -91.025403787,
+        "offsetY": 75,
         "y": 300,
         "x": 173.20508075700002,
         "minX": 250
@@ -1666,7 +1684,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "gtlq",
-    "z": 19432,
+    "z": 26337,
     "parent": "yjto"
   },
   "jtdj": {
@@ -1674,7 +1692,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "jtdj",
-    "z": 19415,
+    "z": 26346,
     "parent": "yjto"
   },
   "n15g": {
@@ -1682,7 +1700,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "n15g",
-    "z": 19413,
+    "z": 26329,
     "parent": "yjto"
   },
   "1hwh": {
@@ -1690,7 +1708,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "1hwh",
-    "z": 19426,
+    "z": 26341,
     "parent": "yjto"
   },
   "h8j6": {
@@ -1698,7 +1716,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "h8j6",
-    "z": 19423,
+    "z": 26342,
     "parent": "yjto"
   },
   "m7x2": {
@@ -1706,7 +1724,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "m7x2",
-    "z": 19427,
+    "z": 26333,
     "parent": "yjto"
   },
   "jht6": {
@@ -1714,7 +1732,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "jht6",
-    "z": 19412,
+    "z": 26340,
     "parent": "yjto"
   },
   "22cj": {
@@ -1722,7 +1740,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "22cj",
-    "z": 19433,
+    "z": 26325,
     "parent": "yjto"
   },
   "i069": {
@@ -1730,7 +1748,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "i069",
-    "z": 19411,
+    "z": 26339,
     "parent": "yjto"
   },
   "4m7f": {
@@ -1738,7 +1756,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "4m7f",
-    "z": 19424,
+    "z": 26343,
     "parent": "yjto"
   },
   "p27u": {
@@ -1746,7 +1764,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "p27u",
-    "z": 19420,
+    "z": 26328,
     "parent": "yjto"
   },
   "qda1": {
@@ -1754,7 +1772,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "qda1",
-    "z": 19421,
+    "z": 26335,
     "parent": "yjto"
   },
   "z8e2": {
@@ -1762,7 +1780,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "z8e2",
-    "z": 19418,
+    "z": 26348,
     "parent": "yjto"
   },
   "0p3n": {
@@ -1770,7 +1788,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "0p3n",
-    "z": 19417,
+    "z": 26330,
     "parent": "yjto"
   },
   "wtxz": {
@@ -1778,7 +1796,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "wtxz",
-    "z": 19425,
+    "z": 26338,
     "parent": "yjto"
   },
   "5lp1": {
@@ -1786,7 +1804,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "5lp1",
-    "z": 19428,
+    "z": 26334,
     "parent": "yjto"
   },
   "xqi8": {
@@ -1794,7 +1812,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "xqi8",
-    "z": 19419,
+    "z": 26345,
     "parent": "yjto"
   },
   "eo2c": {
@@ -1802,189 +1820,8 @@
     "type": "card",
     "cardType": "Knight",
     "id": "eo2c",
-    "z": 19414,
+    "z": 26331,
     "parent": "yjto"
-  },
-  "Harbor Template": {
-    "id": "Harbor Template",
-    "x": 347,
-    "y": 300,
-    "width": 80,
-    "rotation": 630,
-    "css": "background: url(/assets/-1893264675_2943);background-size: cover;background-repeat:no-repeat; background-position: center center",
-    "layer": -4,
-    "image": "/assets/1706672985_296413",
-    "basic": "/assets/-1062389589_16281",
-    "z": 15,
-    "clickRoutine": [
-      "var newRot = ${PROPERTY rotation} + 60",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "rotation",
-        "value": "${newRot}"
-      }
-    ]
-  },
-  "Harbor Template1": {
-    "id": "Harbor Template1",
-    "x": 510,
-    "y": 22,
-    "width": 80,
-    "rotation": 330,
-    "css": "background: url(/assets/-702772627_3102);background-size: cover;background-repeat:no-repeat; background-position: center center",
-    "layer": -4,
-    "image": "/assets/-1557821007_92195",
-    "z": 16,
-    "clickRoutine": [
-      "var newRot = ${PROPERTY rotation} + 60",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "rotation",
-        "value": "${newRot}"
-      }
-    ]
-  },
-  "Harbor Template2": {
-    "id": "Harbor Template2",
-    "x": 835,
-    "y": 17,
-    "width": 80,
-    "rotation": 750,
-    "css": "background: url(/assets/-1313099217_109295);background-size: cover;background-repeat:no-repeat; background-position: center center",
-    "layer": -4,
-    "image": "/assets/-609772913_122240",
-    "z": 26,
-    "clickRoutine": [
-      "var newRot = ${PROPERTY rotation} + 60",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "rotation",
-        "value": "${newRot}"
-      }
-    ]
-  },
-  "Harbor Template3": {
-    "id": "Harbor Template3",
-    "x": 1087,
-    "y": 148,
-    "width": 80,
-    "rotation": 450,
-    "css": "background: url(/assets/-425068549_4309);background-size: cover;background-repeat:no-repeat; background-position: center center",
-    "layer": -4,
-    "z": 8,
-    "image": "/assets/-1578141657_23133",
-    "clickRoutine": [
-      "var newRot = ${PROPERTY rotation} + 60",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "rotation",
-        "value": "${newRot}"
-      }
-    ]
-  },
-  "Harbor Template4": {
-    "id": "Harbor Template4",
-    "x": 1248,
-    "y": 453,
-    "width": 80,
-    "rotation": 450,
-    "css": "background: url(/assets/-425068549_4309);background-size: cover;background-repeat:no-repeat; background-position: center center",
-    "layer": -4,
-    "image": "/assets/-1578141657_23133",
-    "z": 13,
-    "clickRoutine": [
-      "var newRot = ${PROPERTY rotation} + 60",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "rotation",
-        "value": "${newRot}"
-      }
-    ]
-  },
-  "Harbor Template5": {
-    "id": "Harbor Template5",
-    "x": 1087,
-    "y": 739,
-    "width": 80,
-    "rotation": 450,
-    "css": "background: url(/assets/1642357274_3029);background-size: cover;background-repeat:no-repeat; background-position: center center",
-    "layer": -4,
-    "image": "/assets/1653453721_76477",
-    "z": 32,
-    "clickRoutine": [
-      "var newRot = ${PROPERTY rotation} + 60",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "rotation",
-        "value": "${newRot}"
-      }
-    ]
-  },
-  "Harbor Template6": {
-    "id": "Harbor Template6",
-    "x": 854,
-    "y": 880,
-    "width": 80,
-    "css": "background: url(/assets/-425068549_4309);background-size: cover;background-repeat:no-repeat; background-position: center center",
-    "rotation": 570,
-    "layer": -4,
-    "image": "/assets/-1578141657_23133",
-    "z": 27,
-    "clickRoutine": [
-      "var newRot = ${PROPERTY rotation} + 60",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "rotation",
-        "value": "${newRot}"
-      }
-    ]
-  },
-  "Harbor Template7": {
-    "id": "Harbor Template7",
-    "x": 337,
-    "y": 577,
-    "width": 80,
-    "css": "background: url(/assets/-425068549_4309);background-size: cover;background-repeat:no-repeat; background-position: center center",
-    "rotation": 930,
-    "layer": -4,
-    "z": 30,
-    "image": "/assets/-1578141657_23133",
-    "clickRoutine": [
-      "var newRot = ${PROPERTY rotation} + 60",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "rotation",
-        "value": "${newRot}"
-      }
-    ]
-  },
-  "Harbor Template8": {
-    "id": "Harbor Template8",
-    "x": 508,
-    "y": 875,
-    "width": 80,
-    "css": "background: url(/assets/1377496004_2701);background-size: cover;background-repeat:no-repeat; background-position: center center",
-    "layer": -4,
-    "image": "/assets/-969319947_74305",
-    "clickRoutine": [
-      "var newRot = ${PROPERTY rotation} + 60",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "rotation",
-        "value": "${newRot}"
-      }
-    ],
-    "z": 29,
-    "rotation": 1650
   },
   "Player 1": {
     "type": "holder",
@@ -2052,28 +1889,32 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -80,
+        "offsetX": -4.4228634084999925,
+        "offsetY": -75,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -180,
+        "offsetX": -4.4228634084999925,
+        "offsetY": 125,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": 83.39745962149999,
-        "offsetY": -225,
-        "y": 300,
-        "x": 173.20508075700002
-      },
-      {
-        "offsetX": 83.39745962149999,
+        "offsetX": -91.025403787,
         "offsetY": -25,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
+      },
+      {
+        "offsetX": -91.025403787,
+        "offsetY": 75,
+        "y": 300,
+        "x": 173.20508075700002,
+        "minX": 250
       }
     ],
     "home": "Knights",
@@ -2093,28 +1934,32 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -80,
+        "offsetX": -4.4228634084999925,
+        "offsetY": -75,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -180,
+        "offsetX": -4.4228634084999925,
+        "offsetY": 125,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": 83.39745962149999,
-        "offsetY": -225,
-        "y": 300,
-        "x": 173.20508075700002
-      },
-      {
-        "offsetX": 83.39745962149999,
+        "offsetX": -91.025403787,
         "offsetY": -25,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
+      },
+      {
+        "offsetX": -91.025403787,
+        "offsetY": 75,
+        "y": 300,
+        "x": 173.20508075700002,
+        "minX": 250
       }
     ],
     "home": "Knights",
@@ -2134,28 +1979,32 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -80,
+        "offsetX": -4.4228634084999925,
+        "offsetY": -75,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -180,
+        "offsetX": -4.4228634084999925,
+        "offsetY": 125,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": 83.39745962149999,
-        "offsetY": -225,
-        "y": 300,
-        "x": 173.20508075700002
-      },
-      {
-        "offsetX": 83.39745962149999,
+        "offsetX": -91.025403787,
         "offsetY": -25,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
+      },
+      {
+        "offsetX": -91.025403787,
+        "offsetY": 75,
+        "y": 300,
+        "x": 173.20508075700002,
+        "minX": 250
       }
     ],
     "home": "Knights",
@@ -2235,28 +2084,32 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -80,
+        "offsetX": -4.4228634084999925,
+        "offsetY": -75,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -180,
+        "offsetX": -4.4228634084999925,
+        "offsetY": 125,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": 83.39745962149999,
-        "offsetY": -225,
-        "y": 300,
-        "x": 173.20508075700002
-      },
-      {
-        "offsetX": 83.39745962149999,
+        "offsetX": -91.025403787,
         "offsetY": -25,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
+      },
+      {
+        "offsetX": -91.025403787,
+        "offsetY": 75,
+        "y": 300,
+        "x": 173.20508075700002,
+        "minX": 250
       }
     ],
     "home": "Walls",
@@ -2416,8 +2269,8 @@
     "x": 1500,
     "rotation": -5,
     "type": "dice",
-    "activeFace": 0,
-    "rollCount": 16
+    "activeFace": 2,
+    "rollCount": 22
   },
   "Player 1 - Seat": {
     "type": "seat",
@@ -2958,7 +2811,7 @@
   "Player 2": {
     "type": "holder",
     "id": "Player 2",
-    "y": 700,
+    "y": 667,
     "dropTarget": [
       {
         "player": 2
@@ -3634,7 +3487,7 @@
   "Player 3": {
     "type": "holder",
     "id": "Player 3",
-    "y": 300,
+    "y": 289,
     "dropTarget": [
       {
         "player": 3
@@ -4308,7 +4161,7 @@
   "Player 4": {
     "type": "holder",
     "id": "Player 4",
-    "y": 500,
+    "y": 478,
     "dropTarget": [
       {
         "player": 4
@@ -4978,20 +4831,20 @@
   },
   "Robber": {
     "id": "Robber",
-    "x": 752.8203230285,
-    "y": 456,
+    "x": 754.999999998,
+    "y": 455,
     "width": 90,
     "height": 90,
     "grid": [
       {
-        "offsetX": 60.000000000499995,
-        "offsetY": -144,
+        "offsetX": -24.422863408499992,
+        "offsetY": 5,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": -26.60254037850001,
-        "offsetY": 6,
+        "offsetX": -111.025403787,
+        "offsetY": 155,
         "y": 300,
         "x": 173.20508075700002
       }
@@ -5286,7 +5139,7 @@
     "type": "card",
     "cardType": "Knights",
     "id": "n2l5",
-    "z": 574,
+    "z": 664,
     "x": 4,
     "y": 4,
     "parent": "Largest Army Holder"
@@ -5296,7 +5149,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "k0z5",
-    "z": 604,
+    "z": 663,
     "x": 4,
     "y": 4,
     "parent": "Longest Road Holder"
@@ -5345,28 +5198,32 @@
     "color": "pink",
     "grid": [
       {
-        "offsetX": -3.6025403785000094,
+        "offsetX": -9.422863408499992,
         "offsetY": -80,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": -3.6025403785000094,
-        "offsetY": -180,
+        "offsetX": -9.422863408499992,
+        "offsetY": 120,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": 83.39745962149999,
-        "offsetY": -225,
+        "offsetX": -96.025403787,
+        "offsetY": -30,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       },
       {
-        "offsetX": 83.39745962149999,
-        "offsetY": -25,
+        "offsetX": -96.025403787,
+        "offsetY": 70,
         "y": 300,
-        "x": 173.20508075700002
+        "x": 173.20508075700002,
+        "minX": 250
       }
     ],
     "home": "Cities",
@@ -5376,1051 +5233,6 @@
     },
     "z": 35,
     "parent": "Switch Board"
-  },
-  "569d": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": -66.025403787,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "569d",
-    "z": 2927,
-    "activeFace": 1
-  },
-  "9rqr": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 107.17967697000002,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "9rqr",
-    "z": 2929,
-    "activeFace": 1
-  },
-  "9fu4": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 280.384757727,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "9fu4",
-    "z": 2931,
-    "activeFace": 1
-  },
-  "rxry": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 453.58983848400004,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "rxry",
-    "z": 2933,
-    "activeFace": 1
-  },
-  "6u7h": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 626.7949192410001,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "6u7h",
-    "z": 2935,
-    "activeFace": 1
-  },
-  "mcux": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 799.9999999980001,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "mcux",
-    "z": 2937,
-    "activeFace": 1
-  },
-  "acs1": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 973.2050807550002,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "acs1",
-    "z": 2939,
-    "activeFace": 1
-  },
-  "2bun": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1146.4101615120003,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "2bun",
-    "z": 2941,
-    "activeFace": 1
-  },
-  "bt5c": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1319.6152422690002,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "bt5c",
-    "z": 2943,
-    "activeFace": 1
-  },
-  "wlgk": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1492.820323026,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "wlgk",
-    "z": 2945,
-    "activeFace": 1
-  },
-  "u0ju": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1666.025403783,
-    "y": -50,
-    "clonedFrom": "Card Template",
-    "id": "u0ju",
-    "z": 2947,
-    "activeFace": 1
-  },
-  "gfyv": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": -152.62794416550003,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "gfyv",
-    "z": 2949,
-    "activeFace": 1
-  },
-  "8fad": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 20.577136591499993,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "8fad",
-    "z": 2951,
-    "activeFace": 1
-  },
-  "cb50": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 193.7822173485,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "cb50",
-    "z": 2953,
-    "activeFace": 1
-  },
-  "uzu8": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 366.98729810550003,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "uzu8",
-    "z": 2955,
-    "activeFace": 1
-  },
-  "8abq": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "W",
-    "x": 540.1923788625,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "8abq",
-    "z": 2957,
-    "activeFace": 1
-  },
-  "npsw": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "4",
-    "activeFace": 1,
-    "x": 597.1923788625,
-    "y": 170,
-    "clonedFrom": "Chip Template",
-    "id": "npsw",
-    "z": 532
-  },
-  "u834": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "F",
-    "x": 713.3974596195001,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "u834",
-    "z": 2959,
-    "activeFace": 1
-  },
-  "qkhn": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "6",
-    "activeFace": 1,
-    "x": 770.3974596195001,
-    "y": 170,
-    "clonedFrom": "Chip Template",
-    "id": "qkhn",
-    "z": 534
-  },
-  "mp4z": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "W",
-    "x": 886.6025403765001,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "mp4z",
-    "z": 2961,
-    "activeFace": 1
-  },
-  "p1n8": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "9",
-    "activeFace": 1,
-    "x": 943.6025403765001,
-    "y": 170,
-    "clonedFrom": "Chip Template",
-    "id": "p1n8",
-    "z": 536
-  },
-  "jie9": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1059.8076211335,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "jie9",
-    "z": 2963,
-    "activeFace": 1
-  },
-  "lp1s": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1233.0127018905,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "lp1s",
-    "z": 2965,
-    "activeFace": 1
-  },
-  "qs14": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1406.2177826475,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "qs14",
-    "z": 2967,
-    "activeFace": 1
-  },
-  "dqth": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1579.4228634044998,
-    "y": 100,
-    "clonedFrom": "Card Template",
-    "id": "dqth",
-    "z": 2969,
-    "activeFace": 1
-  },
-  "0h4g": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": -66.025403787,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "0h4g",
-    "z": 2971,
-    "activeFace": 1
-  },
-  "5b1o": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 107.17967697000002,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "5b1o",
-    "z": 2973,
-    "activeFace": 1
-  },
-  "1ljt": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 280.384757727,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "1ljt",
-    "z": 2975,
-    "activeFace": 1
-  },
-  "ld6y": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "C",
-    "x": 453.58983848400004,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "ld6y",
-    "z": 2977,
-    "activeFace": 1
-  },
-  "nor7": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "2",
-    "activeFace": 1,
-    "x": 510.58983848400004,
-    "y": 320,
-    "clonedFrom": "Chip Template",
-    "id": "nor7",
-    "z": 538
-  },
-  "1j8x": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "F",
-    "x": 626.7949192410001,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "1j8x",
-    "z": 2979,
-    "activeFace": 1
-  },
-  "rjjx": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "5",
-    "activeFace": 1,
-    "x": 683.7949192410001,
-    "y": 320,
-    "clonedFrom": "Chip Template",
-    "id": "rjjx",
-    "z": 540
-  },
-  "bk9j": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "G",
-    "x": 799.9999999980001,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "bk9j",
-    "z": 2981,
-    "activeFace": 1
-  },
-  "nubu": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "C",
-    "activeFace": 1,
-    "x": 856.9999999980001,
-    "y": 320,
-    "clonedFrom": "Chip Template",
-    "id": "nubu",
-    "z": 542
-  },
-  "1meu": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "G",
-    "x": 973.2050807550002,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "1meu",
-    "z": 2983,
-    "activeFace": 1
-  },
-  "m3bs": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "4",
-    "activeFace": 1,
-    "x": 1030.2050807550002,
-    "y": 320,
-    "clonedFrom": "Chip Template",
-    "id": "m3bs",
-    "z": 544
-  },
-  "z4bi": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1146.4101615120003,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "z4bi",
-    "z": 2985,
-    "activeFace": 1
-  },
-  "j3pm": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1319.6152422690002,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "j3pm",
-    "z": 2987,
-    "activeFace": 1
-  },
-  "xwn6": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1492.820323026,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "xwn6",
-    "z": 2989,
-    "activeFace": 1
-  },
-  "pi7z": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1666.025403783,
-    "y": 250,
-    "clonedFrom": "Card Template",
-    "id": "pi7z",
-    "z": 2991,
-    "activeFace": 1
-  },
-  "rphd": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": -152.62794416550003,
-    "y": 400,
-    "clonedFrom": "Card Template",
-    "id": "rphd",
-    "z": 2993,
-    "activeFace": 1
-  },
-  "dcqa": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 20.577136591499993,
-    "y": 400,
-    "clonedFrom": "Card Template",
-    "id": "dcqa",
-    "z": 2995,
-    "activeFace": 1
-  },
-  "07do": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 193.7822173485,
-    "y": 400,
-    "clonedFrom": "Card Template",
-    "id": "07do",
-    "z": 2997,
-    "activeFace": 1
-  },
-  "jok6": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "G",
-    "x": 366.98729810550003,
-    "y": 400,
-    "clonedFrom": "Card Template",
-    "id": "jok6",
-    "z": 2999,
-    "activeFace": 1
-  },
-  "00uj": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "9",
-    "activeFace": 1,
-    "x": 423.98729810550003,
-    "y": 470,
-    "clonedFrom": "Chip Template",
-    "id": "00uj",
-    "z": 546
-  },
-  "fx8e": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "C",
-    "x": 540.1923788625,
-    "y": 400,
-    "clonedFrom": "Card Template",
-    "id": "fx8e",
-    "z": 3001,
-    "activeFace": 1
-  },
-  "2z6x": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "8",
-    "activeFace": 1,
-    "x": 597.1923788625,
-    "y": 470,
-    "clonedFrom": "Chip Template",
-    "id": "2z6x",
-    "z": 548
-  },
-  "iu3r": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "D",
-    "x": 713.3974596195001,
-    "y": 400,
-    "clonedFrom": "Card Template",
-    "id": "iu3r",
-    "z": 3003,
-    "activeFace": 1
-  },
-  "j8xq": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "M",
-    "x": 886.6025403765001,
-    "y": 400,
-    "clonedFrom": "Card Template",
-    "id": "j8xq",
-    "z": 3005,
-    "activeFace": 1
-  },
-  "t7vu": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "8",
-    "activeFace": 1,
-    "x": 943.6025403765001,
-    "y": 470,
-    "clonedFrom": "Chip Template",
-    "id": "t7vu",
-    "z": 550
-  },
-  "h76i": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "G",
-    "clonedFrom": "Card Template",
-    "id": "h76i",
-    "z": 3007,
-    "activeFace": 1,
-    "x": 1059.8076211335,
-    "y": 400
-  },
-  "o28i": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "A",
-    "activeFace": 1,
-    "x": 1116.8076211335,
-    "y": 470,
-    "clonedFrom": "Chip Template",
-    "id": "o28i",
-    "z": 552
-  },
-  "9ubt": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1233.0127018905,
-    "y": 400,
-    "clonedFrom": "Card Template",
-    "id": "9ubt",
-    "z": 3009,
-    "activeFace": 1
-  },
-  "sksk": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1406.2177826475,
-    "y": 400,
-    "clonedFrom": "Card Template",
-    "id": "sksk",
-    "z": 3011,
-    "activeFace": 1
-  },
-  "dwhp": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1579.4228634044998,
-    "y": 400,
-    "clonedFrom": "Card Template",
-    "id": "dwhp",
-    "z": 3013,
-    "activeFace": 1
-  },
-  "yynt": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": -66.025403787,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "yynt",
-    "z": 3015,
-    "activeFace": 1
-  },
-  "fzzf": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 107.17967697000002,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "fzzf",
-    "z": 3017,
-    "activeFace": 1
-  },
-  "sa65": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 280.384757727,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "sa65",
-    "z": 3019,
-    "activeFace": 1
-  },
-  "jhkw": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "F",
-    "x": 453.58983848400004,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "jhkw",
-    "z": 3021,
-    "activeFace": 1
-  },
-  "rqcw": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "3",
-    "activeFace": 1,
-    "x": 510.58983848400004,
-    "y": 620,
-    "clonedFrom": "Chip Template",
-    "id": "rqcw",
-    "z": 554
-  },
-  "3eih": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "M",
-    "x": 626.7949192410001,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "3eih",
-    "z": 3023,
-    "activeFace": 1
-  },
-  "mn9o": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "5",
-    "activeFace": 1,
-    "x": 683.7949192410001,
-    "y": 620,
-    "clonedFrom": "Chip Template",
-    "id": "mn9o",
-    "z": 556
-  },
-  "ej2a": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "C",
-    "x": 799.9999999980001,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "ej2a",
-    "z": 3025,
-    "activeFace": 1
-  },
-  "y62p": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "A",
-    "activeFace": 1,
-    "x": 856.9999999980001,
-    "y": 620,
-    "clonedFrom": "Chip Template",
-    "id": "y62p",
-    "z": 558
-  },
-  "vuin": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "F",
-    "x": 973.2050807550002,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "vuin",
-    "z": 3027,
-    "activeFace": 1
-  },
-  "aeqv": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "B",
-    "activeFace": 1,
-    "x": 1030.2050807550002,
-    "y": 620,
-    "clonedFrom": "Chip Template",
-    "id": "aeqv",
-    "z": 560
-  },
-  "7ycm": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1146.4101615120003,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "7ycm",
-    "z": 3029,
-    "activeFace": 1
-  },
-  "xi23": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1319.6152422690002,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "xi23",
-    "z": 3031,
-    "activeFace": 1
-  },
-  "xazk": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1492.820323026,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "xazk",
-    "z": 3033,
-    "activeFace": 1
-  },
-  "3bo8": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1666.025403783,
-    "y": 550,
-    "clonedFrom": "Card Template",
-    "id": "3bo8",
-    "z": 3035,
-    "activeFace": 1
-  },
-  "9fb3": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": -152.62794416550003,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "9fb3",
-    "z": 3037,
-    "activeFace": 1
-  },
-  "imp4": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 20.577136591499993,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "imp4",
-    "z": 3039,
-    "activeFace": 1
-  },
-  "cxob": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 193.7822173485,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "cxob",
-    "z": 3041,
-    "activeFace": 1
-  },
-  "gwnk": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 366.98729810550003,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "gwnk",
-    "z": 3043,
-    "activeFace": 1
-  },
-  "aq76": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "W",
-    "x": 540.1923788625,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "aq76",
-    "z": 3045,
-    "activeFace": 1
-  },
-  "2v3r": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "3",
-    "activeFace": 1,
-    "x": 597.1923788625,
-    "y": 770,
-    "clonedFrom": "Chip Template",
-    "id": "2v3r",
-    "z": 562
-  },
-  "8j95": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "W",
-    "x": 713.3974596195001,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "8j95",
-    "z": 3047,
-    "activeFace": 1
-  },
-  "bwzc": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "6",
-    "activeFace": 1,
-    "x": 770.3974596195001,
-    "y": 770,
-    "clonedFrom": "Chip Template",
-    "id": "bwzc",
-    "z": 564
-  },
-  "4ewm": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "M",
-    "x": 886.6025403765001,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "4ewm",
-    "z": 3049,
-    "activeFace": 1
-  },
-  "l4kx": {
-    "type": "card",
-    "deck": "Chips",
-    "cardType": "B",
-    "activeFace": 1,
-    "x": 943.6025403765001,
-    "y": 770,
-    "clonedFrom": "Chip Template",
-    "id": "l4kx",
-    "z": 566
-  },
-  "aeri": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1059.8076211335,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "aeri",
-    "z": 3051,
-    "activeFace": 1
-  },
-  "nw77": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1233.0127018905,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "nw77",
-    "z": 3053,
-    "activeFace": 1
-  },
-  "cm7b": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1406.2177826475,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "cm7b",
-    "z": 3055,
-    "activeFace": 1
-  },
-  "65la": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1579.4228634044998,
-    "y": 700,
-    "clonedFrom": "Card Template",
-    "id": "65la",
-    "z": 3057,
-    "activeFace": 1
-  },
-  "k2i2": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": -66.025403787,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "k2i2",
-    "z": 3059,
-    "activeFace": 1
-  },
-  "wide": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 107,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "wide",
-    "z": 3061,
-    "activeFace": 1
-  },
-  "jig7": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 280.384757727,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "jig7",
-    "z": 3063,
-    "activeFace": 1
-  },
-  "i71p": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 453.58983848400004,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "i71p",
-    "z": 3065,
-    "activeFace": 1
-  },
-  "kibr": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 626.7949192410001,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "kibr",
-    "z": 3067,
-    "activeFace": 1
-  },
-  "krwu": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 799.9999999980001,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "krwu",
-    "z": 3069,
-    "activeFace": 1
-  },
-  "d7o5": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 973.2050807550002,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "d7o5",
-    "z": 3071,
-    "activeFace": 1
-  },
-  "1ce6": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1146.4101615120003,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "1ce6",
-    "z": 3073,
-    "activeFace": 1
-  },
-  "ah0i": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1319.6152422690002,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "ah0i",
-    "z": 3075,
-    "activeFace": 1
-  },
-  "0cfg": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1492.820323026,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "0cfg",
-    "z": 3077,
-    "activeFace": 1
-  },
-  "hy3e": {
-    "type": "card",
-    "deck": "Tiles Real",
-    "cardType": "S",
-    "x": 1666.025403783,
-    "y": 850,
-    "clonedFrom": "Card Template",
-    "id": "hy3e",
-    "z": 3079,
-    "activeFace": 1
   },
   "sii7": {
     "type": "pile",
@@ -6450,7 +5262,6 @@
     "rotation": 10,
     "layer": 5,
     "z": 1,
-    "activeFace": 1,
     "faces": [
       1,
       2,
@@ -6459,7 +5270,7 @@
       5,
       6
     ],
-    "rollCount": 16,
+    "rollCount": 22,
     "shape3d": true,
     "clickRoutine": [
       {
@@ -6501,6 +5312,14 @@
         ]
       },
       {
+        "func": "IF",
+        "operand1": "${PROPERTY optionHighlight OF Reset}",
+        "operand2": "off",
+        "thenRoutine": [
+          "var value = '0'"
+        ]
+      },
+      {
         "func": "FOREACH",
         "loopRoutine": [
           "var highlight = ${value} == ${PROPERTY cardType OF $widgetID}",
@@ -6521,14 +5340,15 @@
           }
         ]
       }
-    ]
+    ],
+    "activeFace": 2
   },
   "ldbu": {
     "deck": "Development",
     "type": "card",
     "cardType": "1 Point",
     "id": "ldbu",
-    "z": 19410,
+    "z": 26326,
     "parent": "yjto"
   },
   "uqjm": {
@@ -6536,7 +5356,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "uqjm",
-    "z": 19431,
+    "z": 26344,
     "parent": "yjto"
   },
   "yjto": {
@@ -6553,7 +5373,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "07eh",
-    "z": 19430,
+    "z": 26349,
     "parent": "yjto"
   },
   "68gw": {
@@ -6561,7 +5381,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "68gw",
-    "z": 19434,
+    "z": 26327,
     "parent": "yjto"
   },
   "af6i": {
@@ -6569,7 +5389,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "af6i",
-    "z": 19416,
+    "z": 26347,
     "parent": "yjto"
   },
   "ktlv": {
@@ -6577,7 +5397,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "ktlv",
-    "z": 19429,
+    "z": 26332,
     "parent": "yjto"
   },
   "1rdy": {
@@ -6585,7 +5405,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "1rdy",
-    "z": 19422,
+    "z": 26336,
     "parent": "yjto"
   },
   "Base Map Button New": {
@@ -6601,21 +5421,12 @@
         "relation": "in",
         "value": [
           "Card Template",
-          "Chip Template"
+          "Chip Template",
+          "Harbor Template"
         ]
       },
       {
         "func": "DELETE"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "levelRandomTilesCounter"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "levelRandomChipsCounter"
       },
       {
         "func": "CALL",
@@ -6626,14 +5437,21 @@
       },
       {
         "func": "CALL",
-        "routine": "setSizesAndGridsRoutine"
+        "routine": "randomizeRandomsRoutine",
+        "arguments": {
+          "param": "levelRandomChips"
+        }
       },
       {
         "func": "CALL",
         "routine": "randomizeRandomsRoutine",
         "arguments": {
-          "param": "levelRandomChips"
+          "param": "levelRandomHarbors"
         }
+      },
+      {
+        "func": "CALL",
+        "routine": "setSizesAndGridsRoutine"
       },
       {
         "func": "CALL",
@@ -6667,10 +5485,10 @@
       "           "
     ],
     "levelRandomTiles": {
-      "X": "MWCGFGFFWGCMGMWWCF"
+      "X": "GFGFGMCCWMMGWWFCFW"
     },
     "levelRandomChips": {
-      "X": "936A654BC4583A98B2"
+      "X": "AC93893266A8B5454B"
     },
     "levelX": -66.025403787,
     "levelY": -50,
@@ -6710,6 +5528,42 @@
         "operand2": "D",
         "thenRoutine": [
           "var chipType = ' '"
+        ]
+      },
+      "// Harbor",
+      {
+        "func": "IF",
+        "operand1": "${harborType}",
+        "operand2": " ",
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "resolveRandomRoutine",
+            "variable": "harborType",
+            "arguments": {
+              "randomSource": "levelRandomHarbors",
+              "type": "${harborType}"
+            }
+          },
+          "var upperType = ${harborType} toUpperCase",
+          "var isUpper = ${upperType} == ${harborType}",
+          "var activeFace = ${isUpper} && 1",
+          "var activeFace = ${activeFace} || 0",
+          "var rotation = ${harborOrientation} * 60",
+          {
+            "func": "CLONE",
+            "source": [
+              "Harbor Template"
+            ],
+            "properties": {
+              "parent": null,
+              "x": "${x}",
+              "y": "${y}",
+              "cardType": "${upperType}",
+              "activeFace": "${activeFace}",
+              "rotation": "${rotation}"
+            }
+          }
         ]
       },
       "// Chip",
@@ -6754,6 +5608,12 @@
       }
     ],
     "randomizeRandomsRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "${param}Counter",
+        "value": 0
+      },
       "var map = ${PROPERTY $param}",
       {
         "func": "FOREACH",
@@ -6795,6 +5655,8 @@
     "buildRowRoutine": [
       "var rowTiles = ${PROPERTY levelTiles} getIndex ${row}",
       "var rowChips = ${PROPERTY levelChips} getIndex ${row}",
+      "var rowHarbors = ${PROPERTY levelHarbors} getIndex ${row}",
+      "var rowHarborOrientations = ${PROPERTY levelHarborOrientations} getIndex ${row}",
       "var xOffset = ${PROPERTY levelSize} * 1.73205080757",
       {
         "func": "FOREACH",
@@ -6807,7 +5669,9 @@
               "x": "${x}",
               "y": "${y}",
               "tileType": "${value}",
-              "chipType": "${rowChips.$key}"
+              "chipType": "${rowChips.$key}",
+              "harborType": "${rowHarbors.$key}",
+              "harborOrientation": "${rowHarborOrientations.$key}"
             }
           },
           "var x = ${x} + ${xOffset}"
@@ -6857,6 +5721,18 @@
         "func": "SET",
         "collection": [
           "Tiles Real"
+        ],
+        "property": "cardDefaults",
+        "value": "${cardDefaults}"
+      },
+      "// Harbor sizes",
+      "var cardDefaults = ${PROPERTY cardDefaults OF Harbors}",
+      "var cardDefaults.width = ${WIDTH}",
+      "var cardDefaults.height = ${HEIGHT}",
+      {
+        "func": "SET",
+        "collection": [
+          "Harbors"
         ],
         "property": "cardDefaults",
         "value": "${cardDefaults}"
@@ -7136,7 +6012,29 @@
           }
         ]
       }
-    ]
+    ],
+    "levelHarbors": [
+      "   X X     ",
+      "       X   ",
+      "  X        ",
+      "        X  ",
+      "  X        ",
+      "       X   ",
+      "   X X     "
+    ],
+    "levelHarborOrientations": [
+      "   4 5     ",
+      "       5   ",
+      "  3        ",
+      "        0  ",
+      "  3        ",
+      "       1   ",
+      "   2 1     "
+    ],
+    "levelRandomHarbors": {
+      "X": "RRRRWFGMC"
+    },
+    "levelRandomHarborsCounter": 9
   },
   "Starter Map B": {
     "type": "button",
@@ -7169,7 +6067,29 @@
       "SSSFMWGSSSS",
       "SSSSCWGSSSS",
       "SSSSSSSSSSS"
-    ]
+    ],
+    "levelRandomHarbors": {},
+    "levelHarborOrientations": [
+      "   4 5     ",
+      "       5   ",
+      "  3        ",
+      "        0  ",
+      "  3        ",
+      "       1   ",
+      "   2 1     "
+    ],
+    "levelHarbors": [
+      "   R W     ",
+      "       M   ",
+      "  F        ",
+      "        R  ",
+      "  C        ",
+      "       G   ",
+      "   R R     "
+    ],
+    "levelRandomTilesCounter": 0,
+    "levelRandomChipsCounter": 0,
+    "levelRandomHarborsCounter": 0
   },
   "Starter Map A": {
     "type": "button",
@@ -7202,7 +6122,30 @@
       "SSSFMCFSSSS",
       "SSSSWWMSSSS",
       "SSSSSSSSSSS"
-    ]
+    ],
+    "levelRandomHarbors": {},
+    "levelHarborOrientations": [
+      "   4 5     ",
+      "       0   ",
+      "  3        ",
+      "        0  ",
+      "  2        ",
+      "       0   ",
+      "   2 2     "
+    ],
+    "levelHarbors": [
+      "   M G     ",
+      "       R   ",
+      "  F        ",
+      "        R  ",
+      "  R        ",
+      "       W   ",
+      "   C R     "
+    ],
+    "link": "https://cliquenabend.de/images/db/4433_500x400.jpg",
+    "levelRandomTilesCounter": 0,
+    "levelRandomChipsCounter": 0,
+    "levelRandomHarborsCounter": 0
   },
   "Player 1 - Road Bonus": {
     "type": "holder",
@@ -7477,13 +6420,13 @@
       "           "
     ],
     "levelRandomChips": {
-      "X": "936A654BC4583A98B2936A654BC4583A98B2"
+      "X": "A8449363995BBA4C66C88AA562285B95343B"
     },
     "levelRandomChipsCounter": 18,
     "levelRandomTiles": {
-      "X": "MWCGFGFFWGCMGMWWCFMWCGFGFFWGCMGMWWCFDD"
+      "X": "DWWWGMGWWMFCGWCMFGWMCCFGCGMGFCFGFMFDFW"
     },
-    "levelRandomTilesCounter": 18,
+    "levelRandomTilesCounter": 19,
     "levelSize": 100,
     "levelTiles": [
       "SSSSSSSSSSS",
@@ -7495,7 +6438,29 @@
       "SSSSSSSSSSS"
     ],
     "levelX": -66.025403787,
-    "levelY": -50
+    "levelY": -50,
+    "levelHarborOrientations": [
+      "   4 5     ",
+      "       5   ",
+      "  3        ",
+      "        0  ",
+      "  3        ",
+      "       1   ",
+      "   2 1     "
+    ],
+    "levelHarbors": [
+      "   X X     ",
+      "       X   ",
+      "  X        ",
+      "        X  ",
+      "  X        ",
+      "       X   ",
+      "   X X     "
+    ],
+    "levelRandomHarbors": {
+      "X": "RWFMRGRRRWGFCRRRCM"
+    },
+    "levelRandomHarborsCounter": 18
   },
   "Six Player Button": {
     "type": "button",
@@ -7518,11 +6483,11 @@
       "             "
     ],
     "levelRandomChips": {
-      "X": "C4C5A2A69338B9C86869B5B44A53"
+      "X": "923A48C9A5458963B5B66CB8AC34"
     },
     "levelRandomChipsCounter": 28,
     "levelRandomTiles": {
-      "X": "GFWWGDCWWFFCCWFMCCFGMDMFWMMGGG"
+      "X": "WCFGFWCCGMMDWFMWDCGMGCFFGWFMWG"
     },
     "levelRandomTilesCounter": 30,
     "levelSize": 78,
@@ -7540,7 +6505,35 @@
     ],
     "levelX": -10.6,
     "levelY": -84,
-    "levelPlayers": 6
+    "levelPlayers": 6,
+    "levelHarbors": [
+      "    X X      ",
+      "        X    ",
+      "             ",
+      "   X         ",
+      "         X   ",
+      "   X         ",
+      "   X    X    ",
+      "        X    ",
+      "    X X      ",
+      "             "
+    ],
+    "levelHarborOrientations": [
+      "    4 5      ",
+      "        5    ",
+      "             ",
+      "   3         ",
+      "         0   ",
+      "   3         ",
+      "   3    1    ",
+      "        0    ",
+      "    2 1      ",
+      "             "
+    ],
+    "levelRandomHarbors": {
+      "X": "RRFGCGRWRRM"
+    },
+    "levelRandomHarborsCounter": 11
   },
   "Turn": {
     "type": "button",
@@ -7561,8 +6554,7 @@
   "Player 5": {
     "type": "holder",
     "id": "Player 5",
-    "y": 197,
-    "owner": [],
+    "y": 195,
     "dropTarget": [
       {
         "player": 5
@@ -7586,7 +6578,8 @@
         "rotation"
       ]
     },
-    "x": 207
+    "x": 207,
+    "owner": []
   },
   "Player 5 - Settlements": {
     "type": "holder",
@@ -8289,7 +7282,6 @@
     "type": "holder",
     "id": "Player 6",
     "y": 762,
-    "owner": [],
     "dropTarget": [
       {
         "player": 6
@@ -8313,7 +7305,8 @@
         "rotation"
       ]
     },
-    "x": 207
+    "x": 207,
+    "owner": []
   },
   "Player 6 - Settlements": {
     "type": "holder",
@@ -9016,7 +8009,7 @@
   "Player 7": {
     "type": "holder",
     "id": "Player 7",
-    "y": 385,
+    "y": 384,
     "owner": [],
     "dropTarget": [
       {
@@ -10678,5 +9671,1237 @@
         ]
       }
     ]
+  },
+  "Harbors": {
+    "type": "deck",
+    "id": "Harbors",
+    "x": 824,
+    "cardDefaults": {
+      "onPileCreation": {
+        "no harbor": "piles"
+      },
+      "width": 173.20508075700002,
+      "height": 200,
+      "layer": -5,
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 60
+        }
+      ]
+    },
+    "cardTypes": {
+      "C": {
+        "image": "/assets/-969319947_74305"
+      },
+      "F": {
+        "image": "/assets/1706672985_296413"
+      },
+      "G": {
+        "image": "/assets/-609772913_122240"
+      },
+      "M": {
+        "image": "/assets/-1557821007_92195"
+      },
+      "R": {
+        "image": "/assets/-1578141657_23133"
+      },
+      "W": {
+        "image": "/assets/1653453721_76477"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": []
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "css": "clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+            "dynamicProperties": {
+              "width": "width",
+              "height": "height"
+            }
+          },
+          {
+            "type": "image",
+            "x": -26,
+            "color": "transparent",
+            "css": "background-size: 50%",
+            "dynamicProperties": {
+              "value": "image",
+              "width": "width",
+              "height": "height"
+            },
+            "rotation": 90
+          }
+        ]
+      }
+    ],
+    "z": 665,
+    "y": 3
+  },
+  "Harbor Template": {
+    "type": "card",
+    "id": "Harbor Template",
+    "parent": "Switch Board",
+    "deck": "Harbors",
+    "cardType": "R",
+    "x": 1146,
+    "y": 550,
+    "z": 3088,
+    "activeFace": 1
+  },
+  "Six Player Random Button": {
+    "type": "button",
+    "id": "Six Player Random Button",
+    "parent": "Switch Board",
+    "x": 848,
+    "y": 710,
+    "inheritFrom": "Base Map Button New",
+    "text": "6P\nMap",
+    "levelChips": [
+      "             ",
+      "     XXX     ",
+      "    XXXX     ",
+      "    XXXXX    ",
+      "   XXXXXX    ",
+      "    XXXXX    ",
+      "    XXXX     ",
+      "     XXX     ",
+      "             ",
+      "             "
+    ],
+    "levelHarborOrientations": [
+      "    4 5      ",
+      "        5    ",
+      "             ",
+      "   3         ",
+      "         0   ",
+      "   3         ",
+      "   3    1    ",
+      "        0    ",
+      "    2 1      ",
+      "             "
+    ],
+    "levelHarbors": [
+      "    X X      ",
+      "        X    ",
+      "             ",
+      "   X         ",
+      "         X   ",
+      "   X         ",
+      "   X    X    ",
+      "        X    ",
+      "    X X      ",
+      "             "
+    ],
+    "levelPlayers": 6,
+    "levelRandomChips": {
+      "X": "9296B58A8A436658B96BAA3A45398B694353CCCC844A98BC5C453B62"
+    },
+    "levelRandomChipsCounter": 28,
+    "levelRandomHarbors": {
+      "X": "RWMGCRFGRRGRRFRGRMRWCR"
+    },
+    "levelRandomHarborsCounter": 11,
+    "levelRandomTiles": {
+      "X": "WGGMDCGWFMFMCGGCFMFWFMMCFMDCCWCCFMWDDFFGGWCGWMFWCFWGWMFGWGWG"
+    },
+    "levelRandomTilesCounter": 30,
+    "levelSize": 78,
+    "levelTiles": [
+      "SSSSSSSSSSSSS",
+      "SSSSSXXXSSSSS",
+      "SSSSXXXXSSSSS",
+      "SSSSXXXXXSSSS",
+      "SSSXXXXXXSSSS",
+      "SSSSXXXXXSSSS",
+      "SSSSXXXXSSSSS",
+      "SSSSSXXXSSSSS",
+      "SSSSSSSSSSSSS",
+      "SSSSSSSSSSSSS"
+    ],
+    "levelX": -10.6,
+    "levelY": -84
+  },
+  "gq2e": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -66.025403787,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "gq2e"
+  },
+  "p84b": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 107.17967697000002,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "p84b"
+  },
+  "ltiu": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 280.384757727,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "ltiu"
+  },
+  "vmys": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 453.58983848400004,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "vmys"
+  },
+  "yf9l": {
+    "type": "card",
+    "deck": "Harbors",
+    "cardType": "R",
+    "x": 453.58983848400004,
+    "y": -50,
+    "z": 3088,
+    "activeFace": 1,
+    "rotation": 240,
+    "clonedFrom": "Harbor Template",
+    "id": "yf9l"
+  },
+  "9zs2": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 626.7949192410001,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "9zs2"
+  },
+  "itv9": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 799.9999999980001,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "itv9"
+  },
+  "xl5j": {
+    "type": "card",
+    "deck": "Harbors",
+    "cardType": "W",
+    "x": 799.9999999980001,
+    "y": -50,
+    "z": 3088,
+    "activeFace": 1,
+    "rotation": 300,
+    "clonedFrom": "Harbor Template",
+    "id": "xl5j"
+  },
+  "5f9r": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 973.2050807550002,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "5f9r"
+  },
+  "jqsq": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1146.4101615120003,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "jqsq"
+  },
+  "my16": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1319.6152422690002,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "my16"
+  },
+  "67ua": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1492.820323026,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "67ua"
+  },
+  "tdd9": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1666.025403783,
+    "y": -50,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "tdd9"
+  },
+  "a6jt": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -152.62794416550003,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "a6jt"
+  },
+  "1z73": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 20.577136591499993,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "1z73"
+  },
+  "6bpk": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 193.7822173485,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "6bpk"
+  },
+  "r6h8": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 366.98729810550003,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "r6h8"
+  },
+  "mn6s": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "M",
+    "x": 540.1923788625,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "mn6s"
+  },
+  "5hxa": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "A",
+    "activeFace": 1,
+    "x": 596.7949192410001,
+    "y": 170,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "5hxa"
+  },
+  "yy4m": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "G",
+    "x": 713.3974596195001,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "yy4m"
+  },
+  "anzk": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "2",
+    "activeFace": 1,
+    "x": 769.999999998,
+    "y": 170,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "anzk"
+  },
+  "l942": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "F",
+    "x": 886.6025403765001,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "l942"
+  },
+  "88i8": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "9",
+    "activeFace": 1,
+    "x": 943.2050807550002,
+    "y": 170,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "88i8"
+  },
+  "mbv8": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1059.8076211335,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "mbv8"
+  },
+  "5ee3": {
+    "type": "card",
+    "deck": "Harbors",
+    "cardType": "M",
+    "x": 1059.8076211335,
+    "y": 100,
+    "z": 3088,
+    "activeFace": 1,
+    "rotation": 300,
+    "clonedFrom": "Harbor Template",
+    "id": "5ee3"
+  },
+  "eji1": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1233.0127018905,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "eji1"
+  },
+  "1j43": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1406.2177826475,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "1j43"
+  },
+  "1j9y": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1579.4228634044998,
+    "y": 100,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "1j9y"
+  },
+  "dmfw": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -66.025403787,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "dmfw"
+  },
+  "jf4z": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 107.17967697000002,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "jf4z"
+  },
+  "mi7z": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 280.384757727,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "mi7z"
+  },
+  "1wxu": {
+    "type": "card",
+    "deck": "Harbors",
+    "cardType": "F",
+    "x": 280.384757727,
+    "y": 250,
+    "z": 3088,
+    "activeFace": 1,
+    "rotation": 180,
+    "clonedFrom": "Harbor Template",
+    "id": "1wxu"
+  },
+  "ggvj": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "W",
+    "x": 453.58983848400004,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "ggvj"
+  },
+  "8j5h": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "C",
+    "activeFace": 1,
+    "x": 510.19237886250005,
+    "y": 320,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "8j5h"
+  },
+  "tq5b": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "C",
+    "x": 626.7949192410001,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "tq5b"
+  },
+  "fo9y": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "6",
+    "activeFace": 1,
+    "x": 683.3974596195001,
+    "y": 320,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "fo9y"
+  },
+  "3qgd": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "G",
+    "x": 799.9999999980001,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "3qgd"
+  },
+  "hyko": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "4",
+    "activeFace": 1,
+    "x": 856.6025403765002,
+    "y": 320,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "hyko"
+  },
+  "6swu": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "C",
+    "x": 973.2050807550002,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "6swu"
+  },
+  "v79b": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "A",
+    "activeFace": 1,
+    "x": 1029.8076211335,
+    "y": 320,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "v79b"
+  },
+  "3ovj": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1146.4101615120003,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "3ovj"
+  },
+  "00pl": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1319.6152422690002,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "00pl"
+  },
+  "5rze": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1492.820323026,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "5rze"
+  },
+  "5ghf": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1666.025403783,
+    "y": 250,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "5ghf"
+  },
+  "5euu": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -152.62794416550003,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "5euu"
+  },
+  "jnut": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 20.577136591499993,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "jnut"
+  },
+  "vttv": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 193.7822173485,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "vttv"
+  },
+  "u7dx": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "W",
+    "x": 366.98729810550003,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "u7dx"
+  },
+  "wips": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "9",
+    "activeFace": 1,
+    "x": 423.58983848400004,
+    "y": 470,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "wips"
+  },
+  "fvd1": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "F",
+    "x": 540.1923788625,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "fvd1"
+  },
+  "1ciq": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "B",
+    "activeFace": 1,
+    "x": 596.7949192410001,
+    "y": 470,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "1ciq"
+  },
+  "9gyh": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "D",
+    "x": 713.3974596195001,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "9gyh"
+  },
+  "xmn7": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "F",
+    "x": 886.6025403765001,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "xmn7"
+  },
+  "t8hz": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "3",
+    "activeFace": 1,
+    "x": 943.2050807550002,
+    "y": 470,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "t8hz"
+  },
+  "yd2j": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "M",
+    "x": 1059.8076211335,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "yd2j"
+  },
+  "7jvx": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "8",
+    "activeFace": 1,
+    "x": 1116.410161512,
+    "y": 470,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "7jvx"
+  },
+  "wis0": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1233.0127018905,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "wis0"
+  },
+  "2nln": {
+    "type": "card",
+    "deck": "Harbors",
+    "cardType": "R",
+    "x": 1233.0127018905,
+    "y": 400,
+    "z": 3088,
+    "activeFace": 1,
+    "rotation": 0,
+    "clonedFrom": "Harbor Template",
+    "id": "2nln"
+  },
+  "rzzf": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1406.2177826475,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "rzzf"
+  },
+  "7k74": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1579.4228634044998,
+    "y": 400,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "7k74"
+  },
+  "35oz": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -66.025403787,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "35oz"
+  },
+  "7meu": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 107.17967697000002,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "7meu"
+  },
+  "hipo": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 280.384757727,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "hipo"
+  },
+  "bfbz": {
+    "type": "card",
+    "deck": "Harbors",
+    "cardType": "C",
+    "x": 280.384757727,
+    "y": 550,
+    "z": 3088,
+    "activeFace": 1,
+    "rotation": 180,
+    "clonedFrom": "Harbor Template",
+    "id": "bfbz"
+  },
+  "wncb": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "F",
+    "x": 453.58983848400004,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "wncb"
+  },
+  "cr5k": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "8",
+    "activeFace": 1,
+    "x": 510.19237886250005,
+    "y": 620,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "cr5k"
+  },
+  "adkh": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "M",
+    "x": 626.7949192410001,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "adkh"
+  },
+  "enrr": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "3",
+    "activeFace": 1,
+    "x": 683.3974596195001,
+    "y": 620,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "enrr"
+  },
+  "nnty": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "W",
+    "x": 799.9999999980001,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "nnty"
+  },
+  "tjnt": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "4",
+    "activeFace": 1,
+    "x": 856.6025403765002,
+    "y": 620,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "tjnt"
+  },
+  "ewmq": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "G",
+    "x": 973.2050807550002,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "ewmq"
+  },
+  "vtev": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "5",
+    "activeFace": 1,
+    "x": 1029.8076211335,
+    "y": 620,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "vtev"
+  },
+  "jo67": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1146.4101615120003,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "jo67"
+  },
+  "fxzy": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1319.6152422690002,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "fxzy"
+  },
+  "43xx": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1492.820323026,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "43xx"
+  },
+  "euq6": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1666.025403783,
+    "y": 550,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "euq6"
+  },
+  "3lat": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -152.62794416550003,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "3lat"
+  },
+  "x3tx": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 20.577136591499993,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "x3tx"
+  },
+  "i901": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 193.7822173485,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "i901"
+  },
+  "itkv": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 366.98729810550003,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "itkv"
+  },
+  "8rnb": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "C",
+    "x": 540.1923788625,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "8rnb"
+  },
+  "yycp": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "5",
+    "activeFace": 1,
+    "x": 596.7949192410001,
+    "y": 770,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "yycp"
+  },
+  "dtuh": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "W",
+    "x": 713.3974596195001,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "dtuh"
+  },
+  "hn6m": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "6",
+    "activeFace": 1,
+    "x": 769.999999998,
+    "y": 770,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "hn6m"
+  },
+  "w12p": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "G",
+    "x": 886.6025403765001,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "w12p"
+  },
+  "er4d": {
+    "type": "card",
+    "deck": "Chips",
+    "cardType": "B",
+    "activeFace": 1,
+    "x": 943.2050807550002,
+    "y": 770,
+    "background": null,
+    "clonedFrom": "Chip Template",
+    "id": "er4d"
+  },
+  "rk7r": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1059.8076211335,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "rk7r"
+  },
+  "gp20": {
+    "type": "card",
+    "deck": "Harbors",
+    "cardType": "G",
+    "x": 1059.8076211335,
+    "y": 700,
+    "z": 3088,
+    "activeFace": 1,
+    "rotation": 60,
+    "clonedFrom": "Harbor Template",
+    "id": "gp20"
+  },
+  "3det": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1233.0127018905,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "3det"
+  },
+  "r3a5": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1406.2177826475,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "r3a5"
+  },
+  "6x9w": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1579.4228634044998,
+    "y": 700,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "6x9w"
+  },
+  "968n": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": -66.025403787,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "968n"
+  },
+  "tipj": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 107.17967697000002,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "tipj"
+  },
+  "exam": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 280.384757727,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "exam"
+  },
+  "ragd": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 453.58983848400004,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "ragd"
+  },
+  "177o": {
+    "type": "card",
+    "deck": "Harbors",
+    "cardType": "R",
+    "x": 453.58983848400004,
+    "y": 850,
+    "z": 3088,
+    "activeFace": 1,
+    "rotation": 120,
+    "clonedFrom": "Harbor Template",
+    "id": "177o"
+  },
+  "v0tm": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 626.7949192410001,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "v0tm"
+  },
+  "zum4": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 799.9999999980001,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "zum4"
+  },
+  "nrdf": {
+    "type": "card",
+    "deck": "Harbors",
+    "cardType": "R",
+    "x": 799.9999999980001,
+    "y": 850,
+    "z": 3088,
+    "activeFace": 1,
+    "rotation": 60,
+    "clonedFrom": "Harbor Template",
+    "id": "nrdf"
+  },
+  "b5z0": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 973.2050807550002,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "b5z0"
+  },
+  "f182": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1146.4101615120003,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "f182"
+  },
+  "gt1g": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1319.6152422690002,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "gt1g"
+  },
+  "8wk6": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1492.820323026,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "8wk6"
+  },
+  "k6i3": {
+    "type": "card",
+    "deck": "Tiles Real",
+    "cardType": "S",
+    "x": 1666.025403783,
+    "y": 850,
+    "activeFace": 1,
+    "clonedFrom": "Card Template",
+    "id": "k6i3"
   }
 }
