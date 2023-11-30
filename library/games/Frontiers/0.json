@@ -322,14 +322,6 @@
     },
     "parent": "Bricks"
   },
-  "rl2f": {
-    "deck": "Resources",
-    "type": "card",
-    "cardType": "Wood",
-    "id": "rl2f",
-    "parent": "f1uy",
-    "z": 26124
-  },
   "kiow": {
     "deck": "Resources",
     "type": "card",
@@ -455,14 +447,6 @@
       "cardType": "Ore"
     },
     "z": 115
-  },
-  "j8dc": {
-    "deck": "Resources",
-    "type": "card",
-    "cardType": "Wood",
-    "id": "j8dc",
-    "parent": "f1uy",
-    "z": 26126
   },
   "iob3": {
     "deck": "Resources",
@@ -1252,31 +1236,6 @@
         "property": "optionHighlight",
         "value": "${highlight}"
       },
-      "// Board",
-      {
-        "func": "IF",
-        "operand1": "${board}",
-        "operand2": "keep",
-        "thenRoutine": [
-          {
-            "func": "SELECT",
-            "property": "background",
-            "relation": "!=",
-            "value": null,
-            "type": "card"
-          },
-          {
-            "func": "SET",
-            "property": "background"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "CALL",
-            "widget": "${board}"
-          }
-        ]
-      },
       {
         "func": "FOREACH",
         "in": [
@@ -1364,6 +1323,31 @@
       {
         "func": "TURN",
         "turnCycle": "random"
+      },
+      "// Board",
+      {
+        "func": "IF",
+        "operand1": "${board}",
+        "operand2": "keep",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "background",
+            "relation": "!=",
+            "value": null,
+            "type": "card"
+          },
+          {
+            "func": "SET",
+            "property": "background"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${board}"
+          }
+        ]
       }
     ],
     "x": 24,
@@ -1684,7 +1668,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "gtlq",
-    "z": 26337,
+    "z": 26409,
     "parent": "yjto"
   },
   "jtdj": {
@@ -1692,7 +1676,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "jtdj",
-    "z": 26346,
+    "z": 26427,
     "parent": "yjto"
   },
   "n15g": {
@@ -1700,7 +1684,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "n15g",
-    "z": 26329,
+    "z": 26411,
     "parent": "yjto"
   },
   "1hwh": {
@@ -1708,7 +1692,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "1hwh",
-    "z": 26341,
+    "z": 26426,
     "parent": "yjto"
   },
   "h8j6": {
@@ -1716,7 +1700,7 @@
     "type": "card",
     "cardType": "Roads",
     "id": "h8j6",
-    "z": 26342,
+    "z": 26405,
     "parent": "yjto"
   },
   "m7x2": {
@@ -1724,7 +1708,7 @@
     "type": "card",
     "cardType": "Monopoly",
     "id": "m7x2",
-    "z": 26333,
+    "z": 26428,
     "parent": "yjto"
   },
   "jht6": {
@@ -1732,7 +1716,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "jht6",
-    "z": 26340,
+    "z": 26422,
     "parent": "yjto"
   },
   "22cj": {
@@ -1740,7 +1724,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "22cj",
-    "z": 26325,
+    "z": 26418,
     "parent": "yjto"
   },
   "i069": {
@@ -1748,7 +1732,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "i069",
-    "z": 26339,
+    "z": 26425,
     "parent": "yjto"
   },
   "4m7f": {
@@ -1756,7 +1740,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "4m7f",
-    "z": 26343,
+    "z": 26404,
     "parent": "yjto"
   },
   "p27u": {
@@ -1764,7 +1748,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "p27u",
-    "z": 26328,
+    "z": 26407,
     "parent": "yjto"
   },
   "qda1": {
@@ -1772,7 +1756,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "qda1",
-    "z": 26335,
+    "z": 26408,
     "parent": "yjto"
   },
   "z8e2": {
@@ -1780,7 +1764,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "z8e2",
-    "z": 26348,
+    "z": 26415,
     "parent": "yjto"
   },
   "0p3n": {
@@ -1788,7 +1772,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "0p3n",
-    "z": 26330,
+    "z": 26410,
     "parent": "yjto"
   },
   "wtxz": {
@@ -1796,7 +1780,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "wtxz",
-    "z": 26338,
+    "z": 26423,
     "parent": "yjto"
   },
   "5lp1": {
@@ -1804,7 +1788,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "5lp1",
-    "z": 26334,
+    "z": 26420,
     "parent": "yjto"
   },
   "xqi8": {
@@ -1812,7 +1796,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "xqi8",
-    "z": 26345,
+    "z": 26421,
     "parent": "yjto"
   },
   "eo2c": {
@@ -1820,7 +1804,7 @@
     "type": "card",
     "cardType": "Knight",
     "id": "eo2c",
-    "z": 26331,
+    "z": 26412,
     "parent": "yjto"
   },
   "Player 1": {
@@ -4867,19 +4851,19 @@
       "time": "60",
       "showName": true,
       "attribution": "<div>Board layout by ArnoldSmith86 and mousewax. Released to public domain under CC0.</div><div><br></div><div>Library image generated by Midjourney using prompt \"catan, water color painting\".</div><div><br></div><div>All other images by mousewax, released to public domain under CC0.</div><div><br></div><div>Description texts generated by ChatGPT and modified by ArnoldSmith86.</div>",
-      "lastUpdate": 1700846277693,
+      "lastUpdate": 1701333187319,
       "skill": "",
       "description": "Roll the dice to determine your harvest, engage in resource trading, and expand your colony to gain victory points. The player with the most victory points wins.",
       "similarImage": "",
       "similarName": "Catan",
       "similarAwards": "2012 JoTa Best Game Released in Brazil Nominee\n2012 JoTa Best Game Released in Brazil Critic Award\n2011 Ludo Award Best Board Game Editor's Choice Winner\n2011 Jocul Anului în România Best Game in Romanian Winner\n2011 Jocul Anului în România Best Game in Romanian Finalist\n2005 Gra Roku Game of the Year Winner\n2004 Hra roku Winner\n2004 Hra roku Nominee\n2002 Japan Boardgame Prize Best Japanese Game Nominee\n2001 Origins Awards Hall of Fame Inductee\n1996 Origins Awards Best Fantasy or Science Fiction Board Game Winner\n1995 Spiel des Jahres Winner\n1995 Meeples' Choice Award\n1995 Essener Feder Best Written Rules Winner\n1995 Deutscher Spiele Preis Best Family/Adult Game Winner",
-      "ruleText": "<h4>🛠️ Setup</h4><ol><li>Each player joins the game by clicking a seat on the left.</li><li>Press <i class=\"richtextSymbol material-icons\">restart_alt</i> in the bottom left to start a new game and select the type of board to play on.<br></li>  <li>The highlighted player begins by dragging a settlement (house) from its seat on the left to a junction point between hexes. Drag a road next to it on any adjacent edge.</li><li>Players continue clockwise placing their first settlement.</li><li>The last player may place two settlements (they don't have to be joined by roads) and placement continues counter-clockwise.</li><li>All players take matching resources for the three hex tiles next to their second settlement from the card piles on the right and drag them into their hand area at the bottom (every player sees only their own cards here).<br></li></ol><h4>🎮 Gameplay</h4><ol>  <li><strong>Roll the Dice 🎲<br></strong>The active player rolls the two six-sided dice in the top-right to determine which terrain hexes produce resources. Every player with a settlement or city adjacent to a hex with the rolled number receives one matching resource cards for each settlement and two for each city.</li>  <li><strong>Trade 🤝<br></strong>The active player may trade resources with other players or with the bank (4:1 ratio, or better if on a port).</li>  <li><strong>Build 🏗️<br></strong>Players can build new roads, settlements, or upgrade settlements to cities with their resources, or buy development cards. The costs are:    <br><br><ul>      <li>Road:<br>🧱🌲&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 Brick + 1 Lumber&nbsp;</li>      <li>Settlement:<br>🧱🌲🐑🌾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 Brick + 1 Lumber + 1 Wool + 1 Grain</li>      <li>City:<br>⛰⛰⛰🌾🌾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3 Ore + 2 Grain</li>      <li>Development Card:<br>⛰🐑🌾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 Ore️ + 1 Wool + 1 Grain<br><br></li>    </ul>  </li>  <li><strong>End Turn<br></strong>After performing actions, the active player ends their turn by pressing <i class=\"richtextSymbol material-icons\">skip_next</i> and the next player takes their turn.</li></ol><h4>🗺️ Development Cards</h4><div>Players can buy development cards by paying ⛰🐑🌾 to the bank and dragging a development card from the bottom right into their hand at the bottom.</div><div><br></div><div>Only one development card may be played per turn  and you may not play cards you bought on the same turn.<br></div><ul>  <li>🧙‍♂️ <strong>Knight</strong><br>Move the robber and steal 1 resource card from an adjacent player by clicking the <i class=\"richtextSymbol symbols\">[card]</i> button next to their name (it shows the number of resource cards in their hand).<br>The knight card stays face-up on the board next to your seat. If you have 3 knights (and nobody has more), you can drag the Largest Army token from the build cost overview to your seat, giving you 2 victory points.<br><br></li><li>🏰 <strong>1 Point</strong><br>Each card is worth 1 victory point. Keep them in your hand and reveal them as soon as you have 10 victory points in total.<br><br></li><li>💰 <b>Monopoly<br></b>Name one of the five resources. Every player has to give you all of their cards of that resource.<br><br></li><li>🌽 <b>Resources<br></b>Take two resource cards of your choice from the bank.<br><br></li><li>🛣 <b>Roads<br></b>Immediately place two roads onto the board (adjacent to your pieces) without paying for them.</li></ul><h4>🥷 The Robber</h4><p>When a player rolls a 7, no resources are distributed.</p><p>All players that have more than 7 resource cards in their hand, have to discard half of them (rounding down).<br></p><p>The player who rolled must move the robber to any other terrain hex, blocking that hex's number. The player may then steal 1 resource card from another player with a settlement or city adjacent to the robber's new location by clicking the <i class=\"richtextSymbol symbols\">[card]</i> button next to their name (it shows the number of resource cards in their hand).</p><h4>📈 Building Points</h4><ul>  <li>Settlement: <b>1</b> point 🏘️</li>  <li>City: <b>2</b> points 🏙️ (upgrades a settlement)</li>  <li>Longest Road 🛣️ (at least 5 road segments): <b>2</b> points</li>  <li>Largest Army ⚔️ (use most Knight cards): <b>2</b> points</li>  <li>Victory Point Cards: <b>1</b> point each 🏆</li></ul><h4>🏁 Winning the Game</h4><p>The first player to accumulate 10 victory points on their turn wins the game.</p><h4>🔔 Additional Rules</h4><ul><li>Settlements must be built at least 2 roads away from any other settlements or cities. So there always has to be an empty junction between them.<br></li><li>Roads must connect to your own roads, settlements or cities.</li></ul>",
+      "ruleText": "<h4>🛠️ Setup</h4><ol><li><span style=\"color: var(--overlayFontColor);\">Press </span><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol material-icons\">restart_alt</i><span style=\"color: var(--overlayFontColor);\"> in the bottom left to start a new game and select the type of board to play on.</span><br></li>  <li>Each player joins the game by clicking a seat on the left.</li><li>The highlighted player begins by dragging a settlement (house) from its seat on the left to a junction point between hexes. Drag a road next to it on any adjacent edge.</li><li>Players continue clockwise placing their first settlement.</li><li>The last player may place two settlements (they don't have to be joined by roads) and placement continues counter-clockwise.</li><li>All players take matching resources for the three hex tiles next to their second settlement from the card piles on the right and drag them into their hand area at the bottom (every player sees only their own cards here).<br></li></ol><h4>🎮 Gameplay</h4><ol>  <li><strong>Roll the Dice 🎲<br></strong>The active player rolls the two six-sided dice in the top-right to determine which terrain hexes produce resources. Every player with a settlement or city adjacent to a hex with the rolled number receives one matching resource cards for each settlement and two for each city.</li>  <li><strong>Trade 🤝<br></strong>The active player may trade resources with other players or with the bank (4:1 ratio, or better if on a port).</li>  <li><strong>Build 🏗️<br></strong>Players can build new roads, settlements, or upgrade settlements to cities with their resources, or buy development cards. The costs are:    <br><br><ul>      <li>Road:<br>🧱🌲&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 Brick + 1 Lumber&nbsp;</li>      <li>Settlement:<br>🧱🌲🐑🌾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 Brick + 1 Lumber + 1 Wool + 1 Grain</li>      <li>City:<br>⛰⛰⛰🌾🌾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3 Ore + 2 Grain</li>      <li>Development Card:<br>⛰🐑🌾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 Ore️ + 1 Wool + 1 Grain<br><br></li>    </ul>  </li>  <li><strong>End Turn<br></strong>After performing actions, the active player ends their turn by pressing <i class=\"richtextSymbol material-icons\">skip_next</i> and the next player takes their turn.</li></ol><h4>🗺️ Development Cards</h4><div>Players can buy development cards by paying ⛰🐑🌾 to the bank and dragging a development card from the bottom right into their hand at the bottom.</div><div><br></div><div>Only one development card may be played per turn  and you may not play cards you bought on the same turn.<br></div><ul>  <li>🧙‍♂️ <strong>Knight</strong><br>Move the robber and steal 1 resource card from an adjacent player by clicking the <i class=\"richtextSymbol symbols\">[card]</i> button next to their name (it shows the number of resource cards in their hand).<br>The knight card stays face-up on the board next to your seat. If you have 3 knights (and nobody has more), you can drag the Largest Army token from the build cost overview to your seat, giving you 2 victory points.<br><br></li><li>🏰 <strong>1 Point</strong><br>Each card is worth 1 victory point. Keep them in your hand and reveal them as soon as you have 10 victory points in total.<br><br></li><li>💰 <b>Monopoly<br></b>Name one of the five resources. Every player has to give you all of their cards of that resource.<br><br></li><li>🌽 <b>Resources<br></b>Take two resource cards of your choice from the bank.<br><br></li><li>🛣 <b>Roads<br></b>Immediately place two roads onto the board (adjacent to your pieces) without paying for them.</li></ul><h4>🥷 The Robber</h4><p>When a player rolls a 7, no resources are distributed.</p><p>All players that have more than 7 resource cards in their hand, have to discard half of them (rounding down).<br></p><p>The player who rolled must move the robber to any other terrain hex, blocking that hex's number. The player may then steal 1 resource card from another player with a settlement or city adjacent to the robber's new location by clicking the <i class=\"richtextSymbol symbols\">[card]</i> button next to their name (it shows the number of resource cards in their hand).</p><h4>📈 Building Points</h4><ul>  <li>Settlement: <b>1</b> point 🏘️</li>  <li>City: <b>2</b> points 🏙️ (upgrades a settlement)</li>  <li>Longest Road 🛣️ (at least 5 road segments): <b>2</b> points</li>  <li>Largest Army ⚔️ (use most Knight cards): <b>2</b> points</li>  <li>Victory Point Cards: <b>1</b> point each 🏆</li></ul><h4>🏁 Winning the Game</h4><p>The first player to accumulate 10 victory points on their turn wins the game.</p><h4>🔔 Additional Rules</h4><ul><li>Settlements must be built at least 2 roads away from any other settlements or cities. So there always has to be an empty junction between them.<br></li><li>Roads must connect to your own roads, settlements or cities.</li></ul>",
       "helpText": "",
       "similarDesigner": "Klaus Teuber",
-      "players": "2-4",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "en-US",
+      "players": "3-6"
     }
   },
   "Development Draw": {
@@ -5348,7 +5332,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "ldbu",
-    "z": 26326,
+    "z": 26413,
     "parent": "yjto"
   },
   "uqjm": {
@@ -5356,7 +5340,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "uqjm",
-    "z": 26344,
+    "z": 26416,
     "parent": "yjto"
   },
   "yjto": {
@@ -5373,7 +5357,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "07eh",
-    "z": 26349,
+    "z": 26417,
     "parent": "yjto"
   },
   "68gw": {
@@ -5381,7 +5365,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "68gw",
-    "z": 26327,
+    "z": 26424,
     "parent": "yjto"
   },
   "af6i": {
@@ -5389,7 +5373,7 @@
     "type": "card",
     "cardType": "1 Point",
     "id": "af6i",
-    "z": 26347,
+    "z": 26406,
     "parent": "yjto"
   },
   "ktlv": {
@@ -5397,7 +5381,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "ktlv",
-    "z": 26332,
+    "z": 26414,
     "parent": "yjto"
   },
   "1rdy": {
@@ -5405,7 +5389,7 @@
     "type": "card",
     "cardType": "Resources",
     "id": "1rdy",
-    "z": 26336,
+    "z": 26419,
     "parent": "yjto"
   },
   "Base Map Button New": {
@@ -5464,6 +5448,10 @@
       {
         "func": "CALL",
         "routine": "showPlayerSeatsRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "discardExpansionCardsRoutine"
       }
     ],
     "levelTiles": [
@@ -6034,7 +6022,25 @@
     "levelRandomHarbors": {
       "X": "RRRRWFGMC"
     },
-    "levelRandomHarborsCounter": 9
+    "levelRandomHarborsCounter": 9,
+    "discardExpansionCardsRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY levelPlayers}",
+        "operand2": 6,
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "expansion",
+            "value": "6p"
+          },
+          {
+            "func": "MOVE",
+            "to": "Expansion Cards Holder"
+          }
+        ]
+      }
+    ]
   },
   "Starter Map B": {
     "type": "button",
@@ -10902,5 +10908,306 @@
     "activeFace": 1,
     "clonedFrom": "Card Template",
     "id": "k6i3"
+  },
+  "5bsf": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "5bsf",
+    "z": 26376,
+    "parent": "f1uy"
+  },
+  "xpdz": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "xpdz",
+    "z": 26378,
+    "parent": "f1uy"
+  },
+  "a9sg": {
+    "type": "pile",
+    "id": "a9sg",
+    "z": 666,
+    "parent": "Expansion Cards Holder"
+  },
+  "1qse": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "1qse",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "bcmv": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "bcmv",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "qrst": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "qrst",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "d7km": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "d7km",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "bq70": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wood",
+    "id": "bq70",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "c6kx": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "c6kx",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "pg2p": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "pg2p",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "veqk": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "veqk",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "uuxc": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "uuxc",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "s6rp": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Bricks",
+    "id": "s6rp",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "h4jp": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "h4jp",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "4cqy": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "4cqy",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "3qp9": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "3qp9",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "5opn": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "5opn",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "qgkr": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wool",
+    "id": "qgkr",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "ajyg": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "ajyg",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "9sw8": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "9sw8",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "fg0y": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "fg0y",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "3jfe": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "3jfe",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "fctu": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Ore",
+    "id": "fctu",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "8jkz": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "8jkz",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "f3je": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "f3je",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "3gmz": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "3gmz",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "8a2m": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "8a2m",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "w2f1": {
+    "deck": "Resources",
+    "type": "card",
+    "cardType": "Wheat",
+    "id": "w2f1",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "7r7e": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "7r7e",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "bhfs": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "bhfs",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "pyzl": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "pyzl",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "f1z2": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "f1z2",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "0oxx": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "0oxx",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "hqpb": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Knight",
+    "id": "hqpb",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "qj0n": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Monopoly",
+    "id": "qj0n",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "t9v3": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Resources",
+    "id": "t9v3",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "ejkv": {
+    "deck": "Development",
+    "type": "card",
+    "cardType": "Roads",
+    "id": "ejkv",
+    "expansion": "6p",
+    "parent": "a9sg"
+  },
+  "Expansion Cards Holder": {
+    "type": "holder",
+    "id": "Expansion Cards Holder",
+    "x": -176,
+    "y": 334,
+    "z": 132
   }
 }
