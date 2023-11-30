@@ -1114,7 +1114,9 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderCardLayers(deck) {
-    const card = widgetFilter(w=>w.get('deck')==deck.get('id'))[0];
+    const card = new Card();
+    card.state.deck = deck.id;
+    card.state.cardType = Object.keys(deck.get('cardTypes'))[0];
     const faceTemplates = this.faceTemplates = JSON.parse(JSON.stringify(deck.get('faceTemplates')));
 
     this.cardLayerCards = [];
@@ -1156,7 +1158,8 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderCardTypes(deck, onlyCardType=null) {
-    const card = widgetFilter(w=>w.get('deck')==deck.get('id'))[0];
+    const card = new Card();
+    card.state.deck = deck.id;
     const cardTypes = this.cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
 
     this.cardTypeCards = [];
@@ -1295,7 +1298,10 @@ class PropertiesModule extends SidebarModule {
     };
 
     this.addSubHeader(`Card layers`);
-    this.renderCardLayers(widget);
+    if(Object.values(widget.get('cardTypes')).length)
+      this.renderCardLayers(widget);
+    else
+      div(this.moduleDOM, '', `<p>Please add a cardType first.</p>`);
 
     this.addSubHeader(`Card default properties`);
     for(const [ prop, value ] of Object.entries(widget.get('cardDefaults'))) {
