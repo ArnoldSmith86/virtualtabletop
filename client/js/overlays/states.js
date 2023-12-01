@@ -645,7 +645,7 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit]'), 'hidden', !editable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=delete]'), 'hidden', !deletable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable || deletable);
-  toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers || !!state.publicLibrary);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link_off]'), 'hidden', !state.link);
 
   function updateStateDetailsDomains(state) {
@@ -1044,12 +1044,20 @@ async function confirmOverlay(title, text, confirmButton, cancelButton, confirmI
 
 async function shareLink(state) {
   showStatesOverlay('shareLinkOverlay');
-  let url = state.link;
-  if(!url) {
-    const name = state.name.replace(/[^A-Za-z0-9.-]/g, '_');
-    url = await fetch(`share/${roomID}/${state.id}`);
-    url = `${location.origin}${await url.text()}/${name}.vtt`;
+
+  const name = state.name.replace(/[^A-Za-z0-9.-]+/g, '_');
+  let url = null;
+
+  if(state.publicLibrary) {
+    url = `${location.origin}/game/${name}`;
+  } else {
+    url = state.link;
+    if(!url) {
+      url = await fetch(`share/${roomID}/${state.id}`);
+      url = `${location.origin}${await url.text()}/${name}`;
+    }
   }
+
   $('#sharedLink').value = url;
 }
 

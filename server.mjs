@@ -276,7 +276,7 @@ MinifyHTML().then(function(result) {
       const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
       sharedLinks[newLink] = target;
       fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
-      res.send(Config.get('urlPrefix') + newLink);
+      res.send(Config.get('urlPrefix') + newLink.replace(/^\/s\//, '/game/'));
     }).catch(next);
   });
 

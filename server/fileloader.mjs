@@ -25,7 +25,16 @@ async function downloadLink(link) {
     filename: Math.random().toString(36).substring(3, 9)
   };
 
-  const response = await fetch(await TTS.resolveLink(link), requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
+  const headers = requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {};
+  let response = null;
+  try {
+    if(link.match(/\/game\//))
+      response = await fetch(await TTS.resolveLink(link.replace(/\/game\//, '/s/')), headers);
+    else
+      throw new Error('only needs original fetch');
+  } catch(e) {
+    response = await fetch(await TTS.resolveLink(link), headers);
+  }
 
   currentLinkStatus.time = +new Date();
   currentLinkStatus.status = response.status;
@@ -81,11 +90,11 @@ function checkForLinkToOwnServer(link) {
     return null;
 
   const localPrefix = Config.get('externalURL').replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
-  const match = link.match(`^${localPrefix}(/s/[0-9a-z]{8})/`);
+  const match = link.match(`^${localPrefix}/(s|game)/([0-9a-z]{8})/`);
 
   if(match) {
     const sharedLinks = JSON.parse(fs.readFileSync(Config.directory('save') + '/shares.json'));
-    const m = sharedLinks[match[1]].split('/');
+    const m = sharedLinks['/s/'.match[2]].split('/');
 
     const states = {};
     states['VTT'] = [];
