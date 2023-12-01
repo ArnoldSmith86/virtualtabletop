@@ -17,6 +17,57 @@ export function div(parent, className, html) {
   return div;
 }
 
+export function progressButton(button, clickHandler, disableWhenDone=true) {
+  const initialIcon = button.getAttribute('icon');
+  const initialText = button.innerText;
+
+  button.onclick = async function() {
+    button.disabled = true;
+    button.classList.add('progress');
+    button.innerText = 'Working...';
+    button.setAttribute('icon', 'hourglass_empty');
+    try {
+      await clickHandler(function(status, progress) {
+        button.innerText = status;
+        if(progress) {
+          button.classList.add('visualProgress');
+          button.style.setProperty('--progress', progress);
+        }
+      });
+      button.setAttribute('icon', 'check');
+      button.innerText = 'Done';
+      button.classList.remove('progress');
+      button.classList.remove('visualProgress');
+      button.classList.add('green');
+    } catch(e) {
+      button.setAttribute('icon', 'error');
+      button.innerText = e.toString();
+      button.classList.remove('progress');
+      button.classList.remove('visualProgress');
+      button.classList.add('red');
+    }
+    if(disableWhenDone) {
+      await sleep(2500);
+      button.disabled = false;
+      button.setAttribute('icon', initialIcon);
+      button.innerText = initialText;
+      button.classList.remove('green');
+      button.classList.remove('red');
+    }
+  };
+}
+
+export async function loadImage(img, src) {
+  return new Promise(function(resolve, reject) {
+    img.onload = function() {
+      img.onload = null;
+      resolve(img);
+    };
+    img.onerror = e=>reject(e);
+    img.src = src;
+  });
+}
+
 const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
 
 export function regexEscape(string) {
@@ -134,6 +185,8 @@ export function formField(field, dom, id) {
     const input = document.createElement('input');
     const spanafter = document.createElement('span');
     const labelExplainer = document.createElement('span');
+    const underlineelement = document.createElement('div');
+    underlineelement.classList.add('inputunderline');
     labelExplainer.classList.add('numberInputRange');
     input.type = 'number';
     input.step = 'any';
@@ -160,13 +213,18 @@ export function formField(field, dom, id) {
       input.max = maxset ? field.max : false;
     }
     dom.appendChild(input);
+    dom.appendChild(underlineelement);
     dom.appendChild(spanafter);
     input.id = id;
   }
 
   if(field.type == 'select') {
     const input = document.createElement('select');
-    for(const option of field.options) {
+    const underlineelement = document.createElement('div');
+    const inputexpandselect = document.createElement('div');
+    underlineelement.classList.add('inputunderline');
+    inputexpandselect.classList.add('inputexpandselect');
+    for(const option of asArray(field.options || [])) {
       const optionElement = document.createElement('option');
       optionElement.value = option.value || '';
       optionElement.textContent = option.text || option.value || '';
@@ -174,7 +232,10 @@ export function formField(field, dom, id) {
         optionElement.selected = true;
       input.appendChild(optionElement);
     }
+    inputexpandselect.textContent = "expand_more";
     dom.appendChild(input);
+    dom.appendChild(underlineelement);
+    dom.appendChild(inputexpandselect);
     input.id = id;
   }
 
@@ -249,8 +310,11 @@ export function formField(field, dom, id) {
 
   if(field.type == 'string') {
     const input = document.createElement('input');
+    const underlineelement = document.createElement('div');
+    underlineelement.classList.add('inputunderline');
     input.value = field.value || '';
     dom.appendChild(input);
+    dom.appendChild(underlineelement);
     input.id = id;
   }
 
@@ -370,11 +434,11 @@ export async function loadSymbolPicker() {
     let list = '';
     let gameIconsIndex = 0;
     for(const [ category, symbols ] of Object.entries(symbolData)) {
-      list += `<h2>${category}</h2>`;
+      list += `<h2 class="${category.match(/Material|VTT/)?'fontCategory':'imageCategory'}">${category}</h2>`;
       for(const [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+          list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
           ++gameIconsIndex;
         } else {
           let className = 'emoji';
@@ -382,7 +446,9 @@ export async function loadSymbolPicker() {
             className = 'symbols';
           else if(symbol.match(/^[a-z0-9_]+$/))
             className = 'material-icons';
-          list += `<i class="${className}" title="${className}: ${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+          if(category == 'Emoji - Flags')
+            className += ' emojiFlag';
+          list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
         }
       }
     }
@@ -397,6 +463,43 @@ export async function loadSymbolPicker() {
       toggleClass($('#symbolPickerOverlay'), 'fewResults', $a('#symbolList i:not(.hidden)').length < 100);
     };
   }
+}
+
+export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true) {
+  if($('#statesButton').dataset.overlay == 'symbolPickerOverlay')
+    $('#statesButton').dataset.overlay = detailsOverlay;
+
+  await loadSymbolPicker();
+  return new Promise((resolve, reject) => {
+    showOverlay('symbolPickerOverlay');
+    $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
+    $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
+    $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
+    $('#symbolPickerOverlay').scrollTop = 0;
+    $('#symbolPickerOverlay input').value = '';
+    $('#symbolPickerOverlay input').focus();
+    $('#symbolPickerOverlay input').onkeyup();
+
+    $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
+      if(closeOverlay)
+        showOverlay(null);
+      resolve(null);
+    };
+
+    for(const icon of $a('#symbolList i')) {
+      icon.onclick = function(e) {
+        if(closeOverlay)
+          showOverlay(null);
+        const isImage = ['emoji','game-icons'].indexOf(icon.dataset.type) != -1;
+        let url = null;
+        if(icon.dataset.type == 'emoji')
+          url = `/i/noto-emoji/emoji_u${emojiToFilename(icon.dataset.symbol)}.svg`;
+        if(icon.dataset.type == 'game-icons')
+          url = `/i/game-icons.net/${icon.dataset.symbol}.svg`;
+        resolve(Object.assign({...icon.dataset}, { isImage, url }));
+      };
+    }
+  });
 }
 
 export function addRichtextControls(dom) {
@@ -461,6 +564,8 @@ export function addRichtextControls(dom) {
 
     showStatesOverlay('symbolPickerOverlay');
     $('#symbolPickerOverlay').scrollTop = 0;
+    for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
+      $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
     $('#symbolPickerOverlay input').onkeyup();
@@ -545,6 +650,18 @@ export function selectFile(getContents, multipleCallback) {
     });
     upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
+}
+
+export function triggerDownload(url, filename) {
+  var link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link); // Required for Firefox
+  link.click();
+  setTimeout(function(){
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  }, 100);
 }
 
 export function asArray(variable) {

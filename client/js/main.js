@@ -110,6 +110,7 @@ export function showOverlay(id, forced) {
   } else {
     overlayActive = false;
   }
+  $('body').classList.toggle('overlayActive', overlayActive);
 }
 
 export function showStatesOverlay(id) {
@@ -336,12 +337,15 @@ async function uploadAsset(multipleCallback) {
 }
 
 async function _uploadAsset(file) {
+    if(typeof file == 'string')
+      file = await (await fetch(file)).arrayBuffer();
+
     const response = await fetch('asset', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/octet-stream'
       },
-      body: file.content
+      body: file.content || file
     });
 
     if(response.status == 413)
@@ -384,13 +388,14 @@ async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, div, on, onMessage, showOverlay,
+      $, $a, div, progressButton, loadImage, on, onMessage, showOverlay, sleep,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,
       loadJSZip, waitForJSZip,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, uploadAsset, selectFile,
-      getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
+      uploadAsset, _uploadAsset, pickSymbol, selectFile, triggerDownload,
+      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
@@ -401,7 +406,7 @@ async function loadEditMode() {
     const editmode = await import('./edit.js');
     $('body').classList.remove('loadingEditMode');
     Object.assign(window, editmode);
-    initializeEditMode();
+    initializeEditMode(currentMetaData);
   }
 }
 
