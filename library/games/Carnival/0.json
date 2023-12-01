@@ -16,9 +16,9 @@
       "similarImage": "",
       "similarName": "Parade",
       "similarAwards": "2015 As d'Or - Jeu de l'Année Nominee\n2014 Fairplay À la carte Runner-up",
-      "ruleText": "<h4><span style=\"color: var(--overlayFontColor);\">Rounds and actions</span><br></h4><div><span style=\"color: var(--overlayFontColor);\">Players need to play a card at the end of the card line (right side of the line).</span><br></div><div>The value in the card played blocks equals the number of safe cards in front of the played card.</div><div><br></div><div>The player needs to take all unsafe cards that are equal or lower value than the played card and all unsafe cards that are of the same color as the played card.</div><div><br></div><div>Example:\nIf the player plays a Yellow-4 card they count 4 cards after the played card. Those cards are safe and the player doesn't need to take them.\nFrom the unsafe card the player needs to take all cards that have values 1, 2, 3, or 4 and all cards that are Yellow no matter the value.\nIn the image below the 4 cards from Green-2 to Purple-1 are safe cards. No matter the value or color they will not be taken.\nAll other cards (to the left of Purple-1) are not safe. The player must take all yellow cards and all cards with a value 4 or lower.</div><a href=\"/assets/385578086_109456\"><img src=\"/assets/385578086_109456\" class=\"richtextAsset\"></a><div><br></div><div><h4>End of the game&nbsp;</h4></div><div>The last round begins either when a player gets the last card from the draw pile or one player has collected at least one or more of each type of card. All players play one last card ending in the player the drew the last card from the draw pile.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">All players need to choose 2 cards to add to their pile and 2 cards to discard.</span></div><div>&nbsp;</div><h4>Counting points</h4><div>The player that have the majority of each color count 1 point for each card of that color. If two players have the majority of the same color both count 1 point per card.\n<br></div><div>All other cards points are added using their printed value.\n\nThe Player with the LEAST amount of points wins.</div>",
-      "helpText": "<h4>Setup</h4><div><ul><li><span style=\"font-weight: normal;\">All players should select a seat</span><a href=\"/assets/2113431920_4817\"><img src=\"/assets/2113431920_4817\" class=\"richtextAsset\"></a></li></ul><ul><li><span style=\"font-weight: normal;\">Click on the play button&nbsp;to deal cards<a href=\"/assets/-660941794_1759\"><img src=\"/assets/-660941794_1759\" class=\"richtextAsset\"></a></span></li></ul><h4>Round</h4><ul><li><span style=\"font-weight: 400;\">The player puts a card in the holder under the arrow</span><a href=\"/assets/-1527996678_145413\"><img src=\"/assets/-1527996678_145413\" class=\"richtextAsset\"></a></li></ul><ul><li><span style=\"font-weight: normal;\">All cards that should be taken into the player's pile will be highlighted</span><a href=\"/assets/385578086_109456\"><img src=\"/assets/385578086_109456\" class=\"richtextAsset\"></a></li></ul><ul><li><span style=\"font-weight: 400;\">The player can click the arrow to move the played card into the line and take the card into their pile</span><a href=\"/assets/-783411224_94248\"><img src=\"/assets/-783411224_94248\" class=\"richtextAsset\"></a></li></ul><ul><li><span style=\"font-weight: 400;\">The player needs to buy another card from the draw pile. Players should always have 5 cards when possible</span><a href=\"/assets/-424757628_56321\"><img src=\"/assets/-424757628_56321\" class=\"richtextAsset\"></a></li></ul><h4>Ending the game</h4><div><ul><li><span style=\"font-weight: 400;\">After the last round is played, players need to discard 2 cards into the draw pile</span></li><li><span style=\"font-weight: 400;\">When all players have chosen the remainder 2 cards in their hands, the cards can be played into their piles</span></li><li><span style=\"font-weight: 400;\">Players can use the counter to help them count their points</span></li></ul></div></div>",
-      "lastUpdate": 1701415523164,
+      "ruleText": "<h4><span style=\"color: var(--overlayFontColor);\">Rounds and actions</span><br></h4><div><span style=\"color: var(--overlayFontColor);\">Players need to play a card at the end of the card line (right side of the line).</span><br></div><div>The value in the card played blocks equals the number of safe cards in front of the played card.</div><div><br></div><div>The player needs to take all unsafe cards that are equal or lower value than the played card and all unsafe cards that are of the same color as the played card.</div><div><br></div><div>Example:</div><div>\nIf the player plays a Yellow-4 card they count 4 cards from the end (right side) of the line. Those cards are safe and the player does not need to take them.&nbsp;<span style=\"color: var(--overlayFontColor);\">In the image below the 4 cards from Green-2 to Purple-1 are safe cards. No matter the value or color they will not be taken.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">All other cards (to the left of Purple-1) are not safe.</span></div><div>\nFrom the unsafe cards the player needs to take all cards that have values equal to the value of the played card and all cards that are the same color no matter the value.&nbsp;<span style=\"color: var(--overlayFontColor);\">The player must take all yellow cards and all cards with a value 4 or lower. In the image below, those cards are the Red-1, Red-4, and Yellow-3.</span></div><div><br></div><div><a href=\"/assets/-658727007_225205\"><img src=\"/assets/-658727007_225205\" class=\"richtextAsset\"></a></div><div><br></div><div><h4>End of the game&nbsp;</h4></div><div>The last round begins either when a player gets the last card from the draw pile or one player has collected at least one of each type of card. The player that completed the set of cards plays that turn normally and will go last in the final round. If the draw pile is exhausted, all players play one last card ending in the player the drew the last card from the draw pile.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">All players then choose 2 cards to add to their pile and 2 cards to discard.</span></div><div>&nbsp;</div><h4>Counting points</h4><div>The player that has the majority of each color counts 1 point for each card of that color. If two players have the majority of the same color both count 1 point per card.\n<br></div><div>All other cards points are added using their printed value.\n\nThe player with the LEAST amount of points wins.</div>",
+      "helpText": "<h4>Setup</h4><div><ul><li><span style=\"font-weight: normal;\">All players should select a seat.</span></li></ul><a href=\"/assets/1655350907_20528\"><img src=\"/assets/1655350907_20528\" class=\"richtextAsset\"></a><ul><li><span style=\"font-weight: normal;\">Click on the play button&nbsp;to deal cards.<a href=\"/assets/-660941794_1759\"><img src=\"/assets/-660941794_1759\" class=\"richtextAsset\"></a></span></li></ul><h4>Round</h4><ul><li><span style=\"font-weight: 400;\">The player puts a card in the holder next to their hand. The number to the left of the line displays the count of the number of cards in the line.</span></li></ul><a href=\"/assets/1706549567_302976\"><img src=\"/assets/1706549567_302976\" class=\"richtextAsset\"></a><a href=\"/assets/-1527996678_145413\"><br></a><ul><li><span style=\"font-weight: normal;\">All cards that should be taken into the player's pile will be highlighted.</span><a href=\"/assets/385578086_109456\"><br></a><a href=\"/assets/-658727007_225205\"><img src=\"/assets/-658727007_225205\" class=\"richtextAsset\"></a></li></ul><ul><li><span style=\"font-weight: 400;\">The player can click the arrow to move the played card into the line and take the card into their pile.</span></li></ul><a href=\"/assets/-1835983689_722\"><img src=\"/assets/-1835983689_722\" class=\"richtextAsset\"></a><ul><li><span style=\"font-weight: 400;\">The player will be given a new card to keep the hand at 5. If this is the final round, no new card will be dealt.</span><a href=\"/assets/-424757628_56321\"><br></a></li></ul><h4>Ending the game</h4><div><ul><li><span style=\"font-weight: 400;\">After the last round is played, players need to discard 2 cards into the draw pile.</span></li><li><span style=\"font-weight: 400;\">When all players have chosen the remainder 2 cards in their hands, the cards can be played into their piles.</span></li><li><span style=\"font-weight: 400;\">Players can use the counter to help them count their points.</span></li></ul></div></div>",
+      "lastUpdate": 1701447397624,
       "similarDesigner": "Naoki Homma",
       "variantImage": "",
       "variant": "",
@@ -30,7 +30,7 @@
     "type": "holder",
     "stackOffsetX": 45,
     "childrenPerOwner": true,
-    "x": 147,
+    "x": 1080,
     "width": 291,
     "id": "hand",
     "z": 113,
@@ -449,528 +449,528 @@
     "type": "card",
     "cardType": "01-Spades-00",
     "id": "86ig",
-    "z": 25983,
-    "parent": "hrqh"
+    "z": 27295,
+    "parent": "3bme"
   },
   "jjkk": {
     "deck": "DECK",
     "type": "card",
     "cardType": "01-Spades-01",
     "id": "jjkk",
-    "z": 25960,
-    "parent": "hrqh"
+    "z": 27347,
+    "parent": "3bme"
   },
   "6ads": {
     "deck": "DECK",
     "type": "card",
     "cardType": "01-Spades-02",
     "id": "6ads",
-    "z": 25938,
-    "parent": "hrqh"
+    "z": 27243,
+    "parent": "3bme"
   },
   "99r0": {
     "deck": "DECK",
     "type": "card",
     "cardType": "01-Spades-03",
     "id": "99r0",
-    "z": 25911,
-    "parent": "hrqh"
+    "z": 27341,
+    "parent": "3bme"
   },
   "cd3x": {
     "deck": "DECK",
     "type": "card",
     "cardType": "01-Spades-04",
     "id": "cd3x",
-    "z": 25914,
-    "parent": "hrqh"
+    "z": 27339,
+    "parent": "3bme"
   },
   "pd8t": {
     "deck": "DECK",
     "type": "card",
     "cardType": "01-Spades-05",
     "id": "pd8t",
-    "z": 25918,
-    "parent": "hrqh"
+    "z": 27366,
+    "parent": "3bme"
   },
   "8zjq": {
     "deck": "DECK",
     "type": "card",
     "cardType": "01-Spades-06",
     "id": "8zjq",
-    "z": 25922,
-    "parent": "hrqh"
+    "z": 27370,
+    "parent": "3bme"
   },
   "a8m3": {
     "deck": "DECK",
     "type": "card",
     "cardType": "01-Spades-07",
     "id": "a8m3",
-    "z": 25928,
-    "parent": "hrqh"
+    "z": 27200,
+    "parent": "3bme"
   },
   "xpd2": {
     "deck": "DECK",
     "type": "card",
     "cardType": "01-Spades-08",
     "id": "xpd2",
-    "z": 25919,
-    "parent": "hrqh"
+    "z": 27214,
+    "parent": "3bme"
   },
   "ir8h": {
     "deck": "DECK",
     "type": "card",
     "cardType": "01-Spades-09",
     "id": "ir8h",
-    "z": 25959,
-    "parent": "hrqh"
+    "z": 27323,
+    "parent": "3bme"
   },
   "yvmr": {
     "deck": "DECK",
     "type": "card",
     "cardType": "01-Spades-10",
     "id": "yvmr",
-    "z": 25933,
-    "parent": "hrqh"
+    "z": 27289,
+    "parent": "3bme"
   },
   "0jgt": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-00",
     "id": "0jgt",
-    "z": 25937,
-    "parent": "hrqh"
+    "z": 27367,
+    "parent": "3bme"
   },
   "6c0v": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-01",
     "id": "6c0v",
-    "z": 25925,
-    "parent": "hrqh"
+    "z": 27334,
+    "parent": "3bme"
   },
   "84qt": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-02",
     "id": "84qt",
-    "z": 25909,
-    "parent": "hrqh"
+    "z": 27307,
+    "parent": "3bme"
   },
   "xfq2": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-03",
     "id": "xfq2",
-    "z": 25945,
-    "parent": "hrqh"
+    "z": 27310,
+    "parent": "3bme"
   },
   "5tzs": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-04",
     "id": "5tzs",
-    "z": 25942,
-    "parent": "hrqh"
+    "z": 27316,
+    "parent": "3bme"
   },
   "sqkp": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-05",
     "id": "sqkp",
-    "z": 25943,
-    "parent": "hrqh"
+    "z": 27250,
+    "parent": "3bme"
   },
   "vqug": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-06",
     "id": "vqug",
-    "z": 25968,
-    "parent": "hrqh"
+    "z": 27371,
+    "parent": "3bme"
   },
   "gagc": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-07",
     "id": "gagc",
-    "z": 25935,
-    "parent": "hrqh"
+    "z": 27249,
+    "parent": "3bme"
   },
   "iccr": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-08",
     "id": "iccr",
-    "z": 25910,
-    "parent": "hrqh"
+    "z": 27245,
+    "parent": "3bme"
   },
   "0mi6": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-09",
     "id": "0mi6",
-    "z": 25949,
-    "parent": "hrqh"
+    "z": 27359,
+    "parent": "3bme"
   },
   "o6c0": {
     "deck": "DECK",
     "type": "card",
     "cardType": "02-Hearts-10",
     "id": "o6c0",
-    "z": 25923,
-    "parent": "hrqh"
+    "z": 27337,
+    "parent": "3bme"
   },
   "uu1e": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-00",
     "id": "uu1e",
-    "z": 25913,
-    "parent": "hrqh"
+    "z": 27330,
+    "parent": "3bme"
   },
   "41o3": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-01",
     "id": "41o3",
-    "z": 25944,
-    "parent": "hrqh"
+    "z": 27358,
+    "parent": "3bme"
   },
   "orr7": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-02",
     "id": "orr7",
-    "z": 25929,
-    "parent": "hrqh"
+    "z": 27360,
+    "parent": "3bme"
   },
   "62uz": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-03",
     "id": "62uz",
-    "z": 25950,
-    "parent": "hrqh"
+    "z": 27340,
+    "parent": "3bme"
   },
   "gtf3": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-04",
     "id": "gtf3",
-    "z": 25915,
-    "parent": "hrqh"
+    "z": 27326,
+    "parent": "3bme"
   },
   "czsp": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-05",
     "id": "czsp",
-    "z": 25936,
-    "parent": "hrqh"
+    "z": 27355,
+    "parent": "3bme"
   },
   "bfxl": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-06",
     "id": "bfxl",
-    "z": 25930,
-    "parent": "hrqh"
+    "z": 27222,
+    "parent": "3bme"
   },
   "a838": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-07",
     "id": "a838",
-    "z": 25958,
-    "parent": "hrqh"
+    "z": 27373,
+    "parent": "3bme"
   },
   "n86s": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-08",
     "id": "n86s",
-    "z": 25953,
-    "parent": "hrqh"
+    "z": 27230,
+    "parent": "3bme"
   },
   "7v23": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-09",
     "id": "7v23",
-    "z": 25941,
-    "parent": "hrqh"
+    "z": 27350,
+    "parent": "3bme"
   },
   "ql4q": {
     "deck": "DECK",
     "type": "card",
     "cardType": "03-Clubs-10",
     "id": "ql4q",
-    "z": 25926,
-    "parent": "hrqh"
+    "z": 27369,
+    "parent": "3bme"
   },
   "x5kd": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-00",
     "id": "x5kd",
-    "z": 25921,
-    "parent": "hrqh"
+    "z": 27356,
+    "parent": "3bme"
   },
   "bjy5": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-01",
     "id": "bjy5",
-    "z": 25927,
-    "parent": "hrqh"
+    "z": 27374,
+    "parent": "3bme"
   },
   "m1cn": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-02",
     "id": "m1cn",
-    "z": 25934,
-    "parent": "hrqh"
+    "z": 27223,
+    "parent": "3bme"
   },
   "s5no": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-03",
     "id": "s5no",
-    "z": 25946,
-    "parent": "hrqh"
+    "z": 27321,
+    "parent": "3bme"
   },
   "kqr5": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-04",
     "id": "kqr5",
-    "z": 25962,
-    "parent": "hrqh"
+    "z": 27233,
+    "parent": "3bme"
   },
   "17os": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-05",
     "id": "17os",
-    "z": 25992,
-    "parent": "hrqh"
+    "z": 27375,
+    "parent": "3bme"
   },
   "po6m": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-06",
     "id": "po6m",
-    "z": 25912,
-    "parent": "hrqh"
+    "z": 27333,
+    "parent": "3bme"
   },
   "budl": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-07",
     "id": "budl",
-    "z": 25963,
-    "parent": "hrqh"
+    "z": 27363,
+    "parent": "3bme"
   },
   "fxba": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-08",
     "id": "fxba",
-    "z": 25952,
-    "parent": "hrqh"
+    "z": 27208,
+    "parent": "3bme"
   },
   "187l": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-09",
     "id": "187l",
-    "z": 25948,
-    "parent": "hrqh"
+    "z": 27311,
+    "parent": "3bme"
   },
   "o9lb": {
     "deck": "DECK",
     "type": "card",
     "cardType": "04-Diamonds-10",
     "id": "o9lb",
-    "z": 25920,
-    "parent": "hrqh"
+    "z": 27225,
+    "parent": "3bme"
   },
   "lfbw": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-00",
     "id": "lfbw",
-    "z": 25955,
-    "parent": "hrqh"
+    "z": 27372,
+    "parent": "3bme"
   },
   "j2nr": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-01",
     "id": "j2nr",
-    "z": 25986,
-    "parent": "hrqh"
+    "z": 27365,
+    "parent": "3bme"
   },
   "6iba": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-02",
     "id": "6iba",
-    "z": 25932,
-    "parent": "hrqh"
+    "z": 27351,
+    "parent": "3bme"
   },
   "ydp6": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-03",
     "id": "ydp6",
-    "z": 25961,
-    "parent": "hrqh"
+    "z": 27361,
+    "parent": "3bme"
   },
   "b1mn": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-04",
     "id": "b1mn",
-    "z": 25967,
-    "parent": "hrqh"
+    "z": 27234,
+    "parent": "3bme"
   },
   "a594": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-05",
     "id": "a594",
-    "z": 25924,
-    "parent": "hrqh"
+    "z": 27210,
+    "parent": "3bme"
   },
   "527c": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-06",
     "id": "527c",
-    "z": 25957,
-    "parent": "hrqh"
+    "z": 27376,
+    "parent": "3bme"
   },
   "vtke": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-07",
     "id": "vtke",
-    "z": 25940,
-    "parent": "hrqh"
+    "z": 27362,
+    "parent": "3bme"
   },
   "p1x2": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-08",
     "id": "p1x2",
-    "z": 25916,
-    "parent": "hrqh"
+    "z": 27338,
+    "parent": "3bme"
   },
   "luqt": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-09",
     "id": "luqt",
-    "z": 25951,
-    "parent": "hrqh"
+    "z": 27343,
+    "parent": "3bme"
   },
   "eonc": {
     "deck": "DECK",
     "type": "card",
     "cardType": "05-Starts-10",
     "id": "eonc",
-    "z": 25998,
-    "parent": "hrqh"
+    "z": 27197,
+    "parent": "3bme"
   },
   "qq5r": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-00",
     "id": "qq5r",
-    "z": 25931,
-    "parent": "hrqh"
+    "z": 27207,
+    "parent": "3bme"
   },
   "zxm8": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-01",
     "id": "zxm8",
-    "z": 25947,
-    "parent": "hrqh"
+    "z": 27211,
+    "parent": "3bme"
   },
   "04fw": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-02",
     "id": "04fw",
-    "z": 25965,
-    "parent": "hrqh"
+    "z": 27336,
+    "parent": "3bme"
   },
   "d4af": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-03",
     "id": "d4af",
-    "z": 25964,
-    "parent": "hrqh"
+    "z": 27213,
+    "parent": "3bme"
   },
   "jws8": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-04",
     "id": "jws8",
-    "z": 25954,
-    "parent": "hrqh"
+    "z": 27205,
+    "parent": "3bme"
   },
   "bakg": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-05",
     "id": "bakg",
-    "z": 25989,
-    "parent": "hrqh"
+    "z": 27353,
+    "parent": "3bme"
   },
   "d31h": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-06",
     "id": "d31h",
-    "z": 25966,
-    "parent": "hrqh"
+    "z": 27332,
+    "parent": "3bme"
   },
   "dml1": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-07",
     "id": "dml1",
-    "z": 25917,
-    "parent": "hrqh"
+    "z": 27331,
+    "parent": "3bme"
   },
   "8dco": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-08",
     "id": "8dco",
-    "z": 25956,
-    "parent": "hrqh"
+    "z": 27327,
+    "parent": "3bme"
   },
   "viq2": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-09",
     "id": "viq2",
-    "z": 25939,
-    "parent": "hrqh"
+    "z": 27301,
+    "parent": "3bme"
   },
   "ibxx": {
     "deck": "DECK",
     "type": "card",
     "cardType": "06-Moons-10",
     "id": "ibxx",
-    "z": 25995,
-    "parent": "hrqh"
+    "z": 27346,
+    "parent": "3bme"
   },
   "DEAL": {
     "type": "holder",
@@ -981,7 +981,7 @@
       "target": null,
       "player": null
     },
-    "x": 8,
+    "x": 1395,
     "y": 810,
     "css": "background:#fff6"
   },
@@ -1038,7 +1038,8 @@
     "hideWhenUnused": true,
     "hand2": "TopHolder-SEAT1",
     "x": 5,
-    "scale": 0.98
+    "scale": 0.98,
+    "turn": true
   },
   "TopHolder-SEAT1": {
     "type": "holder",
@@ -1397,8 +1398,7 @@
     "movableInEdit": false,
     "hideWhenUnused": true,
     "hand2": "TopHolder-SEAT5",
-    "scale": 0.98,
-    "turn": true
+    "scale": 0.98
   },
   "TopHolder-SEAT5": {
     "type": "holder",
@@ -1549,9 +1549,8 @@
   "carnivalLine": {
     "type": "holder",
     "id": "carnivalLine",
-    "x": 710,
     "y": 810,
-    "width": 800,
+    "width": 605,
     "z": 139,
     "onEnter": {
       "activeFace": 1
@@ -1560,12 +1559,39 @@
       "activeFace": 0
     },
     "stackOffsetX": 45,
-    "css": "background:#fff6"
+    "css": "background:#fff6",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "countRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "paradeCount"
+        ],
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "x": 170
   },
   "temp": {
     "type": "holder",
     "id": "temp",
-    "x": 515,
+    "x": 915,
     "y": 810,
     "z": 145,
     "css": "background:#fff6",
@@ -1671,18 +1697,10 @@
       }
     ]
   },
-  "hrqh": {
-    "type": "pile",
-    "width": 103,
-    "height": 160,
-    "id": "hrqh",
-    "z": 20604,
-    "parent": "DEAL"
-  },
   "Move": {
     "id": "Move",
-    "x": 645,
-    "y": 861,
+    "x": 819,
+    "y": 868,
     "width": 50,
     "height": 50,
     "z": 29,
@@ -1698,7 +1716,7 @@
         "color": "#888"
       }
     },
-    "text": "arrow_right",
+    "text": "arrow_left",
     "clickRoutine": [
       {
         "func": "SELECT",
@@ -1778,7 +1796,8 @@
       }
     ],
     "movable": false,
-    "endCheck": false
+    "endCheck": false,
+    "layer": -3
   },
   "background": {
     "id": "background",
@@ -1859,8 +1878,8 @@
   "restart": {
     "type": "button",
     "id": "restart",
-    "x": 1522,
-    "y": 911,
+    "x": 8,
+    "y": 917,
     "width": 70,
     "height": 70,
     "z": 54,
@@ -1953,5 +1972,27 @@
         "holder": "DEAL"
       }
     ]
+  },
+  "paradeCount": {
+    "id": "paradeCount",
+    "height": 40,
+    "movable": false,
+    "css": {
+      "font-size": "40px"
+    },
+    "width": 45,
+    "layer": -3,
+    "y": 879,
+    "text": 0,
+    "x": 120
+  },
+  "3bme": {
+    "type": "pile",
+    "parent": "DEAL",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "3bme"
   }
 }
