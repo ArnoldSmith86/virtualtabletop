@@ -18,7 +18,7 @@
       "similarAwards": "2015 As d'Or - Jeu de l'Année Nominee\n2014 Fairplay À la carte Runner-up",
       "ruleText": "<h4><span style=\"color: var(--overlayFontColor);\">Rounds and actions</span><br></h4><div><span style=\"color: var(--overlayFontColor);\">Players need to play a card at the end of the card line (right side of the line).</span><br></div><div>The value in the card played blocks equals the number of safe cards in front of the played card.</div><div><br></div><div>The player needs to take all unsafe cards that are equal or lower value than the played card and all unsafe cards that are of the same color as the played card.</div><div><br></div><div>Example:\nIf the player plays a Yellow-4 card they count 4 cards after the played card. Those cards are safe and the player doesn't need to take them.\nFrom the unsafe card the player needs to take all cards that have values 1, 2, 3, or 4 and all cards that are Yellow no matter the value.\nIn the image below the 4 cards from Green-2 to Purple-1 are safe cards. No matter the value or color they will not be taken.\nAll other cards (to the left of Purple-1) are not safe. The player must take all yellow cards and all cards with a value 4 or lower.</div><a href=\"/assets/385578086_109456\"><img src=\"/assets/385578086_109456\" class=\"richtextAsset\"></a><div><br></div><div><h4>End of the game&nbsp;</h4></div><div>The last round begins either when a player gets the last card from the draw pile or one player has collected at least one or more of each type of card. All players play one last card ending in the player the drew the last card from the draw pile.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">All players need to choose 2 cards to add to their pile and 2 cards to discard.</span></div><div>&nbsp;</div><h4>Counting points</h4><div>The player that have the majority of each color count 1 point for each card of that color. If two players have the majority of the same color both count 1 point per card.\n<br></div><div>All other cards points are added using their printed value.\n\nThe Player with the LEAST amount of points wins.</div>",
       "helpText": "<h4>Setup</h4><div><ul><li><span style=\"font-weight: normal;\">All players should select a seat</span><a href=\"/assets/2113431920_4817\"><img src=\"/assets/2113431920_4817\" class=\"richtextAsset\"></a></li></ul><ul><li><span style=\"font-weight: normal;\">Click on the play button&nbsp;to deal cards<a href=\"/assets/-660941794_1759\"><img src=\"/assets/-660941794_1759\" class=\"richtextAsset\"></a></span></li></ul><h4>Round</h4><ul><li><span style=\"font-weight: 400;\">The player puts a card in the holder under the arrow</span><a href=\"/assets/-1527996678_145413\"><img src=\"/assets/-1527996678_145413\" class=\"richtextAsset\"></a></li></ul><ul><li><span style=\"font-weight: normal;\">All cards that should be taken into the player's pile will be highlighted</span><a href=\"/assets/385578086_109456\"><img src=\"/assets/385578086_109456\" class=\"richtextAsset\"></a></li></ul><ul><li><span style=\"font-weight: 400;\">The player can click the arrow to move the played card into the line and take the card into their pile</span><a href=\"/assets/-783411224_94248\"><img src=\"/assets/-783411224_94248\" class=\"richtextAsset\"></a></li></ul><ul><li><span style=\"font-weight: 400;\">The player needs to buy another card from the draw pile. Players should always have 5 cards when possible</span><a href=\"/assets/-424757628_56321\"><img src=\"/assets/-424757628_56321\" class=\"richtextAsset\"></a></li></ul><h4>Ending the game</h4><div><ul><li><span style=\"font-weight: 400;\">After the last round is played, players need to discard 2 cards into the draw pile</span></li><li><span style=\"font-weight: 400;\">When all players have chosen the remainder 2 cards in their hands, the cards can be played into their piles</span></li><li><span style=\"font-weight: 400;\">Players can use the counter to help them count their points</span></li></ul></div></div>",
-      "lastUpdate": 1701379283324,
+      "lastUpdate": 1701415523164,
       "similarDesigner": "Naoki Homma",
       "variantImage": "",
       "variant": "",
@@ -449,7 +449,7 @@
     "type": "card",
     "cardType": "01-Spades-00",
     "id": "86ig",
-    "z": 22583,
+    "z": 25983,
     "parent": "hrqh"
   },
   "jjkk": {
@@ -457,7 +457,7 @@
     "type": "card",
     "cardType": "01-Spades-01",
     "id": "jjkk",
-    "z": 22594,
+    "z": 25960,
     "parent": "hrqh"
   },
   "6ads": {
@@ -465,7 +465,7 @@
     "type": "card",
     "cardType": "01-Spades-02",
     "id": "6ads",
-    "z": 22625,
+    "z": 25938,
     "parent": "hrqh"
   },
   "99r0": {
@@ -473,7 +473,7 @@
     "type": "card",
     "cardType": "01-Spades-03",
     "id": "99r0",
-    "z": 22606,
+    "z": 25911,
     "parent": "hrqh"
   },
   "cd3x": {
@@ -481,7 +481,7 @@
     "type": "card",
     "cardType": "01-Spades-04",
     "id": "cd3x",
-    "z": 22600,
+    "z": 25914,
     "parent": "hrqh"
   },
   "pd8t": {
@@ -489,7 +489,7 @@
     "type": "card",
     "cardType": "01-Spades-05",
     "id": "pd8t",
-    "z": 22604,
+    "z": 25918,
     "parent": "hrqh"
   },
   "8zjq": {
@@ -497,7 +497,7 @@
     "type": "card",
     "cardType": "01-Spades-06",
     "id": "8zjq",
-    "z": 22585,
+    "z": 25922,
     "parent": "hrqh"
   },
   "a8m3": {
@@ -505,7 +505,7 @@
     "type": "card",
     "cardType": "01-Spades-07",
     "id": "a8m3",
-    "z": 22634,
+    "z": 25928,
     "parent": "hrqh"
   },
   "xpd2": {
@@ -513,7 +513,7 @@
     "type": "card",
     "cardType": "01-Spades-08",
     "id": "xpd2",
-    "z": 22626,
+    "z": 25919,
     "parent": "hrqh"
   },
   "ir8h": {
@@ -521,7 +521,7 @@
     "type": "card",
     "cardType": "01-Spades-09",
     "id": "ir8h",
-    "z": 22614,
+    "z": 25959,
     "parent": "hrqh"
   },
   "yvmr": {
@@ -529,7 +529,7 @@
     "type": "card",
     "cardType": "01-Spades-10",
     "id": "yvmr",
-    "z": 22622,
+    "z": 25933,
     "parent": "hrqh"
   },
   "0jgt": {
@@ -537,7 +537,7 @@
     "type": "card",
     "cardType": "02-Hearts-00",
     "id": "0jgt",
-    "z": 22615,
+    "z": 25937,
     "parent": "hrqh"
   },
   "6c0v": {
@@ -545,7 +545,7 @@
     "type": "card",
     "cardType": "02-Hearts-01",
     "id": "6c0v",
-    "z": 22628,
+    "z": 25925,
     "parent": "hrqh"
   },
   "84qt": {
@@ -553,7 +553,7 @@
     "type": "card",
     "cardType": "02-Hearts-02",
     "id": "84qt",
-    "z": 22618,
+    "z": 25909,
     "parent": "hrqh"
   },
   "xfq2": {
@@ -561,7 +561,7 @@
     "type": "card",
     "cardType": "02-Hearts-03",
     "id": "xfq2",
-    "z": 22665,
+    "z": 25945,
     "parent": "hrqh"
   },
   "5tzs": {
@@ -569,7 +569,7 @@
     "type": "card",
     "cardType": "02-Hearts-04",
     "id": "5tzs",
-    "z": 22580,
+    "z": 25942,
     "parent": "hrqh"
   },
   "sqkp": {
@@ -577,7 +577,7 @@
     "type": "card",
     "cardType": "02-Hearts-05",
     "id": "sqkp",
-    "z": 22584,
+    "z": 25943,
     "parent": "hrqh"
   },
   "vqug": {
@@ -585,7 +585,7 @@
     "type": "card",
     "cardType": "02-Hearts-06",
     "id": "vqug",
-    "z": 22591,
+    "z": 25968,
     "parent": "hrqh"
   },
   "gagc": {
@@ -593,7 +593,7 @@
     "type": "card",
     "cardType": "02-Hearts-07",
     "id": "gagc",
-    "z": 22609,
+    "z": 25935,
     "parent": "hrqh"
   },
   "iccr": {
@@ -601,7 +601,7 @@
     "type": "card",
     "cardType": "02-Hearts-08",
     "id": "iccr",
-    "z": 22598,
+    "z": 25910,
     "parent": "hrqh"
   },
   "0mi6": {
@@ -609,7 +609,7 @@
     "type": "card",
     "cardType": "02-Hearts-09",
     "id": "0mi6",
-    "z": 22608,
+    "z": 25949,
     "parent": "hrqh"
   },
   "o6c0": {
@@ -617,7 +617,7 @@
     "type": "card",
     "cardType": "02-Hearts-10",
     "id": "o6c0",
-    "z": 22579,
+    "z": 25923,
     "parent": "hrqh"
   },
   "uu1e": {
@@ -625,7 +625,7 @@
     "type": "card",
     "cardType": "03-Clubs-00",
     "id": "uu1e",
-    "z": 22653,
+    "z": 25913,
     "parent": "hrqh"
   },
   "41o3": {
@@ -633,7 +633,7 @@
     "type": "card",
     "cardType": "03-Clubs-01",
     "id": "41o3",
-    "z": 22581,
+    "z": 25944,
     "parent": "hrqh"
   },
   "orr7": {
@@ -641,7 +641,7 @@
     "type": "card",
     "cardType": "03-Clubs-02",
     "id": "orr7",
-    "z": 22632,
+    "z": 25929,
     "parent": "hrqh"
   },
   "62uz": {
@@ -649,7 +649,7 @@
     "type": "card",
     "cardType": "03-Clubs-03",
     "id": "62uz",
-    "z": 22619,
+    "z": 25950,
     "parent": "hrqh"
   },
   "gtf3": {
@@ -657,7 +657,7 @@
     "type": "card",
     "cardType": "03-Clubs-04",
     "id": "gtf3",
-    "z": 22597,
+    "z": 25915,
     "parent": "hrqh"
   },
   "czsp": {
@@ -665,7 +665,7 @@
     "type": "card",
     "cardType": "03-Clubs-05",
     "id": "czsp",
-    "z": 22627,
+    "z": 25936,
     "parent": "hrqh"
   },
   "bfxl": {
@@ -673,7 +673,7 @@
     "type": "card",
     "cardType": "03-Clubs-06",
     "id": "bfxl",
-    "z": 22599,
+    "z": 25930,
     "parent": "hrqh"
   },
   "a838": {
@@ -681,7 +681,7 @@
     "type": "card",
     "cardType": "03-Clubs-07",
     "id": "a838",
-    "z": 22659,
+    "z": 25958,
     "parent": "hrqh"
   },
   "n86s": {
@@ -689,7 +689,7 @@
     "type": "card",
     "cardType": "03-Clubs-08",
     "id": "n86s",
-    "z": 22656,
+    "z": 25953,
     "parent": "hrqh"
   },
   "7v23": {
@@ -697,7 +697,7 @@
     "type": "card",
     "cardType": "03-Clubs-09",
     "id": "7v23",
-    "z": 22595,
+    "z": 25941,
     "parent": "hrqh"
   },
   "ql4q": {
@@ -705,7 +705,7 @@
     "type": "card",
     "cardType": "03-Clubs-10",
     "id": "ql4q",
-    "z": 22611,
+    "z": 25926,
     "parent": "hrqh"
   },
   "x5kd": {
@@ -713,7 +713,7 @@
     "type": "card",
     "cardType": "04-Diamonds-00",
     "id": "x5kd",
-    "z": 22633,
+    "z": 25921,
     "parent": "hrqh"
   },
   "bjy5": {
@@ -721,7 +721,7 @@
     "type": "card",
     "cardType": "04-Diamonds-01",
     "id": "bjy5",
-    "z": 22602,
+    "z": 25927,
     "parent": "hrqh"
   },
   "m1cn": {
@@ -729,7 +729,7 @@
     "type": "card",
     "cardType": "04-Diamonds-02",
     "id": "m1cn",
-    "z": 22621,
+    "z": 25934,
     "parent": "hrqh"
   },
   "s5no": {
@@ -737,7 +737,7 @@
     "type": "card",
     "cardType": "04-Diamonds-03",
     "id": "s5no",
-    "z": 22613,
+    "z": 25946,
     "parent": "hrqh"
   },
   "kqr5": {
@@ -745,7 +745,7 @@
     "type": "card",
     "cardType": "04-Diamonds-04",
     "id": "kqr5",
-    "z": 22586,
+    "z": 25962,
     "parent": "hrqh"
   },
   "17os": {
@@ -753,7 +753,7 @@
     "type": "card",
     "cardType": "04-Diamonds-05",
     "id": "17os",
-    "z": 22662,
+    "z": 25992,
     "parent": "hrqh"
   },
   "po6m": {
@@ -761,7 +761,7 @@
     "type": "card",
     "cardType": "04-Diamonds-06",
     "id": "po6m",
-    "z": 22631,
+    "z": 25912,
     "parent": "hrqh"
   },
   "budl": {
@@ -769,7 +769,7 @@
     "type": "card",
     "cardType": "04-Diamonds-07",
     "id": "budl",
-    "z": 22587,
+    "z": 25963,
     "parent": "hrqh"
   },
   "fxba": {
@@ -777,7 +777,7 @@
     "type": "card",
     "cardType": "04-Diamonds-08",
     "id": "fxba",
-    "z": 22629,
+    "z": 25952,
     "parent": "hrqh"
   },
   "187l": {
@@ -785,7 +785,7 @@
     "type": "card",
     "cardType": "04-Diamonds-09",
     "id": "187l",
-    "z": 22589,
+    "z": 25948,
     "parent": "hrqh"
   },
   "o9lb": {
@@ -793,7 +793,7 @@
     "type": "card",
     "cardType": "04-Diamonds-10",
     "id": "o9lb",
-    "z": 22624,
+    "z": 25920,
     "parent": "hrqh"
   },
   "lfbw": {
@@ -801,7 +801,7 @@
     "type": "card",
     "cardType": "05-Starts-00",
     "id": "lfbw",
-    "z": 22592,
+    "z": 25955,
     "parent": "hrqh"
   },
   "j2nr": {
@@ -809,7 +809,7 @@
     "type": "card",
     "cardType": "05-Starts-01",
     "id": "j2nr",
-    "z": 22638,
+    "z": 25986,
     "parent": "hrqh"
   },
   "6iba": {
@@ -817,7 +817,7 @@
     "type": "card",
     "cardType": "05-Starts-02",
     "id": "6iba",
-    "z": 22623,
+    "z": 25932,
     "parent": "hrqh"
   },
   "ydp6": {
@@ -825,7 +825,7 @@
     "type": "card",
     "cardType": "05-Starts-03",
     "id": "ydp6",
-    "z": 22590,
+    "z": 25961,
     "parent": "hrqh"
   },
   "b1mn": {
@@ -833,7 +833,7 @@
     "type": "card",
     "cardType": "05-Starts-04",
     "id": "b1mn",
-    "z": 22605,
+    "z": 25967,
     "parent": "hrqh"
   },
   "a594": {
@@ -841,7 +841,7 @@
     "type": "card",
     "cardType": "05-Starts-05",
     "id": "a594",
-    "z": 22610,
+    "z": 25924,
     "parent": "hrqh"
   },
   "527c": {
@@ -849,7 +849,7 @@
     "type": "card",
     "cardType": "05-Starts-06",
     "id": "527c",
-    "z": 22607,
+    "z": 25957,
     "parent": "hrqh"
   },
   "vtke": {
@@ -857,7 +857,7 @@
     "type": "card",
     "cardType": "05-Starts-07",
     "id": "vtke",
-    "z": 22603,
+    "z": 25940,
     "parent": "hrqh"
   },
   "p1x2": {
@@ -865,7 +865,7 @@
     "type": "card",
     "cardType": "05-Starts-08",
     "id": "p1x2",
-    "z": 22612,
+    "z": 25916,
     "parent": "hrqh"
   },
   "luqt": {
@@ -873,7 +873,7 @@
     "type": "card",
     "cardType": "05-Starts-09",
     "id": "luqt",
-    "z": 22617,
+    "z": 25951,
     "parent": "hrqh"
   },
   "eonc": {
@@ -881,7 +881,7 @@
     "type": "card",
     "cardType": "05-Starts-10",
     "id": "eonc",
-    "z": 22637,
+    "z": 25998,
     "parent": "hrqh"
   },
   "qq5r": {
@@ -889,7 +889,7 @@
     "type": "card",
     "cardType": "06-Moons-00",
     "id": "qq5r",
-    "z": 22593,
+    "z": 25931,
     "parent": "hrqh"
   },
   "zxm8": {
@@ -897,7 +897,7 @@
     "type": "card",
     "cardType": "06-Moons-01",
     "id": "zxm8",
-    "z": 22635,
+    "z": 25947,
     "parent": "hrqh"
   },
   "04fw": {
@@ -905,7 +905,7 @@
     "type": "card",
     "cardType": "06-Moons-02",
     "id": "04fw",
-    "z": 22601,
+    "z": 25965,
     "parent": "hrqh"
   },
   "d4af": {
@@ -913,7 +913,7 @@
     "type": "card",
     "cardType": "06-Moons-03",
     "id": "d4af",
-    "z": 22668,
+    "z": 25964,
     "parent": "hrqh"
   },
   "jws8": {
@@ -921,7 +921,7 @@
     "type": "card",
     "cardType": "06-Moons-04",
     "id": "jws8",
-    "z": 22620,
+    "z": 25954,
     "parent": "hrqh"
   },
   "bakg": {
@@ -929,7 +929,7 @@
     "type": "card",
     "cardType": "06-Moons-05",
     "id": "bakg",
-    "z": 22636,
+    "z": 25989,
     "parent": "hrqh"
   },
   "d31h": {
@@ -937,7 +937,7 @@
     "type": "card",
     "cardType": "06-Moons-06",
     "id": "d31h",
-    "z": 22588,
+    "z": 25966,
     "parent": "hrqh"
   },
   "dml1": {
@@ -945,7 +945,7 @@
     "type": "card",
     "cardType": "06-Moons-07",
     "id": "dml1",
-    "z": 22582,
+    "z": 25917,
     "parent": "hrqh"
   },
   "8dco": {
@@ -953,7 +953,7 @@
     "type": "card",
     "cardType": "06-Moons-08",
     "id": "8dco",
-    "z": 22630,
+    "z": 25956,
     "parent": "hrqh"
   },
   "viq2": {
@@ -961,7 +961,7 @@
     "type": "card",
     "cardType": "06-Moons-09",
     "id": "viq2",
-    "z": 22616,
+    "z": 25939,
     "parent": "hrqh"
   },
   "ibxx": {
@@ -969,7 +969,7 @@
     "type": "card",
     "cardType": "06-Moons-10",
     "id": "ibxx",
-    "z": 22596,
+    "z": 25995,
     "parent": "hrqh"
   },
   "DEAL": {
@@ -1069,6 +1069,58 @@
         "holder": "${bottomHolder}"
       },
       {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${bottomHolder}",
+        "collection": "theseCards"
+      },
+      {
+        "func": "SELECT",
+        "source": "theseCards",
+        "property": "color",
+        "value": "#529332",
+        "max": 1,
+        "collection": "eachColor"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "#634388",
+          "#b9130f",
+          "#56b4e9",
+          "#01020c",
+          "#eed227"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "theseCards",
+            "property": "color",
+            "value": "${value}",
+            "max": 1,
+            "collection": "eachColor",
+            "mode": "add"
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "collection": "eachColor",
+        "property": "color",
+        "aggregation": "array"
+      },
+      "var endCheck = length ${color}",
+      {
+        "func": "IF",
+        "operand1": "${endCheck}",
+        "relation": "<",
+        "operand2": 6,
+        "thenRoutine": [
+          "var result = true"
+        ]
+      },
+      {
         "func": "FOREACH",
         "range": [
           14
@@ -1110,8 +1162,7 @@
     "movableInEdit": false,
     "hideWhenUnused": true,
     "hand2": "TopHolder-SEAT2",
-    "scale": 0.98,
-    "turn": true
+    "scale": 0.98
   },
   "TopHolder-SEAT2": {
     "type": "holder",
@@ -1346,7 +1397,8 @@
     "movableInEdit": false,
     "hideWhenUnused": true,
     "hand2": "TopHolder-SEAT5",
-    "scale": 0.98
+    "scale": 0.98,
+    "turn": true
   },
   "TopHolder-SEAT5": {
     "type": "holder",
@@ -1694,19 +1746,39 @@
       {
         "func": "CALL",
         "routine": "sortRoutine",
-        "widget": "${seatHand}"
+        "widget": "${seatHand}",
+        "variable": "result"
       },
       {
-        "func": "MOVE",
-        "from": "DEAL",
-        "to": "SEAT${seatIndex}",
-        "fillTo": 5
+        "func": "IF",
+        "condition": "${PROPERTY endCheck}",
+        "elseRoutine": [
+          {
+            "func": "MOVE",
+            "from": "DEAL",
+            "to": "SEAT${seatIndex}",
+            "fillTo": 5
+          },
+          {
+            "func": "IF",
+            "condition": "${result}",
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "endCheck",
+                "value": true
+              }
+            ]
+          }
+        ]
       },
       {
         "func": "TURN"
       }
     ],
-    "movable": false
+    "movable": false,
+    "endCheck": false
   },
   "background": {
     "id": "background",
@@ -1865,6 +1937,14 @@
         "from": "DEAL",
         "to": "carnivalLine",
         "fillTo": 6
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Move"
+        ],
+        "property": "endCheck",
+        "value": false
       }
     ],
     "gameStartRoutine": [
