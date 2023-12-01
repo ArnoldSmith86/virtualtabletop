@@ -1045,7 +1045,7 @@ async function confirmOverlay(title, text, confirmButton, cancelButton, confirmI
 async function shareLink(state) {
   showStatesOverlay('shareLinkOverlay');
 
-  const name = state.name.replace(/[^A-Za-z0-9.-]+/g, '_');
+  const name = state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '');
   let url = null;
 
   if(state.publicLibrary) {
