@@ -254,7 +254,7 @@ MinifyHTML().then(function(result) {
       return res.status(404).send('Invalid share.');
 
     const roomID  = isPublicLibraryGame ? 'dummy'          : sharedLinks[`/s/${req.params.share}`].split('/')[2];
-    const stateID = isPublicLibraryGame ? req.params.share : sharedLinks[`/s/${req.params.share}`].split('/')[1];
+    const stateID = isPublicLibraryGame ? req.params.share : sharedLinks[`/s/${req.params.share}`].split('/')[3];
 
     ensureRoomIsLoaded(roomID).then(function(isLoaded) {
       if(isLoaded) {
