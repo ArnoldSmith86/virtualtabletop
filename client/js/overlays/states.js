@@ -1049,7 +1049,7 @@ async function shareLink(state) {
   let url = null;
 
   if(state.publicLibrary) {
-    url = `${location.origin}/game/${name}`;
+    url = `${config.externalURL}/game/${name}`;
   } else {
     url = state.link;
     if(!url) {
