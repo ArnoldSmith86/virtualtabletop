@@ -1,10 +1,17 @@
 function parseGameURL() {
   const gameURLmatch = location.href.match(/\/game\/(?:([0-9a-z]{8})\/)?([a-z-]+)$/);
   if(gameURLmatch) {
-    return {
-      type: 'user',
-      id: gameURLmatch[1]
-    };
+    if(gameURLmatch[1]) {
+      return {
+        type: 'user',
+        id: gameURLmatch[1]
+      };
+    } else {
+      return {
+        type: 'public',
+        id: `PL:${gameURLmatch[2]}`
+      };
+    }
   }
 }
 

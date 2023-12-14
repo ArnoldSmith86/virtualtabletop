@@ -232,14 +232,14 @@ MinifyHTML().then(function(result) {
   router.options('/api/addShareToRoom/:room/:share', allowCORS);
   router.get('/api/addShareToRoom/:room/:share', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    if(!sharedLinks[`/s/${req.params.share}`])
+    const isPublicLibraryGame = req.params.share.match(/^PL:([a-z-]+)$/);
+    if(!isPublicLibraryGame && !sharedLinks[`/s/${req.params.share}`])
       return res.sendStatus(404);
 
-    const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
     ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
       if(isLoaded) {
-        await activeRooms.get(req.params.room).addState(req.params.share, 'link', `${Config.get('externalURL')}/s/${req.params.share}/name.vtt`, '');
-        res.send(req.params.share);
+        const newStateID = await activeRooms.get(req.params.room).addShare(req.params.share);
+        res.send(newStateID);
       } else {
         res.status(404).send('Invalid room.');
       }
@@ -249,14 +249,17 @@ MinifyHTML().then(function(result) {
   router.options('/api/shareDetails/:share', allowCORS);
   router.get('/api/shareDetails/:share', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    if(!sharedLinks[`/s/${req.params.share}`])
+    const isPublicLibraryGame = req.params.share.match(/^PL:([a-z-]+)$/);
+    if(!isPublicLibraryGame && !sharedLinks[`/s/${req.params.share}`])
       return res.status(404).send('Invalid share.');
 
-    const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
-    ensureRoomIsLoaded(tokens[2]).then(function(isLoaded) {
+    const roomID  = isPublicLibraryGame ? 'dummy'          : sharedLinks[`/s/${req.params.share}`].split('/')[2];
+    const stateID = isPublicLibraryGame ? req.params.share : sharedLinks[`/s/${req.params.share}`].split('/')[1];
+
+    ensureRoomIsLoaded(roomID).then(function(isLoaded) {
       if(isLoaded) {
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(activeRooms.get(tokens[2]).state._meta.states[tokens[3]]));
+        res.send(JSON.stringify(activeRooms.get(roomID).getStateDetails(stateID)));
       }
     }).catch(next);
   });

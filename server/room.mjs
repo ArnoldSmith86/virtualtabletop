@@ -50,6 +50,18 @@ export default class Room {
     }
   }
 
+  async addShare(shareID) {
+    if(shareID.match(/^PL:/)) {
+      const state = this.getStateDetails(shareID);
+      if(!this.state._meta.starred[state.publicLibrary])
+        this.toggleStateStar(null, state.publicLibrary);
+      return state.id;
+    } else {
+      await this.addState(req.params.share, 'link', `${Config.get('externalURL')}/s/${shareID}/name.vtt`, '');
+      return req.params.share;
+    }
+  }
+
   async addState(id, type, src, srcName, addAsVariant) {
     const initialAddAsVariant = addAsVariant;
     let stateID = addAsVariant || id;
@@ -414,6 +426,16 @@ export default class Room {
     }
     Statistics.updateDataInsideStates(Room.publicLibrary);
     return Room.publicLibrary;
+  }
+
+  getStateDetails(stateID) {
+    if(stateID.match(/^PL:/)) {
+      for(const [ id, state ] of Object.entries(this.state._meta.states))
+        if(state.publicLibrary && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == stateID.substr(3))
+          return Object.assign({}, state, { id });
+    } else {
+      return this.state._meta.states[stateID];
+    }
   }
 
   getVariantMetadata(stateID, variantID) {
