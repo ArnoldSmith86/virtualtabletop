@@ -20,7 +20,7 @@ export function startWebSocket() {
   connection.onopen = () => {
     showOverlay(null, true);
     showOverlay(lastOverlay);
-    if(!urlProperties.askID && !location.href.includes('/game/')) {
+    if(!urlProperties.askID) {
       toServer('room', { playerName, roomID });
       if(urlProperties.trace)
         toServer('enableTrace');

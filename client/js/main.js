@@ -552,7 +552,8 @@ onLoad(function() {
 
   checkURLproperties(false);
   setScale();
-  startWebSocket();
+  if(!location.href.includes('/game/'))
+    startWebSocket();
 
   onMessage('warning', alert);
   onMessage('error', function(message) {

@@ -28,6 +28,7 @@ async function playButtonClick(updateProgress) {
   updateProgress('Joining room...');
   if(!$('#welcomeJoinRoom').value.match(/^[A-Za-z0-9_-]+$/))
     throw new Error('Invalid room name');
+  lastOverlay = 'linkDetailsOverlay';
   await joinRoom($('#welcomeJoinRoom').value);
   updateProgress('Adding game...');
   localStorage.setItem('playerName', playerName = $('#welcomePlayerName').value);
@@ -43,7 +44,7 @@ async function joinRoom(newRoomID) {
       history.pushState("", document.title, roomID);
       resolve();
     });
-    toServer('room', { playerName, roomID });
+    startWebSocket();
   });
 }
 
