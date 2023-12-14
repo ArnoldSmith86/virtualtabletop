@@ -94,7 +94,7 @@ function checkForLinkToOwnServer(link) {
 
   if(match) {
     const sharedLinks = JSON.parse(fs.readFileSync(Config.directory('save') + '/shares.json'));
-    const m = sharedLinks['/s/'.match[2]].split('/');
+    const m = sharedLinks['/s/'+match[2]].split('/');
 
     const states = {};
     states['VTT'] = [];

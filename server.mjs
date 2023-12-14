@@ -207,6 +207,8 @@ MinifyHTML().then(function(result) {
         const state = {...activeRooms.get(req.params.room).state};
         delete state._meta;
         res.send(JSON.stringify(state, null, '  '));
+      } else {
+        res.status(404).send('Invalid room.');
       }
     }).catch(next);
   });
@@ -218,6 +220,8 @@ MinifyHTML().then(function(result) {
         if(isLoaded) {
           activeRooms.get(req.params.room).setState(req.body);
           res.send('OK');
+        } else {
+          res.status(404).send('Invalid room.');
         }
       }).catch(next);
     } else {
@@ -232,10 +236,12 @@ MinifyHTML().then(function(result) {
       return res.sendStatus(404);
 
     const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
-    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+    ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
       if(isLoaded) {
-        activeRooms.get(req.params.room).addState(req.params.share, 'link', `${Config.get('externalURL')}/s/${req.params.share}/name.vtt`, '');
-        res.send('OK');
+        await activeRooms.get(req.params.room).addState(req.params.share, 'link', `${Config.get('externalURL')}/s/${req.params.share}/name.vtt`, '');
+        res.send(req.params.share);
+      } else {
+        res.status(404).send('Invalid room.');
       }
     }).catch(next);
   });
@@ -244,7 +250,7 @@ MinifyHTML().then(function(result) {
   router.get('/api/shareDetails/:share', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     if(!sharedLinks[`/s/${req.params.share}`])
-      return res.sendStatus(404);
+      return res.status(404).send('Invalid share.');
 
     const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
     ensureRoomIsLoaded(tokens[2]).then(function(isLoaded) {
@@ -257,7 +263,7 @@ MinifyHTML().then(function(result) {
 
   router.get('/s/:link/:junk', function(req, res, next) {
     if(!sharedLinks[`/s/${req.params.link}`])
-      return res.sendStatus(404);
+      return res.status(404).send('Invalid share.');
 
     const tokens = sharedLinks[`/s/${req.params.link}`].split('/');
     downloadState(res, tokens[2], tokens[3]).catch(next);

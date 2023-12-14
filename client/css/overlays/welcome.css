@@ -1,0 +1,35 @@
+
+#linkDetailsOverlay {
+  color: var(--overlayFontColor);
+}
+
+#linkDetailsOverlay h1 {
+  margin-bottom: 0;
+}
+
+#linkDetailsOverlay h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+#linkDetailsOverlay .addToRoomBox {
+  position: absolute;
+  width: 60%;
+  top: calc(20px + var(--mainDetailsHeight));
+  left: 20%;
+  box-sizing: border-box;
+  background: var(--roomColor);
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 20px;
+}
+#welcomePlayButton {
+  margin: auto;
+}
+#linkDetailsOverlay .addToRoomBox button[icon=share] {
+  display: inline-flex;
+  padding: 2px;
+  vertical-align: middle;
+}
+#linkDetailsOverlay p[icon]::before {
+  left: 32px;
+}

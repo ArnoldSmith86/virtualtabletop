@@ -128,18 +128,8 @@ function checkURLproperties(connected) {
   if(!connected) {
 
     try {
-      const gameURLmatch = location.href.match(/\/game\/(?:([0-9a-z]{8})\/)?([a-z-]+)$/);
-      if(gameURLmatch) {
-        console.log(gameURLmatch);
-        fetch(`api/shareDetails/${gameURLmatch[1]}`).then(async function(r) {
-          const state = await r.json();
-          console.log(state);
-          applyValuesToDOM($('#linkDetailsOverlay'), state);
-          toggleClass($('#linkDetailsOverlay .star'),               'hidden', !!gameURLmatch[1]);
-          toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', !gameURLmatch[1]);
-          showOverlay('linkDetailsOverlay');
-        });
-      } else if(location.hash) {
+      checkForGameURL();
+      if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
           $('#filterByType').value = 'Tutorials';
