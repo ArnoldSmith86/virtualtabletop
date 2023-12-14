@@ -23,6 +23,7 @@ function checkForGameURL() {
       applyValuesToDOM($('#linkDetailsOverlay'), state);
       $('#welcomePlayerName').value = playerName;
       $('#welcomeGameName').innerText = state.name;
+      $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
       toggleClass($('#linkDetailsOverlay .star'),               'hidden', gameDetails.type == 'user');
       toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', gameDetails.type == 'public');
       showOverlay('linkDetailsOverlay');

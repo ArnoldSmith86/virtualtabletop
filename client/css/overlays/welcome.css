@@ -18,9 +18,14 @@
   left: 20%;
   box-sizing: border-box;
   background: var(--roomColor);
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 20px;
   border-radius: 20px;
+}
+#linkDetailsOverlay .addToRoomBox > p:first-child {
+  margin-top: 0;
+}
+#linkDetailsOverlay .addToRoomBox > p:last-child {
+  margin-bottom: 0;
 }
 #welcomePlayButton {
   margin: auto;
