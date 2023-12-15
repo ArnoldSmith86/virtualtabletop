@@ -20,12 +20,17 @@ function checkForGameURL() {
   if(gameDetails) {
     fetch(`api/shareDetails/${gameDetails.id}`).then(async function(r) {
       const state = await r.json();
+
       applyValuesToDOM($('#linkDetailsOverlay'), state);
       $('#welcomePlayerName').value = playerName;
       $('#welcomeGameName').innerText = state.name;
       $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
       toggleClass($('#linkDetailsOverlay .star'),               'hidden', gameDetails.type == 'user');
       toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', gameDetails.type == 'public');
+
+      let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
+      document.title = `${state.name} - ${tabSuffix}`;
+
       showOverlay('linkDetailsOverlay');
     });
   }
