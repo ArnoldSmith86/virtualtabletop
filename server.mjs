@@ -52,6 +52,13 @@ async function ensureRoomIsLoaded(id) {
   return true;
 }
 
+function getEmptyRoomID() {
+  let id = null;
+  while(!id || fs.existsSync(savedir + '/rooms/' + id + '.json'))
+    id = Math.random().toString(36).substring(3, 7);
+  return id;
+}
+
 function validateInput(res, next, values) {
   for(const value of values) {
     if(value && !value.match(/^[A-Za-z0-9.: _-]+$/)) {
@@ -172,10 +179,7 @@ MinifyHTML().then(function(result) {
   });
 
   router.get('/', function(req, res) {
-    let id = null;
-    while(!id || fs.existsSync(savedir + '/rooms/' + id + '.json'))
-      id = Math.random().toString(36).substring(3, 7);
-    res.redirect(id);
+    res.redirect(getEmptyRoomID());
   });
 
   router.get('/dl/:room/:state/:variant', function(req, res, next) {
@@ -259,7 +263,7 @@ MinifyHTML().then(function(result) {
     ensureRoomIsLoaded(roomID).then(function(isLoaded) {
       if(isLoaded) {
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(activeRooms.get(roomID).getStateDetails(stateID)));
+        res.send(JSON.stringify(Object.assign({}, activeRooms.get(roomID).getStateDetails(stateID), { emptyRoomID: getEmptyRoomID() })));
       }
     }).catch(next);
   });

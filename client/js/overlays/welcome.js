@@ -22,6 +22,7 @@ function checkForGameURL() {
       const state = await r.json();
 
       applyValuesToDOM($('#linkDetailsOverlay'), state);
+      $('#welcomeJoinRoom').value = state.emptyRoomID;
       $('#welcomePlayerName').value = playerName;
       $('#welcomeGameName').innerText = state.name;
       $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
