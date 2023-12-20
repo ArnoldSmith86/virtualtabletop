@@ -157,19 +157,19 @@
     },
     "cardTypes": {
       "Avalance": {
-        "image": "/assets/-933369498_266661"
+        "image": "/assets/470087539_50396"
       },
       "Iron Stance": {
         "image": "/assets/1119123900_44394"
       },
       "Masons Savvy": {
-        "image": "/assets/438380371_250603"
+        "image": "/assets/-2138769815_45788"
       },
       "Sacrifice of the Hermit": {
-        "image": "/assets/1674559791_258172"
+        "image": "/assets/-1367523716_48160"
       },
       "Shifting Sands": {
-        "image": "/assets/-2042249907_255811"
+        "image": "/assets/-94795597_47132"
       }
     },
     "faceTemplates": [
@@ -225,16 +225,16 @@
     },
     "cardTypes": {
       "Control the Current": {
-        "image": "/assets/-499140795_226010"
+        "image": "/assets/493302344_44388"
       },
       "Inspiring Draught": {
-        "image": "/assets/627592702_225245"
+        "image": "/assets/737744225_43376"
       },
       "Reflect": {
-        "image": "/assets/-132913253_217083"
+        "image": "/assets/-1098420279_40870"
       },
       "Refreshing Thought": {
-        "image": "/assets/680614193_221322"
+        "image": "/assets/597957599_41828"
       },
       "Wandering River": {
         "image": "/assets/986479394_43528"
@@ -296,7 +296,7 @@
         "image": "/assets/-1060454048_38008"
       },
       "Burning Motivation": {
-        "image": "/assets/1972284976_219682"
+        "image": "/assets/-1089252476_40488"
       },
       "Sacrifical Pyre": {
         "image": "/assets/1106169138_41726"
@@ -305,7 +305,7 @@
         "image": "/assets/-1595529501_38644"
       },
       "Unbidden Lamplight": {
-        "image": "/assets/-1197097264_222324"
+        "image": "/assets/-533539271_41412"
       }
     },
     "faceTemplates": [
@@ -361,19 +361,19 @@
     },
     "cardTypes": {
       "Course of Action": {
-        "image": "/assets/-2009625108_196832"
+        "image": "/assets/-491802119_35922"
       },
       "Cyclone": {
-        "image": "/assets/-2042800329_192426"
+        "image": "/assets/-1738600359_34216"
       },
       "Take Flight": {
-        "image": "/assets/1335624270_201982"
+        "image": "/assets/1098312245_37048"
       },
       "Trade Winds": {
-        "image": "/assets/-2064490684_188403"
+        "image": "/assets/-691006207_33328"
       },
       "View From the Sky": {
-        "image": "/assets/-537405235_176264"
+        "image": "/assets/1342085772_30194"
       }
     },
     "faceTemplates": [
@@ -429,19 +429,19 @@
     },
     "cardTypes": {
       "Delay Tactics": {
-        "image": "/assets/426045087_185551"
+        "image": "/assets/-673101959_31646"
       },
       "Duplicative Mind": {
-        "image": "/assets/-318475987_188412"
+        "image": "/assets/-505929895_32822"
       },
       "Scholars Insight": {
-        "image": "/assets/-356950871_191786"
+        "image": "/assets/2095685451_33720"
       },
       "Shrewd Stratagem": {
-        "image": "/assets/-1570389518_184221"
+        "image": "/assets/1380796838_31880"
       },
       "Telekinesis": {
-        "image": "/assets/-1512551006_183997"
+        "image": "/assets/-1520734628_31748"
       }
     },
     "faceTemplates": [
@@ -1169,7 +1169,7 @@
     ],
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s"
@@ -1315,22 +1315,22 @@
     },
     "cardTypes": {
       "Wildfire": {
-        "image": "/assets/1239744820_214184"
+        "image": "/assets/1931923232_40100"
       },
       "Seed the Skies": {
-        "image": "/assets/-1000130306_215917"
+        "image": "/assets/1572314951_40222"
       },
       "Open Mind": {
         "image": "/assets/-1615760585_38210"
       },
       "Reflecting Pool": {
-        "image": "/assets/-1831237072_212824"
+        "image": "/assets/-1546952945_38838"
       },
       "Mudslide": {
         "image": "/assets/-653188628_37558"
       },
       "Incisive Strike": {
-        "image": "/assets/-1222629810_204720"
+        "image": "/assets/-1710201001_36786"
       },
       "Dust Storm": {
         "image": "/assets/-92297803_38886"
@@ -1653,7 +1653,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -1686,7 +1686,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2001,7 +2001,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2034,7 +2034,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2315,7 +2315,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2348,7 +2348,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2629,7 +2629,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2662,7 +2662,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2943,7 +2943,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2976,7 +2976,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/-1738371307_940')",
+        "background-image": "url('/assets/1671289076_836')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -7071,7 +7071,7 @@
       "mode": "vs",
       "time": "30-90",
       "attribution": "Created and copyrighted by Jake Seegers.<div>\nVTT implementation by Jake Seegers and Michael Taylor.</div><div>\nLibrary image generated using the DALL.E&nbsp; artificial intelligence image generator for the background, Ideogram.ai artificial intelligence image generator for the \"Godaigo\" text, and the remaining text and elements by Jake Seegers.</div><div>\nRulebook Art uses original art by Jake Seegers for game elements such as Scroll Cards, Symbols, and Tiles, and Midjourney artificial intelligence image generator for art and background images.</div>",
-      "lastUpdate": 1703086414383,
+      "lastUpdate": 1703086799263,
       "showName": true,
       "skill": "Medium",
       "description": "Godaigo: Secret of the Five Elements is a strategic board game where players find and cast Elemental Scrolls to win. Players arrange Elemental Stones on the board, using their unique abilities to influence gameplay. The game offers a unique, booster-pack-free, spellcasting experience in every playthrough.",
