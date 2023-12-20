@@ -853,14 +853,17 @@ function fillStateDetails(states, state, dom) {
     toServer('unlinkState', state.id);
   };
   $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
-  $('#shareLinkOverlay button[icon=link]').onclick = async function() {
+  progressButton($('#shareLinkOverlay button[icon=link]'), async function() {
     try {
-      await navigator.clipboard.writeText($('#shareLinkOverlay input').value.replace(/( \(copied\))+$/, ''));
-      $('#shareLinkOverlay input').value += ' (copied)';
+      await navigator.share({ url: $('#shareLinkOverlay input').value });
     } catch(e) {
-      $('#shareLinkOverlay input').value += ' (NOT copied)';
+      try {
+        await navigator.clipboard.writeText($('#shareLinkOverlay input').value);
+      } catch(e) {
+        throw new Error('Could not share or copy URL.');
+      }
     }
-  }
+  });
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
     const type     = state.savePlayers ? 'saved game'        : 'game';
