@@ -1055,6 +1055,8 @@ async function shareLink(state) {
     if(!url) {
       url = await fetch(`share/${roomID}/${state.id}`);
       url = `${location.origin}${await url.text()}/${name}`;
+    } else if(url.startsWith(`${config.externalURL}/s/`)) {
+      url = `${config.externalURL}/game/${url.substr(config.externalURL.length + 3, 8)}/${name}`;
     }
   }
 

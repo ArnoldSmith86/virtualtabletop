@@ -57,8 +57,8 @@ export default class Room {
         this.toggleStateStar(null, state.publicLibrary);
       return state.id;
     } else {
-      await this.addState(req.params.share, 'link', `${Config.get('externalURL')}/s/${shareID}/name.vtt`, '');
-      return req.params.share;
+      await this.addState(shareID, 'link', `${Config.get('externalURL')}/s/${shareID}/name.vtt`, '');
+      return shareID;
     }
   }
 

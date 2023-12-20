@@ -280,7 +280,7 @@ MinifyHTML().then(function(result) {
     const target = `/dl/${req.params.room}/${req.params.state}`;
     for(const link in sharedLinks)
       if(sharedLinks[link] == target)
-        return res.send(Config.get('urlPrefix') + link);
+        return res.send(Config.get('urlPrefix') + link.replace(/^\/s\//, '/game/'));
 
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded)
