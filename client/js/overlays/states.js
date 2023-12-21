@@ -853,7 +853,7 @@ function fillStateDetails(states, state, dom) {
     toServer('unlinkState', state.id);
   };
   $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
-  progressButton($('#shareLinkOverlay button[icon=link]'), async function() {
+  progressButton($('#shareLinkOverlay button[icon=share]'), async function() {
     try {
       await navigator.share({ url: $('#shareLinkOverlay input').value });
     } catch(e) {
