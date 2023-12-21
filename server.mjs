@@ -250,22 +250,29 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
+  async function shareDetails(shareID) {
+    const isPublicLibraryGame = shareID.match(/^PL:([a-z-]+)$/);
+    if(!isPublicLibraryGame && !sharedLinks[`/s/${shareID}`])
+      return null;
+
+    const roomID  = isPublicLibraryGame ? 'dummy' : sharedLinks[`/s/${shareID}`].split('/')[2];
+    const stateID = isPublicLibraryGame ? shareID : sharedLinks[`/s/${shareID}`].split('/')[3];
+
+    if(!await ensureRoomIsLoaded(roomID))
+      return null;
+
+    return Object.assign({}, activeRooms.get(roomID).getStateDetails(stateID), { emptyRoomID: getEmptyRoomID() });
+  }
   router.options('/api/shareDetails/:share', allowCORS);
-  router.get('/api/shareDetails/:share', function(req, res, next) {
+  router.get('/api/shareDetails/:share', async function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    const isPublicLibraryGame = req.params.share.match(/^PL:([a-z-]+)$/);
-    if(!isPublicLibraryGame && !sharedLinks[`/s/${req.params.share}`])
+    try {
+      const details = await shareDetails(req.params.share);
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(details));
+    } catch(e) {
       return res.status(404).send('Invalid share.');
-
-    const roomID  = isPublicLibraryGame ? 'dummy'          : sharedLinks[`/s/${req.params.share}`].split('/')[2];
-    const stateID = isPublicLibraryGame ? req.params.share : sharedLinks[`/s/${req.params.share}`].split('/')[3];
-
-    ensureRoomIsLoaded(roomID).then(function(isLoaded) {
-      if(isLoaded) {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(Object.assign({}, activeRooms.get(roomID).getStateDetails(stateID), { emptyRoomID: getEmptyRoomID() })));
-      }
-    }).catch(next);
+    }
   });
 
   router.get('/s/:link/:junk', function(req, res, next) {
@@ -313,43 +320,56 @@ MinifyHTML().then(function(result) {
   const botPattern = createBotPattern(crawlers);
 
   router.get('/:room', gameRoomHandler);
-  router.get('/game/:id', gameRoomHandler);
-  router.get('/game/:id/:junk', gameRoomHandler);
-  router.get('/tutorial/:id', gameRoomHandler);
-  function gameRoomHandler(req, res, next) {
-    ensureRoomIsLoaded(req.params.room || req.params.id).then(function(isLoaded) {
-      if(!isLoaded) {
-        res.send('Invalid characters in room ID.');
-        return;
-      }
+  router.get('/game/:plName', gameRoomHandler);
+  router.get('/game/:shareID/:name', gameRoomHandler);
+  router.get('/tutorial/:plName', gameRoomHandler);
+  async function gameRoomHandler(req, res, next) {
+    if(!String(req.params.room).match(/^[A-Za-z0-9_-]+$/)) {
+      res.send('Invalid characters in room ID.');
+      return;
+    }
 
-      if(botPattern.test(req.headers['user-agent'])) {
-        const room = activeRooms.get(req.params.room);
-        let game = null;
-        if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
-          game = room.state._meta.states[room.state._meta.activeState.stateID];
+    if(botPattern.test(req.headers['user-agent'])) {
+      let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
+      res.setHeader('Content-Type', 'text/html');
 
-        res.setHeader('Content-Type', 'text/html');
-        let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
-        if(game) {
-          ogOutput += `<meta property="og:description" content="Come play the game ${game.name} with me!" />`;
-          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
+      if(req.params.room) {
+        if(await ensureRoomIsLoaded(req.params.room)) {
+          const room = activeRooms.get(req.params.room);
+          let game = null;
+          if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
+            game = room.state._meta.states[room.state._meta.activeState.stateID];
+
+          if(game) {
+            ogOutput += `<meta property="og:description" content="Come play the game ${game.name} with me!" />`;
+            ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
+          } else {
+            ogOutput += `<meta property="og:description" content="Come play with me!" />`;
+            ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
+          }
+        }
+      } else {
+        const share = await shareDetails(req.params.shareID || `PL:${req.params.plName}`);
+        if(share) {
+          ogOutput += `<meta property="og:description" content="Come play the game ${share.name} with your friends!" />`;
+          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;
         } else {
-          ogOutput += `<meta property="og:description" content="Come play with me!" />`;
+          ogOutput += `<meta property="og:description" content="Come play with your friends!" />`;
           ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
         }
-        ogOutput += `<p>Your browser identifies as a bot and therefor only receives metadata. Please use a different browser and/or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a>.</p>`;
-        res.send(ogOutput);
-      } else {
-        res.setHeader('Content-Type', 'text/html');
-        if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-          res.setHeader('Content-Encoding', 'gzip');
-          res.send(result.gzipped);
-        } else {
-          res.send(result.min);
-        }
       }
-    }).catch(next);
+
+      ogOutput += `<p>Your browser identifies as a bot and therefor only receives metadata. Please use a different browser and/or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a>.</p>`;
+      res.send(ogOutput);
+    } else {
+      res.setHeader('Content-Type', 'text/html');
+      if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+        res.setHeader('Content-Encoding', 'gzip');
+        res.send(result.gzipped);
+      } else {
+        res.send(result.min);
+      }
+    }
   }
 
   router.get('/createTempState/:room', function(req, res, next) {
