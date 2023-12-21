@@ -315,6 +315,7 @@ MinifyHTML().then(function(result) {
   router.get('/:room', gameRoomHandler);
   router.get('/game/:id', gameRoomHandler);
   router.get('/game/:id/:junk', gameRoomHandler);
+  router.get('/tutorial/:id', gameRoomHandler);
   function gameRoomHandler(req, res, next) {
     ensureRoomIsLoaded(req.params.room || req.params.id).then(function(isLoaded) {
       if(!isLoaded) {

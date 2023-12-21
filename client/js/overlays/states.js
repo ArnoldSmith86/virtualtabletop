@@ -1052,7 +1052,8 @@ async function shareLink(state) {
   let url = null;
 
   if(state.publicLibrary) {
-    url = `${config.externalURL}/game/${name}`;
+    const type = state.publicLibrary.match(/tutorials/) ? 'tutorial' : 'game';
+    url = `${config.externalURL}/${type}/${name}`;
   } else {
     url = state.link;
     if(!url) {

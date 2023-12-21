@@ -1,15 +1,16 @@
 function parseGameURL() {
-  const gameURLmatch = location.href.match(/\/game\/(?:([0-9a-z]{8})\/)?([a-z-]+)$/);
+  const gameURLmatch = location.href.match(/\/(game|tutorial)\/(?:([0-9a-z]{8})\/)?([a-z-]+)$/);
   if(gameURLmatch) {
-    if(gameURLmatch[1]) {
+    if(gameURLmatch[2]) {
       return {
         type: 'user',
-        id: gameURLmatch[1]
+        id: gameURLmatch[2]
       };
     } else {
       return {
         type: 'public',
-        id: `PL:${gameURLmatch[2]}`
+        category: gameURLmatch[1],
+        id: `PL:${gameURLmatch[3]}`
       };
     }
   }
@@ -38,7 +39,7 @@ function checkForGameURL() {
 }
 
 async function playButtonClick(updateProgress) {
-  const shareID = parseGameURL().id;
+  const share = parseGameURL();
 
   updateProgress('Joining room...');
   if(!$('#welcomeJoinRoom').value.match(/^[A-Za-z0-9_-]+$/))
@@ -47,9 +48,14 @@ async function playButtonClick(updateProgress) {
   await joinRoom($('#welcomeJoinRoom').value);
   updateProgress('Adding game...');
   localStorage.setItem('playerName', playerName = $('#welcomePlayerName').value);
-  const stateID = await addSharedGame(shareID);
+  const stateID = await addSharedGame(share.id);
   $('#statesButton').click();
   $(`#statesList [data-id="${stateID}"]`).click();
+
+  if(share.category == 'tutorial') {
+    $('#filterByType').value = 'Tutorials';
+    updateLibraryFilter();
+  }
 }
 
 async function joinRoom(newRoomID) {
