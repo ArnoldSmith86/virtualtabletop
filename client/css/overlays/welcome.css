@@ -1,3 +1,8 @@
+#loadingRoomIndicator {
+  text-align: center;
+  margin-top: 485px;
+  color: var(--VTTblue);
+}
 
 #linkDetailsOverlay {
   color: var(--overlayFontColor);
