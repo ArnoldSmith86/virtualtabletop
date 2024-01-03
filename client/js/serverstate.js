@@ -320,6 +320,8 @@ function receiveStateFromServer(args) {
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyState(args);
 
+  cancelInputOverlay();
+
   if(triggerGameStartRoutineOnNextStateLoad) {
     triggerGameStartRoutineOnNextStateLoad = false;
     (async function() {
@@ -329,6 +331,18 @@ function receiveStateFromServer(args) {
           await w.evaluateRoutine('gameStartRoutine', { widgetID: id }, { widget: [ w ] });
       batchEnd();
     })();
+  }
+}
+
+function cancelInputOverlay() {
+  if($('#activeGameButton[data-overlay=buttonInputOverlay]')) {
+    delete $('#activeGameButton').dataset.overlay;
+    if($('#buttonInputOverlay').style.display == 'flex')
+      showOverlay();
+
+    delta = { s: {} };
+    deltaChanged = false;
+    batchDepth = 0;
   }
 }
 
