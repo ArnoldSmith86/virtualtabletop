@@ -447,7 +447,7 @@ onLoad(function() {
     if(e.currentTarget.classList.contains('active')) {
       if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
         showStatesOverlay('statesOverlay');
-      if(e.currentTarget == $('#activeGameButton'))
+      if(e.currentTarget == $('#activeGameButton') && $('#buttonInputOverlay').style.display == 'none')
         showOverlay();
       e.stopImmediatePropagation();
       return;
@@ -596,8 +596,10 @@ window.onkeyup = function(event) {
       $('#editorSidebar button.active').click();
     else if(edit)
       $('#editorToolbar button[icon=close]').click();
-    else if(overlayActive)
+    else if(overlayActive && $('#buttonInputOverlay').style.display == 'none')
       $('#activeGameButton').click();
+    else if($('#buttonInputCancel').style.visibility == 'visible')
+      $('#buttonInputCancel').click();
   }
 }
 
