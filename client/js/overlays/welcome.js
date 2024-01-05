@@ -24,16 +24,21 @@ function checkForGameURL() {
 
       applyValuesToDOM($('#linkDetailsOverlay'), state);
       $('#welcomeJoinRoom').value = state.emptyRoomID;
-      $('#welcomePlayerName').value = playerName;
-      $('#welcomeGameName').innerText = state.name;
-      $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
-      toggleClass($('#linkDetailsOverlay .star'),               'hidden', gameDetails.type == 'user');
-      toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', gameDetails.type == 'public');
 
-      let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
-      document.title = `${state.name} - ${tabSuffix}`;
+      if(state.name) {
+        $('#welcomePlayerName').value = playerName;
+        $('#welcomeGameName').innerText = state.name;
+        $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
+        toggleClass($('#linkDetailsOverlay .star'),               'hidden', gameDetails.type == 'user');
+        toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', gameDetails.type == 'public');
 
-      showOverlay('linkDetailsOverlay');
+        let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
+        document.title = `${state.name} - ${tabSuffix}`;
+
+        showOverlay('linkDetailsOverlay');
+      } else {
+        $('#loadingRoomIndicator').innerText = 'Game not found!';
+      }
     });
   }
 }
