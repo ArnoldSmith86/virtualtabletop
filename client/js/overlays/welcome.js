@@ -76,4 +76,7 @@ async function addSharedGame(shareID) {
 
 onLoad(function() {
   progressButton($('#welcomePlayButton'), playButtonClick);
+
+  // share URL when clicking button
+  shareButton($('.addToRoomBox button[icon=share]'), _=>config.externalURL + '/' + $('#welcomeJoinRoom').value);
 });
