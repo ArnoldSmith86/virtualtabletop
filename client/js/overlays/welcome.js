@@ -64,9 +64,12 @@ async function playButtonClick(updateProgress) {
 }
 
 async function joinRoom(newRoomID) {
+  let joined = false;
   return new Promise(function(resolve, reject) {
     roomID = newRoomID;
     onMessage('meta', _=>{
+      if(joined) return;
+      joined = true;
       history.pushState("", document.title, roomID);
       resolve();
     });
@@ -83,7 +86,9 @@ onLoad(function() {
   progressButton($('#welcomePlayButton'), playButtonClick);
 
   $('#closeLinkDetails').onclick = _=>location.href = config.externalURL;
-  
+
   // share URL when clicking button
   shareButton($('.addToRoomBox button[icon=share]'), _=>config.externalURL + '/' + $('#welcomeJoinRoom').value);
+
+  window.onpopstate = _=>location.reload();
 });
