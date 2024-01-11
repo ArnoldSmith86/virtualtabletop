@@ -1,4 +1,4 @@
-import { asArray, onLoad } from '../domhelpers.js';
+import { asArray, onLoad, rand } from '../domhelpers.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
