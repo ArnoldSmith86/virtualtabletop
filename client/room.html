@@ -409,10 +409,12 @@
         <p>Welcome to <b>VirtualTabletop.io</b>!</p>
         <p>On this platform you can <b>play board games</b> with family and friends directly in your browser. No accounts necessary.</p>
         <p>You followed a direct link to the game "<b id="welcomeGameName">Animal Race</b>". In order to start playing it:</p>
-        <p>Enter a room URL and player name of your choice, click PLAY and share the URL with your friends:<br>
+        <div class="welcomeInput">
+          <p>Enter a room URL and player name of your choice, click PLAY and share the URL with your friends:</p>
           <b>Room URL:</b>  /*** EXTERNAL_URL ***/ /<input id="welcomeJoinRoom"><button icon="share"></button><br>
-           <b>Player name:</b> <input id="welcomePlayerName"></p>
-        <button id="welcomePlayButton" icon="play_arrow">Play</button>
+          <b>Player name:</b> <input id="welcomePlayerName">
+          <button id="welcomePlayButton" icon="play_arrow">Play</button>
+        </div>
         <p id="welcomeUserGenerated" icon="warning">This game is <b>user-generated content</b> for which VirtualTabletop.io holds no responsibility or liability.</p>
       </div>
     </div>

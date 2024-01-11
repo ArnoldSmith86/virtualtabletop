@@ -32,8 +32,22 @@
 #linkDetailsOverlay .addToRoomBox > p:last-child {
   margin-bottom: 0;
 }
+#linkDetailsOverlay .welcomeInput {
+  margin: 40px 80px 0;
+}
+#linkDetailsOverlay .welcomeInput p {
+  margin-bottom: 20px;
+}
+#linkDetailsOverlay .welcomeInput b {
+  display: inline-block;
+  width: 150px;
+}
+#linkDetailsOverlay .welcomeInput input {
+  width: 100px;
+}
 #welcomePlayButton {
   margin: auto;
+  margin-top: 20px;
 }
 #linkDetailsOverlay .addToRoomBox button[icon=share] {
   display: inline-flex;
