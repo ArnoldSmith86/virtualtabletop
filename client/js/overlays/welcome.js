@@ -90,5 +90,15 @@ onLoad(function() {
   // share URL when clicking button
   shareButton($('.addToRoomBox button[icon=share]'), _=>config.externalURL + '/' + $('#welcomeJoinRoom').value);
 
+  // press play button when pressing enter
+  for(const button of $a('#welcomeJoinRoom, #welcomePlayerName')) {
+    button.onkeypress = e=>{
+      if(e.keyCode == 13) {
+        $('#welcomePlayButton').click();
+        e.preventDefault();
+      }
+    };
+  }
+
   window.onpopstate = _=>location.reload();
 });
