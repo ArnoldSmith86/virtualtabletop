@@ -1861,7 +1861,7 @@ export class Widget extends StateManaged {
               nextTurnIndex = a.turn;
             }
           } else if(a.turnCycle == 'random') {
-            nextTurnIndex = Math.floor(Math.random() * indexList.length);
+            nextTurnIndex = Math.floor(rand() * indexList.length);
           } else if(a.turnCycle == 'seat') {
             let setSeat = c.find(w => w.get('id') === a.turn);
             if(setSeat){
@@ -2430,7 +2430,7 @@ export class Widget extends StateManaged {
     $('#buttonInputCancel').style.visibility = "visible";
     return new Promise((resolve, reject) => {
       const maxRandomRotate = o.randomRotation || 0;
-      const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
+      const rotation = Math.floor(rand() * maxRandomRotate) - (maxRandomRotate / 2);
       var confirmButtonText, cancelButtonText = "";
       $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";

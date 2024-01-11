@@ -70,6 +70,16 @@ export async function loadImage(img, src) {
 
 const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
 
+export function rand() {
+  if(window.customRandomSeed) {
+    const x = Math.sin(window.customRandomSeed++) * 10000;
+    console.log('seed', window.customRandomSeed);
+    return traceRandom(Math.round((x - Math.floor(x))*1000000)/1000000);
+  }
+
+  return traceRandom(Math.random());
+}
+
 export function regexEscape(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
 }

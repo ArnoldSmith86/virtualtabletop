@@ -22,7 +22,7 @@ let undoProtocol = [];
 function generateUniqueWidgetID() {
   let id;
   do {
-    id = Math.random().toString(36).substring(3, 7);
+    id = rand().toString(36).substring(3, 7);
   } while (widgets.has(id));
   return id;
 }
