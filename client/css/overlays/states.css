@@ -1108,6 +1108,10 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin: 0 auto;
 }
 
+#shareLinkOverlay.customGame .plGameInfo, #shareLinkOverlay.plGame .customGameInfo {
+  display: none;
+}
+
 @media (max-width: 800px), (max-height: 500px) {
   #shareLinkOverlay {
     justify-content: unset;

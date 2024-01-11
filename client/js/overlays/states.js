@@ -1041,6 +1041,9 @@ async function shareLink(state) {
   const name = state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '');
   let url = null;
 
+  $('#shareLinkOverlay').classList.toggle('plGame', !!state.publicLibrary);
+  $('#shareLinkOverlay').classList.toggle('customGame', !state.publicLibrary);
+
   if(state.publicLibrary) {
     const type = state.publicLibrary.match(/tutorials/) ? 'tutorial' : 'game';
     url = `${config.externalURL}/${type}/${name}`;
