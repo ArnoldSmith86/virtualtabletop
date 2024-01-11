@@ -312,18 +312,17 @@ function receiveStateFromServer(args) {
     deferredChildren = {};
   }
 
+  if(isLoading) {
+    $('#loadingRoomIndicator').remove();
+    $('body').classList.remove('loading');
+    isLoading = false;
+  }
+
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
     $('#statesButton').click();
     overlayShownForEmptyRoom = true;
-  } else if(isLoading) {
-    $('#activeGameButton').click();
   }
 
-  if(isLoading) {
-    isLoading = false;
-    $('#loadingRoomIndicator').remove();
-    $('body').classList.remove('loading');
-  }
   toServer('confirm');
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
