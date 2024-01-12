@@ -90,6 +90,19 @@ export async function loadImage(img, src) {
 
 const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
 
+export function rand() {
+  let number = Math.random();
+
+  if(window.customRandomSeed) {
+    const x = Math.sin(window.customRandomSeed++) * 10000;
+    number = Math.round((x - Math.floor(x))*1000000)/1000000;
+  }
+
+  if(typeof traceRandom == 'function')
+    traceRandom(number);
+  return number;
+}
+
 export function regexEscape(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
 }
@@ -124,7 +137,7 @@ export function shuffleArray(array) {
   const isString = typeof array === 'string';
   array = [...array];
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rand() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return isString ? array.join('') : array;

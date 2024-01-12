@@ -37,7 +37,7 @@ function addStateFile(f) {
   const stateDOM = domByTemplate('template-stateslist-entry');
   let id;
   do {
-    id = Math.random().toString(36).substring(3, 7);
+    id = rand().toString(36).substring(3, 7);
   } while($(`.roomState[data-id="${id}"]`));
   stateDOM.dataset.id = id;
   stateDOM.className = 'uploading visible roomState noImage';
@@ -189,7 +189,7 @@ async function addState(e, type, src, id, addAsVariant) {
   if(type == 'link' && (!src || !src.match(/^http/)))
     return;
   if(!id)
-    id = Math.random().toString(36).substring(3, 7);
+    id = rand().toString(36).substring(3, 7);
 
   const blob = new Blob([ src ], { type: 'text/plain' });
 
@@ -789,7 +789,7 @@ function fillStateDetails(states, state, dom) {
       $('#stateDetailsOverlay').classList.add('uploading');
 
       const variantDOM = [];
-      const filenameSuffix = Math.random().toString(36).substring(3, 11);
+      const filenameSuffix = rand().toString(36).substring(3, 11);
 
       function metaCallback(name, similarName, image, variants) {
         variantOperationQueue.push({

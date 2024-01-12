@@ -245,7 +245,7 @@ export async function shuffleWidgets(collection) {
   const len = collection.length;
   let indexes = [...Array(len).keys()];
   for (let i = len-1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i+1));
+    let j = Math.floor(rand() * (i+1));
     [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
   }
   for (let i of indexes) {
@@ -378,7 +378,7 @@ async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, div, progressButton, loadImage, on, onMessage, showOverlay, sleep,
+      $, $a, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,
