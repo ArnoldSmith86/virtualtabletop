@@ -164,7 +164,7 @@ class Dice extends Widget {
 
   async click(mode='respect') {
     if(!await super.click(mode)) {
-      await this.set('activeFace', Math.floor(Math.random()*this.faces().length));
+      await this.set('activeFace', Math.floor(rand()*this.faces().length));
       await this.set('rollCount', this.get('rollCount',{ignoreFaceProperties:true})+1);
     }
   }
