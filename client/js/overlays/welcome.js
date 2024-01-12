@@ -40,6 +40,8 @@ function checkForGameURL() {
         $('#loadingRoomIndicator').innerText = 'Game not found!';
       }
     });
+  } else if(location.href.includes('/game/') || location.href.includes('/tutorial/')) {
+    $('#loadingRoomIndicator').innerText = 'Invalid game name!';
   }
 }
 
