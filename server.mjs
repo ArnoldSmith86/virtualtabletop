@@ -236,7 +236,7 @@ MinifyHTML().then(function(result) {
   router.options('/api/addShareToRoom/:room/:share', allowCORS);
   router.get('/api/addShareToRoom/:room/:share', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    const isPublicLibraryGame = req.params.share.match(/^PL:([a-z-]+)$/);
+    const isPublicLibraryGame = req.params.share.match(/^PL:(game|tutorial):([a-z-]+)$/);
     if(!isPublicLibraryGame && !sharedLinks[`/s/${req.params.share}`])
       return res.sendStatus(404);
 
