@@ -251,7 +251,7 @@ MinifyHTML().then(function(result) {
   });
 
   async function shareDetails(shareID) {
-    const isPublicLibraryGame = shareID.match(/^PL:([a-z-]+)$/);
+    const isPublicLibraryGame = shareID.match(/^PL:(game|tutorial):([a-z-]+)$/);
     if(!isPublicLibraryGame && !sharedLinks[`/s/${shareID}`])
       return null;
 

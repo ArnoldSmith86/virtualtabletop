@@ -10,7 +10,7 @@ function parseGameURL() {
       return {
         type: 'public',
         category: gameURLmatch[1],
-        id: `PL:${gameURLmatch[3]}`
+        id: `PL:${gameURLmatch[1]}:${gameURLmatch[3]}`
       };
     }
   }

@@ -430,8 +430,9 @@ export default class Room {
 
   getStateDetails(stateID) {
     if(stateID.match(/^PL:/)) {
+      const [ , category, name ] = stateID.split(':');
       for(const [ id, state ] of Object.entries(this.state._meta.states))
-        if(state.publicLibrary && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == stateID.substr(3))
+        if(state.publicLibrary && state.publicLibraryCategory.toLowerCase() == `${category}s` && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == name)
           return Object.assign({}, state, { id });
     } else {
       return this.state._meta.states[stateID];
