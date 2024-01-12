@@ -54,7 +54,7 @@ async function playButtonClick(updateProgress) {
   lastOverlay = 'linkDetailsOverlay';
   await joinRoom($('#welcomeJoinRoom').value);
   updateProgress('Adding game...');
-  localStorage.setItem('playerName', playerName = $('#welcomePlayerName').value);
+  toServer('rename', { oldName: playerName, newName: $('#welcomePlayerName').value });
   const stateID = await addSharedGame(share.id);
   $('#statesButton').click();
   $(`#statesList [data-id="${stateID}"]`).click();
