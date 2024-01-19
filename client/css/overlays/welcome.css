@@ -3,6 +3,9 @@
   margin-top: 485px;
   color: var(--VTTblue);
 }
+#loadingRoomIndicator + div button {
+  margin: auto;
+}
 
 #linkDetailsOverlay {
   color: var(--overlayFontColor);

@@ -37,12 +37,20 @@ function checkForGameURL() {
 
         showOverlay('linkDetailsOverlay');
       } else {
-        $('#loadingRoomIndicator').innerText = 'Game not found!';
+        checkForGameURL_showError('Game not found!');
       }
     });
   } else if(location.href.includes('/game/') || location.href.includes('/tutorial/')) {
-    $('#loadingRoomIndicator').innerText = 'Invalid game name!';
+    checkForGameURL_showError('Invalid game name!');
   }
+}
+
+function checkForGameURL_showError(text) {
+  $('#loadingRoomIndicator').innerText = text;
+  div($('#topSurface'), '', `
+    <button icon=close>Create an empty room</button>
+  `);
+  $('#topSurface button').onclick = _=>location.href = config.externalURL;
 }
 
 async function playButtonClick(updateProgress) {
