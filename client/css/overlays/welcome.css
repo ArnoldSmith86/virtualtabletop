@@ -30,6 +30,7 @@
   border-radius: 20px;
   width: 80%;
   min-width: 800px;
+  max-width: 1400px;
 }
 #linkDetailsOverlay .addToRoomBox > p:first-child {
   margin-top: 0;
@@ -193,6 +194,10 @@
     width: 95%;
     overflow: unset;
   }
+  #linkDetailsOverlay > .mainStateDetails .details {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
   .mainStateImage {
     position: relative;
     float: left;
@@ -209,5 +214,16 @@
 @media (max-width: 500px), (max-height: 312px) {
   #linkDetailsOverlay {
     --mainDetailsHeight: 50px;
+  }
+  #linkDetailsOverlay > .mainStateDetails {
+    padding: 10px;
+    margin: 60px auto 10px;
+  }
+  #linkDetailsOverlay > .mainStateDetails .details {
+    padding: unset;
+    margin: unset;
+  }
+  #linkDetailsOverlay > .mainStateDetails .star::before {
+    font-size: 32px;
   }
 }
