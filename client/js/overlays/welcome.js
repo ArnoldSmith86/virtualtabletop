@@ -97,9 +97,6 @@ onLoad(function() {
 
   $('#closeLinkDetails').onclick = _=>location.href = config.externalURL;
 
-  // share URL when clicking button
-  shareButton($('#welcomeShareButton'), _=>config.externalURL + '/' + $('#welcomeJoinRoom').value);
-
   // press play button when pressing enter
   for(const button of $a('#welcomeJoinRoom, #welcomePlayerName')) {
     button.onkeypress = e=>{

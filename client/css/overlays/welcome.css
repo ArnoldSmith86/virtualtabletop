@@ -32,6 +32,9 @@
   min-width: 800px;
   max-width: 1400px;
 }
+#linkDetailsOverlay .addToRoomBox {
+  margin-bottom: 20px;
+}
 #linkDetailsOverlay .addToRoomBox > p:first-child {
   margin-top: 0;
 }
@@ -40,6 +43,9 @@
 }
 #linkDetailsOverlay .welcomeInput {
   margin: 40px 80px 0;
+}
+#linkDetailsOverlay .welcomeInput span {
+  display: inline-block;
 }
 #linkDetailsOverlay .welcomeInput p {
   margin-bottom: 20px;
@@ -209,6 +215,10 @@
     width: var(--mainDetailsHeight);
     border-radius: 10px;
   }
+
+  #linkDetailsOverlay .addToRoomBox {
+    width: 95%;
+  }
 }
 
 
@@ -226,5 +236,24 @@
   }
   #linkDetailsOverlay > .mainStateDetails .star::before {
     font-size: 32px;
+  }
+
+  #linkDetailsOverlay .addToRoomBox {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  #linkDetailsOverlay .welcomeInput {
+    margin: 20px 20px 0;
+  }
+  #linkDetailsOverlay .welcomeInput b {
+    display: block;
+    margin-top: 20px;
+  }
+}
+
+
+@media (max-width: 360px), (max-height: 225px) {
+  #linkDetailsOverlay .welcomeInput {
+    margin: 0;
   }
 }
