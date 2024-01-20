@@ -58,6 +58,7 @@
 #welcomeShareButton {
   display: inline-flex;
   padding: 2px;
+  padding-right: calc(.75rem - 3px);
   vertical-align: middle;
 }
 #linkDetailsOverlay p[icon]::before {
