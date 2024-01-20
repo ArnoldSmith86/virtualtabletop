@@ -206,7 +206,8 @@ async function addBag(o, parent) {
     y: 500-extractNumber(o.Transform.posZ)*25,
     text: o.Nickname || 'Open\nBag'
   };
-  Object.assign(widgets, await addRecursive(o.ContainedObjects, o.GUID));
+  if(o.ContainedObjects)
+    Object.assign(widgets, await addRecursive(o.ContainedObjects, o.GUID));
   return widgets;
 }
 
