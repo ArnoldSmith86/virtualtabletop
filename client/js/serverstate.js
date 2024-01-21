@@ -316,6 +316,8 @@ function receiveStateFromServer(args) {
     $('#loadingRoomIndicator').remove();
     $('body').classList.remove('loading');
     isLoading = false;
+    if(!$('.active.toolbarTab'))
+      $('#activeGameButton').click();
   }
 
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
