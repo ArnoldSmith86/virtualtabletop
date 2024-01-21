@@ -571,6 +571,7 @@ onLoad(function() {
     checkedOnce = true;
     let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
     document.title = `${document.location.pathname.split('/').pop()} - ${tabSuffix}`;
+    $('#playerInviteURL').innerText = location.href;
   });
 });
 

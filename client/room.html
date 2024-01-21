@@ -81,6 +81,11 @@
         <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
         <label class="inactivePlayers ui-line"> </label>
       </div>
+      <div id="playerInvite">
+        <h1>Invite</h1>
+        <p>More players can join this game by visiting <span id="playerInviteURL"></span>.</p>
+        <button icon="share" id="playersShareButton">Share room URL</button>
+      </div>
     </div>
 
     <div id="returnOverlay" class="overlay">
@@ -414,6 +419,7 @@
             <li>Create a custom room URL and player name or accept the defaults.</li>
             <li>Click CREATE ROOM.</li>
             <li>On the next page, click PLAY.</li>
+            <li>Invite your friends on the Players tab.</li>
           </ol>
           <b>Room URL:</b> <span> /*** EXTERNAL_URL ***/ /<input id="welcomeJoinRoom" tabindex="1"></span><br>
           <b>Player name:</b> <input id="welcomePlayerName" tabindex="2">
