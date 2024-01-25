@@ -29,7 +29,7 @@ function checkForGameURL() {
         $('#welcomePlayerName').value = playerName;
         $('#welcomeGameName').innerText = state.name;
         $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
-        toggleClass($('#linkDetailsOverlay .star'),               'hidden', gameDetails.type == 'user');
+        toggleClass($('#linkDetailsOverlay .star'),               'hidden', gameDetails.type == 'user' || !state.stars);
         toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', gameDetails.type == 'public');
 
         let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';

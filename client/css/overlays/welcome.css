@@ -229,10 +229,9 @@
     padding: unset;
     margin: unset;
   }
-  #linkDetailsOverlay > .mainStateDetails .star::before {
-    font-size: 32px;
+  .mainStateImage .star, .mainStateImage .star + span {
+    display: none;
   }
-
   #linkDetailsOverlay .addToRoomBox {
     padding: 10px;
     margin-bottom: 10px;
