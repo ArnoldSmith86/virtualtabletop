@@ -90,8 +90,21 @@ async function joinRoom(newRoomID) {
 }
 
 async function addSharedGame(shareID) {
+
   const result = await fetch(`api/addShareToRoom/${roomID}/${shareID}`);
-  return await result.text();
+  const stateID = await result.text();
+
+  // wait for the state to be added to the library if it's not already there
+  if(!$(`#statesList [data-id="${stateID}"]`)) {
+    await new Promise(function(resolve, reject) {
+      onMessage('meta', args=>{
+        if(args.meta.states[stateID])
+          resolve();
+      });
+    });
+  }
+
+  return stateID;
 }
 
 onLoad(function() {
