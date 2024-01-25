@@ -232,6 +232,9 @@
   .mainStateImage .star, .mainStateImage .star + span {
     display: none;
   }
+  #linkDetailsOverlay > .mainStateDetails i {
+    font-size: 32px;
+  }
   #linkDetailsOverlay .addToRoomBox {
     padding: 10px;
     margin-bottom: 10px;
