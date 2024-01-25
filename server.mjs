@@ -349,8 +349,11 @@ MinifyHTML().then(function(result) {
           }
         }
       } else {
-        const share = await shareDetails(req.params.shareID || `PL:${req.params.plName}`);
-        if(share) {
+        const share = await shareDetails(req.params.shareID || `PL:${req.url.split('/')[1]}:${req.params.plName}`);
+        if(share && req.url.split('/')[1] == 'tutorial') {
+          ogOutput += `<meta property="og:description" content="Come look at the tutorial ${share.name}!" />`;
+          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;
+        } else if(share) {
           ogOutput += `<meta property="og:description" content="Come play the game ${share.name} with your friends!" />`;
           ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;
         } else {
