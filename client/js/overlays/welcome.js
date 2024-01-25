@@ -28,6 +28,8 @@ function checkForGameURL() {
       if(state.name) {
         $('#welcomePlayerName').value = playerName;
         $('#welcomeGameName').innerText = state.name;
+        $('#welcomeGameType').innerText = gameDetails.category || 'game';
+        $('#welcomeGameTypeHint').innerText = gameDetails.category == 'tutorial' ? 'check it out' : 'start playing it';
         $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
         toggleClass($('#linkDetailsOverlay .star'),               'hidden', gameDetails.type == 'user' || !state.stars);
         toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', gameDetails.type == 'public');
