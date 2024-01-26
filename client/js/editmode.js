@@ -1539,8 +1539,12 @@ export function initializeEditMode(currentMetaData) {
         'var parent = ${PROPERTY parent}',
         "var COUNT = 0",
         {
+          "func": "SELECT",
+          "property": "_ancestor",
+          "value": "${PROPERTY hand OF $parent}"
+        },
+        {
           "func": "COUNT",
-          "holder": "${PROPERTY hand OF $parent}",
           "owner": "${PROPERTY player OF $parent}"
         },
         {
