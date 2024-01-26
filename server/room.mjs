@@ -116,7 +116,7 @@ export default class Room {
           return;
         }
 
-        if(type != 'link' || meta.importer)
+        if(type != 'link' || meta.importerTemp)
           fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
 
         let variantMeta = {
@@ -135,7 +135,7 @@ export default class Room {
           };
         }
 
-        if(type == 'link' && !meta.importer) {
+        if(type == 'link' && !meta.importerTemp) {
           const baseLink = src.replace(/#[^#]*$/, '');
           meta.link = `${baseLink}#${state}`;
           if(!variantMeta.link && !variantMeta.plStateID) {
@@ -155,7 +155,7 @@ export default class Room {
         if(addAsVariant) {
           if(!this.state._meta.states[stateID].variants[newVariantID])
             this.state._meta.states[stateID].variants[newVariantID] = variantMeta;
-          else if(type != 'link' || meta.importer)
+          else if(type != 'link' || meta.importerTemp)
             delete this.state._meta.states[stateID].variants[newVariantID].link;
           if(!this.state._meta.states[stateID].attribution)
             this.state._meta.states[stateID].attribution = meta.attribution;
@@ -170,6 +170,11 @@ export default class Room {
 
         if(type == 'state')
           this.state._meta.activeState = { stateID, variantID: newVariantID };
+
+        if(meta.importerTemp) {
+          meta.importer = meta.importerTemp;
+          delete meta.importerTemp;
+        }
       }
 
 

@@ -90,7 +90,6 @@ async function joinRoom(newRoomID) {
 }
 
 async function addSharedGame(shareID) {
-
   const result = await fetch(`api/addShareToRoom/${roomID}/${shareID}`);
   const stateID = await result.text();
 

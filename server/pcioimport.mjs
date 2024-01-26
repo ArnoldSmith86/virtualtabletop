@@ -140,7 +140,8 @@ export default async function convertPCIO(content) {
   const output = {
     _meta: {
       info: {
-        importer: 'PCIO'
+        importerTemp: 'PCIO',
+        importerTime: +new Date()
       },
       version: 4
     }

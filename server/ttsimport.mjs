@@ -305,7 +305,8 @@ async function convertTTS(content, linkContent) {
   widgets._meta = {
     info: {
       name: json.SaveName,
-      importer: 'TTS'
+      importerTemp: 'TTS',
+      importerTime: +new Date()
     },
     version: 5
   };
