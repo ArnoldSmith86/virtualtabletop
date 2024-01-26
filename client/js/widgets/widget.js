@@ -653,7 +653,7 @@ export class Widget extends StateManaged {
     const variables = {};
     const collections = {};
     if(go) {
-      for(const field of o.fields) {
+      for(const field of o.fields || []) {
         const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
         const isSingleWidget = field.source && Array.isArray(field.source) && field.source.length == 1;
         if(field.type == 'checkbox') {
@@ -678,11 +678,14 @@ export class Widget extends StateManaged {
     }
 
     if(!go || this.evaluateInputOverlayErrors(o, variables)) {
-      showOverlay(null);
-      if(go)
-        resolve({ variables, collections });
-      else
-        reject({ variables, collections });
+      this.showInputOverlayWorkingState(true);
+      sleep(1).then(function() {
+        showOverlay(null);
+        if(go)
+          resolve({ variables, collections });
+        else
+          reject({ variables, collections });
+      })
       return true;
     }
   }
@@ -697,7 +700,7 @@ export class Widget extends StateManaged {
       div(dom.parentElement, 'inputError', error);
     };
 
-    for(const field of o.fields) {
+    for(const field of o.fields || []) {
       if(field.type == 'choose' && asArray(variables[field.variable]).length < field.min)
         isValid = displayError(field, `Please select at least ${field.min}.`);
       if(field.type == 'choose' && asArray(variables[field.variable]).length > (field.max || 1))
@@ -1503,7 +1506,17 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true, inHolder: true });
+        setDefaults(a, { owned: true, inHolder: true, excludeCollection: null });
+
+        let excludeCollection = null;
+        if(a.excludeCollection) {
+          if(excludeCollection = getCollection(a.excludeCollection)) {
+            excludeCollection = collections[excludeCollection].map(e => widgets.get(e.id));
+          } else {
+            problems.push(`The collection ${a.excludeCollection} you want to exclude does not exist.`);
+          }
+        }
+
         if(this.isValidID(a.holder, problems)) {
           for(const holder of asArray(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
@@ -1514,6 +1527,8 @@ export class Widget extends StateManaged {
                   cards = cards.filter(c=>!c.get('owner'));
                 if(!a.inHolder)
                   cards = cards.filter(c=>!c.get('_ancestor'));
+                if(a.excludeCollection && excludeCollection)
+                  cards = cards.filter(c=>!excludeCollection.includes(c));
                 for(const c of cards)
                   await c.moveToHolder(widgets.get(holder));
               }
@@ -1522,7 +1537,7 @@ export class Widget extends StateManaged {
             }
           };
           if(jeRoutineLogging) {
-            jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`)
+            jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`);
           }
         }
       }
@@ -1814,12 +1829,12 @@ export class Widget extends StateManaged {
 
       if(a.func == 'TURN') {
         setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
-        if([ 'forward', 'backward', 'random', 'position' ].indexOf(a.turnCycle) == -1) {
+        if([ 'forward', 'backward', 'random', 'position', 'seat' ].indexOf(a.turnCycle) == -1) {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
         let c = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
-        c = c.filter(w => w.get('type') === 'seat');
+        c = c.filter(w => w.get('type') === 'seat' && !w.get('skipTurn'));
 
         //this get the list of valid index
         const indexList = [];
@@ -1846,7 +1861,14 @@ export class Widget extends StateManaged {
               nextTurnIndex = a.turn;
             }
           } else if(a.turnCycle == 'random') {
-            nextTurnIndex = Math.floor(Math.random() * indexList.length);
+            nextTurnIndex = Math.floor(rand() * indexList.length);
+          } else if(a.turnCycle == 'seat') {
+            let setSeat = c.find(w => w.get('id') === a.turn);
+            if(setSeat){
+              nextTurnIndex = indexList.indexOf(setSeat.get('index'));
+            } else {
+              problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.source}.`);
+            }
           } else {
             const turnIndexOffset = a.turnCycle == 'forward' ? a.turn : -a.turn;
             nextTurnIndex = indexList.indexOf(previousTurn) + turnIndexOffset;
@@ -1869,7 +1891,7 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
         } else if(jeRoutineLogging) {
-          jeLoggingRoutineOperationSummary(`no active seats found`);
+          jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
         }
       }
 
@@ -2402,11 +2424,13 @@ export class Widget extends StateManaged {
   }
 
   async showInputOverlay(o, widgets, variables, collections, getCollection, problems) {
+    this.showInputOverlayWorkingState(false);
+
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
     $('#buttonInputCancel').style.visibility = "visible";
     return new Promise((resolve, reject) => {
       const maxRandomRotate = o.randomRotation || 0;
-      const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
+      const rotation = Math.floor(rand() * maxRandomRotate) - (maxRandomRotate / 2);
       var confirmButtonText, cancelButtonText = "";
       $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
@@ -2432,7 +2456,7 @@ export class Widget extends StateManaged {
       $('#buttonInputGo span').textContent = o.confirmButtonIcon || "";
       $('#buttonInputCancel span').textContent = o.cancelButtonIcon || "";
 
-      for(const field of o.fields) {
+      for(const field of o.fields || []) {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
@@ -2470,6 +2494,16 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  showInputOverlayWorkingState(isWorking) {
+    for(const b of $a('#buttonInputOverlay button'))
+      b.style.disabled = isWorking;
+
+    if(isWorking) {
+      $('#buttonInputGo label').textContent = 'Working...';
+      $('#buttonInputCancel').style.visibility = 'hidden';
+    }
   }
 
   async snapToGrid() {

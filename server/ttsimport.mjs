@@ -206,7 +206,8 @@ async function addBag(o, parent) {
     y: 500-extractNumber(o.Transform.posZ)*25,
     text: o.Nickname || 'Open\nBag'
   };
-  Object.assign(widgets, await addRecursive(o.ContainedObjects, o.GUID));
+  if(o.ContainedObjects)
+    Object.assign(widgets, await addRecursive(o.ContainedObjects, o.GUID));
   return widgets;
 }
 
@@ -304,17 +305,8 @@ async function convertTTS(content, linkContent) {
   widgets._meta = {
     info: {
       name: json.SaveName,
-      image: '',
-      rules: '',
-      bgg: '',
-      year: 0,
-      mode: 'vs',
-      time: 30,
-      players: '2-4',
-      language: 'US',
-      variant: '',
-      link: '',
-      attribution: ''
+      importerTemp: 'TTS',
+      importerTime: +new Date()
     },
     version: 5
   };
