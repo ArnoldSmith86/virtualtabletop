@@ -1828,7 +1828,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'TURN') {
-        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
+        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN', simulate: false });       
         if([ 'forward', 'backward', 'random', 'position', 'seat' ].indexOf(a.turnCycle) == -1) {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
@@ -1879,17 +1879,23 @@ export class Widget extends StateManaged {
           if(typeof nextTurnIndex != 'number' || !isFinite(nextTurnIndex))
             nextTurnIndex = 0;
           const turn = indexList[mod(nextTurnIndex, indexList.length)];
+          variables.TURN = turn;
 
           collections[a.collection] = [];
-          //saves turn into all seats and creates output collection with turn seats
-          for(const w of c) {
-            await w.set('turn', w.get('index') == turn);
-            if(w.get('turn') && w.get('player'))
-              collections[a.collection].push(w);
+
+          if(!a.simulate) {
+            //saves turn into all seats and creates output collection with turn seats
+            for(const w of c) {
+              await w.set('turn', w.get('index') == turn);
+            }
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+          } else if(jeRoutineLogging) {
+            jeLoggingRoutineOperationSummary(`SIMULATED turn of seats: from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
           }
 
-          if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+          collections[a.collection] = c.filter(w=>w.get('index')==turn && w.get('player'));
+
         } else if(jeRoutineLogging) {
           jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
         }
