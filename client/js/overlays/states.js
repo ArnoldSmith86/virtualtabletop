@@ -645,7 +645,7 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit]'), 'hidden', !editable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=delete]'), 'hidden', !deletable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable || deletable);
-  toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers || !!state.publicLibrary);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link_off]'), 'hidden', !state.link);
 
   function updateStateDetailsDomains(state) {
@@ -849,18 +849,11 @@ function fillStateDetails(states, state, dom) {
     shareLink(state);
   };
   $('#stateDetailsOverlay .buttons [icon=link_off]').onclick = function() {
-    $('#mainImage > i').classList.add('hidden');
+    $('#stateDetailsOverlay .mainStateImage > i').classList.add('hidden');
     toServer('unlinkState', state.id);
   };
   $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
-  $('#shareLinkOverlay button[icon=link]').onclick = async function() {
-    try {
-      await navigator.clipboard.writeText($('#shareLinkOverlay input').value.replace(/( \(copied\))+$/, ''));
-      $('#shareLinkOverlay input').value += ' (copied)';
-    } catch(e) {
-      $('#shareLinkOverlay input').value += ' (NOT copied)';
-    }
-  }
+  shareButton($('#shareLinkOverlay button[icon=share]'), _=>$('#shareLinkOverlay input').value);
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
     const type     = state.savePlayers ? 'saved game'        : 'game';
@@ -1044,12 +1037,26 @@ async function confirmOverlay(title, text, confirmButton, cancelButton, confirmI
 
 async function shareLink(state) {
   showStatesOverlay('shareLinkOverlay');
-  let url = state.link;
-  if(!url) {
-    const name = state.name.replace(/[^A-Za-z0-9.-]/g, '_');
-    url = await fetch(`share/${roomID}/${state.id}`);
-    url = `${location.origin}${await url.text()}/${name}.vtt`;
+
+  const name = state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '');
+  let url = null;
+
+  $('#shareLinkOverlay').classList.toggle('plGame', !!state.publicLibrary);
+  $('#shareLinkOverlay').classList.toggle('customGame', !state.publicLibrary);
+
+  if(state.publicLibrary) {
+    const type = state.publicLibrary.match(/tutorials/) ? 'tutorial' : 'game';
+    url = `${config.externalURL}/${type}/${name}`;
+  } else {
+    url = state.link;
+    if(!url) {
+      url = await fetch(`share/${roomID}/${state.id}`);
+      url = `${location.origin}${await url.text()}/${name}`;
+    } else if(url.startsWith(`${config.externalURL}/s/`)) {
+      url = `${config.externalURL}/game/${url.substr(config.externalURL.length + 3, 8)}/${name}`;
+    }
   }
+
   $('#sharedLink').value = url;
 }
 

@@ -139,9 +139,11 @@ export default async function convertPCIO(content) {
 
   const output = {
     _meta: {
-      version: 4,
-      players: {},
-      states: {}
+      info: {
+        importerTemp: 'PCIO',
+        importerTime: +new Date()
+      },
+      version: 4
     }
   };
 

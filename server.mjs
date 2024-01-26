@@ -52,6 +52,13 @@ async function ensureRoomIsLoaded(id) {
   return true;
 }
 
+function getEmptyRoomID() {
+  let id = null;
+  while(!id || fs.existsSync(savedir + '/rooms/' + id + '.json'))
+    id = Math.random().toString(36).substring(3, 7);
+  return id;
+}
+
 function validateInput(res, next, values) {
   for(const value of values) {
     if(value && !value.match(/^[A-Za-z0-9.: _-]+$/)) {
@@ -172,10 +179,7 @@ MinifyHTML().then(function(result) {
   });
 
   router.get('/', function(req, res) {
-    let id = null;
-    while(!id || fs.existsSync(savedir + '/rooms/' + id + '.json'))
-      id = Math.random().toString(36).substring(3, 7);
-    res.redirect(id);
+    res.redirect(getEmptyRoomID());
   });
 
   router.get('/dl/:room/:state/:variant', function(req, res, next) {
@@ -207,6 +211,8 @@ MinifyHTML().then(function(result) {
         const state = {...activeRooms.get(req.params.room).state};
         delete state._meta;
         res.send(JSON.stringify(state, null, '  '));
+      } else {
+        res.status(404).send('Invalid room.');
       }
     }).catch(next);
   });
@@ -218,6 +224,8 @@ MinifyHTML().then(function(result) {
         if(isLoaded) {
           activeRooms.get(req.params.room).setState(req.body);
           res.send('OK');
+        } else {
+          res.status(404).send('Invalid room.');
         }
       }).catch(next);
     } else {
@@ -228,36 +236,48 @@ MinifyHTML().then(function(result) {
   router.options('/api/addShareToRoom/:room/:share', allowCORS);
   router.get('/api/addShareToRoom/:room/:share', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    if(!sharedLinks[`/s/${req.params.share}`])
+    const isPublicLibraryGame = req.params.share.match(/^PL:(game|tutorial):([a-z-]+)$/);
+    if(!isPublicLibraryGame && !sharedLinks[`/s/${req.params.share}`])
       return res.sendStatus(404);
 
-    const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
-    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+    ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
       if(isLoaded) {
-        activeRooms.get(req.params.room).addState(req.params.share, 'link', `${Config.get('externalURL')}/s/${req.params.share}/name.vtt`, '');
-        res.send('OK');
+        const newStateID = await activeRooms.get(req.params.room).addShare(req.params.share);
+        res.send(newStateID);
+      } else {
+        res.status(404).send('Invalid room.');
       }
     }).catch(next);
   });
 
-  router.options('/api/shareDetails/:share', allowCORS);
-  router.get('/api/shareDetails/:share', function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    if(!sharedLinks[`/s/${req.params.share}`])
-      return res.sendStatus(404);
+  async function shareDetails(shareID) {
+    const isPublicLibraryGame = shareID.match(/^PL:(game|tutorial):([a-z-]+)$/);
+    if(!isPublicLibraryGame && !sharedLinks[`/s/${shareID}`])
+      return null;
 
-    const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
-    ensureRoomIsLoaded(tokens[2]).then(function(isLoaded) {
-      if(isLoaded) {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(activeRooms.get(tokens[2]).state._meta.states[tokens[3]]));
-      }
-    }).catch(next);
+    const roomID  = isPublicLibraryGame ? 'dummy' : sharedLinks[`/s/${shareID}`].split('/')[2];
+    const stateID = isPublicLibraryGame ? shareID : sharedLinks[`/s/${shareID}`].split('/')[3];
+
+    if(!await ensureRoomIsLoaded(roomID))
+      return null;
+
+    return Object.assign({}, activeRooms.get(roomID).getStateDetails(stateID), { emptyRoomID: getEmptyRoomID() });
+  }
+  router.options('/api/shareDetails/:share', allowCORS);
+  router.get('/api/shareDetails/:share', async function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    try {
+      const details = await shareDetails(req.params.share);
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(details));
+    } catch(e) {
+      return res.status(404).send('Invalid share.');
+    }
   });
 
   router.get('/s/:link/:junk', function(req, res, next) {
     if(!sharedLinks[`/s/${req.params.link}`])
-      return res.sendStatus(404);
+      return res.status(404).send('Invalid share.');
 
     const tokens = sharedLinks[`/s/${req.params.link}`].split('/');
     downloadState(res, tokens[2], tokens[3]).catch(next);
@@ -267,7 +287,7 @@ MinifyHTML().then(function(result) {
     const target = `/dl/${req.params.room}/${req.params.state}`;
     for(const link in sharedLinks)
       if(sharedLinks[link] == target)
-        return res.send(Config.get('urlPrefix') + link);
+        return res.send(Config.get('urlPrefix') + link.replace(/^\/s\//, '/game/'));
 
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded)
@@ -276,7 +296,7 @@ MinifyHTML().then(function(result) {
       const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
       sharedLinks[newLink] = target;
       fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
-      res.send(Config.get('urlPrefix') + newLink);
+      res.send(Config.get('urlPrefix') + newLink.replace(/^\/s\//, '/game/'));
     }).catch(next);
   });
 
@@ -299,41 +319,61 @@ MinifyHTML().then(function(result) {
   }
   const botPattern = createBotPattern(crawlers);
 
-  router.get('/:room', function(req, res, next) {
-    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
-      if(!isLoaded) {
-        res.send('Invalid characters in room ID.');
-        return;
-      }
+  router.get('/:room', gameRoomHandler);
+  router.get('/game/:plName', gameRoomHandler);
+  router.get('/game/:shareID/:name', gameRoomHandler);
+  router.get('/tutorial/:plName', gameRoomHandler);
+  async function gameRoomHandler(req, res, next) {
+    if(!String(req.params.room).match(/^[A-Za-z0-9_-]+$/)) {
+      res.send('Invalid characters in room ID.');
+      return;
+    }
 
-      if(botPattern.test(req.headers['user-agent'])) {
-        const room = activeRooms.get(req.params.room);
-        let game = null;
-        if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
-          game = room.state._meta.states[room.state._meta.activeState.stateID];
+    if(botPattern.test(req.headers['user-agent'])) {
+      let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
+      res.setHeader('Content-Type', 'text/html');
 
-        res.setHeader('Content-Type', 'text/html');
-        let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
-        if(game) {
-          ogOutput += `<meta property="og:description" content="Come play the game ${game.name} with me!" />`;
-          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
+      if(req.params.room) {
+        if(await ensureRoomIsLoaded(req.params.room)) {
+          const room = activeRooms.get(req.params.room);
+          let game = null;
+          if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
+            game = room.state._meta.states[room.state._meta.activeState.stateID];
+
+          if(game) {
+            ogOutput += `<meta property="og:description" content="Come play the game ${game.name} with me!" />`;
+            ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
+          } else {
+            ogOutput += `<meta property="og:description" content="Come play with me!" />`;
+            ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
+          }
+        }
+      } else {
+        const share = await shareDetails(req.params.shareID || `PL:${req.url.split('/')[1]}:${req.params.plName}`);
+        if(share && req.url.split('/')[1] == 'tutorial') {
+          ogOutput += `<meta property="og:description" content="Come look at the tutorial ${share.name}!" />`;
+          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;
+        } else if(share) {
+          ogOutput += `<meta property="og:description" content="Come play the game ${share.name} with your friends!" />`;
+          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;
         } else {
-          ogOutput += `<meta property="og:description" content="Come play with me!" />`;
+          ogOutput += `<meta property="og:description" content="Come play with your friends!" />`;
           ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
         }
-        ogOutput += `<p>Your browser identifies as a bot and therefor only receives metadata. Please use a different browser and/or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a>.</p>`;
-        res.send(ogOutput);
-      } else {
-        res.setHeader('Content-Type', 'text/html');
-        if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-          res.setHeader('Content-Encoding', 'gzip');
-          res.send(result.gzipped);
-        } else {
-          res.send(result.min);
-        }
       }
-    }).catch(next);
-  });
+
+      ogOutput += `<p>Your browser identifies as a bot and therefor only receives metadata. Please use a different browser and/or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a>.</p>`;
+      res.send(ogOutput);
+    } else {
+      res.setHeader('Content-Type', 'text/html');
+      if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+        res.setHeader('Content-Encoding', 'gzip');
+        res.send(result.gzipped);
+      } else {
+        res.send(result.min);
+      }
+    }
+  }
 
   router.get('/createTempState/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {

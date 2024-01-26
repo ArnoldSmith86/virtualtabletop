@@ -50,6 +50,18 @@ export default class Room {
     }
   }
 
+  async addShare(shareID) {
+    if(shareID.match(/^PL:/)) {
+      const state = this.getStateDetails(shareID);
+      if(!this.state._meta.starred[state.publicLibrary])
+        this.toggleStateStar(null, state.publicLibrary);
+      return state.id;
+    } else {
+      await this.addState(shareID, 'link', `${Config.get('externalURL')}/s/${shareID}/name.vtt`, '');
+      return shareID;
+    }
+  }
+
   async addState(id, type, src, srcName, addAsVariant) {
     const initialAddAsVariant = addAsVariant;
     let stateID = addAsVariant || id;
@@ -104,7 +116,7 @@ export default class Room {
           return;
         }
 
-        if(type != 'link')
+        if(type != 'link' || meta.importerTemp)
           fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
 
         let variantMeta = {
@@ -123,7 +135,7 @@ export default class Room {
           };
         }
 
-        if(type == 'link') {
+        if(type == 'link' && !meta.importerTemp) {
           const baseLink = src.replace(/#[^#]*$/, '');
           meta.link = `${baseLink}#${state}`;
           if(!variantMeta.link && !variantMeta.plStateID) {
@@ -143,7 +155,7 @@ export default class Room {
         if(addAsVariant) {
           if(!this.state._meta.states[stateID].variants[newVariantID])
             this.state._meta.states[stateID].variants[newVariantID] = variantMeta;
-          else if(type != 'link')
+          else if(type != 'link' || meta.importerTemp)
             delete this.state._meta.states[stateID].variants[newVariantID].link;
           if(!this.state._meta.states[stateID].attribution)
             this.state._meta.states[stateID].attribution = meta.attribution;
@@ -158,6 +170,11 @@ export default class Room {
 
         if(type == 'state')
           this.state._meta.activeState = { stateID, variantID: newVariantID };
+
+        if(meta.importerTemp) {
+          meta.importer = meta.importerTemp;
+          delete meta.importerTemp;
+        }
       }
 
 
@@ -414,6 +431,17 @@ export default class Room {
     }
     Statistics.updateDataInsideStates(Room.publicLibrary);
     return Room.publicLibrary;
+  }
+
+  getStateDetails(stateID) {
+    if(stateID.match(/^PL:/)) {
+      const [ , category, name ] = stateID.split(':');
+      for(const [ id, state ] of Object.entries(this.state._meta.states))
+        if(state.publicLibrary && state.publicLibraryCategory.toLowerCase() == `${category}s` && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == name)
+          return Object.assign({}, state, { id });
+    } else {
+      return this.state._meta.states[stateID];
+    }
   }
 
   getVariantMetadata(stateID, variantID) {

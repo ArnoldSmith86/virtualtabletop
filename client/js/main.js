@@ -105,7 +105,8 @@ export function showOverlay(id, forced) {
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
-    toServer('mouse',{inactive:true})
+    if(!isLoading)
+      toServer('mouse',{inactive:true})
   } else {
     overlayActive = false;
   }
@@ -127,6 +128,7 @@ function checkURLproperties(connected) {
   if(!connected) {
 
     try {
+      checkForGameURL();
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
@@ -434,6 +436,13 @@ onLoad(function() {
 
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
 
+  on('.toolbarButton', 'click', function(e) {
+    if(isLoading) {
+      e.stopImmediatePropagation();
+      return;
+    }
+  });
+
   on('.toolbarTab', 'click', function(e) {
     if(e.currentTarget.classList.contains('active')) {
       if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
@@ -543,7 +552,8 @@ onLoad(function() {
 
   checkURLproperties(false);
   setScale();
-  startWebSocket();
+  if(!location.href.includes('/game/') && !location.href.includes('/tutorial/'))
+    startWebSocket();
 
   onMessage('warning', alert);
   onMessage('error', function(message) {
@@ -561,6 +571,7 @@ onLoad(function() {
     checkedOnce = true;
     let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
     document.title = `${document.location.pathname.split('/').pop()} - ${tabSuffix}`;
+    $('#playerInviteURL').innerText = location.href;
   });
 });
 

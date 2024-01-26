@@ -57,6 +57,26 @@ export function progressButton(button, clickHandler, disableWhenDone=true) {
   };
 }
 
+async function shareURL(url) {
+  try {
+    await navigator.share({ url });
+  } catch(e) {
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch(e) {
+      throw new Error('Could not share or copy URL.');
+    }
+  }
+}
+
+// uses a progressButton with a custom handler that shares a URL
+export function shareButton(button, urlCallback) {
+  progressButton(button, async function(updateProgress) {
+    updateProgress('Sharing...');
+    await shareURL(urlCallback());
+  });
+}
+
 export async function loadImage(img, src) {
   return new Promise(function(resolve, reject) {
     img.onload = function() {
