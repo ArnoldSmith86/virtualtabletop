@@ -110,4 +110,7 @@ onLoad(function() {
     for(const [ id, widget ] of widgets)
       widget.updateOwner();
   });
+
+  // share URL when clicking button
+  shareButton($('#playersShareButton'), _=>location.href);
 });
