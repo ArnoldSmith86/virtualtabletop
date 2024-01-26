@@ -330,7 +330,8 @@
     "y": 504,
     "x": 7,
     "width": 315,
-    "height": 200
+    "height": 200,
+    "movable": false
   },
   "9gbf": {
     "type": "button",
