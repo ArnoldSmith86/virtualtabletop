@@ -140,6 +140,10 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
+    body.loading #toolbar, body.loading #toolbar * {
+      cursor: not-allowed;
+    }
+
     @media (min-height: 350px) {
       body.wideToolbar #toolbar > img {
         display: block;
@@ -262,6 +266,10 @@ body.aspectTooGood.hiddenToolbar {
       background-color: rgba(0, 0, 0, 0.1);
     }
 
+    body.loading .toolbarButton:hover {
+      background-color: transparent;
+    }
+
     .toolbarButton:focus {
       outline-style: none;
       box-shadow: none;
@@ -377,7 +385,7 @@ body.aspectTooGood.hiddenToolbar {
       pointer-events: none;
     }
 
-    .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
+    body:not(.loading) .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
       display: block;
     }
 

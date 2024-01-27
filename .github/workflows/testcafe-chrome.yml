@@ -30,4 +30,5 @@ jobs:
     - name: Run TestCafe tests
       uses: DevExpress/testcafe-action@latest
       with:
+        version: "3.5.0"
         args: "chrome:headless tests/testcafe"

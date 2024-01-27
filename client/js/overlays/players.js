@@ -1,8 +1,8 @@
-import { asArray, onLoad } from '../domhelpers.js';
+import { asArray, onLoad, rand } from '../domhelpers.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
-let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
+let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(rand()*1000);
 let playerColor = 'red';
 let activePlayers = [];
 let activeColors = [];
@@ -110,4 +110,7 @@ onLoad(function() {
     for(const [ id, widget ] of widgets)
       widget.updateOwner();
   });
+
+  // share URL when clicking button
+  shareButton($('#playersShareButton'), _=>location.href);
 });

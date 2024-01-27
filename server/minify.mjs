@@ -21,6 +21,7 @@ export default async function minifyHTML() {
     'client/css/overlays/states.css',
     'client/css/overlays/connectionlost.css',
     'client/css/overlays/about.css',
+    'client/css/overlays/welcome.css',
 
     'client/css/widgets/basicwidget.css',
     'client/css/widgets/button.css',
@@ -54,6 +55,7 @@ export default async function minifyHTML() {
 
     'client/js/overlays/players.js',
     'client/js/overlays/states.js',
+    'client/js/overlays/welcome.js',
 
     'client/js/widgets/widget.js',
     'client/js/widgets/basicwidget.js',
