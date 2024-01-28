@@ -2499,7 +2499,18 @@ export class Widget extends StateManaged {
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
-      $('#buttonInputFields input, #buttonInputFields select').focus();
+      const inputs = $a('#buttonInputFields input, #buttonInputFields select');
+      if(inputs.length)
+        inputs[0].focus();
+      // press go button when enter is pressed
+      for(const input of inputs) {
+        input.addEventListener('keydown', e=>{
+          if(e.key == 'Enter') {
+            e.preventDefault();
+            goHandler();
+          }
+        });
+      }
     });
   }
 
