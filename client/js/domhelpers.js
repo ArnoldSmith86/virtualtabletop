@@ -349,7 +349,6 @@ export function formField(field, dom, id) {
     dom.appendChild(input);
     dom.appendChild(underlineelement);
     input.id = id;
-    setTimeout(() => $('.inputstring input', $('#buttonInputFields')).focus(), 0);
   }
 
   if(field.type == 'text') {

@@ -2499,6 +2499,7 @@ export class Widget extends StateManaged {
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
+      $('#buttonInputFields input, #buttonInputFields select').focus();
     });
   }
 
