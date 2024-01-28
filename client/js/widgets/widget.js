@@ -2500,8 +2500,10 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
       const inputs = $a('#buttonInputFields input, #buttonInputFields select');
-      if(inputs.length)
+      if(inputs.length) {
         inputs[0].focus();
+        inputs[0].select();
+      }
       // press go button when enter is pressed
       for(const input of inputs) {
         input.addEventListener('keydown', e=>{
