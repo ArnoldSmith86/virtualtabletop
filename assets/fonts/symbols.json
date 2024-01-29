@@ -32610,6 +32610,11 @@
       "silly",
       "smile"
     ],
+    "🫠": [
+      "melting face",
+      "hot",
+      "heat"
+    ],
     "😉": [
       "winking_face",
       "face",
@@ -32715,6 +32720,12 @@
       "infatuation",
       "kiss"
     ],
+    "🥲": [
+      "smiling face with tear",
+      "sad",
+      "cry",
+      "pretend"
+    ],
     "😋": [
       "face_savoring_food",
       "happy",
@@ -32784,6 +32795,20 @@
       "shock",
       "surprise"
     ],
+    "🫢": [
+      "face with open eyes and hand over mouth",
+      "silence",
+      "secret",
+      "shock",
+      "surprise"
+    ],
+    "🫣": [
+      "face with peeking eye",
+      "scared",
+      "frightening",
+      "embarrassing",
+      "shy"
+    ],
     "🤫": [
       "shushing_face",
       "face",
@@ -32796,6 +32821,11 @@
       "hmmm",
       "think",
       "consider"
+    ],
+    "🫡": [
+      "saluting face",
+      "respect",
+      "salute"
     ],
     "🤐": [
       "zipper_mouth_face",
@@ -32811,7 +32841,8 @@
       "scepticism",
       "disapproval",
       "disbelief",
-      "surprise"
+      "surprise",
+      "suspicious"
     ],
     "😐": [
       "neutral_face",
@@ -32830,8 +32861,20 @@
     ],
     "😶": [
       "face_without_mouth",
-      "face",
-      "hellokitty"
+      "face"
+    ],
+    "🫥": [
+      "dotted line face",
+      "invisible",
+      "lonely",
+      "isolation",
+      "depression"
+    ],
+    "😶‍🌫️": [
+      "face in clouds",
+      "shower",
+      "steam",
+      "dream"
     ],
     "😏": [
       "smirking_face",
@@ -32852,6 +32895,7 @@
       "unimpressed",
       "skeptical",
       "dubious",
+      "ugh",
       "side_eye"
     ],
     "🙄": [
@@ -32866,11 +32910,35 @@
       "grimace",
       "teeth"
     ],
+    "😮‍💨": [
+      "face exhaling",
+      "relieve",
+      "relief",
+      "tired",
+      "sigh"
+    ],
     "🤥": [
       "lying_face",
       "face",
       "lie",
       "pinocchio"
+    ],
+    "🫨": [
+      "shaking face",
+      "dizzy",
+      "shock",
+      "blurry",
+      "earthquake"
+    ],
+    "🙂‍↔️": [
+      "head_shaking_horizontally",
+      "no",
+      "shake"
+    ],
+    "🙂‍↕️": [
+      "head_shaking_vertically",
+      "nod",
+      "yes"
     ],
     "😌": [
       "relieved_face",
@@ -32985,6 +33053,14 @@
       "xox",
       "dizzy"
     ],
+    "😵‍💫": [
+      "face with spiral eyes",
+      "sick",
+      "ill",
+      "confused",
+      "nauseous",
+      "nausea"
+    ],
     "🤯": [
       "exploding_head",
       "face",
@@ -33003,6 +33079,13 @@
       "face",
       "celebration",
       "woohoo"
+    ],
+    "🥸": [
+      "disguised face",
+      "pretent",
+      "brows",
+      "glasses",
+      "moustache"
     ],
     "😎": [
       "smiling_face_with_sunglasses",
@@ -33034,6 +33117,13 @@
       "weird",
       "hmmm",
       ":/"
+    ],
+    "🫤": [
+      "face with diagonal mouth",
+      "skeptic",
+      "confuse",
+      "frustrated",
+      "indifferent"
     ],
     "😟": [
       "worried_face",
@@ -33090,7 +33180,17 @@
       "pleading_face",
       "face",
       "begging",
-      "mercy"
+      "mercy",
+      "cry",
+      "tears",
+      "sad",
+      "grievance"
+    ],
+    "🥹": [
+      "face holding back tears",
+      "touched",
+      "gratitude",
+      "cry"
     ],
     "😦": [
       "frowning_face_with_open_mouth",
@@ -33109,9 +33209,7 @@
       "face",
       "scared",
       "terrified",
-      "nervous",
-      "oops",
-      "huh"
+      "nervous"
     ],
     "😰": [
       "anxious_face_with_sweat",
@@ -33137,6 +33235,7 @@
     ],
     "😭": [
       "loudly_crying_face",
+      "sobbing",
       "face",
       "cry",
       "tears",
@@ -33211,7 +33310,8 @@
       "gas",
       "phew",
       "proud",
-      "pride"
+      "pride",
+      "triumph"
     ],
     "😡": [
       "pouting_face",
@@ -33252,7 +33352,8 @@
       "dead",
       "skeleton",
       "creepy",
-      "death"
+      "death",
+      "dead"
     ],
     "☠️": [
       "skull_and_crossbones",
@@ -33286,8 +33387,7 @@
       "creepy",
       "devil",
       "demon",
-      "japanese",
-      "ogre"
+      "japanese_ogre"
     ],
     "👺": [
       "goblin",
@@ -33297,8 +33397,7 @@
       "monster",
       "scary",
       "creepy",
-      "japanese",
-      "goblin"
+      "japanese_goblin"
     ],
     "👻": [
       "ghost",
@@ -33411,15 +33510,6 @@
       "nature",
       "omg"
     ],
-    "💋": [
-      "kiss_mark",
-      "face",
-      "lips",
-      "love",
-      "like",
-      "affection",
-      "valentines"
-    ],
     "💌": [
       "love_letter",
       "email",
@@ -33499,10 +33589,25 @@
       "heart",
       "heartbreak"
     ],
+    "❤️‍🔥": [
+      "heart on fire",
+      "passionate",
+      "enthusiastic"
+    ],
+    "❤️‍🩹": [
+      "mending heart",
+      "broken heart",
+      "bandage",
+      "wounded"
+    ],
     "❤️": [
       "red_heart",
       "love",
       "like",
+      "valentines"
+    ],
+    "🩷": [
+      "pink heart",
       "valentines"
     ],
     "🧡": [
@@ -33533,6 +33638,11 @@
       "affection",
       "valentines"
     ],
+    "🩵": [
+      "light blue heart",
+      "ice",
+      "baby blue"
+    ],
     "💜": [
       "purple_heart",
       "love",
@@ -33548,9 +33658,23 @@
       "black_heart",
       "evil"
     ],
+    "🩶": [
+      "grey heart",
+      "silver",
+      "monochrome"
+    ],
     "🤍": [
       "white_heart",
       "pure"
+    ],
+    "💋": [
+      "kiss_mark",
+      "face",
+      "lips",
+      "love",
+      "like",
+      "affection",
+      "valentines"
     ],
     "💯": [
       "hundred_points",
@@ -33562,7 +33686,8 @@
       "quiz",
       "test",
       "pass",
-      "hundred"
+      "hundred",
+      "100"
     ],
     "💢": [
       "anger_symbol",
@@ -33574,7 +33699,6 @@
       "bomb",
       "explode",
       "explosion",
-      "collision",
       "blown"
     ],
     "💫": [
@@ -33603,13 +33727,6 @@
     "🕳️": [
       "hole",
       "embarrassing"
-    ],
-    "💣": [
-      "bomb",
-      "boom",
-      "explode",
-      "explosion",
-      "terrorism"
     ],
     "💬": [
       "speech_balloon",
@@ -33655,6 +33772,7 @@
   "Emoji - People & Body": {
     "👋": [
       "waving_hand",
+      "wave",
       "hands",
       "gesture",
       "goodbye",
@@ -33691,6 +33809,39 @@
       "spock",
       "star trek"
     ],
+    "🫱": [
+      "rightwards hand",
+      "palm",
+      "offer"
+    ],
+    "🫲": [
+      "leftwards hand",
+      "palm",
+      "offer"
+    ],
+    "🫳": [
+      "palm down hand",
+      "palm",
+      "drop"
+    ],
+    "🫴": [
+      "palm up hand",
+      "lift",
+      "offer",
+      "demand"
+    ],
+    "🫷": [
+      "leftwards pushing hand",
+      "highfive",
+      "pressing",
+      "stop"
+    ],
+    "🫸": [
+      "rightwards pushing hand",
+      "highfive",
+      "pressing",
+      "stop"
+    ],
     "👌": [
       "ok_hand",
       "fingers",
@@ -33698,6 +33849,12 @@
       "perfect",
       "ok",
       "okay"
+    ],
+    "🤌": [
+      "pinched fingers",
+      "size",
+      "tiny",
+      "small"
     ],
     "🤏": [
       "pinching_hand",
@@ -33718,6 +33875,13 @@
       "crossed_fingers",
       "good",
       "lucky"
+    ],
+    "🫰": [
+      "hand with index finger and thumb crossed",
+      "heart",
+      "love",
+      "money",
+      "expensive"
     ],
     "🤟": [
       "love_you_gesture",
@@ -33782,6 +33946,11 @@
       "direction",
       "up"
     ],
+    "🫵": [
+      "index pointing at the viewer",
+      "you",
+      "recruit"
+    ],
     "👍": [
       "thumbs_up",
       "thumbsup",
@@ -33844,6 +34013,12 @@
       "celebration",
       "hands"
     ],
+    "🫶": [
+      "heart hands",
+      "love",
+      "appreciation",
+      "support"
+    ],
     "👐": [
       "open_hands",
       "fingers",
@@ -33884,11 +34059,13 @@
     ],
     "💅": [
       "nail_polish",
+      "nail_care",
       "beauty",
       "manicure",
       "finger",
       "fashion",
-      "nail"
+      "nail",
+      "slay"
     ],
     "🤳": [
       "selfie",
@@ -33943,6 +34120,15 @@
       "smart",
       "intelligent"
     ],
+    "🫀": [
+      "anatomical heart",
+      "health",
+      "heartbeat"
+    ],
+    "🫁": [
+      "lungs",
+      "breathe"
+    ],
     "🦷": [
       "tooth",
       "teeth",
@@ -33975,8 +34161,14 @@
     ],
     "👄": [
       "mouth",
-      "mouth",
       "kiss"
+    ],
+    "🫦": [
+      "biting lip",
+      "flirt",
+      "sexy",
+      "pain",
+      "worry"
     ],
     "👶": [
       "baby",
@@ -34005,8 +34197,7 @@
     ],
     "🧑": [
       "person",
-      "gender-neutral",
-      "person"
+      "gender-neutral"
     ],
     "👱": [
       "person_blond_hair",
@@ -34026,6 +34217,14 @@
       "man_beard",
       "person",
       "bewhiskered"
+    ],
+    "🧔‍♂️": [
+      "man beard",
+      "facial hair"
+    ],
+    "🧔‍♀️": [
+      "woman beard",
+      "facial hair"
     ],
     "👨‍🦰": [
       "man_red_hair",
@@ -34646,8 +34845,7 @@
     "🕵️": [
       "detective",
       "human",
-      "spy",
-      "detective"
+      "spy"
     ],
     "🕵️‍♂️": [
       "man_detective",
@@ -34683,6 +34881,12 @@
       "royal",
       "woman"
     ],
+    "🥷": [
+      "ninja",
+      "ninjutsu",
+      "skills",
+      "japanese"
+    ],
     "👷": [
       "construction_worker",
       "labor",
@@ -34709,6 +34913,11 @@
       "worker",
       "labor",
       "woman"
+    ],
+    "🫅": [
+      "person with crown",
+      "royalty",
+      "power"
     ],
     "🤴": [
       "prince",
@@ -34768,6 +34977,16 @@
       "wedding",
       "groom"
     ],
+    "🤵‍♂️": [
+      "man in tuxedo",
+      "formal",
+      "fashion"
+    ],
+    "🤵‍♀️": [
+      "woman in tuxedo",
+      "formal",
+      "fashion"
+    ],
     "👰": [
       "bride_with_veil",
       "couple",
@@ -34776,14 +34995,49 @@
       "woman",
       "bride"
     ],
+    "👰‍♂️": [
+      "man with veil",
+      "wedding",
+      "marriage"
+    ],
+    "👰‍♀️": [
+      "woman with veil",
+      "wedding",
+      "marriage"
+    ],
     "🤰": [
       "pregnant_woman",
       "baby"
+    ],
+    "🫃": [
+      "pregnant man",
+      "baby",
+      "belly"
+    ],
+    "🫄": [
+      "pregnant person",
+      "baby",
+      "belly"
     ],
     "🤱": [
       "breast_feeding",
       "nursing",
       "baby"
+    ],
+    "👩‍🍼": [
+      "woman feeding baby",
+      "birth",
+      "food"
+    ],
+    "👨‍🍼": [
+      "man feeding baby",
+      "birth",
+      "food"
+    ],
+    "🧑‍🍼": [
+      "person feeding baby",
+      "birth",
+      "food"
     ],
     "👼": [
       "baby_angel",
@@ -34805,6 +35059,10 @@
       "female",
       "xmas",
       "mother christmas"
+    ],
+    "🧑‍🎄": [
+      "mx claus",
+      "christmas"
     ],
     "🦸": [
       "superhero",
@@ -34964,6 +35222,11 @@
       "undead",
       "walking dead"
     ],
+    "🧌": [
+      "troll",
+      "mystical",
+      "monster"
+    ],
     "💆": [
       "person_getting_massage",
       "relax"
@@ -35016,6 +35279,15 @@
       "woman",
       "female"
     ],
+    "🚶‍➡️": [
+      "person walking facing right"
+    ],
+    "🚶‍♀️‍➡️": [
+      "woman walking facing right"
+    ],
+    "🚶‍♂️‍➡️": [
+      "man walking facing right"
+    ],
     "🧍": [
       "person_standing",
       "still"
@@ -35043,47 +35315,83 @@
       "respectful",
       "pray"
     ],
+    "🧎‍➡️": [
+      "person kneeling facing right"
+    ],
+    "🧎‍♀️‍➡️": [
+      "woman kneeling facing right"
+    ],
+    "🧎‍♂️‍➡️": [
+      "man kneeling facing right"
+    ],
     "🧑‍🦯": [
       "person_with_probing_cane",
       "blind"
+    ],
+    "🧑‍🦯‍➡️": [
+      "person with white cane facing right"
     ],
     "👨‍🦯": [
       "man_with_probing_cane",
       "blind"
     ],
+    "👨‍🦯‍➡️": [
+      "man with white cane facing right"
+    ],
     "👩‍🦯": [
       "woman_with_probing_cane",
       "blind"
+    ],
+    "👩‍🦯‍➡️": [
+      "woman with white cane facing right"
     ],
     "🧑‍🦼": [
       "person_in_motorized_wheelchair",
       "disability",
       "accessibility"
     ],
+    "🧑‍🦼‍➡️": [
+      "person in motorized wheelchair facing right"
+    ],
     "👨‍🦼": [
       "man_in_motorized_wheelchair",
       "disability",
       "accessibility"
+    ],
+    "👨‍🦼‍➡️": [
+      "man in motorized wheelchair facing right"
     ],
     "👩‍🦼": [
       "woman_in_motorized_wheelchair",
       "disability",
       "accessibility"
     ],
+    "👩‍🦼‍➡️": [
+      "woman in motorized wheelchair facing right"
+    ],
     "🧑‍🦽": [
       "person_in_manual_wheelchair",
       "disability",
       "accessibility"
+    ],
+    "🧑‍🦽‍➡️": [
+      "person in manual wheelchair facing right"
     ],
     "👨‍🦽": [
       "man_in_manual_wheelchair",
       "disability",
       "accessibility"
     ],
+    "👨‍🦽‍➡️": [
+      "man in manual wheelchair facing right"
+    ],
     "👩‍🦽": [
       "woman_in_manual_wheelchair",
       "disability",
       "accessibility"
+    ],
+    "👩‍🦽‍➡️": [
+      "woman in manual wheelchair facing right"
     ],
     "🏃": [
       "person_running",
@@ -35105,6 +35413,15 @@
       "race",
       "running",
       "female"
+    ],
+    "🏃‍➡️": [
+      "person running facing right"
+    ],
+    "🏃‍♀️‍➡️": [
+      "woman running facing right"
+    ],
+    "🏃‍♂️‍➡️": [
+      "man running facing right"
     ],
     "💃": [
       "woman_dancing",
@@ -35334,20 +35651,27 @@
     ],
     "🚴": [
       "person_biking",
+      "bicycle",
+      "bike",
+      "cyclist",
       "sport",
       "move"
     ],
     "🚴‍♂️": [
       "man_biking",
-      "sports",
+      "bicycle",
       "bike",
+      "cyclist",
+      "sports",
       "exercise",
       "hipster"
     ],
     "🚴‍♀️": [
       "woman_biking",
-      "sports",
+      "bicycle",
       "bike",
+      "cyclist",
+      "sports",
       "exercise",
       "hipster",
       "woman",
@@ -35355,24 +35679,31 @@
     ],
     "🚵": [
       "person_mountain_biking",
+      "bicycle",
+      "bike",
+      "cyclist",
       "sport",
       "move"
     ],
     "🚵‍♂️": [
       "man_mountain_biking",
+      "bicycle",
+      "bike",
+      "cyclist",
       "transportation",
       "sports",
       "human",
-      "race",
-      "bike"
+      "race"
     ],
     "🚵‍♀️": [
       "woman_mountain_biking",
+      "bicycle",
+      "bike",
+      "cyclist",
       "transportation",
       "sports",
       "human",
       "race",
-      "bike",
       "woman",
       "female"
     ],
@@ -35589,18 +35920,6 @@
       "dating",
       "valentines",
       "marriage"
-    ],
-    "👪": [
-      "family",
-      "home",
-      "parents",
-      "child",
-      "mom",
-      "dad",
-      "father",
-      "mother",
-      "people",
-      "human"
     ],
     "👨‍👩‍👦": [
       "family_man_woman_boy",
@@ -35821,6 +36140,34 @@
       "group",
       "team"
     ],
+    "🫂": [
+      "people hugging",
+      "care"
+    ],
+    "👪": [
+      "family",
+      "home",
+      "parents",
+      "child",
+      "mom",
+      "dad",
+      "father",
+      "mother",
+      "people",
+      "human"
+    ],
+    "🧑‍🧑‍🧒": [
+      "family: adult, adult, child"
+    ],
+    "🧑‍🧑‍🧒‍🧒": [
+      "family: adult, adult, child, child"
+    ],
+    "🧑‍🧒": [
+      "family: adult, child"
+    ],
+    "🧑‍🧒‍🧒": [
+      "family: adult, child, child"
+    ],
     "👣": [
       "footprints",
       "feet",
@@ -35922,6 +36269,11 @@
       "pet",
       "cats"
     ],
+    "🐈‍⬛": [
+      "black cat",
+      "superstition",
+      "luck"
+    ],
     "🦁": [
       "lion",
       "animal",
@@ -35953,6 +36305,19 @@
       "brown",
       "nature"
     ],
+    "🫎": [
+      "moose",
+      "shrek",
+      "canada",
+      "sweden",
+      "sven",
+      "cool"
+    ],
+    "🫏": [
+      "donkey",
+      "eeyore",
+      "mule"
+    ],
     "🐎": [
       "horse",
       "animal",
@@ -35978,6 +36343,10 @@
       "nature",
       "horns",
       "venison"
+    ],
+    "🦬": [
+      "bison",
+      "ox"
     ],
     "🐮": [
       "cow_face",
@@ -36085,6 +36454,11 @@
       "th",
       "circus"
     ],
+    "🦣": [
+      "mammoth",
+      "elephant",
+      "tusks"
+    ],
     "🦏": [
       "rhinoceros",
       "animal",
@@ -36144,6 +36518,11 @@
       "rodent",
       "squirrel"
     ],
+    "🦫": [
+      "beaver",
+      "animal",
+      "rodent"
+    ],
     "🦔": [
       "hedgehog",
       "animal",
@@ -36163,6 +36542,11 @@
       "nature",
       "wild"
     ],
+    "🐻‍❄️": [
+      "polar bear",
+      "animal",
+      "arctic"
+    ],
     "🐨": [
       "koala",
       "animal",
@@ -36171,8 +36555,7 @@
     "🐼": [
       "panda",
       "animal",
-      "nature",
-      "panda"
+      "nature"
     ],
     "🦥": [
       "sloth",
@@ -36295,6 +36678,16 @@
       "bird",
       "hoot"
     ],
+    "🦤": [
+      "dodo",
+      "animal",
+      "bird"
+    ],
+    "🪶": [
+      "feather",
+      "bird",
+      "fly"
+    ],
     "🦩": [
       "flamingo",
       "animal"
@@ -36313,6 +36706,29 @@
       "bird",
       "pirate",
       "talk"
+    ],
+    "🪽": [
+      "wing",
+      "angel",
+      "birds",
+      "flying"
+    ],
+    "🐦‍⬛": [
+      "black bird",
+      "crow"
+    ],
+    "🪿": [
+      "goose",
+      "silly",
+      "jemima",
+      "goosebumps"
+    ],
+    "🐦‍🔥": [
+      "phoenix",
+      "fantasy",
+      "firebird",
+      "rebirth",
+      "reincarnation"
     ],
     "🐸": [
       "frog",
@@ -36409,6 +36825,12 @@
       "fins",
       "beach"
     ],
+    "🦭": [
+      "seal",
+      "animal",
+      "creature",
+      "sea"
+    ],
     "🐟": [
       "fish",
       "animal",
@@ -36457,6 +36879,17 @@
       "sea",
       "beach"
     ],
+    "🪸": [
+      "coral",
+      "ocean",
+      "sea",
+      "reef"
+    ],
+    "🪼": [
+      "jellyfish",
+      "sting",
+      "tentacles"
+    ],
     "🐌": [
       "snail",
       "slow",
@@ -36493,6 +36926,10 @@
       "spring",
       "honey"
     ],
+    "🪲": [
+      "beetle",
+      "insect"
+    ],
     "🐞": [
       "lady_beetle",
       "animal",
@@ -36503,8 +36940,12 @@
     "🦗": [
       "cricket",
       "animal",
-      "cricket",
       "chirp"
+    ],
+    "🪳": [
+      "cockroach",
+      "insect",
+      "pests"
     ],
     "🕷️": [
       "spider",
@@ -36529,6 +36970,14 @@
       "nature",
       "insect",
       "malaria"
+    ],
+    "🪰": [
+      "fly",
+      "insect"
+    ],
+    "🪱": [
+      "worm",
+      "animal"
     ],
     "🦠": [
       "microbe",
@@ -36556,6 +37005,12 @@
       "japanese",
       "spring"
     ],
+    "🪷": [
+      "lotus",
+      "flower",
+      "calm",
+      "meditation"
+    ],
     "🏵️": [
       "rosette",
       "flower",
@@ -36573,7 +37028,8 @@
       "wilted_flower",
       "plant",
       "nature",
-      "flower"
+      "flower",
+      "rose"
     ],
     "🌺": [
       "hibiscus",
@@ -36602,6 +37058,11 @@
       "summer",
       "spring"
     ],
+    "🪻": [
+      "hyacinth",
+      "flower",
+      "lavender"
+    ],
     "🌱": [
       "seedling",
       "plant",
@@ -36609,6 +37070,11 @@
       "grass",
       "lawn",
       "spring"
+    ],
+    "🪴": [
+      "potted plant",
+      "greenery",
+      "house"
     ],
     "🌲": [
       "evergreen_tree",
@@ -36690,6 +37156,19 @@
       "grass",
       "lawn",
       "spring"
+    ],
+    "🪹": [
+      "empty nest",
+      "bird"
+    ],
+    "🪺": [
+      "nest with eggs",
+      "bird"
+    ],
+    "🍄": [
+      "mushroom",
+      "plant",
+      "vegetable"
     ]
   },
   "Emoji - Food & Drink": {
@@ -36723,6 +37202,12 @@
       "lemon",
       "fruit",
       "nature"
+    ],
+    "🍋‍🟩": [
+      "lime",
+      "citrus",
+      "fruit",
+      "tropical"
     ],
     "🍌": [
       "banana",
@@ -36776,6 +37261,10 @@
       "food",
       "nature"
     ],
+    "🫐": [
+      "blueberries",
+      "fruit"
+    ],
     "🥝": [
       "kiwi_fruit",
       "fruit",
@@ -36787,6 +37276,10 @@
       "vegetable",
       "nature",
       "food"
+    ],
+    "🫒": [
+      "olive",
+      "fruit"
     ],
     "🥥": [
       "coconut",
@@ -36833,6 +37326,11 @@
       "chilli",
       "chili"
     ],
+    "🫑": [
+      "bell pepper",
+      "fruit",
+      "plant"
+    ],
     "🥒": [
       "cucumber",
       "fruit",
@@ -36867,20 +37365,38 @@
       "food",
       "spice"
     ],
-    "🍄": [
-      "mushroom",
-      "plant",
-      "vegetable"
-    ],
     "🥜": [
       "peanuts",
       "food",
       "nut"
     ],
+    "🫘": [
+      "beans",
+      "food"
+    ],
     "🌰": [
       "chestnut",
       "food",
       "squirrel"
+    ],
+    "🫚": [
+      "ginger root",
+      "spice",
+      "yellow",
+      "cooking",
+      "gingerbread"
+    ],
+    "🫛": [
+      "pea pod",
+      "cozy",
+      "green"
+    ],
+    "🍄‍🟫": [
+      "brown_mushroom",
+      "food",
+      "fungus",
+      "nature",
+      "vegetable"
     ],
     "🍞": [
       "bread",
@@ -36903,6 +37419,12 @@
       "france",
       "bakery"
     ],
+    "🫓": [
+      "flatbread",
+      "flour",
+      "food",
+      "bakery"
+    ],
     "🥨": [
       "pretzel",
       "food",
@@ -36917,8 +37439,7 @@
       "bread",
       "bakery",
       "schmear",
-      "jewish",
-      "bakery"
+      "jewish_bakery"
     ],
     "🥞": [
       "pancakes",
@@ -37020,6 +37541,11 @@
       "food",
       "mexican"
     ],
+    "🫔": [
+      "tamale",
+      "food",
+      "masa"
+    ],
     "🥙": [
       "stuffed_flatbread",
       "food",
@@ -37061,6 +37587,12 @@
       "meat",
       "soup",
       "hot pot"
+    ],
+    "🫕": [
+      "fondue",
+      "cheese",
+      "pot",
+      "food"
     ],
     "🥣": [
       "bowl_with_spoon",
@@ -37112,12 +37644,15 @@
       "rice_cracker",
       "food",
       "japanese",
-      "snack"
+      "snack",
+      "senbei"
     ],
     "🍙": [
       "rice_ball",
       "food",
-      "japanese"
+      "japanese",
+      "onigiri",
+      "omusubi"
     ],
     "🍚": [
       "cooked_rice",
@@ -37154,6 +37689,7 @@
     ],
     "🍢": [
       "oden",
+      "skewer",
       "food",
       "japanese"
     ],
@@ -37333,7 +37869,9 @@
     "🍮": [
       "custard",
       "dessert",
-      "food"
+      "food",
+      "pudding",
+      "flan"
     ],
     "🍯": [
       "honey_pot",
@@ -37359,7 +37897,13 @@
       "caffeine",
       "latte",
       "espresso",
-      "coffee"
+      "coffee",
+      "mug"
+    ],
+    "🫖": [
+      "teapot",
+      "drink",
+      "hot"
     ],
     "🍵": [
       "teacup_without_handle",
@@ -37463,10 +38007,22 @@
       "glass",
       "shot"
     ],
+    "🫗": [
+      "pouring liquid",
+      "cup",
+      "water"
+    ],
     "🥤": [
       "cup_with_straw",
       "drink",
       "soda"
+    ],
+    "🧋": [
+      "bubble tea",
+      "taiwan",
+      "boba",
+      "milk tea",
+      "straw"
     ],
     "🧃": [
       "beverage_box",
@@ -37515,6 +38071,11 @@
       "kitchen",
       "weapon"
     ],
+    "🫙": [
+      "jar",
+      "container",
+      "sauce"
+    ],
     "🏺": [
       "amphora",
       "vase",
@@ -37526,6 +38087,7 @@
       "globe_showing_europe_africa",
       "globe",
       "world",
+      "earth",
       "international"
     ],
     "🌎": [
@@ -37533,6 +38095,7 @@
       "globe",
       "world",
       "USA",
+      "earth",
       "international"
     ],
     "🌏": [
@@ -37540,6 +38103,7 @@
       "globe",
       "world",
       "east",
+      "earth",
       "international"
     ],
     "🌐": [
@@ -37651,6 +38215,21 @@
     "🧱": [
       "brick",
       "bricks"
+    ],
+    "🪨": [
+      "rock",
+      "stone"
+    ],
+    "🪵": [
+      "wood",
+      "nature",
+      "timber",
+      "trunk"
+    ],
+    "🛖": [
+      "hut",
+      "house",
+      "structure"
     ],
     "🏘️": [
       "houses",
@@ -37885,6 +38464,11 @@
       "photo",
       "carnival"
     ],
+    "🛝": [
+      "playground slide",
+      "fun",
+      "park"
+    ],
     "🎡": [
       "ferris_wheel",
       "photo",
@@ -38064,6 +38648,11 @@
       "transportation",
       "vehicle"
     ],
+    "🛻": [
+      "pickup truck",
+      "car",
+      "transportation"
+    ],
     "🚚": [
       "delivery_truck",
       "cars",
@@ -38118,8 +38707,8 @@
     ],
     "🚲": [
       "bicycle",
+      "bike",
       "sports",
-      "bicycle",
       "exercise",
       "hipster"
     ],
@@ -38132,6 +38721,11 @@
     "🛹": [
       "skateboard",
       "board"
+    ],
+    "🛼": [
+      "roller skate",
+      "footwear",
+      "sports"
     ],
     "🚏": [
       "bus_stop",
@@ -38158,6 +38752,11 @@
       "fuel_pump",
       "gas station",
       "petroleum"
+    ],
+    "🛞": [
+      "wheel",
+      "car",
+      "transport"
     ],
     "🚨": [
       "police_car_light",
@@ -38198,6 +38797,11 @@
       "ferry",
       "sea",
       "boat"
+    ],
+    "🛟": [
+      "ring buoy",
+      "life saver",
+      "life preserver"
     ],
     "⛵": [
       "sailboat",
@@ -38381,6 +38985,11 @@
     ],
     "🕛": [
       "twelve_o_clock",
+      "12",
+      "00:00",
+      "0000",
+      "12:00",
+      "1200",
       "time",
       "noon",
       "midnight",
@@ -38391,6 +39000,10 @@
     ],
     "🕧": [
       "twelve_thirty",
+      "00:30",
+      "0030",
+      "12:30",
+      "1230",
       "time",
       "late",
       "early",
@@ -38398,6 +39011,11 @@
     ],
     "🕐": [
       "one_o_clock",
+      "1",
+      "1:00",
+      "100",
+      "13:00",
+      "1300",
       "time",
       "late",
       "early",
@@ -38405,6 +39023,10 @@
     ],
     "🕜": [
       "one_thirty",
+      "1:30",
+      "130",
+      "13:30",
+      "1330",
       "time",
       "late",
       "early",
@@ -38412,6 +39034,11 @@
     ],
     "🕑": [
       "two_o_clock",
+      "2",
+      "2:00",
+      "200",
+      "14:00",
+      "1400",
       "time",
       "late",
       "early",
@@ -38419,6 +39046,10 @@
     ],
     "🕝": [
       "two_thirty",
+      "2:30",
+      "230",
+      "14:30",
+      "1430",
       "time",
       "late",
       "early",
@@ -38426,6 +39057,11 @@
     ],
     "🕒": [
       "three_o_clock",
+      "3",
+      "3:00",
+      "300",
+      "15:00",
+      "1500",
       "time",
       "late",
       "early",
@@ -38433,6 +39069,10 @@
     ],
     "🕞": [
       "three_thirty",
+      "3:30",
+      "330",
+      "15:30",
+      "1530",
       "time",
       "late",
       "early",
@@ -38440,6 +39080,11 @@
     ],
     "🕓": [
       "four_o_clock",
+      "4",
+      "4:00",
+      "400",
+      "16:00",
+      "1600",
       "time",
       "late",
       "early",
@@ -38447,6 +39092,10 @@
     ],
     "🕟": [
       "four_thirty",
+      "4:30",
+      "430",
+      "16:30",
+      "1630",
       "time",
       "late",
       "early",
@@ -38454,6 +39103,11 @@
     ],
     "🕔": [
       "five_o_clock",
+      "5",
+      "5:00",
+      "500",
+      "17:00",
+      "1700",
       "time",
       "late",
       "early",
@@ -38461,6 +39115,10 @@
     ],
     "🕠": [
       "five_thirty",
+      "5:30",
+      "530",
+      "17:30",
+      "1730",
       "time",
       "late",
       "early",
@@ -38468,6 +39126,11 @@
     ],
     "🕕": [
       "six_o_clock",
+      "6",
+      "6:00",
+      "600",
+      "18:00",
+      "1800",
       "time",
       "late",
       "early",
@@ -38477,6 +39140,10 @@
     ],
     "🕡": [
       "six_thirty",
+      "6:30",
+      "630",
+      "18:30",
+      "1830",
       "time",
       "late",
       "early",
@@ -38484,6 +39151,11 @@
     ],
     "🕖": [
       "seven_o_clock",
+      "7",
+      "7:00",
+      "700",
+      "19:00",
+      "1900",
       "time",
       "late",
       "early",
@@ -38491,6 +39163,10 @@
     ],
     "🕢": [
       "seven_thirty",
+      "7:30",
+      "730",
+      "19:30",
+      "1930",
       "time",
       "late",
       "early",
@@ -38498,6 +39174,11 @@
     ],
     "🕗": [
       "eight_o_clock",
+      "8",
+      "8:00",
+      "800",
+      "20:00",
+      "2000",
       "time",
       "late",
       "early",
@@ -38505,6 +39186,10 @@
     ],
     "🕣": [
       "eight_thirty",
+      "8:30",
+      "830",
+      "20:30",
+      "2030",
       "time",
       "late",
       "early",
@@ -38512,6 +39197,11 @@
     ],
     "🕘": [
       "nine_o_clock",
+      "9",
+      "9:00",
+      "900",
+      "21:00",
+      "2100",
       "time",
       "late",
       "early",
@@ -38519,6 +39209,10 @@
     ],
     "🕤": [
       "nine_thirty",
+      "9:30",
+      "930",
+      "21:30",
+      "2130",
       "time",
       "late",
       "early",
@@ -38526,6 +39220,11 @@
     ],
     "🕙": [
       "ten_o_clock",
+      "10",
+      "10:00",
+      "1000",
+      "22:00",
+      "2200",
       "time",
       "late",
       "early",
@@ -38533,6 +39232,10 @@
     ],
     "🕥": [
       "ten_thirty",
+      "10:30",
+      "1030",
+      "22:30",
+      "2230",
       "time",
       "late",
       "early",
@@ -38540,6 +39243,11 @@
     ],
     "🕚": [
       "eleven_o_clock",
+      "11",
+      "11:00",
+      "1100",
+      "23:00",
+      "2300",
       "time",
       "late",
       "early",
@@ -38547,6 +39255,10 @@
     ],
     "🕦": [
       "eleven_thirty",
+      "11:30",
+      "1130",
+      "23:30",
+      "2330",
       "time",
       "late",
       "early",
@@ -38843,7 +39555,8 @@
       "thunder",
       "weather",
       "lightning bolt",
-      "fast"
+      "fast",
+      "zap"
     ],
     "❄️": [
       "snowflake",
@@ -38979,15 +39692,21 @@
       "plant",
       "nature",
       "branch",
-      "summer"
+      "summer",
+      "bamboo",
+      "wish",
+      "star_festival",
+      "tanzaku"
     ],
     "🎍": [
       "pine_decoration",
+      "japanese",
       "plant",
       "nature",
       "vegetable",
       "panda",
-      "pine_decoration"
+      "new_years",
+      "bamboo"
     ],
     "🎎": [
       "japanese_dolls",
@@ -39249,6 +39968,12 @@
       "wind",
       "fly"
     ],
+    "🔫": [
+      "pistol",
+      "violence",
+      "weapon",
+      "revolver"
+    ],
     "🎱": [
       "pool_8_ball",
       "pool",
@@ -39265,10 +39990,10 @@
       "circus",
       "fortune_teller"
     ],
-    "🧿": [
-      "nazar_amulet",
-      "bead",
-      "charm"
+    "🪄": [
+      "magic wand",
+      "supernature",
+      "power"
     ],
     "🎮": [
       "video_game",
@@ -39309,6 +40034,23 @@
       "teddy_bear",
       "plush",
       "stuffed"
+    ],
+    "🪅": [
+      "pinata",
+      "mexico",
+      "candy",
+      "celebration"
+    ],
+    "🪩": [
+      "mirror ball",
+      "disco",
+      "dance",
+      "party"
+    ],
+    "🪆": [
+      "nesting dolls",
+      "matryoshka",
+      "toy"
     ],
     "♠️": [
       "spade_suit",
@@ -39387,11 +40129,20 @@
       "spool",
       "string"
     ],
+    "🪡": [
+      "sewing needle",
+      "stitches"
+    ],
     "🧶": [
       "yarn",
       "ball",
       "crochet",
       "knit"
+    ],
+    "🪢": [
+      "knot",
+      "rope",
+      "scout"
     ]
   },
   "Emoji - Objects": {
@@ -39516,6 +40267,11 @@
       "shopping_bags",
       "female"
     ],
+    "🪭": [
+      "folding hand fan",
+      "flamenco",
+      "hot"
+    ],
     "👛": [
       "purse",
       "fashion",
@@ -39547,8 +40303,12 @@
       "backpack",
       "student",
       "education",
-      "bag",
-      "backpack"
+      "bag"
+    ],
+    "🩴": [
+      "thong sandal",
+      "footwear",
+      "summer"
     ],
     "👞": [
       "man_s_shoe",
@@ -39596,6 +40356,11 @@
       "shoes",
       "fashion"
     ],
+    "🪮": [
+      "hair pick",
+      "afro",
+      "comb"
+    ],
     "👑": [
       "crown",
       "king",
@@ -39636,6 +40401,11 @@
       "billed_cap",
       "cap",
       "baseball"
+    ],
+    "🪖": [
+      "military helmet",
+      "army",
+      "protection"
     ],
     "⛑️": [
       "rescue_worker_s_helmet",
@@ -39793,6 +40563,10 @@
       "jazz",
       "blues"
     ],
+    "🪗": [
+      "accordion",
+      "music"
+    ],
     "🎸": [
       "guitar",
       "music",
@@ -39828,6 +40602,23 @@
       "drumsticks",
       "snare"
     ],
+    "🪘": [
+      "long drum",
+      "music"
+    ],
+    "🪇": [
+      "maracas",
+      "music",
+      "instrument",
+      "percussion"
+    ],
+    "🪈": [
+      "flute",
+      "bamboo",
+      "music",
+      "instrument",
+      "pied piper"
+    ],
     "📱": [
       "mobile_phone",
       "technology",
@@ -39844,8 +40635,7 @@
       "telephone",
       "technology",
       "communication",
-      "dial",
-      "telephone"
+      "dial"
     ],
     "📞": [
       "telephone_receiver",
@@ -39870,6 +40660,11 @@
       "energy",
       "sustain"
     ],
+    "🪫": [
+      "low battery",
+      "drained",
+      "dead"
+    ],
     "🔌": [
       "electric_plug",
       "charger",
@@ -39878,7 +40673,6 @@
     "💻": [
       "laptop",
       "technology",
-      "laptop",
       "screen",
       "display",
       "monitor"
@@ -39972,8 +40766,7 @@
       "technology",
       "program",
       "oldschool",
-      "show",
-      "television"
+      "show"
     ],
     "📷": [
       "camera",
@@ -40163,6 +40956,11 @@
       "payment",
       "coins",
       "sale"
+    ],
+    "🪙": [
+      "coin",
+      "money",
+      "currency"
     ],
     "💴": [
       "yen_banknote",
@@ -40382,7 +41180,6 @@
     ],
     "📅": [
       "calendar",
-      "calendar",
       "schedule"
     ],
     "📆": [
@@ -40578,12 +41375,16 @@
       "crossed_swords",
       "weapon"
     ],
-    "🔫": [
-      "pistol",
-      "violence",
-      "weapon",
-      "pistol",
-      "revolver"
+    "💣": [
+      "bomb",
+      "boom",
+      "explode",
+      "explosion",
+      "terrorism"
+    ],
+    "🪃": [
+      "boomerang",
+      "weapon"
     ],
     "🏹": [
       "bow_and_arrow",
@@ -40594,6 +41395,11 @@
       "protection",
       "security"
     ],
+    "🪚": [
+      "carpentry saw",
+      "cut",
+      "chop"
+    ],
     "🔧": [
       "wrench",
       "tools",
@@ -40601,6 +41407,10 @@
       "ikea",
       "fix",
       "maintainer"
+    ],
+    "🪛": [
+      "screwdriver",
+      "tools"
     ],
     "🔩": [
       "nut_and_bolt",
@@ -40631,10 +41441,21 @@
       "rings",
       "url"
     ],
+    "⛓️‍💥": [
+      "broken_chain",
+      "break",
+      "breaking",
+      "cuffs",
+      "freedom"
+    ],
     "⛓️": [
       "chains",
       "lock",
       "arrest"
+    ],
+    "🪝": [
+      "hook",
+      "tools"
     ],
     "🧰": [
       "toolbox",
@@ -40648,6 +41469,10 @@
       "magnet",
       "attraction",
       "magnetic"
+    ],
+    "🪜": [
+      "ladder",
+      "tools"
     ],
     "⚗️": [
       "alembic",
@@ -40729,15 +41554,37 @@
       "adhesive_bandage",
       "heal"
     ],
+    "🩼": [
+      "crutch",
+      "accessibility",
+      "assist"
+    ],
     "🩺": [
       "stethoscope",
       "health"
+    ],
+    "🩻": [
+      "x-ray",
+      "skeleton",
+      "medicine"
     ],
     "🚪": [
       "door",
       "house",
       "entry",
       "exit"
+    ],
+    "🛗": [
+      "elevator",
+      "lift"
+    ],
+    "🪞": [
+      "mirror",
+      "reflection"
+    ],
+    "🪟": [
+      "window",
+      "scenery"
     ],
     "🛏️": [
       "bed",
@@ -40762,6 +41609,10 @@
       "bathroom",
       "potty"
     ],
+    "🪠": [
+      "plunger",
+      "toilet"
+    ],
     "🚿": [
       "shower",
       "clean",
@@ -40773,6 +41624,10 @@
       "clean",
       "shower",
       "bathroom"
+    ],
+    "🪤": [
+      "mouse trap",
+      "cheese"
     ],
     "🪒": [
       "razor",
@@ -40801,12 +41656,29 @@
       "roll_of_paper",
       "roll"
     ],
+    "🪣": [
+      "bucket",
+      "water",
+      "container"
+    ],
     "🧼": [
       "soap",
       "bar",
       "bathing",
       "cleaning",
       "lather"
+    ],
+    "🫧": [
+      "bubbles",
+      "soap",
+      "fun",
+      "carbonation",
+      "sparkling"
+    ],
+    "🪥": [
+      "toothbrush",
+      "hygiene",
+      "dental"
     ],
     "🧽": [
       "sponge",
@@ -40826,7 +41698,6 @@
       "cigarette",
       "kills",
       "tobacco",
-      "cigarette",
       "joint",
       "smoke"
     ],
@@ -40843,6 +41714,12 @@
       "funeral",
       "box"
     ],
+    "🪦": [
+      "headstone",
+      "death",
+      "rip",
+      "grave"
+    ],
     "⚱️": [
       "funeral_urn",
       "dead",
@@ -40851,11 +41728,28 @@
       "rip",
       "ashes"
     ],
+    "🧿": [
+      "nazar_amulet",
+      "bead",
+      "charm"
+    ],
+    "🪬": [
+      "hamsa",
+      "religion",
+      "protection"
+    ],
     "🗿": [
       "moai",
       "rock",
-      "easter island",
-      "moai"
+      "easter island"
+    ],
+    "🪧": [
+      "placard",
+      "announcement"
+    ],
+    "🪪": [
+      "identification card",
+      "document"
     ]
   },
   "Emoji - Symbols": {
@@ -40988,6 +41882,9 @@
     ],
     "🚳": [
       "no_bicycles",
+      "no_bikes",
+      "bicycle",
+      "bike",
       "cyclist",
       "prohibited",
       "circle"
@@ -41243,6 +42140,11 @@
       "jewish",
       "hexagram"
     ],
+    "🪯": [
+      "khanda",
+      "Sikhism",
+      "religion"
+    ],
     "♈": [
       "aries",
       "sign",
@@ -41297,8 +42199,7 @@
       "sign",
       "zodiac",
       "purple-square",
-      "astrology",
-      "scorpio"
+      "astrology"
     ],
     "♐": [
       "sagittarius",
@@ -41470,6 +42371,13 @@
       "bluetooth",
       "bars"
     ],
+    "🛜": [
+      "wireless",
+      "wifi",
+      "internet",
+      "contactless",
+      "signal"
+    ],
     "📳": [
       "vibration_mode",
       "orange-square",
@@ -41494,6 +42402,11 @@
       "man",
       "boy",
       "men"
+    ],
+    "⚧️": [
+      "transgender symbol",
+      "transgender",
+      "lgbtq"
     ],
     "✖️": [
       "multiplication_sign",
@@ -41520,6 +42433,10 @@
       "divide",
       "math",
       "calculation"
+    ],
+    "🟰": [
+      "heavy equals sign",
+      "math"
     ],
     "♾️": [
       "infinity",
@@ -41747,87 +42664,107 @@
       "0",
       "numbers",
       "blue-square",
-      "null"
+      "null",
+      "zero"
     ],
     "1️⃣": [
       "keycap_1",
       "blue-square",
       "numbers",
-      "1"
+      "1",
+      "one"
     ],
     "2️⃣": [
       "keycap_2",
       "numbers",
       "2",
       "prime",
-      "blue-square"
+      "blue-square",
+      "two"
     ],
     "3️⃣": [
       "keycap_3",
       "3",
       "numbers",
       "prime",
-      "blue-square"
+      "blue-square",
+      "three"
     ],
     "4️⃣": [
       "keycap_4",
       "4",
       "numbers",
-      "blue-square"
+      "blue-square",
+      "four"
     ],
     "5️⃣": [
       "keycap_5",
       "5",
       "numbers",
       "blue-square",
-      "prime"
+      "prime",
+      "five"
     ],
     "6️⃣": [
       "keycap_6",
       "6",
       "numbers",
-      "blue-square"
+      "blue-square",
+      "six"
     ],
     "7️⃣": [
       "keycap_7",
       "7",
       "numbers",
       "blue-square",
-      "prime"
+      "prime",
+      "seven"
     ],
     "8️⃣": [
       "keycap_8",
       "8",
       "blue-square",
-      "numbers"
+      "numbers",
+      "eight"
     ],
     "9️⃣": [
       "keycap_9",
       "blue-square",
       "numbers",
-      "9"
+      "9",
+      "nine"
     ],
     "🔟": [
       "keycap_10",
       "numbers",
       "10",
-      "blue-square"
+      "blue-square",
+      "ten"
     ],
     "🔠": [
       "input_latin_uppercase",
       "alphabet",
       "words",
+      "letters",
+      "uppercase",
       "blue-square"
     ],
     "🔡": [
       "input_latin_lowercase",
       "blue-square",
+      "letters",
+      "lowercase",
       "alphabet"
     ],
     "🔢": [
       "input_numbers",
       "numbers",
-      "blue-square"
+      "blue-square",
+      "1234",
+      "1",
+      "2",
+      "3",
+      "4"
     ],
     "🔣": [
       "input_symbols",
@@ -42297,12 +43234,17 @@
       "pride",
       "gay",
       "lgbt",
-      "glbt",
       "queer",
       "homosexual",
       "lesbian",
-      "bisexual",
-      "transgender"
+      "bisexual"
+    ],
+    "🏳️‍⚧️": [
+      "transgender flag",
+      "transgender",
+      "flag",
+      "pride",
+      "lgbtq"
     ],
     "🏴‍☠️": [
       "pirate_flag",
@@ -42756,8 +43698,7 @@
       "flag",
       "country",
       "nation",
-      "banner",
-      "china"
+      "banner"
     ],
     "🇨🇴": [
       "flag_colombia",
@@ -42950,8 +43891,7 @@
       "flag",
       "nation",
       "country",
-      "banner",
-      "spain"
+      "banner"
     ],
     "🇪🇹": [
       "flag_ethiopia",
@@ -43006,8 +43946,7 @@
       "flag",
       "nation",
       "country",
-      "banner",
-      "micronesia"
+      "banner"
     ],
     "🇫🇴": [
       "flag_faroe_islands",
@@ -43026,8 +43965,7 @@
       "nation",
       "france",
       "french",
-      "country",
-      "france"
+      "country"
     ],
     "🇬🇦": [
       "flag_gabon",
@@ -43349,8 +44287,7 @@
       "flag",
       "nation",
       "country",
-      "banner",
-      "iran"
+      "banner"
     ],
     "🇮🇸": [
       "flag_iceland",
@@ -43367,8 +44304,7 @@
       "flag",
       "nation",
       "country",
-      "banner",
-      "italy"
+      "banner"
     ],
     "🇯🇪": [
       "flag_jersey",
@@ -43640,8 +44576,7 @@
       "flag",
       "nation",
       "country",
-      "banner",
-      "moldova"
+      "banner"
     ],
     "🇲🇪": [
       "flag_montenegro",
@@ -44437,8 +45372,7 @@
       "flag",
       "nation",
       "country",
-      "banner",
-      "turkey"
+      "banner"
     ],
     "🇹🇹": [
       "flag_trinidad_tobago",
@@ -44475,8 +45409,7 @@
       "flag",
       "nation",
       "country",
-      "banner",
-      "tanzania"
+      "banner"
     ],
     "🇺🇦": [
       "flag_ukraine",

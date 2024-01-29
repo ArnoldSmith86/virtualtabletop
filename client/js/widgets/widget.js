@@ -1833,8 +1833,9 @@ export class Widget extends StateManaged {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
-        let c = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
-        c = c.filter(w => w.get('type') === 'seat' && !w.get('skipTurn'));
+        let cBase = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
+        let c = cBase.filter(w => w.get('type') === 'seat' && !w.get('skipTurn'));
+        let cSkip = cBase.filter(w => w.get('type') === 'seat' && w.get('skipTurn'));
 
         //this get the list of valid index
         const indexList = [];
@@ -1886,6 +1887,11 @@ export class Widget extends StateManaged {
             await w.set('turn', w.get('index') == turn);
             if(w.get('turn') && w.get('player'))
               collections[a.collection].push(w);
+          }
+
+          //sets turn = false on any seats with skipTurn = true
+          for (const seat of cSkip) {
+            await seat.set('turn', false);
           }
 
           if(jeRoutineLogging)
@@ -2493,6 +2499,21 @@ export class Widget extends StateManaged {
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
+      const inputs = $a('#buttonInputFields input, #buttonInputFields select');
+      if(inputs.length) {
+        inputs[0].focus();
+        if(typeof inputs[0].select == 'function')
+          inputs[0].select();
+      }
+      // press go button when enter is pressed
+      for(const input of inputs) {
+        input.addEventListener('keydown', e=>{
+          if(e.key == 'Enter') {
+            e.preventDefault();
+            goHandler();
+          }
+        });
+      }
     });
   }
 
