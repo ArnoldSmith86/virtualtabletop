@@ -157,19 +157,19 @@
     },
     "cardTypes": {
       "Avalance": {
-        "image": "/assets/470087539_50396"
+        "image": "/assets/-114538675_253224"
       },
       "Iron Stance": {
-        "image": "/assets/1119123900_44394"
+        "image": "/assets/-1955609208_266763"
       },
       "Masons Savvy": {
-        "image": "/assets/-2138769815_45788"
+        "image": "/assets/1882244785_257226"
       },
       "Sacrifice of the Hermit": {
-        "image": "/assets/-1367523716_48160"
+        "image": "/assets/-1303469560_256016"
       },
       "Shifting Sands": {
-        "image": "/assets/-94795597_47132"
+        "image": "/assets/-154282235_265965"
       }
     },
     "faceTemplates": [
@@ -205,7 +205,7 @@
         "border": 1,
         "radius": 8,
         "properties": {
-          "enlarge": 3
+          "enlarge": 4
         }
       }
     ],
@@ -225,19 +225,19 @@
     },
     "cardTypes": {
       "Control the Current": {
-        "image": "/assets/493302344_44388"
+        "image": "/assets/-499140795_226010"
       },
       "Inspiring Draught": {
-        "image": "/assets/737744225_43376"
+        "image": "/assets/1467602771_225538"
       },
       "Reflect": {
-        "image": "/assets/-1098420279_40870"
+        "image": "/assets/513921231_221550"
       },
       "Refreshing Thought": {
-        "image": "/assets/597957599_41828"
+        "image": "/assets/971589350_221304"
       },
       "Wandering River": {
-        "image": "/assets/986479394_43528"
+        "image": "/assets/-1577215135_214056"
       }
     },
     "faceTemplates": [
@@ -273,7 +273,7 @@
         "border": 1,
         "radius": 8,
         "properties": {
-          "enlarge": 3
+          "enlarge": 4
         }
       }
     ],
@@ -293,19 +293,19 @@
     },
     "cardTypes": {
       "Arson": {
-        "image": "/assets/-1060454048_38008"
+        "image": "/assets/-1706618299_211937"
       },
       "Burning Motivation": {
-        "image": "/assets/-1089252476_40488"
+        "image": "/assets/1011086424_219646"
       },
       "Sacrifical Pyre": {
-        "image": "/assets/1106169138_41726"
+        "image": "/assets/-1853618421_214550"
       },
       "Scorched Earth": {
-        "image": "/assets/-1595529501_38644"
+        "image": "/assets/419321592_226419"
       },
       "Unbidden Lamplight": {
-        "image": "/assets/-533539271_41412"
+        "image": "/assets/-276719367_222276"
       }
     },
     "faceTemplates": [
@@ -341,7 +341,7 @@
         "border": 1,
         "radius": 8,
         "properties": {
-          "enlarge": 3
+          "enlarge": 4
         }
       }
     ],
@@ -361,19 +361,19 @@
     },
     "cardTypes": {
       "Course of Action": {
-        "image": "/assets/-491802119_35922"
+        "image": "/assets/-2009625108_196832"
       },
       "Cyclone": {
-        "image": "/assets/-1738600359_34216"
+        "image": "/assets/-2042800329_192426"
       },
       "Take Flight": {
-        "image": "/assets/1098312245_37048"
+        "image": "/assets/507000498_180856"
       },
       "Trade Winds": {
-        "image": "/assets/-691006207_33328"
+        "image": "/assets/-2064490684_188403"
       },
       "View From the Sky": {
-        "image": "/assets/1342085772_30194"
+        "image": "/assets/-178087752_199012"
       }
     },
     "faceTemplates": [
@@ -409,7 +409,7 @@
         "border": 1,
         "radius": 8,
         "properties": {
-          "enlarge": 3
+          "enlarge": 4
         }
       }
     ],
@@ -429,19 +429,19 @@
     },
     "cardTypes": {
       "Delay Tactics": {
-        "image": "/assets/-673101959_31646"
+        "image": "/assets/1761883752_194993"
       },
       "Duplicative Mind": {
-        "image": "/assets/-505929895_32822"
+        "image": "/assets/-2134344491_184854"
       },
       "Scholars Insight": {
-        "image": "/assets/2095685451_33720"
+        "image": "/assets/-1805829820_183498"
       },
       "Shrewd Stratagem": {
-        "image": "/assets/1380796838_31880"
+        "image": "/assets/1413983933_193653"
       },
       "Telekinesis": {
-        "image": "/assets/-1520734628_31748"
+        "image": "/assets/375153282_186447"
       }
     },
     "faceTemplates": [
@@ -477,7 +477,7 @@
         "border": 1,
         "radius": 8,
         "properties": {
-          "enlarge": 3
+          "enlarge": 4
         }
       }
     ],
@@ -1003,138 +1003,6 @@
     ],
     "parent": "purpleTokenHolder"
   },
-  "greenPawn": {
-    "id": "greenPawn",
-    "width": 35,
-    "height": 65,
-    "z": 3847,
-    "color": "#69d83a",
-    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
-    "image": "i/game-pieces/3D/Pawn-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "black",
-    "borderWidth": 1,
-    "resetProperties": {
-      "parent": "seatGroup1",
-      "x": 200,
-      "y": 36,
-      "scale": 1
-    },
-    "pawn": true,
-    "y": 36,
-    "x": 200,
-    "hoverParent": "playArea",
-    "parent": "seatGroup1"
-  },
-  "purplePawn": {
-    "id": "purplePawn",
-    "y": 36,
-    "width": 35,
-    "height": 65,
-    "z": 3716,
-    "color": "#9458f4",
-    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
-    "image": "i/game-pieces/3D/Pawn-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "black",
-    "borderWidth": 1,
-    "resetProperties": {
-      "parent": "seatGroup5",
-      "x": 200,
-      "y": 36,
-      "scale": 1
-    },
-    "pawn": true,
-    "parent": "seatGroup5",
-    "x": 200
-  },
-  "yellowPawn": {
-    "id": "yellowPawn",
-    "width": 35,
-    "height": 65,
-    "z": 3714,
-    "color": "#ffce00",
-    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
-    "image": "i/game-pieces/3D/Pawn-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "black",
-    "borderWidth": 1,
-    "resetProperties": {
-      "parent": "seatGroup4",
-      "x": 200,
-      "y": 36,
-      "scale": 1
-    },
-    "pawn": true,
-    "y": 36,
-    "parent": "seatGroup4",
-    "x": 200
-  },
-  "redPawn": {
-    "id": "redPawn",
-    "y": 36,
-    "width": 35,
-    "height": 65,
-    "z": 3804,
-    "color": "#ed1b43",
-    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
-    "image": "i/game-pieces/3D/Pawn-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "black",
-    "borderWidth": 1,
-    "resetProperties": {
-      "parent": "seatGroup3",
-      "x": 200,
-      "y": 36,
-      "scale": 1
-    },
-    "pawn": true,
-    "x": 200,
-    "parent": "seatGroup3"
-  },
-  "bluePawn": {
-    "id": "bluePawn",
-    "width": 35,
-    "height": 65,
-    "z": 3850,
-    "color": "#5894f4",
-    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
-    "image": "i/game-pieces/3D/Pawn-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "black",
-    "borderWidth": 1,
-    "resetProperties": {
-      "parent": "seatGroup2",
-      "x": 200,
-      "y": 36,
-      "scale": 1
-    },
-    "pawn": true,
-    "y": 36,
-    "x": 200,
-    "hoverParent": "playArea",
-    "parent": "seatGroup2"
-  },
   "turnButton": {
     "type": "button",
     "id": "turnButton",
@@ -1169,7 +1037,7 @@
     ],
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s"
@@ -1213,19 +1081,24 @@
     },
     "cardTypes": {
       "player1": {
-        "number": 1
+        "image": "/assets/1486907715_255098",
+        "tokenColor": "#9458f4"
       },
       "player2": {
-        "number": 2
+        "image": "/assets/1436598259_256878",
+        "tokenColor": "#ffce00"
       },
       "player3": {
-        "number": 3
+        "image": "/assets/-764228346_258252",
+        "tokenColor": "#ed1b43"
       },
       "player4": {
-        "number": 4
+        "image": "/assets/130932535_258286",
+        "tokenColor": "#5894f4"
       },
       "player5": {
-        "number": 5
+        "image": "/assets/2117578441_258066",
+        "tokenColor": "#69d83a"
       }
     },
     "faceTemplates": [
@@ -1263,23 +1136,16 @@
             "color": "transparent",
             "width": 172,
             "height": 149,
-            "value": "/assets/77553683_19744"
-          },
-          {
-            "type": "text",
-            "x": 55,
-            "y": 49,
-            "fontSize": 37,
-            "textAlign": "center",
-            "textFont": null,
-            "width": 60,
             "dynamicProperties": {
-              "value": "number"
+              "value": "image"
             }
           }
         ],
         "border": false,
-        "radius": false
+        "radius": false,
+        "properties": {
+          "enlarge": 3
+        }
       }
     ],
     "parent": "playerTileHolder"
@@ -1315,22 +1181,22 @@
     },
     "cardTypes": {
       "Wildfire": {
-        "image": "/assets/1931923232_40100"
+        "image": "/assets/1260174681_215074"
       },
       "Seed the Skies": {
-        "image": "/assets/1572314951_40222"
+        "image": "/assets/-1000130306_215917"
       },
       "Open Mind": {
         "image": "/assets/-1615760585_38210"
       },
       "Reflecting Pool": {
-        "image": "/assets/-1546952945_38838"
+        "image": "/assets/-1831237072_212824"
       },
       "Mudslide": {
-        "image": "/assets/-653188628_37558"
+        "image": "/assets/1349231848_208384"
       },
       "Incisive Strike": {
-        "image": "/assets/-1710201001_36786"
+        "image": "/assets/-1222629810_204720"
       },
       "Dust Storm": {
         "image": "/assets/-92297803_38886"
@@ -1378,7 +1244,7 @@
         "border": 1,
         "radius": 8,
         "properties": {
-          "enlarge": 3
+          "enlarge": 4
         }
       }
     ]
@@ -1402,7 +1268,7 @@
     "fixedParent": true,
     "parent": "playArea",
     "layer": 3,
-    "x": 500,
+    "x": -400,
     "classes": "transparent"
   },
   "tileHolder": {
@@ -1424,7 +1290,7 @@
     "y": 925,
     "parent": "playArea",
     "fixedParent": true,
-    "x": 500
+    "x": -300
   },
   "v7dwC": {
     "id": "v7dwC",
@@ -1476,40 +1342,7 @@
     "id": "seat1",
     "x": 35,
     "y": 45,
-    "parent": "seatGroup1",
-    "clickRoutine": [
-      {
-        "func": "CLICK",
-        "collection": "thisButton",
-        "mode": "ignoreClickRoutine"
-      },
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Recalling tiles ..."
-          },
-          {
-            "type": "subtitle",
-            "text": "Different player counts usually require different numbers of tiles. Do you also want to recall all the tiles?"
-          }
-        ],
-        "confirmButtonText": "Yes, reset.",
-        "cancelButtonText": "No, just change seat status."
-      },
-      {
-        "func": "CALL",
-        "widget": "restartButton",
-        "routine": "playerCountRoutine"
-      },
-      {
-        "func": "CALL",
-        "widget": "restartButton",
-        "routine": "dealRoutine"
-      }
-    ],
-    "turn": true
+    "parent": "seatGroup1"
   },
   "greenTokenHolder1": {
     "type": "holder",
@@ -1653,7 +1486,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -1686,7 +1519,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -1736,9 +1569,10 @@
     "linkedToSeat": "seat1",
     "scale": 0.9,
     "css": {
-      "border": "1px solid #69d83a"
+      "border": "1px solid ${PROPERTY tokenColor}"
     },
-    "borderRadius": 8
+    "borderRadius": 8,
+    "tokenColor": "#b75000"
   },
   "seatGroup2": {
     "id": "seatGroup2",
@@ -1748,7 +1582,7 @@
     "layer": -3,
     "editorGroup": true,
     "x": 464,
-    "z": 3675,
+    "z": 3678,
     "resetProperties": {
       "x": 464,
       "y": 721
@@ -1756,9 +1590,10 @@
     "linkedToSeat": "seat2",
     "scale": 0.9,
     "css": {
-      "border": "1px solid #5894f4"
+      "border": "1px solid ${PROPERTY tokenColor}"
     },
-    "borderRadius": 8
+    "borderRadius": 8,
+    "tokenColor": "#b75000"
   },
   "seat2": {
     "type": "seat",
@@ -1766,39 +1601,7 @@
     "x": 35,
     "y": 45,
     "parent": "seatGroup2",
-    "index": 2,
-    "clickRoutine": [
-      {
-        "func": "CLICK",
-        "collection": "thisButton",
-        "mode": "ignoreClickRoutine"
-      },
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Recalling tiles ..."
-          },
-          {
-            "type": "subtitle",
-            "text": "Different player counts usually require different numbers of tiles. Do you also want to recall all the tiles?"
-          }
-        ],
-        "confirmButtonText": "Yes, reset.",
-        "cancelButtonText": "No, just change seat status."
-      },
-      {
-        "func": "CALL",
-        "widget": "restartButton",
-        "routine": "playerCountRoutine"
-      },
-      {
-        "func": "CALL",
-        "widget": "restartButton",
-        "routine": "dealRoutine"
-      }
-    ]
+    "index": 2
   },
   "v8dwC": {
     "id": "v8dwC",
@@ -2001,7 +1804,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2034,7 +1837,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2070,9 +1873,10 @@
     "linkedToSeat": "seat3",
     "scale": 0.9,
     "css": {
-      "border": "1px solid #ed1b43"
+      "border": "1px solid ${PROPERTY tokenColor}"
     },
-    "borderRadius": 8
+    "borderRadius": 8,
+    "tokenColor": "#b75000"
   },
   "seat3": {
     "type": "seat",
@@ -2080,39 +1884,7 @@
     "x": 35,
     "y": 45,
     "parent": "seatGroup3",
-    "index": 3,
-    "clickRoutine": [
-      {
-        "func": "CLICK",
-        "collection": "thisButton",
-        "mode": "ignoreClickRoutine"
-      },
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Recalling tiles ..."
-          },
-          {
-            "type": "subtitle",
-            "text": "Different player counts usually require different numbers of tiles. Do you also want to recall all the tiles?"
-          }
-        ],
-        "confirmButtonText": "Yes, reset.",
-        "cancelButtonText": "No, just change seat status."
-      },
-      {
-        "func": "CALL",
-        "widget": "restartButton",
-        "routine": "playerCountRoutine"
-      },
-      {
-        "func": "CALL",
-        "widget": "restartButton",
-        "routine": "dealRoutine"
-      }
-    ]
+    "index": 3
   },
   "v9dwC": {
     "id": "v9dwC",
@@ -2315,7 +2087,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2348,7 +2120,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2384,9 +2156,10 @@
     "linkedToSeat": "seat4",
     "scale": 0.9,
     "css": {
-      "border": "1px solid #ffce00"
+      "border": "1px solid ${PROPERTY tokenColor}"
     },
-    "borderRadius": 8
+    "borderRadius": 8,
+    "tokenColor": "#b75000"
   },
   "seat4": {
     "type": "seat",
@@ -2394,39 +2167,7 @@
     "x": 35,
     "y": 45,
     "parent": "seatGroup4",
-    "index": 4,
-    "clickRoutine": [
-      {
-        "func": "CLICK",
-        "collection": "thisButton",
-        "mode": "ignoreClickRoutine"
-      },
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Recalling tiles ..."
-          },
-          {
-            "type": "subtitle",
-            "text": "Different player counts usually require different numbers of tiles. Do you also want to recall all the tiles?"
-          }
-        ],
-        "confirmButtonText": "Yes, reset.",
-        "cancelButtonText": "No, just change seat status."
-      },
-      {
-        "func": "CALL",
-        "widget": "restartButton",
-        "routine": "playerCountRoutine"
-      },
-      {
-        "func": "CALL",
-        "widget": "restartButton",
-        "routine": "dealRoutine"
-      }
-    ]
+    "index": 4
   },
   "v10dwC": {
     "id": "v10dwC",
@@ -2629,7 +2370,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2662,7 +2403,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2698,9 +2439,10 @@
     "linkedToSeat": "seat5",
     "scale": 0.9,
     "css": {
-      "border": "1px solid #9458f4"
+      "border": "1px solid ${PROPERTY tokenColor}"
     },
-    "borderRadius": 8
+    "borderRadius": 8,
+    "tokenColor": "#b75000"
   },
   "seat5": {
     "type": "seat",
@@ -2709,38 +2451,7 @@
     "y": 45,
     "parent": "seatGroup5",
     "index": 5,
-    "clickRoutine": [
-      {
-        "func": "CLICK",
-        "collection": "thisButton",
-        "mode": "ignoreClickRoutine"
-      },
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Recalling tiles ..."
-          },
-          {
-            "type": "subtitle",
-            "text": "Different player counts usually require different numbers of tiles. Do you also want to recall all the tiles?"
-          }
-        ],
-        "confirmButtonText": "Yes, reset.",
-        "cancelButtonText": "No, just change seat status."
-      },
-      {
-        "func": "CALL",
-        "widget": "restartButton",
-        "routine": "playerCountRoutine"
-      },
-      {
-        "func": "CALL",
-        "widget": "restartButton",
-        "routine": "dealRoutine"
-      }
-    ]
+    "turn": true
   },
   "v11dwC": {
     "id": "v11dwC",
@@ -2943,7 +2654,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -2976,7 +2687,7 @@
     "classes": "symbols",
     "css": {
       "default": {
-        "background-image": "url('/assets/1671289076_836')",
+        "background-image": "url('/assets/-1738371307_940')",
         "color": "black",
         "border-color": "#b75000",
         "transition": "filter 0.25s",
@@ -3278,7 +2989,7 @@
     "height": 2100,
     "scale": "0.7",
     "layer": -10,
-    "z": 4249,
+    "z": 4273,
     "movable": true,
     "alignChildren": false,
     "classes": "transparent",
@@ -3294,19 +3005,19 @@
       }
     ],
     "resetZoomProperties": {
-      "x": -835,
+      "x": -850,
       "y": -550,
       "scale": "0.7"
     },
     "y": -550,
-    "x": -835
+    "x": -850
   },
   "qyc2": {
     "deck": "greenTokenDeck",
     "type": "card",
     "cardType": "green",
     "id": "qyc2",
-    "z": 7093,
+    "z": 39798,
     "parent": "mysf"
   },
   "ecb6": {
@@ -3314,7 +3025,7 @@
     "type": "card",
     "cardType": "green",
     "id": "ecb6",
-    "z": 7095,
+    "z": 39800,
     "parent": "mysf"
   },
   "cgqs": {
@@ -3322,7 +3033,7 @@
     "type": "card",
     "cardType": "green",
     "id": "cgqs",
-    "z": 7097,
+    "z": 39802,
     "parent": "mysf"
   },
   "k32j": {
@@ -3330,7 +3041,7 @@
     "type": "card",
     "cardType": "green",
     "id": "k32j",
-    "z": 7099,
+    "z": 39804,
     "parent": "mysf"
   },
   "rrn3": {
@@ -3338,7 +3049,7 @@
     "type": "card",
     "cardType": "green",
     "id": "rrn3",
-    "z": 7101,
+    "z": 39806,
     "parent": "mysf"
   },
   "tt0g": {
@@ -3346,7 +3057,7 @@
     "type": "card",
     "cardType": "green",
     "id": "tt0g",
-    "z": 7103,
+    "z": 39808,
     "parent": "mysf"
   },
   "w9bs": {
@@ -3354,7 +3065,7 @@
     "type": "card",
     "cardType": "green",
     "id": "w9bs",
-    "z": 7105,
+    "z": 39810,
     "parent": "mysf"
   },
   "ft6b": {
@@ -3362,7 +3073,7 @@
     "type": "card",
     "cardType": "green",
     "id": "ft6b",
-    "z": 7107,
+    "z": 39812,
     "parent": "mysf"
   },
   "6pc6": {
@@ -3370,7 +3081,7 @@
     "type": "card",
     "cardType": "green",
     "id": "6pc6",
-    "z": 7109,
+    "z": 39814,
     "parent": "mysf"
   },
   "y27w": {
@@ -3378,7 +3089,7 @@
     "type": "card",
     "cardType": "green",
     "id": "y27w",
-    "z": 7111,
+    "z": 39816,
     "parent": "mysf"
   },
   "54yo": {
@@ -3386,7 +3097,7 @@
     "type": "card",
     "cardType": "green",
     "id": "54yo",
-    "z": 7113,
+    "z": 39818,
     "parent": "mysf"
   },
   "mgct": {
@@ -3394,7 +3105,7 @@
     "type": "card",
     "cardType": "green",
     "id": "mgct",
-    "z": 7115,
+    "z": 39820,
     "parent": "mysf"
   },
   "wymv": {
@@ -3402,7 +3113,7 @@
     "type": "card",
     "cardType": "green",
     "id": "wymv",
-    "z": 7117,
+    "z": 39822,
     "parent": "mysf"
   },
   "gf0g": {
@@ -3410,7 +3121,7 @@
     "type": "card",
     "cardType": "green",
     "id": "gf0g",
-    "z": 7119,
+    "z": 39824,
     "parent": "mysf"
   },
   "ec2l": {
@@ -3418,7 +3129,7 @@
     "type": "card",
     "cardType": "green",
     "id": "ec2l",
-    "z": 7129,
+    "z": 39826,
     "parent": "mysf"
   },
   "mhg3": {
@@ -3426,7 +3137,7 @@
     "type": "card",
     "cardType": "green",
     "id": "mhg3",
-    "z": 7131,
+    "z": 39828,
     "parent": "mysf"
   },
   "grtf": {
@@ -3434,7 +3145,7 @@
     "type": "card",
     "cardType": "green",
     "id": "grtf",
-    "z": 7133,
+    "z": 39830,
     "parent": "mysf"
   },
   "j5pm": {
@@ -3442,7 +3153,7 @@
     "type": "card",
     "cardType": "green",
     "id": "j5pm",
-    "z": 7135,
+    "z": 39832,
     "parent": "mysf"
   },
   "a826": {
@@ -3450,7 +3161,7 @@
     "type": "card",
     "cardType": "green",
     "id": "a826",
-    "z": 7137,
+    "z": 39834,
     "parent": "mysf"
   },
   "soqw": {
@@ -3458,7 +3169,7 @@
     "type": "card",
     "cardType": "green",
     "id": "soqw",
-    "z": 7089,
+    "z": 39836,
     "parent": "mysf"
   },
   "bprq": {
@@ -3466,7 +3177,7 @@
     "type": "card",
     "cardType": "green",
     "id": "bprq",
-    "z": 7091,
+    "z": 39838,
     "parent": "mysf"
   },
   "ty0i": {
@@ -3474,7 +3185,7 @@
     "type": "card",
     "cardType": "green",
     "id": "ty0i",
-    "z": 7121,
+    "z": 39840,
     "parent": "mysf"
   },
   "i90n": {
@@ -3482,7 +3193,7 @@
     "type": "card",
     "cardType": "green",
     "id": "i90n",
-    "z": 7123,
+    "z": 39842,
     "parent": "mysf"
   },
   "rfi8": {
@@ -3490,7 +3201,7 @@
     "type": "card",
     "cardType": "green",
     "id": "rfi8",
-    "z": 7125,
+    "z": 39844,
     "parent": "mysf"
   },
   "7jfc": {
@@ -3498,7 +3209,7 @@
     "type": "card",
     "cardType": "green",
     "id": "7jfc",
-    "z": 7127,
+    "z": 39846,
     "parent": "mysf"
   },
   "e3kp": {
@@ -3506,7 +3217,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "e3kp",
-    "z": 7147,
+    "z": 39848,
     "parent": "l4w2"
   },
   "0dfr": {
@@ -3514,7 +3225,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "0dfr",
-    "z": 7149,
+    "z": 39850,
     "parent": "l4w2"
   },
   "bs3u": {
@@ -3522,7 +3233,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "bs3u",
-    "z": 7151,
+    "z": 39852,
     "parent": "l4w2"
   },
   "3dfj": {
@@ -3530,7 +3241,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "3dfj",
-    "z": 7153,
+    "z": 39854,
     "parent": "l4w2"
   },
   "826q": {
@@ -3538,7 +3249,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "826q",
-    "z": 7155,
+    "z": 39856,
     "parent": "l4w2"
   },
   "xhvg": {
@@ -3546,7 +3257,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "xhvg",
-    "z": 7157,
+    "z": 39858,
     "parent": "l4w2"
   },
   "dsd1": {
@@ -3554,7 +3265,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "dsd1",
-    "z": 7159,
+    "z": 39860,
     "parent": "l4w2"
   },
   "68z8": {
@@ -3562,7 +3273,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "68z8",
-    "z": 7161,
+    "z": 39862,
     "parent": "l4w2"
   },
   "l2r1": {
@@ -3570,7 +3281,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "l2r1",
-    "z": 7163,
+    "z": 39864,
     "parent": "l4w2"
   },
   "ukws": {
@@ -3578,7 +3289,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "ukws",
-    "z": 7165,
+    "z": 39866,
     "parent": "l4w2"
   },
   "xnph": {
@@ -3586,7 +3297,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "xnph",
-    "z": 7167,
+    "z": 39868,
     "parent": "l4w2"
   },
   "ro7c": {
@@ -3594,7 +3305,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "ro7c",
-    "z": 7169,
+    "z": 39870,
     "parent": "l4w2"
   },
   "v3v9": {
@@ -3602,7 +3313,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "v3v9",
-    "z": 7171,
+    "z": 39872,
     "parent": "l4w2"
   },
   "ts2e": {
@@ -3610,7 +3321,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "ts2e",
-    "z": 7173,
+    "z": 39874,
     "parent": "l4w2"
   },
   "v9yt": {
@@ -3618,7 +3329,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "v9yt",
-    "z": 7175,
+    "z": 39876,
     "parent": "l4w2"
   },
   "wxl8": {
@@ -3626,7 +3337,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "wxl8",
-    "z": 7177,
+    "z": 39878,
     "parent": "l4w2"
   },
   "9rlb": {
@@ -3634,7 +3345,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "9rlb",
-    "z": 7139,
+    "z": 39880,
     "parent": "l4w2"
   },
   "84j9": {
@@ -3642,7 +3353,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "84j9",
-    "z": 7179,
+    "z": 39882,
     "parent": "l4w2"
   },
   "tfky": {
@@ -3650,7 +3361,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "tfky",
-    "z": 7181,
+    "z": 39884,
     "parent": "l4w2"
   },
   "of5j": {
@@ -3658,7 +3369,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "of5j",
-    "z": 7183,
+    "z": 39886,
     "parent": "l4w2"
   },
   "7uv0": {
@@ -3666,7 +3377,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "7uv0",
-    "z": 7185,
+    "z": 39888,
     "parent": "l4w2"
   },
   "zpxm": {
@@ -3674,7 +3385,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "zpxm",
-    "z": 7141,
+    "z": 39890,
     "parent": "l4w2"
   },
   "kfie": {
@@ -3682,7 +3393,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "kfie",
-    "z": 7143,
+    "z": 39892,
     "parent": "l4w2"
   },
   "5hbt": {
@@ -3690,7 +3401,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "5hbt",
-    "z": 7145,
+    "z": 39894,
     "parent": "l4w2"
   },
   "9ivo": {
@@ -3698,7 +3409,7 @@
     "type": "card",
     "cardType": "blue",
     "id": "9ivo",
-    "z": 7187,
+    "z": 39896,
     "parent": "l4w2"
   },
   "yzgd": {
@@ -3706,7 +3417,7 @@
     "type": "card",
     "cardType": "red",
     "id": "yzgd",
-    "z": 7199,
+    "z": 39898,
     "parent": "udhr"
   },
   "01lu": {
@@ -3714,7 +3425,7 @@
     "type": "card",
     "cardType": "red",
     "id": "01lu",
-    "z": 7201,
+    "z": 39900,
     "parent": "udhr"
   },
   "2k3z": {
@@ -3722,7 +3433,7 @@
     "type": "card",
     "cardType": "red",
     "id": "2k3z",
-    "z": 7203,
+    "z": 39902,
     "parent": "udhr"
   },
   "j6d3": {
@@ -3730,7 +3441,7 @@
     "type": "card",
     "cardType": "red",
     "id": "j6d3",
-    "z": 7205,
+    "z": 39904,
     "parent": "udhr"
   },
   "ipcy": {
@@ -3738,7 +3449,7 @@
     "type": "card",
     "cardType": "red",
     "id": "ipcy",
-    "z": 7207,
+    "z": 39906,
     "parent": "udhr"
   },
   "90i9": {
@@ -3746,7 +3457,7 @@
     "type": "card",
     "cardType": "red",
     "id": "90i9",
-    "z": 7209,
+    "z": 39908,
     "parent": "udhr"
   },
   "jgom": {
@@ -3754,7 +3465,7 @@
     "type": "card",
     "cardType": "red",
     "id": "jgom",
-    "z": 7211,
+    "z": 39910,
     "parent": "udhr"
   },
   "rpvz": {
@@ -3762,7 +3473,7 @@
     "type": "card",
     "cardType": "red",
     "id": "rpvz",
-    "z": 7213,
+    "z": 39912,
     "parent": "udhr"
   },
   "s7wi": {
@@ -3770,7 +3481,7 @@
     "type": "card",
     "cardType": "red",
     "id": "s7wi",
-    "z": 7215,
+    "z": 39914,
     "parent": "udhr"
   },
   "99zd": {
@@ -3778,7 +3489,7 @@
     "type": "card",
     "cardType": "red",
     "id": "99zd",
-    "z": 7217,
+    "z": 39916,
     "parent": "udhr"
   },
   "hia6": {
@@ -3786,7 +3497,7 @@
     "type": "card",
     "cardType": "red",
     "id": "hia6",
-    "z": 7219,
+    "z": 39918,
     "parent": "udhr"
   },
   "aa9u": {
@@ -3794,7 +3505,7 @@
     "type": "card",
     "cardType": "red",
     "id": "aa9u",
-    "z": 7221,
+    "z": 39920,
     "parent": "udhr"
   },
   "5bjb": {
@@ -3802,7 +3513,7 @@
     "type": "card",
     "cardType": "red",
     "id": "5bjb",
-    "z": 7223,
+    "z": 39922,
     "parent": "udhr"
   },
   "pufp": {
@@ -3810,7 +3521,7 @@
     "type": "card",
     "cardType": "red",
     "id": "pufp",
-    "z": 7225,
+    "z": 39924,
     "parent": "udhr"
   },
   "6r6o": {
@@ -3818,7 +3529,7 @@
     "type": "card",
     "cardType": "red",
     "id": "6r6o",
-    "z": 7189,
+    "z": 39926,
     "parent": "udhr"
   },
   "lvb9": {
@@ -3826,7 +3537,7 @@
     "type": "card",
     "cardType": "red",
     "id": "lvb9",
-    "z": 7233,
+    "z": 39928,
     "parent": "udhr"
   },
   "vy1b": {
@@ -3834,7 +3545,7 @@
     "type": "card",
     "cardType": "red",
     "id": "vy1b",
-    "z": 7235,
+    "z": 39930,
     "parent": "udhr"
   },
   "h9fl": {
@@ -3842,7 +3553,7 @@
     "type": "card",
     "cardType": "red",
     "id": "h9fl",
-    "z": 7237,
+    "z": 39932,
     "parent": "udhr"
   },
   "ao1l": {
@@ -3850,7 +3561,7 @@
     "type": "card",
     "cardType": "red",
     "id": "ao1l",
-    "z": 7227,
+    "z": 39934,
     "parent": "udhr"
   },
   "zq0t": {
@@ -3858,7 +3569,7 @@
     "type": "card",
     "cardType": "red",
     "id": "zq0t",
-    "z": 7229,
+    "z": 39936,
     "parent": "udhr"
   },
   "dc43": {
@@ -3866,7 +3577,7 @@
     "type": "card",
     "cardType": "red",
     "id": "dc43",
-    "z": 7231,
+    "z": 39938,
     "parent": "udhr"
   },
   "psds": {
@@ -3874,7 +3585,7 @@
     "type": "card",
     "cardType": "red",
     "id": "psds",
-    "z": 7191,
+    "z": 39940,
     "parent": "udhr"
   },
   "qcp4": {
@@ -3882,7 +3593,7 @@
     "type": "card",
     "cardType": "red",
     "id": "qcp4",
-    "z": 7193,
+    "z": 39942,
     "parent": "udhr"
   },
   "dryz": {
@@ -3890,7 +3601,7 @@
     "type": "card",
     "cardType": "red",
     "id": "dryz",
-    "z": 7195,
+    "z": 39944,
     "activeFace": 1,
     "parent": "udhr"
   },
@@ -3899,7 +3610,7 @@
     "type": "card",
     "cardType": "red",
     "id": "gip1",
-    "z": 7197,
+    "z": 39946,
     "parent": "udhr"
   },
   "iu3r": {
@@ -3907,7 +3618,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "iu3r",
-    "z": 7239,
+    "z": 39948,
     "parent": "zxgn"
   },
   "crip": {
@@ -3915,7 +3626,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "crip",
-    "z": 7241,
+    "z": 39950,
     "parent": "zxgn"
   },
   "uqnk": {
@@ -3923,7 +3634,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "uqnk",
-    "z": 7243,
+    "z": 39952,
     "parent": "zxgn"
   },
   "sgws": {
@@ -3931,7 +3642,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "sgws",
-    "z": 7245,
+    "z": 39954,
     "parent": "zxgn"
   },
   "zzj5": {
@@ -3939,7 +3650,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "zzj5",
-    "z": 7247,
+    "z": 39956,
     "parent": "zxgn"
   },
   "bl7m": {
@@ -3947,7 +3658,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "bl7m",
-    "z": 7249,
+    "z": 39958,
     "parent": "zxgn"
   },
   "vog0": {
@@ -3955,7 +3666,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "vog0",
-    "z": 7251,
+    "z": 39960,
     "parent": "zxgn"
   },
   "rxrf": {
@@ -3963,7 +3674,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "rxrf",
-    "z": 7253,
+    "z": 39962,
     "parent": "zxgn"
   },
   "as56": {
@@ -3971,7 +3682,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "as56",
-    "z": 7255,
+    "z": 39964,
     "parent": "zxgn"
   },
   "1ilz": {
@@ -3979,7 +3690,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "1ilz",
-    "z": 7257,
+    "z": 39966,
     "parent": "zxgn"
   },
   "l8eg": {
@@ -3987,7 +3698,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "l8eg",
-    "z": 7259,
+    "z": 39968,
     "parent": "zxgn"
   },
   "3b0b": {
@@ -3995,7 +3706,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "3b0b",
-    "z": 7261,
+    "z": 39970,
     "parent": "zxgn"
   },
   "tt0m": {
@@ -4003,7 +3714,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "tt0m",
-    "z": 7263,
+    "z": 39972,
     "parent": "zxgn"
   },
   "uk15": {
@@ -4011,7 +3722,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "uk15",
-    "z": 7265,
+    "z": 39974,
     "parent": "zxgn"
   },
   "ye7g": {
@@ -4019,7 +3730,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "ye7g",
-    "z": 7267,
+    "z": 39976,
     "parent": "zxgn"
   },
   "g5pw": {
@@ -4027,7 +3738,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "g5pw",
-    "z": 7269,
+    "z": 39978,
     "parent": "zxgn"
   },
   "tn7h": {
@@ -4035,7 +3746,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "tn7h",
-    "z": 7271,
+    "z": 39980,
     "parent": "zxgn"
   },
   "2xqg": {
@@ -4043,7 +3754,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "2xqg",
-    "z": 7273,
+    "z": 39982,
     "parent": "zxgn"
   },
   "on72": {
@@ -4051,7 +3762,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "on72",
-    "z": 7275,
+    "z": 39984,
     "parent": "zxgn"
   },
   "0ar2": {
@@ -4059,7 +3770,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "0ar2",
-    "z": 7277,
+    "z": 39986,
     "parent": "zxgn"
   },
   "f6pi": {
@@ -4067,7 +3778,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "f6pi",
-    "z": 7279,
+    "z": 39988,
     "parent": "zxgn"
   },
   "su50": {
@@ -4075,7 +3786,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "su50",
-    "z": 7281,
+    "z": 39990,
     "parent": "zxgn"
   },
   "psrt": {
@@ -4083,7 +3794,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "psrt",
-    "z": 7283,
+    "z": 39992,
     "parent": "zxgn"
   },
   "69wf": {
@@ -4091,7 +3802,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "69wf",
-    "z": 7285,
+    "z": 39994,
     "parent": "zxgn"
   },
   "1rm3": {
@@ -4099,7 +3810,7 @@
     "type": "card",
     "cardType": "yellow",
     "id": "1rm3",
-    "z": 7287,
+    "z": 39996,
     "parent": "zxgn"
   },
   "56kc": {
@@ -4107,7 +3818,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "56kc",
-    "z": 7289,
+    "z": 39998,
     "parent": "xoca"
   },
   "5ij0": {
@@ -4115,7 +3826,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "5ij0",
-    "z": 7291,
+    "z": 40000,
     "parent": "xoca"
   },
   "snxg": {
@@ -4123,7 +3834,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "snxg",
-    "z": 7293,
+    "z": 40002,
     "parent": "xoca"
   },
   "xg84": {
@@ -4131,7 +3842,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "xg84",
-    "z": 7295,
+    "z": 40004,
     "parent": "xoca"
   },
   "mb0r": {
@@ -4139,7 +3850,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "mb0r",
-    "z": 7297,
+    "z": 40006,
     "parent": "xoca"
   },
   "7k3b": {
@@ -4147,7 +3858,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "7k3b",
-    "z": 7299,
+    "z": 40008,
     "parent": "xoca"
   },
   "1mv4": {
@@ -4155,7 +3866,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "1mv4",
-    "z": 7301,
+    "z": 40010,
     "parent": "xoca"
   },
   "rbqv": {
@@ -4163,7 +3874,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "rbqv",
-    "z": 7303,
+    "z": 40012,
     "parent": "xoca"
   },
   "gx71": {
@@ -4171,7 +3882,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "gx71",
-    "z": 7305,
+    "z": 40014,
     "parent": "xoca"
   },
   "k17s": {
@@ -4179,7 +3890,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "k17s",
-    "z": 7307,
+    "z": 40016,
     "parent": "xoca"
   },
   "ycuf": {
@@ -4187,7 +3898,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "ycuf",
-    "z": 7309,
+    "z": 40018,
     "parent": "xoca"
   },
   "fji3": {
@@ -4195,7 +3906,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "fji3",
-    "z": 7311,
+    "z": 40020,
     "parent": "xoca"
   },
   "ej27": {
@@ -4203,7 +3914,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "ej27",
-    "z": 7313,
+    "z": 40022,
     "parent": "xoca"
   },
   "94lm": {
@@ -4211,7 +3922,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "94lm",
-    "z": 7315,
+    "z": 40024,
     "parent": "xoca"
   },
   "5rcf": {
@@ -4219,7 +3930,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "5rcf",
-    "z": 7317,
+    "z": 40026,
     "parent": "xoca"
   },
   "pc1p": {
@@ -4227,7 +3938,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "pc1p",
-    "z": 7319,
+    "z": 40028,
     "parent": "xoca"
   },
   "jsf3": {
@@ -4235,7 +3946,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "jsf3",
-    "z": 7321,
+    "z": 40030,
     "parent": "xoca"
   },
   "njvv": {
@@ -4243,7 +3954,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "njvv",
-    "z": 7323,
+    "z": 40032,
     "parent": "xoca"
   },
   "kqd5": {
@@ -4251,7 +3962,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "kqd5",
-    "z": 7325,
+    "z": 40034,
     "parent": "xoca"
   },
   "xzzb": {
@@ -4259,7 +3970,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "xzzb",
-    "z": 7327,
+    "z": 40036,
     "parent": "xoca"
   },
   "9qit": {
@@ -4267,7 +3978,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "9qit",
-    "z": 7329,
+    "z": 40038,
     "parent": "xoca"
   },
   "uirf": {
@@ -4275,7 +3986,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "uirf",
-    "z": 7331,
+    "z": 40040,
     "parent": "xoca"
   },
   "5c61": {
@@ -4283,7 +3994,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "5c61",
-    "z": 7333,
+    "z": 40042,
     "parent": "xoca"
   },
   "y2ca": {
@@ -4291,7 +4002,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "y2ca",
-    "z": 7335,
+    "z": 40044,
     "parent": "xoca"
   },
   "k5q4": {
@@ -4299,7 +4010,7 @@
     "type": "card",
     "cardType": "purple",
     "id": "k5q4",
-    "z": 7337,
+    "z": 40046,
     "parent": "xoca"
   },
   "dx02": {
@@ -4307,480 +4018,480 @@
     "type": "card",
     "cardType": "Control the Current",
     "id": "dx02",
-    "z": 7416,
-    "parent": "7phr"
+    "z": 40120,
+    "parent": "v0a4"
   },
   "dhtz": {
     "deck": "waterDeck",
     "type": "card",
     "cardType": "Inspiring Draught",
     "id": "dhtz",
-    "z": 7412,
-    "parent": "7phr"
+    "z": 40122,
+    "parent": "v0a4"
   },
   "ssfz": {
     "deck": "waterDeck",
     "type": "card",
     "cardType": "Reflect",
     "id": "ssfz",
-    "z": 7413,
-    "parent": "7phr"
+    "z": 40124,
+    "parent": "v0a4"
   },
   "w4gn": {
     "deck": "waterDeck",
     "type": "card",
     "cardType": "Refreshing Thought",
     "id": "w4gn",
-    "z": 7415,
-    "parent": "7phr"
+    "z": 40123,
+    "parent": "v0a4"
   },
   "xp4z": {
     "deck": "waterDeck",
     "type": "card",
     "cardType": "Wandering River",
     "id": "xp4z",
-    "z": 7414,
-    "parent": "7phr"
+    "z": 40121,
+    "parent": "v0a4"
   },
   "51bq": {
     "deck": "fireDeck",
     "type": "card",
     "cardType": "Arson",
     "id": "51bq",
-    "z": 7421,
-    "parent": "zpzo"
+    "z": 40125,
+    "parent": "u5nn"
   },
   "d1sf": {
     "deck": "fireDeck",
     "type": "card",
     "cardType": "Burning Motivation",
     "id": "d1sf",
-    "z": 7417,
-    "parent": "zpzo"
+    "z": 40126,
+    "parent": "u5nn"
   },
   "mjc7": {
     "deck": "fireDeck",
     "type": "card",
     "cardType": "Sacrifical Pyre",
     "id": "mjc7",
-    "z": 7420,
-    "parent": "zpzo"
+    "z": 40128,
+    "parent": "u5nn"
   },
   "y7wv": {
     "deck": "fireDeck",
     "type": "card",
     "cardType": "Scorched Earth",
     "id": "y7wv",
-    "z": 7419,
-    "parent": "zpzo"
+    "z": 40129,
+    "parent": "u5nn"
   },
   "pwtx": {
     "deck": "fireDeck",
     "type": "card",
     "cardType": "Unbidden Lamplight",
     "id": "pwtx",
-    "z": 7418,
-    "parent": "zpzo"
+    "z": 40127,
+    "parent": "u5nn"
   },
   "44e4": {
     "deck": "windDeck",
     "type": "card",
     "cardType": "Course of Action",
     "id": "44e4",
-    "z": 7424,
-    "parent": "8ik1"
+    "z": 40134,
+    "parent": "j6v9"
   },
   "sw0q": {
     "deck": "windDeck",
     "type": "card",
     "cardType": "Cyclone",
     "id": "sw0q",
-    "z": 7425,
-    "parent": "8ik1"
+    "z": 40132,
+    "parent": "j6v9"
   },
   "41yw": {
     "deck": "windDeck",
     "type": "card",
     "cardType": "Take Flight",
     "id": "41yw",
-    "z": 7423,
-    "parent": "8ik1"
+    "z": 40133,
+    "parent": "j6v9"
   },
   "b2vu": {
     "deck": "windDeck",
     "type": "card",
     "cardType": "Trade Winds",
     "id": "b2vu",
-    "z": 7426,
-    "parent": "8ik1"
+    "z": 40130,
+    "parent": "j6v9"
   },
   "4u5y": {
     "deck": "windDeck",
     "type": "card",
     "cardType": "View From the Sky",
     "id": "4u5y",
-    "z": 7422,
-    "parent": "8ik1"
+    "z": 40131,
+    "parent": "j6v9"
   },
   "ewr4": {
     "deck": "voidDeck",
     "type": "card",
     "cardType": "Delay Tactics",
     "id": "ewr4",
-    "z": 7430,
-    "parent": "j7uq"
+    "z": 40138,
+    "parent": "fjyn"
   },
   "6eif": {
     "deck": "voidDeck",
     "type": "card",
     "cardType": "Duplicative Mind",
     "id": "6eif",
-    "z": 7428,
-    "parent": "j7uq"
+    "z": 40137,
+    "parent": "fjyn"
   },
   "1svd": {
     "deck": "voidDeck",
     "type": "card",
     "cardType": "Scholars Insight",
     "id": "1svd",
-    "z": 7429,
-    "parent": "j7uq"
+    "z": 40139,
+    "parent": "fjyn"
   },
   "z6ra": {
     "deck": "voidDeck",
     "type": "card",
     "cardType": "Shrewd Stratagem",
     "id": "z6ra",
-    "z": 7431,
-    "parent": "j7uq"
+    "z": 40135,
+    "parent": "fjyn"
   },
   "ej2i": {
     "deck": "voidDeck",
     "type": "card",
     "cardType": "Telekinesis",
     "id": "ej2i",
-    "z": 7427,
-    "parent": "j7uq"
+    "z": 40136,
+    "parent": "fjyn"
   },
   "2n0x": {
     "deck": "catacombDeck",
     "type": "card",
     "cardType": "Wildfire",
     "id": "2n0x",
-    "z": 7439,
-    "parent": "6y3d"
+    "z": 40147,
+    "parent": "jwd7"
   },
   "q5oz": {
     "deck": "catacombDeck",
     "type": "card",
     "cardType": "Seed the Skies",
     "id": "q5oz",
-    "z": 7434,
-    "parent": "6y3d"
+    "z": 40142,
+    "parent": "jwd7"
   },
   "xm2m": {
     "deck": "catacombDeck",
     "type": "card",
     "cardType": "Open Mind",
     "id": "xm2m",
-    "z": 7433,
-    "parent": "6y3d"
+    "z": 40141,
+    "parent": "jwd7"
   },
   "ihlo": {
     "deck": "catacombDeck",
     "type": "card",
     "cardType": "Reflecting Pool",
     "id": "ihlo",
-    "z": 7440,
-    "parent": "6y3d"
+    "z": 40149,
+    "parent": "jwd7"
   },
   "kjaq": {
     "deck": "catacombDeck",
     "type": "card",
     "cardType": "Mudslide",
     "id": "kjaq",
-    "z": 7435,
-    "parent": "6y3d"
+    "z": 40145,
+    "parent": "jwd7"
   },
   "hof3": {
     "deck": "catacombDeck",
     "type": "card",
     "cardType": "Incisive Strike",
     "id": "hof3",
-    "z": 7437,
-    "parent": "6y3d"
+    "z": 40148,
+    "parent": "jwd7"
   },
   "hagb": {
     "deck": "catacombDeck",
     "type": "card",
     "cardType": "Dust Storm",
     "id": "hagb",
-    "z": 7438,
-    "parent": "6y3d"
+    "z": 40144,
+    "parent": "jwd7"
   },
   "xz4o": {
     "deck": "catacombDeck",
     "type": "card",
     "cardType": "Container",
     "id": "xz4o",
-    "z": 7441,
-    "parent": "6y3d"
+    "z": 40140,
+    "parent": "jwd7"
   },
   "cfhi": {
     "deck": "catacombDeck",
     "type": "card",
     "cardType": "Campfire",
     "id": "cfhi",
-    "z": 7432,
-    "parent": "6y3d"
+    "z": 40146,
+    "parent": "jwd7"
   },
   "3p22": {
     "deck": "catacombDeck",
     "type": "card",
     "cardType": "Steam Vents",
     "id": "3p22",
-    "z": 7436,
-    "parent": "6y3d"
+    "z": 40143,
+    "parent": "jwd7"
   },
   "ie8b": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Earth",
     "id": "ie8b",
-    "z": 7575,
-    "parent": "o0g2"
+    "z": 40266,
+    "parent": "mo6x"
   },
   "snzz": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Water",
     "id": "snzz",
-    "z": 7557,
-    "parent": "o0g2"
+    "z": 40271,
+    "parent": "mo6x"
   },
   "jxel": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Fire",
     "id": "jxel",
-    "z": 7563,
-    "parent": "o0g2"
+    "z": 40283,
+    "parent": "mo6x"
   },
   "w515": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Wind",
     "id": "w515",
-    "z": 7583,
-    "parent": "o0g2"
+    "z": 40272,
+    "parent": "mo6x"
   },
   "5gwo": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Void",
     "id": "5gwo",
-    "z": 7562,
-    "parent": "o0g2"
+    "z": 40293,
+    "parent": "mo6x"
   },
   "jari": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Catacomb",
     "id": "jari",
-    "z": 7586,
-    "parent": "o0g2"
+    "z": 40279,
+    "parent": "mo6x"
   },
   "ovz5": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Earth",
     "id": "ovz5",
-    "z": 7578,
-    "parent": "o0g2"
+    "z": 40280,
+    "parent": "mo6x"
   },
   "weho": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Water",
     "id": "weho",
-    "z": 7581,
-    "parent": "o0g2"
+    "z": 40292,
+    "parent": "mo6x"
   },
   "3gw7": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Fire",
     "id": "3gw7",
-    "z": 7568,
-    "parent": "o0g2"
+    "z": 40274,
+    "parent": "mo6x"
   },
   "j4t0": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Wind",
     "id": "j4t0",
-    "z": 7573,
-    "parent": "o0g2"
+    "z": 40276,
+    "parent": "mo6x"
   },
   "juwz": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Void",
     "id": "juwz",
-    "z": 7559,
-    "parent": "o0g2"
+    "z": 40269,
+    "parent": "mo6x"
   },
   "kusq": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Catacomb",
     "id": "kusq",
-    "z": 7567,
-    "parent": "o0g2"
+    "z": 40290,
+    "parent": "mo6x"
   },
   "jqzc": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Earth",
     "id": "jqzc",
-    "z": 7582,
-    "parent": "o0g2"
+    "z": 40275,
+    "parent": "mo6x"
   },
   "j87k": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Water",
     "id": "j87k",
-    "z": 7571,
-    "parent": "o0g2"
+    "z": 40267,
+    "parent": "mo6x"
   },
   "x9me": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Fire",
     "id": "x9me",
-    "z": 7570,
-    "parent": "o0g2"
+    "z": 40284,
+    "parent": "mo6x"
   },
   "c92n": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Wind",
     "id": "c92n",
-    "z": 7577,
-    "parent": "o0g2"
+    "z": 40265,
+    "parent": "mo6x"
   },
   "ln7y": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Void",
     "id": "ln7y",
-    "z": 7561,
-    "parent": "o0g2"
+    "z": 40273,
+    "parent": "mo6x"
   },
   "ee6e": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Catacomb",
     "id": "ee6e",
-    "z": 7579,
-    "parent": "o0g2"
+    "z": 40277,
+    "parent": "mo6x"
   },
   "w9ea": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Earth",
     "id": "w9ea",
-    "z": 7572,
-    "parent": "o0g2"
+    "z": 40278,
+    "parent": "mo6x"
   },
   "gakc": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Water",
     "id": "gakc",
-    "z": 7574,
-    "parent": "o0g2"
+    "z": 40286,
+    "parent": "mo6x"
   },
   "ypeo": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Fire",
     "id": "ypeo",
-    "z": 7569,
-    "parent": "o0g2"
+    "z": 40268,
+    "parent": "mo6x"
   },
   "3sd0": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Wind",
     "id": "3sd0",
-    "z": 7565,
-    "parent": "o0g2"
+    "z": 40287,
+    "parent": "mo6x"
   },
   "g0io": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Void",
     "id": "g0io",
-    "z": 7566,
-    "parent": "o0g2"
+    "z": 40281,
+    "parent": "mo6x"
   },
   "ovhp": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Catacomb",
     "id": "ovhp",
-    "z": 7585,
-    "parent": "o0g2"
+    "z": 40288,
+    "parent": "mo6x"
   },
   "59hu": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Earth",
     "id": "59hu",
-    "z": 7576,
-    "parent": "o0g2"
+    "z": 40270,
+    "parent": "mo6x"
   },
   "0ydr": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Water",
     "id": "0ydr",
-    "z": 7558,
-    "parent": "o0g2"
+    "z": 40291,
+    "parent": "mo6x"
   },
   "ufx0": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Fire",
     "id": "ufx0",
-    "z": 7580,
-    "parent": "o0g2"
+    "z": 40285,
+    "parent": "mo6x"
   },
   "exmr": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Wind",
     "id": "exmr",
-    "z": 7564,
-    "parent": "o0g2"
+    "z": 40282,
+    "parent": "mo6x"
   },
   "8sef": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Void",
     "id": "8sef",
-    "z": 7584,
-    "parent": "o0g2"
+    "z": 40289,
+    "parent": "mo6x"
   },
   "w6vt": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "Catacomb",
     "id": "w6vt",
-    "z": 7560,
-    "parent": "o0g2"
+    "z": 40294,
+    "parent": "mo6x"
   },
   "unusedTileHolder": {
     "type": "holder",
@@ -4799,7 +4510,7 @@
     "type": "card",
     "cardType": "player1",
     "id": "wzi6",
-    "z": 7496,
+    "z": 40204,
     "parent": "playerTileHolder"
   },
   "tevo": {
@@ -4807,32 +4518,32 @@
     "type": "card",
     "cardType": "player2",
     "id": "tevo",
-    "z": 7489,
-    "parent": "jrmc"
+    "z": 40197,
+    "parent": "rfnt"
   },
   "a0zv": {
     "deck": "playerTileDeck",
     "type": "card",
     "cardType": "player3",
     "id": "a0zv",
-    "z": 7491,
-    "parent": "jrmc"
+    "z": 40199,
+    "parent": "rfnt"
   },
   "yrq1": {
     "deck": "playerTileDeck",
     "type": "card",
     "cardType": "player4",
     "id": "yrq1",
-    "z": 7493,
-    "parent": "jrmc"
+    "z": 40201,
+    "parent": "rfnt"
   },
   "4jn6": {
     "deck": "playerTileDeck",
     "type": "card",
     "cardType": "player5",
     "id": "4jn6",
-    "z": 7495,
-    "parent": "jrmc"
+    "z": 40203,
+    "parent": "rfnt"
   },
   "preventHolder1": {
     "type": "holder",
@@ -4891,37 +4602,29 @@
       "preventHolder1": "*"
     }
   },
-  "eljm": {
-    "deck": "earthDeck",
-    "type": "card",
-    "cardType": "Avalance",
-    "id": "eljm",
-    "z": 7411,
-    "parent": "fkv9"
-  },
   "9b99": {
     "deck": "earthDeck",
     "type": "card",
     "cardType": "Iron Stance",
     "id": "9b99",
-    "z": 7409,
-    "parent": "fkv9"
+    "z": 40118,
+    "parent": "oesj"
   },
   "bfql": {
     "deck": "earthDeck",
     "type": "card",
     "cardType": "Sacrifice of the Hermit",
     "id": "bfql",
-    "z": 7410,
-    "parent": "fkv9"
+    "z": 40116,
+    "parent": "oesj"
   },
   "rx6t": {
     "deck": "earthDeck",
     "type": "card",
     "cardType": "Shifting Sands",
     "id": "rx6t",
-    "z": 7408,
-    "parent": "fkv9"
+    "z": 40117,
+    "parent": "oesj"
   },
   "hex1": {
     "type": "holder",
@@ -5659,7 +5362,7 @@
     },
     "type": "holder",
     "id": "hex80",
-    "x": 571,
+    "x": 552,
     "y": 565,
     "z": 3587
   },
@@ -6472,7 +6175,6 @@
       }
     },
     "image": "/assets/-819611811_7836",
-    "text": "Restart",
     "2pArray": [
       18,
       83,
@@ -6565,11 +6267,11 @@
         "fields": [
           {
             "type": "title",
-            "text": "Resetting the game ..."
+            "text": "Starting the game ..."
           },
           {
             "type": "subtitle",
-            "text": "This will completely reset the board. Are you sure?"
+            "text": "This will start a new game and completely reset the board. Are you sure?"
           }
         ],
         "confirmButtonText": "Yes, reset.",
@@ -6619,6 +6321,18 @@
         "value": 5
       },
       {
+        "func": "SET",
+        "collection": [
+          "seatGroup1",
+          "seatGroup2",
+          "seatGroup3",
+          "seatGroup4",
+          "seatGroup5"
+        ],
+        "property": "tokenColor",
+        "value": "#b75000"
+      },
+      {
         "func": "CLICK",
         "collection": [
           "resetZoom"
@@ -6653,6 +6367,18 @@
       {
         "func": "CALL",
         "routine": "dealRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "assignTilesRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "reference"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
       }
     ],
     "dealRoutine": [
@@ -6833,7 +6559,130 @@
           "tileHolder"
         ]
       }
-    ]
+    ],
+    "assignTilesRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "TURN",
+            "turnCycle": "random"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "pawn1",
+              "pawn2",
+              "pawn3",
+              "pawn4",
+              "pawn5"
+            ],
+            "property": "x",
+            "relation": "-",
+            "value": 450
+          },
+          {
+            "func": "FOREACH",
+            "range": [
+              "${COUNT}"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "turn",
+                "value": true
+              },
+              {
+                "func": "GET",
+                "property": "index",
+                "variable": "currentTurn"
+              },
+              "var currentTurn2 = ${currentTurn} * 2",
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "cardType",
+                "value": "player${value}"
+              },
+              {
+                "func": "GET",
+                "property": "tokenColor"
+              },
+              {
+                "func": "GET",
+                "property": "player"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "scrollHolder${currentTurn2}"
+              },
+              {
+                "func": "SET",
+                "property": "x",
+                "value": -100
+              },
+              "var seatGroup = 'seatGroup' + ${currentTurn}",
+              "var seatID = 'seat' + ${currentTurn}",
+              {
+                "func": "SET",
+                "collection": [
+                  "${seatGroup}"
+                ],
+                "property": "tokenColor",
+                "value": "${tokenColor}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${seatID}"
+                ],
+                "property": "color",
+                "value": "${tokenColor}"
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "pawn${value}"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${seatGroup}"
+              },
+              {
+                "func": "SET",
+                "property": "x",
+                "value": 200
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": 36
+              },
+              {
+                "func": "TURN"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "text": "Start"
   },
   "restartButton2": {
     "id": "restartButton2",
@@ -7057,29 +6906,131 @@
     "type": "card",
     "cardType": "Masons Savvy",
     "id": "npc3",
-    "z": 7407,
-    "parent": "fkv9"
+    "z": 40119,
+    "parent": "oesj"
+  },
+  "uk3i": {
+    "deck": "earthDeck",
+    "type": "card",
+    "cardType": "Avalance",
+    "id": "uk3i",
+    "z": 40115,
+    "parent": "oesj"
+  },
+  "5wxx": {
+    "id": "5wxx",
+    "z": 3851,
+    "width": 82,
+    "height": 20,
+    "html": "<a href='https://drive.google.com/file/d/1vOKhQBuIvrMdpfdVX2jCMp2XR18S_pct/view?usp=sharing'>Rules PDF</a></p>",
+    "movable": false,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1738371307_940')",
+        "background-size": "90px 45px",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "border": "3px dashed #b75000"
+      },
+      " a:link": {
+        "color": "black",
+        "text-decoration": "none"
+      },
+      " a:visited": {
+        "color": "black",
+        "text-decoration": "none"
+      },
+      " a:hover": {
+        "color": "#b75000",
+        "text-decoration": "none"
+      }
+    },
+    "y": 2,
+    "borderRadius": 5,
+    "x": 2
+  },
+  "reference": {
+    "id": "reference",
+    "y": 20,
+    "z": 3856,
+    "image": "/assets/-1604261584_69658",
+    "width": 1244,
+    "height": 962,
+    "movable": false,
+    "onlyVisibleForSeat": [],
+    "x": 180
+  },
+  "referenceButton": {
+    "type": "button",
+    "id": "referenceButton",
+    "y": 30,
+    "height": 30,
+    "z": 2078,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1738371307_940')",
+        "color": "black",
+        "border-color": "#b75000",
+        "transition": "filter 0.25s"
+      },
+      ":hover": {
+        "filter": "invert(20%)"
+      }
+    },
+    "text": "Reference",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "reference"
+        ],
+        "property": "onlyVisibleForSeat"
+      },
+      "var visible = ${seatID} in ${onlyVisibleForSeat}",
+      {
+        "func": "IF",
+        "condition": "${visible}",
+        "thenRoutine": [
+          "var index = ${onlyVisibleForSeat} indexOf ${seatID}",
+          "var onlyVisibleForSeat = remove ${index}"
+        ],
+        "elseRoutine": [
+          "var onlyVisibleForSeat = push ${seatID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "reference"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${onlyVisibleForSeat}"
+      }
+    ],
+    "width": 90,
+    "x": 1
   },
   "_meta": {
     "version": 15,
     "info": {
       "name": "Godaigo",
       "image": "/assets/-1112185154_103110",
-      "rules": "https://drive.google.com/file/d/1vKpt-5DACMz3uMQ184eJhgyFu6xrApzU/view?usp=sharing",
+      "rules": "https://drive.google.com/file/d/1vOKhQBuIvrMdpfdVX2jCMp2XR18S_pct/view?usp=sharing",
       "bgg": "https://www.thegamecrafter.com/games/godaigo:-secret-of-the-five-elements",
       "year": "",
       "mode": "vs",
       "time": "30-90",
       "attribution": "Created and copyrighted by Jake Seegers.<div>\nVTT implementation by Jake Seegers and Michael Taylor.</div><div>\nLibrary image generated using the DALL.E&nbsp; artificial intelligence image generator for the background, Ideogram.ai artificial intelligence image generator for the \"Godaigo\" text, and the remaining text and elements by Jake Seegers.</div><div>\nRulebook Art uses original art by Jake Seegers for game elements such as Scroll Cards, Symbols, and Tiles, and Midjourney artificial intelligence image generator for art and background images.</div>",
-      "lastUpdate": 1703086799263,
+      "lastUpdate": 1706810090233,
       "showName": true,
       "skill": "Medium",
       "description": "Godaigo: Secret of the Five Elements is a strategic board game where players find and cast Elemental Scrolls to win. Players arrange Elemental Stones on the board, using their unique abilities to influence gameplay. The game offers a unique, booster-pack-free, spellcasting experience in every playthrough.",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
-      "ruleText": "<span style=\"white-space-collapse: collapse;\">In Godaigo, players must explore the board to find Elemental Scrolls, and be the first to cast one of each type to win the game.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">To do this, the players must also acquire spell components called \"Elemental Stones\" and arrange them on the board in specific shapes.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">This challenges players spatial strategy skills, and creates a game experience that is pleasing to the eye.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">Additionally, these stones have their own unique abilities which affect movement and gameplay.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">For example, an Earth Stone can be used to block a path or cut off a resource, or a Wind Stone can allow players to move more freely around the board.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">Spells (or \"Scrolls\") can interfere with an opponent's strategy, or be used to manipulate the state of the board in your favor.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">Godaigo: Secret of the Five Elements provides the fun of spellcasting card games, but does not require additional booster packs. The randomized board state makes each playthrough a unique experience.<br><br>Please read the rulebook provided in the \"Rules overview\" section.</span>",
-      "helpText": "Players will want to open and have access to the online rulebook that can be accessed via the Rules Overview Link on this page.&nbsp;<div>\nIt is also recommended to open a tab with the \"Elemental Reference Sheet\" so that it can be used to better understand the unique mechanics of the elemental stones used in this game.&nbsp;</div><div>\nhttps://drive.google.com/file/d/1BeiirCqcM5YJohNoZTBk1ssxII-ZrJ-h/view?usp=sharing\n</div>",
+      "ruleText": "<div><span style=\"white-space-collapse: collapse; color: var(--overlayFontColor);\">Watch this video for an overview: https://www.youtube.com/watch?v=vm3XSiSWG10&amp;ab_channel=Godaigo.</span><br></div><div style=\"\"><span style=\"white-space-collapse: collapse;\"><br></span></div><span style=\"white-space-collapse: collapse;\">In Godaigo, players must explore the board to find Elemental Scrolls, and be the first to cast one of each type to win the game.</span><div><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">To do this, the players must also acquire spell components called \"Elemental Stones\" and arrange them on the board in specific shapes.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">This challenges players spatial strategy skills, and creates a game experience that is pleasing to the eye.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">Additionally, these stones have their own unique abilities which affect movement and gameplay.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">For example, an Earth Stone can be used to block a path or cut off a resource, or a Wind Stone can allow players to move more freely around the board.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">Spells (or \"Scrolls\") can interfere with an opponent's strategy, or be used to manipulate the state of the board in your favor.</span><br style=\"white-space-collapse: collapse;\"><br style=\"white-space-collapse: collapse;\"><span style=\"white-space-collapse: collapse;\">Godaigo: Secret of the Five Elements provides the fun of spellcasting card games, but does not require additional booster packs. The randomized board state makes each playthrough a unique experience.<br><br>Please read the rulebook provided in the \"Rules Overview\" section above and available as a link within the game.</span></div>",
+      "helpText": "Two or more players take seats.&nbsp; Click the \"Restart\" button to begin a new game.<div><br></div><div>Players are assigned tiles and colors automatically.&nbsp; The player with tile 1 moves the tile to the edge of the board into a position touching at least two other tiles. Move the pawn to the center of the player tile. Press the \"Turn\" button to change the turn indicator. The next player places tile 2 and the matching pawn. Continue until all player tiles and pawns are on the board.</div><div><br></div><div><div><div><span style=\"color: var(--overlayFontColor);\">Click and drag on any empty spot on the play area to move the entire board.</span><br></div><div><br></div><div>Use the zoom buttons at the top of the screen as needed to change the view.</div><div><br></div><div>Click and drag on an empty spot inside the colored border of a player holder to move the entire holder.</div><div><br></div><div>Move stones from the storage area to your own player holder by clicking on a stone.</div></div><div><br></div><div>Drop a scroll card back onto its deck to turn it face down and automatically move it to the bottom of the pile.</div><div><br></div><div>Open the online rulebook via the Rules Overview section above or by clicking \"Rules PDF\" link in the game.&nbsp;<div>\nView the Elemental Reference Sheet by clicking on the \"Reference\" button in the game. This button only displays the sheet to the player clicking the button. Click the button again to hide the reference sheet.</div></div></div>",
       "similarDesigner": "Jake Seegers",
       "variantImage": "",
       "variant": "",
@@ -7087,16 +7038,167 @@
       "players": "2-5"
     }
   },
-  "o0g2": {
-    "type": "pile",
-    "parent": "tileHolder",
-    "x": 0,
-    "y": 0,
-    "width": 172,
-    "height": 149,
-    "id": "o0g2"
+  "referenceCloseButton": {
+    "type": "button",
+    "id": "referenceCloseButton",
+    "x": 1184,
+    "y": 20,
+    "inheritFrom": {
+      "referenceButton": "*"
+    },
+    "parent": "reference",
+    "fixedParent": true,
+    "width": 40,
+    "height": 40,
+    "text": "X"
   },
-  "fkv9": {
+  "pawn1": {
+    "id": "pawn1",
+    "parent": "playArea",
+    "x": 747,
+    "y": 1366,
+    "width": 35,
+    "height": 65,
+    "z": 3867,
+    "color": "#9458f4",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "hoverParent": "playArea",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "pawn": true,
+    "resetProperties": {
+      "parent": "playArea",
+      "x": 747,
+      "y": 1366,
+      "scale": 1
+    }
+  },
+  "pawn2": {
+    "id": "pawn2",
+    "parent": "playArea",
+    "y": 1366,
+    "width": 35,
+    "height": 65,
+    "z": 3869,
+    "color": "#ffce00",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "hoverParent": "playArea",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "pawn": true,
+    "resetProperties": {
+      "parent": "playArea",
+      "x": 706,
+      "y": 1366,
+      "scale": 1
+    },
+    "x": 706
+  },
+  "pawn3": {
+    "id": "pawn3",
+    "parent": "playArea",
+    "x": 665,
+    "y": 1366,
+    "width": 35,
+    "height": 65,
+    "z": 3871,
+    "color": "#ed1b43",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "hoverParent": "playArea",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "pawn": true,
+    "resetProperties": {
+      "parent": "playArea",
+      "x": 665,
+      "y": 1366,
+      "scale": 1
+    }
+  },
+  "pawn4": {
+    "id": "pawn4",
+    "parent": "playArea",
+    "x": 625,
+    "y": 1366,
+    "width": 35,
+    "height": 65,
+    "z": 3873,
+    "color": "#5894f4",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "hoverParent": "playArea",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "pawn": true,
+    "resetProperties": {
+      "parent": "playArea",
+      "x": 625,
+      "y": 1366,
+      "scale": 1
+    }
+  },
+  "pawn5": {
+    "id": "pawn5",
+    "parent": "playArea",
+    "x": 585,
+    "y": 1366,
+    "width": 35,
+    "height": 65,
+    "z": 3877,
+    "color": "#69d83a",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "hoverParent": "playArea",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "pawn": true,
+    "resetProperties": {
+      "parent": "playArea",
+      "x": 585,
+      "y": 1366,
+      "scale": 1
+    }
+  },
+  "logo": {
+    "id": "logo",
+    "parent": "playArea",
+    "fixedParent": true,
+    "x": 1404,
+    "y": 799,
+    "width": 300,
+    "height": 300,
+    "layer": -3,
+    "image": "/assets/-1969474527_14980"
+  },
+  "oesj": {
     "type": "pile",
     "parent": "earthHolder",
     "x": 4,
@@ -7105,9 +7207,9 @@
     "height": 130,
     "handleCSS": ";background-color:transparent; background-image:url('/assets/-819611811_7836'); background-size: contain; background-repeat: no-repeat;background-position: center;color:black",
     "handleSize": 40,
-    "id": "fkv9"
+    "id": "oesj"
   },
-  "7phr": {
+  "v0a4": {
     "type": "pile",
     "parent": "waterHolder",
     "x": 4,
@@ -7116,9 +7218,9 @@
     "height": 130,
     "handleCSS": ";background-color:transparent; background-image:url('/assets/-819611811_7836'); background-size: contain; background-repeat: no-repeat;background-position: center;color:black",
     "handleSize": 40,
-    "id": "7phr"
+    "id": "v0a4"
   },
-  "zpzo": {
+  "u5nn": {
     "type": "pile",
     "parent": "fireHolder",
     "x": 4,
@@ -7127,9 +7229,9 @@
     "height": 130,
     "handleCSS": ";background-color:transparent; background-image:url('/assets/-819611811_7836'); background-size: contain; background-repeat: no-repeat;background-position: center;color:black",
     "handleSize": 40,
-    "id": "zpzo"
+    "id": "u5nn"
   },
-  "8ik1": {
+  "j6v9": {
     "type": "pile",
     "parent": "windHolder",
     "x": 4,
@@ -7138,9 +7240,9 @@
     "height": 130,
     "handleCSS": ";background-color:transparent; background-image:url('/assets/-819611811_7836'); background-size: contain; background-repeat: no-repeat;background-position: center;color:black",
     "handleSize": 40,
-    "id": "8ik1"
+    "id": "j6v9"
   },
-  "j7uq": {
+  "fjyn": {
     "type": "pile",
     "parent": "voidHolder",
     "x": 4,
@@ -7149,9 +7251,9 @@
     "height": 130,
     "handleCSS": ";background-color:transparent; background-image:url('/assets/-819611811_7836'); background-size: contain; background-repeat: no-repeat;background-position: center;color:black",
     "handleSize": 40,
-    "id": "j7uq"
+    "id": "fjyn"
   },
-  "6y3d": {
+  "jwd7": {
     "type": "pile",
     "parent": "catacombHolder",
     "x": 4,
@@ -7160,15 +7262,24 @@
     "height": 130,
     "handleCSS": ";background-color:transparent; background-image:url('/assets/-819611811_7836'); background-size: contain; background-repeat: no-repeat;background-position: center;color:black",
     "handleSize": 40,
-    "id": "6y3d"
+    "id": "jwd7"
   },
-  "jrmc": {
+  "mo6x": {
+    "type": "pile",
+    "parent": "tileHolder",
+    "x": 0,
+    "y": 0,
+    "width": 172,
+    "height": 149,
+    "id": "mo6x"
+  },
+  "rfnt": {
     "type": "pile",
     "parent": "unusedPlayerTileHolder",
     "x": 4,
     "y": 4,
     "width": 172,
     "height": 149,
-    "id": "jrmc"
+    "id": "rfnt"
   }
 }
