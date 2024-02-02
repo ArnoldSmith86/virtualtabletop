@@ -299,7 +299,7 @@ const jeCommands = [
   {
     id: 'je_symbolPickerIcon',
     name: 'pick an asset from the symbol picker',
-    context: '^button ↦ icon',
+    context: '^(basic|button) ↦ icon',
     call: async function() {
       const a = await pickSymbol();
       if(a) {

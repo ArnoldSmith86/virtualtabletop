@@ -58,6 +58,7 @@ export default async function minifyHTML() {
     'client/js/overlays/welcome.js',
 
     'client/js/widgets/widget.js',
+    'client/js/widgets/imagewidget.js',
     'client/js/widgets/basicwidget.js',
     'client/js/widgets/button.js',
     'client/js/widgets/canvas.js',
