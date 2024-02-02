@@ -74,6 +74,8 @@ export function contrastAnyColor(inputColor, intensity) {
 }
 
 export function randomHue(startingColors) {
+  const randomFunction = typeof rand === 'function' ? rand : Math.random;
+
   let hue = 0;
   const hues = [];
   if (startingColors == 1) {
@@ -92,11 +94,11 @@ export function randomHue(startingColors) {
     }
   }
   if(hues.length == 0) {
-    hue = Math.random() * 360;
+    hue = randomFunction() * 360;
   } else {
     const gaps = hues.sort((a,b)=>a-b).map((h, i, a) => (i != (a.length - 1)) ? a[i + 1 ] - h : a[0] + 360 - h);
     const gap = Math.max(...gaps);
-    hue = (Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
+    hue = (randomFunction() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
   }
   const v = [240, 220, 120, 200, 240, 240];
   const value = v[Math.floor(hue/60)] * (60 - hue%60) / 60 + v[Math.ceil(hue/60) % 6] * (hue%60) / 60;

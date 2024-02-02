@@ -262,7 +262,7 @@ const compute_ops = [
     name: 'random',
     desc: 'returns a decimal number in the range 0 to less than 1',
     sample: 'var a = random',
-    call: function(v) { return v = Math.random() },
+    call: function(v) { return v = rand() },
     hash: 'a41526e7d6ab47d459c67c38585b4088'
   },
   {
@@ -703,14 +703,14 @@ const compute_ops = [
     name: 'randInt',
     desc: 'returns a random integer inbetween (and including) two numbers',
     sample: 'var a = randInt ${x} ${y}',
-    call: function(v, x, y) { return v = Math.floor((Math.random() * (y - x + 1)) + x) },
+    call: function(v, x, y) { return v = Math.floor((rand() * (y - x + 1)) + x) },
     hash: '9b07533fb8ae4903272900ea6fbb94d8'
   },
   {
     name: 'randRange',
     desc: 'returns a random integer inbetween two numbers but excluding the endpoint, optionally in z increments (defaults to 1)',
     sample: 'var a = randRange ${x} ${y} ${z}',
-    call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) },
+    call: function(v, x, y, z) { return v = Math.round(Math.floor((rand() * (y - x) / (z || 1))) * (z || 1) + x) },
     hash: '5a75b342f9b9a0c11c2a8d0b6ea9e37d'
   },
   {

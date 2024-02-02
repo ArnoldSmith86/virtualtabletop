@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <title> /*** TITLE ***/ </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <base target="_blank" href=" /*** EXTERNAL_URL ***/ /">
   <link rel="icon" sizes="any" href="i/branding/favicon-32.png"/>
   <link rel="icon" type="image/svg+xml" href="i/branding/favicon.svg"/>
   <link rel="apple-touch-icon" sizes="180x180" href="i/branding/ios-icon.png">
@@ -18,13 +19,13 @@
 </head>
 
 
-<body>
+<body class="loading">
 
   <div id="toolbar">
     <img src="i/branding/logo.svg">
     <div class="divider"></div>
     <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Game Shelf</span></button>
-    <button id="activeGameButton" class="active toolbarButton toolbarTab" ><span class="tooltip">Active Game</span></button>
+    <button id="activeGameButton" class="toolbarButton toolbarTab" ><span class="tooltip">Active Game</span></button>
     <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Players</span></button>
     <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton toolbarTab"><span class="tooltip">About</span></button>
     <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
@@ -39,7 +40,7 @@
 
   <div id="roomArea">
     <div id="room">
-      <div id="topSurface" class="surface"></div>
+      <div id="topSurface" class="surface"><h1 id="loadingRoomIndicator">Loading room...</h1></div>
     </div>
 
     <div id="gridOverlay" class="overlay">
@@ -57,14 +58,14 @@
     </div>
 
     <div id="buttonInputOverlay" class="overlay">
-      <form class=modal onsubmit="return false">
+      <div class="modal">
         <h1>Button Input</h1>
         <div id="buttonInputFields"></div>
-        <div class=footer>
-          <button id="buttonInputGo" class=positiveInput><span class=UIicon></span><label></label></button>
-          <button id="buttonInputCancel" class=neutralInput><span class=UIicon></span><label></label></button>
+        <div class="footer">
+          <button id="buttonInputGo" class="positiveInput"><span class="UIicon"></span><label></label></button>
+          <button id="buttonInputCancel" class="neutralInput"><span class="UIicon"></span><label></label></button>
         </div>
-      </form>
+      </div>
     </div>
 
     <div id="playerOverlay" class="overlay">
@@ -79,6 +80,11 @@
         <label class="me ui-line" data-label="Me »"> </label>
         <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
         <label class="inactivePlayers ui-line"> </label>
+      </div>
+      <div id="playerInvite">
+        <h1>Invite</h1>
+        <p>More players can join this game by visiting <span id="playerInviteURL"></span>.</p>
+        <button icon="share" id="playersShareButton">Share room URL</button>
       </div>
     </div>
 
@@ -370,14 +376,57 @@
       </div>
       <div>
         <div icon="link">
-          <p>You can share this link with others so they can add your game to their library.</p>
-          <p>The link does not expire.</p>
-          <p>Keep in mind that you change their game whenever you change this game in your library.</p>
-          <p>Saved in-progress games are not included and will stay private to your room.</p>
-          <p>There is no way for people with this link to find your room.</p>
+          <p class="customGameInfo">You can share this link with others so they can add your game to their library.</p>
+          <p class="customGameInfo">The link does not expire.</p>
+          <p class="customGameInfo">Keep in mind that you change their game whenever you change this game in your library.</p>
+          <p class="customGameInfo">Saved in-progress games are not included and will stay private to your room.</p>
+          <p class="customGameInfo">There is no way for people with this link to find your room.</p>
+          <p class="plGameInfo">Use this link to tell your friends about this specific game in the public library.</p>
           <input id="sharedLink" value="Loading link..."/>
-          <button icon="link">Copy to clipboard</button>
+          <button icon="share">Share</button>
         </div>
+      </div>
+    </div>
+
+    <div id="linkDetailsOverlay" class="overlay" style="display:none;">
+      <div class="buttons one">
+        <button icon="close" id="closeLinkDetails"></button>
+      </div>
+      <div class="mainStateDetails">
+        <div class="mainStateImage">
+          <img data-field="image" data-target="src" class="uneditable">
+          <button icon="star_rate" class="star"></button>
+          <span data-field="stars" class="uneditable">0</span>
+          <i class="material-icons">link</i>
+        </div>
+        <div class="details">
+          <h1 data-field="name"></h1>
+          <h2 data-showfor="similarName">Similar to: <span data-field="similarName"></span><span data-showfor="year"> (<span data-field="year"></span>)</span></h2>
+          <!--<div data-showfor="bgg" class="hideForEdit"><i class="material-icons">info</i> <a data-field="bgg" data-target="href">Game details on <nobr><i class="material-icons intext">launch</i> <span id="similarDetailsDomain"></span></nobr></a></div>-->
+          <div data-showfor="time"><i class="material-icons">schedule</i> Time: <span data-field="time"></span> minutes</div>
+          <div data-showfor="mode"><i class="material-icons">groups</i> Mode: <span data-field="mode"></span></div>
+          <div data-showfor="skill"><i class="material-icons">psychology</i> Skill: <span data-field="skill"></span></div>
+          <div class="language-info" data-showfor="language"><i class="material-icons">language</i><span data-field="language"></span></div>
+          <div class="player-number-info" data-showfor="players"><i class="material-icons">person</i><span data-field="players"></span></div>
+          <p data-field="description" data-placeholder="&lt;empty game description&gt;"></p>
+        </div>
+      </div>
+      <div class="addToRoomBox">
+        <p>Welcome to <b>VirtualTabletop.io</b>!</p>
+        <p>On this platform you can <b>play games</b> with family and friends directly in your browser. No accounts necessary.</p>
+        <p>You followed a direct link to the <span id="welcomeGameType">game</span> "<b id="welcomeGameName"></b>". In order to <span id="welcomeGameTypeHint">start playing it</span>:</p>
+        <div class="welcomeInput">
+          <ol>
+            <li>Create a custom room URL and player name or accept the defaults.</li>
+            <li>Click CREATE ROOM.</li>
+            <li>On the next page, click PLAY.</li>
+            <li>Invite your friends on the Players tab.</li>
+          </ol>
+          <b>Room URL:</b> <span> /*** EXTERNAL_URL ***/ /<input id="welcomeJoinRoom" tabindex="1"></span><br>
+          <b>Player name:</b> <input id="welcomePlayerName" tabindex="2">
+          <button id="welcomePlayButton" icon="play_arrow">Create room</button>
+        </div>
+        <p id="welcomeUserGenerated" icon="warning">This game is <b>user-generated content</b> for which VirtualTabletop.io holds no responsibility or liability.</p>
       </div>
     </div>
 
