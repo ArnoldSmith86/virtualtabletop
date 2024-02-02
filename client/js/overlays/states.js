@@ -453,7 +453,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
-      if(activeState.saveStateID)
+      if(activeState.saveStateID && states[activeState.saveStateID])
         updateSaveButton.style.display = 'inline-flex';
     }
 
