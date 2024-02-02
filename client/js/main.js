@@ -105,7 +105,8 @@ export function showOverlay(id, forced) {
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
-    toServer('mouse',{inactive:true})
+    if(!isLoading)
+      toServer('mouse',{inactive:true})
   } else {
     overlayActive = false;
   }
@@ -127,6 +128,7 @@ function checkURLproperties(connected) {
   if(!connected) {
 
     try {
+      checkForGameURL();
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
@@ -243,7 +245,7 @@ export async function shuffleWidgets(collection) {
   const len = collection.length;
   let indexes = [...Array(len).keys()];
   for (let i = len-1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i+1));
+    let j = Math.floor(rand() * (i+1));
     [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
   }
   for (let i of indexes) {
@@ -325,12 +327,15 @@ async function uploadAsset(multipleCallback) {
 }
 
 async function _uploadAsset(file) {
+    if(typeof file == 'string')
+      file = await (await fetch(file)).arrayBuffer();
+
     const response = await fetch('asset', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/octet-stream'
       },
-      body: file.content
+      body: file.content || file
     });
 
     if(response.status == 413)
@@ -373,13 +378,13 @@ async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, div, progressButton, on, onMessage, showOverlay, sleep,
+      $, $a, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
       addWidgetLocal, removeWidgetLocal,
       loadJSZip, waitForJSZip,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
-      uploadAsset, pickSymbol, selectFile, triggerDownload,
+      uploadAsset, _uploadAsset, pickSymbol, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
@@ -431,11 +436,18 @@ onLoad(function() {
 
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
 
+  on('.toolbarButton', 'click', function(e) {
+    if(isLoading) {
+      e.stopImmediatePropagation();
+      return;
+    }
+  });
+
   on('.toolbarTab', 'click', function(e) {
     if(e.currentTarget.classList.contains('active')) {
       if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
         showStatesOverlay('statesOverlay');
-      if(e.currentTarget == $('#activeGameButton'))
+      if(e.currentTarget == $('#activeGameButton') && $('#buttonInputOverlay').style.display == 'none')
         showOverlay();
       e.stopImmediatePropagation();
       return;
@@ -540,7 +552,8 @@ onLoad(function() {
 
   checkURLproperties(false);
   setScale();
-  startWebSocket();
+  if(!location.href.includes('/game/') && !location.href.includes('/tutorial/'))
+    startWebSocket();
 
   onMessage('warning', alert);
   onMessage('error', function(message) {
@@ -558,6 +571,7 @@ onLoad(function() {
     checkedOnce = true;
     let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
     document.title = `${document.location.pathname.split('/').pop()} - ${tabSuffix}`;
+    $('#playerInviteURL').innerText = location.href;
   });
 });
 
@@ -583,8 +597,10 @@ window.onkeyup = function(event) {
       $('#editorSidebar button.active').click();
     else if(edit)
       $('#editorToolbar button[icon=close]').click();
-    else if(overlayActive)
+    else if(overlayActive && $('#buttonInputOverlay').style.display == 'none')
       $('#activeGameButton').click();
+    else if($('#buttonInputCancel').style.visibility == 'visible')
+      $('#buttonInputCancel').click();
   }
 }
 

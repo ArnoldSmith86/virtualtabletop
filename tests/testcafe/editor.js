@@ -14,10 +14,7 @@ test('Create game using edit mode', async t => {
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-spinner0')
-    .typeText('#INPUT_\\;values', '1')
-    .pressKey('backspace')
-    .pressKey('backspace')
-    .pressKey('8')
+    .typeText('#INPUT_\\;values', '8', { replace: true })
     .click('#buttonInputGo')
     .rightClick('#w_2ng4')
     .click('#editorToolbar > div > [icon=add]')
@@ -90,5 +87,5 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .rightClick('#w_bldn')
     .click('#w_bldn');
-  await compareState(t, '7917b0ca016b97ac6dcc6a9c90a6a6aa');
+  await compareState(t, 'a8da89943cf6f6fbc9b77ddaab41dc06');
 });

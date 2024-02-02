@@ -3,6 +3,7 @@ import { $, $a, onLoad, unescapeID } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
+let isLoading = true;
 
 export const widgets = new Map();
 
@@ -22,7 +23,7 @@ let undoProtocol = [];
 function generateUniqueWidgetID() {
   let id;
   do {
-    id = Math.random().toString(36).substring(3, 7);
+    id = rand().toString(36).substring(3, 7);
   } while (widgets.has(id));
   return id;
 }
@@ -311,14 +312,25 @@ function receiveStateFromServer(args) {
     deferredChildren = {};
   }
 
+  if(isLoading) {
+    $('#loadingRoomIndicator').remove();
+    $('body').classList.remove('loading');
+    isLoading = false;
+    if(!$('.active.toolbarTab'))
+      $('#activeGameButton').click();
+  }
+
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
     $('#statesButton').click();
     overlayShownForEmptyRoom = true;
   }
+
   toServer('confirm');
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyState(args);
+
+  cancelInputOverlay();
 
   if(triggerGameStartRoutineOnNextStateLoad) {
     triggerGameStartRoutineOnNextStateLoad = false;
@@ -329,6 +341,18 @@ function receiveStateFromServer(args) {
           await w.evaluateRoutine('gameStartRoutine', { widgetID: id }, { widget: [ w ] });
       batchEnd();
     })();
+  }
+}
+
+function cancelInputOverlay() {
+  if($('#activeGameButton[data-overlay=buttonInputOverlay]')) {
+    delete $('#activeGameButton').dataset.overlay;
+    if($('#buttonInputOverlay').style.display == 'flex')
+      showOverlay();
+
+    delta = { s: {} };
+    deltaChanged = false;
+    batchDepth = 0;
   }
 }
 

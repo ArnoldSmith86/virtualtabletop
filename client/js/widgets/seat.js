@@ -10,6 +10,7 @@ class Seat extends Widget {
 
       index: 1,
       turn: false,
+      skipTurn: false,
       player: '',
       display: 'playerName',
       displayEmpty: 'click to sit',
