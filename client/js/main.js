@@ -366,7 +366,7 @@ function getSVG(url, replaces, callback) {
       const callbacks = svgCache[url];
       svgCache[url] = t;
       for(const c of callbacks)
-        c();
+        c(getSVG(url, replaces, _=>{}));
     });
   }
 

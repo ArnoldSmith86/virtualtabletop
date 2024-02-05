@@ -24,6 +24,7 @@ export default async function minifyHTML() {
     'client/css/overlays/welcome.css',
 
     'client/css/widgets/basicwidget.css',
+    'client/css/widgets/imagewidget.css',
     'client/css/widgets/button.css',
     'client/css/widgets/canvas.css',
     'client/css/widgets/card.css',

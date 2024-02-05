@@ -1,3 +1,5 @@
+import { asArray } from "./domhelpers";
+
 function emojiToFilename(emoji) {
   return [...emoji].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
 }
@@ -185,4 +187,99 @@ export function addRichtextControls(dom) {
 
 export function removeRichtextControls(dom) {
   removeFromDOM(dom.previousSibling);
+}
+
+function getIconDetails(icon) {
+  if(!icon)
+    return { image: null, text: null };
+  if(icon.match(/\//))
+    return { image: `/i/game-icons.net/${icon}.svg`, text: ' ', class: 'autoIconAlignImage autoIconAlignGameIcons', colorReplace: '#000' };
+  if(icon.match(/^\[/))
+    return { image: ' ', text: icon, class: 'autoIconAlignFont autoIconAlignSymbols' };
+  if(icon.match(/^[a-z0-9]/))
+    return { image: ' ', text: icon, class: 'autoIconAlignFont autoIconAlignMaterialIcons' };
+  return { image: `/i/noto-emoji/emoji_u${emojiToFilename(icon)}.svg`, text: ' ', class: 'autoIconAlignImage autoIconAlignNotoEmoji' };
+}
+
+function optimalSquareSize(count, width, height) {
+  // Source: https://math.stackexchange.com/a/2570649
+
+  // Compute number of rows and columns, and cell size
+  var ratio = width / height;
+  var ncols_float = Math.sqrt(count * ratio);
+  var nrows_float = count / ncols_float;
+
+  // Find best option filling the whole height
+  var nrows1 = Math.ceil(nrows_float);
+  var ncols1 = Math.ceil(count / nrows1);
+  while (nrows1 * ratio < ncols1) {
+    nrows1++;
+    ncols1 = Math.ceil(count / nrows1);
+  }
+  var cell_size1 = height / nrows1;
+
+  // Find best option filling the whole width
+  var ncols2 = Math.ceil(ncols_float);
+  var nrows2 = Math.ceil(count / ncols2);
+  while (ncols2 < nrows2 * ratio) {
+    ncols2++;
+    nrows2 = Math.ceil(count / ncols2);
+  }
+  var cell_size2 = width / ncols2;
+
+  // Find the best values
+  var nrows, ncols, cell_size;
+  if (cell_size1 < cell_size2) {
+    nrows = nrows2;
+    ncols = ncols2;
+    cell_size = cell_size2;
+  } else {
+    nrows = nrows1;
+    ncols = ncols1;
+    cell_size = cell_size1;
+  }
+  return cell_size;
+}
+
+function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor) {
+  const wrapper = div(target, 'symbolWrapper', `
+    <div class="symbolText"></div>
+  `);
+  $('.symbolText', wrapper).innerText = text;
+
+  wrapper.style.setProperty('--width', `${width}px`);
+  wrapper.style.setProperty('--height', `${height}px`);
+
+  const maxSize = optimalSquareSize(asArray(symbols).length, width, height);
+
+  wrapper.style.setProperty('--count', 1);
+
+  if(text)
+    wrapper.classList.add('withText');
+
+  for(let symbol of asArray(symbols)) {
+    // button 80px -> 60px font-size, 75% background-size
+    if(!symbol)
+      continue;
+
+    if(typeof symbol != 'object')
+      symbol = { name: symbol };
+
+    const details = getIconDetails(symbol.name);
+    const icon = div(wrapper, details.class, details.text);
+    if(details.image) {
+      let image = details.image.substring(1);
+      if(details.colorReplace)
+        image = getSVG(details.image.substring(1), { [details.colorReplace]: symbol.color||defaultColor }, i=>icon.style.backgroundImage = `url("${i}")`);
+      icon.style.backgroundImage = `url("${image}")`;
+    }
+    icon.style.setProperty('--scale', symbol.scale || defaultScale);
+    icon.style.setProperty('--width', `${maxSize}px`);
+    icon.style.setProperty('--height', `${maxSize}px`);
+    icon.style.setProperty('--offsetX', `${symbol.offsetX||0}px`);
+    icon.style.setProperty('--offsetY', `${symbol.offsetY||0}px`);
+    icon.style.setProperty('--color', `${symbol.color||defaultColor}`);
+  }
+
+  return wrapper;
 }

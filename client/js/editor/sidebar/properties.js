@@ -464,7 +464,7 @@ class PropertiesModule extends SidebarModule {
       let suitIndex = 0;
 
       for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
-        const suitURL = `/i/game-icons.net/${suitSymbol}.svg`;
+        const suitURL = suitSymbol;
         for(const rank of parseRankRange(ranks[suitSymbol])) {
           const cT = `${rank} of ${suitSymbol.replace(/.*\//, '')}`;
           cardTypes[cT] = {
@@ -740,13 +740,16 @@ class PropertiesModule extends SidebarModule {
             "width": 60,
             "height": 60,
             "color": "#fff",
-            "css": "border-radius:100%; border:1px solid #444; background-size: 80%",
+            "css": "border-radius:100%; border:1px solid #444; background-size: 80%"
+          },
+          {
+            "type": "icon",
+            "x": 21.5,
+            "y": 50,
+            "size": 60,
             "dynamicProperties": {
-              "value": "suit"
-            },
-            "svgReplaces": {
-              "#000": "suitColor",
-              "<path ": "outline"
+              "value": "suit",
+              "color": "suitColor"
             }
           },
           {
@@ -813,17 +816,13 @@ class PropertiesModule extends SidebarModule {
             }
           },
           {
-            "type": "image",
+            "type": "icon",
             "x": 10,
             "y": 70,
-            "width": 83,
-            "height": 83,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "white"
-            },
+            "size": 83,
+            "color": "white",
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suit",
             }
           },
           {
@@ -869,17 +868,13 @@ class PropertiesModule extends SidebarModule {
             "color": "white"
           },
           {
-            "type": "image",
+            "type": "icon",
             "x": 10,
             "y": 80,
-            "width": 60,
-            "height": 60,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "suitColor"
-            },
+            "size": 60,
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suit",
+              "color": "suitColor"
             }
           },
           {
@@ -920,15 +915,11 @@ class PropertiesModule extends SidebarModule {
         "radius": 16,
         "objects": [
           {
-            "type": "image",
-            "width": 80,
-            "height": 80,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "suitColor"
-            },
+            "type": "icon",
+            "size": 80,
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suit",
+              "color": "suitColor"
             }
           },
           {
@@ -1020,31 +1011,23 @@ class PropertiesModule extends SidebarModule {
             }
           },
           {
-            "type": "image",
+            "type": "icon",
             "x": 1,
             "y": 28,
-            "width": 23,
-            "height": 23,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "suitColor"
-            },
+            "size": 23,
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suit",
+              "color": "suitColor"
             }
           },
           {
-            "type": "image",
+            "type": "icon",
             "x": 79,
             "y": 110,
-            "width": 23,
-            "height": 23,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "suitColor"
-            },
+            "size": 23,
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suit",
+              "color": "suitColor"
             },
             "rotation": 180
           }
@@ -1053,13 +1036,8 @@ class PropertiesModule extends SidebarModule {
     ];
 
     const commonProperties = {
-      type: 'image',
-      width: 16,
-      height: 16,
-      color: 'transparent',
-      svgReplaces: {
-        '#000': 'suitColor'
-      }
+      type: 'icon',
+      size: 16
     }
     for(let row = 0; row < 5; row++) {
       for(let col = 0; col < 3; col++) {
@@ -1068,7 +1046,8 @@ class PropertiesModule extends SidebarModule {
         deck.faceTemplates[1].objects.push(Object.assign({}, commonProperties, {
           x, y,
           dynamicProperties: {
-            value: `suit-P${row + 1}${col + 1}`
+            value: `suit-P${row + 1}${col + 1}`,
+            color: 'suitColor'
           }
         }));
       }
@@ -1081,7 +1060,8 @@ class PropertiesModule extends SidebarModule {
         deck.faceTemplates[1].objects.push(Object.assign({}, commonProperties, {
           x, y,
           dynamicProperties: {
-            value: `suit-S${row + 1}${col + 1}`
+            value: `suit-S${row + 1}${col + 1}`,
+            color: 'suitColor'
           }
         }));
       }

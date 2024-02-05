@@ -36,9 +36,9 @@ class BasicWidget extends ImageWidget {
         this.previouslyActiveFace = face;
       }
     }
-    if(delta.html !== undefined || delta.text !== undefined || this.getWithPropertyReplacements_checkDelta('html', delta)) {
+    if(delta.html !== undefined || delta.text !== undefined || delta.icon !== undefined || this.getWithPropertyReplacements_checkDelta('html', delta)) {
       if(this.get('html') === null)
-        setText(this.domElement, this.get('text'));
+        setText(this.domElement, this.get('icon') ? '' : this.get('text'));
       else
         this.domElement.innerHTML = DOMPurify.sanitize(mapAssetURLs(this.getWithPropertyReplacements('html')), { USE_PROFILES: { html: true } });
     }

@@ -49,5 +49,13 @@ export class Button extends ImageWidget {
     p.push('color', 'backgroundColor', 'borderColor', 'textColor',  'backgroundColorOH', 'borderColorOH', 'textColorOH');
     return p;
   }
+
+  getDefaultIconColor() {
+    return this.get('textColor');
+  }
+
+  getDefaultIconScale() {
+    return 0.75;
+  }
 }
 
