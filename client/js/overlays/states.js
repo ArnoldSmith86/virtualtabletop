@@ -849,7 +849,7 @@ function fillStateDetails(states, state, dom) {
     shareLink(state);
   };
   $('#stateDetailsOverlay .buttons [icon=link_off]').onclick = function() {
-    $('#stateDetailsOverlay .mainStateImage > i').classList.add('hidden');
+    $('#mainImage > i').classList.add('hidden');
     toServer('unlinkState', state.id);
   };
   $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
