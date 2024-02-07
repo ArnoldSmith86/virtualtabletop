@@ -212,7 +212,7 @@ class Card extends Widget {
   getActiveFace() {
     const face = +this.get('activeFace');
     const count = this.getFaceCount();
-    return face < count ? face : this.getFaceCount() - 1;
+    return (face % count + count) % count;
   }
 
   getDefaultValue(property) {
