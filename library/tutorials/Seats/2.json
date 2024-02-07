@@ -4,7 +4,8 @@
     "id": "seat1",
     "x": 104,
     "y": 175,
-    "z": 23
+    "z": 23,
+    "turn": true
   },
   "seat2": {
     "type": "seat",
@@ -28,8 +29,7 @@
     "x": 1225,
     "y": 175,
     "z": 26,
-    "index": 4,
-    "turn": true
+    "index": 4
   },
   "8fr3": {
     "id": "8fr3",
@@ -41,7 +41,7 @@
     "y": 4
   },
   "_meta": {
-    "version": 14,
+    "version": 15,
     "info": {
       "name": "Seats",
       "image": "/assets/-65508335_6985",
@@ -52,7 +52,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1700094328978,
+      "lastUpdate": 1705274283924,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -317,5 +317,67 @@
     "movable": false,
     "width": 400,
     "layer": -1
+  },
+  "uslq": {
+    "text": "Seats also use a property 'skipTurn'. Any seat(s) with that set to true will not be included in the turn calculations. This button turns 'skipTurn' off and on for the first seat above so you can see how that works.",
+    "id": "uslq",
+    "css": {
+      "background": "white",
+      "border": "1px solid black",
+      "padding": "4px"
+    },
+    "borderRadius": 8,
+    "y": 504,
+    "x": 7,
+    "width": 315,
+    "height": 200,
+    "movable": false
+  },
+  "9gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY skipTurn OF seat1}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat1"
+            ],
+            "property": "skipTurn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "skipTurn false"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat1"
+            ],
+            "property": "skipTurn",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "skipTurn true"
+          }
+        ]
+      }
+    ],
+    "x": 123,
+    "y": 614,
+    "z": 109,
+    "id": "9gbf",
+    "layer": 1,
+    "text": "skipTurn false"
   }
 }

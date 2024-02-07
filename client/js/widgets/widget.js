@@ -661,7 +661,7 @@ export class Widget extends StateManaged {
     const variables = {};
     const collections = {};
     if(go) {
-      for(const field of o.fields) {
+      for(const field of o.fields || []) {
         const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
         const isSingleWidget = field.source && Array.isArray(field.source) && field.source.length == 1;
         if(field.type == 'checkbox') {
@@ -708,7 +708,7 @@ export class Widget extends StateManaged {
       div(dom.parentElement, 'inputError', error);
     };
 
-    for(const field of o.fields) {
+    for(const field of o.fields || []) {
       if(field.type == 'choose' && asArray(variables[field.variable]).length < field.min)
         isValid = displayError(field, `Please select at least ${field.min}.`);
       if(field.type == 'choose' && asArray(variables[field.variable]).length > (field.max || 1))
@@ -1845,8 +1845,9 @@ export class Widget extends StateManaged {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
-        let c = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
-        c = c.filter(w => w.get('type') === 'seat' && !w.get('skipTurn'));
+        let cBase = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
+        let c = cBase.filter(w => w.get('type') === 'seat' && !w.get('skipTurn'));
+        let cSkip = cBase.filter(w => w.get('type') === 'seat' && w.get('skipTurn'));
 
         //this get the list of valid index
         const indexList = [];
@@ -1873,7 +1874,7 @@ export class Widget extends StateManaged {
               nextTurnIndex = a.turn;
             }
           } else if(a.turnCycle == 'random') {
-            nextTurnIndex = Math.floor(Math.random() * indexList.length);
+            nextTurnIndex = Math.floor(rand() * indexList.length);
           } else if(a.turnCycle == 'seat') {
             let setSeat = c.find(w => w.get('id') === a.turn);
             if(setSeat){
@@ -1898,6 +1899,11 @@ export class Widget extends StateManaged {
             await w.set('turn', w.get('index') == turn);
             if(w.get('turn') && w.get('player'))
               collections[a.collection].push(w);
+          }
+
+          //sets turn = false on any seats with skipTurn = true
+          for (const seat of cSkip) {
+            await seat.set('turn', false);
           }
 
           if(jeRoutineLogging)
@@ -2442,7 +2448,7 @@ export class Widget extends StateManaged {
     $('#buttonInputCancel').style.visibility = "visible";
     return new Promise((resolve, reject) => {
       const maxRandomRotate = o.randomRotation || 0;
-      const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
+      const rotation = Math.floor(rand() * maxRandomRotate) - (maxRandomRotate / 2);
       var confirmButtonText, cancelButtonText = "";
       $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
@@ -2468,7 +2474,7 @@ export class Widget extends StateManaged {
       $('#buttonInputGo span').textContent = o.confirmButtonIcon || "";
       $('#buttonInputCancel span').textContent = o.cancelButtonIcon || "";
 
-      for(const field of o.fields) {
+      for(const field of o.fields || []) {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
@@ -2505,6 +2511,21 @@ export class Widget extends StateManaged {
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
+      const inputs = $a('#buttonInputFields input, #buttonInputFields select');
+      if(inputs.length) {
+        inputs[0].focus();
+        if(typeof inputs[0].select == 'function')
+          inputs[0].select();
+      }
+      // press go button when enter is pressed
+      for(const input of inputs) {
+        input.addEventListener('keydown', e=>{
+          if(e.key == 'Enter') {
+            e.preventDefault();
+            goHandler();
+          }
+        });
+      }
     });
   }
 

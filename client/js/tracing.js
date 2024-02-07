@@ -6,14 +6,13 @@ function enableTracing() {
   sendTraceEvent('enable');
   tracingEnabled = true;
 
-  const originalRandom = Math.random;
-  Math.random = function() {
-    const number = originalRandom();
-    sendTraceEvent('random', { number, stack: Error().stack });
-    return number;
-  };
-
   alert('Tracing is now enabled for this room.\nPress F9 again whenever a bug occurs.');
+}
+
+function traceRandom(number) {
+  if(tracingEnabled)
+    sendTraceEvent('random', { number, stack: Error().stack });
+  return number;
 }
 
 function sendTraceEvent(type, payload) {

@@ -57,6 +57,26 @@ export function progressButton(button, clickHandler, disableWhenDone=true) {
   };
 }
 
+async function shareURL(url) {
+  try {
+    await navigator.share({ url });
+  } catch(e) {
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch(e) {
+      throw new Error('Could not share or copy URL.');
+    }
+  }
+}
+
+// uses a progressButton with a custom handler that shares a URL
+export function shareButton(button, urlCallback) {
+  progressButton(button, async function(updateProgress) {
+    updateProgress('Sharing...');
+    await shareURL(urlCallback());
+  });
+}
+
 export async function loadImage(img, src) {
   return new Promise(function(resolve, reject) {
     img.onload = function() {
@@ -69,6 +89,19 @@ export async function loadImage(img, src) {
 }
 
 const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
+
+export function rand() {
+  let number = Math.random();
+
+  if(window.customRandomSeed) {
+    const x = Math.sin(window.customRandomSeed++) * 10000;
+    number = Math.round((x - Math.floor(x))*1000000)/1000000;
+  }
+
+  if(typeof traceRandom == 'function')
+    traceRandom(number);
+  return number;
+}
 
 export function regexEscape(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
@@ -104,7 +137,7 @@ export function shuffleArray(array) {
   const isString = typeof array === 'string';
   array = [...array];
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rand() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return isString ? array.join('') : array;

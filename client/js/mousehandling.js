@@ -23,7 +23,7 @@ async function inputHandler(name, e) {
   if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;
 
-  if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
+  if(isLoading || overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
 
   const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
