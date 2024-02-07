@@ -452,7 +452,7 @@ export class Widget extends StateManaged {
   async clone(overrideProperties, recursive = false, problems = null, xOffset = 0, yOffset = 0) {
     const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
     const parent = clone.parent;
-    if(parent !== null && !widgets.has(parent))
+    if(parent !== undefined && parent !== null && !widgets.has(parent))
       return null;
 
     clone.clonedFrom = this.get('id');
