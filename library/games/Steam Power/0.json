@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "45-90",
       "attribution": "Layout design and coding by Jonathan Cox (email: JonGetsGames@gmail.com for inquiries). Game name and all art assets used with permission from the rights holder, Wallace Designs. \"Wrong Answer\" audio source&nbsp;by [UNIVERSFIELD] via&nbsp;https://pixabay.com/sound-effects/wrong-answer-129254/.",
-      "lastUpdate": 1707151186582,
+      "lastUpdate": 1707336311919,
       "showName": true,
       "skill": "Medium",
       "description": "Build your rail network, establish your factories and reap the rewards.",
@@ -4274,27 +4274,23 @@
     "type": "card",
     "cardType": "city_black",
     "id": "xrvy",
-    "z": 57310,
-    "parent": "resource_holder12",
-    "x": -15,
-    "y": -9
+    "z": 57397,
+    "parent": "idsl"
   },
   "ss43": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_black",
     "id": "ss43",
-    "z": 57321,
-    "parent": "resource_holder23",
-    "x": -15,
-    "y": -9
+    "z": 57404,
+    "parent": "idsl"
   },
   "imhx": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_black",
     "id": "imhx",
-    "z": 57269,
+    "z": 57411,
     "parent": "idsl"
   },
   "93w9": {
@@ -4302,207 +4298,167 @@
     "type": "card",
     "cardType": "city_black",
     "id": "93w9",
-    "z": 57301,
-    "parent": "resource_holder3",
-    "x": -15,
-    "y": -9
+    "z": 57426,
+    "parent": "idsl"
   },
   "0t1s": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_black",
     "id": "0t1s",
-    "z": 57323,
-    "parent": "resource_holder25",
-    "x": -15,
-    "y": -9
+    "z": 57414,
+    "parent": "idsl"
   },
   "tn78": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_black",
     "id": "tn78",
-    "z": 57308,
-    "parent": "resource_holder10",
-    "x": -15,
-    "y": -9
+    "z": 57398,
+    "parent": "idsl"
   },
   "ieuw": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_white",
     "id": "ieuw",
-    "z": 57320,
-    "parent": "resource_holder22",
-    "x": -15,
-    "y": -9
+    "z": 57412,
+    "parent": "idsl"
   },
   "yp87": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_white",
     "id": "yp87",
-    "z": 57318,
-    "parent": "resource_holder20",
-    "x": -15,
-    "y": -9
+    "z": 57401,
+    "parent": "idsl"
   },
   "1saa": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_white",
     "id": "1saa",
-    "z": 57315,
-    "parent": "resource_holder17",
-    "x": -15,
-    "y": -9
+    "z": 57416,
+    "parent": "idsl"
   },
   "7dq5": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_white",
     "id": "7dq5",
-    "z": 57312,
-    "parent": "resource_holder14",
-    "x": -15,
-    "y": -9
+    "z": 57408,
+    "parent": "idsl"
   },
   "l1lj": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_white",
     "id": "l1lj",
-    "z": 57303,
-    "parent": "resource_holder5",
-    "x": -15,
-    "y": -9
+    "z": 57399,
+    "parent": "idsl"
   },
   "2r0k": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_white",
     "id": "2r0k",
-    "z": 57319,
-    "parent": "resource_holder21",
-    "x": -15,
-    "y": -9
+    "z": 57407,
+    "parent": "idsl"
   },
   "03y6": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_orange",
     "id": "03y6",
-    "z": 57305,
-    "parent": "resource_holder7",
-    "x": -15,
-    "y": -9
+    "z": 57406,
+    "parent": "idsl"
   },
   "nicp": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_orange",
     "id": "nicp",
-    "z": 57313,
-    "parent": "resource_holder15",
-    "x": -15,
-    "y": -9
+    "z": 57427,
+    "parent": "idsl"
   },
   "xnk5": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_orange",
     "id": "xnk5",
-    "z": 57314,
-    "parent": "resource_holder16",
-    "x": -15,
-    "y": -9
+    "z": 57413,
+    "parent": "idsl"
   },
   "60nt": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_orange",
     "id": "60nt",
-    "z": 57309,
-    "parent": "resource_holder11",
-    "x": -15,
-    "y": -9
+    "z": 57405,
+    "parent": "idsl"
   },
   "2fsk": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_orange",
     "id": "2fsk",
-    "z": 57328,
-    "parent": "resource_holder30",
-    "x": -15,
-    "y": -9
+    "z": 57423,
+    "parent": "idsl"
   },
   "h8qj": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_orange",
     "id": "h8qj",
-    "z": 57300,
-    "parent": "resource_holder2",
-    "x": -15,
-    "y": -9
+    "z": 57421,
+    "parent": "idsl"
   },
   "nrsf": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_orange",
     "id": "nrsf",
-    "z": 57316,
-    "parent": "resource_holder18",
-    "x": -15,
-    "y": -9
+    "z": 57417,
+    "parent": "idsl"
   },
   "7ail": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_grey",
     "id": "7ail",
-    "z": 57322,
-    "parent": "resource_holder24",
-    "x": -15,
-    "y": -9
+    "z": 57409,
+    "parent": "idsl"
   },
   "1l8d": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_grey",
     "id": "1l8d",
-    "z": 57317,
-    "parent": "resource_holder19",
-    "x": -15,
-    "y": -9
+    "z": 57402,
+    "parent": "idsl"
   },
   "yxyd": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_grey",
     "id": "yxyd",
-    "z": 57325,
-    "parent": "resource_holder27",
-    "x": -15,
-    "y": -9
+    "z": 57419,
+    "parent": "idsl"
   },
   "njpr": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_grey",
     "id": "njpr",
-    "z": 57306,
-    "parent": "resource_holder8",
-    "x": -15,
-    "y": -9
+    "z": 57415,
+    "parent": "idsl"
   },
   "25cg": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_grey",
     "id": "25cg",
-    "z": 57268,
+    "z": 57403,
     "parent": "idsl"
   },
   "gaf6": {
@@ -4510,27 +4466,23 @@
     "type": "card",
     "cardType": "city_grey",
     "id": "gaf6",
-    "z": 57324,
-    "parent": "resource_holder26",
-    "x": -15,
-    "y": -9
+    "z": 57422,
+    "parent": "idsl"
   },
   "cfkx": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_purple",
     "id": "cfkx",
-    "z": 57304,
-    "parent": "resource_holder6",
-    "x": -15,
-    "y": -9
+    "z": 57425,
+    "parent": "idsl"
   },
   "qwby": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_purple",
     "id": "qwby",
-    "z": 57267,
+    "z": 57410,
     "parent": "idsl"
   },
   "9uz9": {
@@ -4538,61 +4490,49 @@
     "type": "card",
     "cardType": "city_purple",
     "id": "9uz9",
-    "z": 57327,
+    "z": 57400,
     "parentFixed": "true",
-    "parent": "resource_holder29",
-    "x": -15,
-    "y": -9
+    "parent": "idsl"
   },
   "6ush": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_purple",
     "id": "6ush",
-    "z": 57329,
-    "parent": "resource_holder31",
-    "x": -15,
-    "y": -9
+    "z": 57418,
+    "parent": "idsl"
   },
   "rblh": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_white",
     "id": "rblh",
-    "z": 57307,
-    "parent": "resource_holder9",
-    "x": -15,
-    "y": -9
+    "z": 57424,
+    "parent": "idsl"
   },
   "fwa0": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_black",
     "id": "fwa0",
-    "z": 57311,
-    "parent": "resource_holder13",
-    "x": -15,
-    "y": -9
+    "z": 57420,
+    "parent": "idsl"
   },
   "v0am": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_grey",
     "id": "v0am",
-    "z": 57326,
-    "parent": "resource_holder28",
-    "x": -15,
-    "y": -9
+    "z": 57428,
+    "parent": "idsl"
   },
   "misd": {
     "deck": "city_deck",
     "type": "card",
     "cardType": "city_purple",
     "id": "misd",
-    "z": 57302,
-    "parent": "resource_holder4",
-    "x": -15,
-    "y": -9
+    "z": 57396,
+    "parent": "idsl"
   },
   "history_holder": {
     "type": "holder",
