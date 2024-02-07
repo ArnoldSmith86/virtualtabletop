@@ -263,31 +263,37 @@ class AssetsModule extends SidebarModule {
           const sizeLabel = document.createElement('label');
           checkbox.id = sizeLabel.htmlFor = generateUniqueWidgetID();
 
-          const img = await loadImage(new Image(), URL.createObjectURL(imageBlob));
-          const [targetWidth, targetHeight] = getAssetTargetSize(asset, img.naturalWidth, img.naturalHeight);
-          const canvas = document.createElement('canvas');
-          canvas.width = targetWidth;
-          canvas.height = targetHeight;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+          try {
+            const img = await loadImage(new Image(), URL.createObjectURL(imageBlob));
+            const [targetWidth, targetHeight] = getAssetTargetSize(asset, img.naturalWidth, img.naturalHeight);
+            const canvas = document.createElement('canvas');
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
-          const compressedDataUrl = canvas.toDataURL(`image/${format}`, 0.7);
-          const res = await fetch(compressedDataUrl);
-          const compressedBlob = await res.blob();
-          const sizeInKB = (compressedBlob.size / 1024).toFixed(2);
+            const compressedDataUrl = canvas.toDataURL(`image/${format}`, 0.7);
+            const res = await fetch(compressedDataUrl);
+            const compressedBlob = await res.blob();
+            const sizeInKB = (compressedBlob.size / 1024).toFixed(2);
 
-          const formatString = format === 'original' ? 'Original' : format.toUpperCase();
-          sizeLabel.textContent = `${formatString}\n${targetWidth}x${targetHeight}\n${sizeInKB} KB`;
+            const formatString = format === 'original' ? 'Original' : format.toUpperCase();
+            sizeLabel.textContent = `${formatString}\n${targetWidth}x${targetHeight}\n${sizeInKB} KB`;
 
-          img.src = compressedDataUrl;
-          img.dataset.sourceAsset = asset.asset;
+            img.src = compressedDataUrl;
+            img.dataset.sourceAsset = asset.asset;
 
-          cell.appendChild(img);
-          cell.appendChild(checkbox);
-          cell.appendChild(sizeLabel);
+            cell.appendChild(img);
+            cell.appendChild(checkbox);
+            cell.appendChild(sizeLabel);
 
-          processImage(checkbox);
-          addPreviewEvents(row, cell, targetWidth);
+            processImage(checkbox);
+            addPreviewEvents(row, cell, targetWidth);
+          } catch(e) {
+            sizeLabel.textContent = 'Error';
+            cell.appendChild(sizeLabel);
+            console.log(e);
+          }
         }
       }
       while(row.childElementCount < 3)
