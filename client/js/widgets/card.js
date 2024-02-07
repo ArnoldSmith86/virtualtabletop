@@ -205,7 +205,7 @@ class Card extends Widget {
       if (fC == 'backward')
         await this.set('activeFace', this.getActiveFace() == 0 ? this.getFaceCount()-1 : this.getActiveFace() -1);
       else
-        await this.set('activeFace', Math.floor(this.getActiveFace() + (fC == 'random' ? Math.random()*99999 : 1)) % this.getFaceCount());
+        await this.set('activeFace', Math.floor(this.getActiveFace() + (fC == 'random' ? rand()*99999 : 1)) % this.getFaceCount());
     }
   }
 

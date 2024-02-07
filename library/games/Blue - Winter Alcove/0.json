@@ -787,6 +787,7 @@
     "z": 15235,
     "inheritChildZ": true,
     "css": "clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)",
+    "dropLimit": 1,
     "dropOffsetX": 0,
     "dropOffsetY": 0,
     "parent": "factory8",

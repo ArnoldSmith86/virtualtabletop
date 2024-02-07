@@ -20,7 +20,7 @@ function positionElementsInArc(elements, radius, arcAngle, container) {
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rand() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
@@ -120,7 +120,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
-    const id = 'genericInput' + Math.random().toString(36).substring(3, 12);
+    const id = 'genericInput' + rand().toString(36).substring(3, 12);
     let currentValue = null;
     let inputDOM = null;
 
@@ -163,6 +163,8 @@ class PropertiesModule extends SidebarModule {
           wrapperDOM.appendChild(inputDOM);
         }
         inputDOM.type = t;
+        if(t == 'number')
+          inputDOM.step = 'any';
         inputDOM.onkeyup = inputDOM.oninput = inputDOM.onchange = _=>{
           if(inputDOM) // it might have been removed by another event
             setValue(t=='number'?+inputDOM.value||0:inputDOM.value, true);
