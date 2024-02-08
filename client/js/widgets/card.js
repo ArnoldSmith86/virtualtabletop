@@ -51,7 +51,7 @@ class Card extends Widget {
 
     if(delta.deck !== undefined || delta.activeFace !== undefined) {
       for(let i=0; i<this.domElement.children.length; ++i) {
-        if(i == this.get('activeFace'))
+        if(i == this.getActiveFace())
           this.domElement.children[i].classList.add('active');
         else
           this.domElement.children[i].classList.remove('active');
@@ -62,7 +62,7 @@ class Card extends Widget {
         for(const key in this.previousFaceProperties)
           deltaForFaceChange[key] = this.get(key);
       if(this.deck) {
-        this.previousFaceProperties = this.deck.getFaceProperties(this.get('activeFace'));
+        this.previousFaceProperties = this.deck.getFaceProperties(this.getActiveFace());
         for(const key in this.previousFaceProperties)
           deltaForFaceChange[key] = this.get(key);
       }
@@ -203,15 +203,21 @@ class Card extends Widget {
     else {
       const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.get('faceCycle');
       if (fC == 'backward')
-        await this.set('activeFace', this.get('activeFace') == 0 ? this.deck.get('faceTemplates').length-1 : this.get('activeFace') -1);
+        await this.set('activeFace', this.getActiveFace() == 0 ? this.getFaceCount()-1 : this.getActiveFace() -1);
       else
-        await this.set('activeFace', Math.floor(this.get('activeFace') + (fC == 'random' ? rand()*99999 : 1)) % this.deck.get('faceTemplates').length);
+        await this.set('activeFace', Math.floor(this.getActiveFace() + (fC == 'random' ? rand()*99999 : 1)) % this.getFaceCount());
     }
+  }
+
+  getActiveFace() {
+    const face = +this.get('activeFace');
+    const count = this.getFaceCount();
+    return (face % count + count) % count;
   }
 
   getDefaultValue(property) {
     if(this.deck && property != 'cardType' && property != 'activeFace') {
-      const d = this.deck.cardPropertyGet(this.get('cardType'), this.get('activeFace'), property);
+      const d = this.deck.cardPropertyGet(this.get('cardType'), this.getActiveFace(), property);
       if(d !== undefined)
         return d;
     }
