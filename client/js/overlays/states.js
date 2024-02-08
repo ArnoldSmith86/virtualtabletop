@@ -453,7 +453,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
-      if(activeState.saveStateID)
+      if(activeState.saveStateID && states[activeState.saveStateID] && states[activeState.saveStateID].savePlayers)
         updateSaveButton.style.display = 'inline-flex';
     }
 
@@ -647,6 +647,7 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable || deletable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link_off]'), 'hidden', !state.link);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=settings]'), 'hidden', !state.savePlayers);
 
   function updateStateDetailsDomains(state) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
@@ -868,6 +869,20 @@ function fillStateDetails(states, state, dom) {
     } else {
       showStatesOverlay(detailsOverlay);
     }
+  };
+  $('#stateDetailsOverlay .buttons [icon=settings]').onclick = function() {
+    toServer('editState', {
+      id: state.id,
+      meta: {
+        saveState:     null,
+        saveVariant:   null,
+        saveLinkState: null,
+        savePlayers:   null,
+        saveDate:      null
+      },
+      variantInput: {},
+      variantOperationQueue: []
+    });
   };
   $('#stateDetailsOverlay .buttons [icon=upload]').onclick = function() {
     toServer('addStateToPublicLibrary', state.id);

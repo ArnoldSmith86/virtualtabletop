@@ -1541,8 +1541,12 @@ export class Widget extends StateManaged {
                   cards = cards.filter(c=>!c.get('_ancestor'));
                 if(a.excludeCollection && excludeCollection)
                   cards = cards.filter(c=>!excludeCollection.includes(c));
-                for(const c of cards)
-                  await c.moveToHolder(widgets.get(holder));
+                for(const c of cards) {
+                  if(c.get('_ancestor') == holder && !c.get('owner'))
+                    await c.bringToFront();
+                  else
+                    await c.moveToHolder(widgets.get(holder));
+                }
               }
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
