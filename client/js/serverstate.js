@@ -167,7 +167,6 @@ function receiveDelta(delta) {
   for(const widgetID in delta.s) {
     if(delta.s[widgetID] !== null && widgets.has(widgetID)) { // check widgets.has because addWidget above MIGHT have failed
       if(delta.s[widgetID].type !== undefined && delta.s[widgetID].type !== widgets.get(widgetID).get('type')) {
-        console.log("Widget type changed", widgetID, delta.s[widgetID].type, widgets.get(widgetID).get('type'));
         const currentState = widgets.get(widgetID).state;
         removeWidget(widgetID);
         addWidget(Object.assign(currentState, delta.s[widgetID]));
