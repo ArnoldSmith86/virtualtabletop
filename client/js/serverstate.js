@@ -171,6 +171,8 @@ function receiveDelta(delta) {
         const currentState = widgets.get(widgetID).state;
         removeWidget(widgetID);
         addWidget(Object.assign(currentState, delta.s[widgetID]));
+        for(const child of widgetFilter(w=>w.get('parent')===widgetID))
+          child.applyDelta({ parent: widgetID });
       } else {
         widgets.get(widgetID).applyDelta(delta.s[widgetID]);
       }
