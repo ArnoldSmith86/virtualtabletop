@@ -1336,7 +1336,7 @@ function jeAddWidgetPropertyCommands(object, widgetBase) {
     context: 'No widget selected.',
     onEmpty: true,
     call: async function() {
-      setSelection([ widgets.get(await addWidgetLocal({type})) ]);
+      setSelection([ widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type})) ]);
     }
   });
   return type == 'basic' ? null : type;
