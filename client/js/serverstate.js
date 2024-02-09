@@ -174,9 +174,19 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
       addWidget(delta.s[widgetID]);
 
-  for(const widgetID in delta.s)
-    if(delta.s[widgetID] !== null && widgets.has(widgetID)) // check widgets.has because addWidget above MIGHT have failed
-      widgets.get(widgetID).applyDelta(delta.s[widgetID]);
+  for(const widgetID in delta.s) {
+    if(delta.s[widgetID] !== null && widgets.has(widgetID)) { // check widgets.has because addWidget above MIGHT have failed
+      if(delta.s[widgetID].type !== undefined && delta.s[widgetID].type !== widgets.get(widgetID).get('type')) {
+        const currentState = widgets.get(widgetID).state;
+        removeWidget(widgetID);
+        addWidget(Object.assign(currentState, delta.s[widgetID]));
+        for(const child of widgetFilter(w=>w.get('parent')===widgetID))
+          child.applyDelta({ parent: widgetID });
+      } else {
+        widgets.get(widgetID).applyDelta(delta.s[widgetID]);
+      }
+    }
+  }
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] === null && widgets.has(widgetID))
