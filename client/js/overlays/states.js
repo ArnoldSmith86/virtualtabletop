@@ -8,6 +8,8 @@ let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
 
+const loadedLibraryImages = {};
+
 function loadJSZip() {
   const node = document.createElement('script');
   node.src = 'scripts/jszip';
@@ -460,8 +462,13 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
     if(state.image) {
-      $('img:not(.emoji)', entry).dataset.src = mapAssetURLs(state.image);
-      lazyImageObserver.observe($('img:not(.emoji)', entry));
+      const mappedURL = mapAssetURLs(state.image);
+      if(loadedLibraryImages[mappedURL]) {
+        $('img:not(.emoji)', entry).src = mappedURL;
+      } else {
+        $('img:not(.emoji)', entry).dataset.src = mappedURL;
+        lazyImageObserver.observe($('img:not(.emoji)', entry));
+      }
     }
 
     const validPlayers = [];
@@ -1134,6 +1141,7 @@ const lazyImageObserver = new IntersectionObserver(entries => {
     if(entry.isIntersecting) {
       entry.target.src = entry.target.dataset.src;
       lazyImageObserver.unobserve(entry.target);
+      loadedLibraryImages[entry.target.dataset.src] = true;
     }
   }
 });
