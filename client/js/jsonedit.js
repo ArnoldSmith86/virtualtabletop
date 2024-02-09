@@ -1444,7 +1444,7 @@ async function jeApplyChangesMulti() {
 
 function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
-    if(delta.s[jeStateNow.id].type !== undefined) {
+    if(delta.s[jeStateNow.id] && delta.s[jeStateNow.id].type !== undefined) {
       const w = widgets.get(jeStateNow.id);
       jePlainWidget = new w.constructor();
       jeColorize();
