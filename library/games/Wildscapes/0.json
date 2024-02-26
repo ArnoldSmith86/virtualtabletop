@@ -28,7 +28,7 @@
       "mode": "",
       "time": "30-45",
       "attribution": "The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.\n\nThe following items are available under the Pixabay license:<div><ul><li>Landscape background by 12019, https://pixabay.com/photos/river-mountains-sunset-dusk-1589616/</li><li>Raindrops background by Leohoho, https://pixabay.com/photos/rain-water-raindrops-droplets-5470471/</li></ul><div>The following items are available under the Flaticon license:<br></div></div><div><br></div><div><ul><li>Bear by Rikas Dzihab, https://www.flaticon.com/free-icon/bear_11957630</li><li>Elk by Bloodline Studios, https://www.flaticon.com/free-icon/animal_13272945</li><li>Fox by Smashicons, https://www.flaticon.com/free-icon/fox_3547065</li><li>Hawk by Meiliastudio, https://www.flaticon.com/free-icon/eagle_14099016</li><li>Fish by Cuputo, https://www.flaticon.com/free-icon/koi-fish_7309072</li><li>Pine cone colored by dreamicons, https://www.flaticon.com/free-icon/pine-cone_3373670</li><li>Pine cone outline by dreamicons, https://www.flaticon.com/free-icon/pine-cone_3373673</li></ul><div>The habitat tiles were created&nbsp;<span style=\"color: var(--overlayFontColor);\">using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"top down view of [type of habitat] style of Claude Monet\"</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">The library image was generated using the following Midjourney prompt: \"</span>bear and hawk fighting over salmon, partly cloudy day, mountains in background, oil on canvas.\"</div></div>",
-      "lastUpdate": 1708915602290,
+      "lastUpdate": 1708957109469,
       "showName": true,
       "skill": "vs, solo",
       "description": "Draft tokens and lay tiles to create the highest scoring wildlife habitat.",
@@ -638,20 +638,11 @@
         "header": "Resetting game...",
         "fields": [
           {
-            "type": "text",
-            "text": "Do you want to reset the game?"
-          }
-        ],
-        "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
-      },
-      {
-        "func": "INPUT",
-        "header": "Choose one scoring option:",
-        "fields": [
+            "type": "subtitle",
+            "text": "This will reset the game. Choose a scoring option then press Confirm to continue or Cancel to exit."
+          },
           {
             "type": "select",
-            "label": "Pick wildlife scoring goals",
             "variable": "scoring",
             "value": "${PROPERTY scoring}",
             "options": [
@@ -673,7 +664,9 @@
               }
             ]
           }
-        ]
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "Confirm"
       },
       {
         "func": "SET",
@@ -4603,18 +4596,6 @@
         "condition": "${PROPERTY soloMode OF reset}",
         "thenRoutine": [
           {
-            "func": "INPUT",
-            "header": "Setting up next turn...",
-            "fields": [
-              {
-                "type": "text",
-                "text": "This will remove the habitat and animal tokens on the right ends, shift the remaining tokens, and refill the empty spaces on the left. Are you sure you want to continue?"
-              }
-            ],
-            "confirmButtonText": "Yes",
-            "cancelButtonText": "No"
-          },
-          {
             "func": "FOREACH",
             "range": [
               4
@@ -4778,7 +4759,7 @@
   "seat1": {
     "type": "seat",
     "id": "seat1",
-    "x": 11,
+    "x": 2,
     "y": 936,
     "colorChangeRoutine": [
       {
@@ -4790,66 +4771,351 @@
         "value": "${PROPERTY color}"
       }
     ],
-    "hideWhenUnused": true,
     "score": [],
-    "turn": true
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "colorContrast": "#000000",
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerColor = ${result.0}",
+      "var playerName = ${result.1}"
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Your Color:",
+                "colors": "${PROPERTY colorArray}",
+                "variable": "color",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${PROPERTY colorArray}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              "var result = push ${color}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var result = push ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${result.0}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": []
+      }
+    ],
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8
   },
   "seat2": {
     "type": "seat",
     "id": "seat2",
-    "x": 276,
+    "x": 269,
     "y": 936,
     "index": 2,
-    "colorChangeRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "marker${PROPERTY index}"
-        ],
-        "property": "color",
-        "value": "${PROPERTY color}"
-      }
-    ],
     "hideWhenUnused": true,
-    "score": []
+    "score": [],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seat1": [
+        "!index",
+        "!color",
+        "!player",
+        "!colorContrast",
+        "!score"
+      ]
+    },
+    "width": 172,
+    "height": 48,
+    "player": "",
+    "mainColor": "#dddddd",
+    "textColor": "#000000"
   },
   "seat3": {
     "type": "seat",
     "id": "seat3",
-    "x": 542,
+    "x": 534,
     "y": 936,
     "index": 3,
-    "colorChangeRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "marker${PROPERTY index}"
-        ],
-        "property": "color",
-        "value": "${PROPERTY color}"
-      }
-    ],
     "hideWhenUnused": true,
-    "score": []
+    "score": [],
+    "width": 172,
+    "height": 48,
+    "inheritFrom": {
+      "seat1": [
+        "!index",
+        "!color",
+        "!player",
+        "!colorContrast",
+        "!score"
+      ]
+    }
   },
   "seat4": {
     "type": "seat",
     "id": "seat4",
-    "x": 808,
+    "x": 800,
     "y": 936,
     "index": 4,
-    "colorChangeRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "marker${PROPERTY index}"
-        ],
-        "property": "color",
-        "value": "${PROPERTY color}"
-      }
-    ],
     "hideWhenUnused": true,
-    "score": []
+    "score": [],
+    "width": 172,
+    "height": 48,
+    "inheritFrom": {
+      "seat1": [
+        "!index",
+        "!color",
+        "!player",
+        "!colorContrast",
+        "!score"
+      ]
+    }
   },
   "pineHolder1": {
     "type": "holder",
