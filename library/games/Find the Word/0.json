@@ -7,7 +7,7 @@
     "inheritFrom": "g1l1_1",
     "text": "",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g1l4_1": {
@@ -18,7 +18,7 @@
     "inheritFrom": "g1l1_1",
     "text": "",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g1l5_1": {
@@ -29,7 +29,7 @@
     "inheritFrom": "g1l1_1",
     "text": "",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g2l1_1": {
@@ -40,7 +40,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "inWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g3l1_1": {
@@ -62,7 +62,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "inWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g5l1_1": {
@@ -172,7 +172,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "inWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g2l3_1": {
@@ -183,7 +183,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "inWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g2l4_1": {
@@ -194,7 +194,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g2l5_1": {
@@ -205,7 +205,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g3l2_1": {
@@ -260,7 +260,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "inWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g4l3_1": {
@@ -271,7 +271,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "inWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g4l4_1": {
@@ -1572,7 +1572,7 @@
       "similarName": "Jotto",
       "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
       "showName": true,
-      "lastUpdate": 1709702320683,
+      "lastUpdate": 1709768282500,
       "skill": "",
       "similarImage": "",
       "similarDesigner": "",
@@ -2515,8 +2515,8 @@
     "css": "background-color:lightgray;border:2px solid black",
     "numGuesses": 0,
     "hoverInheritVisibleForSeat": false,
-    "y": 1100,
-    "onlyVisibleForSeat": "P1"
+    "onlyVisibleForSeat": "P1",
+    "y": 1100
   },
   "scorePanel_1": {
     "type": "holder",
@@ -2770,7 +2770,7 @@
     "inheritFrom": "g1l1_1",
     "text": "",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g1l1_1": {
@@ -2831,7 +2831,7 @@
     "letterSquare": true,
     "player": 1,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
-    "sqColor": "notInWord"
+    "sqColor": "white"
   },
   "guessPanel_2": {
     "type": "holder",
@@ -3619,7 +3619,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g17l1_2": {
@@ -3630,7 +3630,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g18l1_2": {
@@ -3641,7 +3641,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g19l1_2": {
@@ -3652,7 +3652,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g15l1_2": {
@@ -3663,7 +3663,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g15l2_2": {
@@ -3674,7 +3674,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g15l3_2": {
@@ -3685,7 +3685,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g15l4_2": {
@@ -3696,7 +3696,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g15l5_2": {
@@ -3707,7 +3707,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g16l2_2": {
@@ -3718,7 +3718,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g16l3_2": {
@@ -3729,7 +3729,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g16l4_2": {
@@ -3740,7 +3740,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g16l5_2": {
@@ -3751,7 +3751,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g17l2_2": {
@@ -3762,7 +3762,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g17l3_2": {
@@ -3773,7 +3773,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g17l4_2": {
@@ -3784,7 +3784,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g17l5_2": {
@@ -3795,7 +3795,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g18l2_2": {
@@ -3806,7 +3806,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g18l3_2": {
@@ -3817,7 +3817,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g18l4_2": {
@@ -3828,7 +3828,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g18l5_2": {
@@ -3839,7 +3839,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g19l2_2": {
@@ -3850,7 +3850,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g19l3_2": {
@@ -3861,7 +3861,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g19l4_2": {
@@ -3872,7 +3872,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g19l5_2": {
@@ -3883,7 +3883,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g20l2_2": {
@@ -3894,7 +3894,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g20l3_2": {
@@ -3905,7 +3905,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g20l4_2": {
@@ -3916,7 +3916,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g20l5_2": {
@@ -3927,7 +3927,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "corr1_2": {
@@ -5132,6 +5132,11 @@
         "value": "${PROPERTY whiteCss OF functions}"
       },
       {
+        "func": "SET",
+        "property": "sqColor",
+        "value": "white"
+      },
+      {
         "Note": "Clear all shadow values",
         "func": "SELECT",
         "property": "shadow",
@@ -5323,7 +5328,7 @@
     "y": 955,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "gray",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
