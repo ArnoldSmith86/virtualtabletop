@@ -73,7 +73,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g6l1_1": {
@@ -1160,6 +1160,36 @@
         "property": "turn",
         "value": true
       }
+    ],
+    "setSuggestionRoutine": [
+      "var suggestionButton = 'say' + ${numCorr}",
+      "var suggestionButton = ${suggestionButton} + '_'",
+      "var suggestionButton = ${suggestionButton} + ${other}",
+      "var thisGuess = 'guess_' + ${player}",
+      "var thisGuess = ${PROPERTY text OF $thisGuess}",
+      {
+        "func": "SET",
+        "collection": [
+          "${suggestionButton}"
+        ],
+        "property": "mainColor",
+        "value": "#008000"
+      },
+      {
+        "func": "IF",
+        "operand1": "${thisGuess}",
+        "operand2": "${hiddenWordStatic}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "sayCorrect_${other}"
+            ],
+            "property": "mainColor",
+            "value": "#008000"
+          }
+        ]
+      }
     ]
   },
   "g14l1_1": {
@@ -1517,17 +1547,17 @@
       "similarName": "Jotto",
       "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
       "showName": true,
-      "lastUpdate": 1709593825943,
+      "lastUpdate": 1709698343653,
       "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2",
       "similarImage": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2"
     }
   },
   "corr1_1": {
@@ -2232,9 +2262,10 @@
     "fixedParent": true,
     "css": "color:black;font-size:16pt",
     "x": 10,
-    "y": 113,
+    "y": 105,
     "width": 150,
-    "parent": "scorePanel_1"
+    "parent": "scorePanel_1",
+    "height": 45
   },
   "awti2": {
     "type": "label",
@@ -2299,6 +2330,10 @@
             "property": "numGuesses",
             "value": "${numGuesses}"
           },
+          "var other = 3 - ${PROPERTY player}",
+          "var hiddenWord = 'chosen_' + ${other}",
+          "var hiddenWord = ${PROPERTY text OF $hiddenWord}",
+          "var hiddenWordStatic = ${hiddenWord}",
           {
             "func": "FOREACH",
             "in": [
@@ -2315,6 +2350,21 @@
               "var letNum = ${value} + 1",
               "var square = ${square} concat ${letNum}",
               "var square = ${square} concat '_1'",
+              {
+                "comment": "Calculate the number of correct letters in the guess."
+              },
+              "var hiddenIndex = ${hiddenWord} indexOf ${char}",
+              {
+                "func": "IF",
+                "operand1": "${hiddenIndex}",
+                "relation": ">=",
+                "operand2": 0,
+                "thenRoutine": [
+                  "var hiddenWord = remove ${hiddenIndex} 1"
+                ]
+              },
+              "var hiddenLen = length ${hiddenWord}",
+              "var numCorr = 5 - ${hiddenLen}",
               {
                 "func": "SET",
                 "collection": [
@@ -2362,6 +2412,14 @@
                 "routine": "setSquareColorRoutine"
               }
             ]
+          },
+          {
+            "func": "CALL",
+            "widget": "functions",
+            "routine": "setSuggestionRoutine",
+            "arguments": {
+              "player": "${PROPERTY player}"
+            }
           },
           {
             "func": "SET",
@@ -2415,7 +2473,8 @@
       }
     ],
     "css": "--wcMain:blue;--wcMainOH:dodgerblue;border:3px solid black",
-    "text": "Guess"
+    "text": "Guess",
+    "player": 1
   },
   "alphabet_1": {
     "type": "holder",
@@ -2559,11 +2618,31 @@
         "func": "TURN",
         "turn": 1,
         "turnCycle": "forward"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "say0_1",
+          "say1_1",
+          "say2_1",
+          "say3_1",
+          "say4_1",
+          "say5_1",
+          "say0_2",
+          "say1_2",
+          "say2_2",
+          "say3_2",
+          "say4_2",
+          "say5_2"
+        ],
+        "property": "mainColor",
+        "value": "#000000"
       }
     ],
-    "css": "--wcMain:green;--wcMainOH:lightgreen;border:3px solid black;font-size:24pt",
+    "css": "--wcMain:${PROPERTY mainColor};--wcMainOH:${PROPERTY mainColor}80;border:3px solid black;font-size:24pt",
     "text": "0",
-    "player": 1
+    "player": 1,
+    "mainColor": "#000000"
   },
   "say1_1": {
     "type": "button",
@@ -2574,7 +2653,8 @@
     "y": 180,
     "z": 28,
     "inheritFrom": "say0_1",
-    "text": 1
+    "text": 1,
+    "mainColor": "#000000"
   },
   "say2_1": {
     "type": "button",
@@ -2583,7 +2663,8 @@
     "x": 131,
     "z": 29,
     "inheritFrom": "say0_1",
-    "text": 2
+    "text": 2,
+    "mainColor": "#000000"
   },
   "say3_1": {
     "type": "button",
@@ -2592,7 +2673,8 @@
     "x": 188,
     "z": 30,
     "inheritFrom": "say0_1",
-    "text": 3
+    "text": 3,
+    "mainColor": "#000000"
   },
   "say4_1": {
     "type": "button",
@@ -2601,7 +2683,8 @@
     "x": 245,
     "z": 31,
     "inheritFrom": "say0_1",
-    "text": 4
+    "text": 4,
+    "mainColor": "#000000"
   },
   "say5_1": {
     "type": "button",
@@ -2610,7 +2693,8 @@
     "x": 302,
     "z": 32,
     "inheritFrom": "say0_1",
-    "text": 5
+    "text": 5,
+    "mainColor": "#000000"
   },
   "sayCorrect_1": {
     "type": "button",
@@ -2622,7 +2706,7 @@
     "width": 140,
     "height": 45,
     "z": 26,
-    "css": "--wcMain:green;--wcMainOH:lightgreen;border:3px solid black;font-size:24pt",
+    "css": "--wcMain:${PROPERTY mainColor};--wcMainOH:${PROPERTY mainColor}80;border:3px solid black;font-size:24pt",
     "text": "Correct!",
     "player": 1,
     "clickRoutine": [
@@ -2658,7 +2742,8 @@
           "winner": "${other}"
         }
       }
-    ]
+    ],
+    "mainColor": "#000000"
   },
   "g1l2_1": {
     "type": "button",
@@ -2783,6 +2868,10 @@
             "property": "numGuesses",
             "value": "${numGuesses}"
           },
+          "var other = 3 - ${PROPERTY player}",
+          "var hiddenWord = 'chosen_' + ${other}",
+          "var hiddenWord = ${PROPERTY text OF $hiddenWord}",
+          "var hiddenWordStatic = ${hiddenWord}",
           {
             "func": "FOREACH",
             "in": [
@@ -2799,6 +2888,21 @@
               "var letNum = ${value} + 1",
               "var square = ${square} concat ${letNum}",
               "var square = ${square} concat '_2'",
+              {
+                "comment": "Calculate the number of correct letters in the guess."
+              },
+              "var hiddenIndex = ${hiddenWord} indexOf ${char}",
+              {
+                "func": "IF",
+                "operand1": "${hiddenIndex}",
+                "relation": ">=",
+                "operand2": 0,
+                "thenRoutine": [
+                  "var hiddenWord = remove ${hiddenIndex} 1"
+                ]
+              },
+              "var hiddenLen = length ${hiddenWord}",
+              "var numCorr = 5 - ${hiddenLen}",
               {
                 "func": "SET",
                 "collection": [
@@ -2846,6 +2950,14 @@
                 "routine": "setSquareColorRoutine"
               }
             ]
+          },
+          {
+            "func": "CALL",
+            "widget": "functions",
+            "routine": "setSuggestionRoutine",
+            "arguments": {
+              "player": "${PROPERTY player}"
+            }
           },
           {
             "func": "SET",
@@ -2899,7 +3011,8 @@
       }
     ],
     "css": "--wcMain:blue;--wcMainOH:dodgerblue;border:3px solid black",
-    "text": "Guess"
+    "text": "Guess",
+    "player": 2
   },
   "scorePanel_2": {
     "type": "holder",
@@ -2932,10 +3045,11 @@
     "id": "awti4",
     "fixedParent": true,
     "css": "color:black;font-size:16pt",
-    "x": 10,
-    "y": 113,
+    "y": 105,
     "width": 150,
-    "parent": "scorePanel_2"
+    "parent": "scorePanel_2",
+    "height": 45,
+    "x": 10
   },
   "chosen_2": {
     "type": "label",
@@ -2977,7 +3091,8 @@
     "player": 2,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "sayCorrect_1"
+    "inheritFrom": "sayCorrect_1",
+    "mainColor": "#000000"
   },
   "guesses_2": {
     "type": "holder",
@@ -3066,7 +3181,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g13l1_2": {
@@ -3077,7 +3192,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g6l2_2": {
@@ -3352,7 +3467,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g12l3_2": {
@@ -3363,7 +3478,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g12l4_2": {
@@ -3374,7 +3489,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g12l5_2": {
@@ -3385,7 +3500,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g13l2_2": {
@@ -3396,7 +3511,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g13l3_2": {
@@ -3407,7 +3522,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g13l4_2": {
@@ -3418,7 +3533,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g13l5_2": {
@@ -3429,7 +3544,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g14l1_2": {
@@ -3440,7 +3555,7 @@
     "inheritFrom": "g1l1_2",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g14l2_2": {
@@ -3451,7 +3566,7 @@
     "inheritFrom": "g1l1_2",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g14l3_2": {
@@ -3462,7 +3577,7 @@
     "inheritFrom": "g1l1_2",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g14l4_2": {
@@ -3473,7 +3588,7 @@
     "inheritFrom": "g1l1_2",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g14l5_2": {
@@ -3484,7 +3599,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g16l1_2": {
@@ -4155,7 +4270,7 @@
     "y": 105,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -4166,7 +4281,7 @@
     "y": 105,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -4177,7 +4292,7 @@
     "y": 105,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -4188,7 +4303,7 @@
     "y": 105,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -4199,7 +4314,7 @@
     "y": 105,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -4327,7 +4442,8 @@
     "player": 2,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "say0_1"
+    "inheritFrom": "say0_1",
+    "mainColor": "#000000"
   },
   "say1_2": {
     "type": "button",
@@ -4338,7 +4454,8 @@
     "y": 180,
     "z": 28,
     "inheritFrom": "say0_2",
-    "text": 1
+    "text": 1,
+    "mainColor": "#000000"
   },
   "say2_2": {
     "type": "button",
@@ -4347,7 +4464,8 @@
     "x": 131,
     "z": 29,
     "inheritFrom": "say0_2",
-    "text": 2
+    "text": 2,
+    "mainColor": "#000000"
   },
   "say3_2": {
     "type": "button",
@@ -4356,7 +4474,8 @@
     "x": 188,
     "z": 30,
     "inheritFrom": "say0_2",
-    "text": 3
+    "text": 3,
+    "mainColor": "#000000"
   },
   "say4_2": {
     "type": "button",
@@ -4365,7 +4484,8 @@
     "x": 245,
     "z": 31,
     "inheritFrom": "say0_2",
-    "text": 4
+    "text": 4,
+    "mainColor": "#000000"
   },
   "say5_2": {
     "type": "button",
@@ -4374,7 +4494,8 @@
     "x": 302,
     "z": 32,
     "inheritFrom": "say0_2",
-    "text": 5
+    "text": 5,
+    "mainColor": "#000000"
   },
   "choosePanel_1": {
     "type": "holder",
@@ -5153,6 +5274,36 @@
         ],
         "property": "gameStarted",
         "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "chosenWord_1",
+          "chosenWord_2"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "sayCorrect_1",
+          "sayCorrect_2",
+          "say0_1",
+          "say1_1",
+          "say2_1",
+          "say3_1",
+          "say4_1",
+          "say5_1",
+          "say0_2",
+          "say1_2",
+          "say2_2",
+          "say3_2",
+          "say4_2",
+          "say5_2"
+        ],
+        "property": "mainColor",
+        "value": "#000000"
       }
     ]
   },
@@ -5562,7 +5713,7 @@
     "width": 310,
     "height": 185,
     "z": 36,
-    "css": "background-color:#27e921;border:2px solid black"
+    "css": "background-color:#e7321f;border:2px solid black"
   },
   "chosenWord_1": {
     "type": "label",
@@ -5574,7 +5725,6 @@
     "css": "font-size:30pt; text-align:center;color:black",
     "width": 306,
     "movableInEdit": false,
-    "text": "UVWXY",
     "height": 40,
     "twoRowBottomAlign": true
   },
@@ -5586,7 +5736,7 @@
     "width": 310,
     "height": 185,
     "z": 36,
-    "css": "background-color:#e7321f;border:2px solid black"
+    "css": "background-color:#27e921;border:2px solid black"
   },
   "chosenWord_2": {
     "type": "label",
@@ -5598,7 +5748,6 @@
     "css": "font-size:30pt; text-align:center;color:black",
     "width": 306,
     "movableInEdit": false,
-    "text": "ABCDE",
     "height": 40,
     "twoRowBottomAlign": true
   },
@@ -5612,7 +5761,7 @@
     "z": 15,
     "movableInEdit": false,
     "css": "font-size:24pt; text-align:center;color:black",
-    "text": "You won!",
+    "text": "You were looking for",
     "twoRowBottomAlign": true,
     "height": 40
   },
@@ -5626,7 +5775,7 @@
     "z": 15,
     "movableInEdit": false,
     "css": "font-size:24pt; text-align:center;color:black",
-    "text": "You were looking for",
+    "text": "You won!",
     "height": 40,
     "twoRowBottomAlign": true
   },
@@ -6787,7 +6936,7 @@
     "z": 2,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P1",
-    "numGuesses": 1,
+    "numGuesses": 14,
     "player": 2,
     "hoverInheritVisibleForSeat": false,
     "y": 1100
