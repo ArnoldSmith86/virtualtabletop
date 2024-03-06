@@ -1023,7 +1023,7 @@
       {
         "func": "SET",
         "collection": [
-          "guessPanel_${player}"
+          "guessButton_${player}"
         ],
         "property": "y",
         "value": 1100
@@ -1033,10 +1033,10 @@
       {
         "func": "SET",
         "collection": [
-          "guessPanel_${player}"
+          "guessButton_${player}"
         ],
         "property": "y",
-        "value": 100
+        "value": 70
       }
     ],
     "notInWordCss": "--wcMain:#ec7063; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
@@ -1547,7 +1547,7 @@
       "similarName": "Jotto",
       "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
       "showName": true,
-      "lastUpdate": 1709698343653,
+      "lastUpdate": 1709698973566,
       "skill": "",
       "similarImage": "",
       "similarDesigner": "",
@@ -2460,14 +2460,6 @@
             "arguments": {
               "player": 1
             }
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "lA_1"
-            ],
-            "property": "clickable",
-            "value": false
           }
         ]
       }
@@ -2498,8 +2490,8 @@
     "css": "background-color:lightgray;border:2px solid black",
     "numGuesses": 0,
     "hoverInheritVisibleForSeat": false,
-    "y": 1100,
-    "onlyVisibleForSeat": "P1"
+    "onlyVisibleForSeat": "P1",
+    "y": 1100
   },
   "scorePanel_1": {
     "type": "holder",
@@ -2845,7 +2837,7 @@
     "id": "guessButton_2",
     "parent": "guessPanel_2",
     "x": 30,
-    "y": 70,
+    "y": 1100,
     "width": 120,
     "height": 40,
     "z": 7,
@@ -2998,14 +2990,6 @@
             "arguments": {
               "player": 2
             }
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "lA_2"
-            ],
-            "property": "clickable",
-            "value": false
           }
         ]
       }
@@ -3104,8 +3088,8 @@
     "css": "background-color:lightgray;border:2px solid black",
     "numGuesses": 0,
     "hoverInheritVisibleForSeat": false,
-    "y": 1100,
-    "onlyVisibleForSeat": "P2"
+    "onlyVisibleForSeat": "P2",
+    "y": 1100
   },
   "g6l1_2": {
     "type": "button",
@@ -5247,15 +5231,6 @@
         "property": "text",
         "value": ""
       },
-      {
-        "func": "SET",
-        "collection": [
-          "lA_1",
-          "lA_2"
-        ],
-        "property": "clickable",
-        "value": true
-      },
       "var ready = ${PROPERTY playersReady OF table}",
       "var ready.0 = false",
       "var ready.1 = false",
@@ -6936,7 +6911,7 @@
     "z": 2,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P1",
-    "numGuesses": 14,
+    "numGuesses": 4,
     "player": 2,
     "hoverInheritVisibleForSeat": false,
     "y": 1100
