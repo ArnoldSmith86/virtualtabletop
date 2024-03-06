@@ -7,7 +7,7 @@
     "inheritFrom": "g1l1_1",
     "text": "",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
-    "sqColor": "white",
+    "sqColor": "notInWord",
     "parent": "guesses_1"
   },
   "g1l4_1": {
@@ -18,7 +18,7 @@
     "inheritFrom": "g1l1_1",
     "text": "",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
-    "sqColor": "white",
+    "sqColor": "notInWord",
     "parent": "guesses_1"
   },
   "g1l5_1": {
@@ -29,7 +29,7 @@
     "inheritFrom": "g1l1_1",
     "text": "",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
-    "sqColor": "white",
+    "sqColor": "notInWord",
     "parent": "guesses_1"
   },
   "g2l1_1": {
@@ -40,7 +40,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "white",
+    "sqColor": "inWord",
     "parent": "guesses_1"
   },
   "g3l1_1": {
@@ -62,7 +62,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "white",
+    "sqColor": "inWord",
     "parent": "guesses_1"
   },
   "g5l1_1": {
@@ -172,7 +172,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "white",
+    "sqColor": "inWord",
     "parent": "guesses_1"
   },
   "g2l3_1": {
@@ -183,7 +183,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "white",
+    "sqColor": "inWord",
     "parent": "guesses_1"
   },
   "g2l4_1": {
@@ -194,7 +194,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "white",
+    "sqColor": "notInWord",
     "parent": "guesses_1"
   },
   "g2l5_1": {
@@ -205,7 +205,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "white",
+    "sqColor": "notInWord",
     "parent": "guesses_1"
   },
   "g3l2_1": {
@@ -260,7 +260,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "white",
+    "sqColor": "inWord",
     "parent": "guesses_1"
   },
   "g4l3_1": {
@@ -271,7 +271,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "white",
+    "sqColor": "inWord",
     "parent": "guesses_1"
   },
   "g4l4_1": {
@@ -911,6 +911,13 @@
       },
       {
         "func": "CALL",
+        "routine": "showPlayerLettersPanelRoutine",
+        "arguments": {
+          "player": "${second}"
+        }
+      },
+      {
+        "func": "CALL",
         "routine": "showPlayerGuessPanelRoutine",
         "arguments": {
           "player": "${first}"
@@ -941,6 +948,24 @@
         "func": "TURN",
         "turn": "${first}",
         "turnCycle": "position"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "guessPanel_1",
+          "guessPanel_2"
+        ],
+        "property": "y",
+        "value": 100
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "alphabet_1",
+          "alphabet_2"
+        ],
+        "property": "y",
+        "value": 275
       }
     ],
     "showPlayerPanelsRoutine": [
@@ -1543,17 +1568,17 @@
       "year": "1956",
       "mode": "vs",
       "time": "30",
-      "attribution": "Room layout and background image by Roger Lipsett and released to the public domain (CC0).",
+      "attribution": "Room layout and background image by Roger Lipsett, with edits by LawDawg96, and released to the public domain (CC0).",
       "similarName": "Jotto",
       "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
       "showName": true,
-      "lastUpdate": 1709698973566,
+      "lastUpdate": 1709701933562,
       "skill": "",
       "similarImage": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "",
+      "helpText": "Players take seats and choose a player to go first by clicking on the box with the hand icon.<div><br></div><div>Enter the 5-letter word the other player is supposed to guess by clicking on the letters in the \"keyboard\" displayed on the screen. Click the green \"Use this word\" to confirm.</div><div><br></div><div>When it is your turn, enter the 5-letter word that you want to guess.&nbsp; Press the blue \"Guess\" button.&nbsp; When it is not your turn, you can still enter letters to pre-load your next guess.</div><div><br></div><div>After a player guesses, the word will appear in the long vertical column that lists the words near the player's seat. The other player will be presented with a confirmation box that shows the correct number of letters in the word in green. The player should confirm the guessed letters appear in the hidden word then press the green button.</div><div><br></div><div>After the non-guessing player confirms the correct number of letters, that number appears in the circle by the guessed word in the long vertical word list. Players can press a letter in the word list and choose to change the color of that letter everywhere it appears to either red, green, or white.</div><div><br></div><div>If the guessing player guesses the word correctly, then the \"Correct\" button turns green on the non-guessing player's overlay. The non-guessing player should confirm the guess and then press the green \"Correct\" button to end the game and reveal the hidden words.</div>",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
@@ -2308,7 +2333,6 @@
     "id": "guessButton_1",
     "parent": "guessPanel_1",
     "x": 30,
-    "y": 70,
     "width": 120,
     "height": 40,
     "z": 7,
@@ -2466,7 +2490,8 @@
     ],
     "css": "--wcMain:blue;--wcMainOH:dodgerblue;border:3px solid black",
     "text": "Guess",
-    "player": 1
+    "player": 1,
+    "y": 1100
   },
   "alphabet_1": {
     "type": "holder",
@@ -2490,8 +2515,8 @@
     "css": "background-color:lightgray;border:2px solid black",
     "numGuesses": 0,
     "hoverInheritVisibleForSeat": false,
-    "onlyVisibleForSeat": "P1",
-    "y": 1100
+    "y": 1100,
+    "onlyVisibleForSeat": "P1"
   },
   "scorePanel_1": {
     "type": "holder",
@@ -2745,7 +2770,7 @@
     "inheritFrom": "g1l1_1",
     "text": "",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
-    "sqColor": "white",
+    "sqColor": "notInWord",
     "parent": "guesses_1"
   },
   "g1l1_1": {
@@ -2806,7 +2831,7 @@
     "letterSquare": true,
     "player": 1,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
-    "sqColor": "white"
+    "sqColor": "notInWord"
   },
   "guessPanel_2": {
     "type": "holder",
@@ -3088,8 +3113,8 @@
     "css": "background-color:lightgray;border:2px solid black",
     "numGuesses": 0,
     "hoverInheritVisibleForSeat": false,
-    "onlyVisibleForSeat": "P2",
-    "y": 1100
+    "y": 1100,
+    "onlyVisibleForSeat": "P2"
   },
   "g6l1_2": {
     "type": "button",
@@ -4636,12 +4661,12 @@
   "status_1": {
     "type": "holder",
     "id": "status_1",
-    "x": 210,
+    "x": 170,
     "width": 270,
     "height": 190,
     "layer": 2,
     "z": 2,
-    "invoker": "g1l4_1",
+    "invoker": "g2l3_1",
     "onlyVisibleForSeat": "P1",
     "y": 1100,
     "hoverInheritVisibleForSeat": false
@@ -4933,6 +4958,15 @@
       {
         "func": "SET",
         "collection": [
+          "guessButton_1",
+          "guessButton_2"
+        ],
+        "property": "y",
+        "value": 100
+      },
+      {
+        "func": "SET",
+        "collection": [
           "guessPanel_1",
           "guessPanel_2"
         ],
@@ -5182,6 +5216,15 @@
         "value": "P1"
       },
       {
+        "Note": "Show first move panel",
+        "func": "SET",
+        "collection": [
+          "firstMovePanel"
+        ],
+        "property": "y",
+        "value": 90
+      },
+      {
         "func": "SET",
         "collection": [
           "guesses_2",
@@ -5208,15 +5251,6 @@
         ],
         "property": "y",
         "value": 200
-      },
-      {
-        "Note": "Show first move panel",
-        "func": "SET",
-        "collection": [
-          "firstMovePanel"
-        ],
-        "property": "y",
-        "value": 90
       },
       {
         "func": "SET",
@@ -5688,7 +5722,7 @@
     "width": 310,
     "height": 185,
     "z": 36,
-    "css": "background-color:#e7321f;border:2px solid black"
+    "css": "background-color:#27e921;border:2px solid black"
   },
   "chosenWord_1": {
     "type": "label",
@@ -5711,7 +5745,7 @@
     "width": 310,
     "height": 185,
     "z": 36,
-    "css": "background-color:#27e921;border:2px solid black"
+    "css": "background-color:#e7321f;border:2px solid black"
   },
   "chosenWord_2": {
     "type": "label",
@@ -5736,7 +5770,7 @@
     "z": 15,
     "movableInEdit": false,
     "css": "font-size:24pt; text-align:center;color:black",
-    "text": "You were looking for",
+    "text": "You won!",
     "twoRowBottomAlign": true,
     "height": 40
   },
@@ -5750,7 +5784,7 @@
     "z": 15,
     "movableInEdit": false,
     "css": "font-size:24pt; text-align:center;color:black",
-    "text": "You won!",
+    "text": "You were looking for",
     "height": 40,
     "twoRowBottomAlign": true
   },
@@ -6911,7 +6945,7 @@
     "z": 2,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P1",
-    "numGuesses": 4,
+    "numGuesses": 3,
     "player": 2,
     "hoverInheritVisibleForSeat": false,
     "y": 1100
