@@ -894,15 +894,6 @@
         }
       },
       {
-        "func": "SET",
-        "collection": [
-          "shadow_guesses_1",
-          "shadow_guesses_2"
-        ],
-        "property": "y",
-        "value": 0
-      },
-      {
         "func": "CALL",
         "routine": "showPlayerLettersPanelRoutine",
         "arguments": {
@@ -943,6 +934,17 @@
         "arguments": {
           "player": "${second}"
         }
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "guesses_1",
+          "guesses_2",
+          "shadow_guesses_1",
+          "shadow_guesses_2"
+        ],
+        "property": "y",
+        "value": 0
       },
       {
         "func": "TURN",
@@ -1572,7 +1574,7 @@
       "similarName": "Jotto",
       "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
       "showName": true,
-      "lastUpdate": 1709768282500,
+      "lastUpdate": 1709769563828,
       "skill": "",
       "similarImage": "",
       "similarDesigner": "",
@@ -2491,7 +2493,7 @@
     "css": "--wcMain:blue;--wcMainOH:dodgerblue;border:3px solid black",
     "text": "Guess",
     "player": 1,
-    "y": 1100
+    "y": 70
   },
   "alphabet_1": {
     "type": "holder",
@@ -3113,8 +3115,8 @@
     "css": "background-color:lightgray;border:2px solid black",
     "numGuesses": 0,
     "hoverInheritVisibleForSeat": false,
-    "y": 1100,
-    "onlyVisibleForSeat": "P2"
+    "onlyVisibleForSeat": "P2",
+    "y": 1100
   },
   "g6l1_2": {
     "type": "button",
@@ -4820,7 +4822,7 @@
     "height": 190,
     "layer": 2,
     "z": 3,
-    "invoker": "g1l1_2",
+    "invoker": "g2l2_2",
     "onlyVisibleForSeat": "P2",
     "y": 1100,
     "hoverInheritVisibleForSeat": false
@@ -5110,7 +5112,9 @@
         "func": "SET",
         "collection": [
           "guesses_1",
-          "guesses_2"
+          "guesses_2",
+          "shadow_guesses_1",
+          "shadow_guesses_2"
         ],
         "property": "numGuesses",
         "value": 0
@@ -5803,7 +5807,8 @@
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P2",
     "hoverInheritVisibleForSeat": false,
-    "y": 1100
+    "y": 1100,
+    "numGuesses": 0
   },
   "shadow_g1l3_1": {
     "type": "button",
@@ -6950,7 +6955,7 @@
     "z": 2,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P1",
-    "numGuesses": 3,
+    "numGuesses": 0,
     "player": 2,
     "hoverInheritVisibleForSeat": false,
     "y": 1100
