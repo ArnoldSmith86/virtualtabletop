@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "30-45",
       "attribution": "<div>Tile design and room layout by LawDawg96.&nbsp; Released to the public domain under CC0.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>Tile bag by mousewax available as CC0.</div><div><br></div><div>Recenter icon is a Google Material Symbol and is in the public domain. Available at https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/recenter/wght200/24px.svg</div>",
-      "lastUpdate": 1709933622396,
+      "lastUpdate": 1709933830292,
       "showName": true,
       "skill": "",
       "description": "Play letter tiles to form words. Change words by stacking tiles. Earn points by stealing words from other players and having the highest tile in a word at the end of the game.",
@@ -3648,11 +3648,6 @@
     "textColor": "black",
     "textColorOH": "gray",
     "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "owner",
-        "value": "${playerName}"
-      },
       {
         "func": "MOVE",
         "from": "holder${seatIndex}",
