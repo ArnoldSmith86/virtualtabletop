@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "30-45",
       "attribution": "<div>Tile design and room layout by LawDawg96.&nbsp; Released to the public domain under CC0.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>Tile bag by mousewax available as CC0.</div><div><br></div><div>Recenter icon is a Google Material Symbol and is in the public domain. Available at https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/recenter/wght200/24px.svg</div>",
-      "lastUpdate": 1709933030740,
+      "lastUpdate": 1709933622396,
       "showName": true,
       "skill": "",
       "description": "Play letter tiles to form words. Change words by stacking tiles. Earn points by stealing words from other players and having the highest tile in a word at the end of the game.",
@@ -31,18 +31,17 @@
     "type": "card",
     "cardType": "AB",
     "id": "f0mz",
-    "z": 19058,
+    "z": 20111,
     "x": 4,
     "y": 4,
-    "parent": "holder1",
-    "activeFace": 1
+    "parent": "holder1"
   },
   "tmgy": {
     "deck": "deck1",
     "type": "card",
     "cardType": "AC",
     "id": "tmgy",
-    "z": 19046,
+    "z": 20102,
     "x": 4,
     "y": 4,
     "parent": "holder1"
@@ -52,7 +51,7 @@
     "type": "card",
     "cardType": "AD",
     "id": "5qsu",
-    "z": 19052,
+    "z": 20108,
     "parent": "holder1",
     "x": 4,
     "y": 4
@@ -62,7 +61,7 @@
     "type": "card",
     "cardType": "AH",
     "id": "nccw",
-    "z": 19036,
+    "z": 20124,
     "parent": "holder1",
     "x": 4,
     "y": 4
@@ -72,18 +71,17 @@
     "type": "card",
     "cardType": "EF",
     "id": "slpy",
-    "z": 19054,
+    "z": 20121,
     "parent": "holder1",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "vhu4": {
     "deck": "deck1",
     "type": "card",
     "cardType": "EG",
     "id": "vhu4",
-    "z": 19053,
+    "z": 20118,
     "x": 4,
     "y": 4,
     "parent": "holder1"
@@ -93,39 +91,38 @@
     "type": "card",
     "cardType": "EJ",
     "id": "nujk",
-    "z": 19043,
+    "z": 20114,
     "parent": "holder1",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "78rg": {
     "deck": "deck1",
     "type": "card",
     "cardType": "EK",
     "id": "78rg",
-    "z": 19044,
+    "z": 20104,
     "x": 4,
     "y": 4,
-    "parent": "holder1",
-    "activeFace": 1
+    "parent": "holder1"
   },
   "qk3x": {
     "deck": "deck1",
     "type": "card",
     "cardType": "ER",
     "id": "qk3x",
-    "z": 19056,
+    "z": 20116,
     "parent": "holder1",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "activeFace": 1
   },
   "9hql": {
     "deck": "deck1",
     "type": "card",
     "cardType": "EZ",
     "id": "9hql",
-    "z": 19041,
+    "z": 20113,
     "parent": "holder1",
     "x": 4,
     "y": 4,
@@ -136,7 +133,7 @@
     "type": "card",
     "cardType": "IL",
     "id": "57b6",
-    "z": 19049,
+    "z": 20110,
     "x": 4,
     "y": 4,
     "parent": "holder1",
@@ -147,29 +144,30 @@
     "type": "card",
     "cardType": "IM",
     "id": "chy9",
-    "z": 19045,
+    "z": 20126,
     "parent": "holder1",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "activeFace": 1
   },
   "g57n": {
     "deck": "deck1",
     "type": "card",
     "cardType": "IR",
     "id": "g57n",
-    "z": 19047,
+    "z": 20120,
     "parent": "holder1",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "activeFace": 1
   },
   "e9wb": {
     "deck": "deck1",
     "type": "card",
     "cardType": "OP",
     "id": "e9wb",
-    "z": 19042,
+    "z": 20107,
     "x": 4,
-    "activeFace": 1,
     "parent": "holder1",
     "y": 4
   },
@@ -178,7 +176,7 @@
     "type": "card",
     "cardType": "OR",
     "id": "4dxy",
-    "z": 19048,
+    "z": 20106,
     "x": 4,
     "y": 4,
     "parent": "holder1"
@@ -188,28 +186,28 @@
     "type": "card",
     "cardType": "OT",
     "id": "xjb9",
-    "z": 19040,
+    "z": 20117,
     "parent": "holder1",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "19dt": {
     "deck": "deck1",
     "type": "card",
     "cardType": "US",
     "id": "19dt",
-    "z": 19039,
+    "z": 20103,
     "x": 4,
     "y": 4,
-    "parent": "holder1"
+    "parent": "holder1",
+    "activeFace": 1
   },
   "4egc": {
     "deck": "deck1",
     "type": "card",
     "cardType": "UV",
     "id": "4egc",
-    "z": 19038,
+    "z": 20122,
     "y": 4,
     "x": 4,
     "parent": "holder1",
@@ -220,7 +218,7 @@
     "type": "card",
     "cardType": "DQu",
     "id": "fiij",
-    "z": 19050,
+    "z": 20125,
     "x": 4,
     "y": 4,
     "parent": "holder1",
@@ -231,7 +229,7 @@
     "type": "card",
     "cardType": "NS",
     "id": "clfp",
-    "z": 19035,
+    "z": 20123,
     "parent": "holder1",
     "x": 4,
     "y": 4
@@ -241,7 +239,7 @@
     "type": "card",
     "cardType": "NX",
     "id": "m4ds",
-    "z": 19037,
+    "z": 20112,
     "x": 4,
     "y": 4,
     "parent": "holder1",
@@ -252,7 +250,7 @@
     "type": "card",
     "cardType": "TY",
     "id": "b1py",
-    "z": 19055,
+    "z": 20115,
     "y": 4,
     "x": 4,
     "parent": "holder1"
@@ -262,7 +260,7 @@
     "type": "card",
     "cardType": "Wild",
     "id": "ifdv",
-    "z": 19051,
+    "z": 20109,
     "parent": "holder1",
     "x": 4,
     "y": 4,
@@ -273,7 +271,7 @@
     "type": "card",
     "cardType": "IL2",
     "id": "xt4u",
-    "z": 19034,
+    "z": 20105,
     "parent": "holder1",
     "x": 4,
     "y": 4
@@ -283,7 +281,7 @@
     "type": "card",
     "cardType": "NW",
     "id": "6wus",
-    "z": 19057,
+    "z": 20119,
     "x": 4,
     "y": 4,
     "parent": "holder1",
@@ -294,7 +292,7 @@
     "type": "card",
     "cardType": "AB",
     "id": "ao7o",
-    "z": 19155,
+    "z": 20327,
     "parent": "holder3",
     "x": 4,
     "y": 4
@@ -304,17 +302,18 @@
     "type": "card",
     "cardType": "AC",
     "id": "74sv",
-    "z": 19147,
+    "z": 20321,
     "parent": "holder3",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "activeFace": 1
   },
   "ejyo": {
     "deck": "deck3",
     "type": "card",
     "cardType": "AD",
     "id": "ejyo",
-    "z": 19134,
+    "z": 20326,
     "parent": "holder3",
     "x": 4,
     "y": 4,
@@ -325,28 +324,28 @@
     "type": "card",
     "cardType": "AH",
     "id": "eozf",
-    "z": 19136,
+    "z": 20322,
     "x": 4,
     "y": 4,
-    "parent": "holder3"
+    "parent": "holder3",
+    "activeFace": 1
   },
   "i4p9": {
     "deck": "deck3",
     "type": "card",
     "cardType": "EF",
     "id": "i4p9",
-    "z": 19153,
+    "z": 20334,
     "parent": "holder3",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "t441": {
     "deck": "deck3",
     "type": "card",
     "cardType": "EG",
     "id": "t441",
-    "z": 19152,
+    "z": 20325,
     "parent": "holder3",
     "x": 4,
     "y": 4
@@ -356,28 +355,28 @@
     "type": "card",
     "cardType": "EJ",
     "id": "q6pm",
-    "z": 19158,
+    "z": 20323,
     "parent": "holder3",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "activeFace": 1
   },
   "rcce": {
     "deck": "deck3",
     "type": "card",
     "cardType": "EK",
     "id": "rcce",
-    "z": 19138,
+    "z": 20332,
     "x": 4,
     "y": 4,
-    "parent": "holder3",
-    "activeFace": 1
+    "parent": "holder3"
   },
   "46di": {
     "deck": "deck3",
     "type": "card",
     "cardType": "ER",
     "id": "46di",
-    "z": 19145,
+    "z": 20338,
     "x": 4,
     "y": 4,
     "parent": "holder3"
@@ -387,7 +386,7 @@
     "type": "card",
     "cardType": "EZ",
     "id": "kkpc",
-    "z": 19150,
+    "z": 20339,
     "parent": "holder3",
     "x": 4,
     "y": 4,
@@ -398,7 +397,7 @@
     "type": "card",
     "cardType": "IL",
     "id": "tear",
-    "z": 19151,
+    "z": 20328,
     "x": 4,
     "y": 4,
     "parent": "holder3"
@@ -408,7 +407,7 @@
     "type": "card",
     "cardType": "IL2",
     "id": "fm3w",
-    "z": 19142,
+    "z": 20317,
     "parent": "holder3",
     "x": 4,
     "y": 4
@@ -418,7 +417,7 @@
     "type": "card",
     "cardType": "IM",
     "id": "ohqu",
-    "z": 19139,
+    "z": 20319,
     "parent": "holder3",
     "x": 4,
     "y": 4,
@@ -429,28 +428,28 @@
     "type": "card",
     "cardType": "IR",
     "id": "fepz",
-    "z": 19149,
+    "z": 20329,
     "x": 4,
     "y": 4,
-    "parent": "holder3",
-    "activeFace": 1
+    "parent": "holder3"
   },
   "olbd": {
     "deck": "deck3",
     "type": "card",
     "cardType": "OP",
     "id": "olbd",
-    "z": 19154,
+    "z": 20340,
     "x": 4,
     "y": 4,
-    "parent": "holder3"
+    "parent": "holder3",
+    "activeFace": 1
   },
   "sw1m": {
     "deck": "deck3",
     "type": "card",
     "cardType": "OR",
     "id": "sw1m",
-    "z": 19141,
+    "z": 20331,
     "parent": "holder3",
     "x": 4,
     "y": 4
@@ -460,7 +459,7 @@
     "type": "card",
     "cardType": "OT",
     "id": "ulka",
-    "z": 19135,
+    "z": 20318,
     "parent": "holder3",
     "x": 4,
     "y": 4,
@@ -471,7 +470,7 @@
     "type": "card",
     "cardType": "US",
     "id": "tzvd",
-    "z": 19157,
+    "z": 20320,
     "parent": "holder3",
     "x": 4,
     "y": 4,
@@ -482,7 +481,7 @@
     "type": "card",
     "cardType": "UV",
     "id": "0dyg",
-    "z": 19146,
+    "z": 20336,
     "x": 4,
     "y": 4,
     "parent": "holder3"
@@ -492,39 +491,38 @@
     "type": "card",
     "cardType": "DQu",
     "id": "wat8",
-    "z": 19143,
+    "z": 20341,
     "x": 4,
     "y": 4,
-    "parent": "holder3"
+    "parent": "holder3",
+    "activeFace": 1
   },
   "c697": {
     "deck": "deck3",
     "type": "card",
     "cardType": "NS",
     "id": "c697",
-    "z": 19148,
+    "z": 20335,
     "x": 4,
     "y": 4,
-    "parent": "holder3",
-    "activeFace": 1
+    "parent": "holder3"
   },
   "04f5": {
     "deck": "deck3",
     "type": "card",
     "cardType": "NW",
     "id": "04f5",
-    "z": 19156,
+    "z": 20337,
     "parent": "holder3",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "2cz5": {
     "deck": "deck3",
     "type": "card",
     "cardType": "NX",
     "id": "2cz5",
-    "z": 19137,
+    "z": 20333,
     "x": 4,
     "y": 4,
     "parent": "holder3"
@@ -534,18 +532,17 @@
     "type": "card",
     "cardType": "TY",
     "id": "67g7",
-    "z": 19140,
+    "z": 20324,
     "parent": "holder3",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "z24s": {
     "deck": "deck3",
     "type": "card",
     "cardType": "Wild",
     "id": "z24s",
-    "z": 19144,
+    "z": 20330,
     "parent": "holder3",
     "x": 4,
     "y": 4,
@@ -556,7 +553,7 @@
     "type": "card",
     "cardType": "AB",
     "id": "hdzx",
-    "z": 19208,
+    "z": 20381,
     "parent": "holder4",
     "x": 4,
     "y": 4
@@ -566,18 +563,18 @@
     "type": "card",
     "cardType": "AC",
     "id": "mi0o",
-    "z": 19204,
-    "x": 4,
+    "z": 20380,
+    "activeFace": 1,
     "y": 4,
-    "parent": "holder4",
-    "activeFace": 1
+    "x": 4,
+    "parent": "holder4"
   },
   "579c": {
     "deck": "deck4",
     "type": "card",
     "cardType": "AD",
     "id": "579c",
-    "z": 19206,
+    "z": 20368,
     "x": 4,
     "y": 4,
     "parent": "holder4",
@@ -588,7 +585,7 @@
     "type": "card",
     "cardType": "AH",
     "id": "aui4",
-    "z": 19201,
+    "z": 20367,
     "parent": "holder4",
     "x": 4,
     "y": 4
@@ -598,7 +595,7 @@
     "type": "card",
     "cardType": "EF",
     "id": "jhun",
-    "z": 19202,
+    "z": 20383,
     "parent": "holder4",
     "x": 4,
     "y": 4,
@@ -609,7 +606,7 @@
     "type": "card",
     "cardType": "EG",
     "id": "asvs",
-    "z": 19197,
+    "z": 20372,
     "x": 4,
     "y": 4,
     "parent": "holder4",
@@ -620,18 +617,17 @@
     "type": "card",
     "cardType": "EJ",
     "id": "8gjc",
-    "z": 19189,
+    "z": 20391,
     "parent": "holder4",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "mvzm": {
     "deck": "deck4",
     "type": "card",
     "cardType": "EK",
     "id": "mvzm",
-    "z": 19196,
+    "z": 20378,
     "x": 4,
     "y": 4,
     "parent": "holder4",
@@ -642,7 +638,7 @@
     "type": "card",
     "cardType": "ER",
     "id": "k1fg",
-    "z": 19192,
+    "z": 20373,
     "x": 4,
     "y": 4,
     "parent": "holder4"
@@ -652,28 +648,28 @@
     "type": "card",
     "cardType": "EZ",
     "id": "s4an",
-    "z": 19207,
-    "parent": "holder4",
+    "z": 20387,
     "x": 4,
     "y": 4,
-    "activeFace": 1
+    "parent": "holder4"
   },
   "wv7n": {
     "deck": "deck4",
     "type": "card",
     "cardType": "IL",
     "id": "wv7n",
-    "z": 19205,
+    "z": 20369,
+    "parent": "holder4",
     "x": 4,
     "y": 4,
-    "parent": "holder4"
+    "activeFace": 1
   },
   "3eoa": {
     "deck": "deck4",
     "type": "card",
     "cardType": "IL2",
     "id": "3eoa",
-    "z": 19198,
+    "z": 20384,
     "y": 4,
     "x": 4,
     "parent": "holder4",
@@ -684,7 +680,7 @@
     "type": "card",
     "cardType": "IM",
     "id": "wyzv",
-    "z": 19195,
+    "z": 20377,
     "x": 4,
     "y": 4,
     "parent": "holder4"
@@ -694,17 +690,17 @@
     "type": "card",
     "cardType": "IR",
     "id": "ix6g",
-    "z": 19199,
-    "parent": "holder4",
+    "z": 20371,
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "holder4"
   },
   "b2iv": {
     "deck": "deck4",
     "type": "card",
     "cardType": "OP",
     "id": "b2iv",
-    "z": 19200,
+    "z": 20374,
     "x": 4,
     "y": 4,
     "parent": "holder4",
@@ -715,17 +711,18 @@
     "type": "card",
     "cardType": "OR",
     "id": "wpvz",
-    "z": 19190,
+    "z": 20370,
     "x": 4,
     "y": 4,
-    "parent": "holder4"
+    "parent": "holder4",
+    "activeFace": 1
   },
   "xn9k": {
     "deck": "deck4",
     "type": "card",
     "cardType": "OT",
     "id": "xn9k",
-    "z": 19184,
+    "z": 20386,
     "x": 4,
     "y": 4,
     "parent": "holder4",
@@ -736,48 +733,50 @@
     "type": "card",
     "cardType": "US",
     "id": "48bv",
-    "z": 19194,
+    "z": 20379,
     "x": 4,
     "y": 4,
-    "parent": "holder4"
+    "parent": "holder4",
+    "activeFace": 1
   },
   "zcck": {
     "deck": "deck4",
     "type": "card",
     "cardType": "UV",
     "id": "zcck",
-    "z": 19187,
+    "z": 20375,
     "parent": "holder4",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "pfbv": {
     "deck": "deck4",
     "type": "card",
     "cardType": "DQu",
     "id": "pfbv",
-    "z": 19186,
+    "z": 20389,
     "x": 4,
     "y": 4,
-    "parent": "holder4"
+    "parent": "holder4",
+    "activeFace": 1
   },
   "yns4": {
     "deck": "deck4",
     "type": "card",
     "cardType": "NS",
     "id": "yns4",
-    "z": 19185,
+    "z": 20376,
     "parent": "holder4",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "activeFace": 1
   },
   "gddt": {
     "deck": "deck4",
     "type": "card",
     "cardType": "NW",
     "id": "gddt",
-    "z": 19191,
+    "z": 20385,
     "x": 4,
     "y": 4,
     "parent": "holder4",
@@ -788,7 +787,7 @@
     "type": "card",
     "cardType": "NX",
     "id": "g8hi",
-    "z": 19203,
+    "z": 20388,
     "parent": "holder4",
     "x": 4,
     "y": 4,
@@ -799,18 +798,17 @@
     "type": "card",
     "cardType": "TY",
     "id": "dkmk",
-    "z": 19193,
+    "z": 20390,
     "x": 4,
     "y": 4,
-    "parent": "holder4",
-    "activeFace": 1
+    "parent": "holder4"
   },
   "2pf8": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Wild",
     "id": "2pf8",
-    "z": 19188,
+    "z": 20382,
     "parent": "holder4",
     "x": 4,
     "y": 4,
@@ -821,39 +819,38 @@
     "type": "card",
     "cardType": "AB",
     "id": "x3mq",
-    "z": 19097,
+    "z": 20285,
     "x": 4,
     "y": 4,
-    "parent": "holder2",
-    "activeFace": 1
+    "parent": "holder2"
   },
   "8b9c": {
     "deck": "deck2",
     "type": "card",
     "cardType": "AC",
     "id": "8b9c",
-    "z": 19085,
+    "z": 20274,
     "parent": "holder2",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "ybc9": {
     "deck": "deck2",
     "type": "card",
     "cardType": "AD",
     "id": "ybc9",
-    "z": 19095,
+    "z": 20284,
     "parent": "holder2",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "activeFace": 1
   },
   "dus5": {
     "deck": "deck2",
     "type": "card",
     "cardType": "AH",
     "id": "dus5",
-    "z": 19104,
+    "z": 20289,
     "parent": "holder2",
     "x": 4,
     "y": 4,
@@ -864,7 +861,7 @@
     "type": "card",
     "cardType": "EF",
     "id": "ux5n",
-    "z": 19105,
+    "z": 20286,
     "parent": "holder2",
     "x": 4,
     "y": 4
@@ -874,28 +871,28 @@
     "type": "card",
     "cardType": "EG",
     "id": "n3k2",
-    "z": 19098,
+    "z": 20270,
     "parent": "holder2",
+    "activeFace": 1,
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "zxhu": {
     "deck": "deck2",
     "type": "card",
     "cardType": "EJ",
     "id": "zxhu",
-    "z": 19106,
+    "z": 20273,
+    "parent": "holder2",
     "x": 4,
-    "y": 4,
-    "parent": "holder2"
+    "y": 4
   },
   "pdot": {
     "deck": "deck2",
     "type": "card",
     "cardType": "EK",
     "id": "pdot",
-    "z": 19100,
+    "z": 20276,
     "parent": "holder2",
     "x": 4,
     "y": 4
@@ -905,17 +902,18 @@
     "type": "card",
     "cardType": "ER",
     "id": "f215",
-    "z": 19086,
+    "z": 20275,
     "x": 4,
     "y": 4,
-    "parent": "holder2"
+    "parent": "holder2",
+    "activeFace": 1
   },
   "pc7j": {
     "deck": "deck2",
     "type": "card",
     "cardType": "EZ",
     "id": "pc7j",
-    "z": 19099,
+    "z": 20272,
     "x": 4,
     "y": 4,
     "parent": "holder2"
@@ -925,37 +923,40 @@
     "type": "card",
     "cardType": "IL",
     "id": "rj9a",
-    "z": 19094,
+    "z": 20280,
     "parent": "holder2",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "activeFace": 1
   },
   "twud": {
     "deck": "deck2",
     "type": "card",
     "cardType": "IL2",
     "id": "twud",
-    "z": 19101,
+    "z": 20278,
     "x": 4,
     "parent": "holder2",
-    "y": 4
+    "y": 4,
+    "activeFace": 1
   },
   "iwiq": {
     "deck": "deck2",
     "type": "card",
     "cardType": "IM",
     "id": "iwiq",
-    "z": 19089,
+    "z": 20279,
     "parent": "holder2",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "activeFace": 1
   },
   "4fwm": {
     "deck": "deck2",
     "type": "card",
     "cardType": "IR",
     "id": "4fwm",
-    "z": 19084,
+    "z": 20267,
     "parent": "holder2",
     "x": 4,
     "y": 4
@@ -965,7 +966,7 @@
     "type": "card",
     "cardType": "OP",
     "id": "6sur",
-    "z": 19096,
+    "z": 20287,
     "parent": "holder2",
     "x": 4,
     "y": 4
@@ -975,82 +976,81 @@
     "type": "card",
     "cardType": "OR",
     "id": "6svv",
-    "z": 19108,
+    "z": 20271,
     "x": 4,
     "y": 4,
     "hoverParent": "holder2",
-    "parent": "holder2"
+    "parent": "holder2",
+    "activeFace": 1
   },
   "xbrp": {
     "deck": "deck2",
     "type": "card",
     "cardType": "OT",
     "id": "xbrp",
-    "z": 19102,
+    "z": 20290,
     "x": 4,
     "y": 4,
-    "parent": "holder2"
+    "parent": "holder2",
+    "activeFace": 1
   },
   "o2ex": {
     "deck": "deck2",
     "type": "card",
     "cardType": "US",
     "id": "o2ex",
-    "z": 19090,
+    "z": 20277,
     "parent": "holder2",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "g9cl": {
     "deck": "deck2",
     "type": "card",
     "cardType": "UV",
     "id": "g9cl",
-    "z": 19103,
+    "z": 20282,
     "parent": "holder2",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "qsau": {
     "deck": "deck2",
     "type": "card",
     "cardType": "DQu",
     "id": "qsau",
-    "z": 19093,
+    "z": 20291,
     "parent": "holder2",
     "x": 4,
-    "y": 4,
-    "activeFace": 1
+    "y": 4
   },
   "w5id": {
     "deck": "deck2",
     "type": "card",
     "cardType": "NS",
     "id": "w5id",
-    "z": 19107,
+    "z": 20288,
     "x": 4,
-    "y": 4,
-    "parent": "holder2"
+    "parent": "holder2",
+    "activeFace": 1,
+    "y": 4
   },
   "l5z0": {
     "deck": "deck2",
     "type": "card",
     "cardType": "NW",
     "id": "l5z0",
-    "z": 19092,
-    "y": 4,
+    "z": 20283,
     "x": 4,
     "parent": "holder2",
-    "activeFace": 1
+    "y": 4
   },
   "g3ef": {
     "deck": "deck2",
     "type": "card",
     "cardType": "NX",
     "id": "g3ef",
-    "z": 19091,
+    "z": 20281,
     "parent": "holder2",
     "x": 4,
     "y": 4,
@@ -1061,7 +1061,7 @@
     "type": "card",
     "cardType": "TY",
     "id": "572t",
-    "z": 19087,
+    "z": 20268,
     "x": 4,
     "y": 4,
     "parent": "holder2"
@@ -1071,7 +1071,7 @@
     "type": "card",
     "cardType": "Wild",
     "id": "9e4d",
-    "z": 19088,
+    "z": 20269,
     "parent": "holder2",
     "x": 4,
     "y": 4,
@@ -2522,8 +2522,7 @@
       }
     ],
     "glowColor": "#4d4d4d",
-    "mainColor": "#ff0000",
-    "turn": true
+    "mainColor": "#ff0000"
   },
   "seat2": {
     "type": "seat",
@@ -2715,7 +2714,8 @@
     ],
     "glowColor": "#4d4d4d",
     "mainColor": "#008000",
-    "index": 2
+    "index": 2,
+    "turn": true
   },
   "jzkbC1": {
     "id": "jzkbC1",
@@ -3486,7 +3486,7 @@
   "turnButton": {
     "type": "button",
     "id": "turnButton",
-    "x": 1550,
+    "x": 1545,
     "y": 932,
     "width": 50,
     "height": 50,
@@ -3569,6 +3569,12 @@
         "confirmButtonText": "Yes"
       },
       {
+        "func": "CLICK",
+        "collection": [
+          "centerButton"
+        ]
+      },
+      {
         "func": "FOREACH",
         "range": [
           4
@@ -3648,22 +3654,10 @@
         "value": "${playerName}"
       },
       {
-        "func": "COUNT"
-      },
-      "var count = 5 - ${COUNT}",
-      {
-        "func": "IF",
-        "operand1": "${count}",
-        "relation": ">",
-        "operand2": 0,
-        "thenRoutine": [
-          {
-            "func": "MOVE",
-            "from": "holder${seatIndex}",
-            "to": "hand",
-            "count": "${count}"
-          }
-        ]
+        "func": "MOVE",
+        "from": "holder${seatIndex}",
+        "to": "hand",
+        "fillTo": 5
       }
     ]
   },
