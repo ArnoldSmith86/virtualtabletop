@@ -1574,7 +1574,7 @@
       "similarName": "Jotto",
       "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
       "showName": true,
-      "lastUpdate": 1710209402218,
+      "lastUpdate": 1710215124096,
       "skill": "",
       "similarImage": "",
       "similarDesigner": "",
@@ -5748,7 +5748,7 @@
     "y": 100,
     "z": 16,
     "parent": "chosenHolder_1",
-    "css": "font-size:30pt; text-align:center;color:black;line-height:1.2em",
+    "css": "font-size:30pt; text-align:center;color:black;line-height:1em",
     "width": 306,
     "movableInEdit": false,
     "height": 40
@@ -5770,7 +5770,7 @@
     "y": 100,
     "z": 16,
     "parent": "chosenHolder_2",
-    "css": "font-size:30pt; text-align:center;color:black;line-height:1.2em",
+    "css": "font-size:30pt; text-align:center;color:black;line-height:1em",
     "width": 306,
     "movableInEdit": false,
     "height": 40
