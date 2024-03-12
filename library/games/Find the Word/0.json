@@ -1574,7 +1574,7 @@
       "similarName": "Jotto",
       "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
       "showName": true,
-      "lastUpdate": 1709769563828,
+      "lastUpdate": 1710209402218,
       "skill": "",
       "similarImage": "",
       "similarDesigner": "",
@@ -2327,8 +2327,7 @@
     "width": 160,
     "height": 40,
     "z": 1,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white",
-    "twoRowBottomAlign": true
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "guessButton_1": {
     "type": "button",
@@ -2542,8 +2541,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white",
-    "twoRowBottomAlign": true
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "guessed_1": {
     "type": "label",
@@ -2555,8 +2553,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white",
-    "twoRowBottomAlign": true
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "say0_1": {
     "type": "button",
@@ -2739,6 +2736,20 @@
       "var toBeDone = ${PROPERTY text OF $corrSlot} == ''",
       "var valid = ${valid} && ${toBeDone}",
       {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Ending game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "The other player will win and the game will end. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
         "func": "IF",
         "condition": "${valid}",
         "thenRoutine": [
@@ -2856,8 +2867,7 @@
     "width": 160,
     "height": 40,
     "z": 1,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white",
-    "twoRowBottomAlign": true
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "guessButton_2": {
     "type": "button",
@@ -3072,8 +3082,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white",
-    "twoRowBottomAlign": true
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "guessed_2": {
     "type": "label",
@@ -3085,8 +3094,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white",
-    "twoRowBottomAlign": true
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "sayCorrect_2": {
     "type": "button",
@@ -4530,8 +4538,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;font-family:Arial",
-    "twoRowBottomAlign": true
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;font-family:Arial;line-height:1.2em"
   },
   "wordButton_1": {
     "type": "button",
@@ -4642,8 +4649,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white",
-    "twoRowBottomAlign": true
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "wordButton_2": {
     "type": "button",
@@ -5296,6 +5302,8 @@
       {
         "func": "SET",
         "collection": [
+          "guess_1",
+          "guess_2",
           "chosenWord_1",
           "chosenWord_2"
         ],
@@ -5740,11 +5748,10 @@
     "y": 100,
     "z": 16,
     "parent": "chosenHolder_1",
-    "css": "font-size:30pt; text-align:center;color:black",
+    "css": "font-size:30pt; text-align:center;color:black;line-height:1.2em",
     "width": 306,
     "movableInEdit": false,
-    "height": 40,
-    "twoRowBottomAlign": true
+    "height": 40
   },
   "chosenHolder_2": {
     "type": "holder",
@@ -5763,11 +5770,10 @@
     "y": 100,
     "z": 16,
     "parent": "chosenHolder_2",
-    "css": "font-size:30pt; text-align:center;color:black",
+    "css": "font-size:30pt; text-align:center;color:black;line-height:1.2em",
     "width": 306,
     "movableInEdit": false,
-    "height": 40,
-    "twoRowBottomAlign": true
+    "height": 40
   },
   "chosenText_1": {
     "type": "label",
@@ -5778,9 +5784,8 @@
     "width": 306,
     "z": 15,
     "movableInEdit": false,
-    "css": "font-size:24pt; text-align:center;color:black",
+    "css": "font-size:24pt; text-align:center;color:black;line-height:1.2em",
     "text": "You won!",
-    "twoRowBottomAlign": true,
     "height": 40
   },
   "chosenText_2": {
@@ -5792,10 +5797,9 @@
     "width": 306,
     "z": 15,
     "movableInEdit": false,
-    "css": "font-size:24pt; text-align:center;color:black",
+    "css": "font-size:24pt; text-align:center;color:black;line-height:1.2em",
     "text": "You were looking for",
-    "height": 40,
-    "twoRowBottomAlign": true
+    "height": 40
   },
   "shadow_guesses_1": {
     "type": "holder",
@@ -5807,8 +5811,8 @@
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P2",
     "hoverInheritVisibleForSeat": false,
-    "y": 1100,
-    "numGuesses": 0
+    "numGuesses": 0,
+    "y": 1100
   },
   "shadow_g1l3_1": {
     "type": "button",
