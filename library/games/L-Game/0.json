@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "10",
       "attribution": "Game design and board layout by LawDawg96. Released to the Public Domain as CC0.<div><br></div><div>Background by safrist available under the Pixabay License:&nbsp;&nbsp;https://pixabay.com/illustrations/cosmos-colorful-pastel-cosmic-1584029/</div>",
-      "lastUpdate": 1710475055086,
+      "lastUpdate": 1710512619237,
       "showName": true,
       "skill": "",
       "description": "Move your L-shaped piece on a 4x4 grid and try to block the other player from doing the same.",
@@ -20,10 +20,10 @@
       "similarAwards": "",
       "ruleText": "Each player chooses an L-shaped piece.<div><br></div><div>During your turn, change the position of your L-shaped piece by moving (and/or rotating by clicking) so that it completely fits on the board and does not overlap any other pieces.<div><br></div><div>Optionally, after moving the L-shaped piece, move either one of the neutral circles to any other square. That ends the player's turn and the next player's turn starts</div><div><br></div><div>You win if you prevent the other player from moving their L-shaped piece.</div></div>",
       "helpText": "",
-      "players": "2",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "",
+      "players": "2"
     }
   },
   "square1": {
@@ -284,7 +284,8 @@
       "x": 645,
       "y": 345
     },
-    "z": 3449
+    "z": 3449,
+    "layer": 2
   },
   "neutral2": {
     "id": "neutral2",
@@ -318,7 +319,8 @@
       "x": 885,
       "y": 585
     },
-    "z": 3445
+    "z": 3445,
+    "layer": 2
   },
   "reset": {
     "type": "button",
@@ -424,8 +426,8 @@
             "collection": [
               "red4"
             ],
-            "property": "y",
-            "value": 77
+            "property": "x",
+            "value": -83
           }
         ],
         "elseRoutine": [
@@ -434,8 +436,8 @@
             "collection": [
               "red4"
             ],
-            "property": "y",
-            "value": -83
+            "property": "x",
+            "value": 77
           }
         ]
       }
@@ -447,23 +449,22 @@
         "offsetY": 20
       }
     ],
-    "customStateproperty": 7,
+    "customStateproperty": 0,
     "resetProperties": {
       "x": 720,
       "y": 500,
-      "rotation": 630,
-      "customStateproperty": 7
+      "rotation": 0,
+      "customStateproperty": 0
     },
-    "z": 3452,
-    "rotation": 630
+    "z": 3457
   },
   "red2": {
     "inheritFrom": {
       "red1": "*"
     },
     "id": "red2",
-    "x": -83,
-    "y": -3,
+    "x": -3,
+    "y": 77,
     "parent": "red1",
     "fixedParent": true,
     "movable": false,
@@ -475,15 +476,16 @@
         ]
       }
     ],
-    "resetProperties": {}
+    "resetProperties": {},
+    "rotation": 0
   },
   "red3": {
     "inheritFrom": {
       "red1": "*"
     },
     "id": "red3",
-    "x": 77,
-    "y": -3,
+    "x": -3,
+    "y": -83,
     "parent": "red1",
     "fixedParent": true,
     "movable": false,
@@ -495,14 +497,15 @@
         ]
       }
     ],
-    "resetProperties": {}
+    "resetProperties": {},
+    "rotation": 0
   },
   "red4": {
     "inheritFrom": {
       "red1": "*"
     },
     "id": "red4",
-    "x": -83,
+    "x": 77,
     "y": 77,
     "parent": "red1",
     "fixedParent": true,
@@ -517,7 +520,8 @@
     ],
     "resetProperties": {
       "y": 77
-    }
+    },
+    "rotation": 0
   },
   "blue1": {
     "id": "blue1",
@@ -530,13 +534,13 @@
       "background": "#1e1fff",
       "border": "3px solid #a5a4f8"
     },
-    "z": 3448,
-    "rotation": 450,
+    "z": 3464,
+    "rotation": 0,
     "resetProperties": {
       "x": 800,
       "y": 420,
-      "rotation": 450,
-      "customStateproperty": 5
+      "rotation": 0,
+      "customStateproperty": 0
     },
     "clickRoutine": [
       "var a = ${PROPERTY customStateproperty} + 1",
@@ -565,7 +569,7 @@
             "collection": [
               "blue4"
             ],
-            "property": "y",
+            "property": "x",
             "value": 77
           }
         ],
@@ -575,13 +579,13 @@
             "collection": [
               "blue4"
             ],
-            "property": "y",
+            "property": "x",
             "value": -83
           }
         ]
       }
     ],
-    "customStateproperty": 5
+    "customStateproperty": 0
   },
   "blue3": {
     "id": "blue3",
@@ -589,8 +593,8 @@
     "inheritFrom": {
       "blue1": "*"
     },
-    "x": 77,
-    "y": -3,
+    "x": -3,
+    "y": 77,
     "fixedParent": true,
     "movable": false,
     "resetProperties": {},
@@ -601,7 +605,8 @@
           "${PROPERTY parent}"
         ]
       }
-    ]
+    ],
+    "rotation": 0
   },
   "blue4": {
     "id": "blue4",
@@ -611,10 +616,10 @@
     },
     "fixedParent": true,
     "x": -83,
-    "y": 77,
+    "y": -83,
     "movable": false,
     "resetProperties": {
-      "y": 77
+      "x": -83
     },
     "clickRoutine": [
       {
@@ -623,7 +628,8 @@
           "${PROPERTY parent}"
         ]
       }
-    ]
+    ],
+    "rotation": 0
   },
   "blue2": {
     "id": "blue2",
@@ -632,8 +638,8 @@
       "blue1": "*"
     },
     "fixedParent": true,
-    "x": -83,
-    "y": -3,
+    "x": -3,
+    "y": -83,
     "movable": false,
     "resetProperties": {},
     "clickRoutine": [
@@ -643,7 +649,8 @@
           "${PROPERTY parent}"
         ]
       }
-    ]
+    ],
+    "rotation": 0
   },
   "8b58": {
     "image": "/assets/-1381013603_4238",
