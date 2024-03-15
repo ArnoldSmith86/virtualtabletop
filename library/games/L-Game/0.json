@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "10",
       "attribution": "Game design and board layout by LawDawg96. Released to the Public Domain as CC0.<div><br></div><div>Background by safrist available under the Pixabay License:&nbsp;&nbsp;https://pixabay.com/illustrations/cosmos-colorful-pastel-cosmic-1584029/</div>",
-      "lastUpdate": 1710512619237,
+      "lastUpdate": 1710512882427,
       "showName": true,
       "skill": "",
       "description": "Move your L-shaped piece on a 4x4 grid and try to block the other player from doing the same.",
@@ -519,7 +519,7 @@
       }
     ],
     "resetProperties": {
-      "y": 77
+      "x": 77
     },
     "rotation": 0
   },
