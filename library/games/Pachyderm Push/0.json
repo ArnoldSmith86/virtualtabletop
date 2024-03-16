@@ -1,0 +1,1570 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Pachyderm Push",
+      "image": "/assets/-1113542942_294770",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/20782/siam",
+      "year": "2005",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "<div>Room design and layout by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Icons by Delapouite available from https://game-icons.net under CC BY 3.0:&nbsp; e<span style=\"color: var(--overlayFontColor);\">lephant, r</span><span style=\"color: var(--overlayFontColor);\">hinoceros, push symbol, clockwise rotation.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div>The background and library images were created&nbsp;<span style=\"color: var(--overlayFontColor);\">using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"t</span><span style=\"color: var(--overlayFontColor);\">photograph of a trail through a bamboo forest --ar 8:5\"</span></div></div>",
+      "lastUpdate": 1710619970367,
+      "showName": true,
+      "skill": "",
+      "description": "Arrange your pieces on the board so they have a correct number, position, and orientation to push a single rock off the board.",
+      "similarImage": "",
+      "similarName": "Siam",
+      "similarDesigner": "Didier Dhorbait",
+      "similarAwards": "2007 As d'Or - Jeu de l'Année Nominee\n2006 Tric Trac Nominee",
+      "ruleText": "During your turn, take one of the following actions:<div><ul><li>Add one of your tiles to any blank space on the board and orient it in any direction you want.</li><li>Remove one of your tiles from the board.</li><li>Rotate one of your tiles to any orientation.</li><li>Move one of your tiles orthogonally one space to an unoccupied space and optionally rotate it to any orientation.</li><li>Push one of your tiles in the direction it is oriented if allowed.</li></ul><div>Basic summary of push rules:</div></div><div><ul><li>You can only push a rock as long as there is an equal or greater number of animals (from either player) pushing in the same direction.</li><li>You can only push other animals if there are a greater number of animals (from either player) pushing animals that are pointed in the opposite direction. Animals oriented perpendicular to the push are \"neutral\" and do not count.</li><li>If there is a mix of rocks and animals, then both conditions above must be satisfied for the push to work.</li><li>You may push to enter the board to an occupied space.</li></ul><div>The game ends when a rock is pushed off the board. The player with the piece closest to the rock and oriented in the same direction as the push wins. The winner is not necessarily the one that initiated the push.</div></div>",
+      "helpText": "<div>Press reset button to choose between standard and alternate board layout.</div><div><br></div>Move tiles around the board by dragging and dropping. If you accidentally drop a tile onto an occupied space, the dropped tile will be pushed to the right of the board out of play.<div><br></div><div>The colored button above each set of tiles is used to either rotate tiles of that color or push them. Click to swap between rotating and pushing.<div><ul><li>To rotate a tile, make sure the colored button shows the rotation arrow and click the tile.</li><li>To push pieces, make sure the colored button shows the push icon and click the tile. The push will move all the appropriate tiles one space each if the move is valid. Otherwise, nothing happens when you click the tile and the move is not permitted by the rules. If you accidentally push instead of rotating, manually move the pieces back.</li></ul></div><div>Keep pieces that are not in play outside of the gold bordered area. Invisible holders inside the border are used in automation routines.</div></div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "square1": {
+    "type": "holder",
+    "id": "square1",
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "transparent",
+      "background": "transparent"
+    },
+    "parent": "boardBase",
+    "dropOffsetX": -1,
+    "dropOffsetY": -1,
+    "c": 0,
+    "r": 0,
+    "dropTarget": [
+      {
+        "piece": "rock"
+      },
+      {
+        "piece": "elephant"
+      },
+      {
+        "piece": "rhino"
+      }
+    ]
+  },
+  "boardBase": {
+    "id": "boardBase",
+    "width": 560,
+    "height": 560,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true,
+    "y": 219,
+    "x": 519,
+    "css": {
+      "border": "2px solid gold"
+    },
+    "borderRadius": 8
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "width": 50,
+    "height": 50,
+    "z": 2088,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "73px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting game...",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "This will reset the game. Choose board and press 'Go' to restart."
+          },
+          {
+            "type": "select",
+            "options": [
+              {
+                "value": "standard",
+                "text": "Standard Board"
+              },
+              {
+                "value": "alternate",
+                "text": "Alternate Board"
+              }
+            ],
+            "variable": "board",
+            "value": "standard"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "swap1",
+          "swap2"
+        ],
+        "property": "bgImage",
+        "value": "/i/game-icons.net/delapouite/clockwise-rotation.svg"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "swap1",
+          "swap2"
+        ],
+        "property": "status",
+        "value": "rotate"
+      },
+      {
+        "func": "IF",
+        "operand1": "${board}",
+        "operand2": "standard",
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY altArray}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${value}"
+                ],
+                "property": "background",
+                "value": "#ffffff60"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${value}"
+                ],
+                "property": "border",
+                "value": "#80808080"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY altArray}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${value}"
+                ],
+                "property": "background",
+                "value": "transparent"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${value}"
+                ],
+                "property": "border",
+                "value": "transparent"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 1550,
+    "altArray": [
+      "square9",
+      "square10",
+      "square13",
+      "square20",
+      "square30",
+      "square37",
+      "square40",
+      "square41"
+    ]
+  },
+  "square2": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square2",
+    "x": 80,
+    "y": 0,
+    "c": 1
+  },
+  "square3": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square3",
+    "x": 160,
+    "y": 0,
+    "c": 2
+  },
+  "square4": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square4",
+    "x": 240,
+    "y": 0,
+    "c": 3
+  },
+  "square5": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square5",
+    "x": 320,
+    "y": 0,
+    "c": 4
+  },
+  "square6": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square6",
+    "x": 400,
+    "y": 0,
+    "c": 5
+  },
+  "square7": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square7",
+    "x": 480,
+    "y": 0,
+    "c": 6
+  },
+  "square8": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square8",
+    "x": 0,
+    "y": 80,
+    "r": 1
+  },
+  "square9": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square9",
+    "x": 80,
+    "y": 80,
+    "css": {
+      "border": "2px solid ${PROPERTY border}",
+      "background": "${PROPERTY background}"
+    },
+    "c": 1,
+    "r": 1,
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "holder",
+            "property": "c",
+            "value": 6
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "r",
+            "value": "${PROPERTY r}"
+          },
+          {
+            "func": "GET",
+            "property": "id"
+          },
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "parent",
+            "value": "${id}"
+          }
+        ]
+      }
+    ],
+    "border": "#80808080",
+    "background": "#ffffff60"
+  },
+  "square10": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square10",
+    "x": 160,
+    "y": 80,
+    "c": 2,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square11": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square11",
+    "x": 240,
+    "y": 80,
+    "c": 3,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square12": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square12",
+    "x": 320,
+    "y": 80,
+    "c": 4,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square13": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square13",
+    "x": 400,
+    "y": 80,
+    "c": 5,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square14": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square14",
+    "x": 480,
+    "y": 80,
+    "c": 6,
+    "r": 1
+  },
+  "square15": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square15",
+    "x": 0,
+    "y": 160,
+    "r": 2
+  },
+  "square16": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square16",
+    "x": 80,
+    "y": 160,
+    "r": 2,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square17": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square17",
+    "x": 160,
+    "y": 160,
+    "c": 2,
+    "r": 2,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square18": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square18",
+    "x": 240,
+    "y": 160,
+    "c": 3,
+    "r": 2,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square19": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square19",
+    "x": 320,
+    "y": 160,
+    "c": 4,
+    "r": 2,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square20": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square20",
+    "x": 400,
+    "y": 160,
+    "c": 5,
+    "r": 2,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square21": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square21",
+    "x": 480,
+    "y": 160,
+    "c": 6,
+    "r": 2
+  },
+  "square22": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square22",
+    "x": 0,
+    "y": 240,
+    "r": 3
+  },
+  "square23": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square23",
+    "x": 80,
+    "y": 240,
+    "r": 3,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square24": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square24",
+    "x": 160,
+    "y": 240,
+    "c": 2,
+    "r": 3,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square25": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square25",
+    "x": 240,
+    "y": 240,
+    "c": 3,
+    "r": 3,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square26": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square26",
+    "x": 320,
+    "y": 240,
+    "c": 4,
+    "r": 3,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square27": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square27",
+    "x": 400,
+    "y": 240,
+    "c": 5,
+    "r": 3,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square28": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square28",
+    "x": 480,
+    "y": 240,
+    "c": 6,
+    "r": 3
+  },
+  "square29": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square29",
+    "x": 0,
+    "y": 320,
+    "r": 4
+  },
+  "square30": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square30",
+    "x": 80,
+    "y": 320,
+    "r": 4,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square31": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square31",
+    "x": 160,
+    "y": 320,
+    "c": 2,
+    "r": 4,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square32": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square32",
+    "x": 240,
+    "y": 320,
+    "c": 3,
+    "r": 4,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square33": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square33",
+    "x": 320,
+    "y": 320,
+    "c": 4,
+    "r": 4,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square34": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square34",
+    "x": 400,
+    "y": 320,
+    "c": 5,
+    "r": 4,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square35": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square35",
+    "x": 480,
+    "y": 320,
+    "c": 6,
+    "r": 4
+  },
+  "square36": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square36",
+    "x": 0,
+    "y": 400,
+    "r": 5
+  },
+  "square37": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square37",
+    "x": 80,
+    "y": 400,
+    "r": 5,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square38": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square38",
+    "x": 160,
+    "y": 400,
+    "c": 2,
+    "r": 5,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square39": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square39",
+    "x": 240,
+    "y": 400,
+    "c": 3,
+    "r": 5,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square40": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square40",
+    "x": 320,
+    "y": 400,
+    "c": 4,
+    "r": 5,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square41": {
+    "inheritFrom": {
+      "square9": "*"
+    },
+    "type": "holder",
+    "id": "square41",
+    "x": 400,
+    "y": 400,
+    "c": 5,
+    "r": 5,
+    "background": "#ffffff60",
+    "border": "#80808080"
+  },
+  "square42": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square42",
+    "x": 480,
+    "y": 400,
+    "c": 6,
+    "r": 5
+  },
+  "square43": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square43",
+    "x": 0,
+    "y": 480,
+    "r": 6
+  },
+  "square44": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square44",
+    "x": 80,
+    "y": 480,
+    "c": 1,
+    "r": 6
+  },
+  "square45": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square45",
+    "x": 160,
+    "y": 480,
+    "c": 2,
+    "r": 6
+  },
+  "square46": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square46",
+    "x": 240,
+    "y": 480,
+    "c": 3,
+    "r": 6
+  },
+  "square47": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square47",
+    "x": 320,
+    "y": 480,
+    "c": 4,
+    "r": 6
+  },
+  "square48": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square48",
+    "x": 400,
+    "y": 480,
+    "c": 5,
+    "r": 6
+  },
+  "square49": {
+    "inheritFrom": {
+      "square1": "*"
+    },
+    "type": "holder",
+    "id": "square49",
+    "x": 480,
+    "y": 480,
+    "c": 6,
+    "r": 6
+  },
+  "rock1": {
+    "id": "rock1",
+    "image": "/i/noto-emoji/emoji_u1faa8.svg",
+    "width": 80,
+    "height": 80,
+    "grid": [
+      {
+        "x": 80,
+        "y": 80,
+        "offsetX": 40,
+        "offsetY": 60
+      }
+    ],
+    "z": 4963,
+    "type": "basic",
+    "piece": "rock",
+    "rotation": -360,
+    "resetProperties": {
+      "x": 0,
+      "y": 0,
+      "parent": "square24"
+    },
+    "parent": "square24"
+  },
+  "functions": {
+    "id": "functions",
+    "x": -214,
+    "y": 371,
+    "text": "Functions",
+    "css": {
+      "background": "blue",
+      "color": "white"
+    },
+    "movementRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${swap}",
+        "operand2": "rotate",
+        "thenRoutine": [
+          {
+            "func": "ROTATE",
+            "collection": [
+              "${thisTile}"
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${thisParent}",
+            "collection": "parent"
+          },
+          {
+            "func": "GET",
+            "collection": "parent",
+            "property": "c"
+          },
+          {
+            "func": "GET",
+            "collection": "parent",
+            "property": "r"
+          },
+          {
+            "func": "IF",
+            "operand1": "${rotation}",
+            "operand2": 0,
+            "thenRoutine": [
+              "// Pushing right",
+              {
+                "func": "CALL",
+                "routine": "pushRoutine",
+                "arguments": {
+                  "start": "${c}",
+                  "end": 6,
+                  "step": 1,
+                  "unit1": "r",
+                  "unit1Value": "${r}",
+                  "unit2": "c"
+                }
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${rotation}",
+            "operand2": 180,
+            "thenRoutine": [
+              "// Pushing left",
+              {
+                "func": "CALL",
+                "routine": "pushRoutine",
+                "arguments": {
+                  "start": "${c}",
+                  "end": 0,
+                  "step": -1,
+                  "unit1": "r",
+                  "unit1Value": "${r}",
+                  "unit2": "c"
+                }
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${rotation}",
+            "operand2": 270,
+            "thenRoutine": [
+              "// Pushing up",
+              {
+                "func": "CALL",
+                "routine": "pushRoutine",
+                "arguments": {
+                  "start": "${r}",
+                  "end": 0,
+                  "step": -1,
+                  "unit1": "c",
+                  "unit1Value": "${c}",
+                  "unit2": "r"
+                }
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${rotation}",
+            "operand2": 90,
+            "thenRoutine": [
+              "// Pushing down",
+              {
+                "func": "CALL",
+                "routine": "pushRoutine",
+                "arguments": {
+                  "start": "${r}",
+                  "end": 6,
+                  "step": 1,
+                  "unit1": "c",
+                  "unit1Value": "${c}",
+                  "unit2": "r"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "pushRoutine": [
+      "var holderArray = []",
+      "var occupiedArray = []",
+      "var strengthArray = []",
+      "var noPush = false",
+      {
+        "func": "FOREACH",
+        "range": [
+          "${start}",
+          "${end}",
+          "${step}"
+        ],
+        "loopRoutine": [
+          "// Loop forward through every column for right, backward through every column for left, backward through every row for up, and forward through every row for down",
+          {
+            "func": "SELECT",
+            "type": "holder",
+            "property": "${unit1}",
+            "value": "${unit1Value}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "${unit2}",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "property": "id"
+          },
+          "var holderArray = push ${id}",
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${id}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "var occupiedArray = push ${COUNT}",
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "property": "rotation",
+                "variable": "strength"
+              },
+              "var strengthArray = push ${strength}"
+            ],
+            "elseRoutine": [
+              "var strengthArray = push 999"
+            ]
+          }
+        ]
+      },
+      "var holderArray = reverse ${holderArray}",
+      "var occupiedArray = reverse ${occupiedArray}",
+      "var emptyHolder = lastIndexOf ${occupiedArray} 0",
+      "// holderArray contains the name of every holder from the end of the column or row (in the direction of the push) back to the holder where the tile is",
+      "// For each holder in holderArray, occupiedArray has a 1 if the holder contains a tile and a 0 if it does not",
+      "// emptyHolder indicates the index value of a blank space to calculate where the push ends",
+      "// strengthArray indicates the rotation of the tiles, starting from the one doing the pushing. This is used to determine if the tile is a rock, is facing the same direction, facing the opposite direction, is facing a neutral direction, or is blank",
+      "var push = 0",
+      "var rock = 0",
+      {
+        "func": "FOREACH",
+        "in": "${strengthArray}",
+        "loopRoutine": [
+          "// Check if push is valid. The push fails if push is ever < 1 or < rock",
+          "var thisCheck = ${strengthArray.$key}",
+          "var diff = ${rotation} - ${thisCheck}",
+          "var diff = abs ${diff}",
+          {
+            "func": "IF",
+            "operand1": "${thisCheck}",
+            "operand2": -360,
+            "thenRoutine": [
+              "var rock = ${rock} + 1"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${thisCheck}",
+                "operand2": "${rotation}",
+                "thenRoutine": [
+                  "var push = ${push} + 1"
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${diff}",
+                    "operand2": 180,
+                    "thenRoutine": [
+                      "var push = ${push} - 1"
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${diff}",
+                        "relation": ">",
+                        "operand2": 100,
+                        "thenRoutine": [
+                          "// This is for the case when there is an empty tile between the tiles being pushed. This ensures the push will happen if it is otherwise valie.",
+                          "var push = ${push} + 999"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${push}",
+            "relation": "<",
+            "operand2": 1,
+            "thenRoutine": [
+              "var noPush = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${push}",
+            "relation": "<",
+            "operand2": "${rock}",
+            "thenRoutine": [
+              "var noPush = true"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${noPush}",
+        "relation": "!=",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${holderArray}",
+            "loopRoutine": [
+              "// Starting with the last tile before the blank space and ending with the tile being used to push, in turn, move each tile one space in the direction of the push",
+              {
+                "func": "IF",
+                "operand1": "${key}",
+                "relation": ">",
+                "operand2": "${emptyHolder}",
+                "thenRoutine": [
+                  "var previous = ${key} - 1",
+                  {
+                    "func": "MOVE",
+                    "from": "${holderArray.$key}",
+                    "to": "${holderArray.$previous}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "z": 4872
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": 0.3
+    },
+    "image": "/assets/-892239381_190992"
+  },
+  "backgroundCover": {
+    "id": "backgroundCover",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "background": "#00000050"
+    }
+  },
+  "blue1": {
+    "type": "basic",
+    "id": "blue1",
+    "x": 440,
+    "y": 300,
+    "width": 74,
+    "height": 74,
+    "z": 5033,
+    "css": {
+      "default": {
+        "background": "#1e1fff",
+        "border": "3px solid #a5a4f8",
+        "font-size": "30px",
+        "color": "white",
+        "text-align": "right",
+        "line-height": "2.5em",
+        "background-size": "80%",
+        "background-repeat": "no-repeat",
+        "background-position": "-120% 50%",
+        "font-family": "VTT-Symbols"
+      }
+    },
+    "grid": [
+      {
+        "x": 80,
+        "y": 80,
+        "offsetX": 40,
+        "offsetY": 60
+      }
+    ],
+    "image": "/i/game-icons.net/delapouite/elephant.svg",
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "text": "arrow_right",
+    "newColor": "#fff",
+    "piece": "elephant",
+    "resetProperties": {
+      "x": 440,
+      "y": 300,
+      "rotation": 0,
+      "parent": null
+    },
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "functions",
+        "routine": "movementRoutine",
+        "arguments": {
+          "thisTile": "${PROPERTY id}",
+          "thisParent": "${PROPERTY parent}",
+          "rotation": "${PROPERTY rotation}",
+          "swap": "${PROPERTY status OF swap1}"
+        }
+      }
+    ]
+  },
+  "blue5": {
+    "id": "blue5",
+    "x": 440,
+    "y": 620,
+    "rotation": 0,
+    "z": 5008,
+    "inheritFrom": {
+      "blue1": "!parent"
+    },
+    "resetProperties": {
+      "x": 440,
+      "y": 620,
+      "rotation": 0,
+      "parent": null
+    }
+  },
+  "blue4": {
+    "id": "blue4",
+    "x": 440,
+    "y": 540,
+    "rotation": 0,
+    "z": 4870,
+    "inheritFrom": {
+      "blue1": "!parent"
+    },
+    "resetProperties": {
+      "x": 440,
+      "y": 540,
+      "rotation": 0,
+      "parent": null
+    }
+  },
+  "blue3": {
+    "id": "blue3",
+    "x": 440,
+    "y": 460,
+    "rotation": 0,
+    "z": 5019,
+    "inheritFrom": {
+      "blue1": "!parent"
+    },
+    "resetProperties": {
+      "x": 440,
+      "y": 460,
+      "rotation": 0,
+      "parent": null
+    }
+  },
+  "blue2": {
+    "inheritFrom": {
+      "blue1": "!parent"
+    },
+    "type": "basic",
+    "id": "blue2",
+    "x": 440,
+    "y": 380,
+    "z": 4989,
+    "rotation": 0,
+    "resetProperties": {
+      "x": 440,
+      "y": 380,
+      "rotation": 0,
+      "parent": null
+    }
+  },
+  "rock2": {
+    "inheritFrom": {
+      "rock1": "!parent"
+    },
+    "id": "rock2",
+    "type": "basic",
+    "x": 0,
+    "y": 0,
+    "z": 5006,
+    "resetProperties": {
+      "x": 0,
+      "y": 0,
+      "parent": "square25"
+    },
+    "parent": "square25"
+  },
+  "rock3": {
+    "inheritFrom": {
+      "rock1": "!parent"
+    },
+    "id": "rock3",
+    "type": "basic",
+    "z": 5037,
+    "x": 0,
+    "y": 0,
+    "resetProperties": {
+      "x": 0,
+      "y": 0,
+      "parent": "square26"
+    },
+    "parent": "square26"
+  },
+  "red1": {
+    "type": "basic",
+    "id": "red1",
+    "x": 1080,
+    "y": 300,
+    "rotation": 0,
+    "z": 5007,
+    "activeFace": 0,
+    "css": {
+      "default": {
+        "background": "#f40000",
+        "border": "3px solid #f29999",
+        "font-size": "30px",
+        "color": "white",
+        "text-align": "right",
+        "line-height": "2.5em",
+        "background-size": "60%",
+        "background-repeat": "no-repeat",
+        "background-position": "-10% 50%",
+        "font-family": "VTT-Symbols"
+      }
+    },
+    "image": "/i/game-icons.net/delapouite/rhinoceros-horn.svg",
+    "inheritFrom": {
+      "blue1": "!parent"
+    },
+    "piece": "rhino",
+    "resetProperties": {
+      "x": 1080,
+      "y": 300,
+      "rotation": 0,
+      "parent": null
+    },
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "functions",
+        "routine": "movementRoutine",
+        "arguments": {
+          "thisTile": "${PROPERTY id}",
+          "thisParent": "${PROPERTY parent}",
+          "rotation": "${PROPERTY rotation}",
+          "swap": "${PROPERTY status OF swap2}"
+        }
+      }
+    ]
+  },
+  "red2": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "type": "basic",
+    "id": "red2",
+    "x": 1080,
+    "y": 380,
+    "resetProperties": {
+      "x": 1080,
+      "y": 380,
+      "rotation": 0,
+      "parent": null
+    },
+    "rotation": 0,
+    "z": 5023
+  },
+  "red3": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "type": "basic",
+    "id": "red3",
+    "x": 1080,
+    "y": 460,
+    "resetProperties": {
+      "x": 1080,
+      "y": 460,
+      "rotation": 0,
+      "parent": null
+    },
+    "rotation": 0,
+    "z": 5017
+  },
+  "red4": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "type": "basic",
+    "id": "red4",
+    "x": 1080,
+    "y": 540,
+    "resetProperties": {
+      "x": 1080,
+      "y": 540,
+      "rotation": 0,
+      "parent": null
+    },
+    "rotation": 0,
+    "z": 4705
+  },
+  "red5": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "type": "basic",
+    "id": "red5",
+    "x": 1080,
+    "y": 620,
+    "resetProperties": {
+      "x": 1080,
+      "y": 620,
+      "rotation": 0,
+      "parent": null
+    },
+    "rotation": 0,
+    "z": 4931
+  },
+  "swap1": {
+    "type": "button",
+    "id": "swap1",
+    "y": 140,
+    "z": 2088,
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "lightblue",
+        "--wcBorder": "black",
+        "--wcMainOH": "#1e1fff",
+        "--wcBorderOH": "lightblue",
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-size": "70%",
+        "background-repeat": "no-repeat"
+      },
+      "::after": {
+        "content": "\"Swap:   Rotate/Push\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "120px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "bgImage": "/i/game-icons.net/delapouite/clockwise-rotation.svg",
+    "status": "rotate",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY status}",
+        "operand2": "rotate",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "bgImage",
+            "value": "/i/game-icons.net/delapouite/push.svg"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "status",
+            "value": "push"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "bgImage",
+            "value": "/i/game-icons.net/delapouite/clockwise-rotation.svg"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "status",
+            "value": "rotate"
+          }
+        ]
+      }
+    ],
+    "x": 440
+  },
+  "swap2": {
+    "type": "button",
+    "id": "swap2",
+    "x": 1080,
+    "y": 140,
+    "z": 2088,
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "pink",
+        "--wcBorder": "black",
+        "--wcMainOH": "#f40000",
+        "--wcBorderOH": "pink",
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-size": "70%",
+        "background-repeat": "no-repeat"
+      },
+      "::after": {
+        "content": "\"Swap:   Rotate/Push\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "120px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "bgImage": "/i/game-icons.net/delapouite/clockwise-rotation.svg",
+    "status": "rotate",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY status}",
+        "operand2": "rotate",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "bgImage",
+            "value": "/i/game-icons.net/delapouite/push.svg"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "status",
+            "value": "push"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "bgImage",
+            "value": "/i/game-icons.net/delapouite/clockwise-rotation.svg"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "status",
+            "value": "rotate"
+          }
+        ]
+      }
+    ]
+  }
+}
