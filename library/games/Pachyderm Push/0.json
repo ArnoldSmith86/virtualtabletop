@@ -9,8 +9,8 @@
       "year": "2005",
       "mode": "vs",
       "time": "15",
-      "attribution": "<div>Room design and layout by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Icons by Delapouite available from https://game-icons.net under CC BY 3.0:&nbsp; e<span style=\"color: var(--overlayFontColor);\">lephant, r</span><span style=\"color: var(--overlayFontColor);\">hinoceros, push symbol, clockwise rotation.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The background and library images were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"photograph of a trail through a bamboo forest --ar 8:5\".<br></div>",
-      "lastUpdate": 1710620382770,
+      "attribution": "<div>Room design and layout by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Icons by Delapouite available from https://game-icons.net under CC BY 3.0:&nbsp; e<span style=\"color: var(--overlayFontColor);\">lephant, r</span><span style=\"color: var(--overlayFontColor);\">hinoceros, push symbol, clockwise rotation.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Icon by lorc available from&nbsp;</span><span style=\"color: var(--overlayFontColor);\">https://game-icons.net under CC BY 3.0: rock.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The background and library images were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"photograph of a trail through a bamboo forest --ar 8:5\".<br></div>",
+      "lastUpdate": 1710625482614,
       "showName": true,
       "skill": "",
       "description": "Arrange your pieces on the board so they have a correct number, position, and orientation to push a single rock off the board.",
@@ -830,7 +830,7 @@
   },
   "rock1": {
     "id": "rock1",
-    "image": "/i/noto-emoji/emoji_u1faa8.svg",
+    "image": "/i/game-icons.net/lorc/rock.svg",
     "width": 80,
     "height": 80,
     "grid": [
