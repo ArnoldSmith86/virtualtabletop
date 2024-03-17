@@ -1,0 +1,470 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Cubeo",
+      "image": "/assets/93044937_15356",
+      "rules": "https://www.abstractgames.org/cubeo.html",
+      "bgg": "https://boardgamegeek.com/boardgame/191916/cubeo",
+      "year": "2016",
+      "mode": "vs",
+      "time": "5-15",
+      "attribution": "Room layout and design by LawDawg96. Released to the Public Domain under CC0.<div><br></div><div>The background image by Martin Stokow is CC0: https://publicdomainpictures.net/en/view-image.php?image=370218&amp;picture=grunge-background-texture-marble.<br><div><br></div><div><br></div></div>",
+      "lastUpdate": 1710639949893,
+      "showName": true,
+      "skill": "",
+      "description": "Place and move dice on the playing surface, but no rolling! Win by merging dice to form a value greater than 6 or prevent your opponent from making a move.",
+      "similarImage": "",
+      "similarName": "Cubeo",
+      "similarDesigner": "Marek Kolcun",
+      "similarAwards": "",
+      "ruleText": "Click the spinner to determine the starting player.&nbsp; Move and place dice according to the following requirements which must be maintained at all times:<div><br></div><div>1. All dice must be in a single group and touching another die on at least one side.</div><div><br></div><div>2. If removing a die would break rule #1, then it cannot be moved.</div><div><br></div><div>3. To add or remove a die, it must be able to slide into place without picking it up or moving any other dice.</div><div><br></div><div>During your turn take one of the following actions (that complies with the above requirements):</div><div><br></div><div>1. Add a die (1-pip side) from your pool of remaining unplayed dice. It must slide into place and a dice played this way cannot touch the side of the opponent's dice except at a diagonal corner.</div><div><br></div><div>2. Move a die around the group one space for each pip showing. The die must move once for each pip, but can change direction including moving back and forth, so long as the die ends up in a different place than it started.</div><div><br></div><div>3. If you have at least 3 dice in the group, you can merge 2 dice by summing the values and removing one of them back to your pool. To change the face on a die, click it to cycle through each possible pip value in order.</div><div><br></div><div>Winning:</div><div><br></div><div>You win by either merging 2 dice to a value greater than 6 or by preventing your opponent from making a legal move.</div><div><br></div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": ""
+    }
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/1008208569_30708"
+  },
+  "color1": {
+    "id": "color1",
+    "image": "/i/noto-emoji/emoji_u1f3a8.svg",
+    "y": 858,
+    "x": 13,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Choose dice color"
+          },
+          {
+            "type": "color",
+            "variable": "color",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "confirmButtonText": "Confirm"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "dice1",
+          "dice2",
+          "dice3",
+          "dice4",
+          "dice5",
+          "dice6"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "color",
+            "value": "${color}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "${color}"
+          }
+        ]
+      }
+    ],
+    "color": "#3f9b9d",
+    "css": {
+      "default": {},
+      "::after": {
+        "content": "\"Change dice color\"",
+        "display": "none",
+        "text-align": "center",
+        "margin-top": "95px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    }
+  },
+  "dice1": {
+    "type": "dice",
+    "id": "dice1",
+    "z": 1,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "shape3d": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "value": 1,
+        "relation": "+"
+      }
+    ],
+    "color": "#3f9b9d",
+    "grid": [
+      {
+        "x": 50,
+        "y": 50
+      }
+    ],
+    "movable": true,
+    "parent": "holder1"
+  },
+  "color2": {
+    "id": "color2",
+    "image": "/i/noto-emoji/emoji_u1f3a8.svg",
+    "y": 858,
+    "x": 1490,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Choose dice color"
+          },
+          {
+            "type": "color",
+            "variable": "color",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "confirmButtonText": "Confirm"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "dice7",
+          "dice8",
+          "dice9",
+          "dice10",
+          "dice11",
+          "dice12"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "color",
+            "value": "${color}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "${color}"
+          }
+        ]
+      }
+    ],
+    "color": "#ce914b",
+    "css": {
+      "default": {},
+      "::after": {
+        "content": "\"Change dice color\"",
+        "display": "none",
+        "text-align": "center",
+        "margin-top": "95px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    }
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 1550,
+    "width": 50,
+    "height": 50,
+    "z": 2088,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "73px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting game...",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "This will reset the game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "MOVE",
+        "collection": [
+          "dice1",
+          "dice2",
+          "dice3",
+          "dice4",
+          "dice5",
+          "dice6"
+        ],
+        "to": "holder1"
+      },
+      {
+        "func": "MOVE",
+        "collection": [
+          "dice7",
+          "dice8",
+          "dice9",
+          "dice10",
+          "dice11",
+          "dice12"
+        ],
+        "to": "holder2"
+      }
+    ]
+  },
+  "dice2": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice2",
+    "x": 100,
+    "y": 0,
+    "color": "#3f9b9d",
+    "activeFace": 0,
+    "z": 2,
+    "parent": "holder1"
+  },
+  "dice3": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice3",
+    "x": 200,
+    "y": 0,
+    "color": "#3f9b9d",
+    "activeFace": 0,
+    "z": 3,
+    "parent": "holder1"
+  },
+  "dice4": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice4",
+    "x": 300,
+    "y": 0,
+    "color": "#3f9b9d",
+    "activeFace": 0,
+    "z": 4,
+    "parent": "holder1"
+  },
+  "dice5": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice5",
+    "x": 400,
+    "y": 0,
+    "color": "#3f9b9d",
+    "activeFace": 0,
+    "z": 5,
+    "parent": "holder1"
+  },
+  "dice6": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice6",
+    "x": 500,
+    "y": 0,
+    "color": "#3f9b9d",
+    "activeFace": 0,
+    "z": 6,
+    "parent": "holder1"
+  },
+  "dice7": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice7",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "color": "#ce914b",
+    "activeFace": 0,
+    "parent": "holder2"
+  },
+  "dice8": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice8",
+    "x": 100,
+    "y": 0,
+    "color": "#ce914b",
+    "activeFace": 0,
+    "z": 2,
+    "parent": "holder2"
+  },
+  "dice9": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice9",
+    "x": 200,
+    "y": 0,
+    "color": "#ce914b",
+    "activeFace": 0,
+    "z": 3,
+    "parent": "holder2"
+  },
+  "dice10": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice10",
+    "x": 300,
+    "y": 0,
+    "color": "#ce914b",
+    "activeFace": 0,
+    "z": 4,
+    "parent": "holder2"
+  },
+  "dice11": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice11",
+    "x": 400,
+    "y": 0,
+    "color": "#ce914b",
+    "z": 5,
+    "activeFace": 0,
+    "parent": "holder2"
+  },
+  "dice12": {
+    "inheritFrom": {
+      "dice1": "!parent"
+    },
+    "type": "dice",
+    "id": "dice12",
+    "x": 500,
+    "y": 0,
+    "color": "#ce914b",
+    "z": 6,
+    "activeFace": 0,
+    "parent": "holder2"
+  },
+  "spinner": {
+    "type": "spinner",
+    "id": "spinner",
+    "x": 744,
+    "y": 868,
+    "z": 3,
+    "options": [
+      1,
+      2
+    ],
+    "value": "0"
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 150,
+    "y": 900,
+    "z": 1,
+    "height": 50,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "width": 550,
+    "stackOffsetX": 100,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 900,
+    "y": 900,
+    "z": 1,
+    "height": 50,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "width": 550,
+    "stackOffsetX": 100,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "onEnter": {
+      "activeFace": 0
+    }
+  }
+}
