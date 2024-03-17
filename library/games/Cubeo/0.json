@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "5-15",
       "attribution": "Room layout and design by LawDawg96. Released to the Public Domain under CC0.<div><br></div><div>The background image by Martin Stokow is CC0: https://publicdomainpictures.net/en/view-image.php?image=370218&amp;picture=grunge-background-texture-marble.<br><div><br></div><div><br></div></div>",
-      "lastUpdate": 1710639949893,
+      "lastUpdate": 1710719607996,
       "showName": true,
       "skill": "",
       "description": "Place and move dice on the playing surface, but no rolling! Win by merging dice to form a value greater than 6 or prevent your opponent from making a move.",
@@ -18,7 +18,7 @@
       "similarName": "Cubeo",
       "similarDesigner": "Marek Kolcun",
       "similarAwards": "",
-      "ruleText": "Click the spinner to determine the starting player.&nbsp; Move and place dice according to the following requirements which must be maintained at all times:<div><br></div><div>1. All dice must be in a single group and touching another die on at least one side.</div><div><br></div><div>2. If removing a die would break rule #1, then it cannot be moved.</div><div><br></div><div>3. To add or remove a die, it must be able to slide into place without picking it up or moving any other dice.</div><div><br></div><div>During your turn take one of the following actions (that complies with the above requirements):</div><div><br></div><div>1. Add a die (1-pip side) from your pool of remaining unplayed dice. It must slide into place and a dice played this way cannot touch the side of the opponent's dice except at a diagonal corner.</div><div><br></div><div>2. Move a die around the group one space for each pip showing. The die must move once for each pip, but can change direction including moving back and forth, so long as the die ends up in a different place than it started.</div><div><br></div><div>3. If you have at least 3 dice in the group, you can merge 2 dice by summing the values and removing one of them back to your pool. To change the face on a die, click it to cycle through each possible pip value in order.</div><div><br></div><div>Winning:</div><div><br></div><div>You win by either merging 2 dice to a value greater than 6 or by preventing your opponent from making a legal move.</div><div><br></div>",
+      "ruleText": "Click the spinner to determine the starting player.&nbsp; Move and place dice according to the following requirements which must be maintained at all times:<div><br></div><div>1. All dice must be in a single group and touching another die on at least one side.</div><div><br></div><div>2. If removing a die would break rule #1, then it cannot be moved.</div><div><br></div><div>3. To add or remove a die, it must be able to slide into place without picking it up or moving any other dice.</div><div><br></div><div>During your turn take one of the following actions (that complies with the above requirements):</div><div><br></div><div>1. Add a die (1-pip side) from your pool of remaining unplayed dice. It must slide into place and a dice played this way cannot touch the side of the opponent's dice except at a diagonal corner.</div><div><br></div><div>2. Move a die around the group one space for each pip showing. The die must move once for each pip, but can change direction including moving back and forth, so long as the die ends up in a different place than it started.</div><div><br></div><div>3. If you have at least 3 dice in the group, you can merge 2 dice. Move the die that will be returned back to the pool and drop it onto the die staying in place. The dice will be summed and one returned to the pool.</div><div><br></div><div>To change the face on a die manually, click it to cycle through each possible pip value in order.</div><div><br></div><div>Winning:</div><div><br></div><div>You win by either merging 2 dice to a value greater than 6 or by preventing your opponent from making a legal move.</div><div><br></div>",
       "helpText": "",
       "variantImage": "",
       "variant": "",
@@ -127,11 +127,88 @@
     "color": "#3f9b9d",
     "grid": [
       {
-        "x": 50,
-        "y": 50
+        "x": 60,
+        "y": 60
       }
     ],
     "movable": true,
+    "mergeCheckRoutine": [
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "parent",
+        "relation": "==",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "${PROPERTY color}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "x",
+        "value": "${PROPERTY x}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "y",
+        "value": "${PROPERTY y}"
+      },
+      {
+        "func": "SELECT",
+        "mode": "intersect",
+        "property": "id",
+        "relation": "!=",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "value"
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": ">=",
+        "operand2": 1,
+        "thenRoutine": [
+          "var newValue = ${value} + ${PROPERTY value}",
+          "var newFace = ${newValue} - 1",
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": "${newFace}"
+          },
+          {
+            "func": "MOVE",
+            "collection": [
+              "${PROPERTY id}"
+            ],
+            "to": "holder${PROPERTY pid}"
+          }
+        ]
+      }
+    ],
+    "draggingChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY dragging}",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "mergeCheckRoutine"
+          }
+        ]
+      }
+    ],
+    "pid": 1,
+    "width": 60,
+    "height": 60,
+    "hoverParent": "holder1",
     "parent": "holder1"
   },
   "color2": {
@@ -276,11 +353,11 @@
     },
     "type": "dice",
     "id": "dice2",
-    "x": 100,
+    "x": 300,
     "y": 0,
     "color": "#3f9b9d",
     "activeFace": 0,
-    "z": 2,
+    "z": 4,
     "parent": "holder1"
   },
   "dice3": {
@@ -289,11 +366,11 @@
     },
     "type": "dice",
     "id": "dice3",
-    "x": 200,
+    "x": 400,
     "y": 0,
     "color": "#3f9b9d",
     "activeFace": 0,
-    "z": 3,
+    "z": 5,
     "parent": "holder1"
   },
   "dice4": {
@@ -302,11 +379,11 @@
     },
     "type": "dice",
     "id": "dice4",
-    "x": 300,
+    "x": 500,
     "y": 0,
     "color": "#3f9b9d",
     "activeFace": 0,
-    "z": 4,
+    "z": 6,
     "parent": "holder1"
   },
   "dice5": {
@@ -315,11 +392,11 @@
     },
     "type": "dice",
     "id": "dice5",
-    "x": 400,
+    "x": 100,
     "y": 0,
     "color": "#3f9b9d",
     "activeFace": 0,
-    "z": 5,
+    "z": 2,
     "parent": "holder1"
   },
   "dice6": {
@@ -328,11 +405,11 @@
     },
     "type": "dice",
     "id": "dice6",
-    "x": 500,
+    "x": 200,
     "y": 0,
     "color": "#3f9b9d",
     "activeFace": 0,
-    "z": 6,
+    "z": 3,
     "parent": "holder1"
   },
   "dice7": {
@@ -346,6 +423,7 @@
     "z": 1,
     "color": "#ce914b",
     "activeFace": 0,
+    "pid": 2,
     "parent": "holder2"
   },
   "dice8": {
@@ -359,6 +437,7 @@
     "color": "#ce914b",
     "activeFace": 0,
     "z": 2,
+    "pid": 2,
     "parent": "holder2"
   },
   "dice9": {
@@ -372,6 +451,7 @@
     "color": "#ce914b",
     "activeFace": 0,
     "z": 3,
+    "pid": 2,
     "parent": "holder2"
   },
   "dice10": {
@@ -385,6 +465,7 @@
     "color": "#ce914b",
     "activeFace": 0,
     "z": 4,
+    "pid": 2,
     "parent": "holder2"
   },
   "dice11": {
@@ -398,6 +479,7 @@
     "color": "#ce914b",
     "z": 5,
     "activeFace": 0,
+    "pid": 2,
     "parent": "holder2"
   },
   "dice12": {
@@ -411,7 +493,8 @@
     "color": "#ce914b",
     "z": 6,
     "activeFace": 0,
-    "parent": "holder2"
+    "parent": "holder2",
+    "pid": 2
   },
   "spinner": {
     "type": "spinner",
@@ -431,13 +514,13 @@
     "x": 150,
     "y": 900,
     "z": 1,
-    "height": 50,
+    "height": 60,
     "dropTarget": {
       "type": "dice"
     },
     "dropOffsetX": 0,
     "dropOffsetY": 0,
-    "width": 550,
+    "width": 560,
     "stackOffsetX": 100,
     "css": {
       "background": "#ffffff80"
@@ -452,13 +535,13 @@
     "x": 900,
     "y": 900,
     "z": 1,
-    "height": 50,
+    "height": 60,
     "dropTarget": {
       "type": "dice"
     },
     "dropOffsetX": 0,
     "dropOffsetY": 0,
-    "width": 550,
+    "width": 560,
     "stackOffsetX": 100,
     "css": {
       "background": "#ffffff80"
