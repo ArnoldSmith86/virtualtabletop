@@ -508,7 +508,8 @@
       },
       {
         "func": "SORT",
-        "holder": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+        "holder": "4e26b75e-0310-4e32-a967-8c96314d78a1",
+        "key": "text1"
       }
     ],
     "backgroundColor": "#e9d0b3",
@@ -854,7 +855,7 @@
     "parent": "ck9c"
   },
   "_meta": {
-    "version": 12,
+    "version": 15,
     "info": {
       "name": "Sashimi Dice",
       "image": "/assets/-923231317_22699",
@@ -873,11 +874,11 @@
       "similarAwards": "",
       "ruleText": "<div>To reset for a new game, use the Chef's hat button to recall all the tiles onto the conveyor belt.</div><div><br></div><div>During the game, use the button with the two dice in order to roll the dice.<br></div><br><div>After each roll, choose one dice face from those rolled that is different from those set aside before, collect all matching dice, and put them in the \"Sum\" holder on the bottom right. The chopsticks dice face is worth 5.<br></div><ul><li>If the sum of all your set-aside dice faces is the same or higher than a sushi tile on the conveyor belt, and includes at least one chopstick, you can place that tile on top of your own stack. </li><li>If your dice sum exactly matches the top tile of another player's pile,  and includes at least one chopstick, you may take that tile instead.</li></ul><div>You bust if you:</div><div><ol><li>have no chopsticks in your set-aside dice, <br></li><li>make a roll with no unique dice faces (from those set aside), or <br></li><li>have too low a sum of the set-aside dice face numbers to pick up a sushi tile. </li></ol></div><div>When you bust, return the top tile from your stack to the conveyor belt and flip the highest sushi tile on the belt face down (if you have no tiles, your turn simply ends). <br></div><div><br></div><div>After your turn ends, either by taking a tile or busting, click the \"Next player\" button to return all the dice to the middle bottom and highlight the next player's name.<br></div><div><br></div><div>The game ends when all the sushi tiles have been taken from or flipped face down on the conveyor belt in the middle.</div><div><br></div><div> Add up the number of sushi shown on the tiles you collected. Most sushi (and not number of tiles) collected wins the game.</div>",
       "helpText": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "",
+      "similarDesigner": "Reiner Knizia",
       "players": "2-5",
-      "similarDesigner": "Reiner Knizia"
+      "language": "",
+      "variant": "",
+      "variantImage": ""
     }
   },
   "27zkx": {
