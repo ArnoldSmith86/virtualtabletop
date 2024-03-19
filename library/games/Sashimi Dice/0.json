@@ -99,6 +99,10 @@
       },
       {
         "func": "TURN"
+      },
+      {
+        "func": "CALL",
+        "widget": "v5ea"
       }
     ],
     "z": 35006
