@@ -764,14 +764,19 @@
     "height": 90
   },
   "n1vj": {
-    "image": "/assets/-1137383578_180294",
+    "image": "/assets/-1767470630_81900",
     "movable": false,
-    "width": 1600,
-    "height": 1000,
+    "width": 1610,
+    "height": 1010,
     "layer": -4,
     "id": "n1vj",
     "z": 2,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "x": -5,
+    "y": -5,
+    "css": {
+      "filter": "blur(2px)"
+    }
   },
   "t5ye": {
     "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
