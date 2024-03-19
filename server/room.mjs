@@ -862,6 +862,8 @@ export default class Room {
   }
 
   saveCurrentState_write(stateID, variantID, metadata, setToActiveState=true) {
+    metadata.lastUpdate = +new Date();
+
     const newState = {...this.state};
     newState._meta = {
       version: this.state._meta.version,
