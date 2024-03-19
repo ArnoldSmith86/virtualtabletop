@@ -120,67 +120,83 @@
     "cardTypes": {
       "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c": {
         "image1": "/assets/-357213206_3173",
-        "text1": "21"
+        "text1": "21",
+        "score": 1
       },
       "type-0d0c5608-5943-4781-b879-29596b6e0d11": {
         "image1": "/assets/-357213206_3173",
-        "text1": "22"
+        "text1": "22",
+        "score": 1
       },
       "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677": {
         "image1": "/assets/-357213206_3173",
-        "text1": "23"
+        "text1": "23",
+        "score": 1
       },
       "type-74d83a07-9543-4525-9258-0ea4f54b654a": {
         "image1": "/assets/-357213206_3173",
-        "text1": "24"
+        "text1": "24",
+        "score": 1
       },
       "type-85fc61ae-79fa-475b-b768-6d519a81e3db": {
         "image1": "/assets/-1581079654_3631",
-        "text1": "25"
+        "text1": "25",
+        "score": 2
       },
       "type-e5fa9bf6-5207-43eb-a289-124f0be69341": {
         "image1": "/assets/-1581079654_3631",
-        "text1": "26"
+        "text1": "26",
+        "score": 2
       },
       "type-d2cce1f2-b95e-4d72-a084-78f314e9d93f": {
         "image1": "/assets/-1581079654_3631",
-        "text1": "27"
+        "text1": "27",
+        "score": 2
       },
       "type-3d750924-17de-4f28-9fe1-17113d301454": {
         "image1": "/assets/-1581079654_3631",
-        "text1": "28"
+        "text1": "28",
+        "score": 2
       },
       "type-f06c6164-7f05-46f1-807a-a37e897c94a2": {
         "image1": "/assets/-1918410956_3964",
-        "text1": "29"
+        "text1": "29",
+        "score": 3
       },
       "type-3915c5b7-e3f2-494e-8048-8e3e47b62527": {
         "image1": "/assets/-1918410956_3964",
-        "text1": "30"
+        "text1": "30",
+        "score": 3
       },
       "type-98bec708-5902-483f-a2aa-ea4513904b4c": {
         "image1": "/assets/-1918410956_3964",
-        "text1": "31"
+        "text1": "31",
+        "score": 3
       },
       "type-ac2c852d-cbb4-482e-bb84-30f9730bcb79": {
         "image1": "/assets/-1918410956_3964",
-        "text1": "32"
+        "text1": "32",
+        "score": 3
       },
       "type-7a3cd332-c01f-4ff7-9a2e-73f959ce048a": {
         "image1": "/assets/-591346775_9190",
-        "text1": "33"
+        "text1": "33",
+        "score": 4
       },
       "type-d588b14c-4203-4c74-a87d-5947d1f02861": {
         "image1": "/assets/-591346775_9190",
-        "text1": "34"
+        "text1": "34",
+        "score": 4
       },
       "type-31d8328a-6032-49c2-a7b6-7867eae846e8": {
         "image1": "/assets/-591346775_9190",
-        "text1": "35"
+        "text1": "35",
+        "score": 4
       },
       "type-cafa94bc-5162-49b3-9d5d-8d9f9b35de45": {
         "image1": "/assets/-591346775_9190",
-        "text1": "36"
+        "text1": "36",
+        "score": 4
       }
     },
     "faceTemplates": [
@@ -368,7 +384,6 @@
   },
   "w2q7": {
     "type": "label",
-    "text": 0,
     "id": "w2q7",
     "x": 205.5,
     "y": 20,
@@ -379,53 +394,8 @@
     "z": 7,
     "linkedToSeat": "wdh4"
   },
-  "w2q7D": {
-    "id": "w2q7D",
-    "parent": "w2q7",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "w2q7U": {
-    "id": "w2q7U",
-    "parent": "w2q7",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
-  },
   "w2q8": {
     "type": "label",
-    "text": 0,
     "id": "w2q8",
     "x": 486.5,
     "y": 20,
@@ -436,53 +406,8 @@
     "z": 16,
     "linkedToSeat": "wdh2"
   },
-  "w2q8D": {
-    "id": "w2q8D",
-    "parent": "w2q8",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "w2q8U": {
-    "id": "w2q8U",
-    "parent": "w2q8",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
-  },
   "w2q9": {
     "type": "label",
-    "text": 0,
     "id": "w2q9",
     "x": 767.5,
     "y": 20,
@@ -493,53 +418,8 @@
     "z": 17,
     "linkedToSeat": "wdh3"
   },
-  "w2q9D": {
-    "id": "w2q9D",
-    "parent": "w2q9",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "w2q9U": {
-    "id": "w2q9U",
-    "parent": "w2q9",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
-  },
   "w2q10": {
     "type": "label",
-    "text": 0,
     "id": "w2q10",
     "x": 1048.5,
     "y": 20,
@@ -549,50 +429,6 @@
     "editable": true,
     "z": 18,
     "linkedToSeat": "wdh5"
-  },
-  "w2q10D": {
-    "id": "w2q10D",
-    "parent": "w2q10",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "w2q10U": {
-    "id": "w2q10U",
-    "parent": "w2q10",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
   },
   "26zkx": {
     "type": "dice",
@@ -622,7 +458,7 @@
       "mode": "vs",
       "time": "20",
       "attribution": "<div>Board layout by Shobu and ArnoldSmith86. Released to public domain under CC0.</div><div><br></div><div>The background image (and library image) were generated by Midjourney using the prompt \"Sushi shop anime background --ar 16:10\".<br></div><div><br></div><div>All other graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license (created by Delapouite):</div><div><br></div><div>https://game-icons.net/1x1/delapouite/sushis.html</div><div>https://game-icons.net/1x1/delapouite/chef-toque.html</div><div>https://game-icons.net/1x1/delapouite/chopsticks.html</div><div>https://game-icons.net/1x1/delapouite/rolling-dices.html<br></div>",
-      "lastUpdate": 1710844011959,
+      "lastUpdate": 1710844866671,
       "showName": true,
       "skill": "",
       "description": "Roll dice and use your chopsticks to pick up the most sushi.",
@@ -1036,7 +872,6 @@
   },
   "w2q11": {
     "type": "label",
-    "text": 0,
     "id": "w2q11",
     "x": 1329.5,
     "y": 20,
@@ -1046,50 +881,6 @@
     "editable": true,
     "z": 19,
     "linkedToSeat": "wdh6"
-  },
-  "w2q11D": {
-    "id": "w2q11D",
-    "parent": "w2q11",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "w2q11U": {
-    "id": "w2q11U",
-    "parent": "w2q11",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
   },
   "n2vj": {
     "movable": false,
@@ -1102,5 +893,62 @@
     "css": {
       "background": "#00000040"
     }
+  },
+  "scoreButton": {
+    "type": "button",
+    "id": "scoreButton",
+    "x": 16,
+    "y": 12,
+    "backgroundColor": "#fff",
+    "borderColor": "#f5a622",
+    "classes": "material-icons",
+    "css": {
+      "font-size": "60px",
+      "line-height": "70px"
+    },
+    "text": "scoreboard",
+    "textColor": "#f5a622",
+    "textColorOH": "#fff",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "seat"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "linkedToSeat",
+            "value": "${widgetID}",
+            "type": "holder"
+          },
+          {
+            "func": "GET"
+          },
+          {
+            "func": "SELECT",
+            "value": "${id}"
+          },
+          {
+            "func": "GET",
+            "property": "score",
+            "aggregation": "sum"
+          },
+          {
+            "func": "SELECT",
+            "property": "linkedToSeat",
+            "value": "${widgetID}",
+            "type": "label"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${score}"
+          }
+        ]
+      }
+    ]
   }
 }
