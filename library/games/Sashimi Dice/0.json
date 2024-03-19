@@ -589,26 +589,19 @@
   "26zkx": {
     "type": "dice",
     "x": 11,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2591,
     "id": "26zkx",
-    "rollCount": 515,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 87,
-    "activeFace": 2,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor"
+      ]
+    }
   },
   "_meta": {
     "version": 15,
@@ -640,146 +633,104 @@
   "27zkx": {
     "type": "dice",
     "x": 356,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2618,
     "id": "27zkx",
-    "rollCount": 516,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 101,
-    "activeFace": 3,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor"
+      ]
+    }
   },
   "28zkx": {
     "type": "dice",
     "x": 196,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2623,
     "id": "28zkx",
-    "rollCount": 533,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 64,
-    "activeFace": 4,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor"
+      ]
+    }
   },
   "29zkx": {
     "type": "dice",
     "x": 676,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2627,
     "id": "29zkx",
-    "rollCount": 513,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 161,
-    "activeFace": 3,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor"
+      ]
+    }
   },
   "30zkx": {
     "type": "dice",
     "x": 509,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2603,
     "id": "30zkx",
-    "rollCount": 510,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 196,
     "parent": "ck9c",
-    "activeFace": 1
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor"
+      ]
+    }
   },
   "31zkx": {
     "type": "dice",
     "x": 687,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2614,
     "id": "31zkx",
-    "rollCount": 513,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 21,
-    "activeFace": 5,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor"
+      ]
+    }
   },
   "32zkx": {
     "type": "dice",
     "x": 474,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2629,
     "id": "32zkx",
-    "rollCount": 509,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 58,
-    "activeFace": 4,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor"
+      ]
+    }
   },
   "33zkx": {
     "type": "dice",
@@ -790,7 +741,7 @@
       4,
       5,
       {
-        "image": "/assets/834358786_25582",
+        "image": "/i/game-icons.net/delapouite/chopsticks.svg",
         "value": 5
       }
     ],
@@ -798,12 +749,15 @@
     "id": "33zkx",
     "rollCount": 516,
     "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 7,
     "x": 584,
-    "activeFace": 5,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "svgReplaces": {
+      "#000": "chopstickColor"
+    },
+    "chopstickColor": "#f5a622",
+    "width": 90,
+    "height": 90
   },
   "n1vj": {
     "image": "/assets/-1137383578_180294",
