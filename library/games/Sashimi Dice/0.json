@@ -46,7 +46,8 @@
         "relation": "=="
       },
       {
-        "func": "CLICK"
+        "func": "CLICK",
+        "mode": "ignoreClickable"
       }
     ],
     "x": 28,
