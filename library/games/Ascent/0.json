@@ -1,0 +1,6043 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Ascent",
+      "image": "/assets/-1831237243_55379",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/41/cant-stop",
+      "year": "1980",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "<div>The room layout and game desigen are by LawDawg96 and are released to the Public Domain under CC0.</div><div><br></div><div>The rolling dice and stop sign icons are by Delapouite and are availabe under CC BY 3.0 from https://game-icons.net/</div><div><br></div><div>The background and library image was created&nbsp;<span style=\"color: var(--overlayFontColor);\">using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"watercolor painting, symmetrical rocky mountain snow covered peak\"</span><br></div>",
+      "lastUpdate": 1711039769850,
+      "showName": true,
+      "skill": "",
+      "description": "Roll the dice to push your luck to see how far you can climb in a turn. But you risk everything gained that turn if the dice do not go your way. First to reach the top of the designated number of columns wins.",
+      "similarImage": "",
+      "similarName": "Can't Stop",
+      "similarDesigner": "Sid Sackson",
+      "similarAwards": "2021 5 Seasons Best International Filler Game Winner\n1982 Spiel des Jahres Recommended\n1981 Spiel des Jahres Recommended",
+      "ruleText": "Roll 4 dice. Divide the dice into pairs and sum the pips. At most, there are 3 possible combinations. Pick a pair of sums that correspond to a column of the same number on the board. For each sum in the pair, if you have one of your 3 runners remaining, you must enter it onto the board if you can.<div><ul><li>If you have a marker in that column, enter the runner onto the space above the marker.</li><li>If you do not have a marker in that column, enter the runner in the lowest space in that column.</li><li>If you already have a runner in that column, do not enter another runner but instead move the existing runner up one space in that column.</li></ul><div>Repeat for the other sum of the pair. If the pair is a double (for example, 7 and 7), then either move the existing runner of two spaces, or enter a runner into the column (at the bottom or above the marker) and then move it up one more space.</div><div><br></div><div>After rolling the dice, so long as any single die allows a runner to be advanced or entered, you must do so. Then you can choose whether to consolidate your gains or press your luck.</div><div><ul><li>If you consolidate your gains, replace each runner with a marker and return the runners to your pool. When it is your turn, roll the dice again and start the process over, but entering runners one space above existing markers.</li><li>If none of your dice allow a legal play, then your turn is over. All the runners are returned to your pool. When it is your turn, roll the dice again and start the process over.</li></ul><div>When a player gets a marker (not a runner) in the top space in a column, that column is closed. Return all other runners and markers in that column to the players.</div></div><div><br></div><div>The first to claim the designated number of columns wins the game. The default is 3, but any value between 1 and 11 can be chosen in the settings.&nbsp; The game works best with no more than 4 players, but this online version allows up to 6. If you have more than 4 players, you should consider making the number of columns needed to win either 2 or 1.</div><div><br></div><div>This online version of the game also has several variations of the timing of turns.</div><div><ul><li><b>Traditional</b>. Each player completes their turn in sequence. A turn ends only when a player fails to make a roll that allows a legal play or when the player decides to stop and consolidate the gains.</li><li><b>Simultaneous turns</b>. All players roll dice and make selections at the same time. Players can keep playing as long as they press their luck until either they fail to make a roll that allows a legal play or they decide to stop. Once all players have failed or stopped, a turn button appears at the top of the screen.&nbsp; Press that to begin the next round.</li><li><b>Lightning</b>. This mode is a complete free-for-all.&nbsp; Players can play without any regard for turns or rounds. The first to reach the top of the designated number of columns wins.</li></ul></div></div>",
+      "helpText": "Players take seats. Choose settings using the gear icon and press the reset button in the upper-right corner to begin the game.<div><br></div><div>Interact with the room based on the following instructions and diagram that represents a seat area.</div><div><br></div><div><img src=\"/assets/209212507_148646\" class=\"richtextAsset\"></div><div><ul><li><span style=\"color: var(--overlayFontColor);\"><b>1. Dice</b></span><span style=\"color: var(--overlayFontColor);\">. You cannot click on, move, or interact with the dice directly.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">2.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Seat</span></b><span style=\"color: var(--overlayFontColor);\">. Used at the beginning of the game. Click to choose a seat and pick a color. Click again to change color, get up from seat, or force another player to get up from seat. When playing traditional rules, the seat of the player whose turn it is will be highlighted and has the exclamation mark in the upper-right corner of the seat.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">3.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Columns won</span></b><span style=\"color: var(--overlayFontColor);\">. This displays the count of the number of columns this player reached the top of first. Under the default rules, the game automatically ends after winning 3 columns. When the victory condition is satisfied, all play immediately ends and interactive buttons are hidden.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">4.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Markers and runners</span></b><span style=\"color: var(--overlayFontColor);\">. The markers (solid color circles) are used to indicate the level of each column that a player has safely reached. There is an unlimited number of markers. The runners (bi-color squares) are used to indicate the level that a player is currently pursuing based on the roll of the dice in the current turn. There are 3 runners per player. When a player end the turn to lock in the gains, the runners are replaced by markers on the board. Under the default rules, all runner and marker activity is automated and players cannot interact with or move the runners or markers in any way.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">5.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Dice pair sums</span></b><span style=\"color: var(--overlayFontColor);\">. These circles represent the 3 possible sums of the combinations of pairs of dice. Players choose which columns to enter or advance runners into by clicking the appropriate circle. Click to select and click again to de-select. Automation routines constrain choices to number(s) permitted by rule.</span></li></ul><ul><ul><li>Missing pairs or a single missing circle that is part of a pair are not available to be selected by rule (or represent a duplicate pair). The missing circles are hidden to simplify the display and make decisions easier and faster.</li><li>White and yellow circles are available for a player to use. White circles indicate the player does not yet have a runner in that column for this turn. Yellow circles indicate the player already has a runner in that column.</li><li>Solid black borders indicate the player does not yet have a marker in that column.</li><li>Dashed player-colored borders indicate the player has a marker in that column.</li><li>Green circles have been selected by the player to be used to enter or advance a runner in this turn.</li></ul><li><span style=\"color: var(--overlayFontColor);\"><b>6. Roll button</b></span><span style=\"color: var(--overlayFontColor);\">. Click this button to roll the dice. The button is hidden when the action is not available.</span><br></li><li><span style=\"color: var(--overlayFontColor);\"><b>7. Confirm runner choice</b>. Click this button to confirm the choices made in the dice pair sums area. When clicked, runners will automatically be moved to (or advanced in) columns corresponding to the numbers in the light green circles. The button is hidden when the action is not available or when a player has not yet selected columns by clicking on the dice pair sums circles.</span></li><li><b>8. End turn</b>. Once a player has entered runner(s) onto the board, the player must decide whether to keep rolling or end the turn. Pressing this button ends the turn. The button is hidden when the action is not available.</li></ul><div>If a player presses his or her luck and the dice do not permit a valid move, a red X is displayed below the seat. Press that X to return the runners to the player and end the turn.</div></div>",
+      "players": "2-6",
+      "language": "",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "diceHolder1": {
+    "type": "holder",
+    "id": "diceHolder1",
+    "x": 1020,
+    "y": 90,
+    "width": 230,
+    "height": 50,
+    "z": 1,
+    "dropOffsetX": -5,
+    "dropOffsetY": 0,
+    "stackOffsetX": 63,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "pid": 1,
+    "linkedToSeat": "seat1",
+    "runners": [],
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    },
+    "claimed": 0,
+    "claimedChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "claimed${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${PROPERTY claimed}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY claimed}",
+        "relation": ">=",
+        "operand2": "${PROPERTY toWin OF settings}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "winner${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "FOREACH",
+            "range": [
+              6
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "roll${value}"
+                ],
+                "property": "scale",
+                "value": 0
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "setRunners${value}"
+                ],
+                "property": "scale",
+                "value": 0
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "setMarkers${value}"
+                ],
+                "property": "scale",
+                "value": 0
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "fail${value}"
+                ],
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "markers": []
+  },
+  "background": {
+    "id": "background",
+    "width": 1000,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "opacity": 0.3
+    },
+    "image": "/assets/-1518626507_124534"
+  },
+  "boardBase": {
+    "id": "boardBase",
+    "width": 1000,
+    "height": 1000,
+    "movable": false,
+    "css": {
+      "background": "#00000020"
+    },
+    "layer": -2,
+    "closedArray": []
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "parent": "boardBase",
+    "y": 946,
+    "width": 35,
+    "height": 35,
+    "z": 2,
+    "css": {
+      "default": {
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "font-size": "26px",
+        "background": "${PROPERTY bgColor}",
+        "color": "${PROPERTY textColor}",
+        "opacity": "${PROPERTY opacity}"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\""
+      }
+    },
+    "dropTarget": {},
+    "text": 2,
+    "bgColor": "#ffffffdd",
+    "textColor": "black",
+    "borderRadius": 100,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 15,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "widthRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "arrayRoutine"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY topLevel}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "topLevelRoutine"
+          }
+        ]
+      }
+    ],
+    "hAnchorPos": "center",
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "widthRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "arrayRoutine"
+      }
+    ],
+    "minWidth": 35,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "widthRoutine": [
+      "var rightX = ${PROPERTY x} + ${PROPERTY width}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rightX",
+        "value": "${rightX}"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "width",
+            "value": "${PROPERTY minWidth}"
+          },
+          "var newWidth = ${PROPERTY minWidth}"
+        ],
+        "elseRoutine": [
+          "var revCount = ${COUNT} - 1",
+          "var revCount = ${revCount} * ${PROPERTY stackOffsetX}",
+          "var newWidth = ${revCount} + ${PROPERTY minWidth}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY hAnchorPos}",
+        "operand2": "left",
+        "thenRoutine": [
+          "var newX = ${PROPERTY x}"
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY hAnchorPos}",
+            "operand2": "right",
+            "thenRoutine": [
+              "var newX = ${PROPERTY rightX} - ${newWidth}"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY hAnchorPos}",
+                "operand2": "center",
+                "thenRoutine": [
+                  "var halfWidth = ${newWidth} / 2",
+                  "var centerX = ${PROPERTY width} / 2",
+                  "var centerX = ${PROPERTY x} + ${centerX}",
+                  "var newX = ${centerX} - ${halfWidth}"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": "${newX}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "width",
+        "value": "${newWidth}"
+      }
+    ],
+    "rightX": 43,
+    "x": 8,
+    "markerHolder": true,
+    "level": 1,
+    "arrayRoutine": [
+      "// Update runner and marker arrays",
+      "var runnerArray = []",
+      "var markerArray = []",
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "pid"
+      },
+      {
+        "func": "SELECT",
+        "property": "runner",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "pid",
+        "value": "${pid}"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": "DEFAULT",
+            "property": "parent"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "${parent}"
+            ],
+            "property": "text"
+          },
+          {
+            "func": "IF",
+            "operand1": "${parent}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${text}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var runnerArray = push ${text}"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "diceHolder${pid}"
+        ],
+        "property": "runners",
+        "value": "${runnerArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "marker",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "pid",
+        "value": "${pid}"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": "DEFAULT",
+            "property": "parent"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "${parent}"
+            ],
+            "property": "text"
+          },
+          {
+            "func": "IF",
+            "operand1": "${parent}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${text}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var markerArray = push ${text}"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "diceHolder${pid}"
+        ],
+        "property": "markers",
+        "value": "${markerArray}"
+      }
+    ],
+    "topLevelRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "marker"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "pid",
+        "variable": "playerID"
+      },
+      {
+        "func": "IF",
+        "condition": "${marker}",
+        "thenRoutine": [
+          "// Remove all markers except the winner",
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "id",
+            "variable": "childID"
+          },
+          {
+            "func": "SELECT",
+            "property": "markerHolder",
+            "value": true,
+            "collection": "allMarkerHolders"
+          },
+          {
+            "func": "SELECT",
+            "source": "allMarkerHolders",
+            "property": "text",
+            "value": "${PROPERTY text}",
+            "collection": "column"
+          },
+          {
+            "func": "GET",
+            "collection": "column",
+            "property": "id",
+            "aggregation": "array",
+            "variable": "columnArray"
+          },
+          {
+            "func": "SELECT",
+            "property": "marker",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "parent",
+            "relation": "in",
+            "value": "${columnArray}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "mode": "intersect",
+            "property": "id",
+            "relation": "!=",
+            "value": "${childID}"
+          },
+          {
+            "func": "DELETE"
+          },
+          "// Remove all runners",
+          {
+            "func": "SELECT",
+            "property": "runner",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "parent",
+            "relation": "in",
+            "value": "${columnArray}"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": "DEFAULT",
+                "property": "pid"
+              },
+              {
+                "func": "MOVE",
+                "collection": "DEFAULT",
+                "to": "runnerHolder${pid}"
+              }
+            ]
+          },
+          "// Update closed array",
+          {
+            "func": "GET",
+            "collection": "thisButton",
+            "property": "text"
+          },
+          "var closedArray = ${PROPERTY closedArray OF boardBase}",
+          "var closedArray = push ${text}",
+          {
+            "func": "SET",
+            "collection": [
+              "boardBase"
+            ],
+            "property": "closedArray",
+            "value": "${closedArray}"
+          },
+          "// Update claimed column count",
+          {
+            "func": "SET",
+            "collection": [
+              "diceHolder${playerID}"
+            ],
+            "property": "claimed",
+            "relation": "+",
+            "value": 1
+          },
+          "// Update opacity",
+          {
+            "func": "SET",
+            "collection": "column",
+            "property": "opacity",
+            "value": 0.3
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "opacity",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "opacity": 1
+  },
+  "holder2": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder2",
+    "x": 103,
+    "y": 946,
+    "text": 3,
+    "rightX": 138,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder3": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder3",
+    "x": 198,
+    "y": 946,
+    "text": 4,
+    "rightX": 233,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder4": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder4",
+    "x": 293,
+    "y": 946,
+    "text": 5,
+    "rightX": 328,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder5": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder5",
+    "x": 388,
+    "y": 946,
+    "text": 6,
+    "rightX": 423,
+    "width": 35,
+    "z": 12,
+    "opacity": 1
+  },
+  "holder6": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder6",
+    "x": 483,
+    "y": 946,
+    "text": 7,
+    "rightX": 518,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder7": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder7",
+    "x": 578,
+    "y": 946,
+    "text": 8,
+    "rightX": 613,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder8": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder8",
+    "x": 673,
+    "y": 946,
+    "text": 9,
+    "rightX": 708,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder9": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder9",
+    "x": 768,
+    "y": 946,
+    "text": 10,
+    "rightX": 803,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder10": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder10",
+    "x": 863,
+    "y": 946,
+    "text": 11,
+    "rightX": 898,
+    "width": 35,
+    "z": 5,
+    "opacity": 1
+  },
+  "holder11": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder11",
+    "x": 958,
+    "y": 946,
+    "text": 12,
+    "rightX": 993,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder12": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder12",
+    "x": 8,
+    "y": 867,
+    "bgColor": "#80808080",
+    "rightX": 43,
+    "width": 35,
+    "level": 2,
+    "opacity": 1
+  },
+  "holder13": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder13",
+    "x": 103,
+    "y": 867,
+    "text": 3,
+    "rightX": 138,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder14": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder14",
+    "x": 198,
+    "y": 867,
+    "text": 4,
+    "rightX": 233,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder15": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder15",
+    "x": 293,
+    "y": 867,
+    "text": 5,
+    "rightX": 328,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder16": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder16",
+    "x": 388,
+    "y": 867,
+    "text": 6,
+    "rightX": 423,
+    "width": 35,
+    "z": 11,
+    "opacity": 1
+  },
+  "holder17": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder17",
+    "x": 483,
+    "y": 867,
+    "text": 7,
+    "rightX": 518,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder18": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder18",
+    "x": 578,
+    "y": 867,
+    "text": 8,
+    "rightX": 613,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder19": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder19",
+    "x": 673,
+    "y": 867,
+    "text": 9,
+    "rightX": 708,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder20": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder20",
+    "x": 768,
+    "y": 867,
+    "text": 10,
+    "rightX": 803,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder21": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder21",
+    "x": 863,
+    "y": 867,
+    "text": 11,
+    "rightX": 898,
+    "width": 35,
+    "z": 4,
+    "opacity": 1
+  },
+  "holder22": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder22",
+    "x": 958,
+    "y": 867,
+    "text": 12,
+    "rightX": 993,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder23": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder23",
+    "x": 8,
+    "y": 790,
+    "bgColor": "#000000bb",
+    "textColor": "#ffffff",
+    "rightX": 43,
+    "width": 35,
+    "level": 3,
+    "topLevel": true,
+    "opacity": 1
+  },
+  "holder24": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder24",
+    "x": 103,
+    "y": 790,
+    "text": 3,
+    "rightX": 138,
+    "width": 35,
+    "level": 3,
+    "opacity": 1
+  },
+  "holder25": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder25",
+    "x": 198,
+    "y": 790,
+    "text": 4,
+    "rightX": 233,
+    "width": 35,
+    "level": 3,
+    "opacity": 1
+  },
+  "holder26": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder26",
+    "x": 293,
+    "y": 790,
+    "text": 5,
+    "rightX": 328,
+    "width": 35,
+    "level": 3,
+    "opacity": 1
+  },
+  "holder27": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder27",
+    "x": 388,
+    "y": 790,
+    "text": 6,
+    "rightX": 423,
+    "width": 35,
+    "level": 3,
+    "z": 10,
+    "opacity": 1
+  },
+  "holder28": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder28",
+    "x": 483,
+    "y": 790,
+    "text": 7,
+    "rightX": 518,
+    "width": 35,
+    "level": 3,
+    "opacity": 1
+  },
+  "holder29": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder29",
+    "x": 578,
+    "y": 790,
+    "text": 8,
+    "rightX": 613,
+    "width": 35,
+    "level": 3,
+    "opacity": 1
+  },
+  "holder30": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder30",
+    "x": 673,
+    "y": 790,
+    "text": 9,
+    "rightX": 708,
+    "width": 35,
+    "level": 3,
+    "opacity": 1
+  },
+  "holder31": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder31",
+    "x": 768,
+    "y": 790,
+    "text": 10,
+    "rightX": 803,
+    "width": 35,
+    "level": 3,
+    "opacity": 1
+  },
+  "holder32": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder32",
+    "x": 863,
+    "y": 790,
+    "text": 11,
+    "rightX": 898,
+    "width": 35,
+    "level": 3,
+    "z": 3,
+    "opacity": 1
+  },
+  "holder33": {
+    "inheritFrom": {
+      "holder23": "*"
+    },
+    "type": "holder",
+    "id": "holder33",
+    "x": 958,
+    "y": 790,
+    "text": 12,
+    "rightX": 993,
+    "width": 35,
+    "level": 3,
+    "opacity": 1
+  },
+  "holder35": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder35",
+    "x": 103,
+    "y": 711,
+    "text": 3,
+    "level": 4,
+    "rightX": 138,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder36": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder36",
+    "x": 198,
+    "y": 711,
+    "text": 4,
+    "level": 4,
+    "rightX": 233,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder37": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder37",
+    "x": 293,
+    "y": 711,
+    "text": 5,
+    "level": 4,
+    "rightX": 328,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder38": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder38",
+    "x": 388,
+    "y": 711,
+    "text": 6,
+    "level": 4,
+    "rightX": 423,
+    "width": 35,
+    "z": 9,
+    "opacity": 1
+  },
+  "holder39": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder39",
+    "x": 483,
+    "y": 711,
+    "text": 7,
+    "level": 4,
+    "rightX": 518,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder40": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder40",
+    "x": 578,
+    "y": 711,
+    "text": 8,
+    "level": 4,
+    "rightX": 613,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder41": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder41",
+    "x": 673,
+    "y": 711,
+    "text": 9,
+    "level": 4,
+    "rightX": 708,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder42": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder42",
+    "x": 768,
+    "y": 711,
+    "text": 10,
+    "level": 4,
+    "rightX": 803,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder43": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder43",
+    "x": 863,
+    "y": 711,
+    "text": 11,
+    "level": 4,
+    "rightX": 898,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder46": {
+    "inheritFrom": {
+      "holder23": "*"
+    },
+    "type": "holder",
+    "id": "holder46",
+    "x": 103,
+    "y": 631,
+    "text": 3,
+    "level": 5,
+    "rightX": 138,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder47": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder47",
+    "x": 198,
+    "y": 631,
+    "text": 4,
+    "level": 5,
+    "rightX": 233,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder48": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder48",
+    "x": 293,
+    "y": 631,
+    "text": 5,
+    "level": 5,
+    "rightX": 328,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder49": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder49",
+    "x": 388,
+    "y": 631,
+    "text": 6,
+    "level": 5,
+    "rightX": 423,
+    "width": 35,
+    "z": 8,
+    "opacity": 1
+  },
+  "holder50": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder50",
+    "x": 483,
+    "y": 631,
+    "text": 7,
+    "level": 5,
+    "rightX": 518,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder51": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder51",
+    "x": 578,
+    "y": 631,
+    "text": 8,
+    "level": 5,
+    "rightX": 613,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder52": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder52",
+    "x": 673,
+    "y": 631,
+    "text": 9,
+    "level": 5,
+    "rightX": 708,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder53": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder53",
+    "x": 768,
+    "y": 631,
+    "text": 10,
+    "level": 5,
+    "rightX": 803,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder58": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder58",
+    "x": 198,
+    "y": 552,
+    "text": 4,
+    "level": 6,
+    "rightX": 233,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder59": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder59",
+    "x": 293,
+    "y": 552,
+    "text": 5,
+    "level": 6,
+    "rightX": 328,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder60": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder60",
+    "x": 388,
+    "y": 552,
+    "text": 6,
+    "level": 6,
+    "rightX": 423,
+    "width": 35,
+    "z": 7,
+    "opacity": 1
+  },
+  "holder61": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder61",
+    "x": 483,
+    "y": 552,
+    "text": 7,
+    "rightX": 518,
+    "width": 35,
+    "level": 6,
+    "opacity": 1
+  },
+  "holder62": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder62",
+    "x": 578,
+    "y": 552,
+    "text": 8,
+    "level": 6,
+    "rightX": 613,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder63": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder63",
+    "x": 673,
+    "y": 552,
+    "text": 9,
+    "level": 6,
+    "rightX": 708,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder64": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder64",
+    "x": 768,
+    "y": 552,
+    "text": 10,
+    "level": 6,
+    "rightX": 803,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder69": {
+    "inheritFrom": {
+      "holder23": "*"
+    },
+    "type": "holder",
+    "id": "holder69",
+    "x": 198,
+    "y": 473,
+    "text": 4,
+    "level": 7,
+    "rightX": 233,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder70": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder70",
+    "x": 293,
+    "y": 473,
+    "text": 5,
+    "level": 7,
+    "rightX": 328,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder71": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder71",
+    "x": 388,
+    "y": 473,
+    "text": 6,
+    "level": 7,
+    "rightX": 423,
+    "width": 35,
+    "z": 6,
+    "opacity": 1
+  },
+  "holder72": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder72",
+    "x": 483,
+    "y": 473,
+    "text": 7,
+    "level": 7,
+    "rightX": 518,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder73": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder73",
+    "x": 578,
+    "y": 473,
+    "text": 8,
+    "rightX": 613,
+    "width": 35,
+    "level": 7,
+    "opacity": 1
+  },
+  "holder74": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder74",
+    "x": 673,
+    "y": 473,
+    "text": 9,
+    "level": 7,
+    "rightX": 708,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder75": {
+    "inheritFrom": {
+      "holder23": "*"
+    },
+    "type": "holder",
+    "id": "holder75",
+    "x": 768,
+    "y": 473,
+    "text": 10,
+    "rightX": 803,
+    "width": 35,
+    "level": 7,
+    "opacity": 1
+  },
+  "holder81": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder81",
+    "x": 293,
+    "y": 395,
+    "text": 5,
+    "level": 8,
+    "rightX": 328,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder82": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder82",
+    "x": 388,
+    "y": 395,
+    "text": 6,
+    "level": 8,
+    "rightX": 423,
+    "width": 35,
+    "z": 5,
+    "opacity": 1
+  },
+  "holder83": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder83",
+    "x": 483,
+    "y": 395,
+    "text": 7,
+    "level": 8,
+    "rightX": 518,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder84": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder84",
+    "x": 578,
+    "y": 395,
+    "text": 8,
+    "level": 8,
+    "rightX": 613,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder85": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder85",
+    "x": 673,
+    "y": 395,
+    "text": 9,
+    "rightX": 708,
+    "width": 35,
+    "level": 8,
+    "opacity": 1
+  },
+  "holder92": {
+    "inheritFrom": {
+      "holder23": "*"
+    },
+    "type": "holder",
+    "id": "holder92",
+    "x": 293,
+    "y": 317,
+    "text": 5,
+    "level": 9,
+    "rightX": 328,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder93": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder93",
+    "x": 388,
+    "y": 317,
+    "text": 6,
+    "level": 9,
+    "rightX": 423,
+    "width": 35,
+    "z": 4,
+    "opacity": 1
+  },
+  "holder94": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder94",
+    "x": 483,
+    "y": 317,
+    "text": 7,
+    "level": 9,
+    "rightX": 518,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder95": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder95",
+    "x": 578,
+    "y": 317,
+    "text": 8,
+    "level": 9,
+    "rightX": 613,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder96": {
+    "inheritFrom": {
+      "holder23": "*"
+    },
+    "type": "holder",
+    "id": "holder96",
+    "x": 673,
+    "y": 317,
+    "text": 9,
+    "rightX": 708,
+    "width": 35,
+    "level": 9,
+    "opacity": 1
+  },
+  "holder104": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder104",
+    "x": 388,
+    "y": 238,
+    "text": 6,
+    "level": 10,
+    "rightX": 423,
+    "width": 35,
+    "z": 3,
+    "opacity": 1
+  },
+  "holder105": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder105",
+    "x": 483,
+    "y": 238,
+    "text": 7,
+    "level": 10,
+    "rightX": 518,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder106": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder106",
+    "x": 578,
+    "y": 238,
+    "text": 8,
+    "level": 10,
+    "rightX": 613,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder115": {
+    "inheritFrom": {
+      "holder23": "*"
+    },
+    "type": "holder",
+    "id": "holder115",
+    "x": 388,
+    "y": 159,
+    "text": 6,
+    "level": 11,
+    "z": 2,
+    "rightX": 423,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder116": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder116",
+    "x": 483,
+    "y": 159,
+    "text": 7,
+    "level": 11,
+    "rightX": 518,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder117": {
+    "inheritFrom": {
+      "holder23": "*"
+    },
+    "type": "holder",
+    "id": "holder117",
+    "x": 578,
+    "y": 159,
+    "text": 8,
+    "rightX": 613,
+    "width": 35,
+    "level": 11,
+    "opacity": 1
+  },
+  "holder127": {
+    "inheritFrom": {
+      "holder12": "*"
+    },
+    "type": "holder",
+    "id": "holder127",
+    "x": 483,
+    "y": 80,
+    "text": 7,
+    "level": 12,
+    "rightX": 518,
+    "width": 35,
+    "opacity": 1
+  },
+  "holder138": {
+    "inheritFrom": {
+      "holder23": "*"
+    },
+    "type": "holder",
+    "id": "holder138",
+    "x": 483,
+    "y": 3,
+    "text": 7,
+    "rightX": 518,
+    "width": 35,
+    "level": 13,
+    "opacity": 1
+  },
+  "holder54": {
+    "inheritFrom": {
+      "holder23": "*"
+    },
+    "type": "holder",
+    "id": "holder54",
+    "x": 863,
+    "y": 631,
+    "text": 11,
+    "rightX": 898,
+    "width": 35,
+    "level": 5,
+    "z": 2,
+    "opacity": 1
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 1259,
+    "y": 89,
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548"
+    ],
+    "colorContrast": "#000000",
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "score": [],
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerColor = ${result.0}",
+      "var playerName = ${result.1}"
+    ],
+    "colorChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "marker${PROPERTY index}"
+        ],
+        "property": "color",
+        "value": "${PROPERTY color}"
+      }
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Your Color:",
+                "colors": "${PROPERTY colorArray}",
+                "variable": "color",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${PROPERTY colorArray}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              "var result = push ${color}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var result = push ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${result.0}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              },
+              {
+                "func": "CALL",
+                "routine": "markerColorRoutine"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          },
+          {
+            "func": "CALL",
+            "routine": "markerColorRoutine"
+          }
+        ],
+        "elseRoutine": []
+      }
+    ],
+    "markerColorRoutine": [
+      "var markerContrast = ${PROPERTY mainColor} colorContrast 0.15",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "runnerHolder${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor1",
+        "value": "${PROPERTY mainColor}"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor2",
+        "value": "${markerContrast}"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "markerHolder${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "${PROPERTY mainColor}"
+      }
+    ]
+  },
+  "runner1": {
+    "id": "runner1",
+    "width": 35,
+    "height": 35,
+    "borderRadius": 4,
+    "z": 1,
+    "css": {
+      "background": "repeating-linear-gradient(45deg, ${PROPERTY bgColor1}, ${PROPERTY bgColor1} 10px, ${PROPERTY bgColor2} 10px, ${PROPERTY bgColor2} 20px)",
+      "border": "1px solid black"
+    },
+    "bgColor1": "#dddddd",
+    "bgColor2": "#b7b7b7",
+    "runner": true,
+    "activeFace": 1,
+    "pid": 1,
+    "parent": "runnerHolder1",
+    "movable": false
+  },
+  "runner3": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner3",
+    "x": 36,
+    "y": 0,
+    "z": 2,
+    "bgColor1": "#dddddd",
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1,
+    "movable": false,
+    "parent": "runnerHolder1"
+  },
+  "markerHolder1": {
+    "type": "holder",
+    "id": "markerHolder1",
+    "parent": "diceHolder1",
+    "y": 7,
+    "width": 36,
+    "height": 36,
+    "borderRadius": 100,
+    "z": 210,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "marker": true
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": "${id}",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "DELETE"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "x": 486
+  },
+  "runnerHolder1": {
+    "type": "holder",
+    "id": "runnerHolder1",
+    "parent": "diceHolder1",
+    "x": 450,
+    "width": 108,
+    "height": 36,
+    "z": 210,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "runner": true
+    },
+    "y": 55,
+    "stackOffsetX": 36,
+    "enterRoutine": [
+      "// This fixes a problem I was too lazy to figure out where sometimes markers get sent to the runner holder.",
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "marker"
+      },
+      {
+        "func": "IF",
+        "condition": "${marker}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ]
+  },
+  "pairBorder1": {
+    "id": "pairBorder1",
+    "parent": "diceHolder1",
+    "x": -5,
+    "y": 55,
+    "width": 76,
+    "height": 40,
+    "borderRadius": 5,
+    "layer": -2,
+    "movable": false,
+    "css": {
+      "border": "1px solid black"
+    }
+  },
+  "pairBorder2": {
+    "id": "pairBorder2",
+    "x": 75,
+    "y": 55,
+    "inheritFrom": {
+      "pairBorder1": "*"
+    },
+    "activeFace": 0
+  },
+  "pairBorder3": {
+    "id": "pairBorder3",
+    "x": 155,
+    "y": 55,
+    "inheritFrom": {
+      "pairBorder1": "*"
+    },
+    "activeFace": 0
+  },
+  "runner2": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner2",
+    "x": 72,
+    "y": 0,
+    "z": 3,
+    "bgColor1": "#dddddd",
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1,
+    "movable": false,
+    "parent": "runnerHolder1"
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 1540,
+    "width": 50,
+    "height": 50,
+    "z": 2088,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting game...",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "This will reset the game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "boardBase"
+        ],
+        "property": "closedArray",
+        "value": []
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          6
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "diceHolder${value}"
+            ],
+            "property": "runners",
+            "value": []
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "diceHolder${value}"
+            ],
+            "property": "markers",
+            "value": []
+          },
+          {
+            "func": "SELECT",
+            "property": "runner",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "pid",
+            "value": "${value}"
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "runnerHolder${value}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "setRunners${value}"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "setMarkers${value}"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "fail${value}"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "diceHolder${value}"
+            ],
+            "property": "claimed",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "winner${value}"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "roll${value}"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "claimed${value}"
+            ],
+            "property": "text",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "marker",
+        "value": true
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "SELECT",
+        "property": "optionButton",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "markerHolder",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "opacity",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "CLICK",
+        "mode": "ignoreClickable"
+      },
+      {
+        "func": "SET",
+        "property": "rollCount",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": "DEFAULT",
+        "property": "turn",
+        "value": null
+      },
+      {
+        "func": "CALL",
+        "widget": "settings",
+        "routine": "gameTypeChangeRoutine"
+      }
+    ],
+    "y": 2
+  },
+  "roll1": {
+    "id": "roll1",
+    "parent": "diceHolder1",
+    "x": 240,
+    "y": 50,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/i/game-icons.net/delapouite/rolling-dices.svg",
+    "#000": "newColor",
+    "newColor": "#fff",
+    "pid": 1,
+    "zeroArray": [
+      0,
+      0
+    ],
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": "${PROPERTY pid}",
+        "thenRoutine": [
+          "var diceHolder = 'diceHolder' + ${PROPERTY pid}",
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "pair",
+            "relation": "!=",
+            "value": null,
+            "collection": "options"
+          },
+          {
+            "func": "SET",
+            "collection": "options",
+            "property": "bgColor",
+            "value": "white"
+          },
+          {
+            "func": "SET",
+            "collection": "options",
+            "property": "text",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": "options",
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": "options",
+            "property": "borderColor",
+            "value": "solid #000000"
+          },
+          "var valuesArray = []",
+          "var pairsArray = []",
+          "var pair1 = []",
+          "var pair2 = []",
+          "var pair3 = []",
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "parent",
+            "value": "diceHolder${PROPERTY pid}",
+            "sortBy": {
+              "key": "z",
+              "reverse": false
+            }
+          },
+          {
+            "func": "CLICK",
+            "mode": "ignoreClickable"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "property": "value",
+                "variable": "pips"
+              },
+              "var valuesArray = push ${pips}"
+            ]
+          },
+          "// This creates pairs of arrays of the possible sums of the dice",
+          "var sum1 = ${valuesArray.0} + ${valuesArray.1}",
+          "var sum2 = ${valuesArray.2} + ${valuesArray.3}",
+          "var pair1 = push ${sum1}",
+          "var pair1 = push ${sum2}",
+          "var pair1 = numericSort ${pair1}",
+          "var sum3 = ${valuesArray.0} + ${valuesArray.2}",
+          "var sum4 = ${valuesArray.1} + ${valuesArray.3}",
+          "var pair2 = push ${sum3}",
+          "var pair2 = push ${sum4}",
+          "var pair2 = numericSort ${pair2}",
+          "var sum5 = ${valuesArray.0} + ${valuesArray.3}",
+          "var sum6 = ${valuesArray.1} + ${valuesArray.2}",
+          "var pair3 = push ${sum5}",
+          "var pair3 = push ${sum6}",
+          "var pair3 = numericSort ${pair3}",
+          "// This checks to see if any array is a duplicate",
+          "var comp1 = jsonStringify ${pair1}",
+          "var comp2 = jsonStringify ${pair2}",
+          "var comp3 = jsonStringify ${pair3}",
+          "var compare1 = ${comp1} === ${comp2}",
+          "var compare2 = ${comp1} === ${comp3}",
+          "var compare3 = ${comp2} === ${comp3}",
+          "var remove3 = ${compare2} || ${compare3}",
+          {
+            "func": "IF",
+            "condition": "${remove3}",
+            "thenRoutine": [
+              "// If pair3 is a duplicate of either pair1 or pair2, set pair3 values to 0,0",
+              "var pair3 = ${PROPERTY zeroArray}"
+            ]
+          },
+          "var pairsArray = push ${pair1.0}",
+          "var pairsArray = push ${pair1.1}",
+          {
+            "func": "IF",
+            "condition": "${compare1}",
+            "thenRoutine": [
+              "// If pair2 is a duplicate of pair1, then set it to 0,0 otherwise set it to its value",
+              "var pairsArray = push ${pair3.0}",
+              "var pairsArray = push ${pair3.1}",
+              "var pairsArray = push 0",
+              "var pairsArray = push 0"
+            ],
+            "elseRoutine": [
+              "var pairsArray = push ${pair2.0}",
+              "var pairsArray = push ${pair2.1}",
+              "var pairsArray = push ${pair3.0}",
+              "var pairsArray = push ${pair3.1}"
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "in": "${pairsArray}",
+            "loopRoutine": [
+              "// Set the option buttons text to the appropriate pair value",
+              "var newIndex = ${key} + 1",
+              {
+                "func": "SET",
+                "collection": [
+                  "option${PROPERTY pid}${newIndex}"
+                ],
+                "property": "text",
+                "value": "${value}"
+              }
+            ]
+          },
+          "// If the value is 0,0 because of a duplicate, then hide the option button",
+          {
+            "func": "SELECT",
+            "source": "options",
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 0
+          },
+          "// If a column has been claimed, hide any non-available sums",
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY closedArray OF boardBase}",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "options",
+                "property": "text",
+                "value": "${value}"
+              },
+              {
+                "func": "SET",
+                "property": "text",
+                "value": 0
+              },
+              {
+                "func": "SET",
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          },
+          "// Change color to yellow for any values that match existing runners",
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY runners OF $diceHolder}",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "options",
+                "property": "text",
+                "value": "${value}"
+              },
+              {
+                "func": "SET",
+                "property": "bgColor",
+                "value": "yellow"
+              }
+            ]
+          },
+          "// Change border to playerColor for any values that match existing markers",
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY markers OF $diceHolder}",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "options",
+                "property": "text",
+                "value": "${value}"
+              },
+              {
+                "func": "SET",
+                "property": "borderColor",
+                "value": "dashed ${PROPERTY mainColor OF $seatID}"
+              }
+            ]
+          },
+          "// If all the runners are used, hide any non-available sums",
+          {
+            "func": "COUNT",
+            "holder": "runnerHolder${PROPERTY pid}"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "source": "options",
+                "property": "bgColor",
+                "relation": "!=",
+                "value": "yellow"
+              },
+              {
+                "func": "SET",
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "setMarkers${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          "// If no sums match the runners, show the fail button",
+          {
+            "func": "SELECT",
+            "property": "optionButton",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "fail${PROPERTY pid}"
+                ],
+                "property": "scale",
+                "value": 1
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "setMarkers${PROPERTY pid}"
+                ],
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "css": {
+      "default": {},
+      "::after": {
+        "content": "\"Roll Dice\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "50px",
+        "margin-left": "0px",
+        "width": "75px",
+        "color": "black",
+        "font-size": "14px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "scale": 0
+  },
+  "setRunners1": {
+    "id": "setRunners1",
+    "parent": "diceHolder1",
+    "x": 297,
+    "y": 50,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "css": {
+      "default": {},
+      "::after": {
+        "content": "\"Set Runners\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "50px",
+        "margin-left": "-12px",
+        "width": "75px",
+        "color": "black",
+        "font-size": "14px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "image": "/i/noto-emoji/emoji_u2705.svg",
+    "pid": 1,
+    "calcLevelRoutine": [
+      {
+        "func": "SELECT",
+        "property": "markerHolder",
+        "value": true,
+        "collection": "allMarkerHolders"
+      },
+      {
+        "func": "SELECT",
+        "source": "allMarkerHolders",
+        "property": "text",
+        "value": "${columnValue}",
+        "collection": "column"
+      },
+      "var hasMarker = ${PROPERTY markers OF $diceHolder} includes ${columnValue}",
+      {
+        "func": "IF",
+        "condition": "${hasMarker}",
+        "thenRoutine": [
+          "// This moves a runner from the runner holder to the next level above an existing marker in the column",
+          {
+            "func": "GET",
+            "collection": "column",
+            "property": "id",
+            "aggregation": "array",
+            "variable": "columnArray"
+          },
+          {
+            "func": "SELECT",
+            "property": "marker",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "pid",
+            "value": "${PROPERTY pid}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "parent",
+            "relation": "in",
+            "value": "${columnArray}",
+            "collection": "thisMarker"
+          },
+          {
+            "func": "GET",
+            "collection": "thisMarker",
+            "property": "parent"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "${parent}"
+            ],
+            "property": "level"
+          },
+          "var nextLevel = ${level} + 1",
+          {
+            "func": "SELECT",
+            "source": "column",
+            "property": "level",
+            "value": "${nextLevel}",
+            "collection": "nextHolder"
+          },
+          {
+            "func": "GET",
+            "collection": "nextHolder",
+            "property": "id",
+            "variable": "result"
+          }
+        ],
+        "elseRoutine": [
+          "// This moves a runner from the runner holder to the column at the starting level of 1 if there is no marker in the column",
+          {
+            "func": "SELECT",
+            "source": "column",
+            "property": "level",
+            "value": 1
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "result"
+          }
+        ]
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": "${PROPERTY pid}",
+        "thenRoutine": [
+          "var diceHolder = 'diceHolder' + ${PROPERTY pid}",
+          "var currentRunners = ${PROPERTY runners OF $diceHolder}",
+          {
+            "func": "SELECT",
+            "property": "pair",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "bgColor",
+            "value": "lightgreen"
+          },
+          {
+            "func": "GET",
+            "property": "text",
+            "aggregation": "array",
+            "variable": "updatedRunners"
+          },
+          {
+            "func": "FOREACH",
+            "in": "${updatedRunners}",
+            "loopRoutine": [
+              "// If runners are on the board, advance them based on the selected dice pair sums.",
+              "var inPlay = ${currentRunners} includes ${value}",
+              "var columnValue = ${value}",
+              {
+                "func": "IF",
+                "condition": "${inPlay}",
+                "thenRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "markerHolder",
+                    "value": true
+                  },
+                  {
+                    "func": "SELECT",
+                    "source": "DEFAULT",
+                    "property": "text",
+                    "value": "${columnValue}",
+                    "collection": "column"
+                  },
+                  {
+                    "func": "GET",
+                    "collection": "column",
+                    "property": "id",
+                    "aggregation": "array",
+                    "variable": "columnArray"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "runner",
+                    "value": true
+                  },
+                  {
+                    "func": "SELECT",
+                    "source": "DEFAULT",
+                    "property": "pid",
+                    "value": "${PROPERTY pid}"
+                  },
+                  {
+                    "func": "SELECT",
+                    "source": "DEFAULT",
+                    "property": "parent",
+                    "relation": "in",
+                    "value": "${columnArray}",
+                    "collection": "thisRunner"
+                  },
+                  {
+                    "func": "GET",
+                    "collection": "thisRunner",
+                    "property": "parent"
+                  },
+                  {
+                    "func": "GET",
+                    "collection": [
+                      "${parent}"
+                    ],
+                    "property": "level"
+                  },
+                  "var nextLevel = ${level} + 1",
+                  {
+                    "func": "SELECT",
+                    "source": "column",
+                    "property": "level",
+                    "value": "${nextLevel}",
+                    "collection": "nextHolder"
+                  },
+                  {
+                    "func": "COUNT",
+                    "collection": "nextHolder"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${COUNT}",
+                    "operand2": 1,
+                    "thenRoutine": [
+                      "// If this is the last level, then do not move",
+                      {
+                        "func": "GET",
+                        "collection": "nextHolder",
+                        "property": "id",
+                        "variable": "nextHolderID"
+                      },
+                      {
+                        "func": "MOVE",
+                        "collection": "thisRunner",
+                        "to": "${nextHolderID}"
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  "// If runners are available, move them onto the board",
+                  {
+                    "func": "COUNT",
+                    "holder": "runnerHolder${PROPERTY pid}"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${COUNT}",
+                    "relation": ">",
+                    "operand2": 0,
+                    "thenRoutine": [
+                      {
+                        "func": "CALL",
+                        "routine": "calcLevelRoutine"
+                      },
+                      {
+                        "func": "MOVE",
+                        "from": "runnerHolder${PROPERTY pid}",
+                        "to": "${result}"
+                      },
+                      "var currentRunners = ${PROPERTY runners OF $diceHolder}"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "roll${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "setMarkers${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SELECT",
+            "property": "optionButton",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "scale": 0
+  },
+  "setMarkers1": {
+    "id": "setMarkers1",
+    "parent": "diceHolder1",
+    "x": 355,
+    "y": 50,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "css": {
+      "default": {},
+      "::after": {
+        "content": "\" End Turn & Set Markers\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "50px",
+        "margin-left": "-50px",
+        "width": "150px",
+        "color": "black",
+        "font-size": "14px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "image": "/i/game-icons.net/delapouite/stop-sign.svg",
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "red",
+    "pid": 1,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": "${PROPERTY pid}",
+        "thenRoutine": [
+          "var diceHolder = 'diceHolder' + ${PROPERTY pid}",
+          "var markersArray = ${PROPERTY markers OF $diceHolder}",
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY runners OF $diceHolder}",
+            "loopRoutine": [
+              "// Remove markers from columns with a runner",
+              {
+                "func": "SELECT",
+                "property": "markerHolder",
+                "value": true,
+                "collection": "allMarkerHolders"
+              },
+              {
+                "func": "SELECT",
+                "source": "allMarkerHolders",
+                "property": "text",
+                "value": "${value}",
+                "collection": "column"
+              },
+              {
+                "func": "GET",
+                "collection": "column",
+                "property": "id",
+                "aggregation": "array",
+                "variable": "columnArray"
+              },
+              {
+                "func": "SELECT",
+                "property": "marker",
+                "value": true
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "pid",
+                "value": "${PROPERTY pid}"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "parent",
+                "relation": "in",
+                "value": "${columnArray}",
+                "collection": "thisMarker"
+              },
+              {
+                "func": "COUNT",
+                "collection": "thisMarker"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "relation": ">",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "GET",
+                    "collection": "thisMarker",
+                    "property": "id"
+                  },
+                  {
+                    "func": "MOVE",
+                    "collection": "thisMarker",
+                    "to": "tempHolder"
+                  },
+                  {
+                    "func": "DELETE",
+                    "collection": "thisMarker"
+                  }
+                ]
+              }
+            ]
+          },
+          "// Move a marker from the markerHolder to where each runner is",
+          {
+            "func": "SELECT",
+            "property": "runner",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "pid",
+            "value": "${PROPERTY pid}"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "parent"
+              },
+              {
+                "func": "MOVE",
+                "from": "markerHolder${PROPERTY pid}",
+                "to": "${parent}"
+              },
+              {
+                "func": "MOVE",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "to": "runnerHolder${PROPERTY pid}"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${parent}"
+                ],
+                "property": "text",
+                "variable": "column"
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "diceHolder${PROPERTY pid}"
+            ],
+            "property": "runners",
+            "value": []
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SELECT",
+            "property": "optionButton",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "CALL",
+            "routine": "gameConditionsRoutine"
+          }
+        ]
+      }
+    ],
+    "gameConditionsRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType OF settings}",
+        "operand2": 1,
+        "thenRoutine": [
+          "// For traditional rules, advance turn, hide roll button for this player and show roll button for the next player (unless the game is over)",
+          {
+            "func": "TURN"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "turn",
+            "value": true
+          },
+          {
+            "func": "GET",
+            "collection": "DEFAULT",
+            "property": "index"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "roll${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SELECT",
+            "property": "winner",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "roll${index}"
+                ],
+                "property": "scale",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType OF settings}",
+        "operand2": 2,
+        "thenRoutine": [
+          "// For simultaneous turn rules, hide roll button for this player. It stays hidden until turn/next round button becomes visible and is pressed",
+          {
+            "func": "SET",
+            "collection": [
+              "roll${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "turn"
+            ],
+            "property": "stopCount",
+            "relation": "+",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType OF settings}",
+        "operand2": 3,
+        "thenRoutine": [
+          "// For lighting rules, show roll button for the this player",
+          {
+            "func": "SET",
+            "collection": [
+              "roll${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "scale": 0
+  },
+  "fail1": {
+    "id": "fail1",
+    "parent": "diceHolder1",
+    "x": 297,
+    "y": 50,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "css": {
+      "default": {},
+      "::after": {
+        "content": "\"Failed! End turn\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "50px",
+        "margin-left": "-27px",
+        "width": "105px",
+        "color": "black",
+        "font-size": "14px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "image": "/i/noto-emoji/emoji_u274c.svg",
+    "pid": 1,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "roll${PROPERTY pid}"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "runner",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "pid",
+        "value": "${PROPERTY pid}"
+      },
+      {
+        "func": "MOVE",
+        "collection": "DEFAULT",
+        "to": "runnerHolder${PROPERTY pid}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "setMarkers${PROPERTY pid}",
+        "routine": "gameConditionsRoutine"
+      }
+    ],
+    "scale": 0
+  },
+  "settings": {
+    "type": "button",
+    "id": "settings",
+    "x": 1010,
+    "width": 50,
+    "height": 50,
+    "z": 2088,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "38px",
+        "line-height": "1.15em",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Settings\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "-10px",
+        "margin-left": "-4px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Choose settings...",
+        "fields": [
+          {
+            "type": "number",
+            "label": "How many columns needed to win",
+            "min": 1,
+            "max": 11,
+            "value": "${PROPERTY toWin}",
+            "variable": "toWin"
+          },
+          {
+            "type": "checkbox",
+            "label": "Prevent players from manually moving runners and markers?",
+            "value": "${PROPERTY noMove}",
+            "variable": "noMove"
+          },
+          {
+            "type": "select",
+            "label": "Choose type of play",
+            "value": "${PROPERTY gameType}",
+            "variable": "gameType",
+            "options": [
+              {
+                "value": 1,
+                "text": "Traditional"
+              },
+              {
+                "value": 2,
+                "text": "Simultaneous Turns"
+              },
+              {
+                "value": 3,
+                "text": "Lightning"
+              }
+            ]
+          }
+        ],
+        "confirmButtonText": "Confirm"
+      },
+      "var toWin = parseFloat ${toWin}",
+      "var gameType = parseFloat ${gameType}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "toWin",
+        "value": "${toWin}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "noMove",
+        "value": "${noMove}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "gameType",
+        "value": "${gameType}"
+      }
+    ],
+    "text": "settings",
+    "classes": "material-icons",
+    "y": 2,
+    "toWin": 3,
+    "noMove": true,
+    "noMoveChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "runner",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "mode": "add",
+        "property": "marker",
+        "value": true
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY noMove}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "DEFAULT",
+            "property": "movable",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "DEFAULT",
+            "property": "movable",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "gameType": 1,
+    "gameTypeChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "turn"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "turn"
+            ],
+            "property": "flexText",
+            "value": "Turn"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "roll1",
+              "roll2",
+              "roll3",
+              "roll4",
+              "roll5",
+              "roll6"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "TURN",
+            "turnCycle": "random"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "turn",
+            "value": true
+          },
+          {
+            "func": "GET",
+            "collection": "DEFAULT",
+            "property": "index"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "roll${index}"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "turn"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "turn"
+            ],
+            "property": "flexText",
+            "value": "Next Round"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "turn"
+            ],
+            "property": "stopCount",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "roll1",
+              "roll2",
+              "roll3",
+              "roll4",
+              "roll5",
+              "roll6"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "turn",
+            "value": null
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "turn"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "roll1",
+              "roll2",
+              "roll3",
+              "roll4",
+              "roll5",
+              "roll6"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "turn",
+            "value": null
+          }
+        ]
+      }
+    ]
+  },
+  "winner1": {
+    "id": "winner1",
+    "x": 300,
+    "y": 50,
+    "image": "/i/noto-emoji/emoji_u1f3c6.svg",
+    "width": 50,
+    "height": 50,
+    "parent": "diceHolder1",
+    "movable": false,
+    "winner": true,
+    "scale": 0
+  },
+  "seatAreaBorder1": {
+    "id": "seatAreaBorder1",
+    "parent": "diceHolder1",
+    "x": -15,
+    "width": 580,
+    "height": 145,
+    "movable": false,
+    "css": {
+      "pointer-events": "none",
+      "border": "2px dashed grey"
+    },
+    "y": -20
+  },
+  "dice1": {
+    "type": "dice",
+    "id": "dice1",
+    "x": -5,
+    "z": 1,
+    "clickable": false,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "shape3d": true,
+    "parent": "diceHolder1",
+    "rollCount": 1
+  },
+  "dice4": {
+    "type": "dice",
+    "id": "dice4",
+    "x": 184,
+    "y": 0,
+    "z": 4,
+    "activeFace": 2,
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "parent": "diceHolder1",
+    "rollCount": 1
+  },
+  "dice3": {
+    "type": "dice",
+    "id": "dice3",
+    "x": 121,
+    "y": 0,
+    "z": 3,
+    "activeFace": 1,
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "parent": "diceHolder1",
+    "rollCount": 1
+  },
+  "dice2": {
+    "type": "dice",
+    "id": "dice2",
+    "x": 58,
+    "y": 0,
+    "z": 2,
+    "activeFace": 2,
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "movable": true,
+    "hoverParent": "diceHolder1",
+    "parent": "diceHolder1",
+    "rollCount": 1
+  },
+  "diceHolder2": {
+    "inheritFrom": {
+      "diceHolder1": "*"
+    },
+    "type": "holder",
+    "id": "diceHolder2",
+    "x": 1020,
+    "y": 245,
+    "runners": [],
+    "claimed": 0,
+    "linkedToSeat": "seat2",
+    "pid": 2,
+    "markers": []
+  },
+  "markerHolder2": {
+    "inheritFrom": {
+      "markerHolder1": "*"
+    },
+    "type": "holder",
+    "id": "markerHolder2",
+    "parent": "diceHolder2"
+  },
+  "runnerHolder2": {
+    "inheritFrom": {
+      "runnerHolder1": "*"
+    },
+    "type": "holder",
+    "id": "runnerHolder2",
+    "parent": "diceHolder2"
+  },
+  "runner4": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner4",
+    "parent": "runnerHolder2",
+    "z": 1,
+    "x": 0,
+    "y": 0,
+    "width": 35,
+    "height": 35,
+    "pid": 2,
+    "bgColor2": "#b7b7b7",
+    "movable": false,
+    "activeFace": 1,
+    "bgColor1": "#dddddd"
+  },
+  "runner5": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner5",
+    "x": 36,
+    "y": 0,
+    "z": 2,
+    "width": 35,
+    "height": 35,
+    "pid": 2,
+    "bgColor2": "#b7b7b7",
+    "movable": false,
+    "activeFace": 1,
+    "parent": "runnerHolder2",
+    "bgColor1": "#dddddd"
+  },
+  "runner6": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner6",
+    "x": 72,
+    "y": 0,
+    "z": 3,
+    "width": 35,
+    "height": 35,
+    "pid": 2,
+    "bgColor2": "#b7b7b7",
+    "movable": false,
+    "activeFace": 1,
+    "parent": "runnerHolder2",
+    "bgColor1": "#dddddd"
+  },
+  "pairBorder4": {
+    "inheritFrom": {
+      "pairBorder1": "*"
+    },
+    "id": "pairBorder4",
+    "parent": "diceHolder2",
+    "activeFace": 0
+  },
+  "pairBorder5": {
+    "inheritFrom": {
+      "pairBorder2": "*"
+    },
+    "id": "pairBorder5",
+    "parent": "diceHolder2"
+  },
+  "pairBorder6": {
+    "inheritFrom": {
+      "pairBorder3": "*"
+    },
+    "id": "pairBorder6",
+    "parent": "diceHolder2"
+  },
+  "roll2": {
+    "inheritFrom": {
+      "roll1": "*"
+    },
+    "id": "roll2",
+    "parent": "diceHolder2",
+    "scale": 0,
+    "pid": 2
+  },
+  "setRunners2": {
+    "inheritFrom": {
+      "setRunners1": "*"
+    },
+    "id": "setRunners2",
+    "parent": "diceHolder2",
+    "scale": 0,
+    "pid": 2
+  },
+  "setMarkers2": {
+    "inheritFrom": {
+      "setMarkers1": "*"
+    },
+    "id": "setMarkers2",
+    "parent": "diceHolder2",
+    "scale": 0,
+    "pid": 2
+  },
+  "fail2": {
+    "inheritFrom": {
+      "fail1": "*"
+    },
+    "id": "fail2",
+    "parent": "diceHolder2",
+    "scale": 0,
+    "pid": 2
+  },
+  "winner2": {
+    "inheritFrom": {
+      "winner1": "*"
+    },
+    "id": "winner2",
+    "parent": "diceHolder2",
+    "scale": 0
+  },
+  "seatAreaBorder2": {
+    "inheritFrom": {
+      "seatAreaBorder1": "*"
+    },
+    "id": "seatAreaBorder2",
+    "parent": "diceHolder2"
+  },
+  "dice5": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice5",
+    "parent": "diceHolder2",
+    "activeFace": 2,
+    "rollCount": 1,
+    "x": -5,
+    "y": 0,
+    "z": 1
+  },
+  "dice6": {
+    "inheritFrom": {
+      "dice4": "*"
+    },
+    "type": "dice",
+    "id": "dice6",
+    "activeFace": 0,
+    "rollCount": 1,
+    "z": 2,
+    "hoverParent": "diceHolder2",
+    "x": 58,
+    "y": 0,
+    "parent": "diceHolder2"
+  },
+  "dice7": {
+    "inheritFrom": {
+      "dice3": "*"
+    },
+    "type": "dice",
+    "id": "dice7",
+    "activeFace": 5,
+    "rollCount": 1,
+    "x": 121,
+    "y": 0,
+    "z": 3,
+    "hoverParent": "diceHolder2",
+    "parent": "diceHolder2"
+  },
+  "dice8": {
+    "inheritFrom": {
+      "dice2": "*"
+    },
+    "type": "dice",
+    "id": "dice8",
+    "parent": "diceHolder2",
+    "activeFace": 5,
+    "rollCount": 1,
+    "x": 184,
+    "y": 0,
+    "z": 4
+  },
+  "diceHolder3": {
+    "inheritFrom": {
+      "diceHolder1": "*"
+    },
+    "type": "holder",
+    "id": "diceHolder3",
+    "x": 1020,
+    "y": 400,
+    "runners": [],
+    "markers": [],
+    "claimed": 0,
+    "linkedToSeat": "seat3",
+    "pid": 3
+  },
+  "markerHolder3": {
+    "inheritFrom": {
+      "markerHolder1": "*"
+    },
+    "type": "holder",
+    "id": "markerHolder3",
+    "parent": "diceHolder3"
+  },
+  "runnerHolder3": {
+    "inheritFrom": {
+      "runnerHolder1": "*"
+    },
+    "type": "holder",
+    "id": "runnerHolder3",
+    "parent": "diceHolder3"
+  },
+  "runner7": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner7",
+    "parent": "runnerHolder3",
+    "z": 1,
+    "x": 0,
+    "y": 0,
+    "width": 35,
+    "height": 35,
+    "pid": 3,
+    "movable": false,
+    "bgColor1": "#dddddd",
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1
+  },
+  "runner8": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner8",
+    "parent": "runnerHolder3",
+    "x": 36,
+    "y": 0,
+    "z": 2,
+    "width": 35,
+    "height": 35,
+    "pid": 3,
+    "movable": false,
+    "bgColor1": "#dddddd",
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1
+  },
+  "runner9": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner9",
+    "parent": "runnerHolder3",
+    "x": 72,
+    "y": 0,
+    "z": 3,
+    "width": 35,
+    "height": 35,
+    "pid": 3,
+    "movable": false,
+    "bgColor1": "#dddddd",
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1
+  },
+  "pairBorder7": {
+    "inheritFrom": {
+      "pairBorder1": "*"
+    },
+    "id": "pairBorder7",
+    "parent": "diceHolder3"
+  },
+  "pairBorder8": {
+    "inheritFrom": {
+      "pairBorder2": "*"
+    },
+    "id": "pairBorder8",
+    "parent": "diceHolder3"
+  },
+  "pairBorder9": {
+    "inheritFrom": {
+      "pairBorder3": "*"
+    },
+    "id": "pairBorder9",
+    "parent": "diceHolder3"
+  },
+  "roll3": {
+    "inheritFrom": {
+      "roll1": "*"
+    },
+    "id": "roll3",
+    "parent": "diceHolder3",
+    "scale": 0,
+    "pid": 3
+  },
+  "setRunners3": {
+    "inheritFrom": {
+      "setRunners1": "*"
+    },
+    "id": "setRunners3",
+    "parent": "diceHolder3",
+    "scale": 0,
+    "pid": 3
+  },
+  "setMarkers3": {
+    "inheritFrom": {
+      "setMarkers1": "*"
+    },
+    "id": "setMarkers3",
+    "parent": "diceHolder3",
+    "scale": 0,
+    "pid": 3
+  },
+  "fail3": {
+    "inheritFrom": {
+      "fail1": "*"
+    },
+    "id": "fail3",
+    "parent": "diceHolder3",
+    "scale": 0,
+    "pid": 3
+  },
+  "winner3": {
+    "inheritFrom": {
+      "winner1": "*"
+    },
+    "id": "winner3",
+    "parent": "diceHolder3",
+    "scale": 0
+  },
+  "seatAreaBorder3": {
+    "inheritFrom": {
+      "seatAreaBorder1": "*"
+    },
+    "id": "seatAreaBorder3",
+    "parent": "diceHolder3"
+  },
+  "dice9": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice9",
+    "parent": "diceHolder3",
+    "activeFace": 2,
+    "rollCount": 1,
+    "x": -5,
+    "y": 0,
+    "z": 1
+  },
+  "dice10": {
+    "inheritFrom": {
+      "dice4": "*"
+    },
+    "type": "dice",
+    "id": "dice10",
+    "activeFace": 2,
+    "rollCount": 1,
+    "z": 2,
+    "hoverParent": "diceHolder3",
+    "x": 58,
+    "y": 0,
+    "parent": "diceHolder3"
+  },
+  "dice11": {
+    "inheritFrom": {
+      "dice3": "*"
+    },
+    "type": "dice",
+    "id": "dice11",
+    "activeFace": 3,
+    "rollCount": 1,
+    "x": 121,
+    "y": 0,
+    "z": 3,
+    "hoverParent": "diceHolder3",
+    "parent": "diceHolder3"
+  },
+  "dice12": {
+    "inheritFrom": {
+      "dice2": "*"
+    },
+    "type": "dice",
+    "id": "dice12",
+    "parent": "diceHolder3",
+    "activeFace": 1,
+    "rollCount": 1,
+    "x": 184,
+    "y": 0,
+    "z": 4
+  },
+  "diceHolder4": {
+    "inheritFrom": {
+      "diceHolder1": "*"
+    },
+    "type": "holder",
+    "id": "diceHolder4",
+    "x": 1020,
+    "y": 555,
+    "runners": [],
+    "claimed": 0,
+    "linkedToSeat": "seat4",
+    "pid": 4,
+    "markers": []
+  },
+  "markerHolder4": {
+    "inheritFrom": {
+      "markerHolder1": "*"
+    },
+    "type": "holder",
+    "id": "markerHolder4",
+    "parent": "diceHolder4"
+  },
+  "runnerHolder4": {
+    "inheritFrom": {
+      "runnerHolder1": "*"
+    },
+    "type": "holder",
+    "id": "runnerHolder4",
+    "parent": "diceHolder4"
+  },
+  "runner10": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner10",
+    "parent": "runnerHolder4",
+    "z": 1,
+    "x": 0,
+    "y": 0,
+    "width": 35,
+    "height": 35,
+    "pid": 4,
+    "movable": false,
+    "bgColor1": "#dddddd",
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1
+  },
+  "runner11": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner11",
+    "parent": "runnerHolder4",
+    "x": 36,
+    "y": 0,
+    "z": 2,
+    "width": 35,
+    "height": 35,
+    "pid": 4,
+    "movable": false,
+    "bgColor1": "#dddddd",
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1
+  },
+  "runner12": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner12",
+    "parent": "runnerHolder4",
+    "x": 72,
+    "y": 0,
+    "z": 3,
+    "width": 35,
+    "height": 35,
+    "pid": 4,
+    "movable": false,
+    "bgColor1": "#dddddd",
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1
+  },
+  "pairBorder10": {
+    "inheritFrom": {
+      "pairBorder1": "*"
+    },
+    "id": "pairBorder10",
+    "parent": "diceHolder4"
+  },
+  "pairBorder11": {
+    "inheritFrom": {
+      "pairBorder2": "*"
+    },
+    "id": "pairBorder11",
+    "parent": "diceHolder4"
+  },
+  "pairBorder12": {
+    "inheritFrom": {
+      "pairBorder3": "*"
+    },
+    "id": "pairBorder12",
+    "parent": "diceHolder4"
+  },
+  "roll4": {
+    "inheritFrom": {
+      "roll1": "*"
+    },
+    "id": "roll4",
+    "parent": "diceHolder4",
+    "scale": 0,
+    "pid": 4
+  },
+  "setRunners4": {
+    "inheritFrom": {
+      "setRunners1": "*"
+    },
+    "id": "setRunners4",
+    "parent": "diceHolder4",
+    "scale": 0,
+    "pid": 4
+  },
+  "setMarkers4": {
+    "inheritFrom": {
+      "setMarkers1": "*"
+    },
+    "id": "setMarkers4",
+    "parent": "diceHolder4",
+    "scale": 0,
+    "pid": 4
+  },
+  "fail4": {
+    "inheritFrom": {
+      "fail1": "*"
+    },
+    "id": "fail4",
+    "parent": "diceHolder4",
+    "scale": 0,
+    "pid": 4
+  },
+  "winner4": {
+    "inheritFrom": {
+      "winner1": "*"
+    },
+    "id": "winner4",
+    "parent": "diceHolder4",
+    "scale": 0,
+    "activeFace": 0
+  },
+  "seatAreaBorder4": {
+    "inheritFrom": {
+      "seatAreaBorder1": "*"
+    },
+    "id": "seatAreaBorder4",
+    "parent": "diceHolder4"
+  },
+  "dice13": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice13",
+    "parent": "diceHolder4",
+    "activeFace": 3,
+    "rollCount": 1,
+    "x": -5,
+    "y": 0,
+    "z": 1
+  },
+  "dice14": {
+    "inheritFrom": {
+      "dice4": "*"
+    },
+    "type": "dice",
+    "id": "dice14",
+    "activeFace": 0,
+    "rollCount": 1,
+    "z": 2,
+    "hoverParent": "diceHolder4",
+    "x": 58,
+    "y": 0,
+    "parent": "diceHolder4"
+  },
+  "dice15": {
+    "inheritFrom": {
+      "dice3": "*"
+    },
+    "type": "dice",
+    "id": "dice15",
+    "activeFace": 4,
+    "rollCount": 1,
+    "x": 121,
+    "y": 0,
+    "z": 3,
+    "hoverParent": "diceHolder4",
+    "parent": "diceHolder4"
+  },
+  "dice16": {
+    "inheritFrom": {
+      "dice2": "*"
+    },
+    "type": "dice",
+    "id": "dice16",
+    "parent": "diceHolder4",
+    "activeFace": 5,
+    "rollCount": 1,
+    "x": 184,
+    "y": 0,
+    "z": 4
+  },
+  "diceHolder5": {
+    "inheritFrom": {
+      "diceHolder1": "*"
+    },
+    "type": "holder",
+    "id": "diceHolder5",
+    "x": 1020,
+    "y": 710,
+    "runners": [],
+    "markers": [],
+    "claimed": 0,
+    "linkedToSeat": "seat5",
+    "pid": 5
+  },
+  "markerHolder5": {
+    "inheritFrom": {
+      "markerHolder1": "*"
+    },
+    "type": "holder",
+    "id": "markerHolder5",
+    "parent": "diceHolder5"
+  },
+  "runnerHolder5": {
+    "inheritFrom": {
+      "runnerHolder1": "*"
+    },
+    "type": "holder",
+    "id": "runnerHolder5",
+    "parent": "diceHolder5"
+  },
+  "runner13": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner13",
+    "parent": "runnerHolder5",
+    "z": 1,
+    "x": 0,
+    "y": 0,
+    "width": 35,
+    "height": 35,
+    "pid": 5,
+    "movable": false,
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1,
+    "bgColor1": "#dddddd"
+  },
+  "runner14": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner14",
+    "parent": "runnerHolder5",
+    "x": 36,
+    "y": 0,
+    "z": 2,
+    "width": 35,
+    "height": 35,
+    "pid": 5,
+    "movable": false,
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1,
+    "bgColor1": "#dddddd"
+  },
+  "runner15": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner15",
+    "parent": "runnerHolder5",
+    "x": 72,
+    "y": 0,
+    "z": 3,
+    "width": 35,
+    "height": 35,
+    "pid": 5,
+    "movable": false,
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1,
+    "bgColor1": "#dddddd"
+  },
+  "pairBorder13": {
+    "inheritFrom": {
+      "pairBorder1": "*"
+    },
+    "id": "pairBorder13",
+    "parent": "diceHolder5"
+  },
+  "pairBorder14": {
+    "inheritFrom": {
+      "pairBorder2": "*"
+    },
+    "id": "pairBorder14",
+    "parent": "diceHolder5"
+  },
+  "pairBorder15": {
+    "inheritFrom": {
+      "pairBorder3": "*"
+    },
+    "id": "pairBorder15",
+    "parent": "diceHolder5"
+  },
+  "roll5": {
+    "inheritFrom": {
+      "roll1": "*"
+    },
+    "id": "roll5",
+    "parent": "diceHolder5",
+    "scale": 0,
+    "pid": 5
+  },
+  "setRunners5": {
+    "inheritFrom": {
+      "setRunners1": "*"
+    },
+    "id": "setRunners5",
+    "parent": "diceHolder5",
+    "scale": 0,
+    "pid": 5
+  },
+  "setMarkers5": {
+    "inheritFrom": {
+      "setMarkers1": "*"
+    },
+    "id": "setMarkers5",
+    "parent": "diceHolder5",
+    "scale": 0,
+    "pid": 5
+  },
+  "fail5": {
+    "inheritFrom": {
+      "fail1": "*"
+    },
+    "id": "fail5",
+    "parent": "diceHolder5",
+    "scale": 0,
+    "pid": 5
+  },
+  "winner5": {
+    "inheritFrom": {
+      "winner1": "*"
+    },
+    "id": "winner5",
+    "parent": "diceHolder5",
+    "scale": 0
+  },
+  "seatAreaBorder5": {
+    "inheritFrom": {
+      "seatAreaBorder1": "*"
+    },
+    "id": "seatAreaBorder5",
+    "parent": "diceHolder5"
+  },
+  "dice17": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice17",
+    "parent": "diceHolder5",
+    "activeFace": 1,
+    "rollCount": 1,
+    "x": -5,
+    "y": 0,
+    "z": 1
+  },
+  "dice18": {
+    "inheritFrom": {
+      "dice4": "*"
+    },
+    "type": "dice",
+    "id": "dice18",
+    "activeFace": 1,
+    "rollCount": 1,
+    "z": 2,
+    "hoverParent": "diceHolder5",
+    "x": 58,
+    "y": 0,
+    "parent": "diceHolder5"
+  },
+  "dice19": {
+    "inheritFrom": {
+      "dice3": "*"
+    },
+    "type": "dice",
+    "id": "dice19",
+    "activeFace": 2,
+    "rollCount": 1,
+    "x": 121,
+    "y": 0,
+    "z": 3,
+    "hoverParent": "diceHolder5",
+    "parent": "diceHolder5"
+  },
+  "dice20": {
+    "inheritFrom": {
+      "dice2": "*"
+    },
+    "type": "dice",
+    "id": "dice20",
+    "parent": "diceHolder5",
+    "activeFace": 1,
+    "rollCount": 1,
+    "x": 184,
+    "y": 0,
+    "z": 4
+  },
+  "diceHolder6": {
+    "inheritFrom": {
+      "diceHolder1": "*"
+    },
+    "type": "holder",
+    "id": "diceHolder6",
+    "x": 1020,
+    "y": 865,
+    "runners": [],
+    "claimed": 0,
+    "linkedToSeat": "seat6",
+    "pid": 6,
+    "markers": []
+  },
+  "markerHolder6": {
+    "inheritFrom": {
+      "markerHolder1": "*"
+    },
+    "type": "holder",
+    "id": "markerHolder6",
+    "parent": "diceHolder6"
+  },
+  "runnerHolder6": {
+    "inheritFrom": {
+      "runnerHolder1": "*"
+    },
+    "type": "holder",
+    "id": "runnerHolder6",
+    "parent": "diceHolder6"
+  },
+  "runner16": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner16",
+    "parent": "runnerHolder6",
+    "z": 1,
+    "x": 0,
+    "y": 0,
+    "width": 35,
+    "height": 35,
+    "pid": 6,
+    "movable": false,
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1,
+    "bgColor1": "#dddddd"
+  },
+  "runner17": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner17",
+    "parent": "runnerHolder6",
+    "x": 36,
+    "y": 0,
+    "z": 2,
+    "width": 35,
+    "height": 35,
+    "pid": 6,
+    "movable": false,
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1,
+    "bgColor1": "#dddddd"
+  },
+  "runner18": {
+    "inheritFrom": {
+      "runner1": "!parent"
+    },
+    "id": "runner18",
+    "parent": "runnerHolder6",
+    "x": 72,
+    "y": 0,
+    "z": 3,
+    "width": 35,
+    "height": 35,
+    "pid": 6,
+    "movable": false,
+    "bgColor2": "#b7b7b7",
+    "activeFace": 1,
+    "bgColor1": "#dddddd"
+  },
+  "pairBorder16": {
+    "inheritFrom": {
+      "pairBorder1": "*"
+    },
+    "id": "pairBorder16",
+    "parent": "diceHolder6"
+  },
+  "pairBorder17": {
+    "inheritFrom": {
+      "pairBorder2": "*"
+    },
+    "id": "pairBorder17",
+    "parent": "diceHolder6"
+  },
+  "pairBorder18": {
+    "inheritFrom": {
+      "pairBorder3": "*"
+    },
+    "id": "pairBorder18",
+    "parent": "diceHolder6"
+  },
+  "roll6": {
+    "inheritFrom": {
+      "roll1": "*"
+    },
+    "id": "roll6",
+    "parent": "diceHolder6",
+    "scale": 0,
+    "pid": 6
+  },
+  "setRunners6": {
+    "inheritFrom": {
+      "setRunners1": "*"
+    },
+    "id": "setRunners6",
+    "parent": "diceHolder6",
+    "scale": 0,
+    "pid": 6
+  },
+  "setMarkers6": {
+    "inheritFrom": {
+      "setMarkers1": "*"
+    },
+    "id": "setMarkers6",
+    "parent": "diceHolder6",
+    "scale": 0,
+    "pid": 6
+  },
+  "fail6": {
+    "inheritFrom": {
+      "fail1": "*"
+    },
+    "id": "fail6",
+    "parent": "diceHolder6",
+    "scale": 0,
+    "pid": 6
+  },
+  "winner6": {
+    "inheritFrom": {
+      "winner1": "*"
+    },
+    "id": "winner6",
+    "parent": "diceHolder6",
+    "scale": 0
+  },
+  "seatAreaBorder6": {
+    "inheritFrom": {
+      "seatAreaBorder1": "*"
+    },
+    "id": "seatAreaBorder6",
+    "parent": "diceHolder6"
+  },
+  "dice21": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice21",
+    "parent": "diceHolder6",
+    "activeFace": 1,
+    "rollCount": 1,
+    "x": -5,
+    "y": 0,
+    "z": 1
+  },
+  "dice22": {
+    "inheritFrom": {
+      "dice4": "*"
+    },
+    "type": "dice",
+    "id": "dice22",
+    "activeFace": 5,
+    "rollCount": 1,
+    "z": 2,
+    "hoverParent": "diceHolder6",
+    "x": 58,
+    "y": 0,
+    "parent": "diceHolder6"
+  },
+  "dice23": {
+    "inheritFrom": {
+      "dice3": "*"
+    },
+    "type": "dice",
+    "id": "dice23",
+    "activeFace": 2,
+    "rollCount": 1,
+    "x": 121,
+    "y": 0,
+    "z": 3,
+    "hoverParent": "diceHolder6",
+    "parent": "diceHolder6"
+  },
+  "dice24": {
+    "inheritFrom": {
+      "dice2": "*"
+    },
+    "type": "dice",
+    "id": "dice24",
+    "parent": "diceHolder6",
+    "activeFace": 3,
+    "rollCount": 1,
+    "x": 184,
+    "y": 0,
+    "z": 4
+  },
+  "seat2": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 1259,
+    "y": 244,
+    "player": "",
+    "textColor": "#000000",
+    "mainColor": "#dddddd"
+  },
+  "seat3": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "x": 1259,
+    "y": 399,
+    "player": "",
+    "mainColor": "#dddddd",
+    "textColor": "#000000"
+  },
+  "seat4": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": 1259,
+    "y": 554,
+    "player": "",
+    "mainColor": "#dddddd",
+    "textColor": "#000000"
+  },
+  "seat5": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat5",
+    "index": 5,
+    "x": 1259,
+    "y": 709,
+    "player": "",
+    "textColor": "#000000",
+    "mainColor": "#dddddd"
+  },
+  "seat6": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat6",
+    "index": 6,
+    "x": 1259,
+    "y": 864,
+    "player": "",
+    "textColor": "#000000",
+    "mainColor": "#dddddd"
+  },
+  "option12": {
+    "id": "option12",
+    "x": 35,
+    "scale": 0,
+    "inheritFrom": {
+      "option11": "*"
+    },
+    "text": 11,
+    "bgColor": "white",
+    "borderColor": "solid #000000",
+    "pair": "option11"
+  },
+  "option11": {
+    "id": "option11",
+    "parent": "diceHolder1",
+    "y": 59,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "${PROPERTY bgColor}",
+        "color": "${PROPERTY textColor}",
+        "border": "2px ${PROPERTY borderColor}",
+        "font-size": "22px",
+        "text-align": "center",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center"
+      }
+    },
+    "text": 8,
+    "bgColor": "white",
+    "borderColor": "dashed #3f51b5",
+    "optionButton": true,
+    "pair": "option12",
+    "pid": 1,
+    "textColor": "#000000",
+    "bgColorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scale}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "bgColor",
+            "value": "white"
+          }
+        ]
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": "${PROPERTY pid}",
+        "thenRoutine": [
+          "var pair = ${PROPERTY pair}",
+          "var wasYellow = false",
+          {
+            "func": "SELECT",
+            "property": "pair",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "parent",
+            "value": "${PROPERTY parent}",
+            "collection": "options"
+          },
+          {
+            "func": "COUNT",
+            "holder": "runnerHolder${PROPERTY pid}"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY bgColor}",
+                "operand2": "lightgreen",
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": "options",
+                    "property": "bgColor",
+                    "value": "white"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "recolorYellowRoutine"
+                  }
+                ],
+                "elseRoutine": [
+                  "var yellowPair = ${PROPERTY bgColor OF $pair} == 'yellow'",
+                  "var yellowThis = ${PROPERTY bgColor} == 'yellow'",
+                  "var checkYellow = ${yellowPair} || ${yellowThis}",
+                  {
+                    "func": "IF",
+                    "condition": "${checkYellow}",
+                    "thenRoutine": [
+                      "var wasYellow = true"
+                    ]
+                  },
+                  {
+                    "func": "SET",
+                    "collection": "options",
+                    "property": "bgColor",
+                    "value": "white"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${PROPERTY id}"
+                    ],
+                    "property": "bgColor",
+                    "value": "lightgreen"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY text OF $pair}",
+                    "operand2": "${PROPERTY text}",
+                    "thenRoutine": [
+                      "// Special case for when there is one runner left and the pair is the same number",
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${pair}"
+                        ],
+                        "property": "bgColor",
+                        "value": "lightgreen"
+                      }
+                    ]
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "recolorYellowRoutine",
+                    "arguments": {
+                      "wasYellow": "${wasYellow}"
+                    }
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY bgColor}",
+                "operand2": "lightgreen",
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": "options",
+                    "property": "bgColor",
+                    "value": "white"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "recolorYellowRoutine"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": "options",
+                    "property": "bgColor",
+                    "value": "white"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "recolorYellowRoutine"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${pair}",
+                      "${PROPERTY id}"
+                    ],
+                    "property": "bgColor",
+                    "value": "lightgreen"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "optionButton",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "bgColor",
+            "value": "lightgreen"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "relation": ">",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "setRunners${PROPERTY pid}"
+                ],
+                "property": "scale",
+                "value": 1
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "setRunners${PROPERTY pid}"
+                ],
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "recolorYellowRoutine": [
+      "var diceHolder = 'diceHolder' + ${PROPERTY pid}",
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY runners OF $diceHolder}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "options",
+            "property": "text",
+            "value": "${value}"
+          },
+          {
+            "func": "SET",
+            "property": "bgColor",
+            "value": "yellow"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${wasYellow}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${pair}",
+              "${PROPERTY id}"
+            ],
+            "property": "bgColor",
+            "value": "lightgreen"
+          }
+        ]
+      }
+    ],
+    "scaleChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scale}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "bgColor",
+            "value": "white"
+          }
+        ]
+      }
+    ],
+    "scale": 0
+  },
+  "option13": {
+    "id": "option13",
+    "x": 80,
+    "scale": 0,
+    "inheritFrom": {
+      "option11": "*"
+    },
+    "text": 9,
+    "bgColor": "white",
+    "borderColor": "solid #000000",
+    "pair": "option14"
+  },
+  "option14": {
+    "id": "option14",
+    "x": 115,
+    "scale": 0,
+    "inheritFrom": {
+      "option11": "*"
+    },
+    "text": 10,
+    "bgColor": "white",
+    "borderColor": "dashed #3f51b5",
+    "pair": "option13"
+  },
+  "option15": {
+    "id": "option15",
+    "x": 160,
+    "scale": 0,
+    "inheritFrom": {
+      "option11": "*"
+    },
+    "text": 0,
+    "bgColor": "white",
+    "borderColor": "solid #000000",
+    "pair": "option16"
+  },
+  "option16": {
+    "id": "option16",
+    "x": 195,
+    "scale": 0,
+    "inheritFrom": {
+      "option11": "*"
+    },
+    "text": 0,
+    "bgColor": "white",
+    "borderColor": "solid #000000",
+    "pair": "option15"
+  },
+  "option21": {
+    "id": "option21",
+    "parent": "diceHolder2",
+    "x": 0,
+    "y": 59,
+    "inheritFrom": {
+      "option11": "*"
+    },
+    "pair": "option22",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 2,
+    "borderColor": "solid #000000",
+    "pid": 2
+  },
+  "option22": {
+    "id": "option22",
+    "parent": "diceHolder2",
+    "x": 35,
+    "y": 59,
+    "inheritFrom": {
+      "option12": "*"
+    },
+    "pair": "option21",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 5,
+    "borderColor": "solid #000000",
+    "pid": 2
+  },
+  "option23": {
+    "id": "option23",
+    "parent": "diceHolder2",
+    "x": 80,
+    "y": 59,
+    "inheritFrom": {
+      "option13": "*"
+    },
+    "pair": "option24",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 0,
+    "borderColor": "solid #000000",
+    "pid": 2
+  },
+  "option24": {
+    "id": "option24",
+    "parent": "diceHolder2",
+    "x": 115,
+    "y": 59,
+    "inheritFrom": {
+      "option14": "*"
+    },
+    "pair": "option23",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 0,
+    "borderColor": "solid #000000",
+    "pid": 2
+  },
+  "option25": {
+    "id": "option25",
+    "parent": "diceHolder2",
+    "x": 160,
+    "y": 59,
+    "inheritFrom": {
+      "option15": "*"
+    },
+    "pair": "option26",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 0,
+    "borderColor": "solid #000000",
+    "pid": 2
+  },
+  "option26": {
+    "id": "option26",
+    "parent": "diceHolder2",
+    "x": 195,
+    "y": 59,
+    "inheritFrom": {
+      "option16": "*"
+    },
+    "pair": "option25",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 0,
+    "borderColor": "solid #000000",
+    "pid": 2
+  },
+  "option31": {
+    "id": "option31",
+    "parent": "diceHolder3",
+    "x": 0,
+    "y": 59,
+    "inheritFrom": {
+      "option11": "*"
+    },
+    "pair": "option32",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 5,
+    "borderColor": "#000000",
+    "pid": 3
+  },
+  "option32": {
+    "id": "option32",
+    "parent": "diceHolder3",
+    "x": 35,
+    "y": 59,
+    "inheritFrom": {
+      "option12": "*"
+    },
+    "pair": "option31",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 5,
+    "borderColor": "#000000",
+    "pid": 3
+  },
+  "option33": {
+    "id": "option33",
+    "parent": "diceHolder3",
+    "x": 80,
+    "y": 59,
+    "inheritFrom": {
+      "option13": "*"
+    },
+    "pair": "option34",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 2,
+    "borderColor": "#000000",
+    "pid": 3
+  },
+  "option34": {
+    "id": "option34",
+    "parent": "diceHolder3",
+    "x": 115,
+    "y": 59,
+    "inheritFrom": {
+      "option14": "*"
+    },
+    "pair": "option33",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 8,
+    "borderColor": "#000000",
+    "pid": 3
+  },
+  "option35": {
+    "id": "option35",
+    "parent": "diceHolder3",
+    "x": 160,
+    "y": 59,
+    "inheritFrom": {
+      "option15": "*"
+    },
+    "pair": "option36",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 0,
+    "borderColor": "#000000",
+    "pid": 3
+  },
+  "option36": {
+    "id": "option36",
+    "parent": "diceHolder3",
+    "x": 195,
+    "y": 59,
+    "inheritFrom": {
+      "option16": "*"
+    },
+    "pair": "option35",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 0,
+    "borderColor": "#000000",
+    "pid": 3
+  },
+  "option41": {
+    "id": "option41",
+    "parent": "diceHolder4",
+    "x": 0,
+    "y": 59,
+    "inheritFrom": {
+      "option11": "*"
+    },
+    "pair": "option42",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 8,
+    "borderColor": "solid #000000",
+    "pid": 4
+  },
+  "option42": {
+    "id": "option42",
+    "parent": "diceHolder4",
+    "x": 35,
+    "y": 59,
+    "inheritFrom": {
+      "option12": "*"
+    },
+    "pair": "option41",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 9,
+    "borderColor": "solid #000000",
+    "pid": 4
+  },
+  "option43": {
+    "id": "option43",
+    "parent": "diceHolder4",
+    "x": 80,
+    "y": 59,
+    "inheritFrom": {
+      "option13": "*"
+    },
+    "pair": "option44",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 5,
+    "borderColor": "solid #000000",
+    "pid": 4
+  },
+  "option44": {
+    "id": "option44",
+    "parent": "diceHolder4",
+    "x": 115,
+    "y": 59,
+    "inheritFrom": {
+      "option14": "*"
+    },
+    "pair": "option43",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 12,
+    "borderColor": "solid #000000",
+    "pid": 4
+  },
+  "option45": {
+    "id": "option45",
+    "parent": "diceHolder4",
+    "x": 160,
+    "y": 59,
+    "inheritFrom": {
+      "option15": "*"
+    },
+    "pair": "option46",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 0,
+    "borderColor": "solid #000000",
+    "pid": 4
+  },
+  "option46": {
+    "id": "option46",
+    "parent": "diceHolder4",
+    "x": 195,
+    "y": 59,
+    "inheritFrom": {
+      "option16": "*"
+    },
+    "pair": "option45",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 0,
+    "borderColor": "solid #000000",
+    "pid": 4
+  },
+  "option51": {
+    "id": "option51",
+    "parent": "diceHolder5",
+    "x": 0,
+    "y": 59,
+    "inheritFrom": {
+      "option11": "*"
+    },
+    "pair": "option52",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 4,
+    "borderColor": "#3f51b5",
+    "pid": 5
+  },
+  "option52": {
+    "id": "option52",
+    "parent": "diceHolder5",
+    "x": 35,
+    "y": 59,
+    "inheritFrom": {
+      "option12": "*"
+    },
+    "pair": "option51",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 9,
+    "borderColor": "#000000",
+    "pid": 5
+  },
+  "option53": {
+    "id": "option53",
+    "parent": "diceHolder5",
+    "x": 80,
+    "y": 59,
+    "inheritFrom": {
+      "option13": "*"
+    },
+    "pair": "option54",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 6,
+    "borderColor": "#000000",
+    "pid": 5
+  },
+  "option54": {
+    "id": "option54",
+    "parent": "diceHolder5",
+    "x": 115,
+    "y": 59,
+    "inheritFrom": {
+      "option14": "*"
+    },
+    "pair": "option53",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 7,
+    "borderColor": "#3f51b5",
+    "pid": 5
+  },
+  "option55": {
+    "id": "option55",
+    "parent": "diceHolder5",
+    "x": 160,
+    "y": 59,
+    "inheritFrom": {
+      "option15": "*"
+    },
+    "pair": "option56",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 0,
+    "borderColor": "#000000",
+    "pid": 5
+  },
+  "option56": {
+    "id": "option56",
+    "parent": "diceHolder5",
+    "x": 195,
+    "y": 59,
+    "inheritFrom": {
+      "option16": "*"
+    },
+    "pair": "option55",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 0,
+    "borderColor": "#000000",
+    "pid": 5
+  },
+  "option61": {
+    "id": "option61",
+    "parent": "diceHolder6",
+    "x": 0,
+    "y": 59,
+    "inheritFrom": {
+      "option11": "*"
+    },
+    "pair": "option62",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 6,
+    "borderColor": "solid #000000",
+    "pid": 6
+  },
+  "option62": {
+    "id": "option62",
+    "parent": "diceHolder6",
+    "x": 35,
+    "y": 59,
+    "inheritFrom": {
+      "option12": "*"
+    },
+    "pair": "option61",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 8,
+    "borderColor": "solid #000000",
+    "pid": 6
+  },
+  "option63": {
+    "id": "option63",
+    "parent": "diceHolder6",
+    "x": 80,
+    "y": 59,
+    "inheritFrom": {
+      "option13": "*"
+    },
+    "pair": "option64",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 3,
+    "borderColor": "solid #000000",
+    "pid": 6
+  },
+  "option64": {
+    "id": "option64",
+    "parent": "diceHolder6",
+    "x": 115,
+    "y": 59,
+    "inheritFrom": {
+      "option14": "*"
+    },
+    "pair": "option63",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 11,
+    "borderColor": "solid #000000",
+    "pid": 6
+  },
+  "option65": {
+    "id": "option65",
+    "parent": "diceHolder6",
+    "x": 160,
+    "y": 59,
+    "inheritFrom": {
+      "option15": "*"
+    },
+    "pair": "option66",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 7,
+    "borderColor": "solid #000000",
+    "pid": 6
+  },
+  "option66": {
+    "id": "option66",
+    "parent": "diceHolder6",
+    "x": 195,
+    "y": 59,
+    "inheritFrom": {
+      "option16": "*"
+    },
+    "pair": "option65",
+    "scale": 0,
+    "bgColor": "white",
+    "text": 7,
+    "borderColor": "solid #000000",
+    "pid": 6
+  },
+  "turn": {
+    "type": "button",
+    "id": "turn",
+    "x": 1275,
+    "y": 2,
+    "width": 50,
+    "height": 50,
+    "z": 2088,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "38px",
+        "line-height": "1.15em",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"${PROPERTY flexText}\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "width": "80px",
+        "line-height": "1em",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType OF settings}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "roll1",
+              "roll2",
+              "roll3",
+              "roll4",
+              "roll5",
+              "roll6"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "TURN"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "turn",
+            "value": true
+          },
+          {
+            "func": "GET",
+            "collection": "DEFAULT",
+            "property": "index"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "roll${index}"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType OF settings}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "roll1",
+              "roll2",
+              "roll3",
+              "roll4",
+              "roll5",
+              "roll6"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "text": "skip_next",
+    "classes": "symbols",
+    "flexText": "Turn",
+    "stopCount": 0,
+    "stopCountChangeRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY stopCount}",
+        "relation": ">=",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "stopCount",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  "tempHolder": {
+    "type": "holder",
+    "id": "tempHolder",
+    "x": -182,
+    "y": 205,
+    "z": 211,
+    "width": 50,
+    "height": 50
+  },
+  "claimed1": {
+    "id": "claimed1",
+    "x": 433,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 4,
+    "css": {
+      "font-size": "35px",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "background": "black",
+      "color": "white"
+    },
+    "text": 0,
+    "parent": "diceHolder1",
+    "y": 7,
+    "movable": false
+  },
+  "claimed2": {
+    "inheritFrom": {
+      "claimed1": "*"
+    },
+    "id": "claimed2",
+    "x": 433,
+    "y": 7,
+    "parent": "diceHolder2",
+    "text": 0
+  },
+  "claimed3": {
+    "inheritFrom": {
+      "claimed1": "*"
+    },
+    "id": "claimed3",
+    "x": 433,
+    "y": 7,
+    "parent": "diceHolder3",
+    "text": 0
+  },
+  "claimed4": {
+    "inheritFrom": {
+      "claimed1": "*"
+    },
+    "id": "claimed4",
+    "x": 433,
+    "y": 7,
+    "parent": "diceHolder4",
+    "text": 0
+  },
+  "claimed5": {
+    "inheritFrom": {
+      "claimed1": "*"
+    },
+    "id": "claimed5",
+    "x": 433,
+    "y": 7,
+    "parent": "diceHolder5",
+    "text": 0
+  },
+  "claimed6": {
+    "inheritFrom": {
+      "claimed1": "*"
+    },
+    "id": "claimed6",
+    "x": 433,
+    "y": 7,
+    "parent": "diceHolder6",
+    "text": 0
+  },
+  "5ez8": {
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 7664,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "1px solid black"
+    },
+    "marker": true,
+    "bgColor": "#dddddd",
+    "color": "#ffc107",
+    "clonedFrom": "exok",
+    "activeFace": 1,
+    "pid": 3,
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "movable": false,
+    "id": "5ez8",
+    "parent": "markerHolder3"
+  },
+  "tqm7": {
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 7666,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "1px solid black"
+    },
+    "marker": true,
+    "color": "#ffc107",
+    "clonedFrom": "tcg6",
+    "activeFace": 1,
+    "pid": 5,
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "bgColor": "#dddddd",
+    "movable": false,
+    "id": "tqm7",
+    "parent": "markerHolder5"
+  },
+  "0siq": {
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 7668,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "1px solid black"
+    },
+    "marker": true,
+    "color": "#ffc107",
+    "clonedFrom": "sjki",
+    "activeFace": 1,
+    "pid": 2,
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "dragging": "Left",
+    "hoverParent": "markerHolder2",
+    "movable": false,
+    "bgColor": "#dddddd",
+    "id": "0siq",
+    "parent": "markerHolder2"
+  },
+  "1rf9": {
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 7670,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "1px solid black"
+    },
+    "marker": true,
+    "bgColor": "#dddddd",
+    "color": "#ffc107",
+    "clonedFrom": "fl8r",
+    "activeFace": 1,
+    "pid": 1,
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "dragging": "Mike",
+    "hoverParent": "markerHolder1",
+    "movable": false,
+    "id": "1rf9",
+    "parent": "markerHolder1"
+  },
+  "i6pn": {
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 7672,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "1px solid black"
+    },
+    "marker": true,
+    "bgColor": "#dddddd",
+    "color": "#ffc107",
+    "clonedFrom": "6949",
+    "activeFace": 1,
+    "pid": 4,
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "movable": false,
+    "id": "i6pn",
+    "parent": "markerHolder4"
+  },
+  "fz99": {
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 7674,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "1px solid black"
+    },
+    "marker": true,
+    "color": "#ffc107",
+    "clonedFrom": "ngu5",
+    "activeFace": 1,
+    "pid": 6,
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "dragging": "Mike",
+    "hoverParent": "markerHolder6",
+    "bgColor": "#dddddd",
+    "movable": false,
+    "id": "fz99",
+    "parent": "markerHolder6"
+  }
+}
