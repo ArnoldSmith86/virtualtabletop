@@ -18,8 +18,8 @@
       "similarName": "Can't Stop",
       "similarDesigner": "Sid Sackson",
       "similarAwards": "2021 5 Seasons Best International Filler Game Winner\n1982 Spiel des Jahres Recommended\n1981 Spiel des Jahres Recommended",
-      "ruleText": "Roll 4 dice. Divide the dice into pairs and sum the pips. At most, there are 3 possible combinations. Pick a pair of sums that correspond to a column of the same number on the board. For each sum in the pair, if you have one of your 3 runners remaining, you must enter it onto the board if you can.<div><ul><li>If you have a marker in that column, enter the runner onto the space above the marker.</li><li>If you do not have a marker in that column, enter the runner in the lowest space in that column.</li><li>If you already have a runner in that column, do not enter another runner but instead move the existing runner up one space in that column.</li></ul><div>Repeat for the other sum of the pair. If the pair is a double (for example, 7 and 7), then either move the existing runner of two spaces, or enter a runner into the column (at the bottom or above the marker) and then move it up one more space.</div><div><br></div><div>After rolling the dice, so long as any single die allows a runner to be advanced or entered, you must do so. Then you can choose whether to consolidate your gains or press your luck.</div><div><ul><li>If you consolidate your gains, replace each runner with a marker and return the runners to your pool. When it is your turn, roll the dice again and start the process over, but entering runners one space above existing markers.</li><li>If none of your dice allow a legal play, then your turn is over. All the runners are returned to your pool. When it is your turn, roll the dice again and start the process over.</li></ul><div>When a player gets a marker (not a runner) in the top space in a column, that column is closed. Return all other runners and markers in that column to the players.</div></div><div><br></div><div>The first to claim the designated number of columns wins the game. The default is 3, but any value between 1 and 11 can be chosen in the settings.&nbsp; The game works best with no more than 4 players, but this online version allows up to 6. If you have more than 4 players, you should consider making the number of columns needed to win either 2 or 1.</div><div><br></div><div>This online version of the game also has several variations of the timing of turns.</div><div><ul><li><b>Traditional</b>. Each player completes their turn in sequence. A turn ends only when a player fails to make a roll that allows a legal play or when the player decides to stop and consolidate the gains.</li><li><b>Simultaneous turns</b>. All players roll dice and make selections at the same time. Players can keep playing as long as they press their luck until either they fail to make a roll that allows a legal play or they decide to stop. Once all players have failed or stopped, a turn button appears at the top of the screen.&nbsp; Press that to begin the next round.</li><li><b>Lightning</b>. This mode is a complete free-for-all.&nbsp; Players can play without any regard for turns or rounds. The first to reach the top of the designated number of columns wins.</li></ul></div></div>",
-      "helpText": "Players take seats. Choose settings using the gear icon and press the reset button in the upper-right corner to begin the game.<div><br></div><div>Interact with the room based on the following instructions and diagram that represents a seat area.</div><div><br></div><div><img src=\"/assets/209212507_148646\" class=\"richtextAsset\"></div><div><ul><li><span style=\"color: var(--overlayFontColor);\"><b>1. Dice</b></span><span style=\"color: var(--overlayFontColor);\">. You cannot click on, move, or interact with the dice directly.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">2.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Seat</span></b><span style=\"color: var(--overlayFontColor);\">. Used at the beginning of the game. Click to choose a seat and pick a color. Click again to change color, get up from seat, or force another player to get up from seat. When playing traditional rules, the seat of the player whose turn it is will be highlighted and has the exclamation mark in the upper-right corner of the seat.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">3.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Columns won</span></b><span style=\"color: var(--overlayFontColor);\">. This displays the count of the number of columns this player reached the top of first. Under the default rules, the game automatically ends after winning 3 columns. When the victory condition is satisfied, all play immediately ends and interactive buttons are hidden.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">4.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Markers and runners</span></b><span style=\"color: var(--overlayFontColor);\">. The markers (solid color circles) are used to indicate the level of each column that a player has safely reached. There is an unlimited number of markers. The runners (bi-color squares) are used to indicate the level that a player is currently pursuing based on the roll of the dice in the current turn. There are 3 runners per player. When a player end the turn to lock in the gains, the runners are replaced by markers on the board. Under the default rules, all runner and marker activity is automated and players cannot interact with or move the runners or markers in any way.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">5.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Dice pair sums</span></b><span style=\"color: var(--overlayFontColor);\">. These circles represent the 3 possible sums of the combinations of pairs of dice. Players choose which columns to enter or advance runners into by clicking the appropriate circle. Click to select and click again to de-select. Automation routines constrain choices to number(s) permitted by rule.</span></li></ul><ul><ul><li>Missing pairs or a single missing circle that is part of a pair are not available to be selected by rule (or represent a duplicate pair). The missing circles are hidden to simplify the display and make decisions easier and faster.</li><li>White and yellow circles are available for a player to use. White circles indicate the player does not yet have a runner in that column for this turn. Yellow circles indicate the player already has a runner in that column.</li><li>Solid black borders indicate the player does not yet have a marker in that column.</li><li>Dashed player-colored borders indicate the player has a marker in that column.</li><li>Green circles have been selected by the player to be used to enter or advance a runner in this turn.</li></ul><li><span style=\"color: var(--overlayFontColor);\"><b>6. Roll button</b></span><span style=\"color: var(--overlayFontColor);\">. Click this button to roll the dice. The button is hidden when the action is not available.</span><br></li><li><span style=\"color: var(--overlayFontColor);\"><b>7. Confirm runner choice</b>. Click this button to confirm the choices made in the dice pair sums area. When clicked, runners will automatically be moved to (or advanced in) columns corresponding to the numbers in the light green circles. The button is hidden when the action is not available or when a player has not yet selected columns by clicking on the dice pair sums circles.</span></li><li><b>8. End turn</b>. Once a player has entered runner(s) onto the board, the player must decide whether to keep rolling or end the turn. Pressing this button ends the turn. The button is hidden when the action is not available.</li></ul><div>If a player presses his or her luck and the dice do not permit a valid move, a red X is displayed below the seat. Press that X to return the runners to the player and end the turn.</div></div>",
+      "ruleText": "Roll 4 dice. Divide the dice into pairs and sum the pips. At most, there are 3 possible combinations. Pick a pair of sums that correspond to a column of the same number on the board. For each sum in the pair, if you have one of your 3 climbers remaining, you must enter it onto the board if you can.<div><ul><li>If you have a marker in that column, enter the climber onto the space above the marker.</li><li>If you do not have a marker in that column, enter the climber in the lowest space in that column.</li><li>If you already have a climber in that column, do not enter another climber but instead move the existing climber up one space in that column.</li></ul><div>Repeat for the other sum of the pair. If the pair is a double (for example, 7 and 7), then either move the existing climber of two spaces, or enter a climber into the column (at the bottom or above the marker) and then move it up one more space.</div><div><br></div><div>After rolling the dice, so long as any single die allows a climber to be advanced or entered, you must do so. Then you can choose whether to consolidate your gains or press your luck.</div><div><ul><li>If you consolidate your gains, replace each climber with a marker and return the climbers to your pool. When it is your turn, roll the dice again and start the process over, but entering climbers one space above existing markers.</li><li>If none of your dice allow a legal play, then your turn is over. All the climbers are returned to your pool. When it is your turn, roll the dice again and start the process over.</li></ul><div>When a player gets a marker (not a climber) in the top space in a column, that column is closed. Return all other climbers and markers in that column to the players.</div></div><div><br></div><div>The first to claim the designated number of columns wins the game. The default is 3, but any value between 1 and 11 can be chosen in the settings.&nbsp; The game works best with no more than 4 players, but this online version allows up to 6. If you have more than 4 players, you should consider making the number of columns needed to win either 2 or 1.</div><div><br></div><div>This online version of the game also has several variations of the timing of turns.</div><div><ul><li><b>Traditional</b>. Each player completes their turn in sequence. A turn ends only when a player fails to make a roll that allows a legal play or when the player decides to stop and consolidate the gains.</li><li><b>Simultaneous turns</b>. All players roll dice and make selections at the same time. Players can keep playing as long as they press their luck until either they fail to make a roll that allows a legal play or they decide to stop. Once all players have failed or stopped, a turn button appears at the top of the screen.&nbsp; Press that to begin the next round.</li><li><b>Lightning</b>. This mode is a complete free-for-all.&nbsp; Players can play without any regard for turns or rounds. The first to reach the top of the designated number of columns wins.</li></ul></div></div>",
+      "helpText": "Players take seats. Choose settings using the gear icon and press the reset button in the upper-right corner to begin the game.<div><br></div><div>Interact with the room based on the following instructions and diagram that represents a seat area.</div><div><br></div><div><img src=\"/assets/209212507_148646\" class=\"richtextAsset\"></div><div><ul><li><span style=\"color: var(--overlayFontColor);\"><b>1. Dice</b></span><span style=\"color: var(--overlayFontColor);\">. You cannot click on, move, or interact with the dice directly.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">2.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Seat</span></b><span style=\"color: var(--overlayFontColor);\">. Used at the beginning of the game. Click to choose a seat and pick a color. Click again to change color, get up from seat, or force another player to get up from seat. When playing traditional rules, the seat of the player whose turn it is will be highlighted and has the exclamation mark in the upper-right corner of the seat.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">3.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Columns won</span></b><span style=\"color: var(--overlayFontColor);\">. This displays the count of the number of columns this player reached the top of first. Under the default rules, the game automatically ends after winning 3 columns. When the victory condition is satisfied, all play immediately ends and interactive buttons are hidden.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">4.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Markers and climbers</span></b><span style=\"color: var(--overlayFontColor);\">. The markers (solid color circles) are used to indicate the level of each column that a player has safely reached. There is an unlimited number of markers. The climbers (bi-color squares) are used to indicate the level that a player is currently pursuing based on the roll of the dice in the current turn. There are 3 climbers per player. When a player end the turn to lock in the gains, the climbers are replaced by markers on the board. Under the default rules, all climber and marker activity is automated and players cannot interact with or move the climbers or markers in any way.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">5.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Dice pair sums</span></b><span style=\"color: var(--overlayFontColor);\">. These circles represent the 3 possible sums of the combinations of pairs of dice. Players choose which columns to enter or advance climbers into by clicking the appropriate circle. Click to select and click again to de-select. Automation routines constrain choices to number(s) permitted by rule.</span></li></ul><ul><ul><li>Missing pairs or a single missing circle that is part of a pair are not available to be selected by rule (or represent a duplicate pair). The missing circles are hidden to simplify the display and make decisions easier and faster.</li><li>White and yellow circles are available for a player to use. White circles indicate the player does not yet have a climber in that column for this turn. Yellow circles indicate the player already has a climber in that column.</li><li>Solid black borders indicate the player does not yet have a marker in that column.</li><li>Dashed player-colored borders indicate the player has a marker in that column.</li><li>Green circles have been selected by the player to be used to enter or advance a climber in this turn.</li></ul><li><span style=\"color: var(--overlayFontColor);\"><b>6. Roll button</b></span><span style=\"color: var(--overlayFontColor);\">. Click this button to roll the dice. The button is hidden when the action is not available.</span><br></li><li><span style=\"color: var(--overlayFontColor);\"><b>7. Confirm climber choice</b>. Click this button to confirm the choices made in the dice pair sums area. When clicked, climbers will automatically be moved to (or advanced in) columns corresponding to the numbers in the light green circles. The button is hidden when the action is not available or when a player has not yet selected columns by clicking on the dice pair sums circles.</span></li><li><b>8. End turn</b>. Once a player has entered climber(s) onto the board, the player must decide whether to keep rolling or end the turn. Pressing this button ends the turn. The button is hidden when the action is not available.</li></ul><div>If a player presses his or her luck and the dice do not permit a valid move, a red X is displayed below the seat. Press that X to return the climbers to the player and end the turn.</div></div>",
       "players": "2-6",
       "language": "",
       "variant": "",
@@ -42,7 +42,7 @@
     },
     "pid": 1,
     "linkedToSeat": "seat1",
-    "runners": [],
+    "climbers": [],
     "css": {
       "background": "transparent",
       "border": "transparent"
@@ -88,7 +88,7 @@
               {
                 "func": "SET",
                 "collection": [
-                  "setRunners${value}"
+                  "setClimbers${value}"
                 ],
                 "property": "scale",
                 "value": 0
@@ -288,8 +288,8 @@
     "markerHolder": true,
     "level": 1,
     "arrayRoutine": [
-      "// Update runner and marker arrays",
-      "var runnerArray = []",
+      "// Update climber and marker arrays",
+      "var climberArray = []",
       "var markerArray = []",
       {
         "func": "GET",
@@ -298,7 +298,7 @@
       },
       {
         "func": "SELECT",
-        "property": "runner",
+        "property": "climber",
         "value": true
       },
       {
@@ -335,7 +335,7 @@
                 "relation": "!=",
                 "operand2": null,
                 "thenRoutine": [
-                  "var runnerArray = push ${text}"
+                  "var climberArray = push ${text}"
                 ]
               }
             ]
@@ -347,8 +347,8 @@
         "collection": [
           "diceHolder${pid}"
         ],
-        "property": "runners",
-        "value": "${runnerArray}"
+        "property": "climbers",
+        "value": "${climberArray}"
       },
       {
         "func": "SELECT",
@@ -471,10 +471,10 @@
           {
             "func": "DELETE"
           },
-          "// Remove all runners",
+          "// Remove all climbers",
           {
             "func": "SELECT",
-            "property": "runner",
+            "property": "climber",
             "value": true
           },
           {
@@ -496,7 +496,7 @@
               {
                 "func": "MOVE",
                 "collection": "DEFAULT",
-                "to": "runnerHolder${pid}"
+                "to": "climberHolder${pid}"
               }
             ]
           },
@@ -1994,7 +1994,7 @@
       {
         "func": "SELECT",
         "property": "parent",
-        "value": "runnerHolder${PROPERTY index}"
+        "value": "climberHolder${PROPERTY index}"
       },
       {
         "func": "SET",
@@ -2018,8 +2018,8 @@
       }
     ]
   },
-  "runner1": {
-    "id": "runner1",
+  "climber1": {
+    "id": "climber1",
     "width": 35,
     "height": 35,
     "borderRadius": 4,
@@ -2030,17 +2030,17 @@
     },
     "bgColor1": "#dddddd",
     "bgColor2": "#b7b7b7",
-    "runner": true,
+    "climber": true,
     "activeFace": 1,
     "pid": 1,
-    "parent": "runnerHolder1",
+    "parent": "climberHolder1",
     "movable": false
   },
-  "runner3": {
+  "climber3": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner3",
+    "id": "climber3",
     "x": 36,
     "y": 0,
     "z": 2,
@@ -2048,7 +2048,7 @@
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
     "movable": false,
-    "parent": "runnerHolder1"
+    "parent": "climberHolder1"
   },
   "markerHolder1": {
     "type": "holder",
@@ -2120,9 +2120,9 @@
     ],
     "x": 486
   },
-  "runnerHolder1": {
+  "climberHolder1": {
     "type": "holder",
-    "id": "runnerHolder1",
+    "id": "climberHolder1",
     "parent": "diceHolder1",
     "x": 450,
     "width": 108,
@@ -2131,12 +2131,12 @@
     "dropOffsetX": 0,
     "dropOffsetY": 0,
     "dropTarget": {
-      "runner": true
+      "climber": true
     },
     "y": 55,
     "stackOffsetX": 36,
     "enterRoutine": [
-      "// This fixes a problem I was too lazy to figure out where sometimes markers get sent to the runner holder.",
+      "// This fixes a problem I was too lazy to figure out where sometimes markers get sent to the climber holder.",
       {
         "func": "GET",
         "collection": "child",
@@ -2186,11 +2186,11 @@
     },
     "activeFace": 0
   },
-  "runner2": {
+  "climber2": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner2",
+    "id": "climber2",
     "x": 72,
     "y": 0,
     "z": 3,
@@ -2198,7 +2198,7 @@
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
     "movable": false,
-    "parent": "runnerHolder1"
+    "parent": "climberHolder1"
   },
   "reset": {
     "type": "button",
@@ -2262,7 +2262,7 @@
             "collection": [
               "diceHolder${value}"
             ],
-            "property": "runners",
+            "property": "climbers",
             "value": []
           },
           {
@@ -2275,7 +2275,7 @@
           },
           {
             "func": "SELECT",
-            "property": "runner",
+            "property": "climber",
             "value": true
           },
           {
@@ -2287,12 +2287,12 @@
           {
             "func": "MOVE",
             "collection": "DEFAULT",
-            "to": "runnerHolder${value}"
+            "to": "climberHolder${value}"
           },
           {
             "func": "SET",
             "collection": [
-              "setRunners${value}"
+              "setClimbers${value}"
             ],
             "property": "scale",
             "value": 0
@@ -2605,10 +2605,10 @@
               }
             ]
           },
-          "// Change color to yellow for any values that match existing runners",
+          "// Change color to yellow for any values that match existing climbers",
           {
             "func": "FOREACH",
-            "in": "${PROPERTY runners OF $diceHolder}",
+            "in": "${PROPERTY climbers OF $diceHolder}",
             "loopRoutine": [
               {
                 "func": "SELECT",
@@ -2641,10 +2641,10 @@
               }
             ]
           },
-          "// If all the runners are used, hide any non-available sums",
+          "// If all the climbers are used, hide any non-available sums",
           {
             "func": "COUNT",
-            "holder": "runnerHolder${PROPERTY pid}"
+            "holder": "climberHolder${PROPERTY pid}"
           },
           {
             "func": "IF",
@@ -2681,7 +2681,7 @@
             "property": "scale",
             "value": 0
           },
-          "// If no sums match the runners, show the fail button",
+          "// If no sums match the climbers, show the fail button",
           {
             "func": "SELECT",
             "property": "optionButton",
@@ -2746,8 +2746,8 @@
     },
     "scale": 0
   },
-  "setRunners1": {
-    "id": "setRunners1",
+  "setClimbers1": {
+    "id": "setClimbers1",
     "parent": "diceHolder1",
     "x": 297,
     "y": 50,
@@ -2757,7 +2757,7 @@
     "css": {
       "default": {},
       "::after": {
-        "content": "\"Set Runners\"",
+        "content": "\"Set Climbers\"",
         "display": "none",
         "position": "absolute",
         "margin-top": "50px",
@@ -2791,7 +2791,7 @@
         "func": "IF",
         "condition": "${hasMarker}",
         "thenRoutine": [
-          "// This moves a runner from the runner holder to the next level above an existing marker in the column",
+          "// This moves a climber from the climber holder to the next level above an existing marker in the column",
           {
             "func": "GET",
             "collection": "column",
@@ -2846,7 +2846,7 @@
           }
         ],
         "elseRoutine": [
-          "// This moves a runner from the runner holder to the column at the starting level of 1 if there is no marker in the column",
+          "// This moves a climber from the climber holder to the column at the starting level of 1 if there is no marker in the column",
           {
             "func": "SELECT",
             "source": "column",
@@ -2868,7 +2868,7 @@
         "operand2": "${PROPERTY pid}",
         "thenRoutine": [
           "var diceHolder = 'diceHolder' + ${PROPERTY pid}",
-          "var currentRunners = ${PROPERTY runners OF $diceHolder}",
+          "var currentClimbers = ${PROPERTY climbers OF $diceHolder}",
           {
             "func": "SELECT",
             "property": "pair",
@@ -2891,14 +2891,14 @@
             "func": "GET",
             "property": "text",
             "aggregation": "array",
-            "variable": "updatedRunners"
+            "variable": "updatedClimbers"
           },
           {
             "func": "FOREACH",
-            "in": "${updatedRunners}",
+            "in": "${updatedClimbers}",
             "loopRoutine": [
-              "// If runners are on the board, advance them based on the selected dice pair sums.",
-              "var inPlay = ${currentRunners} includes ${value}",
+              "// If climbers are on the board, advance them based on the selected dice pair sums.",
+              "var inPlay = ${currentClimbers} includes ${value}",
               "var columnValue = ${value}",
               {
                 "func": "IF",
@@ -2925,7 +2925,7 @@
                   },
                   {
                     "func": "SELECT",
-                    "property": "runner",
+                    "property": "climber",
                     "value": true
                   },
                   {
@@ -2940,11 +2940,11 @@
                     "property": "parent",
                     "relation": "in",
                     "value": "${columnArray}",
-                    "collection": "thisRunner"
+                    "collection": "thisClimber"
                   },
                   {
                     "func": "GET",
-                    "collection": "thisRunner",
+                    "collection": "thisClimber",
                     "property": "parent"
                   },
                   {
@@ -2980,17 +2980,17 @@
                       },
                       {
                         "func": "MOVE",
-                        "collection": "thisRunner",
+                        "collection": "thisClimber",
                         "to": "${nextHolderID}"
                       }
                     ]
                   }
                 ],
                 "elseRoutine": [
-                  "// If runners are available, move them onto the board",
+                  "// If climbers are available, move them onto the board",
                   {
                     "func": "COUNT",
-                    "holder": "runnerHolder${PROPERTY pid}"
+                    "holder": "climberHolder${PROPERTY pid}"
                   },
                   {
                     "func": "IF",
@@ -3004,10 +3004,10 @@
                       },
                       {
                         "func": "MOVE",
-                        "from": "runnerHolder${PROPERTY pid}",
+                        "from": "climberHolder${PROPERTY pid}",
                         "to": "${result}"
                       },
-                      "var currentRunners = ${PROPERTY runners OF $diceHolder}"
+                      "var currentClimbers = ${PROPERTY climbers OF $diceHolder}"
                     ]
                   }
                 ]
@@ -3099,9 +3099,9 @@
           "var markersArray = ${PROPERTY markers OF $diceHolder}",
           {
             "func": "FOREACH",
-            "in": "${PROPERTY runners OF $diceHolder}",
+            "in": "${PROPERTY climbers OF $diceHolder}",
             "loopRoutine": [
-              "// Remove markers from columns with a runner",
+              "// Remove markers from columns with a climber",
               {
                 "func": "SELECT",
                 "property": "markerHolder",
@@ -3169,10 +3169,10 @@
               }
             ]
           },
-          "// Move a marker from the markerHolder to where each runner is",
+          "// Move a marker from the markerHolder to where each climber is",
           {
             "func": "SELECT",
-            "property": "runner",
+            "property": "climber",
             "value": true
           },
           {
@@ -3202,7 +3202,7 @@
                 "collection": [
                   "${widgetID}"
                 ],
-                "to": "runnerHolder${PROPERTY pid}"
+                "to": "climberHolder${PROPERTY pid}"
               },
               {
                 "func": "GET",
@@ -3219,7 +3219,7 @@
             "collection": [
               "diceHolder${PROPERTY pid}"
             ],
-            "property": "runners",
+            "property": "climbers",
             "value": []
           },
           {
@@ -3392,7 +3392,7 @@
       },
       {
         "func": "SELECT",
-        "property": "runner",
+        "property": "climber",
         "value": true
       },
       {
@@ -3404,7 +3404,7 @@
       {
         "func": "MOVE",
         "collection": "DEFAULT",
-        "to": "runnerHolder${PROPERTY pid}"
+        "to": "climberHolder${PROPERTY pid}"
       },
       {
         "func": "SET",
@@ -3466,7 +3466,7 @@
           },
           {
             "type": "checkbox",
-            "label": "Prevent players from manually moving runners and markers?",
+            "label": "Prevent players from manually moving climbers and markers?",
             "value": "${PROPERTY noMove}",
             "variable": "noMove"
           },
@@ -3522,7 +3522,7 @@
     "noMoveChangeRoutine": [
       {
         "func": "SELECT",
-        "property": "runner",
+        "property": "climber",
         "value": true
       },
       {
@@ -3803,7 +3803,7 @@
     "id": "diceHolder2",
     "x": 1020,
     "y": 245,
-    "runners": [],
+    "climbers": [],
     "claimed": 0,
     "linkedToSeat": "seat2",
     "pid": 2,
@@ -3817,20 +3817,20 @@
     "id": "markerHolder2",
     "parent": "diceHolder2"
   },
-  "runnerHolder2": {
+  "climberHolder2": {
     "inheritFrom": {
-      "runnerHolder1": "*"
+      "climberHolder1": "*"
     },
     "type": "holder",
-    "id": "runnerHolder2",
+    "id": "climberHolder2",
     "parent": "diceHolder2"
   },
-  "runner4": {
+  "climber4": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner4",
-    "parent": "runnerHolder2",
+    "id": "climber4",
+    "parent": "climberHolder2",
     "z": 1,
     "x": 0,
     "y": 0,
@@ -3842,11 +3842,11 @@
     "activeFace": 1,
     "bgColor1": "#dddddd"
   },
-  "runner5": {
+  "climber5": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner5",
+    "id": "climber5",
     "x": 36,
     "y": 0,
     "z": 2,
@@ -3856,14 +3856,14 @@
     "bgColor2": "#b7b7b7",
     "movable": false,
     "activeFace": 1,
-    "parent": "runnerHolder2",
+    "parent": "climberHolder2",
     "bgColor1": "#dddddd"
   },
-  "runner6": {
+  "climber6": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner6",
+    "id": "climber6",
     "x": 72,
     "y": 0,
     "z": 3,
@@ -3873,7 +3873,7 @@
     "bgColor2": "#b7b7b7",
     "movable": false,
     "activeFace": 1,
-    "parent": "runnerHolder2",
+    "parent": "climberHolder2",
     "bgColor1": "#dddddd"
   },
   "pairBorder4": {
@@ -3907,11 +3907,11 @@
     "scale": 0,
     "pid": 2
   },
-  "setRunners2": {
+  "setClimbers2": {
     "inheritFrom": {
-      "setRunners1": "*"
+      "setClimbers1": "*"
     },
-    "id": "setRunners2",
+    "id": "setClimbers2",
     "parent": "diceHolder2",
     "scale": 0,
     "pid": 2
@@ -4011,7 +4011,7 @@
     "id": "diceHolder3",
     "x": 1020,
     "y": 400,
-    "runners": [],
+    "climbers": [],
     "markers": [],
     "claimed": 0,
     "linkedToSeat": "seat3",
@@ -4025,20 +4025,20 @@
     "id": "markerHolder3",
     "parent": "diceHolder3"
   },
-  "runnerHolder3": {
+  "climberHolder3": {
     "inheritFrom": {
-      "runnerHolder1": "*"
+      "climberHolder1": "*"
     },
     "type": "holder",
-    "id": "runnerHolder3",
+    "id": "climberHolder3",
     "parent": "diceHolder3"
   },
-  "runner7": {
+  "climber7": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner7",
-    "parent": "runnerHolder3",
+    "id": "climber7",
+    "parent": "climberHolder3",
     "z": 1,
     "x": 0,
     "y": 0,
@@ -4050,12 +4050,12 @@
     "bgColor2": "#b7b7b7",
     "activeFace": 1
   },
-  "runner8": {
+  "climber8": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner8",
-    "parent": "runnerHolder3",
+    "id": "climber8",
+    "parent": "climberHolder3",
     "x": 36,
     "y": 0,
     "z": 2,
@@ -4067,12 +4067,12 @@
     "bgColor2": "#b7b7b7",
     "activeFace": 1
   },
-  "runner9": {
+  "climber9": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner9",
-    "parent": "runnerHolder3",
+    "id": "climber9",
+    "parent": "climberHolder3",
     "x": 72,
     "y": 0,
     "z": 3,
@@ -4114,11 +4114,11 @@
     "scale": 0,
     "pid": 3
   },
-  "setRunners3": {
+  "setClimbers3": {
     "inheritFrom": {
-      "setRunners1": "*"
+      "setClimbers1": "*"
     },
-    "id": "setRunners3",
+    "id": "setClimbers3",
     "parent": "diceHolder3",
     "scale": 0,
     "pid": 3
@@ -4218,7 +4218,7 @@
     "id": "diceHolder4",
     "x": 1020,
     "y": 555,
-    "runners": [],
+    "climbers": [],
     "claimed": 0,
     "linkedToSeat": "seat4",
     "pid": 4,
@@ -4232,20 +4232,20 @@
     "id": "markerHolder4",
     "parent": "diceHolder4"
   },
-  "runnerHolder4": {
+  "climberHolder4": {
     "inheritFrom": {
-      "runnerHolder1": "*"
+      "climberHolder1": "*"
     },
     "type": "holder",
-    "id": "runnerHolder4",
+    "id": "climberHolder4",
     "parent": "diceHolder4"
   },
-  "runner10": {
+  "climber10": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner10",
-    "parent": "runnerHolder4",
+    "id": "climber10",
+    "parent": "climberHolder4",
     "z": 1,
     "x": 0,
     "y": 0,
@@ -4257,12 +4257,12 @@
     "bgColor2": "#b7b7b7",
     "activeFace": 1
   },
-  "runner11": {
+  "climber11": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner11",
-    "parent": "runnerHolder4",
+    "id": "climber11",
+    "parent": "climberHolder4",
     "x": 36,
     "y": 0,
     "z": 2,
@@ -4274,12 +4274,12 @@
     "bgColor2": "#b7b7b7",
     "activeFace": 1
   },
-  "runner12": {
+  "climber12": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner12",
-    "parent": "runnerHolder4",
+    "id": "climber12",
+    "parent": "climberHolder4",
     "x": 72,
     "y": 0,
     "z": 3,
@@ -4321,11 +4321,11 @@
     "scale": 0,
     "pid": 4
   },
-  "setRunners4": {
+  "setClimbers4": {
     "inheritFrom": {
-      "setRunners1": "*"
+      "setClimbers1": "*"
     },
-    "id": "setRunners4",
+    "id": "setClimbers4",
     "parent": "diceHolder4",
     "scale": 0,
     "pid": 4
@@ -4426,7 +4426,7 @@
     "id": "diceHolder5",
     "x": 1020,
     "y": 710,
-    "runners": [],
+    "climbers": [],
     "markers": [],
     "claimed": 0,
     "linkedToSeat": "seat5",
@@ -4440,20 +4440,20 @@
     "id": "markerHolder5",
     "parent": "diceHolder5"
   },
-  "runnerHolder5": {
+  "climberHolder5": {
     "inheritFrom": {
-      "runnerHolder1": "*"
+      "climberHolder1": "*"
     },
     "type": "holder",
-    "id": "runnerHolder5",
+    "id": "climberHolder5",
     "parent": "diceHolder5"
   },
-  "runner13": {
+  "climber13": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner13",
-    "parent": "runnerHolder5",
+    "id": "climber13",
+    "parent": "climberHolder5",
     "z": 1,
     "x": 0,
     "y": 0,
@@ -4465,12 +4465,12 @@
     "activeFace": 1,
     "bgColor1": "#dddddd"
   },
-  "runner14": {
+  "climber14": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner14",
-    "parent": "runnerHolder5",
+    "id": "climber14",
+    "parent": "climberHolder5",
     "x": 36,
     "y": 0,
     "z": 2,
@@ -4482,12 +4482,12 @@
     "activeFace": 1,
     "bgColor1": "#dddddd"
   },
-  "runner15": {
+  "climber15": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner15",
-    "parent": "runnerHolder5",
+    "id": "climber15",
+    "parent": "climberHolder5",
     "x": 72,
     "y": 0,
     "z": 3,
@@ -4529,11 +4529,11 @@
     "scale": 0,
     "pid": 5
   },
-  "setRunners5": {
+  "setClimbers5": {
     "inheritFrom": {
-      "setRunners1": "*"
+      "setClimbers1": "*"
     },
-    "id": "setRunners5",
+    "id": "setClimbers5",
     "parent": "diceHolder5",
     "scale": 0,
     "pid": 5
@@ -4633,7 +4633,7 @@
     "id": "diceHolder6",
     "x": 1020,
     "y": 865,
-    "runners": [],
+    "climbers": [],
     "claimed": 0,
     "linkedToSeat": "seat6",
     "pid": 6,
@@ -4647,20 +4647,20 @@
     "id": "markerHolder6",
     "parent": "diceHolder6"
   },
-  "runnerHolder6": {
+  "climberHolder6": {
     "inheritFrom": {
-      "runnerHolder1": "*"
+      "climberHolder1": "*"
     },
     "type": "holder",
-    "id": "runnerHolder6",
+    "id": "climberHolder6",
     "parent": "diceHolder6"
   },
-  "runner16": {
+  "climber16": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner16",
-    "parent": "runnerHolder6",
+    "id": "climber16",
+    "parent": "climberHolder6",
     "z": 1,
     "x": 0,
     "y": 0,
@@ -4672,12 +4672,12 @@
     "activeFace": 1,
     "bgColor1": "#dddddd"
   },
-  "runner17": {
+  "climber17": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner17",
-    "parent": "runnerHolder6",
+    "id": "climber17",
+    "parent": "climberHolder6",
     "x": 36,
     "y": 0,
     "z": 2,
@@ -4689,12 +4689,12 @@
     "activeFace": 1,
     "bgColor1": "#dddddd"
   },
-  "runner18": {
+  "climber18": {
     "inheritFrom": {
-      "runner1": "!parent"
+      "climber1": "!parent"
     },
-    "id": "runner18",
-    "parent": "runnerHolder6",
+    "id": "climber18",
+    "parent": "climberHolder6",
     "x": 72,
     "y": 0,
     "z": 3,
@@ -4736,11 +4736,11 @@
     "scale": 0,
     "pid": 6
   },
-  "setRunners6": {
+  "setClimbers6": {
     "inheritFrom": {
-      "setRunners1": "*"
+      "setClimbers1": "*"
     },
-    "id": "setRunners6",
+    "id": "setClimbers6",
     "parent": "diceHolder6",
     "scale": 0,
     "pid": 6
@@ -4975,7 +4975,7 @@
           },
           {
             "func": "COUNT",
-            "holder": "runnerHolder${PROPERTY pid}"
+            "holder": "climberHolder${PROPERTY pid}"
           },
           {
             "func": "IF",
@@ -5028,7 +5028,7 @@
                     "operand1": "${PROPERTY text OF $pair}",
                     "operand2": "${PROPERTY text}",
                     "thenRoutine": [
-                      "// Special case for when there is one runner left and the pair is the same number",
+                      "// Special case for when there is one climber left and the pair is the same number",
                       {
                         "func": "SET",
                         "collection": [
@@ -5119,7 +5119,7 @@
               {
                 "func": "SET",
                 "collection": [
-                  "setRunners${PROPERTY pid}"
+                  "setClimbers${PROPERTY pid}"
                 ],
                 "property": "scale",
                 "value": 1
@@ -5129,7 +5129,7 @@
               {
                 "func": "SET",
                 "collection": [
-                  "setRunners${PROPERTY pid}"
+                  "setClimbers${PROPERTY pid}"
                 ],
                 "property": "scale",
                 "value": 0
@@ -5143,7 +5143,7 @@
       "var diceHolder = 'diceHolder' + ${PROPERTY pid}",
       {
         "func": "FOREACH",
-        "in": "${PROPERTY runners OF $diceHolder}",
+        "in": "${PROPERTY climbers OF $diceHolder}",
         "loopRoutine": [
           {
             "func": "SELECT",
