@@ -20,7 +20,8 @@
     "bgColor": "#dddddd",
     "classes": "transition",
     "id": "1393",
-    "parent": "markerHolder2"
+    "parent": "markerHolder2",
+    "movable": false
   },
   "_meta": {
     "version": 15,
@@ -33,7 +34,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.</div><div><br></div><div>The rolling dice and stop sign icons are by Delapouite and are availabe under CC BY 3.0 from https://game-icons.net/.</div><br><div>The background and library image were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"watercolor painting, symmetrical rocky mountain snow covered peak.\"<br></div>",
-      "lastUpdate": 1711134599975,
+      "lastUpdate": 1711135127843,
       "showName": true,
       "skill": "",
       "description": "Roll the dice to push your luck to see how far you can climb in a turn. But you risk everything gained that turn if the dice do not go your way. First to reach the top of the designated number of columns wins.",
@@ -2101,7 +2102,8 @@
     "activeFace": 1,
     "pid": 1,
     "classes": "transition",
-    "parent": "climberHolder1"
+    "parent": "climberHolder1",
+    "movable": false
   },
   "climber3": {
     "inheritFrom": {
@@ -2114,7 +2116,7 @@
     "bgColor1": "#dddddd",
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
-    "movable": true,
+    "movable": false,
     "parent": "climberHolder1"
   },
   "markerHolder1": {
@@ -2290,7 +2292,7 @@
     "bgColor1": "#dddddd",
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
-    "movable": true,
+    "movable": false,
     "parent": "climberHolder1"
   },
   "reset": {
@@ -3579,7 +3581,7 @@
     "classes": "material-icons",
     "y": 2,
     "toWin": 3,
-    "noMove": false,
+    "noMove": true,
     "noMoveChangeRoutine": [
       {
         "func": "SELECT",
@@ -3900,7 +3902,7 @@
     "height": 35,
     "pid": 2,
     "bgColor2": "#b7b7b7",
-    "movable": true,
+    "movable": false,
     "activeFace": 1,
     "bgColor1": "#dddddd"
   },
@@ -3916,7 +3918,7 @@
     "height": 35,
     "pid": 2,
     "bgColor2": "#b7b7b7",
-    "movable": true,
+    "movable": false,
     "activeFace": 1,
     "parent": "climberHolder2",
     "bgColor1": "#dddddd"
@@ -3933,7 +3935,7 @@
     "height": 35,
     "pid": 2,
     "bgColor2": "#b7b7b7",
-    "movable": true,
+    "movable": false,
     "activeFace": 1,
     "parent": "climberHolder2",
     "bgColor1": "#dddddd"
@@ -4107,7 +4109,7 @@
     "width": 35,
     "height": 35,
     "pid": 3,
-    "movable": true,
+    "movable": false,
     "bgColor1": "#dddddd",
     "bgColor2": "#b7b7b7",
     "activeFace": 1
@@ -4124,7 +4126,7 @@
     "width": 35,
     "height": 35,
     "pid": 3,
-    "movable": true,
+    "movable": false,
     "bgColor1": "#dddddd",
     "bgColor2": "#b7b7b7",
     "activeFace": 1
@@ -4141,7 +4143,7 @@
     "width": 35,
     "height": 35,
     "pid": 3,
-    "movable": true,
+    "movable": false,
     "bgColor1": "#dddddd",
     "bgColor2": "#b7b7b7",
     "activeFace": 1
@@ -4313,7 +4315,7 @@
     "width": 35,
     "height": 35,
     "pid": 4,
-    "movable": true,
+    "movable": false,
     "bgColor1": "#dddddd",
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
@@ -4330,7 +4332,7 @@
     "width": 35,
     "height": 35,
     "pid": 4,
-    "movable": true,
+    "movable": false,
     "bgColor1": "#dddddd",
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
@@ -4348,7 +4350,7 @@
     "width": 35,
     "height": 35,
     "pid": 4,
-    "movable": true,
+    "movable": false,
     "bgColor1": "#dddddd",
     "bgColor2": "#b7b7b7",
     "activeFace": 1
@@ -4522,7 +4524,7 @@
     "width": 35,
     "height": 35,
     "pid": 5,
-    "movable": true,
+    "movable": false,
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
     "bgColor1": "#dddddd"
@@ -4539,7 +4541,7 @@
     "width": 35,
     "height": 35,
     "pid": 5,
-    "movable": true,
+    "movable": false,
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
     "bgColor1": "#dddddd"
@@ -4556,7 +4558,7 @@
     "width": 35,
     "height": 35,
     "pid": 5,
-    "movable": true,
+    "movable": false,
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
     "bgColor1": "#dddddd"
@@ -4729,7 +4731,7 @@
     "width": 35,
     "height": 35,
     "pid": 6,
-    "movable": true,
+    "movable": false,
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
     "bgColor1": "#dddddd"
@@ -4746,7 +4748,7 @@
     "width": 35,
     "height": 35,
     "pid": 6,
-    "movable": true,
+    "movable": false,
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
     "bgColor1": "#dddddd"
@@ -4763,7 +4765,7 @@
     "width": 35,
     "height": 35,
     "pid": 6,
-    "movable": true,
+    "movable": false,
     "bgColor2": "#b7b7b7",
     "activeFace": 1,
     "bgColor1": "#dddddd"
@@ -5990,7 +5992,8 @@
     "bgColor2": "#e55c32",
     "classes": "transition",
     "id": "fj86",
-    "parent": "markerHolder3"
+    "parent": "markerHolder3",
+    "movable": false
   },
   "jn5y": {
     "width": 35,
@@ -6011,7 +6014,8 @@
     "bgColor": "#dddddd",
     "classes": "transition",
     "id": "jn5y",
-    "parent": "markerHolder5"
+    "parent": "markerHolder5",
+    "movable": false
   },
   "2zvf": {
     "width": 35,
@@ -6034,7 +6038,8 @@
     "bgColor": "#dddddd",
     "classes": "transition",
     "id": "2zvf",
-    "parent": "markerHolder6"
+    "parent": "markerHolder6",
+    "movable": false
   },
   "aw7b": {
     "width": 35,
@@ -6055,7 +6060,8 @@
     "bgColor2": "#e55c32",
     "classes": "transition",
     "id": "aw7b",
-    "parent": "markerHolder4"
+    "parent": "markerHolder4",
+    "movable": false
   },
   "egt7": {
     "width": 35,
@@ -6076,6 +6082,7 @@
     "bgColor2": "#e55c32",
     "classes": "transition",
     "id": "egt7",
-    "parent": "markerHolder1"
+    "parent": "markerHolder1",
+    "movable": false
   }
 }
