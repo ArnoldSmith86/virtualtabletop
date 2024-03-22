@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.</div><div><br></div><div>The rolling dice and stop sign icons are by Delapouite and are availabe under CC BY 3.0 from https://game-icons.net/.</div><br><div>The background and library image were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"watercolor painting, symmetrical rocky mountain snow covered peak.\"<br></div>",
-      "lastUpdate": 1711065972997,
+      "lastUpdate": 1711069660342,
       "showName": true,
       "skill": "",
       "description": "Roll the dice to push your luck to see how far you can climb in a turn. But you risk everything gained that turn if the dice do not go your way. First to reach the top of the designated number of columns wins.",
@@ -1782,10 +1782,22 @@
       }
     ],
     "useSeatRoutine": [
+      "// Customized seat color and options routine",
       "var leaveSeat = false",
       "var name = ${PROPERTY player}",
       "var color = ${PROPERTY color}",
       "var result = []",
+      "var colorArray = ${PROPERTY colorArray}",
+      "var colorList = ${playerColor} indexOf ${colorArray}",
+      {
+        "func": "IF",
+        "operand1": "${colorList}",
+        "relation": ">",
+        "operand2": "-1",
+        "elseRoutine": [
+          "var playerColor = ${colorArray.0}"
+        ]
+      },
       {
         "func": "IF",
         "operand1": "${PROPERTY player}",
@@ -1992,6 +2004,7 @@
       }
     ],
     "markerColorRoutine": [
+      "// Sets the colors on the markers and climbers",
       "var markerContrast = ${PROPERTY mainColor} colorContrast 0.15",
       {
         "func": "SELECT",
