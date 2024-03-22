@@ -1,28 +1,4 @@
 {
-  "1393": {
-    "width": 35,
-    "height": 35,
-    "borderRadius": 100,
-    "z": 8313,
-    "css": {
-      "background": "${PROPERTY bgColor}",
-      "border": "1px solid black"
-    },
-    "marker": true,
-    "color": "#ffc107",
-    "clonedFrom": "l5ce",
-    "activeFace": 1,
-    "pid": 2,
-    "bgColor1": "#bf360c",
-    "bgColor2": "#e55c32",
-    "dragging": "Left",
-    "hoverParent": "markerHolder2",
-    "bgColor": "#dddddd",
-    "classes": "transition",
-    "id": "1393",
-    "parent": "markerHolder2",
-    "movable": false
-  },
   "_meta": {
     "version": 15,
     "info": {
@@ -33,8 +9,8 @@
       "year": "1980",
       "mode": "vs",
       "time": "15",
-      "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.</div><div><br></div><div>The rolling dice and stop sign icons are by Delapouite and are availabe under CC BY 3.0 from https://game-icons.net/.</div><br><div>The background and library image were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"watercolor painting, symmetrical rocky mountain snow covered peak.\"<br></div>",
-      "lastUpdate": 1711135665772,
+      "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.</div><div><br></div><div>The rolling dice and stop sign icons are by Delapouite and are availabe under CC BY 3.0 from https://game-icons.net/.</div><br><div>The mountain background and library image were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"watercolor painting, symmetrical rocky mountain snow covered peak.\" The underwater image used the following prompt: \"colorful symmetrical underwate scene from surface to bottom 50 feet below, boat, marine life, coral reef.\"<br></div>",
+      "lastUpdate": 1711151545336,
       "showName": true,
       "skill": "",
       "description": "Roll the dice to push your luck to see how far you can climb in a turn. But you risk everything gained that turn if the dice do not go your way. First to reach the top of the designated number of columns wins.",
@@ -43,7 +19,7 @@
       "similarDesigner": "Sid Sackson",
       "similarAwards": "2021 5 Seasons Best International Filler Game Winner\n1982 Spiel des Jahres Recommended\n1981 Spiel des Jahres Recommended",
       "ruleText": "Roll 4 dice. Divide the dice into pairs and sum the pips. At most, there are 3 possible combinations. Pick a pair of sums that correspond to a column of the same number on the board. For each sum in the pair, if you have one of your 3 climbers remaining, you must enter it onto the board if you can.<div><ul><li>If you have a marker in that column, enter the climber onto the space above the marker.</li><li>If you do not have a marker in that column, enter the climber in the lowest space in that column.</li><li>If you already have a climber in that column, do not enter another climber but instead move the existing climber up one space in that column.</li></ul><div>Repeat for the other sum of the pair. If the pair is a double (for example, 7 and 7), then either move the existing climber up two spaces, or enter a climber into the column (at the bottom or above the marker) and then move it up one more space.</div><div><br></div><div>After rolling the dice, so long as any single die allows a climber to be advanced or entered, you must do so. Then you can choose whether to consolidate your gains or press your luck.</div><div><ul><li>If you consolidate your gains, replace each climber with a marker and return the climbers to your pool. When it is your turn, roll the dice again and start the process over, but entering climbers one space above existing markers.</li><li>If none of your dice allow a legal play, then your turn is over. All the climbers are returned to your pool. When it is your turn, roll the dice again and start the process over.</li></ul><div>When a player gets a marker (not a climber) in the top space in a column, that column is closed. Return all other climbers and markers in that column to the players.</div></div><div><br></div><div>The first to claim the designated number of columns wins the game. The default is 3, but any value between 1 and 11 can be chosen in the settings.&nbsp; The game works best with no more than 4 players, but this online version allows up to 6. If you have more than 4 players, you should consider making the number of columns needed to win either 2 or 1.</div><div><br></div><div>This online version of the game also has several variations of the timing of turns.</div><div><ul><li><b>Traditional</b>. Each player completes their turn in sequence. A turn ends only when a player fails to make a roll that allows a legal play or when the player decides to stop and consolidate the gains.</li><li><b>Simultaneous turns</b>. All players roll dice and make selections at the same time. Players can keep playing as long as they press their luck until either they fail to make a roll that allows a legal play or they decide to stop. Once all players have failed or stopped, a turn button appears at the top of the screen.&nbsp; Press that to begin the next round.</li><li><b>Lightning</b>. This mode is a complete free-for-all.&nbsp; Players can play without any regard for turns or rounds. The first to reach the top of the designated number of columns wins.</li></ul></div></div>",
-      "helpText": "Players take seats. Choose settings using the gear icon and press the reset button in the upper-right corner to begin the game.<div><br></div><div>Interact with the room based on the following instructions and diagram that represents a seat area. Except for the seat widget itself, players can only press can see but cannot press buttons outside the seat area they are sitting in.</div><div><br></div><div><img src=\"/assets/209212507_148646\" class=\"richtextAsset\"></div><div><ul><li><span style=\"color: var(--overlayFontColor);\"><b>1. Dice</b></span><span style=\"color: var(--overlayFontColor);\">. You cannot click on, move, or interact with the dice directly. They roll when you click the roll dice button (#6).</span></li><li><b><span style=\"color: var(--overlayFontColor);\">2.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Seat</span></b><span style=\"color: var(--overlayFontColor);\">. Used at the beginning of the game. Click to choose a seat and pick a color. Click again to change color, get up from seat, or force another player to get up from seat. When playing traditional rules, the seat of the player whose turn it is will be highlighted and has the exclamation mark in the upper-right corner of the seat.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">3.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Columns won</span></b><span style=\"color: var(--overlayFontColor);\">. This displays the count of the number of columns this player has won (reached the top with a marker first). Under the default rules, the game automatically ends after winning 3 columns. When the victory condition is satisfied, all play immediately ends, interactive buttons are hidden, and the a trophy icon is displayed below the winner's seat.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">4.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Markers and climbers</span></b><span style=\"color: var(--overlayFontColor);\">. The markers (solid color circles) are used to indicate the level of each column that a player has safely reached. There is an unlimited number of markers. The climbers (bi-color squares) are used to indicate the level that a player is currently pursuing based on the roll of the dice in the current turn. There are 3 climbers per player. When a player ends the turn to lock in the gains, the climbers are replaced by markers on the board. Under the default rules, all climber and marker activity is automated and players cannot interact with or move the climbers or markers in any way. You can modify that using the settings button at any time without interfering with the progress of the game.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">5.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Dice pair sums</span></b><span style=\"color: var(--overlayFontColor);\">. These circles represent the 3 possible sums of the combinations of pairs of dice. Players choose which columns to enter or advance climbers into by clicking the appropriate circle. Click to select and click again to de-select. Automation routines constrain choices to number(s) permitted by rule.</span></li></ul><ul><ul><li>Missing pairs or a single missing circle that is part of a pair are not available to be selected by rule (or represent a duplicate pair). The missing circles are hidden to simplify the display and make decisions easier and faster.</li><li>White and yellow circles are available for a player to use. White circles indicate the player does not yet have a climber in that column for this turn. Yellow circles indicate the player already has a climber in that column.</li><li>Solid black borders indicate the player does not yet have a marker in that column.</li><li>Dashed player-colored borders indicate the player has a marker in that column.</li><li>Green circles are the columns the player has chosen to enter or advance a climber in the current turn.</li></ul><li><span style=\"color: var(--overlayFontColor);\"><b>6. Roll button</b></span><span style=\"color: var(--overlayFontColor);\">. Click this button to roll the dice. The button is hidden when the action is not available.</span><br></li><li><span style=\"color: var(--overlayFontColor);\"><b>7. Confirm climber choice</b>. Click this button to confirm the choices made in the dice pair sums area. When clicked, climbers will automatically be moved to (or advanced in) columns corresponding to the numbers in the green circles. The button is hidden when the action is not available or when a player has not yet selected columns by clicking on the dice pair sums circles.</span></li><li><b>8. End turn</b>. Once a player has entered climber(s) onto the board, the player must decide whether to keep rolling or end the turn. Pressing this button ends the turn. The button is hidden when the action is not available.</li></ul><div>If a player presses his or her luck and the dice do not permit a valid move, a red X is displayed below the seat. Press that X to return the climbers to the player and end the turn.</div></div>",
+      "helpText": "Players take seats. Choose settings using the gear icon and press the reset button in the upper-right corner to begin the game.<div><br></div><div>Interact with the room based on the following instructions and diagram that represents a seat area. Except for the seat widget itself, players can only press can see but cannot press buttons outside the seat area they are sitting in.</div><div><br></div><div><img src=\"/assets/209212507_148646\" class=\"richtextAsset\"></div><div><ul><li><span style=\"color: var(--overlayFontColor);\"><b>1. Dice</b></span><span style=\"color: var(--overlayFontColor);\">. You cannot click on, move, or interact with the dice directly. They roll when you click the roll dice button (#6).</span></li><li><b><span style=\"color: var(--overlayFontColor);\">2.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Seat</span></b><span style=\"color: var(--overlayFontColor);\">. Used at the beginning of the game. Click to choose a seat and pick a color. Click again to change color, get up from seat, or force another player to get up from seat. When playing traditional rules, the seat of the player whose turn it is will be highlighted and has the exclamation mark in the upper-right corner of the seat.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">3.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Columns won</span></b><span style=\"color: var(--overlayFontColor);\">. This displays the count of the number of columns this player has won (reached the top with a marker first). Under the default rules, the game automatically ends after winning 3 columns. When the victory condition is satisfied, all play immediately ends, interactive buttons are hidden, and the a trophy icon is displayed below the winner's seat.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">4.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Markers and climbers</span></b><span style=\"color: var(--overlayFontColor);\">. The markers (solid color circles) are used to indicate the level of each column that a player has safely reached. There is an unlimited number of markers. The climbers (bi-color squares) are used to indicate the level that a player is currently pursuing based on the roll of the dice in the current turn. There are 3 climbers per player. When a player ends the turn to lock in the gains, the climbers are replaced by markers on the board. Under the default rules, all climber and marker activity is automated and players cannot interact with or move the climbers or markers in any way. You can modify that using the settings button at any time without interfering with the progress of the game.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">5.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Dice pair sums</span></b><span style=\"color: var(--overlayFontColor);\">. These circles represent the 3 possible sums of the combinations of pairs of dice. Players choose which columns to enter or advance climbers into by clicking the appropriate circle. Click to select and click again to de-select or click a die in another pair to change the selction. Automation routines constrain choices to number(s) permitted by rule.</span></li></ul><ul><ul><li>Missing pairs or a single missing circle that is part of a pair are not available to be selected by rule (or represent a duplicate pair). The missing circles are hidden to simplify the display and make decisions easier and faster.</li><li>White and yellow circles are available for a player to use. White circles indicate the player does not yet have a climber in that column for this turn. Yellow circles indicate the player already has a climber in that column.</li><li>Solid black borders indicate the player does not yet have a marker in that column.</li><li>Dashed player-colored borders indicate the player has a marker in that column.</li><li>Green circles are the columns the player has chosen to enter or advance a climber in the current turn.</li></ul><li><span style=\"color: var(--overlayFontColor);\"><b>6. Roll button</b></span><span style=\"color: var(--overlayFontColor);\">. Click this button to roll the dice. The button is hidden when the action is not available.</span><br></li><li><span style=\"color: var(--overlayFontColor);\"><b>7. Confirm climber choice</b>. Click this button to confirm the choices made in the dice pair sums area. When clicked, climbers will automatically be moved to (or advanced in) columns corresponding to the numbers in the green circles. The button is hidden when the action is not available or when a player has not yet selected columns by clicking on the dice pair sums circles.</span></li><li><b>8. End turn</b>. Once a player has entered climber(s) onto the board, the player must decide whether to keep rolling or end the turn. Pressing this button ends the turn. The button is hidden when the action is not available.</li></ul><div>If a player presses his or her luck and the dice do not permit a valid move, a red X is displayed below the seat. Press that X to return the climbers to the player and end the turn.</div></div><div><br></div><div>In the settings menu, there is an option to reverse the direction of the board (going from top to bottom) using an underwater background image instead of the default mountain background.</div>",
       "variantImage": "",
       "variant": "",
       "language": "",
@@ -148,9 +124,10 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "opacity": 0.3
+      "opacity": 0.3,
+      "transition": "linear 2s"
     },
-    "image": "/assets/-1518626507_124534"
+    "image": "/assets/-1958895190_1915587"
   },
   "boardBase": {
     "id": "boardBase",
@@ -597,7 +574,10 @@
         ]
       }
     ],
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3,
+    "classes": "transition"
   },
   "holder2": {
     "inheritFrom": {
@@ -610,7 +590,9 @@
     "text": 3,
     "rightX": 138,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3
   },
   "holder3": {
     "inheritFrom": {
@@ -623,7 +605,9 @@
     "text": 4,
     "rightX": 233,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3
   },
   "holder4": {
     "inheritFrom": {
@@ -636,7 +620,9 @@
     "text": 5,
     "rightX": 328,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3
   },
   "holder5": {
     "inheritFrom": {
@@ -650,7 +636,9 @@
     "rightX": 423,
     "width": 35,
     "z": 12,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3
   },
   "holder6": {
     "inheritFrom": {
@@ -663,7 +651,9 @@
     "text": 7,
     "rightX": 518,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3
   },
   "holder7": {
     "inheritFrom": {
@@ -676,7 +666,9 @@
     "text": 8,
     "rightX": 613,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3
   },
   "holder8": {
     "inheritFrom": {
@@ -689,7 +681,9 @@
     "text": 9,
     "rightX": 708,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3
   },
   "holder9": {
     "inheritFrom": {
@@ -702,7 +696,9 @@
     "text": 10,
     "rightX": 803,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3
   },
   "holder10": {
     "inheritFrom": {
@@ -716,7 +712,9 @@
     "rightX": 898,
     "width": 35,
     "z": 5,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3
   },
   "holder11": {
     "inheritFrom": {
@@ -729,7 +727,9 @@
     "text": 12,
     "rightX": 993,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 946,
+    "descendY": 3
   },
   "holder12": {
     "inheritFrom": {
@@ -743,7 +743,9 @@
     "rightX": 43,
     "width": 35,
     "level": 2,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder13": {
     "inheritFrom": {
@@ -756,7 +758,9 @@
     "text": 3,
     "rightX": 138,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder14": {
     "inheritFrom": {
@@ -769,7 +773,9 @@
     "text": 4,
     "rightX": 233,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder15": {
     "inheritFrom": {
@@ -782,7 +788,9 @@
     "text": 5,
     "rightX": 328,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder16": {
     "inheritFrom": {
@@ -796,7 +804,9 @@
     "rightX": 423,
     "width": 35,
     "z": 11,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder17": {
     "inheritFrom": {
@@ -809,7 +819,9 @@
     "text": 7,
     "rightX": 518,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder18": {
     "inheritFrom": {
@@ -822,7 +834,9 @@
     "text": 8,
     "rightX": 613,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder19": {
     "inheritFrom": {
@@ -835,7 +849,9 @@
     "text": 9,
     "rightX": 708,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder20": {
     "inheritFrom": {
@@ -848,7 +864,9 @@
     "text": 10,
     "rightX": 803,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder21": {
     "inheritFrom": {
@@ -862,7 +880,9 @@
     "rightX": 898,
     "width": 35,
     "z": 4,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder22": {
     "inheritFrom": {
@@ -875,7 +895,9 @@
     "text": 12,
     "rightX": 993,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 867,
+    "descendY": 80
   },
   "holder23": {
     "inheritFrom": {
@@ -891,7 +913,9 @@
     "width": 35,
     "level": 3,
     "topLevel": true,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder24": {
     "inheritFrom": {
@@ -905,7 +929,9 @@
     "rightX": 138,
     "width": 35,
     "level": 3,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder25": {
     "inheritFrom": {
@@ -919,7 +945,9 @@
     "rightX": 233,
     "width": 35,
     "level": 3,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder26": {
     "inheritFrom": {
@@ -933,7 +961,9 @@
     "rightX": 328,
     "width": 35,
     "level": 3,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder27": {
     "inheritFrom": {
@@ -948,7 +978,9 @@
     "width": 35,
     "level": 3,
     "z": 10,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder28": {
     "inheritFrom": {
@@ -962,7 +994,9 @@
     "rightX": 518,
     "width": 35,
     "level": 3,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder29": {
     "inheritFrom": {
@@ -976,7 +1010,9 @@
     "rightX": 613,
     "width": 35,
     "level": 3,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder30": {
     "inheritFrom": {
@@ -990,7 +1026,9 @@
     "rightX": 708,
     "width": 35,
     "level": 3,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder31": {
     "inheritFrom": {
@@ -1004,7 +1042,9 @@
     "rightX": 803,
     "width": 35,
     "level": 3,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder32": {
     "inheritFrom": {
@@ -1019,7 +1059,9 @@
     "width": 35,
     "level": 3,
     "z": 3,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder33": {
     "inheritFrom": {
@@ -1033,7 +1075,9 @@
     "rightX": 993,
     "width": 35,
     "level": 3,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 790,
+    "descendY": 159
   },
   "holder35": {
     "inheritFrom": {
@@ -1047,7 +1091,9 @@
     "level": 4,
     "rightX": 138,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 711,
+    "descendY": 238
   },
   "holder36": {
     "inheritFrom": {
@@ -1061,7 +1107,9 @@
     "level": 4,
     "rightX": 233,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 711,
+    "descendY": 238
   },
   "holder37": {
     "inheritFrom": {
@@ -1075,7 +1123,9 @@
     "level": 4,
     "rightX": 328,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 711,
+    "descendY": 238
   },
   "holder38": {
     "inheritFrom": {
@@ -1090,7 +1140,9 @@
     "rightX": 423,
     "width": 35,
     "z": 9,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 711,
+    "descendY": 238
   },
   "holder39": {
     "inheritFrom": {
@@ -1104,7 +1156,9 @@
     "level": 4,
     "rightX": 518,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 711,
+    "descendY": 238
   },
   "holder40": {
     "inheritFrom": {
@@ -1118,7 +1172,9 @@
     "level": 4,
     "rightX": 613,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 711,
+    "descendY": 238
   },
   "holder41": {
     "inheritFrom": {
@@ -1132,7 +1188,9 @@
     "level": 4,
     "rightX": 708,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 711,
+    "descendY": 238
   },
   "holder42": {
     "inheritFrom": {
@@ -1146,7 +1204,9 @@
     "level": 4,
     "rightX": 803,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 711,
+    "descendY": 238
   },
   "holder43": {
     "inheritFrom": {
@@ -1160,7 +1220,9 @@
     "level": 4,
     "rightX": 898,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 711,
+    "descendY": 238
   },
   "holder46": {
     "inheritFrom": {
@@ -1174,7 +1236,9 @@
     "level": 5,
     "rightX": 138,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 631,
+    "descendY": 317
   },
   "holder47": {
     "inheritFrom": {
@@ -1188,7 +1252,9 @@
     "level": 5,
     "rightX": 233,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 631,
+    "descendY": 317
   },
   "holder48": {
     "inheritFrom": {
@@ -1202,7 +1268,9 @@
     "level": 5,
     "rightX": 328,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 631,
+    "descendY": 317
   },
   "holder49": {
     "inheritFrom": {
@@ -1217,7 +1285,9 @@
     "rightX": 423,
     "width": 35,
     "z": 8,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 631,
+    "descendY": 317
   },
   "holder50": {
     "inheritFrom": {
@@ -1231,7 +1301,9 @@
     "level": 5,
     "rightX": 518,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 631,
+    "descendY": 317
   },
   "holder51": {
     "inheritFrom": {
@@ -1245,7 +1317,9 @@
     "level": 5,
     "rightX": 613,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 631,
+    "descendY": 317
   },
   "holder52": {
     "inheritFrom": {
@@ -1259,7 +1333,9 @@
     "level": 5,
     "rightX": 708,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 631,
+    "descendY": 317
   },
   "holder53": {
     "inheritFrom": {
@@ -1273,7 +1349,9 @@
     "level": 5,
     "rightX": 803,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 631,
+    "descendY": 317
   },
   "holder58": {
     "inheritFrom": {
@@ -1287,7 +1365,9 @@
     "level": 6,
     "rightX": 233,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 552,
+    "descendY": 395
   },
   "holder59": {
     "inheritFrom": {
@@ -1301,7 +1381,9 @@
     "level": 6,
     "rightX": 328,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 552,
+    "descendY": 395
   },
   "holder60": {
     "inheritFrom": {
@@ -1316,7 +1398,9 @@
     "rightX": 423,
     "width": 35,
     "z": 7,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 552,
+    "descendY": 395
   },
   "holder61": {
     "inheritFrom": {
@@ -1330,7 +1414,9 @@
     "rightX": 518,
     "width": 35,
     "level": 6,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 552,
+    "descendY": 395
   },
   "holder62": {
     "inheritFrom": {
@@ -1344,7 +1430,9 @@
     "level": 6,
     "rightX": 613,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 552,
+    "descendY": 395
   },
   "holder63": {
     "inheritFrom": {
@@ -1358,7 +1446,9 @@
     "level": 6,
     "rightX": 708,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 552,
+    "descendY": 395
   },
   "holder64": {
     "inheritFrom": {
@@ -1372,7 +1462,9 @@
     "level": 6,
     "rightX": 803,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 552,
+    "descendY": 395
   },
   "holder69": {
     "inheritFrom": {
@@ -1386,7 +1478,9 @@
     "level": 7,
     "rightX": 233,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 473,
+    "descendY": 473
   },
   "holder70": {
     "inheritFrom": {
@@ -1400,7 +1494,9 @@
     "level": 7,
     "rightX": 328,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 473,
+    "descendY": 473
   },
   "holder71": {
     "inheritFrom": {
@@ -1415,7 +1511,9 @@
     "rightX": 423,
     "width": 35,
     "z": 6,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 473,
+    "descendY": 473
   },
   "holder72": {
     "inheritFrom": {
@@ -1429,7 +1527,9 @@
     "level": 7,
     "rightX": 518,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 473,
+    "descendY": 473
   },
   "holder73": {
     "inheritFrom": {
@@ -1443,7 +1543,9 @@
     "rightX": 613,
     "width": 35,
     "level": 7,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 473,
+    "descendY": 473
   },
   "holder74": {
     "inheritFrom": {
@@ -1457,7 +1559,9 @@
     "level": 7,
     "rightX": 708,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 473,
+    "descendY": 473
   },
   "holder75": {
     "inheritFrom": {
@@ -1471,7 +1575,9 @@
     "rightX": 803,
     "width": 35,
     "level": 7,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 473,
+    "descendY": 473
   },
   "holder81": {
     "inheritFrom": {
@@ -1485,7 +1591,9 @@
     "level": 8,
     "rightX": 328,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 395,
+    "descendY": 552
   },
   "holder82": {
     "inheritFrom": {
@@ -1500,7 +1608,9 @@
     "rightX": 423,
     "width": 35,
     "z": 5,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 395,
+    "descendY": 552
   },
   "holder83": {
     "inheritFrom": {
@@ -1514,7 +1624,9 @@
     "level": 8,
     "rightX": 518,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 395,
+    "descendY": 552
   },
   "holder84": {
     "inheritFrom": {
@@ -1528,7 +1640,9 @@
     "level": 8,
     "rightX": 613,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 395,
+    "descendY": 552
   },
   "holder85": {
     "inheritFrom": {
@@ -1542,7 +1656,9 @@
     "rightX": 708,
     "width": 35,
     "level": 8,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 395,
+    "descendY": 552
   },
   "holder92": {
     "inheritFrom": {
@@ -1556,7 +1672,9 @@
     "level": 9,
     "rightX": 328,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 317,
+    "descendY": 631
   },
   "holder93": {
     "inheritFrom": {
@@ -1571,7 +1689,9 @@
     "rightX": 423,
     "width": 35,
     "z": 4,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 317,
+    "descendY": 631
   },
   "holder94": {
     "inheritFrom": {
@@ -1585,7 +1705,9 @@
     "level": 9,
     "rightX": 518,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 317,
+    "descendY": 631
   },
   "holder95": {
     "inheritFrom": {
@@ -1599,7 +1721,9 @@
     "level": 9,
     "rightX": 613,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 317,
+    "descendY": 631
   },
   "holder96": {
     "inheritFrom": {
@@ -1613,7 +1737,9 @@
     "rightX": 708,
     "width": 35,
     "level": 9,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 317,
+    "descendY": 631
   },
   "holder104": {
     "inheritFrom": {
@@ -1628,7 +1754,9 @@
     "rightX": 423,
     "width": 35,
     "z": 3,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 238,
+    "descendY": 711
   },
   "holder105": {
     "inheritFrom": {
@@ -1642,7 +1770,9 @@
     "level": 10,
     "rightX": 518,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 238,
+    "descendY": 711
   },
   "holder106": {
     "inheritFrom": {
@@ -1656,7 +1786,9 @@
     "level": 10,
     "rightX": 613,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 238,
+    "descendY": 711
   },
   "holder115": {
     "inheritFrom": {
@@ -1671,7 +1803,9 @@
     "z": 2,
     "rightX": 423,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 159,
+    "descendY": 790
   },
   "holder116": {
     "inheritFrom": {
@@ -1685,7 +1819,9 @@
     "level": 11,
     "rightX": 518,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 159,
+    "descendY": 790
   },
   "holder117": {
     "inheritFrom": {
@@ -1699,7 +1835,9 @@
     "rightX": 613,
     "width": 35,
     "level": 11,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 159,
+    "descendY": 790
   },
   "holder127": {
     "inheritFrom": {
@@ -1713,7 +1851,9 @@
     "level": 12,
     "rightX": 518,
     "width": 35,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 80,
+    "descendY": 867
   },
   "holder138": {
     "inheritFrom": {
@@ -1727,7 +1867,9 @@
     "rightX": 518,
     "width": 35,
     "level": 13,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 3,
+    "descendY": 946
   },
   "holder54": {
     "inheritFrom": {
@@ -1742,7 +1884,9 @@
     "width": 35,
     "level": 5,
     "z": 2,
-    "opacity": 1
+    "opacity": 1,
+    "ascendY": 631,
+    "descendY": 317
   },
   "seat1": {
     "type": "seat",
@@ -3520,6 +3664,22 @@
         "header": "Choose settings...",
         "fields": [
           {
+            "type": "select",
+            "label": "Choose scene and direction of play",
+            "value": "${PROPERTY scene}",
+            "variable": "scene",
+            "options": [
+              {
+                "value": 1,
+                "text": "Mountain (ascend/up)"
+              },
+              {
+                "value": 2,
+                "text": "Underwater (descend/down)"
+              }
+            ]
+          },
+          {
             "type": "number",
             "label": "How many columns needed to win",
             "min": 1,
@@ -3558,6 +3718,7 @@
       },
       "var toWin = parseFloat ${toWin}",
       "var gameType = parseFloat ${gameType}",
+      "var scene = parseFloat ${scene}",
       {
         "func": "SET",
         "collection": "thisButton",
@@ -3575,6 +3736,12 @@
         "collection": "thisButton",
         "property": "gameType",
         "value": "${gameType}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scene",
+        "value": "${scene}"
       }
     ],
     "text": "settings",
@@ -3772,7 +3939,83 @@
           }
         ]
       }
-    ]
+    ],
+    "sceneChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scene}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "background"
+            ],
+            "property": "image",
+            "value": "/assets/-1958895190_1915587"
+          },
+          {
+            "func": "SELECT",
+            "property": "markerHolder",
+            "value": true
+          },
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": "DEFAULT",
+                "property": "ascendY"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "DEFAULT"
+                ],
+                "property": "y",
+                "value": "${ascendY}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "background"
+            ],
+            "property": "image",
+            "value": "/assets/1814401656_181298"
+          },
+          {
+            "func": "SELECT",
+            "property": "markerHolder",
+            "value": true
+          },
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": "DEFAULT",
+                "property": "descendY"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "DEFAULT"
+                ],
+                "property": "y",
+                "value": "${descendY}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "scene": 1
   },
   "winner1": {
     "id": "winner1",
@@ -3816,7 +4059,7 @@
     "shape3d": true,
     "parent": "diceHolder1",
     "rollCount": 1,
-    "activeFace": 5
+    "activeFace": 3
   },
   "dice4": {
     "type": "dice",
@@ -3824,7 +4067,7 @@
     "x": 184,
     "y": 0,
     "z": 4,
-    "activeFace": 2,
+    "activeFace": 5,
     "inheritFrom": {
       "dice1": "*"
     },
@@ -3837,7 +4080,7 @@
     "x": 121,
     "y": 0,
     "z": 3,
-    "activeFace": 2,
+    "activeFace": 0,
     "inheritFrom": {
       "dice1": "*"
     },
@@ -3850,7 +4093,7 @@
     "x": 58,
     "y": 0,
     "z": 2,
-    "activeFace": 5,
+    "activeFace": 3,
     "inheritFrom": {
       "dice1": "*"
     },
@@ -4020,7 +4263,7 @@
     "type": "dice",
     "id": "dice5",
     "parent": "diceHolder2",
-    "activeFace": 4,
+    "activeFace": 0,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4032,7 +4275,7 @@
     },
     "type": "dice",
     "id": "dice6",
-    "activeFace": 0,
+    "activeFace": 4,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder2",
@@ -4046,7 +4289,7 @@
     },
     "type": "dice",
     "id": "dice7",
-    "activeFace": 1,
+    "activeFace": 5,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -4061,7 +4304,7 @@
     "type": "dice",
     "id": "dice8",
     "parent": "diceHolder2",
-    "activeFace": 2,
+    "activeFace": 4,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4227,7 +4470,7 @@
     "type": "dice",
     "id": "dice9",
     "parent": "diceHolder3",
-    "activeFace": 2,
+    "activeFace": 4,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4239,7 +4482,7 @@
     },
     "type": "dice",
     "id": "dice10",
-    "activeFace": 3,
+    "activeFace": 2,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder3",
@@ -4253,7 +4496,7 @@
     },
     "type": "dice",
     "id": "dice11",
-    "activeFace": 1,
+    "activeFace": 0,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -4268,7 +4511,7 @@
     "type": "dice",
     "id": "dice12",
     "parent": "diceHolder3",
-    "activeFace": 1,
+    "activeFace": 3,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4435,7 +4678,7 @@
     "type": "dice",
     "id": "dice13",
     "parent": "diceHolder4",
-    "activeFace": 0,
+    "activeFace": 3,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4447,7 +4690,7 @@
     },
     "type": "dice",
     "id": "dice14",
-    "activeFace": 0,
+    "activeFace": 3,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder4",
@@ -4461,7 +4704,7 @@
     },
     "type": "dice",
     "id": "dice15",
-    "activeFace": 3,
+    "activeFace": 1,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -4476,7 +4719,7 @@
     "type": "dice",
     "id": "dice16",
     "parent": "diceHolder4",
-    "activeFace": 0,
+    "activeFace": 3,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4642,7 +4885,7 @@
     "type": "dice",
     "id": "dice17",
     "parent": "diceHolder5",
-    "activeFace": 5,
+    "activeFace": 2,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4654,7 +4897,7 @@
     },
     "type": "dice",
     "id": "dice18",
-    "activeFace": 3,
+    "activeFace": 0,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder5",
@@ -4668,7 +4911,7 @@
     },
     "type": "dice",
     "id": "dice19",
-    "activeFace": 5,
+    "activeFace": 0,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -4683,7 +4926,7 @@
     "type": "dice",
     "id": "dice20",
     "parent": "diceHolder5",
-    "activeFace": 5,
+    "activeFace": 2,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4849,7 +5092,7 @@
     "type": "dice",
     "id": "dice21",
     "parent": "diceHolder6",
-    "activeFace": 3,
+    "activeFace": 2,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4861,7 +5104,7 @@
     },
     "type": "dice",
     "id": "dice22",
-    "activeFace": 1,
+    "activeFace": 3,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder6",
@@ -4890,7 +5133,7 @@
     "type": "dice",
     "id": "dice24",
     "parent": "diceHolder6",
-    "activeFace": 5,
+    "activeFace": 2,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4935,7 +5178,8 @@
     "y": 554,
     "player": "",
     "mainColor": "#dddddd",
-    "textColor": "#000000"
+    "textColor": "#000000",
+    "turn": false
   },
   "seat5": {
     "inheritFrom": {
@@ -4998,7 +5242,7 @@
         "align-items": "center"
       }
     },
-    "text": 2,
+    "text": 5,
     "bgColor": "white",
     "borderColor": "solid #000000",
     "optionButton": true,
@@ -5272,9 +5516,9 @@
     "inheritFrom": {
       "option11": "*"
     },
-    "text": 3,
+    "text": 4,
     "bgColor": "white",
-    "borderColor": "solid #000000",
+    "borderColor": "dashed #bf360c",
     "pair": "option14"
   },
   "option14": {
@@ -5284,9 +5528,9 @@
     "inheritFrom": {
       "option11": "*"
     },
-    "text": 6,
+    "text": 8,
     "bgColor": "white",
-    "borderColor": "dashed #f44336",
+    "borderColor": "solid #000000",
     "pair": "option13"
   },
   "option15": {
@@ -5973,11 +6217,35 @@
     "parent": "diceHolder6",
     "text": 0
   },
-  "fj86": {
+  "6gsu": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8309,
+    "z": 8385,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "1px solid black"
+    },
+    "marker": true,
+    "color": "#ffc107",
+    "clonedFrom": "1393",
+    "activeFace": 1,
+    "pid": 2,
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "dragging": "Left",
+    "hoverParent": "markerHolder2",
+    "bgColor": "#dddddd",
+    "classes": "transition",
+    "movable": false,
+    "id": "6gsu",
+    "parent": "markerHolder2"
+  },
+  "y9be": {
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 8387,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
@@ -5985,50 +6253,50 @@
     "marker": true,
     "bgColor": "#dddddd",
     "color": "#ffc107",
-    "clonedFrom": "w4fa",
+    "clonedFrom": "fj86",
     "activeFace": 1,
     "pid": 3,
     "bgColor1": "#bf360c",
     "bgColor2": "#e55c32",
     "classes": "transition",
-    "id": "fj86",
-    "parent": "markerHolder3",
-    "movable": false
+    "movable": false,
+    "id": "y9be",
+    "parent": "markerHolder3"
   },
-  "jn5y": {
+  "r8s1": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8311,
+    "z": 8389,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
     },
     "marker": true,
     "color": "#ffc107",
-    "clonedFrom": "eljg",
+    "clonedFrom": "jn5y",
     "activeFace": 1,
     "pid": 5,
     "bgColor1": "#bf360c",
     "bgColor2": "#e55c32",
     "bgColor": "#dddddd",
     "classes": "transition",
-    "id": "jn5y",
-    "parent": "markerHolder5",
-    "movable": false
+    "movable": false,
+    "id": "r8s1",
+    "parent": "markerHolder5"
   },
-  "2zvf": {
+  "rq5h": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8315,
+    "z": 8391,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
     },
     "marker": true,
     "color": "#ffc107",
-    "clonedFrom": "5eeq",
+    "clonedFrom": "2zvf",
     "activeFace": 1,
     "pid": 6,
     "bgColor1": "#bf360c",
@@ -6037,15 +6305,15 @@
     "hoverParent": "markerHolder6",
     "bgColor": "#dddddd",
     "classes": "transition",
-    "id": "2zvf",
-    "parent": "markerHolder6",
-    "movable": false
+    "movable": false,
+    "id": "rq5h",
+    "parent": "markerHolder6"
   },
-  "aw7b": {
+  "t5jw": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8317,
+    "z": 8393,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
@@ -6053,21 +6321,21 @@
     "marker": true,
     "bgColor": "#dddddd",
     "color": "#ffc107",
-    "clonedFrom": "sf42",
+    "clonedFrom": "aw7b",
     "activeFace": 1,
     "pid": 4,
     "bgColor1": "#bf360c",
     "bgColor2": "#e55c32",
     "classes": "transition",
-    "id": "aw7b",
-    "parent": "markerHolder4",
-    "movable": false
+    "movable": false,
+    "id": "t5jw",
+    "parent": "markerHolder4"
   },
-  "egt7": {
+  "l5no": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8319,
+    "z": 8395,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
@@ -6075,14 +6343,14 @@
     "marker": true,
     "bgColor": "#dddddd",
     "color": "#ffc107",
-    "clonedFrom": "8pww",
+    "clonedFrom": "5dki",
     "activeFace": 1,
     "pid": 1,
     "bgColor1": "#bf360c",
     "bgColor2": "#e55c32",
     "classes": "transition",
-    "id": "egt7",
-    "parent": "markerHolder1",
-    "movable": false
+    "movable": false,
+    "id": "l5no",
+    "parent": "markerHolder1"
   }
 }
