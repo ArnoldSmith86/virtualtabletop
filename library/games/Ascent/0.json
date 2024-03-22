@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.</div><div><br></div><div>The rolling dice and stop sign icons are by Delapouite and are availabe under CC BY 3.0 from https://game-icons.net/.</div><br><div>The background and library image were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"watercolor painting, symmetrical rocky mountain snow covered peak.\"<br></div>",
-      "lastUpdate": 1711069660342,
+      "lastUpdate": 1711123332117,
       "showName": true,
       "skill": "",
       "description": "Roll the dice to push your luck to see how far you can climb in a turn. But you risk everything gained that turn if the dice do not go your way. First to reach the top of the designated number of columns wins.",
@@ -318,11 +318,19 @@
             "property": "parent"
           },
           {
-            "func": "GET",
-            "collection": [
-              "${parent}"
-            ],
-            "property": "text"
+            "func": "IF",
+            "operand1": "${parent}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${parent}"
+                ],
+                "property": "text"
+              }
+            ]
           },
           {
             "func": "IF",
@@ -373,11 +381,19 @@
             "property": "parent"
           },
           {
-            "func": "GET",
-            "collection": [
-              "${parent}"
-            ],
-            "property": "text"
+            "func": "IF",
+            "operand1": "${parent}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${parent}"
+                ],
+                "property": "text"
+              }
+            ]
           },
           {
             "func": "IF",
@@ -2049,7 +2065,8 @@
     "activeFace": 1,
     "pid": 1,
     "parent": "climberHolder1",
-    "movable": false
+    "movable": false,
+    "classes": "transition"
   },
   "climber3": {
     "inheritFrom": {
@@ -3465,6 +3482,12 @@
       },
       ":hover::after": {
         "display": "block"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
       }
     },
     "clickRoutine": [
@@ -3768,7 +3791,8 @@
     ],
     "shape3d": true,
     "parent": "diceHolder1",
-    "rollCount": 1
+    "rollCount": 1,
+    "activeFace": 3
   },
   "dice4": {
     "type": "dice",
@@ -3776,7 +3800,7 @@
     "x": 184,
     "y": 0,
     "z": 4,
-    "activeFace": 2,
+    "activeFace": 4,
     "inheritFrom": {
       "dice1": "*"
     },
@@ -3802,7 +3826,7 @@
     "x": 58,
     "y": 0,
     "z": 2,
-    "activeFace": 2,
+    "activeFace": 1,
     "inheritFrom": {
       "dice1": "*"
     },
@@ -3972,7 +3996,7 @@
     "type": "dice",
     "id": "dice5",
     "parent": "diceHolder2",
-    "activeFace": 2,
+    "activeFace": 4,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -3984,7 +4008,7 @@
     },
     "type": "dice",
     "id": "dice6",
-    "activeFace": 0,
+    "activeFace": 1,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder2",
@@ -3998,7 +4022,7 @@
     },
     "type": "dice",
     "id": "dice7",
-    "activeFace": 5,
+    "activeFace": 2,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -4191,7 +4215,7 @@
     },
     "type": "dice",
     "id": "dice10",
-    "activeFace": 2,
+    "activeFace": 3,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder3",
@@ -4220,7 +4244,7 @@
     "type": "dice",
     "id": "dice12",
     "parent": "diceHolder3",
-    "activeFace": 1,
+    "activeFace": 3,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4387,7 +4411,7 @@
     "type": "dice",
     "id": "dice13",
     "parent": "diceHolder4",
-    "activeFace": 3,
+    "activeFace": 2,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4399,7 +4423,7 @@
     },
     "type": "dice",
     "id": "dice14",
-    "activeFace": 0,
+    "activeFace": 5,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder4",
@@ -4413,7 +4437,7 @@
     },
     "type": "dice",
     "id": "dice15",
-    "activeFace": 4,
+    "activeFace": 0,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -4428,7 +4452,7 @@
     "type": "dice",
     "id": "dice16",
     "parent": "diceHolder4",
-    "activeFace": 5,
+    "activeFace": 2,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4594,7 +4618,7 @@
     "type": "dice",
     "id": "dice17",
     "parent": "diceHolder5",
-    "activeFace": 1,
+    "activeFace": 2,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4606,7 +4630,7 @@
     },
     "type": "dice",
     "id": "dice18",
-    "activeFace": 1,
+    "activeFace": 0,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder5",
@@ -4620,7 +4644,7 @@
     },
     "type": "dice",
     "id": "dice19",
-    "activeFace": 2,
+    "activeFace": 3,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -4635,7 +4659,7 @@
     "type": "dice",
     "id": "dice20",
     "parent": "diceHolder5",
-    "activeFace": 1,
+    "activeFace": 3,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4801,7 +4825,7 @@
     "type": "dice",
     "id": "dice21",
     "parent": "diceHolder6",
-    "activeFace": 1,
+    "activeFace": 5,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4813,7 +4837,7 @@
     },
     "type": "dice",
     "id": "dice22",
-    "activeFace": 5,
+    "activeFace": 3,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder6",
@@ -4842,7 +4866,7 @@
     "type": "dice",
     "id": "dice24",
     "parent": "diceHolder6",
-    "activeFace": 3,
+    "activeFace": 4,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4859,7 +4883,8 @@
     "y": 244,
     "player": "",
     "textColor": "#000000",
-    "mainColor": "#dddddd"
+    "mainColor": "#dddddd",
+    "turn": false
   },
   "seat3": {
     "inheritFrom": {
@@ -4872,7 +4897,8 @@
     "y": 399,
     "player": "",
     "mainColor": "#dddddd",
-    "textColor": "#000000"
+    "textColor": "#000000",
+    "turn": false
   },
   "seat4": {
     "inheritFrom": {
@@ -4885,7 +4911,8 @@
     "y": 554,
     "player": "",
     "mainColor": "#dddddd",
-    "textColor": "#000000"
+    "textColor": "#000000",
+    "turn": false
   },
   "seat5": {
     "inheritFrom": {
@@ -4898,7 +4925,8 @@
     "y": 709,
     "player": "",
     "textColor": "#000000",
-    "mainColor": "#dddddd"
+    "mainColor": "#dddddd",
+    "turn": false
   },
   "seat6": {
     "inheritFrom": {
@@ -4911,7 +4939,8 @@
     "y": 864,
     "player": "",
     "textColor": "#000000",
-    "mainColor": "#dddddd"
+    "mainColor": "#dddddd",
+    "turn": false
   },
   "option12": {
     "id": "option12",
@@ -4920,9 +4949,9 @@
     "inheritFrom": {
       "option11": "*"
     },
-    "text": 11,
+    "text": 6,
     "bgColor": "white",
-    "borderColor": "solid #000000",
+    "borderColor": "dashed #f44336",
     "pair": "option11"
   },
   "option11": {
@@ -4946,9 +4975,9 @@
         "align-items": "center"
       }
     },
-    "text": 8,
+    "text": 3,
     "bgColor": "white",
-    "borderColor": "dashed #3f51b5",
+    "borderColor": "solid #000000",
     "optionButton": true,
     "pair": "option12",
     "pid": 1,
@@ -5220,7 +5249,7 @@
     "inheritFrom": {
       "option11": "*"
     },
-    "text": 9,
+    "text": 2,
     "bgColor": "white",
     "borderColor": "solid #000000",
     "pair": "option14"
@@ -5232,9 +5261,9 @@
     "inheritFrom": {
       "option11": "*"
     },
-    "text": 10,
+    "text": 7,
     "bgColor": "white",
-    "borderColor": "dashed #3f51b5",
+    "borderColor": "solid #000000",
     "pair": "option13"
   },
   "option15": {
@@ -5930,11 +5959,11 @@
     "parent": "diceHolder6",
     "text": 0
   },
-  "5ez8": {
+  "alnp": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 7664,
+    "z": 7803,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
@@ -5942,48 +5971,48 @@
     "marker": true,
     "bgColor": "#dddddd",
     "color": "#ffc107",
-    "clonedFrom": "exok",
+    "clonedFrom": "rixp",
     "activeFace": 1,
     "pid": 3,
     "bgColor1": "#bf360c",
     "bgColor2": "#e55c32",
     "movable": false,
-    "id": "5ez8",
+    "id": "alnp",
     "parent": "markerHolder3"
   },
-  "tqm7": {
+  "0m8f": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 7666,
+    "z": 7805,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
     },
     "marker": true,
     "color": "#ffc107",
-    "clonedFrom": "tcg6",
+    "clonedFrom": "64qn",
     "activeFace": 1,
     "pid": 5,
     "bgColor1": "#bf360c",
     "bgColor2": "#e55c32",
     "bgColor": "#dddddd",
     "movable": false,
-    "id": "tqm7",
+    "id": "0m8f",
     "parent": "markerHolder5"
   },
-  "0siq": {
+  "zu8p": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 7668,
+    "z": 7807,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
     },
     "marker": true,
     "color": "#ffc107",
-    "clonedFrom": "sjki",
+    "clonedFrom": "gfmf",
     "activeFace": 1,
     "pid": 2,
     "bgColor1": "#bf360c",
@@ -5992,14 +6021,14 @@
     "hoverParent": "markerHolder2",
     "movable": false,
     "bgColor": "#dddddd",
-    "id": "0siq",
+    "id": "zu8p",
     "parent": "markerHolder2"
   },
-  "1rf9": {
+  "djm4": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 7670,
+    "z": 7809,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
@@ -6007,50 +6036,27 @@
     "marker": true,
     "bgColor": "#dddddd",
     "color": "#ffc107",
-    "clonedFrom": "fl8r",
-    "activeFace": 1,
-    "pid": 1,
-    "bgColor1": "#bf360c",
-    "bgColor2": "#e55c32",
-    "dragging": "Mike",
-    "hoverParent": "markerHolder1",
-    "movable": false,
-    "id": "1rf9",
-    "parent": "markerHolder1"
-  },
-  "i6pn": {
-    "width": 35,
-    "height": 35,
-    "borderRadius": 100,
-    "z": 7672,
-    "css": {
-      "background": "${PROPERTY bgColor}",
-      "border": "1px solid black"
-    },
-    "marker": true,
-    "bgColor": "#dddddd",
-    "color": "#ffc107",
-    "clonedFrom": "6949",
+    "clonedFrom": "m7e1",
     "activeFace": 1,
     "pid": 4,
     "bgColor1": "#bf360c",
     "bgColor2": "#e55c32",
     "movable": false,
-    "id": "i6pn",
+    "id": "djm4",
     "parent": "markerHolder4"
   },
-  "fz99": {
+  "yiag": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 7674,
+    "z": 7811,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
     },
     "marker": true,
     "color": "#ffc107",
-    "clonedFrom": "ngu5",
+    "clonedFrom": "bipc",
     "activeFace": 1,
     "pid": 6,
     "bgColor1": "#bf360c",
@@ -6059,7 +6065,31 @@
     "hoverParent": "markerHolder6",
     "bgColor": "#dddddd",
     "movable": false,
-    "id": "fz99",
+    "id": "yiag",
     "parent": "markerHolder6"
+  },
+  "3xp3": {
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 7813,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "1px solid black"
+    },
+    "marker": true,
+    "bgColor": "#dddddd",
+    "color": "#ffc107",
+    "clonedFrom": "4umr",
+    "activeFace": 1,
+    "pid": 1,
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "dragging": "Mike",
+    "hoverParent": "markerHolder1",
+    "movable": false,
+    "classes": "transition",
+    "id": "3xp3",
+    "parent": "markerHolder1"
   }
 }
