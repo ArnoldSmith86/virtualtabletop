@@ -297,6 +297,38 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_symbolPickerIcon',
+    name: 'pick an asset from the symbol picker',
+    context: '^(basic|button) ↦ icon',
+    call: async function() {
+      const a = await pickSymbol();
+      if(a) {
+        jeStateNow.icon = a.symbol;
+        jeSetAndSelect();
+        await jeApplyChanges();
+      }
+    },
+    show: function() {
+      return typeof jeStateNow.icon == 'string' || jeStateNow.icon === null;
+    }
+  },
+  {
+    id: 'je_symbolPickerSubIcon',
+    name: 'pick an asset from the symbol picker',
+    context: '^(basic|button) ↦ icon ↦ [0-9]+',
+    call: async function() {
+      const a = await pickSymbol();
+      if(a) {
+        if(typeof jeStateNow.icon[jeContext[2]] == 'object' && jeStateNow.icon[jeContext[2]] != null)
+          jeStateNow.icon[jeContext[2]].name = a.symbol;
+        else
+          jeStateNow.icon[jeContext[2]] = a.symbol;
+        jeSetAndSelect();
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
     id: 'je_uploadAudio',
     name: 'upload audio file',
     context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
