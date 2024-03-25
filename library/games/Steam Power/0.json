@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "45-90",
       "attribution": "Layout design and coding by Jonathan Cox (email: JonGetsGames@gmail.com for inquiries). Game name and all art assets used with permission from the rights holder, Wallace Designs. \"Wrong Answer\" audio source&nbsp;by [UNIVERSFIELD] via&nbsp;https://pixabay.com/sound-effects/wrong-answer-129254/.",
-      "lastUpdate": 1711220366445,
+      "lastUpdate": 1711329933436,
       "showName": false,
       "skill": "Medium",
       "description": "Build your rail network, establish your factories and reap the rewards.",
@@ -954,8 +954,7 @@
     "background_color_transparent": "white",
     "passed": false,
     "text": "C",
-    "hideWhenUnused": true,
-    "turn": true
+    "hideWhenUnused": true
   },
   "hands_anchor": {
     "id": "hands_anchor",
@@ -2245,13 +2244,13 @@
     },
     "player": "",
     "textColor": "#000000",
-    "turn": false,
+    "turn": true,
     "audio_enabled": true,
     "turn_alert_enabled": true,
     "background_color_transparent": "white",
     "color": "#dddddd",
     "mainColor": "#dddddd",
-    "background_color_solid": "#ff9800"
+    "background_color_solid": "#dddddd"
   },
   "2_player_score": {
     "type": "label",
@@ -3660,8 +3659,8 @@
     },
     "text": "Click to end turn",
     "button_background_color": "grey",
-    "button_border_color": "#ff9800",
-    "current_turn_index": "1",
+    "button_border_color": "#dddddd",
+    "current_turn_index": "2",
     "ModifyButtonRoutine": [
       {
         "func": "GET",
@@ -3759,18 +3758,6 @@
                 "arguments": {
                   "addendum": "--- ${PROPERTY current_turn_player_name}'s Turn ---"
                 }
-              },
-              {
-                "func": "IF",
-                "operand1": "${audio_enabled}",
-                "relation": "==",
-                "operand2": true,
-                "thenRoutine": [
-                  {
-                    "func": "CALL",
-                    "routine": "TurnSoundRoutine"
-                  }
-                ]
               }
             ]
           }
@@ -4449,7 +4436,7 @@
     "type": "card",
     "cardType": "city_black",
     "id": "xrvy",
-    "z": 67163,
+    "z": 68473,
     "parent": "l3we"
   },
   "ss43": {
@@ -4457,7 +4444,7 @@
     "type": "card",
     "cardType": "city_black",
     "id": "ss43",
-    "z": 67176,
+    "z": 68448,
     "parent": "l3we"
   },
   "imhx": {
@@ -4465,7 +4452,7 @@
     "type": "card",
     "cardType": "city_black",
     "id": "imhx",
-    "z": 67154,
+    "z": 68463,
     "parent": "l3we"
   },
   "93w9": {
@@ -4473,7 +4460,7 @@
     "type": "card",
     "cardType": "city_black",
     "id": "93w9",
-    "z": 67152,
+    "z": 68461,
     "parent": "l3we"
   },
   "0t1s": {
@@ -4481,7 +4468,7 @@
     "type": "card",
     "cardType": "city_black",
     "id": "0t1s",
-    "z": 67159,
+    "z": 68459,
     "parent": "l3we"
   },
   "tn78": {
@@ -4489,7 +4476,7 @@
     "type": "card",
     "cardType": "city_black",
     "id": "tn78",
-    "z": 67174,
+    "z": 68454,
     "parent": "l3we"
   },
   "ieuw": {
@@ -4497,7 +4484,7 @@
     "type": "card",
     "cardType": "city_white",
     "id": "ieuw",
-    "z": 67165,
+    "z": 68460,
     "parent": "l3we"
   },
   "yp87": {
@@ -4505,7 +4492,7 @@
     "type": "card",
     "cardType": "city_white",
     "id": "yp87",
-    "z": 67182,
+    "z": 68468,
     "parent": "l3we"
   },
   "1saa": {
@@ -4513,7 +4500,7 @@
     "type": "card",
     "cardType": "city_white",
     "id": "1saa",
-    "z": 67175,
+    "z": 68477,
     "parent": "l3we"
   },
   "7dq5": {
@@ -4521,7 +4508,7 @@
     "type": "card",
     "cardType": "city_white",
     "id": "7dq5",
-    "z": 67183,
+    "z": 68466,
     "parent": "l3we"
   },
   "l1lj": {
@@ -4529,7 +4516,7 @@
     "type": "card",
     "cardType": "city_white",
     "id": "l1lj",
-    "z": 67155,
+    "z": 68452,
     "parent": "l3we"
   },
   "2r0k": {
@@ -4537,7 +4524,7 @@
     "type": "card",
     "cardType": "city_white",
     "id": "2r0k",
-    "z": 67173,
+    "z": 68450,
     "parent": "l3we"
   },
   "03y6": {
@@ -4545,7 +4532,7 @@
     "type": "card",
     "cardType": "city_orange",
     "id": "03y6",
-    "z": 67170,
+    "z": 68478,
     "parent": "l3we"
   },
   "nicp": {
@@ -4553,7 +4540,7 @@
     "type": "card",
     "cardType": "city_orange",
     "id": "nicp",
-    "z": 67157,
+    "z": 68471,
     "parent": "l3we"
   },
   "xnk5": {
@@ -4561,7 +4548,7 @@
     "type": "card",
     "cardType": "city_orange",
     "id": "xnk5",
-    "z": 67181,
+    "z": 68447,
     "parent": "l3we"
   },
   "60nt": {
@@ -4569,7 +4556,7 @@
     "type": "card",
     "cardType": "city_orange",
     "id": "60nt",
-    "z": 67169,
+    "z": 68457,
     "parent": "l3we"
   },
   "2fsk": {
@@ -4577,7 +4564,7 @@
     "type": "card",
     "cardType": "city_orange",
     "id": "2fsk",
-    "z": 67161,
+    "z": 68453,
     "parent": "l3we"
   },
   "h8qj": {
@@ -4585,7 +4572,7 @@
     "type": "card",
     "cardType": "city_orange",
     "id": "h8qj",
-    "z": 67151,
+    "z": 68464,
     "parent": "l3we"
   },
   "nrsf": {
@@ -4593,7 +4580,7 @@
     "type": "card",
     "cardType": "city_orange",
     "id": "nrsf",
-    "z": 67171,
+    "z": 68451,
     "parent": "l3we"
   },
   "7ail": {
@@ -4601,7 +4588,7 @@
     "type": "card",
     "cardType": "city_grey",
     "id": "7ail",
-    "z": 67166,
+    "z": 68475,
     "parent": "l3we"
   },
   "1l8d": {
@@ -4609,7 +4596,7 @@
     "type": "card",
     "cardType": "city_grey",
     "id": "1l8d",
-    "z": 67153,
+    "z": 68465,
     "parent": "l3we"
   },
   "yxyd": {
@@ -4617,7 +4604,7 @@
     "type": "card",
     "cardType": "city_grey",
     "id": "yxyd",
-    "z": 67168,
+    "z": 68467,
     "parent": "l3we"
   },
   "njpr": {
@@ -4625,7 +4612,7 @@
     "type": "card",
     "cardType": "city_grey",
     "id": "njpr",
-    "z": 67164,
+    "z": 68472,
     "parent": "l3we"
   },
   "25cg": {
@@ -4633,7 +4620,7 @@
     "type": "card",
     "cardType": "city_grey",
     "id": "25cg",
-    "z": 67172,
+    "z": 68476,
     "parent": "l3we"
   },
   "gaf6": {
@@ -4641,7 +4628,7 @@
     "type": "card",
     "cardType": "city_grey",
     "id": "gaf6",
-    "z": 67167,
+    "z": 68456,
     "parent": "l3we"
   },
   "cfkx": {
@@ -4649,7 +4636,7 @@
     "type": "card",
     "cardType": "city_purple",
     "id": "cfkx",
-    "z": 67177,
+    "z": 68479,
     "parent": "l3we"
   },
   "qwby": {
@@ -4657,7 +4644,7 @@
     "type": "card",
     "cardType": "city_purple",
     "id": "qwby",
-    "z": 67162,
+    "z": 68470,
     "parent": "l3we"
   },
   "9uz9": {
@@ -4665,7 +4652,7 @@
     "type": "card",
     "cardType": "city_purple",
     "id": "9uz9",
-    "z": 67178,
+    "z": 68474,
     "parentFixed": "true",
     "parent": "l3we"
   },
@@ -4674,7 +4661,7 @@
     "type": "card",
     "cardType": "city_purple",
     "id": "6ush",
-    "z": 67179,
+    "z": 68469,
     "parent": "l3we"
   },
   "rblh": {
@@ -4682,7 +4669,7 @@
     "type": "card",
     "cardType": "city_white",
     "id": "rblh",
-    "z": 67160,
+    "z": 68462,
     "parent": "l3we"
   },
   "fwa0": {
@@ -4690,7 +4677,7 @@
     "type": "card",
     "cardType": "city_black",
     "id": "fwa0",
-    "z": 67180,
+    "z": 68455,
     "parent": "l3we"
   },
   "v0am": {
@@ -4698,7 +4685,7 @@
     "type": "card",
     "cardType": "city_grey",
     "id": "v0am",
-    "z": 67158,
+    "z": 68458,
     "parent": "l3we"
   },
   "misd": {
@@ -4706,7 +4693,7 @@
     "type": "card",
     "cardType": "city_purple",
     "id": "misd",
-    "z": 67156,
+    "z": 68449,
     "parent": "l3we"
   },
   "history_holder": {
@@ -5091,7 +5078,7 @@
     "z": 439,
     "x": 1266.25,
     "y": 605.344,
-    "city_type": "city_white"
+    "city_type": "city_purple"
   },
   "resource_count3": {
     "type": "label",
@@ -5108,7 +5095,7 @@
     "z": 436,
     "x": 1266.25,
     "y": 827.4730000000001,
-    "city_type": "city_orange"
+    "city_type": "city_white"
   },
   "resource_count4": {
     "type": "label",
@@ -5125,7 +5112,7 @@
     "z": 447,
     "x": 496.75,
     "y": 827.4730000000001,
-    "city_type": "city_white"
+    "city_type": "city_orange"
   },
   "resource_count5": {
     "type": "label",
@@ -5142,7 +5129,7 @@
     "z": 438,
     "x": 945.625,
     "y": 864.4945000000001,
-    "city_type": "city_white"
+    "city_type": "city_black"
   },
   "resource_count6": {
     "type": "label",
@@ -5159,7 +5146,7 @@
     "z": 455,
     "x": 496.75,
     "y": 235.12900000000002,
-    "city_type": "city_purple"
+    "city_type": "city_black"
   },
   "resource_count7": {
     "type": "label",
@@ -5176,7 +5163,7 @@
     "z": 449,
     "x": 945.625,
     "y": 420.23650000000004,
-    "city_type": "city_black"
+    "city_type": "city_white"
   },
   "resource_count8": {
     "type": "label",
@@ -5193,7 +5180,7 @@
     "z": 458,
     "x": 881.5,
     "y": 87.043,
-    "city_type": "city_orange"
+    "city_type": "city_black"
   },
   "resource_count9": {
     "type": "label",
@@ -5210,7 +5197,7 @@
     "z": 435,
     "x": 1394.5,
     "y": 827.4730000000001,
-    "city_type": "city_grey"
+    "city_type": "city_white"
   },
   "resource_count10": {
     "type": "label",
@@ -5244,7 +5231,7 @@
     "z": 427,
     "x": 1138,
     "y": 161.086,
-    "city_type": "city_purple"
+    "city_type": "city_orange"
   },
   "resource_count12": {
     "type": "label",
@@ -5261,7 +5248,7 @@
     "z": 432,
     "x": 1394.5,
     "y": 383.21500000000003,
-    "city_type": "city_black"
+    "city_type": "city_orange"
   },
   "resource_count13": {
     "type": "label",
@@ -5278,7 +5265,7 @@
     "z": 443,
     "x": 1009.75,
     "y": 605.344,
-    "city_type": "city_white"
+    "city_type": "city_purple"
   },
   "resource_count14": {
     "type": "label",
@@ -5295,7 +5282,7 @@
     "z": 459,
     "x": 881.5,
     "y": 309.172,
-    "city_type": "city_orange"
+    "city_type": "city_grey"
   },
   "resource_count15": {
     "type": "label",
@@ -5346,7 +5333,7 @@
     "z": 428,
     "x": 1458.625,
     "y": 50.0215,
-    "city_type": "city_orange"
+    "city_type": "city_white"
   },
   "resource_count18": {
     "type": "label",
@@ -5363,7 +5350,7 @@
     "z": 431,
     "x": 1266.25,
     "y": 309.172,
-    "city_type": "city_black"
+    "city_type": "city_purple"
   },
   "resource_count19": {
     "type": "label",
@@ -5380,7 +5367,7 @@
     "z": 456,
     "x": 560.875,
     "y": 50.0215,
-    "city_type": "city_purple"
+    "city_type": "city_black"
   },
   "resource_count22": {
     "type": "label",
@@ -5397,7 +5384,7 @@
     "z": 451,
     "x": 689.125,
     "y": 420.23650000000004,
-    "city_type": "city_black"
+    "city_type": "city_grey"
   },
   "resource_count23": {
     "type": "label",
@@ -5431,7 +5418,7 @@
     "z": 446,
     "x": 689.125,
     "y": 864.4945000000001,
-    "city_type": "city_white"
+    "city_type": "city_orange"
   },
   "resource_count25": {
     "type": "label",
@@ -5448,7 +5435,7 @@
     "z": 452,
     "x": 496.75,
     "y": 531.301,
-    "city_type": "city_purple"
+    "city_type": "city_black"
   },
   "resource_count26": {
     "type": "label",
@@ -5465,7 +5452,7 @@
     "z": 453,
     "x": 625,
     "y": 235.12900000000002,
-    "city_type": "city_black"
+    "city_type": "city_white"
   },
   "resource_count27": {
     "type": "label",
@@ -5482,7 +5469,7 @@
     "z": 441,
     "x": 1202.125,
     "y": 420.23650000000004,
-    "city_type": "city_orange"
+    "city_type": "city_purple"
   },
   "resource_count28": {
     "type": "label",
@@ -5499,7 +5486,7 @@
     "z": 440,
     "x": 1138,
     "y": 679.3870000000001,
-    "city_type": "city_purple"
+    "city_type": "city_white"
   },
   "resource_count29": {
     "type": "label",
@@ -5516,7 +5503,7 @@
     "z": 437,
     "x": 1138,
     "y": 901.5160000000001,
-    "city_type": "city_white"
+    "city_type": "city_black"
   },
   "resource_count30": {
     "type": "label",
@@ -5533,7 +5520,7 @@
     "z": 444,
     "x": 881.5,
     "y": 679.3870000000001,
-    "city_type": "city_grey"
+    "city_type": "city_orange"
   },
   "resource_count31": {
     "type": "label",
@@ -6755,7 +6742,7 @@
     "type": "card",
     "cardType": "A1-tracks",
     "id": "8hzl",
-    "z": 15724,
+    "z": 16137,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -6765,7 +6752,7 @@
     "type": "card",
     "cardType": "A2-tracks",
     "id": "g9i1",
-    "z": 15722,
+    "z": 16145,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -6775,7 +6762,7 @@
     "type": "card",
     "cardType": "A3-tracks",
     "id": "3rnv",
-    "z": 15743,
+    "z": 16114,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -6785,7 +6772,7 @@
     "type": "card",
     "cardType": "A4-tracks",
     "id": "psuw",
-    "z": 15754,
+    "z": 16133,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -6795,7 +6782,7 @@
     "type": "card",
     "cardType": "A5-factory",
     "id": "46ly",
-    "z": 15726,
+    "z": 16155,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -6805,7 +6792,7 @@
     "type": "card",
     "cardType": "A6-factory",
     "id": "bnxf",
-    "z": 15744,
+    "z": 16143,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -6815,7 +6802,7 @@
     "type": "card",
     "cardType": "A7-factory",
     "id": "rew4",
-    "z": 15760,
+    "z": 16117,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -6825,17 +6812,17 @@
     "type": "card",
     "cardType": "A8-contracts",
     "id": "uxk7",
-    "z": 15732,
+    "z": 16120,
     "x": 4,
-    "y": 4,
-    "parent": "contract_supply"
+    "parent": "contract_supply",
+    "y": 4
   },
   "67hd": {
     "deck": "contracts_deck",
     "type": "card",
     "cardType": "A9-contracts",
     "id": "67hd",
-    "z": 15765,
+    "z": 16158,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -6845,7 +6832,7 @@
     "type": "card",
     "cardType": "A10-contracts",
     "id": "b9mq",
-    "z": 15747,
+    "z": 16140,
     "widgth": 154,
     "x": 4,
     "y": 4,
@@ -6856,7 +6843,7 @@
     "type": "card",
     "cardType": "A11-points",
     "id": "8tnt",
-    "z": 15753,
+    "z": 16146,
     "widgth": 154,
     "x": 4,
     "y": 4,
@@ -6867,7 +6854,7 @@
     "type": "card",
     "cardType": "A12-points",
     "id": "0xx1",
-    "z": 15746,
+    "z": 16121,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -6877,17 +6864,17 @@
     "type": "card",
     "cardType": "B1-tracks",
     "id": "o3ex",
-    "z": 15739,
+    "z": 16118,
     "x": 4,
-    "y": 4,
-    "parent": "contract_supply"
+    "parent": "contract_supply",
+    "y": 4
   },
   "3w5a": {
     "deck": "contracts_deck",
     "type": "card",
     "cardType": "B2-tracks",
     "id": "3w5a",
-    "z": 15755,
+    "z": 16150,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -6897,7 +6884,7 @@
     "type": "card",
     "cardType": "B3-tracks",
     "id": "i6yj",
-    "z": 15764,
+    "z": 16148,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -6907,7 +6894,7 @@
     "type": "card",
     "cardType": "B4-tracks",
     "id": "j752",
-    "z": 15734,
+    "z": 16124,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -6917,7 +6904,7 @@
     "type": "card",
     "cardType": "B5-factory",
     "id": "4wu1",
-    "z": 15725,
+    "z": 16128,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -6927,7 +6914,7 @@
     "type": "card",
     "cardType": "B6-factory",
     "id": "1lro",
-    "z": 15751,
+    "z": 16152,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -6937,17 +6924,17 @@
     "type": "card",
     "cardType": "B7-factory",
     "id": "m4fg",
-    "z": 15757,
+    "z": 16141,
     "x": 4,
-    "y": 4,
-    "parent": "contract_supply"
+    "parent": "contract_supply",
+    "y": 4
   },
   "mjie": {
     "deck": "contracts_deck",
     "type": "card",
     "cardType": "B8-contracts",
     "id": "mjie",
-    "z": 15733,
+    "z": 16139,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -6957,7 +6944,7 @@
     "type": "card",
     "cardType": "B9-contracts",
     "id": "d1lb",
-    "z": 15749,
+    "z": 16125,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -6967,7 +6954,7 @@
     "type": "card",
     "cardType": "B10-points",
     "id": "uybe",
-    "z": 15763,
+    "z": 16144,
     "parent": "contract_supply",
     "x": 4,
     "y": 4
@@ -6977,7 +6964,7 @@
     "type": "card",
     "cardType": "B11-points",
     "id": "4m9o",
-    "z": 15752,
+    "z": 16159,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -6987,7 +6974,7 @@
     "type": "card",
     "cardType": "B12-points",
     "id": "1mp7",
-    "z": 15735,
+    "z": 16134,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -6997,7 +6984,7 @@
     "type": "card",
     "cardType": "C1-tracks",
     "id": "xjmk",
-    "z": 15731,
+    "z": 16129,
     "widgth": 154,
     "x": 4,
     "y": 4,
@@ -7008,7 +6995,7 @@
     "type": "card",
     "cardType": "C2-tracks",
     "id": "ubh9",
-    "z": 15727,
+    "z": 16135,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -7018,7 +7005,7 @@
     "type": "card",
     "cardType": "C3-tracks",
     "id": "wx6d",
-    "z": 15766,
+    "z": 16138,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -7028,7 +7015,7 @@
     "type": "card",
     "cardType": "C4-tracks",
     "id": "w027",
-    "z": 15741,
+    "z": 16123,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -7038,7 +7025,7 @@
     "type": "card",
     "cardType": "C5-factory",
     "id": "hi7a",
-    "z": 15723,
+    "z": 16127,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -7048,7 +7035,7 @@
     "type": "card",
     "cardType": "C6-factory",
     "id": "v0ym",
-    "z": 15759,
+    "z": 16122,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -7058,17 +7045,17 @@
     "type": "card",
     "cardType": "C7-factory",
     "id": "axr6",
-    "z": 15729,
+    "z": 16157,
     "x": 4,
-    "y": 4,
-    "parent": "contract_supply"
+    "parent": "contract_supply",
+    "y": 4
   },
   "4qsy": {
     "deck": "contracts_deck",
     "type": "card",
     "cardType": "C8-contracts",
     "id": "4qsy",
-    "z": 15738,
+    "z": 16132,
     "widgth": 154,
     "x": 4,
     "parent": "contract_supply",
@@ -7079,7 +7066,7 @@
     "type": "card",
     "cardType": "C9-contracts",
     "id": "67nl",
-    "z": 15748,
+    "z": 16161,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -7089,7 +7076,7 @@
     "type": "card",
     "cardType": "C10-points",
     "id": "rzhf",
-    "z": 15740,
+    "z": 16115,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -7099,7 +7086,7 @@
     "type": "card",
     "cardType": "C11-points",
     "id": "a1iv",
-    "z": 15767,
+    "z": 16142,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -7109,7 +7096,7 @@
     "type": "card",
     "cardType": "C12-points",
     "id": "7o5p",
-    "z": 15762,
+    "z": 16149,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -7119,7 +7106,7 @@
     "type": "card",
     "cardType": "D1-tracks",
     "id": "n9gf",
-    "z": 15761,
+    "z": 16160,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -7129,7 +7116,7 @@
     "type": "card",
     "cardType": "D2-tracks",
     "id": "36bi",
-    "z": 15737,
+    "z": 16147,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -7139,7 +7126,7 @@
     "type": "card",
     "cardType": "D3-tracks",
     "id": "7tsw",
-    "z": 15750,
+    "z": 16130,
     "widgth": 154,
     "x": 4,
     "y": 4,
@@ -7150,7 +7137,7 @@
     "type": "card",
     "cardType": "D4-tracks",
     "id": "nhpj",
-    "z": 15730,
+    "z": 16126,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -7160,7 +7147,7 @@
     "type": "card",
     "cardType": "D5-factory",
     "id": "guk2",
-    "z": 15736,
+    "z": 16156,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -7170,17 +7157,17 @@
     "type": "card",
     "cardType": "D6-factory",
     "id": "jbnd",
-    "z": 15745,
+    "z": 16119,
     "x": 4,
-    "y": 4,
-    "parent": "contract_supply"
+    "parent": "contract_supply",
+    "y": 4
   },
   "nqpn": {
     "deck": "contracts_deck",
     "type": "card",
     "cardType": "D7-factory",
     "id": "nqpn",
-    "z": 15728,
+    "z": 16151,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -7190,7 +7177,7 @@
     "type": "card",
     "cardType": "D8-contracts",
     "id": "bf3o",
-    "z": 15758,
+    "z": 16153,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -7200,7 +7187,7 @@
     "type": "card",
     "cardType": "D9-contracts",
     "id": "mf52",
-    "z": 15720,
+    "z": 16154,
     "x": 4,
     "y": 4,
     "parent": "contract_supply"
@@ -7210,7 +7197,7 @@
     "type": "card",
     "cardType": "D10-points",
     "id": "rzwx",
-    "z": 15721,
+    "z": 16136,
     "widgth": 154,
     "x": 4,
     "parent": "contract_supply",
@@ -7221,7 +7208,7 @@
     "type": "card",
     "cardType": "D11-points",
     "id": "a4lf",
-    "z": 15756,
+    "z": 16131,
     "parent": "contract_supply",
     "x": 4,
     "y": 4
@@ -7231,7 +7218,7 @@
     "type": "card",
     "cardType": "D12-points",
     "id": "fusx",
-    "z": 15742,
+    "z": 16116,
     "x": 4,
     "parent": "contract_supply",
     "y": 4
@@ -7365,7 +7352,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "pfkt",
-    "z": 66878,
+    "z": 68144,
     "parent": "1_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7376,7 +7363,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "6z6y",
-    "z": 66879,
+    "z": 68145,
     "parent": "1_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7387,7 +7374,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "3rka",
-    "z": 66880,
+    "z": 68146,
     "parent": "1_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7398,7 +7385,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "7aj2",
-    "z": 66881,
+    "z": 68147,
     "parent": "1_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7409,7 +7396,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "itl6",
-    "z": 66882,
+    "z": 68148,
     "parent": "1_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7420,7 +7407,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "j3h6",
-    "z": 66883,
+    "z": 68149,
     "parent": "1_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7431,7 +7418,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "7z62",
-    "z": 66884,
+    "z": 68150,
     "color": "#b4b4b4",
     "parent": "1_factories",
     "background_color_transparent": "#b4b4b4",
@@ -7442,7 +7429,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "thbi",
-    "z": 66885,
+    "z": 68151,
     "color": "#b4b4b4",
     "parent": "1_factories",
     "background_color_transparent": "#b4b4b4",
@@ -7453,7 +7440,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "ysga",
-    "z": 66886,
+    "z": 68152,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -7464,7 +7451,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "jpoj",
-    "z": 66887,
+    "z": 68153,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -7475,7 +7462,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "b0oe",
-    "z": 66888,
+    "z": 68154,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -7486,7 +7473,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "eyh1",
-    "z": 66889,
+    "z": 68155,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -7497,7 +7484,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "1zeb",
-    "z": 66845,
+    "z": 68111,
     "parent": "2_factories",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -7508,7 +7495,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "i9pj",
-    "z": 66846,
+    "z": 68112,
     "parent": "2_factories",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -7519,7 +7506,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "9enq",
-    "z": 66847,
+    "z": 68113,
     "parent": "2_factories",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -7530,7 +7517,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "qp9h",
-    "z": 66848,
+    "z": 68114,
     "parent": "2_factories",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -7541,7 +7528,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "sf0q",
-    "z": 66849,
+    "z": 68115,
     "parent": "2_factories",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -7552,7 +7539,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "b7my",
-    "z": 66850,
+    "z": 68116,
     "parent": "2_factories",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -7563,7 +7550,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "3sfz",
-    "z": 66851,
+    "z": 68117,
     "hoverParent": "2_factories",
     "parent": "2_factories",
     "background_color_transparent": "#b4b4b4",
@@ -7575,7 +7562,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "7zdy",
-    "z": 66852,
+    "z": 68118,
     "parent": "2_factories",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -7586,7 +7573,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "s9ho",
-    "z": 66853,
+    "z": 68119,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -7597,7 +7584,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "a0vj",
-    "z": 66854,
+    "z": 68120,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -7608,7 +7595,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "g36l",
-    "z": 66855,
+    "z": 68121,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -7619,7 +7606,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "k6pv",
-    "z": 66856,
+    "z": 68122,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -7630,7 +7617,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "mva7",
-    "z": 66893,
+    "z": 68159,
     "parent": "3_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7641,7 +7628,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "n1z3",
-    "z": 66894,
+    "z": 68160,
     "parent": "3_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7652,7 +7639,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "wfmy",
-    "z": 66895,
+    "z": 68161,
     "parent": "3_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7663,7 +7650,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "yvqm",
-    "z": 66896,
+    "z": 68162,
     "parent": "3_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7674,7 +7661,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "td42",
-    "z": 66897,
+    "z": 68163,
     "parent": "3_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7685,7 +7672,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "q0on",
-    "z": 66898,
+    "z": 68164,
     "parent": "3_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7696,7 +7683,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "b1vp",
-    "z": 66899,
+    "z": 68165,
     "color": "#b4b4b4",
     "parent": "3_factories",
     "background_color_transparent": "#b4b4b4",
@@ -7707,7 +7694,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "zeig",
-    "z": 66900,
+    "z": 68166,
     "color": "#b4b4b4",
     "parent": "3_factories",
     "background_color_transparent": "#b4b4b4",
@@ -7718,7 +7705,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "2z4j",
-    "z": 66901,
+    "z": 68167,
     "color": "#b4b4b4",
     "parent": "3_factories",
     "background_color_transparent": "#b4b4b4",
@@ -7729,7 +7716,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "5mtj",
-    "z": 66902,
+    "z": 68168,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -7740,7 +7727,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "4yp4",
-    "z": 66903,
+    "z": 68169,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -7751,7 +7738,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "wl96",
-    "z": 66926,
+    "z": 68192,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7762,7 +7749,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "w9qq",
-    "z": 66927,
+    "z": 68193,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7773,7 +7760,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "cmpn",
-    "z": 66928,
+    "z": 68194,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7784,7 +7771,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "tzaf",
-    "z": 66929,
+    "z": 68195,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7795,7 +7782,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "h172",
-    "z": 66930,
+    "z": 68196,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7806,7 +7793,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "agwn",
-    "z": 66931,
+    "z": 68197,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7817,7 +7804,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "yob0",
-    "z": 66932,
+    "z": 68198,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7828,7 +7815,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "rv6f",
-    "z": 66933,
+    "z": 68199,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7839,7 +7826,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "bisw",
-    "z": 66934,
+    "z": 68200,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7850,7 +7837,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "azoa",
-    "z": 66935,
+    "z": 68201,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7861,7 +7848,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "4frs",
-    "z": 66936,
+    "z": 68202,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7872,7 +7859,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "syot",
-    "z": 66959,
+    "z": 68225,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7883,7 +7870,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "hpn7",
-    "z": 66960,
+    "z": 68226,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7894,7 +7881,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "d9vv",
-    "z": 66961,
+    "z": 68227,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7905,7 +7892,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "qvvg",
-    "z": 66962,
+    "z": 68228,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7916,7 +7903,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "ldbc",
-    "z": 66963,
+    "z": 68229,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7927,7 +7914,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "4w8k",
-    "z": 66964,
+    "z": 68230,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7938,7 +7925,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "6krf",
-    "z": 66965,
+    "z": 68231,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7949,7 +7936,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "96s3",
-    "z": 66966,
+    "z": 68232,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7960,7 +7947,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "tq08",
-    "z": 66967,
+    "z": 68233,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7971,7 +7958,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "8bsl",
-    "z": 66968,
+    "z": 68234,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7982,7 +7969,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "k9v2",
-    "z": 66969,
+    "z": 68235,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -7993,7 +7980,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "lebz",
-    "z": 66970,
+    "z": 68236,
     "color": "#b4b4b4",
     "parent": "5_factories",
     "background_color_transparent": "#b4b4b4",
@@ -8004,7 +7991,7 @@
     "type": "card",
     "cardType": "train",
     "id": "tnw6",
-    "z": 66827,
+    "z": 68093,
     "parent": "1_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8015,7 +8002,7 @@
     "type": "card",
     "cardType": "train",
     "id": "89bo",
-    "z": 66828,
+    "z": 68094,
     "parent": "1_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8026,7 +8013,7 @@
     "type": "card",
     "cardType": "train",
     "id": "3kvd",
-    "z": 66829,
+    "z": 68095,
     "parent": "1_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8037,7 +8024,7 @@
     "type": "card",
     "cardType": "train",
     "id": "h484",
-    "z": 66830,
+    "z": 68096,
     "color": "#b4b4b4",
     "parent": "1_trains",
     "background_color_transparent": "#b4b4b4",
@@ -8048,7 +8035,7 @@
     "type": "card",
     "cardType": "train",
     "id": "pqpy",
-    "z": 66831,
+    "z": 68097,
     "color": "#b4b4b4",
     "parent": "1_trains",
     "background_color_transparent": "#b4b4b4",
@@ -8059,7 +8046,7 @@
     "type": "card",
     "cardType": "train",
     "id": "vg46",
-    "z": 66832,
+    "z": 68098,
     "color": "#b4b4b4",
     "parent": "1_trains",
     "background_color_transparent": "#b4b4b4",
@@ -8070,7 +8057,7 @@
     "type": "card",
     "cardType": "train",
     "id": "v1p3",
-    "z": 66833,
+    "z": 68099,
     "color": "#b4b4b4",
     "parent": "1_trains",
     "background_color_transparent": "#b4b4b4",
@@ -8081,7 +8068,7 @@
     "type": "card",
     "cardType": "train",
     "id": "mlio",
-    "z": 66834,
+    "z": 68100,
     "color": "#b4b4b4",
     "parent": "1_trains",
     "background_color_transparent": "#b4b4b4",
@@ -8092,7 +8079,7 @@
     "type": "card",
     "cardType": "train",
     "id": "ndr2",
-    "z": 66835,
+    "z": 68101,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8103,7 +8090,7 @@
     "type": "card",
     "cardType": "train",
     "id": "35b9",
-    "z": 66836,
+    "z": 68102,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8114,7 +8101,7 @@
     "type": "card",
     "cardType": "train",
     "id": "e81o",
-    "z": 66837,
+    "z": 68103,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8125,7 +8112,7 @@
     "type": "card",
     "cardType": "train",
     "id": "6sga",
-    "z": 66838,
+    "z": 68104,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8136,7 +8123,7 @@
     "type": "card",
     "cardType": "train",
     "id": "22z4",
-    "z": 66839,
+    "z": 68105,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8147,7 +8134,7 @@
     "type": "card",
     "cardType": "train",
     "id": "1yd3",
-    "z": 66840,
+    "z": 68106,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8158,7 +8145,7 @@
     "type": "card",
     "cardType": "train",
     "id": "84b4",
-    "z": 66841,
+    "z": 68107,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8169,7 +8156,7 @@
     "type": "card",
     "cardType": "train",
     "id": "9m9l",
-    "z": 66842,
+    "z": 68108,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8180,7 +8167,7 @@
     "type": "card",
     "cardType": "train",
     "id": "94xq",
-    "z": 66843,
+    "z": 68109,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8191,7 +8178,7 @@
     "type": "card",
     "cardType": "train",
     "id": "rpr0",
-    "z": 66844,
+    "z": 68110,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8202,7 +8189,7 @@
     "type": "card",
     "cardType": "train",
     "id": "izdj",
-    "z": 66860,
+    "z": 68126,
     "parent": "2_trains",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -8213,7 +8200,7 @@
     "type": "card",
     "cardType": "train",
     "id": "v8br",
-    "z": 66861,
+    "z": 68127,
     "parent": "2_trains",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -8224,7 +8211,7 @@
     "type": "card",
     "cardType": "train",
     "id": "6ueq",
-    "z": 66862,
+    "z": 68128,
     "parent": "2_trains",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -8235,7 +8222,7 @@
     "type": "card",
     "cardType": "train",
     "id": "1hbu",
-    "z": 66863,
+    "z": 68129,
     "parent": "2_trains",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -8246,7 +8233,7 @@
     "type": "card",
     "cardType": "train",
     "id": "55y4",
-    "z": 66864,
+    "z": 68130,
     "parent": "2_trains",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -8257,7 +8244,7 @@
     "type": "card",
     "cardType": "train",
     "id": "mrd1",
-    "z": 66865,
+    "z": 68131,
     "parent": "2_trains",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -8268,7 +8255,7 @@
     "type": "card",
     "cardType": "train",
     "id": "h9y1",
-    "z": 66866,
+    "z": 68132,
     "parent": "2_trains",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
@@ -8279,7 +8266,7 @@
     "type": "card",
     "cardType": "train",
     "id": "nwzw",
-    "z": 66867,
+    "z": 68133,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8290,7 +8277,7 @@
     "type": "card",
     "cardType": "train",
     "id": "uoqw",
-    "z": 66868,
+    "z": 68134,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8301,7 +8288,7 @@
     "type": "card",
     "cardType": "train",
     "id": "l01w",
-    "z": 66869,
+    "z": 68135,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8312,7 +8299,7 @@
     "type": "card",
     "cardType": "train",
     "id": "88iz",
-    "z": 66870,
+    "z": 68136,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8323,7 +8310,7 @@
     "type": "card",
     "cardType": "train",
     "id": "v9cv",
-    "z": 66871,
+    "z": 68137,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8334,7 +8321,7 @@
     "type": "card",
     "cardType": "train",
     "id": "2x48",
-    "z": 66872,
+    "z": 68138,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8345,7 +8332,7 @@
     "type": "card",
     "cardType": "train",
     "id": "9jxh",
-    "z": 66873,
+    "z": 68139,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8356,7 +8343,7 @@
     "type": "card",
     "cardType": "train",
     "id": "967z",
-    "z": 66874,
+    "z": 68140,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8367,7 +8354,7 @@
     "type": "card",
     "cardType": "train",
     "id": "au4x",
-    "z": 66875,
+    "z": 68141,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8378,7 +8365,7 @@
     "type": "card",
     "cardType": "train",
     "id": "6i5x",
-    "z": 66876,
+    "z": 68142,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8389,7 +8376,7 @@
     "type": "card",
     "cardType": "train",
     "id": "wjoe",
-    "z": 66877,
+    "z": 68143,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8400,7 +8387,7 @@
     "type": "card",
     "cardType": "train",
     "id": "zna1",
-    "z": 66908,
+    "z": 68174,
     "parent": "3_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8411,7 +8398,7 @@
     "type": "card",
     "cardType": "train",
     "id": "ic6l",
-    "z": 66909,
+    "z": 68175,
     "parent": "3_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8422,7 +8409,7 @@
     "type": "card",
     "cardType": "train",
     "id": "bmmb",
-    "z": 66910,
+    "z": 68176,
     "parent": "3_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8433,7 +8420,7 @@
     "type": "card",
     "cardType": "train",
     "id": "6a7d",
-    "z": 66911,
+    "z": 68177,
     "parent": "3_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8444,7 +8431,7 @@
     "type": "card",
     "cardType": "train",
     "id": "s12l",
-    "z": 66912,
+    "z": 68178,
     "parent": "3_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8455,7 +8442,7 @@
     "type": "card",
     "cardType": "train",
     "id": "zniy",
-    "z": 66913,
+    "z": 68179,
     "color": "#b4b4b4",
     "parent": "3_trains",
     "background_color_transparent": "#b4b4b4",
@@ -8466,7 +8453,7 @@
     "type": "card",
     "cardType": "train",
     "id": "q157",
-    "z": 66914,
+    "z": 68180,
     "color": "#b4b4b4",
     "parent": "3_trains",
     "background_color_transparent": "#b4b4b4",
@@ -8477,7 +8464,7 @@
     "type": "card",
     "cardType": "train",
     "id": "7fe5",
-    "z": 66915,
+    "z": 68181,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8488,7 +8475,7 @@
     "type": "card",
     "cardType": "train",
     "id": "o9xf",
-    "z": 66916,
+    "z": 68182,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8499,7 +8486,7 @@
     "type": "card",
     "cardType": "train",
     "id": "49u3",
-    "z": 66917,
+    "z": 68183,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8510,7 +8497,7 @@
     "type": "card",
     "cardType": "train",
     "id": "ely9",
-    "z": 66918,
+    "z": 68184,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8521,7 +8508,7 @@
     "type": "card",
     "cardType": "train",
     "id": "9iwz",
-    "z": 66919,
+    "z": 68185,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8532,7 +8519,7 @@
     "type": "card",
     "cardType": "train",
     "id": "89fo",
-    "z": 66920,
+    "z": 68186,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8543,7 +8530,7 @@
     "type": "card",
     "cardType": "train",
     "id": "ynu8",
-    "z": 66921,
+    "z": 68187,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8554,7 +8541,7 @@
     "type": "card",
     "cardType": "train",
     "id": "8n1b",
-    "z": 66922,
+    "z": 68188,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8565,7 +8552,7 @@
     "type": "card",
     "cardType": "train",
     "id": "ze8u",
-    "z": 66923,
+    "z": 68189,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8576,7 +8563,7 @@
     "type": "card",
     "cardType": "train",
     "id": "mjqt",
-    "z": 66924,
+    "z": 68190,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8587,7 +8574,7 @@
     "type": "card",
     "cardType": "train",
     "id": "6bb7",
-    "z": 66925,
+    "z": 68191,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -8598,7 +8585,7 @@
     "type": "card",
     "cardType": "train",
     "id": "g9um",
-    "z": 66941,
+    "z": 68207,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8609,7 +8596,7 @@
     "type": "card",
     "cardType": "train",
     "id": "4ye1",
-    "z": 66942,
+    "z": 68208,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8620,7 +8607,7 @@
     "type": "card",
     "cardType": "train",
     "id": "3kk5",
-    "z": 66943,
+    "z": 68209,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8631,7 +8618,7 @@
     "type": "card",
     "cardType": "train",
     "id": "4irg",
-    "z": 66944,
+    "z": 68210,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8642,7 +8629,7 @@
     "type": "card",
     "cardType": "train",
     "id": "x2ks",
-    "z": 66945,
+    "z": 68211,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8653,7 +8640,7 @@
     "type": "card",
     "cardType": "train",
     "id": "xhvp",
-    "z": 66946,
+    "z": 68212,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8664,7 +8651,7 @@
     "type": "card",
     "cardType": "train",
     "id": "ojoz",
-    "z": 66947,
+    "z": 68213,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8675,7 +8662,7 @@
     "type": "card",
     "cardType": "train",
     "id": "4yon",
-    "z": 66948,
+    "z": 68214,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8686,7 +8673,7 @@
     "type": "card",
     "cardType": "train",
     "id": "hheh",
-    "z": 66949,
+    "z": 68215,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8697,7 +8684,7 @@
     "type": "card",
     "cardType": "train",
     "id": "c9cx",
-    "z": 66950,
+    "z": 68216,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8708,7 +8695,7 @@
     "type": "card",
     "cardType": "train",
     "id": "j7ng",
-    "z": 66951,
+    "z": 68217,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8719,7 +8706,7 @@
     "type": "card",
     "cardType": "train",
     "id": "1k8l",
-    "z": 66952,
+    "z": 68218,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8730,7 +8717,7 @@
     "type": "card",
     "cardType": "train",
     "id": "pk72",
-    "z": 66953,
+    "z": 68219,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8741,7 +8728,7 @@
     "type": "card",
     "cardType": "train",
     "id": "9cvm",
-    "z": 66954,
+    "z": 68220,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8752,7 +8739,7 @@
     "type": "card",
     "cardType": "train",
     "id": "tkez",
-    "z": 66955,
+    "z": 68221,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8763,7 +8750,7 @@
     "type": "card",
     "cardType": "train",
     "id": "i4i0",
-    "z": 66956,
+    "z": 68222,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8774,7 +8761,7 @@
     "type": "card",
     "cardType": "train",
     "id": "fqjn",
-    "z": 66957,
+    "z": 68223,
     "parent": "4_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8785,7 +8772,7 @@
     "type": "card",
     "cardType": "train",
     "id": "2abc",
-    "z": 66958,
+    "z": 68224,
     "color": "#b4b4b4",
     "parent": "4_trains",
     "background_color_transparent": "#b4b4b4",
@@ -8796,7 +8783,7 @@
     "type": "card",
     "cardType": "train",
     "id": "3a4o",
-    "z": 66974,
+    "z": 68240,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8807,7 +8794,7 @@
     "type": "card",
     "cardType": "train",
     "id": "x9g3",
-    "z": 66975,
+    "z": 68241,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8818,7 +8805,7 @@
     "type": "card",
     "cardType": "train",
     "id": "wioo",
-    "z": 66976,
+    "z": 68242,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8829,7 +8816,7 @@
     "type": "card",
     "cardType": "train",
     "id": "rvwe",
-    "z": 66977,
+    "z": 68243,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8840,7 +8827,7 @@
     "type": "card",
     "cardType": "train",
     "id": "a352",
-    "z": 66978,
+    "z": 68244,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8851,7 +8838,7 @@
     "type": "card",
     "cardType": "train",
     "id": "p9v4",
-    "z": 66979,
+    "z": 68245,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8862,7 +8849,7 @@
     "type": "card",
     "cardType": "train",
     "id": "orcq",
-    "z": 66980,
+    "z": 68246,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8873,7 +8860,7 @@
     "type": "card",
     "cardType": "train",
     "id": "yesj",
-    "z": 66981,
+    "z": 68247,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8884,7 +8871,7 @@
     "type": "card",
     "cardType": "train",
     "id": "91td",
-    "z": 66982,
+    "z": 68248,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8895,7 +8882,7 @@
     "type": "card",
     "cardType": "train",
     "id": "8z2a",
-    "z": 66983,
+    "z": 68249,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8906,7 +8893,7 @@
     "type": "card",
     "cardType": "train",
     "id": "4nzn",
-    "z": 66984,
+    "z": 68250,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8917,7 +8904,7 @@
     "type": "card",
     "cardType": "train",
     "id": "yu8s",
-    "z": 66985,
+    "z": 68251,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8928,7 +8915,7 @@
     "type": "card",
     "cardType": "train",
     "id": "22b4",
-    "z": 66986,
+    "z": 68252,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8939,7 +8926,7 @@
     "type": "card",
     "cardType": "train",
     "id": "i94w",
-    "z": 66987,
+    "z": 68253,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8950,7 +8937,7 @@
     "type": "card",
     "cardType": "train",
     "id": "s7ju",
-    "z": 66988,
+    "z": 68254,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8961,7 +8948,7 @@
     "type": "card",
     "cardType": "train",
     "id": "f31i",
-    "z": 66989,
+    "z": 68255,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8972,7 +8959,7 @@
     "type": "card",
     "cardType": "train",
     "id": "o6xv",
-    "z": 66990,
+    "z": 68256,
     "parent": "5_trains",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -8983,7 +8970,7 @@
     "type": "card",
     "cardType": "train",
     "id": "v44m",
-    "z": 66991,
+    "z": 68257,
     "color": "#b4b4b4",
     "parent": "5_trains",
     "background_color_transparent": "#b4b4b4",
@@ -9049,7 +9036,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "tyqv",
-    "z": 66857,
+    "z": 68123,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9060,7 +9047,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "z530",
-    "z": 66858,
+    "z": 68124,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9071,7 +9058,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "on9n",
-    "z": 66859,
+    "z": 68125,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9082,7 +9069,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "t9uw",
-    "z": 66904,
+    "z": 68170,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9093,7 +9080,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "lgkj",
-    "z": 66905,
+    "z": 68171,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9104,7 +9091,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "3b0n",
-    "z": 66906,
+    "z": 68172,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9115,7 +9102,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "kl0n",
-    "z": 66907,
+    "z": 68173,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9126,7 +9113,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "y3do",
-    "z": 66937,
+    "z": 68203,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -9137,7 +9124,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "b2k6",
-    "z": 66938,
+    "z": 68204,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -9148,7 +9135,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "rspy",
-    "z": 66939,
+    "z": 68205,
     "parent": "4_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -9159,7 +9146,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "yp2j",
-    "z": 66940,
+    "z": 68206,
     "color": "#b4b4b4",
     "parent": "4_factories",
     "background_color_transparent": "#b4b4b4",
@@ -9170,7 +9157,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "mdhi",
-    "z": 66971,
+    "z": 68237,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -9181,7 +9168,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "mifx",
-    "z": 66972,
+    "z": 68238,
     "parent": "5_factories",
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
@@ -9192,7 +9179,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "31lx",
-    "z": 66973,
+    "z": 68239,
     "color": "#b4b4b4",
     "parent": "5_factories",
     "background_color_transparent": "#b4b4b4",
@@ -9203,7 +9190,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "db7d",
-    "z": 66890,
+    "z": 68156,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9214,7 +9201,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "3fdk",
-    "z": 66891,
+    "z": 68157,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9225,7 +9212,7 @@
     "type": "card",
     "cardType": "factory",
     "id": "4vfx",
-    "z": 66892,
+    "z": 68158,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -10027,110 +10014,6 @@
     "blockingX": 211,
     "defaultX": -300
   },
-  "your_turn_button": {
-    "type": "button",
-    "id": "your_turn_button",
-    "width": 1600,
-    "height": 1000,
-    "borderRadius": 0,
-    "layer": 100,
-    "z": 78732,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "default": {
-        "border-radius": "5px",
-        "border": "0px solid ${PROPERTY background_color_solid}",
-        "background": "transparent",
-        "font-size": "120px",
-        "font-weight": "900",
-        "text-align": "center",
-        "padding-top": "400px",
-        "color": "${PROPERTY background_color_solid}"
-      },
-      " > textarea": {
-        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
-      }
-    },
-    "onlyVisibleForSeat": "",
-    "passed": false,
-    "clickRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "your_turn_button"
-        ],
-        "property": "onlyVisibleForSeat",
-        "value": ""
-      }
-    ],
-    "background_color_solid": "#ff9800",
-    "background_color_transparent": "#ff980048"
-  },
-  "your_turn_label": {
-    "type": "label",
-    "id": "your_turn_label",
-    "parent": "your_turn_button",
-    "fixedParent": true,
-    "x": 418,
-    "y": 426,
-    "width": 700,
-    "height": 110,
-    "layer": 10,
-    "z": 531,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "default": {
-        "background": "white",
-        "border-radius": "5px",
-        "border": "30px solid ${PROPERTY background_color_solid}",
-        "font-size": "90px",
-        "font-weight": "900",
-        "text-align": "center",
-        "pointer-events": "none",
-        "color": "${PROPERTY background_color_solid}"
-      },
-      " > textarea": {
-        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
-      }
-    },
-    "text": "It's Your Turn!",
-    "passed": false,
-    "background_color_solid": "#ff9800",
-    "background_color_transparent": "#ff980048"
-  },
-  "your_turn_label_border": {
-    "type": "label",
-    "id": "your_turn_label_border",
-    "parent": "your_turn_button",
-    "fixedParent": true,
-    "x": 413,
-    "y": 421,
-    "width": 710,
-    "height": 120,
-    "z": 531,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "default": {
-        "background": "white",
-        "border-radius": "5px",
-        "border": "30px solid black",
-        "font-size": "90px",
-        "font-weight": "900",
-        "text-align": "center",
-        "pointer-events": "none",
-        "color": "${PROPERTY background_color_solid}"
-      },
-      " > textarea": {
-        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
-      }
-    },
-    "background_color_solid": "#bf360c",
-    "background_color_transparent": "#bf360c48",
-    "passed": false
-  },
   "turn_settings_button": {
     "type": "button",
     "id": "turn_settings_button",
@@ -10150,7 +10033,7 @@
         "border": "5px solid white"
       }
     },
-    "text": "Turn Settings",
+    "text": "Alert Settings",
     "clickRoutine": [
       {
         "func": "GET",
@@ -10217,7 +10100,7 @@
     "z": 434,
     "x": 1394.5,
     "y": 605.344,
-    "city_type": "city_grey"
+    "city_type": "city_purple"
   },
   "resource_count32": {
     "type": "label",
@@ -10234,7 +10117,7 @@
     "z": 433,
     "x": 1522.75,
     "y": 531.301,
-    "city_type": "city_black"
+    "city_type": "city_white"
   },
   "resource_count33": {
     "type": "label",
@@ -10389,5 +10272,138 @@
     "handleOffset": 20,
     "handlePosition": "middle right",
     "id": "l3we"
+  },
+  "your_turn_button": {
+    "type": "button",
+    "id": "your_turn_button",
+    "width": 1600,
+    "height": 1000,
+    "borderRadius": 0,
+    "layer": 100,
+    "z": 78732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "border-radius": "5px",
+        "border": "0px solid ${PROPERTY background_color_solid}",
+        "background": "transparent",
+        "font-size": "120px",
+        "font-weight": "900",
+        "text-align": "center",
+        "padding-top": "400px",
+        "color": "${PROPERTY background_color_solid}"
+      },
+      " > textarea": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "onlyVisibleForSeat": "",
+    "passed": false,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "your_turn_button"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": ""
+      }
+    ],
+    "background_color_solid": "#dddddd",
+    "background_color_transparent": "#dddddd48"
+  },
+  "your_turn_label": {
+    "type": "label",
+    "id": "your_turn_label",
+    "parent": "your_turn_button",
+    "fixedParent": true,
+    "x": 418,
+    "y": 400,
+    "width": 700,
+    "height": 135,
+    "layer": 10,
+    "z": 531,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "white",
+        "border-radius": "5px",
+        "border": "30px solid ${PROPERTY background_color_solid}",
+        "font-size": "90px",
+        "font-weight": "900",
+        "text-align": "center",
+        "pointer-events": "none",
+        "color": "${PROPERTY background_color_solid}"
+      },
+      " > textarea": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "text": "It's Your Turn!",
+    "passed": false,
+    "background_color_solid": "#dddddd",
+    "background_color_transparent": "#dddddd48"
+  },
+  "your_turn_label_border": {
+    "type": "label",
+    "id": "your_turn_label_border",
+    "parent": "your_turn_button",
+    "fixedParent": true,
+    "x": 413,
+    "y": 395,
+    "width": 710,
+    "height": 146,
+    "z": 531,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "white",
+        "border-radius": "5px",
+        "border": "30px solid black",
+        "font-size": "90px",
+        "font-weight": "900",
+        "text-align": "center",
+        "pointer-events": "none",
+        "color": "${PROPERTY background_color_solid}"
+      },
+      " > textarea": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "background_color_solid": "#bf360c",
+    "background_color_transparent": "#bf360c48",
+    "passed": false
+  },
+  "your_turn_click_to_exit_label": {
+    "type": "label",
+    "id": "your_turn_click_to_exit_label",
+    "parent": "your_turn_button",
+    "fixedParent": true,
+    "x": 462,
+    "y": 525,
+    "width": 700,
+    "height": 60,
+    "layer": 10,
+    "z": 531,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-radius": "5px",
+        "font-size": "30px",
+        "font-weight": "900",
+        "text-align": "center",
+        "pointer-events": "none",
+        "color": "black"
+      },
+      " > text area": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "text": "Click anywhere to continue.",
+    "background_color_solid": "#9c27b0",
+    "background_color_transparent": "#9c27b048",
+    "passed": false
   }
 }
