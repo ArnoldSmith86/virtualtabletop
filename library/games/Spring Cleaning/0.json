@@ -18,7 +18,7 @@
       "mode": "vs",
       "time": "15 - 45",
       "attribution": "The game room, game design, and game layout are by Jonathan Cox. Art assets used with permission from the rights holder, Jonathan Cox. Illustrations created by Lananh Vo. No permission is given for the further use of any Spring Cleaning art assets.",
-      "lastUpdate": 1711330064852,
+      "lastUpdate": 1711330306630,
       "showName": false,
       "skill": "low",
       "description": "In this climbing/shedding game you must offer your cards to opponents, and play each others cards as you race to play them all.",
@@ -28,10 +28,10 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "Have every player take a seat and then click the \"NEW GAME\" button. This will randomly choose a starting player and deal each player their starting hand of cards.<div><div><br></div><div>Once done with their turn, the player should click the \"CLICK TO END TURN\" button, which will move it to the next player in order.<br><div><br></div><div>When playing cards, click and drag them into the large open area in the middle of the screen. It is best to line them up horizontally with your seat name and offered cards area. You may click once on a card to turn it over.</div><div><br></div><div>When offering cards, click and drag them to the \"Offered Cards\" window under the player's name.&nbsp;</div><div><br></div><div>Once a trick is over, the winner of the trick should click the \"TRICK WINNER CLICK TO CLEAR CARDS\" button in the bottom right. This will remove all played cards, and also assign the current turn to the trick winner.</div></div><div><br></div><div>The \"Total Cards: #\" value counts all cards in that player's hidden hand as well as all cards in their offer area.</div><div><br></div><div>At the end of a round players will score trash by clicking and dragging the appropriate trash token from the \"Trash Supply\". Place gained track tokens into the skinny vertical column to the right of the player's name.</div><div><br></div><div>Once trash has been scored at the end of the round, if the game isn't over then click the \"NEW ROUND\" button. The turn order button will be moved to the player with the most total trash, who will take the first turn of the next round.</div><div><br></div><div>2 Player Implementation Note:</div><div>Neither player should use the bottom-most seat, this area will be used by the Neutral Offer, which appears after starting a 2 player game.</div></div>",
-      "players": "2 - 5",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "Spring Cleaning",
-      "variantImage": ""
+      "language": "en-US",
+      "players": "2 - 5"
     }
   },
   "2jur": {
@@ -86,31 +86,31 @@
     },
     "cardTypes": {
       "dykj": {
-        "image": "/assets/-144550471_252727"
+        "image": "/assets/-591262877_9644"
       },
       "gco2": {
-        "image": "/assets/-1632136897_281272"
+        "image": "/assets/-992759430_10614"
       },
       "dcrr": {
-        "image": "/assets/605136899_222200"
+        "image": "/assets/-2099847120_10526"
       },
       "2sls": {
-        "image": "/assets/1787747762_221161"
+        "image": "/assets/1817473309_9366"
       },
       "vecg": {
-        "image": "/assets/2125545053_215121"
+        "image": "/assets/1227878576_8866"
       },
       "w4id": {
-        "image": "/assets/747354153_182239"
+        "image": "/assets/2027753747_8510"
       },
       "rqsv": {
-        "image": "/assets/-1273217503_264940"
+        "image": "/assets/-1102663282_9362"
       },
       "236k": {
-        "image": "/assets/866880531_284975"
+        "image": "/assets/-856051398_11696"
       },
       "vpsw": {
-        "image": "/assets/1412155391_223339"
+        "image": "/assets/-1711539631_10204"
       }
     },
     "faceTemplates": [
@@ -125,7 +125,7 @@
             "width": 107,
             "height": 170,
             "color": "transparent",
-            "value": "/assets/-95539708_80591"
+            "value": "/assets/995141016_3278"
           }
         ]
       },
@@ -2788,7 +2788,7 @@
     "z": 606
   },
   "d4i7": {
-    "image": "/assets/1930585545_1650385",
+    "image": "/assets/1500231630_87272",
     "id": "d4i7",
     "x": 996,
     "height": 860,
@@ -2891,7 +2891,7 @@
     "height": 90,
     "z": 1220,
     "movable": false,
-    "image": "/assets/905543181_22476",
+    "image": "/assets/372054288_3836",
     "visibleX": -1,
     "visibleY": 79,
     "defaultX": -100,
@@ -3065,7 +3065,7 @@
     "z": 317,
     "movable": false,
     "movableInEdit": false,
-    "image": "/assets/716961149_87238",
+    "image": "/assets/-1283016571_11990",
     "x": 5,
     "offer_card_asset": true
   },
@@ -3748,7 +3748,7 @@
     "hideWhenUnused": true
   },
   "twbb": {
-    "image": "/assets/991696033_137475",
+    "image": "/assets/823911279_26306",
     "id": "twbb",
     "z": 20194,
     "x": 1008,
@@ -4055,7 +4055,7 @@
     "parent": "draw_deck_holder"
   },
   "ub44": {
-    "image": "/assets/1223974730_21006",
+    "image": "/assets/-405535666_1714",
     "z": 44896,
     "width": 35,
     "height": 40,
@@ -4071,7 +4071,7 @@
     "parent": "infinite_trash4"
   },
   "x2ef": {
-    "image": "/assets/-1437369679_17872",
+    "image": "/assets/-1576134704_1552",
     "z": 44898,
     "width": 35,
     "height": 40,
@@ -4087,7 +4087,7 @@
     "parent": "infinite_trash3"
   },
   "9cme": {
-    "image": "/assets/2132500640_14972",
+    "image": "/assets/1804259984_1344",
     "z": 44900,
     "width": 35,
     "height": 40,
@@ -4103,7 +4103,7 @@
     "parent": "infinite_trash2"
   },
   "ecnn": {
-    "image": "/assets/-1877962591_11360",
+    "image": "/assets/1905965947_1098",
     "z": 44905,
     "width": 35,
     "height": 40,
@@ -4118,7 +4118,7 @@
     "parent": "infinite_trash1"
   },
   "56gh": {
-    "image": "/assets/-1877962591_11360",
+    "image": "/assets/1905965947_1098",
     "z": 44906,
     "width": 35,
     "height": 40,
@@ -4267,7 +4267,7 @@
     "passed": false
   },
   "iv2a": {
-    "image": "/assets/1433080236_12080",
+    "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
     "height": 40,
@@ -4284,7 +4284,7 @@
     "isClone": true
   },
   "7h97": {
-    "image": "/assets/1433080236_12080",
+    "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
     "height": 40,
@@ -4302,7 +4302,7 @@
     "isClone": true
   },
   "u0yv": {
-    "image": "/assets/1433080236_12080",
+    "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
     "height": 40,
@@ -4320,7 +4320,7 @@
     "isClone": true
   },
   "hlvv": {
-    "image": "/assets/1433080236_12080",
+    "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
     "height": 40,
@@ -4338,7 +4338,7 @@
     "isClone": true
   },
   "uto1": {
-    "image": "/assets/1433080236_12080",
+    "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
     "height": 40,
@@ -4356,7 +4356,7 @@
     "isClone": true
   },
   "pue1": {
-    "image": "/assets/1433080236_12080",
+    "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
     "height": 40,
@@ -4374,7 +4374,7 @@
     "isClone": true
   },
   "rrru": {
-    "image": "/assets/1433080236_12080",
+    "image": "/assets/1777628233_1186",
     "z": 46840,
     "width": 35,
     "height": 40,
