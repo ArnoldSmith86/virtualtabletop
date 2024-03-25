@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "45-90",
       "attribution": "Layout design and coding by Jonathan Cox (email: JonGetsGames@gmail.com for inquiries). Game name and all art assets used with permission from the rights holder, Wallace Designs. \"Wrong Answer\" audio source&nbsp;by [UNIVERSFIELD] via&nbsp;https://pixabay.com/sound-effects/wrong-answer-129254/.",
-      "lastUpdate": 1711329933436,
+      "lastUpdate": 1711330503897,
       "showName": false,
       "skill": "Medium",
       "description": "Build your rail network, establish your factories and reap the rewards.",
@@ -20,10 +20,10 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "Players choose a seat by clicking any \"click to sit\" buttons, then type in their name and select their desired color in the popup window. Sit down by clicking the green \"Go\" button.<div><br></div><div>After all players have chosen seats,&nbsp; any one player must click the \"Setup\" button, click the check box in the popup window, and then click the \"Reset the game!\" button. This will randomly determine the starting player, randomly place all city tiles, and give every player 5 random contracts.<div><div><br></div><div>Once done with their turn, the player should click the \"Click to end turn\" button button to the left of their name, which will move to the next player in order. The next player will hear a soft sound and a text alert on screen, reminding them that their turn has begun. Clicking anywhere on the screen will remove the text alert. Any players who do not want to hear the sound and/or see the text alert when it is their turn can click the \"Turn Options\" button in the bottom left corner and change their preference.<br><div><br></div><div>Hovering your mouse over any of the five white boxes in the bottom right corner of the screen will reveal helpful player aids.</div><div><br></div><div>In order to play a track tile, left click and drag the desired type from a holder in the top left corer and place it on the map. Left clicking on a tile on the map rotates it clockwise. The number between the tiles shows how many of that type are left in the supply (when played in person, there are 3 tiles with different front and backs, these are split up in this mod to make it easier to place the type desired).</div><div><br></div><div>Place trains on placed track by left clicking and dragging the train from the stack to the left of that player's name. The trains will snap their orientation to one of 6 sides on the hexagonal grid, let go of the train in the desired location.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">Place Factories on empty cities by left clicking and dragging the Factory from the stack to the left of that player's name.&nbsp;</span>When placing Factories onto cities, 5 of the correct resource will automatically be placed onto the city. When spending resources, click on the stack under the number on the city and drag the resource to any edge of the screen and let go, deleting the resource (track tiles can be deleted in the same way).</div><div><br></div><div>Draw new contracts by left clicking on the Contracts Supply stack, dragging the tile to the bottom left corner of the screen and letting go in the area labeled \"Your Hidden Contracts Hand\". The number of contracts each player currently has is displayed to the left of their name.</div><div><br></div><div>When completing Contracts, click and drag them out of the Hidden Contracts Hand, and place them in the \"Completed Contracts\" box to the left of that player's name. The victory points and money gained from the contract will be automatically added to that players supply. The player must perform the bonus action manually, this is not automated.</div><div><br></div><div>In order to pay an opponent any amount of money, left click on the \"pay -&gt;\" button to the left of their name, type in the amount of money you owe them (as a positive number) and then press enter (or click the green \"pay\" button). Money can be taken from opponents in a similar way by typing in a negative number.</div><div><br></div><div>In order to edit their current total points or total money amount, the player must left click on the \"edit -&gt;\" button to the left of the chosen resource, type a number into the box, and press enter (or click the green \"pay\" button). A positive number inputted will increase the resource by that amount, a negative number will decrease by that amount.&nbsp;</div><div><br></div><div>The game end and final scoring are described in the \"Endgame Trigger\" and \"Final Scoring\" white player aid boxes in the bottom right corner. The only automated part of final scoring is the money and victory points from completed contracts already being given to players.</div></div></div></div>",
-      "players": "2-5",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "Germany map",
-      "variantImage": ""
+      "language": "en-US",
+      "players": "2-5"
     }
   },
   "board_deck": {
@@ -160,24 +160,24 @@
     },
     "cardTypes": {
       "city_black": {
-        "image": "/assets/-712275580_51568",
-        "front": "/assets/1766392903_115080"
+        "image": "/assets/-644995751_2606",
+        "front": "/assets/567612469_5588"
       },
       "city_white": {
-        "image": "/assets/-539427248_48515",
-        "front": "/assets/1118633289_101823"
+        "image": "/assets/229122881_2682",
+        "front": "/assets/632515778_5766"
       },
       "city_orange": {
-        "image": "/assets/2030141110_51197",
-        "front": "/assets/1014001151_119001"
+        "image": "/assets/-816956976_3434",
+        "front": "/assets/-1396757161_6642"
       },
       "city_grey": {
-        "image": "/assets/-197264699_50213",
-        "front": "/assets/-113255160_126179"
+        "image": "/assets/1735189007_2570",
+        "front": "/assets/1232730400_5168"
       },
       "city_purple": {
-        "image": "/assets/1677480205_124874",
-        "front": "/assets/1677480205_124874"
+        "image": "/assets/-259128848_5326",
+        "front": "/assets/-259128848_5326"
       }
     },
     "faceTemplates": [
@@ -1718,242 +1718,242 @@
     },
     "cardTypes": {
       "A1-tracks": {
-        "image": "/assets/610747479_441718",
+        "image": "/assets/227156465_26414",
         "money": 2,
         "vp": 2
       },
       "A2-tracks": {
-        "image": "/assets/1730809054_479482",
+        "image": "/assets/-1345102657_31130",
         "money": 2,
         "vp": 2
       },
       "A3-tracks": {
-        "image": "/assets/-593205623_467914",
+        "image": "/assets/315295995_28044",
         "money": 2,
         "vp": 2
       },
       "A4-tracks": {
-        "image": "/assets/1744463609_466218",
+        "image": "/assets/206163891_27026",
         "money": 2,
         "vp": 2
       },
       "A5-factory": {
-        "image": "/assets/-1508123949_429143",
+        "image": "/assets/-143725955_27128",
         "money": 3,
         "vp": 3
       },
       "A6-factory": {
-        "image": "/assets/-555862598_463457",
+        "image": "/assets/-635547164_29782",
         "money": 3,
         "vp": 3
       },
       "A7-factory": {
-        "image": "/assets/-711616909_453428",
+        "image": "/assets/-435574879_28924",
         "money": 3,
         "vp": 3
       },
       "A8-contracts": {
-        "image": "/assets/-614576584_449502",
+        "image": "/assets/-664114556_32712",
         "money": 3,
         "vp": 3
       },
       "A9-contracts": {
-        "image": "/assets/-875720455_452399",
+        "image": "/assets/-583210604_31936",
         "money": 3,
         "vp": 3
       },
       "A10-contracts": {
-        "image": "/assets/-316698837_453414",
+        "image": "/assets/1521828237_34564",
         "money": 3,
         "vp": 3
       },
       "A11-points": {
-        "image": "/assets/1684016481_458514",
+        "image": "/assets/97110316_22796",
         "money": 0,
         "vp": 5
       },
       "A12-points": {
-        "image": "/assets/-1056905097_427948",
+        "image": "/assets/1551728191_19664",
         "money": 0,
         "vp": 5
       },
       "B1-tracks": {
-        "image": "/assets/2083507418_475708",
+        "image": "/assets/-1583341893_30716",
         "money": 2,
         "vp": 2
       },
       "B2-tracks": {
-        "image": "/assets/-629988374_476668",
+        "image": "/assets/133108997_30742",
         "money": 2,
         "vp": 2
       },
       "B3-tracks": {
-        "image": "/assets/25401129_469175",
+        "image": "/assets/-1549008109_29068",
         "money": 2,
         "vp": 2
       },
       "B4-tracks": {
-        "image": "/assets/-900036912_465326",
+        "image": "/assets/-665457192_27424",
         "money": 2,
         "vp": 2
       },
       "B5-factory": {
-        "image": "/assets/739469930_461397",
+        "image": "/assets/-1691071248_28878",
         "money": 3,
         "vp": 3
       },
       "B6-factory": {
-        "image": "/assets/1250048773_461489",
+        "image": "/assets/-1206557516_29304",
         "money": 3,
         "vp": 3
       },
       "B7-factory": {
-        "image": "/assets/1575062366_452315",
+        "image": "/assets/2056943435_27234",
         "money": 3,
         "vp": 3
       },
       "B8-contracts": {
-        "image": "/assets/-1493668147_448429",
+        "image": "/assets/1762739037_33154",
         "money": 3,
         "vp": 3
       },
       "B9-contracts": {
-        "image": "/assets/-1630534682_458864",
+        "image": "/assets/541903189_32364",
         "money": 3,
         "vp": 3
       },
       "B10-points": {
-        "image": "/assets/-726159883_464430",
+        "image": "/assets/1377527484_25466",
         "money": 0,
         "vp": 5
       },
       "B11-points": {
-        "image": "/assets/-1451371848_457350",
+        "image": "/assets/768585328_24782",
         "money": 0,
         "vp": 5
       },
       "B12-points": {
-        "image": "/assets/163232945_455711",
+        "image": "/assets/-1607209661_22922",
         "money": 0,
         "vp": 5
       },
       "C1-tracks": {
-        "image": "/assets/-686695492_472869",
+        "image": "/assets/1514394476_31126",
         "money": 2,
         "vp": 2
       },
       "C2-tracks": {
-        "image": "/assets/1691409437_473109",
+        "image": "/assets/-728220271_28528",
         "money": 2,
         "vp": 2
       },
       "C3-tracks": {
-        "image": "/assets/649330156_478816",
+        "image": "/assets/918739855_28114",
         "money": 2,
         "vp": 2
       },
       "C4-tracks": {
-        "image": "/assets/1622497839_477645",
+        "image": "/assets/-1762638134_27508",
         "money": 2,
         "vp": 2
       },
       "C5-factory": {
-        "image": "/assets/102858185_455771",
+        "image": "/assets/-992119744_27862",
         "money": 3,
         "vp": 3
       },
       "C6-factory": {
-        "image": "/assets/2082052521_458150",
+        "image": "/assets/464951_27848",
         "money": 3,
         "vp": 3
       },
       "C7-factory": {
-        "image": "/assets/1952931729_463184",
+        "image": "/assets/-135670103_28010",
         "money": 3,
         "vp": 3
       },
       "C8-contracts": {
-        "image": "/assets/-5699666_459867",
+        "image": "/assets/-1263696598_32508",
         "money": 3,
         "vp": 3
       },
       "C9-contracts": {
-        "image": "/assets/-1274842415_450424",
+        "image": "/assets/2011185229_31030",
         "money": 3,
         "vp": 3
       },
       "C10-points": {
-        "image": "/assets/1904043093_451236",
+        "image": "/assets/1070748043_23748",
         "money": 0,
         "vp": 5
       },
       "C11-points": {
-        "image": "/assets/1423075353_462137",
+        "image": "/assets/-1451012633_25202",
         "money": 0,
         "vp": 5
       },
       "C12-points": {
-        "image": "/assets/347070715_461955",
+        "image": "/assets/1676485121_26446",
         "money": 0,
         "vp": 5
       },
       "D1-tracks": {
-        "image": "/assets/-2107572420_444420",
+        "image": "/assets/-903212841_27364",
         "money": 2,
         "vp": 2
       },
       "D2-tracks": {
-        "image": "/assets/1682653140_469623",
+        "image": "/assets/-1324151173_27004",
         "money": 2,
         "vp": 2
       },
       "D3-tracks": {
-        "image": "/assets/-2031095132_471349",
+        "image": "/assets/1529724086_27434",
         "money": 2,
         "vp": 2
       },
       "D4-tracks": {
-        "image": "/assets/2131767727_471411",
+        "image": "/assets/411598280_28064",
         "money": 2,
         "vp": 2
       },
       "D5-factory": {
-        "image": "/assets/2108940095_431909",
+        "image": "/assets/885319983_24550",
         "money": 3,
         "vp": 3
       },
       "D6-factory": {
-        "image": "/assets/1852383136_457444",
+        "image": "/assets/-1294363653_29826",
         "money": 3,
         "vp": 3
       },
       "D7-factory": {
-        "image": "/assets/2056600197_455934",
+        "image": "/assets/1664611344_28004",
         "money": 3,
         "vp": 3
       },
       "D8-contracts": {
-        "image": "/assets/-1972378044_454610",
+        "image": "/assets/-1995788001_33462",
         "money": 3,
         "vp": 3
       },
       "D9-contracts": {
-        "image": "/assets/1677917344_454210",
+        "image": "/assets/-1589491850_34666",
         "money": 3,
         "vp": 3
       },
       "D10-points": {
-        "image": "/assets/-973855497_450374",
+        "image": "/assets/2140060899_22910",
         "money": 0,
         "vp": 5
       },
       "D11-points": {
-        "image": "/assets/-95869674_461521",
+        "image": "/assets/255583772_24988",
         "money": 0,
         "vp": 5
       },
       "D12-points": {
-        "image": "/assets/-563240820_428427",
+        "image": "/assets/1632037417_23540",
         "money": 0,
         "vp": 5
       }
@@ -1969,7 +1969,7 @@
             "y": 0,
             "width": 150,
             "height": 77,
-            "value": "/assets/720677377_180050"
+            "value": "/assets/-1544097766_7818"
           }
         ]
       },
@@ -4076,7 +4076,7 @@
     "movable": false,
     "movableInEdit": false,
     "enlarge": 4,
-    "image": "/assets/-1314937238_730647",
+    "image": "/assets/-1827056518_93416",
     "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon."
   },
   "info_template_icon": {
@@ -4132,7 +4132,7 @@
     "movable": false,
     "movableInEdit": false,
     "enlarge": 2,
-    "image": "/assets/1840542954_18661",
+    "image": "/assets/948488022_9848",
     "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon."
   },
   "info_turn-options_icon": {
@@ -4181,7 +4181,7 @@
     "movable": false,
     "movableInEdit": false,
     "enlarge": 2,
-    "image": "/assets/46463208_41105",
+    "image": "/assets/1878608445_22640",
     "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon."
   },
   "info_endgame_parent": {
@@ -4266,7 +4266,7 @@
     "movable": false,
     "movableInEdit": false,
     "enlarge": 2,
-    "image": "/assets/-1675858721_391529",
+    "image": "/assets/-587927109_89236",
     "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon."
   },
   "info_icons_parent": {
@@ -4298,7 +4298,7 @@
     "movable": false,
     "movableInEdit": false,
     "enlarge": 2,
-    "image": "/assets/1345135559_51465",
+    "image": "/assets/-631687223_28780",
     "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon."
   },
   "info_scoring_parent": {
@@ -4356,7 +4356,7 @@
     "movable": false,
     "movableInEdit": false,
     "enlarge": 2,
-    "image": "/assets/-1311090134_73271",
+    "image": "/assets/1319680471_43960",
     "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon."
   },
   "info_delivery_parent": {
@@ -4412,7 +4412,7 @@
     "height": 70,
     "layer": -10,
     "z": 79110,
-    "image": "/assets/-1121609800_58250",
+    "image": "/assets/-711663870_5328",
     "borderColor": "grey",
     "borderWidth": 3,
     "x": -100,
@@ -4427,7 +4427,7 @@
     "id": "jqp0",
     "width": 1600,
     "height": 1000,
-    "image": "/assets/1192560257_2598440",
+    "image": "/assets/-2145940998_198170",
     "layer": -10,
     "z": 79104,
     "movable": false,
@@ -4948,22 +4948,22 @@
       "city_black": {
         "backgroundColor": "black",
         "iconColor": "white",
-        "image": "/assets/1651642502_14137"
+        "image": "/assets/-1556624367_1940"
       },
       "city_white": {
         "backgroundColor": "white",
         "iconColor": "black",
-        "image": "/assets/-671482486_10483"
+        "image": "/assets/-241224798_1898"
       },
       "city_orange": {
         "backgroundColor": "orange",
         "iconColor": "white",
-        "image": "/assets/-1063180942_12824"
+        "image": "/assets/519655716_2016"
       },
       "city_grey": {
         "backgroundColor": "grey",
         "iconColor": "white",
-        "image": "/assets/-2060627033_13219"
+        "image": "/assets/1711734677_1576"
       }
     },
     "faceTemplates": [
@@ -9830,22 +9830,22 @@
     },
     "cardTypes": {
       "straight": {
-        "image": "/assets/-1859630848_14393"
+        "image": "/assets/-2145893788_4046"
       },
       "gentle": {
-        "image": "/assets/50613649_17372"
+        "image": "/assets/-1569859738_4038"
       },
       "tight": {
-        "image": "/assets/-347250178_13965"
+        "image": "/assets/-997229228_3506"
       },
       "straight-straight": {
-        "image": "/assets/-1662205923_24252"
+        "image": "/assets/2092309170_5510"
       },
       "gentle-straight": {
-        "image": "/assets/2138005282_32090"
+        "image": "/assets/-1250673010_5542"
       },
       "gentle-gentle": {
-        "image": "/assets/887153530_24809"
+        "image": "/assets/923562766_5188"
       }
     },
     "faceTemplates": [
