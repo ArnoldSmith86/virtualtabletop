@@ -1,39 +1,4 @@
 {
-  "3774": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "2sls",
-    "id": "3774",
-    "z": 46826,
-    "parent": "6vls"
-  },
-  "_meta": {
-    "version": 15,
-    "info": {
-      "name": "Spring Cleaning",
-      "image": "/assets/1259383691_187927",
-      "rules": "https://docs.google.com/document/d/1OznPvz6h_4DaKRbSWTMR9AnIjdB207-7dtMVVtMhufo/edit?usp=sharing",
-      "bgg": "https://www.jongetsgames.com/springcleaning",
-      "year": "",
-      "mode": "vs",
-      "time": "15 - 45",
-      "attribution": "The game room, game design, and game layout are by Jonathan Cox. Art assets used with permission from the rights holder, Jonathan Cox. Illustrations created by Lananh Vo. No permission is given for the further use of any Spring Cleaning art assets.",
-      "lastUpdate": 1711330306630,
-      "showName": false,
-      "skill": "low",
-      "description": "In this climbing/shedding game you must offer your cards to opponents, and play each others cards as you race to play them all.",
-      "similarImage": "",
-      "similarName": "",
-      "similarDesigner": "Jonathan Cox",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "Have every player take a seat and then click the \"NEW GAME\" button. This will randomly choose a starting player and deal each player their starting hand of cards.<div><div><br></div><div>Once done with their turn, the player should click the \"CLICK TO END TURN\" button, which will move it to the next player in order.<br><div><br></div><div>When playing cards, click and drag them into the large open area in the middle of the screen. It is best to line them up horizontally with your seat name and offered cards area. You may click once on a card to turn it over.</div><div><br></div><div>When offering cards, click and drag them to the \"Offered Cards\" window under the player's name.&nbsp;</div><div><br></div><div>Once a trick is over, the winner of the trick should click the \"TRICK WINNER CLICK TO CLEAR CARDS\" button in the bottom right. This will remove all played cards, and also assign the current turn to the trick winner.</div></div><div><br></div><div>The \"Total Cards: #\" value counts all cards in that player's hidden hand as well as all cards in their offer area.</div><div><br></div><div>At the end of a round players will score trash by clicking and dragging the appropriate trash token from the \"Trash Supply\". Place gained track tokens into the skinny vertical column to the right of the player's name.</div><div><br></div><div>Once trash has been scored at the end of the round, if the game isn't over then click the \"NEW ROUND\" button. The turn order button will be moved to the player with the most total trash, who will take the first turn of the next round.</div><div><br></div><div>2 Player Implementation Note:</div><div>Neither player should use the bottom-most seat, this area will be used by the Neutral Offer, which appears after starting a 2 player game.</div></div>",
-      "variantImage": "",
-      "variant": "Spring Cleaning",
-      "language": "en-US",
-      "players": "2 - 5"
-    }
-  },
   "2jur": {
     "deck": "z3kdD",
     "type": "card",
@@ -148,76 +113,12 @@
       }
     ]
   },
-  "vjcj": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "dykj",
-    "id": "vjcj",
-    "z": 46803,
-    "parent": "6vls"
-  },
-  "0w7t": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "gco2",
-    "id": "0w7t",
-    "z": 46762,
-    "parent": "6vls"
-  },
-  "mqgj": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "dcrr",
-    "id": "mqgj",
-    "z": 46807,
-    "parent": "6vls"
-  },
   "hd6g": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "2sls",
     "id": "hd6g",
-    "z": 46785,
-    "parent": "6vls"
-  },
-  "zoh4": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "vecg",
-    "id": "zoh4",
-    "z": 46759,
-    "parent": "6vls"
-  },
-  "89ui": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "w4id",
-    "id": "89ui",
-    "z": 46767,
-    "parent": "6vls"
-  },
-  "cips": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "rqsv",
-    "id": "cips",
-    "z": 46819,
-    "parent": "6vls"
-  },
-  "95x9": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "236k",
-    "id": "95x9",
-    "z": 46761,
-    "parent": "6vls"
-  },
-  "uoyg": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "vpsw",
-    "id": "uoyg",
-    "z": 46778,
+    "z": 47732,
     "parent": "6vls"
   },
   "dpvg": {
@@ -225,7 +126,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "dpvg",
-    "z": 46782,
+    "z": 47696,
     "parent": "6vls"
   },
   "gysf": {
@@ -233,7 +134,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "gysf",
-    "z": 46808,
+    "z": 47711,
     "parent": "6vls"
   },
   "j8qx": {
@@ -241,7 +142,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "j8qx",
-    "z": 46765,
+    "z": 47677,
     "parent": "6vls"
   },
   "hvc9": {
@@ -249,7 +150,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "hvc9",
-    "z": 46806,
+    "z": 47731,
     "parent": "6vls"
   },
   "6tgi": {
@@ -257,7 +158,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "6tgi",
-    "z": 46777,
+    "z": 47691,
     "parent": "6vls"
   },
   "28b4": {
@@ -265,7 +166,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "28b4",
-    "z": 46799,
+    "z": 47712,
     "parent": "6vls"
   },
   "kwrt": {
@@ -273,7 +174,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "kwrt",
-    "z": 46792,
+    "z": 47719,
     "parent": "6vls"
   },
   "0k5i": {
@@ -281,7 +182,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "0k5i",
-    "z": 46772,
+    "z": 47727,
     "parent": "6vls"
   },
   "9d08": {
@@ -289,7 +190,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "9d08",
-    "z": 46823,
+    "z": 47697,
     "parent": "6vls"
   },
   "yxmx": {
@@ -297,7 +198,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "yxmx",
-    "z": 46801,
+    "z": 47723,
     "parent": "6vls"
   },
   "krzj": {
@@ -305,7 +206,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "krzj",
-    "z": 46789,
+    "z": 47703,
     "parent": "6vls"
   },
   "sv8o": {
@@ -313,7 +214,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "sv8o",
-    "z": 46796,
+    "z": 47689,
     "parent": "6vls"
   },
   "1i5n": {
@@ -321,7 +222,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "1i5n",
-    "z": 46800,
+    "z": 47690,
     "parent": "6vls"
   },
   "6agt": {
@@ -329,7 +230,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "6agt",
-    "z": 46758,
+    "z": 47684,
     "parent": "6vls"
   },
   "mkv8": {
@@ -337,7 +238,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "mkv8",
-    "z": 46790,
+    "z": 47728,
     "parent": "6vls"
   },
   "hu3a": {
@@ -345,7 +246,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "hu3a",
-    "z": 46825,
+    "z": 47701,
     "parent": "6vls"
   },
   "scdy": {
@@ -353,7 +254,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "scdy",
-    "z": 46788,
+    "z": 47692,
     "parent": "6vls"
   },
   "q0oo": {
@@ -361,7 +262,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "q0oo",
-    "z": 46764,
+    "z": 47706,
     "parent": "6vls"
   },
   "tg41": {
@@ -369,7 +270,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "tg41",
-    "z": 46766,
+    "z": 47680,
     "parent": "6vls"
   },
   "ryr2": {
@@ -377,7 +278,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "ryr2",
-    "z": 46774,
+    "z": 47730,
     "parent": "6vls"
   },
   "1fx0": {
@@ -385,7 +286,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "1fx0",
-    "z": 46771,
+    "z": 47695,
     "parent": "6vls"
   },
   "ck6d": {
@@ -393,7 +294,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "ck6d",
-    "z": 46763,
+    "z": 47724,
     "parent": "6vls"
   },
   "3cqj": {
@@ -401,7 +302,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "3cqj",
-    "z": 46776,
+    "z": 47694,
     "parent": "6vls"
   },
   "k6cn": {
@@ -409,7 +310,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "k6cn",
-    "z": 46781,
+    "z": 47717,
     "parent": "6vls"
   },
   "ngmq": {
@@ -417,7 +318,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "ngmq",
-    "z": 46795,
+    "z": 47710,
     "parent": "6vls"
   },
   "ugqo": {
@@ -425,7 +326,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "ugqo",
-    "z": 46815,
+    "z": 47720,
     "parent": "6vls"
   },
   "hxmb": {
@@ -433,7 +334,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "hxmb",
-    "z": 46797,
+    "z": 47729,
     "parent": "6vls"
   },
   "q998": {
@@ -441,7 +342,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "q998",
-    "z": 46793,
+    "z": 47687,
     "parent": "6vls"
   },
   "f43c": {
@@ -449,7 +350,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "f43c",
-    "z": 46820,
+    "z": 47735,
     "parent": "6vls"
   },
   "jgjt": {
@@ -457,7 +358,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "jgjt",
-    "z": 46768,
+    "z": 47676,
     "parent": "6vls"
   },
   "ngz6": {
@@ -465,7 +366,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "ngz6",
-    "z": 46827,
+    "z": 47679,
     "parent": "6vls"
   },
   "qzrh": {
@@ -473,7 +374,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "qzrh",
-    "z": 46810,
+    "z": 47683,
     "parent": "6vls"
   },
   "1u26": {
@@ -481,7 +382,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "1u26",
-    "z": 46770,
+    "z": 47713,
     "parent": "6vls"
   },
   "lq4c": {
@@ -489,7 +390,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "lq4c",
-    "z": 46818,
+    "z": 47733,
     "parent": "6vls"
   },
   "keoj": {
@@ -497,7 +398,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "keoj",
-    "z": 46779,
+    "z": 47734,
     "parent": "6vls"
   },
   "e8gg": {
@@ -505,7 +406,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "e8gg",
-    "z": 46822,
+    "z": 47693,
     "parent": "6vls"
   },
   "6sub": {
@@ -513,7 +414,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "6sub",
-    "z": 46780,
+    "z": 47737,
     "parent": "6vls"
   },
   "dnlb": {
@@ -521,7 +422,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "dnlb",
-    "z": 46814,
+    "z": 47721,
     "parent": "6vls"
   },
   "ipmw": {
@@ -529,7 +430,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "ipmw",
-    "z": 46787,
+    "z": 47699,
     "parent": "6vls"
   },
   "ytu6": {
@@ -537,7 +438,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "ytu6",
-    "z": 46760,
+    "z": 47702,
     "parent": "6vls"
   },
   "48o4": {
@@ -545,7 +446,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "48o4",
-    "z": 46786,
+    "z": 47681,
     "parent": "6vls"
   },
   "ay3c": {
@@ -553,7 +454,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "ay3c",
-    "z": 46813,
+    "z": 47704,
     "parent": "6vls"
   },
   "u595": {
@@ -561,7 +462,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "u595",
-    "z": 46812,
+    "z": 47718,
     "parent": "6vls"
   },
   "nkzc": {
@@ -569,7 +470,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "nkzc",
-    "z": 46802,
+    "z": 47738,
     "parent": "6vls"
   },
   "gk31": {
@@ -577,7 +478,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "gk31",
-    "z": 46821,
+    "z": 47726,
     "parent": "6vls"
   },
   "x7xi": {
@@ -585,7 +486,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "x7xi",
-    "z": 46791,
+    "z": 47707,
     "parent": "6vls"
   },
   "5z49": {
@@ -593,7 +494,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "5z49",
-    "z": 46805,
+    "z": 47685,
     "parent": "6vls"
   },
   "q4cz": {
@@ -601,7 +502,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "q4cz",
-    "z": 46828,
+    "z": 47682,
     "parent": "6vls"
   },
   "hftn": {
@@ -609,7 +510,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "hftn",
-    "z": 46816,
+    "z": 47722,
     "parent": "6vls"
   },
   "mr7v": {
@@ -617,7 +518,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "mr7v",
-    "z": 46784,
+    "z": 47700,
     "parent": "6vls"
   },
   "vjjx": {
@@ -625,7 +526,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "vjjx",
-    "z": 46757,
+    "z": 47686,
     "parent": "6vls"
   },
   "uh2r": {
@@ -633,7 +534,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "uh2r",
-    "z": 46809,
+    "z": 47678,
     "parent": "6vls"
   },
   "bord": {
@@ -641,7 +542,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "bord",
-    "z": 46783,
+    "z": 47715,
     "parent": "6vls"
   },
   "1hand": {
@@ -1003,7 +904,7 @@
     "audio_enabled": true,
     "color": "#dddddd",
     "mainColor": "#dddddd",
-    "background_color_solid": "#9c27b0"
+    "background_color_solid": "#00bcd4"
   },
   "2_card_count": {
     "type": "label",
@@ -1823,7 +1724,7 @@
   "arrow": {
     "id": "arrow",
     "width": 70,
-    "z": 78782,
+    "z": 78784,
     "height": 150,
     "clickRoutine": [
       {
@@ -1953,7 +1854,7 @@
     },
     "text": "CLICK\nTO END TURN",
     "x": -100,
-    "y": -97,
+    "y": -115,
     "TurnSoundRoutine": [
       {
         "func": "AUDIO",
@@ -2788,7 +2689,7 @@
     "z": 606
   },
   "d4i7": {
-    "image": "/assets/1500231630_87272",
+    "image": "/assets/61117290_1650183",
     "id": "d4i7",
     "x": 996,
     "height": 860,
@@ -3310,7 +3211,7 @@
     "type": "card",
     "cardType": "dykj",
     "id": "fhyp",
-    "z": 46824,
+    "z": 47714,
     "parent": "6vls"
   },
   "bi3q": {
@@ -3318,7 +3219,7 @@
     "type": "card",
     "cardType": "gco2",
     "id": "bi3q",
-    "z": 46794,
+    "z": 47698,
     "parent": "6vls"
   },
   "ry40": {
@@ -3326,7 +3227,7 @@
     "type": "card",
     "cardType": "dcrr",
     "id": "ry40",
-    "z": 46804,
+    "z": 47736,
     "parent": "6vls"
   },
   "g812": {
@@ -3334,7 +3235,7 @@
     "type": "card",
     "cardType": "2sls",
     "id": "g812",
-    "z": 46798,
+    "z": 47725,
     "parent": "6vls"
   },
   "mufq": {
@@ -3342,7 +3243,7 @@
     "type": "card",
     "cardType": "vecg",
     "id": "mufq",
-    "z": 46817,
+    "z": 47716,
     "parent": "6vls"
   },
   "6tja": {
@@ -3350,7 +3251,7 @@
     "type": "card",
     "cardType": "w4id",
     "id": "6tja",
-    "z": 46769,
+    "z": 47709,
     "parent": "6vls"
   },
   "g8zv": {
@@ -3358,7 +3259,7 @@
     "type": "card",
     "cardType": "rqsv",
     "id": "g8zv",
-    "z": 46773,
+    "z": 47708,
     "parent": "6vls"
   },
   "u5oz": {
@@ -3366,7 +3267,7 @@
     "type": "card",
     "cardType": "236k",
     "id": "u5oz",
-    "z": 46811,
+    "z": 47688,
     "parent": "6vls"
   },
   "qm3w": {
@@ -3374,7 +3275,7 @@
     "type": "card",
     "cardType": "vpsw",
     "id": "qm3w",
-    "z": 46775,
+    "z": 47705,
     "parent": "6vls"
   },
   "1seat": {
@@ -4170,8 +4071,8 @@
         "value": ""
       }
     ],
-    "background_color_solid": "#9c27b0",
-    "background_color_transparent": "#9c27b048"
+    "background_color_solid": "#00bcd4",
+    "background_color_transparent": "#00bcd448"
   },
   "your_turn_label": {
     "type": "label",
@@ -4202,8 +4103,8 @@
     },
     "text": "It's Your Turn!",
     "passed": false,
-    "background_color_solid": "#9c27b0",
-    "background_color_transparent": "#9c27b048"
+    "background_color_solid": "#00bcd4",
+    "background_color_transparent": "#00bcd448"
   },
   "your_turn_label_border": {
     "type": "label",
@@ -4266,7 +4167,7 @@
     "background_color_transparent": "#9c27b048",
     "passed": false
   },
-  "iv2a": {
+  "ov5g": {
     "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
@@ -4277,13 +4178,13 @@
     "x": 1,
     "trash_value": 0,
     "dragging": "Jonny",
-    "clonedFrom": "1fey",
+    "clonedFrom": "li7a",
     "movable": false,
-    "id": "iv2a",
+    "id": "ov5g",
     "parent": "2trash_holder",
     "isClone": true
   },
-  "7h97": {
+  "45fg": {
     "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
@@ -4295,13 +4196,13 @@
     "trash_value": 0,
     "dragging": "Jonny",
     "hoverParent": null,
-    "clonedFrom": "iv2a",
+    "clonedFrom": "ov5g",
     "movable": false,
-    "id": "7h97",
+    "id": "45fg",
     "parent": "3trash_holder",
     "isClone": true
   },
-  "u0yv": {
+  "m4q1": {
     "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
@@ -4313,13 +4214,13 @@
     "trash_value": 0,
     "dragging": "Jonny",
     "hoverParent": null,
-    "clonedFrom": "7h97",
+    "clonedFrom": "45fg",
     "movable": false,
-    "id": "u0yv",
+    "id": "m4q1",
     "parent": "4trash_holder",
     "isClone": true
   },
-  "hlvv": {
+  "ze32": {
     "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
@@ -4331,13 +4232,13 @@
     "trash_value": 0,
     "dragging": "Jonny",
     "hoverParent": null,
-    "clonedFrom": "u0yv",
+    "clonedFrom": "m4q1",
     "movable": false,
-    "id": "hlvv",
+    "id": "ze32",
     "parent": "0trash_holder",
     "isClone": true
   },
-  "uto1": {
+  "mpgd": {
     "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
@@ -4349,13 +4250,13 @@
     "trash_value": 0,
     "dragging": "Jonny",
     "hoverParent": null,
-    "clonedFrom": "hlvv",
+    "clonedFrom": "ze32",
     "movable": false,
-    "id": "uto1",
+    "id": "mpgd",
     "parent": "5trash_holder",
     "isClone": true
   },
-  "pue1": {
+  "lt8k": {
     "image": "/assets/1777628233_1186",
     "z": 1,
     "width": 35,
@@ -4367,15 +4268,15 @@
     "trash_value": 0,
     "dragging": "Jonny",
     "hoverParent": null,
-    "clonedFrom": "uto1",
+    "clonedFrom": "mpgd",
     "movable": false,
-    "id": "pue1",
+    "id": "lt8k",
     "parent": "1trash_holder",
     "isClone": true
   },
-  "rrru": {
+  "di8d": {
     "image": "/assets/1777628233_1186",
-    "z": 46840,
+    "z": 47750,
     "width": 35,
     "height": 40,
     "trash": true,
@@ -4385,9 +4286,36 @@
     "trash_value": 0,
     "dragging": "Jonny",
     "hoverParent": "infinite_trash0",
-    "clonedFrom": "pue1",
+    "clonedFrom": "lt8k",
     "movable": false,
-    "id": "rrru",
+    "id": "di8d",
     "parent": "infinite_trash0"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Spring Cleaning",
+      "image": "/assets/1259383691_187927",
+      "rules": "https://docs.google.com/document/d/1OznPvz6h_4DaKRbSWTMR9AnIjdB207-7dtMVVtMhufo/edit?usp=sharing",
+      "bgg": "https://www.jongetsgames.com/springcleaning",
+      "year": "",
+      "mode": "vs",
+      "time": "15 - 45",
+      "attribution": "The game room, game design, and game layout are by Jonathan Cox. Art assets used with permission from the rights holder, Jonathan Cox. Illustrations created by Lananh Vo. No permission is given for the further use of any Spring Cleaning art assets.",
+      "lastUpdate": 1711632108161,
+      "showName": false,
+      "skill": "low",
+      "description": "In this climbing/shedding game you must offer your cards to opponents, and play each others cards as you race to play them all.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Jonathan Cox",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Have every player take a seat and then click the \"NEW GAME\" button. This will randomly choose a starting player and deal each player their starting hand of cards.<div><div><br></div><div>Once done with their turn, the player should click the \"CLICK TO END TURN\" button, which will move it to the next player in order.<br><div><br></div><div>When playing cards, click and drag them into the large open area in the middle of the screen. It is best to line them up horizontally with your seat name and offered cards area. You may click once on a card to turn it over.</div><div><br></div><div>When offering cards, click and drag them to the \"Offered Cards\" window under the player's name.&nbsp;</div><div><br></div><div>Once a trick is over, the winner of the trick should click the \"TRICK WINNER CLICK TO CLEAR CARDS\" button in the bottom right. This will remove all played cards, and also assign the current turn to the trick winner.</div></div><div><br></div><div>The \"Total Cards: #\" value counts all cards in that player's hidden hand as well as all cards in their offer area.</div><div><br></div><div>At the end of a round players will score trash by clicking and dragging the appropriate trash token from the \"Trash Supply\". Place gained track tokens into the skinny vertical column to the right of the player's name.</div><div><br></div><div>Once trash has been scored at the end of the round, if the game isn't over then click the \"NEW ROUND\" button. The turn order button will be moved to the player with the most total trash, who will take the first turn of the next round.</div><div><br></div><div>2 Player Implementation Note:</div><div>Neither player should use the bottom-most seat, this area will be used by the Neutral Offer, which appears after starting a 2 player game.</div></div>",
+      "variantImage": "",
+      "variant": "Spring Cleaning",
+      "language": "en-US",
+      "players": "2 - 5"
+    }
   }
 }
