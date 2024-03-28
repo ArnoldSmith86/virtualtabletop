@@ -1849,9 +1849,9 @@ export class Widget extends StateManaged {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
-        let cBase = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
-        let c = cBase.filter(w => w.get('type') === 'seat' && !w.get('skipTurn'));
-        let cSkip = cBase.filter(w => w.get('type') === 'seat' && w.get('skipTurn'));
+        
+        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat')
+        let c = a.source=='all' ? allSeats: collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')
 
         //this get the list of valid index
         const indexList = [];
@@ -1899,15 +1899,10 @@ export class Widget extends StateManaged {
 
           collections[a.collection] = [];
           //saves turn into all seats and creates output collection with turn seats
-          for(const w of c) {
+          for(const w of allSeats) {
             await w.set('turn', w.get('index') == turn);
             if(w.get('turn') && w.get('player'))
               collections[a.collection].push(w);
-          }
-
-          //sets turn = false on any seats with skipTurn = true
-          for (const seat of cSkip) {
-            await seat.set('turn', false);
           }
 
           if(jeRoutineLogging)
