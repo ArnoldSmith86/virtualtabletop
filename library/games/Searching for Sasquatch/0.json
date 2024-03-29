@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "30-50",
       "attribution": "<div><div>Room design and layout by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Icon by Delapouite available from https://game-icons.net under CC BY 3.0:&nbsp; open padlock.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Icons by lorc available from&nbsp;</span><span style=\"color: var(--overlayFontColor);\">https://game-icons.net under CC BY 3.0: closed padlock, magnifying glass.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The background woods image was created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"pacific northwest woods photograph --ar 8:5\".</div></div><div><br></div><div>The sasquatch footprint and silhouette is available for personal use from:&nbsp;<span style=\"color: var(--overlayFontColor);\">https://clipart-library.com/clip-art/sasquatch-silhouette-vector-5.htm.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Data for the predefined maps, clues, and hints is from Tony Ye 's (sionar) implementation of a version of Cryptid for Tabletop Simulator, available from&nbsp;</span>https://github.com/sionar/Cryptid.</div>",
-      "lastUpdate": 1711683533773,
+      "lastUpdate": 1711721961940,
       "showName": true,
       "skill": "",
       "description": "Give location clues using pieces on a board to confuse other players while correctly interpreting the clues they give you. Be the first to deduce the location of the elusive sasquatch and claim the win.",
@@ -8967,9 +8967,21 @@
                 "text": "Manually"
               }
             ]
+          },
+          {
+            "type": "checkbox",
+            "label": "Hide player instructions?",
+            "variable": "hideInstructions",
+            "value": false
           }
         ],
         "confirmButtonText": "Confirm"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "hideInstructions",
+        "value": "${hideInstructions}"
       },
       {
         "func": "SELECT",
@@ -9298,7 +9310,8 @@
     },
     "width": 50,
     "height": 50,
-    "y": 6
+    "y": 6,
+    "hideInstructions": false
   },
   "turn": {
     "type": "button",
@@ -11431,6 +11444,18 @@
                 "value": 1
               }
             ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY hideInstructions OF reset}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "scale",
+            "value": 0
           }
         ]
       }
