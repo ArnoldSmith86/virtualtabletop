@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "30-50",
       "attribution": "<div><div>Room design and layout by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Icon by Delapouite available from https://game-icons.net under CC BY 3.0:&nbsp; open padlock.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Icons by lorc available from&nbsp;</span><span style=\"color: var(--overlayFontColor);\">https://game-icons.net under CC BY 3.0: closed padlock, magnifying glass.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The background woods image was created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"pacific northwest woods photograph --ar 8:5\".</div></div><div><br></div><div>The sasquatch footprint and silhouette is available for personal use from:&nbsp;<span style=\"color: var(--overlayFontColor);\">https://clipart-library.com/clip-art/sasquatch-silhouette-vector-5.htm.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Data for the predefined maps, clues, and hints is from Tony Ye 's (sionar) implementation of a version of Cryptid for Tabletop Simulator, available from&nbsp;</span>https://github.com/sionar/Cryptid.</div>",
-      "lastUpdate": 1711677726660,
+      "lastUpdate": 1711683533773,
       "showName": true,
       "skill": "",
       "description": "Give location clues using pieces on a board to confuse other players while correctly interpreting the clues they give you. Be the first to deduce the location of the elusive sasquatch and claim the win.",
@@ -30,7 +30,7 @@
     "id": "tile1",
     "width": 475,
     "height": 313,
-    "z": 1,
+    "z": 9,
     "fixedParent": true,
     "parent": "boardBack",
     "grid": [
@@ -394,7 +394,7 @@
     "type": "holder",
     "x": 375,
     "y": 216.5,
-    "z": 1,
+    "z": 3,
     "css": {
       "background-image": "url('${PROPERTY forest}')",
       "background-size": "contain",
@@ -5639,7 +5639,7 @@
     "width": 58,
     "height": 58,
     "layer": 3,
-    "z": 9215,
+    "z": 9227,
     "css": {
       "clip-path": "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
       "background": "${PROPERTY tokenColor}",
@@ -11942,5 +11942,22 @@
     "hoverParent": "playerDiscHolder1",
     "id": "hb6v",
     "parent": "playerDiscHolder1"
+  },
+  "bear8": {
+    "inheritFrom": {
+      "bear1": "*"
+    },
+    "id": "bear8",
+    "x": 0,
+    "y": 0,
+    "parent": "hex18"
+  },
+  "bear9": {
+    "inheritFrom": {
+      "bear8": "*"
+    },
+    "id": "bear9",
+    "x": 0,
+    "y": 0
   }
 }
