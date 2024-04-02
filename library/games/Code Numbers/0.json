@@ -816,8 +816,25 @@
         ],
         "property": "scale",
         "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "discardHolder"
+        ],
+        "property": "scale",
+        "value": 0
       }
-    ]
+    ],
+    "css": {
+      "default": {},
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    }
   },
   "letterLabel1": {
     "id": "letterLabel1",
@@ -3140,6 +3157,7 @@
       }
     ],
     "cardDefaults": {
+      "classes": "transition",
       "width": 248,
       "height": 148,
       "enlarge": 2
@@ -4292,6 +4310,43 @@
             "func": "TURN",
             "turnCycle": "seat",
             "turn": "seat1"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY level OF solo}",
+            "operand2": "normal",
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY soloCount OF solo}",
+                "relation": "<=",
+                "operand2": 2,
+                "thenRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "boardQuestionsHolder"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "aggregation": "array"
+                  },
+                  "var removeCard = shuffle ${id}",
+                  "var removeCard = ${removeCard.0}",
+                  {
+                    "func": "SELECT",
+                    "type": "card",
+                    "property": "id",
+                    "value": "${removeCard}"
+                  },
+                  {
+                    "func": "MOVE",
+                    "to": "discardHolder"
+                  }
+                ]
+              }
+            ]
           }
         ],
         "elseRoutine": [
@@ -10545,6 +10600,25 @@
             "max": 3,
             "value": "${PROPERTY soloCount}",
             "variable": "soloCount"
+          },
+          {
+            "type": "subtitle",
+            "text": "Choose the level of difficulty"
+          },
+          {
+            "type": "select",
+            "options": [
+              {
+                "value": "easy",
+                "text": "Easy"
+              },
+              {
+                "value": "normal",
+                "text": "Normal"
+              }
+            ],
+            "variable": "level",
+            "value": "${PROPERTY level}"
           }
         ],
         "confirmButtonText": "Start"
@@ -10554,6 +10628,12 @@
         "collection": "thisButton",
         "property": "soloCount",
         "value": "${soloCount}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "level",
+        "value": "${level}"
       },
       {
         "func": "SET",
@@ -10619,6 +10699,39 @@
         "func": "CALL",
         "routine": "resetRoutine",
         "widget": "reset"
+      },
+      {
+        "func": "IF",
+        "operand1": "${level}",
+        "operand2": "normal",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${soloCount}",
+            "relation": "<=",
+            "operand2": 2,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "discardHolder"
+                ],
+                "property": "scale",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "discardHolder"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
       },
       {
         "func": "SET",
@@ -10701,7 +10814,8 @@
     ],
     "text": "Solo",
     "mode": false,
-    "soloCount": "1"
+    "soloCount": "1",
+    "level": "normal"
   },
   "_meta": {
     "version": 15,
@@ -10714,7 +10828,7 @@
       "mode": "solo; vs",
       "time": "15",
       "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.\n\nThe following items are available under the Pixabay license:<div><ul><li>Question cards background by geralt, https://pixabay.com/illustrations/question-mark-question-note-request-5987748/&nbsp;</li><li>Room background by BiancaVanDijk, https://pixabay.com/illustrations/background-digital-background-photo-7349298/</li></ul><div>The number tiles back pattern was generated using&nbsp;<span style=\"color: var(--overlayFontColor);\">https://pattern.monster/concentric-circles-3/.</span><br></div></div></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The library image was created&nbsp;<span style=\"color: var(--overlayFontColor);\">using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"green and white code numbers abstract painting\".</span><span style=\"color: var(--overlayFontColor);\"><br></span></div>",
-      "lastUpdate": 1712031675991,
+      "lastUpdate": 1712081268107,
       "showName": true,
       "skill": "",
       "description": "Choose from the available questions and use logical deduction to determine the numbers, colors, and sequent on the hidden cards.",
@@ -10723,7 +10837,7 @@
       "similarDesigner": "Ryohei Kurahashi",
       "similarAwards": "2020 UK Games Expo Best New Card Game (Strategic) Nominee",
       "ruleText": "",
-      "helpText": "<h4><b>Multiplayer (2-4)</b></h4>Players take seats. Press Reset button to begin. A random player is automatically selected to start and number tiles are dealt to each player's hand at the bottom of the screen. If playing with more than two players, the cards that are to be guessed are displayed face down in the lower left corner.<div><div><br></div><div>Select a question card from the row of available question cards at the top and drag it to the \"question\" holder. The answer to the question is calculated automatically and displayed in the black box in the bottom right for the players that will be prompted to respond. For some questions, the player asking the question is prompted to select between two numbers.</div><div><br></div><div>After questions are answered, update the note taking sheet.&nbsp; The sheet has several areas for players to use.</div><div><img src=\"/assets/-347155024_15535\" class=\"richtextAsset\"></div><div>Click on the numbered tiles to x them out when they cannot be part of the solution. The values for the cards in each player's hand are automatically x'd out when the game starts.</div><div><a href=\"/assets/1530689051_9255\"><img src=\"/assets/1530689051_9255\" class=\"richtextAsset\"></a></div><div>There is a row for each opposing player. Use the space above the colored squares and the space to the right to type notes. Click on the colored squares to cycle each one through a checkmark, an x, and a question mark.</div></div><div><img src=\"/assets/-2074017750_7349\" class=\"richtextAsset\"></div><div>In the upper right, players enter what they believe the values and the colors are for the hidden tiles. Enter one number and select one color for each of the spaces before using the Guess button.</div><div><br></div><div>When players have finished entering notes, press the Turn button to add another question to the pool and the next player chooses the question to ask.</div><div><br></div><div>When players are ready to guess, be sure the values and colors are entered into the note sheet in the area on the top right. Then press the guess button. The result of the guess (correct or incorrect) will be displayed on the left side of the screen and depending on the game mode and the number of players, the answer may be displayed.</div><h4><b>Solo</b></h4><span style=\"font-weight: 400;\"><div><span style=\"font-weight: 400;\">While solo play is not possible in a physical implementation of this game, in this online version, solo play works almost identically to playing with other people.</span></div><div><span style=\"font-weight: 400;\"><br></span></div>To begin solo play, sit in the far-left seat and press the solo button. Choose the number of computer opponents (1-3).</span><div><span style=\"font-weight: 400;\"><br></span></div><div><span style=\"font-weight: 400;\">There are only three differences between solo mode and multiplayer mode. First, instead of seeing your own answers to the questions, you see the computer player(s) answers. To switch between them, click on the tabs to the left of the black answer area.</span></div><div><span style=\"font-weight: 400;\"><br></span></div><div><img src=\"/assets/1361858855_11530\" class=\"richtextAsset\"></div><div>Second, only you ask questions. The computer will not ask questions or make guesses. Press the Turn button to refill the pool of questions after making notes.</div><div><br></div><div>Third, no matter how many computer opponents you are playing against, you have the option to continue playing even after making an incorrect guess.</div>",
+      "helpText": "<h4><b>Multiplayer (2-4)</b></h4>Players take seats. Press Reset button to begin. A random player is automatically selected to start and number tiles are dealt to each player's hand at the bottom of the screen. If playing with more than two players, the cards that are to be guessed are displayed face down in the lower left corner.<div><div><br></div><div>Select a question card from the row of available question cards at the top and drag it to the \"question\" holder. The answer to the question is calculated automatically and displayed in the black box in the bottom right for the players that will be prompted to respond. For some questions, the player asking the question is prompted to select between two numbers.</div><div><br></div><div>After questions are answered, update the note taking sheet.&nbsp; The sheet has several areas for players to use.</div><div><img src=\"/assets/-347155024_15535\" class=\"richtextAsset\"></div><div>Click on the numbered tiles to x them out when they cannot be part of the solution. The values for the cards in each player's hand are automatically x'd out when the game starts.</div><div><a href=\"/assets/1530689051_9255\"><img src=\"/assets/1530689051_9255\" class=\"richtextAsset\"></a></div><div>There is a row for each opposing player. Use the space above the colored squares and the space to the right to type notes. Click on the colored squares to cycle each one through a checkmark, an x, and a question mark.</div></div><div><img src=\"/assets/-2074017750_7349\" class=\"richtextAsset\"></div><div>In the upper right, players enter what they believe the values and the colors are for the hidden tiles. Enter one number and select one color for each of the spaces before using the Guess button.</div><div><br></div><div>When players have finished entering notes, press the Turn button to add another question to the pool and the next player chooses the question to ask.</div><div><br></div><div>When players are ready to guess, be sure the values and colors are entered into the note sheet in the area on the top right. Then press the guess button. The result of the guess (correct or incorrect) will be displayed on the left side of the screen and depending on the game mode and the number of players, the answer may be displayed.</div><h4><b>Solo</b></h4><span style=\"font-weight: 400;\"><div><span style=\"font-weight: 400;\">While solo play is not possible in a physical implementation of this game, in this online version, solo play works almost identically to playing with other people.</span></div><div><span style=\"font-weight: 400;\"><br></span></div>To begin solo play, sit in the far-left seat and press the solo button. Choose the number of computer opponents (1-3) and the level of play (easy or normal).</span><div><br></div><div>In normal mode, when playing with one or two computer opponents, one question from the pool is randomly removed from play each time you ask a question to approximate what happens when playing in multiplayer mode. In easy mode, or when playing with three computer opponents, all questions remain available.<br><div><span style=\"font-weight: 400;\"><br></span></div><div><span style=\"font-weight: 400;\">There are only three other differences between solo mode and multiplayer mode. First, instead of seeing your own answers to the questions, you see the computer player(s) answers. To switch between them, click on the tabs to the left of the black answer area.</span></div><div><span style=\"font-weight: 400;\"><br></span></div><div><img src=\"/assets/1361858855_11530\" class=\"richtextAsset\"></div><div>Second, only you ask questions. The computer will not ask questions or make guesses. Press the Turn button to refill the pool of questions after making notes.</div><div><br></div><div>Third, no matter how many computer opponents you are playing against, you have the option to continue playing even after making an incorrect guess.</div></div>",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
@@ -10741,8 +10855,7 @@
       "justify-content": "center",
       "align-items": "center",
       "background": "${PROPERTY bgColor}",
-      "font-size": "16px",
-      "font-family": "roboto"
+      "font-size": "16px"
     },
     "text": "Comp1",
     "movable": false,
@@ -10852,5 +10965,38 @@
     "width": 70,
     "height": 110,
     "id": "aakb"
+  },
+  "discardHolder": {
+    "type": "holder",
+    "id": "discardHolder",
+    "x": 1318,
+    "y": 455,
+    "width": 250,
+    "height": 150,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "scale": 0
+  },
+  "discardLabel": {
+    "id": "discardLabel",
+    "parent": "discardHolder",
+    "x": 92,
+    "y": 155,
+    "height": 30,
+    "layer": -2,
+    "movable": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "text": "discard"
   }
 }
