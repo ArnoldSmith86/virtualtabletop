@@ -1,31 +1,4 @@
 {
-  "_meta": {
-    "version": 15,
-    "info": {
-      "name": "Code Numbers",
-      "image": "/assets/1507661345_223300",
-      "rules": "",
-      "bgg": "https://boardgamegeek.com/boardgame/227466/break-the-code",
-      "year": "2017",
-      "mode": "vs",
-      "time": "15",
-      "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.\n\nThe following items are available under the Pixabay license:<div><ul><li>Question cards background by geralt, https://pixabay.com/illustrations/question-mark-question-note-request-5987748/&nbsp;</li><li>Room background by BiancaVanDijk, https://pixabay.com/illustrations/background-digital-background-photo-7349298/</li></ul><div>The number tiles back pattern was generated using&nbsp;<span style=\"color: var(--overlayFontColor);\">https://pattern.monster/concentric-circles-3/.</span><br></div></div></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The library image was created&nbsp;<span style=\"color: var(--overlayFontColor);\">using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"green and white code numbers abstract painting\".</span><span style=\"color: var(--overlayFontColor);\"><br></span></div>",
-      "lastUpdate": 1711922848755,
-      "showName": true,
-      "skill": "",
-      "description": "Choose from the available questions and use logical deduction to determine the numbers, colors, and sequent on the hidden cards.",
-      "similarImage": "",
-      "similarName": "Break the Code",
-      "similarDesigner": "Ryohei Kurahashi",
-      "similarAwards": "2020 UK Games Expo Best New Card Game (Strategic) Nominee",
-      "ruleText": "",
-      "helpText": "Players take seats. Press Reset button to begin. A random player is automatically selected to start and number tiles are dealt to each player's hand at the bottom of the screen. If playing with more than two players, the cards that are to be guessed are displayed face down in the lower left corner.<div><div><br></div><div>Select a question card from the row of available question cards at the top and drag it to the \"question\" holder. The answer to the question is calculated automatically and displayed in the black box for the players that will be prompted to respond. For some questions, the player asking the question must verbally select between two numbers, but the answers for both possible numbers are displayed on the screen.</div><div><br></div><div>After questions are answered, update the note taking sheet.&nbsp; The sheet has several areas for players to use.</div><div><img src=\"/assets/-347155024_15535\" class=\"richtextAsset\"></div><div>Click on the numbered tiles to x them out when they cannot be part of the solution. The values for the cards in each player's hand are automatically x'd out when the game starts.</div><div><a href=\"/assets/1530689051_9255\"><img src=\"/assets/1530689051_9255\" class=\"richtextAsset\"></a></div><div>There is a row for each opposing player. Use the space above the colored squares and the space to the right to type notes. Click on the colored squares to cycle each one through a checkmark, an x, and a question mark.</div></div><div><img src=\"/assets/-2074017750_7349\" class=\"richtextAsset\"></div><div>In the upper right, players enter what they believe the values and the colors are for the hidden tiles. Enter one number and select one color for each of the spaces before using the Guess button.</div><div><br></div><div>When players have finished entering notes, press the Turn button to add another question to the row and the next player chooses the question to ask.</div><div><br></div><div>When players are ready to guess, be sure the values and colors are entered into the note sheet in the area on the top right. Then press the guess button. For 2 player games, the result of the guess (correct or incorrect) will be displayed on the left side of the screen. For games with more than 2 players, the player making the guess will see the hidden tiles and then the results of the guess are displayed.</div>",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-4"
-    }
-  },
   "sheetBack1": {
     "id": "sheetBack1",
     "height": 622,
@@ -411,7 +384,6 @@
     "parent": "sheetBack1",
     "fixedParent": true,
     "movable": false,
-    "classes": "tech_font",
     "pid": 1,
     "player": ""
   },
@@ -459,6 +431,15 @@
         ],
         "confirmButtonText": "Yes"
       },
+      {
+        "func": "CALL",
+        "routine": "resetRoutine"
+      }
+    ],
+    "text": "Reset",
+    "width": 50,
+    "height": 50,
+    "resetRoutine": [
       {
         "func": "RECALL",
         "holder": "numbersDeckHolder"
@@ -781,11 +762,62 @@
         ],
         "property": "scale",
         "value": 0
+      },
+      "// Solo mode resets",
+      {
+        "func": "SET",
+        "collection": [
+          "solo"
+        ],
+        "property": "mode",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "answer1"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "loopRoutine": [
+          "var pid = ${key} + 2",
+          {
+            "func": "SET",
+            "collection": [
+              "answer${pid}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "${value}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "answer${pid}"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "answerTab2",
+          "answerTab3",
+          "answerTab4"
+        ],
+        "property": "scale",
+        "value": 0
       }
-    ],
-    "text": "Reset",
-    "width": 50,
-    "height": 50
+    ]
   },
   "letterLabel1": {
     "id": "letterLabel1",
@@ -796,11 +828,10 @@
     "width": 420,
     "height": 50,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "50px"
     },
-    "text": "A      B      C      D",
+    "text": "A        B       C        D",
     "layer": -2
   },
   "mark1": {
@@ -1848,7 +1879,8 @@
     "z": 1,
     "css": {
       "color": "black",
-      "text-align": "left"
+      "text-align": "left",
+      "font-size": "28px"
     },
     "editable": true
   },
@@ -2072,7 +2104,6 @@
     "height": 50,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "50px"
     },
@@ -2088,11 +2119,10 @@
     "height": 40,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "35px"
     },
-    "text": "A     B     C     D",
+    "text": "A      B      C      D",
     "y": 4
   },
   "markGroup16": {
@@ -2261,7 +2291,7 @@
     "scale": 0.6,
     "checkColor": 1,
     "checkTile": "B",
-    "color": "green"
+    "color": "white"
   },
   "mark49": {
     "type": "card",
@@ -2313,7 +2343,8 @@
     "z": 1,
     "scale": 0.6,
     "checkColor": 1,
-    "checkTile": "C"
+    "checkTile": "C",
+    "color": "white"
   },
   "mark52": {
     "type": "card",
@@ -2421,7 +2452,7 @@
     "scale": 0.6,
     "checkColor": 1,
     "checkTile": "E",
-    "color": "green"
+    "color": "white"
   },
   "mark58": {
     "type": "card",
@@ -2571,7 +2602,6 @@
     "height": 40,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "35px"
     },
@@ -2589,7 +2619,6 @@
     "height": 30,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "25px"
     },
@@ -2612,7 +2641,6 @@
     "id": "numbersDeck",
     "z": 5,
     "cardDefaults": {
-      "classes": "tech_font",
       "width": 70,
       "height": 110
     },
@@ -2825,7 +2853,6 @@
     "y": 132,
     "z": 5,
     "cardDefaults": {
-      "classes": "tech_font",
       "width": 70,
       "height": 110,
       "movable": false,
@@ -3123,168 +3150,168 @@
     "type": "card",
     "cardType": "1",
     "id": "f7ut",
-    "z": 21447,
-    "parent": "vhft"
+    "z": 43862,
+    "parent": "2db1"
   },
   "r2x2": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "3",
     "id": "r2x2",
-    "z": 21449,
-    "parent": "vhft"
+    "z": 43882,
+    "parent": "2db1"
   },
   "9xep": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "4",
     "id": "9xep",
-    "z": 21453,
-    "parent": "vhft"
+    "z": 43885,
+    "parent": "2db1"
   },
   "vyiw": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "5",
     "id": "vyiw",
-    "z": 21451,
-    "parent": "vhft"
+    "z": 43857,
+    "parent": "2db1"
   },
   "k0og": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "2",
     "id": "k0og",
-    "z": 21474,
-    "parent": "vhft"
+    "z": 43861,
+    "parent": "2db1"
   },
   "7yvj": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "6",
     "id": "7yvj",
-    "z": 21442,
-    "parent": "vhft"
+    "z": 43852,
+    "parent": "2db1"
   },
   "zqvp": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "7",
     "id": "zqvp",
-    "z": 21454,
-    "parent": "vhft"
+    "z": 43859,
+    "parent": "2db1"
   },
   "njbd": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "8",
     "id": "njbd",
-    "z": 21448,
-    "parent": "vhft"
+    "z": 43891,
+    "parent": "2db1"
   },
   "wu22": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "9",
     "id": "wu22",
-    "z": 21445,
-    "parent": "vhft"
+    "z": 43864,
+    "parent": "2db1"
   },
   "32j8": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "10",
     "id": "32j8",
-    "z": 21455,
-    "parent": "vhft"
+    "z": 43879,
+    "parent": "2db1"
   },
   "fzsc": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "11",
     "id": "fzsc",
-    "z": 21456,
-    "parent": "vhft"
+    "z": 43855,
+    "parent": "2db1"
   },
   "drri": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "12",
     "id": "drri",
-    "z": 21444,
-    "parent": "vhft"
+    "z": 43858,
+    "parent": "2db1"
   },
   "raul": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "13",
     "id": "raul",
-    "z": 21452,
-    "parent": "vhft"
+    "z": 43863,
+    "parent": "2db1"
   },
   "lpm6": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "14",
     "id": "lpm6",
-    "z": 21443,
-    "parent": "vhft"
+    "z": 43856,
+    "parent": "2db1"
   },
   "mdt1": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "15",
     "id": "mdt1",
-    "z": 21483,
-    "parent": "vhft"
+    "z": 43851,
+    "parent": "2db1"
   },
   "s6jz": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "16",
     "id": "s6jz",
-    "z": 21477,
-    "parent": "vhft"
+    "z": 43850,
+    "parent": "2db1"
   },
   "zzaz": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "17",
     "id": "zzaz",
-    "z": 21486,
-    "parent": "vhft"
+    "z": 43894,
+    "parent": "2db1"
   },
   "ebrq": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "18",
     "id": "ebrq",
-    "z": 21446,
-    "parent": "vhft"
+    "z": 43860,
+    "parent": "2db1"
   },
   "jc62": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "19",
     "id": "jc62",
-    "z": 21450,
-    "parent": "vhft"
+    "z": 43854,
+    "parent": "2db1"
   },
   "v66w": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "20",
     "id": "v66w",
-    "z": 21471,
-    "parent": "vhft"
+    "z": 43853,
+    "parent": "2db1"
   },
   "5ty6": {
     "deck": "questionsDeck",
     "type": "card",
     "cardType": "21",
     "id": "5ty6",
-    "z": 21480,
-    "parent": "vhft"
+    "z": 43888,
+    "parent": "2db1"
   },
   "questionHolder": {
     "type": "holder",
@@ -3732,125 +3759,62 @@
       "// Where are 0 ",
       {
         "func": "CALL",
-        "routine": "whereRoutine",
+        "routine": "where2Routine",
         "arguments": {
-          "where1": 0,
-          "where2": null
+          "where": 0
         }
       }
     ],
     "whereRoutine": [
-      "var where1Array = []",
-      "var where2Array = []",
-      "var intArray1 = []",
-      "var intArray2 = []",
-      "var finalArray = []",
       {
-        "func": "FOREACH",
-        "range": [
-          4
-        ],
-        "loopRoutine": [
-          "var key = ${value} - 1",
-          {
-            "func": "SELECT",
-            "type": "card",
-            "property": "parent",
-            "value": "hand${value}",
-            "sortBy": {
-              "key": "z"
-            }
-          },
-          {
-            "func": "GET",
-            "aggregation": "array",
-            "property": "text",
-            "variable": "numbers"
-          },
-          {
-            "func": "IF",
-            "operand1": "${pCOUNT}",
-            "operand2": 4,
-            "thenRoutine": [
-              "var letterCount = ${PROPERTY letters4}"
-            ],
-            "elseRoutine": [
-              "var letterCount = ${PROPERTY letters5}"
-            ]
-          },
-          {
-            "func": "FOREACH",
-            "in": "${letterCount}",
-            "loopRoutine": [
-              "var isLetter1 = ${numbers.$key} == ${where1}",
-              {
-                "func": "IF",
-                "condition": "${isLetter1}",
-                "thenRoutine": [
-                  "var where1Array = push ${value}"
-                ]
-              },
-              "var isLetter2 = ${numbers.$key} == ${where2}",
-              {
-                "func": "IF",
-                "condition": "${isLetter2}",
-                "thenRoutine": [
-                  "var where2Array = push ${value}"
-                ]
-              }
-            ]
-          },
-          "var length1 = ${where1Array} length",
-          {
-            "func": "IF",
-            "operand1": "${length1}",
-            "relation": ">",
-            "operand2": 0,
-            "thenRoutine": [
-              "var intArray1 = ${where1} + 's at: '",
-              "var intArray1 = ${intArray1} + ${where1Array}",
-              "var intArray1 = ${intArray1} + '\\u000a'"
-            ],
-            "elseRoutine": [
-              "var intArray1 = 'No ' + ${where1}",
-              "var intArray1 = ${intArray1} + 's \\u000a'"
-            ]
-          },
-          "var length2 = ${where2Array} length",
-          {
-            "func": "IF",
-            "operand1": "${length2}",
-            "relation": ">",
-            "operand2": 0,
-            "thenRoutine": [
-              "var intArray2 = ${where2} + 's at: '",
-              "var intArray2 = ${intArray2} + ${where2Array}",
-              "var intArray2 = ${intArray2} + '\\u000a'"
-            ],
-            "elseRoutine": [
-              "var intArray2 = 'No ' + ${where2}",
-              "var intArray2 = ${intArray2} + 's \\u000a'"
-            ]
-          },
-          "var where1Array = []",
-          "var where2Array = []",
-          {
-            "func": "IF",
-            "operand1": "${intArray2}",
-            "operand2": "No nulls \n",
-            "thenRoutine": [
-              "var combined = ${intArray1}"
-            ],
-            "elseRoutine": [
-              "var combined = ${intArray1} + ${intArray2}"
-            ]
-          },
-          "var finalArray = push ${combined}",
-          "var intArray1 = []",
-          "var intArray2 = []"
-        ]
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "numbersDeck"
       },
-      "var result = ${finalArray}"
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "relation": "in",
+        "value": "${inValue}",
+        "collection": "myCards",
+        "sortBy": {
+          "key": "cardType",
+          "reverse": false
+        }
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "${textValue}"
+          },
+          {
+            "type": "choose",
+            "source": "myCards",
+            "max": 1,
+            "propertyOverride": {
+              "activeFace": 1
+            },
+            "variable": "cardID"
+          }
+        ],
+        "confirmButtonText": "Continue"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${cardID}"
+        ],
+        "property": "text",
+        "variable": "where"
+      },
+      {
+        "func": "CALL",
+        "routine": "where2Routine"
+      }
     ],
     "10Routine": [
       "// Where are 3 or 4 ",
@@ -3858,8 +3822,8 @@
         "func": "CALL",
         "routine": "whereRoutine",
         "arguments": {
-          "where1": 3,
-          "where2": 4
+          "inValue": "${PROPERTY array34}",
+          "textValue": "Ask about 3s or 4s?"
         }
       }
     ],
@@ -3869,8 +3833,8 @@
         "func": "CALL",
         "routine": "whereRoutine",
         "arguments": {
-          "where1": 1,
-          "where2": 2
+          "inValue": "${PROPERTY array12}",
+          "textValue": "Ask about 1s or 2s?"
         }
       }
     ],
@@ -3878,10 +3842,9 @@
       "// Where are 5 ",
       {
         "func": "CALL",
-        "routine": "whereRoutine",
+        "routine": "where2Routine",
         "arguments": {
-          "where1": 5,
-          "where2": null
+          "where": 5
         }
       }
     ],
@@ -3891,8 +3854,8 @@
         "func": "CALL",
         "routine": "whereRoutine",
         "arguments": {
-          "where1": 6,
-          "where2": 7
+          "inValue": "${PROPERTY array67}",
+          "textValue": "Ask about 6s or 7s?"
         }
       }
     ],
@@ -3902,8 +3865,8 @@
         "func": "CALL",
         "routine": "whereRoutine",
         "arguments": {
-          "where1": 8,
-          "where2": 9
+          "inValue": "${PROPERTY array89}",
+          "textValue": "Ask about 8s or 9s?"
         }
       }
     ],
@@ -4188,7 +4151,93 @@
     ],
     "css": {
       "background": "#ffffff80"
-    }
+    },
+    "array89": [
+      "8b",
+      "9b"
+    ],
+    "array67": [
+      "6b",
+      "7b"
+    ],
+    "array34": [
+      "3b",
+      "4b"
+    ],
+    "array12": [
+      "1b",
+      "2b"
+    ],
+    "where2Routine": [
+      "var whereArray = []",
+      "var intArray = []",
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          "var key = ${value} - 1",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "hand${value}",
+            "sortBy": {
+              "key": "z"
+            }
+          },
+          {
+            "func": "GET",
+            "aggregation": "array",
+            "property": "text",
+            "variable": "numbers"
+          },
+          {
+            "func": "IF",
+            "operand1": "${pCOUNT}",
+            "operand2": 4,
+            "thenRoutine": [
+              "var letterCount = ${PROPERTY letters4}"
+            ],
+            "elseRoutine": [
+              "var letterCount = ${PROPERTY letters5}"
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "in": "${letterCount}",
+            "loopRoutine": [
+              "var isLetter = ${numbers.$key} == ${where}",
+              {
+                "func": "IF",
+                "condition": "${isLetter}",
+                "thenRoutine": [
+                  "var whereArray = push ${value}"
+                ]
+              }
+            ]
+          },
+          "var length = ${whereArray} length",
+          {
+            "func": "IF",
+            "operand1": "${length}",
+            "relation": ">",
+            "operand2": 0,
+            "thenRoutine": [
+              "var intArray = ${where} + 's at: '",
+              "var intArray = ${intArray} + ${whereArray}"
+            ],
+            "elseRoutine": [
+              "var intArray = 'No ' + ${where}",
+              "var intArray = ${intArray} + 's'"
+            ]
+          },
+          "var result = push ${intArray}",
+          "var whereArray = []"
+        ]
+      }
+    ]
   },
   "answer1": {
     "id": "answer1",
@@ -4206,7 +4255,6 @@
     "x": 1361,
     "borderRadius": 8,
     "height": 110,
-    "classes": "tech_font",
     "width": 180,
     "movable": false,
     "onlyVisibleForSeat": "seat1"
@@ -4237,7 +4285,20 @@
     "z": 2,
     "clickRoutine": [
       {
-        "func": "TURN"
+        "func": "IF",
+        "condition": "${PROPERTY mode OF solo}",
+        "thenRoutine": [
+          {
+            "func": "TURN",
+            "turnCycle": "seat",
+            "turn": "seat1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "TURN"
+          }
+        ]
       },
       {
         "func": "MOVE",
@@ -4258,11 +4319,10 @@
     "height": 50,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "22px"
     },
-    "text": "A        B         C        D"
+    "text": "A          B           C          D"
   },
   "letterLabelHandE": {
     "id": "letterLabelHandE",
@@ -4272,7 +4332,6 @@
     "height": 50,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "22px"
     },
@@ -4286,7 +4345,6 @@
     "height": 50,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "22px"
     },
@@ -4299,7 +4357,6 @@
     "height": 30,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "22px"
     },
@@ -4358,26 +4415,30 @@
     "id": "answer2",
     "x": 1361,
     "y": 858,
+    "scale": 1,
     "onlyVisibleForSeat": "seat2",
     "text": ""
   },
   "answer3": {
-    "inheritFrom": {
-      "answer1": "*"
-    },
     "id": "answer3",
     "x": 1361,
     "y": 858,
+    "scale": 1,
     "onlyVisibleForSeat": "seat3",
-    "text": ""
-  },
-  "answer4": {
     "inheritFrom": {
       "answer1": "*"
     },
+    "text": ""
+  },
+  "answer4": {
     "id": "answer4",
     "x": 1361,
     "y": 858,
+    "scale": 1,
+    "inheritFrom": {
+      "answer1": "*"
+    },
+    "layer": 1,
     "onlyVisibleForSeat": "seat4",
     "text": ""
   },
@@ -4419,160 +4480,160 @@
     "type": "card",
     "cardType": "0b",
     "id": "23ic",
-    "z": 21403,
-    "parent": "nv2a"
+    "z": 43811,
+    "parent": "aakb"
   },
   "es73": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "1b",
     "id": "es73",
-    "z": 21396,
-    "parent": "nv2a"
+    "z": 43816,
+    "parent": "aakb"
   },
   "ew6j": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "2b",
     "id": "ew6j",
-    "z": 21398,
-    "parent": "nv2a"
+    "z": 43810,
+    "parent": "aakb"
   },
   "zvr2": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "3b",
     "id": "zvr2",
-    "z": 21400,
-    "parent": "nv2a"
+    "z": 43812,
+    "parent": "aakb"
   },
   "zvln": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "4b",
     "id": "zvln",
-    "z": 21408,
-    "parent": "nv2a"
+    "z": 43823,
+    "parent": "aakb"
   },
   "y3nr": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "5b",
     "id": "y3nr",
-    "z": 21401,
-    "parent": "nv2a"
+    "z": 43817,
+    "parent": "aakb"
   },
   "twhn": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "6b",
     "id": "twhn",
-    "z": 21412,
-    "parent": "nv2a"
+    "z": 43828,
+    "parent": "aakb"
   },
   "2rfb": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "7b",
     "id": "2rfb",
-    "z": 21402,
-    "parent": "nv2a"
+    "z": 43809,
+    "parent": "aakb"
   },
   "kpch": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "8b",
     "id": "kpch",
-    "z": 21414,
-    "parent": "nv2a"
+    "z": 43819,
+    "parent": "aakb"
   },
   "dcbp": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "9b",
     "id": "dcbp",
-    "z": 21413,
-    "parent": "nv2a"
+    "z": 43822,
+    "parent": "aakb"
   },
   "g3za": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "0w",
     "id": "g3za",
-    "z": 21405,
-    "parent": "nv2a"
+    "z": 43815,
+    "parent": "aakb"
   },
   "7o6j": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "1w",
     "id": "7o6j",
-    "z": 21411,
-    "parent": "nv2a"
+    "z": 43824,
+    "parent": "aakb"
   },
   "rrqc": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "2w",
     "id": "rrqc",
-    "z": 21395,
-    "parent": "nv2a"
+    "z": 43818,
+    "parent": "aakb"
   },
   "ig58": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "3w",
     "id": "ig58",
-    "z": 21409,
-    "parent": "nv2a"
+    "z": 43827,
+    "parent": "aakb"
   },
   "b0xa": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "4w",
     "id": "b0xa",
-    "z": 21399,
-    "parent": "nv2a"
+    "z": 43821,
+    "parent": "aakb"
   },
   "n3t3": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "5w",
     "id": "n3t3",
-    "z": 21407,
-    "parent": "nv2a"
+    "z": 43826,
+    "parent": "aakb"
   },
   "i16g": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "6w",
     "id": "i16g",
-    "z": 21410,
-    "parent": "nv2a"
+    "z": 43820,
+    "parent": "aakb"
   },
   "8r3k": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "7w",
     "id": "8r3k",
-    "z": 21404,
-    "parent": "nv2a"
+    "z": 43825,
+    "parent": "aakb"
   },
   "4v9r": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "8w",
     "id": "4v9r",
-    "z": 21406,
-    "parent": "nv2a"
+    "z": 43814,
+    "parent": "aakb"
   },
   "qbql": {
     "deck": "numbersDeck",
     "type": "card",
     "cardType": "9w",
     "id": "qbql",
-    "z": 21397,
-    "parent": "nv2a"
+    "z": 43813,
+    "parent": "aakb"
   },
   "sheetBack2": {
     "inheritFrom": {
@@ -5533,7 +5594,7 @@
     "id": "markGroup37",
     "parent": "sheetBack2",
     "checkColor": 2,
-    "color": "white"
+    "color": "black"
   },
   "mark109": {
     "inheritFrom": {
@@ -5575,7 +5636,7 @@
     "id": "markGroup38",
     "parent": "sheetBack2",
     "checkColor": 2,
-    "color": "green"
+    "color": "black"
   },
   "mark112": {
     "inheritFrom": {
@@ -5660,7 +5721,7 @@
     "parent": "sheetBack2",
     "scale": 0.6,
     "checkColor": 2,
-    "color": "black"
+    "color": "white"
   },
   "mark118": {
     "inheritFrom": {
@@ -6945,7 +7006,7 @@
     "id": "markGroup57",
     "parent": "sheetBack3",
     "checkColor": 3,
-    "color": "white"
+    "color": "black"
   },
   "mark169": {
     "inheritFrom": {
@@ -6987,7 +7048,7 @@
     "id": "markGroup58",
     "parent": "sheetBack3",
     "checkColor": 3,
-    "color": "green"
+    "color": "black"
   },
   "mark172": {
     "inheritFrom": {
@@ -7029,7 +7090,7 @@
     "id": "markGroup59",
     "parent": "sheetBack3",
     "checkColor": 3,
-    "color": "white"
+    "color": "black"
   },
   "mark175": {
     "inheritFrom": {
@@ -8882,7 +8943,6 @@
       "#607d8b"
     ],
     "colorContrast": "#000000",
-    "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
     "score": [],
     "textColor": "#000000",
@@ -9158,7 +9218,8 @@
         "property": "bgColor",
         "value": "${PROPERTY mainColor}"
       }
-    ]
+    ],
+    "mainColor": "#dddddd"
   },
   "seat3": {
     "type": "seat",
@@ -9229,7 +9290,6 @@
       "#607d8b"
     ],
     "colorContrast": "#000000",
-    "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
     "score": [],
     "textColor": "#000000",
@@ -9505,7 +9565,8 @@
         "property": "bgColor",
         "value": "${PROPERTY mainColor}"
       }
-    ]
+    ],
+    "mainColor": "#dddddd"
   },
   "seat4": {
     "type": "seat",
@@ -9575,7 +9636,6 @@
       "#607d8b"
     ],
     "colorContrast": "#000000",
-    "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
     "score": [],
     "textColor": "#000000",
@@ -9852,7 +9912,8 @@
         "property": "bgColor",
         "value": "${PROPERTY mainColor}"
       }
-    ]
+    ],
+    "mainColor": "#dddddd"
   },
   "guess3": {
     "type": "button",
@@ -9866,19 +9927,11 @@
     "hide2": true,
     "clickRoutine": [
       {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "This will reveal the hidden tiles"
-          },
-          {
-            "type": "subtitle",
-            "text": "You can only do this when you are ready to guess. Be sure your answers, including numbers and colors, are entered into the spaces in the upper right of your answer sheet. Do you want to see the hidden tiles?"
-          }
-        ],
-        "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "func": "CALL",
+        "routine": "input1Routine",
+        "arguments": {
+          "mode": "${PROPERTY mode OF solo}"
+        }
       },
       {
         "func": "SELECT",
@@ -9892,24 +9945,12 @@
         "collection": "hiddenTiles"
       },
       {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "These are the hidden tiles:"
-          },
-          {
-            "type": "choose",
-            "source": "hiddenTiles",
-            "max": 0,
-            "propertyOverride": {
-              "activeFace": 1
-            }
-          }
+        "func": "SET",
+        "collection": [
+          "guessGroup"
         ],
-        "cancelButtonIcon": null,
-        "cancelButtonText": null,
-        "confirmButtonText": "Finished"
+        "property": "scale",
+        "value": 1
       },
       "var check = true",
       {
@@ -9985,6 +10026,19 @@
             ],
             "property": "text",
             "value": "${newCorrect}"
+          },
+          {
+            "func": "IF",
+            "condition": "${PROPERTY mode OF solo}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "input2Routine",
+                "arguments": {
+                  "mode": 0
+                }
+              }
+            ]
           }
         ],
         "elseRoutine": [
@@ -9997,6 +10051,34 @@
             "value": "${newIncorrect}"
           }
         ]
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY mode OF solo}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "condition": "${check}",
+            "elseRoutine": [
+              {
+                "func": "CALL",
+                "routine": "input2Routine",
+                "arguments": {
+                  "mode": "${PROPERTY mode OF solo}"
+                }
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "input2Routine",
+            "arguments": {
+              "mode": "${PROPERTY mode OF solo}"
+            }
+          }
+        ]
       }
     ],
     "checkTilesArray": [
@@ -10005,6 +10087,129 @@
       "C",
       "D",
       "E"
+    ],
+    "input1Routine": [
+      {
+        "func": "IF",
+        "condition": "${mode}",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "This will submit your guess"
+              },
+              {
+                "type": "subtitle",
+                "text": "You can only do this when you are ready to guess. Be sure your answers, including numbers and colors, are entered into the spaces in the upper right of your answer sheet. In the solo mode, you will not see the hidden tiles unless your guess is correct. Are you ready to submit your guess?"
+              }
+            ],
+            "confirmButtonText": "Yes",
+            "cancelButtonText": "No"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "This will reveal the hidden tiles"
+              },
+              {
+                "type": "subtitle",
+                "text": "You can only do this when you are ready to guess. Be sure your answers, including numbers and colors, are entered into the spaces in the upper right of your answer sheet. Do you want to see the hidden tiles?"
+              }
+            ],
+            "confirmButtonText": "Yes",
+            "cancelButtonText": "No"
+          }
+        ]
+      }
+    ],
+    "input2Routine": [
+      {
+        "func": "IF",
+        "condition": "${check}",
+        "thenRoutine": [
+          "var guessText = 'Your guess was correct.'"
+        ],
+        "elseRoutine": [
+          "var guessText = 'Your guess was incorrect.'"
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${mode}",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Your guess was incorrect"
+              },
+              {
+                "type": "checkbox",
+                "label": "Do you want to see the answer? Check the box and press Yes to see the hidden tiles.",
+                "value": false,
+                "variable": "seeFinal"
+              }
+            ],
+            "cancelButtonText": "No",
+            "confirmButtonText": "Yes"
+          },
+          {
+            "func": "IF",
+            "condition": "${seeFinal}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "input2Routine",
+                "arguments": {
+                  "mode": 0
+                }
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "COUNT",
+            "holder": "questionHolder"
+          },
+          "var questionsText = ${COUNT} + ' questions have been asked.'",
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "These are the hidden tiles"
+              },
+              {
+                "type": "subtitle",
+                "text": "${guessText}"
+              },
+              {
+                "type": "subtitle",
+                "text": "${questionsText}"
+              },
+              {
+                "type": "choose",
+                "source": "hiddenTiles",
+                "max": 0,
+                "propertyOverride": {
+                  "activeFace": 1
+                }
+              }
+            ],
+            "cancelButtonIcon": null,
+            "cancelButtonText": null,
+            "confirmButtonText": "Finished"
+          }
+        ]
+      }
     ]
   },
   "answerLabel1": {
@@ -10024,7 +10229,6 @@
     },
     "editable": true,
     "borderRadius": 8,
-    "classes": "tech_font",
     "checkNumber": 1,
     "checkTile": "A",
     "color": "grey"
@@ -10172,6 +10376,39 @@
             ],
             "property": "text",
             "value": "${newCorrect}"
+          },
+          {
+            "func": "COUNT",
+            "holder": "questionHolder"
+          },
+          "var questionsText = ${COUNT} + ' questions have been asked.'",
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "These are the other player's tiles"
+              },
+              {
+                "type": "subtitle",
+                "text": "You guessed correctly."
+              },
+              {
+                "type": "subtitle",
+                "text": "${questionsText}"
+              },
+              {
+                "type": "choose",
+                "source": "hiddenTiles",
+                "max": 0,
+                "propertyOverride": {
+                  "activeFace": 1
+                }
+              }
+            ],
+            "cancelButtonIcon": null,
+            "cancelButtonText": null,
+            "confirmButtonText": "Finished"
           }
         ],
         "elseRoutine": [
@@ -10182,6 +10419,22 @@
             ],
             "property": "text",
             "value": "${newIncorrect}"
+          },
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "You guessed incorrectly."
+              },
+              {
+                "type": "subtitle",
+                "text": "Keep playing."
+              }
+            ],
+            "cancelButtonIcon": null,
+            "cancelButtonText": null,
+            "confirmButtonText": "Ok"
           }
         ]
       }
@@ -10192,7 +10445,6 @@
   "correct": {
     "id": "correct",
     "y": 60,
-    "classes": "tech_font",
     "css": {
       "font-size": "18px",
       "background": "#ffffffaa",
@@ -10225,7 +10477,6 @@
     "height": 30,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "22px"
     },
@@ -10239,7 +10490,6 @@
     "height": 30,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "22px"
     },
@@ -10252,44 +10502,12 @@
     "height": 30,
     "layer": -2,
     "movable": false,
-    "classes": "tech_font",
     "css": {
       "font-size": "22px"
     },
     "text": "guess results",
     "width": 150,
     "parent": "guessGroup"
-  },
-  "vhft": {
-    "type": "pile",
-    "width": 248,
-    "height": 148,
-    "id": "vhft",
-    "z": 21261,
-    "x": 0,
-    "y": 0,
-    "parent": "questionsDeckHolder"
-  },
-  "nv2a": {
-    "type": "pile",
-    "parent": "numbersDeckHolder",
-    "x": 0,
-    "y": 0,
-    "width": 70,
-    "height": 110,
-    "id": "nv2a"
-  },
-  "xjyi": {
-    "image": "/assets/-241149892_8880",
-    "movable": false,
-    "width": 2000,
-    "layer": -4,
-    "id": "xjyi",
-    "height": 1200,
-    "x": -200,
-    "css": {
-      "opacity": 0.4
-    }
   },
   "guessGroup": {
     "id": "guessGroup",
@@ -10300,5 +10518,339 @@
     "layer": -3,
     "movable": false,
     "scale": 0
+  },
+  "solo": {
+    "type": "button",
+    "id": "solo",
+    "x": 1485,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Setting up solo play mode..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Sit in the first seat (farthest to the left) and choose the number of computer opponents."
+          },
+          {
+            "type": "number",
+            "min": 1,
+            "max": 3,
+            "value": "${PROPERTY soloCount}",
+            "variable": "soloCount"
+          }
+        ],
+        "confirmButtonText": "Start"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "soloCount",
+        "value": "${soloCount}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "property": "player",
+        "value": ""
+      },
+      "var colorArray = ${PROPERTY colorArray OF seat1}",
+      "var colorArray = remove 0 1",
+      "var colorArray = remove 0 1",
+      "var colorIndex = ${colorArray} indexOf ${mainColor}",
+      "var colorArray = remove ${colorIndex} 1",
+      {
+        "func": "FOREACH",
+        "range": [
+          "${PROPERTY soloCount}"
+        ],
+        "loopRoutine": [
+          "var valuePlus = ${value} + 1",
+          "var thisSeat = 'seat' + ${valuePlus}",
+          {
+            "func": "SET",
+            "collection": [
+              "${thisSeat}"
+            ],
+            "property": "player",
+            "value": "Comp${value}"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY mainColor OF $thisSeat}",
+            "operand2": "#dddddd",
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "seat1"
+                ],
+                "property": "mainColor"
+              },
+              "var length = ${colorArray} length",
+              "var length = ${length} - 1",
+              "var random = randInt 0 ${length}",
+              "var seatColor = ${colorArray} getIndex ${random}",
+              {
+                "func": "SET",
+                "collection": [
+                  "${thisSeat}"
+                ],
+                "property": "mainColor",
+                "value": "${seatColor}"
+              },
+              "var colorArray = remove ${random} 1"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "resetRoutine",
+        "widget": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "mode",
+        "value": true
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "seat",
+        "turn": "seat1"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "answer1"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          "${PROPERTY soloCount}"
+        ],
+        "loopRoutine": [
+          "var pid = ${value} + 1",
+          {
+            "func": "SET",
+            "collection": [
+              "answer${pid}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "seat1"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "answerTab${pid}"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "answer2"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "answerTab2"
+        ],
+        "property": "bgColor",
+        "value": "${PROPERTY mainColor OF seat2}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "answerTab3",
+          "answerTab4"
+        ],
+        "property": "bgColor",
+        "value": "#888888"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "answer3",
+          "answer4"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "text": "Solo",
+    "mode": false,
+    "soloCount": "1"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Code Numbers",
+      "image": "/assets/1507661345_223300",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/227466/break-the-code",
+      "year": "2017",
+      "mode": "solo; vs",
+      "time": "15",
+      "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.\n\nThe following items are available under the Pixabay license:<div><ul><li>Question cards background by geralt, https://pixabay.com/illustrations/question-mark-question-note-request-5987748/&nbsp;</li><li>Room background by BiancaVanDijk, https://pixabay.com/illustrations/background-digital-background-photo-7349298/</li></ul><div>The number tiles back pattern was generated using&nbsp;<span style=\"color: var(--overlayFontColor);\">https://pattern.monster/concentric-circles-3/.</span><br></div></div></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The library image was created&nbsp;<span style=\"color: var(--overlayFontColor);\">using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"green and white code numbers abstract painting\".</span><span style=\"color: var(--overlayFontColor);\"><br></span></div>",
+      "lastUpdate": 1712031675991,
+      "showName": true,
+      "skill": "",
+      "description": "Choose from the available questions and use logical deduction to determine the numbers, colors, and sequent on the hidden cards.",
+      "similarImage": "",
+      "similarName": "Break the Code",
+      "similarDesigner": "Ryohei Kurahashi",
+      "similarAwards": "2020 UK Games Expo Best New Card Game (Strategic) Nominee",
+      "ruleText": "",
+      "helpText": "<h4><b>Multiplayer (2-4)</b></h4>Players take seats. Press Reset button to begin. A random player is automatically selected to start and number tiles are dealt to each player's hand at the bottom of the screen. If playing with more than two players, the cards that are to be guessed are displayed face down in the lower left corner.<div><div><br></div><div>Select a question card from the row of available question cards at the top and drag it to the \"question\" holder. The answer to the question is calculated automatically and displayed in the black box in the bottom right for the players that will be prompted to respond. For some questions, the player asking the question is prompted to select between two numbers.</div><div><br></div><div>After questions are answered, update the note taking sheet.&nbsp; The sheet has several areas for players to use.</div><div><img src=\"/assets/-347155024_15535\" class=\"richtextAsset\"></div><div>Click on the numbered tiles to x them out when they cannot be part of the solution. The values for the cards in each player's hand are automatically x'd out when the game starts.</div><div><a href=\"/assets/1530689051_9255\"><img src=\"/assets/1530689051_9255\" class=\"richtextAsset\"></a></div><div>There is a row for each opposing player. Use the space above the colored squares and the space to the right to type notes. Click on the colored squares to cycle each one through a checkmark, an x, and a question mark.</div></div><div><img src=\"/assets/-2074017750_7349\" class=\"richtextAsset\"></div><div>In the upper right, players enter what they believe the values and the colors are for the hidden tiles. Enter one number and select one color for each of the spaces before using the Guess button.</div><div><br></div><div>When players have finished entering notes, press the Turn button to add another question to the pool and the next player chooses the question to ask.</div><div><br></div><div>When players are ready to guess, be sure the values and colors are entered into the note sheet in the area on the top right. Then press the guess button. The result of the guess (correct or incorrect) will be displayed on the left side of the screen and depending on the game mode and the number of players, the answer may be displayed.</div><h4><b>Solo</b></h4><span style=\"font-weight: 400;\"><div><span style=\"font-weight: 400;\">While solo play is not possible in a physical implementation of this game, in this online version, solo play works almost identically to playing with other people.</span></div><div><span style=\"font-weight: 400;\"><br></span></div>To begin solo play, sit in the far-left seat and press the solo button. Choose the number of computer opponents (1-3).</span><div><span style=\"font-weight: 400;\"><br></span></div><div><span style=\"font-weight: 400;\">There are only three differences between solo mode and multiplayer mode. First, instead of seeing your own answers to the questions, you see the computer player(s) answers. To switch between them, click on the tabs to the left of the black answer area.</span></div><div><span style=\"font-weight: 400;\"><br></span></div><div><img src=\"/assets/1361858855_11530\" class=\"richtextAsset\"></div><div>Second, only you ask questions. The computer will not ask questions or make guesses. Press the Turn button to refill the pool of questions after making notes.</div><div><br></div><div>Third, no matter how many computer opponents you are playing against, you have the option to continue playing even after making an incorrect guess.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1-4"
+    }
+  },
+  "answerTab2": {
+    "id": "answerTab2",
+    "width": 70,
+    "height": 30,
+    "borderRadius": "30% 0% 0% 30%",
+    "css": {
+      "border": "1px solid black",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "background": "${PROPERTY bgColor}",
+      "font-size": "16px",
+      "font-family": "roboto"
+    },
+    "text": "Comp1",
+    "movable": false,
+    "clickRoutine": [
+      "var compSeat = 'seat' + ${PROPERTY index}",
+      {
+        "func": "SET",
+        "collection": [
+          "answerTab2",
+          "answerTab3",
+          "answerTab4"
+        ],
+        "property": "bgColor",
+        "value": "#888888"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "answer2",
+          "answer3",
+          "answer4"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "bgColor",
+        "value": "${PROPERTY mainColor OF $compSeat}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "answer${PROPERTY index}"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "tab": true,
+    "index": 2,
+    "bgColor": "#1976d2",
+    "y": 859,
+    "x": 1292,
+    "scale": 0
+  },
+  "answerTab3": {
+    "inheritFrom": {
+      "answerTab2": "*"
+    },
+    "id": "answerTab3",
+    "index": 3,
+    "scale": 0,
+    "text": "Comp2",
+    "bgColor": "#888888",
+    "x": 1292,
+    "y": 898
+  },
+  "answerTab4": {
+    "inheritFrom": {
+      "answerTab2": "*"
+    },
+    "id": "answerTab4",
+    "activeFace": 0,
+    "scale": 0,
+    "text": "Comp3",
+    "index": 4,
+    "bgColor": "#888888",
+    "x": 1292,
+    "y": 936
+  },
+  "background": {
+    "id": "background",
+    "x": -200,
+    "width": 2000,
+    "height": 1200,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": 0.4
+    },
+    "image": "/assets/-241149892_8880"
+  },
+  "holderCover3": {
+    "id": "holderCover3",
+    "x": 618,
+    "y": 857,
+    "width": 365,
+    "height": 120,
+    "movable": false
+  },
+  "2db1": {
+    "type": "pile",
+    "parent": "questionsDeckHolder",
+    "x": 0,
+    "y": 0,
+    "width": 248,
+    "height": 148,
+    "id": "2db1"
+  },
+  "aakb": {
+    "type": "pile",
+    "parent": "numbersDeckHolder",
+    "x": 0,
+    "y": 0,
+    "width": 70,
+    "height": 110,
+    "id": "aakb"
   }
 }
