@@ -1205,29 +1205,15 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   if(applyChangesFromUI)
     await applyEditOptions(widget);
 
-  const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
-  const cards = widgetFilter(w=>w.get('deck')==previousState.id);
-
-  if(widget.id !== previousState.id || widget.type !== previousState.type) {
-    for(const child of children)
-      sendPropertyUpdate(child.get('id'), 'parent', null);
-    for(const card of cards)
-      sendPropertyUpdate(card.get('id'), 'deck', null);
+  if(widget.id !== previousState.id) {
+    await updateWidgetId(widget, previousState);
+  } else if (widget.type !== previousState.type) {
     await removeWidgetLocal(previousState.id, true);
+    const id = await addWidgetLocal(widget);
   } else {
     for(const key in previousState)
       if(widget[key] === undefined)
         widget[key] = null;
-  }
-
-  if(widget.id !== previousState.id || widget.type !== previousState.type) {
-    const id = await addWidgetLocal(widget);
-
-    for(const child of children)
-      sendPropertyUpdate(child.get('id'), 'parent', id);
-    for(const card of cards)
-      sendPropertyUpdate(card.get('id'), 'deck', id);
-  } else {
     for(const key in widget) {
       if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
         widgets.get(widget.id).state[key] = widget[key];
@@ -1237,6 +1223,66 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   }
 
   batchEnd();
+}
+
+async function updateWidgetId(widget, previousState) {
+  const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
+  const cards = widgetFilter(w=>w.get('deck')==previousState.id);
+
+  for(const child of children)
+    sendPropertyUpdate(child.get('id'), 'parent', null);
+  for(const card of cards)
+    sendPropertyUpdate(card.get('id'), 'deck', null);
+  await removeWidgetLocal(previousState.id, true);
+  
+  const id = await addWidgetLocal(widget);
+
+  // Restore children
+  for(const child of children)
+    sendPropertyUpdate(child.get('id'), 'parent', id);
+  for(const card of cards)
+    sendPropertyUpdate(card.get('id'), 'deck', id);
+
+  // Change inheritFrom on widgets inheriting from altered widget
+  for (const inheritor of StateManaged.inheritFromMapping[previousState.id]) {
+    const oldInherits = inheritor.get('inheritFrom');
+    let newInherits;
+    if(typeof oldInherits == "string")
+      newInherits = id;
+    else {
+      newInherits = {...oldInherits};
+      newInherits[id] = newInherits[previousState.id];
+      delete newInherits[previousState.id]
+    }
+    inheritor.set('inheritFrom', newInherits)
+  };
+
+  // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
+  if(widget.type == 'seat') {
+    const onlyList = widgetFilter(w => w.get('onlyVisibleForSeat') && asArray(w.get('onlyVisibleForSeat')).includes(previousState.id));
+    onlyList.map( w => {
+      if(typeof w.get('onlyVisibleForSeat') === 'string')
+        w.set('onlyVisibleForSeat', id)
+      else {
+        const vis = [...w.get('onlyVisibleForSeat')];
+        vis[vis.indexOf(previousState.id)] = id;
+        w.set('onlyVisibleForSeat', vis)
+      }
+    });
+    const linkedList = widgetFilter(w => w.get('linkedToSeat') && asArray(w.get('linkedToSeat')).includes(previousState.id));
+    linkedList.map( w => {
+      if(typeof w.get('linkedToSeat') === 'string')
+        w.set('linkedToSeat', id)
+      else {
+        const link = [...w.get('linkedToSeat')];
+        link[link.indexOf(previousState.id)] = id;
+        w.set('linkedToSeat', link)
+      }
+    });
+  }
+
+  // Finally, change any seats that use the old id as a hand.
+  widgetFilter(w => w.get('type') == 'seat' && w.get('hand') == previousState.id).map( w => w.set('hand', id));
 }
 
 async function onClickUpdateWidget(applyChangesFromUI) {
