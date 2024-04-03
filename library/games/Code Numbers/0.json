@@ -10157,7 +10157,11 @@
               },
               {
                 "type": "subtitle",
-                "text": "You can only do this when you are ready to guess. Be sure your answers, including numbers and colors, are entered into the spaces in the upper right of your answer sheet. In the solo mode, you will not see the hidden tiles unless your guess is correct. Are you ready to submit your guess?"
+                "text": "You can only do this when you are ready to guess. Be sure your answers, including numbers and colors, are entered into the spaces in the upper right of your answer sheet."
+              },
+              {
+                "type": "subtitle",
+                "text": "Remember, if the answer includes a pair of the same number (other than 5), then you must have black first and white second. Are you ready to guess?"
               }
             ],
             "confirmButtonText": "Yes",
@@ -10174,7 +10178,11 @@
               },
               {
                 "type": "subtitle",
-                "text": "You can only do this when you are ready to guess. Be sure your answers, including numbers and colors, are entered into the spaces in the upper right of your answer sheet. Do you want to see the hidden tiles?"
+                "text": "You can only do this when you are ready to guess. Be sure your answers, including numbers and colors, are entered into the spaces in the upper right of your answer sheet."
+              },
+              {
+                "type": "subtitle",
+                "text": "Remember, if the answer includes a pair of the same number (other than 5), then you must have black first and white second. Are you ready to guess?"
               }
             ],
             "confirmButtonText": "Yes",
@@ -10314,7 +10322,11 @@
           },
           {
             "type": "subtitle",
-            "text": "Do this when you are ready to guess. Be sure your answers, including numbers and colors, are entered into the spaces in the upper right of your answer sheet. Are you ready to guess?"
+            "text": "Do this when you are ready to guess. Be sure your answers, including numbers and colors, are entered into the spaces in the upper right of your answer sheet."
+          },
+          {
+            "type": "subtitle",
+            "text": "Remember, if the answer includes a pair of the same number (other than 5), then you must have black first and white second. Are you ready to guess?"
           }
         ],
         "confirmButtonText": "Yes",
@@ -10421,6 +10433,10 @@
       "var newIncorrect = ${PROPERTY text OF incorrect} + ${playerName}",
       "var newIncorrect = ${newIncorrect} + '\\u000a'",
       {
+        "func": "COUNT",
+        "holder": "questionHolder"
+      },
+      {
         "func": "IF",
         "condition": "${check}",
         "thenRoutine": [
@@ -10431,10 +10447,6 @@
             ],
             "property": "text",
             "value": "${newCorrect}"
-          },
-          {
-            "func": "COUNT",
-            "holder": "questionHolder"
           },
           "var questionsText = ${COUNT} + ' questions have been asked.'",
           {
@@ -10476,20 +10488,76 @@
             "value": "${newIncorrect}"
           },
           {
-            "func": "INPUT",
-            "fields": [
+            "func": "IF",
+            "condition": "${PROPERTY mode OF solo}",
+            "thenRoutine": [
               {
-                "type": "title",
-                "text": "You guessed incorrectly."
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Your guess was incorrect"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Do you want to see the answer? Check the box and press Yes to see the hidden tiles.",
+                    "value": false,
+                    "variable": "seeFinal"
+                  }
+                ],
+                "cancelButtonText": "No",
+                "confirmButtonText": "Yes"
               },
               {
-                "type": "subtitle",
-                "text": "Keep playing."
+                "func": "IF",
+                "condition": "${seeFinal}",
+                "thenRoutine": [
+                  "var questionsText = ${COUNT} + ' questions have been asked.'",
+                  {
+                    "func": "INPUT",
+                    "fields": [
+                      {
+                        "type": "title",
+                        "text": "These are the other player's tiles"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "${questionsText}"
+                      },
+                      {
+                        "type": "choose",
+                        "source": "hiddenTiles",
+                        "max": 0,
+                        "propertyOverride": {
+                          "activeFace": 1
+                        }
+                      }
+                    ],
+                    "cancelButtonIcon": null,
+                    "cancelButtonText": null,
+                    "confirmButtonText": "Finished"
+                  }
+                ]
               }
             ],
-            "cancelButtonIcon": null,
-            "cancelButtonText": null,
-            "confirmButtonText": "Ok"
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "You guessed incorrectly."
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "Keep playing."
+                  }
+                ],
+                "cancelButtonIcon": null,
+                "cancelButtonText": null,
+                "confirmButtonText": "Ok"
+              }
+            ]
           }
         ]
       }
@@ -10828,7 +10896,7 @@
       "mode": "solo; vs",
       "time": "15",
       "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.\n\nThe following items are available under the Pixabay license:<div><ul><li>Question cards background by geralt, https://pixabay.com/illustrations/question-mark-question-note-request-5987748/&nbsp;</li><li>Room background by BiancaVanDijk, https://pixabay.com/illustrations/background-digital-background-photo-7349298/</li></ul><div>The number tiles back pattern was generated using&nbsp;<span style=\"color: var(--overlayFontColor);\">https://pattern.monster/concentric-circles-3/.</span><br></div></div></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The library image was created&nbsp;<span style=\"color: var(--overlayFontColor);\">using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"green and white code numbers abstract painting\".</span><span style=\"color: var(--overlayFontColor);\"><br></span></div>",
-      "lastUpdate": 1712081268107,
+      "lastUpdate": 1712115176396,
       "showName": true,
       "skill": "",
       "description": "Choose from the available questions and use logical deduction to determine the numbers, colors, and sequent on the hidden cards.",
