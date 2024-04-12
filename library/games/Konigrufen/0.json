@@ -4,15 +4,15 @@
     "type": "card",
     "cardType": "t19.png",
     "id": "1124",
-    "z": 89407,
-    "parent": "rjm5"
+    "z": 9060,
+    "parent": "pp3j"
   },
   "6436": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "dK.png",
     "id": "6436",
-    "z": 89222,
+    "z": 8778,
     "parent": "rywr"
   },
   "tyit": {
@@ -20,424 +20,424 @@
     "type": "card",
     "cardType": "d7.png",
     "id": "tyit",
-    "z": 89421,
-    "parent": "rjm5"
+    "z": 9055,
+    "parent": "pp3j"
   },
   "fl73": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "d8.png",
     "id": "fl73",
-    "z": 89451,
-    "parent": "rjm5"
+    "z": 9031,
+    "parent": "pp3j"
   },
   "9ldi": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "d9.png",
     "id": "9ldi",
-    "z": 89415,
-    "parent": "rjm5"
+    "z": 9049,
+    "parent": "pp3j"
   },
   "n0uk": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "d10.png",
     "id": "n0uk",
-    "z": 89444,
-    "parent": "rjm5"
+    "z": 9033,
+    "parent": "pp3j"
   },
   "ngr2": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "dJ.png",
     "id": "ngr2",
-    "z": 89422,
-    "parent": "rjm5"
+    "z": 9069,
+    "parent": "pp3j"
   },
   "x3z8": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "dC.png",
     "id": "x3z8",
-    "z": 89445,
-    "parent": "rjm5"
+    "z": 9079,
+    "parent": "pp3j"
   },
   "j0mr": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "dQ.png",
     "id": "j0mr",
-    "z": 89408,
-    "parent": "rjm5"
+    "z": 9064,
+    "parent": "pp3j"
   },
   "okf1": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "dK.png",
     "id": "okf1",
-    "z": 89428,
-    "parent": "rjm5"
+    "z": 9042,
+    "parent": "pp3j"
   },
   "s6z1": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "c7.png",
     "id": "s6z1",
-    "z": 89425,
-    "parent": "rjm5"
+    "z": 9057,
+    "parent": "pp3j"
   },
   "02jw": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "c8.png",
     "id": "02jw",
-    "z": 89402,
-    "parent": "rjm5"
+    "z": 9048,
+    "parent": "pp3j"
   },
   "kyyt": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "c9.png",
     "id": "kyyt",
-    "z": 89419,
-    "parent": "rjm5"
+    "z": 9082,
+    "parent": "pp3j"
   },
   "ddp1": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "c10.png",
     "id": "ddp1",
-    "z": 89435,
-    "parent": "rjm5"
+    "z": 9071,
+    "parent": "pp3j"
   },
   "ul0v": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "cJ.png",
     "id": "ul0v",
-    "z": 89401,
-    "parent": "rjm5"
+    "z": 9034,
+    "parent": "pp3j"
   },
   "q88x": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "cC.png",
     "id": "q88x",
-    "z": 89453,
-    "parent": "rjm5"
+    "z": 9032,
+    "parent": "pp3j"
   },
   "koyg": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "cQ.png",
     "id": "koyg",
-    "z": 89431,
-    "parent": "rjm5"
+    "z": 9073,
+    "parent": "pp3j"
   },
   "5hp4": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "cK.png",
     "id": "5hp4",
-    "z": 89403,
-    "parent": "rjm5"
+    "z": 9065,
+    "parent": "pp3j"
   },
   "jgt9": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "h7.png",
     "id": "jgt9",
-    "z": 89439,
-    "parent": "rjm5"
+    "z": 9078,
+    "parent": "pp3j"
   },
   "dn1k": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "h8.png",
     "id": "dn1k",
-    "z": 89438,
-    "parent": "rjm5"
+    "z": 9068,
+    "parent": "pp3j"
   },
   "qpq4": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "h9.png",
     "id": "qpq4",
-    "z": 89434,
-    "parent": "rjm5"
+    "z": 9052,
+    "parent": "pp3j"
   },
   "22y0": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "h10.png",
     "id": "22y0",
-    "z": 89447,
-    "parent": "rjm5"
+    "z": 9053,
+    "parent": "pp3j"
   },
   "7thy": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "hJ.png",
     "id": "7thy",
-    "z": 89427,
-    "parent": "rjm5"
+    "z": 9081,
+    "parent": "pp3j"
   },
   "ypg1": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "hC.png",
     "id": "ypg1",
-    "z": 89432,
-    "parent": "rjm5"
+    "z": 9080,
+    "parent": "pp3j"
   },
   "rf84": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "hQ.png",
     "id": "rf84",
-    "z": 89437,
-    "parent": "rjm5"
+    "z": 9035,
+    "parent": "pp3j"
   },
   "1qwj": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "hK.png",
     "id": "1qwj",
-    "z": 89440,
-    "parent": "rjm5"
+    "z": 9040,
+    "parent": "pp3j"
   },
   "36kw": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "s7.png",
     "id": "36kw",
-    "z": 89412,
-    "parent": "rjm5"
+    "z": 9067,
+    "parent": "pp3j"
   },
   "s3vo": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "s8.png",
     "id": "s3vo",
-    "z": 89404,
-    "parent": "rjm5"
+    "z": 9075,
+    "parent": "pp3j"
   },
   "nkip": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "s9.png",
     "id": "nkip",
-    "z": 89417,
-    "parent": "rjm5"
+    "z": 9063,
+    "parent": "pp3j"
   },
   "5i09": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "s10.png",
     "id": "5i09",
-    "z": 89416,
-    "parent": "rjm5"
+    "z": 9061,
+    "parent": "pp3j"
   },
   "y9i2": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "sJ.png",
     "id": "y9i2",
-    "z": 89448,
-    "parent": "rjm5"
+    "z": 9041,
+    "parent": "pp3j"
   },
   "bila": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "sC.png",
     "id": "bila",
-    "z": 89409,
-    "parent": "rjm5"
+    "z": 9084,
+    "parent": "pp3j"
   },
   "j0jz": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "sQ.png",
     "id": "j0jz",
-    "z": 89413,
-    "parent": "rjm5"
+    "z": 9046,
+    "parent": "pp3j"
   },
   "t2h8": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "sK.png",
     "id": "t2h8",
-    "z": 89424,
-    "parent": "rjm5"
+    "z": 9083,
+    "parent": "pp3j"
   },
   "vj9v": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t1.png",
     "id": "vj9v",
-    "z": 89418,
-    "parent": "rjm5"
+    "z": 9059,
+    "parent": "pp3j"
   },
   "urij": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t2.png",
     "id": "urij",
-    "z": 89436,
-    "parent": "rjm5"
+    "z": 9074,
+    "parent": "pp3j"
   },
   "0zeb": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t3.png",
     "id": "0zeb",
-    "z": 89449,
-    "parent": "rjm5"
+    "z": 9072,
+    "parent": "pp3j"
   },
   "dgsb": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t4.png",
     "id": "dgsb",
-    "z": 89423,
-    "parent": "rjm5"
+    "z": 9039,
+    "parent": "pp3j"
   },
   "aca8": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t5.png",
     "id": "aca8",
-    "z": 89411,
-    "parent": "rjm5"
+    "z": 9066,
+    "parent": "pp3j"
   },
   "wn3p": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t6.png",
     "id": "wn3p",
-    "z": 89450,
-    "parent": "rjm5"
+    "z": 9051,
+    "parent": "pp3j"
   },
   "qopp": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t7.png",
     "id": "qopp",
-    "z": 89430,
-    "parent": "rjm5"
+    "z": 9038,
+    "parent": "pp3j"
   },
   "qr5t": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t8.png",
     "id": "qr5t",
-    "z": 89406,
-    "parent": "rjm5"
+    "z": 9070,
+    "parent": "pp3j"
   },
   "0atn": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t9.png",
     "id": "0atn",
-    "z": 89429,
-    "parent": "rjm5"
+    "z": 9043,
+    "parent": "pp3j"
   },
   "4gzt": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t10.png",
     "id": "4gzt",
-    "z": 89420,
-    "parent": "rjm5"
+    "z": 9050,
+    "parent": "pp3j"
   },
   "m8xs": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t11.png",
     "id": "m8xs",
-    "z": 89426,
-    "parent": "rjm5"
+    "z": 9054,
+    "parent": "pp3j"
   },
   "45ja": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t12.png",
     "id": "45ja",
-    "z": 89410,
-    "parent": "rjm5"
+    "z": 9077,
+    "parent": "pp3j"
   },
   "04bc": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t13.png",
     "id": "04bc",
-    "z": 89443,
-    "parent": "rjm5"
+    "z": 9062,
+    "parent": "pp3j"
   },
   "6ta7": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t14.png",
     "id": "6ta7",
-    "z": 89405,
-    "parent": "rjm5"
+    "z": 9058,
+    "parent": "pp3j"
   },
   "ea2j": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t15.png",
     "id": "ea2j",
-    "z": 89433,
-    "parent": "rjm5"
+    "z": 9047,
+    "parent": "pp3j"
   },
   "pt6e": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t16.png",
     "id": "pt6e",
-    "z": 89414,
-    "parent": "rjm5"
+    "z": 9076,
+    "parent": "pp3j"
   },
   "kcgi": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t17.png",
     "id": "kcgi",
-    "z": 89441,
-    "parent": "rjm5"
+    "z": 9044,
+    "parent": "pp3j"
   },
   "h4um": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t18.png",
     "id": "h4um",
-    "z": 89442,
-    "parent": "rjm5"
+    "z": 9056,
+    "parent": "pp3j"
   },
   "7ixc": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t20.png",
     "id": "7ixc",
-    "z": 89400,
-    "parent": "rjm5"
+    "z": 9045,
+    "parent": "pp3j"
   },
   "mf94": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t21.png",
     "id": "mf94",
-    "z": 89446,
-    "parent": "rjm5"
+    "z": 9037,
+    "parent": "pp3j"
   },
   "kxtc": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t22.png",
     "id": "kxtc",
-    "z": 89452,
-    "parent": "rjm5"
+    "z": 9036,
+    "parent": "pp3j"
   },
   "1_trick": {
     "type": "holder",
@@ -561,19 +561,46 @@
       {
         "func": "CALL",
         "routine": "ModifyWidthRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "UpdateCounterRoutine"
       }
     ],
     "leaveRoutine": [
       {
         "func": "CALL",
         "routine": "ModifyWidthRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "UpdateCounterRoutine"
       }
     ],
     "min_width": 553,
     "layer": 5,
     "x": 459,
     "hidePlayerCursors": true,
-    "onlyVisibleForSeat": "1_seat"
+    "onlyVisibleForSeat": "1_seat",
+    "onLeave": {
+      "activeFace": 0
+    },
+    "UpdateCounterRoutine": [
+      "var index = ${thisID} charAt 0",
+      {
+        "func": "COUNT",
+        "holder": "${thisID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${index}_card_counter"
+        ],
+        "property": "count",
+        "relation": "=",
+        "value": "${COUNT}"
+      }
+    ]
   },
   "1_hand_anchor": {
     "id": "1_hand_anchor",
@@ -605,7 +632,7 @@
     "id": "1_seat",
     "parent": "1_seat_anchor",
     "fixedParent": true,
-    "y": -406,
+    "y": -405,
     "width": 10,
     "height": 35,
     "borderRadius": 8,
@@ -614,11 +641,11 @@
     "color": "#dddddd",
     "css": {
       "default": {
-        "min-width": "199px",
+        "min-width": "129px",
         "cursor": "pointer",
         "gap": "5px",
         "font-size": "21px",
-        "box-shadow": "0 2px 5px #00000066",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
         "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
         "background": "${PROPERTY mainColor}",
         "color": "white",
@@ -654,7 +681,7 @@
       }
     },
     "audio_enabled": true,
-    "background_color_solid": "#9c27b0",
+    "background_color_solid": "#ff9800",
     "background_color_transparent": "white",
     "colorContrast": "#000000",
     "mainColor": "#dddddd",
@@ -979,9 +1006,9 @@
         "elseRoutine": []
       }
     ],
-    "x": 393,
-    "hideWhenUnused": true,
-    "layer": 10
+    "x": 462,
+    "layer": 10,
+    "hideWhenUnused": true
   },
   "1_bonus_deck": {
     "type": "deck",
@@ -1144,10 +1171,21 @@
     "z": 78989,
     "css": {
       "default": {
+        "color": "${PROPERTY color_text}",
         "font-size": "23px",
-        "background-color": "grey",
-        "border": "2px solid black",
-        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset"
+        "border": "2px solid ${PROPERTY color_border_default}",
+        "font-weight": "900",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "line-height": 0.9,
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "2px solid ${PROPERTY color_border_default}"
       }
     },
     "text": "Call Bonuses",
@@ -1227,7 +1265,11 @@
       }
     ],
     "width": 120,
-    "x": 1163
+    "x": 1163,
+    "color_background": "grey",
+    "color_border_default": "white",
+    "color_border_hover": "black",
+    "color_text": "white"
   },
   "1_bonus_called": {
     "type": "holder",
@@ -1324,7 +1366,7 @@
     "dropOffsetY": 150
   },
   "1_player_money": {
-    "type": "label",
+    "type": "basic",
     "id": "1_player_money",
     "parent": "1_board",
     "fixedParent": true,
@@ -1335,13 +1377,11 @@
     "movableInEdit": false,
     "css": {
       "default": {
-        "color": "${PROPERTY background_color_solid}",
+        "color": "black",
         "font-size": "40px",
         "font-weight": "700",
         "background": "transparent",
-        "text-align": "center"
-      },
-      " > textarea": {
+        "text-align": "center",
         "text-shadow": "-1px -1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, 1px 1px 0 #FFFFFF, 0 1px 5px #FFFFFF99"
       }
     },
@@ -1442,10 +1482,7 @@
         ]
       }
     ],
-    "color_change_index": 1,
-    "color": "#b4b4b4",
-    "background_color_transparent": "#b4b4b4",
-    "background_color_solid": "#b4b4b4",
+    "color": "#ff9800",
     "x": 208
   },
   "1_money_edit": {
@@ -1453,12 +1490,30 @@
     "id": "1_money_edit",
     "parent": "1_board",
     "fixedParent": true,
-    "width": 50,
-    "height": 37,
+    "width": 70,
+    "height": 47,
     "borderRadius": 10,
     "z": 78734,
     "movableInEdit": false,
-    "css": "font-size: 12px;text-shadow:none;border: 3px solid grey;color: black;background: white;line-height: 0.8",
+    "css": {
+      "default": {
+        "color": "${PROPERTY color_text}",
+        "font-size": "18px",
+        "border": "3px solid ${PROPERTY color_border_default}",
+        "font-weight": "400",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "line-height": 1,
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}"
+      },
+      ":hover": {
+        "border": "3px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "3px solid ${PROPERTY color_border_default}"
+      }
+    },
     "text": "edit\npoints",
     "clickRoutine": [
       "var index = ${PROPERTY id} charAt 0",
@@ -1520,8 +1575,16 @@
         }
       }
     ],
-    "y": 178,
-    "x": 292
+    "y": 174,
+    "x": 281,
+    "activeFace": 69,
+    "color_background": "grey",
+    "color_border_default": "white",
+    "color_border_hover": "black",
+    "color_text": "white",
+    "color_text_shadow": "#000000bb",
+    "textShadowBlur": 0,
+    "textShadowDistance": 0
   },
   "history_toggle": {
     "type": "button",
@@ -1529,17 +1592,26 @@
     "height": 70,
     "borderRadius": 10,
     "z": 78801,
-    "backgroundColor": "grey",
     "css": {
       "default": {
-        "color": "${PROPERTY textColor}",
-        "font-size": "16px",
-        "background-color": "${PROPERTY backgroundColor}",
-        "border": "5px solid white",
-        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset"
+        "color": "${PROPERTY color_text}",
+        "font-size": "23px",
+        "border": "0px solid ${PROPERTY color_border_default}",
+        "font-weight": "900",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "line-height": 1,
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}"
+      },
+      ":hover": {
+        "border": "5px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "0px solid ${PROPERTY color_border_default}"
       }
     },
-    "text": "VIEW FULL HISTORY",
+    "text": "View Full History",
     "CopyThisToMakeAddendumRoutine": [
       {
         "note": "ADDENDUM ADDED TO HISTORY",
@@ -1583,9 +1655,17 @@
         "value": "${visibleToSeats}"
       }
     ],
-    "y": 815,
+    "y": 817,
     "movableInEdit": false,
-    "x": 1514
+    "x": 1484,
+    "color_background": "grey",
+    "color_border_default": "black",
+    "color_border_hover": "black",
+    "color_text": "white",
+    "color_text_shadow": "#000000bb",
+    "textShadowBlur": 2,
+    "textShadowDistance": 0,
+    "width": 110
   },
   "history_holder": {
     "type": "holder",
@@ -1673,8 +1753,8 @@
   },
   "history_recent_label": {
     "id": "history_recent_label",
-    "y": 896,
-    "width": 355,
+    "y": 897,
+    "width": 380,
     "height": 96,
     "layer": 0,
     "z": 30369,
@@ -1717,7 +1797,7 @@
       }
     ],
     "borderRadius": 10,
-    "x": 1239
+    "x": 1211
   },
   "1_take_trick": {
     "type": "button",
@@ -1734,7 +1814,15 @@
         "font-size": "23px",
         "background-color": "${PROPERTY background_color_solid}",
         "border": "0px solid black",
-        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset"
+        "font-weight": "800",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}"
+      },
+      ":hover": {
+        "border": "2px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "0px solid ${PROPERTY color_border_default}"
       }
     },
     "color_change_index": 1,
@@ -1772,61 +1860,13 @@
       }
     ],
     "y": 9,
-    "x": 7
-  },
-  "turn_button_label": {
-    "type": "label",
-    "id": "turn_button_label",
-    "parent": "1_take_trick",
-    "fixedParent": true,
-    "y": 12,
-    "width": 70,
-    "height": 80,
-    "layer": 100,
-    "z": 78737,
-    "css": {
-      "default": {
-        "color": "white",
-        "font-size": "22px",
-        "border": "0px solid black",
-        "font-weight": "900",
-        "background": "${PROPERTY color}",
-        "text-align": "center",
-        "pointer-events": "none"
-      },
-      " > textarea": {
-        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
-      }
-    },
+    "x": 7,
+    "color_border_default": "black",
+    "color_border_hover": "black",
     "text": "Take Trick",
-    "passed": false,
-    "textChangeRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY text}",
-        "relation": "==",
-        "operand2": "Passed",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "y",
-            "relation": "=",
-            "value": 9
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "y",
-            "relation": "=",
-            "value": 1
-          }
-        ]
-      }
-    ],
-    "x": -1
+    "color_text_shadow": "#000000bb",
+    "textShadowBlur": 2,
+    "textShadowDistance": 0
   },
   "1_tricks_taken": {
     "type": "holder",
@@ -1922,7 +1962,7 @@
     "textColor": "#000000",
     "color": "#dddddd",
     "mainColor": "#dddddd",
-    "background_color_solid": "#9c27b0"
+    "background_color_solid": "#dddddd"
   },
   "2_bonus_supply": {
     "type": "holder",
@@ -2124,18 +2164,14 @@
     "background_color_solid": "#b4b4b4"
   },
   "2_player_money": {
-    "type": "label",
+    "type": "basic",
     "id": "2_player_money",
     "parent": "2_board",
     "fixedParent": true,
     "linkedToSeat": "2_seat",
-    "color_change_index": 2,
     "inheritFrom": "1_player_money",
-    "background_color_transparent": "#b4b4b4",
     "money": 0,
-    "text": 0,
-    "color": "#b4b4b4",
-    "background_color_solid": "#b4b4b4"
+    "text": 0
   },
   "2_money_edit": {
     "type": "button",
@@ -2154,13 +2190,6 @@
     "inheritFrom": "1_take_trick",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4"
-  },
-  "turn_button_label1": {
-    "type": "label",
-    "id": "turn_button_label1",
-    "parent": "2_take_trick",
-    "fixedParent": true,
-    "inheritFrom": "turn_button_label"
   },
   "2_tricks_taken": {
     "type": "holder",
@@ -2228,7 +2257,7 @@
     "textColor": "#000000",
     "color": "#dddddd",
     "mainColor": "#dddddd",
-    "background_color_solid": "#9c27b0"
+    "background_color_solid": "#8bc34a"
   },
   "3_bonus_supply": {
     "type": "holder",
@@ -2430,18 +2459,14 @@
     "background_color_solid": "#b4b4b4"
   },
   "3_player_money": {
-    "type": "label",
+    "type": "basic",
     "id": "3_player_money",
     "parent": "3_board",
     "fixedParent": true,
     "linkedToSeat": "3_seat",
-    "color_change_index": 3,
     "inheritFrom": "1_player_money",
-    "background_color_transparent": "#b4b4b4",
     "money": 0,
-    "text": 0,
-    "color": "#b4b4b4",
-    "background_color_solid": "#b4b4b4"
+    "text": 0
   },
   "3_money_edit": {
     "type": "button",
@@ -2460,13 +2485,6 @@
     "inheritFrom": "1_take_trick",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4"
-  },
-  "turn_button_label2": {
-    "type": "label",
-    "id": "turn_button_label2",
-    "parent": "3_take_trick",
-    "fixedParent": true,
-    "inheritFrom": "turn_button_label"
   },
   "3_tricks_taken": {
     "type": "holder",
@@ -2534,7 +2552,7 @@
     "textColor": "#000000",
     "color": "#dddddd",
     "mainColor": "#dddddd",
-    "background_color_solid": "#4caf50"
+    "background_color_solid": "#3f51b5"
   },
   "4_bonus_supply": {
     "type": "holder",
@@ -2736,18 +2754,14 @@
     "color": "#b4b4b4"
   },
   "4_player_money": {
-    "type": "label",
+    "type": "basic",
     "id": "4_player_money",
     "parent": "4_board",
     "fixedParent": true,
     "linkedToSeat": "4_seat",
-    "color_change_index": 4,
     "inheritFrom": "1_player_money",
-    "background_color_transparent": "#b4b4b4",
     "money": 0,
-    "text": 0,
-    "background_color_solid": "#b4b4b4",
-    "color": "#b4b4b4"
+    "text": 0
   },
   "4_money_edit": {
     "type": "button",
@@ -2767,13 +2781,6 @@
     "background_color_solid": "#b4b4b4",
     "color": "#b4b4b4"
   },
-  "turn_button_label3": {
-    "type": "label",
-    "id": "turn_button_label3",
-    "parent": "4_take_trick",
-    "fixedParent": true,
-    "inheritFrom": "turn_button_label"
-  },
   "4_tricks_taken": {
     "type": "holder",
     "id": "4_tricks_taken",
@@ -2790,7 +2797,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "53v6",
-    "z": 37586,
+    "z": 38984,
     "parent": "3_bonus_supply",
     "y": 204,
     "color": "#f06292",
@@ -2803,7 +2810,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "9les",
-    "z": 37587,
+    "z": 38985,
     "parent": "3_bonus_supply",
     "y": 154,
     "color": "#f06292",
@@ -2816,7 +2823,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "67ii",
-    "z": 37588,
+    "z": 38986,
     "parent": "3_bonus_supply",
     "y": 79,
     "color": "#f06292",
@@ -2829,9 +2836,9 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "n8zr",
-    "z": 37589,
+    "z": 38987,
     "parent": "3_bonus_supply",
-    "y": 4,
+    "y": 29,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
     "background_color_solid": "#f06292",
@@ -2842,9 +2849,9 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "42sk",
-    "z": 37590,
+    "z": 38988,
     "parent": "3_bonus_supply",
-    "y": 29,
+    "y": 4,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
     "background_color_solid": "#f06292",
@@ -2855,7 +2862,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "aq4y",
-    "z": 37591,
+    "z": 38989,
     "parent": "3_bonus_supply",
     "y": 179,
     "color": "#f06292",
@@ -2868,7 +2875,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "vtrh",
-    "z": 37592,
+    "z": 38990,
     "parent": "3_bonus_supply",
     "y": 129,
     "color": "#f06292",
@@ -2881,7 +2888,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "otkf",
-    "z": 37593,
+    "z": 38991,
     "parent": "3_bonus_supply",
     "y": 104,
     "color": "#f06292",
@@ -2894,7 +2901,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "ki61",
-    "z": 37603,
+    "z": 39001,
     "parent": "4_bonus_supply",
     "y": 54,
     "color": "#f06292",
@@ -2907,7 +2914,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "1wju",
-    "z": 37604,
+    "z": 39002,
     "parent": "4_bonus_supply",
     "y": 204,
     "color": "#f06292",
@@ -2920,7 +2927,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "7gn4",
-    "z": 37605,
+    "z": 39003,
     "parent": "4_bonus_supply",
     "y": 179,
     "color": "#f06292",
@@ -2933,7 +2940,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "t7lm",
-    "z": 37606,
+    "z": 39004,
     "parent": "4_bonus_supply",
     "y": 4,
     "color": "#f06292",
@@ -2946,7 +2953,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "yfou",
-    "z": 37607,
+    "z": 39005,
     "parent": "4_bonus_supply",
     "y": 154,
     "color": "#f06292",
@@ -2959,7 +2966,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "e8rq",
-    "z": 37608,
+    "z": 39006,
     "parent": "4_bonus_supply",
     "y": 29,
     "color": "#f06292",
@@ -2972,7 +2979,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "uuut",
-    "z": 37609,
+    "z": 39007,
     "parent": "4_bonus_supply",
     "y": 129,
     "color": "#f06292",
@@ -2985,7 +2992,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "s5gn",
-    "z": 37610,
+    "z": 39008,
     "parent": "4_bonus_supply",
     "y": 104,
     "color": "#f06292",
@@ -2998,7 +3005,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "ekzj",
-    "z": 37569,
+    "z": 38967,
     "parent": "2_bonus_supply",
     "y": 79,
     "color": "#f06292",
@@ -3011,7 +3018,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "765h",
-    "z": 37570,
+    "z": 38968,
     "parent": "2_bonus_supply",
     "y": 129,
     "color": "#f06292",
@@ -3024,7 +3031,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "gvhc",
-    "z": 37571,
+    "z": 38969,
     "parent": "2_bonus_supply",
     "y": 204,
     "color": "#f06292",
@@ -3037,7 +3044,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "rm42",
-    "z": 37572,
+    "z": 38970,
     "parent": "2_bonus_supply",
     "y": 4,
     "color": "#f06292",
@@ -3050,7 +3057,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "7lzr",
-    "z": 37573,
+    "z": 38971,
     "parent": "2_bonus_supply",
     "y": 29,
     "color": "#f06292",
@@ -3063,7 +3070,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "5yo4",
-    "z": 37574,
+    "z": 38972,
     "parent": "2_bonus_supply",
     "y": 54,
     "color": "#f06292",
@@ -3076,7 +3083,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "oo7a",
-    "z": 37575,
+    "z": 38973,
     "parent": "2_bonus_supply",
     "y": 179,
     "color": "#f06292",
@@ -3089,7 +3096,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "vws7",
-    "z": 37576,
+    "z": 38974,
     "parent": "2_bonus_supply",
     "y": 104,
     "color": "#f06292",
@@ -3165,11 +3172,21 @@
     "z": 78771,
     "css": {
       "default": {
+        "color": "${PROPERTY color_text}",
         "font-size": "23px",
-        "color": "grey",
-        "background-color": "white",
-        "border": "2px solid black",
-        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset"
+        "border": "0px solid ${PROPERTY color_border_default}",
+        "font-weight": "400",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "line-height": 1,
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}"
+      },
+      ":hover": {
+        "border": "2px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "0px solid ${PROPERTY color_border_default}"
       }
     },
     "text": "Reveal Talon",
@@ -3188,8 +3205,15 @@
       }
     ],
     "movableInEdit": false,
-    "activeFace": 60,
-    "x": -85
+    "activeFace": 69,
+    "x": -85,
+    "color_background": "white",
+    "color_border_default": "black",
+    "color_border_hover": "black",
+    "color_text": "black",
+    "color_text_shadow": "#000000bb",
+    "textShadowBlur": 0,
+    "textShadowDistance": 0
   },
   "reveal_talon2": {
     "type": "button",
@@ -3198,7 +3222,7 @@
     "fixedParent": true,
     "y": 24,
     "inheritFrom": "reveal_talon1",
-    "activeFace": 62,
+    "activeFace": 71,
     "x": 214
   },
   "2_hand_anchor": {
@@ -3338,14 +3362,25 @@
     "movableInEdit": false,
     "css": {
       "default": {
+        "color": "${PROPERTY color_text}",
         "font-size": "23px",
-        "background-color": "grey",
-        "border": "2px solid black",
-        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset"
+        "border": "0px solid ${PROPERTY color_border_default}",
+        "font-weight": "500",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "line-height": 1,
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "0px solid ${PROPERTY color_border_default}"
       }
     },
     "text": "Take Talon",
-    "activeFace": 60,
+    "activeFace": 69,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -3365,8 +3400,12 @@
         "count": 3
       }
     ],
-    "talon_index": 1,
-    "x": -85
+    "x": -85,
+    "color_background": "grey",
+    "color_border_default": "white",
+    "color_border_hover": "black",
+    "color_text": "white",
+    "talon_index": 1
   },
   "take_talon2": {
     "type": "button",
@@ -3376,7 +3415,7 @@
     "y": 87,
     "talon_index": 2,
     "inheritFrom": "take_talon1",
-    "activeFace": 56,
+    "activeFace": 65,
     "x": 214
   },
   "Declarer": {
@@ -3384,7 +3423,7 @@
     "y": 231,
     "width": 56,
     "height": 56,
-    "z": 521,
+    "z": 530,
     "color": "red",
     "css": {
       "default": {
@@ -3413,7 +3452,7 @@
     "y": 288,
     "width": 56,
     "height": 56,
-    "z": 520,
+    "z": 532,
     "color": "red",
     "css": {
       "default": {
@@ -3442,7 +3481,7 @@
     "y": 288,
     "width": 56,
     "height": 56,
-    "z": 522,
+    "z": 531,
     "color": "blue",
     "css": {
       "default": {
@@ -3471,7 +3510,7 @@
     "y": 231,
     "width": 56,
     "height": 56,
-    "z": 523,
+    "z": 533,
     "color": "blue",
     "css": {
       "default": {
@@ -3660,15 +3699,25 @@
   "reset": {
     "type": "button",
     "id": "reset",
-    "height": 24,
+    "height": 27,
     "borderRadius": 10,
     "z": 78804,
     "css": {
       "default": {
+        "color": "${PROPERTY color_text}",
         "font-size": "15px",
-        "background-color": "grey",
-        "border": "2px solid black",
-        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset"
+        "border": "2px solid ${PROPERTY color_border_default}",
+        "font-weight": "900",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "2px solid ${PROPERTY color_border_default}"
       }
     },
     "text": "New Game",
@@ -3738,7 +3787,7 @@
                 ],
                 "property": "text",
                 "relation": "=",
-                "value": "7 8 9 10 J C Q K - ♥ & ♦"
+                "value": "7  8  9  10  J  C  Q  K  -  ♥ & ♦"
               }
             ]
           },
@@ -3755,7 +3804,7 @@
                 ],
                 "property": "text",
                 "relation": "=",
-                "value": "1 2 3 4 J C Q K - ♥ & ♦"
+                "value": "1  2  3  4  J  C  Q  K  -  ♥ & ♦"
               }
             ]
           },
@@ -3772,7 +3821,7 @@
                 ],
                 "property": "text",
                 "relation": "=",
-                "value": "4 3 2 1 J C Q K - ♥ & ♦"
+                "value": "4  3  2  1  J  C  Q  K  -  ♥ & ♦"
               }
             ]
           },
@@ -3844,10 +3893,14 @@
       }
     ],
     "y": 3,
-    "width": 85,
-    "x": 1509,
+    "width": 95,
+    "x": 1501,
     "movableInEdit": false,
-    "active_deck": "1"
+    "active_deck": "1",
+    "color_background": "grey",
+    "color_border_default": "white",
+    "color_border_hover": "black",
+    "color_text": "white"
   },
   "new_hand": {
     "type": "button",
@@ -3859,10 +3912,21 @@
     "z": 78988,
     "css": {
       "default": {
+        "color": "${PROPERTY color_text}",
         "font-size": "23px",
-        "background-color": "grey",
-        "border": "2px solid black",
-        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset"
+        "border": "0px solid ${PROPERTY color_border_default}",
+        "font-weight": "900",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "line-height": 1,
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}"
+      },
+      ":hover": {
+        "border": "5px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "0px solid ${PROPERTY color_border_default}"
       }
     },
     "text": "Deal New Hands",
@@ -4108,13 +4172,20 @@
         }
       }
     ],
-    "x": 1240
+    "x": 1210,
+    "color_background": "grey",
+    "color_border_default": "black",
+    "color_border_hover": "black",
+    "color_text": "white",
+    "color_text_shadow": "#000000bb",
+    "textShadowBlur": 2,
+    "textShadowDistance": 0
   },
   "forehand": {
     "id": "forehand",
     "width": 50.4,
     "height": 70,
-    "z": 3,
+    "z": 18,
     "color": "#1f5ca6",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "/i/noto-emoji/emoji_u1f590.svg",
@@ -4140,10 +4211,20 @@
     "css": {
       "default": {
         "color": "${PROPERTY suitColor}",
-        "font-size": "45px",
-        "background-color": "#eeeeee",
-        "border": "2px solid black",
-        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset"
+        "font-size": "33px",
+        "border": "2px solid ${PROPERTY color_border_default}",
+        "font-weight": "500",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "line-height": 1,
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}"
+      },
+      ":hover": {
+        "border": "2px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "2px solid ${PROPERTY color_border_default}"
       }
     },
     "clickRoutine": [
@@ -4220,11 +4301,18 @@
       }
     ],
     "width": 55,
-    "activeFace": 3,
+    "activeFace": 0,
     "suitColor": "grey",
     "movableInEdit": false,
     "text": "?",
-    "x": 1003
+    "x": 1003,
+    "color_background": "white",
+    "color_border_default": "transparent",
+    "color_border_hover": "black",
+    "talon_index": 1,
+    "color_text_shadow": "#000000bb",
+    "textShadowBlur": 0,
+    "textShadowDistance": 0
   },
   "king_picker_label": {
     "type": "label",
@@ -4391,9 +4479,25 @@
     "height": 25,
     "type": "button",
     "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
+    "css": {
+      "default": {
+        "color": "${PROPERTY color_text}",
+        "font-size": "20px",
+        "border": "2px solid ${PROPERTY color_border_default}",
+        "font-weight": "900",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "2px solid ${PROPERTY color_border_default}"
+      }
+    },
+    "text": "-",
     "clickRoutine": [
       {
         "func": "LABEL",
@@ -4402,7 +4506,11 @@
         "value": 1
       }
     ],
-    "x": -12
+    "x": -12,
+    "color_background": "grey",
+    "color_border_default": "white",
+    "color_border_hover": "black",
+    "color_text": "white"
   },
   "oie3U": {
     "id": "oie3U",
@@ -4413,9 +4521,25 @@
     "height": 25,
     "type": "button",
     "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
+    "css": {
+      "default": {
+        "color": "${PROPERTY color_text}",
+        "font-size": "20px",
+        "border": "2px solid ${PROPERTY color_border_default}",
+        "font-weight": "900",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "2px solid ${PROPERTY color_border_default}"
+      }
+    },
+    "text": "+",
     "clickRoutine": [
       {
         "func": "LABEL",
@@ -4424,7 +4548,11 @@
         "value": 1
       }
     ],
-    "x": 51
+    "x": 51,
+    "color_background": "grey",
+    "color_border_default": "white",
+    "color_border_hover": "black",
+    "color_text": "white"
   },
   "round_counter": {
     "type": "label",
@@ -4435,7 +4563,7 @@
     "z": 2126,
     "css": "font-size: 30px;",
     "editable": true,
-    "text": 1,
+    "text": 5,
     "zero_on_setup": true,
     "money": 0,
     "x": 987
@@ -4529,37 +4657,15 @@
     "x": 267
   },
   "14vta": {
-    "type": "label",
-    "text": "1 2 3 4 5 6 7 8 9 10 11 12 13",
+    "type": "basic",
+    "text": "Taroks: 1 through 22",
     "css": "color: black;font-size: 20px;text-align: left",
     "height": 25,
-    "width": 300,
-    "y": 937,
-    "z": 2116,
+    "width": 340,
+    "y": 908,
+    "z": 81169,
     "id": "14vta",
-    "x": 267
-  },
-  "15vta": {
-    "type": "label",
-    "text": "1 4 15 16 17 18 19 20 21 22",
-    "css": "color: black;font-size: 20px;text-align: left",
-    "height": 25,
-    "width": 300,
-    "y": 961,
-    "z": 2114,
-    "id": "15vta",
-    "x": 267
-  },
-  "16vta": {
-    "type": "label",
-    "text": "Taroks:",
-    "css": "color: black;font-size: 20px;text-align: left",
-    "height": 25,
-    "width": 300,
-    "y": 912,
-    "z": 2116,
-    "id": "16vta",
-    "x": 267
+    "x": 263
   },
   "17uf": {
     "deck": "tarot_deck_red_low",
@@ -4596,7 +4702,7 @@
     "type": "card",
     "cardType": "d7.png",
     "id": "os4f",
-    "z": 89091,
+    "z": 8703,
     "parent": "8sku"
   },
   "6swm": {
@@ -4604,7 +4710,7 @@
     "type": "card",
     "cardType": "d8.png",
     "id": "6swm",
-    "z": 89084,
+    "z": 8699,
     "parent": "8sku"
   },
   "zpkp": {
@@ -4612,7 +4718,7 @@
     "type": "card",
     "cardType": "d9.png",
     "id": "zpkp",
-    "z": 89077,
+    "z": 8709,
     "parent": "8sku"
   },
   "f4f4": {
@@ -4620,7 +4726,7 @@
     "type": "card",
     "cardType": "d10.png",
     "id": "f4f4",
-    "z": 89103,
+    "z": 8710,
     "parent": "8sku"
   },
   "6n3b": {
@@ -4628,7 +4734,7 @@
     "type": "card",
     "cardType": "dJ.png",
     "id": "6n3b",
-    "z": 89127,
+    "z": 8662,
     "parent": "8sku"
   },
   "714c": {
@@ -4636,7 +4742,7 @@
     "type": "card",
     "cardType": "dC.png",
     "id": "714c",
-    "z": 89090,
+    "z": 8672,
     "parent": "8sku"
   },
   "coa8": {
@@ -4644,7 +4750,7 @@
     "type": "card",
     "cardType": "dQ.png",
     "id": "coa8",
-    "z": 89104,
+    "z": 8700,
     "parent": "8sku"
   },
   "458a": {
@@ -4652,7 +4758,7 @@
     "type": "card",
     "cardType": "dK.png",
     "id": "458a",
-    "z": 89088,
+    "z": 8691,
     "parent": "8sku"
   },
   "9fg7": {
@@ -4660,7 +4766,7 @@
     "type": "card",
     "cardType": "c7.png",
     "id": "9fg7",
-    "z": 89128,
+    "z": 8673,
     "parent": "8sku"
   },
   "lg9t": {
@@ -4668,7 +4774,7 @@
     "type": "card",
     "cardType": "c8.png",
     "id": "lg9t",
-    "z": 89129,
+    "z": 8686,
     "parent": "8sku"
   },
   "u6s9": {
@@ -4676,7 +4782,7 @@
     "type": "card",
     "cardType": "c9.png",
     "id": "u6s9",
-    "z": 89086,
+    "z": 8669,
     "parent": "8sku"
   },
   "mq7i": {
@@ -4684,7 +4790,7 @@
     "type": "card",
     "cardType": "c10.png",
     "id": "mq7i",
-    "z": 89099,
+    "z": 8685,
     "parent": "8sku"
   },
   "8w2o": {
@@ -4692,7 +4798,7 @@
     "type": "card",
     "cardType": "cJ.png",
     "id": "8w2o",
-    "z": 89079,
+    "z": 8665,
     "parent": "8sku"
   },
   "8zoy": {
@@ -4700,7 +4806,7 @@
     "type": "card",
     "cardType": "cC.png",
     "id": "8zoy",
-    "z": 89083,
+    "z": 8679,
     "parent": "8sku"
   },
   "hvgo": {
@@ -4708,7 +4814,7 @@
     "type": "card",
     "cardType": "cQ.png",
     "id": "hvgo",
-    "z": 89113,
+    "z": 8687,
     "parent": "8sku"
   },
   "e5su": {
@@ -4716,7 +4822,7 @@
     "type": "card",
     "cardType": "cK.png",
     "id": "e5su",
-    "z": 89093,
+    "z": 8677,
     "parent": "8sku"
   },
   "jh1u": {
@@ -4724,7 +4830,7 @@
     "type": "card",
     "cardType": "h7.png",
     "id": "jh1u",
-    "z": 89097,
+    "z": 8666,
     "parent": "8sku"
   },
   "ezcx": {
@@ -4732,7 +4838,7 @@
     "type": "card",
     "cardType": "h8.png",
     "id": "ezcx",
-    "z": 89106,
+    "z": 8702,
     "parent": "8sku"
   },
   "geog": {
@@ -4740,7 +4846,7 @@
     "type": "card",
     "cardType": "h9.png",
     "id": "geog",
-    "z": 89105,
+    "z": 8706,
     "parent": "8sku"
   },
   "tzmg": {
@@ -4748,7 +4854,7 @@
     "type": "card",
     "cardType": "h10.png",
     "id": "tzmg",
-    "z": 89119,
+    "z": 8675,
     "parent": "8sku"
   },
   "sfr8": {
@@ -4756,7 +4862,7 @@
     "type": "card",
     "cardType": "hJ.png",
     "id": "sfr8",
-    "z": 89130,
+    "z": 8668,
     "parent": "8sku"
   },
   "xtms": {
@@ -4764,7 +4870,7 @@
     "type": "card",
     "cardType": "hC.png",
     "id": "xtms",
-    "z": 89107,
+    "z": 8676,
     "parent": "8sku"
   },
   "4nrg": {
@@ -4772,7 +4878,7 @@
     "type": "card",
     "cardType": "hQ.png",
     "id": "4nrg",
-    "z": 89125,
+    "z": 8689,
     "parent": "8sku"
   },
   "h3vg": {
@@ -4780,7 +4886,7 @@
     "type": "card",
     "cardType": "hK.png",
     "id": "h3vg",
-    "z": 89100,
+    "z": 8660,
     "parent": "8sku"
   },
   "om2m": {
@@ -4788,7 +4894,7 @@
     "type": "card",
     "cardType": "s7.png",
     "id": "om2m",
-    "z": 89124,
+    "z": 8671,
     "parent": "8sku"
   },
   "l3sa": {
@@ -4796,7 +4902,7 @@
     "type": "card",
     "cardType": "s8.png",
     "id": "l3sa",
-    "z": 89078,
+    "z": 8659,
     "parent": "8sku"
   },
   "nwd5": {
@@ -4804,7 +4910,7 @@
     "type": "card",
     "cardType": "s9.png",
     "id": "nwd5",
-    "z": 89118,
+    "z": 8682,
     "parent": "8sku"
   },
   "v28z": {
@@ -4812,7 +4918,7 @@
     "type": "card",
     "cardType": "s10.png",
     "id": "v28z",
-    "z": 89101,
+    "z": 8711,
     "parent": "8sku"
   },
   "yo9z": {
@@ -4820,7 +4926,7 @@
     "type": "card",
     "cardType": "sJ.png",
     "id": "yo9z",
-    "z": 89102,
+    "z": 8693,
     "parent": "8sku"
   },
   "o8d1": {
@@ -4828,7 +4934,7 @@
     "type": "card",
     "cardType": "sC.png",
     "id": "o8d1",
-    "z": 89082,
+    "z": 8694,
     "parent": "8sku"
   },
   "8pio": {
@@ -4836,7 +4942,7 @@
     "type": "card",
     "cardType": "sQ.png",
     "id": "8pio",
-    "z": 89096,
+    "z": 8707,
     "parent": "8sku"
   },
   "nrpu": {
@@ -4844,7 +4950,7 @@
     "type": "card",
     "cardType": "sK.png",
     "id": "nrpu",
-    "z": 89080,
+    "z": 8692,
     "parent": "8sku"
   },
   "dz2e": {
@@ -4852,7 +4958,7 @@
     "type": "card",
     "cardType": "t1.png",
     "id": "dz2e",
-    "z": 89081,
+    "z": 8680,
     "parent": "8sku"
   },
   "epu0": {
@@ -4860,7 +4966,7 @@
     "type": "card",
     "cardType": "t2.png",
     "id": "epu0",
-    "z": 89114,
+    "z": 8688,
     "parent": "8sku"
   },
   "e24y": {
@@ -4868,7 +4974,7 @@
     "type": "card",
     "cardType": "t3.png",
     "id": "e24y",
-    "z": 89122,
+    "z": 8684,
     "parent": "8sku"
   },
   "8f78": {
@@ -4876,7 +4982,7 @@
     "type": "card",
     "cardType": "t4.png",
     "id": "8f78",
-    "z": 89116,
+    "z": 8697,
     "parent": "8sku"
   },
   "8dxc": {
@@ -4884,7 +4990,7 @@
     "type": "card",
     "cardType": "t5.png",
     "id": "8dxc",
-    "z": 89117,
+    "z": 8681,
     "parent": "8sku"
   },
   "nl2g": {
@@ -4892,7 +4998,7 @@
     "type": "card",
     "cardType": "t6.png",
     "id": "nl2g",
-    "z": 89085,
+    "z": 8695,
     "parent": "8sku"
   },
   "50k5": {
@@ -4900,7 +5006,7 @@
     "type": "card",
     "cardType": "t7.png",
     "id": "50k5",
-    "z": 89111,
+    "z": 8664,
     "parent": "8sku"
   },
   "clcw": {
@@ -4908,7 +5014,7 @@
     "type": "card",
     "cardType": "t8.png",
     "id": "clcw",
-    "z": 89108,
+    "z": 8674,
     "parent": "8sku"
   },
   "uy6h": {
@@ -4916,7 +5022,7 @@
     "type": "card",
     "cardType": "t9.png",
     "id": "uy6h",
-    "z": 89089,
+    "z": 8663,
     "parent": "8sku"
   },
   "pora": {
@@ -4924,7 +5030,7 @@
     "type": "card",
     "cardType": "t10.png",
     "id": "pora",
-    "z": 89120,
+    "z": 8683,
     "parent": "8sku"
   },
   "vc9u": {
@@ -4932,7 +5038,7 @@
     "type": "card",
     "cardType": "t11.png",
     "id": "vc9u",
-    "z": 89098,
+    "z": 8678,
     "parent": "8sku"
   },
   "h0px": {
@@ -4940,7 +5046,7 @@
     "type": "card",
     "cardType": "t12.png",
     "id": "h0px",
-    "z": 89094,
+    "z": 8712,
     "parent": "8sku"
   },
   "55c7": {
@@ -4948,7 +5054,7 @@
     "type": "card",
     "cardType": "t13.png",
     "id": "55c7",
-    "z": 89115,
+    "z": 8661,
     "parent": "8sku"
   },
   "7wvo": {
@@ -4956,7 +5062,7 @@
     "type": "card",
     "cardType": "t14.png",
     "id": "7wvo",
-    "z": 89110,
+    "z": 8708,
     "parent": "8sku"
   },
   "lc5y": {
@@ -4964,7 +5070,7 @@
     "type": "card",
     "cardType": "t15.png",
     "id": "lc5y",
-    "z": 89121,
+    "z": 8705,
     "parent": "8sku"
   },
   "w9j4": {
@@ -4972,7 +5078,7 @@
     "type": "card",
     "cardType": "t16.png",
     "id": "w9j4",
-    "z": 89109,
+    "z": 8704,
     "parent": "8sku"
   },
   "g2mv": {
@@ -4980,7 +5086,7 @@
     "type": "card",
     "cardType": "t17.png",
     "id": "g2mv",
-    "z": 89126,
+    "z": 8667,
     "parent": "8sku"
   },
   "n7ee": {
@@ -4988,7 +5094,7 @@
     "type": "card",
     "cardType": "t18.png",
     "id": "n7ee",
-    "z": 89095,
+    "z": 8696,
     "parent": "8sku"
   },
   "5yyq": {
@@ -4996,7 +5102,7 @@
     "type": "card",
     "cardType": "t19.png",
     "id": "5yyq",
-    "z": 89092,
+    "z": 8690,
     "parent": "8sku"
   },
   "mqmt": {
@@ -5004,7 +5110,7 @@
     "type": "card",
     "cardType": "t20.png",
     "id": "mqmt",
-    "z": 89087,
+    "z": 8701,
     "parent": "8sku"
   },
   "9q5a": {
@@ -5012,7 +5118,7 @@
     "type": "card",
     "cardType": "t21.png",
     "id": "9q5a",
-    "z": 89112,
+    "z": 8670,
     "parent": "8sku"
   },
   "3bvz": {
@@ -5020,7 +5126,7 @@
     "type": "card",
     "cardType": "t22.png",
     "id": "3bvz",
-    "z": 89123,
+    "z": 8698,
     "parent": "8sku"
   },
   "main_deck_red_high_recall": {
@@ -5085,7 +5191,7 @@
     "height": 25,
     "z": 2123,
     "css": "color: red;font-size: 20px;text-align: left",
-    "text": "7 8 9 10 J C Q K - ♥ & ♦",
+    "text": "7  8  9  10  J  C  Q  K  -  ♥ & ♦",
     "x": 267
   },
   "main_deck_red_low_recall1": {
@@ -5120,7 +5226,7 @@
     "type": "card",
     "cardType": "d7.png",
     "id": "r9g0",
-    "z": 89209,
+    "z": 8804,
     "parent": "rywr"
   },
   "tera": {
@@ -5128,7 +5234,7 @@
     "type": "card",
     "cardType": "d8.png",
     "id": "tera",
-    "z": 89233,
+    "z": 8798,
     "parent": "rywr"
   },
   "btus": {
@@ -5136,7 +5242,7 @@
     "type": "card",
     "cardType": "d9.png",
     "id": "btus",
-    "z": 89238,
+    "z": 8813,
     "parent": "rywr"
   },
   "vq85": {
@@ -5144,7 +5250,7 @@
     "type": "card",
     "cardType": "d10.png",
     "id": "vq85",
-    "z": 89196,
+    "z": 8770,
     "parent": "rywr"
   },
   "mmv6": {
@@ -5152,7 +5258,7 @@
     "type": "card",
     "cardType": "dJ.png",
     "id": "mmv6",
-    "z": 89215,
+    "z": 8812,
     "parent": "rywr"
   },
   "oqnc": {
@@ -5160,7 +5266,7 @@
     "type": "card",
     "cardType": "dC.png",
     "id": "oqnc",
-    "z": 89203,
+    "z": 8797,
     "parent": "rywr"
   },
   "tp6f": {
@@ -5168,7 +5274,7 @@
     "type": "card",
     "cardType": "dQ.png",
     "id": "tp6f",
-    "z": 89232,
+    "z": 8774,
     "parent": "rywr"
   },
   "i8sa": {
@@ -5176,7 +5282,7 @@
     "type": "card",
     "cardType": "c7.png",
     "id": "i8sa",
-    "z": 89226,
+    "z": 8805,
     "parent": "rywr"
   },
   "2kdk": {
@@ -5184,7 +5290,7 @@
     "type": "card",
     "cardType": "c8.png",
     "id": "2kdk",
-    "z": 89198,
+    "z": 8784,
     "parent": "rywr"
   },
   "wwd6": {
@@ -5192,7 +5298,7 @@
     "type": "card",
     "cardType": "c9.png",
     "id": "wwd6",
-    "z": 89186,
+    "z": 8786,
     "parent": "rywr"
   },
   "8iae": {
@@ -5200,7 +5306,7 @@
     "type": "card",
     "cardType": "c10.png",
     "id": "8iae",
-    "z": 89214,
+    "z": 8769,
     "parent": "rywr"
   },
   "isy0": {
@@ -5208,7 +5314,7 @@
     "type": "card",
     "cardType": "cJ.png",
     "id": "isy0",
-    "z": 89189,
+    "z": 8808,
     "parent": "rywr"
   },
   "hb15": {
@@ -5216,7 +5322,7 @@
     "type": "card",
     "cardType": "cC.png",
     "id": "hb15",
-    "z": 89210,
+    "z": 8799,
     "parent": "rywr"
   },
   "moxk": {
@@ -5224,7 +5330,7 @@
     "type": "card",
     "cardType": "cQ.png",
     "id": "moxk",
-    "z": 89204,
+    "z": 8820,
     "parent": "rywr"
   },
   "n9ir": {
@@ -5232,7 +5338,7 @@
     "type": "card",
     "cardType": "cK.png",
     "id": "n9ir",
-    "z": 89193,
+    "z": 8777,
     "parent": "rywr"
   },
   "w8gn": {
@@ -5240,7 +5346,7 @@
     "type": "card",
     "cardType": "h7.png",
     "id": "w8gn",
-    "z": 89212,
+    "z": 8800,
     "parent": "rywr"
   },
   "xx6w": {
@@ -5248,7 +5354,7 @@
     "type": "card",
     "cardType": "h8.png",
     "id": "xx6w",
-    "z": 89237,
+    "z": 8776,
     "parent": "rywr"
   },
   "zlb3": {
@@ -5256,7 +5362,7 @@
     "type": "card",
     "cardType": "h9.png",
     "id": "zlb3",
-    "z": 89219,
+    "z": 8802,
     "parent": "rywr"
   },
   "zuvq": {
@@ -5264,7 +5370,7 @@
     "type": "card",
     "cardType": "h10.png",
     "id": "zuvq",
-    "z": 89192,
+    "z": 8791,
     "parent": "rywr"
   },
   "aazc": {
@@ -5272,7 +5378,7 @@
     "type": "card",
     "cardType": "hJ.png",
     "id": "aazc",
-    "z": 89224,
+    "z": 8790,
     "parent": "rywr"
   },
   "9nm1": {
@@ -5280,7 +5386,7 @@
     "type": "card",
     "cardType": "hC.png",
     "id": "9nm1",
-    "z": 89231,
+    "z": 8779,
     "parent": "rywr"
   },
   "c9rk": {
@@ -5288,7 +5394,7 @@
     "type": "card",
     "cardType": "hQ.png",
     "id": "c9rk",
-    "z": 89207,
+    "z": 8817,
     "parent": "rywr"
   },
   "94lq": {
@@ -5296,7 +5402,7 @@
     "type": "card",
     "cardType": "hK.png",
     "id": "94lq",
-    "z": 89228,
+    "z": 8789,
     "parent": "rywr"
   },
   "iewq": {
@@ -5304,7 +5410,7 @@
     "type": "card",
     "cardType": "s7.png",
     "id": "iewq",
-    "z": 89199,
+    "z": 8801,
     "parent": "rywr"
   },
   "krd9": {
@@ -5312,7 +5418,7 @@
     "type": "card",
     "cardType": "s8.png",
     "id": "krd9",
-    "z": 89205,
+    "z": 8810,
     "parent": "rywr"
   },
   "esab": {
@@ -5320,7 +5426,7 @@
     "type": "card",
     "cardType": "s9.png",
     "id": "esab",
-    "z": 89236,
+    "z": 8809,
     "parent": "rywr"
   },
   "mmmt": {
@@ -5328,7 +5434,7 @@
     "type": "card",
     "cardType": "s10.png",
     "id": "mmmt",
-    "z": 89200,
+    "z": 8816,
     "parent": "rywr"
   },
   "xusw": {
@@ -5336,7 +5442,7 @@
     "type": "card",
     "cardType": "sJ.png",
     "id": "xusw",
-    "z": 89213,
+    "z": 8783,
     "parent": "rywr"
   },
   "hx9t": {
@@ -5344,7 +5450,7 @@
     "type": "card",
     "cardType": "sC.png",
     "id": "hx9t",
-    "z": 89202,
+    "z": 8773,
     "parent": "rywr"
   },
   "scoy": {
@@ -5352,7 +5458,7 @@
     "type": "card",
     "cardType": "sQ.png",
     "id": "scoy",
-    "z": 89225,
+    "z": 8806,
     "parent": "rywr"
   },
   "d7ah": {
@@ -5360,7 +5466,7 @@
     "type": "card",
     "cardType": "sK.png",
     "id": "d7ah",
-    "z": 89211,
+    "z": 8771,
     "parent": "rywr"
   },
   "ogeh": {
@@ -5368,7 +5474,7 @@
     "type": "card",
     "cardType": "t1.png",
     "id": "ogeh",
-    "z": 89234,
+    "z": 8803,
     "parent": "rywr"
   },
   "vbyd": {
@@ -5376,7 +5482,7 @@
     "type": "card",
     "cardType": "t2.png",
     "id": "vbyd",
-    "z": 89188,
+    "z": 8792,
     "parent": "rywr"
   },
   "h705": {
@@ -5384,7 +5490,7 @@
     "type": "card",
     "cardType": "t3.png",
     "id": "h705",
-    "z": 89191,
+    "z": 8785,
     "parent": "rywr"
   },
   "asgn": {
@@ -5392,7 +5498,7 @@
     "type": "card",
     "cardType": "t4.png",
     "id": "asgn",
-    "z": 89229,
+    "z": 8780,
     "parent": "rywr"
   },
   "ktwf": {
@@ -5400,7 +5506,7 @@
     "type": "card",
     "cardType": "t5.png",
     "id": "ktwf",
-    "z": 89216,
+    "z": 8796,
     "parent": "rywr"
   },
   "634q": {
@@ -5408,7 +5514,7 @@
     "type": "card",
     "cardType": "t6.png",
     "id": "634q",
-    "z": 89223,
+    "z": 8788,
     "parent": "rywr"
   },
   "bl0v": {
@@ -5416,7 +5522,7 @@
     "type": "card",
     "cardType": "t7.png",
     "id": "bl0v",
-    "z": 89190,
+    "z": 8814,
     "parent": "rywr"
   },
   "jmfn": {
@@ -5424,7 +5530,7 @@
     "type": "card",
     "cardType": "t8.png",
     "id": "jmfn",
-    "z": 89197,
+    "z": 8781,
     "parent": "rywr"
   },
   "tnmx": {
@@ -5432,7 +5538,7 @@
     "type": "card",
     "cardType": "t9.png",
     "id": "tnmx",
-    "z": 89206,
+    "z": 8767,
     "parent": "rywr"
   },
   "mvlj": {
@@ -5440,7 +5546,7 @@
     "type": "card",
     "cardType": "t10.png",
     "id": "mvlj",
-    "z": 89217,
+    "z": 8819,
     "parent": "rywr"
   },
   "je0f": {
@@ -5448,7 +5554,7 @@
     "type": "card",
     "cardType": "t11.png",
     "id": "je0f",
-    "z": 89227,
+    "z": 8793,
     "parent": "rywr"
   },
   "llnz": {
@@ -5456,7 +5562,7 @@
     "type": "card",
     "cardType": "t12.png",
     "id": "llnz",
-    "z": 89185,
+    "z": 8768,
     "parent": "rywr"
   },
   "m0je": {
@@ -5464,7 +5570,7 @@
     "type": "card",
     "cardType": "t13.png",
     "id": "m0je",
-    "z": 89195,
+    "z": 8795,
     "parent": "rywr"
   },
   "fw2b": {
@@ -5472,7 +5578,7 @@
     "type": "card",
     "cardType": "t14.png",
     "id": "fw2b",
-    "z": 89221,
+    "z": 8787,
     "parent": "rywr"
   },
   "lhuy": {
@@ -5480,7 +5586,7 @@
     "type": "card",
     "cardType": "t15.png",
     "id": "lhuy",
-    "z": 89208,
+    "z": 8775,
     "parent": "rywr"
   },
   "wmfn": {
@@ -5488,7 +5594,7 @@
     "type": "card",
     "cardType": "t16.png",
     "id": "wmfn",
-    "z": 89201,
+    "z": 8818,
     "parent": "rywr"
   },
   "emlk": {
@@ -5496,7 +5602,7 @@
     "type": "card",
     "cardType": "t17.png",
     "id": "emlk",
-    "z": 89220,
+    "z": 8782,
     "parent": "rywr"
   },
   "ey7i": {
@@ -5504,7 +5610,7 @@
     "type": "card",
     "cardType": "t18.png",
     "id": "ey7i",
-    "z": 89218,
+    "z": 8815,
     "parent": "rywr"
   },
   "elvc": {
@@ -5512,7 +5618,7 @@
     "type": "card",
     "cardType": "t19.png",
     "id": "elvc",
-    "z": 89230,
+    "z": 8811,
     "parent": "rywr"
   },
   "mom3": {
@@ -5520,7 +5626,7 @@
     "type": "card",
     "cardType": "t20.png",
     "id": "mom3",
-    "z": 89187,
+    "z": 8772,
     "parent": "rywr"
   },
   "ndqc": {
@@ -5528,7 +5634,7 @@
     "type": "card",
     "cardType": "t21.png",
     "id": "ndqc",
-    "z": 89235,
+    "z": 8807,
     "parent": "rywr"
   },
   "3i70": {
@@ -5536,7 +5642,7 @@
     "type": "card",
     "cardType": "t22.png",
     "id": "3i70",
-    "z": 89194,
+    "z": 8794,
     "parent": "rywr"
   },
   "closed_background": {
@@ -5564,7 +5670,7 @@
     "id": "contract_disc",
     "width": 33,
     "height": 33,
-    "z": 78986,
+    "z": 79001,
     "css": "border-radius: 50%;",
     "image": "/i/game-pieces/3D/Marble-3D.svg",
     "svgReplaces": {
@@ -5679,19 +5785,30 @@
   "open_hands_button": {
     "type": "button",
     "id": "open_hands_button",
-    "x": 1396,
-    "y": 821,
-    "width": 90,
-    "height": 60,
+    "x": 1357,
+    "y": 817,
+    "width": 110,
+    "height": 70,
     "borderRadius": 10,
     "z": 78771,
     "movableInEdit": false,
     "css": {
       "default": {
+        "color": "${PROPERTY color_text}",
         "font-size": "23px",
-        "background-color": "grey",
-        "border": "2px solid black",
-        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset"
+        "border": "0px solid ${PROPERTY color_border_default}",
+        "font-weight": "900",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "line-height": 1,
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY color_text_shadow}"
+      },
+      ":hover": {
+        "border": "5px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "0px solid ${PROPERTY color_border_default}"
       }
     },
     "text": "Open Hands",
@@ -5817,7 +5934,14 @@
           }
         ]
       }
-    ]
+    ],
+    "color_background": "grey",
+    "color_border_default": "black",
+    "color_border_hover": "black",
+    "color_text": "white",
+    "color_text_shadow": "#000000bb",
+    "textShadowBlur": 2,
+    "textShadowDistance": 0
   },
   "2_announcements_button": {
     "type": "button",
@@ -5828,10 +5952,21 @@
     "z": 78826,
     "css": {
       "default": {
+        "color": "${PROPERTY color_text}",
         "font-size": "23px",
-        "background-color": "grey",
-        "border": "2px solid black",
-        "box-shadow": "2px 2px 5px black, -1px -1px 3px gray inset"
+        "border": "2px solid ${PROPERTY color_border_default}",
+        "font-weight": "900",
+        "background": "${PROPERTY color_background}",
+        "text-align": "center",
+        "line-height": 0.9,
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid ${PROPERTY color_border_hover}"
+      },
+      ":active": {
+        "border": "2px solid ${PROPERTY color_border_default}"
       }
     },
     "text": "Silent Bonuses",
@@ -5911,7 +6046,11 @@
       }
     ],
     "width": 120,
-    "x": 1163
+    "x": 1163,
+    "color_background": "grey",
+    "color_border_default": "white",
+    "color_border_hover": "black",
+    "color_text": "white"
   },
   "5_bonus_supply_recall": {
     "type": "button",
@@ -5946,7 +6085,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "jypx1",
-    "z": 37552,
+    "z": 38950,
     "y": 179,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
@@ -5959,7 +6098,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "10fah",
-    "z": 37553,
+    "z": 38951,
     "parent": "1_bonus_supply",
     "y": 54,
     "color": "#f06292",
@@ -5972,7 +6111,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "m6j7",
-    "z": 37554,
+    "z": 38952,
     "parent": "1_bonus_supply",
     "y": 104,
     "color": "#f06292",
@@ -5985,7 +6124,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "12ol",
-    "z": 37555,
+    "z": 38953,
     "y": 29,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
@@ -5998,7 +6137,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "qa4i",
-    "z": 37556,
+    "z": 38954,
     "parent": "1_bonus_supply",
     "y": 4,
     "color": "#f06292",
@@ -6011,7 +6150,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "phlx1",
-    "z": 37557,
+    "z": 38955,
     "parent": "1_bonus_supply",
     "y": 154,
     "color": "#f06292",
@@ -6024,7 +6163,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "9wm4",
-    "z": 37558,
+    "z": 38956,
     "parent": "1_bonus_supply",
     "y": 204,
     "color": "#f06292",
@@ -6037,7 +6176,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "xxp1",
-    "z": 37559,
+    "z": 38957,
     "parent": "1_bonus_supply",
     "y": 129,
     "color": "#f06292",
@@ -6722,7 +6861,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "u9yo",
-    "z": 37561,
+    "z": 38959,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 4
@@ -6732,7 +6871,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "bjo9",
-    "z": 37562,
+    "z": 38960,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 179
@@ -6742,7 +6881,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "j7hg",
-    "z": 37563,
+    "z": 38961,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 154
@@ -6752,7 +6891,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "cxcb",
-    "z": 37564,
+    "z": 38962,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 79
@@ -6762,7 +6901,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "k4j4",
-    "z": 37565,
+    "z": 38963,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 129
@@ -6772,7 +6911,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "p1qo",
-    "z": 37566,
+    "z": 38964,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 104
@@ -6782,7 +6921,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "6y4k",
-    "z": 37567,
+    "z": 38965,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 54
@@ -6792,7 +6931,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "rzrf",
-    "z": 37568,
+    "z": 38966,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 29
@@ -6802,7 +6941,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "4jf1",
-    "z": 37578,
+    "z": 38976,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 179
@@ -6812,7 +6951,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "2qfc",
-    "z": 37579,
+    "z": 38977,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 54
@@ -6822,7 +6961,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "oxaa",
-    "z": 37580,
+    "z": 38978,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 29
@@ -6832,7 +6971,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "v052",
-    "z": 37581,
+    "z": 38979,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 154
@@ -6842,7 +6981,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "eub9",
-    "z": 37582,
+    "z": 38980,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 129
@@ -6852,7 +6991,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "jsdo",
-    "z": 37583,
+    "z": 38981,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 104
@@ -6862,7 +7001,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "bhpb",
-    "z": 37584,
+    "z": 38982,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 4
@@ -6872,7 +7011,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "92qq",
-    "z": 37585,
+    "z": 38983,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 79
@@ -6882,7 +7021,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "re4m",
-    "z": 37595,
+    "z": 38993,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 29
@@ -6892,7 +7031,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "ppch",
-    "z": 37596,
+    "z": 38994,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 54
@@ -6902,7 +7041,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "1ljs",
-    "z": 37597,
+    "z": 38995,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 79
@@ -6912,7 +7051,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "6rm4",
-    "z": 37598,
+    "z": 38996,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 179
@@ -6922,7 +7061,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "48ft",
-    "z": 37599,
+    "z": 38997,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 154
@@ -6932,7 +7071,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "55db",
-    "z": 37600,
+    "z": 38998,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 4
@@ -6942,7 +7081,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "8ad8",
-    "z": 37601,
+    "z": 38999,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 129
@@ -6952,7 +7091,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "nlcv",
-    "z": 37602,
+    "z": 39000,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 104
@@ -6962,7 +7101,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "viq4",
-    "z": 37612,
+    "z": 39010,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 179
@@ -6972,17 +7111,17 @@
     "type": "card",
     "cardType": "Trull",
     "id": "rivc",
-    "z": 37613,
+    "z": 39011,
     "parent": "4_silent_bonus_supply",
     "x": 4,
-    "y": 29
+    "y": 54
   },
   "cjmk": {
     "deck": "4_silent_bonus_deck",
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "cjmk",
-    "z": 37614,
+    "z": 39012,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 154
@@ -6992,17 +7131,17 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "hbpt",
-    "z": 37615,
+    "z": 39013,
     "parent": "4_silent_bonus_supply",
     "x": 4,
-    "y": 54
+    "y": 4
   },
   "tdk9": {
     "deck": "4_silent_bonus_deck",
     "type": "card",
     "cardType": "Uhu",
     "id": "tdk9",
-    "z": 37616,
+    "z": 39014,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 129
@@ -7012,17 +7151,17 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "02ce",
-    "z": 37617,
+    "z": 39015,
     "parent": "4_silent_bonus_supply",
     "x": 4,
-    "y": 4
+    "y": 29
   },
   "t0vx": {
     "deck": "4_silent_bonus_deck",
     "type": "card",
     "cardType": "Quapil",
     "id": "t0vx",
-    "z": 37618,
+    "z": 39016,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 104
@@ -7032,7 +7171,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "j1ej",
-    "z": 37619,
+    "z": 39017,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 79
@@ -7042,7 +7181,7 @@
     "type": "card",
     "cardType": "Sack",
     "id": "fgml",
-    "z": 37560,
+    "z": 38958,
     "parent": "1_bonus_supply",
     "x": 4,
     "y": 79
@@ -7052,7 +7191,7 @@
     "type": "card",
     "cardType": "Sack",
     "id": "6xp4",
-    "z": 37577,
+    "z": 38975,
     "parent": "2_bonus_supply",
     "x": 4,
     "y": 154
@@ -7062,7 +7201,7 @@
     "type": "card",
     "cardType": "Sack",
     "id": "rjnq",
-    "z": 37594,
+    "z": 38992,
     "parent": "3_bonus_supply",
     "x": 4,
     "y": 54
@@ -7072,7 +7211,7 @@
     "type": "card",
     "cardType": "Sack",
     "id": "d1nm",
-    "z": 37611,
+    "z": 39009,
     "parent": "4_bonus_supply",
     "x": 4,
     "y": 79
@@ -7080,9 +7219,9 @@
   "1_deck_holder": {
     "type": "holder",
     "id": "1_deck_holder",
-    "x": 1748,
-    "y": 368,
-    "z": 55,
+    "x": 1747,
+    "y": 363,
+    "z": 872,
     "dropTarget": {
       "type": "card"
     },
@@ -8760,7 +8899,7 @@
     "height": 25,
     "z": 2123,
     "css": "color: black;font-size: 20px;text-align: left",
-    "text": "7 8 9 10 J C Q K - ♠ & ♣"
+    "text": "7  8  9  10  J  C  Q  K  -  ♠ & ♣"
   },
   "rywr": {
     "type": "pile",
@@ -8785,53 +8924,6 @@
     "handleOffset": 0,
     "clickRoutine": [],
     "id": "8sku"
-  },
-  "sh07": {
-    "y": 2,
-    "width": 30,
-    "height": 30,
-    "z": 6,
-    "activeFace": 1,
-    "classes": "chip",
-    "color": "pink",
-    "css": {
-      "default": {
-        "color": "black",
-        "text-align": "center",
-        "font-size": "18px",
-        "line-height": "55px"
-      }
-    },
-    "faces": [
-      {
-        "image": "i/game-pieces/2D/Checkers-2D.svg",
-        "crowned": false
-      },
-      {
-        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "crowned": true
-      }
-    ],
-    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "text": "x2",
-    "borderColor": "#000000",
-    "borderWidth": 1,
-    "crowned": true,
-    "secondaryColor": "#ffffff",
-    "x2": true,
-    "dragging": "Jonathan",
-    "hoverParent": "coins_supply",
-    "clonedFrom": "9wnv",
-    "x": 2,
-    "layer": 10,
-    "id": "sh07",
-    "parent": "coins_supply"
   },
   "info_game_structure_parent": {
     "id": "info_game_structure_parent",
@@ -8892,7 +8984,268 @@
     "text": "Autoscoring Help",
     "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
   },
-  "rjm5": {
+  "xfub": {
+    "y": 2,
+    "width": 30,
+    "height": 30,
+    "z": 78666,
+    "activeFace": 1,
+    "classes": "chip",
+    "color": "pink",
+    "css": {
+      "default": {
+        "color": "black",
+        "text-align": "center",
+        "font-size": "18px",
+        "line-height": "55px"
+      }
+    },
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "text": "x2",
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "x2": true,
+    "dragging": "Jonathan",
+    "hoverParent": "coins_supply",
+    "clonedFrom": "emoa",
+    "x": 2,
+    "layer": 10,
+    "id": "xfub",
+    "parent": "coins_supply"
+  },
+  "1_card_counter": {
+    "id": "1_card_counter",
+    "parent": "1_seat_anchor",
+    "fixedParent": true,
+    "x": 396,
+    "y": -403,
+    "width": 50,
+    "height": 40,
+    "borderRadius": 3,
+    "layer": 12,
+    "z": 17,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "25px",
+        "font-weight": "700",
+        "background": "transparent",
+        "text-align": "center",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      }
+    },
+    "color_background": "transparent",
+    "color_border_default": "white",
+    "color_border_hover": "black",
+    "color_text": "white",
+    "color_text_shadow": "#000000bb",
+    "textShadowBlur": 2,
+    "textShadowDistance": 0,
+    "count": 0,
+    "countChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY count}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "relation": "=",
+            "value": "${PROPERTY count}"
+          }
+        ]
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false,
+    "linkedToSeat": "1_seat",
+    "text": 0,
+    "color_change_index": 1,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
+  },
+  "2_card_counter": {
+    "id": "2_card_counter",
+    "parent": "2_seat_anchor",
+    "fixedParent": true,
+    "linkedToSeat": "2_seat",
+    "inheritFrom": "1_card_counter",
+    "count": 0,
+    "text": 0,
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "color": "#b4b4b4"
+  },
+  "3_card_counter": {
+    "id": "3_card_counter",
+    "parent": "3_seat_anchor",
+    "fixedParent": true,
+    "linkedToSeat": "3_seat",
+    "inheritFrom": "1_card_counter",
+    "count": 0,
+    "text": 0,
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "color": "#b4b4b4"
+  },
+  "4_card_counter": {
+    "id": "4_card_counter",
+    "parent": "4_seat_anchor",
+    "fixedParent": true,
+    "linkedToSeat": "4_seat",
+    "inheritFrom": "1_card_counter",
+    "count": 0,
+    "text": 0,
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "color": "#b4b4b4"
+  },
+  "1_card_counter_background1": {
+    "id": "1_card_counter_background1",
+    "parent": "1_seat_anchor",
+    "fixedParent": true,
+    "x": 402,
+    "y": -406,
+    "width": 25,
+    "height": 35,
+    "borderRadius": 3,
+    "rotation": -12,
+    "layer": 11,
+    "z": 17,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "box-shadow:0 1px 1px black;background-image:url(/assets/566443850_13760);font-weight:900;font-size:1.5rem;line-height:50px;color:white;;text-shadow: 0px 0px 3px black;box-shadow: inset 0 0 0 1000px white);",
+    "linkedToSeat": "1_seat"
+  },
+  "1_card_counter_background2": {
+    "id": "1_card_counter_background2",
+    "parent": "1_seat_anchor",
+    "fixedParent": true,
+    "x": 408,
+    "y": -407,
+    "width": 25,
+    "height": 35,
+    "borderRadius": 3,
+    "rotation": 8,
+    "layer": 11,
+    "z": 17,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "box-shadow:0 1px 1px black;background-image:url(/assets/566443850_13760);font-weight:900;font-size:1.5rem;line-height:50px;color:white;;text-shadow: 0px 0px 3px black;box-shadow: inset 0 0 0 1000px white);",
+    "linkedToSeat": "1_seat"
+  },
+  "1_card_counter_background3": {
+    "id": "1_card_counter_background3",
+    "parent": "1_seat_anchor",
+    "fixedParent": true,
+    "x": 417,
+    "y": -407,
+    "width": 25,
+    "height": 35,
+    "borderRadius": 3,
+    "rotation": 28,
+    "layer": 11,
+    "z": 17,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "box-shadow:0 1px 1px black;background-image:url(/assets/566443850_13760);font-weight:900;font-size:1.5rem;line-height:50px;color:white;;text-shadow: 0px 0px 3px black;box-shadow: inset 0 0 0 1000px white);",
+    "linkedToSeat": "1_seat"
+  },
+  "2_card_counter_background1": {
+    "id": "2_card_counter_background1",
+    "parent": "2_seat_anchor",
+    "fixedParent": true,
+    "linkedToSeat": "2_seat",
+    "inheritFrom": "1_card_counter_background1"
+  },
+  "2_card_counter_background2": {
+    "id": "2_card_counter_background2",
+    "parent": "2_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_card_counter_background2",
+    "linkedToSeat": "2_seat"
+  },
+  "2_card_counter_background3": {
+    "id": "2_card_counter_background3",
+    "parent": "2_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_card_counter_background3",
+    "linkedToSeat": "2_seat"
+  },
+  "3_card_counter_background1": {
+    "id": "3_card_counter_background1",
+    "parent": "3_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_card_counter_background1",
+    "linkedToSeat": "3_seat"
+  },
+  "3_card_counter_background2": {
+    "id": "3_card_counter_background2",
+    "parent": "3_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_card_counter_background2",
+    "linkedToSeat": "3_seat"
+  },
+  "3_card_counter_background3": {
+    "id": "3_card_counter_background3",
+    "parent": "3_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_card_counter_background3",
+    "linkedToSeat": "3_seat"
+  },
+  "4_card_counter_background1": {
+    "id": "4_card_counter_background1",
+    "parent": "4_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_card_counter_background1",
+    "linkedToSeat": "4_seat"
+  },
+  "4_card_counter_background2": {
+    "id": "4_card_counter_background2",
+    "parent": "4_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_card_counter_background2",
+    "linkedToSeat": "4_seat"
+  },
+  "4_card_counter_background3": {
+    "id": "4_card_counter_background3",
+    "parent": "4_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_card_counter_background3",
+    "linkedToSeat": "4_seat"
+  },
+  "pp3j": {
     "type": "pile",
     "parent": "1_deck_holder",
     "x": 4,
@@ -8902,20 +9255,20 @@
     "handleCSS": "background:black;left:38px;width:50px;top:55px;height:50px;border-radius:100px;color:white;font-size:35px;background-size:100%;display:block;line-height:50px",
     "handleOffset": 0,
     "clickRoutine": [],
-    "id": "rjm5"
+    "id": "pp3j"
   },
   "_meta": {
     "version": 15,
     "info": {
       "name": "Konigrufen",
-      "image": "/assets/679600255_654677",
+      "image": "/assets/-2034928598_35061",
       "rules": "https://www.pagat.com/tarot/koenig.html",
       "bgg": "",
       "year": "",
       "mode": "vs",
       "time": "30+",
       "attribution": "Layout design and coding by Jonathan Cox (email: JonGetsGames@gmail.com for inquiries).&nbsp; All art assets are from https://commons.wikimedia.org/wiki/Category:Tarot_nouveau_-_Grimaud_-_1898 and are in the Public Domain.",
-      "lastUpdate": 1712548143791,
+      "lastUpdate": 1712873716257,
       "showName": true,
       "skill": "medium",
       "description": "Classic 4 player only, variable-partner, tarot, trick-taking game.",
