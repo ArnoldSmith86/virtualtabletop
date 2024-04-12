@@ -106,7 +106,7 @@
     "type": "card",
     "cardType": "C 01",
     "staged": false,
-    "z": 42475,
+    "z": 42590,
     "parent": "v48a"
   },
   "fate_2_C": {
@@ -116,7 +116,7 @@
     "cardType": "C 02",
     "staged": false,
     "parent": "v48a",
-    "z": 42484
+    "z": 42611
   },
   "fate_3_C": {
     "id": "fate_3_C",
@@ -125,7 +125,7 @@
     "cardType": "C 03",
     "staged": false,
     "parent": "v48a",
-    "z": 42485
+    "z": 42604
   },
   "fate_4_C": {
     "id": "fate_4_C",
@@ -133,7 +133,7 @@
     "type": "card",
     "cardType": "C 04",
     "staged": false,
-    "z": 42489,
+    "z": 42602,
     "parent": "v48a"
   },
   "fate_5_C": {
@@ -143,7 +143,7 @@
     "cardType": "C 05",
     "staged": false,
     "parent": "v48a",
-    "z": 42473
+    "z": 42578
   },
   "fate_6_C": {
     "id": "fate_6_C",
@@ -152,7 +152,7 @@
     "cardType": "C 06",
     "staged": false,
     "parent": "v48a",
-    "z": 42520
+    "z": 42617
   },
   "fate_7_C": {
     "id": "fate_7_C",
@@ -160,7 +160,7 @@
     "type": "card",
     "cardType": "C 07",
     "staged": false,
-    "z": 42477,
+    "z": 42596,
     "parent": "v48a"
   },
   "fate_8_C": {
@@ -169,7 +169,7 @@
     "type": "card",
     "cardType": "C 08",
     "staged": false,
-    "z": 42501,
+    "z": 42584,
     "parent": "v48a"
   },
   "fate_9_C": {
@@ -178,7 +178,7 @@
     "type": "card",
     "cardType": "C 09",
     "staged": false,
-    "z": 42499,
+    "z": 42610,
     "parent": "v48a"
   },
   "fate_T_C": {
@@ -187,7 +187,7 @@
     "type": "card",
     "cardType": "C 10",
     "staged": false,
-    "z": 42509,
+    "z": 42577,
     "parent": "v48a"
   },
   "fate_J_C": {
@@ -197,7 +197,7 @@
     "cardType": "C 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 42483,
+    "z": 42585,
     "parent": "v48a"
   },
   "fate_Q_C": {
@@ -206,7 +206,7 @@
     "type": "card",
     "cardType": "C 3Q",
     "staged": false,
-    "z": 42517,
+    "z": 42609,
     "parent": "v48a"
   },
   "fate_K_C": {
@@ -215,7 +215,7 @@
     "type": "card",
     "cardType": "C 4K",
     "staged": false,
-    "z": 42524,
+    "z": 42621,
     "parent": "v48a"
   },
   "fate_A_D": {
@@ -224,7 +224,7 @@
     "type": "card",
     "cardType": "D 01",
     "staged": false,
-    "z": 42512,
+    "z": 42599,
     "parent": "v48a"
   },
   "fate_2_D": {
@@ -234,7 +234,7 @@
     "cardType": "D 02",
     "staged": false,
     "parent": "v48a",
-    "z": 42492
+    "z": 42598
   },
   "fate_3_D": {
     "id": "fate_3_D",
@@ -243,7 +243,7 @@
     "cardType": "D 03",
     "staged": false,
     "parent": "v48a",
-    "z": 42503
+    "z": 42579
   },
   "fate_4_D": {
     "id": "fate_4_D",
@@ -252,7 +252,7 @@
     "cardType": "D 04",
     "staged": false,
     "parent": "v48a",
-    "z": 42481
+    "z": 42592
   },
   "fate_5_D": {
     "id": "fate_5_D",
@@ -260,7 +260,7 @@
     "type": "card",
     "cardType": "D 05",
     "staged": false,
-    "z": 42498,
+    "z": 42600,
     "parent": "v48a"
   },
   "fate_6_D": {
@@ -269,7 +269,7 @@
     "type": "card",
     "cardType": "D 06",
     "staged": false,
-    "z": 42502,
+    "z": 42620,
     "parent": "v48a"
   },
   "fate_7_D": {
@@ -278,7 +278,7 @@
     "type": "card",
     "cardType": "D 07",
     "staged": false,
-    "z": 42514,
+    "z": 42589,
     "parent": "v48a"
   },
   "fate_8_D": {
@@ -287,7 +287,7 @@
     "type": "card",
     "cardType": "D 08",
     "staged": false,
-    "z": 42508,
+    "z": 42594,
     "parent": "v48a"
   },
   "fate_9_D": {
@@ -296,7 +296,7 @@
     "type": "card",
     "cardType": "D 09",
     "staged": false,
-    "z": 42478,
+    "z": 42616,
     "parent": "v48a"
   },
   "fate_T_D": {
@@ -305,7 +305,7 @@
     "type": "card",
     "cardType": "D 10",
     "staged": false,
-    "z": 42494,
+    "z": 42588,
     "parent": "v48a"
   },
   "fate_J_D": {
@@ -315,7 +315,7 @@
     "cardType": "D 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 42522,
+    "z": 42593,
     "parent": "v48a"
   },
   "fate_Q_D": {
@@ -324,7 +324,7 @@
     "type": "card",
     "cardType": "D 3Q",
     "staged": false,
-    "z": 42487,
+    "z": 42626,
     "parent": "v48a"
   },
   "fate_K_D": {
@@ -333,7 +333,7 @@
     "type": "card",
     "cardType": "D 4K",
     "staged": false,
-    "z": 42488,
+    "z": 42607,
     "parent": "v48a"
   },
   "fate_A_H": {
@@ -342,7 +342,7 @@
     "type": "card",
     "cardType": "H 01",
     "staged": false,
-    "z": 42490,
+    "z": 42603,
     "parent": "v48a"
   },
   "fate_2_H": {
@@ -351,7 +351,7 @@
     "type": "card",
     "cardType": "H 02",
     "staged": false,
-    "z": 42505,
+    "z": 42591,
     "parent": "v48a"
   },
   "fate_3_H": {
@@ -361,7 +361,7 @@
     "cardType": "H 03",
     "staged": false,
     "parent": "v48a",
-    "z": 42479
+    "z": 42625
   },
   "fate_4_H": {
     "id": "fate_4_H",
@@ -370,7 +370,7 @@
     "cardType": "H 04",
     "staged": false,
     "parent": "v48a",
-    "z": 42491
+    "z": 42586
   },
   "fate_5_H": {
     "id": "fate_5_H",
@@ -379,7 +379,7 @@
     "cardType": "H 05",
     "staged": false,
     "parent": "v48a",
-    "z": 42495
+    "z": 42627
   },
   "fate_6_H": {
     "id": "fate_6_H",
@@ -387,7 +387,7 @@
     "type": "card",
     "cardType": "H 06",
     "staged": false,
-    "z": 42476,
+    "z": 42622,
     "parent": "v48a"
   },
   "fate_7_H": {
@@ -396,7 +396,7 @@
     "type": "card",
     "cardType": "H 07",
     "staged": false,
-    "z": 42516,
+    "z": 42581,
     "parent": "v48a"
   },
   "fate_8_H": {
@@ -405,7 +405,7 @@
     "type": "card",
     "cardType": "H 08",
     "staged": false,
-    "z": 42497,
+    "z": 42624,
     "parent": "v48a"
   },
   "fate_9_H": {
@@ -414,7 +414,7 @@
     "type": "card",
     "cardType": "H 09",
     "staged": false,
-    "z": 42507,
+    "z": 42583,
     "parent": "v48a"
   },
   "fate_T_H": {
@@ -423,7 +423,7 @@
     "type": "card",
     "cardType": "H 10",
     "staged": false,
-    "z": 42482,
+    "z": 42608,
     "parent": "v48a"
   },
   "fate_J_H": {
@@ -433,7 +433,7 @@
     "cardType": "H 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 42515,
+    "z": 42595,
     "parent": "v48a"
   },
   "fate_Q_H": {
@@ -442,7 +442,7 @@
     "type": "card",
     "cardType": "H 3Q",
     "staged": false,
-    "z": 42506,
+    "z": 42615,
     "parent": "v48a"
   },
   "fate_K_H": {
@@ -451,7 +451,7 @@
     "type": "card",
     "cardType": "H 4K",
     "staged": false,
-    "z": 42486,
+    "z": 42605,
     "parent": "v48a"
   },
   "fate_A_S": {
@@ -460,7 +460,7 @@
     "type": "card",
     "cardType": "S 01",
     "staged": false,
-    "z": 42500,
+    "z": 42606,
     "parent": "v48a"
   },
   "fate_2_S": {
@@ -470,7 +470,7 @@
     "cardType": "S 02",
     "staged": false,
     "parent": "v48a",
-    "z": 42504
+    "z": 42612
   },
   "fate_3_S": {
     "id": "fate_3_S",
@@ -479,7 +479,7 @@
     "cardType": "S 03",
     "staged": false,
     "parent": "v48a",
-    "z": 42511
+    "z": 42628
   },
   "fate_4_S": {
     "id": "fate_4_S",
@@ -488,7 +488,7 @@
     "cardType": "S 04",
     "staged": false,
     "parent": "v48a",
-    "z": 42519
+    "z": 42582
   },
   "fate_5_S": {
     "id": "fate_5_S",
@@ -497,7 +497,7 @@
     "cardType": "S 05",
     "staged": false,
     "parent": "v48a",
-    "z": 42474
+    "z": 42601
   },
   "fate_6_S": {
     "id": "fate_6_S",
@@ -506,7 +506,7 @@
     "cardType": "S 06",
     "staged": false,
     "parent": "v48a",
-    "z": 42493
+    "z": 42614
   },
   "fate_7_S": {
     "id": "fate_7_S",
@@ -514,7 +514,7 @@
     "type": "card",
     "cardType": "S 07",
     "staged": false,
-    "z": 42518,
+    "z": 42613,
     "parent": "v48a"
   },
   "fate_8_S": {
@@ -523,7 +523,7 @@
     "type": "card",
     "cardType": "S 08",
     "staged": false,
-    "z": 42496,
+    "z": 42597,
     "parent": "v48a"
   },
   "fate_9_S": {
@@ -532,7 +532,7 @@
     "type": "card",
     "cardType": "S 09",
     "staged": false,
-    "z": 42513,
+    "z": 42580,
     "parent": "v48a"
   },
   "fate_T_S": {
@@ -541,7 +541,7 @@
     "type": "card",
     "cardType": "S 10",
     "staged": false,
-    "z": 42521,
+    "z": 42623,
     "parent": "v48a"
   },
   "fate_J_S": {
@@ -551,7 +551,7 @@
     "cardType": "S 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 42510,
+    "z": 42618,
     "parent": "v48a"
   },
   "fate_Q_S": {
@@ -560,7 +560,7 @@
     "type": "card",
     "cardType": "S 3Q",
     "staged": false,
-    "z": 42523,
+    "z": 42587,
     "parent": "v48a"
   },
   "fate_K_S": {
@@ -569,7 +569,7 @@
     "type": "card",
     "cardType": "S 4K",
     "staged": false,
-    "z": 42480,
+    "z": 42619,
     "parent": "v48a"
   },
   "deckHolder": {
@@ -15561,7 +15561,7 @@
         "operand1": "${trump}",
         "operand2": 4,
         "thenRoutine": [
-          "var offJack = 1"
+          "var offJack = 2"
         ]
       },
       {
@@ -20814,7 +20814,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1712412928084,
+      "lastUpdate": 1712957412795,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Secret Agent, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv1.4",
