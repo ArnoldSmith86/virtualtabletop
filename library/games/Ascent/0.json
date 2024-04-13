@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.</div><div><br></div><div>The rolling dice and stop sign icons are by Delapouite and are availabe under CC BY 3.0 from https://game-icons.net/.</div><br><div>The mountain background and library image were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"watercolor painting, symmetrical rocky mountain snow covered peak.\" The underwater image used the following prompt: \"colorful symmetrical underwate scene from surface to bottom 50 feet below, boat, marine life, coral reef.\"<br></div>",
-      "lastUpdate": 1713022637751,
+      "lastUpdate": 1713027750477,
       "showName": true,
       "skill": "",
       "description": "Roll the dice to push your luck to see how far you can climb in a turn. But you risk everything gained that turn if the dice do not go your way. First to reach the top of the designated number of columns wins.",
@@ -186,6 +186,31 @@
           {
             "func": "CALL",
             "routine": "topLevelRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "climber"
+          },
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "pid",
+            "variable": "playerID"
+          },
+          {
+            "func": "IF",
+            "condition": "${climber}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "child",
+                "property": "topLevel",
+                "value": null
+              }
+            ]
           }
         ]
       }
@@ -438,6 +463,29 @@
       }
     ],
     "topLevelRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "climber"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "pid",
+        "variable": "playerID"
+      },
+      {
+        "func": "IF",
+        "condition": "${climber}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "topLevel",
+            "value": true
+          }
+        ]
+      },
       {
         "func": "GET",
         "collection": "child",
@@ -2387,6 +2435,12 @@
         "property": "currentLevel",
         "value": null
       },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "topLevel",
+        "value": null
+      },
       "// This fixes a problem I was too lazy to figure out where sometimes markers get sent to the climber holder. I think it is fixed, but leaving this here just to be sure.",
       {
         "func": "GET",
@@ -2837,6 +2891,56 @@
           {
             "func": "FOREACH",
             "in": "${PROPERTY closedArray OF boardBase}",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "options",
+                "property": "text",
+                "value": "${value}"
+              },
+              {
+                "func": "SET",
+                "property": "text",
+                "value": 0
+              },
+              {
+                "func": "SET",
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          },
+          "// If a column has a climber in the top level, hide sums for that level",
+          {
+            "func": "SELECT",
+            "property": "climber",
+            "value": true,
+            "collection": "climbers"
+          },
+          {
+            "func": "SELECT",
+            "source": "climbers",
+            "property": "pid",
+            "value": "${PROPERTY pid}",
+            "collection": "climbers"
+          },
+          {
+            "func": "SELECT",
+            "source": "climbers",
+            "property": "topLevel",
+            "value": true,
+            "collection": "climbers"
+          },
+          {
+            "func": "GET",
+            "collection": "climbers",
+            "aggregation": "array",
+            "property": "currentColumn",
+            "variable": "topClimber"
+          },
+          {
+            "func": "FOREACH",
+            "in": "${topClimber}",
             "loopRoutine": [
               {
                 "func": "SELECT",
@@ -4071,7 +4175,7 @@
     "shape3d": true,
     "parent": "diceHolder1",
     "rollCount": 1,
-    "activeFace": 3
+    "activeFace": 2
   },
   "dice4": {
     "type": "dice",
@@ -4092,7 +4196,7 @@
     "x": 121,
     "y": 0,
     "z": 3,
-    "activeFace": 0,
+    "activeFace": 4,
     "inheritFrom": {
       "dice1": "*"
     },
@@ -4105,7 +4209,7 @@
     "x": 58,
     "y": 0,
     "z": 2,
-    "activeFace": 3,
+    "activeFace": 2,
     "inheritFrom": {
       "dice1": "*"
     },
@@ -4275,7 +4379,7 @@
     "type": "dice",
     "id": "dice5",
     "parent": "diceHolder2",
-    "activeFace": 0,
+    "activeFace": 3,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4287,7 +4391,7 @@
     },
     "type": "dice",
     "id": "dice6",
-    "activeFace": 4,
+    "activeFace": 0,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder2",
@@ -4316,7 +4420,7 @@
     "type": "dice",
     "id": "dice8",
     "parent": "diceHolder2",
-    "activeFace": 4,
+    "activeFace": 5,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4482,7 +4586,7 @@
     "type": "dice",
     "id": "dice9",
     "parent": "diceHolder3",
-    "activeFace": 4,
+    "activeFace": 0,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4508,7 +4612,7 @@
     },
     "type": "dice",
     "id": "dice11",
-    "activeFace": 0,
+    "activeFace": 2,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -4523,7 +4627,7 @@
     "type": "dice",
     "id": "dice12",
     "parent": "diceHolder3",
-    "activeFace": 3,
+    "activeFace": 4,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -4690,7 +4794,7 @@
     "type": "dice",
     "id": "dice13",
     "parent": "diceHolder4",
-    "activeFace": 3,
+    "activeFace": 2,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4716,7 +4820,7 @@
     },
     "type": "dice",
     "id": "dice15",
-    "activeFace": 1,
+    "activeFace": 0,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -4897,7 +5001,7 @@
     "type": "dice",
     "id": "dice17",
     "parent": "diceHolder5",
-    "activeFace": 2,
+    "activeFace": 4,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -4909,7 +5013,7 @@
     },
     "type": "dice",
     "id": "dice18",
-    "activeFace": 0,
+    "activeFace": 3,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder5",
@@ -4923,7 +5027,7 @@
     },
     "type": "dice",
     "id": "dice19",
-    "activeFace": 0,
+    "activeFace": 5,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -4938,7 +5042,7 @@
     "type": "dice",
     "id": "dice20",
     "parent": "diceHolder5",
-    "activeFace": 2,
+    "activeFace": 3,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -5104,7 +5208,7 @@
     "type": "dice",
     "id": "dice21",
     "parent": "diceHolder6",
-    "activeFace": 2,
+    "activeFace": 0,
     "rollCount": 1,
     "x": -5,
     "y": 0,
@@ -5116,7 +5220,7 @@
     },
     "type": "dice",
     "id": "dice22",
-    "activeFace": 3,
+    "activeFace": 4,
     "rollCount": 1,
     "z": 2,
     "hoverParent": "diceHolder6",
@@ -5130,7 +5234,7 @@
     },
     "type": "dice",
     "id": "dice23",
-    "activeFace": 3,
+    "activeFace": 2,
     "rollCount": 1,
     "x": 121,
     "y": 0,
@@ -5145,7 +5249,7 @@
     "type": "dice",
     "id": "dice24",
     "parent": "diceHolder6",
-    "activeFace": 2,
+    "activeFace": 4,
     "rollCount": 1,
     "x": 184,
     "y": 0,
@@ -5228,7 +5332,7 @@
     "inheritFrom": {
       "option11": "*"
     },
-    "text": 7,
+    "text": 9,
     "bgColor": "white",
     "borderColor": "solid #000000",
     "pair": "option11"
@@ -5254,7 +5358,7 @@
         "align-items": "center"
       }
     },
-    "text": 5,
+    "text": 3,
     "bgColor": "white",
     "borderColor": "solid #000000",
     "optionButton": true,
@@ -5528,9 +5632,9 @@
     "inheritFrom": {
       "option11": "*"
     },
-    "text": 4,
+    "text": 6,
     "bgColor": "white",
-    "borderColor": "dashed #bf360c",
+    "borderColor": "solid #000000",
     "pair": "option14"
   },
   "option14": {
@@ -5540,7 +5644,7 @@
     "inheritFrom": {
       "option11": "*"
     },
-    "text": 8,
+    "text": 6,
     "bgColor": "white",
     "borderColor": "solid #000000",
     "pair": "option13"
@@ -5552,9 +5656,9 @@
     "inheritFrom": {
       "option11": "*"
     },
-    "text": 0,
+    "text": 5,
     "bgColor": "white",
-    "borderColor": "solid #000000",
+    "borderColor": "dashed #1976d2",
     "pair": "option16"
   },
   "option16": {
@@ -6229,18 +6333,18 @@
     "parent": "diceHolder6",
     "text": 0
   },
-  "6gsu": {
+  "qx62": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8385,
+    "z": 8489,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
     },
     "marker": true,
     "color": "#ffc107",
-    "clonedFrom": "1393",
+    "clonedFrom": "6nnu",
     "activeFace": 1,
     "pid": 2,
     "bgColor1": "#bf360c",
@@ -6250,14 +6354,14 @@
     "bgColor": "#dddddd",
     "classes": "transition",
     "movable": false,
-    "id": "6gsu",
+    "id": "qx62",
     "parent": "markerHolder2"
   },
-  "y9be": {
+  "jj2m": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8387,
+    "z": 8491,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
@@ -6265,28 +6369,28 @@
     "marker": true,
     "bgColor": "#dddddd",
     "color": "#ffc107",
-    "clonedFrom": "fj86",
+    "clonedFrom": "m57a",
     "activeFace": 1,
     "pid": 3,
     "bgColor1": "#bf360c",
     "bgColor2": "#e55c32",
     "classes": "transition",
     "movable": false,
-    "id": "y9be",
+    "id": "jj2m",
     "parent": "markerHolder3"
   },
-  "r8s1": {
+  "lkak": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8389,
+    "z": 8493,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
     },
     "marker": true,
     "color": "#ffc107",
-    "clonedFrom": "jn5y",
+    "clonedFrom": "prqr",
     "activeFace": 1,
     "pid": 5,
     "bgColor1": "#bf360c",
@@ -6294,21 +6398,21 @@
     "bgColor": "#dddddd",
     "classes": "transition",
     "movable": false,
-    "id": "r8s1",
+    "id": "lkak",
     "parent": "markerHolder5"
   },
-  "rq5h": {
+  "jmui": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8391,
+    "z": 8495,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
     },
     "marker": true,
     "color": "#ffc107",
-    "clonedFrom": "2zvf",
+    "clonedFrom": "axc6",
     "activeFace": 1,
     "pid": 6,
     "bgColor1": "#bf360c",
@@ -6318,14 +6422,14 @@
     "bgColor": "#dddddd",
     "classes": "transition",
     "movable": false,
-    "id": "rq5h",
+    "id": "jmui",
     "parent": "markerHolder6"
   },
-  "t5jw": {
+  "6a61": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8393,
+    "z": 8497,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
@@ -6333,21 +6437,21 @@
     "marker": true,
     "bgColor": "#dddddd",
     "color": "#ffc107",
-    "clonedFrom": "aw7b",
+    "clonedFrom": "cwgq",
     "activeFace": 1,
     "pid": 4,
     "bgColor1": "#bf360c",
     "bgColor2": "#e55c32",
     "classes": "transition",
     "movable": false,
-    "id": "t5jw",
+    "id": "6a61",
     "parent": "markerHolder4"
   },
-  "l5no": {
+  "6x5y": {
     "width": 35,
     "height": 35,
     "borderRadius": 100,
-    "z": 8395,
+    "z": 8499,
     "css": {
       "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
@@ -6355,14 +6459,16 @@
     "marker": true,
     "bgColor": "#dddddd",
     "color": "#ffc107",
-    "clonedFrom": "5dki",
+    "clonedFrom": "idq5",
     "activeFace": 1,
     "pid": 1,
     "bgColor1": "#bf360c",
     "bgColor2": "#e55c32",
     "classes": "transition",
+    "dragging": "Mike",
+    "hoverParent": "markerHolder1",
     "movable": false,
-    "id": "l5no",
+    "id": "6x5y",
     "parent": "markerHolder1"
   }
 }
