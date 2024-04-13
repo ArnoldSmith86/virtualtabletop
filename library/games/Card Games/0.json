@@ -106,7 +106,7 @@
     "type": "card",
     "cardType": "C 01",
     "staged": false,
-    "z": 47501,
+    "z": 47613,
     "parent": "qjm4"
   },
   "fate_2_C": {
@@ -115,7 +115,7 @@
     "type": "card",
     "cardType": "C 02",
     "staged": false,
-    "z": 47544,
+    "z": 47648,
     "parent": "qjm4"
   },
   "fate_3_C": {
@@ -124,7 +124,7 @@
     "type": "card",
     "cardType": "C 03",
     "staged": false,
-    "z": 47530,
+    "z": 47616,
     "parent": "qjm4"
   },
   "fate_4_C": {
@@ -133,7 +133,7 @@
     "type": "card",
     "cardType": "C 04",
     "staged": false,
-    "z": 47520,
+    "z": 47617,
     "parent": "qjm4"
   },
   "fate_5_C": {
@@ -142,7 +142,7 @@
     "type": "card",
     "cardType": "C 05",
     "staged": false,
-    "z": 47541,
+    "z": 47610,
     "parent": "qjm4"
   },
   "fate_6_C": {
@@ -151,7 +151,7 @@
     "type": "card",
     "cardType": "C 06",
     "staged": false,
-    "z": 47547,
+    "z": 47607,
     "parent": "qjm4"
   },
   "fate_7_C": {
@@ -160,7 +160,7 @@
     "type": "card",
     "cardType": "C 07",
     "staged": false,
-    "z": 47533,
+    "z": 47603,
     "parent": "qjm4"
   },
   "fate_8_C": {
@@ -169,7 +169,7 @@
     "type": "card",
     "cardType": "C 08",
     "staged": false,
-    "z": 47536,
+    "z": 47644,
     "parent": "qjm4"
   },
   "fate_9_C": {
@@ -178,7 +178,7 @@
     "type": "card",
     "cardType": "C 09",
     "staged": false,
-    "z": 47503,
+    "z": 47652,
     "parent": "qjm4"
   },
   "fate_T_C": {
@@ -187,7 +187,7 @@
     "type": "card",
     "cardType": "C 10",
     "staged": false,
-    "z": 47523,
+    "z": 47621,
     "parent": "qjm4"
   },
   "fate_J_C": {
@@ -197,7 +197,7 @@
     "cardType": "C 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 47524,
+    "z": 47611,
     "parent": "qjm4"
   },
   "fate_Q_C": {
@@ -206,7 +206,7 @@
     "type": "card",
     "cardType": "C 3Q",
     "staged": false,
-    "z": 47531,
+    "z": 47608,
     "parent": "qjm4"
   },
   "fate_K_C": {
@@ -215,7 +215,7 @@
     "type": "card",
     "cardType": "C 4K",
     "staged": false,
-    "z": 47538,
+    "z": 47649,
     "parent": "qjm4"
   },
   "fate_A_D": {
@@ -224,7 +224,7 @@
     "type": "card",
     "cardType": "D 01",
     "staged": false,
-    "z": 47537,
+    "z": 47646,
     "parent": "qjm4"
   },
   "fate_2_D": {
@@ -233,7 +233,7 @@
     "type": "card",
     "cardType": "D 02",
     "staged": false,
-    "z": 47504,
+    "z": 47602,
     "parent": "qjm4"
   },
   "fate_3_D": {
@@ -242,7 +242,7 @@
     "type": "card",
     "cardType": "D 03",
     "staged": false,
-    "z": 47532,
+    "z": 47639,
     "parent": "qjm4"
   },
   "fate_4_D": {
@@ -251,7 +251,7 @@
     "type": "card",
     "cardType": "D 04",
     "staged": false,
-    "z": 47543,
+    "z": 47604,
     "parent": "qjm4"
   },
   "fate_5_D": {
@@ -260,7 +260,7 @@
     "type": "card",
     "cardType": "D 05",
     "staged": false,
-    "z": 47509,
+    "z": 47651,
     "parent": "qjm4"
   },
   "fate_6_D": {
@@ -269,7 +269,7 @@
     "type": "card",
     "cardType": "D 06",
     "staged": false,
-    "z": 47534,
+    "z": 47627,
     "parent": "qjm4"
   },
   "fate_7_D": {
@@ -278,7 +278,7 @@
     "type": "card",
     "cardType": "D 07",
     "staged": false,
-    "z": 47502,
+    "z": 47625,
     "parent": "qjm4"
   },
   "fate_8_D": {
@@ -287,7 +287,7 @@
     "type": "card",
     "cardType": "D 08",
     "staged": false,
-    "z": 47517,
+    "z": 47629,
     "parent": "qjm4"
   },
   "fate_9_D": {
@@ -296,7 +296,7 @@
     "type": "card",
     "cardType": "D 09",
     "staged": false,
-    "z": 47545,
+    "z": 47618,
     "parent": "qjm4"
   },
   "fate_T_D": {
@@ -305,7 +305,7 @@
     "type": "card",
     "cardType": "D 10",
     "staged": false,
-    "z": 47514,
+    "z": 47634,
     "parent": "qjm4"
   },
   "fate_J_D": {
@@ -315,7 +315,7 @@
     "cardType": "D 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 47522,
+    "z": 47647,
     "parent": "qjm4"
   },
   "fate_Q_D": {
@@ -324,7 +324,7 @@
     "type": "card",
     "cardType": "D 3Q",
     "staged": false,
-    "z": 47499,
+    "z": 47622,
     "parent": "qjm4"
   },
   "fate_K_D": {
@@ -333,7 +333,7 @@
     "type": "card",
     "cardType": "D 4K",
     "staged": false,
-    "z": 47516,
+    "z": 47605,
     "parent": "qjm4"
   },
   "fate_A_H": {
@@ -342,7 +342,7 @@
     "type": "card",
     "cardType": "H 01",
     "staged": false,
-    "z": 47548,
+    "z": 47630,
     "parent": "qjm4"
   },
   "fate_2_H": {
@@ -351,7 +351,7 @@
     "type": "card",
     "cardType": "H 02",
     "staged": false,
-    "z": 47529,
+    "z": 47632,
     "parent": "qjm4"
   },
   "fate_3_H": {
@@ -360,7 +360,7 @@
     "type": "card",
     "cardType": "H 03",
     "staged": false,
-    "z": 47519,
+    "z": 47606,
     "parent": "qjm4"
   },
   "fate_4_H": {
@@ -370,7 +370,7 @@
     "cardType": "H 04",
     "staged": false,
     "parent": "qjm4",
-    "z": 47542
+    "z": 47626
   },
   "fate_5_H": {
     "id": "fate_5_H",
@@ -379,7 +379,7 @@
     "cardType": "H 05",
     "staged": false,
     "parent": "qjm4",
-    "z": 47515
+    "z": 47641
   },
   "fate_6_H": {
     "id": "fate_6_H",
@@ -387,7 +387,7 @@
     "type": "card",
     "cardType": "H 06",
     "staged": false,
-    "z": 47535,
+    "z": 47620,
     "parent": "qjm4"
   },
   "fate_7_H": {
@@ -396,7 +396,7 @@
     "type": "card",
     "cardType": "H 07",
     "staged": false,
-    "z": 47527,
+    "z": 47612,
     "parent": "qjm4"
   },
   "fate_8_H": {
@@ -405,7 +405,7 @@
     "type": "card",
     "cardType": "H 08",
     "staged": false,
-    "z": 47521,
+    "z": 47645,
     "parent": "qjm4"
   },
   "fate_9_H": {
@@ -414,7 +414,7 @@
     "type": "card",
     "cardType": "H 09",
     "staged": false,
-    "z": 47525,
+    "z": 47615,
     "parent": "qjm4"
   },
   "fate_T_H": {
@@ -423,7 +423,7 @@
     "type": "card",
     "cardType": "H 10",
     "staged": false,
-    "z": 47507,
+    "z": 47635,
     "parent": "qjm4"
   },
   "fate_J_H": {
@@ -433,7 +433,7 @@
     "cardType": "H 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 47506,
+    "z": 47601,
     "parent": "qjm4"
   },
   "fate_Q_H": {
@@ -442,7 +442,7 @@
     "type": "card",
     "cardType": "H 3Q",
     "staged": false,
-    "z": 47497,
+    "z": 47650,
     "parent": "qjm4"
   },
   "fate_K_H": {
@@ -451,7 +451,7 @@
     "type": "card",
     "cardType": "H 4K",
     "staged": false,
-    "z": 47512,
+    "z": 47633,
     "parent": "qjm4"
   },
   "fate_A_S": {
@@ -460,7 +460,7 @@
     "type": "card",
     "cardType": "S 01",
     "staged": false,
-    "z": 47528,
+    "z": 47619,
     "parent": "qjm4"
   },
   "fate_2_S": {
@@ -469,7 +469,7 @@
     "type": "card",
     "cardType": "S 02",
     "staged": false,
-    "z": 47526,
+    "z": 47624,
     "parent": "qjm4"
   },
   "fate_3_S": {
@@ -478,7 +478,7 @@
     "type": "card",
     "cardType": "S 03",
     "staged": false,
-    "z": 47505,
+    "z": 47631,
     "parent": "qjm4"
   },
   "fate_4_S": {
@@ -488,7 +488,7 @@
     "cardType": "S 04",
     "staged": false,
     "parent": "qjm4",
-    "z": 47508
+    "z": 47623
   },
   "fate_5_S": {
     "id": "fate_5_S",
@@ -497,7 +497,7 @@
     "cardType": "S 05",
     "staged": false,
     "parent": "qjm4",
-    "z": 47539
+    "z": 47637
   },
   "fate_6_S": {
     "id": "fate_6_S",
@@ -506,7 +506,7 @@
     "cardType": "S 06",
     "staged": false,
     "parent": "qjm4",
-    "z": 47513
+    "z": 47614
   },
   "fate_7_S": {
     "id": "fate_7_S",
@@ -514,7 +514,7 @@
     "type": "card",
     "cardType": "S 07",
     "staged": false,
-    "z": 47546,
+    "z": 47642,
     "parent": "qjm4"
   },
   "fate_8_S": {
@@ -523,7 +523,7 @@
     "type": "card",
     "cardType": "S 08",
     "staged": false,
-    "z": 47510,
+    "z": 47636,
     "parent": "qjm4"
   },
   "fate_9_S": {
@@ -532,7 +532,7 @@
     "type": "card",
     "cardType": "S 09",
     "staged": false,
-    "z": 47511,
+    "z": 47628,
     "parent": "qjm4"
   },
   "fate_T_S": {
@@ -541,7 +541,7 @@
     "type": "card",
     "cardType": "S 10",
     "staged": false,
-    "z": 47540,
+    "z": 47640,
     "parent": "qjm4"
   },
   "fate_J_S": {
@@ -551,7 +551,7 @@
     "cardType": "S 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 47518,
+    "z": 47609,
     "parent": "qjm4"
   },
   "fate_Q_S": {
@@ -560,7 +560,7 @@
     "type": "card",
     "cardType": "S 3Q",
     "staged": false,
-    "z": 47498,
+    "z": 47638,
     "parent": "qjm4"
   },
   "fate_K_S": {
@@ -569,7 +569,7 @@
     "type": "card",
     "cardType": "S 4K",
     "staged": false,
-    "z": 47500,
+    "z": 47643,
     "parent": "qjm4"
   },
   "deckHolder": {
@@ -3488,6 +3488,7 @@
         "sortCoincheTrump": 11,
         "sortTrucoMineiro": 7,
         "sortTrucoPaulista": 4,
+        "sortSchafkopf": 18,
         "sortSkat": 13,
         "sortSuitSkat": 1
       },
@@ -3609,6 +3610,7 @@
         "sortCoincheTrump": 6,
         "sortTrucoMineiro": 11,
         "sortTrucoPaulista": 8,
+        "sortSchafkopf": 13,
         "sortSkat": 6,
         "sortSuitSkat": 1,
         "sortBatardeTrump": 2
@@ -3634,6 +3636,7 @@
         "sortFelsosTrump": 7,
         "sortAceTen": 7,
         "sortCoincheTrump": 7,
+        "sortSchafkopf": 14,
         "sortSkat": 7,
         "sortSuitSkat": 1,
         "sortBatardeTrump": 7
@@ -3660,6 +3663,7 @@
         "sortFelsosTrump": 12,
         "sortAceTen": 8,
         "sortCoincheTrump": 12,
+        "sortSchafkopf": 15,
         "sortSkat": 8,
         "sortSuitSkat": 1,
         "sortBatardeTrump": 8
@@ -3688,6 +3692,7 @@
         "sortDoppel": 3,
         "sortAceTen": 12,
         "sortCoincheTrump": 10,
+        "sortSchafkopf": 17,
         "sortSkat": 12,
         "sortSuitSkat": 1,
         "sortBatardeTrump": 9
@@ -3709,6 +3714,7 @@
         "sortCoincheTrump": 13,
         "sortTrucoMineiro": 9,
         "sortTrucoPaulista": 6,
+        "sortSchafkopf": 28,
         "sortSkat": 17,
         "sortSuitSkat": 1,
         "sortBatardeTrump": 3
@@ -3730,6 +3736,7 @@
         "sortCoincheTrump": 8,
         "sortTrucoMineiro": 10,
         "sortTrucoPaulista": 7,
+        "sortSchafkopf": 32,
         "sortSkat": 10,
         "sortSuitSkat": 1,
         "sortBatardeTrump": 5
@@ -3751,6 +3758,7 @@
         "sortCoincheTrump": 9,
         "sortTrucoMineiro": 8,
         "sortTrucoPaulista": 5,
+        "sortSchafkopf": 16,
         "sortSkat": 11,
         "sortSuitSkat": 1,
         "sortBatardeTrump": 6
@@ -3773,6 +3781,7 @@
         "sortCoincheTrump": 11,
         "sortTrucoMineiro": 7,
         "sortTrucoPaulista": 4,
+        "sortSchafkopf": 12,
         "sortSkat": 13,
         "sortSuitSkat": 4
       },
@@ -3900,6 +3909,7 @@
         "sortCoincheTrump": 6,
         "sortTrucoMineiro": 4,
         "sortTrucoPaulista": 8,
+        "sortSchafkopf": 7,
         "sortSkat": 6,
         "sortSuitSkat": 4,
         "sortBatardeTrump": 2
@@ -3926,6 +3936,7 @@
         "sortFelsosTrump": 7,
         "sortAceTen": 7,
         "sortCoincheTrump": 7,
+        "sortSchafkopf": 8,
         "sortSkat": 7,
         "sortSuitSkat": 4,
         "sortBatardeTrump": 7
@@ -3954,6 +3965,7 @@
         "sortDoppel": 12,
         "sortAceTen": 8,
         "sortCoincheTrump": 12,
+        "sortSchafkopf": 9,
         "sortSkat": 8,
         "sortSuitSkat": 4,
         "sortBatardeTrump": 8
@@ -3983,6 +3995,7 @@
         "sortDoppel": 14,
         "sortAceTen": 12,
         "sortCoincheTrump": 10,
+        "sortSchafkopf": 11,
         "sortSkat": 12,
         "sortSuitSkat": 4,
         "sortBatardeTrump": 9
@@ -4005,6 +4018,7 @@
         "sortCoincheTrump": 13,
         "sortTrucoMineiro": 9,
         "sortTrucoPaulista": 6,
+        "sortSchafkopf": 25,
         "sortSkat": 14,
         "sortSuitSkat": 4,
         "sortBatardeTrump": 3
@@ -4027,6 +4041,7 @@
         "sortCoincheTrump": 8,
         "sortTrucoMineiro": 10,
         "sortTrucoPaulista": 7,
+        "sortSchafkopf": 29,
         "sortSkat": 10,
         "sortSuitSkat": 4,
         "sortBatardeTrump": 5
@@ -4049,6 +4064,7 @@
         "sortCoincheTrump": 9,
         "sortTrucoMineiro": 8,
         "sortTrucoPaulista": 5,
+        "sortSchafkopf": 10,
         "sortSkat": 11,
         "sortSuitSkat": 4,
         "sortBatardeTrump": 6
@@ -4088,7 +4104,8 @@
         "sortFelsosTrump": 1,
         "sortAceTen": 1,
         "sortTrucoMineiro": 6,
-        "sortTrucoPaulista": 3
+        "sortTrucoPaulista": 3,
+        "sortSchafkopf": 6
       },
       "S 03": {
         "rank": "3",
@@ -4191,6 +4208,7 @@
         "sortCoincheTrump": 6,
         "sortTrucoMineiro": 11,
         "sortTrucoPaulista": 8,
+        "sortSchafkopf": 1,
         "sortSkat": 6,
         "sortSuitSkat": 2,
         "sortBatardeTrump": 2
@@ -4216,6 +4234,7 @@
         "sortFelsosTrump": 7,
         "sortAceTen": 7,
         "sortCoincheTrump": 7,
+        "sortSchafkopf": 2,
         "sortSkat": 7,
         "sortSuitSkat": 2,
         "sortBatardeTrump": 7
@@ -4243,6 +4262,7 @@
         "sortDoppel": 8,
         "sortAceTen": 8,
         "sortCoincheTrump": 12,
+        "sortSchafkopf": 3,
         "sortSkat": 8,
         "sortSuitSkat": 2,
         "sortBatardeTrump": 8
@@ -4271,6 +4291,7 @@
         "sortDoppel": 10,
         "sortAceTen": 12,
         "sortCoincheTrump": 10,
+        "sortSchafkopf": 5,
         "sortSkat": 12,
         "sortSuitSkat": 2,
         "sortBatardeTrump": 9
@@ -4292,6 +4313,7 @@
         "sortCoincheTrump": 13,
         "sortTrucoMineiro": 9,
         "sortTrucoPaulista": 6,
+        "sortSchafkopf": 27,
         "sortSkat": 16,
         "sortSuitSkat": 2,
         "sortBatardeTrump": 3
@@ -4313,6 +4335,7 @@
         "sortCoincheTrump": 8,
         "sortTrucoMineiro": 10,
         "sortTrucoPaulista": 7,
+        "sortSchafkopf": 31,
         "sortSkat": 10,
         "sortSuitSkat": 2,
         "sortBatardeTrump": 5
@@ -4334,6 +4357,7 @@
         "sortCoincheTrump": 9,
         "sortTrucoMineiro": 8,
         "sortTrucoPaulista": 5,
+        "sortSchafkopf": 4,
         "sortSkat": 11,
         "sortSuitSkat": 2,
         "sortBatardeTrump": 6
@@ -4356,6 +4380,7 @@
         "sortCoincheTrump": 11,
         "sortTrucoMineiro": 7,
         "sortTrucoPaulista": 4,
+        "sortSchafkopf": 24,
         "sortSkat": 13,
         "sortSuitSkat": 3
       },
@@ -4483,6 +4508,7 @@
         "sortCoincheTrump": 6,
         "sortTrucoMineiro": 2,
         "sortTrucoPaulista": 8,
+        "sortSchafkopf": 19,
         "sortSkat": 6,
         "sortSuitSkat": 3,
         "sortBatardeTrump": 2
@@ -4509,6 +4535,7 @@
         "sortFelsosTrump": 7,
         "sortAceTen": 7,
         "sortCoincheTrump": 7,
+        "sortSchafkopf": 20,
         "sortSkat": 7,
         "sortSuitSkat": 3,
         "sortBatardeTrump": 7
@@ -4537,6 +4564,7 @@
         "sortDoppel": 5,
         "sortAceTen": 8,
         "sortCoincheTrump": 12,
+        "sortSchafkopf": 21,
         "sortSkat": 8,
         "sortSuitSkat": 3,
         "sortBatardeTrump": 8
@@ -4566,6 +4594,7 @@
         "sortDoppel": 24,
         "sortAceTen": 12,
         "sortCoincheTrump": 10,
+        "sortSchafkopf": 23,
         "sortSkat": 12,
         "sortSuitSkat": 3,
         "sortBatardeTrump": 9
@@ -4588,6 +4617,7 @@
         "sortCoincheTrump": 13,
         "sortTrucoMineiro": 9,
         "sortTrucoPaulista": 6,
+        "sortSchafkopf": 26,
         "sortSkat": 15,
         "sortSuitSkat": 3,
         "sortBatardeTrump": 3
@@ -4610,6 +4640,7 @@
         "sortCoincheTrump": 8,
         "sortTrucoMineiro": 10,
         "sortTrucoPaulista": 7,
+        "sortSchafkopf": 30,
         "sortSkat": 10,
         "sortSuitSkat": 3,
         "sortBatardeTrump": 5
@@ -4632,6 +4663,7 @@
         "sortCoincheTrump": 9,
         "sortTrucoMineiro": 8,
         "sortTrucoPaulista": 5,
+        "sortSchafkopf": 22,
         "sortSkat": 11,
         "sortSuitSkat": 3,
         "sortBatardeTrump": 6
@@ -20840,11 +20872,11 @@
       "year": "",
       "mode": "vs",
       "time": "5-60",
-      "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by: jade-alarm.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1713022307014,
+      "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by jade-alarm and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
+      "lastUpdate": 1713047055084,
       "showName": true,
       "skill": "",
-      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schieber Jass, Secret Agent, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv1.4",
+      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv1.4",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
@@ -38172,5 +38204,204 @@
     "height": 160,
     "owner": "Mike",
     "id": "v0ra"
+  },
+  "gameID39": {
+    "id": "gameID39",
+    "x": -710,
+    "y": 278,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Schafkopf (3p)",
+    "capturedArray": [
+      [],
+      [
+        "D 01"
+      ]
+    ],
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Bid using square white bid widget and Message button.\\a\\a During play, click on small red, black, and white letter icons to set teams once known. After certain numbers of tricks, text will appear near the trick indicator (below Recall & Shuffle button) showing at what point certain annoucements must be made. When an ace of diamonds is captured, it will be displayed face up in a mini-holder of the player making the capture. This is a reminder about the point for catching a fox, but does not actually indicate if the point has been won.\\a\\a After round is over, press Add Card Points button. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a When ready to enter final score on main scoreboard, press Transfer Score button.\"",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Geier (Queens)",
+        "text": "Geier (Queens)"
+      },
+      {
+        "value": "Wenz (Jacks)",
+        "text": "Wenz (Jacks)"
+      },
+      {
+        "value": "Solo (Queen,Jacks, Trump Suit)",
+        "text": "Solo (Queen,Jacks, Trump Suit)"
+      },
+      {
+        "value": "Hand (x2 / No Talon)",
+        "text": "Hand (x2 / No Talon)"
+      },
+      {
+        "value": "Tout (All tricks)",
+        "text": "Tout (All tricks)"
+      }
+    ],
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "capturedHolder",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        true
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        10
+      ],
+      [
+        "deckType",
+        1
+      ],
+      [
+        "hideCards",
+        6
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        true
+      ]
+    ],
+    "sort1": "sortSchafkopf",
+    "transferButtonReturn": false,
+    "transferExceptionsRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Transferring score ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY _totals OF tempScoreboard}",
+        "loopRoutine": [
+          "var seat = 'seat' + ${key}",
+          "var cardPoints = ${PROPERTY tempScore OF $seat}",
+          "var cardPoints = ${cardPoints.0}",
+          "var value = ${value} - ${cardPoints}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seat}",
+            "value": "${value}"
+          }
+        ]
+      }
+    ]
+  },
+  "playerAid39a": {
+    "id": "playerAid39a",
+    "parent": "playerAid39",
+    "fixedParent": true,
+    "x": 190,
+    "y": 169,
+    "width": 900,
+    "height": 720,
+    "borderRadius": 4,
+    "z": 36,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid blue"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "0px"
+      }
+    },
+    "html": "<h3>Suits</h3><p>Rank/points: A(11), 10(10), K(4), Q(3), J(2), 9, 8, 7<p>Trump suit:<br>- Solo :Q<font size=5 >&#9827;</font>, Q<font size=5 >&#9824;</font>, Q<font size=5 >&#9829;</font>, Q<font size=5 >&#9830;</font>, J<font size=5 >&#9827;</font>, J<font size=5 >&#9824;</font>, J<font size=5 >&#9829;</font>, J<font size=5 >&#9830;</font>, (any suit)A, 10, 9, 8, 7<br>- Geier: Q<font size=5 >&#9827;</font>, Q<font size=5 >&#9824;</font>, Q<font size=5 >&#9829;</font>, Q<font size=5 >&#9830;</font><br>- Wenz: J<font size=5 >&#9827;</font>, J<font size=5 >&#9824;</font>, J<font size=5 >&#9829;</font>, J<font size=5 >&#9830;</font><h3>Bidding</h3><p>The forehand begins bidding by saying : I would play. To outbid the person before you, you must offer to win with more points (in increments of 5).<p><strong>The bid winner has the option to exchange 2 cards from the blind before declaring the games he will play (the exchanged cards are not revealed to the others, and they count toward his tricks).</strong><p>If nobody bid, make a new deal. Next game will be worth 4 pts more.<h3>Contracts</h3><p>Partner games are not possible: only <strong>Geier, Wenz or Solo</strong> are possible (equally ranked).<p><p>Doubling:<br>- Hand (Without Exchange):  double the value of game (talon points go to the declarer).<br>- Tout: double the value of the game if win all tricks (lose if lose any trick) <p><strong>Forehand plays first</strong><h3>Scoring</h3><p>-if declarer wins <strong>more than [Bid value]pts</strong>, he receives 4pts from each loser. If declarer wins [Bid value]pts or less, he gives 4pts to each defender.<br>- Schneider (+1) if declarer scores more than 90pts / defenders score 90pts or more<br>- Schwarz (+1) if a side wins all tricks."
+  },
+  "playerAid39": {
+    "id": "playerAid39",
+    "x": 115,
+    "y": -126,
+    "width": 1,
+    "height": 1,
+    "layer": 14,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [
+      "seat1"
+    ],
+    "playerAid": true
   }
 }
