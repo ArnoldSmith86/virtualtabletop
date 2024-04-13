@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.</div><div><br></div><div>The rolling dice and stop sign icons are by Delapouite and are availabe under CC BY 3.0 from https://game-icons.net/.</div><br><div>The mountain background and library image were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"watercolor painting, symmetrical rocky mountain snow covered peak.\" The underwater image used the following prompt: \"colorful symmetrical underwate scene from surface to bottom 50 feet below, boat, marine life, coral reef.\"<br></div>",
-      "lastUpdate": 1711151545336,
+      "lastUpdate": 1713022637751,
       "showName": true,
       "skill": "",
       "description": "Roll the dice to push your luck to see how far you can climb in a turn. But you risk everything gained that turn if the dice do not go your way. First to reach the top of the designated number of columns wins.",
@@ -2205,8 +2205,14 @@
       "var markerContrast = ${PROPERTY mainColor} colorContrast 0.15",
       {
         "func": "SELECT",
-        "property": "parent",
-        "value": "climberHolder${PROPERTY index}"
+        "property": "climber",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "pid",
+        "value": "${PROPERTY index}"
       },
       {
         "func": "SET",
@@ -2220,8 +2226,14 @@
       },
       {
         "func": "SELECT",
-        "property": "parent",
-        "value": "markerHolder${PROPERTY index}"
+        "property": "marker",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "pid",
+        "value": "${PROPERTY index}"
       },
       {
         "func": "SET",
