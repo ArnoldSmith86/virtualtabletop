@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1713153896664,
+      "lastUpdate": 1713153950197,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -243,8 +243,8 @@
     "x": 666,
     "y": 483,
     "z": 9,
-    "text": "Cursors are modified",
-    "cursorMod": false,
+    "text": "Cursors are normal",
+    "cursorMod": true,
     "cursorModCSS": {
       "hack, #playerCursors": {
         "--cursorActiveOpacity": 1,
@@ -298,23 +298,6 @@
     ],
     "movable": false,
     "width": 150,
-    "height": 30,
-    "css": {
-      "hack, #playerCursors": {
-        "--cursorActiveOpacity": 1,
-        "--cursorActiveDuration": 9999
-      },
-      "hack, .cursor": {
-        "border": "9px solid var(--playerColor)"
-      },
-      "hack, .cursor::before": {
-        "content": "var(--playerName)",
-        "position": "absolute",
-        "top": "calc(var(--cursorSize) * -1px * var(--scale) - 15px)",
-        "left": "calc(var(--cursorSize) * -1px * var(--scale))",
-        "font-size": "10px",
-        "color": "var(--playerColor)"
-      }
-    }
+    "height": 30
   }
 }
