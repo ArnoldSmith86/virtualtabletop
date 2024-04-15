@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 15,
     "info": {
       "name": "CSS",
       "image": "/assets/-1069925580_4501",
@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1676865317862,
+      "lastUpdate": 1713152076398,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -22,7 +22,8 @@
       "variantImage": "",
       "variant": "Caution",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "similarDesigner": ""
     }
   },
   "8fr3": {
@@ -60,7 +61,7 @@
   },
   "bm6j": {
     "id": "bm6j",
-    "x": 808,
+    "x": 1153,
     "y": 700,
     "z": 9732,
     "width": 300,
@@ -172,7 +173,7 @@
         ]
       }
     ],
-    "x": 900,
+    "x": 1245,
     "y": 532,
     "z": 9794,
     "id": "wwid1",
@@ -193,5 +194,110 @@
       }
     },
     "text": "VTT Blue"
+  },
+  "ld5d": {
+    "type": "button",
+    "id": "ld5d",
+    "x": 700,
+    "y": 525,
+    "z": 1,
+    "text": "Change Cursor",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "cursorCSS"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY cursorMod OF cursorCSS}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "cursorMod",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "cursorMod",
+            "value": true
+          }
+        ]
+      }
+    ]
+  },
+  "bm5j": {
+    "text": "The button makes opposing player cursor indicators more visible, last longer, and adds the playerName using css. This works by alternately changing a property from true to false on the cursorCSS widget directly above the button. To get this effect in your room, copy the cursorCSS widget and the button code to your room.",
+    "id": "bm5j",
+    "x": 607,
+    "y": 700,
+    "z": 10659,
+    "width": 300,
+    "movable": false,
+    "css": "font-size: 20px; "
+  },
+  "cursorCSS": {
+    "id": "cursorCSS",
+    "x": 666,
+    "y": 483,
+    "z": 9,
+    "text": "Cursors are normal",
+    "cursorMod": true,
+    "cursorModCSS": {
+      "hack, #playerCursors": {
+        "--cursorActiveOpacity": 1,
+        "--cursorActiveDuration": 9999
+      },
+      "hack, .cursor": {
+        "border": "9px solid var(--playerColor)"
+      },
+      "hack, .cursor::before": {
+        "content": "attr(data-player)",
+        "position": "absolute",
+        "top": "calc(var(--cursorSize) * -1px * var(--scale) - 15px)",
+        "left": "calc(var(--cursorSize) * -1px * var(--scale))",
+        "font-size": "10px",
+        "color": "var(--playerColor)"
+      }
+    },
+    "cursorModChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY cursorMod}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Cursors are normal"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": "${PROPERTY cursorModCSS}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Cursors are modified"
+          }
+        ]
+      }
+    ],
+    "movable": false,
+    "width": 150,
+    "height": 30
   }
 }
