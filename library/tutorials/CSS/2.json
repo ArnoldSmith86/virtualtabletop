@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1713186351812,
+      "lastUpdate": 1713200182531,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -251,17 +251,15 @@
         "--cursorPressedOpacity": 1,
         "--cursorActiveDuration": 9999
       },
-      "hack, .cursor": {
-        "border": "9px solid var(--playerColor)"
-      },
       "hack, .cursor.pressed": {
-        "border": "9px solid var(--playerColor)"
+        "border": "4px solid var(--playerColor)"
       },
       "hack, .cursor::before": {
         "content": "var(--playerName)",
         "position": "relative",
-        "top": "-27px",
-        "left": "-8px",
+        "top": "-23px",
+        "left": "-4px",
+        "line-height": "2.7em",
         "font-size": "10px",
         "color": "var(--playerColor)"
       }
