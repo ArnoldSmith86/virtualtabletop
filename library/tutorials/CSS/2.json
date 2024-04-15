@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1713200182531,
+      "lastUpdate": 1713220565675,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -204,32 +204,148 @@
     "text": "Change Cursor",
     "clickRoutine": [
       {
-        "func": "SELECT",
-        "property": "id",
-        "value": "cursorCSS"
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Cursor settings"
+          },
+          {
+            "type": "select",
+            "label": "Choose cursor style for all players.",
+            "variable": "cursor_style",
+            "value": "${PROPERTY cursor_style}",
+            "options": [
+              {
+                "value": "default",
+                "text": "Translucent (VTT default)"
+              },
+              {
+                "text": "Solid - No Name",
+                "value": "solid_no_name"
+              },
+              {
+                "text": "Solid & Player Name (do not use spaces in name)",
+                "value": "solid_player_name"
+              },
+              {
+                "text": "Invisible",
+                "value": "invisible"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cursor_style",
+        "relation": "=",
+        "value": "${cursor_style}"
+      }
+    ],
+    "cursorCSS_default": {
+      "default": {}
+    },
+    "cursorCSS_invisible": {
+      "display": "none"
+    },
+    "cursorCSS_solid_1": {
+      "--cursorActiveOpacity": 1,
+      "--cursorPressedOpacity": 1,
+      "--cursorActiveDuration": 9999
+    },
+    "cursorCSS_solid_2": {
+      "border": "4px solid var(--playerColor)"
+    },
+    "cursorCSS_solid_player_name": {
+      "content": "attr(data-player)",
+      "position": "relative",
+      "top": "-5px",
+      "left": "19px",
+      "font-size": "15px",
+      "color": "var(--playerColor)"
+    },
+    "cursor_styleChangeRoutine": [
+      "// This code runs when a user makes a selection in the INPUT function that changes the cursor type. It builds the newCSS that will be added to the button to control the cursor display for all players in the room.",
+      "var newCSS = {}",
+      "// The cursorCSS_default contains the css that would customize this button's appearance. Because this is a default button, there is no css customization and the cursorCSS_default property is blank. But you can add anything you want to be included in every version of the css, including psuedo-selectors like :hover.",
+      "var newCSS = ${PROPERTY cursorCSS_default}",
+      "// The following properties are just arbitrarily numbered to distinguish them. They are the label for the css selector. In some cases escape codes are used, like \\u0023 because VTT does not recognize most symbols in routines. \\u0023 is for the # character and \\u003a is for the : character.",
+      "var newProp1 = 'cursorHack, \\u0023playerCursors'",
+      "var newProp2 = 'cursorHack, .cursor.pressed'",
+      "var newProp3 = 'cursorHack, .cursor\\u003a\\u003abefore'",
+      "var newProp4 = 'cursorHack, .cursor'",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY cursor_style}",
+        "operand2": "default",
+        "thenRoutine": [
+          "// This condition just adds the default css to the button.",
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "${newCSS}",
+            "collection": "thisButton"
+          }
+        ]
       },
       {
         "func": "IF",
-        "condition": "${PROPERTY cursorMod OF cursorCSS}",
+        "operand1": "${PROPERTY cursor_style}",
+        "operand2": "solid_no_name",
         "thenRoutine": [
+          "// This condition adds the default css, plus two new css selectors that make the cursor completely opaque and stay on the screen for 10 seconds. To adjust those parameters, look above for the properties cursorCSS_solid_1 and _2.",
+          "var newCSS.$newProp1 = ${PROPERTY cursorCSS_solid_1}",
+          "var newCSS.$newProp2 = ${PROPERTY cursorCSS_solid_2}",
           {
             "func": "SET",
-            "property": "cursorMod",
-            "value": false
+            "property": "css",
+            "value": "${newCSS}",
+            "collection": "thisButton"
           }
-        ],
-        "elseRoutine": [
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY cursor_style}",
+        "operand2": "solid_player_name",
+        "thenRoutine": [
+          "// This condition does what the previous condition did but also adds the playerName near to the cursor.",
+          "var newCSS.$newProp1 = ${PROPERTY cursorCSS_solid_1}",
+          "var newCSS.$newProp2 = ${PROPERTY cursorCSS_solid_2}",
+          "var newCSS.$newProp3 = ${PROPERTY cursorCSS_solid_player_name}",
           {
             "func": "SET",
-            "property": "cursorMod",
-            "value": true
+            "property": "css",
+            "value": "${newCSS}",
+            "collection": "thisButton"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY cursor_style}",
+        "operand2": "invisible",
+        "thenRoutine": [
+          "// This condition makes the cursor invisible. It is just like the button to the left, but included here in case you want to offer players more options on how the cursors appear in the room.",
+          "var newCSS.$newProp4 = ${PROPERTY cursorCSS_invisible}",
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "${newCSS}",
+            "collection": "thisButton"
           }
         ]
       }
-    ]
+    ],
+    "cursor_style": "default",
+    "css": {
+      "default": {}
+    }
   },
   "bm5j": {
-    "text": "The button makes opposing player cursor indicators more visible, last longer, and adds the playerName using css. This works by alternately changing a property from true to false on the cursorCSS widget directly above the button. To get this effect in your room, copy the cursorCSS widget and the button code to your room.",
+    "text": "The button creates an option to make opposing player cursor indicators more visible and add the playerName using css. This will not work if the button to left for cursor invisibility has turned the cursor off since there can only be one widget controlling the cursor's css",
     "id": "bm5j",
     "x": 607,
     "y": 700,
@@ -237,69 +353,5 @@
     "width": 300,
     "movable": false,
     "css": "font-size: 20px; "
-  },
-  "cursorCSS": {
-    "id": "cursorCSS",
-    "x": 666,
-    "y": 483,
-    "z": 9,
-    "text": "Cursors are normal",
-    "cursorMod": true,
-    "cursorModCSS": {
-      "hack, #playerCursors": {
-        "--cursorActiveOpacity": 1,
-        "--cursorPressedOpacity": 1,
-        "--cursorActiveDuration": 9999
-      },
-      "hack, .cursor.pressed": {
-        "border": "4px solid var(--playerColor)"
-      },
-      "hack, .cursor::before": {
-        "content": "var(--playerName)",
-        "position": "relative",
-        "top": "-23px",
-        "left": "-4px",
-        "line-height": "2.7em",
-        "font-size": "10px",
-        "color": "var(--playerColor)"
-      }
-    },
-    "cursorModChangeRoutine": [
-      {
-        "func": "IF",
-        "condition": "${PROPERTY cursorMod}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "css",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "Cursors are normal"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "css",
-            "value": "${PROPERTY cursorModCSS}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "Cursors are modified"
-          }
-        ]
-      }
-    ],
-    "movable": false,
-    "width": 150,
-    "height": 30
   }
 }
