@@ -254,11 +254,14 @@
       "hack, .cursor": {
         "border": "9px solid var(--playerColor)"
       },
+      "hack, .cursor.pressed": {
+        "border": "9px solid var(--playerColor)"
+      },
       "hack, .cursor::before": {
         "content": "var(--playerName)",
         "position": "absolute",
-        "top": "calc(var(--cursorSize) * -1px * var(--scale) - 15px)",
-        "left": "calc(var(--cursorSize) * -1px * var(--scale))",
+        "top": "-27px",
+        "left": "-8px",
         "font-size": "10px",
         "color": "var(--playerColor)"
       }
