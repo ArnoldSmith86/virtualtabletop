@@ -259,7 +259,7 @@
       },
       "hack, .cursor::before": {
         "content": "var(--playerName)",
-        "position": "absolute",
+        "position": "relative",
         "top": "-27px",
         "left": "-8px",
         "font-size": "10px",
