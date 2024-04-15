@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1713153950197,
+      "lastUpdate": 1713186351812,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -248,6 +248,7 @@
     "cursorModCSS": {
       "hack, #playerCursors": {
         "--cursorActiveOpacity": 1,
+        "--cursorPressedOpacity": 1,
         "--cursorActiveDuration": 9999
       },
       "hack, .cursor": {
