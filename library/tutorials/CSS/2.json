@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1713220565675,
+      "lastUpdate": 1713226306787,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -259,7 +259,7 @@
       "border": "4px solid var(--playerColor)"
     },
     "cursorCSS_solid_player_name": {
-      "content": "attr(data-player)",
+      "content": "var(--playerName)",
       "position": "relative",
       "top": "-5px",
       "left": "19px",
