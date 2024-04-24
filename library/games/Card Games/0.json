@@ -5,8 +5,8 @@
     "cardType": "19",
     "id": "4424",
     "staged": false,
-    "z": 69032,
-    "parent": "ol5n"
+    "z": 71299,
+    "parent": "pile2"
   },
   "7724": {
     "deck": "crowDeck",
@@ -15,7 +15,7 @@
     "id": "7724",
     "staged": false,
     "parent": "pile2",
-    "z": 66330
+    "z": 71093
   },
   "hand": {
     "type": "holder",
@@ -106,8 +106,8 @@
     "type": "card",
     "cardType": "C 01",
     "staged": false,
-    "z": 66117,
-    "parent": "pile2"
+    "z": 71548,
+    "parent": "8i5b"
   },
   "fate_2_C": {
     "id": "fate_2_C",
@@ -115,8 +115,8 @@
     "type": "card",
     "cardType": "C 02",
     "staged": false,
-    "z": 66119,
-    "parent": "pile2"
+    "z": 71539,
+    "parent": "8i5b"
   },
   "fate_3_C": {
     "id": "fate_3_C",
@@ -124,8 +124,8 @@
     "type": "card",
     "cardType": "C 03",
     "staged": false,
-    "z": 66121,
-    "parent": "pile2"
+    "z": 71572,
+    "parent": "8i5b"
   },
   "fate_4_C": {
     "id": "fate_4_C",
@@ -133,8 +133,8 @@
     "type": "card",
     "cardType": "C 04",
     "staged": false,
-    "z": 66123,
-    "parent": "pile2"
+    "z": 71551,
+    "parent": "8i5b"
   },
   "fate_5_C": {
     "id": "fate_5_C",
@@ -142,8 +142,8 @@
     "type": "card",
     "cardType": "C 05",
     "staged": false,
-    "z": 66125,
-    "parent": "pile2"
+    "z": 71543,
+    "parent": "8i5b"
   },
   "fate_6_C": {
     "id": "fate_6_C",
@@ -151,8 +151,8 @@
     "type": "card",
     "cardType": "C 06",
     "staged": false,
-    "z": 66127,
-    "parent": "pile2"
+    "z": 71578,
+    "parent": "8i5b"
   },
   "fate_7_C": {
     "id": "fate_7_C",
@@ -160,8 +160,8 @@
     "type": "card",
     "cardType": "C 07",
     "staged": false,
-    "z": 66129,
-    "parent": "pile2"
+    "z": 71571,
+    "parent": "8i5b"
   },
   "fate_8_C": {
     "id": "fate_8_C",
@@ -169,8 +169,8 @@
     "type": "card",
     "cardType": "C 08",
     "staged": false,
-    "z": 66131,
-    "parent": "pile2"
+    "z": 71556,
+    "parent": "8i5b"
   },
   "fate_9_C": {
     "id": "fate_9_C",
@@ -178,8 +178,8 @@
     "type": "card",
     "cardType": "C 09",
     "staged": false,
-    "z": 66133,
-    "parent": "pile2"
+    "z": 71574,
+    "parent": "8i5b"
   },
   "fate_T_C": {
     "id": "fate_T_C",
@@ -187,8 +187,8 @@
     "type": "card",
     "cardType": "C 10",
     "staged": false,
-    "z": 66135,
-    "parent": "pile2"
+    "z": 71585,
+    "parent": "8i5b"
   },
   "fate_J_C": {
     "id": "fate_J_C",
@@ -197,8 +197,8 @@
     "cardType": "C 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 66137,
-    "parent": "pile2"
+    "z": 71553,
+    "parent": "8i5b"
   },
   "fate_Q_C": {
     "id": "fate_Q_C",
@@ -206,8 +206,8 @@
     "type": "card",
     "cardType": "C 3Q",
     "staged": false,
-    "z": 66139,
-    "parent": "pile2"
+    "z": 71570,
+    "parent": "8i5b"
   },
   "fate_K_C": {
     "id": "fate_K_C",
@@ -215,8 +215,8 @@
     "type": "card",
     "cardType": "C 4K",
     "staged": false,
-    "z": 66141,
-    "parent": "pile2"
+    "z": 71569,
+    "parent": "8i5b"
   },
   "fate_A_D": {
     "id": "fate_A_D",
@@ -224,8 +224,8 @@
     "type": "card",
     "cardType": "D 01",
     "staged": false,
-    "z": 66143,
-    "parent": "pile2"
+    "z": 71535,
+    "parent": "8i5b"
   },
   "fate_2_D": {
     "id": "fate_2_D",
@@ -233,8 +233,8 @@
     "type": "card",
     "cardType": "D 02",
     "staged": false,
-    "z": 66145,
-    "parent": "pile2"
+    "z": 71568,
+    "parent": "8i5b"
   },
   "fate_3_D": {
     "id": "fate_3_D",
@@ -242,8 +242,8 @@
     "type": "card",
     "cardType": "D 03",
     "staged": false,
-    "z": 66147,
-    "parent": "pile2"
+    "z": 71584,
+    "parent": "8i5b"
   },
   "fate_4_D": {
     "id": "fate_4_D",
@@ -251,8 +251,8 @@
     "type": "card",
     "cardType": "D 04",
     "staged": false,
-    "z": 66149,
-    "parent": "pile2"
+    "z": 71567,
+    "parent": "8i5b"
   },
   "fate_5_D": {
     "id": "fate_5_D",
@@ -260,8 +260,8 @@
     "type": "card",
     "cardType": "D 05",
     "staged": false,
-    "z": 66151,
-    "parent": "pile2"
+    "z": 71560,
+    "parent": "8i5b"
   },
   "fate_6_D": {
     "id": "fate_6_D",
@@ -269,8 +269,8 @@
     "type": "card",
     "cardType": "D 06",
     "staged": false,
-    "z": 66153,
-    "parent": "pile2"
+    "z": 71541,
+    "parent": "8i5b"
   },
   "fate_7_D": {
     "id": "fate_7_D",
@@ -278,8 +278,8 @@
     "type": "card",
     "cardType": "D 07",
     "staged": false,
-    "z": 66155,
-    "parent": "pile2"
+    "z": 71545,
+    "parent": "8i5b"
   },
   "fate_8_D": {
     "id": "fate_8_D",
@@ -287,8 +287,8 @@
     "type": "card",
     "cardType": "D 08",
     "staged": false,
-    "z": 66157,
-    "parent": "pile2"
+    "z": 71580,
+    "parent": "8i5b"
   },
   "fate_9_D": {
     "id": "fate_9_D",
@@ -296,8 +296,8 @@
     "type": "card",
     "cardType": "D 09",
     "staged": false,
-    "z": 66159,
-    "parent": "pile2"
+    "z": 71579,
+    "parent": "8i5b"
   },
   "fate_T_D": {
     "id": "fate_T_D",
@@ -305,8 +305,8 @@
     "type": "card",
     "cardType": "D 10",
     "staged": false,
-    "z": 66161,
-    "parent": "pile2"
+    "z": 71562,
+    "parent": "8i5b"
   },
   "fate_J_D": {
     "id": "fate_J_D",
@@ -315,8 +315,8 @@
     "cardType": "D 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 66163,
-    "parent": "pile2"
+    "z": 71549,
+    "parent": "8i5b"
   },
   "fate_Q_D": {
     "id": "fate_Q_D",
@@ -324,8 +324,8 @@
     "type": "card",
     "cardType": "D 3Q",
     "staged": false,
-    "z": 66165,
-    "parent": "pile2"
+    "z": 71550,
+    "parent": "8i5b"
   },
   "fate_K_D": {
     "id": "fate_K_D",
@@ -333,8 +333,8 @@
     "type": "card",
     "cardType": "D 4K",
     "staged": false,
-    "z": 66167,
-    "parent": "pile2"
+    "z": 71540,
+    "parent": "8i5b"
   },
   "fate_A_H": {
     "id": "fate_A_H",
@@ -342,8 +342,8 @@
     "type": "card",
     "cardType": "H 01",
     "staged": false,
-    "z": 66169,
-    "parent": "pile2"
+    "z": 71573,
+    "parent": "8i5b"
   },
   "fate_2_H": {
     "id": "fate_2_H",
@@ -351,8 +351,8 @@
     "type": "card",
     "cardType": "H 02",
     "staged": false,
-    "z": 66171,
-    "parent": "pile2"
+    "z": 71557,
+    "parent": "8i5b"
   },
   "fate_3_H": {
     "id": "fate_3_H",
@@ -360,8 +360,8 @@
     "type": "card",
     "cardType": "H 03",
     "staged": false,
-    "z": 66173,
-    "parent": "pile2"
+    "z": 71577,
+    "parent": "8i5b"
   },
   "fate_4_H": {
     "id": "fate_4_H",
@@ -369,8 +369,8 @@
     "type": "card",
     "cardType": "H 04",
     "staged": false,
-    "z": 66175,
-    "parent": "pile2"
+    "z": 71564,
+    "parent": "8i5b"
   },
   "fate_5_H": {
     "id": "fate_5_H",
@@ -378,8 +378,8 @@
     "type": "card",
     "cardType": "H 05",
     "staged": false,
-    "z": 66177,
-    "parent": "pile2"
+    "z": 71544,
+    "parent": "8i5b"
   },
   "fate_6_H": {
     "id": "fate_6_H",
@@ -387,8 +387,8 @@
     "type": "card",
     "cardType": "H 06",
     "staged": false,
-    "z": 66179,
-    "parent": "pile2"
+    "z": 71559,
+    "parent": "8i5b"
   },
   "fate_7_H": {
     "id": "fate_7_H",
@@ -396,8 +396,8 @@
     "type": "card",
     "cardType": "H 07",
     "staged": false,
-    "z": 66181,
-    "parent": "pile2"
+    "z": 71565,
+    "parent": "8i5b"
   },
   "fate_8_H": {
     "id": "fate_8_H",
@@ -405,8 +405,8 @@
     "type": "card",
     "cardType": "H 08",
     "staged": false,
-    "z": 66183,
-    "parent": "pile2"
+    "z": 71555,
+    "parent": "8i5b"
   },
   "fate_9_H": {
     "id": "fate_9_H",
@@ -414,8 +414,8 @@
     "type": "card",
     "cardType": "H 09",
     "staged": false,
-    "z": 66185,
-    "parent": "pile2"
+    "z": 71566,
+    "parent": "8i5b"
   },
   "fate_T_H": {
     "id": "fate_T_H",
@@ -423,8 +423,8 @@
     "type": "card",
     "cardType": "H 10",
     "staged": false,
-    "z": 66187,
-    "parent": "pile2"
+    "z": 71538,
+    "parent": "8i5b"
   },
   "fate_J_H": {
     "id": "fate_J_H",
@@ -433,8 +433,8 @@
     "cardType": "H 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 66189,
-    "parent": "pile2"
+    "z": 71582,
+    "parent": "8i5b"
   },
   "fate_Q_H": {
     "id": "fate_Q_H",
@@ -442,8 +442,8 @@
     "type": "card",
     "cardType": "H 3Q",
     "staged": false,
-    "z": 66191,
-    "parent": "pile2"
+    "z": 71554,
+    "parent": "8i5b"
   },
   "fate_K_H": {
     "id": "fate_K_H",
@@ -451,8 +451,8 @@
     "type": "card",
     "cardType": "H 4K",
     "staged": false,
-    "z": 66193,
-    "parent": "pile2"
+    "z": 71542,
+    "parent": "8i5b"
   },
   "fate_A_S": {
     "id": "fate_A_S",
@@ -460,8 +460,8 @@
     "type": "card",
     "cardType": "S 01",
     "staged": false,
-    "z": 66195,
-    "parent": "pile2"
+    "z": 71583,
+    "parent": "8i5b"
   },
   "fate_2_S": {
     "id": "fate_2_S",
@@ -469,8 +469,8 @@
     "type": "card",
     "cardType": "S 02",
     "staged": false,
-    "z": 66197,
-    "parent": "pile2"
+    "z": 71586,
+    "parent": "8i5b"
   },
   "fate_3_S": {
     "id": "fate_3_S",
@@ -478,8 +478,8 @@
     "type": "card",
     "cardType": "S 03",
     "staged": false,
-    "z": 66199,
-    "parent": "pile2"
+    "z": 71561,
+    "parent": "8i5b"
   },
   "fate_4_S": {
     "id": "fate_4_S",
@@ -487,8 +487,8 @@
     "type": "card",
     "cardType": "S 04",
     "staged": false,
-    "z": 66201,
-    "parent": "pile2"
+    "z": 71581,
+    "parent": "8i5b"
   },
   "fate_5_S": {
     "id": "fate_5_S",
@@ -496,8 +496,8 @@
     "type": "card",
     "cardType": "S 05",
     "staged": false,
-    "z": 66203,
-    "parent": "pile2"
+    "z": 71537,
+    "parent": "8i5b"
   },
   "fate_6_S": {
     "id": "fate_6_S",
@@ -505,8 +505,8 @@
     "type": "card",
     "cardType": "S 06",
     "staged": false,
-    "z": 66205,
-    "parent": "pile2"
+    "z": 71558,
+    "parent": "8i5b"
   },
   "fate_7_S": {
     "id": "fate_7_S",
@@ -514,8 +514,8 @@
     "type": "card",
     "cardType": "S 07",
     "staged": false,
-    "z": 66207,
-    "parent": "pile2"
+    "z": 71547,
+    "parent": "8i5b"
   },
   "fate_8_S": {
     "id": "fate_8_S",
@@ -523,8 +523,8 @@
     "type": "card",
     "cardType": "S 08",
     "staged": false,
-    "z": 66209,
-    "parent": "pile2"
+    "z": 71546,
+    "parent": "8i5b"
   },
   "fate_9_S": {
     "id": "fate_9_S",
@@ -532,8 +532,8 @@
     "type": "card",
     "cardType": "S 09",
     "staged": false,
-    "z": 66211,
-    "parent": "pile2"
+    "z": 71536,
+    "parent": "8i5b"
   },
   "fate_T_S": {
     "id": "fate_T_S",
@@ -541,8 +541,8 @@
     "type": "card",
     "cardType": "S 10",
     "staged": false,
-    "z": 66213,
-    "parent": "pile2"
+    "z": 71575,
+    "parent": "8i5b"
   },
   "fate_J_S": {
     "id": "fate_J_S",
@@ -551,8 +551,8 @@
     "cardType": "S 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 66215,
-    "parent": "pile2"
+    "z": 71563,
+    "parent": "8i5b"
   },
   "fate_Q_S": {
     "id": "fate_Q_S",
@@ -560,8 +560,8 @@
     "type": "card",
     "cardType": "S 3Q",
     "staged": false,
-    "z": 66217,
-    "parent": "pile2"
+    "z": 71552,
+    "parent": "8i5b"
   },
   "fate_K_S": {
     "id": "fate_K_S",
@@ -569,8 +569,8 @@
     "type": "card",
     "cardType": "S 4K",
     "staged": false,
-    "z": 66219,
-    "parent": "pile2"
+    "z": 71576,
+    "parent": "8i5b"
   },
   "deckHolder": {
     "type": "holder",
@@ -1197,8 +1197,7 @@
     "height": 50,
     "borderRadius": 8,
     "movable": false,
-    "y": 48,
-    "scale": 0
+    "y": 48
   },
   "choose0": {
     "type": "button",
@@ -1493,11 +1492,10 @@
     "y": 130,
     "chooser": 14,
     "deckSuit": "swords",
-    "image": "/assets/-374765193_624",
-    "text": "",
-    "deckSuitsUni": "*",
-    "deckSuitsColor": "purple",
-    "deckSuits": "stars"
+    "image": "",
+    "text": "No\nTrump",
+    "deckSuitsUni": "NT",
+    "deckSuitsColor": ""
   },
   "bidSuit1": {
     "id": "bidSuit1",
@@ -1528,7 +1526,7 @@
     "inheritFrom": {
       "bidValue1": "clickRoutine"
     },
-    "scale": 0,
+    "scale": 1,
     "svgReplaces": {
       "currentColor": "deckSuitsColor"
     },
@@ -1739,7 +1737,7 @@
     "id": "scoreboard",
     "x": 5,
     "y": 85,
-    "height": 560,
+    "height": 840,
     "autosizeColumns": false,
     "css": {
       ".scoreboard td:first-child": {
@@ -2162,7 +2160,7 @@
       }
     ],
     "showScore": true,
-    "showTricks": false,
+    "showTricks": true,
     "showScoreChangeRoutine": [
       {
         "func": "IF",
@@ -2267,8 +2265,8 @@
         ]
       }
     ],
-    "showBidValue": false,
-    "showBidSuit": false,
+    "showBidValue": true,
+    "showBidSuit": true,
     "turnDirectionChangeRoutine": [
       {
         "func": "IF",
@@ -2295,7 +2293,7 @@
         ]
       }
     ],
-    "turnDirection": false,
+    "turnDirection": true,
     "showDiscardChangeRoutine": [
       {
         "func": "IF",
@@ -2362,7 +2360,7 @@
         ]
       }
     ],
-    "showDiscard": true,
+    "showDiscard": false,
     "centerShow": false,
     "centerShowChangeRoutine": [
       {
@@ -2797,7 +2795,7 @@
     "index": 2,
     "x": 435,
     "y": 535,
-    "scale": 1,
+    "scale": 0,
     "score": [],
     "tricks": 0,
     "tempScore": [],
@@ -2815,12 +2813,9 @@
       " "
     ],
     "showing": false,
-    "color": "#c900f0",
-    "player": "Left",
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000",
-    "sortDirection": true
+    "color": "#999999",
+    "player": "",
+    "turn": false
   },
   "bidValue2": {
     "inheritFrom": {
@@ -2859,7 +2854,7 @@
     "onEnter": {
       "activeFace": 1
     },
-    "dropLimit": -1
+    "dropLimit": 0
   },
   "seat3": {
     "inheritFrom": {
@@ -2874,9 +2869,9 @@
     "type": "seat",
     "id": "seat3",
     "index": 3,
-    "x": 348,
+    "x": 440,
     "y": 348,
-    "color": "#f44336",
+    "color": "#999999",
     "scale": 1,
     "score": [],
     "tricks": 0,
@@ -2899,12 +2894,8 @@
       0,
       0
     ],
-    "player": "Guest381",
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000",
-    "sortDirection": true,
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "bidValue3": {
     "inheritFrom": {
@@ -3036,8 +3027,8 @@
     "id": "seat5",
     "index": 5,
     "x": 720,
-    "y": 55,
-    "color": "#1976d2",
+    "y": 125,
+    "color": "#999999",
     "scale": 1,
     "score": [],
     "tricks": 0,
@@ -3056,12 +3047,8 @@
       " "
     ],
     "showing": false,
-    "player": "Guest980",
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#ffffff",
-    "sortDirection": true,
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "bidValue5": {
     "inheritFrom": {
@@ -3197,9 +3184,9 @@
     "type": "seat",
     "id": "seat7",
     "index": 7,
-    "x": 1090,
+    "x": 1005,
     "y": 348,
-    "color": "#000000",
+    "color": "#999999",
     "scale": 1,
     "score": [],
     "tricks": 0,
@@ -3218,12 +3205,11 @@
       " "
     ],
     "showing": false,
-    "player": "Guest201",
     "turn": false,
+    "player": "",
     "mainColor": "#ffffff",
     "textColor": "#000000",
-    "glowColor": "#ffffff",
-    "sortDirection": true
+    "glowColor": "#000000"
   },
   "bidValue7": {
     "inheritFrom": {
@@ -3380,8 +3366,7 @@
       "seat6",
       "seat7",
       "seat8"
-    ],
-    "scale": 0
+    ]
   },
   "dealButton": {
     "type": "button",
@@ -5332,7 +5317,7 @@
     "cardType": "C 01",
     "staged": false,
     "parent": "pile2",
-    "z": 66220
+    "z": 70983
   },
   "6exv_2_C": {
     "id": "6exv_2_C",
@@ -5341,7 +5326,7 @@
     "cardType": "C 02",
     "staged": false,
     "parent": "pile2",
-    "z": 66221
+    "z": 70984
   },
   "6exv_3_C": {
     "id": "6exv_3_C",
@@ -5349,7 +5334,7 @@
     "type": "card",
     "cardType": "C 03",
     "staged": false,
-    "z": 66222,
+    "z": 70985,
     "parent": "pile2"
   },
   "6exv_4_C": {
@@ -5359,7 +5344,7 @@
     "cardType": "C 04",
     "staged": false,
     "parent": "pile2",
-    "z": 66223
+    "z": 70986
   },
   "6exv_5_C": {
     "id": "6exv_5_C",
@@ -5368,7 +5353,7 @@
     "cardType": "C 05",
     "staged": false,
     "parent": "pile2",
-    "z": 66224
+    "z": 70987
   },
   "6exv_6_C": {
     "id": "6exv_6_C",
@@ -5377,7 +5362,7 @@
     "cardType": "C 06",
     "staged": false,
     "parent": "pile2",
-    "z": 66225
+    "z": 70988
   },
   "6exv_7_C": {
     "id": "6exv_7_C",
@@ -5386,7 +5371,7 @@
     "cardType": "C 07",
     "staged": false,
     "parent": "pile2",
-    "z": 66226
+    "z": 70989
   },
   "6exv_8_C": {
     "id": "6exv_8_C",
@@ -5395,7 +5380,7 @@
     "cardType": "C 08",
     "staged": false,
     "parent": "pile2",
-    "z": 66227
+    "z": 70990
   },
   "6exv_9_C": {
     "id": "6exv_9_C",
@@ -5404,7 +5389,7 @@
     "cardType": "C 09",
     "staged": false,
     "parent": "pile2",
-    "z": 66228
+    "z": 70991
   },
   "6exv_T_C": {
     "id": "6exv_T_C",
@@ -5413,7 +5398,7 @@
     "cardType": "C 10",
     "staged": false,
     "parent": "pile2",
-    "z": 66229
+    "z": 70992
   },
   "6exv_J_C": {
     "id": "6exv_J_C",
@@ -5422,7 +5407,7 @@
     "cardType": "C 2J",
     "staged": false,
     "parent": "pile2",
-    "z": 66230
+    "z": 70993
   },
   "6exv_Q_C": {
     "id": "6exv_Q_C",
@@ -5431,7 +5416,7 @@
     "cardType": "C 3Q",
     "staged": false,
     "parent": "pile2",
-    "z": 66231
+    "z": 70994
   },
   "6exv_K_C": {
     "id": "6exv_K_C",
@@ -5440,7 +5425,7 @@
     "cardType": "C 4K",
     "staged": false,
     "parent": "pile2",
-    "z": 66232
+    "z": 70995
   },
   "6exv_A_D": {
     "id": "6exv_A_D",
@@ -5449,7 +5434,7 @@
     "cardType": "D 01",
     "staged": false,
     "parent": "pile2",
-    "z": 66233
+    "z": 70996
   },
   "6exv_2_D": {
     "id": "6exv_2_D",
@@ -5458,7 +5443,7 @@
     "cardType": "D 02",
     "staged": false,
     "parent": "pile2",
-    "z": 66234
+    "z": 70997
   },
   "6exv_3_D": {
     "id": "6exv_3_D",
@@ -5467,7 +5452,7 @@
     "cardType": "D 03",
     "staged": false,
     "parent": "pile2",
-    "z": 66235
+    "z": 70998
   },
   "6exv_4_D": {
     "id": "6exv_4_D",
@@ -5476,7 +5461,7 @@
     "cardType": "D 04",
     "staged": false,
     "parent": "pile2",
-    "z": 66236
+    "z": 70999
   },
   "6exv_5_D": {
     "id": "6exv_5_D",
@@ -5485,7 +5470,7 @@
     "cardType": "D 05",
     "staged": false,
     "parent": "pile2",
-    "z": 66237
+    "z": 71000
   },
   "6exv_6_D": {
     "id": "6exv_6_D",
@@ -5494,7 +5479,7 @@
     "cardType": "D 06",
     "staged": false,
     "parent": "pile2",
-    "z": 66238
+    "z": 71001
   },
   "6exv_7_D": {
     "id": "6exv_7_D",
@@ -5503,7 +5488,7 @@
     "cardType": "D 07",
     "staged": false,
     "parent": "pile2",
-    "z": 66239
+    "z": 71002
   },
   "6exv_8_D": {
     "id": "6exv_8_D",
@@ -5512,7 +5497,7 @@
     "cardType": "D 08",
     "staged": false,
     "parent": "pile2",
-    "z": 66240
+    "z": 71003
   },
   "6exv_9_D": {
     "id": "6exv_9_D",
@@ -5521,7 +5506,7 @@
     "cardType": "D 09",
     "staged": false,
     "parent": "pile2",
-    "z": 66241
+    "z": 71004
   },
   "6exv_T_D": {
     "id": "6exv_T_D",
@@ -5530,7 +5515,7 @@
     "cardType": "D 10",
     "staged": false,
     "parent": "pile2",
-    "z": 66242
+    "z": 71005
   },
   "6exv_J_D": {
     "id": "6exv_J_D",
@@ -5539,7 +5524,7 @@
     "cardType": "D 2J",
     "staged": false,
     "parent": "pile2",
-    "z": 66243
+    "z": 71006
   },
   "6exv_Q_D": {
     "id": "6exv_Q_D",
@@ -5548,7 +5533,7 @@
     "cardType": "D 3Q",
     "staged": false,
     "parent": "pile2",
-    "z": 66244
+    "z": 71007
   },
   "6exv_K_D": {
     "id": "6exv_K_D",
@@ -5557,7 +5542,7 @@
     "cardType": "D 4K",
     "staged": false,
     "parent": "pile2",
-    "z": 66245
+    "z": 71008
   },
   "6exv_A_H": {
     "id": "6exv_A_H",
@@ -5566,7 +5551,7 @@
     "cardType": "H 01",
     "staged": false,
     "parent": "pile2",
-    "z": 66246
+    "z": 71009
   },
   "6exv_2_H": {
     "id": "6exv_2_H",
@@ -5575,7 +5560,7 @@
     "cardType": "H 02",
     "staged": false,
     "parent": "pile2",
-    "z": 66247
+    "z": 71010
   },
   "6exv_3_H": {
     "id": "6exv_3_H",
@@ -5584,7 +5569,7 @@
     "cardType": "H 03",
     "staged": false,
     "parent": "pile2",
-    "z": 66248
+    "z": 71011
   },
   "6exv_4_H": {
     "id": "6exv_4_H",
@@ -5593,7 +5578,7 @@
     "cardType": "H 04",
     "staged": false,
     "parent": "pile2",
-    "z": 66249
+    "z": 71012
   },
   "6exv_5_H": {
     "id": "6exv_5_H",
@@ -5602,7 +5587,7 @@
     "cardType": "H 05",
     "staged": false,
     "parent": "pile2",
-    "z": 66250
+    "z": 71013
   },
   "6exv_6_H": {
     "id": "6exv_6_H",
@@ -5611,7 +5596,7 @@
     "cardType": "H 06",
     "staged": false,
     "parent": "pile2",
-    "z": 66251
+    "z": 71014
   },
   "6exv_7_H": {
     "id": "6exv_7_H",
@@ -5620,7 +5605,7 @@
     "cardType": "H 07",
     "staged": false,
     "parent": "pile2",
-    "z": 66252
+    "z": 71015
   },
   "6exv_8_H": {
     "id": "6exv_8_H",
@@ -5629,7 +5614,7 @@
     "cardType": "H 08",
     "staged": false,
     "parent": "pile2",
-    "z": 66253
+    "z": 71016
   },
   "6exv_9_H": {
     "id": "6exv_9_H",
@@ -5638,7 +5623,7 @@
     "cardType": "H 09",
     "staged": false,
     "parent": "pile2",
-    "z": 66254
+    "z": 71017
   },
   "6exv_T_H": {
     "id": "6exv_T_H",
@@ -5647,7 +5632,7 @@
     "cardType": "H 10",
     "staged": false,
     "parent": "pile2",
-    "z": 66255
+    "z": 71018
   },
   "6exv_J_H": {
     "id": "6exv_J_H",
@@ -5656,7 +5641,7 @@
     "type": "card",
     "cardType": "H 2J",
     "staged": false,
-    "z": 66256
+    "z": 71019
   },
   "6exv_Q_H": {
     "id": "6exv_Q_H",
@@ -5665,7 +5650,7 @@
     "type": "card",
     "cardType": "H 3Q",
     "staged": false,
-    "z": 66257
+    "z": 71020
   },
   "6exv_K_H": {
     "id": "6exv_K_H",
@@ -5674,7 +5659,7 @@
     "cardType": "H 4K",
     "staged": false,
     "parent": "pile2",
-    "z": 66258
+    "z": 71021
   },
   "6exv_A_S": {
     "id": "6exv_A_S",
@@ -5683,7 +5668,7 @@
     "cardType": "S 01",
     "staged": false,
     "parent": "pile2",
-    "z": 66259
+    "z": 71022
   },
   "6exv_2_S": {
     "id": "6exv_2_S",
@@ -5691,7 +5676,7 @@
     "type": "card",
     "cardType": "S 02",
     "staged": false,
-    "z": 66260,
+    "z": 71023,
     "parent": "pile2"
   },
   "6exv_3_S": {
@@ -5700,7 +5685,7 @@
     "type": "card",
     "cardType": "S 03",
     "staged": false,
-    "z": 66261,
+    "z": 71024,
     "parent": "pile2"
   },
   "6exv_4_S": {
@@ -5710,7 +5695,7 @@
     "cardType": "S 04",
     "staged": false,
     "parent": "pile2",
-    "z": 66262
+    "z": 71025
   },
   "6exv_5_S": {
     "id": "6exv_5_S",
@@ -5719,7 +5704,7 @@
     "cardType": "S 05",
     "staged": false,
     "parent": "pile2",
-    "z": 66263
+    "z": 71026
   },
   "6exv_6_S": {
     "id": "6exv_6_S",
@@ -5728,7 +5713,7 @@
     "cardType": "S 06",
     "staged": false,
     "parent": "pile2",
-    "z": 66264
+    "z": 71027
   },
   "6exv_7_S": {
     "id": "6exv_7_S",
@@ -5737,7 +5722,7 @@
     "cardType": "S 07",
     "staged": false,
     "parent": "pile2",
-    "z": 66265
+    "z": 71028
   },
   "6exv_8_S": {
     "id": "6exv_8_S",
@@ -5746,7 +5731,7 @@
     "cardType": "S 08",
     "staged": false,
     "parent": "pile2",
-    "z": 66266
+    "z": 71029
   },
   "6exv_9_S": {
     "id": "6exv_9_S",
@@ -5755,7 +5740,7 @@
     "type": "card",
     "cardType": "S 09",
     "staged": false,
-    "z": 66267
+    "z": 71030
   },
   "6exv_T_S": {
     "id": "6exv_T_S",
@@ -5764,7 +5749,7 @@
     "cardType": "S 10",
     "staged": false,
     "parent": "pile2",
-    "z": 66268
+    "z": 71031
   },
   "6exv_J_S": {
     "id": "6exv_J_S",
@@ -5773,7 +5758,7 @@
     "type": "card",
     "cardType": "S 2J",
     "staged": false,
-    "z": 66269
+    "z": 71032
   },
   "6exv_Q_S": {
     "id": "6exv_Q_S",
@@ -5782,7 +5767,7 @@
     "cardType": "S 3Q",
     "staged": false,
     "parent": "pile2",
-    "z": 66270
+    "z": 71033
   },
   "6exv_K_S": {
     "id": "6exv_K_S",
@@ -5791,7 +5776,7 @@
     "cardType": "S 4K",
     "staged": false,
     "parent": "pile2",
-    "z": 66271
+    "z": 71034
   },
   "offHolder": {
     "type": "holder",
@@ -5959,7 +5944,7 @@
     "deck": "jokers",
     "cardType": "T 2J",
     "staged": false,
-    "z": 68976,
+    "z": 71531,
     "parent": "pile2"
   },
   "jokerRed2": {
@@ -5969,7 +5954,7 @@
     "cardType": "T 2J",
     "parent": "pile2",
     "staged": false,
-    "z": 68977
+    "z": 71532
   },
   "jokerBlack1": {
     "type": "card",
@@ -5977,7 +5962,7 @@
     "deck": "jokers",
     "cardType": "T 1J",
     "staged": false,
-    "z": 68978,
+    "z": 71533,
     "parent": "pile2"
   },
   "jokerBlack2": {
@@ -5987,7 +5972,7 @@
     "cardType": "T 1J",
     "staged": false,
     "parent": "pile2",
-    "z": 68979
+    "z": 71534
   },
   "discard": {
     "type": "holder",
@@ -6000,7 +5985,9 @@
     },
     "dropTarget": {
       "type": "card"
-    }
+    },
+    "scale": 0,
+    "dropLimit": 0
   },
   "centerHolder": {
     "type": "holder",
@@ -6388,8 +6375,7 @@
       "y": 950
     },
     "deckSuitsColor": "",
-    "z": 45,
-    "scale": 0
+    "z": 45
   },
   "scoreButton": {
     "type": "button",
@@ -6483,8 +6469,8 @@
         ]
       }
     ],
-    "activeBoard": "tempScoreboard",
-    "activeProperty": "tempScore",
+    "activeBoard": "scoreboard",
+    "activeProperty": "score",
     "scoreRoutine": [
       "var activeBoard = ${PROPERTY activeBoard}",
       "var activeProperty = ${PROPERTY activeProperty}",
@@ -6882,7 +6868,8 @@
         ]
       }
     ],
-    "activeGameChangeRoutine": []
+    "activeGameChangeRoutine": [],
+    "scale": 0
   },
   "settingsDecks": {
     "type": "button",
@@ -6895,7 +6882,7 @@
     "css": "font-size: 18px; line-height:1.05",
     "text": "Decks & Players",
     "jokerCount": 0,
-    "seatCount": 5,
+    "seatCount": 4,
     "showDelete": false,
     "teamScore": false,
     "clickRoutine": [
@@ -7774,7 +7761,7 @@
         ]
       }
     ],
-    "tempScore": true,
+    "tempScore": false,
     "tempScoreChangeRoutine": [
       {
         "func": "IF",
@@ -7883,7 +7870,7 @@
       }
     ],
     "layer": -4,
-    "deckType": 7,
+    "deckType": 0,
     "variableScore": false,
     "variableScoreChangeRoutine": [
       {
@@ -7925,7 +7912,7 @@
         ]
       }
     ],
-    "cardCount": 15,
+    "cardCount": 13,
     "hideCardsChangeRoutine": [
       {
         "func": "CALL",
@@ -8774,7 +8761,7 @@
     ],
     "movableInEdit": false,
     "y": 965,
-    "direction": "backward",
+    "direction": "forward",
     "css": {
       "border-radius": "10px 4px 4px 10px"
     }
@@ -9023,7 +9010,8 @@
     "id": "backHolder2",
     "x": 185,
     "y": -60,
-    "parent": "seat2"
+    "parent": "seat2",
+    "dropLimit": 0
   },
   "backHolder3": {
     "inheritFrom": {
@@ -9134,13 +9122,14 @@
     "y": 650,
     "rounds": [
       "Card Points"
-    ]
+    ],
+    "scale": 0
   },
   "seat1": {
     "type": "seat",
     "id": "seat1",
     "x": 720,
-    "y": 680,
+    "y": 600,
     "movableInEdit": false,
     "score": [],
     "tricks": 0,
@@ -9401,13 +9390,7 @@
           }
         ]
       }
-    ],
-    "player": "Mike",
-    "color": "#00b07d",
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000",
-    "sortDirection": true
+    ]
   },
   "preSetsButton": {
     "type": "button",
@@ -9809,7 +9792,7 @@
       "text": "Default",
       "value": "0"
     },
-    "preSet": "44"
+    "preSet": "0"
   },
   "bids": {
     "id": "bids",
@@ -10178,8 +10161,8 @@
         "border": "2px solid ${PROPERTY textColor}"
       }
     },
-    "textColor": "#000000",
-    "backColor": "#00b07d",
+    "textColor": "#6d6d6d",
+    "backColor": "#e4e4e4",
     "text": 0,
     "playerGlobalUpdateRoutine": [
       {
@@ -10209,9 +10192,9 @@
     "inheritFrom": {
       "count1": "*"
     },
-    "text": 2,
-    "backColor": "#c900f0",
-    "textColor": "#000000"
+    "text": 0,
+    "backColor": "#e4e4e4",
+    "textColor": "#6d6d6d"
   },
   "count3": {
     "id": "count3",
@@ -10220,8 +10203,8 @@
       "count1": "*"
     },
     "text": 0,
-    "backColor": "#f44336",
-    "textColor": "#000000"
+    "backColor": "#e4e4e4",
+    "textColor": "#6d6d6d"
   },
   "count4": {
     "id": "count4",
@@ -10240,8 +10223,8 @@
       "count1": "*"
     },
     "text": 0,
-    "backColor": "#1976d2",
-    "textColor": "#ffffff"
+    "backColor": "#e4e4e4",
+    "textColor": "#6d6d6d"
   },
   "count6": {
     "id": "count6",
@@ -10260,8 +10243,8 @@
       "count1": "*"
     },
     "text": 0,
-    "backColor": "#000000",
-    "textColor": "#ffffff"
+    "backColor": "#e4e4e4",
+    "textColor": "#6d6d6d"
   },
   "count8": {
     "id": "count8",
@@ -12215,7 +12198,7 @@
     "id": "gcew",
     "staged": false,
     "parent": "pile2",
-    "z": 66276
+    "z": 71039
   },
   "cx9g": {
     "deck": "tarokyDeck",
@@ -12224,7 +12207,7 @@
     "id": "cx9g",
     "staged": false,
     "parent": "pile2",
-    "z": 66277
+    "z": 71040
   },
   "ihao": {
     "deck": "tarokyDeck",
@@ -12233,7 +12216,7 @@
     "id": "ihao",
     "staged": false,
     "parent": "pile2",
-    "z": 66278
+    "z": 71041
   },
   "62uz": {
     "deck": "tarokyDeck",
@@ -12242,7 +12225,7 @@
     "id": "62uz",
     "staged": false,
     "parent": "pile2",
-    "z": 66279
+    "z": 71042
   },
   "ouw2": {
     "deck": "tarokyDeck",
@@ -12251,7 +12234,7 @@
     "id": "ouw2",
     "staged": false,
     "parent": "pile2",
-    "z": 66280
+    "z": 71043
   },
   "hqit": {
     "deck": "tarokyDeck",
@@ -12260,7 +12243,7 @@
     "id": "hqit",
     "staged": false,
     "parent": "pile2",
-    "z": 66281
+    "z": 71044
   },
   "sccr": {
     "deck": "tarokyDeck",
@@ -12269,7 +12252,7 @@
     "id": "sccr",
     "staged": false,
     "parent": "pile2",
-    "z": 66282
+    "z": 71045
   },
   "p0xc": {
     "deck": "tarokyDeck",
@@ -12278,7 +12261,7 @@
     "id": "p0xc",
     "staged": false,
     "parent": "pile2",
-    "z": 66283
+    "z": 71046
   },
   "n5y9": {
     "deck": "tarokyDeck",
@@ -12287,7 +12270,7 @@
     "id": "n5y9",
     "staged": false,
     "parent": "pile2",
-    "z": 66284
+    "z": 71047
   },
   "qlze": {
     "deck": "tarokyDeck",
@@ -12296,7 +12279,7 @@
     "id": "qlze",
     "staged": false,
     "parent": "pile2",
-    "z": 66285
+    "z": 71048
   },
   "p4hk": {
     "deck": "tarokyDeck",
@@ -12305,7 +12288,7 @@
     "id": "p4hk",
     "staged": false,
     "parent": "pile2",
-    "z": 66286
+    "z": 71049
   },
   "yixx": {
     "deck": "tarokyDeck",
@@ -12314,7 +12297,7 @@
     "id": "yixx",
     "staged": false,
     "parent": "pile2",
-    "z": 66287
+    "z": 71050
   },
   "xdcd": {
     "deck": "tarokyDeck",
@@ -12323,7 +12306,7 @@
     "id": "xdcd",
     "staged": false,
     "parent": "pile2",
-    "z": 66288
+    "z": 71051
   },
   "yc1e": {
     "deck": "tarokyDeck",
@@ -12332,7 +12315,7 @@
     "id": "yc1e",
     "staged": false,
     "parent": "pile2",
-    "z": 66289
+    "z": 71052
   },
   "gvb3": {
     "deck": "tarokyDeck",
@@ -12341,7 +12324,7 @@
     "id": "gvb3",
     "staged": false,
     "parent": "pile2",
-    "z": 66290
+    "z": 71053
   },
   "9w3w": {
     "deck": "tarokyDeck",
@@ -12350,7 +12333,7 @@
     "id": "9w3w",
     "staged": false,
     "parent": "pile2",
-    "z": 66291
+    "z": 71054
   },
   "icaj": {
     "deck": "tarokyDeck",
@@ -12359,7 +12342,7 @@
     "id": "icaj",
     "staged": false,
     "parent": "pile2",
-    "z": 66292
+    "z": 71055
   },
   "z80s": {
     "deck": "tarokyDeck",
@@ -12368,7 +12351,7 @@
     "id": "z80s",
     "staged": false,
     "parent": "pile2",
-    "z": 66293
+    "z": 71056
   },
   "1bs0": {
     "deck": "tarokyDeck",
@@ -12377,7 +12360,7 @@
     "id": "1bs0",
     "staged": false,
     "parent": "pile2",
-    "z": 66294
+    "z": 71057
   },
   "4x8f": {
     "deck": "tarokyDeck",
@@ -12386,7 +12369,7 @@
     "id": "4x8f",
     "staged": false,
     "parent": "pile2",
-    "z": 66295
+    "z": 71058
   },
   "fbiv": {
     "deck": "tarokyDeck",
@@ -12395,7 +12378,7 @@
     "id": "fbiv",
     "staged": false,
     "parent": "pile2",
-    "z": 66296
+    "z": 71059
   },
   "1gs3": {
     "deck": "tarokyDeck",
@@ -12404,7 +12387,7 @@
     "id": "1gs3",
     "staged": false,
     "parent": "pile2",
-    "z": 66297
+    "z": 71060
   },
   "7nqw": {
     "deck": "tarokyDeck",
@@ -12413,7 +12396,7 @@
     "id": "7nqw",
     "staged": false,
     "parent": "pile2",
-    "z": 66298
+    "z": 71061
   },
   "ay8z": {
     "deck": "tarokyDeck",
@@ -12422,7 +12405,7 @@
     "id": "ay8z",
     "staged": false,
     "parent": "pile2",
-    "z": 66299
+    "z": 71062
   },
   "mmr8": {
     "deck": "tarokyDeck",
@@ -12431,7 +12414,7 @@
     "id": "mmr8",
     "staged": false,
     "parent": "pile2",
-    "z": 66300
+    "z": 71063
   },
   "0jm2": {
     "deck": "tarokyDeck",
@@ -12440,7 +12423,7 @@
     "id": "0jm2",
     "staged": false,
     "parent": "pile2",
-    "z": 66301
+    "z": 71064
   },
   "tpgx": {
     "deck": "tarokyDeck",
@@ -12449,7 +12432,7 @@
     "id": "tpgx",
     "staged": false,
     "parent": "pile2",
-    "z": 66302
+    "z": 71065
   },
   "a0w6": {
     "deck": "tarokyDeck",
@@ -12458,7 +12441,7 @@
     "id": "a0w6",
     "staged": false,
     "parent": "pile2",
-    "z": 66303
+    "z": 71066
   },
   "6cna": {
     "deck": "tarokyDeck",
@@ -12467,7 +12450,7 @@
     "id": "6cna",
     "staged": false,
     "parent": "pile2",
-    "z": 66304
+    "z": 71067
   },
   "js97": {
     "deck": "tarokyDeck",
@@ -12476,7 +12459,7 @@
     "id": "js97",
     "staged": false,
     "parent": "pile2",
-    "z": 66305
+    "z": 71068
   },
   "is5g": {
     "deck": "tarokyDeck",
@@ -12485,7 +12468,7 @@
     "id": "is5g",
     "staged": false,
     "parent": "pile2",
-    "z": 66306
+    "z": 71069
   },
   "s9mz": {
     "deck": "tarokyDeck",
@@ -12494,7 +12477,7 @@
     "id": "s9mz",
     "staged": false,
     "parent": "pile2",
-    "z": 66307
+    "z": 71070
   },
   "lz08": {
     "deck": "tarokyDeck",
@@ -12503,7 +12486,7 @@
     "id": "lz08",
     "staged": false,
     "parent": "pile2",
-    "z": 66308
+    "z": 71071
   },
   "pwid": {
     "deck": "tarokyDeck",
@@ -12512,7 +12495,7 @@
     "id": "pwid",
     "staged": false,
     "parent": "pile2",
-    "z": 66309
+    "z": 71072
   },
   "zqx6": {
     "deck": "tarokyDeck",
@@ -12521,7 +12504,7 @@
     "id": "zqx6",
     "staged": false,
     "parent": "pile2",
-    "z": 66310
+    "z": 71073
   },
   "is8d": {
     "deck": "tarokyDeck",
@@ -12530,7 +12513,7 @@
     "id": "is8d",
     "staged": false,
     "parent": "pile2",
-    "z": 66311
+    "z": 71074
   },
   "pmam": {
     "deck": "tarokyDeck",
@@ -12539,7 +12522,7 @@
     "id": "pmam",
     "staged": false,
     "parent": "pile2",
-    "z": 66312
+    "z": 71075
   },
   "44lh": {
     "deck": "tarokyDeck",
@@ -12548,7 +12531,7 @@
     "id": "44lh",
     "staged": false,
     "parent": "pile2",
-    "z": 66313
+    "z": 71076
   },
   "sr00": {
     "deck": "tarokyDeck",
@@ -12557,7 +12540,7 @@
     "id": "sr00",
     "staged": false,
     "parent": "pile2",
-    "z": 66314
+    "z": 71077
   },
   "12h0": {
     "deck": "tarokyDeck",
@@ -12566,7 +12549,7 @@
     "id": "12h0",
     "staged": false,
     "parent": "pile2",
-    "z": 66315
+    "z": 71078
   },
   "ew11": {
     "deck": "tarokyDeck",
@@ -12575,7 +12558,7 @@
     "id": "ew11",
     "staged": false,
     "parent": "pile2",
-    "z": 66316
+    "z": 71079
   },
   "bj7c": {
     "deck": "tarokyDeck",
@@ -12584,7 +12567,7 @@
     "id": "bj7c",
     "staged": false,
     "parent": "pile2",
-    "z": 66317
+    "z": 71080
   },
   "ik4a": {
     "deck": "tarokyDeck",
@@ -12593,7 +12576,7 @@
     "id": "ik4a",
     "staged": false,
     "parent": "pile2",
-    "z": 66318
+    "z": 71081
   },
   "8l8q": {
     "deck": "tarokyDeck",
@@ -12602,7 +12585,7 @@
     "id": "8l8q",
     "staged": false,
     "parent": "pile2",
-    "z": 66319
+    "z": 71082
   },
   "m9m0": {
     "deck": "tarokyDeck",
@@ -12611,7 +12594,7 @@
     "id": "m9m0",
     "staged": false,
     "parent": "pile2",
-    "z": 66320
+    "z": 71083
   },
   "2grz": {
     "deck": "tarokyDeck",
@@ -12620,7 +12603,7 @@
     "id": "2grz",
     "staged": false,
     "parent": "pile2",
-    "z": 66321
+    "z": 71084
   },
   "5lwu": {
     "deck": "tarokyDeck",
@@ -12629,7 +12612,7 @@
     "id": "5lwu",
     "staged": false,
     "parent": "pile2",
-    "z": 66322
+    "z": 71085
   },
   "fwop": {
     "deck": "tarokyDeck",
@@ -12638,7 +12621,7 @@
     "id": "fwop",
     "staged": false,
     "parent": "pile2",
-    "z": 66323
+    "z": 71086
   },
   "fplx": {
     "deck": "tarokyDeck",
@@ -12647,7 +12630,7 @@
     "id": "fplx",
     "staged": false,
     "parent": "pile2",
-    "z": 66324
+    "z": 71087
   },
   "jtkp": {
     "deck": "tarokyDeck",
@@ -12656,7 +12639,7 @@
     "id": "jtkp",
     "staged": false,
     "parent": "pile2",
-    "z": 66325
+    "z": 71088
   },
   "scoreboard3": {
     "type": "scoreboard",
@@ -13710,8 +13693,7 @@
     "width": 120,
     "fixedParent": true,
     "parent": "scoreButton",
-    "x": -5,
-    "scale": 0
+    "x": -5
   },
   "doppelLabel": {
     "id": "doppelLabel",
@@ -13812,12 +13794,6 @@
         "text": "D",
         "teamID": 4,
         "backColor": "#808080",
-        "fontColor": "#ffffff"
-      },
-      {
-        "text": "E",
-        "teamID": 5,
-        "backColor": "#820000",
         "fontColor": "#ffffff"
       }
     ],
@@ -17252,10 +17228,6 @@
       {
         "image": "i/icons/hearts.svg",
         "deckSuitColor": "#e50932"
-      },
-      {
-        "image": "/assets/-374765193_624",
-        "deckSuitColor": "purple"
       }
     ],
     "scale": 0
@@ -18748,7 +18720,7 @@
     "id": "notu",
     "staged": false,
     "parent": "pile2",
-    "z": 66331
+    "z": 71094
   },
   "pjia": {
     "deck": "crowDeck",
@@ -18757,7 +18729,7 @@
     "id": "pjia",
     "staged": false,
     "parent": "pile2",
-    "z": 66332
+    "z": 71095
   },
   "4iy9": {
     "deck": "crowDeck",
@@ -18766,7 +18738,7 @@
     "id": "4iy9",
     "staged": false,
     "parent": "pile2",
-    "z": 66333
+    "z": 71096
   },
   "ojbu": {
     "deck": "crowDeck",
@@ -18775,7 +18747,7 @@
     "id": "ojbu",
     "staged": false,
     "parent": "pile2",
-    "z": 66334
+    "z": 71097
   },
   "dncy": {
     "deck": "crowDeck",
@@ -18784,7 +18756,7 @@
     "id": "dncy",
     "staged": false,
     "parent": "pile2",
-    "z": 66335
+    "z": 71098
   },
   "bzoz": {
     "deck": "crowDeck",
@@ -18793,7 +18765,7 @@
     "id": "bzoz",
     "staged": false,
     "parent": "pile2",
-    "z": 66336
+    "z": 71099
   },
   "jfaf": {
     "deck": "crowDeck",
@@ -18802,7 +18774,7 @@
     "id": "jfaf",
     "staged": false,
     "parent": "pile2",
-    "z": 66337
+    "z": 71100
   },
   "xy9f": {
     "deck": "crowDeck",
@@ -18811,7 +18783,7 @@
     "id": "xy9f",
     "staged": false,
     "parent": "pile2",
-    "z": 66338
+    "z": 71101
   },
   "6jhn": {
     "deck": "crowDeck",
@@ -18820,7 +18792,7 @@
     "id": "6jhn",
     "staged": false,
     "parent": "pile2",
-    "z": 66339
+    "z": 71102
   },
   "pid7": {
     "deck": "crowDeck",
@@ -18829,7 +18801,7 @@
     "id": "pid7",
     "staged": false,
     "parent": "pile2",
-    "z": 66340
+    "z": 71103
   },
   "1yph": {
     "deck": "crowDeck",
@@ -18838,7 +18810,7 @@
     "id": "1yph",
     "staged": false,
     "parent": "pile2",
-    "z": 66341
+    "z": 71104
   },
   "zs4n": {
     "deck": "crowDeck",
@@ -18847,7 +18819,7 @@
     "id": "zs4n",
     "staged": false,
     "parent": "pile2",
-    "z": 66342
+    "z": 71105
   },
   "22ul": {
     "deck": "crowDeck",
@@ -18856,7 +18828,7 @@
     "id": "22ul",
     "staged": false,
     "parent": "pile2",
-    "z": 66343
+    "z": 71106
   },
   "j3kr": {
     "deck": "crowDeck",
@@ -18865,7 +18837,7 @@
     "id": "j3kr",
     "staged": false,
     "parent": "pile2",
-    "z": 66344
+    "z": 71107
   },
   "t5k3": {
     "deck": "crowDeck",
@@ -18874,7 +18846,7 @@
     "id": "t5k3",
     "staged": false,
     "parent": "pile2",
-    "z": 66345
+    "z": 71108
   },
   "oldk": {
     "deck": "crowDeck",
@@ -18883,7 +18855,7 @@
     "id": "oldk",
     "staged": false,
     "parent": "pile2",
-    "z": 66346
+    "z": 71109
   },
   "q4io": {
     "deck": "crowDeck",
@@ -18892,7 +18864,7 @@
     "id": "q4io",
     "staged": false,
     "parent": "pile2",
-    "z": 66347
+    "z": 71110
   },
   "gxx1": {
     "deck": "crowDeck",
@@ -18901,7 +18873,7 @@
     "id": "gxx1",
     "staged": false,
     "parent": "pile2",
-    "z": 66348
+    "z": 71111
   },
   "buyf": {
     "deck": "crowDeck",
@@ -18910,7 +18882,7 @@
     "id": "buyf",
     "staged": false,
     "parent": "pile2",
-    "z": 66349
+    "z": 71112
   },
   "sva5": {
     "deck": "crowDeck",
@@ -18919,7 +18891,7 @@
     "id": "sva5",
     "staged": false,
     "parent": "pile2",
-    "z": 66350
+    "z": 71113
   },
   "k0hw": {
     "deck": "crowDeck",
@@ -18928,7 +18900,7 @@
     "id": "k0hw",
     "staged": false,
     "parent": "pile2",
-    "z": 66351
+    "z": 71114
   },
   "9iak": {
     "deck": "crowDeck",
@@ -18937,7 +18909,7 @@
     "id": "9iak",
     "staged": false,
     "parent": "pile2",
-    "z": 66352
+    "z": 71115
   },
   "r79s": {
     "deck": "crowDeck",
@@ -18946,7 +18918,7 @@
     "id": "r79s",
     "staged": false,
     "parent": "pile2",
-    "z": 66353
+    "z": 71116
   },
   "i7bl": {
     "deck": "crowDeck",
@@ -18955,7 +18927,7 @@
     "id": "i7bl",
     "staged": false,
     "parent": "pile2",
-    "z": 66354
+    "z": 71117
   },
   "php9": {
     "deck": "crowDeck",
@@ -18964,7 +18936,7 @@
     "id": "php9",
     "staged": false,
     "parent": "pile2",
-    "z": 66355
+    "z": 71118
   },
   "ojdh": {
     "deck": "crowDeck",
@@ -18973,7 +18945,7 @@
     "id": "ojdh",
     "staged": false,
     "parent": "pile2",
-    "z": 66356
+    "z": 71119
   },
   "6k91": {
     "deck": "crowDeck",
@@ -18982,7 +18954,7 @@
     "id": "6k91",
     "staged": false,
     "parent": "pile2",
-    "z": 66357
+    "z": 71120
   },
   "tam4": {
     "deck": "crowDeck",
@@ -18991,7 +18963,7 @@
     "id": "tam4",
     "staged": false,
     "parent": "pile2",
-    "z": 66358
+    "z": 71121
   },
   "kcuh": {
     "deck": "crowDeck",
@@ -19000,7 +18972,7 @@
     "id": "kcuh",
     "staged": false,
     "parent": "pile2",
-    "z": 66359
+    "z": 71122
   },
   "66n3": {
     "deck": "crowDeck",
@@ -19009,7 +18981,7 @@
     "id": "66n3",
     "staged": false,
     "parent": "pile2",
-    "z": 66360
+    "z": 71123
   },
   "g97r": {
     "deck": "crowDeck",
@@ -19018,7 +18990,7 @@
     "id": "g97r",
     "staged": false,
     "parent": "pile2",
-    "z": 66361
+    "z": 71124
   },
   "48dj": {
     "deck": "crowDeck",
@@ -19027,7 +18999,7 @@
     "id": "48dj",
     "staged": false,
     "parent": "pile2",
-    "z": 66362
+    "z": 71125
   },
   "ojip": {
     "deck": "crowDeck",
@@ -19036,7 +19008,7 @@
     "id": "ojip",
     "staged": false,
     "parent": "pile2",
-    "z": 66363
+    "z": 71126
   },
   "cyz2": {
     "deck": "crowDeck",
@@ -19045,7 +19017,7 @@
     "id": "cyz2",
     "staged": false,
     "parent": "pile2",
-    "z": 66364
+    "z": 71127
   },
   "gios": {
     "deck": "crowDeck",
@@ -19054,7 +19026,7 @@
     "id": "gios",
     "staged": false,
     "parent": "pile2",
-    "z": 66365
+    "z": 71128
   },
   "8gln": {
     "deck": "crowDeck",
@@ -19063,7 +19035,7 @@
     "id": "8gln",
     "staged": false,
     "parent": "pile2",
-    "z": 66366
+    "z": 71129
   },
   "q9r7": {
     "deck": "crowDeck",
@@ -19072,7 +19044,7 @@
     "id": "q9r7",
     "staged": false,
     "parent": "pile2",
-    "z": 66367
+    "z": 71130
   },
   "dkdr": {
     "deck": "crowDeck",
@@ -19081,7 +19053,7 @@
     "id": "dkdr",
     "staged": false,
     "parent": "pile2",
-    "z": 66368
+    "z": 71131
   },
   "ghgj": {
     "deck": "crowDeck",
@@ -19090,7 +19062,7 @@
     "id": "ghgj",
     "staged": false,
     "parent": "pile2",
-    "z": 66369
+    "z": 71132
   },
   "qdto": {
     "deck": "crowDeck",
@@ -19099,7 +19071,7 @@
     "id": "qdto",
     "staged": false,
     "parent": "pile2",
-    "z": 66370
+    "z": 71133
   },
   "k5r9": {
     "deck": "crowDeck",
@@ -19108,7 +19080,7 @@
     "id": "k5r9",
     "staged": false,
     "parent": "pile2",
-    "z": 66371
+    "z": 71134
   },
   "782o": {
     "deck": "crowDeck",
@@ -19117,7 +19089,7 @@
     "id": "782o",
     "staged": false,
     "parent": "pile2",
-    "z": 66372
+    "z": 71135
   },
   "xrbw": {
     "deck": "crowDeck",
@@ -19126,7 +19098,7 @@
     "id": "xrbw",
     "staged": false,
     "parent": "pile2",
-    "z": 66373
+    "z": 71136
   },
   "ktnc": {
     "deck": "crowDeck",
@@ -19135,7 +19107,7 @@
     "id": "ktnc",
     "parent": "pile2",
     "staged": false,
-    "z": 66374
+    "z": 71137
   },
   "92ev": {
     "deck": "crowDeck",
@@ -19144,7 +19116,7 @@
     "id": "92ev",
     "staged": false,
     "parent": "pile2",
-    "z": 66375
+    "z": 71138
   },
   "jvbb": {
     "deck": "crowDeck",
@@ -19153,7 +19125,7 @@
     "id": "jvbb",
     "staged": false,
     "parent": "pile2",
-    "z": 66376
+    "z": 71139
   },
   "5u00": {
     "deck": "crowDeck",
@@ -19162,7 +19134,7 @@
     "id": "5u00",
     "staged": false,
     "parent": "pile2",
-    "z": 66377
+    "z": 71140
   },
   "pf8h": {
     "deck": "crowDeck",
@@ -19171,7 +19143,7 @@
     "id": "pf8h",
     "staged": false,
     "parent": "pile2",
-    "z": 66378
+    "z": 71141
   },
   "f4xu": {
     "deck": "crowDeck",
@@ -19180,7 +19152,7 @@
     "id": "f4xu",
     "staged": false,
     "parent": "pile2",
-    "z": 66379
+    "z": 71142
   },
   "niu8": {
     "deck": "crowDeck",
@@ -19189,7 +19161,7 @@
     "id": "niu8",
     "staged": false,
     "parent": "pile2",
-    "z": 66380
+    "z": 71143
   },
   "afo6": {
     "deck": "crowDeck",
@@ -19198,7 +19170,7 @@
     "id": "afo6",
     "staged": false,
     "parent": "pile2",
-    "z": 66381
+    "z": 71144
   },
   "1clv": {
     "deck": "crowDeck",
@@ -19207,7 +19179,7 @@
     "id": "1clv",
     "staged": false,
     "parent": "pile2",
-    "z": 66382,
+    "z": 71145,
     "activeFace": 1
   },
   "97qc": {
@@ -19217,7 +19189,7 @@
     "id": "97qc",
     "staged": false,
     "parent": "pile2",
-    "z": 66383
+    "z": 71146
   },
   "1mni": {
     "deck": "crowDeck",
@@ -19226,7 +19198,7 @@
     "id": "1mni",
     "staged": false,
     "parent": "pile2",
-    "z": 66384
+    "z": 71147
   },
   "il4p": {
     "deck": "crowDeck",
@@ -19235,7 +19207,7 @@
     "id": "il4p",
     "staged": false,
     "parent": "pile2",
-    "z": 66385
+    "z": 71148
   },
   "gameID10": {
     "id": "gameID10",
@@ -19575,7 +19547,7 @@
     "id": "y6hi",
     "staged": false,
     "parent": "pile2",
-    "z": 66386
+    "z": 71149
   },
   "y2nf": {
     "deck": "tarokyDeck",
@@ -19584,7 +19556,7 @@
     "id": "y2nf",
     "staged": false,
     "parent": "pile2",
-    "z": 66326
+    "z": 71089
   },
   "ndj3": {
     "deck": "tarokyDeck",
@@ -19593,7 +19565,7 @@
     "id": "ndj3",
     "staged": false,
     "parent": "pile2",
-    "z": 66327
+    "z": 71090
   },
   "f58q": {
     "deck": "tarokyDeck",
@@ -19602,7 +19574,7 @@
     "id": "f58q",
     "staged": false,
     "parent": "pile2",
-    "z": 66328
+    "z": 71091
   },
   "y26i": {
     "deck": "tarokyDeck",
@@ -19611,7 +19583,7 @@
     "id": "y26i",
     "staged": false,
     "parent": "pile2",
-    "z": 66329
+    "z": 71092
   },
   "gameID11": {
     "id": "gameID11",
@@ -20322,10 +20294,10 @@
         "display": "block"
       }
     },
-    "text": "Papayou",
+    "text": "Default",
     "movable": false,
     "movableInEdit": false,
-    "hintText": "\"Choose the number of players (5-7) by selecting a version.\\a\\aPass cards using the Pass Cards button in the bottom right. You can adjust the direction and number using the widgets above and below that button.\\a\\aTotal points is 431: trump cards are worth their face value and queens are worth 50 points each.\""
+    "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\""
   },
   "gameID15": {
     "id": "gameID15",
@@ -23840,7 +23812,8 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "0"
+    "versionNumber": "0",
+    "scale": 0
   },
   "cloneButton": {
     "type": "button",
@@ -24178,7 +24151,7 @@
     "id": "8oho",
     "staged": false,
     "parent": "pile2",
-    "z": 66387
+    "z": 71150
   },
   "64sh": {
     "deck": "crowDeck",
@@ -24186,7 +24159,7 @@
     "cardType": "2 black",
     "id": "64sh",
     "staged": false,
-    "z": 66388,
+    "z": 71151,
     "parent": "pile2"
   },
   "dk9p": {
@@ -24195,7 +24168,7 @@
     "cardType": "3 black",
     "id": "dk9p",
     "staged": false,
-    "z": 66389,
+    "z": 71152,
     "parent": "pile2"
   },
   "f44h": {
@@ -24204,7 +24177,7 @@
     "cardType": "4 black",
     "id": "f44h",
     "staged": false,
-    "z": 66390,
+    "z": 71153,
     "parent": "pile2"
   },
   "d2im": {
@@ -24213,7 +24186,7 @@
     "cardType": "5 black",
     "id": "d2im",
     "staged": false,
-    "z": 66391,
+    "z": 71154,
     "parent": "pile2"
   },
   "iuob": {
@@ -24222,7 +24195,7 @@
     "cardType": "6 black",
     "id": "iuob",
     "staged": false,
-    "z": 66392,
+    "z": 71155,
     "parent": "pile2"
   },
   "fzbc": {
@@ -24231,7 +24204,7 @@
     "cardType": "7 black",
     "id": "fzbc",
     "staged": false,
-    "z": 66393,
+    "z": 71156,
     "parent": "pile2"
   },
   "gjox": {
@@ -24240,7 +24213,7 @@
     "cardType": "8 black",
     "id": "gjox",
     "staged": false,
-    "z": 66394,
+    "z": 71157,
     "parent": "pile2"
   },
   "l7jt": {
@@ -24249,7 +24222,7 @@
     "cardType": "9 black",
     "id": "l7jt",
     "staged": false,
-    "z": 66395,
+    "z": 71158,
     "parent": "pile2"
   },
   "zcx7": {
@@ -24259,7 +24232,7 @@
     "id": "zcx7",
     "staged": false,
     "parent": "pile2",
-    "z": 66396
+    "z": 71159
   },
   "f9al": {
     "deck": "crowDeck",
@@ -24267,7 +24240,7 @@
     "cardType": "11 black",
     "id": "f9al",
     "staged": false,
-    "z": 66397,
+    "z": 71160,
     "parent": "pile2"
   },
   "g7mu": {
@@ -24276,7 +24249,7 @@
     "cardType": "12 black",
     "id": "g7mu",
     "staged": false,
-    "z": 66398,
+    "z": 71161,
     "parent": "pile2"
   },
   "m28x": {
@@ -24286,7 +24259,7 @@
     "id": "m28x",
     "parent": "pile2",
     "staged": false,
-    "z": 66399
+    "z": 71162
   },
   "uu8d": {
     "deck": "crowDeck",
@@ -24294,7 +24267,7 @@
     "cardType": "14 black",
     "id": "uu8d",
     "staged": false,
-    "z": 66400,
+    "z": 71163,
     "parent": "pile2"
   },
   "statePoints": {
@@ -27662,7 +27635,7 @@
     "id": "sh1e",
     "parent": "pile2",
     "staged": false,
-    "z": 66404
+    "z": 71167
   },
   "9rai": {
     "deck": "spanishDeck",
@@ -27671,7 +27644,7 @@
     "id": "9rai",
     "parent": "pile2",
     "staged": false,
-    "z": 66405
+    "z": 71168
   },
   "9hfs": {
     "deck": "spanishDeck",
@@ -27680,7 +27653,7 @@
     "id": "9hfs",
     "parent": "pile2",
     "staged": false,
-    "z": 66406
+    "z": 71169
   },
   "4i54": {
     "deck": "spanishDeck",
@@ -27689,7 +27662,7 @@
     "id": "4i54",
     "parent": "pile2",
     "staged": false,
-    "z": 66407
+    "z": 71170
   },
   "cqty": {
     "deck": "spanishDeck",
@@ -27698,7 +27671,7 @@
     "id": "cqty",
     "parent": "pile2",
     "staged": false,
-    "z": 66408
+    "z": 71171
   },
   "q3iq": {
     "deck": "spanishDeck",
@@ -27707,7 +27680,7 @@
     "id": "q3iq",
     "staged": false,
     "parent": "pile2",
-    "z": 66409
+    "z": 71172
   },
   "yan6": {
     "deck": "spanishDeck",
@@ -27716,7 +27689,7 @@
     "id": "yan6",
     "parent": "pile2",
     "staged": false,
-    "z": 66410
+    "z": 71173
   },
   "4kbm": {
     "deck": "spanishDeck",
@@ -27725,7 +27698,7 @@
     "id": "4kbm",
     "parent": "pile2",
     "staged": false,
-    "z": 66411
+    "z": 71174
   },
   "no7i": {
     "deck": "spanishDeck",
@@ -27734,7 +27707,7 @@
     "id": "no7i",
     "staged": false,
     "parent": "pile2",
-    "z": 66412
+    "z": 71175
   },
   "tbd4": {
     "deck": "spanishDeck",
@@ -27743,7 +27716,7 @@
     "id": "tbd4",
     "staged": false,
     "parent": "pile2",
-    "z": 66413
+    "z": 71176
   },
   "9wkw": {
     "deck": "spanishDeck",
@@ -27752,7 +27725,7 @@
     "id": "9wkw",
     "staged": false,
     "parent": "pile2",
-    "z": 66414
+    "z": 71177
   },
   "1uaz": {
     "deck": "spanishDeck",
@@ -27761,7 +27734,7 @@
     "id": "1uaz",
     "parent": "pile2",
     "staged": false,
-    "z": 66415
+    "z": 71178
   },
   "g2p1": {
     "deck": "spanishDeck",
@@ -27770,7 +27743,7 @@
     "id": "g2p1",
     "parent": "pile2",
     "staged": false,
-    "z": 66416
+    "z": 71179
   },
   "2lr5": {
     "deck": "spanishDeck",
@@ -27779,7 +27752,7 @@
     "id": "2lr5",
     "parent": "pile2",
     "staged": false,
-    "z": 66417
+    "z": 71180
   },
   "fb07": {
     "deck": "spanishDeck",
@@ -27788,7 +27761,7 @@
     "id": "fb07",
     "parent": "pile2",
     "staged": false,
-    "z": 66418
+    "z": 71181
   },
   "7mdx": {
     "deck": "spanishDeck",
@@ -27797,7 +27770,7 @@
     "id": "7mdx",
     "parent": "pile2",
     "staged": false,
-    "z": 66419
+    "z": 71182
   },
   "p6t1": {
     "deck": "spanishDeck",
@@ -27806,7 +27779,7 @@
     "id": "p6t1",
     "parent": "pile2",
     "staged": false,
-    "z": 66420
+    "z": 71183
   },
   "y8jg": {
     "deck": "spanishDeck",
@@ -27815,7 +27788,7 @@
     "id": "y8jg",
     "parent": "pile2",
     "staged": false,
-    "z": 66421
+    "z": 71184
   },
   "jy9e": {
     "deck": "spanishDeck",
@@ -27824,7 +27797,7 @@
     "id": "jy9e",
     "parent": "pile2",
     "staged": false,
-    "z": 66422
+    "z": 71185
   },
   "ois8": {
     "deck": "spanishDeck",
@@ -27833,7 +27806,7 @@
     "id": "ois8",
     "parent": "pile2",
     "staged": false,
-    "z": 66423
+    "z": 71186
   },
   "bmmy": {
     "deck": "spanishDeck",
@@ -27842,7 +27815,7 @@
     "id": "bmmy",
     "parent": "pile2",
     "staged": false,
-    "z": 66424
+    "z": 71187
   },
   "odn8": {
     "deck": "spanishDeck",
@@ -27851,7 +27824,7 @@
     "id": "odn8",
     "parent": "pile2",
     "staged": false,
-    "z": 66425
+    "z": 71188
   },
   "v2h2": {
     "deck": "spanishDeck",
@@ -27860,7 +27833,7 @@
     "id": "v2h2",
     "parent": "pile2",
     "staged": false,
-    "z": 66426
+    "z": 71189
   },
   "qgiq": {
     "deck": "spanishDeck",
@@ -27869,7 +27842,7 @@
     "id": "qgiq",
     "parent": "pile2",
     "staged": false,
-    "z": 66427
+    "z": 71190
   },
   "rj3y": {
     "deck": "spanishDeck",
@@ -27878,7 +27851,7 @@
     "id": "rj3y",
     "parent": "pile2",
     "staged": false,
-    "z": 66428
+    "z": 71191
   },
   "ksc2": {
     "deck": "spanishDeck",
@@ -27887,7 +27860,7 @@
     "id": "ksc2",
     "parent": "pile2",
     "staged": false,
-    "z": 66429
+    "z": 71192
   },
   "z99b": {
     "deck": "spanishDeck",
@@ -27896,7 +27869,7 @@
     "id": "z99b",
     "parent": "pile2",
     "staged": false,
-    "z": 66430
+    "z": 71193
   },
   "x9gd": {
     "deck": "spanishDeck",
@@ -27905,7 +27878,7 @@
     "id": "x9gd",
     "parent": "pile2",
     "staged": false,
-    "z": 66431
+    "z": 71194
   },
   "to5r": {
     "deck": "spanishDeck",
@@ -27914,7 +27887,7 @@
     "id": "to5r",
     "parent": "pile2",
     "staged": false,
-    "z": 66432
+    "z": 71195
   },
   "epq7": {
     "deck": "spanishDeck",
@@ -27923,7 +27896,7 @@
     "id": "epq7",
     "parent": "pile2",
     "staged": false,
-    "z": 66433
+    "z": 71196
   },
   "qd9y": {
     "deck": "spanishDeck",
@@ -27932,7 +27905,7 @@
     "id": "qd9y",
     "parent": "pile2",
     "staged": false,
-    "z": 66434
+    "z": 71197
   },
   "fvha": {
     "deck": "spanishDeck",
@@ -27941,7 +27914,7 @@
     "id": "fvha",
     "parent": "pile2",
     "staged": false,
-    "z": 66435
+    "z": 71198
   },
   "hvmr": {
     "deck": "spanishDeck",
@@ -27950,7 +27923,7 @@
     "id": "hvmr",
     "parent": "pile2",
     "staged": false,
-    "z": 66436
+    "z": 71199
   },
   "o5wk": {
     "deck": "spanishDeck",
@@ -27959,7 +27932,7 @@
     "id": "o5wk",
     "parent": "pile2",
     "staged": false,
-    "z": 66437
+    "z": 71200
   },
   "glym": {
     "deck": "spanishDeck",
@@ -27968,7 +27941,7 @@
     "id": "glym",
     "parent": "pile2",
     "staged": false,
-    "z": 66438
+    "z": 71201
   },
   "qk6o": {
     "deck": "spanishDeck",
@@ -27977,7 +27950,7 @@
     "id": "qk6o",
     "parent": "pile2",
     "staged": false,
-    "z": 66439
+    "z": 71202
   },
   "6ztl": {
     "deck": "spanishDeck",
@@ -27986,7 +27959,7 @@
     "id": "6ztl",
     "parent": "pile2",
     "staged": false,
-    "z": 66440
+    "z": 71203
   },
   "6jct": {
     "deck": "spanishDeck",
@@ -27995,7 +27968,7 @@
     "id": "6jct",
     "parent": "pile2",
     "staged": false,
-    "z": 66441
+    "z": 71204
   },
   "06fw": {
     "deck": "spanishDeck",
@@ -28004,7 +27977,7 @@
     "id": "06fw",
     "parent": "pile2",
     "staged": false,
-    "z": 66442
+    "z": 71205
   },
   "e2ul": {
     "deck": "spanishDeck",
@@ -28013,7 +27986,7 @@
     "id": "e2ul",
     "parent": "pile2",
     "staged": false,
-    "z": 66443
+    "z": 71206
   },
   "t499": {
     "deck": "spanishDeck",
@@ -28022,7 +27995,7 @@
     "id": "t499",
     "parent": "pile2",
     "staged": false,
-    "z": 66444
+    "z": 71207
   },
   "jceo": {
     "deck": "spanishDeck",
@@ -28031,7 +28004,7 @@
     "id": "jceo",
     "parent": "pile2",
     "staged": false,
-    "z": 66445
+    "z": 71208
   },
   "kyrv": {
     "deck": "spanishDeck",
@@ -28040,7 +28013,7 @@
     "id": "kyrv",
     "staged": false,
     "parent": "pile2",
-    "z": 66446
+    "z": 71209
   },
   "cprx": {
     "deck": "spanishDeck",
@@ -28049,7 +28022,7 @@
     "id": "cprx",
     "parent": "pile2",
     "staged": false,
-    "z": 66447
+    "z": 71210
   },
   "1van": {
     "deck": "spanishDeck",
@@ -28058,7 +28031,7 @@
     "id": "1van",
     "parent": "pile2",
     "staged": false,
-    "z": 66448
+    "z": 71211
   },
   "yvjj": {
     "deck": "spanishDeck",
@@ -28067,7 +28040,7 @@
     "id": "yvjj",
     "parent": "pile2",
     "staged": false,
-    "z": 66449
+    "z": 71212
   },
   "rxxu": {
     "deck": "spanishDeck",
@@ -28076,7 +28049,7 @@
     "id": "rxxu",
     "parent": "pile2",
     "staged": false,
-    "z": 66450
+    "z": 71213
   },
   "ca49": {
     "deck": "spanishDeck",
@@ -28085,7 +28058,7 @@
     "id": "ca49",
     "parent": "pile2",
     "staged": false,
-    "z": 66451
+    "z": 71214
   },
   "playerAid8": {
     "type": "scoreboard",
@@ -28963,7 +28936,7 @@
     "id": "vaj7",
     "parent": "pile2",
     "staged": false,
-    "z": 66452
+    "z": 71215
   },
   "87mo": {
     "deck": "germanDeck",
@@ -28972,7 +28945,7 @@
     "id": "87mo",
     "parent": "pile2",
     "staged": false,
-    "z": 66453
+    "z": 71216
   },
   "xixn": {
     "deck": "germanDeck",
@@ -28981,7 +28954,7 @@
     "id": "xixn",
     "parent": "pile2",
     "staged": false,
-    "z": 66454
+    "z": 71217
   },
   "zzrf": {
     "deck": "germanDeck",
@@ -28990,7 +28963,7 @@
     "id": "zzrf",
     "staged": false,
     "parent": "pile2",
-    "z": 66455
+    "z": 71218
   },
   "zcet": {
     "deck": "germanDeck",
@@ -28999,7 +28972,7 @@
     "id": "zcet",
     "parent": "pile2",
     "staged": false,
-    "z": 66456
+    "z": 71219
   },
   "t7mu": {
     "deck": "germanDeck",
@@ -29008,7 +28981,7 @@
     "id": "t7mu",
     "staged": false,
     "parent": "pile2",
-    "z": 66457
+    "z": 71220
   },
   "anm2": {
     "deck": "germanDeck",
@@ -29017,7 +28990,7 @@
     "id": "anm2",
     "parent": "pile2",
     "staged": false,
-    "z": 66458
+    "z": 71221
   },
   "up0z": {
     "deck": "germanDeck",
@@ -29027,7 +29000,7 @@
     "parent": "pile2",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 66459
+    "z": 71222
   },
   "hrdy": {
     "deck": "germanDeck",
@@ -29036,7 +29009,7 @@
     "id": "hrdy",
     "parent": "pile2",
     "staged": false,
-    "z": 66460
+    "z": 71223
   },
   "ydk0": {
     "deck": "germanDeck",
@@ -29045,7 +29018,7 @@
     "id": "ydk0",
     "parent": "pile2",
     "staged": false,
-    "z": 66461
+    "z": 71224
   },
   "1abt": {
     "deck": "germanDeck",
@@ -29054,7 +29027,7 @@
     "id": "1abt",
     "parent": "pile2",
     "staged": false,
-    "z": 66462
+    "z": 71225
   },
   "48y2": {
     "deck": "germanDeck",
@@ -29063,7 +29036,7 @@
     "id": "48y2",
     "staged": false,
     "parent": "pile2",
-    "z": 66463
+    "z": 71226
   },
   "8jk6": {
     "deck": "germanDeck",
@@ -29072,7 +29045,7 @@
     "id": "8jk6",
     "parent": "pile2",
     "staged": false,
-    "z": 66464
+    "z": 71227
   },
   "4dpk": {
     "deck": "germanDeck",
@@ -29081,7 +29054,7 @@
     "id": "4dpk",
     "parent": "pile2",
     "staged": false,
-    "z": 66465
+    "z": 71228
   },
   "zt4c": {
     "deck": "germanDeck",
@@ -29090,7 +29063,7 @@
     "id": "zt4c",
     "parent": "pile2",
     "staged": false,
-    "z": 66466
+    "z": 71229
   },
   "b1er": {
     "deck": "germanDeck",
@@ -29099,7 +29072,7 @@
     "id": "b1er",
     "parent": "pile2",
     "staged": false,
-    "z": 66467
+    "z": 71230
   },
   "mul7": {
     "deck": "germanDeck",
@@ -29108,7 +29081,7 @@
     "id": "mul7",
     "parent": "pile2",
     "staged": false,
-    "z": 66468
+    "z": 71231
   },
   "ya24": {
     "deck": "germanDeck",
@@ -29118,7 +29091,7 @@
     "parent": "pile2",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 66469
+    "z": 71232
   },
   "4a99": {
     "deck": "germanDeck",
@@ -29127,7 +29100,7 @@
     "id": "4a99",
     "staged": false,
     "parent": "pile2",
-    "z": 66470
+    "z": 71233
   },
   "srqz": {
     "deck": "germanDeck",
@@ -29136,7 +29109,7 @@
     "id": "srqz",
     "parent": "pile2",
     "staged": false,
-    "z": 66471
+    "z": 71234
   },
   "4cpf": {
     "deck": "germanDeck",
@@ -29145,7 +29118,7 @@
     "id": "4cpf",
     "parent": "pile2",
     "staged": false,
-    "z": 66472
+    "z": 71235
   },
   "t91e": {
     "deck": "germanDeck",
@@ -29154,7 +29127,7 @@
     "id": "t91e",
     "parent": "pile2",
     "staged": false,
-    "z": 66473
+    "z": 71236
   },
   "wr2t": {
     "deck": "germanDeck",
@@ -29163,7 +29136,7 @@
     "id": "wr2t",
     "parent": "pile2",
     "staged": false,
-    "z": 66474
+    "z": 71237
   },
   "vhpu": {
     "deck": "germanDeck",
@@ -29172,7 +29145,7 @@
     "id": "vhpu",
     "parent": "pile2",
     "staged": false,
-    "z": 66475
+    "z": 71238
   },
   "gm6i": {
     "deck": "germanDeck",
@@ -29181,7 +29154,7 @@
     "id": "gm6i",
     "parent": "pile2",
     "staged": false,
-    "z": 66476
+    "z": 71239
   },
   "lwqv": {
     "deck": "germanDeck",
@@ -29190,7 +29163,7 @@
     "id": "lwqv",
     "parent": "pile2",
     "staged": false,
-    "z": 66477
+    "z": 71240
   },
   "l255": {
     "deck": "germanDeck",
@@ -29199,7 +29172,7 @@
     "id": "l255",
     "parent": "pile2",
     "staged": false,
-    "z": 66478
+    "z": 71241
   },
   "myzu": {
     "deck": "germanDeck",
@@ -29209,7 +29182,7 @@
     "parent": "pile2",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 66479
+    "z": 71242
   },
   "2sab": {
     "deck": "germanDeck",
@@ -29218,7 +29191,7 @@
     "id": "2sab",
     "parent": "pile2",
     "staged": false,
-    "z": 66480
+    "z": 71243
   },
   "pvbv": {
     "deck": "germanDeck",
@@ -29227,7 +29200,7 @@
     "id": "pvbv",
     "parent": "pile2",
     "staged": false,
-    "z": 66481
+    "z": 71244
   },
   "dctx": {
     "deck": "germanDeck",
@@ -29236,7 +29209,7 @@
     "id": "dctx",
     "staged": false,
     "parent": "pile2",
-    "z": 66482
+    "z": 71245
   },
   "zk00": {
     "deck": "germanDeck",
@@ -29245,7 +29218,7 @@
     "id": "zk00",
     "parent": "pile2",
     "staged": false,
-    "z": 66483
+    "z": 71246
   },
   "da7e": {
     "deck": "germanDeck",
@@ -29254,7 +29227,7 @@
     "id": "da7e",
     "staged": false,
     "parent": "pile2",
-    "z": 66484
+    "z": 71247
   },
   "y4x5": {
     "deck": "germanDeck",
@@ -29263,7 +29236,7 @@
     "id": "y4x5",
     "parent": "pile2",
     "staged": false,
-    "z": 66485
+    "z": 71248
   },
   "i7o5": {
     "deck": "germanDeck",
@@ -29272,7 +29245,7 @@
     "id": "i7o5",
     "parent": "pile2",
     "staged": false,
-    "z": 66486
+    "z": 71249
   },
   "scgl": {
     "deck": "germanDeck",
@@ -29281,7 +29254,7 @@
     "id": "scgl",
     "staged": false,
     "parent": "pile2",
-    "z": 66487
+    "z": 71250
   },
   "xtc9": {
     "deck": "germanDeck",
@@ -29290,7 +29263,7 @@
     "id": "xtc9",
     "parent": "pile2",
     "staged": false,
-    "z": 66488
+    "z": 71251
   },
   "d9tp": {
     "deck": "germanDeck",
@@ -29300,7 +29273,7 @@
     "staged": false,
     "sortSuitSkat": 0,
     "parent": "pile2",
-    "z": 66489
+    "z": 71252
   },
   "8ytr": {
     "deck": "germanDeck",
@@ -29309,7 +29282,7 @@
     "id": "8ytr",
     "parent": "pile2",
     "staged": false,
-    "z": 66490
+    "z": 71253
   },
   "lvgf": {
     "deck": "germanDeck",
@@ -29318,7 +29291,7 @@
     "id": "lvgf",
     "staged": false,
     "parent": "pile2",
-    "z": 66491
+    "z": 71254
   },
   "gameID29": {
     "id": "gameID29",
@@ -29430,8 +29403,8 @@
     },
     "chooser": 15,
     "image": "",
-    "text": "No\nTrump",
-    "deckSuitsUni": "NT",
+    "text": "All\nTrump",
+    "deckSuitsUni": "AT",
     "deckSuitsColor": ""
   },
   "choose16": {
@@ -30001,7 +29974,7 @@
     "cardType": "Acorn 01",
     "id": "2wa8",
     "staged": false,
-    "z": 66492,
+    "z": 71255,
     "parent": "pile2"
   },
   "alcs": {
@@ -30010,7 +29983,7 @@
     "cardType": "Acorn 06",
     "id": "alcs",
     "staged": false,
-    "z": 66493,
+    "z": 71256,
     "parent": "pile2"
   },
   "zjgq": {
@@ -30019,7 +29992,7 @@
     "cardType": "Acorn 07",
     "id": "zjgq",
     "staged": false,
-    "z": 66494,
+    "z": 71257,
     "parent": "pile2"
   },
   "f4ea": {
@@ -30028,7 +30001,7 @@
     "cardType": "Acorn 08",
     "id": "f4ea",
     "staged": false,
-    "z": 66495,
+    "z": 71258,
     "parent": "pile2"
   },
   "4gts": {
@@ -30038,7 +30011,7 @@
     "id": "4gts",
     "parent": "pile2",
     "staged": false,
-    "z": 66496
+    "z": 71259
   },
   "4u5f": {
     "deck": "swissDeck",
@@ -30047,7 +30020,7 @@
     "id": "4u5f",
     "parent": "pile2",
     "staged": false,
-    "z": 66497
+    "z": 71260
   },
   "1zs0": {
     "deck": "swissDeck",
@@ -30055,7 +30028,7 @@
     "cardType": "Acorn 11",
     "id": "1zs0",
     "staged": false,
-    "z": 66498,
+    "z": 71261,
     "parent": "pile2"
   },
   "fj5l": {
@@ -30065,7 +30038,7 @@
     "id": "fj5l",
     "parent": "pile2",
     "staged": false,
-    "z": 66499
+    "z": 71262
   },
   "nksh": {
     "deck": "swissDeck",
@@ -30073,7 +30046,7 @@
     "cardType": "Acorn 13",
     "id": "nksh",
     "staged": false,
-    "z": 66500,
+    "z": 71263,
     "parent": "pile2"
   },
   "2clx": {
@@ -30082,7 +30055,7 @@
     "cardType": "Bell 01",
     "id": "2clx",
     "staged": false,
-    "z": 66501,
+    "z": 71264,
     "parent": "pile2"
   },
   "wkpt": {
@@ -30092,7 +30065,7 @@
     "id": "wkpt",
     "parent": "pile2",
     "staged": false,
-    "z": 66502
+    "z": 71265
   },
   "cysa": {
     "deck": "swissDeck",
@@ -30100,7 +30073,7 @@
     "cardType": "Bell 07",
     "id": "cysa",
     "staged": false,
-    "z": 66503,
+    "z": 71266,
     "parent": "pile2"
   },
   "1uhp": {
@@ -30110,7 +30083,7 @@
     "id": "1uhp",
     "parent": "pile2",
     "staged": false,
-    "z": 66504
+    "z": 71267
   },
   "ix0x": {
     "deck": "swissDeck",
@@ -30119,7 +30092,7 @@
     "id": "ix0x",
     "parent": "pile2",
     "staged": false,
-    "z": 66505
+    "z": 71268
   },
   "4ljo": {
     "deck": "swissDeck",
@@ -30127,7 +30100,7 @@
     "cardType": "Bell 10",
     "id": "4ljo",
     "staged": false,
-    "z": 66506,
+    "z": 71269,
     "parent": "pile2"
   },
   "dsaz": {
@@ -30137,7 +30110,7 @@
     "id": "dsaz",
     "parent": "pile2",
     "staged": false,
-    "z": 66507
+    "z": 71270
   },
   "2yuy": {
     "deck": "swissDeck",
@@ -30146,7 +30119,7 @@
     "id": "2yuy",
     "parent": "pile2",
     "staged": false,
-    "z": 66508
+    "z": 71271
   },
   "ydai": {
     "deck": "swissDeck",
@@ -30154,7 +30127,7 @@
     "cardType": "Bell 13",
     "id": "ydai",
     "staged": false,
-    "z": 66509,
+    "z": 71272,
     "parent": "pile2"
   },
   "lqvm": {
@@ -30164,7 +30137,7 @@
     "id": "lqvm",
     "staged": false,
     "parent": "pile2",
-    "z": 66510
+    "z": 71273
   },
   "l1a4": {
     "deck": "swissDeck",
@@ -30173,7 +30146,7 @@
     "id": "l1a4",
     "parent": "pile2",
     "staged": false,
-    "z": 66511
+    "z": 71274
   },
   "1ao8": {
     "deck": "swissDeck",
@@ -30182,7 +30155,7 @@
     "id": "1ao8",
     "parent": "pile2",
     "staged": false,
-    "z": 66512
+    "z": 71275
   },
   "z53z": {
     "deck": "swissDeck",
@@ -30191,7 +30164,7 @@
     "id": "z53z",
     "parent": "pile2",
     "staged": false,
-    "z": 66513
+    "z": 71276
   },
   "l477": {
     "deck": "swissDeck",
@@ -30199,7 +30172,7 @@
     "cardType": "Rose 09",
     "id": "l477",
     "staged": false,
-    "z": 66514,
+    "z": 71277,
     "parent": "pile2"
   },
   "xlbo": {
@@ -30209,7 +30182,7 @@
     "id": "xlbo",
     "parent": "pile2",
     "staged": false,
-    "z": 66515
+    "z": 71278
   },
   "2fzs": {
     "deck": "swissDeck",
@@ -30217,7 +30190,7 @@
     "cardType": "Rose 11",
     "id": "2fzs",
     "staged": false,
-    "z": 66516,
+    "z": 71279,
     "parent": "pile2"
   },
   "ke9s": {
@@ -30227,7 +30200,7 @@
     "id": "ke9s",
     "parent": "pile2",
     "staged": false,
-    "z": 66517
+    "z": 71280
   },
   "0ytl": {
     "deck": "swissDeck",
@@ -30236,7 +30209,7 @@
     "id": "0ytl",
     "parent": "pile2",
     "staged": false,
-    "z": 66518
+    "z": 71281
   },
   "jykm": {
     "deck": "swissDeck",
@@ -30244,7 +30217,7 @@
     "cardType": "Shield 01",
     "id": "jykm",
     "staged": false,
-    "z": 66519,
+    "z": 71282,
     "parent": "pile2"
   },
   "4ol2": {
@@ -30254,7 +30227,7 @@
     "id": "4ol2",
     "parent": "pile2",
     "staged": false,
-    "z": 66520
+    "z": 71283
   },
   "5jz0": {
     "deck": "swissDeck",
@@ -30263,7 +30236,7 @@
     "id": "5jz0",
     "parent": "pile2",
     "staged": false,
-    "z": 66521
+    "z": 71284
   },
   "6v02": {
     "deck": "swissDeck",
@@ -30272,7 +30245,7 @@
     "id": "6v02",
     "parent": "pile2",
     "staged": false,
-    "z": 66522
+    "z": 71285
   },
   "ev9f": {
     "deck": "swissDeck",
@@ -30280,7 +30253,7 @@
     "cardType": "Shield 09",
     "id": "ev9f",
     "staged": false,
-    "z": 66523,
+    "z": 71286,
     "parent": "pile2"
   },
   "rkh9": {
@@ -30290,7 +30263,7 @@
     "id": "rkh9",
     "parent": "pile2",
     "staged": false,
-    "z": 66524
+    "z": 71287
   },
   "3lst": {
     "deck": "swissDeck",
@@ -30299,7 +30272,7 @@
     "id": "3lst",
     "parent": "pile2",
     "staged": false,
-    "z": 66525
+    "z": 71288
   },
   "wdsg": {
     "deck": "swissDeck",
@@ -30307,7 +30280,7 @@
     "cardType": "Shield 12",
     "id": "wdsg",
     "staged": false,
-    "z": 66526,
+    "z": 71289,
     "parent": "pile2"
   },
   "mb5b": {
@@ -30317,7 +30290,7 @@
     "id": "mb5b",
     "staged": false,
     "parent": "pile2",
-    "z": 66527
+    "z": 71290
   },
   "itemsHolder27": {
     "inheritFrom": {
@@ -32566,7 +32539,7 @@
     "cardType": "CC",
     "id": "wwt0",
     "staged": false,
-    "z": 66528,
+    "z": 71291,
     "parent": "pile2"
   },
   "mqge": {
@@ -32575,7 +32548,7 @@
     "cardType": "CD",
     "id": "mqge",
     "staged": false,
-    "z": 66529,
+    "z": 71292,
     "parent": "pile2"
   },
   "1ncf": {
@@ -32585,7 +32558,7 @@
     "id": "1ncf",
     "staged": false,
     "parent": "pile2",
-    "z": 66530
+    "z": 71293
   },
   "b5ol": {
     "deck": "cavaliers",
@@ -32594,7 +32567,7 @@
     "id": "b5ol",
     "staged": false,
     "parent": "pile2",
-    "z": 66531
+    "z": 71294
   },
   "playerAid31": {
     "type": "scoreboard",
@@ -32634,7 +32607,7 @@
     "id": "575h",
     "parent": "pile2",
     "staged": false,
-    "z": 66532
+    "z": 71295
   },
   "n8iz": {
     "deck": "cavaliers",
@@ -32643,7 +32616,7 @@
     "id": "n8iz",
     "parent": "pile2",
     "staged": false,
-    "z": 66533
+    "z": 71296
   },
   "469z": {
     "deck": "cavaliers",
@@ -32652,7 +32625,7 @@
     "id": "469z",
     "parent": "pile2",
     "staged": false,
-    "z": 66534
+    "z": 71297
   },
   "kc22": {
     "deck": "cavaliers",
@@ -32661,7 +32634,7 @@
     "id": "kc22",
     "parent": "pile2",
     "staged": false,
-    "z": 66535
+    "z": 71298
   },
   "tarotDeck": {
     "type": "deck",
@@ -34142,9 +34115,8 @@
     "cardType": "1",
     "id": "jtch",
     "staged": false,
-    "z": 69035,
-    "hoverParent": "hand",
-    "parent": "ol5n"
+    "z": 71300,
+    "parent": "pile2"
   },
   "mbpc": {
     "deck": "tarotDeck",
@@ -34152,18 +34124,17 @@
     "cardType": "2",
     "id": "mbpc",
     "staged": false,
-    "z": 69017,
-    "hoverParent": "hand",
-    "parent": "ol5n"
+    "z": 71301,
+    "parent": "pile2"
   },
   "2gql": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "3",
     "id": "2gql",
-    "staged": true,
-    "z": 69018,
-    "parent": "ol5n"
+    "staged": false,
+    "z": 71302,
+    "parent": "pile2"
   },
   "zoeh": {
     "deck": "tarotDeck",
@@ -34171,8 +34142,8 @@
     "cardType": "4",
     "id": "zoeh",
     "staged": false,
-    "z": 69004,
-    "parent": "ol5n"
+    "z": 71303,
+    "parent": "pile2"
   },
   "yqvf": {
     "deck": "tarotDeck",
@@ -34180,17 +34151,17 @@
     "cardType": "5",
     "id": "yqvf",
     "staged": false,
-    "z": 68996,
-    "parent": "ol5n"
+    "z": 71304,
+    "parent": "pile2"
   },
   "ltpy": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "6",
     "id": "ltpy",
-    "staged": true,
-    "z": 69055,
-    "parent": "ol5n"
+    "staged": false,
+    "z": 71305,
+    "parent": "pile2"
   },
   "np2x": {
     "deck": "tarotDeck",
@@ -34198,8 +34169,8 @@
     "cardType": "7",
     "id": "np2x",
     "staged": false,
-    "parent": "ol5n",
-    "z": 68989
+    "z": 71306,
+    "parent": "pile2"
   },
   "4e72": {
     "deck": "tarotDeck",
@@ -34207,35 +34178,35 @@
     "cardType": "8",
     "id": "4e72",
     "staged": false,
-    "z": 68980,
-    "parent": "ol5n"
+    "z": 71307,
+    "parent": "pile2"
   },
   "2kwi": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "9",
     "id": "2kwi",
-    "staged": true,
-    "parent": "ol5n",
-    "z": 69033
+    "staged": false,
+    "parent": "pile2",
+    "z": 71308
   },
   "d4pk": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "10",
     "id": "d4pk",
-    "staged": true,
-    "parent": "ol5n",
-    "z": 69011
+    "staged": false,
+    "parent": "pile2",
+    "z": 71309
   },
   "dxj9": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "11",
     "id": "dxj9",
-    "staged": true,
-    "parent": "ol5n",
-    "z": 68981
+    "staged": false,
+    "parent": "pile2",
+    "z": 71310
   },
   "2x0u": {
     "deck": "tarotDeck",
@@ -34243,8 +34214,8 @@
     "cardType": "12",
     "id": "2x0u",
     "staged": false,
-    "z": 68993,
-    "parent": "ol5n"
+    "z": 71311,
+    "parent": "pile2"
   },
   "6dv5": {
     "deck": "tarotDeck",
@@ -34252,26 +34223,26 @@
     "cardType": "13",
     "id": "6dv5",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69016
+    "parent": "pile2",
+    "z": 71312
   },
   "0bw8": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "14",
     "id": "0bw8",
-    "staged": true,
-    "parent": "ol5n",
-    "z": 69000
+    "staged": false,
+    "parent": "pile2",
+    "z": 71313
   },
   "33re": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "15",
     "id": "33re",
-    "staged": true,
-    "parent": "ol5n",
-    "z": 68985
+    "staged": false,
+    "parent": "pile2",
+    "z": 71314
   },
   "m05l": {
     "deck": "tarotDeck",
@@ -34279,8 +34250,8 @@
     "cardType": "16",
     "id": "m05l",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69012
+    "parent": "pile2",
+    "z": 71315
   },
   "n6be": {
     "deck": "tarotDeck",
@@ -34288,8 +34259,8 @@
     "cardType": "17",
     "id": "n6be",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69034
+    "parent": "pile2",
+    "z": 71316
   },
   "68g3": {
     "deck": "tarotDeck",
@@ -34297,8 +34268,8 @@
     "cardType": "18",
     "id": "68g3",
     "staged": false,
-    "z": 69027,
-    "parent": "ol5n"
+    "z": 71317,
+    "parent": "pile2"
   },
   "4da2": {
     "deck": "tarotDeck",
@@ -34306,8 +34277,8 @@
     "cardType": "20",
     "id": "4da2",
     "staged": false,
-    "parent": "ol5n",
-    "z": 68984
+    "parent": "pile2",
+    "z": 71318
   },
   "y991": {
     "deck": "tarotDeck",
@@ -34315,8 +34286,8 @@
     "cardType": "21",
     "id": "y991",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69019
+    "parent": "pile2",
+    "z": 71319
   },
   "g48v": {
     "deck": "tarotDeck",
@@ -34324,62 +34295,62 @@
     "cardType": "22",
     "id": "g48v",
     "staged": false,
-    "z": 69051,
-    "parent": "ol5n"
+    "z": 71320,
+    "parent": "pile2"
   },
   "3w2i": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "1C",
     "id": "3w2i",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69043
+    "z": 71321
   },
   "p4v9": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "2C",
     "id": "p4v9",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69052
+    "z": 71322
   },
   "uaoz": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "3C",
     "id": "uaoz",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 68995
+    "z": 71323
   },
   "jj7b": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "4C",
     "id": "jj7b",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69003
+    "z": 71324
   },
   "3gud": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "5C",
     "id": "3gud",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69050
+    "z": 71325
   },
   "2iju": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "6C",
     "id": "2iju",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 68986
+    "z": 71326
   },
   "b598": {
     "deck": "tarotDeck",
@@ -34387,8 +34358,8 @@
     "cardType": "7C",
     "id": "b598",
     "staged": false,
-    "z": 69036,
-    "parent": "ol5n"
+    "z": 71327,
+    "parent": "pile2"
   },
   "1oo2": {
     "deck": "tarotDeck",
@@ -34396,8 +34367,8 @@
     "cardType": "8C",
     "id": "1oo2",
     "staged": false,
-    "parent": "ol5n",
-    "z": 68987
+    "parent": "pile2",
+    "z": 71328
   },
   "pukz": {
     "deck": "tarotDeck",
@@ -34405,8 +34376,8 @@
     "cardType": "9C",
     "id": "pukz",
     "staged": false,
-    "z": 68997,
-    "parent": "ol5n"
+    "z": 71329,
+    "parent": "pile2"
   },
   "ylxc": {
     "deck": "tarotDeck",
@@ -34414,8 +34385,8 @@
     "cardType": "TC",
     "id": "ylxc",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69023
+    "parent": "pile2",
+    "z": 71330
   },
   "oymw": {
     "deck": "tarotDeck",
@@ -34423,8 +34394,8 @@
     "cardType": "JC",
     "id": "oymw",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69039
+    "parent": "pile2",
+    "z": 71331
   },
   "tesr": {
     "deck": "tarotDeck",
@@ -34432,8 +34403,8 @@
     "cardType": "CC",
     "id": "tesr",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69046
+    "parent": "pile2",
+    "z": 71332
   },
   "uwmv": {
     "deck": "tarotDeck",
@@ -34441,8 +34412,8 @@
     "cardType": "QC",
     "id": "uwmv",
     "staged": false,
-    "z": 69044,
-    "parent": "ol5n"
+    "z": 71374,
+    "parent": "pile2"
   },
   "r550": {
     "deck": "tarotDeck",
@@ -34450,8 +34421,8 @@
     "cardType": "KC",
     "id": "r550",
     "staged": false,
-    "z": 69022,
-    "parent": "ol5n"
+    "z": 71333,
+    "parent": "pile2"
   },
   "rf4c": {
     "deck": "tarotDeck",
@@ -34459,62 +34430,62 @@
     "cardType": "1S",
     "id": "rf4c",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69007
+    "parent": "pile2",
+    "z": 71334
   },
   "sb8x": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "2S",
     "id": "sb8x",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69014
+    "z": 71375
   },
   "ug2j": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "3S",
     "id": "ug2j",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69002
+    "z": 71335
   },
   "p7lg": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "4S",
     "id": "p7lg",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69057
+    "z": 71336
   },
   "wyil": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "5S",
     "id": "wyil",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 68998
+    "z": 71337
   },
   "pmh4": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "6S",
     "id": "pmh4",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69056
+    "z": 71338
   },
   "c7jy": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "7S",
     "id": "c7jy",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 68994
+    "z": 71339
   },
   "6aw4": {
     "deck": "tarotDeck",
@@ -34522,17 +34493,17 @@
     "cardType": "8S",
     "id": "6aw4",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69047
+    "parent": "pile2",
+    "z": 71340
   },
   "ve9u": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "9S",
     "id": "ve9u",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69029
+    "z": 71341
   },
   "5s5b": {
     "deck": "tarotDeck",
@@ -34540,8 +34511,8 @@
     "cardType": "TS",
     "id": "5s5b",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69013
+    "parent": "pile2",
+    "z": 71342
   },
   "6gee": {
     "deck": "tarotDeck",
@@ -34549,8 +34520,8 @@
     "cardType": "JS",
     "id": "6gee",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69001
+    "parent": "pile2",
+    "z": 71343
   },
   "x5md": {
     "deck": "tarotDeck",
@@ -34558,8 +34529,8 @@
     "cardType": "CS",
     "id": "x5md",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69030
+    "parent": "pile2",
+    "z": 71344
   },
   "47jy": {
     "deck": "tarotDeck",
@@ -34567,71 +34538,71 @@
     "cardType": "QS",
     "id": "47jy",
     "staged": false,
-    "z": 69031,
-    "parent": "ol5n"
+    "z": 71345,
+    "parent": "pile2"
   },
   "45qe": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "KS",
     "id": "45qe",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69024
+    "z": 71346
   },
   "edgy": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "1H",
     "id": "edgy",
-    "parent": "ol5n",
     "staged": false,
-    "z": 68990
+    "z": 71347,
+    "parent": "pile2"
   },
   "rxu3": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "2H",
     "id": "rxu3",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 68983
+    "z": 71348
   },
   "pvp2": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "3H",
     "id": "pvp2",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69038
+    "z": 71349
   },
   "7w8g": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "4H",
     "id": "7w8g",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69037
+    "z": 71350
   },
   "ouox": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "5H",
     "id": "ouox",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69041
+    "z": 71351
   },
   "p6qv": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "6H",
     "id": "p6qv",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69006
+    "z": 71352
   },
   "g0zk": {
     "deck": "tarotDeck",
@@ -34639,8 +34610,8 @@
     "cardType": "7H",
     "id": "g0zk",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69021
+    "parent": "pile2",
+    "z": 71353
   },
   "phv7": {
     "deck": "tarotDeck",
@@ -34648,8 +34619,8 @@
     "cardType": "8H",
     "id": "phv7",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69042
+    "parent": "pile2",
+    "z": 71354
   },
   "slaj": {
     "deck": "tarotDeck",
@@ -34657,8 +34628,8 @@
     "cardType": "9H",
     "id": "slaj",
     "staged": false,
-    "z": 68991,
-    "parent": "ol5n"
+    "z": 71355,
+    "parent": "pile2"
   },
   "t27t": {
     "deck": "tarotDeck",
@@ -34666,8 +34637,8 @@
     "cardType": "TH",
     "id": "t27t",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69048
+    "parent": "pile2",
+    "z": 71356
   },
   "lh3t": {
     "deck": "tarotDeck",
@@ -34675,8 +34646,8 @@
     "cardType": "JH",
     "id": "lh3t",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69054
+    "parent": "pile2",
+    "z": 71357
   },
   "u117": {
     "deck": "tarotDeck",
@@ -34684,17 +34655,17 @@
     "cardType": "CH",
     "id": "u117",
     "staged": false,
-    "z": 69005,
-    "parent": "ol5n"
+    "z": 71358,
+    "parent": "pile2"
   },
   "v0ar": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "QH",
     "id": "v0ar",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69045
+    "z": 71359
   },
   "4tgs": {
     "deck": "tarotDeck",
@@ -34702,62 +34673,62 @@
     "cardType": "KH",
     "id": "4tgs",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69010
+    "parent": "pile2",
+    "z": 71360
   },
   "0v9j": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "1D",
     "id": "0v9j",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 68988
+    "z": 71361
   },
   "8vu2": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "2D",
     "id": "8vu2",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 68992
+    "z": 71362
   },
   "3bi4": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "3D",
     "id": "3bi4",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69015
+    "z": 71376
   },
   "jcpv": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "4D",
     "id": "jcpv",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69040
+    "z": 71363
   },
   "rh8y": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "5D",
     "id": "rh8y",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69009
+    "z": 71364
   },
   "tthw": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "6D",
     "id": "tthw",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69020
+    "z": 71365
   },
   "sgmg": {
     "deck": "tarotDeck",
@@ -34765,8 +34736,8 @@
     "cardType": "7D",
     "id": "sgmg",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69025
+    "parent": "pile2",
+    "z": 71366
   },
   "4iu4": {
     "deck": "tarotDeck",
@@ -34774,8 +34745,8 @@
     "cardType": "8D",
     "id": "4iu4",
     "staged": false,
-    "z": 69008,
-    "parent": "ol5n"
+    "z": 71367,
+    "parent": "pile2"
   },
   "67mo": {
     "deck": "tarotDeck",
@@ -34783,8 +34754,8 @@
     "cardType": "9D",
     "id": "67mo",
     "staged": false,
-    "parent": "ol5n",
-    "z": 68982
+    "parent": "pile2",
+    "z": 71368
   },
   "i97a": {
     "deck": "tarotDeck",
@@ -34792,8 +34763,8 @@
     "cardType": "TD",
     "id": "i97a",
     "staged": false,
-    "z": 69053,
-    "parent": "ol5n"
+    "z": 71369,
+    "parent": "pile2"
   },
   "s05m": {
     "deck": "tarotDeck",
@@ -34801,8 +34772,8 @@
     "cardType": "JD",
     "id": "s05m",
     "staged": false,
-    "z": 68999,
-    "parent": "ol5n"
+    "z": 71370,
+    "parent": "pile2"
   },
   "aiq2": {
     "deck": "tarotDeck",
@@ -34810,17 +34781,17 @@
     "cardType": "CD",
     "id": "aiq2",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69026
+    "parent": "pile2",
+    "z": 71371
   },
   "m3r6": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "QD",
     "id": "m3r6",
-    "parent": "ol5n",
+    "parent": "pile2",
     "staged": false,
-    "z": 69028
+    "z": 71372
   },
   "op0r": {
     "deck": "tarotDeck",
@@ -34828,8 +34799,8 @@
     "cardType": "KD",
     "id": "op0r",
     "staged": false,
-    "parent": "ol5n",
-    "z": 69049
+    "parent": "pile2",
+    "z": 71373
   },
   "gameID32": {
     "id": "gameID32",
@@ -36137,7 +36108,7 @@
     "cardType": "-5 auction",
     "id": "o04t",
     "staged": false,
-    "z": 66401,
+    "z": 71164,
     "parent": "pile2"
   },
   "ipja": {
@@ -36146,7 +36117,7 @@
     "cardType": "x2 auction",
     "id": "ipja",
     "staged": false,
-    "z": 66402,
+    "z": 71165,
     "parent": "pile2"
   },
   "gameID35": {
@@ -37077,7 +37048,7 @@
     "cardType": "ally auction",
     "id": "jytu",
     "staged": false,
-    "z": 66403,
+    "z": 71166,
     "activeFace": 1,
     "parent": "pile2"
   },
@@ -37348,7 +37319,9 @@
         "text": "remove_circle"
       }
     ],
-    "classes": "symbols"
+    "classes": "symbols",
+    "scale": 0,
+    "activeFace": 3
   },
   "fbpi": {
     "y": 4,
@@ -39884,7 +39857,7 @@
     "y": 874,
     "z": 78,
     "text": "Pass Cards",
-    "ready": 0,
+    "ready": 5,
     "clickRoutine": [
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       "var passCount = ${PROPERTY text OF passCountButton}",
@@ -39953,6 +39926,7 @@
         "operand1": "${PROPERTY ready}",
         "operand2": "${PROPERTY seatCount OF settingsDecks}",
         "thenRoutine": [
+          "// Gets an empty collection",
           {
             "func": "SELECT",
             "type": "doesNotExist",
@@ -39965,6 +39939,38 @@
             "operand1": "${PROPERTY activeFace OF passIndicator}",
             "operand2": 2,
             "thenRoutine": [
+              {
+                "func": "SELECT",
+                "mode": "add",
+                "type": "card",
+                "property": "parent",
+                "value": "passCards1",
+                "collection": "movingCards"
+              },
+              {
+                "func": "SELECT",
+                "mode": "add",
+                "type": "card",
+                "property": "parent",
+                "value": "passCards3",
+                "collection": "movingCards"
+              },
+              {
+                "func": "SELECT",
+                "mode": "add",
+                "type": "card",
+                "property": "parent",
+                "value": "passCards5",
+                "collection": "movingCards"
+              },
+              {
+                "func": "SELECT",
+                "mode": "add",
+                "type": "card",
+                "property": "parent",
+                "value": "passCards7",
+                "collection": "movingCards"
+              },
               {
                 "func": "MOVE",
                 "from": "passCards1",
@@ -40071,20 +40077,15 @@
           {
             "func": "SET",
             "collection": "DEFAULT",
-            "property": "staged",
-            "value": true
-          },
-          {
-            "func": "SET",
-            "collection": "DEFAULT",
             "property": "y",
-            "value": -6
+            "value": -10
           }
         ]
       }
     ],
     "width": 60,
-    "height": 60
+    "height": 60,
+    "scale": 0
   },
   "_meta": {
     "version": 15,
@@ -40097,7 +40098,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1713930769888,
+      "lastUpdate": 1713964673446,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv1.5",
@@ -40342,15 +40343,13 @@
       }
     ]
   },
-  "ol5n": {
+  "8i5b": {
     "type": "pile",
     "parent": "deckHolder",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "ol5n",
-    "z": 68890,
-    "staged": false
+    "id": "8i5b"
   }
 }
