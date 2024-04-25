@@ -5,8 +5,8 @@
     "cardType": "19",
     "id": "4424",
     "staged": false,
-    "parent": "pile2",
-    "z": 59341
+    "z": 71299,
+    "parent": "pile2"
   },
   "7724": {
     "deck": "crowDeck",
@@ -15,7 +15,7 @@
     "id": "7724",
     "staged": false,
     "parent": "pile2",
-    "z": 59135
+    "z": 71093
   },
   "hand": {
     "type": "holder",
@@ -106,8 +106,8 @@
     "type": "card",
     "cardType": "C 01",
     "staged": false,
-    "z": 59582,
-    "parent": "6zng"
+    "z": 71548,
+    "parent": "8i5b"
   },
   "fate_2_C": {
     "id": "fate_2_C",
@@ -115,8 +115,8 @@
     "type": "card",
     "cardType": "C 02",
     "staged": false,
-    "z": 59595,
-    "parent": "6zng"
+    "z": 71539,
+    "parent": "8i5b"
   },
   "fate_3_C": {
     "id": "fate_3_C",
@@ -124,8 +124,8 @@
     "type": "card",
     "cardType": "C 03",
     "staged": false,
-    "z": 59602,
-    "parent": "6zng"
+    "z": 71572,
+    "parent": "8i5b"
   },
   "fate_4_C": {
     "id": "fate_4_C",
@@ -133,8 +133,8 @@
     "type": "card",
     "cardType": "C 04",
     "staged": false,
-    "z": 59594,
-    "parent": "6zng"
+    "z": 71551,
+    "parent": "8i5b"
   },
   "fate_5_C": {
     "id": "fate_5_C",
@@ -142,8 +142,8 @@
     "type": "card",
     "cardType": "C 05",
     "staged": false,
-    "z": 59625,
-    "parent": "6zng"
+    "z": 71543,
+    "parent": "8i5b"
   },
   "fate_6_C": {
     "id": "fate_6_C",
@@ -151,8 +151,8 @@
     "type": "card",
     "cardType": "C 06",
     "staged": false,
-    "z": 59599,
-    "parent": "6zng"
+    "z": 71578,
+    "parent": "8i5b"
   },
   "fate_7_C": {
     "id": "fate_7_C",
@@ -160,8 +160,8 @@
     "type": "card",
     "cardType": "C 07",
     "staged": false,
-    "z": 59617,
-    "parent": "6zng"
+    "z": 71571,
+    "parent": "8i5b"
   },
   "fate_8_C": {
     "id": "fate_8_C",
@@ -169,8 +169,8 @@
     "type": "card",
     "cardType": "C 08",
     "staged": false,
-    "z": 59604,
-    "parent": "6zng"
+    "z": 71556,
+    "parent": "8i5b"
   },
   "fate_9_C": {
     "id": "fate_9_C",
@@ -178,8 +178,8 @@
     "type": "card",
     "cardType": "C 09",
     "staged": false,
-    "z": 59581,
-    "parent": "6zng"
+    "z": 71574,
+    "parent": "8i5b"
   },
   "fate_T_C": {
     "id": "fate_T_C",
@@ -187,8 +187,8 @@
     "type": "card",
     "cardType": "C 10",
     "staged": false,
-    "z": 59609,
-    "parent": "6zng"
+    "z": 71585,
+    "parent": "8i5b"
   },
   "fate_J_C": {
     "id": "fate_J_C",
@@ -197,8 +197,8 @@
     "cardType": "C 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 59607,
-    "parent": "6zng"
+    "z": 71553,
+    "parent": "8i5b"
   },
   "fate_Q_C": {
     "id": "fate_Q_C",
@@ -206,8 +206,8 @@
     "type": "card",
     "cardType": "C 3Q",
     "staged": false,
-    "z": 59589,
-    "parent": "6zng"
+    "z": 71570,
+    "parent": "8i5b"
   },
   "fate_K_C": {
     "id": "fate_K_C",
@@ -215,8 +215,8 @@
     "type": "card",
     "cardType": "C 4K",
     "staged": false,
-    "z": 59620,
-    "parent": "6zng"
+    "z": 71569,
+    "parent": "8i5b"
   },
   "fate_A_D": {
     "id": "fate_A_D",
@@ -224,8 +224,8 @@
     "type": "card",
     "cardType": "D 01",
     "staged": false,
-    "z": 59588,
-    "parent": "6zng"
+    "z": 71535,
+    "parent": "8i5b"
   },
   "fate_2_D": {
     "id": "fate_2_D",
@@ -233,8 +233,8 @@
     "type": "card",
     "cardType": "D 02",
     "staged": false,
-    "z": 59610,
-    "parent": "6zng"
+    "z": 71568,
+    "parent": "8i5b"
   },
   "fate_3_D": {
     "id": "fate_3_D",
@@ -242,8 +242,8 @@
     "type": "card",
     "cardType": "D 03",
     "staged": false,
-    "z": 59603,
-    "parent": "6zng"
+    "z": 71584,
+    "parent": "8i5b"
   },
   "fate_4_D": {
     "id": "fate_4_D",
@@ -251,8 +251,8 @@
     "type": "card",
     "cardType": "D 04",
     "staged": false,
-    "z": 59578,
-    "parent": "6zng"
+    "z": 71567,
+    "parent": "8i5b"
   },
   "fate_5_D": {
     "id": "fate_5_D",
@@ -260,8 +260,8 @@
     "type": "card",
     "cardType": "D 05",
     "staged": false,
-    "z": 59583,
-    "parent": "6zng"
+    "z": 71560,
+    "parent": "8i5b"
   },
   "fate_6_D": {
     "id": "fate_6_D",
@@ -269,8 +269,8 @@
     "type": "card",
     "cardType": "D 06",
     "staged": false,
-    "z": 59619,
-    "parent": "6zng"
+    "z": 71541,
+    "parent": "8i5b"
   },
   "fate_7_D": {
     "id": "fate_7_D",
@@ -278,8 +278,8 @@
     "type": "card",
     "cardType": "D 07",
     "staged": false,
-    "z": 59580,
-    "parent": "6zng"
+    "z": 71545,
+    "parent": "8i5b"
   },
   "fate_8_D": {
     "id": "fate_8_D",
@@ -287,8 +287,8 @@
     "type": "card",
     "cardType": "D 08",
     "staged": false,
-    "z": 59621,
-    "parent": "6zng"
+    "z": 71580,
+    "parent": "8i5b"
   },
   "fate_9_D": {
     "id": "fate_9_D",
@@ -296,8 +296,8 @@
     "type": "card",
     "cardType": "D 09",
     "staged": false,
-    "z": 59598,
-    "parent": "6zng"
+    "z": 71579,
+    "parent": "8i5b"
   },
   "fate_T_D": {
     "id": "fate_T_D",
@@ -305,8 +305,8 @@
     "type": "card",
     "cardType": "D 10",
     "staged": false,
-    "z": 59622,
-    "parent": "6zng"
+    "z": 71562,
+    "parent": "8i5b"
   },
   "fate_J_D": {
     "id": "fate_J_D",
@@ -315,8 +315,8 @@
     "cardType": "D 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 59587,
-    "parent": "6zng"
+    "z": 71549,
+    "parent": "8i5b"
   },
   "fate_Q_D": {
     "id": "fate_Q_D",
@@ -324,8 +324,8 @@
     "type": "card",
     "cardType": "D 3Q",
     "staged": false,
-    "z": 59612,
-    "parent": "6zng"
+    "z": 71550,
+    "parent": "8i5b"
   },
   "fate_K_D": {
     "id": "fate_K_D",
@@ -333,8 +333,8 @@
     "type": "card",
     "cardType": "D 4K",
     "staged": false,
-    "z": 59590,
-    "parent": "6zng"
+    "z": 71540,
+    "parent": "8i5b"
   },
   "fate_A_H": {
     "id": "fate_A_H",
@@ -342,8 +342,8 @@
     "type": "card",
     "cardType": "H 01",
     "staged": false,
-    "z": 59628,
-    "parent": "6zng"
+    "z": 71573,
+    "parent": "8i5b"
   },
   "fate_2_H": {
     "id": "fate_2_H",
@@ -351,8 +351,8 @@
     "type": "card",
     "cardType": "H 02",
     "staged": false,
-    "z": 59592,
-    "parent": "6zng"
+    "z": 71557,
+    "parent": "8i5b"
   },
   "fate_3_H": {
     "id": "fate_3_H",
@@ -360,8 +360,8 @@
     "type": "card",
     "cardType": "H 03",
     "staged": false,
-    "z": 59608,
-    "parent": "6zng"
+    "z": 71577,
+    "parent": "8i5b"
   },
   "fate_4_H": {
     "id": "fate_4_H",
@@ -369,8 +369,8 @@
     "type": "card",
     "cardType": "H 04",
     "staged": false,
-    "parent": "6zng",
-    "z": 59615
+    "z": 71564,
+    "parent": "8i5b"
   },
   "fate_5_H": {
     "id": "fate_5_H",
@@ -378,8 +378,8 @@
     "type": "card",
     "cardType": "H 05",
     "staged": false,
-    "parent": "6zng",
-    "z": 59626
+    "z": 71544,
+    "parent": "8i5b"
   },
   "fate_6_H": {
     "id": "fate_6_H",
@@ -387,8 +387,8 @@
     "type": "card",
     "cardType": "H 06",
     "staged": false,
-    "z": 59586,
-    "parent": "6zng"
+    "z": 71559,
+    "parent": "8i5b"
   },
   "fate_7_H": {
     "id": "fate_7_H",
@@ -396,8 +396,8 @@
     "type": "card",
     "cardType": "H 07",
     "staged": false,
-    "z": 59591,
-    "parent": "6zng"
+    "z": 71565,
+    "parent": "8i5b"
   },
   "fate_8_H": {
     "id": "fate_8_H",
@@ -405,8 +405,8 @@
     "type": "card",
     "cardType": "H 08",
     "staged": false,
-    "z": 59624,
-    "parent": "6zng"
+    "z": 71555,
+    "parent": "8i5b"
   },
   "fate_9_H": {
     "id": "fate_9_H",
@@ -414,8 +414,8 @@
     "type": "card",
     "cardType": "H 09",
     "staged": false,
-    "z": 59605,
-    "parent": "6zng"
+    "z": 71566,
+    "parent": "8i5b"
   },
   "fate_T_H": {
     "id": "fate_T_H",
@@ -423,8 +423,8 @@
     "type": "card",
     "cardType": "H 10",
     "staged": false,
-    "z": 59616,
-    "parent": "6zng"
+    "z": 71538,
+    "parent": "8i5b"
   },
   "fate_J_H": {
     "id": "fate_J_H",
@@ -433,8 +433,8 @@
     "cardType": "H 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 59579,
-    "parent": "6zng"
+    "z": 71582,
+    "parent": "8i5b"
   },
   "fate_Q_H": {
     "id": "fate_Q_H",
@@ -442,8 +442,8 @@
     "type": "card",
     "cardType": "H 3Q",
     "staged": false,
-    "z": 59593,
-    "parent": "6zng"
+    "z": 71554,
+    "parent": "8i5b"
   },
   "fate_K_H": {
     "id": "fate_K_H",
@@ -451,8 +451,8 @@
     "type": "card",
     "cardType": "H 4K",
     "staged": false,
-    "z": 59606,
-    "parent": "6zng"
+    "z": 71542,
+    "parent": "8i5b"
   },
   "fate_A_S": {
     "id": "fate_A_S",
@@ -460,8 +460,8 @@
     "type": "card",
     "cardType": "S 01",
     "staged": false,
-    "z": 59623,
-    "parent": "6zng"
+    "z": 71583,
+    "parent": "8i5b"
   },
   "fate_2_S": {
     "id": "fate_2_S",
@@ -469,8 +469,8 @@
     "type": "card",
     "cardType": "S 02",
     "staged": false,
-    "z": 59618,
-    "parent": "6zng"
+    "z": 71586,
+    "parent": "8i5b"
   },
   "fate_3_S": {
     "id": "fate_3_S",
@@ -478,8 +478,8 @@
     "type": "card",
     "cardType": "S 03",
     "staged": false,
-    "z": 59585,
-    "parent": "6zng"
+    "z": 71561,
+    "parent": "8i5b"
   },
   "fate_4_S": {
     "id": "fate_4_S",
@@ -487,8 +487,8 @@
     "type": "card",
     "cardType": "S 04",
     "staged": false,
-    "parent": "6zng",
-    "z": 59597
+    "z": 71581,
+    "parent": "8i5b"
   },
   "fate_5_S": {
     "id": "fate_5_S",
@@ -496,8 +496,8 @@
     "type": "card",
     "cardType": "S 05",
     "staged": false,
-    "parent": "6zng",
-    "z": 59613
+    "z": 71537,
+    "parent": "8i5b"
   },
   "fate_6_S": {
     "id": "fate_6_S",
@@ -505,8 +505,8 @@
     "type": "card",
     "cardType": "S 06",
     "staged": false,
-    "parent": "6zng",
-    "z": 59614
+    "z": 71558,
+    "parent": "8i5b"
   },
   "fate_7_S": {
     "id": "fate_7_S",
@@ -514,8 +514,8 @@
     "type": "card",
     "cardType": "S 07",
     "staged": false,
-    "z": 59584,
-    "parent": "6zng"
+    "z": 71547,
+    "parent": "8i5b"
   },
   "fate_8_S": {
     "id": "fate_8_S",
@@ -523,8 +523,8 @@
     "type": "card",
     "cardType": "S 08",
     "staged": false,
-    "z": 59627,
-    "parent": "6zng"
+    "z": 71546,
+    "parent": "8i5b"
   },
   "fate_9_S": {
     "id": "fate_9_S",
@@ -532,8 +532,8 @@
     "type": "card",
     "cardType": "S 09",
     "staged": false,
-    "z": 59601,
-    "parent": "6zng"
+    "z": 71536,
+    "parent": "8i5b"
   },
   "fate_T_S": {
     "id": "fate_T_S",
@@ -541,8 +541,8 @@
     "type": "card",
     "cardType": "S 10",
     "staged": false,
-    "z": 59596,
-    "parent": "6zng"
+    "z": 71575,
+    "parent": "8i5b"
   },
   "fate_J_S": {
     "id": "fate_J_S",
@@ -551,8 +551,8 @@
     "cardType": "S 2J",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 59600,
-    "parent": "6zng"
+    "z": 71563,
+    "parent": "8i5b"
   },
   "fate_Q_S": {
     "id": "fate_Q_S",
@@ -560,8 +560,8 @@
     "type": "card",
     "cardType": "S 3Q",
     "staged": false,
-    "z": 59577,
-    "parent": "6zng"
+    "z": 71552,
+    "parent": "8i5b"
   },
   "fate_K_S": {
     "id": "fate_K_S",
@@ -569,8 +569,8 @@
     "type": "card",
     "cardType": "S 4K",
     "staged": false,
-    "z": 59611,
-    "parent": "6zng"
+    "z": 71576,
+    "parent": "8i5b"
   },
   "deckHolder": {
     "type": "holder",
@@ -884,13 +884,6 @@
             "property": "customFace",
             "value": "${PROPERTY nextTrump OF $gameID}"
           }
-        ]
-      },
-      "//This is needed because of Hearts",
-      {
-        "func": "CLICK",
-        "collection": [
-          "passIndicator"
         ]
       },
       "// This is needed because of Felos",
@@ -1428,14 +1421,14 @@
     "height": 50,
     "borderRadius": 8,
     "x": 10,
-    "y": 12,
+    "y": 10,
     "svgReplaces": {
       "currentColor": "deckSuitsColor"
     },
-    "image": "i/icons/clubs.svg",
-    "deckSuitsColor": "",
     "deckSuitsUni": "♣",
-    "deckSuits": "clubs"
+    "deckSuits": "clubs",
+    "deckSuitsColor": "",
+    "image": "i/icons/clubs.svg"
   },
   "choose11": {
     "inheritFrom": {
@@ -1450,9 +1443,9 @@
     "deckSuit": "clubs",
     "image": "i/icons/diamonds.svg",
     "text": "",
-    "deckSuitsColor": "#e50932",
     "deckSuitsUni": "♦",
-    "deckSuits": "diamonds"
+    "deckSuits": "diamonds",
+    "deckSuitsColor": "#e50932"
   },
   "choose12": {
     "inheritFrom": {
@@ -1468,9 +1461,9 @@
     "deckSuit": "coins",
     "image": "i/icons/spades.svg",
     "text": "",
-    "deckSuitsColor": "",
     "deckSuitsUni": "♠",
-    "deckSuits": "spades"
+    "deckSuits": "spades",
+    "deckSuitsColor": ""
   },
   "choose13": {
     "inheritFrom": {
@@ -1485,9 +1478,9 @@
     "deckSuit": "cups",
     "image": "i/icons/hearts.svg",
     "text": "",
-    "deckSuitsColor": "#e50932",
     "deckSuitsUni": "♥",
-    "deckSuits": "hearts"
+    "deckSuits": "hearts",
+    "deckSuitsColor": "#e50932"
   },
   "choose14": {
     "inheritFrom": {
@@ -1501,8 +1494,8 @@
     "deckSuit": "swords",
     "image": "",
     "text": "No\nTrump",
-    "deckSuitsColor": "",
-    "deckSuitsUni": "NT"
+    "deckSuitsUni": "NT",
+    "deckSuitsColor": ""
   },
   "bidSuit1": {
     "id": "bidSuit1",
@@ -1678,7 +1671,7 @@
     "id": "chooseSuit",
     "fixedParent": true,
     "x": 310,
-    "width": 130,
+    "width": 190,
     "height": 190,
     "borderRadius": 8,
     "css": {
@@ -2694,7 +2687,8 @@
       }
     ],
     "bgColor": "#deeaf0",
-    "showbidHistory": false
+    "showbidHistory": false,
+    "tempScore": false
   },
   "holder1": {
     "type": "holder",
@@ -2751,10 +2745,14 @@
         "func": "IF",
         "condition": "${PROPERTY playEnterRoutine OF $gameID}",
         "thenRoutine": [
+          "var thisParent = ${PROPERTY parent}",
           {
             "func": "CALL",
             "widget": "${gameID}",
-            "routine": "playEnterRoutine"
+            "routine": "playEnterRoutine",
+            "arguments": {
+              "thisSeatIndex": "${PROPERTY index OF $thisParent}"
+            }
           }
         ]
       }
@@ -2769,10 +2767,14 @@
         "func": "IF",
         "condition": "${PROPERTY playLeaveRoutine OF $gameID}",
         "thenRoutine": [
+          "var thisParent = ${PROPERTY parent}",
           {
             "func": "CALL",
             "widget": "${gameID}",
-            "routine": "playLeaveRoutine"
+            "routine": "playLeaveRoutine",
+            "arguments": {
+              "thisSeatIndex": "${PROPERTY index OF $thisParent}"
+            }
           }
         ]
       }
@@ -2811,8 +2813,8 @@
       " "
     ],
     "showing": false,
-    "player": "",
     "color": "#999999",
+    "player": "",
     "turn": false
   },
   "bidValue2": {
@@ -2892,11 +2894,8 @@
       0,
       0
     ],
-    "player": "",
     "turn": false,
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000"
+    "player": ""
   },
   "bidValue3": {
     "inheritFrom": {
@@ -3207,7 +3206,10 @@
     ],
     "showing": false,
     "turn": false,
-    "player": ""
+    "player": "",
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "bidValue7": {
     "inheritFrom": {
@@ -3284,7 +3286,10 @@
     ],
     "showing": false,
     "player": "",
-    "color": "#999999"
+    "color": "#999999",
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "bidValue8": {
     "inheritFrom": {
@@ -5312,7 +5317,7 @@
     "cardType": "C 01",
     "staged": false,
     "parent": "pile2",
-    "z": 59025
+    "z": 70983
   },
   "6exv_2_C": {
     "id": "6exv_2_C",
@@ -5321,7 +5326,7 @@
     "cardType": "C 02",
     "staged": false,
     "parent": "pile2",
-    "z": 59026
+    "z": 70984
   },
   "6exv_3_C": {
     "id": "6exv_3_C",
@@ -5329,8 +5334,8 @@
     "type": "card",
     "cardType": "C 03",
     "staged": false,
-    "parent": "pile2",
-    "z": 59027
+    "z": 70985,
+    "parent": "pile2"
   },
   "6exv_4_C": {
     "id": "6exv_4_C",
@@ -5339,7 +5344,7 @@
     "cardType": "C 04",
     "staged": false,
     "parent": "pile2",
-    "z": 59028
+    "z": 70986
   },
   "6exv_5_C": {
     "id": "6exv_5_C",
@@ -5348,7 +5353,7 @@
     "cardType": "C 05",
     "staged": false,
     "parent": "pile2",
-    "z": 59029
+    "z": 70987
   },
   "6exv_6_C": {
     "id": "6exv_6_C",
@@ -5357,7 +5362,7 @@
     "cardType": "C 06",
     "staged": false,
     "parent": "pile2",
-    "z": 59030
+    "z": 70988
   },
   "6exv_7_C": {
     "id": "6exv_7_C",
@@ -5366,7 +5371,7 @@
     "cardType": "C 07",
     "staged": false,
     "parent": "pile2",
-    "z": 59031
+    "z": 70989
   },
   "6exv_8_C": {
     "id": "6exv_8_C",
@@ -5375,7 +5380,7 @@
     "cardType": "C 08",
     "staged": false,
     "parent": "pile2",
-    "z": 59032
+    "z": 70990
   },
   "6exv_9_C": {
     "id": "6exv_9_C",
@@ -5384,7 +5389,7 @@
     "cardType": "C 09",
     "staged": false,
     "parent": "pile2",
-    "z": 59033
+    "z": 70991
   },
   "6exv_T_C": {
     "id": "6exv_T_C",
@@ -5393,7 +5398,7 @@
     "cardType": "C 10",
     "staged": false,
     "parent": "pile2",
-    "z": 59034
+    "z": 70992
   },
   "6exv_J_C": {
     "id": "6exv_J_C",
@@ -5402,7 +5407,7 @@
     "cardType": "C 2J",
     "staged": false,
     "parent": "pile2",
-    "z": 59035
+    "z": 70993
   },
   "6exv_Q_C": {
     "id": "6exv_Q_C",
@@ -5411,7 +5416,7 @@
     "cardType": "C 3Q",
     "staged": false,
     "parent": "pile2",
-    "z": 59036
+    "z": 70994
   },
   "6exv_K_C": {
     "id": "6exv_K_C",
@@ -5420,7 +5425,7 @@
     "cardType": "C 4K",
     "staged": false,
     "parent": "pile2",
-    "z": 59037
+    "z": 70995
   },
   "6exv_A_D": {
     "id": "6exv_A_D",
@@ -5429,7 +5434,7 @@
     "cardType": "D 01",
     "staged": false,
     "parent": "pile2",
-    "z": 59038
+    "z": 70996
   },
   "6exv_2_D": {
     "id": "6exv_2_D",
@@ -5438,7 +5443,7 @@
     "cardType": "D 02",
     "staged": false,
     "parent": "pile2",
-    "z": 59039
+    "z": 70997
   },
   "6exv_3_D": {
     "id": "6exv_3_D",
@@ -5447,7 +5452,7 @@
     "cardType": "D 03",
     "staged": false,
     "parent": "pile2",
-    "z": 59040
+    "z": 70998
   },
   "6exv_4_D": {
     "id": "6exv_4_D",
@@ -5456,7 +5461,7 @@
     "cardType": "D 04",
     "staged": false,
     "parent": "pile2",
-    "z": 59041
+    "z": 70999
   },
   "6exv_5_D": {
     "id": "6exv_5_D",
@@ -5465,7 +5470,7 @@
     "cardType": "D 05",
     "staged": false,
     "parent": "pile2",
-    "z": 59042
+    "z": 71000
   },
   "6exv_6_D": {
     "id": "6exv_6_D",
@@ -5474,7 +5479,7 @@
     "cardType": "D 06",
     "staged": false,
     "parent": "pile2",
-    "z": 59043
+    "z": 71001
   },
   "6exv_7_D": {
     "id": "6exv_7_D",
@@ -5483,7 +5488,7 @@
     "cardType": "D 07",
     "staged": false,
     "parent": "pile2",
-    "z": 59044
+    "z": 71002
   },
   "6exv_8_D": {
     "id": "6exv_8_D",
@@ -5492,7 +5497,7 @@
     "cardType": "D 08",
     "staged": false,
     "parent": "pile2",
-    "z": 59045
+    "z": 71003
   },
   "6exv_9_D": {
     "id": "6exv_9_D",
@@ -5501,7 +5506,7 @@
     "cardType": "D 09",
     "staged": false,
     "parent": "pile2",
-    "z": 59046
+    "z": 71004
   },
   "6exv_T_D": {
     "id": "6exv_T_D",
@@ -5510,7 +5515,7 @@
     "cardType": "D 10",
     "staged": false,
     "parent": "pile2",
-    "z": 59047
+    "z": 71005
   },
   "6exv_J_D": {
     "id": "6exv_J_D",
@@ -5519,7 +5524,7 @@
     "cardType": "D 2J",
     "staged": false,
     "parent": "pile2",
-    "z": 59048
+    "z": 71006
   },
   "6exv_Q_D": {
     "id": "6exv_Q_D",
@@ -5528,7 +5533,7 @@
     "cardType": "D 3Q",
     "staged": false,
     "parent": "pile2",
-    "z": 59049
+    "z": 71007
   },
   "6exv_K_D": {
     "id": "6exv_K_D",
@@ -5537,7 +5542,7 @@
     "cardType": "D 4K",
     "staged": false,
     "parent": "pile2",
-    "z": 59050
+    "z": 71008
   },
   "6exv_A_H": {
     "id": "6exv_A_H",
@@ -5546,7 +5551,7 @@
     "cardType": "H 01",
     "staged": false,
     "parent": "pile2",
-    "z": 59051
+    "z": 71009
   },
   "6exv_2_H": {
     "id": "6exv_2_H",
@@ -5555,7 +5560,7 @@
     "cardType": "H 02",
     "staged": false,
     "parent": "pile2",
-    "z": 59052
+    "z": 71010
   },
   "6exv_3_H": {
     "id": "6exv_3_H",
@@ -5564,7 +5569,7 @@
     "cardType": "H 03",
     "staged": false,
     "parent": "pile2",
-    "z": 59053
+    "z": 71011
   },
   "6exv_4_H": {
     "id": "6exv_4_H",
@@ -5573,7 +5578,7 @@
     "cardType": "H 04",
     "staged": false,
     "parent": "pile2",
-    "z": 59054
+    "z": 71012
   },
   "6exv_5_H": {
     "id": "6exv_5_H",
@@ -5582,7 +5587,7 @@
     "cardType": "H 05",
     "staged": false,
     "parent": "pile2",
-    "z": 59055
+    "z": 71013
   },
   "6exv_6_H": {
     "id": "6exv_6_H",
@@ -5591,7 +5596,7 @@
     "cardType": "H 06",
     "staged": false,
     "parent": "pile2",
-    "z": 59056
+    "z": 71014
   },
   "6exv_7_H": {
     "id": "6exv_7_H",
@@ -5600,7 +5605,7 @@
     "cardType": "H 07",
     "staged": false,
     "parent": "pile2",
-    "z": 59057
+    "z": 71015
   },
   "6exv_8_H": {
     "id": "6exv_8_H",
@@ -5609,7 +5614,7 @@
     "cardType": "H 08",
     "staged": false,
     "parent": "pile2",
-    "z": 59058
+    "z": 71016
   },
   "6exv_9_H": {
     "id": "6exv_9_H",
@@ -5618,7 +5623,7 @@
     "cardType": "H 09",
     "staged": false,
     "parent": "pile2",
-    "z": 59059
+    "z": 71017
   },
   "6exv_T_H": {
     "id": "6exv_T_H",
@@ -5627,7 +5632,7 @@
     "cardType": "H 10",
     "staged": false,
     "parent": "pile2",
-    "z": 59060
+    "z": 71018
   },
   "6exv_J_H": {
     "id": "6exv_J_H",
@@ -5636,7 +5641,7 @@
     "type": "card",
     "cardType": "H 2J",
     "staged": false,
-    "z": 59061
+    "z": 71019
   },
   "6exv_Q_H": {
     "id": "6exv_Q_H",
@@ -5645,7 +5650,7 @@
     "type": "card",
     "cardType": "H 3Q",
     "staged": false,
-    "z": 59062
+    "z": 71020
   },
   "6exv_K_H": {
     "id": "6exv_K_H",
@@ -5654,7 +5659,7 @@
     "cardType": "H 4K",
     "staged": false,
     "parent": "pile2",
-    "z": 59063
+    "z": 71021
   },
   "6exv_A_S": {
     "id": "6exv_A_S",
@@ -5663,7 +5668,7 @@
     "cardType": "S 01",
     "staged": false,
     "parent": "pile2",
-    "z": 59064
+    "z": 71022
   },
   "6exv_2_S": {
     "id": "6exv_2_S",
@@ -5671,8 +5676,8 @@
     "type": "card",
     "cardType": "S 02",
     "staged": false,
-    "parent": "pile2",
-    "z": 59065
+    "z": 71023,
+    "parent": "pile2"
   },
   "6exv_3_S": {
     "id": "6exv_3_S",
@@ -5680,8 +5685,8 @@
     "type": "card",
     "cardType": "S 03",
     "staged": false,
-    "parent": "pile2",
-    "z": 59066
+    "z": 71024,
+    "parent": "pile2"
   },
   "6exv_4_S": {
     "id": "6exv_4_S",
@@ -5690,7 +5695,7 @@
     "cardType": "S 04",
     "staged": false,
     "parent": "pile2",
-    "z": 59067
+    "z": 71025
   },
   "6exv_5_S": {
     "id": "6exv_5_S",
@@ -5699,7 +5704,7 @@
     "cardType": "S 05",
     "staged": false,
     "parent": "pile2",
-    "z": 59068
+    "z": 71026
   },
   "6exv_6_S": {
     "id": "6exv_6_S",
@@ -5708,7 +5713,7 @@
     "cardType": "S 06",
     "staged": false,
     "parent": "pile2",
-    "z": 59069
+    "z": 71027
   },
   "6exv_7_S": {
     "id": "6exv_7_S",
@@ -5717,7 +5722,7 @@
     "cardType": "S 07",
     "staged": false,
     "parent": "pile2",
-    "z": 59070
+    "z": 71028
   },
   "6exv_8_S": {
     "id": "6exv_8_S",
@@ -5726,7 +5731,7 @@
     "cardType": "S 08",
     "staged": false,
     "parent": "pile2",
-    "z": 59071
+    "z": 71029
   },
   "6exv_9_S": {
     "id": "6exv_9_S",
@@ -5735,7 +5740,7 @@
     "type": "card",
     "cardType": "S 09",
     "staged": false,
-    "z": 59072
+    "z": 71030
   },
   "6exv_T_S": {
     "id": "6exv_T_S",
@@ -5744,7 +5749,7 @@
     "cardType": "S 10",
     "staged": false,
     "parent": "pile2",
-    "z": 59073
+    "z": 71031
   },
   "6exv_J_S": {
     "id": "6exv_J_S",
@@ -5753,7 +5758,7 @@
     "type": "card",
     "cardType": "S 2J",
     "staged": false,
-    "z": 59074
+    "z": 71032
   },
   "6exv_Q_S": {
     "id": "6exv_Q_S",
@@ -5762,7 +5767,7 @@
     "cardType": "S 3Q",
     "staged": false,
     "parent": "pile2",
-    "z": 59075
+    "z": 71033
   },
   "6exv_K_S": {
     "id": "6exv_K_S",
@@ -5771,7 +5776,7 @@
     "cardType": "S 4K",
     "staged": false,
     "parent": "pile2",
-    "z": 59076
+    "z": 71034
   },
   "offHolder": {
     "type": "holder",
@@ -5939,11 +5944,8 @@
     "deck": "jokers",
     "cardType": "T 2J",
     "staged": false,
-    "z": 59573,
-    "parent": "pile2",
-    "activeFace": 1,
-    "suit": 1,
-    "sortDefault": 9.5
+    "z": 71531,
+    "parent": "pile2"
   },
   "jokerRed2": {
     "type": "card",
@@ -5952,7 +5954,7 @@
     "cardType": "T 2J",
     "parent": "pile2",
     "staged": false,
-    "z": 59574
+    "z": 71532
   },
   "jokerBlack1": {
     "type": "card",
@@ -5960,11 +5962,8 @@
     "deck": "jokers",
     "cardType": "T 1J",
     "staged": false,
-    "z": 59575,
-    "parent": "pile2",
-    "activeFace": 1,
-    "suit": 1,
-    "sortDefault": 9.4
+    "z": 71533,
+    "parent": "pile2"
   },
   "jokerBlack2": {
     "type": "card",
@@ -5973,7 +5972,7 @@
     "cardType": "T 1J",
     "staged": false,
     "parent": "pile2",
-    "z": 59576
+    "z": 71534
   },
   "discard": {
     "type": "holder",
@@ -6370,28 +6369,13 @@
       }
     ],
     "customFaceCount": 6,
-    "trump": 4,
+    "trump": 0,
     "resetProperties": {
       "x": 255,
       "y": 950
     },
     "deckSuitsColor": "",
-    "z": 25
-  },
-  "trumpLabel": {
-    "id": "trumpLabel",
-    "width": 40,
-    "height": 20,
-    "text": "Trump",
-    "fixedParent": true,
-    "x": 132,
-    "movable": false,
-    "movableInEdit": false,
-    "parent": "scoreButton",
-    "css": {
-      "color": "black"
-    },
-    "y": -5
+    "z": 45
   },
   "scoreButton": {
     "type": "button",
@@ -6803,7 +6787,7 @@
         "value": 0
       }
     ],
-    "depth": 13,
+    "depth": 36,
     "text": "Add Card Points",
     "width": 120,
     "css": {
@@ -8488,18 +8472,6 @@
         "func": "CALL",
         "routine": "resetScoresRoutine"
       },
-      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
-      {
-        "func": "IF",
-        "condition": "${PROPERTY resetRoutine OF $gameID}",
-        "thenRoutine": [
-          {
-            "func": "CALL",
-            "widget": "${gameID}",
-            "routine": "resetRoutine"
-          }
-        ]
-      },
       {
         "func": "SELECT",
         "property": "resetProperties",
@@ -8538,6 +8510,19 @@
         "func": "CLICK",
         "collection": [
           "index"
+        ]
+      },
+      "//Take any special actions for this particular game.",
+      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY resetRoutine OF $gameID}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "${gameID}",
+            "routine": "resetRoutine"
+          }
         ]
       }
     ],
@@ -9964,26 +9949,8 @@
       }
     ]
   },
-  "bidWinnerLabel": {
-    "id": "bidWinnerLabel",
-    "parent": "scoreButton",
-    "fixedParent": true,
-    "width": 80,
-    "height": 20,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "color": "black"
-    },
-    "text": "Declarer",
-    "x": -108,
-    "y": -5
-  },
   "bidWinner": {
     "id": "bidWinner",
-    "parent": "scoreButton",
-    "fixedParent": true,
-    "x": -115,
     "width": 90,
     "height": 40,
     "borderRadius": 8,
@@ -10043,9 +10010,10 @@
         "value": "${name}"
       }
     ],
-    "customStateproperty": 1,
+    "customStateproperty": 0,
     "first": false,
-    "y": 15
+    "y": 950,
+    "x": 5
   },
   "showPublicBidButton": {
     "type": "button",
@@ -12230,7 +12198,7 @@
     "id": "gcew",
     "staged": false,
     "parent": "pile2",
-    "z": 59081
+    "z": 71039
   },
   "cx9g": {
     "deck": "tarokyDeck",
@@ -12239,7 +12207,7 @@
     "id": "cx9g",
     "staged": false,
     "parent": "pile2",
-    "z": 59082
+    "z": 71040
   },
   "ihao": {
     "deck": "tarokyDeck",
@@ -12248,7 +12216,7 @@
     "id": "ihao",
     "staged": false,
     "parent": "pile2",
-    "z": 59083
+    "z": 71041
   },
   "62uz": {
     "deck": "tarokyDeck",
@@ -12257,7 +12225,7 @@
     "id": "62uz",
     "staged": false,
     "parent": "pile2",
-    "z": 59084
+    "z": 71042
   },
   "ouw2": {
     "deck": "tarokyDeck",
@@ -12266,7 +12234,7 @@
     "id": "ouw2",
     "staged": false,
     "parent": "pile2",
-    "z": 59085
+    "z": 71043
   },
   "hqit": {
     "deck": "tarokyDeck",
@@ -12275,7 +12243,7 @@
     "id": "hqit",
     "staged": false,
     "parent": "pile2",
-    "z": 59086
+    "z": 71044
   },
   "sccr": {
     "deck": "tarokyDeck",
@@ -12284,7 +12252,7 @@
     "id": "sccr",
     "staged": false,
     "parent": "pile2",
-    "z": 59087
+    "z": 71045
   },
   "p0xc": {
     "deck": "tarokyDeck",
@@ -12293,7 +12261,7 @@
     "id": "p0xc",
     "staged": false,
     "parent": "pile2",
-    "z": 59088
+    "z": 71046
   },
   "n5y9": {
     "deck": "tarokyDeck",
@@ -12302,7 +12270,7 @@
     "id": "n5y9",
     "staged": false,
     "parent": "pile2",
-    "z": 59089
+    "z": 71047
   },
   "qlze": {
     "deck": "tarokyDeck",
@@ -12311,7 +12279,7 @@
     "id": "qlze",
     "staged": false,
     "parent": "pile2",
-    "z": 59090
+    "z": 71048
   },
   "p4hk": {
     "deck": "tarokyDeck",
@@ -12320,7 +12288,7 @@
     "id": "p4hk",
     "staged": false,
     "parent": "pile2",
-    "z": 59091
+    "z": 71049
   },
   "yixx": {
     "deck": "tarokyDeck",
@@ -12329,7 +12297,7 @@
     "id": "yixx",
     "staged": false,
     "parent": "pile2",
-    "z": 59092
+    "z": 71050
   },
   "xdcd": {
     "deck": "tarokyDeck",
@@ -12338,7 +12306,7 @@
     "id": "xdcd",
     "staged": false,
     "parent": "pile2",
-    "z": 59093
+    "z": 71051
   },
   "yc1e": {
     "deck": "tarokyDeck",
@@ -12347,7 +12315,7 @@
     "id": "yc1e",
     "staged": false,
     "parent": "pile2",
-    "z": 59094
+    "z": 71052
   },
   "gvb3": {
     "deck": "tarokyDeck",
@@ -12356,7 +12324,7 @@
     "id": "gvb3",
     "staged": false,
     "parent": "pile2",
-    "z": 59095
+    "z": 71053
   },
   "9w3w": {
     "deck": "tarokyDeck",
@@ -12365,7 +12333,7 @@
     "id": "9w3w",
     "staged": false,
     "parent": "pile2",
-    "z": 59096
+    "z": 71054
   },
   "icaj": {
     "deck": "tarokyDeck",
@@ -12374,7 +12342,7 @@
     "id": "icaj",
     "staged": false,
     "parent": "pile2",
-    "z": 59097
+    "z": 71055
   },
   "z80s": {
     "deck": "tarokyDeck",
@@ -12383,7 +12351,7 @@
     "id": "z80s",
     "staged": false,
     "parent": "pile2",
-    "z": 59098
+    "z": 71056
   },
   "1bs0": {
     "deck": "tarokyDeck",
@@ -12392,7 +12360,7 @@
     "id": "1bs0",
     "staged": false,
     "parent": "pile2",
-    "z": 59099
+    "z": 71057
   },
   "4x8f": {
     "deck": "tarokyDeck",
@@ -12401,7 +12369,7 @@
     "id": "4x8f",
     "staged": false,
     "parent": "pile2",
-    "z": 59100
+    "z": 71058
   },
   "fbiv": {
     "deck": "tarokyDeck",
@@ -12410,7 +12378,7 @@
     "id": "fbiv",
     "staged": false,
     "parent": "pile2",
-    "z": 59101
+    "z": 71059
   },
   "1gs3": {
     "deck": "tarokyDeck",
@@ -12419,7 +12387,7 @@
     "id": "1gs3",
     "staged": false,
     "parent": "pile2",
-    "z": 59102
+    "z": 71060
   },
   "7nqw": {
     "deck": "tarokyDeck",
@@ -12428,7 +12396,7 @@
     "id": "7nqw",
     "staged": false,
     "parent": "pile2",
-    "z": 59103
+    "z": 71061
   },
   "ay8z": {
     "deck": "tarokyDeck",
@@ -12437,7 +12405,7 @@
     "id": "ay8z",
     "staged": false,
     "parent": "pile2",
-    "z": 59104
+    "z": 71062
   },
   "mmr8": {
     "deck": "tarokyDeck",
@@ -12446,7 +12414,7 @@
     "id": "mmr8",
     "staged": false,
     "parent": "pile2",
-    "z": 59105
+    "z": 71063
   },
   "0jm2": {
     "deck": "tarokyDeck",
@@ -12455,7 +12423,7 @@
     "id": "0jm2",
     "staged": false,
     "parent": "pile2",
-    "z": 59106
+    "z": 71064
   },
   "tpgx": {
     "deck": "tarokyDeck",
@@ -12464,7 +12432,7 @@
     "id": "tpgx",
     "staged": false,
     "parent": "pile2",
-    "z": 59107
+    "z": 71065
   },
   "a0w6": {
     "deck": "tarokyDeck",
@@ -12473,7 +12441,7 @@
     "id": "a0w6",
     "staged": false,
     "parent": "pile2",
-    "z": 59108
+    "z": 71066
   },
   "6cna": {
     "deck": "tarokyDeck",
@@ -12482,7 +12450,7 @@
     "id": "6cna",
     "staged": false,
     "parent": "pile2",
-    "z": 59109
+    "z": 71067
   },
   "js97": {
     "deck": "tarokyDeck",
@@ -12491,7 +12459,7 @@
     "id": "js97",
     "staged": false,
     "parent": "pile2",
-    "z": 59110
+    "z": 71068
   },
   "is5g": {
     "deck": "tarokyDeck",
@@ -12500,7 +12468,7 @@
     "id": "is5g",
     "staged": false,
     "parent": "pile2",
-    "z": 59111
+    "z": 71069
   },
   "s9mz": {
     "deck": "tarokyDeck",
@@ -12509,7 +12477,7 @@
     "id": "s9mz",
     "staged": false,
     "parent": "pile2",
-    "z": 59112
+    "z": 71070
   },
   "lz08": {
     "deck": "tarokyDeck",
@@ -12518,7 +12486,7 @@
     "id": "lz08",
     "staged": false,
     "parent": "pile2",
-    "z": 59113
+    "z": 71071
   },
   "pwid": {
     "deck": "tarokyDeck",
@@ -12527,7 +12495,7 @@
     "id": "pwid",
     "staged": false,
     "parent": "pile2",
-    "z": 59114
+    "z": 71072
   },
   "zqx6": {
     "deck": "tarokyDeck",
@@ -12536,7 +12504,7 @@
     "id": "zqx6",
     "staged": false,
     "parent": "pile2",
-    "z": 59115
+    "z": 71073
   },
   "is8d": {
     "deck": "tarokyDeck",
@@ -12545,7 +12513,7 @@
     "id": "is8d",
     "staged": false,
     "parent": "pile2",
-    "z": 59116
+    "z": 71074
   },
   "pmam": {
     "deck": "tarokyDeck",
@@ -12554,7 +12522,7 @@
     "id": "pmam",
     "staged": false,
     "parent": "pile2",
-    "z": 59117
+    "z": 71075
   },
   "44lh": {
     "deck": "tarokyDeck",
@@ -12563,7 +12531,7 @@
     "id": "44lh",
     "staged": false,
     "parent": "pile2",
-    "z": 59118
+    "z": 71076
   },
   "sr00": {
     "deck": "tarokyDeck",
@@ -12572,7 +12540,7 @@
     "id": "sr00",
     "staged": false,
     "parent": "pile2",
-    "z": 59119
+    "z": 71077
   },
   "12h0": {
     "deck": "tarokyDeck",
@@ -12581,7 +12549,7 @@
     "id": "12h0",
     "staged": false,
     "parent": "pile2",
-    "z": 59120
+    "z": 71078
   },
   "ew11": {
     "deck": "tarokyDeck",
@@ -12590,7 +12558,7 @@
     "id": "ew11",
     "staged": false,
     "parent": "pile2",
-    "z": 59121
+    "z": 71079
   },
   "bj7c": {
     "deck": "tarokyDeck",
@@ -12599,7 +12567,7 @@
     "id": "bj7c",
     "staged": false,
     "parent": "pile2",
-    "z": 59122
+    "z": 71080
   },
   "ik4a": {
     "deck": "tarokyDeck",
@@ -12608,7 +12576,7 @@
     "id": "ik4a",
     "staged": false,
     "parent": "pile2",
-    "z": 59123
+    "z": 71081
   },
   "8l8q": {
     "deck": "tarokyDeck",
@@ -12617,7 +12585,7 @@
     "id": "8l8q",
     "staged": false,
     "parent": "pile2",
-    "z": 59124
+    "z": 71082
   },
   "m9m0": {
     "deck": "tarokyDeck",
@@ -12626,7 +12594,7 @@
     "id": "m9m0",
     "staged": false,
     "parent": "pile2",
-    "z": 59125
+    "z": 71083
   },
   "2grz": {
     "deck": "tarokyDeck",
@@ -12635,7 +12603,7 @@
     "id": "2grz",
     "staged": false,
     "parent": "pile2",
-    "z": 59126
+    "z": 71084
   },
   "5lwu": {
     "deck": "tarokyDeck",
@@ -12644,7 +12612,7 @@
     "id": "5lwu",
     "staged": false,
     "parent": "pile2",
-    "z": 59127
+    "z": 71085
   },
   "fwop": {
     "deck": "tarokyDeck",
@@ -12653,7 +12621,7 @@
     "id": "fwop",
     "staged": false,
     "parent": "pile2",
-    "z": 59128
+    "z": 71086
   },
   "fplx": {
     "deck": "tarokyDeck",
@@ -12662,7 +12630,7 @@
     "id": "fplx",
     "staged": false,
     "parent": "pile2",
-    "z": 59129
+    "z": 71087
   },
   "jtkp": {
     "deck": "tarokyDeck",
@@ -12671,7 +12639,7 @@
     "id": "jtkp",
     "staged": false,
     "parent": "pile2",
-    "z": 59130
+    "z": 71088
   },
   "scoreboard3": {
     "type": "scoreboard",
@@ -14525,6 +14493,10 @@
     ],
     "displayArray": [
       [
+        "99BidLabel",
+        0
+      ],
+      [
         "playerAidButton",
         0
       ],
@@ -14590,6 +14562,10 @@
       ],
       [
         "tarokBonusTable",
+        0
+      ],
+      [
+        "passCardsButton",
         0
       ]
     ],
@@ -14694,7 +14670,7 @@
     "y": -131,
     "autoTeam": false,
     "preSetExceptionsRoutine": [
-      "// This is needed to fix whatever happens when other pre-sets are called and the game type is changed to something else. This first few are not from specific games are but specific properties of games that may or may not be modified by pre-sets.",
+      "// This is needed to fix whatever happens when other pre-sets are called and the game type is changed to something else. The first few are not from specific games are but specific properties of games that may or may not be modified by pre-sets.",
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
         "func": "IF",
@@ -14903,6 +14879,14 @@
         ],
         "property": "stackOffetX",
         "value": 35
+      },
+      "// This comes from Chwech",
+      {
+        "func": "SET",
+        "collection": "trickCount",
+        "value": [
+          "Tricks"
+        ]
       }
     ],
     "customFaceCount": 6,
@@ -15697,7 +15681,13 @@
       }
     ],
     "autoTeam": true,
-    "x": -529
+    "x": -529,
+    "displayArray": [
+      [
+        "bidWinner",
+        0
+      ]
+    ]
   },
   "gameID4": {
     "id": "gameID4",
@@ -17145,7 +17135,8 @@
     "resetProperties": {
       "x": 1310,
       "y": 145
-    }
+    },
+    "z": 42
   },
   "suitDice": {
     "type": "dice",
@@ -17218,12 +17209,11 @@
         ]
       }
     ],
-    "rollCount": 179,
+    "rollCount": 187,
     "svgReplaces": {
       "currentColor": "deckSuitColor"
     },
-    "activeFace": 1,
-    "scale": 0,
+    "activeFace": 2,
     "faces": [
       {
         "image": "i/icons/clubs.svg"
@@ -17239,7 +17229,8 @@
         "image": "i/icons/hearts.svg",
         "deckSuitColor": "#e50932"
       }
-    ]
+    ],
+    "scale": 0
   },
   "itemsButton": {
     "type": "button",
@@ -18729,7 +18720,7 @@
     "id": "notu",
     "staged": false,
     "parent": "pile2",
-    "z": 59136
+    "z": 71094
   },
   "pjia": {
     "deck": "crowDeck",
@@ -18738,7 +18729,7 @@
     "id": "pjia",
     "staged": false,
     "parent": "pile2",
-    "z": 59137
+    "z": 71095
   },
   "4iy9": {
     "deck": "crowDeck",
@@ -18747,7 +18738,7 @@
     "id": "4iy9",
     "staged": false,
     "parent": "pile2",
-    "z": 59138
+    "z": 71096
   },
   "ojbu": {
     "deck": "crowDeck",
@@ -18756,7 +18747,7 @@
     "id": "ojbu",
     "staged": false,
     "parent": "pile2",
-    "z": 59139
+    "z": 71097
   },
   "dncy": {
     "deck": "crowDeck",
@@ -18765,7 +18756,7 @@
     "id": "dncy",
     "staged": false,
     "parent": "pile2",
-    "z": 59140
+    "z": 71098
   },
   "bzoz": {
     "deck": "crowDeck",
@@ -18774,7 +18765,7 @@
     "id": "bzoz",
     "staged": false,
     "parent": "pile2",
-    "z": 59141
+    "z": 71099
   },
   "jfaf": {
     "deck": "crowDeck",
@@ -18783,7 +18774,7 @@
     "id": "jfaf",
     "staged": false,
     "parent": "pile2",
-    "z": 59142
+    "z": 71100
   },
   "xy9f": {
     "deck": "crowDeck",
@@ -18792,7 +18783,7 @@
     "id": "xy9f",
     "staged": false,
     "parent": "pile2",
-    "z": 59143
+    "z": 71101
   },
   "6jhn": {
     "deck": "crowDeck",
@@ -18801,7 +18792,7 @@
     "id": "6jhn",
     "staged": false,
     "parent": "pile2",
-    "z": 59144
+    "z": 71102
   },
   "pid7": {
     "deck": "crowDeck",
@@ -18810,7 +18801,7 @@
     "id": "pid7",
     "staged": false,
     "parent": "pile2",
-    "z": 59145
+    "z": 71103
   },
   "1yph": {
     "deck": "crowDeck",
@@ -18819,7 +18810,7 @@
     "id": "1yph",
     "staged": false,
     "parent": "pile2",
-    "z": 59146
+    "z": 71104
   },
   "zs4n": {
     "deck": "crowDeck",
@@ -18828,7 +18819,7 @@
     "id": "zs4n",
     "staged": false,
     "parent": "pile2",
-    "z": 59147
+    "z": 71105
   },
   "22ul": {
     "deck": "crowDeck",
@@ -18837,7 +18828,7 @@
     "id": "22ul",
     "staged": false,
     "parent": "pile2",
-    "z": 59148
+    "z": 71106
   },
   "j3kr": {
     "deck": "crowDeck",
@@ -18846,7 +18837,7 @@
     "id": "j3kr",
     "staged": false,
     "parent": "pile2",
-    "z": 59149
+    "z": 71107
   },
   "t5k3": {
     "deck": "crowDeck",
@@ -18855,7 +18846,7 @@
     "id": "t5k3",
     "staged": false,
     "parent": "pile2",
-    "z": 59150
+    "z": 71108
   },
   "oldk": {
     "deck": "crowDeck",
@@ -18864,7 +18855,7 @@
     "id": "oldk",
     "staged": false,
     "parent": "pile2",
-    "z": 59151
+    "z": 71109
   },
   "q4io": {
     "deck": "crowDeck",
@@ -18873,7 +18864,7 @@
     "id": "q4io",
     "staged": false,
     "parent": "pile2",
-    "z": 59152
+    "z": 71110
   },
   "gxx1": {
     "deck": "crowDeck",
@@ -18882,7 +18873,7 @@
     "id": "gxx1",
     "staged": false,
     "parent": "pile2",
-    "z": 59153
+    "z": 71111
   },
   "buyf": {
     "deck": "crowDeck",
@@ -18891,7 +18882,7 @@
     "id": "buyf",
     "staged": false,
     "parent": "pile2",
-    "z": 59154
+    "z": 71112
   },
   "sva5": {
     "deck": "crowDeck",
@@ -18900,7 +18891,7 @@
     "id": "sva5",
     "staged": false,
     "parent": "pile2",
-    "z": 59155
+    "z": 71113
   },
   "k0hw": {
     "deck": "crowDeck",
@@ -18909,7 +18900,7 @@
     "id": "k0hw",
     "staged": false,
     "parent": "pile2",
-    "z": 59156
+    "z": 71114
   },
   "9iak": {
     "deck": "crowDeck",
@@ -18918,7 +18909,7 @@
     "id": "9iak",
     "staged": false,
     "parent": "pile2",
-    "z": 59157
+    "z": 71115
   },
   "r79s": {
     "deck": "crowDeck",
@@ -18927,7 +18918,7 @@
     "id": "r79s",
     "staged": false,
     "parent": "pile2",
-    "z": 59158
+    "z": 71116
   },
   "i7bl": {
     "deck": "crowDeck",
@@ -18936,7 +18927,7 @@
     "id": "i7bl",
     "staged": false,
     "parent": "pile2",
-    "z": 59159
+    "z": 71117
   },
   "php9": {
     "deck": "crowDeck",
@@ -18945,7 +18936,7 @@
     "id": "php9",
     "staged": false,
     "parent": "pile2",
-    "z": 59160
+    "z": 71118
   },
   "ojdh": {
     "deck": "crowDeck",
@@ -18954,7 +18945,7 @@
     "id": "ojdh",
     "staged": false,
     "parent": "pile2",
-    "z": 59161
+    "z": 71119
   },
   "6k91": {
     "deck": "crowDeck",
@@ -18963,7 +18954,7 @@
     "id": "6k91",
     "staged": false,
     "parent": "pile2",
-    "z": 59162
+    "z": 71120
   },
   "tam4": {
     "deck": "crowDeck",
@@ -18972,7 +18963,7 @@
     "id": "tam4",
     "staged": false,
     "parent": "pile2",
-    "z": 59163
+    "z": 71121
   },
   "kcuh": {
     "deck": "crowDeck",
@@ -18981,7 +18972,7 @@
     "id": "kcuh",
     "staged": false,
     "parent": "pile2",
-    "z": 59164
+    "z": 71122
   },
   "66n3": {
     "deck": "crowDeck",
@@ -18990,7 +18981,7 @@
     "id": "66n3",
     "staged": false,
     "parent": "pile2",
-    "z": 59165
+    "z": 71123
   },
   "g97r": {
     "deck": "crowDeck",
@@ -18999,7 +18990,7 @@
     "id": "g97r",
     "staged": false,
     "parent": "pile2",
-    "z": 59166
+    "z": 71124
   },
   "48dj": {
     "deck": "crowDeck",
@@ -19008,7 +18999,7 @@
     "id": "48dj",
     "staged": false,
     "parent": "pile2",
-    "z": 59167
+    "z": 71125
   },
   "ojip": {
     "deck": "crowDeck",
@@ -19017,7 +19008,7 @@
     "id": "ojip",
     "staged": false,
     "parent": "pile2",
-    "z": 59168
+    "z": 71126
   },
   "cyz2": {
     "deck": "crowDeck",
@@ -19026,7 +19017,7 @@
     "id": "cyz2",
     "staged": false,
     "parent": "pile2",
-    "z": 59169
+    "z": 71127
   },
   "gios": {
     "deck": "crowDeck",
@@ -19035,7 +19026,7 @@
     "id": "gios",
     "staged": false,
     "parent": "pile2",
-    "z": 59170
+    "z": 71128
   },
   "8gln": {
     "deck": "crowDeck",
@@ -19044,7 +19035,7 @@
     "id": "8gln",
     "staged": false,
     "parent": "pile2",
-    "z": 59171
+    "z": 71129
   },
   "q9r7": {
     "deck": "crowDeck",
@@ -19053,7 +19044,7 @@
     "id": "q9r7",
     "staged": false,
     "parent": "pile2",
-    "z": 59172
+    "z": 71130
   },
   "dkdr": {
     "deck": "crowDeck",
@@ -19062,7 +19053,7 @@
     "id": "dkdr",
     "staged": false,
     "parent": "pile2",
-    "z": 59173
+    "z": 71131
   },
   "ghgj": {
     "deck": "crowDeck",
@@ -19071,7 +19062,7 @@
     "id": "ghgj",
     "staged": false,
     "parent": "pile2",
-    "z": 59174
+    "z": 71132
   },
   "qdto": {
     "deck": "crowDeck",
@@ -19080,7 +19071,7 @@
     "id": "qdto",
     "staged": false,
     "parent": "pile2",
-    "z": 59175
+    "z": 71133
   },
   "k5r9": {
     "deck": "crowDeck",
@@ -19089,7 +19080,7 @@
     "id": "k5r9",
     "staged": false,
     "parent": "pile2",
-    "z": 59176
+    "z": 71134
   },
   "782o": {
     "deck": "crowDeck",
@@ -19098,7 +19089,7 @@
     "id": "782o",
     "staged": false,
     "parent": "pile2",
-    "z": 59177
+    "z": 71135
   },
   "xrbw": {
     "deck": "crowDeck",
@@ -19107,7 +19098,7 @@
     "id": "xrbw",
     "staged": false,
     "parent": "pile2",
-    "z": 59178
+    "z": 71136
   },
   "ktnc": {
     "deck": "crowDeck",
@@ -19116,7 +19107,7 @@
     "id": "ktnc",
     "parent": "pile2",
     "staged": false,
-    "z": 59179
+    "z": 71137
   },
   "92ev": {
     "deck": "crowDeck",
@@ -19125,7 +19116,7 @@
     "id": "92ev",
     "staged": false,
     "parent": "pile2",
-    "z": 59180
+    "z": 71138
   },
   "jvbb": {
     "deck": "crowDeck",
@@ -19134,7 +19125,7 @@
     "id": "jvbb",
     "staged": false,
     "parent": "pile2",
-    "z": 59181
+    "z": 71139
   },
   "5u00": {
     "deck": "crowDeck",
@@ -19143,7 +19134,7 @@
     "id": "5u00",
     "staged": false,
     "parent": "pile2",
-    "z": 59182
+    "z": 71140
   },
   "pf8h": {
     "deck": "crowDeck",
@@ -19152,7 +19143,7 @@
     "id": "pf8h",
     "staged": false,
     "parent": "pile2",
-    "z": 59183
+    "z": 71141
   },
   "f4xu": {
     "deck": "crowDeck",
@@ -19161,7 +19152,7 @@
     "id": "f4xu",
     "staged": false,
     "parent": "pile2",
-    "z": 59184
+    "z": 71142
   },
   "niu8": {
     "deck": "crowDeck",
@@ -19170,7 +19161,7 @@
     "id": "niu8",
     "staged": false,
     "parent": "pile2",
-    "z": 59185
+    "z": 71143
   },
   "afo6": {
     "deck": "crowDeck",
@@ -19179,7 +19170,7 @@
     "id": "afo6",
     "staged": false,
     "parent": "pile2",
-    "z": 59186
+    "z": 71144
   },
   "1clv": {
     "deck": "crowDeck",
@@ -19188,7 +19179,8 @@
     "id": "1clv",
     "staged": false,
     "parent": "pile2",
-    "z": 59187
+    "z": 71145,
+    "activeFace": 1
   },
   "97qc": {
     "deck": "crowDeck",
@@ -19197,7 +19189,7 @@
     "id": "97qc",
     "staged": false,
     "parent": "pile2",
-    "z": 59188
+    "z": 71146
   },
   "1mni": {
     "deck": "crowDeck",
@@ -19206,7 +19198,7 @@
     "id": "1mni",
     "staged": false,
     "parent": "pile2",
-    "z": 59189
+    "z": 71147
   },
   "il4p": {
     "deck": "crowDeck",
@@ -19215,7 +19207,7 @@
     "id": "il4p",
     "staged": false,
     "parent": "pile2",
-    "z": 59190
+    "z": 71148
   },
   "gameID10": {
     "id": "gameID10",
@@ -19555,7 +19547,7 @@
     "id": "y6hi",
     "staged": false,
     "parent": "pile2",
-    "z": 59191
+    "z": 71149
   },
   "y2nf": {
     "deck": "tarokyDeck",
@@ -19564,7 +19556,7 @@
     "id": "y2nf",
     "staged": false,
     "parent": "pile2",
-    "z": 59131
+    "z": 71089
   },
   "ndj3": {
     "deck": "tarokyDeck",
@@ -19573,7 +19565,7 @@
     "id": "ndj3",
     "staged": false,
     "parent": "pile2",
-    "z": 59132
+    "z": 71090
   },
   "f58q": {
     "deck": "tarokyDeck",
@@ -19582,7 +19574,7 @@
     "id": "f58q",
     "staged": false,
     "parent": "pile2",
-    "z": 59133
+    "z": 71091
   },
   "y26i": {
     "deck": "tarokyDeck",
@@ -19591,7 +19583,7 @@
     "id": "y26i",
     "staged": false,
     "parent": "pile2",
-    "z": 59134
+    "z": 71092
   },
   "gameID11": {
     "id": "gameID11",
@@ -20674,15 +20666,15 @@
           {
             "func": "SORT",
             "collection": "DEFAULT",
-            "key": "${PROPERTY sort1 OF $gameID}",
-            "reverse": true
+            "key": "${PROPERTY sort1 OF $gameID}"
           }
         ],
         "elseRoutine": [
           {
             "func": "SORT",
             "collection": "DEFAULT",
-            "key": "${PROPERTY sort1 OF $gameID}"
+            "key": "${PROPERTY sort1 OF $gameID}",
+            "reverse": true
           }
         ]
       },
@@ -20805,7 +20797,8 @@
           }
         ]
       }
-    ]
+    ],
+    "z": 64
   },
   "itemsHolder12": {
     "inheritFrom": {
@@ -20859,33 +20852,6 @@
     },
     "parent": "itemsBox"
   },
-  "_meta": {
-    "version": 15,
-    "info": {
-      "name": "Card Games",
-      "image": "/assets/-2012896688_55008",
-      "rules": "",
-      "bgg": "",
-      "year": "",
-      "mode": "vs",
-      "time": "5-60",
-      "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by jade-alarm and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1713053363542,
-      "showName": true,
-      "skill": "",
-      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bouncers, Coiffeur Jass, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv1.4",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "<div><i><font color=\"#2d5da8\"><b>Game Button</b></font></i><div><br></div>Use the Game button to automatically configure the room to a particular game type. If a game type is available in the drop-down menu, it will configure the room using the option settings described below for the most common variation of that game type. Even if you use an available pre-set, you can still change other values using the Option Buttons described below.</div><div><br></div><div>If a game pre-set is not available, you can still play many games by configuring the options. The only limitation is that there will be very little automation.</div><div><br></div><div>To the right of the Game button is the name of the current pre-set game. In many rooms, hovering over that text with the cursor will display tips on how to use the automation in that particular pre-set game.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div><i style=\"color: var(--overlayFontColor);\"><font color=\"#2d5da8\"><b>Option Buttons</b></font></i><br></div></div><div><br></div>Use the option buttons in the lower right to set up room as desired.&nbsp;<div><br></div><div><b>Visuals and Other</b></div><div><ul><li><b>Play Holder</b></li><ul><li>Clicking a card in the hand sends the card to the play holder but click to play can be turned off. See Playing A Card in the automation section below for more information.</li><li>Cards are played to either a common holder in the middle of the board or to the holders adjacent to each seat. The common holder is off by default.</li><li>The common holder can display cards spread out or in a pile. When spread out, the space between cards will get smaller if there are more than 5 so they all fit without extending past the holder. About 12 cards fit before it becomes difficult to identify the cards.</li><li>The play holder can force cards to be face up when they enter or face down.</li><li>A mini-holder can be added on top of the normal holder for captured cards. This is useful in games that require some or all captured cards to be displayed face up during play.</li></ul></ul><ul><li><b>Bid &amp; Score Displays</b></li><ul><li>The scoreboard on the left side of the screen can be displayed or hidden.</li><li>The count of tricks taken per player in this round can be displayed or hidden. The total trick count is always displayed beneath the Recall &amp; Shuffle button.</li><li>The white, square bid value widgets to the left at each player's seat can be displayed or hidden.</li><li>The white, square bid suit widgets to the right at each player's seat can be displayed or hidden.</li><li>The discard holder below the trick count score can be displayed or hidden.</li><li>An activity log showing a history of bidding and other messages can be displayed or hidden.</li><li>Bidding values can be displayed to everyone or kept private until the player chooses to reveal them.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Other</b><br></li><ul><li><span style=\"color: var(--overlayFontColor);\">The turn button can be set to move the glowing turn indicator on the seats clockwise or counter-clockwise.</span><br></li><li><span style=\"color: var(--overlayFontColor);\">You can change the background color of the room to a different color.</span></li></ul></ul><div><div><b>Decks and Players</b></div><div><ul><li><b>Players</b></li><ul><li>The number of players can be set between 2 and 8. Each player count has pre-defined seats that cannot be changed. Changing the player count while players are seated will kick all players out of existing seats.</li><li>A dummy hand can be added to seat 1 (bottom-center). Cards can be dealt to the dummy hand either face up or face down. All players may see and interact with the dummy hand.</li></ul></ul><ul><li><b>Cards and Decks</b></li><ul><li>Available decks:</li><ul><li>Standard 52 card French-suited deck</li><li>Two standard 52 card decks</li><li>Taroky (54 cards)</li><li>Tarot (78 cards)</li><li>Crow (similar to Rook)</li><li>Spanish (1-12, clubs, coins, cups, swords)</li><li>German (5-A, acorns, bells, leaves, hearts)</li><li>Swiss (6-A, acorns, bells, roses, shields)</li></ul><li>The number of jokers can be set between 0 (default) and 4. The first joker added is the black 1, the second is a red 2, the third is another black 1, and the fourth is another red 2.</li><li>You can set the number of cards dealt to each seat (including the dummy, when used) from 0 to any value.</li><li>There are options to remove certain cards. This works on the standard, Spanish and Crow decks, but not Tarot.</li><li>A delete button can be displayed in the room. To use this feature, check the box in the settings, drag cards that should be removed from the deck to the Discard holder, and press the red Delete button. All cards in the Discard holder are deleted from the room after confirming your intent in a pop-up menu. Those cards can only be returned to the room by reloading the game from the Game Shelf.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Scoring</b></li><ul><li>Team/partnership scoring using North-South and East-West partners is available when playing a 4-player game.</li><li>Small widgets can be added to indicate \"teams\" that change from round-to-round. This makes variable partnership scoring automated when using certain pre-sets. Otherwise, this is just a visual reminder.</li><li>A smaller, temporary scoreboard on the left side of the screen can also be displayed or hidden (default). This is used to calculate bonuses and other values before entering a final tally in the main scoreboard. The temporary scoreboard records only one round of scores. This is mainly used by pre-sets.</li></ul></ul><i><font color=\"#2d5da8\"><b>Automation</b></font></i><div><br></div>Several widgets and buttons are available in the room to assist with automating some basic tasks.</div></div></div><div><div><ul><li><b>Deal</b></li><ul><li>This will deal the number of cards set in the Decks &amp; Players button automatically to each seat (and to the dummy hand, if being used).</li><li>This button only deals cards in the holder next to it. To start a new round, first press the Recall &amp; Shuffle button.</li></ul></ul></div><div><ul><li><b>Recall &amp; Shuffle</b></li><ul><li>This ends the current round, erases the activity log, and recalls and shuffles the cards.</li></ul></ul><div><ul><li><b>Take 1</b></li><ul><li>This sends one card from the main deck holder to the hand of the player pressing the button.</li></ul></ul></div></div></div><div><ul><li><b>Playing A Card</b></li><ul><li>When click to play is enabled:</li><ul><li>Any player can play the first trick of a new round. After that, the turn indicator moves to the next player. The turn indicator must be correct for click-to-play to work.</li><li>During a player's turn, clicking on a card will immediately play it to the selected play area.</li><li>While players are waiting for their turn, they can click on a card to stage it for play (it will raise up a few pixels above the other cards). Any card in that position when the turn indicator moves to that player will be immediately played.</li><li>If any of these scenarios are incompatible with the game you are playing, turn click to play off. You can always manually drag cards, even when click to play is enabled.</li></ul><li>The circles with numbers on the upper-left of each seat indicate the number of cards in that player's hand.</li></ul></ul></div><div><ul><li><b>Primary Scoreboard</b></li><ul><li>The red and green buttons above the scoreboard decrease and increase the score for the current round for the player pressing the button. Note: the +/- buttons may work on the secondary scoreboard instead; see below.</li><li>A new round is created every time the Recall &amp; Shuffle button is pressed.</li><li>Players can also click on the scoreboard widget directly. A pop-up prompts for which player score to set, which round, and a value. Entering data this way immediately overrides existing values in the selected round for the selected player.</li><li>If a score system was selected in the options menu, then an Add Card Points button, trump indicator, declarer indicator, and possibly a Transfer Score button are displayed at the bottom of the scoreboard.</li><ul><li>The trump indicator is set automatically based on the last bid suit button pressed by a player or by rolling the die (only displayed in some games in the upper right-hand corner for a random trump). But you can override that by clicking on the square trump widget to rotate through the options. If card point values are different for trump cards or when a bid of \"no trumps\" or \"all trumps\" changes point values, then this widget must be set correctly before entering scores. The indicator can be dragged around the room.</li><li>The Declarer indicator shows the player making the last bid. But you can override that by clicking on it to rotate through the names of the players.</li><li>The Add Card Points button will apply the pre-defined point values to the secondary scoreboard for the current round. If there are points already in the current round, pressing the button will replace the existing values with the new ones. Only cards in the holders near each players' seat are counted. There are 3 holders near each players' seat (not all are visible) and all 3 will be counted for that player.</li><li>The Transfer Score button is available in some pre-set games to move and/or convert scores between the secondary scoreboard and the main scoreboard. If available, check the game tips by hovering over the name of the pre-set. If not available, you need to manually enter values in the primary scoreboard before pressing the Recall &amp; Shuffle button.</li></ul></ul></ul><ul><li><b>Secondary Scoreboard</b></li><ul><li>The secondary scoreboard is a smaller scoreboard below the main one. It is used in many pre-sets as a temporary place to calculate interim scores, such as the value of captured card points.</li><li>In addition to the Card Points row, other rows may be available. Drag the slider to the right of the secondary scoreboard up and down to highlight different rows. The red and green +/- buttons work on whichever row is highlighted.</li><li>The red and green +/- buttons can only work on one scoreboard at a time. To reenable the buttons on the primary scoreboard, move the slider all the back up to the top.</li></ul></ul><ul><li><b>Bidding</b></li><ul><li>The square widget on the left side of the player's seat is used to indicate a bid value. The widget on the right is used to indicate the bid's suit.</li><li>Pressing either widget will open a menu in the middle of the screen only visible to that player. On that menu, the player can press numbers and/or suits to indicate a bid. Numbers are entered like a calculator one at a time. Use the blank square to erase a number entry and start over.</li><li>Bids are immediately reflected on the white square widgets for other players to see unless secret bidding is enabled.</li><li>Pressing the green Bid button will optionally display the bid in an activity log in the lower right corner in reverse chronological order. If secret bidding is enabled, the activity log only reports that the player made a bid. The bid history is erased when the cards are recalled for the next round.</li><li>If additional messages are enabled in the pre-set, then a white rectangular Message button appears above the activity log. Pressing that button allows players to choose from a selection of game-related messages that are posted in the activity log.</li><li>To close the bidding menu, press the Close button, the geen Bid button, or once again press one of the white square bidding widgets.</li><li>If secret bidding was enabled in the settings, then at the appropriate time, each player should press the Actions button to the right of the hand. In the pop-up menu, press the Show Bids button. Press the Actions button again to close the pop-up.</li></ul></ul><ul><li><b>Sorting</b></li><ul><li>A Sort button to the left of the hand will sort cards in the hand only for the player pressing the button. Suits are always sorted left to right in order: clubs, diamonds, hearts, spades when using the standard deck. Other decks have similar default sorting.</li><li>The first time a player presses the Sort button, the player is prompted to choose how to sort by value within each suit: high to low or low to high. After making the selection, the player will not see the option again until a new pre-set game is selected.</li><li>After making selections, all subsequent deals to those players will automatically be sorted.</li><li>In some pre-set games, pressing the sort button again after trumps is chosen will change the sort order.</li><li>Some pre-set games also add an additional sort button for unique behavior linked to that game.</li></ul></ul><ul><li><b>Take</b></li><ul><li>The Take button moves all cards played in the round to a holder belonging to the player pressing the button. The cards are turned face-down and placed into a pile.</li><ul><li>If using the common play holder, the cards are moved to the holder near the player's seat.</li><li>If not using the common play holder, the cards are moved to a holder behind and just slightly above and to the right of the holder near the player's seat. This holder is invisible, but can be used, so be careful if manually dragging cards.</li><li>If using the mini-holder to display captured cards, cards can be manually dragged from the holder with the captured cards to the mini-holder. Some games pre-sets do that automatically.</li></ul><li>Clicking the button will increase the count of the number of tricks taken by 1 in the trick scoring widget on the right side of the room.</li><li>The turn indicator moves to the seat of the player pressing the button to lead the next trick.</li></ul></ul><ul><li><b>Actions</b></li><ul><li>This displays a pop-up menu with other buttons that can be used in the game.</li><li>The Show Hand button will create a mini holder over the seat of the player pressing the button. Copies of the cards in the hand of the player will be displayed there in miniature. No player can interact with those copies. They appear and disappear as needed to reflect the cards in the hand of that player.</li><li>The Show Bid button is used as described above to reveal bids that had been secret.</li><li>The Show Arrow button displays a black and white arrow to the left of the hand that can point up or down. This is used in some pre-set games to indicate when low cards are high and vice versa.</li></ul></ul><ul><li><b>Items</b></li><ul><li>This displays a pop-up menu with multiple widgets that can be dragged around and used in the game.</li><li>Most of the widgets (except for the 4 card suits) change color to reflect the color of the player that took it.</li><li>The Label widget can be dragged by grabbing the thick border and you can type short messages in it by clicking in the text area.</li><li>The widgets with numbers can be clicked to change.</li><ul><li>The circular widgets change from 1 to x1, 6 to x6, etc.</li><li>The square widget is a doubling cube and cycles through x2, x4, x8, x16, x32, x64.</li></ul><li>To remove a single widget from the board, just drop it anywhere on the Items \"tray\".</li><li>A player can delete all of their own widgets by pressing the Recall Mine button.</li><li>Any player can delete all of the widgets in the room by pressing the Recall All button.</li></ul></ul><ul><li><b>Reset Scores</b></li><ul><li>The reset scores button will erase all player scores in the scoreboard widget and the trick count in the trick scoring widget. It also deletes all widgets taken from the Items \"tray\".</li></ul></ul><div><b style=\"color: rgb(45, 93, 168);\"><i>Making a New Pre-Set</i></b><br></div></div><div><br></div><div>If you are interested in adding your own pre-set (and hopefully contribute it back to the public library), then see the wiki discussion at&nbsp;https://github.com/96LawDawg/Cards-Tricks/wiki.</div>",
-      "similarDesigner": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-8"
-    }
-  },
   "gameID16": {
     "id": "gameID16",
     "x": -267,
@@ -20911,6 +20877,10 @@
       ],
       [
         "passIndicator",
+        1
+      ],
+      [
+        "passCardsButton",
         1
       ]
     ],
@@ -20947,7 +20917,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"Points are calculated automatically for cards in player piles after the Add Cards Points button is pressed. Press the Transfer Score button to move scores from the small temporary scoreboard to the main scoreboard.\\a\\a Hearts are 1 point each and Q♠ is 13 points. All other scores, including shooting the mooon and capturing all 26 points, must be manually accounted for.\"",
+    "hintText": "\"Pass cards using the Pass Cards button in the bottom right. You can adjust the direction and number using the widgets above and below that button. The direction rotates automatically through 4 options each time the cards are recalled.\\a\\a Points are calculated automatically for cards in player piles after the Add Cards Points button is pressed. Press the Transfer Score button to move scores from the small temporary scoreboard to the main scoreboard.\\a\\a Hearts are 1 point each and Q♠ is 13 points. All other scores, including shooting the mooon and capturing all 26 points, must be manually accounted for.\"",
     "scoreSystem": [
       [],
       [
@@ -20992,6 +20962,14 @@
         ],
         "property": "scale",
         "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "passCountButton"
+        ],
+        "property": "text",
+        "value": 3
       }
     ],
     "scoreExceptionsRoutine": [
@@ -21016,7 +20994,23 @@
     ],
     "trumps": 4,
     "text": "Hearts",
-    "y": 412
+    "y": 412,
+    "recallRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "passIndicator"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "passCardsButton"
+        ],
+        "property": "ready",
+        "value": 0
+      }
+    ]
   },
   "gameID17": {
     "id": "gameID17",
@@ -21043,6 +21037,10 @@
       ],
       [
         "transferScoreButton",
+        0
+      ],
+      [
+        "bidWinner",
         0
       ]
     ],
@@ -22786,6 +22784,18 @@
     "score36": [
       "K-Q-C-J-10-9-8-7",
       "S-21-20-19-...-5-4-3-2-1"
+    ],
+    "score41": [
+      "Play as many cards as possible but also take cards as close as possible to a multiple of 9 without going over.",
+      "Left of dealer starts and may not pass. First player can play Joker and declare a suit.\n\nMust follow suit, play Joker, or pass. Only one Joker per trick.\n\nHighest card wins trick but: (a) Ace is low if it is last card played and (b) Joker only wins if it is last card played.\n\nPlayer winning trick may pass at start of next trick.",
+      "Round ends when either: (a) everyone passed and no card was played on a trick or (b) one player plays their last card and that trick is taken.",
+      "Game ends when every player has dealt once (5-7 players) or dealt twice (4 players)."
+    ],
+    "score42": [
+      "-4",
+      "-3",
+      "-2",
+      "-1"
     ]
   },
   "playerAid6": {
@@ -24141,7 +24151,7 @@
     "id": "8oho",
     "staged": false,
     "parent": "pile2",
-    "z": 59192
+    "z": 71150
   },
   "64sh": {
     "deck": "crowDeck",
@@ -24149,8 +24159,8 @@
     "cardType": "2 black",
     "id": "64sh",
     "staged": false,
-    "parent": "pile2",
-    "z": 59193
+    "z": 71151,
+    "parent": "pile2"
   },
   "dk9p": {
     "deck": "crowDeck",
@@ -24158,9 +24168,8 @@
     "cardType": "3 black",
     "id": "dk9p",
     "staged": false,
-    "activeFace": 1,
-    "parent": "pile2",
-    "z": 59194
+    "z": 71152,
+    "parent": "pile2"
   },
   "f44h": {
     "deck": "crowDeck",
@@ -24168,8 +24177,8 @@
     "cardType": "4 black",
     "id": "f44h",
     "staged": false,
-    "parent": "pile2",
-    "z": 59195
+    "z": 71153,
+    "parent": "pile2"
   },
   "d2im": {
     "deck": "crowDeck",
@@ -24177,9 +24186,8 @@
     "cardType": "5 black",
     "id": "d2im",
     "staged": false,
-    "activeFace": 1,
-    "parent": "pile2",
-    "z": 59196
+    "z": 71154,
+    "parent": "pile2"
   },
   "iuob": {
     "deck": "crowDeck",
@@ -24187,8 +24195,8 @@
     "cardType": "6 black",
     "id": "iuob",
     "staged": false,
-    "parent": "pile2",
-    "z": 59197
+    "z": 71155,
+    "parent": "pile2"
   },
   "fzbc": {
     "deck": "crowDeck",
@@ -24196,8 +24204,8 @@
     "cardType": "7 black",
     "id": "fzbc",
     "staged": false,
-    "parent": "pile2",
-    "z": 59198
+    "z": 71156,
+    "parent": "pile2"
   },
   "gjox": {
     "deck": "crowDeck",
@@ -24205,9 +24213,8 @@
     "cardType": "8 black",
     "id": "gjox",
     "staged": false,
-    "activeFace": 1,
-    "parent": "pile2",
-    "z": 59199
+    "z": 71157,
+    "parent": "pile2"
   },
   "l7jt": {
     "deck": "crowDeck",
@@ -24215,8 +24222,8 @@
     "cardType": "9 black",
     "id": "l7jt",
     "staged": false,
-    "parent": "pile2",
-    "z": 59200
+    "z": 71158,
+    "parent": "pile2"
   },
   "zcx7": {
     "deck": "crowDeck",
@@ -24224,9 +24231,8 @@
     "cardType": "10 black",
     "id": "zcx7",
     "staged": false,
-    "activeFace": 1,
     "parent": "pile2",
-    "z": 59201
+    "z": 71159
   },
   "f9al": {
     "deck": "crowDeck",
@@ -24234,9 +24240,8 @@
     "cardType": "11 black",
     "id": "f9al",
     "staged": false,
-    "parent": "pile2",
-    "activeFace": 1,
-    "z": 59202
+    "z": 71160,
+    "parent": "pile2"
   },
   "g7mu": {
     "deck": "crowDeck",
@@ -24244,8 +24249,8 @@
     "cardType": "12 black",
     "id": "g7mu",
     "staged": false,
-    "parent": "pile2",
-    "z": 59203
+    "z": 71161,
+    "parent": "pile2"
   },
   "m28x": {
     "deck": "crowDeck",
@@ -24254,16 +24259,16 @@
     "id": "m28x",
     "parent": "pile2",
     "staged": false,
-    "z": 59204
+    "z": 71162
   },
   "uu8d": {
     "deck": "crowDeck",
     "type": "card",
     "cardType": "14 black",
     "id": "uu8d",
-    "parent": "pile2",
     "staged": false,
-    "z": 59205
+    "z": 71163,
+    "parent": "pile2"
   },
   "statePoints": {
     "id": "statePoints",
@@ -24303,6 +24308,10 @@
       ],
       [
         "transferScoreButton",
+        0
+      ],
+      [
+        "bidWinner",
         0
       ]
     ],
@@ -25536,6 +25545,10 @@
     "sort2": "suit",
     "displayArray": [
       [
+        "99BidLabel",
+        1
+      ],
+      [
         "playerAidButton",
         1
       ],
@@ -25545,6 +25558,10 @@
       ],
       [
         "score+10",
+        1
+      ],
+      [
+        "suitDice",
         1
       ],
       [
@@ -25561,7 +25578,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder.\\a\\a To declare bid openly for additional pionts, use Actions button then Show Bid button. To reveal hand for additional points, use Actions button then Show Hand button.\\a\\a At the end of the round, press Score button to calculate and enter scores. Manually flipping over bid cards is not necessary, but if a player wants to show their bid, do not manually flip over bid cards until after scoring.\\a\\a Next trump suit is automatically set on the trump indicator widget after recalling cards.\"",
+    "hintText": "\"Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder.\\a\\a To declare bid openly for additional pionts, use Actions button then Show Bid button. To reveal hand for additional points, use Actions button then Show Hand button.\\a\\a At the end of the round, press Score button to calculate and enter scores. Manually flipping over bid cards is not necessary, but if a player wants to show their bid, do not manually flip over bid cards until after scoring.\\a\\a If playing the rule that the number of players that made their exact bid determines trump, then the next trump suit is automatically set on the trump indicator widget after recalling cards. If you want a random trump each time, then click the dice in the upper right after dealing.\"",
     "y": 646,
     "autoTeam": false,
     "preSetExceptionsRoutine": [
@@ -25894,7 +25911,90 @@
         "value": "${nextTrump}"
       }
     ],
-    "nextTrump": 0
+    "nextTrump": 0,
+    "playLeaveRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "dropShadowOwner"
+      },
+      {
+        "func": "IF",
+        "operand1": "${dropShadowOwner}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "calcBidRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "99Bid${thisSeatIndex}"
+            ],
+            "property": "text",
+            "value": "${result}"
+          }
+        ]
+      }
+    ],
+    "calcBidRoutine": [
+      "var bidValues = '0,3,0,1,2' split ','",
+      "var result = 0",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "holder${thisSeatIndex}",
+        "collection": "bidCards"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "bidCards",
+            "property": "suit",
+            "value": "${value}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "var suitTotal = ${COUNT} * ${bidValues.$value}",
+          "var result = ${result} + ${suitTotal}"
+        ]
+      }
+    ],
+    "playEnterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "dropShadowOwner"
+      },
+      {
+        "func": "IF",
+        "operand1": "${dropShadowOwner}",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "calcBidRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "99Bid${thisSeatIndex}"
+            ],
+            "property": "text",
+            "value": "${result}"
+          }
+        ]
+      }
+    ]
   },
   "playerAid26": {
     "type": "scoreboard",
@@ -26913,7 +27013,7 @@
         ]
       }
     ],
-    "spreadHearts": true,
+    "spreadHearts": false,
     "version1": {
       "spreadHearts": false
     },
@@ -27535,7 +27635,7 @@
     "id": "sh1e",
     "parent": "pile2",
     "staged": false,
-    "z": 59209
+    "z": 71167
   },
   "9rai": {
     "deck": "spanishDeck",
@@ -27544,7 +27644,7 @@
     "id": "9rai",
     "parent": "pile2",
     "staged": false,
-    "z": 59210
+    "z": 71168
   },
   "9hfs": {
     "deck": "spanishDeck",
@@ -27553,7 +27653,7 @@
     "id": "9hfs",
     "parent": "pile2",
     "staged": false,
-    "z": 59211
+    "z": 71169
   },
   "4i54": {
     "deck": "spanishDeck",
@@ -27562,7 +27662,7 @@
     "id": "4i54",
     "parent": "pile2",
     "staged": false,
-    "z": 59212
+    "z": 71170
   },
   "cqty": {
     "deck": "spanishDeck",
@@ -27571,7 +27671,7 @@
     "id": "cqty",
     "parent": "pile2",
     "staged": false,
-    "z": 59213
+    "z": 71171
   },
   "q3iq": {
     "deck": "spanishDeck",
@@ -27580,7 +27680,7 @@
     "id": "q3iq",
     "staged": false,
     "parent": "pile2",
-    "z": 59214
+    "z": 71172
   },
   "yan6": {
     "deck": "spanishDeck",
@@ -27589,7 +27689,7 @@
     "id": "yan6",
     "parent": "pile2",
     "staged": false,
-    "z": 59215
+    "z": 71173
   },
   "4kbm": {
     "deck": "spanishDeck",
@@ -27598,7 +27698,7 @@
     "id": "4kbm",
     "parent": "pile2",
     "staged": false,
-    "z": 59216
+    "z": 71174
   },
   "no7i": {
     "deck": "spanishDeck",
@@ -27607,7 +27707,7 @@
     "id": "no7i",
     "staged": false,
     "parent": "pile2",
-    "z": 59217
+    "z": 71175
   },
   "tbd4": {
     "deck": "spanishDeck",
@@ -27616,7 +27716,7 @@
     "id": "tbd4",
     "staged": false,
     "parent": "pile2",
-    "z": 59218
+    "z": 71176
   },
   "9wkw": {
     "deck": "spanishDeck",
@@ -27625,7 +27725,7 @@
     "id": "9wkw",
     "staged": false,
     "parent": "pile2",
-    "z": 59219
+    "z": 71177
   },
   "1uaz": {
     "deck": "spanishDeck",
@@ -27634,7 +27734,7 @@
     "id": "1uaz",
     "parent": "pile2",
     "staged": false,
-    "z": 59220
+    "z": 71178
   },
   "g2p1": {
     "deck": "spanishDeck",
@@ -27643,7 +27743,7 @@
     "id": "g2p1",
     "parent": "pile2",
     "staged": false,
-    "z": 59221
+    "z": 71179
   },
   "2lr5": {
     "deck": "spanishDeck",
@@ -27652,7 +27752,7 @@
     "id": "2lr5",
     "parent": "pile2",
     "staged": false,
-    "z": 59222
+    "z": 71180
   },
   "fb07": {
     "deck": "spanishDeck",
@@ -27661,7 +27761,7 @@
     "id": "fb07",
     "parent": "pile2",
     "staged": false,
-    "z": 59223
+    "z": 71181
   },
   "7mdx": {
     "deck": "spanishDeck",
@@ -27670,7 +27770,7 @@
     "id": "7mdx",
     "parent": "pile2",
     "staged": false,
-    "z": 59224
+    "z": 71182
   },
   "p6t1": {
     "deck": "spanishDeck",
@@ -27679,7 +27779,7 @@
     "id": "p6t1",
     "parent": "pile2",
     "staged": false,
-    "z": 59225
+    "z": 71183
   },
   "y8jg": {
     "deck": "spanishDeck",
@@ -27688,7 +27788,7 @@
     "id": "y8jg",
     "parent": "pile2",
     "staged": false,
-    "z": 59226
+    "z": 71184
   },
   "jy9e": {
     "deck": "spanishDeck",
@@ -27697,7 +27797,7 @@
     "id": "jy9e",
     "parent": "pile2",
     "staged": false,
-    "z": 59227
+    "z": 71185
   },
   "ois8": {
     "deck": "spanishDeck",
@@ -27706,7 +27806,7 @@
     "id": "ois8",
     "parent": "pile2",
     "staged": false,
-    "z": 59228
+    "z": 71186
   },
   "bmmy": {
     "deck": "spanishDeck",
@@ -27715,7 +27815,7 @@
     "id": "bmmy",
     "parent": "pile2",
     "staged": false,
-    "z": 59229
+    "z": 71187
   },
   "odn8": {
     "deck": "spanishDeck",
@@ -27724,7 +27824,7 @@
     "id": "odn8",
     "parent": "pile2",
     "staged": false,
-    "z": 59230
+    "z": 71188
   },
   "v2h2": {
     "deck": "spanishDeck",
@@ -27733,7 +27833,7 @@
     "id": "v2h2",
     "parent": "pile2",
     "staged": false,
-    "z": 59231
+    "z": 71189
   },
   "qgiq": {
     "deck": "spanishDeck",
@@ -27742,7 +27842,7 @@
     "id": "qgiq",
     "parent": "pile2",
     "staged": false,
-    "z": 59232
+    "z": 71190
   },
   "rj3y": {
     "deck": "spanishDeck",
@@ -27751,7 +27851,7 @@
     "id": "rj3y",
     "parent": "pile2",
     "staged": false,
-    "z": 59233
+    "z": 71191
   },
   "ksc2": {
     "deck": "spanishDeck",
@@ -27760,7 +27860,7 @@
     "id": "ksc2",
     "parent": "pile2",
     "staged": false,
-    "z": 59234
+    "z": 71192
   },
   "z99b": {
     "deck": "spanishDeck",
@@ -27769,7 +27869,7 @@
     "id": "z99b",
     "parent": "pile2",
     "staged": false,
-    "z": 59235
+    "z": 71193
   },
   "x9gd": {
     "deck": "spanishDeck",
@@ -27778,7 +27878,7 @@
     "id": "x9gd",
     "parent": "pile2",
     "staged": false,
-    "z": 59236
+    "z": 71194
   },
   "to5r": {
     "deck": "spanishDeck",
@@ -27787,7 +27887,7 @@
     "id": "to5r",
     "parent": "pile2",
     "staged": false,
-    "z": 59237
+    "z": 71195
   },
   "epq7": {
     "deck": "spanishDeck",
@@ -27796,7 +27896,7 @@
     "id": "epq7",
     "parent": "pile2",
     "staged": false,
-    "z": 59238
+    "z": 71196
   },
   "qd9y": {
     "deck": "spanishDeck",
@@ -27805,7 +27905,7 @@
     "id": "qd9y",
     "parent": "pile2",
     "staged": false,
-    "z": 59239
+    "z": 71197
   },
   "fvha": {
     "deck": "spanishDeck",
@@ -27814,7 +27914,7 @@
     "id": "fvha",
     "parent": "pile2",
     "staged": false,
-    "z": 59240
+    "z": 71198
   },
   "hvmr": {
     "deck": "spanishDeck",
@@ -27823,7 +27923,7 @@
     "id": "hvmr",
     "parent": "pile2",
     "staged": false,
-    "z": 59241
+    "z": 71199
   },
   "o5wk": {
     "deck": "spanishDeck",
@@ -27832,7 +27932,7 @@
     "id": "o5wk",
     "parent": "pile2",
     "staged": false,
-    "z": 59242
+    "z": 71200
   },
   "glym": {
     "deck": "spanishDeck",
@@ -27841,7 +27941,7 @@
     "id": "glym",
     "parent": "pile2",
     "staged": false,
-    "z": 59243
+    "z": 71201
   },
   "qk6o": {
     "deck": "spanishDeck",
@@ -27850,7 +27950,7 @@
     "id": "qk6o",
     "parent": "pile2",
     "staged": false,
-    "z": 59244
+    "z": 71202
   },
   "6ztl": {
     "deck": "spanishDeck",
@@ -27859,7 +27959,7 @@
     "id": "6ztl",
     "parent": "pile2",
     "staged": false,
-    "z": 59245
+    "z": 71203
   },
   "6jct": {
     "deck": "spanishDeck",
@@ -27868,7 +27968,7 @@
     "id": "6jct",
     "parent": "pile2",
     "staged": false,
-    "z": 59246
+    "z": 71204
   },
   "06fw": {
     "deck": "spanishDeck",
@@ -27877,7 +27977,7 @@
     "id": "06fw",
     "parent": "pile2",
     "staged": false,
-    "z": 59247
+    "z": 71205
   },
   "e2ul": {
     "deck": "spanishDeck",
@@ -27886,7 +27986,7 @@
     "id": "e2ul",
     "parent": "pile2",
     "staged": false,
-    "z": 59248
+    "z": 71206
   },
   "t499": {
     "deck": "spanishDeck",
@@ -27895,7 +27995,7 @@
     "id": "t499",
     "parent": "pile2",
     "staged": false,
-    "z": 59249
+    "z": 71207
   },
   "jceo": {
     "deck": "spanishDeck",
@@ -27904,7 +28004,7 @@
     "id": "jceo",
     "parent": "pile2",
     "staged": false,
-    "z": 59250
+    "z": 71208
   },
   "kyrv": {
     "deck": "spanishDeck",
@@ -27913,7 +28013,7 @@
     "id": "kyrv",
     "staged": false,
     "parent": "pile2",
-    "z": 59251
+    "z": 71209
   },
   "cprx": {
     "deck": "spanishDeck",
@@ -27922,7 +28022,7 @@
     "id": "cprx",
     "parent": "pile2",
     "staged": false,
-    "z": 59252
+    "z": 71210
   },
   "1van": {
     "deck": "spanishDeck",
@@ -27931,7 +28031,7 @@
     "id": "1van",
     "parent": "pile2",
     "staged": false,
-    "z": 59253
+    "z": 71211
   },
   "yvjj": {
     "deck": "spanishDeck",
@@ -27940,7 +28040,7 @@
     "id": "yvjj",
     "parent": "pile2",
     "staged": false,
-    "z": 59254
+    "z": 71212
   },
   "rxxu": {
     "deck": "spanishDeck",
@@ -27949,7 +28049,7 @@
     "id": "rxxu",
     "parent": "pile2",
     "staged": false,
-    "z": 59255
+    "z": 71213
   },
   "ca49": {
     "deck": "spanishDeck",
@@ -27958,7 +28058,7 @@
     "id": "ca49",
     "parent": "pile2",
     "staged": false,
-    "z": 59256
+    "z": 71214
   },
   "playerAid8": {
     "type": "scoreboard",
@@ -28836,7 +28936,7 @@
     "id": "vaj7",
     "parent": "pile2",
     "staged": false,
-    "z": 59257
+    "z": 71215
   },
   "87mo": {
     "deck": "germanDeck",
@@ -28845,7 +28945,7 @@
     "id": "87mo",
     "parent": "pile2",
     "staged": false,
-    "z": 59258
+    "z": 71216
   },
   "xixn": {
     "deck": "germanDeck",
@@ -28854,7 +28954,7 @@
     "id": "xixn",
     "parent": "pile2",
     "staged": false,
-    "z": 59259
+    "z": 71217
   },
   "zzrf": {
     "deck": "germanDeck",
@@ -28863,7 +28963,7 @@
     "id": "zzrf",
     "staged": false,
     "parent": "pile2",
-    "z": 59260
+    "z": 71218
   },
   "zcet": {
     "deck": "germanDeck",
@@ -28872,7 +28972,7 @@
     "id": "zcet",
     "parent": "pile2",
     "staged": false,
-    "z": 59261
+    "z": 71219
   },
   "t7mu": {
     "deck": "germanDeck",
@@ -28881,7 +28981,7 @@
     "id": "t7mu",
     "staged": false,
     "parent": "pile2",
-    "z": 59262
+    "z": 71220
   },
   "anm2": {
     "deck": "germanDeck",
@@ -28890,7 +28990,7 @@
     "id": "anm2",
     "parent": "pile2",
     "staged": false,
-    "z": 59263
+    "z": 71221
   },
   "up0z": {
     "deck": "germanDeck",
@@ -28900,7 +29000,7 @@
     "parent": "pile2",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 59264
+    "z": 71222
   },
   "hrdy": {
     "deck": "germanDeck",
@@ -28909,7 +29009,7 @@
     "id": "hrdy",
     "parent": "pile2",
     "staged": false,
-    "z": 59265
+    "z": 71223
   },
   "ydk0": {
     "deck": "germanDeck",
@@ -28918,7 +29018,7 @@
     "id": "ydk0",
     "parent": "pile2",
     "staged": false,
-    "z": 59266
+    "z": 71224
   },
   "1abt": {
     "deck": "germanDeck",
@@ -28927,7 +29027,7 @@
     "id": "1abt",
     "parent": "pile2",
     "staged": false,
-    "z": 59267
+    "z": 71225
   },
   "48y2": {
     "deck": "germanDeck",
@@ -28936,7 +29036,7 @@
     "id": "48y2",
     "staged": false,
     "parent": "pile2",
-    "z": 59268
+    "z": 71226
   },
   "8jk6": {
     "deck": "germanDeck",
@@ -28945,7 +29045,7 @@
     "id": "8jk6",
     "parent": "pile2",
     "staged": false,
-    "z": 59269
+    "z": 71227
   },
   "4dpk": {
     "deck": "germanDeck",
@@ -28954,7 +29054,7 @@
     "id": "4dpk",
     "parent": "pile2",
     "staged": false,
-    "z": 59270
+    "z": 71228
   },
   "zt4c": {
     "deck": "germanDeck",
@@ -28963,7 +29063,7 @@
     "id": "zt4c",
     "parent": "pile2",
     "staged": false,
-    "z": 59271
+    "z": 71229
   },
   "b1er": {
     "deck": "germanDeck",
@@ -28972,7 +29072,7 @@
     "id": "b1er",
     "parent": "pile2",
     "staged": false,
-    "z": 59272
+    "z": 71230
   },
   "mul7": {
     "deck": "germanDeck",
@@ -28981,7 +29081,7 @@
     "id": "mul7",
     "parent": "pile2",
     "staged": false,
-    "z": 59273
+    "z": 71231
   },
   "ya24": {
     "deck": "germanDeck",
@@ -28991,7 +29091,7 @@
     "parent": "pile2",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 59274
+    "z": 71232
   },
   "4a99": {
     "deck": "germanDeck",
@@ -29000,7 +29100,7 @@
     "id": "4a99",
     "staged": false,
     "parent": "pile2",
-    "z": 59275
+    "z": 71233
   },
   "srqz": {
     "deck": "germanDeck",
@@ -29009,7 +29109,7 @@
     "id": "srqz",
     "parent": "pile2",
     "staged": false,
-    "z": 59276
+    "z": 71234
   },
   "4cpf": {
     "deck": "germanDeck",
@@ -29018,7 +29118,7 @@
     "id": "4cpf",
     "parent": "pile2",
     "staged": false,
-    "z": 59277
+    "z": 71235
   },
   "t91e": {
     "deck": "germanDeck",
@@ -29027,7 +29127,7 @@
     "id": "t91e",
     "parent": "pile2",
     "staged": false,
-    "z": 59278
+    "z": 71236
   },
   "wr2t": {
     "deck": "germanDeck",
@@ -29036,7 +29136,7 @@
     "id": "wr2t",
     "parent": "pile2",
     "staged": false,
-    "z": 59279
+    "z": 71237
   },
   "vhpu": {
     "deck": "germanDeck",
@@ -29045,7 +29145,7 @@
     "id": "vhpu",
     "parent": "pile2",
     "staged": false,
-    "z": 59280
+    "z": 71238
   },
   "gm6i": {
     "deck": "germanDeck",
@@ -29054,7 +29154,7 @@
     "id": "gm6i",
     "parent": "pile2",
     "staged": false,
-    "z": 59281
+    "z": 71239
   },
   "lwqv": {
     "deck": "germanDeck",
@@ -29063,7 +29163,7 @@
     "id": "lwqv",
     "parent": "pile2",
     "staged": false,
-    "z": 59282
+    "z": 71240
   },
   "l255": {
     "deck": "germanDeck",
@@ -29072,7 +29172,7 @@
     "id": "l255",
     "parent": "pile2",
     "staged": false,
-    "z": 59283
+    "z": 71241
   },
   "myzu": {
     "deck": "germanDeck",
@@ -29082,7 +29182,7 @@
     "parent": "pile2",
     "staged": false,
     "sortSuitSkat": 0,
-    "z": 59284
+    "z": 71242
   },
   "2sab": {
     "deck": "germanDeck",
@@ -29091,7 +29191,7 @@
     "id": "2sab",
     "parent": "pile2",
     "staged": false,
-    "z": 59285
+    "z": 71243
   },
   "pvbv": {
     "deck": "germanDeck",
@@ -29100,7 +29200,7 @@
     "id": "pvbv",
     "parent": "pile2",
     "staged": false,
-    "z": 59286
+    "z": 71244
   },
   "dctx": {
     "deck": "germanDeck",
@@ -29109,7 +29209,7 @@
     "id": "dctx",
     "staged": false,
     "parent": "pile2",
-    "z": 59287
+    "z": 71245
   },
   "zk00": {
     "deck": "germanDeck",
@@ -29118,7 +29218,7 @@
     "id": "zk00",
     "parent": "pile2",
     "staged": false,
-    "z": 59288
+    "z": 71246
   },
   "da7e": {
     "deck": "germanDeck",
@@ -29127,7 +29227,7 @@
     "id": "da7e",
     "staged": false,
     "parent": "pile2",
-    "z": 59289
+    "z": 71247
   },
   "y4x5": {
     "deck": "germanDeck",
@@ -29136,7 +29236,7 @@
     "id": "y4x5",
     "parent": "pile2",
     "staged": false,
-    "z": 59290
+    "z": 71248
   },
   "i7o5": {
     "deck": "germanDeck",
@@ -29145,7 +29245,7 @@
     "id": "i7o5",
     "parent": "pile2",
     "staged": false,
-    "z": 59291
+    "z": 71249
   },
   "scgl": {
     "deck": "germanDeck",
@@ -29154,7 +29254,7 @@
     "id": "scgl",
     "staged": false,
     "parent": "pile2",
-    "z": 59292
+    "z": 71250
   },
   "xtc9": {
     "deck": "germanDeck",
@@ -29163,7 +29263,7 @@
     "id": "xtc9",
     "parent": "pile2",
     "staged": false,
-    "z": 59293
+    "z": 71251
   },
   "d9tp": {
     "deck": "germanDeck",
@@ -29173,7 +29273,7 @@
     "staged": false,
     "sortSuitSkat": 0,
     "parent": "pile2",
-    "z": 59294
+    "z": 71252
   },
   "8ytr": {
     "deck": "germanDeck",
@@ -29182,7 +29282,7 @@
     "id": "8ytr",
     "parent": "pile2",
     "staged": false,
-    "z": 59295
+    "z": 71253
   },
   "lvgf": {
     "deck": "germanDeck",
@@ -29191,7 +29291,7 @@
     "id": "lvgf",
     "staged": false,
     "parent": "pile2",
-    "z": 59296
+    "z": 71254
   },
   "gameID29": {
     "id": "gameID29",
@@ -29304,8 +29404,8 @@
     "chooser": 15,
     "image": "",
     "text": "All\nTrump",
-    "deckSuitsColor": "",
-    "deckSuitsUni": "AT"
+    "deckSuitsUni": "AT",
+    "deckSuitsColor": ""
   },
   "choose16": {
     "type": "button",
@@ -29874,7 +29974,7 @@
     "cardType": "Acorn 01",
     "id": "2wa8",
     "staged": false,
-    "z": 59297,
+    "z": 71255,
     "parent": "pile2"
   },
   "alcs": {
@@ -29883,7 +29983,7 @@
     "cardType": "Acorn 06",
     "id": "alcs",
     "staged": false,
-    "z": 59298,
+    "z": 71256,
     "parent": "pile2"
   },
   "zjgq": {
@@ -29892,7 +29992,7 @@
     "cardType": "Acorn 07",
     "id": "zjgq",
     "staged": false,
-    "z": 59299,
+    "z": 71257,
     "parent": "pile2"
   },
   "f4ea": {
@@ -29901,7 +30001,7 @@
     "cardType": "Acorn 08",
     "id": "f4ea",
     "staged": false,
-    "z": 59300,
+    "z": 71258,
     "parent": "pile2"
   },
   "4gts": {
@@ -29911,7 +30011,7 @@
     "id": "4gts",
     "parent": "pile2",
     "staged": false,
-    "z": 59301
+    "z": 71259
   },
   "4u5f": {
     "deck": "swissDeck",
@@ -29920,7 +30020,7 @@
     "id": "4u5f",
     "parent": "pile2",
     "staged": false,
-    "z": 59302
+    "z": 71260
   },
   "1zs0": {
     "deck": "swissDeck",
@@ -29928,7 +30028,7 @@
     "cardType": "Acorn 11",
     "id": "1zs0",
     "staged": false,
-    "z": 59303,
+    "z": 71261,
     "parent": "pile2"
   },
   "fj5l": {
@@ -29938,7 +30038,7 @@
     "id": "fj5l",
     "parent": "pile2",
     "staged": false,
-    "z": 59304
+    "z": 71262
   },
   "nksh": {
     "deck": "swissDeck",
@@ -29946,7 +30046,7 @@
     "cardType": "Acorn 13",
     "id": "nksh",
     "staged": false,
-    "z": 59305,
+    "z": 71263,
     "parent": "pile2"
   },
   "2clx": {
@@ -29955,7 +30055,7 @@
     "cardType": "Bell 01",
     "id": "2clx",
     "staged": false,
-    "z": 59306,
+    "z": 71264,
     "parent": "pile2"
   },
   "wkpt": {
@@ -29965,7 +30065,7 @@
     "id": "wkpt",
     "parent": "pile2",
     "staged": false,
-    "z": 59307
+    "z": 71265
   },
   "cysa": {
     "deck": "swissDeck",
@@ -29973,7 +30073,7 @@
     "cardType": "Bell 07",
     "id": "cysa",
     "staged": false,
-    "z": 59308,
+    "z": 71266,
     "parent": "pile2"
   },
   "1uhp": {
@@ -29983,7 +30083,7 @@
     "id": "1uhp",
     "parent": "pile2",
     "staged": false,
-    "z": 59309
+    "z": 71267
   },
   "ix0x": {
     "deck": "swissDeck",
@@ -29992,7 +30092,7 @@
     "id": "ix0x",
     "parent": "pile2",
     "staged": false,
-    "z": 59310
+    "z": 71268
   },
   "4ljo": {
     "deck": "swissDeck",
@@ -30000,7 +30100,7 @@
     "cardType": "Bell 10",
     "id": "4ljo",
     "staged": false,
-    "z": 59311,
+    "z": 71269,
     "parent": "pile2"
   },
   "dsaz": {
@@ -30010,7 +30110,7 @@
     "id": "dsaz",
     "parent": "pile2",
     "staged": false,
-    "z": 59312
+    "z": 71270
   },
   "2yuy": {
     "deck": "swissDeck",
@@ -30019,7 +30119,7 @@
     "id": "2yuy",
     "parent": "pile2",
     "staged": false,
-    "z": 59313
+    "z": 71271
   },
   "ydai": {
     "deck": "swissDeck",
@@ -30027,7 +30127,7 @@
     "cardType": "Bell 13",
     "id": "ydai",
     "staged": false,
-    "z": 59314,
+    "z": 71272,
     "parent": "pile2"
   },
   "lqvm": {
@@ -30037,7 +30137,7 @@
     "id": "lqvm",
     "staged": false,
     "parent": "pile2",
-    "z": 59315
+    "z": 71273
   },
   "l1a4": {
     "deck": "swissDeck",
@@ -30046,7 +30146,7 @@
     "id": "l1a4",
     "parent": "pile2",
     "staged": false,
-    "z": 59316
+    "z": 71274
   },
   "1ao8": {
     "deck": "swissDeck",
@@ -30055,7 +30155,7 @@
     "id": "1ao8",
     "parent": "pile2",
     "staged": false,
-    "z": 59317
+    "z": 71275
   },
   "z53z": {
     "deck": "swissDeck",
@@ -30064,7 +30164,7 @@
     "id": "z53z",
     "parent": "pile2",
     "staged": false,
-    "z": 59318
+    "z": 71276
   },
   "l477": {
     "deck": "swissDeck",
@@ -30072,7 +30172,7 @@
     "cardType": "Rose 09",
     "id": "l477",
     "staged": false,
-    "z": 59319,
+    "z": 71277,
     "parent": "pile2"
   },
   "xlbo": {
@@ -30082,7 +30182,7 @@
     "id": "xlbo",
     "parent": "pile2",
     "staged": false,
-    "z": 59320
+    "z": 71278
   },
   "2fzs": {
     "deck": "swissDeck",
@@ -30090,7 +30190,7 @@
     "cardType": "Rose 11",
     "id": "2fzs",
     "staged": false,
-    "z": 59321,
+    "z": 71279,
     "parent": "pile2"
   },
   "ke9s": {
@@ -30100,7 +30200,7 @@
     "id": "ke9s",
     "parent": "pile2",
     "staged": false,
-    "z": 59322
+    "z": 71280
   },
   "0ytl": {
     "deck": "swissDeck",
@@ -30109,7 +30209,7 @@
     "id": "0ytl",
     "parent": "pile2",
     "staged": false,
-    "z": 59323
+    "z": 71281
   },
   "jykm": {
     "deck": "swissDeck",
@@ -30117,7 +30217,7 @@
     "cardType": "Shield 01",
     "id": "jykm",
     "staged": false,
-    "z": 59324,
+    "z": 71282,
     "parent": "pile2"
   },
   "4ol2": {
@@ -30127,7 +30227,7 @@
     "id": "4ol2",
     "parent": "pile2",
     "staged": false,
-    "z": 59325
+    "z": 71283
   },
   "5jz0": {
     "deck": "swissDeck",
@@ -30136,7 +30236,7 @@
     "id": "5jz0",
     "parent": "pile2",
     "staged": false,
-    "z": 59326
+    "z": 71284
   },
   "6v02": {
     "deck": "swissDeck",
@@ -30145,7 +30245,7 @@
     "id": "6v02",
     "parent": "pile2",
     "staged": false,
-    "z": 59327
+    "z": 71285
   },
   "ev9f": {
     "deck": "swissDeck",
@@ -30153,7 +30253,7 @@
     "cardType": "Shield 09",
     "id": "ev9f",
     "staged": false,
-    "z": 59328,
+    "z": 71286,
     "parent": "pile2"
   },
   "rkh9": {
@@ -30163,7 +30263,7 @@
     "id": "rkh9",
     "parent": "pile2",
     "staged": false,
-    "z": 59329
+    "z": 71287
   },
   "3lst": {
     "deck": "swissDeck",
@@ -30172,7 +30272,7 @@
     "id": "3lst",
     "parent": "pile2",
     "staged": false,
-    "z": 59330
+    "z": 71288
   },
   "wdsg": {
     "deck": "swissDeck",
@@ -30180,7 +30280,7 @@
     "cardType": "Shield 12",
     "id": "wdsg",
     "staged": false,
-    "z": 59331,
+    "z": 71289,
     "parent": "pile2"
   },
   "mb5b": {
@@ -30190,7 +30290,7 @@
     "id": "mb5b",
     "staged": false,
     "parent": "pile2",
-    "z": 59332
+    "z": 71290
   },
   "itemsHolder27": {
     "inheritFrom": {
@@ -32439,7 +32539,7 @@
     "cardType": "CC",
     "id": "wwt0",
     "staged": false,
-    "z": 59333,
+    "z": 71291,
     "parent": "pile2"
   },
   "mqge": {
@@ -32448,7 +32548,7 @@
     "cardType": "CD",
     "id": "mqge",
     "staged": false,
-    "z": 59334,
+    "z": 71292,
     "parent": "pile2"
   },
   "1ncf": {
@@ -32458,7 +32558,7 @@
     "id": "1ncf",
     "staged": false,
     "parent": "pile2",
-    "z": 59335
+    "z": 71293
   },
   "b5ol": {
     "deck": "cavaliers",
@@ -32467,7 +32567,7 @@
     "id": "b5ol",
     "staged": false,
     "parent": "pile2",
-    "z": 59336
+    "z": 71294
   },
   "playerAid31": {
     "type": "scoreboard",
@@ -32507,7 +32607,7 @@
     "id": "575h",
     "parent": "pile2",
     "staged": false,
-    "z": 59337
+    "z": 71295
   },
   "n8iz": {
     "deck": "cavaliers",
@@ -32516,7 +32616,7 @@
     "id": "n8iz",
     "parent": "pile2",
     "staged": false,
-    "z": 59338
+    "z": 71296
   },
   "469z": {
     "deck": "cavaliers",
@@ -32525,7 +32625,7 @@
     "id": "469z",
     "parent": "pile2",
     "staged": false,
-    "z": 59339
+    "z": 71297
   },
   "kc22": {
     "deck": "cavaliers",
@@ -32534,7 +32634,7 @@
     "id": "kc22",
     "parent": "pile2",
     "staged": false,
-    "z": 59340
+    "z": 71298
   },
   "tarotDeck": {
     "type": "deck",
@@ -34015,8 +34115,8 @@
     "cardType": "1",
     "id": "jtch",
     "staged": false,
-    "parent": "pile2",
-    "z": 59342
+    "z": 71300,
+    "parent": "pile2"
   },
   "mbpc": {
     "deck": "tarotDeck",
@@ -34024,8 +34124,8 @@
     "cardType": "2",
     "id": "mbpc",
     "staged": false,
-    "parent": "pile2",
-    "z": 59343
+    "z": 71301,
+    "parent": "pile2"
   },
   "2gql": {
     "deck": "tarotDeck",
@@ -34033,8 +34133,8 @@
     "cardType": "3",
     "id": "2gql",
     "staged": false,
-    "parent": "pile2",
-    "z": 59344
+    "z": 71302,
+    "parent": "pile2"
   },
   "zoeh": {
     "deck": "tarotDeck",
@@ -34042,8 +34142,8 @@
     "cardType": "4",
     "id": "zoeh",
     "staged": false,
-    "parent": "pile2",
-    "z": 59345
+    "z": 71303,
+    "parent": "pile2"
   },
   "yqvf": {
     "deck": "tarotDeck",
@@ -34051,8 +34151,8 @@
     "cardType": "5",
     "id": "yqvf",
     "staged": false,
-    "parent": "pile2",
-    "z": 59346
+    "z": 71304,
+    "parent": "pile2"
   },
   "ltpy": {
     "deck": "tarotDeck",
@@ -34060,8 +34160,8 @@
     "cardType": "6",
     "id": "ltpy",
     "staged": false,
-    "parent": "pile2",
-    "z": 59347
+    "z": 71305,
+    "parent": "pile2"
   },
   "np2x": {
     "deck": "tarotDeck",
@@ -34069,8 +34169,8 @@
     "cardType": "7",
     "id": "np2x",
     "staged": false,
-    "parent": "pile2",
-    "z": 59348
+    "z": 71306,
+    "parent": "pile2"
   },
   "4e72": {
     "deck": "tarotDeck",
@@ -34078,8 +34178,8 @@
     "cardType": "8",
     "id": "4e72",
     "staged": false,
-    "parent": "pile2",
-    "z": 59349
+    "z": 71307,
+    "parent": "pile2"
   },
   "2kwi": {
     "deck": "tarotDeck",
@@ -34088,7 +34188,7 @@
     "id": "2kwi",
     "staged": false,
     "parent": "pile2",
-    "z": 59350
+    "z": 71308
   },
   "d4pk": {
     "deck": "tarotDeck",
@@ -34097,7 +34197,7 @@
     "id": "d4pk",
     "staged": false,
     "parent": "pile2",
-    "z": 59351
+    "z": 71309
   },
   "dxj9": {
     "deck": "tarotDeck",
@@ -34106,7 +34206,7 @@
     "id": "dxj9",
     "staged": false,
     "parent": "pile2",
-    "z": 59352
+    "z": 71310
   },
   "2x0u": {
     "deck": "tarotDeck",
@@ -34114,8 +34214,8 @@
     "cardType": "12",
     "id": "2x0u",
     "staged": false,
-    "parent": "pile2",
-    "z": 59353
+    "z": 71311,
+    "parent": "pile2"
   },
   "6dv5": {
     "deck": "tarotDeck",
@@ -34124,7 +34224,7 @@
     "id": "6dv5",
     "staged": false,
     "parent": "pile2",
-    "z": 59354
+    "z": 71312
   },
   "0bw8": {
     "deck": "tarotDeck",
@@ -34133,7 +34233,7 @@
     "id": "0bw8",
     "staged": false,
     "parent": "pile2",
-    "z": 59355
+    "z": 71313
   },
   "33re": {
     "deck": "tarotDeck",
@@ -34142,7 +34242,7 @@
     "id": "33re",
     "staged": false,
     "parent": "pile2",
-    "z": 59356
+    "z": 71314
   },
   "m05l": {
     "deck": "tarotDeck",
@@ -34151,7 +34251,7 @@
     "id": "m05l",
     "staged": false,
     "parent": "pile2",
-    "z": 59357
+    "z": 71315
   },
   "n6be": {
     "deck": "tarotDeck",
@@ -34160,7 +34260,7 @@
     "id": "n6be",
     "staged": false,
     "parent": "pile2",
-    "z": 59358
+    "z": 71316
   },
   "68g3": {
     "deck": "tarotDeck",
@@ -34168,8 +34268,8 @@
     "cardType": "18",
     "id": "68g3",
     "staged": false,
-    "parent": "pile2",
-    "z": 59359
+    "z": 71317,
+    "parent": "pile2"
   },
   "4da2": {
     "deck": "tarotDeck",
@@ -34178,7 +34278,7 @@
     "id": "4da2",
     "staged": false,
     "parent": "pile2",
-    "z": 59360
+    "z": 71318
   },
   "y991": {
     "deck": "tarotDeck",
@@ -34187,7 +34287,7 @@
     "id": "y991",
     "staged": false,
     "parent": "pile2",
-    "z": 59361
+    "z": 71319
   },
   "g48v": {
     "deck": "tarotDeck",
@@ -34195,8 +34295,8 @@
     "cardType": "22",
     "id": "g48v",
     "staged": false,
-    "parent": "pile2",
-    "z": 59362
+    "z": 71320,
+    "parent": "pile2"
   },
   "3w2i": {
     "deck": "tarotDeck",
@@ -34205,8 +34305,7 @@
     "id": "3w2i",
     "parent": "pile2",
     "staged": false,
-    "activeFace": 1,
-    "z": 59363
+    "z": 71321
   },
   "p4v9": {
     "deck": "tarotDeck",
@@ -34215,7 +34314,7 @@
     "id": "p4v9",
     "parent": "pile2",
     "staged": false,
-    "z": 59364
+    "z": 71322
   },
   "uaoz": {
     "deck": "tarotDeck",
@@ -34224,7 +34323,7 @@
     "id": "uaoz",
     "parent": "pile2",
     "staged": false,
-    "z": 59365
+    "z": 71323
   },
   "jj7b": {
     "deck": "tarotDeck",
@@ -34233,7 +34332,7 @@
     "id": "jj7b",
     "parent": "pile2",
     "staged": false,
-    "z": 59366
+    "z": 71324
   },
   "3gud": {
     "deck": "tarotDeck",
@@ -34242,7 +34341,7 @@
     "id": "3gud",
     "parent": "pile2",
     "staged": false,
-    "z": 59367
+    "z": 71325
   },
   "2iju": {
     "deck": "tarotDeck",
@@ -34251,7 +34350,7 @@
     "id": "2iju",
     "parent": "pile2",
     "staged": false,
-    "z": 59368
+    "z": 71326
   },
   "b598": {
     "deck": "tarotDeck",
@@ -34259,8 +34358,8 @@
     "cardType": "7C",
     "id": "b598",
     "staged": false,
-    "parent": "pile2",
-    "z": 59369
+    "z": 71327,
+    "parent": "pile2"
   },
   "1oo2": {
     "deck": "tarotDeck",
@@ -34269,7 +34368,7 @@
     "id": "1oo2",
     "staged": false,
     "parent": "pile2",
-    "z": 59370
+    "z": 71328
   },
   "pukz": {
     "deck": "tarotDeck",
@@ -34277,8 +34376,8 @@
     "cardType": "9C",
     "id": "pukz",
     "staged": false,
-    "parent": "pile2",
-    "z": 59371
+    "z": 71329,
+    "parent": "pile2"
   },
   "ylxc": {
     "deck": "tarotDeck",
@@ -34287,7 +34386,7 @@
     "id": "ylxc",
     "staged": false,
     "parent": "pile2",
-    "z": 59372
+    "z": 71330
   },
   "oymw": {
     "deck": "tarotDeck",
@@ -34296,7 +34395,7 @@
     "id": "oymw",
     "staged": false,
     "parent": "pile2",
-    "z": 59373
+    "z": 71331
   },
   "tesr": {
     "deck": "tarotDeck",
@@ -34305,7 +34404,7 @@
     "id": "tesr",
     "staged": false,
     "parent": "pile2",
-    "z": 59374
+    "z": 71332
   },
   "uwmv": {
     "deck": "tarotDeck",
@@ -34313,8 +34412,8 @@
     "cardType": "QC",
     "id": "uwmv",
     "staged": false,
-    "parent": "pile2",
-    "z": 59375
+    "z": 71374,
+    "parent": "pile2"
   },
   "r550": {
     "deck": "tarotDeck",
@@ -34322,8 +34421,8 @@
     "cardType": "KC",
     "id": "r550",
     "staged": false,
-    "parent": "pile2",
-    "z": 59376
+    "z": 71333,
+    "parent": "pile2"
   },
   "rf4c": {
     "deck": "tarotDeck",
@@ -34332,8 +34431,7 @@
     "id": "rf4c",
     "staged": false,
     "parent": "pile2",
-    "activeFace": 1,
-    "z": 59377
+    "z": 71334
   },
   "sb8x": {
     "deck": "tarotDeck",
@@ -34342,7 +34440,7 @@
     "id": "sb8x",
     "parent": "pile2",
     "staged": false,
-    "z": 59378
+    "z": 71375
   },
   "ug2j": {
     "deck": "tarotDeck",
@@ -34351,7 +34449,7 @@
     "id": "ug2j",
     "parent": "pile2",
     "staged": false,
-    "z": 59379
+    "z": 71335
   },
   "p7lg": {
     "deck": "tarotDeck",
@@ -34360,7 +34458,7 @@
     "id": "p7lg",
     "parent": "pile2",
     "staged": false,
-    "z": 59380
+    "z": 71336
   },
   "wyil": {
     "deck": "tarotDeck",
@@ -34369,7 +34467,7 @@
     "id": "wyil",
     "parent": "pile2",
     "staged": false,
-    "z": 59381
+    "z": 71337
   },
   "pmh4": {
     "deck": "tarotDeck",
@@ -34378,7 +34476,7 @@
     "id": "pmh4",
     "parent": "pile2",
     "staged": false,
-    "z": 59382
+    "z": 71338
   },
   "c7jy": {
     "deck": "tarotDeck",
@@ -34387,7 +34485,7 @@
     "id": "c7jy",
     "parent": "pile2",
     "staged": false,
-    "z": 59383
+    "z": 71339
   },
   "6aw4": {
     "deck": "tarotDeck",
@@ -34396,7 +34494,7 @@
     "id": "6aw4",
     "staged": false,
     "parent": "pile2",
-    "z": 59384
+    "z": 71340
   },
   "ve9u": {
     "deck": "tarotDeck",
@@ -34405,7 +34503,7 @@
     "id": "ve9u",
     "parent": "pile2",
     "staged": false,
-    "z": 59385
+    "z": 71341
   },
   "5s5b": {
     "deck": "tarotDeck",
@@ -34414,7 +34512,7 @@
     "id": "5s5b",
     "staged": false,
     "parent": "pile2",
-    "z": 59386
+    "z": 71342
   },
   "6gee": {
     "deck": "tarotDeck",
@@ -34423,7 +34521,7 @@
     "id": "6gee",
     "staged": false,
     "parent": "pile2",
-    "z": 59387
+    "z": 71343
   },
   "x5md": {
     "deck": "tarotDeck",
@@ -34432,7 +34530,7 @@
     "id": "x5md",
     "staged": false,
     "parent": "pile2",
-    "z": 59388
+    "z": 71344
   },
   "47jy": {
     "deck": "tarotDeck",
@@ -34440,8 +34538,8 @@
     "cardType": "QS",
     "id": "47jy",
     "staged": false,
-    "parent": "pile2",
-    "z": 59389
+    "z": 71345,
+    "parent": "pile2"
   },
   "45qe": {
     "deck": "tarotDeck",
@@ -34450,17 +34548,16 @@
     "id": "45qe",
     "parent": "pile2",
     "staged": false,
-    "z": 59390
+    "z": 71346
   },
   "edgy": {
     "deck": "tarotDeck",
     "type": "card",
     "cardType": "1H",
     "id": "edgy",
-    "parent": "pile2",
     "staged": false,
-    "activeFace": 1,
-    "z": 59391
+    "z": 71347,
+    "parent": "pile2"
   },
   "rxu3": {
     "deck": "tarotDeck",
@@ -34469,7 +34566,7 @@
     "id": "rxu3",
     "parent": "pile2",
     "staged": false,
-    "z": 59392
+    "z": 71348
   },
   "pvp2": {
     "deck": "tarotDeck",
@@ -34478,7 +34575,7 @@
     "id": "pvp2",
     "parent": "pile2",
     "staged": false,
-    "z": 59393
+    "z": 71349
   },
   "7w8g": {
     "deck": "tarotDeck",
@@ -34487,7 +34584,7 @@
     "id": "7w8g",
     "parent": "pile2",
     "staged": false,
-    "z": 59394
+    "z": 71350
   },
   "ouox": {
     "deck": "tarotDeck",
@@ -34496,7 +34593,7 @@
     "id": "ouox",
     "parent": "pile2",
     "staged": false,
-    "z": 59395
+    "z": 71351
   },
   "p6qv": {
     "deck": "tarotDeck",
@@ -34505,7 +34602,7 @@
     "id": "p6qv",
     "parent": "pile2",
     "staged": false,
-    "z": 59396
+    "z": 71352
   },
   "g0zk": {
     "deck": "tarotDeck",
@@ -34514,7 +34611,7 @@
     "id": "g0zk",
     "staged": false,
     "parent": "pile2",
-    "z": 59397
+    "z": 71353
   },
   "phv7": {
     "deck": "tarotDeck",
@@ -34523,7 +34620,7 @@
     "id": "phv7",
     "staged": false,
     "parent": "pile2",
-    "z": 59398
+    "z": 71354
   },
   "slaj": {
     "deck": "tarotDeck",
@@ -34531,8 +34628,8 @@
     "cardType": "9H",
     "id": "slaj",
     "staged": false,
-    "parent": "pile2",
-    "z": 59399
+    "z": 71355,
+    "parent": "pile2"
   },
   "t27t": {
     "deck": "tarotDeck",
@@ -34541,7 +34638,7 @@
     "id": "t27t",
     "staged": false,
     "parent": "pile2",
-    "z": 59400
+    "z": 71356
   },
   "lh3t": {
     "deck": "tarotDeck",
@@ -34550,7 +34647,7 @@
     "id": "lh3t",
     "staged": false,
     "parent": "pile2",
-    "z": 59401
+    "z": 71357
   },
   "u117": {
     "deck": "tarotDeck",
@@ -34558,8 +34655,8 @@
     "cardType": "CH",
     "id": "u117",
     "staged": false,
-    "parent": "pile2",
-    "z": 59402
+    "z": 71358,
+    "parent": "pile2"
   },
   "v0ar": {
     "deck": "tarotDeck",
@@ -34568,7 +34665,7 @@
     "id": "v0ar",
     "parent": "pile2",
     "staged": false,
-    "z": 59403
+    "z": 71359
   },
   "4tgs": {
     "deck": "tarotDeck",
@@ -34577,7 +34674,7 @@
     "id": "4tgs",
     "staged": false,
     "parent": "pile2",
-    "z": 59404
+    "z": 71360
   },
   "0v9j": {
     "deck": "tarotDeck",
@@ -34586,8 +34683,7 @@
     "id": "0v9j",
     "parent": "pile2",
     "staged": false,
-    "activeFace": 1,
-    "z": 59405
+    "z": 71361
   },
   "8vu2": {
     "deck": "tarotDeck",
@@ -34596,7 +34692,7 @@
     "id": "8vu2",
     "parent": "pile2",
     "staged": false,
-    "z": 59406
+    "z": 71362
   },
   "3bi4": {
     "deck": "tarotDeck",
@@ -34605,7 +34701,7 @@
     "id": "3bi4",
     "parent": "pile2",
     "staged": false,
-    "z": 59407
+    "z": 71376
   },
   "jcpv": {
     "deck": "tarotDeck",
@@ -34614,7 +34710,7 @@
     "id": "jcpv",
     "parent": "pile2",
     "staged": false,
-    "z": 59408
+    "z": 71363
   },
   "rh8y": {
     "deck": "tarotDeck",
@@ -34623,7 +34719,7 @@
     "id": "rh8y",
     "parent": "pile2",
     "staged": false,
-    "z": 59409
+    "z": 71364
   },
   "tthw": {
     "deck": "tarotDeck",
@@ -34632,7 +34728,7 @@
     "id": "tthw",
     "parent": "pile2",
     "staged": false,
-    "z": 59410
+    "z": 71365
   },
   "sgmg": {
     "deck": "tarotDeck",
@@ -34641,7 +34737,7 @@
     "id": "sgmg",
     "staged": false,
     "parent": "pile2",
-    "z": 59411
+    "z": 71366
   },
   "4iu4": {
     "deck": "tarotDeck",
@@ -34649,8 +34745,8 @@
     "cardType": "8D",
     "id": "4iu4",
     "staged": false,
-    "parent": "pile2",
-    "z": 59412
+    "z": 71367,
+    "parent": "pile2"
   },
   "67mo": {
     "deck": "tarotDeck",
@@ -34659,7 +34755,7 @@
     "id": "67mo",
     "staged": false,
     "parent": "pile2",
-    "z": 59413
+    "z": 71368
   },
   "i97a": {
     "deck": "tarotDeck",
@@ -34667,8 +34763,8 @@
     "cardType": "TD",
     "id": "i97a",
     "staged": false,
-    "parent": "pile2",
-    "z": 59414
+    "z": 71369,
+    "parent": "pile2"
   },
   "s05m": {
     "deck": "tarotDeck",
@@ -34676,8 +34772,8 @@
     "cardType": "JD",
     "id": "s05m",
     "staged": false,
-    "parent": "pile2",
-    "z": 59415
+    "z": 71370,
+    "parent": "pile2"
   },
   "aiq2": {
     "deck": "tarotDeck",
@@ -34686,7 +34782,7 @@
     "id": "aiq2",
     "staged": false,
     "parent": "pile2",
-    "z": 59416
+    "z": 71371
   },
   "m3r6": {
     "deck": "tarotDeck",
@@ -34695,7 +34791,7 @@
     "id": "m3r6",
     "parent": "pile2",
     "staged": false,
-    "z": 59417
+    "z": 71372
   },
   "op0r": {
     "deck": "tarotDeck",
@@ -34704,7 +34800,7 @@
     "id": "op0r",
     "staged": false,
     "parent": "pile2",
-    "z": 59418
+    "z": 71373
   },
   "gameID32": {
     "id": "gameID32",
@@ -34872,7 +34968,7 @@
   },
   "gameID33": {
     "id": "gameID33",
-    "x": -520,
+    "x": -521,
     "css": {
       "background": "blue",
       "color": "white",
@@ -34896,6 +34992,10 @@
       [
         "agonyAuntBack",
         1
+      ],
+      [
+        "bidWinner",
+        0
       ]
     ],
     "settingsArray": [
@@ -34937,7 +35037,7 @@
     "gameID": true,
     "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/agonaunt.html.\\a\\a Manually move tokens from holder by seat to player board in upper-left. Queens and jokers will be displayed face-up in front of the player taking the trick as a reminder. When it is time for the 'Dump Trick' a message will appear above the hand.\\a\\a After the round, press one or more of the buttons below the board to move tokens back to players or to the discard area.\"",
     "trumps": 4,
-    "y": 770,
+    "y": 769,
     "text": "Agony Aunt",
     "dealRoutine": [
       "// Flip over remaining card.",
@@ -35149,7 +35249,8 @@
         "property": "color",
         "value": "${playerColor}"
       }
-    ]
+    ],
+    "z": 39
   },
   "agonyAuntBack": {
     "type": "",
@@ -36007,8 +36108,8 @@
     "cardType": "-5 auction",
     "id": "o04t",
     "staged": false,
-    "parent": "pile2",
-    "z": 59206
+    "z": 71164,
+    "parent": "pile2"
   },
   "ipja": {
     "deck": "crowDeck",
@@ -36016,8 +36117,8 @@
     "cardType": "x2 auction",
     "id": "ipja",
     "staged": false,
-    "parent": "pile2",
-    "z": 59207
+    "z": 71165,
+    "parent": "pile2"
   },
   "gameID35": {
     "id": "gameID35",
@@ -36813,12 +36914,11 @@
   },
   "pile2": {
     "type": "pile",
-    "parent": "offHolder",
-    "x": 4,
-    "y": 4,
     "width": 103,
     "height": 160,
-    "id": "pile2"
+    "id": "pile2",
+    "z": 1,
+    "parent": "offHolder"
   },
   "burnButton": {
     "type": "button",
@@ -36948,14 +37048,15 @@
     "cardType": "ally auction",
     "id": "jytu",
     "staged": false,
-    "parent": "pile2",
-    "z": 59208
+    "z": 71166,
+    "activeFace": 1,
+    "parent": "pile2"
   },
   "showHideBidsB": {
     "type": "button",
     "id": "showHideBidsB",
-    "x": 1179,
-    "y": 731,
+    "x": 1194,
+    "y": 762,
     "text": "Show Bids",
     "clickRoutine": [
       {
@@ -37187,8 +37288,8 @@
   "passIndicator": {
     "id": "passIndicator",
     "fixedParent": true,
-    "x": 761,
-    "y": 367,
+    "x": 1163,
+    "y": 823,
     "width": 80,
     "height": 40,
     "borderRadius": 8,
@@ -37219,7 +37320,8 @@
       }
     ],
     "classes": "symbols",
-    "scale": 0
+    "scale": 0,
+    "activeFace": 3
   },
   "fbpi": {
     "y": 4,
@@ -37632,7 +37734,11 @@
       "gameID37 - Tute Subastado",
       "gameID38 - Felsõs",
       "gameID39 - Schafkopf (3P)",
-      "gameID40 - Slovenian Tarok (3P)"
+      "gameID40 - Slovenian Tarok (3P)",
+      "gameID41 - Chwech",
+      "gameID42 - Knaves",
+      "gameID43 - Bid Whist",
+      "gameID44 - Papayou"
     ],
     "GamesByName": [
       "1000 - gameID14",
@@ -37640,7 +37746,9 @@
       "99 - gameID26",
       "Agony Aunt - gameID33",
       "Auctions (Similar to Bids) - gameID35",
+      "Bid Whist - gameID43",
       "Bouncers - gameID28",
+      "Chwech - gameID41",
       "Coiffeur Jass (3P) - gameID6",
       "Coiffeur Jass (4P) - gameID12",
       "Coinche - gameID8",
@@ -37659,11 +37767,13 @@
       "Huutopussi - gameID13",
       "Israeli Whist - gameID24",
       "Klaverjassen - gameID25",
+      "Knaves - gameID42",
       "Königrufen - gameID20",
       "La Bâtarde - gameID31",
       "Mighty - gameID18",
       "Mittlere Jass - gameID2",
       "Molotow Jass - gameID21",
+      "Papayou - gameID44",
       "Pitch Pawnee 10 Point - gameID3",
       "Schafkopf (3P) - gameID39",
       "Schieber Jass - gameID1",
@@ -38144,46 +38254,6 @@
     "image": "/assets/626131721_35568",
     "enlarge": 2
   },
-  "pnam": {
-    "width": 40,
-    "height": 40,
-    "classes": "chip",
-    "color": "#fcf0d4",
-    "faces": [
-      {
-        "image": "i/game-pieces/2D/Checkers-2D.svg",
-        "crowned": false
-      },
-      {
-        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "crowned": true
-      }
-    ],
-    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 1,
-    "crowned": true,
-    "secondaryColor": "#ffffff",
-    "layer": 10,
-    "item": 4,
-    "color3": "#f8dd9f",
-    "color2": "#000000",
-    "clonedFrom": "d4k4",
-    "itemMarker": true,
-    "x": 4,
-    "y": 4,
-    "z": 136,
-    "ownedBy": null,
-    "id": "pnam",
-    "parent": "itemsHolder4",
-    "clickable": false
-  },
   "gameID39": {
     "id": "gameID39",
     "x": -663,
@@ -38581,13 +38651,1705 @@
     "movableInEdit": false,
     "scale": 0
   },
-  "6zng": {
+  "gameID41": {
+    "id": "gameID41",
+    "x": -660,
+    "y": 406,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "roundsTemp": [
+      "Round Score"
+    ],
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "trump",
+        0
+      ],
+      [
+        "transferScoreButton",
+        0
+      ],
+      [
+        "bidWinner",
+        0
+      ]
+    ],
+    "settingsArray": [
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidHistory",
+        false
+      ],
+      [
+        "showScore",
+        true
+      ],
+      [
+        "turnDirection",
+        true
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        9
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "jokerCount",
+        2
+      ],
+      [
+        "seatCount",
+        6
+      ],
+      [
+        "tempScore",
+        false
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/ oricards/chwech.html.\\a\\a Choose number of players using Version button.\\a\\a 4p game uses 36 cards (6 - A).\\a\\a 5p game uses 45 cards (4 - A and one joker).\\a\\a 6p game uses 54 cards (2 - A and 2 jokers).\\a\\a 7p game uses 63 cards (2 - A, 1 joker, and four additional 2s and 3s).\\a\\a The number in the scoreboard on the right side shows the multiplier that will be used. It is the difference between the number of cards taken and the nearest multiple of 9. Values range from 1 to 9 and 9 is the best.\\a\\a Pressing the Score button calculates the score by multipling the number from the scoreboard on the right side by the number of cards played. The score for that round is entered in the scoreboard on the left.\"",
+    "text": "Chwech",
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "scoreSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "trickCount"
+        ],
+        "property": "rounds",
+        "value": [
+          "Multiplier"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          8
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat${value}"
+            ],
+            "property": "tricks",
+            "value": [
+              9
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "recallRoutine"
+      }
+    ],
+    "scoreSpecialRoutine": [
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          8
+        ],
+        "loopRoutine": [
+          "var seat = 'seat' + ${value}",
+          {
+            "func": "GET",
+            "collection": [
+              "${seat}"
+            ],
+            "property": "player",
+            "variable": "owner"
+          },
+          {
+            "func": "COUNT",
+            "holder": "hand",
+            "owner": "${owner}",
+            "variable": "cardsInHand"
+          },
+          "var cardsInHand = 9 - ${cardsInHand}",
+          {
+            "func": "GET",
+            "collection": [
+              "${seat}"
+            ],
+            "property": "tricks",
+            "variable": "multiplier"
+          },
+          "var multiplier = ${multiplier.0}",
+          "var score = ${multiplier} * ${cardsInHand}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seat}",
+            "value": "${score}"
+          }
+        ]
+      }
+    ],
+    "takeRoutine": [
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          8
+        ],
+        "loopRoutine": [
+          "var seat = 'seat' + ${value}",
+          {
+            "func": "COUNT",
+            "holder": "backHolder${value}",
+            "variable": "capturedCards"
+          },
+          "var diff = ${capturedCards} % 9",
+          {
+            "func": "IF",
+            "operand1": "${diff}",
+            "operand2": 0,
+            "thenRoutine": [
+              "var diff = 9"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${seat}"
+            ],
+            "property": "tricks",
+            "value": [
+              "${diff}"
+            ]
+          }
+        ]
+      }
+    ],
+    "resetRoutine": [
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          8
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat${value}"
+            ],
+            "property": "tricks",
+            "value": [
+              9
+            ]
+          }
+        ]
+      }
+    ],
+    "versionArray": [
+      {
+        "value": "0",
+        "text": "Click here to choose version"
+      },
+      {
+        "value": "2",
+        "text": "4 players"
+      },
+      {
+        "value": "3",
+        "text": "5 players"
+      },
+      {
+        "value": "1",
+        "text": "6 players"
+      },
+      {
+        "value": "4",
+        "text": "7 players"
+      }
+    ],
+    "version1": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          9
+        ],
+        [
+          "tempScore",
+          true
+        ],
+        [
+          "jokerCount",
+          2
+        ],
+        [
+          "seatCount",
+          6
+        ],
+        [
+          "tempScore",
+          false
+        ]
+      ]
+    },
+    "version2": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          9
+        ],
+        [
+          "tempScore",
+          true
+        ],
+        [
+          "seatCount",
+          4
+        ],
+        [
+          "tempScore",
+          false
+        ],
+        [
+          "hideCards",
+          4
+        ]
+      ]
+    },
+    "version4": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          9
+        ],
+        [
+          "tempScore",
+          true
+        ],
+        [
+          "jokerCount",
+          3
+        ],
+        [
+          "seatCount",
+          7
+        ],
+        [
+          "tempScore",
+          false
+        ]
+      ]
+    },
+    "recallRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY versionNumber OF versionButton}",
+        "operand2": "4",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "deck",
+            "value": "deck2"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "rank",
+            "relation": "in",
+            "value": [
+              "2",
+              "3"
+            ]
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "deckHolder"
+          }
+        ]
+      }
+    ],
+    "playerAidDetail1": "Info",
+    "version3": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          9
+        ],
+        [
+          "tempScore",
+          true
+        ],
+        [
+          "jokerCount",
+          1
+        ],
+        [
+          "seatCount",
+          5
+        ],
+        [
+          "tempScore",
+          false
+        ],
+        [
+          "hideCards",
+          2
+        ]
+      ]
+    }
+  },
+  "playerAid41": {
+    "type": "scoreboard",
+    "id": "playerAid41",
+    "x": 1225,
+    "y": 560,
+    "width": 360,
+    "height": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Score",
+    "rounds": [
+      "Goal",
+      "Play",
+      "Round Ends",
+      "Game Ends"
+    ],
+    "seats": "playerAidDetail1",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true,
+    "scoreProperty": "score41"
+  },
+  "99BidLabel": {
+    "id": "99BidLabel",
+    "x": 760,
+    "y": 790,
+    "text": "Your bid:",
+    "height": 20,
+    "width": 70,
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -1,
+    "scale": 0
+  },
+  "99Bid1": {
+    "id": "99Bid1",
+    "parent": "99BidLabel",
+    "x": 70,
+    "width": 20,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "text": 2,
+    "onlyVisibleForSeat": "seat1"
+  },
+  "99Bid3": {
+    "inheritFrom": {
+      "99Bid1": "*"
+    },
+    "id": "99Bid3",
+    "x": 70,
+    "y": 0,
+    "onlyVisibleForSeat": "seat3",
+    "text": 0
+  },
+  "99Bid7": {
+    "id": "99Bid7",
+    "x": 70,
+    "y": 0,
+    "inheritFrom": {
+      "99Bid1": "*"
+    },
+    "onlyVisibleForSeat": "seat7",
+    "text": 0
+  },
+  "gameID42": {
+    "id": "gameID42",
+    "x": -661,
+    "y": 532,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "roundsTemp": [
+      "Round Score"
+    ],
+    "displayArray": [
+      [
+        "scoreButton",
+        0
+      ],
+      [
+        "trump",
+        1
+      ],
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "bidWinner",
+        0
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        17
+      ],
+      [
+        "jokerCount",
+        0
+      ],
+      [
+        "seatCount",
+        3
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Deal 17 cards to each player. The leftover card is turned face up and the suit of this card is trump for the hand.\\a\\a First player rotates in each round.\\a\\a Any card can be led. Each player going clockwise, plays a card to the trick. If you can follow suit, you must and if you can't, you may play anything.\\a\\a When everyone has played a card to the trick the winner is the player who played the highest trump or (if no trumps were played to the trick) the highest led suit. The winner leads to the next trick.\\a\\a At the end of the hand, when all cards have been played, each player's score is determined as follows:\\a 1 point for each trick they have won \\a -4 if they won the Jack of Hearts \\a -3 if they won the Jack of Diamonds \\a -2 if they won the Jack of Clubs \\a -1 if they won the Jack of Spades \\a\\a Keep playing rounds until a player has a total score of 20 or more. The player with the highest score wins. \"",
+    "text": "Knaves",
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "scoreSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "scoreSpecialRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          7
+        ],
+        "loopRoutine": [
+          "var seat = 'seat' + ${value}",
+          {
+            "func": "GET",
+            "collection": [
+              "${seat}"
+            ],
+            "property": "tricks",
+            "variable": "tricks"
+          },
+          "var tricks = ${tricks.0}",
+          "var captured = 'backHolder' + ${value}",
+          "var jacksScore = 0",
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${captured}",
+            "collection": "capturedCards"
+          },
+          {
+            "func": "SELECT",
+            "source": "capturedCards",
+            "property": "order",
+            "value": 11,
+            "collection": "jacks"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "jacks",
+            "loopRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY suit OF $widgetID}",
+                "operand2": 1,
+                "thenRoutine": [
+                  "// Club: -2",
+                  "var jacksScore = ${jacksScore} - 2"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY suit OF $widgetID}",
+                "operand2": 2,
+                "thenRoutine": [
+                  "// Diamond: -3",
+                  "var jacksScore = ${jacksScore} - 3"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY suit OF $widgetID}",
+                "operand2": 3,
+                "thenRoutine": [
+                  "// Spade: -1",
+                  "var jacksScore = ${jacksScore} - 1"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY suit OF $widgetID}",
+                "operand2": 4,
+                "thenRoutine": [
+                  "// Heart: -4",
+                  "var jacksScore = ${jacksScore} - 4"
+                ]
+              }
+            ]
+          },
+          "var score = ${tricks} + ${jacksScore}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seat}",
+            "value": "${score}"
+          }
+        ]
+      }
+    ],
+    "playerAidDetail1": "Penalty for Jack",
+    "z": 65,
+    "dealRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "deckHolder",
+        "type": "card",
+        "collection": "trumpCard"
+      },
+      {
+        "func": "SET",
+        "collection": "trumpCard",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "FOREACH",
+        "collection": "trumpCard",
+        "loopRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "trump"
+            ],
+            "count": "${PROPERTY suit OF $widgetID}"
+          }
+        ]
+      }
+    ],
+    "settingsArray": [
+      [
+        "showBidHistory",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ]
+    ]
+  },
+  "playerAid42": {
+    "type": "scoreboard",
+    "id": "playerAid42",
+    "x": 1225,
+    "y": 560,
+    "width": 360,
+    "height": 155,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      ".scoreboard tbody tr:nth-child(1) td": {
+        "background": "#a9c6e8"
+      },
+      ".scoreboard td": {
+        "text-align": "left"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "roundLabel": "Suit",
+    "rounds": [
+      "Hearts",
+      "Diamonds",
+      "Clubs",
+      "Spades"
+    ],
+    "seats": "playerAidDetail1",
+    "showAllRounds": true,
+    "showPlayerColors": false,
+    "showTotals": false,
+    "playerAid": true,
+    "scoreProperty": "score42"
+  },
+  "bidWinnerLabel": {
+    "id": "bidWinnerLabel",
+    "parent": "bidWinner",
+    "fixedParent": true,
+    "x": 8,
+    "y": -17,
+    "width": 80,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "16px"
+    },
+    "text": "Declarer"
+  },
+  "trumpLabel": {
+    "id": "trumpLabel",
+    "parent": "trump",
+    "fixedParent": true,
+    "x": -3,
+    "y": -17,
+    "width": 40,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "color": "black"
+    },
+    "text": "Trump"
+  },
+  "gameID43": {
+    "id": "gameID43",
+    "x": -657,
+    "y": 654,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        12
+      ],
+      [
+        "seatCount",
+        4
+      ],
+      [
+        "teamScore",
+        true
+      ],
+      [
+        "jokerCount",
+        2
+      ]
+    ],
+    "settingsArray": [
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showDiscard",
+        true
+      ]
+    ],
+    "scoreSystem": [
+      [
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        5,
+        5,
+        5
+      ],
+      [],
+      [],
+      []
+    ],
+    "gameID": true,
+    "text": "Bid Whist",
+    "displayArray": [
+      [
+        "transferScoreButton",
+        0
+      ],
+      [
+        "scoreButton",
+        0
+      ],
+      [
+        "reverseSortButton",
+        1
+      ]
+    ],
+    "hintText": "\"Choose a version that sets the number of jokers for the game.\\a\\a Use bid widget near seat to enter bid. Bid is number of tricks/books above 6 plus either a direction arrow or the No Trump option. Be sure to press green Bid button when bid is ready. When the bid is displayed in the scoreboard on the right, 6 tricks will be added to it automatically so the books column and bid column match.\\a\\a Use the Sort and Reverse Sort buttons to flip sorting between uptown and downtown bids. If using 2 of spades as a trump or playing aces as good or bad, those cards must be moved manually.\\a\\a At the end of the round, do not forget to account for the trick in the kitty based on the agreed rules (either the bidder or first trick winner).\\a\\a After round ends, enter score on main scoreboard using green and red +/- buttons.\"",
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "trickCount"
+        ],
+        "property": "seats",
+        "value": {
+          "N - S": [
+            "seat1",
+            "seat5"
+          ],
+          "E - W": [
+            "seat3",
+            "seat7"
+          ]
+        }
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "trickCount"
+        ],
+        "property": "rounds",
+        "value": [
+          "Books",
+          "Bids"
+        ]
+      }
+    ],
+    "versionArray": [
+      {
+        "value": "0",
+        "text": "Click here to choose version"
+      },
+      {
+        "value": "1",
+        "text": "2 jokers"
+      },
+      {
+        "value": "2",
+        "text": "1 joker"
+      },
+      {
+        "value": "3",
+        "text": "0 jokers"
+      }
+    ],
+    "version1": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          12
+        ],
+        [
+          "seatCount",
+          4
+        ],
+        [
+          "teamScore",
+          true
+        ],
+        [
+          "jokerCount",
+          2
+        ]
+      ]
+    },
+    "version2": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          12
+        ],
+        [
+          "seatCount",
+          4
+        ],
+        [
+          "teamScore",
+          true
+        ],
+        [
+          "jokerCount",
+          1
+        ]
+      ]
+    },
+    "version3": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          12
+        ],
+        [
+          "seatCount",
+          4
+        ],
+        [
+          "teamScore",
+          true
+        ],
+        [
+          "jokerCount",
+          0
+        ]
+      ]
+    },
+    "bidRoutine": [
+      "var bidNS = max ${PROPERTY text OF bidValue1} ${PROPERTY text OF bidValue5}",
+      "var bidNS = ${bidNS} + 6",
+      "var bidEW = max ${PROPERTY text OF bidValue3} ${PROPERTY text OF bidValue7}",
+      "var bidEW = ${bidEW} + 6",
+      {
+        "func": "SCORE",
+        "mode": "set",
+        "property": "tricks",
+        "round": 2,
+        "seats": "seat1",
+        "value": "${bidNS}"
+      },
+      {
+        "func": "SCORE",
+        "mode": "set",
+        "property": "tricks",
+        "round": 2,
+        "seats": "seat3",
+        "value": "${bidEW}"
+      }
+    ],
+    "sortPreExceptionsRoutine": [
+      "var trump = ${PROPERTY trump OF trump}",
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "type": "card",
+        "property": "order",
+        "value": 14,
+        "collection": "blackJoker"
+      },
+      {
+        "func": "SET",
+        "collection": "blackJoker",
+        "property": "suit",
+        "value": "${trump}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "type": "card",
+        "property": "order",
+        "value": 15,
+        "collection": "redJoker"
+      },
+      {
+        "func": "SET",
+        "collection": "redJoker",
+        "property": "suit",
+        "value": "${trump}"
+      }
+    ]
+  },
+  "choose18": {
+    "inheritFrom": {
+      "choose10": "*"
+    },
+    "type": "button",
+    "id": "choose18",
+    "x": 130,
+    "y": 10,
+    "text": "↑",
+    "chooser": 18,
+    "deckSuitsColor": "",
+    "deckSuitsUni": "↑",
+    "image": "/i/noto-emoji/emoji_u2b06.svg",
+    "clickRoutine": [
+      "var bidWidget = 'bidValue' concat ${seatIndex}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $bidWidget}",
+        "operand2": "Pass",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${bidWidget}"
+            ],
+            "property": "text",
+            "value": ""
+          }
+        ]
+      },
+      "var bid = ' ' + ${PROPERTY text OF $bidWidget}",
+      "var bid = ${bid} + ${PROPERTY text}",
+      "var bid = ${bid} trimStart",
+      {
+        "func": "SET",
+        "collection": [
+          "${bidWidget}"
+        ],
+        "property": "text",
+        "value": "${bid}"
+      }
+    ]
+  },
+  "choose19": {
+    "inheritFrom": {
+      "choose10": "*"
+    },
+    "type": "button",
+    "id": "choose19",
+    "x": 130,
+    "y": 70,
+    "text": "↓",
+    "chooser": 19,
+    "deckSuitsColor": "",
+    "deckSuitsUni": "↓",
+    "image": "/i/noto-emoji/emoji_u2b07.svg",
+    "clickRoutine": [
+      "var bidWidget = 'bidValue' concat ${seatIndex}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $bidWidget}",
+        "operand2": "Pass",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${bidWidget}"
+            ],
+            "property": "text",
+            "value": ""
+          }
+        ]
+      },
+      "var bid = ' ' + ${PROPERTY text OF $bidWidget}",
+      "var bid = ${bid} + ${PROPERTY text}",
+      "var bid = ${bid} trimStart",
+      {
+        "func": "SET",
+        "collection": [
+          "${bidWidget}"
+        ],
+        "property": "text",
+        "value": "${bid}"
+      }
+    ]
+  },
+  "synu": {
+    "width": 40,
+    "height": 40,
+    "classes": "chip",
+    "color": "#fcf0d4",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "layer": 10,
+    "item": 4,
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "clonedFrom": "qg58",
+    "itemMarker": true,
+    "x": 4,
+    "y": 4,
+    "z": 544,
+    "ownedBy": null,
+    "id": "synu",
+    "parent": "itemsHolder4",
+    "clickable": false
+  },
+  "passCountButton": {
+    "id": "passCountButton",
+    "parent": "passCardsButton",
+    "fixedParent": true,
+    "x": 6,
+    "y": 65,
+    "width": 40,
+    "height": 40,
+    "borderRadius": 8,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "white",
+      "border": "1px solid black",
+      "color": "black",
+      "font-size": "45px",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "text": 3,
+    "clickRoutine": [
+      "var cardCount = ${PROPERTY cardCount OF settingsDecks}",
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Choose number of cards to pass"
+          },
+          {
+            "type": "number",
+            "min": 0,
+            "max": "${cardCount}",
+            "variable": "passCount",
+            "value": "${PROPERTY text}"
+          }
+        ],
+        "confirmButtonText": "Confirm"
+      },
+      "var passCount = parseFloat ${passCount}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${passCount}"
+      }
+    ]
+  },
+  "passCards1": {
+    "type": "holder",
+    "id": "passCards1",
+    "x": 749,
+    "y": 1038,
+    "z": 2
+  },
+  "passCards2": {
+    "inheritFrom": {
+      "passCards1": "*"
+    },
+    "type": "holder",
+    "id": "passCards2",
+    "x": 749,
+    "y": 1038
+  },
+  "passCards3": {
+    "inheritFrom": {
+      "passCards1": "*"
+    },
+    "type": "holder",
+    "id": "passCards3",
+    "x": 749,
+    "y": 1038
+  },
+  "passCards4": {
+    "inheritFrom": {
+      "passCards1": "*"
+    },
+    "type": "holder",
+    "id": "passCards4",
+    "x": 749,
+    "y": 1038
+  },
+  "passCards5": {
+    "inheritFrom": {
+      "passCards1": "*"
+    },
+    "type": "holder",
+    "id": "passCards5",
+    "x": 749,
+    "y": 1038
+  },
+  "passCards6": {
+    "inheritFrom": {
+      "passCards1": "*"
+    },
+    "type": "holder",
+    "id": "passCards6",
+    "x": 749,
+    "y": 1038
+  },
+  "passCards7": {
+    "inheritFrom": {
+      "passCards1": "*"
+    },
+    "type": "holder",
+    "id": "passCards7",
+    "x": 749,
+    "y": 1038
+  },
+  "passCards8": {
+    "inheritFrom": {
+      "passCards1": "*"
+    },
+    "type": "holder",
+    "id": "passCards8",
+    "x": 749,
+    "y": 1038
+  },
+  "passCardsButton": {
+    "type": "button",
+    "id": "passCardsButton",
+    "x": 1174,
+    "y": 874,
+    "z": 78,
+    "text": "Pass Cards",
+    "ready": 5,
+    "clickRoutine": [
+      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
+      "var passCount = ${PROPERTY text OF passCountButton}",
+      "var minPassCount = ${PROPERTY minPassCount OF $gameID}",
+      {
+        "func": "IF",
+        "operand1": "${minPassCount}",
+        "operand2": null,
+        "thenRoutine": [
+          "var minPassCount = ${passCount}"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "owner",
+        "value": "${playerName}",
+        "collection": "playerCards",
+        "sortBy": {
+          "key": "z",
+          "reverse": false
+        }
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace OF passIndicator}",
+        "relation": "!=",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Choose ${passCount} cards to pass"
+              },
+              {
+                "type": "choose",
+                "source": "playerCards",
+                "collection": "passCards",
+                "scale": 0.73,
+                "min": "${minPassCount}",
+                "max": "${passCount}"
+              }
+            ],
+            "confirmButtonText": "Pass these cards"
+          },
+          {
+            "func": "MOVE",
+            "collection": "passCards",
+            "to": "passCards${seatIndex}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "ready",
+            "relation": "+",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "readyChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY ready}",
+        "operand2": "${PROPERTY seatCount OF settingsDecks}",
+        "thenRoutine": [
+          "// Gets an empty collection",
+          {
+            "func": "SELECT",
+            "type": "doesNotExist",
+            "property": "doesNotExist",
+            "value": "doesNotExist",
+            "collection": "movingCards"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY activeFace OF passIndicator}",
+            "operand2": 2,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "mode": "add",
+                "type": "card",
+                "property": "parent",
+                "value": "passCards1",
+                "collection": "movingCards"
+              },
+              {
+                "func": "SELECT",
+                "mode": "add",
+                "type": "card",
+                "property": "parent",
+                "value": "passCards3",
+                "collection": "movingCards"
+              },
+              {
+                "func": "SELECT",
+                "mode": "add",
+                "type": "card",
+                "property": "parent",
+                "value": "passCards5",
+                "collection": "movingCards"
+              },
+              {
+                "func": "SELECT",
+                "mode": "add",
+                "type": "card",
+                "property": "parent",
+                "value": "passCards7",
+                "collection": "movingCards"
+              },
+              {
+                "func": "MOVE",
+                "from": "passCards1",
+                "to": "seat5",
+                "count": 99
+              },
+              {
+                "func": "MOVE",
+                "from": "passCards3",
+                "to": "seat7",
+                "count": 99
+              },
+              {
+                "func": "MOVE",
+                "from": "passCards5",
+                "to": "seat1",
+                "count": 99
+              },
+              {
+                "func": "MOVE",
+                "from": "passCards7",
+                "to": "seat3",
+                "count": 99
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY activeFace OF passIndicator}",
+                "operand2": 0,
+                "thenRoutine": [
+                  "var direction = 'forward'"
+                ],
+                "elseRoutine": [
+                  "var direction = 'backward'"
+                ]
+              },
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "turn",
+                "value": true,
+                "collection": "currentTurn"
+              },
+              {
+                "func": "GET",
+                "collection": "currentTurn",
+                "property": "index",
+                "variable": "passIndex"
+              },
+              {
+                "func": "FOREACH",
+                "range": [
+                  "${PROPERTY seatCount OF settingsDecks}"
+                ],
+                "loopRoutine": [
+                  {
+                    "func": "TURN",
+                    "turnCycle": "${direction}"
+                  },
+                  {
+                    "func": "SELECT",
+                    "type": "seat",
+                    "property": "turn",
+                    "value": true,
+                    "collection": "tempTurn"
+                  },
+                  {
+                    "func": "GET",
+                    "collection": "tempTurn",
+                    "property": "id",
+                    "variable": "toSeat"
+                  },
+                  {
+                    "func": "SELECT",
+                    "mode": "add",
+                    "type": "card",
+                    "property": "parent",
+                    "value": "passCards${passIndex}",
+                    "collection": "movingCards"
+                  },
+                  {
+                    "func": "MOVE",
+                    "from": "passCards${passIndex}",
+                    "to": "${toSeat}",
+                    "count": 99
+                  },
+                  {
+                    "func": "GET",
+                    "collection": "tempTurn",
+                    "property": "index",
+                    "variable": "passIndex"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "collection": "movingCards",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": "DEFAULT",
+            "property": "y",
+            "value": -10
+          }
+        ]
+      }
+    ],
+    "width": 60,
+    "height": 60,
+    "scale": 0
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Card Games",
+      "image": "/assets/-2012896688_55008",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "vs",
+      "time": "5-60",
+      "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
+      "lastUpdate": 1713964673446,
+      "showName": true,
+      "skill": "",
+      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv1.5",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "<div><i><font color=\"#2d5da8\"><b>Game Button</b></font></i><div><br></div>Use the Game button to automatically configure the room to a particular game type. If a game type is available in the drop-down menu, it will configure the room using the option settings described below for the most common variation of that game type. Even if you use an available pre-set, you can still change other values using the Option Buttons described below.</div><div><br></div><div>If a game pre-set is not available, you can still play many games by configuring the options. The only limitation is that there will be very little automation.</div><div><br></div><div>To the right of the Game button is the name of the current pre-set game. In many rooms, hovering over that text with the cursor will display tips on how to use the automation in that particular pre-set game.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div><i style=\"color: var(--overlayFontColor);\"><font color=\"#2d5da8\"><b>Option Buttons</b></font></i><br></div></div><div><br></div>Use the option buttons in the lower right to set up room as desired.&nbsp;<div><br></div><div><b>Visuals and Other</b></div><div><ul><li><b>Play Holder</b></li><ul><li>Clicking a card in the hand sends the card to the play holder but click to play can be turned off. See Playing A Card in the automation section below for more information.</li><li>Cards are played to either a common holder in the middle of the board or to the holders adjacent to each seat. The common holder is off by default.</li><li>The common holder can display cards spread out or in a pile. When spread out, the space between cards will get smaller if there are more than 5 so they all fit without extending past the holder. About 12 cards fit before it becomes difficult to identify the cards.</li><li>The play holder can force cards to be face up when they enter or face down.</li><li>A mini-holder can be added on top of the normal holder for captured cards. This is useful in games that require some or all captured cards to be displayed face up during play.</li></ul></ul><ul><li><b>Bid &amp; Score Displays</b></li><ul><li>The scoreboard on the left side of the screen can be displayed or hidden.</li><li>The count of tricks taken per player in this round can be displayed or hidden. The total trick count is always displayed beneath the Recall &amp; Shuffle button.</li><li>The white, square bid value widgets to the left at each player's seat can be displayed or hidden.</li><li>The white, square bid suit widgets to the right at each player's seat can be displayed or hidden.</li><li>The discard holder below the trick count score can be displayed or hidden.</li><li>An activity log showing a history of bidding and other messages can be displayed or hidden.</li><li>Bidding values can be displayed to everyone or kept private until the player chooses to reveal them.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Other</b><br></li><ul><li><span style=\"color: var(--overlayFontColor);\">The turn button can be set to move the glowing turn indicator on the seats clockwise or counter-clockwise.</span><br></li><li><span style=\"color: var(--overlayFontColor);\">You can change the background color of the room to a different color.</span></li></ul></ul><div><div><b>Decks and Players</b></div><div><ul><li><b>Players</b></li><ul><li>The number of players can be set between 2 and 8. Each player count has pre-defined seats that cannot be changed. Changing the player count while players are seated will kick all players out of existing seats.</li><li>A dummy hand can be added to seat 1 (bottom-center). Cards can be dealt to the dummy hand either face up or face down. All players may see and interact with the dummy hand.</li></ul></ul><ul><li><b>Cards and Decks</b></li><ul><li>Available decks:</li><ul><li>Standard 52 card French-suited deck</li><li>Two standard 52 card decks</li><li>Taroky (54 cards)</li><li>Tarot (78 cards)</li><li>Crow (similar to Rook)</li><li>Spanish (1-12, clubs, coins, cups, swords)</li><li>German (5-A, acorns, bells, leaves, hearts)</li><li>Swiss (6-A, acorns, bells, roses, shields)</li></ul><li>The number of jokers can be set between 0 (default) and 4. The first joker added is the black 1, the second is a red 2, the third is another black 1, and the fourth is another red 2.</li><li>You can set the number of cards dealt to each seat (including the dummy, when used) from 0 to any value.</li><li>There are options to remove certain cards. This works on the standard, Spanish and Crow decks, but not Tarot.</li><li>A delete button can be displayed in the room. To use this feature, check the box in the settings, drag cards that should be removed from the deck to the Discard holder, and press the red Delete button. All cards in the Discard holder are deleted from the room after confirming your intent in a pop-up menu. Those cards can only be returned to the room by reloading the game from the Game Shelf.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Scoring</b></li><ul><li>Team/partnership scoring using North-South and East-West partners is available when playing a 4-player game.</li><li>Small widgets can be added to indicate \"teams\" that change from round-to-round. This makes variable partnership scoring automated when using certain pre-sets. Otherwise, this is just a visual reminder.</li><li>A smaller, temporary scoreboard on the left side of the screen can also be displayed or hidden (default). This is used to calculate bonuses and other values before entering a final tally in the main scoreboard. The temporary scoreboard records only one round of scores. This is mainly used by pre-sets.</li></ul></ul><i><font color=\"#2d5da8\"><b>Automation</b></font></i><div><br></div>Several widgets and buttons are available in the room to assist with automating some basic tasks.</div></div></div><div><div><ul><li><b>Deal</b></li><ul><li>This will deal the number of cards set in the Decks &amp; Players button automatically to each seat (and to the dummy hand, if being used).</li><li>This button only deals cards in the holder next to it. To start a new round, first press the Recall &amp; Shuffle button.</li></ul></ul></div><div><ul><li><b>Recall &amp; Shuffle</b></li><ul><li>This ends the current round, erases the activity log, and recalls and shuffles the cards.</li></ul></ul><div><ul><li><b>Take 1</b></li><ul><li>This sends one card from the main deck holder to the hand of the player pressing the button.</li></ul></ul></div></div></div><div><ul><li><b>Playing A Card</b></li><ul><li>When click to play is enabled:</li><ul><li>Any player can play the first trick of a new round. After that, the turn indicator moves to the next player. The turn indicator must be correct for click-to-play to work.</li><li>During a player's turn, clicking on a card will immediately play it to the selected play area.</li><li>While players are waiting for their turn, they can click on a card to stage it for play (it will raise up a few pixels above the other cards). Any card in that position when the turn indicator moves to that player will be immediately played.</li><li>If any of these scenarios are incompatible with the game you are playing, turn click to play off. You can always manually drag cards, even when click to play is enabled.</li></ul><li>The circles with numbers on the upper-left of each seat indicate the number of cards in that player's hand.</li></ul></ul></div><div><ul><li><b>Primary Scoreboard</b></li><ul><li>The red and green buttons above the scoreboard decrease and increase the score for the current round for the player pressing the button. Note: the +/- buttons may work on the secondary scoreboard instead; see below.</li><li>A new round is created every time the Recall &amp; Shuffle button is pressed.</li><li>Players can also click on the scoreboard widget directly. A pop-up prompts for which player score to set, which round, and a value. Entering data this way immediately overrides existing values in the selected round for the selected player.</li><li>If a score system was selected in the options menu, then an Add Card Points button, trump indicator, declarer indicator, and possibly a Transfer Score button are displayed at the bottom of the scoreboard.</li><ul><li>The trump indicator is set automatically based on the last bid suit button pressed by a player or by rolling the die (only displayed in some games in the upper right-hand corner for a random trump). But you can override that by clicking on the square trump widget to rotate through the options. If card point values are different for trump cards or when a bid of \"no trumps\" or \"all trumps\" changes point values, then this widget must be set correctly before entering scores. The indicator can be dragged around the room.</li><li>The Declarer indicator shows the player making the last bid. But you can override that by clicking on it to rotate through the names of the players.</li><li>The Add Card Points button will apply the pre-defined point values to the secondary scoreboard for the current round. If there are points already in the current round, pressing the button will replace the existing values with the new ones. Only cards in the holders near each players' seat are counted. There are 3 holders near each players' seat (not all are visible) and all 3 will be counted for that player.</li><li>The Transfer Score button is available in some pre-set games to move and/or convert scores between the secondary scoreboard and the main scoreboard. If available, check the game tips by hovering over the name of the pre-set. If not available, you need to manually enter values in the primary scoreboard before pressing the Recall &amp; Shuffle button.</li></ul></ul></ul><ul><li><b>Secondary Scoreboard</b></li><ul><li>The secondary scoreboard is a smaller scoreboard below the main one. It is used in many pre-sets as a temporary place to calculate interim scores, such as the value of captured card points.</li><li>In addition to the Card Points row, other rows may be available. Drag the slider to the right of the secondary scoreboard up and down to highlight different rows. The red and green +/- buttons work on whichever row is highlighted.</li><li>The red and green +/- buttons can only work on one scoreboard at a time. To reenable the buttons on the primary scoreboard, move the slider all the back up to the top.</li></ul></ul><ul><li><b>Bidding</b></li><ul><li>The square widget on the left side of the player's seat is used to indicate a bid value. The widget on the right is used to indicate the bid's suit.</li><li>Pressing either widget will open a menu in the middle of the screen only visible to that player. On that menu, the player can press numbers and/or suits to indicate a bid. Numbers are entered like a calculator one at a time. Use the blank square to erase a number entry and start over.</li><li>Bids are immediately reflected on the white square widgets for other players to see unless secret bidding is enabled.</li><li>Pressing the green Bid button will optionally display the bid in an activity log in the lower right corner in reverse chronological order. If secret bidding is enabled, the activity log only reports that the player made a bid. The bid history is erased when the cards are recalled for the next round.</li><li>If additional messages are enabled in the pre-set, then a white rectangular Message button appears above the activity log. Pressing that button allows players to choose from a selection of game-related messages that are posted in the activity log.</li><li>To close the bidding menu, press the Close button, the geen Bid button, or once again press one of the white square bidding widgets.</li><li>If secret bidding was enabled in the settings, then at the appropriate time, each player should press the Actions button to the right of the hand. In the pop-up menu, press the Show Bids button. Press the Actions button again to close the pop-up.</li></ul></ul><ul><li><b>Sorting</b></li><ul><li>A Sort button to the left of the hand will sort cards in the hand only for the player pressing the button. Suits are always sorted left to right in order: clubs, diamonds, hearts, spades when using the standard deck. Other decks have similar default sorting.</li><li>The first time a player presses the Sort button, the player is prompted to choose how to sort by value within each suit: high to low or low to high. After making the selection, the player will not see the option again until a new pre-set game is selected.</li><li>After making selections, all subsequent deals to those players will automatically be sorted.</li><li>In some pre-set games, pressing the sort button again after trumps is chosen will change the sort order.</li><li>Some pre-set games also add an additional sort button for unique behavior linked to that game.</li></ul></ul><ul><li><b>Take</b></li><ul><li>The Take button moves all cards played in the round to a holder belonging to the player pressing the button. The cards are turned face-down and placed into a pile.</li><ul><li>If using the common play holder, the cards are moved to the holder near the player's seat.</li><li>If not using the common play holder, the cards are moved to a holder behind and just slightly above and to the right of the holder near the player's seat. This holder is invisible, but can be used, so be careful if manually dragging cards.</li><li>If using the mini-holder to display captured cards, cards can be manually dragged from the holder with the captured cards to the mini-holder. Some games pre-sets do that automatically.</li></ul><li>Clicking the button will increase the count of the number of tricks taken by 1 in the trick scoring widget on the right side of the room.</li><li>The turn indicator moves to the seat of the player pressing the button to lead the next trick.</li></ul></ul><ul><li><b>Actions</b></li><ul><li>This displays a pop-up menu with other buttons that can be used in the game.</li><li>The Show Hand button will create a mini holder over the seat of the player pressing the button. Copies of the cards in the hand of the player will be displayed there in miniature. No player can interact with those copies. They appear and disappear as needed to reflect the cards in the hand of that player.</li><li>The Show Bid button is used as described above to reveal bids that had been secret.</li><li>The Show Arrow button displays a black and white arrow to the left of the hand that can point up or down. This is used in some pre-set games to indicate when low cards are high and vice versa.</li></ul></ul><ul><li><b>Items</b></li><ul><li>This displays a pop-up menu with multiple widgets that can be dragged around and used in the game.</li><li>Most of the widgets (except for the 4 card suits) change color to reflect the color of the player that took it.</li><li>The Label widget can be dragged by grabbing the thick border and you can type short messages in it by clicking in the text area.</li><li>The widgets with numbers can be clicked to change.</li><ul><li>The circular widgets change from 1 to x1, 6 to x6, etc.</li><li>The square widget is a doubling cube and cycles through x2, x4, x8, x16, x32, x64.</li></ul><li>To remove a single widget from the board, just drop it anywhere on the Items \"tray\".</li><li>A player can delete all of their own widgets by pressing the Recall Mine button.</li><li>Any player can delete all of the widgets in the room by pressing the Recall All button.</li></ul></ul><ul><li><b>Reset Scores</b></li><ul><li>The reset scores button will erase all player scores in the scoreboard widget and the trick count in the trick scoring widget. It also deletes all widgets taken from the Items \"tray\".</li></ul></ul><div><b style=\"color: rgb(45, 93, 168);\"><i>Making a New Pre-Set</i></b><br></div></div><div><br></div><div>If you are interested in adding your own pre-set (and hopefully contribute it back to the public library), then see the wiki discussion at&nbsp;https://github.com/96LawDawg/Cards-Tricks/wiki.</div>",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-8"
+    }
+  },
+  "gameID44": {
+    "id": "gameID44",
+    "x": -651,
+    "y": 1127,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "text": "Papayou",
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "settingsArray": [
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showDiscard",
+        true
+      ],
+      [
+        "turnDirection",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        15
+      ],
+      [
+        "deckType",
+        7
+      ],
+      [
+        "seatCount",
+        5
+      ],
+      [
+        "tempScore",
+        true
+      ]
+    ],
+    "scoreSystem": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        50,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Choose the number of players (5-7) by selecting a version.\\a\\aPass cards using the Pass Cards button in the bottom right. You can adjust the direction and number using the widgets above and below that button.\\a\\aTotal points is 431: trump cards are worth their face value and queens are worth 50 points each.\"",
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "passIndicator"
+        ],
+        "property": "activeFace",
+        "value": 0
+      }
+    ],
+    "displayArray": [
+      [
+        "transferScoreButton",
+        0
+      ],
+      [
+        "passIndicator",
+        1
+      ],
+      [
+        "passCardsButton",
+        1
+      ]
+    ],
+    "versionArray": [
+      {
+        "value": "0",
+        "text": "Click here to choose version"
+      },
+      {
+        "value": "1",
+        "text": "5 players"
+      },
+      {
+        "value": "2",
+        "text": "6 players"
+      },
+      {
+        "value": "3",
+        "text": "7 players"
+      }
+    ],
+    "version1": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          15
+        ],
+        [
+          "deckType",
+          7
+        ],
+        [
+          "seatCount",
+          5
+        ],
+        [
+          "tempScore",
+          true
+        ]
+      ]
+    },
+    "version2": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          13
+        ],
+        [
+          "deckType",
+          7
+        ],
+        [
+          "seatCount",
+          6
+        ],
+        [
+          "tempScore",
+          true
+        ]
+      ]
+    },
+    "version3": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          11
+        ],
+        [
+          "deckType",
+          7
+        ],
+        [
+          "seatCount",
+          7
+        ],
+        [
+          "tempScore",
+          true
+        ]
+      ]
+    },
+    "postSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "passIndicator"
+        ],
+        "property": "activeFace",
+        "value": 0
+      }
+    ],
+    "recallRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "passCardsButton"
+        ],
+        "property": "ready",
+        "value": 0
+      }
+    ]
+  },
+  "8i5b": {
     "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
     "width": 103,
     "height": 160,
-    "id": "6zng",
-    "z": 59632,
-    "staged": false,
-    "parent": "deckHolder"
+    "id": "8i5b"
   }
 }
