@@ -1,19 +1,4 @@
 {
-  "1243": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 47431,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 2J",
-    "clonedFrom": "cloneMe",
-    "id": "1243",
-    "parent": "rxwi"
-  },
   "hand": {
     "type": "holder",
     "id": "hand",
@@ -2541,8 +2526,8 @@
     ],
     "showing": false,
     "color": "#999999",
-    "player": "",
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "bidValue2": {
     "inheritFrom": {
@@ -2554,7 +2539,8 @@
     "image": "",
     "deckSuitsColor": "",
     "deckSuitsUni": "",
-    "deckSuits": ""
+    "deckSuits": "",
+    "fontSize": "40px"
   },
   "bidSuit2": {
     "inheritFrom": {
@@ -2620,7 +2606,8 @@
     "trickCount": [
       0,
       0
-    ]
+    ],
+    "player": ""
   },
   "bidValue3": {
     "inheritFrom": {
@@ -2772,7 +2759,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "bidValue7": {
     "inheritFrom": {
@@ -5490,7 +5478,7 @@
       }
     ],
     "customFaceCount": 6,
-    "trump": 5,
+    "trump": 0,
     "resetProperties": {
       "x": 255,
       "y": 950
@@ -5908,7 +5896,7 @@
         "value": 0
       }
     ],
-    "depth": 36,
+    "depth": 13,
     "text": "Add Card Points",
     "width": 120,
     "css": {
@@ -19259,7 +19247,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"This room is set-up for 5 players. Scoring is automatic with 5 players using the Add Card Points and Transfer Score buttons. The sort button will move the Mighty, the Joker, and the Ripper (in that order) to a position above the higest trump card.\\a\\aTo make automatic scoring work, the declarer must indicate the bid using the bidding menu, the declarer's name must appear on the widget in the bottom-left corner, and variable teams must be set using the black/red/white widget below the seat. Point cards in the discard holder must be moved to the declarer or partner's holder.\\a\\aMinimum bid is 12. Score calculated using  2 * (Bid minus minimum bid) + (Points earned minus bid).\\a\\a\\a\\a At end of round, press Add Card Points button to enter total of captured cards on temporary small scoreboard. Check score, then press Transfer Score button to enter score on main scoreboard and perform additional calculations based on the rules.\\a\\a Using adjustments in the Options buttons, the room could be configured to play with a different number of players. The Add Card Points button should still work, but the Transfer Score button would not.\"",
+    "hintText": "\"This room is set-up for 5 players. Scoring is automatic with 5 players using the Add Card Points and Transfer Score buttons. The sort button will move the Mighty, the Joker, and the Ripper (in that order) to a position above the higest trump card.\\a\\aTo make automatic scoring work, the declarer must indicate the bid using the bidding menu, the declarer's name must appear on the widget in the bottom-left corner, and variable teams must be set using the black/red/white widget below the seat. Point cards in the discard holder must be moved to the declarer or partner's holder.\\a\\aMinimum bid is 13. Score calculated using  2 * (Bid minus minimum bid) + (Points earned minus bid).\\a\\a At end of round, press Add Card Points button to enter total of captured cards on temporary small scoreboard. Check score, then press Transfer Score button to enter score on main scoreboard and perform additional calculations based on the rules. Points are automatically doubled for a run or back run and for no trump bids. Announced 'no friend' bids must manually double points using red and green buttons for each player.\\a\\a Using adjustments in the Options buttons, the room could be configured to play with a different number of players. The Add Card Points button should still work, but the Transfer Score button would not.\"",
     "text": "Mighty",
     "scoreSystem": [
       [
@@ -19417,6 +19405,7 @@
     "transferExceptionsRoutine": [
       "var indexPartner = 'none'",
       "var result = ${points}",
+      "var trump = ${PROPERTY trump OF trump}",
       "//This duplicates the same code from the first part of the takeRoutine. A call to a common routine is not used because it would be hard to get the 2 different values needed back as the result of the call.",
       {
         "func": "SELECT",
@@ -19500,7 +19489,7 @@
       "var combined = ${combined.$indexDeclarer}",
       "var bid = 'bidValue' + ${indexDeclarer}",
       "var bid = ${PROPERTY text OF $bid}",
-      "var scoreLine = ${bid} - 12",
+      "var scoreLine = ${bid} - 13",
       "var overTake = ${combined} - ${bid}",
       "var overTake = abs ${overTake}",
       "var wonContract = ${combined} >= ${bid}",
@@ -19556,6 +19545,17 @@
         "condition": "${double}",
         "thenRoutine": [
           "//If declarer and/or partner take all points, or if they take 9 or less points, then values double",
+          "var pointsDeclarer = ${pointsDeclarer} * 2",
+          "var pointsPartner = ${pointsPartner} * 2",
+          "var pointsDefender = ${pointsDefender} * 2"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${trump}",
+        "operand2": "-",
+        "thenRoutine": [
+          "// If the bid was no trump, points are doubled (again if appropriate)",
           "var pointsDeclarer = ${pointsDeclarer} * 2",
           "var pointsPartner = ${pointsPartner} * 2",
           "var pointsDefender = ${pointsDefender} * 2"
@@ -19704,9 +19704,11 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "color": "black"
+      "color": "black",
+      "font-size": "15px"
     },
-    "text": "Mighty"
+    "text": "Mighty",
+    "y": 3
   },
   "ripperLabel": {
     "id": "ripperLabel",
@@ -19718,9 +19720,11 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "color": "black"
+      "color": "black",
+      "font-size": "15px"
     },
-    "text": "Ripper"
+    "text": "Ripper",
+    "y": 3
   },
   "mighty": {
     "id": "mighty",
@@ -19804,6 +19808,7 @@
       "x": 307,
       "y": 930
     },
+    "z": 86,
     "scale": 0
   },
   "trackTrick3": {
@@ -36517,7 +36522,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "statePoints": {
     "id": "statePoints",
@@ -37609,7 +37615,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714087142401,
+      "lastUpdate": 1714097407168,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -37625,778 +37631,793 @@
       "players": "2-8"
     }
   },
-  "vomk": {
+  "vlw9": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47441,
+    "z": 51185,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 01",
     "clonedFrom": "cloneMe",
-    "id": "vomk",
-    "parent": "rxwi"
+    "id": "vlw9",
+    "parent": "tcx5"
   },
-  "6tps": {
+  "0xzi": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47474,
+    "z": 51172,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 02",
     "clonedFrom": "cloneMe",
-    "id": "6tps",
-    "parent": "rxwi"
+    "id": "0xzi",
+    "parent": "tcx5"
   },
-  "mufu": {
+  "gdz1": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47448,
+    "z": 51202,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 03",
     "clonedFrom": "cloneMe",
-    "id": "mufu",
-    "parent": "rxwi"
+    "id": "gdz1",
+    "parent": "tcx5"
   },
-  "6wkw": {
+  "8gc0": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47473,
+    "z": 51201,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 04",
     "clonedFrom": "cloneMe",
-    "id": "6wkw",
-    "parent": "rxwi"
+    "id": "8gc0",
+    "parent": "tcx5"
   },
-  "be1f": {
+  "b5vq": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47460,
+    "z": 51208,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 05",
     "clonedFrom": "cloneMe",
-    "id": "be1f",
-    "parent": "rxwi"
+    "id": "b5vq",
+    "parent": "tcx5"
   },
-  "uc1d": {
+  "fqr6": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47444,
+    "z": 51212,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 06",
     "clonedFrom": "cloneMe",
-    "id": "uc1d",
-    "parent": "rxwi"
+    "id": "fqr6",
+    "parent": "tcx5"
   },
-  "xdh9": {
+  "5c9a": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47443,
+    "z": 51219,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 07",
     "clonedFrom": "cloneMe",
-    "id": "xdh9",
-    "parent": "rxwi"
+    "id": "5c9a",
+    "parent": "tcx5"
   },
-  "7zf7": {
+  "uj4b": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47430,
+    "z": 51205,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 08",
     "clonedFrom": "cloneMe",
-    "id": "7zf7",
-    "parent": "rxwi"
+    "id": "uj4b",
+    "parent": "tcx5"
   },
-  "8q0b": {
+  "6g54": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47459,
+    "z": 51194,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 09",
     "clonedFrom": "cloneMe",
-    "id": "8q0b",
-    "parent": "rxwi"
+    "id": "6g54",
+    "parent": "tcx5"
   },
-  "qsrw": {
+  "xczv": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47446,
+    "z": 51206,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 10",
     "clonedFrom": "cloneMe",
-    "id": "qsrw",
-    "parent": "rxwi"
+    "id": "xczv",
+    "parent": "tcx5"
   },
-  "a118": {
+  "33qu": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47475,
+    "z": 51222,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 2J",
     "clonedFrom": "cloneMe",
-    "id": "a118",
-    "parent": "rxwi"
+    "id": "33qu",
+    "parent": "tcx5"
   },
-  "r9y7": {
+  "7hty": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47433,
+    "z": 51186,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 3Q",
     "clonedFrom": "cloneMe",
-    "id": "r9y7",
-    "parent": "rxwi"
+    "id": "7hty",
+    "parent": "tcx5"
   },
-  "4o1y": {
+  "os6j": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47468,
+    "z": 51199,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "C 4K",
     "clonedFrom": "cloneMe",
-    "id": "4o1y",
-    "parent": "rxwi"
+    "id": "os6j",
+    "parent": "tcx5"
   },
-  "6ean": {
+  "4br0": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47467,
+    "z": 51182,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 01",
     "clonedFrom": "cloneMe",
-    "id": "6ean",
-    "parent": "rxwi"
+    "id": "4br0",
+    "parent": "tcx5"
   },
-  "noiu": {
+  "1vft": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47471,
+    "z": 51189,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 02",
     "clonedFrom": "cloneMe",
-    "id": "noiu",
-    "parent": "rxwi"
+    "id": "1vft",
+    "parent": "tcx5"
   },
-  "jvmo": {
+  "vsqn": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47437,
+    "z": 51197,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 03",
     "clonedFrom": "cloneMe",
-    "id": "jvmo",
-    "parent": "rxwi"
+    "id": "vsqn",
+    "parent": "tcx5"
   },
-  "q8lo": {
+  "rqjp": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47447,
+    "z": 51191,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 04",
     "clonedFrom": "cloneMe",
-    "id": "q8lo",
-    "parent": "rxwi"
+    "id": "rqjp",
+    "parent": "tcx5"
   },
-  "3va2": {
+  "ripv": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47465,
+    "z": 51198,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 05",
     "clonedFrom": "cloneMe",
-    "id": "3va2",
-    "parent": "rxwi"
+    "id": "ripv",
+    "parent": "tcx5"
   },
-  "m17m": {
+  "izlr": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47457,
+    "z": 51178,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 06",
     "clonedFrom": "cloneMe",
-    "id": "m17m",
-    "parent": "rxwi"
+    "id": "izlr",
+    "parent": "tcx5"
   },
-  "dap0": {
+  "hp8q": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47428,
+    "z": 51218,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 07",
     "clonedFrom": "cloneMe",
-    "id": "dap0",
-    "parent": "rxwi"
+    "id": "hp8q",
+    "parent": "tcx5"
   },
-  "kpg6": {
+  "b4cu": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47438,
+    "z": 51187,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 08",
     "clonedFrom": "cloneMe",
-    "id": "kpg6",
-    "parent": "rxwi"
+    "id": "b4cu",
+    "parent": "tcx5"
   },
-  "kq4d": {
+  "usd3": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47435,
+    "z": 51209,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 09",
     "clonedFrom": "cloneMe",
-    "id": "kq4d",
-    "parent": "rxwi"
+    "id": "usd3",
+    "parent": "tcx5"
   },
-  "hkl5": {
+  "vbd1": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47429,
+    "z": 51213,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 10",
     "clonedFrom": "cloneMe",
-    "id": "hkl5",
-    "parent": "rxwi"
+    "id": "vbd1",
+    "parent": "tcx5"
   },
-  "4qwr": {
+  "134c": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47439,
+    "z": 51177,
+    "text": "cloneMe",
+    "staged": false,
+    "type": "card",
+    "deck": "deck1",
+    "cardType": "D 2J",
+    "clonedFrom": "cloneMe",
+    "id": "134c",
+    "parent": "tcx5"
+  },
+  "pvs7": {
+    "x": null,
+    "y": null,
+    "width": 103,
+    "height": 160,
+    "z": 51211,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 3Q",
     "clonedFrom": "cloneMe",
-    "id": "4qwr",
-    "parent": "rxwi"
+    "id": "pvs7",
+    "parent": "tcx5"
   },
-  "aoz9": {
+  "f6ry": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47464,
+    "z": 51215,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "D 4K",
     "clonedFrom": "cloneMe",
-    "id": "aoz9",
-    "parent": "rxwi"
+    "id": "f6ry",
+    "parent": "tcx5"
   },
-  "yn9k": {
+  "1fcy": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47449,
+    "z": 51195,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 01",
     "clonedFrom": "cloneMe",
-    "id": "yn9k",
-    "parent": "rxwi"
+    "id": "1fcy",
+    "parent": "tcx5"
   },
-  "pwqk": {
+  "ejoz": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47469,
+    "z": 51217,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 02",
     "clonedFrom": "cloneMe",
-    "id": "pwqk",
-    "parent": "rxwi"
+    "id": "ejoz",
+    "parent": "tcx5"
   },
-  "rxu4": {
+  "zweh": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47472,
+    "z": 51176,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 03",
     "clonedFrom": "cloneMe",
-    "id": "rxu4",
-    "parent": "rxwi"
+    "id": "zweh",
+    "parent": "tcx5"
   },
-  "ldfr": {
+  "osoc": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47432,
+    "z": 51203,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 04",
     "clonedFrom": "cloneMe",
-    "id": "ldfr",
-    "parent": "rxwi"
+    "id": "osoc",
+    "parent": "tcx5"
   },
-  "lt1h": {
+  "tqoa": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47454,
+    "z": 51193,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 05",
     "clonedFrom": "cloneMe",
-    "id": "lt1h",
-    "parent": "rxwi"
+    "id": "tqoa",
+    "parent": "tcx5"
   },
-  "pk3u": {
+  "jbwu": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47436,
+    "z": 51183,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 06",
     "clonedFrom": "cloneMe",
-    "id": "pk3u",
-    "parent": "rxwi"
+    "id": "jbwu",
+    "parent": "tcx5"
   },
-  "hvq8": {
+  "cjdi": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47476,
+    "z": 51173,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 07",
     "clonedFrom": "cloneMe",
-    "id": "hvq8",
-    "parent": "rxwi"
+    "id": "cjdi",
+    "parent": "tcx5"
   },
-  "tk3f": {
+  "yeic": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47440,
+    "z": 51181,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 08",
     "clonedFrom": "cloneMe",
-    "id": "tk3f",
-    "parent": "rxwi"
+    "id": "yeic",
+    "parent": "tcx5"
   },
-  "tq6u": {
+  "edfq": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47463,
+    "z": 51180,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 09",
     "clonedFrom": "cloneMe",
-    "id": "tq6u",
-    "parent": "rxwi"
+    "id": "edfq",
+    "parent": "tcx5"
   },
-  "7f7t": {
+  "tqzj": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47458,
+    "z": 51204,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 10",
     "clonedFrom": "cloneMe",
-    "id": "7f7t",
-    "parent": "rxwi"
+    "id": "tqzj",
+    "parent": "tcx5"
   },
-  "8f4s": {
+  "vfxx": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47442,
+    "z": 51174,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 2J",
     "clonedFrom": "cloneMe",
-    "id": "8f4s",
-    "parent": "rxwi"
+    "id": "vfxx",
+    "parent": "tcx5"
   },
-  "5grv": {
+  "7hlm": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47426,
+    "z": 51190,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 3Q",
     "clonedFrom": "cloneMe",
-    "id": "5grv",
-    "parent": "rxwi"
+    "id": "7hlm",
+    "parent": "tcx5"
   },
-  "3w6a": {
+  "69q8": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47452,
+    "z": 51200,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "S 4K",
     "clonedFrom": "cloneMe",
-    "id": "3w6a",
-    "parent": "rxwi"
+    "id": "69q8",
+    "parent": "tcx5"
   },
-  "ibbz": {
+  "oqxt": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47466,
+    "z": 51216,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 01",
     "clonedFrom": "cloneMe",
-    "id": "ibbz",
-    "parent": "rxwi"
+    "id": "oqxt",
+    "parent": "tcx5"
   },
-  "f2vn": {
+  "tb55": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47455,
+    "z": 51214,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 02",
     "clonedFrom": "cloneMe",
-    "id": "f2vn",
-    "parent": "rxwi"
+    "id": "tb55",
+    "parent": "tcx5"
   },
-  "cmkz": {
+  "097s": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47425,
+    "z": 51179,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 03",
     "clonedFrom": "cloneMe",
-    "id": "cmkz",
-    "parent": "rxwi"
+    "id": "097s",
+    "parent": "tcx5"
   },
-  "3vbx": {
+  "xcwk": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47462,
+    "z": 51221,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 04",
     "clonedFrom": "cloneMe",
-    "id": "3vbx",
-    "parent": "rxwi"
+    "id": "xcwk",
+    "parent": "tcx5"
   },
-  "5vwp": {
+  "5fx5": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47470,
+    "z": 51171,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 05",
     "clonedFrom": "cloneMe",
-    "id": "5vwp",
-    "parent": "rxwi"
+    "id": "5fx5",
+    "parent": "tcx5"
   },
-  "15gr": {
+  "uyl0": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47451,
+    "z": 51175,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 06",
     "clonedFrom": "cloneMe",
-    "id": "15gr",
-    "parent": "rxwi"
+    "id": "uyl0",
+    "parent": "tcx5"
   },
-  "qnet": {
+  "b4gq": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47434,
+    "z": 51220,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 07",
     "clonedFrom": "cloneMe",
-    "id": "qnet",
-    "parent": "rxwi"
+    "id": "b4gq",
+    "parent": "tcx5"
   },
-  "hh3p": {
+  "vtv5": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47456,
+    "z": 51188,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 08",
     "clonedFrom": "cloneMe",
-    "id": "hh3p",
-    "parent": "rxwi"
+    "id": "vtv5",
+    "parent": "tcx5"
   },
-  "z2ij": {
+  "dfim": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47445,
+    "z": 51184,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 09",
     "clonedFrom": "cloneMe",
-    "id": "z2ij",
-    "parent": "rxwi"
+    "id": "dfim",
+    "parent": "tcx5"
   },
-  "o6pm": {
+  "ksme": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47450,
+    "z": 51210,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 10",
     "clonedFrom": "cloneMe",
-    "id": "o6pm",
-    "parent": "rxwi"
+    "id": "ksme",
+    "parent": "tcx5"
   },
-  "62g5": {
+  "id0q": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47461,
+    "z": 51196,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 2J",
     "clonedFrom": "cloneMe",
-    "id": "62g5",
-    "parent": "rxwi"
+    "id": "id0q",
+    "parent": "tcx5"
   },
-  "6jpo": {
+  "ph7x": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47427,
+    "z": 51192,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 3Q",
     "clonedFrom": "cloneMe",
-    "id": "6jpo",
-    "parent": "rxwi"
+    "id": "ph7x",
+    "parent": "tcx5"
   },
-  "kf35": {
+  "isui": {
     "x": null,
     "y": null,
     "width": 103,
     "height": 160,
-    "z": 47453,
+    "z": 51207,
     "text": "cloneMe",
     "staged": false,
     "type": "card",
     "deck": "deck1",
     "cardType": "H 4K",
     "clonedFrom": "cloneMe",
-    "id": "kf35",
-    "parent": "rxwi"
+    "id": "isui",
+    "parent": "tcx5"
   },
-  "rxwi": {
+  "tcx5": {
     "type": "pile",
     "parent": "deckHolder",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "rxwi"
+    "id": "tcx5"
   }
 }
