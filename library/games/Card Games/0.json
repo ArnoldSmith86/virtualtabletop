@@ -466,7 +466,6 @@
             ]
           },
           "// Get cards from misc holders",
-          "// Check to make sure this list covers them all",
           {
             "func": "FOREACH",
             "in": [
@@ -517,7 +516,7 @@
               }
             ]
           },
-          "// Get the rest of the cards (those that are not in holders)",
+          "// Get the rest of the cards (those that are not in the deck holder)",
           {
             "func": "SELECT",
             "type": "card",
@@ -539,6 +538,7 @@
             "holder": "deckHolder",
             "face": 0
           },
+          "// Cut the deck in the way set by properties on the gameID widget",
           "var cutCount = randInt ${cutCountMin} ${cutCountMax}",
           {
             "func": "COUNT",
@@ -551,6 +551,7 @@
               "${cutCount}"
             ],
             "loopRoutine": [
+              "// Cutsize will be 0 unless min and max values are specified on the gameID. If the min and max are specified, a random number between them is chosen.",
               "var cutSize = randInt ${cutSizeMin} ${cutSizeMax}",
               {
                 "func": "IF",
@@ -558,6 +559,7 @@
                 "relation": ">",
                 "operand2": 0,
                 "thenRoutine": [
+                  "// If cutsize not 0 then move cards in groups of cutsize until all cards are moved",
                   "var moveCount = ${cardCount} / ${cutSize}",
                   "var moveCount = ceil ${moveCount}",
                   {
@@ -582,6 +584,7 @@
                   }
                 ],
                 "elseRoutine": [
+                  "// If cutsize is 0 then just cut the cards once using a random size that leaves at least 5 cards on either side of the cut",
                   "var max = ${cardCount} - 5",
                   "var random = randInt 5 ${cardCount}",
                   {
@@ -608,6 +611,7 @@
           }
         ],
         "elseRoutine": [
+          "// If none of the minimum shuffle properties are specified on the gameID, then just do a regular recall and shuffle.",
           {
             "func": "RECALL",
             "holder": "${PROPERTY parent}"
@@ -2608,7 +2612,10 @@
       0,
       0
     ],
-    "turn": false
+    "turn": false,
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "bidValue3": {
     "inheritFrom": {
@@ -5500,14 +5507,14 @@
         "value": "${b}"
       }
     ],
-    "customFaceCount": 6,
     "trump": 4,
     "resetProperties": {
       "x": 255,
       "y": 950
     },
     "z": 45,
-    "deckSuitsColor": ""
+    "deckSuitsColor": "",
+    "customFaceCount": 6
   },
   "scoreButton": {
     "type": "button",
@@ -7477,17 +7484,6 @@
             "routine": "resetRoutine"
           }
         ]
-      },
-      {
-        "func": "SELECT",
-        "type": "card",
-        "property": "_ancestor",
-        "value": "deckHolder"
-      },
-      {
-        "func": "SET",
-        "property": "z",
-        "value": 1
       }
     ],
     "width": 60,
@@ -7540,6 +7536,11 @@
       }
     ],
     "gameStartRoutine": [
+      {
+        "func": "CALL",
+        "widget": "makeCards",
+        "routine": "makeCardsRoutine"
+      },
       {
         "func": "SHUFFLE",
         "holder": "deckHolder"
@@ -8063,10 +8064,10 @@
     ],
     "roundLabel": "",
     "y": 650,
+    "scale": 0,
     "rounds": [
       "Card Points"
-    ],
-    "scale": 0
+    ]
   },
   "seat1": {
     "type": "seat",
@@ -37563,16 +37564,11 @@
         ]
       }
     ],
-    "customFaceCount": 6,
     "showTempScoreTotals": true,
     "text": "ZZ Min Shuffle Test",
     "cutCountMin": 1,
     "cutCountMax": 3,
-    "dealCount": [
-      4,
-      5,
-      4
-    ],
+    "dealCount": 5,
     "cutSizeMax": 15,
     "cutSizeMin": 8
   },
@@ -37586,11 +37582,11 @@
       "year": "",
       "mode": "vs",
       "time": "5-60",
-      "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714168522451,
+      "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
+      "lastUpdate": 1714184206061,
       "showName": true,
       "skill": "",
-      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
+      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
@@ -37702,9 +37698,13 @@
       [
         "scoreButton",
         0
+      ],
+      [
+        "bidWinner",
+        0
       ]
     ],
-    "hintText": "\"Stuff.\"",
+    "hintText": "\"Shuffling in this game is not random. Cards are collected by piles and cut once, consistent with how the game is usually played in person.\\a\\aUse Message button and/or white bid widgets near seats to indicate bids and value. All scoring is manual using the red and green +/- buttons above the scoreboard.\"",
     "bidRoutine": [
       "var bidNS = max ${PROPERTY text OF bidValue1} ${PROPERTY text OF bidValue5}",
       "var bidNS = ${bidNS} + 6",
@@ -37727,795 +37727,323 @@
         "value": "${bidEW}"
       }
     ],
-    "z": 79087
+    "z": 79087,
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Pass",
+        "text": "Pass"
+      },
+      {
+        "value": "Wait",
+        "text": "Wait"
+      },
+      {
+        "value": "Propose ♠",
+        "text": "Propose ♠"
+      },
+      {
+        "value": "Propose ♣",
+        "text": "Propose ♣"
+      },
+      {
+        "value": "Propose ♦",
+        "text": "Propose ♦"
+      },
+      {
+        "value": "Propose ♥",
+        "text": "Propose ♥"
+      },
+      {
+        "value": "Accept ♠",
+        "text": "Accept ♠"
+      },
+      {
+        "value": "Accept ♣",
+        "text": "Accept ♣"
+      },
+      {
+        "value": "Accept ♦",
+        "text": "Accept ♦"
+      },
+      {
+        "value": "Propose ♥",
+        "text": "Propose ♥"
+      },
+      {
+        "value": "Pass parôle",
+        "text": "Pass parôle"
+      },
+      {
+        "value": "Solo",
+        "text": "Solo"
+      },
+      {
+        "value": "Small misère",
+        "text": "Small misère"
+      },
+      {
+        "value": "Abundance",
+        "text": "Abundance"
+      },
+      {
+        "value": "Three aces",
+        "text": "Three aces"
+      },
+      {
+        "value": "Accept three aces",
+        "text": "Accept three aces"
+      },
+      {
+        "value": "Large misère",
+        "text": "Large misère"
+      },
+      {
+        "value": "Open misère",
+        "text": "Open misère"
+      },
+      {
+        "value": "Small slam",
+        "text": "Small slam"
+      },
+      {
+        "value": "Grand slam",
+        "text": "Grand slam"
+      }
+    ],
+    "cutCountMax": 1,
+    "dealCount": [
+      4,
+      5,
+      4
+    ],
+    "cutCountMin": 1,
+    "postSetExceptionsRoutine": [
+      "// Sets up the deck the traditional way where a first deal from a fresh deck just sorts cards so they group together for the real deal",
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "holder1",
+          "holder3",
+          "holder5",
+          "holder7"
+        ],
+        "fillTo": 13
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "holder1",
+          "holder3",
+          "holder5",
+          "holder7"
+        ],
+        "key": "${PROPERTY sort1}"
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "holder1",
+          "holder3",
+          "holder5",
+          "holder7"
+        ],
+        "key": "${PROPERTY sort2}"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "recallButton"
+        ]
+      }
+    ]
   },
-  "lkab": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
+  "playerAid46": {
+    "id": "playerAid46",
+    "x": 1685,
+    "y": 567,
+    "z": 79088,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightblue"
+    },
+    "onlyVisibleForSeat": [],
+    "text": "Color Whist player aid master widget",
+    "playerAid": true,
+    "showTotals": false
+  },
+  "playerAid46a": {
+    "id": "playerAid46a",
+    "parent": "playerAid46",
+    "x": -200,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "pointer",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Auctions"
+  },
+  "playerAid46aAsset": {
+    "id": "playerAid46aAsset",
+    "parent": "playerAid46a",
+    "width": 832,
+    "height": 865,
     "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 01",
-    "clonedFrom": "cloneMe",
-    "id": "lkab",
-    "parent": "lpt5"
+    "movable": false,
+    "movableInEdit": false,
+    "enlarge": 1,
+    "image": "/assets/2012798803_123302"
   },
-  "u4rd": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
+  "playerAid46b": {
+    "id": "playerAid46b",
+    "parent": "playerAid46",
+    "x": -200,
+    "y": 25,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "pointer",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Contracts"
+  },
+  "playerAid46bAsset": {
+    "id": "playerAid46bAsset",
+    "parent": "playerAid46b",
+    "height": 600,
     "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 02",
-    "clonedFrom": "cloneMe",
-    "id": "u4rd",
-    "parent": "lpt5"
+    "movable": false,
+    "movableInEdit": false,
+    "enlarge": 1.25,
+    "image": "/assets/-2039585850_172412",
+    "width": 1000
   },
-  "lwxq": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
+  "playerAid46cAsset": {
+    "id": "playerAid46cAsset",
+    "parent": "playerAid46c",
+    "width": 800,
+    "height": 330,
     "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 03",
-    "clonedFrom": "cloneMe",
-    "id": "lwxq",
-    "parent": "lpt5"
+    "movable": false,
+    "movableInEdit": false,
+    "enlarge": 1.5,
+    "image": "/assets/506034306_122868"
   },
-  "c6p5": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
+  "playerAid46c": {
+    "id": "playerAid46c",
+    "parent": "playerAid46",
+    "x": -200,
+    "y": 50,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "pointer",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Misère/Piccolo"
+  },
+  "playerAid46d": {
+    "id": "playerAid46d",
+    "parent": "playerAid46",
+    "x": -200,
+    "y": 75,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "pointer",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Points v1"
+  },
+  "playerAid46dAsset": {
+    "id": "playerAid46dAsset",
+    "parent": "playerAid46d",
+    "width": 1230,
+    "height": 820,
     "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 04",
-    "clonedFrom": "cloneMe",
-    "id": "c6p5",
-    "parent": "lpt5"
+    "movable": false,
+    "movableInEdit": false,
+    "enlarge": 1,
+    "image": "/assets/184879680_268879"
   },
-  "1pn7": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
+  "playerAid46e": {
+    "id": "playerAid46e",
+    "parent": "playerAid46",
+    "x": -200,
+    "y": 100,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "pointer",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Points v2"
+  },
+  "playerAid46eAsset": {
+    "id": "playerAid46eAsset",
+    "parent": "playerAid46e",
+    "height": 820,
     "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 05",
-    "clonedFrom": "cloneMe",
-    "id": "1pn7",
-    "parent": "lpt5"
-  },
-  "fhhp": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 06",
-    "clonedFrom": "cloneMe",
-    "id": "fhhp",
-    "parent": "lpt5"
-  },
-  "yg53": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 07",
-    "clonedFrom": "cloneMe",
-    "id": "yg53",
-    "parent": "lpt5"
-  },
-  "tr27": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 08",
-    "clonedFrom": "cloneMe",
-    "id": "tr27",
-    "parent": "lpt5"
-  },
-  "p26m": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 09",
-    "clonedFrom": "cloneMe",
-    "id": "p26m",
-    "parent": "lpt5"
-  },
-  "yrrg": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 10",
-    "clonedFrom": "cloneMe",
-    "id": "yrrg",
-    "parent": "lpt5"
-  },
-  "s955": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 2J",
-    "clonedFrom": "cloneMe",
-    "id": "s955",
-    "parent": "lpt5"
-  },
-  "u7pe": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 3Q",
-    "clonedFrom": "cloneMe",
-    "id": "u7pe",
-    "parent": "lpt5"
-  },
-  "bbkg": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "C 4K",
-    "clonedFrom": "cloneMe",
-    "id": "bbkg",
-    "parent": "lpt5"
-  },
-  "4k7s": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 01",
-    "clonedFrom": "cloneMe",
-    "id": "4k7s",
-    "parent": "lpt5"
-  },
-  "f35v": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 02",
-    "clonedFrom": "cloneMe",
-    "id": "f35v",
-    "parent": "lpt5"
-  },
-  "h48g": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 03",
-    "clonedFrom": "cloneMe",
-    "id": "h48g",
-    "parent": "lpt5"
-  },
-  "bh8i": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 04",
-    "clonedFrom": "cloneMe",
-    "id": "bh8i",
-    "parent": "lpt5"
-  },
-  "veei": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 05",
-    "clonedFrom": "cloneMe",
-    "id": "veei",
-    "parent": "lpt5"
-  },
-  "xgtc": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 06",
-    "clonedFrom": "cloneMe",
-    "id": "xgtc",
-    "parent": "lpt5"
-  },
-  "kfkd": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 07",
-    "clonedFrom": "cloneMe",
-    "id": "kfkd",
-    "parent": "lpt5"
-  },
-  "7y0b": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 08",
-    "clonedFrom": "cloneMe",
-    "id": "7y0b",
-    "parent": "lpt5"
-  },
-  "37bm": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 09",
-    "clonedFrom": "cloneMe",
-    "id": "37bm",
-    "parent": "lpt5"
-  },
-  "qf2b": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 10",
-    "clonedFrom": "cloneMe",
-    "id": "qf2b",
-    "parent": "lpt5"
-  },
-  "gvol": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 2J",
-    "clonedFrom": "cloneMe",
-    "id": "gvol",
-    "parent": "lpt5"
-  },
-  "ulti": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 3Q",
-    "clonedFrom": "cloneMe",
-    "id": "ulti",
-    "parent": "lpt5"
-  },
-  "y6zw": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "D 4K",
-    "clonedFrom": "cloneMe",
-    "id": "y6zw",
-    "parent": "lpt5"
-  },
-  "0nc0": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 01",
-    "clonedFrom": "cloneMe",
-    "id": "0nc0",
-    "parent": "lpt5"
-  },
-  "20k8": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 02",
-    "clonedFrom": "cloneMe",
-    "id": "20k8",
-    "parent": "lpt5"
-  },
-  "1zst": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 03",
-    "clonedFrom": "cloneMe",
-    "id": "1zst",
-    "parent": "lpt5"
-  },
-  "uxau": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 04",
-    "clonedFrom": "cloneMe",
-    "id": "uxau",
-    "parent": "lpt5"
-  },
-  "c18g": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 05",
-    "clonedFrom": "cloneMe",
-    "id": "c18g",
-    "parent": "lpt5"
-  },
-  "mn2o": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 06",
-    "clonedFrom": "cloneMe",
-    "id": "mn2o",
-    "parent": "lpt5"
-  },
-  "sl07": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 07",
-    "clonedFrom": "cloneMe",
-    "id": "sl07",
-    "parent": "lpt5"
-  },
-  "sz0a": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 08",
-    "clonedFrom": "cloneMe",
-    "id": "sz0a",
-    "parent": "lpt5"
-  },
-  "apy9": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 09",
-    "clonedFrom": "cloneMe",
-    "id": "apy9",
-    "parent": "lpt5"
-  },
-  "yy90": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 10",
-    "clonedFrom": "cloneMe",
-    "id": "yy90",
-    "parent": "lpt5"
-  },
-  "wh97": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 2J",
-    "clonedFrom": "cloneMe",
-    "id": "wh97",
-    "parent": "lpt5"
-  },
-  "xn4d": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 3Q",
-    "clonedFrom": "cloneMe",
-    "id": "xn4d",
-    "parent": "lpt5"
-  },
-  "ngt4": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "S 4K",
-    "clonedFrom": "cloneMe",
-    "id": "ngt4",
-    "parent": "lpt5"
-  },
-  "0rjm": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 01",
-    "clonedFrom": "cloneMe",
-    "id": "0rjm",
-    "parent": "lpt5"
-  },
-  "ooyr": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 02",
-    "clonedFrom": "cloneMe",
-    "id": "ooyr",
-    "parent": "lpt5"
-  },
-  "f4ws": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 03",
-    "clonedFrom": "cloneMe",
-    "id": "f4ws",
-    "parent": "lpt5"
-  },
-  "cfep": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 04",
-    "clonedFrom": "cloneMe",
-    "id": "cfep",
-    "parent": "lpt5"
-  },
-  "r7ir": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 05",
-    "clonedFrom": "cloneMe",
-    "id": "r7ir",
-    "parent": "lpt5"
-  },
-  "9tei": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 06",
-    "clonedFrom": "cloneMe",
-    "id": "9tei",
-    "parent": "lpt5"
-  },
-  "zh0p": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 07",
-    "clonedFrom": "cloneMe",
-    "id": "zh0p",
-    "parent": "lpt5"
-  },
-  "3ss2": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 08",
-    "clonedFrom": "cloneMe",
-    "id": "3ss2",
-    "parent": "lpt5"
-  },
-  "b860": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 09",
-    "clonedFrom": "cloneMe",
-    "id": "b860",
-    "parent": "lpt5"
-  },
-  "sj8h": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 10",
-    "clonedFrom": "cloneMe",
-    "id": "sj8h",
-    "parent": "lpt5"
-  },
-  "ec9k": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 2J",
-    "clonedFrom": "cloneMe",
-    "id": "ec9k",
-    "parent": "lpt5"
-  },
-  "vtxj": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 3Q",
-    "clonedFrom": "cloneMe",
-    "id": "vtxj",
-    "parent": "lpt5"
-  },
-  "sjaa": {
-    "x": null,
-    "y": null,
-    "width": 103,
-    "height": 160,
-    "z": 1,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "deck": "deck1",
-    "cardType": "H 4K",
-    "clonedFrom": "cloneMe",
-    "id": "sjaa",
-    "parent": "lpt5"
-  },
-  "lpt5": {
-    "type": "pile",
-    "parent": "deckHolder",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "lpt5"
+    "movable": false,
+    "movableInEdit": false,
+    "enlarge": 1,
+    "image": "/assets/342217636_181985",
+    "width": 1000
   }
 }
