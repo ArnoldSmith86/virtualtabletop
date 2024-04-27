@@ -2612,7 +2612,6 @@
       0,
       0
     ],
-    "turn": false,
     "mainColor": "#ffffff",
     "textColor": "#000000",
     "glowColor": "#000000"
@@ -6088,7 +6087,7 @@
                 "value": 2
               },
               {
-                "text": "Tarot (52 Standard, 22 Tarot)",
+                "text": "Tarot (52 Standard, 4 Cavaliers, 22 Tarot)",
                 "value": 7
               },
               {
@@ -35506,46 +35505,6 @@
       }
     ]
   },
-  "synu": {
-    "width": 40,
-    "height": 40,
-    "classes": "chip",
-    "color": "#fcf0d4",
-    "faces": [
-      {
-        "image": "i/game-pieces/2D/Checkers-2D.svg",
-        "crowned": false
-      },
-      {
-        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "crowned": true
-      }
-    ],
-    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 1,
-    "crowned": true,
-    "secondaryColor": "#ffffff",
-    "layer": 10,
-    "item": 4,
-    "color3": "#f8dd9f",
-    "color2": "#000000",
-    "clonedFrom": "qg58",
-    "itemMarker": true,
-    "x": 4,
-    "y": 4,
-    "z": 544,
-    "ownedBy": null,
-    "id": "synu",
-    "parent": "itemsHolder4",
-    "clickable": false
-  },
   "passCountButton": {
     "id": "passCountButton",
     "parent": "passCardsButton",
@@ -37566,8 +37525,8 @@
     ],
     "showTempScoreTotals": true,
     "text": "ZZ Min Shuffle Test",
-    "cutCountMin": 1,
-    "cutCountMax": 3,
+    "cutCountMin": 2,
+    "cutCountMax": 4,
     "dealCount": 5,
     "cutSizeMax": 15,
     "cutSizeMin": 8
@@ -37583,7 +37542,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714184206061,
+      "lastUpdate": 1714229311923,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -37814,13 +37773,11 @@
         "text": "Grand slam"
       }
     ],
-    "cutCountMax": 1,
     "dealCount": [
       4,
       5,
       4
     ],
-    "cutCountMin": 1,
     "postSetExceptionsRoutine": [
       "// Sets up the deck the traditional way where a first deal from a fresh deck just sorts cards so they group together for the real deal",
       {
@@ -37860,7 +37817,9 @@
           "recallButton"
         ]
       }
-    ]
+    ],
+    "cutCountMax": 1,
+    "cutCountMin": 1
   },
   "playerAid46": {
     "id": "playerAid46",
@@ -38045,5 +38004,174 @@
     "enlarge": 1,
     "image": "/assets/342217636_181985",
     "width": 1000
+  },
+  "3fxt": {
+    "width": 40,
+    "height": 40,
+    "classes": "chip",
+    "color": "#fcf0d4",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "layer": 10,
+    "item": 4,
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "clonedFrom": "5x37",
+    "itemMarker": true,
+    "x": 4,
+    "y": 4,
+    "z": 680,
+    "ownedBy": null,
+    "id": "3fxt",
+    "parent": "itemsHolder4",
+    "clickable": false
+  },
+  "tempChooseShuffle": {
+    "type": "button",
+    "id": "tempChooseShuffle",
+    "x": 1524,
+    "y": 191,
+    "width": 65,
+    "height": 40,
+    "z": 79,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Choose shuffle type"
+          },
+          {
+            "type": "select",
+            "variable": "shuffleType",
+            "options": [
+              {
+                "value": 1,
+                "text": "1 Cut"
+              },
+              {
+                "value": 2,
+                "text": "Multiple Cuts"
+              },
+              {
+                "value": 3,
+                "text": "Full Shuffle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "gameID46"
+      },
+      {
+        "func": "IF",
+        "operand1": "${shuffleType}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "cutCountMax",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "property": "cutCountMin",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMax",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMin",
+            "value": null
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${shuffleType}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "cutCountMax",
+            "value": 4
+          },
+          {
+            "func": "SET",
+            "property": "cutCountMin",
+            "value": 2
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMax",
+            "value": 15
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMin",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${shuffleType}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "cutCountMax",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "cutCountMin",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMax",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMin",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "text": "Shuffle Type",
+    "cutCountMax": 4,
+    "cutCountMin": 2,
+    "cutSizeMax": 15,
+    "cutSizeMin": 8
   }
 }
