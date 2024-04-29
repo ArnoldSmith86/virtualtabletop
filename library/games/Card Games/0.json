@@ -421,12 +421,12 @@
     "last9seat3": 0,
     "last9seat7": 0,
     "shuffleRoutine": [
-      "var cutCountMin = ${PROPERTY cutCountMin OF $gameID}",
-      "var cutSizeMin = ${PROPERTY cutSizeMin OF $gameID}",
-      "var cutCountMax = ${PROPERTY cutCountMax OF $gameID}",
-      "var cutSizeMax = ${PROPERTY cutSizeMax OF $gameID}",
+      "var cutCountMin = ${PROPERTY cutCountMin}",
+      "var cutSizeMin = ${PROPERTY cutSizeMin}",
+      "var cutCountMax = ${PROPERTY cutCountMax}",
+      "var cutSizeMax = ${PROPERTY cutSizeMax}",
       "var minShuffle = ${cutCountMax} || ${cutSizeMax}",
-      "// Either do a minimum shuffle if values are set on the gameID or do a regular shuffle",
+      "// Either do a minimum shuffle of some type or do a regular shuffle",
       {
         "func": "IF",
         "condition": "${minShuffle}",
@@ -637,6 +637,122 @@
       6,
       7,
       8
+    ],
+    "shuffleTypeRoutine": [
+      "var shuffleType = ${PROPERTY shuffleType OF settingsDecks}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${shuffleType}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "cutCountMax",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "cutCountMin",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMax",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMin",
+            "value": null
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${shuffleType}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "cutCountMax",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "property": "cutCountMin",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMax",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMin",
+            "value": null
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${shuffleType}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "cutCountMax",
+            "value": 4
+          },
+          {
+            "func": "SET",
+            "property": "cutCountMin",
+            "value": 2
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMax",
+            "value": 15
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMin",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${shuffleType}",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "cutCountMax",
+            "value": 7
+          },
+          {
+            "func": "SET",
+            "property": "cutCountMin",
+            "value": 4
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMax",
+            "value": 10
+          },
+          {
+            "func": "SET",
+            "property": "cutSizeMin",
+            "value": 5
+          }
+        ]
+      }
     ]
   },
   "sortButton": {
@@ -2622,9 +2738,11 @@
       0,
       0
     ],
+    "player": "",
     "mainColor": "#ffffff",
     "textColor": "#000000",
-    "glowColor": "#000000"
+    "glowColor": "#000000",
+    "turn": false
   },
   "bidValue3": {
     "inheritFrom": {
@@ -2776,7 +2894,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "player": "",
+    "sortDirection": true
   },
   "bidValue7": {
     "inheritFrom": {
@@ -6029,8 +6148,8 @@
     "movableInEdit": false,
     "css": "font-size: 18px; line-height:1.05",
     "text": "Decks & Players",
-    "jokerCount": 0,
-    "seatCount": 4,
+    "jokerCount": "0",
+    "seatCount": "4",
     "showDelete": false,
     "teamScore": false,
     "clickRoutine": [
@@ -6192,6 +6311,29 @@
             "value": "${PROPERTY showDelete}"
           },
           {
+            "type": "select",
+            "variable": "shuffleType",
+            "value": "${PROPERTY shuffleType}",
+            "options": [
+              {
+                "value": 1,
+                "text": "Full Random Shuffle"
+              },
+              {
+                "value": 2,
+                "text": "1 Cut"
+              },
+              {
+                "value": 3,
+                "text": "Several Cuts"
+              },
+              {
+                "value": 4,
+                "text": "Many Cuts"
+              }
+            ]
+          },
+          {
             "type": "subtitle",
             "text": "Scoring"
           },
@@ -6271,6 +6413,12 @@
         "collection": "thisButton",
         "property": "jokerCount",
         "value": "${jokerCount}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "shuffleType",
+        "value": "${shuffleType}"
       },
       {
         "func": "SET",
@@ -6792,7 +6940,7 @@
         ]
       }
     ],
-    "hideCards": 0,
+    "hideCards": "0",
     "4PlayerPositionRoutine": [
       {
         "func": "IF",
@@ -7060,7 +7208,7 @@
         ]
       }
     ],
-    "cardCount": 13,
+    "cardCount": "13",
     "hideCardsChangeRoutine": [
       {
         "func": "CALL",
@@ -7206,10 +7354,17 @@
         ]
       }
     ],
-    "dummyHand": 0,
+    "dummyHand": "0",
     "showtempScore": true,
     "showTempScore": true,
-    "j": "o"
+    "shuffleTypeChangeRoutine": [
+      {
+        "func": "CALL",
+        "widget": "recallButton",
+        "routine": "shuffleTypeRoutine"
+      }
+    ],
+    "shuffleType": "1"
   },
   "deckOptions": {
     "id": "deckOptions",
@@ -8343,7 +8498,8 @@
           }
         ]
       }
-    ]
+    ],
+    "sortDirection": true
   },
   "preSetsButton": {
     "type": "button",
@@ -13091,6 +13247,10 @@
         4
       ],
       [
+        "shuffleType",
+        1
+      ],
+      [
         "showDelete",
         false
       ],
@@ -15566,7 +15726,7 @@
       "x": 1310,
       "y": 145
     },
-    "z": 79948
+    "z": 79968
   },
   "suitDice": {
     "type": "dice",
@@ -36465,7 +36625,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "statePoints": {
     "id": "statePoints",
@@ -37627,6 +37788,10 @@
       [
         "seatCount",
         4
+      ],
+      [
+        "shuffleType",
+        2
       ]
     ],
     "settingsArray": [],
@@ -37775,8 +37940,6 @@
         ]
       }
     ],
-    "cutCountMax": 1,
-    "cutCountMin": 1,
     "contractArray": {
       "1": [
         "Together 8",
@@ -38848,135 +39011,6 @@
     "parent": "itemsHolder4",
     "clickable": false
   },
-  "tempChooseShuffle": {
-    "type": "button",
-    "id": "tempChooseShuffle",
-    "x": 1524,
-    "y": 191,
-    "width": 65,
-    "height": 40,
-    "z": 79,
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Choose shuffle type"
-          },
-          {
-            "type": "select",
-            "variable": "shuffleType",
-            "options": [
-              {
-                "value": 1,
-                "text": "1 Cut"
-              },
-              {
-                "value": 2,
-                "text": "Multiple Cuts"
-              },
-              {
-                "value": 3,
-                "text": "Full Shuffle"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "gameID46"
-      },
-      {
-        "func": "IF",
-        "operand1": "${shuffleType}",
-        "operand2": 1,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "cutCountMax",
-            "value": 1
-          },
-          {
-            "func": "SET",
-            "property": "cutCountMin",
-            "value": 1
-          },
-          {
-            "func": "SET",
-            "property": "cutSizeMax",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "property": "cutSizeMin",
-            "value": null
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${shuffleType}",
-        "operand2": 2,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "cutCountMax",
-            "value": 4
-          },
-          {
-            "func": "SET",
-            "property": "cutCountMin",
-            "value": 2
-          },
-          {
-            "func": "SET",
-            "property": "cutSizeMax",
-            "value": 15
-          },
-          {
-            "func": "SET",
-            "property": "cutSizeMin",
-            "value": 8
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${shuffleType}",
-        "operand2": 3,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "cutCountMax",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "property": "cutCountMin",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "property": "cutSizeMax",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "property": "cutSizeMin",
-            "value": null
-          }
-        ]
-      }
-    ],
-    "text": "Shuffle Type",
-    "cutCountMax": 4,
-    "cutCountMin": 2,
-    "cutSizeMax": 15,
-    "cutSizeMin": 8
-  },
   "playerAid46f": {
     "id": "playerAid46f",
     "parent": "playerAid46",
@@ -39029,7 +39063,7 @@
         "background": "${PROPERTY bgColor}"
       },
       ":hover": {
-        "background": "${PROPERTY bgColor}80",
+        "background": "${PROPERTY bgColor}aa",
         "border": "1px solid ${PROPERTY bgColor}"
       },
       "::after": {
@@ -39271,7 +39305,7 @@
         "background": "${PROPERTY bgColor}"
       },
       ":hover": {
-        "background": "${PROPERTY bgColor}80",
+        "background": "${PROPERTY bgColor}aa",
         "border": "1px solid ${PROPERTY bgColor}"
       }
     },
@@ -39395,7 +39429,7 @@
         "background": "${PROPERTY bgColor}"
       },
       ":hover": {
-        "background": "${PROPERTY bgColor}80",
+        "background": "${PROPERTY bgColor}aa",
         "border": "1px solid ${PROPERTY bgColor}"
       }
     },
@@ -39442,7 +39476,7 @@
     "x": 115,
     "y": 22,
     "width": 108,
-    "height": 0,
+    "height": 40,
     "borderRadius": 4,
     "z": 79089,
     "css": {
@@ -39453,7 +39487,10 @@
         "background": "#f1d4e3"
       }
     },
-    "nameArray": [],
+    "nameArray": [
+      "Guest125",
+      "Mike"
+    ],
     "movable": false,
     "movableInEdit": false,
     "clickRoutine": [
@@ -39463,7 +39500,8 @@
           "auctionBtnO"
         ]
       }
-    ]
+    ],
+    "text": "Guest125\nMike\n"
   },
   "_meta": {
     "version": 15,
@@ -39476,7 +39514,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714413453005,
+      "lastUpdate": 1714430449877,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
