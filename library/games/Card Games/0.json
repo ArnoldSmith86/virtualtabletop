@@ -2624,8 +2624,7 @@
     ],
     "mainColor": "#ffffff",
     "textColor": "#000000",
-    "glowColor": "#000000",
-    "turn": false
+    "glowColor": "#000000"
   },
   "bidValue3": {
     "inheritFrom": {
@@ -37560,7 +37559,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714354143883,
+      "lastUpdate": 1714356258399,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -37685,7 +37684,7 @@
         1
       ]
     ],
-    "hintText": "\"Shuffling in this game is not random. Cards are collected by piles and cut once, consistent with how the game is usually played in person.\\a\\aUse Message button and/or white bid widgets near seats to indicate bids and value. All scoring is manual using the red and green +/- buttons above the scoreboard.\"",
+    "hintText": "\"Shuffling in this game is not random. Cards are collected by piles and cut once, consistent with how the game is usually played in person. The first hand is also seeded so that there will be some suit clumping. Use the Shuffle Type button to change the shuffle behavior.\\a\\aUse Message button and/or white bid widgets near seats as desired during bid auction.\\a\\aOnce contract and partners are known, click on the blue Contract Type button at the top right to set the contract. Each player participating in the contract must also click on the green Declarer button to add their name to the list.\\a\\a After round is complete, press the Score button for automatic scoring based on the values indicated in the player aids.\"",
     "z": 79087,
     "messageArray": [
       {
@@ -38357,6 +38356,54 @@
       {
         "func": "CALL",
         "routine": "recallRoutine"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      "var nameArray = []",
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "player"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "owner",
+            "value": "${player}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "order",
+            "value": 1
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "contractType"
+                ],
+                "property": "text",
+                "value": "Three Aces"
+              }
+            ]
+          }
+        ]
       }
     ],
     "preSetExceptionsRoutine": [
