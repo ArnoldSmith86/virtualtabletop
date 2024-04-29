@@ -2776,7 +2776,11 @@
       " ",
       " "
     ],
-    "showing": false
+    "showing": false,
+    "turn": false,
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "bidValue7": {
     "inheritFrom": {
@@ -13004,6 +13008,10 @@
       ],
       [
         "passCardsButton",
+        0
+      ],
+      [
+        "auctionGroup",
         0
       ]
     ],
@@ -36461,9 +36469,6 @@
       " "
     ],
     "showing": false,
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000",
     "turn": false
   },
   "statePoints": {
@@ -37555,7 +37560,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714245626851,
+      "lastUpdate": 1714354143883,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -37636,8 +37641,8 @@
   },
   "gameID46": {
     "id": "gameID46",
-    "x": -656,
-    "y": 778,
+    "x": -657,
+    "y": 780,
     "css": {
       "background": "blue",
       "color": "white",
@@ -37674,6 +37679,10 @@
       [
         "bidWinner",
         0
+      ],
+      [
+        "auctionGroup",
+        1
       ]
     ],
     "hintText": "\"Shuffling in this game is not random. Cards are collected by piles and cut once, consistent with how the game is usually played in person.\\a\\aUse Message button and/or white bid widgets near seats to indicate bids and value. All scoring is manual using the red and green +/- buttons above the scoreboard.\"",
@@ -37692,36 +37701,20 @@
         "text": "Wait"
       },
       {
-        "value": "Propose ♠",
-        "text": "Propose ♠"
+        "value": "Together ♠",
+        "text": "Together ♠"
       },
       {
-        "value": "Propose ♣",
-        "text": "Propose ♣"
+        "value": "Together ♣",
+        "text": "Together ♣"
       },
       {
-        "value": "Propose ♦",
-        "text": "Propose ♦"
+        "value": "Together ♦",
+        "text": "Together ♦"
       },
       {
-        "value": "Propose ♥",
-        "text": "Propose ♥"
-      },
-      {
-        "value": "Accept ♠",
-        "text": "Accept ♠"
-      },
-      {
-        "value": "Accept ♣",
-        "text": "Accept ♣"
-      },
-      {
-        "value": "Accept ♦",
-        "text": "Accept ♦"
-      },
-      {
-        "value": "Propose ♥",
-        "text": "Propose ♥"
+        "value": "Together ♥",
+        "text": "Together ♥"
       },
       {
         "value": "Pass parôle",
@@ -37732,8 +37725,12 @@
         "text": "Solo"
       },
       {
-        "value": "Small misère",
-        "text": "Small misère"
+        "value": "Small misere",
+        "text": "Small misere"
+      },
+      {
+        "value": "Piccolo",
+        "text": "Piccolo"
       },
       {
         "value": "Abundance",
@@ -37748,12 +37745,12 @@
         "text": "Accept three aces"
       },
       {
-        "value": "Large misère",
-        "text": "Large misère"
+        "value": "Large misere",
+        "text": "Large misere"
       },
       {
-        "value": "Open misère",
-        "text": "Open misère"
+        "value": "Open misere",
+        "text": "Open misere"
       },
       {
         "value": "Small slam",
@@ -37810,7 +37807,804 @@
       }
     ],
     "cutCountMax": 1,
-    "cutCountMin": 1
+    "cutCountMin": 1,
+    "contractArray": {
+      "1": [
+        "Together 8",
+        "#e3f0d6"
+      ],
+      "2": [
+        "Together 9",
+        "#e3f0d6"
+      ],
+      "3": [
+        "Solo 6",
+        "#fcf2c7"
+      ],
+      "4": [
+        "Together 10",
+        "#e3f0d6"
+      ],
+      "5": [
+        "Solo 7",
+        "#fcf2c7"
+      ],
+      "6": [
+        "Together 11",
+        "#e3f0d6"
+      ],
+      "7": [
+        "Small Misere",
+        "#e3e9fc"
+      ],
+      "8": [
+        "Solo 8",
+        "#fcf2c7"
+      ],
+      "9": [
+        "Together 12",
+        "#e3f0d6"
+      ],
+      "10": [
+        "Piccolo",
+        "#e3e9fc"
+      ],
+      "11": [
+        "Together 13",
+        "#e3f0d6"
+      ],
+      "12": [
+        "Three Aces",
+        "#f2f2f2"
+      ],
+      "13": [
+        "Abundance 9",
+        "#fcf2c7"
+      ],
+      "14": [
+        "Large Misere",
+        "#e3e9fc"
+      ],
+      "15": [
+        "Abundance 10",
+        "#fcf2c7"
+      ],
+      "16": [
+        "Abundance 11",
+        "#fcf2c7"
+      ],
+      "17": [
+        "Open Misere",
+        "#e3e9fc"
+      ],
+      "18": [
+        "Small Slam",
+        "#fcf2c7"
+      ],
+      "19": [
+        "Grand Slam",
+        "#fcf2c7"
+      ]
+    },
+    "pointsArrayDeclarer": {
+      "Together 8": [
+        -31,
+        -28,
+        -25,
+        -22,
+        -19,
+        -16,
+        -13,
+        -10,
+        7,
+        10,
+        13,
+        16,
+        10,
+        30
+      ],
+      "Together 9": [
+        -37,
+        -34,
+        -31,
+        -28,
+        -25,
+        -22,
+        -19,
+        -16,
+        -13,
+        10,
+        13,
+        16,
+        19,
+        30
+      ],
+      "Solo 6": [
+        -30,
+        -27,
+        -24,
+        -21,
+        -18,
+        -15,
+        12,
+        15,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18
+      ],
+      "Together 10": [
+        -43,
+        -40,
+        -37,
+        -34,
+        -31,
+        -28,
+        -25,
+        -22,
+        -19,
+        -16,
+        13,
+        16,
+        19,
+        30
+      ],
+      "Solo 7": [
+        -36,
+        -33,
+        -30,
+        -27,
+        -24,
+        -21,
+        -18,
+        15,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18
+      ],
+      "Together 11": [
+        -49,
+        -46,
+        -43,
+        -40,
+        -37,
+        -34,
+        -31,
+        -28,
+        -25,
+        -22,
+        -19,
+        16,
+        19,
+        30
+      ],
+      "Small Misere": [
+        0,
+        [
+          18,
+          -18
+        ],
+        [
+          18,
+          -18
+        ],
+        [
+          18,
+          -18
+        ]
+      ],
+      "Solo 8": [
+        -45,
+        -42,
+        -39,
+        -36,
+        -33,
+        -30,
+        -27,
+        -24,
+        21,
+        21,
+        21,
+        21,
+        21,
+        21
+      ],
+      "Together 12": [
+        -58,
+        -55,
+        -52,
+        -49,
+        -46,
+        -43,
+        -40,
+        -37,
+        -34,
+        -31,
+        -28,
+        -25,
+        22,
+        30
+      ],
+      "Piccolo": [
+        1,
+        [
+          27,
+          -27
+        ],
+        [
+          27,
+          -27
+        ],
+        [
+          27,
+          -27
+        ]
+      ],
+      "Together 13": [
+        -69,
+        -66,
+        -63,
+        -60,
+        -57,
+        -54,
+        -51,
+        -48,
+        -45,
+        -42,
+        -39,
+        -36,
+        -33,
+        30
+      ],
+      "Three Aces": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        15,
+        15,
+        15,
+        15,
+        30
+      ],
+      "Abundance 9": [
+        -30,
+        -30,
+        -30,
+        -30,
+        -30,
+        -30,
+        -30,
+        -30,
+        -30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "Large Misere": [
+        0,
+        [
+          36,
+          -36
+        ],
+        [
+          36,
+          -36
+        ],
+        [
+          36,
+          -36
+        ]
+      ],
+      "Abundance 10": [
+        -45,
+        -45,
+        -45,
+        -45,
+        -45,
+        -45,
+        -45,
+        -45,
+        -45,
+        -45,
+        45,
+        45,
+        45,
+        45
+      ],
+      "Abundance 11": [
+        -60,
+        -60,
+        -60,
+        -60,
+        -60,
+        -60,
+        -60,
+        -60,
+        -60,
+        -60,
+        -60,
+        60,
+        60,
+        60
+      ],
+      "Open Misere": [
+        0,
+        [
+          72,
+          -72
+        ],
+        [
+          72,
+          -72
+        ],
+        [
+          72,
+          -72
+        ]
+      ],
+      "Small Slam": [
+        -100,
+        -100,
+        -100,
+        -100,
+        -100,
+        -100,
+        -100,
+        -100,
+        -100,
+        -100,
+        -100,
+        -100,
+        100,
+        100
+      ],
+      "Grand Slam": [
+        -150,
+        -150,
+        -150,
+        -150,
+        -150,
+        -150,
+        -150,
+        -150,
+        -150,
+        -150,
+        -150,
+        -150,
+        -150,
+        150
+      ]
+    },
+    "pointsArrayOpponent": {
+      "Solo 6": [
+        20,
+        18,
+        16,
+        14,
+        12,
+        10
+      ],
+      "Solo 7": [
+        24,
+        22,
+        20,
+        18,
+        16,
+        14,
+        12
+      ],
+      "Small Misere": [
+        "null",
+        [
+          12
+        ],
+        [
+          24,
+          12
+        ],
+        [
+          36,
+          24,
+          12
+        ]
+      ],
+      "Solo 8": [
+        30,
+        28,
+        26,
+        24,
+        22,
+        20,
+        18,
+        16
+      ],
+      "Piccolo": [
+        "null",
+        [
+          18
+        ],
+        [
+          36,
+          18
+        ],
+        [
+          36,
+          36,
+          18
+        ]
+      ],
+      "Three Aces": [
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15
+      ],
+      "Abundance 9": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "Large Misere": [
+        "null",
+        [
+          24
+        ],
+        [
+          48,
+          24
+        ],
+        [
+          72,
+          48,
+          24
+        ]
+      ],
+      "Abundance 10": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "Abundance 11": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "Open Misere": [
+        "null",
+        [
+          48
+        ],
+        [
+          96,
+          48
+        ],
+        [
+          144,
+          96,
+          48
+        ]
+      ],
+      "Small Slam": [
+        66,
+        66,
+        66,
+        66,
+        66,
+        66,
+        66,
+        66,
+        66,
+        66,
+        66,
+        66
+      ],
+      "Grand Slam": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    "dealRoutine": [
+      {
+        "func": "CALL",
+        "routine": "recallRoutine"
+      }
+    ],
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "scoreSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "recallRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "contractType"
+        ],
+        "property": "text",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      "var nameArray = []",
+      "var text = ''",
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "player"
+          },
+          "var nameArray = push ${player}",
+          "var text = ${text} + ${player}",
+          "var text = ${text} + '\\u000a'"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "auctionListD"
+        ],
+        "property": "nameArray",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "auctionListD"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "auctionListO"
+        ],
+        "property": "nameArray",
+        "value": "${nameArray}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "auctionListO"
+        ],
+        "property": "text",
+        "value": "${text}"
+      },
+      "var height = length ${nameArray}",
+      "var height = ${height} * 20",
+      {
+        "func": "SET",
+        "collection": [
+          "auctionListO"
+        ],
+        "property": "height",
+        "value": "${height}"
+      }
+    ],
+    "scoreSpecialRoutine": [
+      "var contractType = ${PROPERTY text OF contractType}",
+      "var wonTricks = 0",
+      "var seatsD = []",
+      "var seatsO = []",
+      "var negative1 = ${contractType} == 'Small Misere'",
+      "var negative2 = ${contractType} == 'Piccolo'",
+      "var negative3 = ${contractType} == 'Large Misere'",
+      "var negative4 = ${contractType} == 'Open Misere'",
+      "var negative = ${negative1} || ${negative2} || ${negative3} || ${negative4}",
+      "var pointsD = ${PROPERTY pointsArrayDeclarer}",
+      "var scoreD = ${pointsD.$contractType}",
+      "var pointsO = ${PROPERTY pointsArrayOpponent}",
+      "var scoreO = ${pointsO.$contractType}",
+      "var nameArrayD = ${PROPERTY nameArray OF auctionListD}",
+      "var nameArrayO = ${PROPERTY nameArray OF auctionListO}",
+      {
+        "func": "IF",
+        "condition": "${negative}",
+        "thenRoutine": [
+          "// If negative contract then set score for declarer(s)",
+          "var declaring = length ${nameArrayD}",
+          "var madeBid = 0",
+          {
+            "func": "FOREACH",
+            "in": "${nameArrayD}",
+            "loopRoutine": [
+              "var scoreD = ${pointsD.$contractType}",
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "player",
+                "value": "${value}"
+              },
+              {
+                "func": "GET",
+                "property": "tricks"
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "seat"
+              },
+              {
+                "func": "IF",
+                "operand1": "${tricks}",
+                "operand2": "${scoreD.0}",
+                "thenRoutine": [
+                  "// If player made bid then set score for that player",
+                  "var scoreD = ${scoreD.$declaring}",
+                  "var scoreD = ${scoreD.0}",
+                  "var madeBid = ${madeBid} + 1"
+                ],
+                "elseRoutine": [
+                  "// If player did not make bid then set score for that player",
+                  "var scoreD = ${scoreD.$declaring}",
+                  "var scoreD = ${scoreD.1}"
+                ]
+              },
+              {
+                "func": "SCORE",
+                "mode": "set",
+                "property": "score",
+                "round": "${PROPERTY currentRound OF scoreboard}",
+                "seats": "${seat}",
+                "value": "${scoreD}"
+              }
+            ]
+          },
+          "// Set score for opponent(s)",
+          {
+            "func": "FOREACH",
+            "in": "${nameArrayO}",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "player",
+                "value": "${value}"
+              },
+              {
+                "func": "GET",
+                "property": "id"
+              },
+              "var seatsO = push ${id}"
+            ]
+          },
+          "var scoreO = ${scoreO.$declaring}",
+          "var scoreO = ${scoreO.$madeBid}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seatsO}",
+            "value": "${scoreO}"
+          }
+        ],
+        "elseRoutine": [
+          "// If positive contract then set score for declarer team",
+          {
+            "func": "FOREACH",
+            "in": "${nameArrayD}",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "player",
+                "value": "${value}"
+              },
+              {
+                "func": "GET",
+                "property": "tricks"
+              },
+              "var theseTricks = ${tricks.0}",
+              "var wonTricks = ${wonTricks} + ${theseTricks}",
+              {
+                "func": "GET",
+                "property": "id"
+              },
+              "var seatsD = push ${id}"
+            ]
+          },
+          "var scoreD = ${scoreD.$wonTricks}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seatsD}",
+            "value": "${scoreD}"
+          },
+          "// Set score for opponent team",
+          {
+            "func": "FOREACH",
+            "in": "${nameArrayO}",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "player",
+                "value": "${value}"
+              },
+              {
+                "func": "GET",
+                "property": "id"
+              },
+              "var seatsO = push ${id}"
+            ]
+          },
+          "var scoreO = ${scoreO.$wonTricks}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seatsO}",
+            "value": "${scoreO}"
+          }
+        ]
+      }
+    ]
   },
   "playerAid46": {
     "id": "playerAid46",
@@ -38185,5 +38979,402 @@
       }
     },
     "html": "<img src='/i/noto-emoji/emoji_u2660.svg' height=18/><img src='/i/noto-emoji/emoji_u2663.svg' height=18 /><img src='/i/noto-emoji/emoji_u2666.svg' height=18/><img src='/i/noto-emoji/emoji_u2665.svg' height=18/>"
+  },
+  "auctionGroup": {
+    "id": "auctionGroup",
+    "x": 930,
+    "width": 334,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#808080"
+    },
+    "scale": 0
+  },
+  "auctionBtn": {
+    "id": "auctionBtn",
+    "parent": "auctionGroup",
+    "width": 110,
+    "height": 20,
+    "borderRadius": 4,
+    "z": 79086,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "border": "1px solid black",
+        "cursor": "pointer",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "${PROPERTY bgColor}"
+      },
+      ":hover": {
+        "background": "${PROPERTY bgColor}80",
+        "border": "1px solid ${PROPERTY bgColor}"
+      }
+    },
+    "text": "Contract Type",
+    "bgColor": "#a9c6e8",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY clonedFrom}",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "showContractsRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "contractChoiceRoutine"
+          }
+        ]
+      }
+    ],
+    "contractChoiceRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "auctionBtn"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "contractType"
+        ],
+        "property": "text",
+        "value": "${PROPERTY text}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "contractType"
+        ],
+        "property": "auctionType",
+        "value": "${PROPERTY auctionType}"
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "auctionBtn"
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "contractTypeBack"
+        ],
+        "property": "height",
+        "value": 20
+      }
+    ],
+    "showContractsRoutine": [
+      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
+      "var contractArray = ${PROPERTY contractArray OF $gameID}",
+      "var newY = 44",
+      {
+        "func": "FOREACH",
+        "in": "${contractArray}",
+        "loopRoutine": [
+          {
+            "func": "CLONE",
+            "source": "thisButton",
+            "properties": {
+              "y": "${newY}",
+              "auctionType": "${key}",
+              "text": "${value.0}",
+              "bgColor": "${value.1}"
+            },
+            "collection": "clones"
+          },
+          "var newY = ${newY} + 22"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var height = ${COUNT} * 22",
+      "var height = ${height} + 22",
+      {
+        "func": "SET",
+        "collection": [
+          "contractTypeBack"
+        ],
+        "property": "height",
+        "value": "${height}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      }
+    ]
+  },
+  "contractType": {
+    "id": "contractType",
+    "parent": "auctionGroup",
+    "x": 2,
+    "y": 22,
+    "width": 109,
+    "height": 20,
+    "borderRadius": 4,
+    "z": 79089,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "display": "flex",
+        "align-items": "center",
+        "background": "black",
+        "color": "white"
+      }
+    },
+    "auctionType": "1"
+  },
+  "contractTypeBack": {
+    "id": "contractTypeBack",
+    "parent": "auctionGroup",
+    "x": 2,
+    "y": 22,
+    "width": 109,
+    "height": 20,
+    "borderRadius": 4,
+    "layer": -1,
+    "z": 79089,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "#808080"
+      }
+    }
+  },
+  "auctionBtnD": {
+    "id": "auctionBtnD",
+    "parent": "auctionGroup",
+    "x": 112,
+    "width": 110,
+    "height": 20,
+    "borderRadius": 4,
+    "z": 79086,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "border": "1px solid black",
+        "cursor": "pointer",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "${PROPERTY bgColor}"
+      },
+      ":hover": {
+        "background": "${PROPERTY bgColor}80",
+        "border": "1px solid ${PROPERTY bgColor}"
+      }
+    },
+    "text": "Declarer(s)",
+    "bgColor": "#a9e7ca",
+    "otherList": "auctionListO",
+    "thisList": "auctionListD",
+    "clickRoutine": [
+      "// Add to this list",
+      "var thisList = ${PROPERTY thisList}",
+      "var thisNameArray = ${PROPERTY nameArray OF $thisList}",
+      "var present = ${thisNameArray} includes ${playerName}",
+      {
+        "func": "IF",
+        "condition": "${present}",
+        "elseRoutine": [
+          "var thisNameArray = push ${playerName}",
+          "var text = ''",
+          {
+            "func": "FOREACH",
+            "in": "${thisNameArray}",
+            "loopRoutine": [
+              "var text = ${text} + ${value}",
+              "var text = ${text} + '\\u000a'"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY thisList}"
+            ],
+            "property": "text",
+            "value": "${text}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY thisList}"
+            ],
+            "property": "nameArray",
+            "value": "${thisNameArray}"
+          },
+          "var height = length ${thisNameArray}",
+          "var height = ${height} * 20",
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY thisList}"
+            ],
+            "property": "height",
+            "value": "${height}"
+          }
+        ]
+      },
+      "// Remove from other list",
+      "var otherList = ${PROPERTY otherList}",
+      "var otherNameArray = ${PROPERTY nameArray OF $otherList}",
+      "var present = ${otherNameArray} includes ${playerName}",
+      {
+        "func": "IF",
+        "condition": "${present}",
+        "thenRoutine": [
+          "var otherNameIndex = indexOf ${otherNameArray} ${playerName}",
+          "var otherNameArray = remove ${otherNameIndex} 1",
+          "var text = ''",
+          {
+            "func": "FOREACH",
+            "in": "${otherNameArray}",
+            "loopRoutine": [
+              "var text = ${text} + ${value}",
+              "var text = ${text} + '\\u000a'"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY otherList}"
+            ],
+            "property": "text",
+            "value": "${text}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY otherList}"
+            ],
+            "property": "nameArray",
+            "value": "${otherNameArray}"
+          },
+          "var height = length ${otherNameArray}",
+          "var height = ${height} * 20",
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY otherList}"
+            ],
+            "property": "height",
+            "value": "${height}"
+          }
+        ]
+      }
+    ]
+  },
+  "auctionBtnO": {
+    "id": "auctionBtnO",
+    "parent": "auctionGroup",
+    "x": 224,
+    "width": 110,
+    "height": 20,
+    "borderRadius": 4,
+    "z": 79086,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "border": "1px solid black",
+        "cursor": "pointer",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "${PROPERTY bgColor}"
+      },
+      ":hover": {
+        "background": "${PROPERTY bgColor}80",
+        "border": "1px solid ${PROPERTY bgColor}"
+      }
+    },
+    "inheritFrom": {
+      "auctionBtnD": "clickRoutine"
+    },
+    "text": "Opponent(s)",
+    "bgColor": "#e7a9c6",
+    "otherList": "auctionListD",
+    "thisList": "auctionListO"
+  },
+  "auctionListD": {
+    "id": "auctionListD",
+    "parent": "auctionGroup",
+    "x": 115,
+    "y": 22,
+    "width": 108,
+    "height": 0,
+    "borderRadius": 4,
+    "z": 79089,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "display": "flex",
+        "align-items": "center",
+        "background": "#d7f3e4"
+      }
+    },
+    "nameArray": [],
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "auctionBtnD"
+        ]
+      }
+    ]
+  },
+  "auctionListO": {
+    "id": "auctionListO",
+    "parent": "auctionGroup",
+    "x": 227,
+    "y": 22,
+    "width": 108,
+    "height": 0,
+    "borderRadius": 4,
+    "z": 79089,
+    "css": {
+      "default": {
+        "display": "flex",
+        "align-items": "center",
+        "background": "#f1d4e3"
+      }
+    },
+    "nameArray": [],
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "auctionBtnO"
+        ]
+      }
+    ]
   }
 }
