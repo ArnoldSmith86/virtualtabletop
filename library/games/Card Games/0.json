@@ -717,12 +717,12 @@
           {
             "func": "SET",
             "property": "cutSizeMax",
-            "value": 15
+            "value": 20
           },
           {
             "func": "SET",
             "property": "cutSizeMin",
-            "value": 8
+            "value": 10
           }
         ]
       },
@@ -6317,7 +6317,7 @@
             "options": [
               {
                 "value": 1,
-                "text": "Full Random Shuffle"
+                "text": "Standard shuffle"
               },
               {
                 "value": 2,
@@ -6325,11 +6325,11 @@
               },
               {
                 "value": 3,
-                "text": "Several Cuts"
+                "text": "Few large cuts"
               },
               {
                 "value": 4,
-                "text": "Many Cuts"
+                "text": "Several small Cuts"
               }
             ]
           },
@@ -12865,8 +12865,8 @@
   },
   "gameID9": {
     "id": "gameID9",
-    "x": -395,
-    "y": 286,
+    "x": -618,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -13069,11 +13069,12 @@
         ]
       }
     ],
-    "transferButtonReturn": false
+    "transferButtonReturn": false,
+    "movable": false
   },
   "gameID0": {
     "id": "gameID0",
-    "x": 58,
+    "x": 45,
     "css": {
       "background": "blue",
       "color": "white",
@@ -13269,7 +13270,7 @@
     ],
     "gameID": true,
     "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\"",
-    "y": -131,
+    "y": -126,
     "autoTeam": false,
     "preSetExceptionsRoutine": [
       "// This is needed to fix whatever happens when other pre-sets are called and the game type is changed to something else. The first few are not from specific games are but specific properties of games that may or may not be modified by pre-sets.",
@@ -13480,12 +13481,13 @@
       }
     ],
     "customFaceCount": 6,
-    "showTempScoreTotals": true
+    "showTempScoreTotals": true,
+    "movable": false
   },
   "gameID1": {
     "id": "gameID1",
-    "x": -541,
-    "y": -209,
+    "x": -751,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -13812,12 +13814,14 @@
         "playerAidButton",
         1
       ]
-    ]
+    ],
+    "z": 1,
+    "movable": false
   },
   "gameID2": {
     "id": "gameID2",
-    "x": -405,
-    "y": -211,
+    "x": -618,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -13990,11 +13994,12 @@
         0
       ]
     ],
-    "playerAidDetail1": "Scoring"
+    "playerAidDetail1": "Scoring",
+    "movable": false
   },
   "gameID3": {
     "id": "gameID3",
-    "y": 286,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -14271,18 +14276,19 @@
       }
     ],
     "autoTeam": true,
-    "x": -529,
+    "x": -751,
     "displayArray": [
       [
         "bidWinner",
         0
       ]
-    ]
+    ],
+    "movable": false
   },
   "gameID4": {
     "id": "gameID4",
-    "x": -268,
-    "y": -211,
+    "x": -486,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -14483,12 +14489,13 @@
         ]
       }
     ],
-    "transferButtonReturn": false
+    "transferButtonReturn": false,
+    "movable": false
   },
   "gameID5": {
     "id": "gameID5",
-    "x": -529,
-    "y": 1012,
+    "x": 902,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -14587,11 +14594,13 @@
         "transferScoreButton",
         0
       ]
-    ]
+    ],
+    "z": 1,
+    "movable": false
   },
   "gameID6": {
     "id": "gameID6",
-    "y": -203,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -14957,7 +14966,7 @@
       }
     ],
     "playerAidDetail1": "Notes",
-    "x": -150,
+    "x": -353,
     "resetRoutine": [
       {
         "func": "FOREACH",
@@ -15007,12 +15016,13 @@
           }
         ]
       }
-    ]
+    ],
+    "movable": false
   },
   "gameID7": {
     "id": "gameID7",
-    "x": -547,
-    "y": -96,
+    "x": -221,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -15456,11 +15466,12 @@
         "playerAidButton",
         1
       ]
-    ]
+    ],
+    "movable": false
   },
   "gameID8": {
     "id": "gameID8",
-    "y": -95,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -15703,8 +15714,9 @@
         0
       ]
     ],
-    "x": -410,
-    "customFaceCount": 7
+    "x": -88,
+    "customFaceCount": 7,
+    "movable": false
   },
   "pawnToken": {
     "id": "pawnToken",
@@ -17308,8 +17320,8 @@
   },
   "gameID10": {
     "id": "gameID10",
-    "x": -526,
-    "y": 1321,
+    "x": 902,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -17635,11 +17647,12 @@
           }
         ]
       }
-    ]
+    ],
+    "movable": false
   },
   "gameID11": {
     "id": "gameID11",
-    "x": -261,
+    "x": -486,
     "css": {
       "background": "blue",
       "color": "white",
@@ -17702,7 +17715,8 @@
     "text": "200",
     "gameID": true,
     "hintText": "\"After round is over, press Add Card Points button to display totals of captured points on the small tempoarary scoreboard. Compare to bid to determine what declarers' scores and opponsents' scores should be. If scores are correct, you can press the Transfer Score button.  Otherwise, when ready to enter final score on main scoreboard, use green/red +/- buttons.\"",
-    "y": 286
+    "y": -567,
+    "movable": false
   },
   "itemsHolder8": {
     "inheritFrom": {
@@ -17758,8 +17772,8 @@
   },
   "gameID12": {
     "id": "gameID12",
-    "x": -272,
-    "y": -91,
+    "x": 44,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -18103,12 +18117,13 @@
           }
         ]
       }
-    ]
+    ],
+    "movable": false
   },
   "gameID13": {
     "id": "gameID13",
-    "x": -142,
-    "y": 287,
+    "x": -353,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -18218,11 +18233,12 @@
           "var result = ${result} + 20"
         ]
       }
-    ]
+    ],
+    "movable": false
   },
   "gameID14": {
     "id": "gameID14",
-    "x": -527,
+    "x": -221,
     "css": {
       "background": "blue",
       "color": "white",
@@ -18317,7 +18333,8 @@
     ],
     "text": "1000",
     "hintText": "\"Use Items button during play to take out widgets as needed to indicate various game conditions.\\a\\a After round is over, press Add Card Points button. To score bonus points in the small scoreboard, move the scrollbar to highlight the row and press the green/red +/- buttons.\\a\\a When score on the temporary scoreboard is correct, move scrollbar all the way to the top and then the green/red +/- buttons will work on the main scoreboard.\"",
-    "y": 406
+    "y": -567,
+    "movable": false
   },
   "gameIDLabel": {
     "id": "gameIDLabel",
@@ -18353,8 +18370,8 @@
   },
   "gameID15": {
     "id": "gameID15",
-    "x": -393,
-    "y": 407,
+    "x": -88,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -18593,7 +18610,8 @@
       [
         4
       ]
-    ]
+    ],
+    "movable": false
   },
   "take1Button": {
     "type": "button",
@@ -18906,7 +18924,7 @@
   },
   "gameID16": {
     "id": "gameID16",
-    "x": -267,
+    "x": 45,
     "css": {
       "background": "blue",
       "color": "white",
@@ -19046,7 +19064,7 @@
     ],
     "trumps": 4,
     "text": "Hearts",
-    "y": 412,
+    "y": -567,
     "recallRoutine": [
       {
         "func": "CLICK",
@@ -19062,12 +19080,13 @@
         "property": "ready",
         "value": 0
       }
-    ]
+    ],
+    "movable": false
   },
   "gameID17": {
     "id": "gameID17",
-    "x": -133,
-    "y": 412,
+    "x": 177,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -19257,7 +19276,8 @@
         "value": "${bidEW}"
       }
     ],
-    "tempScoreReset": false
+    "tempScoreReset": false,
+    "movable": false
   },
   "capturedHolder1": {
     "type": "holder",
@@ -19400,8 +19420,8 @@
   },
   "gameID18": {
     "id": "gameID18",
-    "x": -526,
-    "y": 532,
+    "x": 310,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -19901,7 +19921,8 @@
       }
     ],
     "playerAidDetail1": "Info",
-    "playerAidDetail2": "Info"
+    "playerAidDetail2": "Info",
+    "movable": false
   },
   "mightyLabel": {
     "id": "mightyLabel",
@@ -20296,8 +20317,8 @@
   },
   "gameID19": {
     "id": "gameID19",
-    "x": -397,
-    "y": 530,
+    "x": 442,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -20485,7 +20506,8 @@
         "transferScoreButton",
         0
       ]
-    ]
+    ],
+    "movable": false
   },
   "trackTrickSelectButton": {
     "type": "button",
@@ -20905,8 +20927,8 @@
   },
   "gameID20": {
     "id": "gameID20",
-    "x": -406,
-    "y": 1012,
+    "x": 1035,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -21105,7 +21127,8 @@
         "widget": "itemsRecallAllButton",
         "routine": "clickRoutine"
       }
-    ]
+    ],
+    "movable": false
   },
   "playerAid12": {
     "type": "scoreboard",
@@ -21432,8 +21455,8 @@
   },
   "gamesJassLabel": {
     "id": "gamesJassLabel",
-    "x": -548,
-    "y": -374,
+    "x": -770,
+    "y": 1046,
     "width": 400,
     "borderRadius": 10,
     "css": {
@@ -21451,8 +21474,8 @@
   },
   "gamesStandardLabel": {
     "id": "gamesStandardLabel",
-    "x": -540,
-    "y": 119,
+    "x": -770,
+    "y": -758,
     "width": 400,
     "borderRadius": 10,
     "css": {
@@ -21470,8 +21493,8 @@
   },
   "gamesOtherLabel": {
     "id": "gamesOtherLabel",
-    "x": -533,
-    "y": 1143,
+    "x": 903,
+    "y": -758,
     "width": 400,
     "height": 140,
     "borderRadius": 10,
@@ -21489,8 +21512,8 @@
   },
   "gamesTarotLabel": {
     "id": "gamesTarotLabel",
-    "x": -532,
-    "y": 836,
+    "x": 903,
+    "y": 1046,
     "width": 400,
     "height": 140,
     "borderRadius": 10,
@@ -21548,8 +21571,8 @@
   },
   "gameID21": {
     "id": "gameID21",
-    "x": -136,
-    "y": -91,
+    "x": 177,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -21722,7 +21745,8 @@
         0
       ]
     ],
-    "playerAidDetail1": "Scoring"
+    "playerAidDetail1": "Scoring",
+    "movable": false
   },
   "playerAid21": {
     "type": "scoreboard",
@@ -21934,8 +21958,8 @@
   },
   "gameID22": {
     "id": "gameID22",
-    "x": -406,
-    "y": 1318,
+    "x": 1035,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -22209,12 +22233,13 @@
         "func": "CALL",
         "routine": "centerEnterRoutine"
       }
-    ]
+    ],
+    "movable": false
   },
   "gameID23": {
     "id": "gameID23",
-    "x": -265,
-    "y": 527,
+    "x": 575,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -22414,7 +22439,9 @@
       }
     ],
     "turnedCard": 8,
-    "dealLimit": 3
+    "dealLimit": 3,
+    "z": 1,
+    "movable": false
   },
   "playerAid20b": {
     "id": "playerAid20b",
@@ -22437,7 +22464,7 @@
   },
   "gameID24": {
     "id": "gameID24",
-    "x": -135,
+    "x": -751,
     "css": {
       "background": "blue",
       "color": "white",
@@ -22469,7 +22496,7 @@
     ],
     "gameID": true,
     "hintText": "\"Use bid widgets to enter bids. That is required for automatic scoring. At the end of the round, press Score button to calculate and enter scores.\"",
-    "y": 525,
+    "y": -439,
     "autoTeam": false,
     "transferButtonReturn": false,
     "preSetExceptionsRoutine": [
@@ -22561,11 +22588,12 @@
           }
         ]
       }
-    ]
+    ],
+    "movable": false
   },
   "gameID25": {
     "id": "gameID25",
-    "y": 16,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -22770,7 +22798,7 @@
         ]
       }
     ],
-    "x": -543,
+    "x": 309,
     "displayArray": [
       [
         "playerAidButton",
@@ -22818,7 +22846,8 @@
       {
         "func": "MOVEXY"
       }
-    ]
+    ],
+    "movable": false
   },
   "playerAid25": {
     "type": "scoreboard",
@@ -23459,7 +23488,7 @@
   },
   "gameID26": {
     "id": "gameID26",
-    "x": -526,
+    "x": -618,
     "css": {
       "background": "blue",
       "color": "white",
@@ -23503,7 +23532,7 @@
     ],
     "gameID": true,
     "hintText": "\"Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder.\\a\\a To declare bid openly for additional pionts, use Actions button then Show Bid button. To reveal hand for additional points, use Actions button then Show Hand button.\\a\\a At the end of the round, press Score button to calculate and enter scores. Manually flipping over bid cards is not necessary, but if a player wants to show their bid, do not manually flip over bid cards until after scoring.\\a\\a If playing the rule that the number of players that made their exact bid determines trump, then the next trump suit is automatically set on the trump indicator widget after recalling cards. If you want a random trump each time, then click the dice in the upper right after dealing.\"",
-    "y": 646,
+    "y": -439,
     "autoTeam": false,
     "preSetExceptionsRoutine": [
       {
@@ -23918,7 +23947,8 @@
           }
         ]
       }
-    ]
+    ],
+    "movable": false
   },
   "playerAid26": {
     "type": "scoreboard",
@@ -24024,7 +24054,7 @@
   },
   "gameID27": {
     "id": "gameID27",
-    "x": -392,
+    "x": -486,
     "css": {
       "background": "blue",
       "color": "white",
@@ -24068,7 +24098,7 @@
     ],
     "gameID": true,
     "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/countpnt.html.\\a\\a Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder. Trump is automatically indicated on the trump indicator widget in bottom left.\\a\\a At the end of the round, press Add Card Points button to calculate and enter card points captured that round for each player.\\a\\a Press Transfer Score button to autocalculate remaining values on small temporary scoreboard and enter the score onto the main scoreboard.\"",
-    "y": 647,
+    "y": -439,
     "autoTeam": false,
     "transferButtonReturn": false,
     "preSetExceptionsRoutine": [
@@ -24437,7 +24467,8 @@
         ]
       }
     ],
-    "doNotCount": "holder"
+    "doNotCount": "holder",
+    "movable": false
   },
   "playerAid27": {
     "type": "scoreboard",
@@ -24474,7 +24505,7 @@
   },
   "gameID28": {
     "id": "gameID28",
-    "x": -267,
+    "x": -353,
     "css": {
       "background": "blue",
       "color": "white",
@@ -24506,7 +24537,7 @@
     ],
     "gameID": true,
     "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/bouncers.html.\\a\\a Hearts are removed from deck and used as score indicators. Tricks are discard and the face-up heart is automatically moved to the trick winner's captured cards holder and displayed face up.\\a\\a At end of round, press Score button to automatically enter score in main scoreboard.\"",
-    "y": 649,
+    "y": -439,
     "transferButtonReturn": false,
     "preSetExceptionsRoutine": [
       {
@@ -24957,7 +24988,8 @@
         "value": "2",
         "text": "Show All Hearts"
       }
-    ]
+    ],
+    "movable": false
   },
   "spanishDeck": {
     "type": "deck",
@@ -26429,8 +26461,8 @@
   },
   "gameID29": {
     "id": "gameID29",
-    "x": -134,
-    "y": 651,
+    "x": -221,
+    "y": -439,
     "css": {
       "background": "blue",
       "color": "white",
@@ -26493,7 +26525,8 @@
       ]
     ],
     "sort1": "sortDefault",
-    "sort2": "suit"
+    "sort2": "suit",
+    "movable": false
   },
   "playerAid29": {
     "type": "scoreboard",
@@ -27481,8 +27514,8 @@
   },
   "gameID30": {
     "id": "gameID30",
-    "x": -276,
-    "y": 1320,
+    "x": 1168,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -27957,7 +27990,8 @@
       "♥",
       "G",
       "N"
-    ]
+    ],
+    "movable": false
   },
   "playerAid30": {
     "type": "scoreboard",
@@ -28545,8 +28579,8 @@
   },
   "gameID31": {
     "id": "gameID31",
-    "x": -150,
-    "y": 1327,
+    "x": 1301,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -29092,7 +29126,8 @@
         "func": "SORT",
         "key": "deck2Mark"
       }
-    ]
+    ],
+    "movable": false
   },
   "cavaliers": {
     "type": "deck",
@@ -30832,8 +30867,8 @@
   },
   "gameID32": {
     "id": "gameID32",
-    "x": -272,
-    "y": 1013,
+    "x": 1168,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -30992,11 +31027,12 @@
       "G-C",
       "",
       ""
-    ]
+    ],
+    "movable": false
   },
   "gameID33": {
     "id": "gameID33",
-    "x": -521,
+    "x": -88,
     "css": {
       "background": "blue",
       "color": "white",
@@ -31065,7 +31101,7 @@
     "gameID": true,
     "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/agonaunt.html.\\a\\a Manually move tokens from holder by seat to player board in upper-left. Queens and jokers will be displayed face-up in front of the player taking the trick as a reminder. When it is time for the 'Dump Trick' a message will appear above the hand.\\a\\a After the round, press one or more of the buttons below the board to move tokens back to players or to the discard area.\"",
     "trumps": 4,
-    "y": 769,
+    "y": -439,
     "text": "Agony Aunt",
     "dealRoutine": [
       "// Flip over remaining card.",
@@ -31278,7 +31314,8 @@
         "value": "${playerColor}"
       }
     ],
-    "z": 39
+    "z": 39,
+    "movable": false
   },
   "agonyAuntBack": {
     "type": "",
@@ -31867,8 +31904,8 @@
   },
   "gameID34": {
     "id": "gameID34",
-    "x": -397,
-    "y": 763,
+    "x": 45,
+    "y": -439,
     "color": "#3700f0",
     "css": {
       "background": "blue",
@@ -32067,7 +32104,8 @@
         "key": "sortSecretAgent"
       }
     ],
-    "playerAidDetail2": "Who's Your Agent?"
+    "playerAidDetail2": "Who's Your Agent?",
+    "movable": false
   },
   "playerAid34": {
     "type": "scoreboard",
@@ -32132,8 +32170,7 @@
   },
   "gameID35": {
     "id": "gameID35",
-    "x": -526,
-    "y": 1441,
+    "y": -567,
     "css": {
       "background": "blue",
       "color": "white",
@@ -32920,7 +32957,9 @@
           }
         ]
       }
-    ]
+    ],
+    "x": 1434,
+    "movable": false
   },
   "burnButton": {
     "type": "button",
@@ -33105,8 +33144,8 @@
   },
   "gameID36": {
     "id": "gameID36",
-    "x": -144,
-    "y": 1005,
+    "x": 1301,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -33275,7 +33314,8 @@
     "trumps": 5,
     "playerAidDetail1": "Order (High to Low)",
     "playerAidDetail2": "Game Points",
-    "playerAidDetail3": "Special Powers"
+    "playerAidDetail3": "Special Powers",
+    "movable": false
   },
   "passIndicator": {
     "id": "passIndicator",
@@ -33573,8 +33613,8 @@
   },
   "gameID37": {
     "id": "gameID37",
-    "x": -270,
-    "y": 771,
+    "x": 177,
+    "y": -439,
     "css": {
       "background": "blue",
       "color": "white",
@@ -33673,12 +33713,13 @@
           "var result = ${result} + 10"
         ]
       }
-    ]
+    ],
+    "movable": false
   },
   "index": {
     "id": "index",
-    "x": 192,
-    "y": -128,
+    "x": 177,
+    "y": -126,
     "css": {
       "background": "red",
       "color": "white",
@@ -33857,12 +33898,13 @@
         "value": "${idArray}"
       }
     ],
-    "z": 24
+    "z": 24,
+    "movable": false
   },
   "gameID38": {
     "id": "gameID38",
-    "x": -414,
-    "y": 14,
+    "x": 442,
+    "y": 1235,
     "z": 12,
     "css": {
       "background": "blue",
@@ -34207,7 +34249,8 @@
       }
     ],
     "last9seat3": 0,
-    "last9seat7": 0
+    "last9seat7": 0,
+    "movable": false
   },
   "playerAid38": {
     "id": "playerAid38",
@@ -34260,8 +34303,8 @@
   },
   "gameID39": {
     "id": "gameID39",
-    "x": -663,
-    "y": 286,
+    "x": 310,
+    "y": -439,
     "css": {
       "background": "blue",
       "color": "white",
@@ -34412,7 +34455,8 @@
           }
         ]
       }
-    ]
+    ],
+    "movable": false
   },
   "playerAid39a": {
     "id": "playerAid39a",
@@ -34453,8 +34497,8 @@
   },
   "gameID40": {
     "id": "gameID40",
-    "x": -652,
-    "y": 1012,
+    "x": 1434,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -34585,7 +34629,8 @@
     ],
     "scoreExceptionsRoutine": [
       "var result = ${points}"
-    ]
+    ],
+    "movable": false
   },
   "playerAid40": {
     "id": "playerAid40",
@@ -34639,8 +34684,7 @@
   },
   "gameID41": {
     "id": "gameID41",
-    "x": -660,
-    "y": 406,
+    "y": -439,
     "css": {
       "background": "blue",
       "color": "white",
@@ -35016,7 +35060,9 @@
           }
         ]
       }
-    ]
+    ],
+    "x": 442,
+    "movable": false
   },
   "playerAid41": {
     "type": "scoreboard",
@@ -35096,8 +35142,8 @@
   },
   "gameID42": {
     "id": "gameID42",
-    "x": -661,
-    "y": 532,
+    "x": 575,
+    "y": -439,
     "css": {
       "background": "blue",
       "color": "white",
@@ -35288,7 +35334,8 @@
         "showBidValue",
         false
       ]
-    ]
+    ],
+    "movable": false
   },
   "playerAid42": {
     "type": "scoreboard",
@@ -35356,8 +35403,8 @@
   },
   "gameID43": {
     "id": "gameID43",
-    "x": -657,
-    "y": 654,
+    "x": -751,
+    "y": -312,
     "css": {
       "background": "blue",
       "color": "white",
@@ -35591,7 +35638,8 @@
         "property": "suit",
         "value": "${trump}"
       }
-    ]
+    ],
+    "movable": false
   },
   "choose18": {
     "inheritFrom": {
@@ -35953,8 +36001,8 @@
   },
   "gameID44": {
     "id": "gameID44",
-    "x": -651,
-    "y": 1127,
+    "x": 1567,
+    "y": 1235,
     "css": {
       "background": "blue",
       "color": "white",
@@ -36182,7 +36230,8 @@
         "property": "ready",
         "value": 0
       }
-    ]
+    ],
+    "movable": false
   },
   "cloneMe": {
     "id": "cloneMe",
@@ -37299,413 +37348,6 @@
     "scale": 0,
     "dropLimit": 0
   },
-  "gameID45": {
-    "id": "gameID45",
-    "x": 424,
-    "css": {
-      "background": "blue",
-      "color": "white",
-      "font-size": "26px"
-    },
-    "sort1": "sortDefault",
-    "sort2": "suit",
-    "roundsTemp": [
-      "Card Points"
-    ],
-    "displayArray": [
-      [
-        "99BidLabel",
-        0
-      ],
-      [
-        "playerAidButton",
-        0
-      ],
-      [
-        "soloSortButton",
-        0
-      ],
-      [
-        "reverseSortButton",
-        0
-      ],
-      [
-        "doppelLabel",
-        0
-      ],
-      [
-        "scoreButton",
-        0
-      ],
-      [
-        "transferScoreButton",
-        1
-      ],
-      [
-        "score+10",
-        1
-      ],
-      [
-        "suitDice",
-        0
-      ],
-      [
-        "trump",
-        1
-      ],
-      [
-        "mightyWidgets",
-        0
-      ],
-      [
-        "trackTrickBack",
-        0
-      ],
-      [
-        "bidWinner",
-        1
-      ],
-      [
-        "agonyAuntBack",
-        0
-      ],
-      [
-        "burnButton",
-        0
-      ],
-      [
-        "showHideBidsB",
-        0
-      ],
-      [
-        "passIndicator",
-        0
-      ],
-      [
-        "tarokBonusTable",
-        0
-      ],
-      [
-        "passCardsButton",
-        0
-      ]
-    ],
-    "settingsArray": [
-      [
-        "capturedHolder",
-        false
-      ],
-      [
-        "centerFace",
-        true
-      ],
-      [
-        "centerShow",
-        false
-      ],
-      [
-        "centerSpread",
-        true
-      ],
-      [
-        "clickPlay",
-        true
-      ],
-      [
-        "showBidHistory",
-        true
-      ],
-      [
-        "showBidSuit",
-        true
-      ],
-      [
-        "showBidValue",
-        true
-      ],
-      [
-        "showDiscard",
-        false
-      ],
-      [
-        "showPublicBid",
-        true
-      ],
-      [
-        "showScore",
-        true
-      ],
-      [
-        "showTricks",
-        true
-      ],
-      [
-        "turnDirection",
-        true
-      ]
-    ],
-    "settingsDecksArray": [
-      [
-        "cardCount",
-        13
-      ],
-      [
-        "deckType",
-        0
-      ],
-      [
-        "dummyHand",
-        0
-      ],
-      [
-        "hideCards",
-        0
-      ],
-      [
-        "jokerCount",
-        0
-      ],
-      [
-        "seatCount",
-        4
-      ],
-      [
-        "showDelete",
-        false
-      ],
-      [
-        "teamScore",
-        false
-      ],
-      [
-        "tempScore",
-        false
-      ],
-      [
-        "variableScore",
-        false
-      ]
-    ],
-    "gameID": true,
-    "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\"",
-    "y": -176,
-    "autoTeam": false,
-    "preSetExceptionsRoutine": [
-      "// This is needed to fix whatever happens when other pre-sets are called and the game type is changed to something else. The first few are not from specific games are but specific properties of games that may or may not be modified by pre-sets.",
-      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
-      {
-        "func": "IF",
-        "condition": "${PROPERTY customFaceCount OF $gameID}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "trump"
-            ],
-            "property": "customFaceCount",
-            "value": "${PROPERTY customFaceCount OF $gameID}"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "trump"
-            ],
-            "property": "customFaceCount",
-            "value": "${PROPERTY customFaceCount}"
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY showTempScoreTotals OF $gameID}",
-        "operand2": false,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "tempScoreboard"
-            ],
-            "property": "showTotals",
-            "value": "${PROPERTY showTempScoreTotals OF $gameID}"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "tempScoreboard"
-            ],
-            "property": "showTotals",
-            "value": "${PROPERTY showTempScoreTotals}"
-          }
-        ]
-      },
-      "// This part comes from Coiffeur Jass.",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "scoreboard"
-      },
-      {
-        "func": "SET",
-        "property": "rounds",
-        "value": null
-      },
-      {
-        "func": "SET",
-        "property": "css",
-        "value": "${PROPERTY cssDefault OF scoreboard}"
-      },
-      {
-        "func": "SET",
-        "property": "showTotals",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "scoreboard3"
-        ],
-        "property": "scale",
-        "value": 0
-      },
-      "//This comes from Gong Zhu",
-      {
-        "func": "SET",
-        "collection": [
-          "trump"
-        ],
-        "property": "customFace",
-        "value": 0
-      },
-      "//This comes from Spades",
-      {
-        "func": "SET",
-        "collection": [
-          "trickCount"
-        ],
-        "property": "seats",
-        "value": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4",
-          "seat5",
-          "seat6",
-          "seat7",
-          "seat8"
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "trickCount"
-        ],
-        "property": "rounds",
-        "value": [
-          "Tricks"
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "tempScoreboard"
-        ],
-        "property": "y",
-        "value": 650
-      },
-      "//This comes from State",
-      {
-        "func": "SET",
-        "collection": [
-          "statePoints"
-        ],
-        "property": "scale",
-        "value": 0
-      },
-      "//This comes from Israeli Whist",
-      {
-        "func": "SET",
-        "collection": [
-          "scoreSpecial"
-        ],
-        "property": "scale",
-        "value": 0
-      },
-      "//This comes from 99",
-      {
-        "func": "SET",
-        "collection": [
-          "takeSpecial"
-        ],
-        "property": "scale",
-        "value": 0
-      },
-      "//This comes from Auctions",
-      {
-        "func": "FOREACH",
-        "in": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4",
-          "seat5",
-          "seat6",
-          "seat7",
-          "seat8"
-        ],
-        "loopRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "gameID35"
-            ],
-            "property": "${value}",
-            "value": 1
-          }
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "gameID35"
-        ],
-        "property": "misere",
-        "value": []
-      },
-      "//This comes from Hold My Beer",
-      {
-        "func": "LABEL",
-        "label": "discardLabel",
-        "value": "Discard"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "hand"
-        ],
-        "property": "stackOffetX",
-        "value": 35
-      },
-      "// This comes from Chwech",
-      {
-        "func": "SET",
-        "collection": "trickCount",
-        "value": [
-          "Tricks"
-        ]
-      }
-    ],
-    "showTempScoreTotals": true,
-    "text": "ZZ Min Shuffle Test",
-    "cutCountMin": 2,
-    "cutCountMax": 4,
-    "dealCount": 5,
-    "cutSizeMax": 15,
-    "cutSizeMin": 8
-  },
   "playerAid18": {
     "type": "scoreboard",
     "id": "playerAid18",
@@ -37771,8 +37413,8 @@
   },
   "gameID46": {
     "id": "gameID46",
-    "x": -657,
-    "y": 780,
+    "x": -618,
+    "y": -312,
     "css": {
       "background": "blue",
       "color": "white",
@@ -38819,7 +38461,8 @@
           }
         ]
       }
-    ]
+    ],
+    "movable": false
   },
   "playerAid46": {
     "id": "playerAid46",
@@ -39514,7 +39157,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714430449877,
+      "lastUpdate": 1714433931245,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
