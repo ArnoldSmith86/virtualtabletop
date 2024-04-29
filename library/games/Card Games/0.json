@@ -15569,7 +15569,7 @@
       "x": 1310,
       "y": 145
     },
-    "z": 70
+    "z": 79167
   },
   "suitDice": {
     "type": "dice",
@@ -37559,7 +37559,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714356258399,
+      "lastUpdate": 1714397325117,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -39087,14 +39087,6 @@
       {
         "func": "SET",
         "collection": [
-          "auctionBtn"
-        ],
-        "property": "clickable",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "collection": [
           "contractType"
         ],
         "property": "text",
@@ -39126,50 +39118,73 @@
       }
     ],
     "showContractsRoutine": [
-      "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
-      "var contractArray = ${PROPERTY contractArray OF $gameID}",
-      "var newY = 44",
-      {
-        "func": "FOREACH",
-        "in": "${contractArray}",
-        "loopRoutine": [
-          {
-            "func": "CLONE",
-            "source": "thisButton",
-            "properties": {
-              "y": "${newY}",
-              "auctionType": "${key}",
-              "text": "${value.0}",
-              "bgColor": "${value.1}"
-            },
-            "collection": "clones"
-          },
-          "var newY = ${newY} + 22"
-        ]
-      },
       {
         "func": "SELECT",
         "property": "clonedFrom",
-        "value": "${PROPERTY id}"
+        "value": "auctionBtn"
       },
       {
         "func": "COUNT"
       },
-      "var height = ${COUNT} * 22",
-      "var height = ${height} + 22",
       {
-        "func": "SET",
-        "collection": [
-          "contractTypeBack"
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "DELETE"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "contractTypeBack"
+            ],
+            "property": "height",
+            "value": 20
+          }
         ],
-        "property": "height",
-        "value": "${height}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "clickable",
-        "value": false
+        "elseRoutine": [
+          "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
+          "var contractArray = ${PROPERTY contractArray OF $gameID}",
+          "var newY = 44",
+          {
+            "func": "FOREACH",
+            "in": "${contractArray}",
+            "loopRoutine": [
+              {
+                "func": "CLONE",
+                "source": "thisButton",
+                "properties": {
+                  "y": "${newY}",
+                  "auctionType": "${key}",
+                  "text": "${value.0}",
+                  "bgColor": "${value.1}"
+                },
+                "collection": "clones"
+              },
+              "var newY = ${newY} + 22"
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "clonedFrom",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "var height = ${COUNT} * 22",
+          "var height = ${height} + 22",
+          {
+            "func": "SET",
+            "collection": [
+              "contractTypeBack"
+            ],
+            "property": "height",
+            "value": "${height}"
+          }
+        ]
       }
     ]
   },
@@ -39192,7 +39207,15 @@
         "color": "white"
       }
     },
-    "auctionType": "1"
+    "auctionType": "3",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "auctionBtn"
+        ]
+      }
+    ]
   },
   "contractTypeBack": {
     "id": "contractTypeBack",
