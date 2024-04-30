@@ -169,6 +169,11 @@
       },
       {
         "func": "CALL",
+        "widget": "routines",
+        "routine": "resetTeamsAndContractsRoutine"
+      },
+      {
+        "func": "CALL",
         "widget": "settings",
         "routine": "showPublicBidChangeRoutine"
       },
@@ -1540,7 +1545,8 @@
     "movable": false,
     "movableInEdit": false,
     "scale": 0.8,
-    "owner": []
+    "owner": [],
+    "layer": 2
   },
   "closeButton": {
     "type": "button",
@@ -2738,10 +2744,6 @@
       0,
       0
     ],
-    "player": "",
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000",
     "turn": false
   },
   "bidValue3": {
@@ -2895,7 +2897,10 @@
     ],
     "showing": false,
     "player": "",
-    "sortDirection": true
+    "turn": false,
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "bidValue7": {
     "inheritFrom": {
@@ -3110,6 +3115,11 @@
             ]
           }
         ]
+      },
+      {
+        "func": "CALL",
+        "widget": "routines",
+        "routine": "resetTeamsAndContractsRoutine"
       },
       {
         "func": "CALL",
@@ -5470,8 +5480,8 @@
       "align-items": "center"
     },
     "movableInEdit": false,
-    "x": 255,
-    "y": 950,
+    "x": 780,
+    "y": 370,
     "svgReplaces": {
       "currentColor": "deckSuitsColor"
     },
@@ -5637,10 +5647,10 @@
     ],
     "trump": 4,
     "resetProperties": {
-      "x": 255,
-      "y": 950
+      "x": 780,
+      "y": 370
     },
-    "z": 45,
+    "z": 80022,
     "deckSuitsColor": "",
     "customFaceCount": 6
   },
@@ -6148,8 +6158,8 @@
     "movableInEdit": false,
     "css": "font-size: 18px; line-height:1.05",
     "text": "Decks & Players",
-    "jokerCount": "0",
-    "seatCount": "4",
+    "jokerCount": 0,
+    "seatCount": 4,
     "showDelete": false,
     "teamScore": false,
     "clickRoutine": [
@@ -6312,6 +6322,7 @@
           },
           {
             "type": "select",
+            "label": "Shuffle method:",
             "variable": "shuffleType",
             "value": "${PROPERTY shuffleType}",
             "options": [
@@ -6940,7 +6951,7 @@
         ]
       }
     ],
-    "hideCards": "0",
+    "hideCards": 0,
     "4PlayerPositionRoutine": [
       {
         "func": "IF",
@@ -7208,7 +7219,7 @@
         ]
       }
     ],
-    "cardCount": "13",
+    "cardCount": 13,
     "hideCardsChangeRoutine": [
       {
         "func": "CALL",
@@ -7354,7 +7365,7 @@
         ]
       }
     ],
-    "dummyHand": "0",
+    "dummyHand": 0,
     "showtempScore": true,
     "showTempScore": true,
     "shuffleTypeChangeRoutine": [
@@ -7364,7 +7375,7 @@
         "routine": "shuffleTypeRoutine"
       }
     ],
-    "shuffleType": "1"
+    "shuffleType": 1
   },
   "deckOptions": {
     "id": "deckOptions",
@@ -8498,8 +8509,7 @@
           }
         ]
       }
-    ],
-    "sortDirection": true
+    ]
   },
   "preSetsButton": {
     "type": "button",
@@ -9085,6 +9095,12 @@
         "value": ""
       },
       {
+        "func": "SELECT",
+        "mode": "remove",
+        "property": "playerAidSeat",
+        "value": true
+      },
+      {
         "func": "COUNT"
       },
       {
@@ -9362,10 +9378,35 @@
           "turnButton"
         ]
       },
+      "var bidWinnerText = ${PROPERTY text OF bidWinner}",
+      "var bidWinnerFirst = ${PROPERTY first OF bidWinner}",
       {
         "func": "IF",
-        "condition": "${PROPERTY first OF bidWinner}",
+        "operand1": "${bidWinnerText}",
+        "operand2": "",
+        "thenRoutine": [
+          "var bidWinnerText = true"
+        ],
         "elseRoutine": [
+          "var bidWinnerText = false"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${bidWinnerFirst}",
+        "operand2": false,
+        "thenRoutine": [
+          "var bidWinnerFirst = true"
+        ],
+        "elseRoutine": [
+          "var bidWinnerFirst = false"
+        ]
+      },
+      "var bidWinnerBlank = ${bidWinnerText} && ${bidWinnerFirst}",
+      {
+        "func": "IF",
+        "condition": "${bidWinnerBlank}",
+        "thenRoutine": [
           {
             "func": "SELECT",
             "type": "seat",
@@ -10103,6 +10144,135 @@
         ],
         "property": "activeFace",
         "value": 0
+      }
+    ],
+    "resetTeamsAndContractsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "contractType"
+        ],
+        "property": "text",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "contractType"
+        ],
+        "property": "hoverText",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "mode": "remove",
+        "property": "playerAidSeat",
+        "value": true
+      },
+      "var nameArray = []",
+      "var text = ''",
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "player"
+          },
+          "var nameArray = push ${player}",
+          "var text = ${text} + ${player}",
+          "var text = ${text} + '\\u000a'"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          8
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "teamList${value}"
+            ],
+            "property": "nameArray",
+            "value": []
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "teamList${value}"
+            ],
+            "property": "text",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "teamList${value}"
+            ],
+            "property": "height",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "teamList2"
+        ],
+        "property": "nameArray",
+        "value": "${nameArray}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "teamList2"
+        ],
+        "property": "text",
+        "value": "${text}"
+      },
+      "var height = length ${nameArray}",
+      "var height = ${height} * 20",
+      {
+        "func": "SET",
+        "collection": [
+          "teamList2"
+        ],
+        "property": "height",
+        "value": "${height}"
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "contractButton"
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "contractType"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "contractTypeBack"
+        ],
+        "property": "height",
+        "value": 20
       }
     ]
   },
@@ -13164,7 +13334,7 @@
         0
       ],
       [
-        "auctionGroup",
+        "teamsAndContracts",
         0
       ]
     ],
@@ -14283,7 +14453,8 @@
         0
       ]
     ],
-    "movable": false
+    "movable": false,
+    "z": 1
   },
   "gameID4": {
     "id": "gameID4",
@@ -15738,7 +15909,7 @@
       "x": 1310,
       "y": 145
     },
-    "z": 79968
+    "z": 80025
   },
   "suitDice": {
     "type": "dice",
@@ -20037,7 +20208,7 @@
       "x": 307,
       "y": 930
     },
-    "z": 86,
+    "z": 80019,
     "scale": 0
   },
   "trackTrick3": {
@@ -21455,7 +21626,7 @@
   },
   "gamesJassLabel": {
     "id": "gamesJassLabel",
-    "x": -770,
+    "x": -751,
     "y": 1046,
     "width": 400,
     "borderRadius": 10,
@@ -21470,11 +21641,12 @@
       "align-items": "center"
     },
     "text": "Jass",
-    "height": 140
+    "height": 140,
+    "z": 2
   },
   "gamesStandardLabel": {
     "id": "gamesStandardLabel",
-    "x": -770,
+    "x": -751,
     "y": -758,
     "width": 400,
     "borderRadius": 10,
@@ -21493,7 +21665,7 @@
   },
   "gamesOtherLabel": {
     "id": "gamesOtherLabel",
-    "x": 903,
+    "x": 902,
     "y": -758,
     "width": 400,
     "height": 140,
@@ -21512,7 +21684,7 @@
   },
   "gamesTarotLabel": {
     "id": "gamesTarotLabel",
-    "x": 903,
+    "x": 902,
     "y": 1046,
     "width": 400,
     "height": 140,
@@ -33772,7 +33944,6 @@
       "gameID42 - Knaves",
       "gameID43 - Bid Whist",
       "gameID44 - Papayou",
-      "gameID45 - ZZ Min Shuffle Test",
       "gameID46 - Color Whist"
     ],
     "GamesByName": [
@@ -33821,8 +33992,7 @@
       "State (Similar to Ohio) - gameID22",
       "Tracktrick - gameID19",
       "Truco - gameID23",
-      "Tute Subastado - gameID37",
-      "ZZ Min Shuffle Test - gameID45"
+      "Tute Subastado - gameID37"
     ],
     "clickRoutine": [
       "var textArray = []",
@@ -36673,9 +36843,7 @@
       " ",
       " "
     ],
-    "showing": false,
-    "turn": false,
-    "player": ""
+    "showing": false
   },
   "statePoints": {
     "id": "statePoints",
@@ -37457,7 +37625,7 @@
         0
       ],
       [
-        "auctionGroup",
+        "teamsAndContracts",
         1
       ]
     ],
@@ -38218,88 +38386,6 @@
         "value": 1
       }
     ],
-    "recallRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "contractType"
-        ],
-        "property": "text",
-        "value": null
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "contractType"
-        ],
-        "property": "hoverText",
-        "value": ""
-      },
-      {
-        "func": "SELECT",
-        "type": "seat",
-        "property": "player",
-        "relation": "!=",
-        "value": ""
-      },
-      "var nameArray = []",
-      "var text = ''",
-      {
-        "func": "FOREACH",
-        "collection": "DEFAULT",
-        "loopRoutine": [
-          {
-            "func": "GET",
-            "property": "player"
-          },
-          "var nameArray = push ${player}",
-          "var text = ${text} + ${player}",
-          "var text = ${text} + '\\u000a'"
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "auctionListD"
-        ],
-        "property": "nameArray",
-        "value": []
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "auctionListD"
-        ],
-        "property": "text",
-        "value": ""
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "auctionListO"
-        ],
-        "property": "nameArray",
-        "value": "${nameArray}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "auctionListO"
-        ],
-        "property": "text",
-        "value": "${text}"
-      },
-      "var height = length ${nameArray}",
-      "var height = ${height} * 20",
-      {
-        "func": "SET",
-        "collection": [
-          "auctionListO"
-        ],
-        "property": "height",
-        "value": "${height}"
-      }
-    ],
     "scoreSpecialRoutine": [
       "var contractType = ${PROPERTY text OF contractType}",
       "var wonTricks = 0",
@@ -38314,8 +38400,8 @@
       "var scoreD = ${pointsD.$contractType}",
       "var pointsO = ${PROPERTY pointsArrayOpponent}",
       "var scoreO = ${pointsO.$contractType}",
-      "var nameArrayD = ${PROPERTY nameArray OF auctionListD}",
-      "var nameArrayO = ${PROPERTY nameArray OF auctionListO}",
+      "var nameArrayD = ${PROPERTY nameArray OF teamList1}",
+      "var nameArrayO = ${PROPERTY nameArray OF teamList2}",
       {
         "func": "IF",
         "condition": "${negative}",
@@ -38492,7 +38578,7 @@
         "border": "2px solid black",
         "border-radius": "4px",
         "overflow": "hidden",
-        "cursor": "pointer",
+        "cursor": "zoom-in",
         "display": "flex",
         "justify-content": "center",
         "align-items": "center",
@@ -38526,7 +38612,7 @@
         "border": "2px solid black",
         "border-radius": "4px",
         "overflow": "hidden",
-        "cursor": "pointer",
+        "cursor": "zoom-in",
         "display": "flex",
         "justify-content": "center",
         "align-items": "center",
@@ -38571,7 +38657,7 @@
         "border": "2px solid black",
         "border-radius": "4px",
         "overflow": "hidden",
-        "cursor": "pointer",
+        "cursor": "zoom-in",
         "display": "flex",
         "justify-content": "center",
         "align-items": "center",
@@ -38594,7 +38680,7 @@
         "border": "2px solid black",
         "border-radius": "4px",
         "overflow": "hidden",
-        "cursor": "pointer",
+        "cursor": "zoom-in",
         "display": "flex",
         "justify-content": "center",
         "align-items": "center",
@@ -38675,25 +38761,420 @@
     },
     "html": "<img src='/i/noto-emoji/emoji_u2660.svg' height=18/><img src='/i/noto-emoji/emoji_u2663.svg' height=18 /><img src='/i/noto-emoji/emoji_u2666.svg' height=18/><img src='/i/noto-emoji/emoji_u2665.svg' height=18/>"
   },
-  "auctionGroup": {
-    "id": "auctionGroup",
-    "x": 890,
-    "width": 334,
-    "height": 20,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "background": "#808080"
-    },
-    "scale": 0
-  },
-  "auctionBtn": {
-    "id": "auctionBtn",
-    "parent": "auctionGroup",
+  "contractType": {
+    "id": "contractType",
+    "parent": "contractButton",
+    "y": 22,
     "width": 110,
     "height": 20,
     "borderRadius": 4,
-    "z": 79086,
+    "z": 79089,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "display": "flex",
+        "cursor": "pointer",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "black",
+        "color": "white"
+      },
+      ":hover": {
+        "background": "${PROPERTY bgColor}80",
+        "border": "1px solid ${PROPERTY bgColor}"
+      },
+      "::after": {
+        "content": "\"${PROPERTY hoverText}\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-left": "260px",
+        "color": "white",
+        "background-color": "grey",
+        "width": "145px",
+        "text-align": "center",
+        "border-radius": "4px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "auctionType": "9",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "contractButton"
+        ]
+      }
+    ],
+    "hoverText": ""
+  },
+  "contractTypeBack": {
+    "id": "contractTypeBack",
+    "parent": "contractButton",
+    "y": 22,
+    "width": 110,
+    "height": 20,
+    "borderRadius": 4,
+    "layer": -1,
+    "z": 79089,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "#808080"
+      }
+    }
+  },
+  "teamButton1": {
+    "id": "teamButton1",
+    "parent": "teamsAndContracts",
+    "width": 110,
+    "height": 20,
+    "borderRadius": 4,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "border": "1px solid black",
+        "cursor": "pointer",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "${PROPERTY bgColor}"
+      },
+      ":hover": {
+        "background": "${PROPERTY bgColor}aa",
+        "border": "1px solid ${PROPERTY bgColor}"
+      }
+    },
+    "text": "Declarer(s)",
+    "bgColor": "#a9e7ca",
+    "clickRoutine": [
+      "// Routine only activates for seated players",
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "relation": ">=",
+        "operand2": 1,
+        "thenRoutine": [
+          "// Add to this list",
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}",
+            "collection": "thisList"
+          },
+          {
+            "func": "GET",
+            "collection": "thisList",
+            "property": "id",
+            "variable": "thisList"
+          },
+          "var thisNameArray = ${PROPERTY nameArray OF $thisList}",
+          "var present = ${thisNameArray} includes ${playerName}",
+          {
+            "func": "IF",
+            "condition": "${present}",
+            "elseRoutine": [
+              "// Add to array if not already in it",
+              "var thisNameArray = push ${playerName}"
+            ]
+          },
+          "var text = ''",
+          {
+            "func": "FOREACH",
+            "in": "${thisNameArray}",
+            "loopRoutine": [
+              "// Check to see if the player pressing the button is the declarer",
+              "var buttonCheck = ${PROPERTY teamButton} == 1",
+              "var nameCheck = ${value} == ${playerName}",
+              "var declarerCheck = ${buttonCheck} && ${nameCheck}",
+              {
+                "func": "IF",
+                "condition": "${declarerCheck}",
+                "thenRoutine": [
+                  "// If the player is the declarer (determined solely by which player pressed the button most recently and not any other room values or routines), then indicate status with dashes",
+                  "var text = ${text} + '--'",
+                  "var text = ${text} + ${value}",
+                  "var text = ${text} + '--'",
+                  "var text = ${text} + '\\u000a'",
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "bidWinner"
+                    ],
+                    "property": "text",
+                    "value": "${value}"
+                  }
+                ],
+                "elseRoutine": [
+                  "// Otherwise just add the name without dashes",
+                  "var text = ${text} + ${value}",
+                  "var text = ${text} + '\\u000a'"
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "thisList"
+            ],
+            "property": "text",
+            "value": "${text}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "thisList"
+            ],
+            "property": "nameArray",
+            "value": "${thisNameArray}"
+          },
+          "var height = length ${thisNameArray}",
+          "var height = ${height} * 20",
+          {
+            "func": "SET",
+            "collection": [
+              "thisList"
+            ],
+            "property": "height",
+            "value": "${height}"
+          },
+          "// Remove from other lists",
+          {
+            "func": "SELECT",
+            "property": "teamList",
+            "value": true,
+            "collection": "otherLists"
+          },
+          {
+            "func": "SELECT",
+            "mode": "remove",
+            "property": "parent",
+            "value": "${PROPERTY id}",
+            "collection": "otherLists"
+          },
+          {
+            "func": "GET",
+            "collection": "otherLists",
+            "aggregation": "array",
+            "property": "id",
+            "variable": "otherLists"
+          },
+          {
+            "func": "FOREACH",
+            "in": "${otherLists}",
+            "loopRoutine": [
+              "var otherNameArray = ${PROPERTY nameArray OF $value}",
+              "var present = ${otherNameArray} includes ${playerName}",
+              {
+                "func": "IF",
+                "condition": "${present}",
+                "thenRoutine": [
+                  "var otherNameIndex = indexOf ${otherNameArray} ${playerName}",
+                  "var otherNameArray = remove ${otherNameIndex} 1",
+                  "var text = ''",
+                  {
+                    "func": "FOREACH",
+                    "in": "${otherNameArray}",
+                    "loopRoutine": [
+                      "var text = ${text} + ${value}",
+                      "var text = ${text} + '\\u000a'"
+                    ]
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${value}"
+                    ],
+                    "property": "text",
+                    "value": "${text}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${value}"
+                    ],
+                    "property": "nameArray",
+                    "value": "${otherNameArray}"
+                  },
+                  "var height = length ${otherNameArray}",
+                  "var height = ${height} * 20",
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${value}"
+                    ],
+                    "property": "height",
+                    "value": "${height}"
+                  }
+                ]
+              }
+            ]
+          },
+          "// Update bidWinner widget",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY id}",
+            "operand2": "teamButton1",
+            "thenRoutine": [
+              "var bidWinnerText = ${PROPERTY text OF bidWinner}",
+              "var bidWinnerFirst = ${PROPERTY first OF bidWinner}",
+              {
+                "func": "IF",
+                "operand1": "${bidWinnerText}",
+                "operand2": "",
+                "thenRoutine": [
+                  "var bidWinnerText = true"
+                ],
+                "elseRoutine": [
+                  "var bidWinnerText = false"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${bidWinnerFirst}",
+                "operand2": false,
+                "thenRoutine": [
+                  "var bidWinnerFirst = true"
+                ],
+                "elseRoutine": [
+                  "var bidWinnerFirst = false"
+                ]
+              },
+              "var bidWinnerBlank = ${bidWinnerText} && ${bidWinnerFirst}",
+              {
+                "func": "IF",
+                "condition": "${bidWinnerBlank}",
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "bidWinner"
+                    ],
+                    "property": "text",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "bidWinner"
+                    ],
+                    "property": "first",
+                    "value": true
+                  }
+                ]
+              }
+            ]
+          },
+          "// Update teamGroup widgets",
+          {
+            "func": "SELECT",
+            "property": "teamList",
+            "value": true,
+            "collection": "teamList",
+            "sortBy": {
+              "key": "id"
+            }
+          },
+          {
+            "func": "GET",
+            "collection": "teamList",
+            "property": "nameArray",
+            "aggregation": "array"
+          },
+          "var teamID = 0",
+          {
+            "func": "FOREACH",
+            "in": "${nameArray}",
+            "loopRoutine": [
+              {
+                "func": "FOREACH",
+                "in": "${value}",
+                "loopRoutine": [
+                  {
+                    "func": "SELECT",
+                    "type": "seat",
+                    "property": "player",
+                    "value": "${value}"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "index"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "teamGroup${index}"
+                    ],
+                    "property": "activeFace",
+                    "value": "${teamID}"
+                  }
+                ]
+              },
+              "var teamID = ${teamID} + 1"
+            ]
+          }
+        ]
+      }
+    ],
+    "teamButton": 1
+  },
+  "teamButton2": {
+    "id": "teamButton2",
+    "parent": "teamsAndContracts",
+    "inheritFrom": {
+      "teamButton1": "!parent"
+    },
+    "text": "Opponent(s)",
+    "bgColor": "#e7a9c6",
+    "teamButton": 2,
+    "x": 112,
+    "z": 2,
+    "y": 0
+  },
+  "teamList1": {
+    "id": "teamList1",
+    "parent": "teamButton1",
+    "y": 22,
+    "width": 110,
+    "height": 0,
+    "borderRadius": 4,
+    "z": 79089,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "display": "flex",
+        "align-items": "center",
+        "background": "${PROPERTY bgColor}"
+      }
+    },
+    "nameArray": [],
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ],
+    "x": 1,
+    "teamList": true,
+    "bgColor": "#d7f3e4"
+  },
+  "contractButton": {
+    "id": "contractButton",
+    "parent": "teamsAndContracts",
+    "width": 110,
+    "height": 20,
+    "borderRadius": 4,
+    "z": 3,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -38726,6 +39207,7 @@
     },
     "text": "Contract Type",
     "bgColor": "#a9c6e8",
+    "hoverText": "",
     "clickRoutine": [
       {
         "func": "IF",
@@ -38773,7 +39255,7 @@
       {
         "func": "SELECT",
         "property": "clonedFrom",
-        "value": "auctionBtn"
+        "value": "contractButton"
       },
       {
         "func": "DELETE"
@@ -38791,7 +39273,7 @@
       {
         "func": "SELECT",
         "property": "clonedFrom",
-        "value": "auctionBtn"
+        "value": "contractButton"
       },
       {
         "func": "COUNT"
@@ -38817,7 +39299,7 @@
         "elseRoutine": [
           "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
           "var contractArray = ${PROPERTY contractArray OF $gameID}",
-          "var newY = 44",
+          "var newY = 22",
           {
             "func": "FOREACH",
             "in": "${contractArray}",
@@ -38827,6 +39309,8 @@
                 "source": "thisButton",
                 "properties": {
                   "y": "${newY}",
+                  "x": 0,
+                  "parent": "contractTypeBack",
                   "auctionType": "${key}",
                   "text": "${value.0}",
                   "bgColor": "${value.1}",
@@ -38858,293 +39342,205 @@
         ]
       }
     ],
-    "hoverText": "",
+    "teamButton": 9,
     "x": 224
   },
-  "contractType": {
-    "id": "contractType",
-    "parent": "auctionGroup",
-    "x": 224,
-    "y": 22,
-    "width": 109,
+  "teamsAndContracts": {
+    "type": "holder",
+    "id": "teamsAndContracts",
+    "x": 889.5,
     "height": 20,
-    "borderRadius": 4,
-    "z": 79089,
-    "movable": false,
     "movableInEdit": false,
     "css": {
-      "default": {
-        "display": "flex",
-        "cursor": "pointer",
-        "justify-content": "center",
-        "align-items": "center",
-        "background": "black",
-        "color": "white"
-      },
-      ":hover": {
-        "background": "${PROPERTY bgColor}80",
-        "border": "1px solid ${PROPERTY bgColor}"
-      },
-      "::after": {
-        "content": "\"${PROPERTY hoverText}\"",
-        "display": "none",
-        "position": "absolute",
-        "margin-left": "260px",
-        "color": "white",
-        "background-color": "grey",
-        "width": "145px",
-        "text-align": "center",
-        "border-radius": "4px"
-      },
-      ":hover::after": {
-        "display": "block"
-      }
+      "background": "#808080"
     },
-    "auctionType": "19",
-    "clickRoutine": [
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 112,
+    "enterRoutine": [
       {
-        "func": "CLICK",
-        "collection": [
-          "auctionBtn"
-        ]
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "teamButton"
+      },
+      {
+        "func": "CALL",
+        "routine": "widthRoutine"
       }
     ],
-    "hoverText": ""
-  },
-  "contractTypeBack": {
-    "id": "contractTypeBack",
-    "parent": "auctionGroup",
-    "x": 224,
-    "y": 22,
-    "width": 109,
-    "height": 20,
     "borderRadius": 4,
-    "layer": -1,
-    "z": 79089,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "default": {
-        "background": "#808080"
-      }
-    }
-  },
-  "auctionBtnD": {
-    "id": "auctionBtnD",
-    "parent": "auctionGroup",
-    "width": 110,
-    "height": 20,
-    "borderRadius": 4,
-    "z": 79086,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "default": {
-        "border": "1px solid black",
-        "cursor": "pointer",
-        "display": "flex",
-        "justify-content": "center",
-        "align-items": "center",
-        "background": "${PROPERTY bgColor}"
+    "dropTarget": [
+      {
+        "teamButton": 1
       },
-      ":hover": {
-        "background": "${PROPERTY bgColor}aa",
-        "border": "1px solid ${PROPERTY bgColor}"
+      {
+        "teamButton": 2
+      },
+      {
+        "teamButton": 3
+      },
+      {
+        "teamButton": 4
+      },
+      {
+        "teamButton": 5
+      },
+      {
+        "teamButton": 6
+      },
+      {
+        "teamButton": 7
+      },
+      {
+        "teamButton": 8
+      },
+      {
+        "teamButton": 9
       }
-    },
-    "text": "Declarer(s)",
-    "bgColor": "#a9e7ca",
-    "otherList": "auctionListO",
-    "thisList": "auctionListD",
-    "clickRoutine": [
-      "// Add to this list",
-      "var thisList = ${PROPERTY thisList}",
-      "var thisNameArray = ${PROPERTY nameArray OF $thisList}",
-      "var present = ${thisNameArray} includes ${playerName}",
+    ],
+    "layer": 10,
+    "hAnchorPos": "left",
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "widthRoutine"
+      }
+    ],
+    "minWidth": 111,
+    "widthRoutine": [
+      "var rightX = ${PROPERTY x} + ${PROPERTY width}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rightX",
+        "value": "${rightX}"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
       {
         "func": "IF",
-        "condition": "${present}",
-        "elseRoutine": [
-          "var thisNameArray = push ${playerName}",
-          "var text = ''",
-          {
-            "func": "FOREACH",
-            "in": "${thisNameArray}",
-            "loopRoutine": [
-              "var text = ${text} + ${value}",
-              "var text = ${text} + '\\u000a'"
-            ]
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "${PROPERTY thisList}"
-            ],
-            "property": "text",
-            "value": "${text}"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "${PROPERTY thisList}"
-            ],
-            "property": "nameArray",
-            "value": "${thisNameArray}"
-          },
-          "var height = length ${thisNameArray}",
-          "var height = ${height} * 20",
-          {
-            "func": "SET",
-            "collection": [
-              "${PROPERTY thisList}"
-            ],
-            "property": "height",
-            "value": "${height}"
-          }
-        ]
-      },
-      "// Remove from other list",
-      "var otherList = ${PROPERTY otherList}",
-      "var otherNameArray = ${PROPERTY nameArray OF $otherList}",
-      "var present = ${otherNameArray} includes ${playerName}",
-      {
-        "func": "IF",
-        "condition": "${present}",
+        "operand1": "${COUNT}",
+        "operand2": 0,
         "thenRoutine": [
-          "var otherNameIndex = indexOf ${otherNameArray} ${playerName}",
-          "var otherNameArray = remove ${otherNameIndex} 1",
-          "var text = ''",
           {
-            "func": "FOREACH",
-            "in": "${otherNameArray}",
-            "loopRoutine": [
-              "var text = ${text} + ${value}",
-              "var text = ${text} + '\\u000a'"
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "width",
+            "value": "${PROPERTY minWidth}"
+          },
+          "var newWidth = ${PROPERTY minWidth}"
+        ],
+        "elseRoutine": [
+          "var revCount = ${COUNT} - 1",
+          "var revCount = ${revCount} * ${PROPERTY stackOffsetX}",
+          "var newWidth = ${revCount} + ${PROPERTY minWidth}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY hAnchorPos}",
+        "operand2": "left",
+        "thenRoutine": [
+          "var newX = ${PROPERTY x}"
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY hAnchorPos}",
+            "operand2": "right",
+            "thenRoutine": [
+              "var newX = ${PROPERTY rightX} - ${newWidth}"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY hAnchorPos}",
+                "operand2": "center",
+                "thenRoutine": [
+                  "var halfWidth = ${newWidth} / 2",
+                  "var centerX = ${PROPERTY width} / 2",
+                  "var centerX = ${PROPERTY x} + ${centerX}",
+                  "var newX = ${centerX} - ${halfWidth}"
+                ]
+              }
             ]
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "${PROPERTY otherList}"
-            ],
-            "property": "text",
-            "value": "${text}"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "${PROPERTY otherList}"
-            ],
-            "property": "nameArray",
-            "value": "${otherNameArray}"
-          },
-          "var height = length ${otherNameArray}",
-          "var height = ${height} * 20",
-          {
-            "func": "SET",
-            "collection": [
-              "${PROPERTY otherList}"
-            ],
-            "property": "height",
-            "value": "${height}"
           }
         ]
-      }
-    ]
-  },
-  "auctionBtnO": {
-    "id": "auctionBtnO",
-    "parent": "auctionGroup",
-    "x": 112,
-    "width": 110,
-    "height": 20,
-    "borderRadius": 4,
-    "z": 79086,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "default": {
-        "border": "1px solid black",
-        "cursor": "pointer",
-        "display": "flex",
-        "justify-content": "center",
-        "align-items": "center",
-        "background": "${PROPERTY bgColor}"
       },
-      ":hover": {
-        "background": "${PROPERTY bgColor}aa",
-        "border": "1px solid ${PROPERTY bgColor}"
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": "${newX}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "width",
+        "value": "${newWidth}"
       }
-    },
+    ],
+    "rightX": 1224.5,
+    "width": 335,
+    "scale": 0
+  },
+  "teamsAndContractsOff": {
+    "id": "teamsAndContractsOff",
+    "x": 1000,
+    "width": 111,
+    "height": 20,
+    "movableInEdit": false,
+    "y": -75,
+    "type": "holder",
+    "movable": false,
     "inheritFrom": {
-      "auctionBtnD": "clickRoutine"
+      "teamsAndContracts": "*"
     },
-    "text": "Opponent(s)",
-    "bgColor": "#e7a9c6",
-    "otherList": "auctionListD",
-    "thisList": "auctionListO"
+    "rightX": 1111,
+    "scale": 1
   },
-  "auctionListD": {
-    "id": "auctionListD",
-    "parent": "auctionGroup",
-    "x": 2,
-    "y": 22,
-    "width": 108,
-    "height": 0,
-    "borderRadius": 4,
-    "z": 79089,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "default": {
-        "cursor": "pointer",
-        "display": "flex",
-        "align-items": "center",
-        "background": "#d7f3e4"
-      }
+  "teamList2": {
+    "inheritFrom": {
+      "teamList1": "!parent"
     },
+    "id": "teamList2",
+    "x": 1,
+    "y": 22,
+    "parent": "teamButton2",
+    "text": "",
     "nameArray": [],
-    "clickRoutine": [
-      {
-        "func": "CLICK",
-        "collection": [
-          "auctionBtnD"
-        ]
-      }
-    ]
+    "height": 0,
+    "bgColor": "#f1d4e3"
   },
-  "auctionListO": {
-    "id": "auctionListO",
-    "parent": "auctionGroup",
-    "x": 115,
-    "y": 22,
-    "width": 108,
-    "height": 40,
-    "borderRadius": 4,
-    "z": 79089,
-    "css": {
-      "default": {
-        "cursor": "pointer",
-        "display": "flex",
-        "align-items": "center",
-        "background": "#f1d4e3"
-      }
+  "teamButton3": {
+    "inheritFrom": {
+      "teamButton2": "!parent"
     },
-    "nameArray": [
-      "Guest125",
-      "Mike"
-    ],
-    "movable": false,
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "CLICK",
-        "collection": [
-          "auctionBtnO"
-        ]
-      }
-    ],
-    "text": "Guest125\nMike\n"
+    "id": "teamButton3",
+    "x": 0,
+    "y": 0,
+    "text": "Other(s)",
+    "bgColor": "#ffffff",
+    "teamButton": 3,
+    "z": 1,
+    "parent": "teamsAndContractsOff"
+  },
+  "teamList3": {
+    "inheritFrom": {
+      "teamList2": "*"
+    },
+    "id": "teamList3",
+    "parent": "teamButton3",
+    "text": "",
+    "nameArray": [],
+    "height": 0,
+    "bgColor": "#ffffff"
   },
   "_meta": {
     "version": 15,
@@ -39157,7 +39553,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714433931245,
+      "lastUpdate": 1714517609181,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
