@@ -1273,9 +1273,9 @@
     "svgReplaces": {
       "currentColor": "deckSuitsColor"
     },
+    "image": "i/icons/clubs.svg",
     "deckSuitsUni": "♣",
     "deckSuits": "clubs",
-    "image": "i/icons/clubs.svg",
     "deckSuitsColor": ""
   },
   "choose11": {
@@ -2896,11 +2896,7 @@
       " "
     ],
     "showing": false,
-    "player": "",
-    "turn": false,
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000"
+    "turn": false
   },
   "bidValue7": {
     "inheritFrom": {
@@ -2927,20 +2923,6 @@
     "deckSuits": "",
     "chooser": "",
     "image": ""
-  },
-  "holder7": {
-    "inheritFrom": {
-      "holder1": "*"
-    },
-    "type": "holder",
-    "id": "holder7",
-    "parent": "seat7",
-    "x": -130,
-    "y": -45,
-    "onEnter": {
-      "activeFace": 1
-    },
-    "dropLimit": -1
   },
   "seat8": {
     "inheritFrom": {
@@ -5645,7 +5627,7 @@
         "value": "${b}"
       }
     ],
-    "trump": 4,
+    "trump": 0,
     "resetProperties": {
       "x": 780,
       "y": 370
@@ -6356,9 +6338,29 @@
           },
           {
             "type": "checkbox",
-            "label": "Variable partnership scoring (check to enable)?",
+            "label": "Contract type button (check to enable)?",
+            "variable": "contractType",
+            "value": "${PROPERTY contractType}"
+          },
+          {
+            "type": "select",
+            "label": "Variable partnership scoring",
             "variable": "variableScore",
-            "value": "${PROPERTY variableScore}"
+            "value": "${PROPERTY variableScore}",
+            "options": [
+              {
+                "value": 1,
+                "text": "Do not use variable partnserships"
+              },
+              {
+                "value": 2,
+                "text": "Show Declarer and Opponent teams"
+              },
+              {
+                "value": 3,
+                "text": "Show Declarer and Opponent teams plus individual/spearate scoring (uncommon)"
+              }
+            ]
           },
           {
             "type": "checkbox",
@@ -6436,6 +6438,12 @@
         "collection": "thisButton",
         "property": "tempScore",
         "value": "${tempScore}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "contractType",
+        "value": "${contractType}"
       },
       {
         "func": "SET",
@@ -7178,43 +7186,98 @@
     ],
     "layer": -4,
     "deckType": 0,
-    "variableScore": false,
     "variableScoreChangeRoutine": [
       {
         "func": "IF",
-        "condition": "${PROPERTY variableScore}",
+        "operand1": "${PROPERTY variableScore}",
+        "operand2": "1",
         "thenRoutine": [
           {
-            "func": "SET",
+            "func": "MOVE",
             "collection": [
-              "teamGroup1",
-              "teamGroup2",
-              "teamGroup3",
-              "teamGroup4",
-              "teamGroup5",
-              "teamGroup6",
-              "teamGroup7",
-              "teamGroup8"
+              "teamButton1",
+              "teamButton2",
+              "teamButton3"
             ],
-            "property": "scale",
-            "value": 1
+            "to": "teamsAndContractsOff"
+          },
+          {
+            "func": "IF",
+            "condition": "${PROPERTY contractType}",
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "teamsAndContracts"
+                ],
+                "property": "scale",
+                "value": 0
+              }
+            ]
           }
         ],
         "elseRoutine": [
           {
             "func": "SET",
             "collection": [
-              "teamGroup1",
-              "teamGroup2",
-              "teamGroup3",
-              "teamGroup4",
-              "teamGroup5",
-              "teamGroup6",
-              "teamGroup7",
-              "teamGroup8"
+              "teamsAndContracts"
             ],
             "property": "scale",
             "value": 0
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY variableScore}",
+        "operand2": "2",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "teamsAndContracts"
+            ],
+            "property": "scale",
+            "value": 0.95
+          },
+          {
+            "func": "MOVE",
+            "collection": [
+              "teamButton1",
+              "teamButton2"
+            ],
+            "to": "teamsAndContracts"
+          },
+          {
+            "func": "MOVE",
+            "collection": [
+              "teamButton3"
+            ],
+            "to": "teamsAndContractsOff"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY variableScore}",
+        "operand2": "3",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "teamsAndContracts"
+            ],
+            "property": "scale",
+            "value": 0.95
+          },
+          {
+            "func": "MOVE",
+            "collection": [
+              "teamButton1",
+              "teamButton2",
+              "teamButton3"
+            ],
+            "to": "teamsAndContracts"
           }
         ]
       }
@@ -7375,7 +7438,57 @@
         "routine": "shuffleTypeRoutine"
       }
     ],
-    "shuffleType": 1
+    "shuffleType": 1,
+    "contractTypeChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY contractType}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "teamsAndContracts"
+            ],
+            "property": "scale",
+            "value": 0.95
+          },
+          {
+            "func": "MOVE",
+            "collection": [
+              "contractButton"
+            ],
+            "to": "teamsAndContracts"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "MOVE",
+            "collection": [
+              "contractButton"
+            ],
+            "to": "teamsAndContractsOff"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY variableScore}",
+            "relation": "<",
+            "operand2": 2,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "teamsAndContracts"
+                ],
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "variableScore": 1,
+    "contractType": false
   },
   "deckOptions": {
     "id": "deckOptions",
@@ -9631,14 +9744,16 @@
             "func": "MOVE",
             "from": "tempHolder",
             "to": "centerHolder"
-          },
-          {
-            "func": "SORT",
-            "holder": "hand",
-            "key": "none"
           }
         ],
         "elseRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${thisCard}"
+            ],
+            "property": "owner"
+          },
           {
             "func": "SET",
             "collection": [
@@ -9651,13 +9766,21 @@
             "func": "MOVE",
             "from": "tempHolder",
             "to": "holder${thisSeat}"
-          },
-          {
-            "func": "SORT",
-            "holder": "hand",
-            "key": "none"
           }
         ]
+      },
+      "// This sort is just used to line up the cards after one left without actually sorting them.",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "owner",
+        "value": "${owner}",
+        "collection": "ownerCards"
+      },
+      {
+        "func": "SORT",
+        "collection": "ownerCards",
+        "key": "none"
       },
       {
         "func": "SELECT",
@@ -10195,7 +10318,7 @@
       {
         "func": "FOREACH",
         "range": [
-          8
+          3
         ],
         "loopRoutine": [
           {
@@ -13172,7 +13295,7 @@
       ],
       [
         "variableScore",
-        true
+        2
       ]
     ],
     "scoreSystem": [
@@ -13197,7 +13320,7 @@
       []
     ],
     "gameID": true,
-    "hintText": "\"Bid using square white bid widget and Message button.\\a\\a During play, click on small red, black, and white letter icons to set teams once known. After certain numbers of tricks, text will appear near the trick indicator (below Recall & Shuffle button) showing at what point certain annoucements must be made. When an ace of diamonds is captured, it will be displayed face up in a mini-holder of the player making the capture. This is a reminder about the point for catching a fox, but does not actually indicate if the point has been won.\\a\\a After round is over, press Add Card Points button. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a When ready to enter final score on main scoreboard, press Transfer Score button.\"",
+    "hintText": "\"Bid using square white bid widget and Message button.\\a\\a Set teams, once known, using the Declarer and Opponent buttons at the top of the screen. After certain numbers of tricks, text will appear near the trick indicator (below Recall & Shuffle button) showing at what point certain annoucements must be made. When an ace of diamonds is captured, it will be displayed face up in a mini-holder of the player making the capture. This is a reminder about the point for catching a fox, but does not actually indicate if the point has been won.\\a\\a After round is over, press Add Card Points button. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a When ready to enter final score on main scoreboard, press Transfer Score button.\"",
     "capturedArray": [
       [],
       [
@@ -13435,6 +13558,10 @@
       ],
       [
         "variableScore",
+        1
+      ],
+      [
+        "contractType",
         false
       ]
     ],
@@ -14041,10 +14168,6 @@
       [
         "tempScore",
         true
-      ],
-      [
-        "variableScore",
-        false
       ]
     ],
     "scoreSystem": [
@@ -14214,7 +14337,7 @@
       ],
       [
         "variableScore",
-        true
+        2
       ]
     ],
     "scoreSystem": [
@@ -14254,7 +14377,7 @@
       []
     ],
     "gameID": true,
-    "hintText": "\"Click on small red, black, and white letter icons to set teams once known.\\a\\a At end of round, press Add Card Points button to calculate the card points. When done, press Transfer Score button to move scores from the small scoreboard to the main scoreboard.\"",
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\\a\\a At end of round, press Add Card Points button to calculate the card points. When done, press Transfer Score button to move scores from the small scoreboard to the main scoreboard.\"",
     "trumpIndicator": true,
     "scoreExceptionsRoutine": [
       "//Count the Jokers",
@@ -15987,6 +16110,7 @@
       "currentColor": "deckSuitColor"
     },
     "activeFace": 2,
+    "scale": 0,
     "faces": [
       {
         "image": "i/icons/clubs.svg"
@@ -16002,8 +16126,7 @@
         "image": "i/icons/hearts.svg",
         "deckSuitColor": "#e50932"
       }
-    ],
-    "scale": 0
+    ]
   },
   "itemsButton": {
     "type": "button",
@@ -19636,11 +19759,11 @@
       ],
       [
         "variableScore",
-        true
+        2
       ]
     ],
     "gameID": true,
-    "hintText": "\"This room is set-up for 5 players. Scoring is automatic with 5 players using the Add Card Points and Transfer Score buttons. The sort button will move the Mighty, the Joker, and the Ripper (in that order) to a position above the higest trump card.\\a\\aTo make automatic scoring work, the declarer must indicate the bid using the bidding menu, the declarer's name must appear on the widget in the bottom-left corner, and variable teams must be set using the black/red/white widget below the seat. Point cards in the discard holder must be moved to the declarer or partner's holder.\\a\\aMinimum bid is 13. Score calculated using  2 * (Bid minus minimum bid) + (Points earned minus bid).\\a\\a At end of round, press Add Card Points button to enter total of captured cards on temporary small scoreboard. Check score, then press Transfer Score button to enter score on main scoreboard and perform additional calculations based on the rules. Points are automatically doubled for a run or back run and for no trump bids. Announced 'no friend' bids must manually double points using red and green buttons for each player.\\a\\a Using adjustments in the Options buttons, the room could be configured to play with a different number of players. The Add Card Points button should still work, but the Transfer Score button would not.\"",
+    "hintText": "\"This room is set-up for 5 players. Scoring is automatic with 5 players using the Add Card Points and Transfer Score buttons. The sort button will move the Mighty, the Joker, and the Ripper (in that order) to a position above the higest trump card.\\a\\aTo make automatic scoring work, the declarer must indicate the bid using the bidding menu, the declarer's name must appear on the widget in the bottom-left corner, and variable teams must be set using the Declarer and Opponent buttons at the top of the screen. Point cards in the discard holder must be moved to the declarer or partner's holder.\\a\\aMinimum bid is 13. Score calculated using  2 * (Bid minus minimum bid) + (Points earned minus bid).\\a\\a At end of round, press Add Card Points button to enter total of captured cards on temporary small scoreboard. Check score, then press Transfer Score button to enter score on main scoreboard and perform additional calculations based on the rules. Points are automatically doubled for a run or back run and for no trump bids. Announced 'no friend' bids must manually double points using red and green buttons for each player.\\a\\a Using adjustments in the Options buttons, the room could be configured to play with a different number of players. The Add Card Points button should still work, but the Transfer Score button would not.\"",
     "text": "Mighty",
     "scoreSystem": [
       [
@@ -20200,13 +20323,13 @@
   },
   "mightyWidgets": {
     "id": "mightyWidgets",
-    "x": 307,
-    "y": 930,
+    "x": 747,
+    "y": 415,
     "height": 70,
     "width": 110,
     "resetProperties": {
-      "x": 307,
-      "y": 930
+      "x": 747,
+      "y": 415
     },
     "z": 80019,
     "scale": 0
@@ -21107,7 +21230,7 @@
     },
     "text": "Königrufen",
     "gameID": true,
-    "hintText": "\"You may use Message button to announce contracts. You can use the Items button and the doubling cube for doubles and redoubles (Kontra). Click on small red, black, and white letter icons to set teams once known.\\a\\a During play, you can use the Bonus player aid to show what bonuses are available. If bonus is announced, use Items button and drag the 'x2' cube and drop it on the appropriate line. When bonus is won or lost, drag the appropriate value circle to the line on the player aid.\\a\\a At end of round, be sure all talon cards are in the appropriate player holders.\\a\\aPress Add Card Points button to calculate the card points. Use the slider to highlight the Contract row on the small scoreboard and enter values using the +/- buttons at top left of screen.\\a\\a Use slider to select Bonus row and enter values. When done, press Transfer Score button to move scores from the small scoreboard to the main scoreboard. Only the sum of the Contract and Bonus rows is transferred. \"",
+    "hintText": "\"You may use Message button to announce contracts. You can use the Items button and the doubling cube for doubles and redoubles (Kontra). Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\\a\\a During play, you can use the Bonus player aid to show what bonuses are available. If bonus is announced, use Items button and drag the 'x2' cube and drop it on the appropriate line. When bonus is won or lost, drag the appropriate value circle to the line on the player aid.\\a\\a At end of round, be sure all talon cards are in the appropriate player holders.\\a\\aPress Add Card Points button to calculate the card points. Use the slider to highlight the Contract row on the small scoreboard and enter values using the +/- buttons at top left of screen.\\a\\a Use slider to select Bonus row and enter values. When done, press Transfer Score button to move scores from the small scoreboard to the main scoreboard. Only the sum of the Contract and Bonus rows is transferred. \"",
     "messageArray": [
       {
         "value": "Default",
@@ -21234,7 +21357,7 @@
       ],
       [
         "variableScore",
-        true
+        2
       ]
     ],
     "sort1": "sortDefault",
@@ -21794,10 +21917,6 @@
       [
         "tempScore",
         true
-      ],
-      [
-        "variableScore",
-        false
       ]
     ],
     "scoreSystem": [
@@ -22075,7 +22194,7 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "0",
+    "versionNumber": "4",
     "scale": 0
   },
   "cloneButton": {
@@ -27743,7 +27862,7 @@
       ],
       [
         "variableScore",
-        true
+        2
       ]
     ],
     "scoreSystem": [
@@ -27768,7 +27887,7 @@
       []
     ],
     "gameID": true,
-    "hintText": "\"stuff.\"",
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\"",
     "transferExceptionsRoutine": [
       {
         "func": "INPUT",
@@ -31009,30 +31128,30 @@
     ],
     "deckSuitsImage": [
       "",
-      "i/icons/clubs.svg",
-      "i/icons/diamonds.svg",
-      "i/icons/spades.svg",
-      "i/icons/hearts.svg",
-      "/assets/-374765193_624",
+      "",
+      "",
+      "",
+      "",
+      "",
       ""
     ],
     "deckSuitsText": [
       "",
+      "Petite",
+      "Garde",
+      "Garde+\nChien",
+      "Garde-\nChien",
       "",
-      "",
-      "",
-      "",
-      "",
-      "No\nTrump"
+      ""
     ],
     "deckSuitsUni": [
       "",
-      "♣",
-      "♦",
-      "♠",
-      "♥",
-      "*",
-      "NT"
+      "P",
+      "G",
+      "G+C",
+      "G-C",
+      "",
+      ""
     ],
     "deckType": 7,
     "staged": false
@@ -31111,7 +31230,7 @@
       ],
       [
         "variableScore",
-        true
+        2
       ]
     ],
     "scoreSystem": [
@@ -31156,7 +31275,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"You may use the bid system widget near the seat to bid and the Message button to announce bonuses. Click on small red, black, and white letter icons to set teams once known.\\a\\a At end of round, be sure all chien cards are in the appropriate player holders.\\a\\aPress Add Card Points button to calculate the card points. Manually calcualte scores based on winning and losing players. Then use the green/red +/- buttons to enter scores on the main scoreboard.\"",
+    "hintText": "\"You may use the bid system widget near the seat to bid and the Message button to announce bonuses. Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\\a\\a At end of round, be sure all chien cards are in the appropriate player holders.\\a\\aPress Add Card Points button to calculate the card points. Manually calcualte scores based on winning and losing players. Then use the green/red +/- buttons to enter scores on the main scoreboard.\"",
     "preSetExceptionsRoutine": [
       {
         "func": "SET",
@@ -32430,7 +32549,7 @@
       []
     ],
     "gameID": true,
-    "hintText": "\"Auctions is similar to Bids, an original game by Lorenzo Simons available at https://bidscardgame.com/.\\a\\a This room works for 3-4 players, but only uses the basic cards and no special cards. The can be played for 5-6 players, but the automation does not work and may actually interfere with the game. Until that is fixed, playing with more than 4 people is not recommended.\"",
+    "hintText": "\"Auctions is similar to Bids, an original game by Lorenzo Simons available at https://bidscardgame.com/.\\a\\a This room works for 3-4 players, but only uses the basic cards and no special cards. The can be played for 5-6 players, but the automation does not work and may actually interfere with the game. Until that is fixed, playing with more than 4 people is not recommended.\\a\\a Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\"",
     "preSetExceptionsRoutine": [
       {
         "func": "SET",
@@ -32572,36 +32691,19 @@
       ],
       [
         "seatCount",
-        4
+        6
       ],
       [
         "tempScore",
         true
+      ],
+      [
+        "variableScore",
+        2
       ]
     ],
     "hideCardsByType": [
-      "0 crow",
-      "11 red",
-      "12 red",
-      "13 red",
-      "14 red",
-      "11 green",
-      "12 green",
-      "13 green",
-      "14 green",
-      "11 yellow",
-      "12 yellow",
-      "13 yellow",
-      "14 yellow",
-      "11 orange",
-      "12 orange",
-      "13 orange",
-      "14 orange",
-      "11 black",
-      "12 black",
-      "13 black",
-      "14 black",
-      "ally auction"
+      "0 crow"
     ],
     "dealRoutine": [
       "// Do the entire deal over. Start by moving all cards to the tempHolder.",
@@ -34187,10 +34289,6 @@
       [
         "tempScore",
         true
-      ],
-      [
-        "variableScore",
-        false
       ]
     ],
     "sort1": "sortAceTen",
@@ -34498,7 +34596,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"Bid using square white bid widget and Message button.\\a\\a During play, click on small red, black, and white letter icons to set teams once known. After certain numbers of tricks, text will appear near the trick indicator (below Recall & Shuffle button) showing at what point certain annoucements must be made. When an ace of diamonds is captured, it will be displayed face up in a mini-holder of the player making the capture. This is a reminder about the point for catching a fox, but does not actually indicate if the point has been won.\\a\\a After round is over, press Add Card Points button. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a When ready to enter final score on main scoreboard, press Transfer Score button.\"",
+    "hintText": "\"Bid using square white bid widget and Message button.\\a\\a Set teams, once known, using the Declarer and Opponent buttons at the top of the screen. After certain numbers of tricks, text will appear near the trick indicator (below Recall & Shuffle button) showing at what point certain annoucements must be made. When an ace of diamonds is captured, it will be displayed face up in a mini-holder of the player making the capture. This is a reminder about the point for catching a fox, but does not actually indicate if the point has been won.\\a\\a After round is over, press Add Card Points button. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a When ready to enter final score on main scoreboard, press Transfer Score button.\"",
     "messageArray": [
       {
         "value": "Default",
@@ -34586,7 +34684,7 @@
       ],
       [
         "variableScore",
-        true
+        2
       ]
     ],
     "sort1": "sortSchafkopf",
@@ -34782,7 +34880,7 @@
       ],
       [
         "variableScore",
-        true
+        3
       ]
     ],
     "sort1": "sortDefault",
@@ -34800,7 +34898,8 @@
     "scoreExceptionsRoutine": [
       "var result = ${points}"
     ],
-    "movable": false
+    "movable": false,
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen. If playing a contract where each player scores alone, use the Declarer button for the Declarer. The other players should each use the white Separate button.\""
   },
   "playerAid40": {
     "id": "playerAid40",
@@ -36843,7 +36942,8 @@
       " ",
       " "
     ],
-    "showing": false
+    "showing": false,
+    "turn": false
   },
   "statePoints": {
     "id": "statePoints",
@@ -37602,6 +37702,14 @@
       [
         "shuffleType",
         2
+      ],
+      [
+        "variableScore",
+        2
+      ],
+      [
+        "contractType",
+        true
       ]
     ],
     "settingsArray": [],
@@ -37623,10 +37731,6 @@
       [
         "bidWinner",
         0
-      ],
-      [
-        "teamsAndContracts",
-        1
       ]
     ],
     "hintText": "\"Shuffling in this game is not random. Cards are collected by piles and cut once, consistent with how the game is usually played in person. The first hand is also seeded so that there will be some suit clumping. Use the Shuffle Type button to change the shuffle behavior.\\a\\aUse Message button and/or white bid widgets near seats as desired during bid auction.\\a\\aOnce contract and partners are known, click on the blue Contract Type button at the top right to set the contract. Each player participating in the contract must also click on the green Declarer button to add their name to the list.\\a\\a After round is complete, press the Score button for automatic scoring based on the values indicated in the player aids.\"",
@@ -38808,7 +38912,8 @@
         ]
       }
     ],
-    "hoverText": ""
+    "hoverText": "",
+    "scale": true
   },
   "contractTypeBack": {
     "id": "contractTypeBack",
@@ -38829,7 +38934,7 @@
   },
   "teamButton1": {
     "id": "teamButton1",
-    "parent": "teamsAndContracts",
+    "parent": "teamsAndContractsOff",
     "width": 110,
     "height": 20,
     "borderRadius": 4,
@@ -39071,30 +39176,30 @@
               }
             ]
           },
-          "// Update teamGroup widgets",
-          {
-            "func": "SELECT",
-            "property": "teamList",
-            "value": true,
-            "collection": "teamList",
-            "sortBy": {
-              "key": "id"
-            }
-          },
-          {
-            "func": "GET",
-            "collection": "teamList",
-            "property": "nameArray",
-            "aggregation": "array"
-          },
+          "// Update teamGroup widgets for declarers and opponents",
           "var teamID = 0",
           {
             "func": "FOREACH",
-            "in": "${nameArray}",
+            "in": [
+              1,
+              2
+            ],
             "loopRoutine": [
               {
+                "func": "SELECT",
+                "property": "id",
+                "value": "teamList${value}",
+                "collection": "teamList"
+              },
+              {
+                "func": "GET",
+                "collection": "teamList",
+                "property": "nameArray",
+                "variable": "nameArray"
+              },
+              {
                 "func": "FOREACH",
-                "in": "${value}",
+                "in": "${nameArray}",
                 "loopRoutine": [
                   {
                     "func": "SELECT",
@@ -39118,6 +39223,44 @@
               },
               "var teamID = ${teamID} + 1"
             ]
+          },
+          "// Update teamGroup widgets for players each scoring separately",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "teamList3",
+            "collection": "teamList"
+          },
+          {
+            "func": "GET",
+            "collection": "teamList",
+            "property": "nameArray",
+            "variable": "nameArray"
+          },
+          {
+            "func": "FOREACH",
+            "in": "${nameArray}",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "player",
+                "value": "${value}"
+              },
+              {
+                "func": "GET",
+                "property": "index"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "teamGroup${index}"
+                ],
+                "property": "activeFace",
+                "value": "${teamID}"
+              },
+              "var teamID = ${teamID} + 1"
+            ]
           }
         ]
       }
@@ -39126,7 +39269,7 @@
   },
   "teamButton2": {
     "id": "teamButton2",
-    "parent": "teamsAndContracts",
+    "parent": "teamsAndContractsOff",
     "inheritFrom": {
       "teamButton1": "!parent"
     },
@@ -39170,11 +39313,11 @@
   },
   "contractButton": {
     "id": "contractButton",
-    "parent": "teamsAndContracts",
+    "parent": "teamsAndContractsOff",
     "width": 110,
     "height": 20,
     "borderRadius": 4,
-    "z": 3,
+    "z": 4,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -39343,12 +39486,12 @@
       }
     ],
     "teamButton": 9,
-    "x": 224
+    "x": 336
   },
   "teamsAndContracts": {
     "type": "holder",
     "id": "teamsAndContracts",
-    "x": 889.5,
+    "x": 880,
     "height": 20,
     "movableInEdit": false,
     "css": {
@@ -39486,23 +39629,22 @@
         "value": "${newWidth}"
       }
     ],
-    "rightX": 1224.5,
-    "width": 335,
+    "rightX": 991,
     "scale": 0
   },
   "teamsAndContractsOff": {
     "id": "teamsAndContractsOff",
-    "x": 1000,
-    "width": 111,
+    "x": 1631,
+    "width": 447,
     "height": 20,
     "movableInEdit": false,
-    "y": -75,
+    "y": 1029,
     "type": "holder",
     "movable": false,
     "inheritFrom": {
       "teamsAndContracts": "*"
     },
-    "rightX": 1111,
+    "rightX": 1966,
     "scale": 1
   },
   "teamList2": {
@@ -39523,12 +39665,12 @@
       "teamButton2": "!parent"
     },
     "id": "teamButton3",
-    "x": 0,
+    "x": 224,
     "y": 0,
-    "text": "Other(s)",
+    "text": "Seperate",
     "bgColor": "#ffffff",
     "teamButton": 3,
-    "z": 1,
+    "z": 3,
     "parent": "teamsAndContractsOff"
   },
   "teamList3": {
@@ -39542,6 +39684,20 @@
     "height": 0,
     "bgColor": "#ffffff"
   },
+  "holder7": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder7",
+    "parent": "seat7",
+    "x": -130,
+    "y": -45,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": -1
+  },
   "_meta": {
     "version": 15,
     "info": {
@@ -39553,7 +39709,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714517609181,
+      "lastUpdate": 1714607880263,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
