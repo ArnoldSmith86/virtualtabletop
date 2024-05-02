@@ -2744,7 +2744,10 @@
       0,
       0
     ],
-    "turn": false
+    "player": "",
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "bidValue3": {
     "inheritFrom": {
@@ -2896,7 +2899,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "bidValue7": {
     "inheritFrom": {
@@ -3097,11 +3101,6 @@
             ]
           }
         ]
-      },
-      {
-        "func": "CALL",
-        "widget": "routines",
-        "routine": "resetTeamsAndContractsRoutine"
       },
       {
         "func": "CALL",
@@ -5632,7 +5631,7 @@
       "x": 780,
       "y": 370
     },
-    "z": 80022,
+    "z": 80125,
     "deckSuitsColor": "",
     "customFaceCount": 6
   },
@@ -5677,7 +5676,7 @@
           },
           {
             "type": "subtitle",
-            "text": "This will enter scores in the small scoreboard directly above. Make sure (1) all cards to be counted are in the player holders for captured tricks, (2) the trump indicator to the right is correct (if needed for proper scoring for this game), and (3) the declarer indicator to the left is correct (if needed for proper scoring). Are you sure you want to continue?"
+            "text": "This will enter scores in the small scoreboard directly above. Make sure: (1) all cards to be counted are in the player holders for captured tricks,(2) the trump indicator is correct (if needed for proper scoring for this game),and (3) the declarer and all team members are correct (if needed for proper scoring). Are you sure you want to continue?"
           }
         ],
         "confirmButtonText": "Yes",
@@ -8586,6 +8585,11 @@
                 "routine": "playerSitRoutine"
               }
             ]
+          },
+          {
+            "func": "CALL",
+            "widget": "routines",
+            "routine": "resetTeamsAndContractsRoutine"
           }
         ],
         "thenRoutine": [
@@ -8619,6 +8623,11 @@
                 "routine": "playerStandRoutine"
               }
             ]
+          },
+          {
+            "func": "CALL",
+            "widget": "routines",
+            "routine": "resetTeamsAndContractsRoutine"
           }
         ]
       }
@@ -10267,6 +10276,14 @@
         ],
         "property": "activeFace",
         "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "scoreMultiplier"
+        ],
+        "property": "multiple",
+        "value": 1
       }
     ],
     "resetTeamsAndContractsRoutine": [
@@ -13459,6 +13476,10 @@
       [
         "teamsAndContracts",
         0
+      ],
+      [
+        "scoreMultiplier",
+        0
       ]
     ],
     "settingsArray": [
@@ -16032,13 +16053,13 @@
       "x": 1310,
       "y": 145
     },
-    "z": 80025
+    "z": 80169
   },
   "suitDice": {
     "type": "dice",
     "id": "suitDice",
-    "x": 1504,
-    "y": 143,
+    "x": 1505,
+    "y": 145,
     "movable": true,
     "movableInEdit": false,
     "pipSymbols": false,
@@ -16110,7 +16131,6 @@
       "currentColor": "deckSuitColor"
     },
     "activeFace": 2,
-    "scale": 0,
     "faces": [
       {
         "image": "i/icons/clubs.svg"
@@ -16126,7 +16146,12 @@
         "image": "i/icons/hearts.svg",
         "deckSuitColor": "#e50932"
       }
-    ]
+    ],
+    "resetProperties": {
+      "x": 1505,
+      "y": 145
+    },
+    "scale": 0
   },
   "itemsButton": {
     "type": "button",
@@ -19760,10 +19785,14 @@
       [
         "variableScore",
         2
+      ],
+      [
+        "contractType",
+        true
       ]
     ],
     "gameID": true,
-    "hintText": "\"This room is set-up for 5 players. Scoring is automatic with 5 players using the Add Card Points and Transfer Score buttons. The sort button will move the Mighty, the Joker, and the Ripper (in that order) to a position above the higest trump card.\\a\\aTo make automatic scoring work, the declarer must indicate the bid using the bidding menu, the declarer's name must appear on the widget in the bottom-left corner, and variable teams must be set using the Declarer and Opponent buttons at the top of the screen. Point cards in the discard holder must be moved to the declarer or partner's holder.\\a\\aMinimum bid is 13. Score calculated using  2 * (Bid minus minimum bid) + (Points earned minus bid).\\a\\a At end of round, press Add Card Points button to enter total of captured cards on temporary small scoreboard. Check score, then press Transfer Score button to enter score on main scoreboard and perform additional calculations based on the rules. Points are automatically doubled for a run or back run and for no trump bids. Announced 'no friend' bids must manually double points using red and green buttons for each player.\\a\\a Using adjustments in the Options buttons, the room could be configured to play with a different number of players. The Add Card Points button should still work, but the Transfer Score button would not.\"",
+    "hintText": "\"This room is set-up for 5 players. Scoring is automatic with 5 players using the Add Card Points and Transfer Score buttons. The sort button, if pressed after trumps are established, will move the Mighty and the Joker to a position above the higest trump card.\\a\\aTo make automatic scoring work, the declarer must indicate the bid using the bidding menu, the declarer's name must appear on the widget in the bottom-left corner, and variable teams must be set using the Declarer and Opponent buttons at the top of the screen. Point cards in the discard holder must be moved to the declarer or partner's holder.\\a\\aMinimum bid is 13. Score calculated using  2 * (Bid minus minimum bid) + (Points earned minus bid).\\a\\a At end of round, press Add Card Points button to enter total of captured cards on temporary small scoreboard. Check score, then press Transfer Score button to enter score on main scoreboard and perform additional calculations based on the rules. Points are automatically doubled for a run or back run, for no trump bids, and for No Friend annoucements made using the Contract Type button.\\a\\a Using adjustments in the Options buttons, the room could be configured to play with a different number of players. The Add Card Points button should still work, but the Transfer Score button would not.\"",
     "text": "Mighty",
     "scoreSystem": [
       [
@@ -20077,6 +20106,16 @@
           "var pointsDefender = ${pointsDefender} * 2"
         ]
       },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY auctionType OF contractType}",
+        "operand2": "3",
+        "thenRoutine": [
+          "// If the declarer contract was No friend, points are doubled (again if appropriate)",
+          "var pointsDeclarer = ${pointsDeclarer} * 2",
+          "var pointsDefender = ${pointsDefender} * 2"
+        ]
+      },
       "//Score everybody as a defender since we haven't calculated who those are. Then set the values for Declarer and Partner (which are known) after that.",
       {
         "func": "SCORE",
@@ -20157,43 +20196,6 @@
         "value": 17
       },
       {
-        "func": "IF",
-        "operand1": "${trump}",
-        "operand2": 1,
-        "thenRoutine": [
-          {
-            "func": "SELECT",
-            "source": "DEFAULT",
-            "type": "card",
-            "property": "cardType",
-            "value": "S 03",
-            "collection": "ripper"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SELECT",
-            "source": "DEFAULT",
-            "type": "card",
-            "property": "cardType",
-            "value": "C 03",
-            "collection": "ripper"
-          }
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": "ripper",
-        "property": "suit",
-        "value": "${trump}"
-      },
-      {
-        "func": "SET",
-        "collection": "ripper",
-        "property": "sortDefault",
-        "value": 15
-      },
-      {
         "func": "SELECT",
         "source": "DEFAULT",
         "type": "card",
@@ -20216,7 +20218,24 @@
     ],
     "playerAidDetail1": "Info",
     "playerAidDetail2": "Info",
-    "movable": false
+    "movable": false,
+    "contractArray": {
+      "1": [
+        "Name a card",
+        "#e3f0d6",
+        "Partner = player with card"
+      ],
+      "2": [
+        "First trick",
+        "#e3f0d6",
+        "Partner = winner of 1st trick;\\a No partner if declarer wins 1st trick"
+      ],
+      "3": [
+        "No friend",
+        "#fcf2c7",
+        "No partner;\\a Double points"
+      ]
+    }
   },
   "mightyLabel": {
     "id": "mightyLabel",
@@ -36943,7 +36962,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "statePoints": {
     "id": "statePoints",
@@ -37731,9 +37751,13 @@
       [
         "bidWinner",
         0
+      ],
+      [
+        "scoreMultiplier",
+        1
       ]
     ],
-    "hintText": "\"Shuffling in this game is not random. Cards are collected by piles and cut once, consistent with how the game is usually played in person. The first hand is also seeded so that there will be some suit clumping. Use the Shuffle Type button to change the shuffle behavior.\\a\\aUse Message button and/or white bid widgets near seats as desired during bid auction.\\a\\aOnce contract and partners are known, click on the blue Contract Type button at the top right to set the contract. Each player participating in the contract must also click on the green Declarer button to add their name to the list.\\a\\a After round is complete, press the Score button for automatic scoring based on the values indicated in the player aids.\"",
+    "hintText": "\"Shuffling in this game is not random. Cards are collected by piles and cut once, consistent with how the game is usually played in person. The first hand is also seeded so that there will be some suit clumping. Use the Shuffle Type button to change the shuffle behavior.\\a\\aUse Message button and/or white bid widgets near seats as desired during bid auction.\\a\\aOnce contract and partners are known, click on the blue Contract Type button at the top right to set the contract. Each player participating in the contract must also click on the green Declarer button to add their name to the list.\\a\\a If appropriate, use the score multiplier button at the top right to double or further increase the score value.\\a\\a After round is complete, press the Score button for automatic scoring based on the values indicated in the player aids.\"",
     "z": 79087,
     "messageArray": [
       {
@@ -38549,6 +38573,7 @@
                   "var scoreD = ${scoreD.1}"
                 ]
               },
+              "var scoreD = ${scoreD} * ${PROPERTY multiple OF scoreMultiplier}",
               {
                 "func": "SCORE",
                 "mode": "set",
@@ -38579,6 +38604,7 @@
           },
           "var scoreO = ${scoreO.$declaring}",
           "var scoreO = ${scoreO.$madeBid}",
+          "var scoreO = ${scoreO} * ${PROPERTY multiple OF scoreMultiplier}",
           {
             "func": "SCORE",
             "mode": "set",
@@ -38614,6 +38640,7 @@
             ]
           },
           "var scoreD = ${scoreD.$wonTricks}",
+          "var scoreD = ${scoreD} * ${PROPERTY multiple OF scoreMultiplier}",
           {
             "func": "SCORE",
             "mode": "set",
@@ -38641,6 +38668,7 @@
             ]
           },
           "var scoreO = ${scoreO.$wonTricks}",
+          "var scoreO = ${scoreO} * ${PROPERTY multiple OF scoreMultiplier}",
           {
             "func": "SCORE",
             "mode": "set",
@@ -38903,7 +38931,7 @@
         "display": "block"
       }
     },
-    "auctionType": "9",
+    "auctionType": "6",
     "clickRoutine": [
       {
         "func": "CLICK",
@@ -39491,7 +39519,7 @@
   "teamsAndContracts": {
     "type": "holder",
     "id": "teamsAndContracts",
-    "x": 880,
+    "x": 1046,
     "height": 20,
     "movableInEdit": false,
     "css": {
@@ -39542,7 +39570,7 @@
       }
     ],
     "layer": 10,
-    "hAnchorPos": "left",
+    "hAnchorPos": "center",
     "leaveRoutine": [
       {
         "func": "CALL",
@@ -39629,12 +39657,12 @@
         "value": "${newWidth}"
       }
     ],
-    "rightX": 991,
+    "rightX": 1157,
     "scale": 0
   },
   "teamsAndContractsOff": {
     "id": "teamsAndContractsOff",
-    "x": 1631,
+    "x": 1463,
     "width": 447,
     "height": 20,
     "movableInEdit": false,
@@ -39644,7 +39672,7 @@
     "inheritFrom": {
       "teamsAndContracts": "*"
     },
-    "rightX": 1966,
+    "rightX": 1854,
     "scale": 1
   },
   "teamList2": {
@@ -39698,6 +39726,106 @@
     },
     "dropLimit": -1
   },
+  "scoreMultiplier": {
+    "id": "scoreMultiplier",
+    "x": 1504,
+    "y": 144,
+    "css": {
+      "default": {
+        "background": "#ffffff",
+        "border": "1px solid black",
+        "text-align": "center",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "color": "black",
+        "line-height": "0.8em"
+      },
+      "::after": {
+        "content": "\"${PROPERTY multiple}\"",
+        "position": "absolute",
+        "margin-top": "30px",
+        "color": "black"
+      }
+    },
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "text": "Score\nx\n\n",
+    "multiple": 1,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "multiple",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "z": 80173,
+    "movable": false,
+    "multipleChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY multiple}",
+        "relation": "<",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "multiple",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "scale": 0
+  },
+  "scoreMultiplierMinus": {
+    "type": "button",
+    "id": "scoreMultiplierMinus",
+    "parent": "scoreMultiplier",
+    "y": -10,
+    "width": 20,
+    "height": 20,
+    "z": 79090,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "multiple",
+        "relation": "-",
+        "value": 1
+      }
+    ],
+    "x": -20
+  },
+  "scoreMultiplierPlus": {
+    "type": "button",
+    "id": "scoreMultiplierPlus",
+    "parent": "scoreMultiplier",
+    "y": -10,
+    "width": 20,
+    "height": 20,
+    "z": 79090,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "multiple",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "x": 50,
+    "text": "+"
+  },
   "_meta": {
     "version": 15,
     "info": {
@@ -39709,7 +39837,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714607880263,
+      "lastUpdate": 1714668084617,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
