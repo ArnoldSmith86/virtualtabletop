@@ -2745,9 +2745,7 @@
       0
     ],
     "player": "",
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000"
+    "turn": false
   },
   "bidValue3": {
     "inheritFrom": {
@@ -2899,7 +2897,6 @@
       " "
     ],
     "showing": false,
-    "turn": false,
     "player": ""
   },
   "bidValue7": {
@@ -8351,10 +8348,10 @@
     ],
     "roundLabel": "",
     "y": 650,
-    "scale": 0,
     "rounds": [
       "Card Points"
-    ]
+    ],
+    "scale": 0
   },
   "seat1": {
     "type": "seat",
@@ -9258,7 +9255,7 @@
         "value": "${name}"
       }
     ],
-    "customStateproperty": 0,
+    "customStateproperty": 2,
     "first": false,
     "y": 950,
     "x": 5
@@ -9495,40 +9492,17 @@
     },
     "bidWinnerRoutine": [
       {
-        "func": "CLICK",
-        "collection": [
-          "turnButton"
-        ]
-      },
-      "var bidWinnerText = ${PROPERTY text OF bidWinner}",
-      "var bidWinnerFirst = ${PROPERTY first OF bidWinner}",
-      {
         "func": "IF",
-        "operand1": "${bidWinnerText}",
-        "operand2": "",
+        "condition": "${PROPERTY first OF bidWinner}",
         "thenRoutine": [
-          "var bidWinnerText = true"
+          {
+            "func": "CLICK",
+            "collection": [
+              "turnButton"
+            ]
+          }
         ],
         "elseRoutine": [
-          "var bidWinnerText = false"
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${bidWinnerFirst}",
-        "operand2": false,
-        "thenRoutine": [
-          "var bidWinnerFirst = true"
-        ],
-        "elseRoutine": [
-          "var bidWinnerFirst = false"
-        ]
-      },
-      "var bidWinnerBlank = ${bidWinnerText} && ${bidWinnerFirst}",
-      {
-        "func": "IF",
-        "condition": "${bidWinnerBlank}",
-        "thenRoutine": [
           {
             "func": "SELECT",
             "type": "seat",
@@ -9557,36 +9531,12 @@
             ]
           },
           {
-            "func": "GET",
-            "property": "player"
-          },
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "bidWinner"
-          },
-          {
             "func": "SET",
+            "collection": [
+              "bidWinner"
+            ],
             "property": "first",
             "value": true
-          },
-          {
-            "func": "SET",
-            "property": "text",
-            "value": "${player}"
-          },
-          "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
-          {
-            "func": "IF",
-            "condition": "${PROPERTY autoTeam OF $gameID}",
-            "thenRoutine": [
-              {
-                "func": "CLICK",
-                "collection": [
-                  "teamGroup${seatIndex}"
-                ]
-              }
-            ]
           }
         ]
       }
@@ -13589,7 +13539,6 @@
     "gameID": true,
     "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\"",
     "y": -126,
-    "autoTeam": false,
     "preSetExceptionsRoutine": [
       "// This is needed to fix whatever happens when other pre-sets are called and the game type is changed to something else. The first few are not from specific games are but specific properties of games that may or may not be modified by pre-sets.",
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
@@ -14589,7 +14538,6 @@
         "value": 9.5
       }
     ],
-    "autoTeam": true,
     "x": -751,
     "displayArray": [
       [
@@ -20145,7 +20093,6 @@
         "round": "${PROPERTY currentRound OF scoreboard}"
       }
     ],
-    "autoTeam": true,
     "displayArray": [
       [
         "playerAidButton",
@@ -22807,7 +22754,6 @@
     "gameID": true,
     "hintText": "\"Use bid widgets to enter bids. That is required for automatic scoring. At the end of the round, press Score button to calculate and enter scores.\"",
     "y": -439,
-    "autoTeam": false,
     "transferButtonReturn": false,
     "preSetExceptionsRoutine": [
       {
@@ -23843,7 +23789,6 @@
     "gameID": true,
     "hintText": "\"Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder.\\a\\a To declare bid openly for additional pionts, use Actions button then Show Bid button. To reveal hand for additional points, use Actions button then Show Hand button.\\a\\a At the end of the round, press Score button to calculate and enter scores. Manually flipping over bid cards is not necessary, but if a player wants to show their bid, do not manually flip over bid cards until after scoring.\\a\\a If playing the rule that the number of players that made their exact bid determines trump, then the next trump suit is automatically set on the trump indicator widget after recalling cards. If you want a random trump each time, then click the dice in the upper right after dealing.\"",
     "y": -439,
-    "autoTeam": false,
     "preSetExceptionsRoutine": [
       {
         "func": "SET",
@@ -24409,7 +24354,6 @@
     "gameID": true,
     "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/countpnt.html.\\a\\a Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder. Trump is automatically indicated on the trump indicator widget in bottom left.\\a\\a At the end of the round, press Add Card Points button to calculate and enter card points captured that round for each player.\\a\\a Press Transfer Score button to autocalculate remaining values on small temporary scoreboard and enter the score onto the main scoreboard.\"",
     "y": -439,
-    "autoTeam": false,
     "transferButtonReturn": false,
     "preSetExceptionsRoutine": [
       {
@@ -26779,7 +26723,6 @@
       "font-size": "26px"
     },
     "text": "Collusion",
-    "autoTeam": false,
     "displayArray": [
       [
         "playerAidButton",
@@ -39345,7 +39288,7 @@
     "width": 110,
     "height": 20,
     "borderRadius": 4,
-    "z": 4,
+    "z": 3,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -39514,7 +39457,7 @@
       }
     ],
     "teamButton": 9,
-    "x": 336
+    "x": 224
   },
   "teamsAndContracts": {
     "type": "holder",
@@ -39693,12 +39636,12 @@
       "teamButton2": "!parent"
     },
     "id": "teamButton3",
-    "x": 224,
+    "x": 336,
     "y": 0,
     "text": "Seperate",
     "bgColor": "#ffffff",
     "teamButton": 3,
-    "z": 3,
+    "z": 4,
     "parent": "teamsAndContractsOff"
   },
   "teamList3": {
@@ -39837,7 +39780,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714668084617,
+      "lastUpdate": 1714957472096,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
