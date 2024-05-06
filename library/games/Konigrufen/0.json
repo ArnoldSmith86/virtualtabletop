@@ -4,440 +4,440 @@
     "type": "card",
     "cardType": "t19.png",
     "id": "1124",
-    "z": 19790,
-    "parent": "4blm"
+    "z": 25963,
+    "parent": "l1yl"
   },
   "6436": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "dK.png",
     "id": "6436",
-    "z": 19600,
-    "parent": "rywr"
+    "z": 25746,
+    "parent": "ryv3"
   },
   "tyit": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "d7.png",
     "id": "tyit",
-    "z": 19822,
-    "parent": "4blm"
+    "z": 25958,
+    "parent": "l1yl"
   },
   "fl73": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "d8.png",
     "id": "fl73",
-    "z": 19820,
-    "parent": "4blm"
+    "z": 25967,
+    "parent": "l1yl"
   },
   "9ldi": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "d9.png",
     "id": "9ldi",
-    "z": 19797,
-    "parent": "4blm"
+    "z": 25935,
+    "parent": "l1yl"
   },
   "n0uk": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "d10.png",
     "id": "n0uk",
-    "z": 19789,
-    "parent": "4blm"
+    "z": 25966,
+    "parent": "l1yl"
   },
   "ngr2": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "dJ.png",
     "id": "ngr2",
-    "z": 19781,
-    "parent": "4blm"
+    "z": 25936,
+    "parent": "l1yl"
   },
   "x3z8": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "dC.png",
     "id": "x3z8",
-    "z": 19786,
-    "parent": "4blm"
+    "z": 25969,
+    "parent": "l1yl"
   },
   "j0mr": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "dQ.png",
     "id": "j0mr",
-    "z": 19783,
-    "parent": "4blm"
+    "z": 25950,
+    "parent": "l1yl"
   },
   "okf1": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "dK.png",
     "id": "okf1",
-    "z": 19784,
-    "parent": "4blm"
+    "z": 25940,
+    "parent": "l1yl"
   },
   "s6z1": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "c7.png",
     "id": "s6z1",
-    "z": 19825,
-    "parent": "4blm"
+    "z": 25979,
+    "parent": "l1yl"
   },
   "02jw": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "c8.png",
     "id": "02jw",
-    "z": 19776,
-    "parent": "4blm"
+    "z": 25938,
+    "parent": "l1yl"
   },
   "kyyt": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "c9.png",
     "id": "kyyt",
-    "z": 19779,
-    "parent": "4blm"
+    "z": 25930,
+    "parent": "l1yl"
   },
   "ddp1": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "c10.png",
     "id": "ddp1",
-    "z": 19775,
-    "parent": "4blm"
+    "z": 25971,
+    "parent": "l1yl"
   },
   "ul0v": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "cJ.png",
     "id": "ul0v",
-    "z": 19823,
-    "parent": "4blm"
+    "z": 25949,
+    "parent": "l1yl"
   },
   "q88x": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "cC.png",
     "id": "q88x",
-    "z": 19804,
-    "parent": "4blm"
+    "z": 25973,
+    "parent": "l1yl"
   },
   "koyg": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "cQ.png",
     "id": "koyg",
-    "z": 19796,
-    "parent": "4blm"
+    "z": 25962,
+    "parent": "l1yl"
   },
   "5hp4": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "cK.png",
     "id": "5hp4",
-    "z": 19774,
-    "parent": "4blm"
+    "z": 25968,
+    "parent": "l1yl"
   },
   "jgt9": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "h7.png",
     "id": "jgt9",
-    "z": 19778,
-    "parent": "4blm"
+    "z": 25964,
+    "parent": "l1yl"
   },
   "dn1k": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "h8.png",
     "id": "dn1k",
-    "z": 19791,
-    "parent": "4blm"
+    "z": 25937,
+    "parent": "l1yl"
   },
   "qpq4": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "h9.png",
     "id": "qpq4",
-    "z": 19794,
-    "parent": "4blm"
+    "z": 25948,
+    "parent": "l1yl"
   },
   "22y0": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "h10.png",
     "id": "22y0",
-    "z": 19798,
-    "parent": "4blm"
+    "z": 25952,
+    "parent": "l1yl"
   },
   "7thy": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "hJ.png",
     "id": "7thy",
-    "z": 19802,
-    "parent": "4blm"
+    "z": 25960,
+    "parent": "l1yl"
   },
   "ypg1": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "hC.png",
     "id": "ypg1",
-    "z": 19819,
-    "parent": "4blm"
+    "z": 25931,
+    "parent": "l1yl"
   },
   "rf84": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "hQ.png",
     "id": "rf84",
-    "z": 19803,
-    "parent": "4blm"
+    "z": 25947,
+    "parent": "l1yl"
   },
   "1qwj": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "hK.png",
     "id": "1qwj",
-    "z": 19780,
-    "parent": "4blm"
+    "z": 25956,
+    "parent": "l1yl"
   },
   "36kw": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "s7.png",
     "id": "36kw",
-    "z": 19800,
-    "parent": "4blm"
+    "z": 25945,
+    "parent": "l1yl"
   },
   "s3vo": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "s8.png",
     "id": "s3vo",
-    "z": 19806,
-    "parent": "4blm"
+    "z": 25961,
+    "parent": "l1yl"
   },
   "nkip": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "s9.png",
     "id": "nkip",
-    "z": 19811,
-    "parent": "4blm"
+    "z": 25980,
+    "parent": "l1yl"
   },
   "5i09": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "s10.png",
     "id": "5i09",
-    "z": 19787,
-    "parent": "4blm"
+    "z": 25933,
+    "parent": "l1yl"
   },
   "y9i2": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "sJ.png",
     "id": "y9i2",
-    "z": 19801,
-    "parent": "4blm"
+    "z": 25954,
+    "parent": "l1yl"
   },
   "bila": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "sC.png",
     "id": "bila",
-    "z": 19826,
-    "parent": "4blm"
+    "z": 25976,
+    "parent": "l1yl"
   },
   "j0jz": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "sQ.png",
     "id": "j0jz",
-    "z": 19827,
-    "parent": "4blm"
+    "z": 25932,
+    "parent": "l1yl"
   },
   "t2h8": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "sK.png",
     "id": "t2h8",
-    "z": 19808,
-    "parent": "4blm"
+    "z": 25939,
+    "parent": "l1yl"
   },
   "vj9v": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t1.png",
     "id": "vj9v",
-    "z": 19795,
-    "parent": "4blm"
+    "z": 25953,
+    "parent": "l1yl"
   },
   "urij": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t2.png",
     "id": "urij",
-    "z": 19824,
-    "parent": "4blm"
+    "z": 25972,
+    "parent": "l1yl"
   },
   "0zeb": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t3.png",
     "id": "0zeb",
-    "z": 19799,
-    "parent": "4blm"
+    "z": 25970,
+    "parent": "l1yl"
   },
   "dgsb": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t4.png",
     "id": "dgsb",
-    "z": 19805,
-    "parent": "4blm"
+    "z": 25929,
+    "parent": "l1yl"
   },
   "aca8": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t5.png",
     "id": "aca8",
-    "z": 19785,
-    "parent": "4blm"
+    "z": 25977,
+    "parent": "l1yl"
   },
   "wn3p": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t6.png",
     "id": "wn3p",
-    "z": 19813,
-    "parent": "4blm"
+    "z": 25928,
+    "parent": "l1yl"
   },
   "qopp": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t7.png",
     "id": "qopp",
-    "z": 19810,
-    "parent": "4blm"
+    "z": 25944,
+    "parent": "l1yl"
   },
   "qr5t": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t8.png",
     "id": "qr5t",
-    "z": 19817,
-    "parent": "4blm"
+    "z": 25943,
+    "parent": "l1yl"
   },
   "0atn": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t9.png",
     "id": "0atn",
-    "z": 19815,
-    "parent": "4blm"
+    "z": 25959,
+    "parent": "l1yl"
   },
   "4gzt": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t10.png",
     "id": "4gzt",
-    "z": 19818,
-    "parent": "4blm"
+    "z": 25942,
+    "parent": "l1yl"
   },
   "m8xs": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t11.png",
     "id": "m8xs",
-    "z": 19812,
-    "parent": "4blm"
+    "z": 25946,
+    "parent": "l1yl"
   },
   "45ja": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t12.png",
     "id": "45ja",
-    "z": 19782,
-    "parent": "4blm"
+    "z": 25975,
+    "parent": "l1yl"
   },
   "04bc": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t13.png",
     "id": "04bc",
-    "z": 19807,
-    "parent": "4blm"
+    "z": 25951,
+    "parent": "l1yl"
   },
   "6ta7": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t14.png",
     "id": "6ta7",
-    "z": 19809,
-    "parent": "4blm"
+    "z": 25957,
+    "parent": "l1yl"
   },
   "ea2j": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t15.png",
     "id": "ea2j",
-    "z": 19777,
-    "parent": "4blm"
+    "z": 25934,
+    "parent": "l1yl"
   },
   "pt6e": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t16.png",
     "id": "pt6e",
-    "z": 19814,
-    "parent": "4blm"
+    "z": 25974,
+    "parent": "l1yl"
   },
   "kcgi": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t17.png",
     "id": "kcgi",
-    "z": 19793,
-    "parent": "4blm"
+    "z": 25978,
+    "parent": "l1yl"
   },
   "h4um": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t18.png",
     "id": "h4um",
-    "z": 19792,
-    "parent": "4blm"
+    "z": 25955,
+    "parent": "l1yl"
   },
   "7ixc": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t20.png",
     "id": "7ixc",
-    "z": 19821,
-    "parent": "4blm"
+    "z": 25981,
+    "parent": "l1yl"
   },
   "mf94": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t21.png",
     "id": "mf94",
-    "z": 19788,
-    "parent": "4blm"
+    "z": 25941,
+    "parent": "l1yl"
   },
   "kxtc": {
     "deck": "high_reds_deck",
     "type": "card",
     "cardType": "t22.png",
     "id": "kxtc",
-    "z": 19816,
-    "parent": "4blm"
+    "z": 25965,
+    "parent": "l1yl"
   },
   "1_trick": {
     "type": "holder",
@@ -681,7 +681,7 @@
       }
     },
     "audio_enabled": true,
-    "background_color_solid": "#3f51b5",
+    "background_color_solid": "#795548",
     "background_color_transparent": "white",
     "colorContrast": "#000000",
     "mainColor": "#dddddd",
@@ -1940,30 +1940,27 @@
     "fixedParent": true,
     "color_change_index": 2,
     "inheritFrom": "1_trick",
-    "background_color_transparent": "#607d8b48",
-    "color": "#607d8b",
-    "background_color_solid": "#607d8b"
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "2_seat": {
     "type": "seat",
     "id": "2_seat",
     "parent": "2_seat_anchor",
     "fixedParent": true,
-    "audio_enabled": true,
-    "background_color_transparent": "#607d8b48",
+    "background_color_transparent": "white",
     "colorContrast": "#000000",
     "outlineColor": "#000000bb",
     "passed": false,
     "text": "C",
-    "turn_alert_enabled": false,
     "index": 2,
-    "player": "Julie",
+    "player": "",
     "inheritFrom": "1_seat",
     "textColor": "#000000",
-    "color": "#607d8b",
-    "mainColor": "#607d8b",
-    "background_color_solid": "#607d8b",
-    "glowColor": "#14313f"
+    "color": "#dddddd",
+    "mainColor": "#dddddd",
+    "background_color_solid": "#bf360c"
   },
   "2_bonus_supply": {
     "type": "holder",
@@ -2158,11 +2155,11 @@
     "fixedParent": true,
     "inheritFrom": "1_board",
     "color_change_index": 2,
-    "background_color_transparent": "#607d8b48",
-    "background_color": "#607d8b48",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
     "linkedToSeat": "2_seat",
-    "color": "#607d8b",
-    "background_color_solid": "#607d8b"
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "2_player_money": {
     "type": "basic",
@@ -2172,7 +2169,8 @@
     "linkedToSeat": "2_seat",
     "inheritFrom": "1_player_money",
     "money": 0,
-    "text": 0
+    "text": 0,
+    "activeFace": 0
   },
   "2_money_edit": {
     "type": "button",
@@ -2187,10 +2185,10 @@
     "parent": "2_board",
     "fixedParent": true,
     "color_change_index": 2,
-    "background_color_transparent": "#607d8b48",
+    "background_color_transparent": "#b4b4b4",
     "inheritFrom": "1_take_trick",
-    "color": "#607d8b",
-    "background_color_solid": "#607d8b"
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "2_tricks_taken": {
     "type": "holder",
@@ -2199,9 +2197,9 @@
     "fixedParent": true,
     "color_change_index": 2,
     "inheritFrom": "1_tricks_taken",
-    "background_color_transparent": "#607d8b48",
-    "color": "#607d8b",
-    "background_color_solid": "#607d8b"
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "3_seat_anchor": {
     "id": "3_seat_anchor",
@@ -2258,7 +2256,7 @@
     "textColor": "#000000",
     "color": "#dddddd",
     "mainColor": "#dddddd",
-    "background_color_solid": "#f06292"
+    "background_color_solid": "#ffc107"
   },
   "3_bonus_supply": {
     "type": "holder",
@@ -2553,7 +2551,7 @@
     "textColor": "#000000",
     "color": "#dddddd",
     "mainColor": "#dddddd",
-    "background_color_solid": "#9c27b0"
+    "background_color_solid": "#4caf50"
   },
   "4_bonus_supply": {
     "type": "holder",
@@ -2799,7 +2797,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "53v6",
-    "z": 40310,
+    "z": 41160,
     "parent": "3_bonus_supply",
     "y": 204,
     "color": "#f06292",
@@ -2812,7 +2810,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "9les",
-    "z": 40311,
+    "z": 41161,
     "parent": "3_bonus_supply",
     "y": 154,
     "color": "#f06292",
@@ -2825,9 +2823,9 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "67ii",
-    "z": 40312,
+    "z": 41162,
     "parent": "3_bonus_supply",
-    "y": 79,
+    "y": 104,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
     "background_color_solid": "#f06292",
@@ -2838,9 +2836,9 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "n8zr",
-    "z": 40313,
+    "z": 41163,
     "parent": "3_bonus_supply",
-    "y": 29,
+    "y": 54,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
     "background_color_solid": "#f06292",
@@ -2851,9 +2849,9 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "42sk",
-    "z": 40314,
+    "z": 41164,
     "parent": "3_bonus_supply",
-    "y": 4,
+    "y": 29,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
     "background_color_solid": "#f06292",
@@ -2864,7 +2862,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "aq4y",
-    "z": 40315,
+    "z": 41165,
     "parent": "3_bonus_supply",
     "y": 179,
     "color": "#f06292",
@@ -2877,9 +2875,9 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "vtrh",
-    "z": 40316,
+    "z": 41166,
     "parent": "3_bonus_supply",
-    "y": 129,
+    "y": 4,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
     "background_color_solid": "#f06292",
@@ -2890,9 +2888,9 @@
     "type": "card",
     "cardType": "Slam",
     "id": "otkf",
-    "z": 40317,
+    "z": 41167,
     "parent": "3_bonus_supply",
-    "y": 104,
+    "y": 129,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
     "background_color_solid": "#f06292",
@@ -2903,7 +2901,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "ki61",
-    "z": 40327,
+    "z": 41177,
     "parent": "4_bonus_supply",
     "y": 54,
     "color": "#f06292",
@@ -2916,7 +2914,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "1wju",
-    "z": 40328,
+    "z": 41178,
     "parent": "4_bonus_supply",
     "y": 204,
     "color": "#f06292",
@@ -2929,7 +2927,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "7gn4",
-    "z": 40329,
+    "z": 41179,
     "parent": "4_bonus_supply",
     "y": 179,
     "color": "#f06292",
@@ -2942,7 +2940,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "t7lm",
-    "z": 40330,
+    "z": 41180,
     "parent": "4_bonus_supply",
     "y": 4,
     "color": "#f06292",
@@ -2955,7 +2953,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "yfou",
-    "z": 40331,
+    "z": 41181,
     "parent": "4_bonus_supply",
     "y": 154,
     "color": "#f06292",
@@ -2968,7 +2966,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "e8rq",
-    "z": 40332,
+    "z": 41182,
     "parent": "4_bonus_supply",
     "y": 29,
     "color": "#f06292",
@@ -2981,7 +2979,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "uuut",
-    "z": 40333,
+    "z": 41183,
     "parent": "4_bonus_supply",
     "y": 129,
     "color": "#f06292",
@@ -2994,7 +2992,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "s5gn",
-    "z": 40334,
+    "z": 41184,
     "parent": "4_bonus_supply",
     "y": 104,
     "color": "#f06292",
@@ -3007,7 +3005,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "ekzj",
-    "z": 40293,
+    "z": 41143,
     "parent": "2_bonus_supply",
     "y": 79,
     "color": "#f06292",
@@ -3020,7 +3018,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "765h",
-    "z": 40294,
+    "z": 41144,
     "parent": "2_bonus_supply",
     "y": 129,
     "color": "#f06292",
@@ -3033,7 +3031,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "gvhc",
-    "z": 40295,
+    "z": 41145,
     "parent": "2_bonus_supply",
     "y": 204,
     "color": "#f06292",
@@ -3046,7 +3044,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "rm42",
-    "z": 40296,
+    "z": 41146,
     "parent": "2_bonus_supply",
     "y": 4,
     "color": "#f06292",
@@ -3059,7 +3057,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "7lzr",
-    "z": 40297,
+    "z": 41147,
     "parent": "2_bonus_supply",
     "y": 29,
     "color": "#f06292",
@@ -3072,7 +3070,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "5yo4",
-    "z": 40298,
+    "z": 41148,
     "parent": "2_bonus_supply",
     "y": 54,
     "color": "#f06292",
@@ -3085,7 +3083,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "oo7a",
-    "z": 40299,
+    "z": 41149,
     "parent": "2_bonus_supply",
     "y": 179,
     "color": "#f06292",
@@ -3098,7 +3096,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "vws7",
-    "z": 40300,
+    "z": 41150,
     "parent": "2_bonus_supply",
     "y": 104,
     "color": "#f06292",
@@ -3108,14 +3106,15 @@
   },
   "contracts_chart": {
     "id": "contracts_chart",
-    "image": "/assets/-2053055231_63210",
+    "image": "/assets/-1954675325_70378",
     "z": 3,
     "height": 570,
     "width": 1300,
     "layer": -9,
-    "y": -4,
     "movable": false,
-    "x": -168
+    "x": -168,
+    "y": -4,
+    "movableInEdit": false
   },
   "bonuses_chart": {
     "id": "bonuses_chart",
@@ -3207,7 +3206,7 @@
       }
     ],
     "movableInEdit": false,
-    "activeFace": 77,
+    "activeFace": 84,
     "x": -85,
     "color_background": "white",
     "color_border_default": "black",
@@ -3224,7 +3223,7 @@
     "fixedParent": true,
     "y": 24,
     "inheritFrom": "reveal_talon1",
-    "activeFace": 77,
+    "activeFace": 84,
     "x": 214
   },
   "2_hand_anchor": {
@@ -3383,7 +3382,7 @@
       }
     },
     "text": "Take Talon",
-    "activeFace": 77,
+    "activeFace": 84,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -3418,7 +3417,7 @@
     "y": 87,
     "talon_index": 2,
     "inheritFrom": "take_talon1",
-    "activeFace": 71,
+    "activeFace": 78,
     "x": 214
   },
   "Declarer": {
@@ -3426,7 +3425,7 @@
     "y": 231,
     "width": 56,
     "height": 56,
-    "z": 538,
+    "z": 559,
     "color": "red",
     "css": {
       "default": {
@@ -3455,7 +3454,7 @@
     "y": 288,
     "width": 56,
     "height": 56,
-    "z": 536,
+    "z": 558,
     "color": "red",
     "css": {
       "default": {
@@ -3484,7 +3483,7 @@
     "y": 288,
     "width": 56,
     "height": 56,
-    "z": 534,
+    "z": 556,
     "color": "blue",
     "css": {
       "default": {
@@ -3513,7 +3512,7 @@
     "y": 231,
     "width": 56,
     "height": 56,
-    "z": 537,
+    "z": 552,
     "color": "blue",
     "css": {
       "default": {
@@ -4187,7 +4186,7 @@
     "id": "forehand",
     "width": 50.4,
     "height": 70,
-    "z": 26,
+    "z": 35,
     "color": "#1f5ca6",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "/i/noto-emoji/emoji_u1f590.svg",
@@ -4303,7 +4302,7 @@
       }
     ],
     "width": 55,
-    "activeFace": 0,
+    "activeFace": 3,
     "suitColor": "grey",
     "movableInEdit": false,
     "text": "?",
@@ -4725,7 +4724,7 @@
     "type": "card",
     "cardType": "d7.png",
     "id": "os4f",
-    "z": 19456,
+    "z": 25638,
     "parent": "ze2l"
   },
   "6swm": {
@@ -4733,7 +4732,7 @@
     "type": "card",
     "cardType": "d8.png",
     "id": "6swm",
-    "z": 19491,
+    "z": 25607,
     "parent": "ze2l"
   },
   "zpkp": {
@@ -4741,7 +4740,7 @@
     "type": "card",
     "cardType": "d9.png",
     "id": "zpkp",
-    "z": 19497,
+    "z": 25647,
     "parent": "ze2l"
   },
   "f4f4": {
@@ -4749,7 +4748,7 @@
     "type": "card",
     "cardType": "d10.png",
     "id": "f4f4",
-    "z": 19483,
+    "z": 25605,
     "parent": "ze2l"
   },
   "6n3b": {
@@ -4757,7 +4756,7 @@
     "type": "card",
     "cardType": "dJ.png",
     "id": "6n3b",
-    "z": 19451,
+    "z": 25656,
     "parent": "ze2l"
   },
   "714c": {
@@ -4765,7 +4764,7 @@
     "type": "card",
     "cardType": "dC.png",
     "id": "714c",
-    "z": 19466,
+    "z": 25646,
     "parent": "ze2l"
   },
   "coa8": {
@@ -4773,7 +4772,7 @@
     "type": "card",
     "cardType": "dQ.png",
     "id": "coa8",
-    "z": 19484,
+    "z": 25649,
     "parent": "ze2l"
   },
   "458a": {
@@ -4781,7 +4780,7 @@
     "type": "card",
     "cardType": "dK.png",
     "id": "458a",
-    "z": 19460,
+    "z": 25626,
     "parent": "ze2l"
   },
   "9fg7": {
@@ -4789,7 +4788,7 @@
     "type": "card",
     "cardType": "c7.png",
     "id": "9fg7",
-    "z": 19472,
+    "z": 25611,
     "parent": "ze2l"
   },
   "lg9t": {
@@ -4797,7 +4796,7 @@
     "type": "card",
     "cardType": "c8.png",
     "id": "lg9t",
-    "z": 19468,
+    "z": 25620,
     "parent": "ze2l"
   },
   "u6s9": {
@@ -4805,7 +4804,7 @@
     "type": "card",
     "cardType": "c9.png",
     "id": "u6s9",
-    "z": 19471,
+    "z": 25619,
     "parent": "ze2l"
   },
   "mq7i": {
@@ -4813,7 +4812,7 @@
     "type": "card",
     "cardType": "c10.png",
     "id": "mq7i",
-    "z": 19455,
+    "z": 25635,
     "parent": "ze2l"
   },
   "8w2o": {
@@ -4821,7 +4820,7 @@
     "type": "card",
     "cardType": "cJ.png",
     "id": "8w2o",
-    "z": 19454,
+    "z": 25609,
     "parent": "ze2l"
   },
   "8zoy": {
@@ -4829,7 +4828,7 @@
     "type": "card",
     "cardType": "cC.png",
     "id": "8zoy",
-    "z": 19452,
+    "z": 25648,
     "parent": "ze2l"
   },
   "hvgo": {
@@ -4837,7 +4836,7 @@
     "type": "card",
     "cardType": "cQ.png",
     "id": "hvgo",
-    "z": 19496,
+    "z": 25655,
     "parent": "ze2l"
   },
   "e5su": {
@@ -4845,7 +4844,7 @@
     "type": "card",
     "cardType": "cK.png",
     "id": "e5su",
-    "z": 19459,
+    "z": 25606,
     "parent": "ze2l"
   },
   "jh1u": {
@@ -4853,7 +4852,7 @@
     "type": "card",
     "cardType": "h7.png",
     "id": "jh1u",
-    "z": 19453,
+    "z": 25644,
     "parent": "ze2l"
   },
   "ezcx": {
@@ -4861,7 +4860,7 @@
     "type": "card",
     "cardType": "h8.png",
     "id": "ezcx",
-    "z": 19470,
+    "z": 25630,
     "parent": "ze2l"
   },
   "geog": {
@@ -4869,7 +4868,7 @@
     "type": "card",
     "cardType": "h9.png",
     "id": "geog",
-    "z": 19481,
+    "z": 25636,
     "parent": "ze2l"
   },
   "tzmg": {
@@ -4877,7 +4876,7 @@
     "type": "card",
     "cardType": "h10.png",
     "id": "tzmg",
-    "z": 19492,
+    "z": 25642,
     "parent": "ze2l"
   },
   "sfr8": {
@@ -4885,7 +4884,7 @@
     "type": "card",
     "cardType": "hJ.png",
     "id": "sfr8",
-    "z": 19502,
+    "z": 25657,
     "parent": "ze2l"
   },
   "xtms": {
@@ -4893,7 +4892,7 @@
     "type": "card",
     "cardType": "hC.png",
     "id": "xtms",
-    "z": 19493,
+    "z": 25629,
     "parent": "ze2l"
   },
   "4nrg": {
@@ -4901,7 +4900,7 @@
     "type": "card",
     "cardType": "hQ.png",
     "id": "4nrg",
-    "z": 19482,
+    "z": 25637,
     "parent": "ze2l"
   },
   "h3vg": {
@@ -4909,7 +4908,7 @@
     "type": "card",
     "cardType": "hK.png",
     "id": "h3vg",
-    "z": 19476,
+    "z": 25608,
     "parent": "ze2l"
   },
   "om2m": {
@@ -4917,7 +4916,7 @@
     "type": "card",
     "cardType": "s7.png",
     "id": "om2m",
-    "z": 19467,
+    "z": 25624,
     "parent": "ze2l"
   },
   "l3sa": {
@@ -4925,7 +4924,7 @@
     "type": "card",
     "cardType": "s8.png",
     "id": "l3sa",
-    "z": 19495,
+    "z": 25650,
     "parent": "ze2l"
   },
   "nwd5": {
@@ -4933,7 +4932,7 @@
     "type": "card",
     "cardType": "s9.png",
     "id": "nwd5",
-    "z": 19486,
+    "z": 25641,
     "parent": "ze2l"
   },
   "v28z": {
@@ -4941,7 +4940,7 @@
     "type": "card",
     "cardType": "s10.png",
     "id": "v28z",
-    "z": 19488,
+    "z": 25631,
     "parent": "ze2l"
   },
   "yo9z": {
@@ -4949,7 +4948,7 @@
     "type": "card",
     "cardType": "sJ.png",
     "id": "yo9z",
-    "z": 19490,
+    "z": 25643,
     "parent": "ze2l"
   },
   "o8d1": {
@@ -4957,7 +4956,7 @@
     "type": "card",
     "cardType": "sC.png",
     "id": "o8d1",
-    "z": 19498,
+    "z": 25640,
     "parent": "ze2l"
   },
   "8pio": {
@@ -4965,7 +4964,7 @@
     "type": "card",
     "cardType": "sQ.png",
     "id": "8pio",
-    "z": 19480,
+    "z": 25613,
     "parent": "ze2l"
   },
   "nrpu": {
@@ -4973,7 +4972,7 @@
     "type": "card",
     "cardType": "sK.png",
     "id": "nrpu",
-    "z": 19457,
+    "z": 25625,
     "parent": "ze2l"
   },
   "dz2e": {
@@ -4981,7 +4980,7 @@
     "type": "card",
     "cardType": "t1.png",
     "id": "dz2e",
-    "z": 19462,
+    "z": 25632,
     "parent": "ze2l"
   },
   "epu0": {
@@ -4989,7 +4988,7 @@
     "type": "card",
     "cardType": "t2.png",
     "id": "epu0",
-    "z": 19475,
+    "z": 25610,
     "parent": "ze2l"
   },
   "e24y": {
@@ -4997,7 +4996,7 @@
     "type": "card",
     "cardType": "t3.png",
     "id": "e24y",
-    "z": 19489,
+    "z": 25633,
     "parent": "ze2l"
   },
   "8f78": {
@@ -5005,7 +5004,7 @@
     "type": "card",
     "cardType": "t4.png",
     "id": "8f78",
-    "z": 19465,
+    "z": 25634,
     "parent": "ze2l"
   },
   "8dxc": {
@@ -5013,7 +5012,7 @@
     "type": "card",
     "cardType": "t5.png",
     "id": "8dxc",
-    "z": 19473,
+    "z": 25622,
     "parent": "ze2l"
   },
   "nl2g": {
@@ -5021,7 +5020,7 @@
     "type": "card",
     "cardType": "t6.png",
     "id": "nl2g",
-    "z": 19474,
+    "z": 25621,
     "parent": "ze2l"
   },
   "50k5": {
@@ -5029,7 +5028,7 @@
     "type": "card",
     "cardType": "t7.png",
     "id": "50k5",
-    "z": 19478,
+    "z": 25639,
     "parent": "ze2l"
   },
   "clcw": {
@@ -5037,7 +5036,7 @@
     "type": "card",
     "cardType": "t8.png",
     "id": "clcw",
-    "z": 19461,
+    "z": 25614,
     "parent": "ze2l"
   },
   "uy6h": {
@@ -5045,7 +5044,7 @@
     "type": "card",
     "cardType": "t9.png",
     "id": "uy6h",
-    "z": 19469,
+    "z": 25645,
     "parent": "ze2l"
   },
   "pora": {
@@ -5053,7 +5052,7 @@
     "type": "card",
     "cardType": "t10.png",
     "id": "pora",
-    "z": 19485,
+    "z": 25627,
     "parent": "ze2l"
   },
   "vc9u": {
@@ -5061,7 +5060,7 @@
     "type": "card",
     "cardType": "t11.png",
     "id": "vc9u",
-    "z": 19463,
+    "z": 25658,
     "parent": "ze2l"
   },
   "h0px": {
@@ -5069,7 +5068,7 @@
     "type": "card",
     "cardType": "t12.png",
     "id": "h0px",
-    "z": 19487,
+    "z": 25615,
     "parent": "ze2l"
   },
   "55c7": {
@@ -5077,7 +5076,7 @@
     "type": "card",
     "cardType": "t13.png",
     "id": "55c7",
-    "z": 19479,
+    "z": 25617,
     "parent": "ze2l"
   },
   "7wvo": {
@@ -5085,7 +5084,7 @@
     "type": "card",
     "cardType": "t14.png",
     "id": "7wvo",
-    "z": 19494,
+    "z": 25654,
     "parent": "ze2l"
   },
   "lc5y": {
@@ -5093,7 +5092,7 @@
     "type": "card",
     "cardType": "t15.png",
     "id": "lc5y",
-    "z": 19504,
+    "z": 25651,
     "parent": "ze2l"
   },
   "w9j4": {
@@ -5101,7 +5100,7 @@
     "type": "card",
     "cardType": "t16.png",
     "id": "w9j4",
-    "z": 19477,
+    "z": 25628,
     "parent": "ze2l"
   },
   "g2mv": {
@@ -5109,7 +5108,7 @@
     "type": "card",
     "cardType": "t17.png",
     "id": "g2mv",
-    "z": 19464,
+    "z": 25618,
     "parent": "ze2l"
   },
   "n7ee": {
@@ -5117,7 +5116,7 @@
     "type": "card",
     "cardType": "t18.png",
     "id": "n7ee",
-    "z": 19499,
+    "z": 25612,
     "parent": "ze2l"
   },
   "5yyq": {
@@ -5125,7 +5124,7 @@
     "type": "card",
     "cardType": "t19.png",
     "id": "5yyq",
-    "z": 19458,
+    "z": 25653,
     "parent": "ze2l"
   },
   "mqmt": {
@@ -5133,7 +5132,7 @@
     "type": "card",
     "cardType": "t20.png",
     "id": "mqmt",
-    "z": 19503,
+    "z": 25623,
     "parent": "ze2l"
   },
   "9q5a": {
@@ -5141,7 +5140,7 @@
     "type": "card",
     "cardType": "t21.png",
     "id": "9q5a",
-    "z": 19501,
+    "z": 25616,
     "parent": "ze2l"
   },
   "3bvz": {
@@ -5149,7 +5148,7 @@
     "type": "card",
     "cardType": "t22.png",
     "id": "3bvz",
-    "z": 19500,
+    "z": 25652,
     "parent": "ze2l"
   },
   "main_deck_red_high_recall": {
@@ -5249,424 +5248,424 @@
     "type": "card",
     "cardType": "d7.png",
     "id": "r9g0",
-    "z": 19580,
-    "parent": "rywr"
+    "z": 25737,
+    "parent": "ryv3"
   },
   "tera": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "d8.png",
     "id": "tera",
-    "z": 19563,
-    "parent": "rywr"
+    "z": 25755,
+    "parent": "ryv3"
   },
   "btus": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "d9.png",
     "id": "btus",
-    "z": 19597,
-    "parent": "rywr"
+    "z": 25717,
+    "parent": "ryv3"
   },
   "vq85": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "d10.png",
     "id": "vq85",
-    "z": 19601,
-    "parent": "rywr"
+    "z": 25751,
+    "parent": "ryv3"
   },
   "mmv6": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "dJ.png",
     "id": "mmv6",
-    "z": 19566,
-    "parent": "rywr"
+    "z": 25727,
+    "parent": "ryv3"
   },
   "oqnc": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "dC.png",
     "id": "oqnc",
-    "z": 19598,
-    "parent": "rywr"
+    "z": 25719,
+    "parent": "ryv3"
   },
   "tp6f": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "dQ.png",
     "id": "tp6f",
-    "z": 19588,
-    "parent": "rywr"
+    "z": 25720,
+    "parent": "ryv3"
   },
   "i8sa": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "c7.png",
     "id": "i8sa",
-    "z": 19568,
-    "parent": "rywr"
+    "z": 25748,
+    "parent": "ryv3"
   },
   "2kdk": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "c8.png",
     "id": "2kdk",
-    "z": 19571,
-    "parent": "rywr"
+    "z": 25759,
+    "parent": "ryv3"
   },
   "wwd6": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "c9.png",
     "id": "wwd6",
-    "z": 19595,
-    "parent": "rywr"
+    "z": 25762,
+    "parent": "ryv3"
   },
   "8iae": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "c10.png",
     "id": "8iae",
-    "z": 19606,
-    "parent": "rywr"
+    "z": 25728,
+    "parent": "ryv3"
   },
   "isy0": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "cJ.png",
     "id": "isy0",
-    "z": 19603,
-    "parent": "rywr"
+    "z": 25753,
+    "parent": "ryv3"
   },
   "hb15": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "cC.png",
     "id": "hb15",
-    "z": 19564,
-    "parent": "rywr"
+    "z": 25750,
+    "parent": "ryv3"
   },
   "moxk": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "cQ.png",
     "id": "moxk",
-    "z": 19607,
-    "parent": "rywr"
+    "z": 25729,
+    "parent": "ryv3"
   },
   "n9ir": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "cK.png",
     "id": "n9ir",
-    "z": 19567,
-    "parent": "rywr"
+    "z": 25749,
+    "parent": "ryv3"
   },
   "w8gn": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "h7.png",
     "id": "w8gn",
-    "z": 19574,
-    "parent": "rywr"
+    "z": 25745,
+    "parent": "ryv3"
   },
   "xx6w": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "h8.png",
     "id": "xx6w",
-    "z": 19577,
-    "parent": "rywr"
+    "z": 25713,
+    "parent": "ryv3"
   },
   "zlb3": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "h9.png",
     "id": "zlb3",
-    "z": 19599,
-    "parent": "rywr"
+    "z": 25757,
+    "parent": "ryv3"
   },
   "zuvq": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "h10.png",
     "id": "zuvq",
-    "z": 19575,
-    "parent": "rywr"
+    "z": 25752,
+    "parent": "ryv3"
   },
   "aazc": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "hJ.png",
     "id": "aazc",
-    "z": 19609,
-    "parent": "rywr"
+    "z": 25754,
+    "parent": "ryv3"
   },
   "9nm1": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "hC.png",
     "id": "9nm1",
-    "z": 19594,
-    "parent": "rywr"
+    "z": 25722,
+    "parent": "ryv3"
   },
   "c9rk": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "hQ.png",
     "id": "c9rk",
-    "z": 19560,
-    "parent": "rywr"
+    "z": 25740,
+    "parent": "ryv3"
   },
   "94lq": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "hK.png",
     "id": "94lq",
-    "z": 19572,
-    "parent": "rywr"
+    "z": 25764,
+    "parent": "ryv3"
   },
   "iewq": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "s7.png",
     "id": "iewq",
-    "z": 19578,
-    "parent": "rywr"
+    "z": 25743,
+    "parent": "ryv3"
   },
   "krd9": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "s8.png",
     "id": "krd9",
-    "z": 19591,
-    "parent": "rywr"
+    "z": 25730,
+    "parent": "ryv3"
   },
   "esab": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "s9.png",
     "id": "esab",
-    "z": 19569,
-    "parent": "rywr"
+    "z": 25744,
+    "parent": "ryv3"
   },
   "mmmt": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "s10.png",
     "id": "mmmt",
-    "z": 19585,
-    "parent": "rywr"
+    "z": 25766,
+    "parent": "ryv3"
   },
   "xusw": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "sJ.png",
     "id": "xusw",
-    "z": 19576,
-    "parent": "rywr"
+    "z": 25741,
+    "parent": "ryv3"
   },
   "hx9t": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "sC.png",
     "id": "hx9t",
-    "z": 19584,
-    "parent": "rywr"
+    "z": 25763,
+    "parent": "ryv3"
   },
   "scoy": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "sQ.png",
     "id": "scoy",
-    "z": 19581,
-    "parent": "rywr"
+    "z": 25734,
+    "parent": "ryv3"
   },
   "d7ah": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "sK.png",
     "id": "d7ah",
-    "z": 19596,
-    "parent": "rywr"
+    "z": 25735,
+    "parent": "ryv3"
   },
   "ogeh": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t1.png",
     "id": "ogeh",
-    "z": 19589,
-    "parent": "rywr"
+    "z": 25732,
+    "parent": "ryv3"
   },
   "vbyd": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t2.png",
     "id": "vbyd",
-    "z": 19602,
-    "parent": "rywr"
+    "z": 25721,
+    "parent": "ryv3"
   },
   "h705": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t3.png",
     "id": "h705",
-    "z": 19570,
-    "parent": "rywr"
+    "z": 25738,
+    "parent": "ryv3"
   },
   "asgn": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t4.png",
     "id": "asgn",
-    "z": 19565,
-    "parent": "rywr"
+    "z": 25714,
+    "parent": "ryv3"
   },
   "ktwf": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t5.png",
     "id": "ktwf",
-    "z": 19561,
-    "parent": "rywr"
+    "z": 25742,
+    "parent": "ryv3"
   },
   "634q": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t6.png",
     "id": "634q",
-    "z": 19593,
-    "parent": "rywr"
+    "z": 25718,
+    "parent": "ryv3"
   },
   "bl0v": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t7.png",
     "id": "bl0v",
-    "z": 19590,
-    "parent": "rywr"
+    "z": 25736,
+    "parent": "ryv3"
   },
   "jmfn": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t8.png",
     "id": "jmfn",
-    "z": 19573,
-    "parent": "rywr"
+    "z": 25756,
+    "parent": "ryv3"
   },
   "tnmx": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t9.png",
     "id": "tnmx",
-    "z": 19579,
-    "parent": "rywr"
+    "z": 25760,
+    "parent": "ryv3"
   },
   "mvlj": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t10.png",
     "id": "mvlj",
-    "z": 19587,
-    "parent": "rywr"
+    "z": 25761,
+    "parent": "ryv3"
   },
   "je0f": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t11.png",
     "id": "je0f",
-    "z": 19586,
-    "parent": "rywr"
+    "z": 25758,
+    "parent": "ryv3"
   },
   "llnz": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t12.png",
     "id": "llnz",
-    "z": 19612,
-    "parent": "rywr"
+    "z": 25724,
+    "parent": "ryv3"
   },
   "m0je": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t13.png",
     "id": "m0je",
-    "z": 19605,
-    "parent": "rywr"
+    "z": 25747,
+    "parent": "ryv3"
   },
   "fw2b": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t14.png",
     "id": "fw2b",
-    "z": 19604,
-    "parent": "rywr"
+    "z": 25715,
+    "parent": "ryv3"
   },
   "lhuy": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t15.png",
     "id": "lhuy",
-    "z": 19562,
-    "parent": "rywr"
+    "z": 25716,
+    "parent": "ryv3"
   },
   "wmfn": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t16.png",
     "id": "wmfn",
-    "z": 19610,
-    "parent": "rywr"
+    "z": 25726,
+    "parent": "ryv3"
   },
   "emlk": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t17.png",
     "id": "emlk",
-    "z": 19583,
-    "parent": "rywr"
+    "z": 25723,
+    "parent": "ryv3"
   },
   "ey7i": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t18.png",
     "id": "ey7i",
-    "z": 19559,
-    "parent": "rywr"
+    "z": 25725,
+    "parent": "ryv3"
   },
   "elvc": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t19.png",
     "id": "elvc",
-    "z": 19608,
-    "parent": "rywr"
+    "z": 25765,
+    "parent": "ryv3"
   },
   "mom3": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t20.png",
     "id": "mom3",
-    "z": 19611,
-    "parent": "rywr"
+    "z": 25739,
+    "parent": "ryv3"
   },
   "ndqc": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t21.png",
     "id": "ndqc",
-    "z": 19582,
-    "parent": "rywr"
+    "z": 25731,
+    "parent": "ryv3"
   },
   "3i70": {
     "deck": "low_reds_reversed_order_deck",
     "type": "card",
     "cardType": "t22.png",
     "id": "3i70",
-    "z": 19592,
-    "parent": "rywr"
+    "z": 25733,
+    "parent": "ryv3"
   },
   "closed_background": {
     "id": "closed_background",
@@ -5693,7 +5692,7 @@
     "id": "contract_disc",
     "width": 33,
     "height": 33,
-    "z": 79025,
+    "z": 79050,
     "css": "border-radius: 50%;",
     "image": "/i/game-pieces/3D/Marble-3D.svg",
     "svgReplaces": {
@@ -5786,9 +5785,9 @@
       }
     ],
     "layer": -1,
-    "x": 26,
     "y": 1,
-    "color": "#eeeeee"
+    "color": "#eeeeee",
+    "x": 26
   },
   "b1e5": {
     "image": "/assets/745684629_9082",
@@ -6108,7 +6107,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "jypx1",
-    "z": 40276,
+    "z": 41126,
     "y": 179,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
@@ -6121,7 +6120,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "10fah",
-    "z": 40277,
+    "z": 41127,
     "parent": "1_bonus_supply",
     "y": 79,
     "color": "#f06292",
@@ -6134,7 +6133,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "m6j7",
-    "z": 40278,
+    "z": 41128,
     "parent": "1_bonus_supply",
     "y": 129,
     "color": "#f06292",
@@ -6147,7 +6146,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "12ol",
-    "z": 40279,
+    "z": 41129,
     "y": 54,
     "color": "#f06292",
     "background_color_transparent": "#f0629248",
@@ -6160,7 +6159,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "qa4i",
-    "z": 40280,
+    "z": 41130,
     "parent": "1_bonus_supply",
     "y": 29,
     "color": "#f06292",
@@ -6173,7 +6172,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "phlx1",
-    "z": 40281,
+    "z": 41131,
     "parent": "1_bonus_supply",
     "y": 4,
     "color": "#f06292",
@@ -6186,7 +6185,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "9wm4",
-    "z": 40282,
+    "z": 41132,
     "parent": "1_bonus_supply",
     "y": 204,
     "color": "#f06292",
@@ -6199,7 +6198,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "xxp1",
-    "z": 40283,
+    "z": 41133,
     "parent": "1_bonus_supply",
     "y": 154,
     "color": "#f06292",
@@ -6251,19 +6250,19 @@
         "points": 1
       },
       "Pagat": {
-        "text": "2: S Pagat [1]",
+        "text": "1: S Pagat [1]",
         "points": 1
       },
       "Uhu": {
-        "text": "4: S Uhu [2]",
+        "text": "2: S Uhu [2]",
         "points": 2
       },
       "Kakadu": {
-        "text": "6: S Kakadu [3]",
+        "text": "3: S Kakadu [3]",
         "points": 3
       },
       "Quapil": {
-        "text": "8: S Quapil [4]",
+        "text": "4: S Quapil [4]",
         "points": 4
       },
       "Slam": {
@@ -6426,19 +6425,19 @@
         "points": 1
       },
       "Pagat": {
-        "text": "2: S Pagat [1]",
+        "text": "1: S Pagat [1]",
         "points": 1
       },
       "Uhu": {
-        "text": "4: S Uhu [2]",
+        "text": "2: S Uhu [2]",
         "points": 2
       },
       "Kakadu": {
-        "text": "6: S Kakadu [3]",
+        "text": "3: S Kakadu [3]",
         "points": 3
       },
       "Quapil": {
-        "text": "8: S Quapil [4]",
+        "text": "4: S Quapil [4]",
         "points": 4
       },
       "Slam": {
@@ -6601,19 +6600,19 @@
         "points": 1
       },
       "Pagat": {
-        "text": "2: S Pagat [1]",
+        "text": "1: S Pagat [1]",
         "points": 1
       },
       "Uhu": {
-        "text": "4: S Uhu [2]",
+        "text": "2: S Uhu [2]",
         "points": 2
       },
       "Kakadu": {
-        "text": "6: S Kakadu [3]",
+        "text": "3: S Kakadu [3]",
         "points": 3
       },
       "Quapil": {
-        "text": "8: S Quapil [4]",
+        "text": "4: S Quapil [4]",
         "points": 4
       },
       "Slam": {
@@ -6776,19 +6775,19 @@
         "points": 1
       },
       "Pagat": {
-        "text": "2: S Pagat [1]",
+        "text": "1: S Pagat [1]",
         "points": 1
       },
       "Uhu": {
-        "text": "4: S Uhu [2]",
+        "text": "2: S Uhu [2]",
         "points": 2
       },
       "Kakadu": {
-        "text": "6: S Kakadu [3]",
+        "text": "3: S Kakadu [3]",
         "points": 3
       },
       "Quapil": {
-        "text": "8: S Quapil [4]",
+        "text": "4: S Quapil [4]",
         "points": 4
       },
       "Slam": {
@@ -6884,17 +6883,17 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "u9yo",
-    "z": 40285,
+    "z": 41135,
     "parent": "1_silent_bonus_supply",
     "x": 4,
-    "y": 4
+    "y": 29
   },
   "bjo9": {
     "deck": "1_silent_bonus_deck",
     "type": "card",
     "cardType": "Trull",
     "id": "bjo9",
-    "z": 40286,
+    "z": 41136,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 179
@@ -6904,7 +6903,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "j7hg",
-    "z": 40287,
+    "z": 41137,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 154
@@ -6914,17 +6913,17 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "cxcb",
-    "z": 40288,
+    "z": 41138,
     "parent": "1_silent_bonus_supply",
     "x": 4,
-    "y": 79
+    "y": 104
   },
   "k4j4": {
     "deck": "1_silent_bonus_deck",
     "type": "card",
     "cardType": "Uhu",
     "id": "k4j4",
-    "z": 40289,
+    "z": 41139,
     "parent": "1_silent_bonus_supply",
     "x": 4,
     "y": 129
@@ -6934,37 +6933,37 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "p1qo",
-    "z": 40290,
+    "z": 41140,
     "parent": "1_silent_bonus_supply",
     "x": 4,
-    "y": 104
+    "y": 4
   },
   "6y4k": {
     "deck": "1_silent_bonus_deck",
     "type": "card",
     "cardType": "Quapil",
     "id": "6y4k",
-    "z": 40291,
+    "z": 41141,
     "parent": "1_silent_bonus_supply",
     "x": 4,
-    "y": 54
+    "y": 79
   },
   "rzrf": {
     "deck": "1_silent_bonus_deck",
     "type": "card",
     "cardType": "Slam",
     "id": "rzrf",
-    "z": 40292,
+    "z": 41142,
     "parent": "1_silent_bonus_supply",
     "x": 4,
-    "y": 29
+    "y": 54
   },
   "4jf1": {
     "deck": "2_silent_bonus_deck",
     "type": "card",
     "cardType": "Four_Kings",
     "id": "4jf1",
-    "z": 40302,
+    "z": 41152,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 179
@@ -6974,7 +6973,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "2qfc",
-    "z": 40303,
+    "z": 41153,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 54
@@ -6984,7 +6983,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "oxaa",
-    "z": 40304,
+    "z": 41154,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 29
@@ -6994,7 +6993,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "v052",
-    "z": 40305,
+    "z": 41155,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 154
@@ -7004,7 +7003,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "eub9",
-    "z": 40306,
+    "z": 41156,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 129
@@ -7014,7 +7013,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "jsdo",
-    "z": 40307,
+    "z": 41157,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 104
@@ -7024,7 +7023,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "bhpb",
-    "z": 40308,
+    "z": 41158,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 4
@@ -7034,7 +7033,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "92qq",
-    "z": 40309,
+    "z": 41159,
     "parent": "2_silent_bonus_supply",
     "x": 4,
     "y": 79
@@ -7044,7 +7043,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "re4m",
-    "z": 40319,
+    "z": 41169,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 29
@@ -7054,7 +7053,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "ppch",
-    "z": 40320,
+    "z": 41170,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 54
@@ -7064,7 +7063,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "1ljs",
-    "z": 40321,
+    "z": 41171,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 79
@@ -7074,7 +7073,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "6rm4",
-    "z": 40322,
+    "z": 41172,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 179
@@ -7084,7 +7083,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "48ft",
-    "z": 40323,
+    "z": 41173,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 154
@@ -7094,7 +7093,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "55db",
-    "z": 40324,
+    "z": 41174,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 4
@@ -7104,7 +7103,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "8ad8",
-    "z": 40325,
+    "z": 41175,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 129
@@ -7114,7 +7113,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "nlcv",
-    "z": 40326,
+    "z": 41176,
     "parent": "3_silent_bonus_supply",
     "x": 4,
     "y": 104
@@ -7124,7 +7123,7 @@
     "type": "card",
     "cardType": "Four_Kings",
     "id": "viq4",
-    "z": 40336,
+    "z": 41186,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 179
@@ -7134,7 +7133,7 @@
     "type": "card",
     "cardType": "Trull",
     "id": "rivc",
-    "z": 40337,
+    "z": 41187,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 54
@@ -7144,7 +7143,7 @@
     "type": "card",
     "cardType": "King_Ultimo",
     "id": "cjmk",
-    "z": 40338,
+    "z": 41188,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 154
@@ -7154,7 +7153,7 @@
     "type": "card",
     "cardType": "Pagat",
     "id": "hbpt",
-    "z": 40339,
+    "z": 41189,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 4
@@ -7164,7 +7163,7 @@
     "type": "card",
     "cardType": "Uhu",
     "id": "tdk9",
-    "z": 40340,
+    "z": 41190,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 129
@@ -7174,7 +7173,7 @@
     "type": "card",
     "cardType": "Kakadu",
     "id": "02ce",
-    "z": 40341,
+    "z": 41191,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 29
@@ -7184,7 +7183,7 @@
     "type": "card",
     "cardType": "Quapil",
     "id": "t0vx",
-    "z": 40342,
+    "z": 41192,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 104
@@ -7194,7 +7193,7 @@
     "type": "card",
     "cardType": "Slam",
     "id": "j1ej",
-    "z": 40343,
+    "z": 41193,
     "parent": "4_silent_bonus_supply",
     "x": 4,
     "y": 79
@@ -7204,7 +7203,7 @@
     "type": "card",
     "cardType": "Sack",
     "id": "fgml",
-    "z": 40284,
+    "z": 41134,
     "parent": "1_bonus_supply",
     "x": 4,
     "y": 104
@@ -7214,7 +7213,7 @@
     "type": "card",
     "cardType": "Sack",
     "id": "6xp4",
-    "z": 40301,
+    "z": 41151,
     "parent": "2_bonus_supply",
     "x": 4,
     "y": 154
@@ -7224,17 +7223,17 @@
     "type": "card",
     "cardType": "Sack",
     "id": "rjnq",
-    "z": 40318,
+    "z": 41168,
     "parent": "3_bonus_supply",
     "x": 4,
-    "y": 54
+    "y": 79
   },
   "d1nm": {
     "deck": "4_bonus_deck",
     "type": "card",
     "cardType": "Sack",
     "id": "d1nm",
-    "z": 40335,
+    "z": 41185,
     "parent": "4_bonus_supply",
     "x": 4,
     "y": 79
@@ -8924,18 +8923,6 @@
     "css": "color: black;font-size: 20px;text-align: left",
     "text": "7  8  9  10  J  C  Q  K  -  ♠ & ♣"
   },
-  "rywr": {
-    "type": "pile",
-    "parent": "3_deck_holder",
-    "x": 4,
-    "y": 4,
-    "width": 75,
-    "height": 75,
-    "handleCSS": "background:black;left:38px;width:50px;top:55px;height:50px;border-radius:100px;color:white;font-size:35px;background-size:100%;display:block;line-height:50px",
-    "handleOffset": 0,
-    "clickRoutine": [],
-    "id": "rywr"
-  },
   "info_game_structure_parent": {
     "id": "info_game_structure_parent",
     "x": 1392,
@@ -8966,7 +8953,7 @@
     "movable": false,
     "movableInEdit": false,
     "enlarge": 3,
-    "image": "/assets/-1978681715_125062",
+    "image": "/assets/1683833008_32906",
     "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon."
   },
   "info_game_structure_icon": {
@@ -9268,18 +9255,6 @@
     "id": "c070",
     "parent": "coins_supply"
   },
-  "4blm": {
-    "type": "pile",
-    "parent": "1_deck_holder",
-    "x": 4,
-    "y": 4,
-    "width": 75,
-    "height": 75,
-    "handleCSS": "background:black;left:37px;width:50px;top:55px;height:50px;border-radius:100px;color:white;font-size:35px;background-size:100%;display:block;line-height:50px",
-    "handleOffset": 0,
-    "clickRoutine": [],
-    "id": "4blm"
-  },
   "cursor_settings": {
     "type": "button",
     "id": "cursor_settings",
@@ -9498,6 +9473,30 @@
       }
     ]
   },
+  "ryv3": {
+    "type": "pile",
+    "parent": "3_deck_holder",
+    "x": 4,
+    "y": 4,
+    "width": 75,
+    "height": 75,
+    "handleCSS": "background:black;left:37px;width:50px;top:55px;height:50px;border-radius:100px;color:white;font-size:35px;background-size:100%;display:block;line-height:50px",
+    "handleOffset": 0,
+    "clickRoutine": [],
+    "id": "ryv3"
+  },
+  "l1yl": {
+    "type": "pile",
+    "parent": "1_deck_holder",
+    "x": 4,
+    "y": 4,
+    "width": 75,
+    "height": 75,
+    "handleCSS": "background:black;left:37px;width:50px;top:55px;height:50px;border-radius:100px;color:white;font-size:35px;background-size:100%;display:block;line-height:50px",
+    "handleOffset": 0,
+    "clickRoutine": [],
+    "id": "l1yl"
+  },
   "_meta": {
     "version": 15,
     "info": {
@@ -9509,7 +9508,7 @@
       "mode": "vs",
       "time": "30+",
       "attribution": "Layout design and coding by Jonathan Cox (email: JonGetsGames@gmail.com for inquiries).&nbsp; All art assets are from https://commons.wikimedia.org/wiki/Category:Tarot_nouveau_-_Grimaud_-_1898 and are in the Public Domain.",
-      "lastUpdate": 1714098071736,
+      "lastUpdate": 1714964977827,
       "showName": true,
       "skill": "medium",
       "description": "Classic 4 player only, variable-partner, tarot, trick-taking game.",
