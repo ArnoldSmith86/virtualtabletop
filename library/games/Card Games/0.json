@@ -2897,7 +2897,11 @@
       " "
     ],
     "showing": false,
-    "player": ""
+    "player": "",
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000",
+    "turn": false
   },
   "bidValue7": {
     "inheritFrom": {
@@ -7982,6 +7986,20 @@
     "text": "Turn",
     "clickRoutine": [
       {
+        "func": "IF",
+        "operand1": "${PROPERTY first OF bidWinner}",
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "bidWinner"
+            ],
+            "property": "first",
+            "value": true
+          }
+        ]
+      },
+      {
         "func": "TURN",
         "turnCycle": "${PROPERTY direction}",
         "source": [
@@ -9492,8 +9510,32 @@
     },
     "bidWinnerRoutine": [
       {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true,
+        "collection": "activeTurn"
+      },
+      {
+        "func": "COUNT",
+        "collection": "activeTurn"
+      },
+      {
         "func": "IF",
-        "condition": "${PROPERTY first OF bidWinner}",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          "var activeTurn = true"
+        ],
+        "elseRoutine": [
+          "var activeTurn = false"
+        ]
+      },
+      "var firstCardPlayed = ${PROPERTY first OF bidWinner}",
+      "var normalTurn = ${activeTurn} && ${firstCardPlayed}",
+      {
+        "func": "IF",
+        "condition": "${normalTurn}",
         "thenRoutine": [
           {
             "func": "CLICK",
@@ -9505,7 +9547,7 @@
         "elseRoutine": [
           {
             "func": "SELECT",
-            "type": "seat",
+            "source": "activeTurn",
             "property": "turn",
             "value": true
           },
@@ -9515,12 +9557,10 @@
             "value": false
           },
           {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${seat}"
-          },
-          {
             "func": "SET",
+            "collection": [
+              "${seat}"
+            ],
             "property": "turn",
             "value": true
           },
@@ -39780,7 +39820,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1714957472096,
+      "lastUpdate": 1714959935355,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
