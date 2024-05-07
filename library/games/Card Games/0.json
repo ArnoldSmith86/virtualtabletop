@@ -1273,10 +1273,10 @@
     "svgReplaces": {
       "currentColor": "deckSuitsColor"
     },
-    "image": "i/icons/clubs.svg",
+    "deckSuitsColor": "",
     "deckSuitsUni": "♣",
     "deckSuits": "clubs",
-    "deckSuitsColor": ""
+    "image": "i/icons/clubs.svg"
   },
   "choose11": {
     "inheritFrom": {
@@ -1291,9 +1291,9 @@
     "deckSuit": "clubs",
     "image": "i/icons/diamonds.svg",
     "text": "",
+    "deckSuitsColor": "#e50932",
     "deckSuitsUni": "♦",
-    "deckSuits": "diamonds",
-    "deckSuitsColor": "#e50932"
+    "deckSuits": "diamonds"
   },
   "choose12": {
     "inheritFrom": {
@@ -1309,9 +1309,9 @@
     "deckSuit": "coins",
     "image": "i/icons/spades.svg",
     "text": "",
+    "deckSuitsColor": "",
     "deckSuitsUni": "♠",
-    "deckSuits": "spades",
-    "deckSuitsColor": ""
+    "deckSuits": "spades"
   },
   "choose13": {
     "inheritFrom": {
@@ -1326,9 +1326,9 @@
     "deckSuit": "cups",
     "image": "i/icons/hearts.svg",
     "text": "",
+    "deckSuitsColor": "#e50932",
     "deckSuitsUni": "♥",
-    "deckSuits": "hearts",
-    "deckSuitsColor": "#e50932"
+    "deckSuits": "hearts"
   },
   "choose14": {
     "inheritFrom": {
@@ -1342,8 +1342,8 @@
     "deckSuit": "swords",
     "image": "",
     "text": "No\nTrump",
-    "deckSuitsUni": "NT",
-    "deckSuitsColor": ""
+    "deckSuitsColor": "",
+    "deckSuitsUni": "NT"
   },
   "bidSuit1": {
     "id": "bidSuit1",
@@ -5701,7 +5701,7 @@
                   },
                   {
                     "type": "subtitle",
-                    "text": "The trump indicator to the right of this button is not set. Setting it is necessary for most games using this scoring system. Are you sure you want to continue?"
+                    "text": "The trump indicator is not set. Setting it is necessary for most games using this scoring system. Are you sure you want to continue?"
                   }
                 ],
                 "confirmButtonText": "Yes",
@@ -8368,10 +8368,10 @@
     ],
     "roundLabel": "",
     "y": 650,
+    "scale": 0,
     "rounds": [
       "Card Points"
-    ],
-    "scale": 0
+    ]
   },
   "seat1": {
     "type": "seat",
@@ -13787,6 +13787,15 @@
         "value": [
           "Tricks"
         ]
+      },
+      "// This comes from Papayou",
+      {
+        "func": "SET",
+        "collection": [
+          "passCountButton"
+        ],
+        "property": "text",
+        "value": 3
       }
     ],
     "customFaceCount": 6,
@@ -16121,6 +16130,11 @@
       "currentColor": "deckSuitColor"
     },
     "activeFace": 2,
+    "resetProperties": {
+      "x": 1505,
+      "y": 145
+    },
+    "scale": 0,
     "faces": [
       {
         "image": "i/icons/clubs.svg"
@@ -16136,12 +16150,7 @@
         "image": "i/icons/hearts.svg",
         "deckSuitColor": "#e50932"
       }
-    ],
-    "resetProperties": {
-      "x": 1505,
-      "y": 145
-    },
-    "scale": 0
+    ]
   },
   "itemsButton": {
     "type": "button",
@@ -18530,7 +18539,7 @@
         0
       ]
     ],
-    "hintText": "\"After round is over, press Add Card Points button. Twenty point is automatically added to value of the last player to press the Take button. Use the small temporary scoreboard as an aid to determine actual score that should be entered on main scoreboard. Enter points on main scoreboard using green/red +/- buttons.\"",
+    "hintText": "\"After round is over, press Add Card Points button. Twenty points are automatically added to value of the last player to press the Take button. Use the small temporary scoreboard as an aid to determine actual score that should be entered on main scoreboard. Enter points on main scoreboard using green/red +/- buttons.\"",
     "scoreExceptionsRoutine": [
       "var result = ${points}",
       "var last = ${PROPERTY lastPressedBy OF takeButton}",
@@ -19341,14 +19350,6 @@
         ],
         "property": "scale",
         "value": 0
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "passCountButton"
-        ],
-        "property": "text",
-        "value": 3
       }
     ],
     "scoreExceptionsRoutine": [
@@ -19390,7 +19391,17 @@
         "value": 0
       }
     ],
-    "movable": false
+    "movable": false,
+    "postSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "passIndicator"
+        ],
+        "property": "activeFace",
+        "value": 0
+      }
+    ]
   },
   "gameID17": {
     "id": "gameID17",
@@ -21187,7 +21198,8 @@
       "Pass and cannot bid again. Min bid = 13 + suit or NT. No priority among suits but NT > any trump bid. Declarer can change suit for +2 bid increase and can go NT for +1 increase. Score x2 for NT.",
       "Options: (1) Name any card. Partner revealed only when card played. (2) Winner of first trick (if declarer, then solo). (3) Announce 'no friend' for score x2.",
       "Must follow suit unless Mighty or Joker. 10-Ace 1 point each. Score x2 if declarer takes all 20 points or less than 10."
-    ]
+    ],
+    "player": "Order (High to Low)"
   },
   "playerAid6": {
     "type": "scoreboard",
@@ -22202,7 +22214,7 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "4",
+    "versionNumber": "0",
     "scale": 0
   },
   "cloneButton": {
@@ -23427,55 +23439,6 @@
     "parent": "itemsHolder25",
     "clickable": false
   },
-  "95mt": {
-    "width": 30,
-    "height": 30,
-    "item": 26,
-    "color": "#fcf0d4",
-    "color3": "#f8dd9f",
-    "color2": "#000000",
-    "layer": 10,
-    "svgReplaces": {
-      "#000000": "color"
-    },
-    "text": 1,
-    "css": {
-      "border": "1px solid ${PROPERTY color2}",
-      "color": "${PROPERTY color2}",
-      "background": "${PROPERTY color}",
-      "text-align": "center",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center"
-    },
-    "faces": [
-      {
-        "text": "x2"
-      },
-      {
-        "text": "x4"
-      },
-      {
-        "text": "x8"
-      },
-      {
-        "text": "x16"
-      },
-      {
-        "text": "x32"
-      },
-      {
-        "text": "x64"
-      }
-    ],
-    "clonedFrom": "aijn",
-    "borderRadius": 3,
-    "itemMarker": true,
-    "ownedBy": null,
-    "id": "95mt",
-    "parent": "itemsHolder26",
-    "clickable": false
-  },
   "z60k": {
     "y": 4,
     "x": 4,
@@ -24394,7 +24357,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/countpnt.html.\\a\\a Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder. Trump is automatically indicated on the trump indicator widget in bottom left.\\a\\a At the end of the round, press Add Card Points button to calculate and enter card points captured that round for each player.\\a\\a Press Transfer Score button to autocalculate remaining values on small temporary scoreboard and enter the score onto the main scoreboard.\"",
+    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/ countpnt.html.\\a\\a Put 3 cards into holder next to seat to indicate bid. Cards are played to the main central holder. Trump is automatically indicated on the trump indicator widget.\\a\\a At the end of the round, press Add Card Points button to calculate and enter card points captured that round for each player.\\a\\a Press Transfer Score button to autocalculate remaining values on small temporary scoreboard and enter the score onto the main scoreboard.\"",
     "y": -439,
     "transferButtonReturn": false,
     "preSetExceptionsRoutine": [
@@ -26784,7 +26747,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/collude.html.\"",
+    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/ collude.html.\"",
     "playerAidDetail1": "Bonus",
     "roundsTemp": [
       "Card Points"
@@ -26866,8 +26829,8 @@
     "chooser": 15,
     "image": "",
     "text": "All\nTrump",
-    "deckSuitsUni": "AT",
-    "deckSuitsColor": ""
+    "deckSuitsColor": "",
+    "deckSuitsUni": "AT"
   },
   "choose16": {
     "type": "button",
@@ -28914,7 +28877,7 @@
     "settingsDecksArray": [
       [
         "deckType",
-        1
+        0
       ],
       [
         "cardCount",
@@ -28922,7 +28885,7 @@
       ],
       [
         "seatCount",
-        7
+        4
       ],
       [
         "hideCards",
@@ -28930,7 +28893,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"Choose number of players from Decks & Players button.\\a\\a Bid number of tricks using black and white bid system widgets near seat. Bid suit by using the trump widget in the bottom-left.\\a\\a Tricks are counted automatically in the scoreboard to the right, but scores should be entered manually using the green/red +/- buttons above the main scoreboard.\"",
+    "hintText": "\"Choose number of players using Version button.\\a\\a Bid number of tricks using black and white bid system widgets near seat. Bid suit by using the trump widget.\\a\\a Tricks are counted automatically in the scoreboard to the right, but scores should be entered manually using the green/red +/- buttons above the main scoreboard.\"",
     "preSetExceptionsRoutine": [
       {
         "func": "CALL",
@@ -31132,30 +31095,30 @@
     ],
     "deckSuitsImage": [
       "",
-      "",
-      "",
-      "",
-      "",
-      "",
+      "i/icons/clubs.svg",
+      "i/icons/diamonds.svg",
+      "i/icons/spades.svg",
+      "i/icons/hearts.svg",
+      "/assets/-374765193_624",
       ""
     ],
     "deckSuitsText": [
       "",
-      "Petite",
-      "Garde",
-      "Garde+\nChien",
-      "Garde-\nChien",
       "",
-      ""
+      "",
+      "",
+      "",
+      "",
+      "No\nTrump"
     ],
     "deckSuitsUni": [
       "",
-      "P",
-      "G",
-      "G+C",
-      "G-C",
-      "",
-      ""
+      "♣",
+      "♦",
+      "♠",
+      "♥",
+      "*",
+      "NT"
     ],
     "deckType": 7,
     "staged": false
@@ -31394,7 +31357,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/agonaunt.html.\\a\\a Manually move tokens from holder by seat to player board in upper-left. Queens and jokers will be displayed face-up in front of the player taking the trick as a reminder. When it is time for the 'Dump Trick' a message will appear above the hand.\\a\\a After the round, press one or more of the buttons below the board to move tokens back to players or to the discard area.\"",
+    "hintText": "\"An original game by David Parlett. Rules at https://www.parlettgames.uk/oricards/ agonaunt.html.\\a\\a Manually move tokens from holder by seat to player board in upper-left. Queens and jokers will be displayed face-up in front of the player taking the trick as a reminder. When it is time for the 'Dump Trick' a message will appear above the hand.\\a\\a After the round, press one or more of the buttons below the board to move tokens back to players or to the discard area.\"",
     "trumps": 4,
     "y": -439,
     "text": "Agony Aunt",
@@ -33630,8 +33593,8 @@
       }
     ],
     "classes": "symbols",
-    "activeFace": 3,
-    "scale": 0
+    "scale": 0,
+    "activeFace": 3
   },
   "fbpi": {
     "y": 4,
@@ -36386,6 +36349,14 @@
         ],
         "property": "activeFace",
         "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "passCountButton"
+        ],
+        "property": "text",
+        "value": 2
       }
     ],
     "displayArray": [
@@ -38817,46 +38788,6 @@
     "image": "/assets/632722828_978266",
     "height": 1500
   },
-  "3fxt": {
-    "width": 40,
-    "height": 40,
-    "classes": "chip",
-    "color": "#fcf0d4",
-    "faces": [
-      {
-        "image": "i/game-pieces/2D/Checkers-2D.svg",
-        "crowned": false
-      },
-      {
-        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "crowned": true
-      }
-    ],
-    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 1,
-    "crowned": true,
-    "secondaryColor": "#ffffff",
-    "layer": 10,
-    "item": 4,
-    "color3": "#f8dd9f",
-    "color2": "#000000",
-    "clonedFrom": "5x37",
-    "itemMarker": true,
-    "x": 4,
-    "y": 4,
-    "z": 680,
-    "ownedBy": null,
-    "id": "3fxt",
-    "parent": "itemsHolder4",
-    "clickable": false
-  },
   "playerAid46f": {
     "id": "playerAid46f",
     "parent": "playerAid46",
@@ -39822,7 +39753,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1715032639321,
+      "lastUpdate": 1715057032015,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -39837,5 +39768,97 @@
       "language": "en-US",
       "players": "2-8"
     }
+  },
+  "u74d": {
+    "width": 40,
+    "height": 40,
+    "classes": "chip",
+    "color": "#fcf0d4",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "layer": 10,
+    "item": 4,
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "clonedFrom": "hp47",
+    "itemMarker": true,
+    "x": 4,
+    "y": 4,
+    "z": 952,
+    "ownedBy": null,
+    "id": "u74d",
+    "parent": "itemsHolder4",
+    "clickable": false
+  },
+  "reoe": {
+    "width": 30,
+    "height": 30,
+    "item": 26,
+    "color": "#fcf0d4",
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "layer": 10,
+    "svgReplaces": {
+      "#000000": "color"
+    },
+    "text": 1,
+    "css": {
+      "border": "1px solid ${PROPERTY color2}",
+      "color": "${PROPERTY color2}",
+      "background": "${PROPERTY color}",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "faces": [
+      {
+        "text": "x2"
+      },
+      {
+        "text": "x4"
+      },
+      {
+        "text": "x8"
+      },
+      {
+        "text": "x16"
+      },
+      {
+        "text": "x32"
+      },
+      {
+        "text": "x64"
+      }
+    ],
+    "clonedFrom": "95mt",
+    "borderRadius": 3,
+    "itemMarker": true,
+    "z": 954,
+    "dragging": null,
+    "hoverParent": "itemsHolder26",
+    "ownedBy": null,
+    "id": "reoe",
+    "parent": "itemsHolder26",
+    "clickable": false
   }
 }
