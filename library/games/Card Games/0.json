@@ -2745,7 +2745,9 @@
       0
     ],
     "player": "",
-    "turn": false
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "bidValue3": {
     "inheritFrom": {
@@ -8368,10 +8370,10 @@
     ],
     "roundLabel": "",
     "y": 650,
+    "scale": 0,
     "rounds": [
       "Card Points"
-    ],
-    "scale": 0
+    ]
   },
   "seat1": {
     "type": "seat",
@@ -39637,7 +39639,7 @@
   },
   "scoreMultiplier": {
     "id": "scoreMultiplier",
-    "x": 1504,
+    "x": 1515,
     "y": 144,
     "css": {
       "default": {
@@ -39659,7 +39661,7 @@
     },
     "width": 50,
     "height": 50,
-    "borderRadius": 8,
+    "borderRadius": 4,
     "text": "Score\nx\n\n",
     "multiple": 1,
     "clickRoutine": [
@@ -39667,8 +39669,8 @@
         "func": "SET",
         "collection": "thisButton",
         "property": "multiple",
-        "relation": "+",
-        "value": 1
+        "relation": "*",
+        "value": 2
       }
     ],
     "z": 80173,
@@ -39692,12 +39694,11 @@
     "scale": 0
   },
   "scoreMultiplierMinus": {
-    "type": "button",
+    "type": "basic",
     "id": "scoreMultiplierMinus",
     "parent": "scoreMultiplier",
-    "y": -10,
     "width": 20,
-    "height": 20,
+    "height": 50,
     "z": 79090,
     "text": "-",
     "clickRoutine": [
@@ -39711,15 +39712,27 @@
         "value": 1
       }
     ],
-    "x": -20
+    "x": -22,
+    "css": {
+      "default": {
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "#e7a9c6",
+        "font-size": "45px",
+        "border": "1px solid red"
+      }
+    },
+    "movable": false,
+    "borderRadius": 4,
+    "y": -1
   },
   "scoreMultiplierPlus": {
-    "type": "button",
+    "type": "basic",
     "id": "scoreMultiplierPlus",
     "parent": "scoreMultiplier",
-    "y": -10,
     "width": 20,
-    "height": 20,
+    "height": 50,
     "z": 79090,
     "clickRoutine": [
       {
@@ -39732,8 +39745,20 @@
         "value": 1
       }
     ],
-    "x": 50,
-    "text": "+"
+    "text": "+",
+    "css": {
+      "default": {
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "#a9e7ca",
+        "font-size": "45px",
+        "border": "1px solid green"
+      }
+    },
+    "x": 51,
+    "borderRadius": 4,
+    "y": -1
   },
   "_meta": {
     "version": 15,
@@ -39746,7 +39771,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1715094141079,
+      "lastUpdate": 1715096614972,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
