@@ -8652,10 +8652,7 @@
           }
         ]
       }
-    ],
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000"
+    ]
   },
   "preSetsButton": {
     "type": "button",
@@ -14957,6 +14954,10 @@
     ],
     "settingsArray": [
       [
+        "showBidSuit",
+        false
+      ],
+      [
         "showBidValue",
         false
       ],
@@ -15272,7 +15273,6 @@
         ]
       }
     ],
-    "playerAidDetail1": "Notes",
     "x": -353,
     "resetRoutine": [
       {
@@ -21252,17 +21252,6 @@
     "tempScore": [],
     "showing": false,
     "y": 37,
-    "score6": [
-      "Spades are trumps",
-      "Clubs are trumps",
-      "Diamonds are trumps",
-      "Hearts are trumps",
-      "No trumps",
-      "No trumps; rank inverted",
-      "No trumps; alternate rank",
-      "No trumps; swap rank after 6 tricks",
-      "Any of the above contracts"
-    ],
     "score": [],
     "score12": [
       "Spades are trumps",
@@ -21360,44 +21349,6 @@
       "Options: (1) Name any card. Partner revealed only when card played. (2) Winner of first trick (if declarer, then solo). (3) Announce 'no friend' for score x2.",
       "Must follow suit unless Mighty or Joker. 10-Ace 1 point each. Score x2 if declarer takes all 20 points or less than 10."
     ]
-  },
-  "playerAid6": {
-    "type": "scoreboard",
-    "id": "playerAid6",
-    "x": 1225,
-    "y": 265,
-    "width": 360,
-    "height": 305,
-    "clickable": false,
-    "css": {
-      ".scoreboard tbody tr:nth-child(1) td": {
-        "background": "#a9c6e8"
-      },
-      ".scoreboard td": {
-        "text-align": "left"
-      }
-    },
-    "roundLabel": "Contract",
-    "rounds": [
-      "Spades",
-      "Clubs",
-      "Diamonds",
-      "Hearts",
-      "Obenabe",
-      "Undenufe",
-      "Slalom",
-      "Gustav",
-      "Joker 1/2"
-    ],
-    "seats": "playerAidDetail1",
-    "showAllRounds": true,
-    "showPlayerColors": false,
-    "showTotals": false,
-    "onlyVisibleForSeat": [],
-    "playerAid": true,
-    "scoreProperty": "score6",
-    "movable": false,
-    "movableInEdit": false
   },
   "gameID20": {
     "id": "gameID20",
@@ -26162,40 +26113,6 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true
-  },
-  "playerAid6a": {
-    "type": "scoreboard",
-    "id": "playerAid6a",
-    "y": 307,
-    "width": 360,
-    "height": 130,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "css": {
-      "default": {
-        "font-size": "15px"
-      },
-      ".scoreboard td:first-child": {
-        "--firstColWidth": "120px"
-      },
-      ".scoreboard tbody tr:nth-child(1) td": {
-        "background": "#a9c6e8"
-      },
-      ".scoreboard td": {
-        "text-align": "left"
-      }
-    },
-    "roundLabel": "Trump Reminders",
-    "rounds": [
-      "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
-    ],
-    "seats": "playerAidDetail2",
-    "showAllRounds": true,
-    "showPlayerColors": false,
-    "showTotals": false,
-    "parent": "playerAid6",
-    "fixedParent": true
   },
   "playerAid12a": {
     "type": "scoreboard",
@@ -39928,7 +39845,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1715370473390,
+      "lastUpdate": 1715373279384,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -40620,5 +40537,133 @@
       }
     ],
     "scale": 0
+  },
+  "playerAid6": {
+    "id": "playerAid6",
+    "x": 1685,
+    "y": 590,
+    "z": 79088,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightblue"
+    },
+    "onlyVisibleForSeat": [],
+    "text": "Schafkopf 4P player aid master widget",
+    "playerAid": true,
+    "showTotals": false
+  },
+  "playerAid6a": {
+    "id": "playerAid6a",
+    "parent": "playerAid6",
+    "x": -200,
+    "y": 25,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Ranks & Points"
+  },
+  "playerAid6aAsset": {
+    "id": "playerAid6aAsset",
+    "parent": "playerAid6a",
+    "width": 650,
+    "height": 510,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      " .scoring-aid": {
+        "display": "none"
+      },
+      " table": {
+        "border-spacing": "0px",
+        "width": "100%"
+      },
+      " td": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      " th": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      "#enlarged > .scoring-aid": {
+        "display": "block"
+      }
+    },
+    "enlarge": 1,
+    "html": "<div class='trump-aid'> <h3>No Trumps / Non-Trumps</h3> <br/> <strong>Ace</strong> 11 <br/> <strong>King</strong> 4 <br/> <strong>Queen</strong> 3 <br/> <strong>Jack</strong> 2 <br/> <strong>Ten</strong> 10 <br/> <strong>Nine</strong> 0 <br/> <strong>Eight</strong> 0 (if a contract without a trump suit, then 8 points) <br/> <strong>Seven</strong> 0 <br/> <strong>Six</strong> 0 <br/> <h3>Trump Suit</h3> <br/> <strong>Jack</strong> 20 <br/> <strong>Nine</strong> 14 <br/> <strong>King</strong> 4 <br/> <strong>Queen</strong> 3 <br/> <strong>Ten</strong> 10 <br/> <strong>Eight</strong> 0 <br/> <strong>Seven</strong> 0 <br/> <strong>Six</strong> 0 </div>"
+  },
+  "playerAid6b": {
+    "id": "playerAid6b",
+    "parent": "playerAid6",
+    "x": -200,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "General"
+  },
+  "playerAid6bAsset": {
+    "id": "playerAid6bAsset",
+    "parent": "playerAid6b",
+    "width": 645,
+    "height": 275,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      }
+    },
+    "enlarge": 1,
+    "html": "<div class='general-aid'> <h3>Trump Reminders</h3> <br/><strong>May</strong> follow suit or trump.<br/><br/><strong>Never</strong> required to play Jack of trumps.<br/><br/><strong>Must</strong> overtrump unless you only have trumps in your hand.<br/><br/><strong>Cannot</strong> play a lower trump if you have cards of the nontrump led suit and the second player trumps. You must either play the led suit or a higher trump, unless you only have trumps in your hand. </div>"
   }
 }
