@@ -362,7 +362,7 @@
         "property": "sortTrucoPaulista",
         "value": null
       },
-      "//This is needed because of Pitch and Agony Aunt",
+      "//This is needed because of Pitch, Agony Aunt, and Mighty",
       {
         "func": "SET",
         "property": "suit",
@@ -376,6 +376,12 @@
       {
         "func": "SET",
         "property": "order",
+        "value": null
+      },
+      "//This is needed because of Schafkopf",
+      {
+        "func": "SET",
+        "property": "sortSchafkopf",
         "value": null
       },
       "//This is needed because of Counterpoint",
@@ -2899,7 +2905,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "bidValue7": {
     "inheritFrom": {
@@ -3861,6 +3868,7 @@
         "sortCoincheTrump": 11,
         "sortTrucoMineiro": 3,
         "sortTrucoPaulista": 4,
+        "sortSchafkopf": 6.5,
         "sortSkat": 13,
         "sortSuitSkat": 2
       },
@@ -5630,7 +5638,7 @@
       "x": 780,
       "y": 370
     },
-    "z": 80125,
+    "z": 80258,
     "deckSuitsColor": "",
     "customFaceCount": 6
   },
@@ -8366,10 +8374,10 @@
     ],
     "roundLabel": "",
     "y": 650,
+    "scale": 0,
     "rounds": [
       "Card Points"
-    ],
-    "scale": 0
+    ]
   },
   "seat1": {
     "type": "seat",
@@ -38812,7 +38820,7 @@
         "background": "white"
       }
     },
-    "html": "<img src='/i/noto-emoji/emoji_u2660.svg' height=18/><img src='/i/noto-emoji/emoji_u2663.svg' height=18 /><img src='/i/noto-emoji/emoji_u2666.svg' height=18/><img src='/i/noto-emoji/emoji_u2665.svg' height=18/>"
+    "html": "Hi<img src='/i/noto-emoji/emoji_u2665.svg' height=18/><img src='/i/noto-emoji/emoji_u2666.svg' height=18 /><img src='/i/noto-emoji/emoji_u2663.svg' height=18/><img src='/i/noto-emoji/emoji_u2660.svg' height=18/>Lo"
   },
   "contractType": {
     "id": "contractType",
@@ -39439,8 +39447,8 @@
       }
     ],
     "teamButton": 9,
-    "x": 336,
-    "html": "Contract Type"
+    "html": "Contract Type",
+    "x": 336
   },
   "teamsAndContracts": {
     "type": "holder",
@@ -39786,7 +39794,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1715336397980,
+      "lastUpdate": 1715365468980,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -40134,6 +40142,79 @@
           }
         ]
       }
+    ],
+    "noQueensArray": [
+      "FW1",
+      "wenz",
+      "farbwenzTout1",
+      "wenzTout"
+    ],
+    "sortPreExceptionsRoutine": [
+      "var auctionType = ${PROPERTY auctionType OF contractType}",
+      "var noQueens = ${PROPERTY noQueensArray} includes ${auctionType}",
+      {
+        "func": "IF",
+        "condition": "${noQueens}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "C 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 15.5
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "S 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 3.5
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "H 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 21.5
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "D 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 9.5
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "rank",
+            "value": "Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": null
+          }
+        ]
+      }
     ]
   },
   "playerAid45": {
@@ -40170,7 +40251,7 @@
         "background": "white"
       }
     },
-    "html": "<img src='/i/noto-emoji/emoji_u2663.svg' height=18 /><img src='/i/noto-emoji/emoji_u2660.svg' height=18/><img src='/i/noto-emoji/emoji_u2665.svg' height=18/><img src='/i/noto-emoji/emoji_u2666.svg' height=18/>"
+    "html": "Hi<img src='/i/noto-emoji/emoji_u2663.svg' height=18 /><img src='/i/noto-emoji/emoji_u2660.svg' height=18/><img src='/i/noto-emoji/emoji_u2665.svg' height=18/><img src='/i/noto-emoji/emoji_u2666.svg' height=18/>Lo"
   },
   "playerAid45b": {
     "id": "playerAid45b",
