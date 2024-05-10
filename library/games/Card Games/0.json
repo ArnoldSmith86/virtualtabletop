@@ -13478,6 +13478,10 @@
       [
         "scoreMultiplier",
         0
+      ],
+      [
+        "talonButton",
+        0
       ]
     ],
     "settingsArray": [
@@ -34751,7 +34755,7 @@
         1
       ],
       [
-        "talon",
+        "talonButton",
         1
       ],
       [
@@ -39782,7 +39786,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1715327168404,
+      "lastUpdate": 1715336397980,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -40334,5 +40338,72 @@
     },
     "enlarge": 1,
     "html": "<div class='contracts-aid'> <h3>Contracts</h3> <br /> <h4>Rufspiel</h4>Trump: Q <font size=5>&#9827;</font>, Q <font size=5>&#9824;</font>, Q <font size=5 style='color: red'>&#9829;</font>, Q <font size=5 style='color: red'>&#9830;</font>, J <font size=5>&#9827;</font>, J <font size=5>&#9824;</font>, J <font size=5 style='color: red'>&#9829;</font>, J <font size=5 style='color: red'>&#9830;</font>, A <font size=5 style='color: red'>&#9829;</font>, 10 <font size=5 style='color: red'>&#9829;</font>, K <font size=5 style='color: red'>&#9829;</font>, 9 <font size=5 style='color: red'>&#9829;</font>, 8 <font size=5 style='color: red'>&#9829;</font>, 7 <font size=5 style='color: red'>&#9829;</font> <br />Bid winner calls an A, holder of which will be their partner. Partner not known until A is played. Bid winner cannot call A in hand and must have at least one card of called A suit in hand. Cannot call A <font size=5 style='color: red'>&#9829;</font>. <br /> <h4>Farbwenz</h4>Trump: J <font size=5>&#9827;</font>, J <font size=5>&#9824;</font>, J <font size=5 style='color: red'>&#9829;</font>, J <font size=5 style='color: red'>&#9830;</font> (any suit) A, 10, K, 9, 8, 7 <br />Bid winner names a suit which joins Jacks in trump. <br /> <h4>Wenz</h4>Trump: J <font size=5>&#9827;</font>, J <font size=5>&#9824;</font>, J <font size=5 style='color: red'>&#9829;</font>, J <font size=5 style='color: red'>&#9830;</font> <br /> <h4>Solo</h4>Trump: Q <font size=5>&#9827;</font>, Q <font size=5>&#9824;</font>, Q <font size=5 style='color: red'>&#9829;</font>, Q <font size=5 style='color: red'>&#9830;</font>, J <font size=5>&#9827;</font>, J <font size=5>&#9824;</font>, J <font size=5 style='color: red'>&#9829;</font>, J <font size=5 style='color: red'>&#9830;</font>, (any suit) A, 10, K, 9, 8, 7 <br />Bid winner names a suit which joins Queens and Jacks in trump. <br /> <h4>-Tout</h4>As contract above but bidding to win all tricks. <br /> <h4>Sie</h4>If dealt all Queens and Jacks, the player shows them and wins automatically. <br /> <h4>Ramsch</h4>Trump: Q <font size=5>&#9827;</font>, Q <font size=5>&#9824;</font>, Q <font size=5 style='color: red'>&#9829;</font>, Q <font size=5 style='color: red'>&#9830;</font>, J <font size=5>&#9827;</font>, J <font size=5>&#9824;</font>, J <font size=5 style='color: red'>&#9829;</font>, J <font size=5 style='color: red'>&#9830;</font>, A <font size=5 style='color: red'>&#9829;</font>, 10 <font size=5 style='color: red'>&#9829;</font>, K <font size=5 style='color: red'>&#9829;</font>, 9 <font size=5 style='color: red'>&#9829;</font>, 8 <font size=5 style='color: red'>&#9829;</font>, 7 <font size=5 style='color: red'>&#9829;</font> <br />If all players pass, a Ramsch contract is played. <br />Must follow suit if possible, otherwise may play any card.<br />The aim is to avoid winning tricks with point cards and the player who won the most points is the loser. Tie breakers for the loser are: Most points -> most tricks -> most trumps won -> highest trump won. <br />The loser pays all other players 1 point. For every player that won 0 tricks, the loser's payment is doubled. </div>"
+  },
+  "talonButton": {
+    "type": "button",
+    "id": "talonButton",
+    "x": 1503,
+    "y": 146,
+    "width": 60,
+    "height": 60,
+    "z": 79092,
+    "text": "Talon",
+    "clickRoutine": [
+      {
+        "func": "MOVEXY",
+        "from": "deckHolder",
+        "count": 1,
+        "face": 1,
+        "x": 1250,
+        "y": 471,
+        "z": 100
+      },
+      {
+        "func": "MOVEXY",
+        "from": "deckHolder",
+        "count": 1,
+        "face": 1,
+        "x": 1250,
+        "y": 534,
+        "z": 100
+      },
+      {
+        "func": "MOVEXY",
+        "from": "deckHolder",
+        "count": 1,
+        "face": 1,
+        "x": 1364,
+        "y": 471,
+        "z": 100
+      },
+      {
+        "func": "MOVEXY",
+        "from": "deckHolder",
+        "count": 1,
+        "face": 1,
+        "x": 1364,
+        "y": 534,
+        "z": 100
+      },
+      {
+        "func": "MOVEXY",
+        "from": "deckHolder",
+        "count": 1,
+        "face": 1,
+        "x": 1478,
+        "y": 471,
+        "z": 100
+      },
+      {
+        "func": "MOVEXY",
+        "from": "deckHolder",
+        "count": 1,
+        "face": 1,
+        "x": 1478,
+        "y": 534,
+        "z": 100
+      }
+    ],
+    "scale": 0
   }
 }
