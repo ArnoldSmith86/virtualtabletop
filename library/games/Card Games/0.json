@@ -1279,9 +1279,9 @@
     "svgReplaces": {
       "currentColor": "deckSuitsColor"
     },
+    "image": "i/icons/clubs.svg",
     "deckSuitsUni": "♣",
     "deckSuits": "clubs",
-    "image": "i/icons/clubs.svg",
     "deckSuitsColor": ""
   },
   "choose11": {
@@ -2543,7 +2543,8 @@
     ],
     "bgColor": "#deeaf0",
     "showbidHistory": false,
-    "tempScore": false
+    "tempScore": false,
+    "showSuitValue": false
   },
   "holder1": {
     "type": "holder",
@@ -2750,8 +2751,8 @@
       0,
       0
     ],
-    "player": "",
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "bidValue3": {
     "inheritFrom": {
@@ -5637,7 +5638,6 @@
       "y": 370
     },
     "z": 80258,
-    "deckSuitsColor": "",
     "customFaceCount": 6
   },
   "scoreButton": {
@@ -11782,7 +11782,7 @@
               {
                 "func": "SET",
                 "property": "x",
-                "value": 270
+                "value": 240
               },
               {
                 "func": "SET",
@@ -12412,7 +12412,6 @@
     ],
     "y": 910,
     "classes": "symbols",
-    "activeFace": 1,
     "scale": 0
   },
   "tricksLabel": {
@@ -13838,40 +13837,6 @@
     "sort1": "sortDefault",
     "sort2": "suit",
     "text": "Schieber Jass",
-    "messageArray": [
-      {
-        "value": "Default",
-        "text": "Click here to choose message"
-      },
-      {
-        "value": "Schieben",
-        "text": "Schieben"
-      },
-      {
-        "value": "Clubs",
-        "text": "Clubs (x1)"
-      },
-      {
-        "value": "Spades",
-        "text": "Spades (x1)"
-      },
-      {
-        "value": "Diamonds",
-        "text": "Diamonds (x2)"
-      },
-      {
-        "value": "Hearts",
-        "text": "Hearts (x2)"
-      },
-      {
-        "value": "Obenabe",
-        "text": "Obenabe (x3)"
-      },
-      {
-        "value": "Undenufe",
-        "text": "Undenufe (x4)"
-      }
-    ],
     "roundsTemp": [
       "Card Points",
       "Weis",
@@ -13890,6 +13855,14 @@
       ],
       [
         "showBidValue",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidHistory",
         false
       ]
     ],
@@ -13912,6 +13885,10 @@
       ],
       [
         "tempScore",
+        true
+      ],
+      [
+        "contractType",
         true
       ]
     ],
@@ -14063,13 +14040,9 @@
       },
       "\\ Show contract multiplier",
       "var multiplier = 1",
-      "var contract = ${PROPERTY message OF bids}",
-      "var hearts1 = ${contract} == 'hearts'",
-      "var hearts2 = ${contract} == 'Hearts'",
-      "var hearts = ${hearts1} || ${hearts2}",
-      "var diamonds1 = ${contract} == 'diamonds'",
-      "var diamonds2 = ${contract} == 'Diamonds'",
-      "var diamonds = ${diamonds1} || ${diamonds2}",
+      "var contract = ${PROPERTY auctionType OF contractType}",
+      "var hearts = ${contract} == 'Hearts'",
+      "var diamonds = ${contract} == 'Diamonds'",
       "var red = ${hearts} || ${diamonds}",
       {
         "func": "IF",
@@ -14090,6 +14063,14 @@
         "func": "IF",
         "operand1": "${contract}",
         "operand2": "Undenufe",
+        "thenRoutine": [
+          "var multiplier = 4"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${contract}",
+        "operand2": "Slalom",
         "thenRoutine": [
           "var multiplier = 4"
         ]
@@ -14155,10 +14136,151 @@
       [
         "playerAidButton",
         1
+      ],
+      [
+        "reverseSortButton",
+        1
       ]
     ],
     "z": 1,
-    "movable": false
+    "movable": false,
+    "contractArray": {
+      "Spades": [
+        "Spades <img src='/i/noto-emoji/emoji_u2660.svg' height=18 />",
+        "#e3f0d6",
+        "x1"
+      ],
+      "Clubs": [
+        "Clubs <img src='/i/noto-emoji/emoji_u2663.svg' height=18/>",
+        "#e3f0d6",
+        "x1"
+      ],
+      "Diamonds": [
+        "Diamonds <img src='/i/noto-emoji/emoji_u2666.svg' height=18/>",
+        "#fcf2c7",
+        "x2"
+      ],
+      "Hearts": [
+        "Hearts <img src='/i/noto-emoji/emoji_u2665.svg' height=18/>",
+        "#fcf2c7",
+        "x2"
+      ],
+      "Obenabe": [
+        "Obenabe",
+        "#e3e9fc",
+        "No trumps\\ax3"
+      ],
+      "Undenufe": [
+        "Undenufe",
+        "#e3e9fc",
+        "No trumps\\aRank inverted\\ax4"
+      ],
+      "Slalom": [
+        "Slalom",
+        "#e3e9fc",
+        "No trumps\\a Alternate O & U rank\\ax4"
+      ]
+    },
+    "contractChoiceRoutine": [
+      "var contractType = ${PROPERTY auctionType OF contractType}",
+      "var isIn = ${contractType} in ${PROPERTY noTrumpBids}",
+      {
+        "func": "IF",
+        "condition": "${isIn}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "trump"
+            ],
+            "property": "customFace",
+            "value": 5
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${contractType}",
+            "operand2": "Spades",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "trump"
+                ],
+                "property": "customFace",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${contractType}",
+            "operand2": "Clubs",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "trump"
+                ],
+                "property": "customFace",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${contractType}",
+            "operand2": "Diamonds",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "trump"
+                ],
+                "property": "customFace",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${contractType}",
+            "operand2": "Hearts",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "trump"
+                ],
+                "property": "customFace",
+                "value": 4
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "noTrumpBids": [
+      "Obenabe",
+      "Undenufe",
+      "Slalom"
+    ],
+    "takeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY auctionType OF contractType}",
+        "operand2": "Slalom",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "arrow"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "gameID2": {
     "id": "gameID2",
@@ -14975,6 +15097,10 @@
       ],
       [
         "turnDirection",
+        false
+      ],
+      [
+        "showBidHistory",
         false
       ]
     ],
@@ -16303,6 +16429,7 @@
       "x": 1505,
       "y": 145
     },
+    "scale": 0,
     "faces": [
       {
         "image": "i/icons/clubs.svg"
@@ -16318,8 +16445,7 @@
         "image": "i/icons/hearts.svg",
         "deckSuitColor": "#e50932"
       }
-    ],
-    "scale": 0
+    ]
   },
   "itemsButton": {
     "type": "button",
@@ -19355,7 +19481,7 @@
         ]
       }
     ],
-    "z": 64
+    "z": 80347
   },
   "itemsHolder12": {
     "inheritFrom": {
@@ -26051,41 +26177,6 @@
       "Do not have to follow suit to play. If Ripper leads, Joker is lowest card. If Joker leads 1st or last trick, Joker is lowest card and second player's card determines trick suit. If Joker leads any other trick, that player declears trick suit.",
       "If led and player asks, then Joker must be played and loses. Cannot play on 1st trick."
     ]
-  },
-  "playerAid1": {
-    "type": "scoreboard",
-    "id": "playerAid1",
-    "x": 1225,
-    "y": 300,
-    "width": 350,
-    "height": 257,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "css": {
-      "default": {
-        "font-size": "15px"
-      },
-      ".scoreboard td:first-child": {
-        "--firstColWidth": "120px"
-      },
-      ".scoreboard tbody tr:nth-child(1) td": {
-        "background": "#a9c6e8"
-      },
-      ".scoreboard td": {
-        "text-align": "left"
-      }
-    },
-    "onlyVisibleForSeat": [],
-    "roundLabel": "Trump Reminders",
-    "rounds": [
-      "'May' follow suit or trump.\n\nNever have to play Jack of trumps.\n\nMust overtrump unless you only have trumps in\nyour hand.\n\nIf you have cards of the nontrump led suit and the second player trumps, you cannot play a lower\ntrump. Must either play the led suit or a higher\ntrump, unless you only have trumps left."
-    ],
-    "seats": "playerAidDetail1",
-    "showAllRounds": true,
-    "showPlayerColors": false,
-    "showTotals": false,
-    "playerAid": true
   },
   "playerAid7": {
     "type": "scoreboard",
@@ -39862,7 +39953,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1715436562924,
+      "lastUpdate": 1715446691056,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -40566,7 +40657,7 @@
       "background": "lightblue"
     },
     "onlyVisibleForSeat": [],
-    "text": "Schafkopf 4P player aid master widget",
+    "text": "Coiffeur Jass 3P player aid master widget",
     "playerAid": true,
     "showTotals": false
   },
@@ -40634,7 +40725,7 @@
       }
     },
     "enlarge": 1,
-    "html": "<div class='trump-aid'> <h3>No Trumps / Non-Trumps</h3> <br/> <strong>Ace</strong> 11 <br/> <strong>King</strong> 4 <br/> <strong>Queen</strong> 3 <br/> <strong>Jack</strong> 2 <br/> <strong>Ten</strong> 10 <br/> <strong>Nine</strong> 0 <br/> <strong>Eight</strong> 0 (if a contract without a trump suit, then 8 points) <br/> <strong>Seven</strong> 0 <br/> <strong>Six</strong> 0 <br/> <h3>Trump Suit</h3> <br/> <strong>Jack</strong> 20 <br/> <strong>Nine</strong> 14 <br/> <strong>King</strong> 4 <br/> <strong>Queen</strong> 3 <br/> <strong>Ten</strong> 10 <br/> <strong>Eight</strong> 0 <br/> <strong>Seven</strong> 0 <br/> <strong>Six</strong> 0 </div>"
+    "html": "<div class='trump-aid'> <h3>No Trumps / Non-Trumps</h3> <br/> <strong>Ace</strong> 11 <br/> <strong>King</strong> 4 <br/> <strong>Queen</strong> 3 <br/> <strong>Jack</strong> 2 <br/> <strong>Ten</strong> 10 <br/> <strong>Nine</strong> 0 <br/> <strong>Eight</strong> 0 (if a contract without a trump suit, then 8 points) <br/> <strong>Seven</strong> 0 <br/> <strong>Six</strong> 0 <br/> <h3>Trump Suit</h3> <br/> <strong>Jack</strong> 20 <br/> <strong>Nine</strong> 14 <br/> <strong>Ace</strong> 11 <br/> <strong>King</strong> 4 <br/> <strong>Queen</strong> 3 <br/> <strong>Ten</strong> 10 <br/> <strong>Eight</strong> 0 <br/> <strong>Seven</strong> 0 <br/> <strong>Six</strong> 0 </div>"
   },
   "playerAid6b": {
     "id": "playerAid6b",
@@ -40682,5 +40773,181 @@
     },
     "enlarge": 1,
     "html": "<div class='general-aid'><h3>Bidding</h3><br/>Forhand chooses available contract or passes.<br/><br/>Each player in turn then gets a chance to choose a contract or pass.<br/><br/>If all three players pass, forehand must choose a contract.<h3>Play</h3><br/>Forehand leads to first trick.<br/><br/><strong>May</strong> follow suit or trump.<br/><br/><strong>Never</strong> required to play Jack of trumps.<br/><br/><strong>Must</strong> overtrump unless you only have trumps in your hand.<br/><br/><strong>Cannot</strong> play a lower trump if you have cards of the nontrump led suit and the second player trumps. You must either play the led suit or a higher trump, unless you only have trumps in your hand.<h3>Scoring</h3> <br/>152 total card points plus 5 points to winner of last trick.<br/><br/>If declarer wins all tricks, gets 100 point bonus and two sticks in match row. Opponents get a potato each in match row.<br/><br/>If declarer wins no tricks, gets two potatoes in match row. Opponents get a stick each in match row.</div>"
+  },
+  "playerAid1": {
+    "id": "playerAid1",
+    "x": 1685,
+    "y": 590,
+    "z": 79088,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightblue"
+    },
+    "onlyVisibleForSeat": [],
+    "text": "Schieber Jass player aid master widget",
+    "playerAid": true,
+    "showTotals": false
+  },
+  "playerAid1a": {
+    "id": "playerAid1a",
+    "parent": "playerAid1",
+    "x": -200,
+    "y": 25,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Ranks & Points"
+  },
+  "playerAid1aAsset": {
+    "id": "playerAid1aAsset",
+    "parent": "playerAid1a",
+    "width": 650,
+    "height": 510,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      " .scoring-aid": {
+        "display": "none"
+      },
+      " table": {
+        "border-spacing": "0px",
+        "width": "100%"
+      },
+      " td": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      " th": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      "#enlarged > .scoring-aid": {
+        "display": "block"
+      }
+    },
+    "enlarge": 1,
+    "html": "<div class='trump-aid'> <h3>No Trumps / Non-Trumps</h3> <br/> <strong>Ace</strong> 11 <br/> <strong>King</strong> 4 <br/> <strong>Queen</strong> 3 <br/> <strong>Jack</strong> 2 <br/> <strong>Ten</strong> 10 <br/> <strong>Nine</strong> 0 <br/> <strong>Eight</strong> 0 (if a contract without a trump suit, then 8 points) <br/> <strong>Seven</strong> 0 <br/> <strong>Six</strong> 0 <br/> <h3>Trump Suit</h3> <br/> <strong>Jack</strong> 20 <br/> <strong>Nine</strong> 14 <br/> <strong>Ace</strong> 11 <br/> <strong>King</strong> 4 <br/> <strong>Queen</strong> 3 <br/> <strong>Ten</strong> 10 <br/> <strong>Eight</strong> 0 <br/> <strong>Seven</strong> 0 <br/> <strong>Six</strong> 0 </div>"
+  },
+  "playerAid1b": {
+    "id": "playerAid1b",
+    "parent": "playerAid1",
+    "x": -200,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "General"
+  },
+  "playerAid1bAsset": {
+    "id": "playerAid1bAsset",
+    "parent": "playerAid1b",
+    "width": 645,
+    "height": 675,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      }
+    },
+    "enlarge": 1,
+    "html": "<div class='general-aid'><h3>Bidding</h3><br/>Forhand chooses contract or shoves to partner by saying 'schieben'.<h3>Play</h3><br/>Forehand leads to first trick.<br/><br/><strong>May</strong> follow suit or trump.<br/><br/><strong>Never</strong> required to play Jack of trumps.<br/><br/><strong>Cannot</strong> play a lower trump if you have cards of the nontrump led suit and another player trumps. You must either play the led suit or a higher trump, unless you only have trumps in your hand.<br/><br/>As first trick is being played, players annouce their Weis.<br/><br/>A player with both the king and queen of trumps may annouce 'stock' as the second of the pair is played.<h3>Scoring</h3> <br/>152 total card points plus 5 points to winner of last trick.<br/><br/>If either side wins all 9 tricks, get a 100 point bonus.<br/><br/>The partnership with best single Weis scores points for all their Weis.<br/><br/>First to 3000 points wins and this can happen in the middle of a game</div>"
+  },
+  "playerAid1c": {
+    "id": "playerAid1c",
+    "parent": "playerAid1",
+    "x": -200,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Weis",
+    "y": 50
+  },
+  "playerAid1cAsset": {
+    "id": "playerAid1cAsset",
+    "parent": "playerAid1c",
+    "width": 645,
+    "height": 910,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "10px 0px 0px 0px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "5px"
+      }
+    },
+    "enlarge": 1,
+    "html": "<div class='weis-aid'> <h3>Small Weis</h3> <table> <tr> <th>Combination</th> <th>Points</th> </tr> <tr> <td>Sequence of three cards in suit</td> <td>20 points</td> </tr> <tr> <td>Sequence of four cards in suit</td> <td>50 points</td> </tr> <tr> <td>Four tens</td> <td>100 points</td> </tr> <tr> <td>Four queens</td> <td>100 points</td> </tr> <tr> <td>Four kings</td> <td>100 points</td> </tr> <tr> <td>Four aces</td> <td>100 points</td> </tr> <tr> <td>Sequence of five or more cards in suit</td> <td>100 points</td> </tr> <tr> <td>Four nines (if allowed in advance)</td> <td>150 points</td> </tr> <tr> <td>Four jacks</td> <td>200 points</td> </tr> </table>The same card may not be used in two different combinations.<h3>Large Weis</h3> <table> <tr> <th>Combination</th> <th>Points</th> </tr> <tr> <td>Sequence of three cards in suit</td> <td>20 points</td> </tr> <tr> <td>Sequence of four cards in suit</td> <td>50 points</td> </tr> <tr> <td>Four tens</td> <td>100 points</td> </tr> <tr> <td>Four queens</td> <td>100 points</td> </tr> <tr> <td>Four kings</td> <td>100 points</td> </tr> <tr> <td>Four aces</td> <td>100 points</td> </tr> <tr> <td>Sequence of five cards in suit</td> <td>100 points</td> </tr> <tr> <td>Four nines</td> <td>150 points</td> </tr> <tr> <td>Sequence of six cards in suit</td> <td>150 points</td> </tr> <tr> <td>Four jacks</td> <td>200 points</td> </tr> <tr> <td>Sequence of seven in suit</td> <td>200 points</td> </tr> <tr> <td>Sequence of eight in suit</td> <td>250 points</td> </tr> <tr> <td>Sequence of nine in suit</td> <td>300 points</td> </tr> </table>The same card may be used in both a set of four and a sequent.<h3>Tie Breaker</h3>Cards are always in the order of A, K, Q, J, 10, 9, 8, 7, 6.<br/><br/>Each Weis is better than those above it. A longer sequence is better than a shorter one. In comparing sequences of the same length, the one with the higher card is better. In comparing identical sequences in different suits, one in the trump suit is better. If two players have identical sequences in non-trump suits, the player playing to the trick earlier wins. </div>"
   }
 }
