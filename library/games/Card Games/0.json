@@ -23027,6 +23027,10 @@
       [
         "playerAidButton",
         1
+      ],
+      [
+        "passCardsButton",
+        1
       ]
     ],
     "gameID": true,
@@ -23123,7 +23127,17 @@
         ]
       }
     ],
-    "movable": false
+    "movable": false,
+    "postSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "passIndicator"
+        ],
+        "property": "activeFace",
+        "value": 0
+      }
+    ]
   },
   "gameID25": {
     "id": "gameID25",
@@ -34656,18 +34670,6 @@
     "onlyVisibleForSeat": [],
     "playerAid": true
   },
-  "playerAid24": {
-    "id": "playerAid24",
-    "x": 115,
-    "y": -126,
-    "width": 1,
-    "height": 1,
-    "layer": 14,
-    "movable": false,
-    "movableInEdit": false,
-    "onlyVisibleForSeat": [],
-    "playerAid": true
-  },
   "playerAid38a": {
     "id": "playerAid38a",
     "parent": "playerAid38",
@@ -34679,19 +34681,6 @@
     "z": 23,
     "movable": false,
     "image": "/assets/948048380_204657"
-  },
-  "playerAid24a": {
-    "id": "playerAid24a",
-    "parent": "playerAid24",
-    "fixedParent": true,
-    "x": 211,
-    "y": 592,
-    "width": 250,
-    "height": 350,
-    "z": 23,
-    "movable": false,
-    "image": "/assets/626131721_35568",
-    "enlarge": 2
   },
   "gameID39": {
     "id": "gameID39",
@@ -39953,7 +39942,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1715446691056,
+      "lastUpdate": 1715558951393,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -40949,5 +40938,152 @@
     },
     "enlarge": 1,
     "html": "<div class='weis-aid'> <h3>Small Weis</h3> <table> <tr> <th>Combination</th> <th>Points</th> </tr> <tr> <td>Sequence of three cards in suit</td> <td>20 points</td> </tr> <tr> <td>Sequence of four cards in suit</td> <td>50 points</td> </tr> <tr> <td>Four tens</td> <td>100 points</td> </tr> <tr> <td>Four queens</td> <td>100 points</td> </tr> <tr> <td>Four kings</td> <td>100 points</td> </tr> <tr> <td>Four aces</td> <td>100 points</td> </tr> <tr> <td>Sequence of five or more cards in suit</td> <td>100 points</td> </tr> <tr> <td>Four nines (if allowed in advance)</td> <td>150 points</td> </tr> <tr> <td>Four jacks</td> <td>200 points</td> </tr> </table>The same card may not be used in two different combinations.<h3>Large Weis</h3> <table> <tr> <th>Combination</th> <th>Points</th> </tr> <tr> <td>Sequence of three cards in suit</td> <td>20 points</td> </tr> <tr> <td>Sequence of four cards in suit</td> <td>50 points</td> </tr> <tr> <td>Four tens</td> <td>100 points</td> </tr> <tr> <td>Four queens</td> <td>100 points</td> </tr> <tr> <td>Four kings</td> <td>100 points</td> </tr> <tr> <td>Four aces</td> <td>100 points</td> </tr> <tr> <td>Sequence of five cards in suit</td> <td>100 points</td> </tr> <tr> <td>Four nines</td> <td>150 points</td> </tr> <tr> <td>Sequence of six cards in suit</td> <td>150 points</td> </tr> <tr> <td>Four jacks</td> <td>200 points</td> </tr> <tr> <td>Sequence of seven in suit</td> <td>200 points</td> </tr> <tr> <td>Sequence of eight in suit</td> <td>250 points</td> </tr> <tr> <td>Sequence of nine in suit</td> <td>300 points</td> </tr> </table>The same card may be used in both a set of four and a sequent.<h3>Tie Breaker</h3>Cards are always in the order of A, K, Q, J, 10, 9, 8, 7, 6.<br/><br/>Each Weis is better than those above it. A longer sequence is better than a shorter one. In comparing sequences of the same length, the one with the higher card is better. In comparing identical sequences in different suits, one in the trump suit is better. If two players have identical sequences in non-trump suits, the player playing to the trick earlier wins. </div>"
+  },
+  "playerAid24": {
+    "id": "playerAid24",
+    "x": 1685,
+    "y": 590,
+    "z": 79088,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightblue"
+    },
+    "onlyVisibleForSeat": [],
+    "text": "Schafkopf 4P player aid master widget",
+    "playerAid": true,
+    "showTotals": false
+  },
+  "playerAid24a": {
+    "id": "playerAid24a",
+    "parent": "playerAid24",
+    "x": -200,
+    "y": -25,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "html": "NT<img src='/i/noto-emoji/emoji_u2660.svg' height=18 /><img src='/i/noto-emoji/emoji_u2665.svg' height=18/><img src='/i/noto-emoji/emoji_u2666.svg' height=18/><img src='/i/noto-emoji/emoji_u2663.svg' height=18/>"
+  },
+  "playerAid24b": {
+    "id": "playerAid24b",
+    "parent": "playerAid24",
+    "x": -200,
+    "y": 25,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Scoring"
+  },
+  "playerAid24bAsset": {
+    "id": "playerAid24bAsset",
+    "parent": "playerAid24b",
+    "width": 550,
+    "height": 300,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      " table": {
+        "width": "100%"
+      },
+      " td, th": {
+        "border": "1px solid black",
+        "padding": "6px"
+      },
+      " th": {
+        "background-color": "#c0c0c0"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      "#enlarged > .scoring-aid": {
+        "display": "block"
+      }
+    },
+    "enlarge": 1,
+    "html": "<div class='scoring-aid'> <h3>Scoring</h3> <table> <tr> <th>Bid</th> <th>Make Bid</th> <th>Don't Make</th> </tr> <tr> <td>Normal bid</td> <td>10 + bid<sup>2</sup></td> <td>-10/trick off from bid</td> </tr> <tr> <td>Misere 'short' (total &lt; 13)</td> <td>50</td> <td>-60 + 10/trick</td> </tr> <tr> <td>Misere 'long' (total &gt; 13)</td> <td>30</td> <td>-40 + 10/trick</td> </tr> </table> </div>"
+  },
+  "playerAid24c": {
+    "id": "playerAid24c",
+    "parent": "playerAid24",
+    "x": -200,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "General"
+  },
+  "playerAid24cAsset": {
+    "id": "playerAid24cAsset",
+    "parent": "playerAid24c",
+    "width": 645,
+    "height": 625,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      " img": {
+        "height": "1em"
+      }
+    },
+    "enlarge": 1,
+    "html": "<h3>Bidding</h3><br/><strong>Phase 1</strong>:<br/><br/>Starting with dealer, bid number of tricks (5+) and suit (or no trumps) or pass.<br/><br/>Bid of more tricks outranks fewer. Bid of same number of tricks are outranked by higher suit. From high to low: NT<img src='/i/noto-emoji/emoji_u2660.svg' /><img src='/i/noto-emoji/emoji_u2665.svg' /><img src='/i/noto-emoji/emoji_u2666.svg' /><img src='/i/noto-emoji/emoji_u2663.svg' /><br/><br/>Can pass and come back in. Can increase your own bid. Phase ends when all four players pass in succession. Highest bidder becomes declarer.<br/><br/><strong>Phase 2</strong>:<br/><br/>Each player states number of tricks they will take (0+).<br/><br/>Fourth player cannot bid number that would case total of all bids to equal 13.<br/><br/><strong>Gulash</strong>:<br/><br/>If no player bids in Phase 1, pass 3 cards to the left. Start bidding cycle again. Repeat, if necessary, two more times. After three cycles, current dealer starts a new deal.<br/> <h3>Play</h3><br/>Declarer plays first.<br/><br/>Players must follow suit if possible. If not, they can play any card."
   }
 }
