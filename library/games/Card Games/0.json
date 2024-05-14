@@ -18946,6 +18946,10 @@
       [
         "transferScoreButton",
         0
+      ],
+      [
+        "playerAidButton",
+        1
       ]
     ],
     "text": "1000",
@@ -39946,7 +39950,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1715626601589,
+      "lastUpdate": 1715687951906,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -41089,5 +41093,181 @@
     },
     "enlarge": 1,
     "html": "<h3>Bidding</h3><br/><strong>Phase 1</strong>:<br/><br/>Starting with dealer, bid number of tricks (5+) and suit (or no trumps) or pass.<br/><br/>Bid of more tricks outranks fewer. Bid of same number of tricks are outranked by higher suit. From high to low: NT<img src='/i/noto-emoji/emoji_u2660.svg' /><img src='/i/noto-emoji/emoji_u2665.svg' /><img src='/i/noto-emoji/emoji_u2666.svg' /><img src='/i/noto-emoji/emoji_u2663.svg' /><br/><br/>Can pass and come back in. Can increase your own bid. Phase ends when all four players pass in succession. Highest bidder becomes declarer.<br/><br/><strong>Phase 2</strong>:<br/><br/>Each player states number of tricks they will take (0+).<br/><br/>Fourth player cannot bid number that would case total of all bids to equal 13.<br/><br/><strong>Gulash</strong>:<br/><br/>If no player bids in Phase 1, pass 3 cards to the left. Start bidding cycle again. Repeat, if necessary, two more times. After three cycles, current dealer starts a new deal.<br/> <h3>Play</h3><br/>Declarer plays first.<br/><br/>Players must follow suit if possible. If not, they can play any card."
+  },
+  "playerAid14": {
+    "id": "playerAid14",
+    "x": 1685,
+    "y": 590,
+    "z": 79088,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightblue"
+    },
+    "onlyVisibleForSeat": [],
+    "text": "1000 player aid master widget",
+    "playerAid": true,
+    "showTotals": false
+  },
+  "playerAid14a": {
+    "id": "playerAid14a",
+    "parent": "playerAid14",
+    "x": -200,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "General",
+    "y": -25
+  },
+  "playerAid14aAsset": {
+    "id": "playerAid14aAsset",
+    "parent": "playerAid14a",
+    "width": 645,
+    "height": 825,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      " img": {
+        "height": "1em"
+      }
+    },
+    "enlarge": 1,
+    "html": "<h3>Cards</h3> <br /><strong>Rank (points):</strong>A(11), 10(10), K(4), Q(3), J(2), 9(0) <br /> <br />A marraige is a K and Q of the same suit in a player's hand. <h3>Bidding</h3> <br />Forehand starts bidding and <strong>must</strong> bid 100. Other players bid higher or pass (connot bid again after passign). Bids must be a multiple of 5. Bidding ends when 2 players have passed. Highest bidder is declarer. <br /> <br />Maximum card points are 120. Must have a mariage in your hand to bid higher than 120. <h3>Talon</h3> <br />Declarer reveals the talon to all players and takes in into their hand. They then give each other player a card from their hand face down. <br /> <br />Declarer may increase their bid. <br /> <br />If a player has all 4 nines in their hand, they can ask for a redeal. <h3>Play</h3> <br />Declarer leads the first trick. Trick winner leads after that. <br /> <br />You must follow suit if you can. If you cannot follow suit and there is no trump, you may play any card. If you cannot follow suit and there is a trump, you must play a trump (if you have no trumps either, then you may play anything). <br /> <br />Tricks are won by the highest trump played if trumps were played to the trick, otherwise by the highest card of the led suit. <br /> <br />Marraiges can only be declared by a player immediately after they have won a trick. To declare a marraige, play either the K or the Q and declare. This will set the trump to the suit of the card played. Marraiges are only scored if they are also declared. Other players may declare a marraige after and change trump. <br /> <br />"
+  },
+  "playerAid14b": {
+    "id": "playerAid14b",
+    "parent": "playerAid14",
+    "x": -200,
+    "y": 25,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Scoring"
+  },
+  "playerAid14bAsset": {
+    "id": "playerAid14bAsset",
+    "parent": "playerAid14b",
+    "width": 550,
+    "height": 840,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      " table": {},
+      " td, th": {
+        "border": "1px solid black",
+        "padding": "6px",
+        "text-align": "center"
+      },
+      " th": {
+        "background-color": "#c0c0c0"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      "#enlarged > .scoring-aid": {
+        "display": "block"
+      }
+    },
+    "enlarge": 1,
+    "html": "<div class='scoring-aid'> <h3>Marraiges</h3> <table> <tr> <th style='width: 150px'>Suit</th> <th style='width: 150px'>Points</th> </tr> <tr> <td>Spades</td> <td>40</td> </tr> <tr> <td>Clubs</td> <td>60</td> </tr> <tr> <td>Diamonds</td> <td>80</td> </tr> <tr> <td>Hearts</td> <td>100</td> </tr> </table> <h3>Card points</h3> <table> <tr> <th style='width: 150px'>Rank</th> <th style='width: 150px'>Points</th> </tr> <tr> <td>A</td> <td>11</td> </tr> <tr> <td>10</td> <td>10</td> </tr> <tr> <td>K</td> <td>4</td> </tr> <tr> <td>Q</td> <td>3</td> </tr> <tr> <td>J</td> <td>2</td> </tr> <tr> <td>9</td> <td>0</td> </tr> </table> <h3>Bids</h3> <table style='width: 100%'> <tr> <th style='width: 150px'>Player</th> <th>Bid won</th> <th>Bid lost</th> </tr> <tr> <td>Declarer</td> <td>Bid value</td> <td><font color='red'>- Bid value</font></td> </tr> <tr> <td>Opponent</td> <td colspan='2'>Points won in tricks</td> </tr> <tr></tr> </table> </div>"
+  },
+  "playerAid14c": {
+    "id": "playerAid14c",
+    "parent": "playerAid14",
+    "x": -200,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Other"
+  },
+  "playerAid14cAsset": {
+    "id": "playerAid14cAsset",
+    "parent": "playerAid14c",
+    "width": 645,
+    "height": 600,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      " img": {
+        "height": "1em"
+      }
+    },
+    "enlarge": 1,
+    "html": "<h3>The barrel</h3> <br />A player cannot have a score between 880 and 1000. <br /> <br />If a player has a score less than 880 and scores enough points to get to 880 or above (but not above 1000), their score is set to 880 and they are on the barrel. <br /> <br />The player then has the next 3 hands to be the declarer and score 120 or more points and win the game. If they haven't done this in 3 hands, they fall off the barrel and lose 120 points. Losing a bid as the declarer while on the barrel, results in the usual point loss and falling off the barrel. Points scored as the non-declarer while on the barrel are ignored. <br /> <br />If a player has less 880 points and scores enough points to reach 1000 or more, they win the game without being on the barrel. <h3>Zero scores</h3> <br />If a player scores zero points in a hand (as declarer or opponent), they recieve a bolt. After a player has recieved their 3rd bolt, they lose 120 points and return all bolt. <h3>Distribute</h3> <br />After a declarer has looked at the talon, they may decide to distribute the hand. In this case, the cards are not played, each opponent scores 60 points and the declarer recieves a flag. After a player has recieved their 3rd flag, they lose 120 points and return all flags. <br /> <br />You cannot distribute while on the barrel."
   }
 }
