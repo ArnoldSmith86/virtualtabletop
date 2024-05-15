@@ -972,10 +972,19 @@
         "operand1": "${COUNT}",
         "operand2": 0,
         "thenRoutine": [
+          "var chooseValue = 'chooseValue'",
+          "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
+          {
+            "func": "IF",
+            "condition": "${PROPERTY chooseValue OF $gameID}",
+            "thenRoutine": [
+              "var chooseValue = ${PROPERTY chooseValue OF $gameID}"
+            ]
+          },
           {
             "func": "CLONE",
             "source": [
-              "chooseValue"
+              "${chooseValue}"
             ],
             "collection": "bidClones",
             "recursive": true,
@@ -13498,6 +13507,10 @@
       ],
       [
         "talonButton",
+        0
+      ],
+      [
+        "rankIndicator",
         0
       ]
     ],
@@ -34191,7 +34204,8 @@
       "gameID43 - Bid Whist",
       "gameID44 - Papayou",
       "gameID45 - Schafkopf (4P)",
-      "gameID46 - Color Whist"
+      "gameID46 - Color Whist",
+      "gameID47 - Cross Purposes (4P)"
     ],
     "GamesByName": [
       "1000 - gameID14",
@@ -34208,6 +34222,7 @@
       "Collusion - gameID29",
       "Color Whist - gameID46",
       "Counterpoint - gameID27",
+      "Cross Purposes (4P) - gameID47",
       "Crow (Similar to Rook) - gameID10",
       "Czech Taroky - gameID5",
       "Default - gameID0",
@@ -39950,7 +39965,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1715687951906,
+      "lastUpdate": 1715778029780,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -41269,5 +41284,1278 @@
     },
     "enlarge": 1,
     "html": "<h3>The barrel</h3> <br />A player cannot have a score between 880 and 1000. <br /> <br />If a player has a score less than 880 and scores enough points to get to 880 or above (but not above 1000), their score is set to 880 and they are on the barrel. <br /> <br />The player then has the next 3 hands to be the declarer and score 120 or more points and win the game. If they haven't done this in 3 hands, they fall off the barrel and lose 120 points. Losing a bid as the declarer while on the barrel, results in the usual point loss and falling off the barrel. Points scored as the non-declarer while on the barrel are ignored. <br /> <br />If a player has less 880 points and scores enough points to reach 1000 or more, they win the game without being on the barrel. <h3>Zero scores</h3> <br />If a player scores zero points in a hand (as declarer or opponent), they recieve a bolt. After a player has recieved their 3rd bolt, they lose 120 points and return all bolt. <h3>Distribute</h3> <br />After a declarer has looked at the talon, they may decide to distribute the hand. In this case, the cards are not played, each opponent scores 60 points and the declarer recieves a flag. After a player has recieved their 3rd flag, they lose 120 points and return all flags. <br /> <br />You cannot distribute while on the barrel."
+  },
+  "gameID47": {
+    "id": "gameID47",
+    "x": -353,
+    "y": -312,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "displayArray": [
+      [
+        "scoreButton",
+        0
+      ],
+      [
+        "score+10",
+        1
+      ],
+      [
+        "trump",
+        1
+      ],
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "bidWinner",
+        0
+      ],
+      [
+        "rankIndicator",
+        1
+      ]
+    ],
+    "settingsArray": [
+      [
+        "showBidSuit",
+        true
+      ],
+      [
+        "showScore",
+        true
+      ],
+      [
+        "showTricks",
+        true
+      ]
+    ],
+    "settingsDecksArray": [],
+    "gameID": true,
+    "hintText": "\"This room is set up for 4-player variable or fixed partnership Cross Purposes.\\a\\a Use bid widget near seat to enter bid. Be sure to press green Bid button when bid is ready. \\a\\a Player tricks taken are displayed in the scoreboard to the right of the screen.\\a\\a  After round ends, use Score button to calculate team scores.\"",
+    "text": "Cross Purposes (4P)",
+    "messageArray": [],
+    "tempScoreReset": false,
+    "movable": false,
+    "z": 80352,
+    "chooseValue": "chooseValueRank",
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "scoreSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "scoreSpecialRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          "trumpsPartners",
+          "topsPartners"
+        ],
+        "loopRoutine": [
+          "var partners = ${PROPERTY $value}",
+          "var partner1 = 'seat' + ${partners.0}",
+          "var partner1Tricks = ${PROPERTY tricks OF $partner1}",
+          "var partner1Tricks = ${partner1Tricks.0} + 1",
+          "var partner2 = 'seat' + ${partners.1}",
+          "var partner2Tricks = ${PROPERTY tricks OF $partner2}",
+          "var partner2Tricks = ${partner2Tricks.0} + 1",
+          "var partnersScore = ${partner1Tricks} * ${partner2Tricks}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": [
+              "${partner1}",
+              "${partner2}"
+            ],
+            "value": "${partnersScore}"
+          }
+        ]
+      }
+    ],
+    "bidRoutine": [
+      {
+        "func": "CALL",
+        "routine": "resetPartnersRoutine"
+      },
+      "var tops = ''",
+      "var trumps = ''",
+      "var bidValues = ${PROPERTY bidValues}",
+      "var bidSuits = ${PROPERTY bidSuits}",
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          3
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${tops}",
+            "operand2": "",
+            "thenRoutine": [
+              "var bidValueWidget = shift ${bidValues}",
+              "var bidValue = ${PROPERTY text OF $bidValueWidget}",
+              {
+                "func": "IF",
+                "operand1": "${bidValue}",
+                "relation": "!=",
+                "operand2": "",
+                "thenRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "id",
+                    "relation": "in",
+                    "value": "${bidValues}"
+                  },
+                  {
+                    "func": "SELECT",
+                    "source": "DEFAULT",
+                    "property": "text",
+                    "value": "${bidValue}"
+                  },
+                  {
+                    "func": "COUNT",
+                    "variable": "matches"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${matches}",
+                    "relation": "!=",
+                    "operand2": 0,
+                    "thenRoutine": [
+                      "var tops = ${bidValue}",
+                      {
+                        "func": "GET",
+                        "property": "id",
+                        "variable": "partner"
+                      },
+                      "var topsPartners = []",
+                      "var topsPartners = push ${bidValueWidget.8}",
+                      "var topsPartners = push ${partner.8}",
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "thisButton"
+                        ],
+                        "property": "topsPartners",
+                        "value": "${topsPartners}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${trumps}",
+            "operand2": "",
+            "thenRoutine": [
+              "var bidSuitWidget = shift ${bidSuits}",
+              "var bidSuit = ${PROPERTY deckSuits OF $bidSuitWidget}",
+              {
+                "func": "IF",
+                "operand1": "${bidSuit}",
+                "relation": "!=",
+                "operand2": "",
+                "thenRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "id",
+                    "relation": "in",
+                    "value": "${bidSuits}"
+                  },
+                  {
+                    "func": "SELECT",
+                    "source": "DEFAULT",
+                    "property": "deckSuits",
+                    "value": "${bidSuit}"
+                  },
+                  {
+                    "func": "COUNT",
+                    "variable": "matches"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${matches}",
+                    "relation": "!=",
+                    "operand2": 0,
+                    "thenRoutine": [
+                      "var trumps = ${bidSuit}",
+                      {
+                        "func": "GET",
+                        "property": "id",
+                        "variable": "partner"
+                      },
+                      "var trumpsPartners = []",
+                      "var trumpsPartners  = push ${bidSuitWidget.7}",
+                      "var trumpsPartners = push ${partner.7}",
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "thisButton"
+                        ],
+                        "property": "trumpsPartners",
+                        "value": "${trumpsPartners}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "updateRankRoutine",
+        "arguments": {
+          "tops": "${tops}"
+        }
+      }
+    ],
+    "recallRoutine": [
+      {
+        "func": "CALL",
+        "routine": "resetPartnersRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ranks"
+        ],
+        "property": "x",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "clonedFrom",
+        "value": "cloneMe",
+        "collection": "cards"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "cards",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY oldSortDefault OF $widgetID}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "sortDefault",
+                "value": "${PROPERTY oldSortDefault OF $widgetID}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "oldSortDefault",
+                "value": null
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "convert": {
+      "J": 11,
+      "Q": 12,
+      "K": 13,
+      "A": 14
+    },
+    "bidValues": [
+      "bidValue1",
+      "bidValue3",
+      "bidValue5",
+      "bidValue7"
+    ],
+    "bidSuits": [
+      "bidSuit1",
+      "bidSuit3",
+      "bidSuit5",
+      "bidSuit7"
+    ],
+    "resetProperties": {
+      "topsPartners": [],
+      "trumpsPartners": []
+    },
+    "topsPartners": [],
+    "trumpsPartners": [],
+    "resetPartnersRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "thisButton"
+        ],
+        "property": "trumpsPartners",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "thisButton"
+        ],
+        "property": "topsPartners",
+        "value": []
+      }
+    ],
+    "updateRankRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "ranks"
+        ],
+        "property": "x",
+        "value": 0
+      },
+      {
+        "func": "IF",
+        "operand1": "${tops}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          "var convert = ${PROPERTY convert}",
+          "var letterTops = ${convert} includes ${tops}",
+          {
+            "func": "IF",
+            "condition": "${letterTops}",
+            "thenRoutine": [
+              "var tops = ${convert.$tops}"
+            ]
+          },
+          "var x = ${tops} - 1",
+          "var x = 13 - ${x}",
+          "var x = -30 * ${x}",
+          {
+            "func": "SET",
+            "collection": [
+              "ranks"
+            ],
+            "property": "x",
+            "value": "${x}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "clonedFrom",
+        "value": "cloneMe",
+        "collection": "cards"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "cards",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY oldSortDefault OF $widgetID}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "sortDefault",
+                "value": "${PROPERTY oldSortDefault OF $widgetID}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "oldSortDefault",
+                "value": null
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${tops}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              "var oldOrder = ${PROPERTY sortDefault OF $widgetID}",
+              "var newOrder = ${oldOrder} - ${tops} + 1 + 13",
+              "var newOrder = ${newOrder} % 13",
+              {
+                "func": "IF",
+                "operand1": "${newOrder}",
+                "operand2": 0,
+                "thenRoutine": [
+                  "var newOrder = 13"
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "oldSortDefault",
+                "value": "${oldOrder}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "sortDefault",
+                "value": "${newOrder}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "choose20": {
+    "type": "button",
+    "id": "choose20",
+    "parent": "chooseValueRank",
+    "x": 10,
+    "y": 10,
+    "text": "A",
+    "inheritFrom": {
+      "choose0": "*"
+    }
+  },
+  "choose21": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose21",
+    "x": 70,
+    "y": 10,
+    "text": 2,
+    "parent": "chooseValueRank"
+  },
+  "choose22": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose22",
+    "x": 130,
+    "y": 10,
+    "text": 3,
+    "parent": "chooseValueRank"
+  },
+  "choose23": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose23",
+    "x": 190,
+    "y": 10,
+    "text": 4,
+    "parent": "chooseValueRank"
+  },
+  "choose24": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose24",
+    "x": 250,
+    "y": 10,
+    "text": 5,
+    "parent": "chooseValueRank"
+  },
+  "choose25": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose25",
+    "x": 10,
+    "y": 70,
+    "text": 6,
+    "parent": "chooseValueRank"
+  },
+  "choose26": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose26",
+    "x": 70,
+    "y": 70,
+    "text": 7,
+    "parent": "chooseValueRank"
+  },
+  "choose27": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose27",
+    "x": 130,
+    "y": 70,
+    "text": 8,
+    "parent": "chooseValueRank"
+  },
+  "choose28": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose28",
+    "x": 190,
+    "y": 70,
+    "text": 9,
+    "parent": "chooseValueRank"
+  },
+  "choose29": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose29",
+    "x": 250,
+    "y": 70,
+    "text": 10,
+    "parent": "chooseValueRank"
+  },
+  "chooseSuit1": {
+    "id": "chooseSuit1",
+    "fixedParent": true,
+    "x": 310,
+    "width": 130,
+    "height": 250,
+    "borderRadius": 8,
+    "css": {
+      "background": "#8ea7cc",
+      "border": "3px solid #0d2f5e"
+    },
+    "parent": "chooseValueRank",
+    "y": -3,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "choose31": {
+    "type": "button",
+    "id": "choose31",
+    "parent": "chooseSuit1",
+    "chooser": 10,
+    "x": 10,
+    "y": 10,
+    "image": "i/icons/clubs.svg",
+    "deckSuitsUni": "♣",
+    "deckSuits": "clubs",
+    "deckSuitsColor": "",
+    "inheritFrom": {
+      "choose10": "*"
+    },
+    "text": "",
+    "deckSuit": "clubs"
+  },
+  "choose32": {
+    "inheritFrom": {
+      "choose10": "*"
+    },
+    "type": "button",
+    "id": "choose32",
+    "x": 70,
+    "y": 10,
+    "parent": "chooseSuit1",
+    "chooser": 11,
+    "deckSuit": "clubs",
+    "image": "i/icons/diamonds.svg",
+    "text": "",
+    "deckSuitsUni": "♦",
+    "deckSuits": "diamonds",
+    "deckSuitsColor": "#e50932"
+  },
+  "choose33": {
+    "inheritFrom": {
+      "choose10": "*"
+    },
+    "type": "button",
+    "id": "choose33",
+    "x": 10,
+    "y": 70,
+    "parent": "chooseSuit1",
+    "newColor": "#e50932",
+    "chooser": 12,
+    "deckSuit": "coins",
+    "image": "i/icons/spades.svg",
+    "text": "",
+    "deckSuitsUni": "♠",
+    "deckSuits": "spades",
+    "deckSuitsColor": ""
+  },
+  "choose34": {
+    "inheritFrom": {
+      "choose10": "*"
+    },
+    "type": "button",
+    "id": "choose34",
+    "x": 70,
+    "y": 70,
+    "parent": "chooseSuit1",
+    "chooser": 13,
+    "deckSuit": "cups",
+    "image": "i/icons/hearts.svg",
+    "text": "",
+    "deckSuitsUni": "♥",
+    "deckSuits": "hearts",
+    "deckSuitsColor": "#e50932"
+  },
+  "closeButton1": {
+    "type": "button",
+    "id": "closeButton1",
+    "x": 312,
+    "y": -52,
+    "width": 130,
+    "css": {
+      "default": {
+        "font-size": "30px",
+        "background": "#0d2f5e",
+        "border-color": "white"
+      },
+      ":hover": {
+        "background": "#a9c6e8",
+        "border-color": "black",
+        "color": "black"
+      }
+    },
+    "inheritFrom": {
+      "choose1": "*"
+    },
+    "text": "Close",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedBy",
+        "value": "${playerName}"
+      },
+      {
+        "func": "DELETE"
+      }
+    ],
+    "parent": "chooseValueRank"
+  },
+  "bidButton1": {
+    "type": "button",
+    "id": "bidButton1",
+    "inheritFrom": "bidButton",
+    "parent": "chooseValueRank",
+    "y": 190,
+    "x": 120
+  },
+  "choose38": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose38",
+    "x": 10,
+    "y": 128,
+    "text": "J",
+    "parent": "chooseValueRank",
+    "z": 81015
+  },
+  "choose40": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose40",
+    "x": 70,
+    "y": 130,
+    "text": "Q",
+    "parent": "chooseValueRank"
+  },
+  "choose41": {
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "type": "button",
+    "id": "choose41",
+    "x": 130,
+    "y": 130,
+    "text": "K",
+    "parent": "chooseValueRank"
+  },
+  "choose30": {
+    "type": "button",
+    "id": "choose30",
+    "x": 250,
+    "y": 130,
+    "inheritFrom": {
+      "choose0": "*"
+    },
+    "text": "",
+    "clickRoutine": [
+      "var bidValueWidget = 'bidValue' concat ${seatIndex}",
+      "var bidSuitWidget = 'bidSuit' concat ${seatIndex}",
+      {
+        "func": "SET",
+        "collection": [
+          "${bidValueWidget}"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${bidSuitWidget}"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${bidSuitWidget}"
+        ],
+        "property": "image",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${bidSuitWidget}"
+        ],
+        "property": "deckSuitsColor",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${bidSuitWidget}"
+        ],
+        "property": "deckSuitsUni",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${bidSuitWidget}"
+        ],
+        "property": "deckSuits",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${bidSuitWidget}"
+        ],
+        "property": "chooser",
+        "value": ""
+      }
+    ],
+    "parent": "chooseValueRank"
+  },
+  "5a3m": {
+    "width": 40,
+    "height": 40,
+    "classes": "chip",
+    "color": "#fcf0d4",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "layer": 10,
+    "item": 4,
+    "color3": "#f8dd9f",
+    "color2": "#000000",
+    "clonedFrom": "i95o",
+    "itemMarker": true,
+    "x": 4,
+    "y": 4,
+    "z": 1090,
+    "ownedBy": null,
+    "id": "5a3m",
+    "parent": "itemsHolder4",
+    "clickable": false
+  },
+  "kofj1": {
+    "id": "kofj1",
+    "text": "K",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "x": 30,
+    "parent": "ranks"
+  },
+  "kofj2": {
+    "id": "kofj2",
+    "x": 60,
+    "text": "Q",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj3": {
+    "id": "kofj3",
+    "x": 90,
+    "text": "J",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj4": {
+    "id": "kofj4",
+    "x": 120,
+    "text": "10",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj5": {
+    "id": "kofj5",
+    "x": 150,
+    "text": "9",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks",
+    "activeFace": 0
+  },
+  "kofj6": {
+    "id": "kofj6",
+    "x": 180,
+    "text": "8",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj7": {
+    "id": "kofj7",
+    "x": 210,
+    "text": "7",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks",
+    "activeFace": 0
+  },
+  "kofj8": {
+    "id": "kofj8",
+    "x": 240,
+    "text": "6",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj9": {
+    "id": "kofj9",
+    "x": 270,
+    "text": "5",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks",
+    "activeFace": 0
+  },
+  "kofj10": {
+    "id": "kofj10",
+    "x": 300,
+    "text": "4",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj11": {
+    "id": "kofj11",
+    "x": 330,
+    "text": "3",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj12": {
+    "id": "kofj12",
+    "x": 360,
+    "text": "2",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks",
+    "activeFace": 0
+  },
+  "kofj13": {
+    "id": "kofj13",
+    "x": 390,
+    "text": "A",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj14": {
+    "id": "kofj14",
+    "x": 420,
+    "text": "K",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj15": {
+    "id": "kofj15",
+    "x": 450,
+    "text": "Q",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks",
+    "activeFace": 0
+  },
+  "kofj16": {
+    "id": "kofj16",
+    "x": 480,
+    "text": "J",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj17": {
+    "id": "kofj17",
+    "x": 510,
+    "text": "10",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj18": {
+    "id": "kofj18",
+    "x": 540,
+    "text": "9",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj19": {
+    "id": "kofj19",
+    "x": 570,
+    "text": "8",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj20": {
+    "id": "kofj20",
+    "x": 600,
+    "text": "7",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj21": {
+    "id": "kofj21",
+    "x": 630,
+    "text": "6",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj22": {
+    "id": "kofj22",
+    "x": 660,
+    "text": "5",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj23": {
+    "id": "kofj23",
+    "x": 690,
+    "text": "4",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj24": {
+    "id": "kofj24",
+    "x": 720,
+    "text": "3",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "kofj25": {
+    "id": "kofj25",
+    "x": 750,
+    "text": "2",
+    "inheritFrom": {
+      "rank1": [
+        "!text",
+        "!x"
+      ]
+    },
+    "parent": "ranks"
+  },
+  "v2iy": {
+    "text": "Rank (High -> Low)",
+    "id": "v2iy",
+    "width": 390,
+    "height": 20,
+    "y": 30,
+    "css": {
+      "default": {
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center"
+      }
+    },
+    "z": 80417,
+    "hoverParent": "rankIndicator",
+    "parent": "rankIndicator",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "rank1": {
+    "id": "rank1",
+    "parent": "ranks",
+    "width": 30,
+    "height": 30,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center"
+      }
+    },
+    "text": "A"
+  },
+  "ranks": {
+    "id": "ranks",
+    "width": 780,
+    "height": 30,
+    "z": 80420,
+    "parent": "rankIndicator",
+    "resetProperties": {
+      "x": 0
+    }
+  },
+  "rankIndicator": {
+    "id": "rankIndicator",
+    "x": 704,
+    "z": 80432,
+    "width": 390,
+    "height": 50,
+    "movable": false,
+    "css": "background-color: white; overflow: hidden;",
+    "y": 753,
+    "movableInEdit": false,
+    "scale": 0
+  },
+  "chooseValueRank": {
+    "id": "chooseValueRank",
+    "owner": [],
+    "x": 596,
+    "y": 314,
+    "width": 310,
+    "height": 250,
+    "borderRadius": 8,
+    "scale": 0.8,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#8ea7cc",
+      "border": "3px solid #0d2f5e"
+    }
+  },
+  "playerAid47": {
+    "id": "playerAid47",
+    "x": 1685,
+    "y": 590,
+    "z": 79088,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightblue"
+    },
+    "onlyVisibleForSeat": [],
+    "text": "1000 player aid master widget",
+    "playerAid": true,
+    "showTotals": false
+  },
+  "playerAid47a": {
+    "id": "playerAid47a",
+    "parent": "playerAid47",
+    "x": -200,
+    "y": 25,
+    "width": 110,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "General"
+  },
+  "playerAid47aAsset": {
+    "id": "playerAid47aAsset",
+    "parent": "playerAid47a",
+    "width": 645,
+    "height": 725,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      " img": {
+        "height": "1em"
+      }
+    },
+    "enlarge": 1,
+    "html": "<h3>Cards</h3> <br />A full deck of 52 cards is used. A, K, Q, J, 10, .. 3, 2 in 4 suits. 13 cards are dealt to each player. <br /> <br />The rank of the cards change depending on the value bid for tops. The bid value becomes the highest rank witht he others following. For example, if 9 was tops, each suit would rank as follows: 9, 8, 7, 6, 5, 4, 3, 2, A, K, Q, J, 10. <h3>Bidding</h3> <br /><strong>Variable partnerships:</strong> <br />Starting with forehand, each player bids either a rank to be tops or a suit to be trumps. If two players bid the same (either rank or suit), they are partners.The other two players are also partners and must decide on either either rank or suit (whiever one wasn't bid by the first partnership). Bidding can go on for several rounds but once players are in a partnership AND agreed, they no longer bid. <br /> <br /><strong>Fixed partnerships:</strong> <br />The process is the same as variable partnerhsip, however trumps and tops muct be agreed with players sitting opposite each other in fixed partnerships. <h3>Play</h3> <br />Forehand leads to first trick. Trick leads after. Must follow suit if you can, but may play anything if you can't. Trick is won by the highest ranked trump, if trumps were player to the trick and by the highest ranked led card if trumps were not played. <h3>Score</h3> <br />Partners both score the number of tricks won by one partner + 1 multplied by the number of tricks won by the other partner + 1. <br /> <br />Play to 100 points. "
   }
 }
