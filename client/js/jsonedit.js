@@ -1368,7 +1368,7 @@ function jeAddWidgetPropertyCommands(object, widgetBase) {
     context: 'No widget selected.',
     onEmpty: true,
     call: async function() {
-      setSelection([ widgets.get(await addWidgetLocal({type})) ]);
+      setSelection([ widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type})) ]);
     }
   });
   return type == 'basic' ? null : type;
@@ -1476,6 +1476,12 @@ async function jeApplyChangesMulti() {
 
 function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
+    if(delta.s[jeStateNow.id] && delta.s[jeStateNow.id].type !== undefined) {
+      const w = widgets.get(jeStateNow.id);
+      jePlainWidget = new w.constructor();
+      jeColorize();
+    }
+
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
         if(delta.s[jeStateNow[field]] === null) {

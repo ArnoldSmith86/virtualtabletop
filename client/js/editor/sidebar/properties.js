@@ -163,6 +163,8 @@ class PropertiesModule extends SidebarModule {
           wrapperDOM.appendChild(inputDOM);
         }
         inputDOM.type = t;
+        if(t == 'number')
+          inputDOM.step = 'any';
         inputDOM.onkeyup = inputDOM.oninput = inputDOM.onchange = _=>{
           if(inputDOM) // it might have been removed by another event
             setValue(t=='number'?+inputDOM.value||0:inputDOM.value, true);

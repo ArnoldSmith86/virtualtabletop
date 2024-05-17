@@ -452,6 +452,9 @@ export class Widget extends StateManaged {
   async clone(overrideProperties, recursive = false, problems = null, xOffset = 0, yOffset = 0) {
     const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
     const parent = clone.parent;
+    if(parent !== undefined && parent !== null && !widgets.has(parent))
+      return null;
+
     clone.clonedFrom = this.get('id');
     if(widgets.has(clone.id)) {
       delete clone.id;
@@ -459,27 +462,32 @@ export class Widget extends StateManaged {
         problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
     }
     delete clone.parent;
-    const cWidget = widgets.get(await addWidgetLocal(clone));
+    const newID = await addWidgetLocal(clone);
+    if(widgets.has(newID)) { // cloning can fail for example with invalid cardType
+      const cWidget = widgets.get(newID);
 
-    // use moveToHolder so that CLONE triggers onEnter and similar features
-    cWidget.movedByButton = problems != null;
-    if(parent)
-      await cWidget.moveToHolder(widgets.get(parent));
+      // use moveToHolder so that CLONE triggers onEnter and similar features
+      cWidget.movedByButton = problems != null;
+      if(parent)
+        await cWidget.moveToHolder(widgets.get(parent));
 
-    // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
-    if(!parent || !widgets.get(parent).get('alignChildren')) {
-      await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
-      await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
-      await cWidget.updatePiles();
-    }
-    delete cWidget.movedByButton;
-
-    if (recursive) {
-      for (const w of this.childArray) {
-        await w.clone({parent: cWidget.get('id')}, true, problems);
+      // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
+      if(!parent || !widgets.get(parent).get('alignChildren')) {
+        await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
+        await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
+        await cWidget.updatePiles();
       }
+      delete cWidget.movedByButton;
+
+      if (recursive) {
+        for (const w of this.childArray) {
+          await w.clone({parent: cWidget.get('id')}, true, problems);
+        }
+      }
+      return cWidget;
+    } else {
+      return null;
     }
-    return cWidget;
   }
 
   coordGlobalFromCoordLocal(coord) {
@@ -1094,12 +1102,16 @@ export class Widget extends StateManaged {
           var c=[];
           for(const w of collections[source]) {
             for(let i=1; i<=a.count; ++i) {
-              c.push(await w.clone(a.properties, a.recursive, problems, a.xOffset * i, a.yOffset * i));
+              const newWidget = await w.clone(a.properties, a.recursive, problems, a.xOffset * i, a.yOffset * i);
+              if(newWidget)
+                c.push(newWidget);
+              else
+                problems.push(`Creating a clone failed. Check that parent, deck and cardType are valid.`);
             }
           }
           collections[a.collection]=c;
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${JSON.stringify(a.collection)}'`)
+            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${JSON.stringify(a.collection)}'`);
         }
       }
 
@@ -1529,8 +1541,12 @@ export class Widget extends StateManaged {
                   cards = cards.filter(c=>!c.get('_ancestor'));
                 if(a.excludeCollection && excludeCollection)
                   cards = cards.filter(c=>!excludeCollection.includes(c));
-                for(const c of cards)
-                  await c.moveToHolder(widgets.get(holder));
+                for(const c of cards) {
+                  if(c.get('_ancestor') == holder && !c.get('owner'))
+                    await c.bringToFront();
+                  else
+                    await c.moveToHolder(widgets.get(holder));
+                }
               }
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
@@ -1833,9 +1849,9 @@ export class Widget extends StateManaged {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
-        let cBase = a.source === 'all' ? Array.from(widgets.values()) : collections[getCollection(a.source)] || [];
-        let c = cBase.filter(w => w.get('type') === 'seat' && !w.get('skipTurn'));
-        let cSkip = cBase.filter(w => w.get('type') === 'seat' && w.get('skipTurn'));
+        
+        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat')
+        let c = a.source=='all' ? allSeats: collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')
 
         //this get the list of valid index
         const indexList = [];
@@ -1883,15 +1899,10 @@ export class Widget extends StateManaged {
 
           collections[a.collection] = [];
           //saves turn into all seats and creates output collection with turn seats
-          for(const w of c) {
+          for(const w of allSeats) {
             await w.set('turn', w.get('index') == turn);
             if(w.get('turn') && w.get('player'))
               collections[a.collection].push(w);
-          }
-
-          //sets turn = false on any seats with skipTurn = true
-          for (const seat of cSkip) {
-            await seat.set('turn', false);
           }
 
           if(jeRoutineLogging)
