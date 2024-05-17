@@ -1,0 +1,49 @@
+.symbolWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: var(--width);
+  height: var(--height);
+  position: relative;
+  font-size: 0;
+}
+
+.symbolWrapper > div:not(.symbolText) {
+  --targetSize: calc(var(--scale) * min(calc(var(--width) / var(--count)), calc(var(--height) / var(--count))));
+  min-width: var(--targetSize);
+  max-width: var(--targetSize);
+  font-size: var(--targetSize);
+  color: var(--color);
+  transform: translate(var(--offsetX), var(--offsetY));
+}
+
+.symbolWrapper > .symbolText {
+  font-size: 30px;
+  color: var(--wcFont);
+}
+
+.widget:hover .symbolWrapper > .symbolText {
+  color: var(--wcFontOH);
+}
+
+.autoIconAlignImage {
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: var(--targetSize);
+  max-height: var(--targetSize);
+}
+
+.autoIconAlignFont {
+  font-family: "Material Icons";
+  text-transform: lowercase;
+  font-weight: normal;
+  line-height: 1;
+  min-height: var(--targetSize);
+  max-height: var(--targetSize);
+}
+
+.autoIconAlignSymbols {
+  font-family: "VTT-Symbols";
+}
