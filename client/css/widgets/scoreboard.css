@@ -77,3 +77,9 @@
   bottom: 0;
 }
 
+@supports (-webkit-hyphens:none) {
+  .scoreboard > div.scoreboardIntermediate > table .totalsLine {
+    position: static;
+    bottom: unset;
+  }
+}
