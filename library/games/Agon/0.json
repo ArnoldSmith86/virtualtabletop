@@ -1,0 +1,1422 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Agon",
+      "image": "/assets/-2112557019_80975",
+      "rules": "https://en.wikipedia.org/wiki/Agon_(game)",
+      "bgg": "https://boardgamegeek.com/boardgame/5168/queens-guard",
+      "year": "1842",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "Layout, design, and library image by LawDawg 96. Released to the Public Domain under CC0.",
+      "lastUpdate": 1716176878396,
+      "showName": true,
+      "skill": "",
+      "description": "Agon, also known as Queen's Guard, is the oldest known use of a hexagonal board. Move your queen to the center and surround her with the guards to win.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "<h3>Objective:</h3> <p>Move your queen to the center of the board and surround it with all 6 of your pawns.</p> <h3>Setup:</h3> <p>Queens are placed on opposite ends of the board. Six guards are placed on both sides at intervals of 4, 9, and 13 spaces around the outer ring.</p> <h3>Gameplay:</h3><ol> <li> <p><b>Moving Pieces:</b></p> <ul> <li>Move one piece one space per turn.</li> <li>All moves must be either sideways in the same color ring or towards the center in the next ring.</li> <li>A piece cannot move between two opposing pieces that would create a straight line of three pieces. This is called blocking.</li> <li>Pieces may not land on occupied spaces.</li> <li>Pieces cannot jump over other pieces.</li> <li>Only the queen can be moved into the center space.</li> </ul> </li> <li> <p><b>Capturing:</b></p> <ul> <li>A piece is captured when two opposing pieces are on either side of it in a straight line.</li> <li>A piece that is captured must be relocated on the next turn instead of moving another piece. If multiple pieces are captured only one piece can be relocated per turn, starting with the queen if it was captured.</li> <li>If the captured piece is a queen, it can be moved to any vacant space on the board.</li> <li>If the captured piece is a pawn, it can be moved to any vacant space on the outer ring of the board.</li> </ul> </li> <li> <p><b>Winning:</b></p> <ul> <li>A player wins by moving the queen to the center space and surrounding it with all six guards.</li> <li>A player loses if all six guards surround the center space, but that player's queen is not on the center space since this configuration prevents either player from winning.</li> </ul> </li> </ol> <h3>Variations:</h3> <ol> <li> <p><b>Setup:</b></p> <ul> <li>Place the queens in the usual starting positions. Take turns putting the guards, one at a time, into any unoccupied space other than the center.</li> <li>Alternately, place the queens anywhere on the board, then take turns placing the guards.</li> </ul> </li> <li> <p><b>Capture:</b></p> <ul> <li>When a queen is captured, the capturing player specifies the new location of the queen.</li> </ul> </li> <li> <p><b><q>Bloody Queen</q>:</b></p> <ul> <li>Blocking is not allowed. Pieces can move between opponent pieces.</li> <li>Capture rules vary as follows:</li> <ul> <li><u>Capturing the queen:</u> If the queen is captured, the capturing player immediately swaps the position of the queen with one of the opponent's outermost guards. The guard is removed from the game.</li> <li><u>Capturing a guard with two guards:</u> The captured player immediately relocates the guard to a vacant space in the next ring outward from the center. If no space is available, then move it to the next outer ring. A guard captured in the outermost ring is relocated to another space in the outermost ring.</li> <li><u>Capturing a guard with a guard and queen:</u> The captured player immediately removes the guard from the game. If multiple pieces are captured in a single move, they are all removed from the game during the same turn.</li> </ul> </ul> </li> </ol> ",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "hex1": {
+    "id": "hex1",
+    "z": 1,
+    "grid": [
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": -75,
+        "offsetY": -43.3
+      },
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "type": "holder",
+    "css": {
+      "background-image": "url('${PROPERTY hexColor}')",
+      "background-size": "contain",
+      "background-color": "transparent",
+      "border": "transparent",
+      "pointer-events": "auto"
+    },
+    "movable": true,
+    "width": 100,
+    "height": 100,
+    "y": 216.5,
+    "hexColor": "/assets/-688976482_375",
+    "dropTarget": {
+      "piece": true
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 8,
+    "parent": "hexBack"
+  },
+  "hex2": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex2",
+    "type": "holder",
+    "x": 75,
+    "y": 173.2001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex3": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex3",
+    "type": "holder",
+    "x": 150,
+    "y": 129.900390625,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex4": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex4",
+    "type": "holder",
+    "x": 225,
+    "y": 86.599609375,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex5": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex5",
+    "type": "holder",
+    "x": 300,
+    "y": 43.2998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex6": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex6",
+    "type": "holder",
+    "x": 375,
+    "y": 0,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex7": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex7",
+    "type": "holder",
+    "x": 450,
+    "y": 43.2998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex8": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex8",
+    "type": "holder",
+    "x": 525,
+    "y": 86.599609375,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex9": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex9",
+    "type": "holder",
+    "x": 600,
+    "y": 129.900390625,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex10": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex10",
+    "type": "holder",
+    "x": 675,
+    "y": 173.2001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex11": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex11",
+    "type": "holder",
+    "x": 750,
+    "y": 216.5,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex12": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex12",
+    "type": "holder",
+    "x": 0,
+    "y": 303.099609375,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex13": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex13",
+    "type": "holder",
+    "x": 75,
+    "y": 259.7998046875,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex14": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex14",
+    "type": "holder",
+    "x": 150,
+    "y": 216.5,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex15": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex15",
+    "type": "holder",
+    "x": 225,
+    "y": 173.2001953125,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex16": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex16",
+    "type": "holder",
+    "x": 300,
+    "y": 129.900390625,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex17": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex17",
+    "type": "holder",
+    "x": 375,
+    "y": 86.599609375,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex18": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex18",
+    "type": "holder",
+    "x": 450,
+    "y": 129.900390625,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex19": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex19",
+    "type": "holder",
+    "x": 525,
+    "y": 173.2001953125,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex20": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex20",
+    "type": "holder",
+    "x": 600,
+    "y": 216.5,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex21": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex21",
+    "type": "holder",
+    "x": 675,
+    "y": 259.7998046875,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex22": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex22",
+    "type": "holder",
+    "x": 750,
+    "y": 303.099609375,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex23": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex23",
+    "type": "holder",
+    "x": 0,
+    "y": 389.7001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex24": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex24",
+    "type": "holder",
+    "x": 75,
+    "y": 346.400390625,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex25": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex25",
+    "type": "holder",
+    "x": 150,
+    "y": 303.099609375,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex26": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex26",
+    "type": "holder",
+    "x": 225,
+    "y": 259.7998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex27": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex27",
+    "type": "holder",
+    "x": 300,
+    "y": 216.5,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex28": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex28",
+    "type": "holder",
+    "x": 375,
+    "y": 173.2001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex29": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex29",
+    "type": "holder",
+    "x": 450,
+    "y": 216.5,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex30": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex30",
+    "type": "holder",
+    "x": 525,
+    "y": 259.7998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex31": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex31",
+    "type": "holder",
+    "x": 600,
+    "y": 303.099609375,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex32": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex32",
+    "type": "holder",
+    "x": 675,
+    "y": 346.400390625,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex33": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex33",
+    "type": "holder",
+    "x": 750,
+    "y": 389.7001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex34": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex34",
+    "type": "holder",
+    "x": 0,
+    "y": 476.2998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex35": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex35",
+    "type": "holder",
+    "x": 75,
+    "y": 433,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex36": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex36",
+    "type": "holder",
+    "x": 150,
+    "y": 389.7001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex37": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex37",
+    "type": "holder",
+    "x": 225,
+    "y": 346.400390625,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex38": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex38",
+    "type": "holder",
+    "x": 300,
+    "y": 303.099609375,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex39": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex39",
+    "type": "holder",
+    "x": 375,
+    "y": 259.7998046875,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex40": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex40",
+    "type": "holder",
+    "x": 450,
+    "y": 303.7001953125,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex41": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex41",
+    "type": "holder",
+    "x": 525,
+    "y": 346.400390625,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex42": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex42",
+    "type": "holder",
+    "x": 600,
+    "y": 389.7001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex43": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex43",
+    "type": "holder",
+    "x": 675,
+    "y": 433,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex44": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex44",
+    "type": "holder",
+    "x": 750,
+    "y": 476.2998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex45": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex45",
+    "type": "holder",
+    "x": 0,
+    "y": 562.900390625,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex46": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex46",
+    "type": "holder",
+    "x": 75,
+    "y": 519.599609375,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex47": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex47",
+    "type": "holder",
+    "x": 150,
+    "y": 476.2998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex48": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex48",
+    "type": "holder",
+    "x": 225,
+    "y": 433,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex49": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex49",
+    "type": "holder",
+    "x": 300,
+    "y": 389.7001953125,
+    "z": 1,
+    "hexColor": "/assets/-1796439602_375",
+    "parent": "hexBack"
+  },
+  "hex50": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex50",
+    "type": "holder",
+    "x": 375,
+    "y": 346.400390625,
+    "z": 1,
+    "hexColor": "/assets/-1796439602_375",
+    "parent": "hexBack"
+  },
+  "hex51": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex51",
+    "type": "holder",
+    "x": 450,
+    "y": 389.7001953125,
+    "z": 1,
+    "hexColor": "/assets/-1796439602_375",
+    "parent": "hexBack"
+  },
+  "hex52": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex52",
+    "type": "holder",
+    "x": 525,
+    "y": 433,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex53": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex53",
+    "type": "holder",
+    "x": 600,
+    "y": 476.2998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex54": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex54",
+    "type": "holder",
+    "x": 675,
+    "y": 519.599609375,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex55": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex55",
+    "type": "holder",
+    "x": 750,
+    "y": 562.900390625,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex56": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex56",
+    "type": "holder",
+    "x": 0,
+    "y": 649.5,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex57": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex57",
+    "type": "holder",
+    "x": 75,
+    "y": 606.2001953125,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex58": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex58",
+    "type": "holder",
+    "x": 150,
+    "y": 562.900390625,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex59": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex59",
+    "type": "holder",
+    "x": 225,
+    "y": 519.599609375,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex60": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex60",
+    "type": "holder",
+    "x": 300,
+    "y": 476.2998046875,
+    "z": 1,
+    "hexColor": "/assets/-1796439602_375",
+    "parent": "hexBack"
+  },
+  "hex61": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex61",
+    "type": "holder",
+    "x": 375,
+    "y": 433,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex62": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex62",
+    "type": "holder",
+    "x": 450,
+    "y": 476.2998046875,
+    "z": 1,
+    "hexColor": "/assets/-1796439602_375",
+    "parent": "hexBack"
+  },
+  "hex63": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex63",
+    "type": "holder",
+    "x": 525,
+    "y": 519.599609375,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex64": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex64",
+    "type": "holder",
+    "x": 600,
+    "y": 562.900390625,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex65": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex65",
+    "type": "holder",
+    "x": 675,
+    "y": 606.2001953125,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex66": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex66",
+    "type": "holder",
+    "x": 750,
+    "y": 649.5,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex67": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex67",
+    "type": "holder",
+    "x": 75,
+    "y": 692.7998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex68": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex68",
+    "type": "holder",
+    "x": 150,
+    "y": 649.5,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex69": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex69",
+    "type": "holder",
+    "x": 225,
+    "y": 606.2001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex70": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex70",
+    "type": "holder",
+    "x": 300,
+    "y": 562.900390625,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex71": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex71",
+    "type": "holder",
+    "x": 375,
+    "y": 519.599609375,
+    "z": 1,
+    "hexColor": "/assets/-1796439602_375",
+    "parent": "hexBack"
+  },
+  "hex72": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex72",
+    "type": "holder",
+    "x": 450,
+    "y": 562.900390625,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex73": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex73",
+    "type": "holder",
+    "x": 525,
+    "y": 606.2001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex74": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex74",
+    "type": "holder",
+    "x": 600,
+    "y": 649.5,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex75": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex75",
+    "type": "holder",
+    "x": 675,
+    "y": 692.7998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex76": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex76",
+    "type": "holder",
+    "x": 150,
+    "y": 736.099609375,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex77": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex77",
+    "type": "holder",
+    "x": 225,
+    "y": 692.7998046875,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex78": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex78",
+    "type": "holder",
+    "x": 300,
+    "y": 649.5,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex79": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex79",
+    "type": "holder",
+    "x": 375,
+    "y": 606.2001953125,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex80": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex80",
+    "type": "holder",
+    "x": 450,
+    "y": 649.5,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex81": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex81",
+    "type": "holder",
+    "x": 525,
+    "y": 692.7998046875,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex82": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex82",
+    "type": "holder",
+    "x": 600,
+    "y": 736.099609375,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex83": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex83",
+    "type": "holder",
+    "x": 225,
+    "y": 779.400390625,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex84": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex84",
+    "type": "holder",
+    "x": 300,
+    "y": 736.099609375,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex85": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex85",
+    "type": "holder",
+    "x": 375,
+    "y": 692.7998046875,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex86": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex86",
+    "type": "holder",
+    "x": 450,
+    "y": 736.099609375,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex87": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex87",
+    "type": "holder",
+    "x": 525,
+    "y": 779.400390625,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex88": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex88",
+    "type": "holder",
+    "x": 450,
+    "y": 822.7001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex89": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex89",
+    "type": "holder",
+    "x": 300,
+    "y": 822.7001953125,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "hex90": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex90",
+    "type": "holder",
+    "x": 375,
+    "y": 779.400390625,
+    "z": 1,
+    "hexColor": "/assets/1656285883_375",
+    "parent": "hexBack"
+  },
+  "hex91": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex91",
+    "type": "holder",
+    "x": 375,
+    "y": 866,
+    "z": 1,
+    "parent": "hexBack"
+  },
+  "blackQueen": {
+    "id": "blackQueen",
+    "x": 10,
+    "y": 8,
+    "width": 80,
+    "height": 80,
+    "z": 171,
+    "image": "/i/game-icons.net/skoll/chess-queen.svg",
+    "piece": true,
+    "resetProperties": {
+      "parent": "hex91",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex91"
+  },
+  "whiteQueen": {
+    "id": "whiteQueen",
+    "x": 10,
+    "y": 8,
+    "width": 80,
+    "height": 80,
+    "z": 1,
+    "image": "/i/game-icons.net/skoll/chess-queen.svg",
+    "piece": true,
+    "svgReplaces": {
+      "#000": "altColor"
+    },
+    "altColor": "#ffffff",
+    "resetProperties": {
+      "parent": "hex6",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex6"
+  },
+  "blackPawn1": {
+    "id": "blackPawn1",
+    "x": 10,
+    "width": 80,
+    "height": 80,
+    "z": 1,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "piece": true,
+    "y": 8,
+    "resetProperties": {
+      "parent": "hex67",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex67"
+  },
+  "blackPawn2": {
+    "inheritFrom": {
+      "blackPawn1": "!parent"
+    },
+    "id": "blackPawn2",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "resetProperties": {
+      "parent": "hex12",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex12"
+  },
+  "blackPawn3": {
+    "inheritFrom": {
+      "blackPawn1": "!parent"
+    },
+    "id": "blackPawn3",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "resetProperties": {
+      "parent": "hex4",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex4"
+  },
+  "blackPawn4": {
+    "inheritFrom": {
+      "blackPawn1": "!parent"
+    },
+    "id": "blackPawn4",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "resetProperties": {
+      "parent": "hex8",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex8"
+  },
+  "blackPawn5": {
+    "inheritFrom": {
+      "blackPawn1": "!parent"
+    },
+    "id": "blackPawn5",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "resetProperties": {
+      "parent": "hex22",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex22"
+  },
+  "blackPawn6": {
+    "inheritFrom": {
+      "blackPawn1": "!parent"
+    },
+    "id": "blackPawn6",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "resetProperties": {
+      "parent": "hex75",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex75"
+  },
+  "whitePawn1": {
+    "id": "whitePawn1",
+    "x": 10,
+    "y": 8,
+    "width": 80,
+    "height": 80,
+    "z": 1,
+    "svgReplaces": {
+      "#000": "altColor"
+    },
+    "altColor": "#ffffff",
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "piece": true,
+    "resetProperties": {
+      "parent": "hex10",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex10"
+  },
+  "whitePawn2": {
+    "inheritFrom": {
+      "whitePawn1": "!parent"
+    },
+    "id": "whitePawn2",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hex55",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex55"
+  },
+  "whitePawn3": {
+    "inheritFrom": {
+      "whitePawn1": "!parent"
+    },
+    "id": "whitePawn3",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "resetProperties": {
+      "parent": "hex87",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex87"
+  },
+  "whitePawn4": {
+    "inheritFrom": {
+      "whitePawn1": "!parent"
+    },
+    "id": "whitePawn4",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "resetProperties": {
+      "parent": "hex83",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex83"
+  },
+  "whitePawn5": {
+    "inheritFrom": {
+      "whitePawn1": "!parent"
+    },
+    "id": "whitePawn5",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "resetProperties": {
+      "parent": "hex45",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex45"
+  },
+  "whitePawn6": {
+    "inheritFrom": {
+      "whitePawn1": "!parent"
+    },
+    "id": "whitePawn6",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "resetProperties": {
+      "parent": "hex2",
+      "x": 10,
+      "y": 8
+    },
+    "parent": "hex2"
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ]
+  },
+  "hexBack": {
+    "id": "hexBack",
+    "x": 375,
+    "width": 850,
+    "height": 966,
+    "layer": -3,
+    "movable": false,
+    "y": 22,
+    "z": 1
+  },
+  "x4up": {
+    "id": "x4up",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "css": {
+      "background": "#DEB887"
+    },
+    "layer": -3
+  }
+}
