@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "Layout, design, and library image by LawDawg 96. Released to the Public Domain under CC0.",
-      "lastUpdate": 1716176878396,
+      "lastUpdate": 1716211670431,
       "showName": true,
       "skill": "",
       "description": "Agon, also known as Queen's Guard, is the oldest known use of a hexagonal board. Move your queen to the center and surround her with the guards to win.",
@@ -51,7 +51,6 @@
       "border": "transparent",
       "pointer-events": "auto"
     },
-    "movable": true,
     "width": 100,
     "height": 100,
     "y": 216.5,
