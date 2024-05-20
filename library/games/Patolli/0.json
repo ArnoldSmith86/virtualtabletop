@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "45",
       "attribution": "Game design and room layout by LawDawg96. Released under CC BY-SA 4.0.<div><br></div><div>Board and beans by&nbsp;Rubýñ, available under CC BY-SA 3.0 at&nbsp;https://en.wikipedia.org/wiki/File:Tablero_de_Patolli.svg.</div><div><br></div><div>Library, coin, and background image by GDJ, available under the Pixabay License at&nbsp;https://pixabay.com/vectors/aztec-calendar-mexico-mexican-time-8015961/.</div><div><br></div><div>Aztec god&nbsp;Macuilxochitl in the Public Domain, available at https://en.wikipedia.org/wiki/Patolli#/media/File:Macuilxochitl_Patolli.png.</div><div><br></div><div>Rules written by ChatGPT and edited by LawDawg96 (based on review of several websites and YouTube videos with different rule variations).</div>",
-      "lastUpdate": 1716151642667,
+      "lastUpdate": 1716176018115,
       "showName": true,
       "skill": "",
       "description": "An ancient Mesoamerican race game. Move pieces around the board based on a roll of marked beans and take all the coins from your opponent.",
@@ -963,7 +963,7 @@
     "width": 200,
     "height": 200,
     "movable": false,
-    "image": "/assets/1921299877_29529",
+    "image": "/assets/2126386929_17592",
     "z": 1,
     "layer": -4
   },
@@ -1243,7 +1243,7 @@
         "text-align": "left"
       }
     },
-    "html": "<h3>Legend</h3><br/><table><tr><th><img src='/i/noto-emoji/emoji_u26ab.svg' height=25/></th><th>Enter with roll of 1.<br/>Leave with exact roll and take 1 coin from opponent.</th></tr><tr><th><img src='/assets/-1198549151_54776' height=45/></th><th>Remove opponent's marker from the board and take 1 coin from opponent.</th></tr><tr><th><img src='/assets/561013787_17686' height=45/></th><th>Give 1 coin to opponent.</th></tr><tr><th><img src='/assets/82743130_18063' height=45/></th><th>Roll again.</th></tr></table>",
+    "html": "<h3>Legend</h3><br/><table><tr><th><img src='/i/noto-emoji/emoji_u26ab.svg' height=25/></th><th>Enter with roll of 1.<br/>Leave with exact roll and take 1 coin from opponent.</th></tr><tr><th><img src='/assets/1207197689_10678' height=45/></th><th>Remove opponent's marker from the board and take 1 coin from opponent.</th></tr><tr><th><img src='/assets/-205412757_5762' height=45/></th><th>Give 1 coin to opponent.</th></tr><tr><th><img src='/assets/1625460113_5142' height=45/></th><th>Roll again.</th></tr></table>",
     "layer": -4
   },
   "reminders": {
