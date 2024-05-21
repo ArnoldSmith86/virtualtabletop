@@ -1,0 +1,1340 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Hex",
+      "image": "/assets/-1636166758_47047",
+      "rules": "https://en.wikipedia.org/wiki/Hex_(board_game)",
+      "bgg": "https://boardgamegeek.com/boardgame/4112/hex",
+      "year": "1942",
+      "mode": "vs",
+      "time": "10",
+      "attribution": "Room design, layout, and library image by LawDawg96. Released to the Public Domain under CC0.",
+      "lastUpdate": 1716264979790,
+      "showName": true,
+      "skill": "",
+      "description": "Be the first to connect two ends of the hex board with a continuous, connected line of your color.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Piet Hein, John Nash",
+      "similarAwards": "",
+      "ruleText": "Sit in seats. Decide which player goes first. The seat at the top of the screen tries to connect the top and bottom edges. The seat at the left of the screen tries to connect the left and right edges.<div><br></div><div>Take turns clicking on a space to turn the space to your player color.&nbsp; The winner is the first player to connect two ends of the board with a continuous connected line of their color.</div><div><br></div><div>After the first player makes the first move, the second player can choose to switch positions (to compensate for the advantage the player going first has). To swap in the room, the second player clicks on the other seat to take over that position and click on the first played piece to change its color.</div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "hexMaster": {
+    "type": "holder",
+    "id": "hexMaster",
+    "x": 174,
+    "y": -203,
+    "width": 86.6,
+    "height": 86.6,
+    "z": 1,
+    "css": {
+      "border-radius": "100%",
+      "background": "transparentx",
+      "border": "none"
+    },
+    "grid": [
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": -68.3,
+        "offsetY": -19.6
+      },
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": 6.7,
+        "offsetY": 23.7
+      }
+    ],
+    "dropTarget": {},
+    "movableInEdit": false,
+    "dropOffsetX": 12,
+    "dropOffsetY": 12,
+    "rotation": -30,
+    "dropLimit": 2
+  },
+  "ghn1": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "",
+    "id": "ghn1"
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "fillColor",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ]
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -10,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "#eee6d9"
+      }
+    }
+  },
+  "hexDeck": {
+    "type": "deck",
+    "id": "hexDeck",
+    "x": 336,
+    "y": -197,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "cardDefaults": {
+      "movable": false,
+      "movableInEdit": false,
+      "layer": -10,
+      "width": 100,
+      "height": 100,
+      "grid": [
+        {
+          "y": 150,
+          "x": 86.6,
+          "offsetY": -68.3,
+          "offsetX": -19.6
+        },
+        {
+          "y": 150,
+          "x": 86.6,
+          "offsetY": 6.7,
+          "offsetX": 23.7
+        }
+      ],
+      "clickRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY fillColor}",
+          "operand2": "#c0c0c0",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "fillColor",
+              "value": "${playerColor}"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "fillColor",
+              "value": "#c0c0c0"
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "light": {
+        "fillColor": "#c0c0c0",
+        "strokeColor": "#ffffff",
+        "rotDeg": 0
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "value": "/assets/1000076354_385",
+            "svgReplaces": {
+              "fillColor": "fillColor",
+              "strokeColor": "strokeColor",
+              "rotDeg": "rotDeg"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "77qp": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "77qp",
+    "z": 1,
+    "x": 586.5999999999999,
+    "y": 831.7
+  },
+  "1e7z": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "1e7z",
+    "z": 1,
+    "x": 543.3,
+    "y": 756.7
+  },
+  "c46r": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "c46r",
+    "z": 1,
+    "x": 456.69999999999993,
+    "y": 756.7
+  },
+  "96el": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "96el",
+    "z": 1,
+    "x": 499.99999999999994,
+    "y": 681.7
+  },
+  "mmbs": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "mmbs",
+    "z": 1,
+    "x": 413.4,
+    "y": 681.7
+  },
+  "ueg9": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "ueg9",
+    "z": 1,
+    "x": 456.69999999999993,
+    "y": 606.7
+  },
+  "zsqs": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "zsqs",
+    "z": 1,
+    "x": 370.09999999999997,
+    "y": 606.7
+  },
+  "5nij": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "5nij",
+    "z": 1,
+    "x": 413.4,
+    "y": 531.7
+  },
+  "nq8c": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "nq8c",
+    "z": 1,
+    "x": 326.79999999999995,
+    "y": 531.7
+  },
+  "h17y": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "h17y",
+    "z": 1,
+    "x": 370.09999999999997,
+    "y": 456.70000000000005
+  },
+  "c36p": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "c36p",
+    "z": 1,
+    "x": 283.5,
+    "y": 456.70000000000005
+  },
+  "tx9d": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "tx9d",
+    "z": 1,
+    "x": 326.79999999999995,
+    "y": 381.70000000000005
+  },
+  "znad": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "znad",
+    "z": 1,
+    "x": 240.19999999999996,
+    "y": 381.70000000000005
+  },
+  "rd9o": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "rd9o",
+    "z": 1,
+    "x": 283.5,
+    "y": 306.7
+  },
+  "iews": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "iews",
+    "z": 1,
+    "x": 196.89999999999998,
+    "y": 306.7
+  },
+  "yjvd": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "yjvd",
+    "z": 1,
+    "x": 240.19999999999996,
+    "y": 231.7
+  },
+  "9m7q": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "9m7q",
+    "z": 1,
+    "x": 153.6,
+    "y": 231.7
+  },
+  "7dov": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "7dov",
+    "z": 1,
+    "x": 196.89999999999998,
+    "y": 156.7
+  },
+  "ae1j": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "ae1j",
+    "z": 1,
+    "x": 110.3,
+    "y": 156.7
+  },
+  "gun8": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "gun8",
+    "z": 1,
+    "x": 1279.4,
+    "y": 831.7
+  },
+  "b7tc": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "b7tc",
+    "z": 1,
+    "x": 1192.8,
+    "y": 831.7
+  },
+  "l6o8": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "l6o8",
+    "z": 1,
+    "x": 1236.1,
+    "y": 756.7
+  },
+  "3ewa": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "3ewa",
+    "z": 1,
+    "x": 1192.8,
+    "y": 681.7
+  },
+  "xvv6": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "xvv6",
+    "z": 1,
+    "x": 1149.5,
+    "y": 756.7
+  },
+  "uyal": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "uyal",
+    "z": 1,
+    "x": 1106.2,
+    "y": 681.7
+  },
+  "gx5o": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "gx5o",
+    "z": 1,
+    "x": 1106.2,
+    "y": 831.7
+  },
+  "2p3e": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "2p3e",
+    "z": 1,
+    "x": 1062.9,
+    "y": 756.7
+  },
+  "6cdk": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "6cdk",
+    "z": 1,
+    "x": 1019.6,
+    "y": 681.7
+  },
+  "u30u": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "u30u",
+    "z": 1,
+    "x": 1019.6,
+    "y": 831.7
+  },
+  "f12u": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "f12u",
+    "z": 1,
+    "x": 976.3,
+    "y": 756.7
+  },
+  "i4e4": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "i4e4",
+    "z": 1,
+    "x": 846.3999999999999,
+    "y": 681.7
+  },
+  "r6ad": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "r6ad",
+    "z": 1,
+    "x": 932.9999999999999,
+    "y": 831.7
+  },
+  "g6z9": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "g6z9",
+    "z": 1,
+    "x": 932.9999999999999,
+    "y": 681.7
+  },
+  "e3v6": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "e3v6",
+    "z": 1,
+    "x": 759.8,
+    "y": 681.7
+  },
+  "it0j": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "it0j",
+    "z": 1,
+    "x": 846.3999999999999,
+    "y": 831.7
+  },
+  "e81x": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "e81x",
+    "z": 1,
+    "x": 803.1,
+    "y": 756.7
+  },
+  "4a20": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "4a20",
+    "z": 1,
+    "x": 889.7,
+    "y": 756.7
+  },
+  "cw0t": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "cw0t",
+    "z": 1,
+    "x": 759.8,
+    "y": 831.7
+  },
+  "cb63": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "cb63",
+    "z": 1,
+    "x": 716.5,
+    "y": 756.7
+  },
+  "njij": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "njij",
+    "z": 1,
+    "x": 673.1999999999999,
+    "y": 681.7
+  },
+  "0dll": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "0dll",
+    "z": 1,
+    "x": 1149.5,
+    "y": 606.7
+  },
+  "iijf": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "iijf",
+    "z": 1,
+    "x": 1062.9,
+    "y": 606.7
+  },
+  "n8j7": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "n8j7",
+    "z": 1,
+    "x": 976.3,
+    "y": 606.7
+  },
+  "rwj4": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "rwj4",
+    "z": 1,
+    "x": 889.7,
+    "y": 606.7
+  },
+  "jr3a": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "jr3a",
+    "z": 1,
+    "x": 803.1,
+    "y": 606.7
+  },
+  "oqae": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "oqae",
+    "z": 1,
+    "x": 716.5,
+    "y": 606.7
+  },
+  "ry4w": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "ry4w",
+    "z": 1,
+    "x": 629.9,
+    "y": 606.7
+  },
+  "z9n3": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "z9n3",
+    "z": 1,
+    "x": 1106.2,
+    "y": 531.7
+  },
+  "h29s": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "h29s",
+    "z": 1,
+    "x": 1019.6,
+    "y": 531.7
+  },
+  "hgc9": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "hgc9",
+    "z": 1,
+    "x": 932.9999999999999,
+    "y": 531.7
+  },
+  "isjo": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "isjo",
+    "z": 1,
+    "x": 846.3999999999999,
+    "y": 531.7
+  },
+  "xm0w": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "xm0w",
+    "z": 1,
+    "x": 759.8,
+    "y": 531.7
+  },
+  "rohz": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "rohz",
+    "z": 1,
+    "x": 673.1999999999999,
+    "y": 531.7
+  },
+  "jtzr": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "jtzr",
+    "z": 1,
+    "x": 586.5999999999999,
+    "y": 531.7
+  },
+  "jolf": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "jolf",
+    "z": 1,
+    "x": 1062.9,
+    "y": 456.70000000000005
+  },
+  "s7nk": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "s7nk",
+    "z": 1,
+    "x": 976.3,
+    "y": 456.70000000000005
+  },
+  "s44d": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "s44d",
+    "z": 1,
+    "x": 889.7,
+    "y": 456.70000000000005
+  },
+  "g4jd": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "g4jd",
+    "z": 1,
+    "x": 803.1,
+    "y": 456.70000000000005
+  },
+  "z17z": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "z17z",
+    "z": 1,
+    "x": 716.5,
+    "y": 456.70000000000005
+  },
+  "ikov": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "ikov",
+    "z": 1,
+    "x": 629.9,
+    "y": 456.70000000000005
+  },
+  "hc7m": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "hc7m",
+    "z": 1,
+    "x": 543.3,
+    "y": 456.70000000000005
+  },
+  "jdpn": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "jdpn",
+    "z": 1,
+    "x": 1019.6,
+    "y": 381.70000000000005
+  },
+  "u7vm": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "u7vm",
+    "z": 1,
+    "x": 932.9999999999999,
+    "y": 381.70000000000005
+  },
+  "31em": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "31em",
+    "z": 1,
+    "x": 846.3999999999999,
+    "y": 381.70000000000005
+  },
+  "9xtd": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "9xtd",
+    "z": 1,
+    "x": 759.8,
+    "y": 381.70000000000005
+  },
+  "i4z3": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "i4z3",
+    "z": 1,
+    "x": 673.1999999999999,
+    "y": 381.70000000000005
+  },
+  "f1ms": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "f1ms",
+    "z": 1,
+    "x": 586.5999999999999,
+    "y": 381.70000000000005
+  },
+  "8m8u": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "8m8u",
+    "z": 1,
+    "x": 499.99999999999994,
+    "y": 381.70000000000005
+  },
+  "fdsb": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "fdsb",
+    "z": 1,
+    "x": 976.3,
+    "y": 306.7
+  },
+  "xr3y": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "xr3y",
+    "z": 1,
+    "x": 889.7,
+    "y": 306.7
+  },
+  "j18x": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "j18x",
+    "z": 1,
+    "x": 803.1,
+    "y": 306.7
+  },
+  "pu41": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "pu41",
+    "z": 1,
+    "x": 716.5,
+    "y": 306.7
+  },
+  "zs5o": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "zs5o",
+    "z": 1,
+    "x": 629.9,
+    "y": 306.7
+  },
+  "nqm9": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "nqm9",
+    "z": 1,
+    "x": 543.3,
+    "y": 306.7
+  },
+  "3tuz": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "3tuz",
+    "z": 1,
+    "x": 456.69999999999993,
+    "y": 306.7
+  },
+  "vqfm": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "vqfm",
+    "z": 1,
+    "x": 932.9999999999999,
+    "y": 231.7
+  },
+  "hea4": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "hea4",
+    "z": 1,
+    "x": 846.3999999999999,
+    "y": 231.7
+  },
+  "3aiu": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "3aiu",
+    "z": 1,
+    "x": 759.8,
+    "y": 231.7
+  },
+  "gt9h": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "gt9h",
+    "z": 1,
+    "x": 673.1999999999999,
+    "y": 231.7
+  },
+  "xurr": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "xurr",
+    "z": 1,
+    "x": 586.5999999999999,
+    "y": 231.7
+  },
+  "6bcr": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "6bcr",
+    "z": 1,
+    "x": 499.99999999999994,
+    "y": 231.7
+  },
+  "2ynm": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "2ynm",
+    "z": 1,
+    "x": 413.4,
+    "y": 231.7
+  },
+  "r9ue": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "r9ue",
+    "z": 1,
+    "x": 889.7,
+    "y": 156.7
+  },
+  "hbyw": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "hbyw",
+    "z": 1,
+    "x": 803.1,
+    "y": 156.7
+  },
+  "nl3g": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "nl3g",
+    "z": 1,
+    "x": 716.5,
+    "y": 156.7
+  },
+  "otpb": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "otpb",
+    "z": 1,
+    "x": 629.9,
+    "y": 156.7
+  },
+  "8w1t": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "8w1t",
+    "z": 1,
+    "x": 543.3,
+    "y": 156.7
+  },
+  "6jf0": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "6jf0",
+    "z": 1,
+    "x": 456.69999999999993,
+    "y": 156.7
+  },
+  "cqak": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "cqak",
+    "z": 1,
+    "x": 370.09999999999997,
+    "y": 156.7
+  },
+  "cgqa": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "cgqa",
+    "z": 1,
+    "x": 1366,
+    "y": 831.7
+  },
+  "xlvs": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "xlvs",
+    "z": 1,
+    "x": 1322.7,
+    "y": 756.7
+  },
+  "65ms": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "65ms",
+    "z": 1,
+    "x": 1279.4,
+    "y": 681.7
+  },
+  "8h1d": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "8h1d",
+    "z": 1,
+    "x": 1236.1,
+    "y": 606.7
+  },
+  "2rtv": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "2rtv",
+    "z": 1,
+    "x": 1192.8,
+    "y": 531.7
+  },
+  "qvct": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "qvct",
+    "z": 1,
+    "x": 1149.5,
+    "y": 456.70000000000005
+  },
+  "j2h1": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "j2h1",
+    "z": 1,
+    "x": 1019.6,
+    "y": 231.7
+  },
+  "uw32": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "uw32",
+    "z": 1,
+    "x": 976.3,
+    "y": 156.7
+  },
+  "wgq4": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "wgq4",
+    "z": 1,
+    "x": 66.99999999999999,
+    "y": 81.69999999999999
+  },
+  "zebm": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "zebm",
+    "z": 1,
+    "x": 153.6,
+    "y": 81.69999999999999
+  },
+  "1ocd": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "1ocd",
+    "z": 1,
+    "x": 673.1999999999999,
+    "y": 831.7
+  },
+  "519m": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "519m",
+    "z": 1,
+    "x": 629.9,
+    "y": 756.7
+  },
+  "sv0z": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "sv0z",
+    "z": 1,
+    "x": 586.5999999999999,
+    "y": 681.7
+  },
+  "uy3m": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "uy3m",
+    "z": 1,
+    "x": 543.3,
+    "y": 606.7
+  },
+  "pdh6": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "pdh6",
+    "z": 1,
+    "x": 499.99999999999994,
+    "y": 531.7
+  },
+  "c31a": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "c31a",
+    "z": 1,
+    "x": 456.69999999999993,
+    "y": 456.7
+  },
+  "oyei": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "oyei",
+    "z": 1,
+    "x": 413.4,
+    "y": 381.7
+  },
+  "2eop": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "2eop",
+    "z": 1,
+    "x": 370.09999999999997,
+    "y": 306.7
+  },
+  "wavq": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "wavq",
+    "z": 1,
+    "x": 326.79999999999995,
+    "y": 231.7
+  },
+  "edas": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "edas",
+    "z": 1,
+    "x": 283.5,
+    "y": 156.7
+  },
+  "yo2z": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "yo2z",
+    "z": 1,
+    "x": 1062.9,
+    "y": 306.7
+  },
+  "c4md": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "c4md",
+    "z": 1,
+    "x": 1106.2,
+    "y": 381.7
+  },
+  "etf8": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "etf8",
+    "z": 1,
+    "x": 932.9999999999999,
+    "y": 81.69999999999999
+  },
+  "15ov": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "15ov",
+    "z": 1,
+    "x": 846.3999999999999,
+    "y": 81.69999999999999
+  },
+  "sqt5": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "sqt5",
+    "z": 1,
+    "x": 759.8,
+    "y": 81.69999999999999
+  },
+  "c739": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "c739",
+    "z": 1,
+    "x": 673.1999999999999,
+    "y": 81.69999999999999
+  },
+  "1d8m": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "1d8m",
+    "z": 1,
+    "x": 586.5999999999999,
+    "y": 81.69999999999999
+  },
+  "bpum": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "bpum",
+    "z": 1,
+    "x": 499.99999999999994,
+    "y": 81.69999999999999
+  },
+  "iqml": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "iqml",
+    "z": 1,
+    "x": 413.4,
+    "y": 81.69999999999999
+  },
+  "zfdz": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "zfdz",
+    "z": 1,
+    "x": 240.19999999999996,
+    "y": 81.69999999999999
+  },
+  "6o68": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "6o68",
+    "z": 1,
+    "x": 326.79999999999995,
+    "y": 81.69999999999999
+  },
+  "6bnr": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "6bnr",
+    "z": 1,
+    "y": 831.7,
+    "x": 499.99999999999994
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 467,
+    "y": 14,
+    "z": 1
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 84,
+    "y": 488,
+    "index": 2,
+    "z": 1
+  }
+}
