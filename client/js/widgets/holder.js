@@ -20,8 +20,6 @@ class Holder extends Widget {
       showInactiveFaceToSeat: null,
       image: '',
       svgReplaces: {},
-      color: 'black',
-      text: '',
 
       onEnter: {},
       onLeave: {},
@@ -91,8 +89,6 @@ class Holder extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined)
-      setText(this.domElement, delta.text);
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined)
