@@ -1,9 +1,26 @@
 .holder {
-  background: white;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
   border-color: #d8d8d8 #ccc #ccc #d8d8d8;
+}
+
+.holder > * {
+  display: initial;
+  justify-content: initial;
+  align-items: initial;
+  text-align: initial;
+  font-size: initial;
+  color: initial;
 }
 
 .holder.droppable.droptarget{

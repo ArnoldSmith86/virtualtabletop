@@ -18,6 +18,10 @@ class Holder extends Widget {
       preventPiles: false,
       childrenPerOwner: false,
       showInactiveFaceToSeat: null,
+      image: '',
+      svgReplaces: {},
+      color: 'black',
+      text: '',
 
       onEnter: {},
       onLeave: {},
@@ -58,6 +62,41 @@ class Holder extends Widget {
     const p = super.classesProperties();
     p.push('showInactiveFaceToSeat');
     return p;
+  }
+
+  css() {
+    let css = super.css();
+
+   if(this.get('image'))
+      css += '; background-image: url("' + this.getImage() + '")';
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('image', 'svgReplaces');
+    return p;
+  }
+
+  getImage() {
+    if(!Object.keys(this.get('svgReplaces') || {}).length)
+      return this.get('image');
+
+    const replaces = {};
+    for(const key in this.get('svgReplaces'))
+      replaces[key] = this.get(this.get('svgReplaces')[key]);
+    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
+  }
+
+  applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+    if(delta.text !== undefined)
+      setText(this.domElement, delta.text);
+
+    for(const property of Object.values(this.get('svgReplaces') || {}))
+      if(delta[property] !== undefined)
+        this.domElement.style.cssText = mapAssetURLs(this.css());
   }
 
   async dispenseCard(card) {
