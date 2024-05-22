@@ -539,7 +539,7 @@ const jeCommands = [
   },
   {
     id: 'je_hexGrid',
-    name: 'hex grid element',
+    name: 'calculated hex grid',
     context: '^[^ ]* ↦ grid',
     call: async function() {
       const w = widgets.get(jeStateNow.id);
@@ -548,7 +548,7 @@ const jeCommands = [
       let hexSide = isFlat ? w.get('height') : w.get('width');
 
       let long = hexSide;
-      let short = long * Math.sqrt(3) / 2;
+      let short = parseFloat((long * Math.sqrt(3) / 2).toFixed(2));
       let long15 = long * 1.5;
       let long75 = long * 0.75;
       let shortHalf = short / 2;
