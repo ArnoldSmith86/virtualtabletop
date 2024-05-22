@@ -20,7 +20,6 @@ class Holder extends Widget {
       showInactiveFaceToSeat: null,
       image: '',
       svgReplaces: {},
-      text: '',
 
       onEnter: {},
       onLeave: {},
@@ -91,26 +90,9 @@ class Holder extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
 
-    if(delta.text !== undefined)
-      setText(this.domElement, delta.text);
-
     for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined)
         this.domElement.style.cssText = mapAssetURLs(this.css());
-  }
-
-  classes(includeTemporary=true) {
-    let className = super.classes(includeTemporary);
-
-    if(this.get('image'))
-      console.log('hasImage', this.get('image'));
-      className += ' hasImage';
-
-    if(this.get('text'))
-      console.log('hasText', this.get('text'));
-      className += ' hasText';
-
-    return className;
   }
 
   async dispenseCard(card) {
