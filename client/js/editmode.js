@@ -793,6 +793,43 @@ function populateAddWidgetOverlay() {
     borderWidth: 1
   });
 
+   //Sixth row
+
+   addPieceToAddWidgetOverlay(new BasicWidget('HexFlat'), {
+    x: 450,
+    y: 606.2,
+    width: 50,
+    height: 50,
+    color: VTTblue,
+    image: "i/game-pieces/2D/Hex-Flat.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    borderColor: "#000000",
+    borderWidth: 2,
+    hexType: "flat",
+    autoHexGrid: true,
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexPoint'), {
+    x: 562.9,
+    y: 600,
+    width: 50,
+    height: 50,
+    color: VTTblue,
+    image: "i/game-pieces/2D/Hex-Point.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    borderColor: "#000000",
+    borderWidth: 2, hexType: "point",
+    autoHexGrid: true,
+  });
+
   //Poker chips
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker2DSVG'), {
