@@ -797,7 +797,7 @@ function populateAddWidgetOverlay() {
 
    addPieceToAddWidgetOverlay(new BasicWidget('HexFlat'), {
     x: 450,
-    y: 606.2,
+    y: 600,
     width: 50,
     height: 50,
     color: VTTblue,
@@ -808,13 +808,11 @@ function populateAddWidgetOverlay() {
       "#borderWidth": "borderWidth"
     },
     borderColor: "#000000",
-    borderWidth: 2,
-    hexType: "flat",
-    autoHexGrid: true,
+    borderWidth: 2
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('HexPoint'), {
-    x: 562.9,
+    x: 560,
     y: 600,
     width: 50,
     height: 50,
@@ -826,8 +824,7 @@ function populateAddWidgetOverlay() {
       "#borderWidth": "borderWidth"
     },
     borderColor: "#000000",
-    borderWidth: 2, hexType: "point",
-    autoHexGrid: true,
+    borderWidth: 2
   });
 
   //Poker chips

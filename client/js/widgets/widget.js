@@ -55,7 +55,6 @@ export class Widget extends StateManaged {
       clickSound: null,
 
       grid: [],
-      autoHexGrid: false,
       enlarge: false,
       overlap: true,
       ignoreOnLeave: false,
@@ -2104,40 +2103,6 @@ export class Widget extends StateManaged {
       for(const t of this.dropTargets)
         t.domElement.classList.add('droppable');
     }
-
-    if(this.get('autoHexGrid')) {
-      let hexType = this.get('hexType');
-      const isFlat = hexType === 'flat';
-      let hexSide = isFlat ? this.get('height') : this.get('width');
-
-      let long = hexSide;
-      let short = long * Math.sqrt(3) / 2;
-      let long15 = long * 1.5;
-      let long75 = long * 0.75;
-      let shortHalf = short / 2;
-
-      let xHex = isFlat ? long15 : short;
-      let yHex = isFlat ? short : long15;
-      let offsetXHex = isFlat ? long75 : shortHalf;
-      let offsetYHex = isFlat ? shortHalf : long75;
-
-      const hexGrid = [
-        {
-            "x": xHex,
-            "y": yHex,
-            "offsetX": offsetXHex,
-            "offsetY": offsetYHex
-        },
-        {
-            "x": xHex,
-            "y": yHex,
-            "offsetX": 0,
-            "offsetY": 0
-        }
-    ];
-    await this.set('grid', hexGrid);
-    }
-
   }
 
   async move(coordGlobal, localAnchor) {
@@ -2264,10 +2229,6 @@ export class Widget extends StateManaged {
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
     }
-
-    if(this.get('autoHexGrid'))
-      await this.set('grid', null);
-    
 
     this.hideEnlarged();
     if(this.domElement.classList.contains('longtouch'))
