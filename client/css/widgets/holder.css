@@ -13,21 +13,13 @@
 }
 
 .holder.hasText {
-  color: black;
- 
-  justify-content: center;
- 
-}
-
-.holder.hasImage.hasText {
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 100% 100%;
-  color: black;
+  color: black; 
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
+
 
 .holder.droppable.droptarget{
   border-color: #333!important;
