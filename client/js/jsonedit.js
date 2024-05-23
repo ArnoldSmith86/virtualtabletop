@@ -543,8 +543,8 @@ const jeCommands = [
     context: '^[^ ]* ↦ grid',
     call: async function() {
       const w = widgets.get(jeStateNow.id);
-      let hexType = w.get('image');
-      let isFlat = hexType === 'i/game-pieces/2D/Hex-Flat.svg';
+      let hexType = w.get('hexType');
+      let isFlat = hexType === 'flat';
       let hexSide = isFlat ? w.get('height') : w.get('width');
 
       let long = hexSide;
