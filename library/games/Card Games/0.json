@@ -6062,7 +6062,7 @@
         "value": 0
       }
     ],
-    "depth": 13,
+    "depth": 15,
     "text": "Add Card Points",
     "width": 120,
     "css": {
@@ -8382,10 +8382,10 @@
     ],
     "roundLabel": "",
     "y": 650,
-    "scale": 0,
     "rounds": [
       "Card Points"
-    ]
+    ],
+    "scale": 0
   },
   "seat1": {
     "type": "seat",
@@ -16849,7 +16849,7 @@
         "suit": 0,
         "order": 15,
         "rank": "",
-        "sortKentucky": 1,
+        "sortKentucky": 12,
         "sortState": -10,
         "sortDefault": 0,
         "sortSecretAgent": 15
@@ -16895,7 +16895,7 @@
         "suit": 1,
         "order": 1,
         "rank": 1,
-        "sortKentucky": 3,
+        "sortKentucky": 11,
         "sortState": 1,
         "sortDefault": 1,
         "sortSecretAgent": 15
@@ -16941,7 +16941,7 @@
         "suit": 1,
         "order": 5,
         "rank": 5,
-        "sortKentucky": 13,
+        "sortKentucky": 1,
         "sortState": 5,
         "sortDefault": 5
       },
@@ -16953,7 +16953,7 @@
         "suit": 1,
         "order": 6,
         "rank": 6,
-        "sortKentucky": 12,
+        "sortKentucky": 2,
         "sortState": 6,
         "sortDefault": 6
       },
@@ -16965,7 +16965,7 @@
         "suit": 1,
         "order": 7,
         "rank": 7,
-        "sortKentucky": 11,
+        "sortKentucky": 3,
         "sortState": 7,
         "sortDefault": 7
       },
@@ -16977,7 +16977,7 @@
         "suit": 1,
         "order": 8,
         "rank": 8,
-        "sortKentucky": 10,
+        "sortKentucky": 4,
         "sortState": 8,
         "sortDefault": 8
       },
@@ -16989,7 +16989,7 @@
         "suit": 1,
         "order": 9,
         "rank": 9,
-        "sortKentucky": 9,
+        "sortKentucky": 5,
         "sortState": 9,
         "sortDefault": 9
       },
@@ -17001,7 +17001,7 @@
         "suit": 1,
         "order": 10,
         "rank": 10,
-        "sortKentucky": 8,
+        "sortKentucky": 6,
         "sortState": 10,
         "sortDefault": 10
       },
@@ -17024,7 +17024,7 @@
         "suit": 1,
         "order": 12,
         "rank": 12,
-        "sortKentucky": 6,
+        "sortKentucky": 8,
         "sortDefault": 12
       },
       "13 red": {
@@ -17035,7 +17035,7 @@
         "suit": 1,
         "order": 13,
         "rank": 13,
-        "sortKentucky": 5,
+        "sortKentucky": 9,
         "sortDefault": 13
       },
       "14 red": {
@@ -17046,7 +17046,7 @@
         "suit": 1,
         "order": 14,
         "rank": 14,
-        "sortKentucky": 4,
+        "sortKentucky": 10,
         "sortDefault": 14
       },
       "1 orange": {
@@ -17057,7 +17057,7 @@
         "suit": 2,
         "order": 1,
         "rank": 1,
-        "sortKentucky": 14,
+        "sortKentucky": 11,
         "sortState": 1,
         "sortDefault": 1
       },
@@ -17103,7 +17103,7 @@
         "suit": 2,
         "order": 5,
         "rank": 5,
-        "sortKentucky": 24,
+        "sortKentucky": 1,
         "sortState": 5,
         "sortDefault": 5
       },
@@ -17115,7 +17115,7 @@
         "suit": 2,
         "order": 6,
         "rank": 6,
-        "sortKentucky": 23,
+        "sortKentucky": 2,
         "sortState": 6,
         "sortDefault": 6
       },
@@ -17127,7 +17127,7 @@
         "suit": 2,
         "order": 7,
         "rank": 7,
-        "sortKentucky": 22,
+        "sortKentucky": 3,
         "sortState": 7,
         "sortDefault": 7
       },
@@ -17139,7 +17139,7 @@
         "suit": 2,
         "order": 8,
         "rank": 8,
-        "sortKentucky": 21,
+        "sortKentucky": 4,
         "sortState": 8,
         "sortDefault": 8
       },
@@ -17151,7 +17151,7 @@
         "suit": 2,
         "order": 9,
         "rank": 9,
-        "sortKentucky": 20,
+        "sortKentucky": 5,
         "sortState": 9,
         "sortDefault": 9
       },
@@ -17163,7 +17163,7 @@
         "suit": 2,
         "order": 10,
         "rank": 10,
-        "sortKentucky": 19,
+        "sortKentucky": 6,
         "sortState": 10,
         "sortDefault": 10
       },
@@ -17175,7 +17175,7 @@
         "suit": 2,
         "order": 11,
         "rank": 11,
-        "sortKentucky": 18,
+        "sortKentucky": 7,
         "sortDefault": 11
       },
       "12 orange": {
@@ -17186,7 +17186,7 @@
         "suit": 2,
         "order": 12,
         "rank": 12,
-        "sortKentucky": 17,
+        "sortKentucky": 8,
         "sortDefault": 12
       },
       "13 orange": {
@@ -17197,7 +17197,7 @@
         "suit": 2,
         "order": 13,
         "rank": 13,
-        "sortKentucky": 16,
+        "sortKentucky": 9,
         "sortDefault": 13
       },
       "14 orange": {
@@ -17208,7 +17208,7 @@
         "suit": 2,
         "order": 14,
         "rank": 14,
-        "sortKentucky": 15,
+        "sortKentucky": 10,
         "sortDefault": 14
       },
       "1 green": {
@@ -17219,7 +17219,7 @@
         "suit": 3,
         "order": 1,
         "rank": 1,
-        "sortKentucky": 25,
+        "sortKentucky": 11,
         "sortState": 1,
         "sortDefault": 1,
         "sortSecretAgent": 15
@@ -17265,7 +17265,7 @@
         "suit": 3,
         "order": 5,
         "rank": 5,
-        "sortKentucky": 35,
+        "sortKentucky": 1,
         "sortState": 5,
         "sortDefault": 5
       },
@@ -17277,7 +17277,7 @@
         "suit": 3,
         "order": 6,
         "rank": 6,
-        "sortKentucky": 34,
+        "sortKentucky": 2,
         "sortState": 6,
         "sortDefault": 6
       },
@@ -17289,7 +17289,7 @@
         "suit": 3,
         "order": 7,
         "rank": 7,
-        "sortKentucky": 33,
+        "sortKentucky": 3,
         "sortState": 7,
         "sortDefault": 7
       },
@@ -17301,7 +17301,7 @@
         "suit": 3,
         "order": 8,
         "rank": 8,
-        "sortKentucky": 32,
+        "sortKentucky": 4,
         "sortState": 8,
         "sortDefault": 8
       },
@@ -17313,7 +17313,7 @@
         "suit": 3,
         "order": 9,
         "rank": 9,
-        "sortKentucky": 31,
+        "sortKentucky": 5,
         "sortState": 9,
         "sortDefault": 9
       },
@@ -17325,7 +17325,7 @@
         "suit": 3,
         "order": 10,
         "rank": 10,
-        "sortKentucky": 30,
+        "sortKentucky": 6,
         "sortState": 10,
         "sortDefault": 10
       },
@@ -17337,7 +17337,7 @@
         "suit": 3,
         "order": 11,
         "rank": 11,
-        "sortKentucky": 29,
+        "sortKentucky": 7,
         "sortDefault": 11
       },
       "12 green": {
@@ -17348,7 +17348,7 @@
         "suit": 3,
         "order": 12,
         "rank": 12,
-        "sortKentucky": 28,
+        "sortKentucky": 8,
         "sortDefault": 12
       },
       "13 green": {
@@ -17359,7 +17359,7 @@
         "suit": 3,
         "order": 13,
         "rank": 13,
-        "sortKentucky": 27,
+        "sortKentucky": 9,
         "sortDefault": 13
       },
       "14 green": {
@@ -17370,7 +17370,7 @@
         "suit": 3,
         "order": 14,
         "rank": 14,
-        "sortKentucky": 26,
+        "sortKentucky": 10,
         "sortDefault": 14
       },
       "1 yellow": {
@@ -17381,7 +17381,7 @@
         "suit": 4,
         "order": 1,
         "rank": 1,
-        "sortKentucky": 36,
+        "sortKentucky": 11,
         "sortState": 1,
         "sortDefault": 1
       },
@@ -17426,7 +17426,7 @@
         "suit": 4,
         "order": 5,
         "rank": 5,
-        "sortKentucky": 46,
+        "sortKentucky": 1,
         "sortState": 5,
         "sortDefault": 5
       },
@@ -17438,7 +17438,7 @@
         "suit": 4,
         "order": 6,
         "rank": 6,
-        "sortKentucky": 45,
+        "sortKentucky": 2,
         "sortState": 6,
         "sortDefault": 6
       },
@@ -17450,7 +17450,7 @@
         "suit": 4,
         "order": 7,
         "rank": 7,
-        "sortKentucky": 44,
+        "sortKentucky": 3,
         "sortState": 7,
         "sortDefault": 7
       },
@@ -17462,7 +17462,7 @@
         "suit": 4,
         "order": 8,
         "rank": 8,
-        "sortKentucky": 43,
+        "sortKentucky": 4,
         "sortState": 8,
         "sortDefault": 8
       },
@@ -17474,7 +17474,7 @@
         "suit": 4,
         "order": 9,
         "rank": 9,
-        "sortKentucky": 42,
+        "sortKentucky": 5,
         "sortState": 9,
         "sortDefault": 9
       },
@@ -17486,7 +17486,7 @@
         "suit": 4,
         "order": 10,
         "rank": 10,
-        "sortKentucky": 41,
+        "sortKentucky": 6,
         "sortState": 10,
         "sortDefault": 10
       },
@@ -17498,7 +17498,7 @@
         "suit": 4,
         "order": 11,
         "rank": 11,
-        "sortKentucky": 40,
+        "sortKentucky": 7,
         "sortDefault": 11
       },
       "12 yellow": {
@@ -17509,7 +17509,7 @@
         "suit": 4,
         "order": 12,
         "rank": 12,
-        "sortKentucky": 39,
+        "sortKentucky": 8,
         "sortDefault": 12
       },
       "13 yellow": {
@@ -17520,7 +17520,7 @@
         "suit": 4,
         "order": 13,
         "rank": 13,
-        "sortKentucky": 38,
+        "sortKentucky": 9,
         "sortDefault": 13
       },
       "14 yellow": {
@@ -17531,7 +17531,7 @@
         "suit": 4,
         "order": 14,
         "rank": 14,
-        "sortKentucky": 37,
+        "sortKentucky": 10,
         "sortDefault": 14
       },
       "1 black": {
@@ -17555,7 +17555,8 @@
         "order": 2,
         "rank": 2,
         "sortState": 2,
-        "sortDefault": 2
+        "sortDefault": 2,
+        "sortKentucky": 13
       },
       "3 black": {
         "suitImage": "/assets/-1568599145_166",
@@ -17958,7 +17959,7 @@
       "color": "white",
       "font-size": "26px"
     },
-    "sort2": "sortKentucky",
+    "sort2": "suit",
     "roundsTemp": [
       "Card Points"
     ],
@@ -17977,7 +17978,6 @@
       ]
     ],
     "text": "Crow (Similar to Rook)",
-    "sort1": "suit",
     "scoreSystem": [
       [
         0,
@@ -18215,6 +18215,7 @@
         "func": "FOREACH",
         "in": "${PROPERTY _totals OF tempScoreboard}",
         "loopRoutine": [
+          "var pointsWon = ${value}",
           {
             "func": "IF",
             "operand1": "${key}",
@@ -18235,9 +18236,9 @@
                 "thenRoutine": [
                   {
                     "func": "IF",
-                    "operand1": "${value}",
-                    "relation": "<",
-                    "operand2": "${bidValue}",
+                    "operand1": "${bidValue}",
+                    "relation": ">",
+                    "operand2": "${pointsWon}",
                     "thenRoutine": [
                       "var value = ${bidValue} * -1"
                     ]
@@ -18257,9 +18258,9 @@
                 "thenRoutine": [
                   {
                     "func": "IF",
-                    "operand1": "${value}",
-                    "relation": "<",
-                    "operand2": "${bidValue}",
+                    "operand1": "${bidValue}",
+                    "relation": ">",
+                    "operand2": "${pointsWon}",
                     "thenRoutine": [
                       "var value = ${bidValue} * -1"
                     ]
@@ -18279,7 +18280,43 @@
         ]
       }
     ],
-    "movable": false
+    "movable": false,
+    "sortPreExceptionsRoutine": [
+      "var trump = ${PROPERTY trump OF trump}",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "0 crow",
+        "collection": "crow"
+      },
+      {
+        "func": "SET",
+        "collection": "crow",
+        "property": "suit",
+        "value": "${trump}"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "2 black",
+        "collection": "deuce"
+      },
+      {
+        "func": "SET",
+        "collection": "deuce",
+        "property": "suit",
+        "value": "${trump}"
+      }
+    ],
+    "sort1": "sortKentucky",
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ]
+    ]
   },
   "gameID11": {
     "id": "gameID11",
@@ -29053,10 +29090,6 @@
       ],
       [
         "showDiscard",
-        false
-      ],
-      [
-        "showBidSuit",
         false
       ]
     ],
@@ -40012,7 +40045,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1716605595499,
+      "lastUpdate": 1716657280293,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Cross Purposes, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -42902,5 +42935,112 @@
       "y": 440
     },
     "scale": 0
+  },
+  "playerAid10": {
+    "id": "playerAid10",
+    "x": 1685,
+    "z": 79088,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightblue"
+    },
+    "onlyVisibleForSeat": [],
+    "text": "Crow player aid master widget",
+    "playerAid": true,
+    "showTotals": false,
+    "y": 400
+  },
+  "playerAid10a": {
+    "id": "playerAid10a",
+    "parent": "playerAid10",
+    "x": -227,
+    "y": -25,
+    "width": 135,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      },
+      "::before": {
+        "content": "\"Hi -> Lo\"",
+        "position": "absolute",
+        "margin-left": "-195px",
+        "color": "black"
+      }
+    },
+    "html": "2-<img src='/i/icons/auto_awesome.svg' height=18/>-1-14-13...5"
+  },
+  "playerAid10dAsset": {
+    "id": "playerAid10dAsset",
+    "parent": "playerAid10d",
+    "width": 650,
+    "height": 860,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      " .scoring-aid": {
+        "display": "none"
+      },
+      " table": {
+        "border-spacing": "0px",
+        "width": "100%"
+      },
+      " td": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      " th": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      "#enlarged > .scoring-aid": {
+        "display": "block"
+      }
+    },
+    "enlarge": 1,
+    "html": "<h3>Play</h3><br/>Declarer leads first trick.<br/><br/>Must follow suit if possible. If not, then may trump, overtrump, or play any other card.<br/><br/><h3>Bidding</h3><br/>Forehand bids first. Annouce number of points. Minimum bid is 100 in 180 point game or 120 in 200 point game.<br/><br/>Subsequent players must bid a higher number of points or pass. Once a player passes, they cannot bid again.<br/><br/>Bidding continues until all players but one have passed.<br/><br/>Can bid all the points to <q>shoot the moon</q> and win or lose 500.<br/><br/>Declarer gets the 6 cards in the nest, announces the truump suit, and discards 6 cards.<h3>Point Values</h3><br/>Black 2 (if used): 20 points<br/><br/>Crow: 20 points<br/><br/>1: 15 points<br/><br/>14: 10 points<br/><br/>10: 10 points<br/><br/>5: 5 points<h3>Scoring</h3><br/>Declarer's team adds all the points they win if they make their bid. Declarer's team subtracts the value of the bid if they do not make their bid.<br/><br/>The opposing team adds all the points they win to their total.<br/><br/>First team to 500 wins."
+  },
+  "playerAid10d": {
+    "id": "playerAid10d",
+    "parent": "playerAid10",
+    "x": -227,
+    "width": 135,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "General"
   }
 }
