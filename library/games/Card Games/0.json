@@ -1288,10 +1288,10 @@
     "svgReplaces": {
       "currentColor": "deckSuitsColor"
     },
-    "image": "i/icons/clubs.svg",
+    "deckSuitsColor": "",
     "deckSuitsUni": "♣",
     "deckSuits": "clubs",
-    "deckSuitsColor": ""
+    "image": "i/icons/clubs.svg"
   },
   "choose11": {
     "inheritFrom": {
@@ -1306,9 +1306,9 @@
     "deckSuit": "clubs",
     "image": "i/icons/diamonds.svg",
     "text": "",
+    "deckSuitsColor": "#e50932",
     "deckSuitsUni": "♦",
-    "deckSuits": "diamonds",
-    "deckSuitsColor": "#e50932"
+    "deckSuits": "diamonds"
   },
   "choose12": {
     "inheritFrom": {
@@ -1324,9 +1324,9 @@
     "deckSuit": "coins",
     "image": "i/icons/spades.svg",
     "text": "",
+    "deckSuitsColor": "",
     "deckSuitsUni": "♠",
-    "deckSuits": "spades",
-    "deckSuitsColor": ""
+    "deckSuits": "spades"
   },
   "choose13": {
     "inheritFrom": {
@@ -1341,9 +1341,9 @@
     "deckSuit": "cups",
     "image": "i/icons/hearts.svg",
     "text": "",
+    "deckSuitsColor": "#e50932",
     "deckSuitsUni": "♥",
-    "deckSuits": "hearts",
-    "deckSuitsColor": "#e50932"
+    "deckSuits": "hearts"
   },
   "choose14": {
     "inheritFrom": {
@@ -1357,8 +1357,8 @@
     "deckSuit": "swords",
     "image": "",
     "text": "No\nTrump",
-    "deckSuitsUni": "NT",
-    "deckSuitsColor": ""
+    "deckSuitsColor": "",
+    "deckSuitsUni": "NT"
   },
   "bidSuit1": {
     "id": "bidSuit1",
@@ -5647,7 +5647,8 @@
       "y": 370
     },
     "z": 80258,
-    "customFaceCount": 6
+    "customFaceCount": 6,
+    "deckSuitsColor": ""
   },
   "scoreButton": {
     "type": "button",
@@ -21472,11 +21473,6 @@
       "n/a"
     ],
     "playerAidSeat": true,
-    "score31": [
-      "AT - S - H - D - C - NT",
-      "K-Q-C-J-10-9-8-7-6",
-      "10-9-8-K-Q-C-J-7-6"
-    ],
     "score33": [
       "Take back all your counters",
       "Take back all your counters unless another player wins all tricks",
@@ -27019,8 +27015,8 @@
     "chooser": 15,
     "image": "",
     "text": "All\nTrump",
-    "deckSuitsUni": "AT",
-    "deckSuitsColor": ""
+    "deckSuitsColor": "",
+    "deckSuitsUni": "AT"
   },
   "choose16": {
     "type": "button",
@@ -29083,8 +29079,16 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"Choose number of players using Version button.\\a\\a Bid number of tricks using black and white bid system widgets near seat. Bid suit by using the trump widget.\\a\\a Tricks are counted automatically in the scoreboard to the right, but scores should be entered manually using the green/red +/- buttons above the main scoreboard.\"",
+    "hintText": "\"Choose number of players using Version button.\\a\\a Bid number of tricks using black and white bid system widgets near seat. Bid suit by using the trump widget.\\a\\aWhen playing with 5+ players, indicate whether underlined (marked) or regular (simple) cards of the same suit have priority among cards of identical rank and value using the button below the trump indicator.\\a\\aUse the red, green, and white widget to the right of the deck to indicate double and quadruple value rounds.\\a\\aTricks are counted automatically in the scoreboard to the right.\\a\\aPress the Score button in the lower right to automatically calculate scores and enter them in the main scoreboard on the left.\"",
     "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "scoreSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      },
       {
         "func": "CALL",
         "routine": "recallRoutine"
@@ -29099,6 +29103,32 @@
         "func": "SET",
         "property": "deck2Mark",
         "value": "__"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY seatCount OF settingsDecks}",
+        "relation": ">=",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "markedButton"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "markedButton"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
       }
     ],
     "displayArray": [
@@ -29116,6 +29146,10 @@
       ],
       [
         "playerAidButton",
+        1
+      ],
+      [
+        "scoreMultiplier",
         1
       ]
     ],
@@ -29185,10 +29219,6 @@
     ],
     "5PDeal": [
       0,
-      5,
-      6,
-      7,
-      8,
       9,
       10,
       11,
@@ -29201,10 +29231,6 @@
       11,
       10,
       9,
-      8,
-      7,
-      6,
-      5,
       14
     ],
     "6PDeal": [
@@ -29299,6 +29325,14 @@
       {
         "func": "SHUFFLE",
         "holder": "deckHolder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "markedButton"
+        ],
+        "property": "activeFace",
+        "value": 0
       }
     ],
     "hideCardsByType": [
@@ -29442,7 +29476,6 @@
       "♠",
       "AT"
     ],
-    "playerAidDetail1": "Order (High to Low)",
     "versionArray": [
       {
         "value": "0",
@@ -29571,11 +29604,56 @@
     },
     "sortPreExceptionsRoutine": [
       {
-        "func": "SORT",
-        "key": "deck2Mark"
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace OF markedButton}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SORT",
+            "key": "deck2Mark"
+          }
+        ]
       }
     ],
-    "movable": false
+    "movable": false,
+    "scoreSpecialRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          5,
+          7
+        ],
+        "loopRoutine": [
+          "var bidValue = 'bidValue' + ${value}",
+          "var seat = 'seat' + ${value}",
+          "var isExact = ${PROPERTY tricks OF $seat} == ${PROPERTY text OF $bidValue}",
+          {
+            "func": "IF",
+            "condition": "${isExact}",
+            "thenRoutine": [
+              "var score = 0",
+              "var score = ${score} * ${PROPERTY multiple OF scoreMultiplier}"
+            ],
+            "elseRoutine": [
+              "var score = ${PROPERTY tricks OF $seat} - ${PROPERTY text OF $bidValue}",
+              "var score = abs ${score}",
+              "var score = ${score} * -1",
+              "var score = ${score} * ${PROPERTY multiple OF scoreMultiplier}"
+            ]
+          },
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seat}",
+            "value": "${score}"
+          }
+        ]
+      }
+    ]
   },
   "cavaliers": {
     "type": "deck",
@@ -29808,37 +29886,6 @@
         "cardDefaults"
       ]
     }
-  },
-  "playerAid31": {
-    "type": "scoreboard",
-    "id": "playerAid31",
-    "x": 1225,
-    "y": 560,
-    "width": 360,
-    "height": 127,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      ".scoreboard tbody tr:nth-child(1) td": {
-        "background": "#a9c6e8"
-      },
-      ".scoreboard td": {
-        "text-align": "left"
-      }
-    },
-    "onlyVisibleForSeat": [],
-    "roundLabel": "Category",
-    "rounds": [
-      "Suit ranks",
-      "Card ranks (no trump)",
-      "Card ranks (trump)"
-    ],
-    "seats": "playerAidDetail1",
-    "showAllRounds": true,
-    "showPlayerColors": false,
-    "showTotals": false,
-    "playerAid": true,
-    "scoreProperty": "score31"
   },
   "tarotDeck": {
     "type": "deck",
@@ -37081,7 +37128,8 @@
       " "
     ],
     "showing": false,
-    "turn": false
+    "turn": false,
+    "player": ""
   },
   "statePoints": {
     "id": "statePoints",
@@ -39964,7 +40012,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1715795244755,
+      "lastUpdate": 1716605595499,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Cross Purposes, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -42576,5 +42624,283 @@
       ]
     },
     "text": "2"
+  },
+  "playerAid31": {
+    "id": "playerAid31",
+    "x": 1685,
+    "y": 590,
+    "z": 79088,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightblue"
+    },
+    "onlyVisibleForSeat": [],
+    "text": "Color Whist player aid master widget",
+    "playerAid": true,
+    "showTotals": false
+  },
+  "playerAid31a": {
+    "id": "playerAid31a",
+    "parent": "playerAid31",
+    "x": -227,
+    "y": -25,
+    "width": 135,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      },
+      "::before": {
+        "content": "\"Hi -> Lo\"",
+        "position": "absolute",
+        "margin-left": "-190px",
+        "color": "black"
+      }
+    },
+    "html": "AT<img src='/i/noto-emoji/emoji_u2660.svg' height=18/><img src='/i/noto-emoji/emoji_u2665.svg' height=18 /><img src='/i/noto-emoji/emoji_u2666.svg' height=18/><img src='/i/noto-emoji/emoji_u2663.svg' height=18/>NT"
+  },
+  "playerAid31b": {
+    "id": "playerAid31b",
+    "parent": "playerAid31",
+    "x": -227,
+    "width": 135,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      },
+      "::before": {
+        "content": "\"No Trump\"",
+        "position": "absolute",
+        "margin-left": "-210px",
+        "color": "black"
+      }
+    },
+    "html": "K-Q-C-J-10-9-8-7-6"
+  },
+  "playerAid31e": {
+    "id": "playerAid31e",
+    "parent": "playerAid31",
+    "x": -227,
+    "y": 75,
+    "width": 135,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "Dealing"
+  },
+  "playerAid31d": {
+    "id": "playerAid31d",
+    "parent": "playerAid31",
+    "x": -227,
+    "y": 50,
+    "width": 135,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "overflow": "hidden",
+        "cursor": "zoom-in",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      }
+    },
+    "text": "General"
+  },
+  "playerAid31c": {
+    "id": "playerAid31c",
+    "parent": "playerAid31",
+    "x": -227,
+    "width": 135,
+    "height": 20,
+    "z": 79086,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "2px solid black",
+        "border-radius": "4px",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "background": "white"
+      },
+      "::before": {
+        "content": "\"Trump\"",
+        "position": "absolute",
+        "margin-left": "-190px",
+        "color": "black"
+      }
+    },
+    "html": "10-9-8-K-Q-C-J-7-6",
+    "y": 25
+  },
+  "playerAid31dAsset": {
+    "id": "playerAid31dAsset",
+    "parent": "playerAid31d",
+    "width": 650,
+    "height": 890,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "enlarge": 1,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      " .scoring-aid": {
+        "display": "none"
+      },
+      " table": {
+        "border-spacing": "0px",
+        "width": "100%"
+      },
+      " td": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      " th": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      "#enlarged > .scoring-aid": {
+        "display": "block"
+      }
+    },
+    "html": "<h3>Play</h3><br/>Number of cards dealt each hand varies and depends on the player count.<br/><br/>Forehand leads first trick.<br/><br/>Must follow suit if possible. If not, then must trump and must overtrump if possible. Otherwise play any card.<br/><br/>The same rules apply if playing all trumps: Play a higher card of the led suit if possible since it is a trump. Otherwise play any trump if possible and iscard any card if not.<h3>Bidding</h3><br/>Forehand bids first. Annouce number of tricks and trump suit.<br/><br/>Subsequent players must bid either a number of tricks (can be 0) or change the trump by making a higher bid.<br/><br/>Bidding a new trump cancels the previous bid and must either be a higher precedence trump of the same amount of tricks or a higher number of tricks.<br/><br/>Bidding continues until all players have bid without changing the trump suit.<br/><br/>Last player to bid cannot bid a number of tricks that would make the total number of tricks bid by all players equal to the number of cards distributed that round.<br/><br/>When playing with 5+ players, the player proposing the bid says whether the underlined cards (marked) or the regular cards (simple) take priority among two identical cards.<h3>Méchouner</h3><br/>During the bidding, any player can say <q>Double.</q> Doing so stops the trump from changing again, but playerss can still bid tricks. The point value of the round is doubled.<br/><br/>Any other player than the one doubling can, at any time before the first card is played, re-double to quadruple the point value of the round.<h3>Scoring</h3><br/>Subtract one point for each trick above or below the player's bid. Double or quadruple as needed.<br/><br/>Ties are broken by playing one more hand at the full card count."
+  },
+  "playerAid31eAsset": {
+    "id": "playerAid31eAsset",
+    "parent": "playerAid31e",
+    "width": 650,
+    "height": 530,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "enlarge": 1,
+    "css": {
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "15px 0px 0px 0px"
+      },
+      " .scoring-aid": {
+        "display": "none"
+      },
+      " table": {
+        "border-spacing": "0px",
+        "width": "100%"
+      },
+      " td": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      " th": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid blue",
+        "padding": "20px"
+      },
+      "#enlarged > .scoring-aid": {
+        "display": "block"
+      }
+    },
+    "html": "<h3>Number of Cards</h3><br/>The number of cards dealt each hand varies depening on the round and the number of players. For 3 and 4 player games, use one deck. For 5+ player games use two decks.<h3>3 Players</h3><br/>7-8-9-10-11-12-12-11-10-9-8-7<h3>4 Players</h3><br/>5-6-7-8-9-9-8-7-6-5<h3>5 Players</h3><br/>9-10-11-12-13-14-14-13-12-11-10-9<h3>6 Players</h3><br/>7-8-9-10-11-12-12-11-10-9-8-7<h3>7 Players</h3><br/>5-6-7-8-9-10-10-9-8-7-6-5"
+  },
+  "markedLabel1": {
+    "id": "markedLabel1",
+    "parent": "markedButton",
+    "fixedParent": true,
+    "x": -12,
+    "y": -17,
+    "width": 40,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "color": "black"
+    },
+    "text": "Marked/Simple"
+  },
+  "markedButton": {
+    "id": "markedButton",
+    "x": 760,
+    "y": 440,
+    "width": 80,
+    "height": 30,
+    "borderRadius": 8,
+    "z": 80433,
+    "movableInEdit": false,
+    "css": {
+      "background": "#ffffff",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "1px solid black",
+      "color": "black",
+      "font-size": "15px",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "faces": [
+      {
+        "text": "Simple"
+      },
+      {
+        "text": "Marked"
+      }
+    ],
+    "resetProperties": {
+      "x": 760,
+      "y": 440
+    },
+    "scale": 0
   }
 }
