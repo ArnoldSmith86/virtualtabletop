@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "5",
       "attribution": "Game design and layout by LawDawg96. Released to the Public Domain under CC0.<div><br></div><div><div><span style=\"color: var(--overlayFontColor);\">Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>Tile bag by mousewax available as CC0.</div></div>",
-      "lastUpdate": 1716750933224,
+      "lastUpdate": 1716755998297,
       "showName": true,
       "skill": "",
       "description": "",
@@ -367,7 +367,7 @@
     "movable": false,
     "css": {
       "font-size": "40px",
-      "background": "#c0c0c0",
+      "background": "${PROPERTY bgColor}",
       "border": "2px solid black",
       "display": "flex",
       "justify-content": "center",
@@ -376,7 +376,8 @@
     },
     "text": 0,
     "z": 1,
-    "diceColor": "#ffffff"
+    "diceColor": "#ffffff",
+    "bgColor": "#808080"
   },
   "sumRow2": {
     "inheritFrom": {
@@ -417,7 +418,8 @@
     },
     "text": 0,
     "z": 1,
-    "diceColor": "#000000"
+    "diceColor": "#000000",
+    "bgColor": "#c0c0c0"
   },
   "sumCol2": {
     "inheritFrom": {
@@ -428,7 +430,8 @@
     "y": 650,
     "text": 0,
     "z": 1,
-    "diceColor": "#000000"
+    "diceColor": "#000000",
+    "bgColor": "#c0c0c0"
   },
   "sumCol3": {
     "inheritFrom": {
@@ -439,7 +442,8 @@
     "y": 650,
     "text": 0,
     "z": 1,
-    "diceColor": "#000000"
+    "diceColor": "#000000",
+    "bgColor": "#c0c0c0"
   },
   "sumCol4": {
     "inheritFrom": {
@@ -450,7 +454,8 @@
     "y": 650,
     "text": 0,
     "z": 1,
-    "diceColor": "#000000"
+    "diceColor": "#000000",
+    "bgColor": "#c0c0c0"
   },
   "bag1": {
     "type": "holder",
