@@ -1,0 +1,963 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Dice Duel",
+      "image": "/assets/1878698840_322553",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "vs",
+      "time": "5",
+      "attribution": "Game design and layout by LawDawg96. Released to the Public Domain under CC0.<div><br></div><div><div><span style=\"color: var(--overlayFontColor);\">Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>Tile bag by mousewax available as CC0.</div></div>",
+      "lastUpdate": 1716743236958,
+      "showName": true,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "Choose white (rows) or black (columns).<div><br></div><div>Players take turns dragging dice out of the bag and placing them on the board in an open square.</div><div><br></div><div>Compare the highest row total with the highest column total. The player with the highest total wins. In the case of a tie, compare the second highest totals, and so on, until the tie is broken.</div>",
+      "helpText": "",
+      "players": "2",
+      "language": "",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "z": 1,
+    "width": 150,
+    "height": 150,
+    "classes": "transparent",
+    "css": {
+      "border": "2px solid black"
+    },
+    "borderRadius": 0,
+    "parent": "holderBack",
+    "dropTarget": {
+      "type": "dice"
+    },
+    "dropOffsetX": 20,
+    "dropOffsetY": 20,
+    "row": 1,
+    "col": 1,
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "value"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "pips",
+        "value": "${value}"
+      },
+      {
+        "func": "CALL",
+        "routine": "calcRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "pips",
+        "value": 0
+      },
+      {
+        "func": "CALL",
+        "routine": "calcRoutine"
+      }
+    ],
+    "calcRoutine": [
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "row",
+        "value": "${PROPERTY row}"
+      },
+      {
+        "func": "GET",
+        "aggregation": "sum",
+        "property": "pips"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "sumRow${PROPERTY row}"
+        ],
+        "property": "text",
+        "value": "${pips}"
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "col",
+        "value": "${PROPERTY col}"
+      },
+      {
+        "func": "GET",
+        "aggregation": "sum",
+        "property": "pips"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "sumCol${PROPERTY col}"
+        ],
+        "property": "text",
+        "value": "${pips}"
+      }
+    ],
+    "pips": 0
+  },
+  "holder2": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder2",
+    "x": 150,
+    "y": 0,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 1,
+    "col": 2,
+    "pips": 0
+  },
+  "holder3": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder3",
+    "x": 300,
+    "y": 0,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 1,
+    "col": 3,
+    "pips": 0
+  },
+  "holder4": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder4",
+    "x": 450,
+    "y": 0,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 1,
+    "col": 4,
+    "pips": 0
+  },
+  "holder5": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder5",
+    "x": 0,
+    "y": 150,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 2,
+    "pips": 0
+  },
+  "holder6": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder6",
+    "x": 150,
+    "y": 150,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 2,
+    "col": 2,
+    "pips": 0
+  },
+  "holder7": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder7",
+    "x": 300,
+    "y": 150,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 2,
+    "col": 3,
+    "pips": 0
+  },
+  "holder8": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder8",
+    "x": 450,
+    "y": 150,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 2,
+    "col": 4,
+    "pips": 0
+  },
+  "holder9": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder9",
+    "x": 0,
+    "y": 300,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 3,
+    "pips": 0
+  },
+  "holder10": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder10",
+    "x": 150,
+    "y": 300,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 3,
+    "col": 2,
+    "pips": 0
+  },
+  "holder11": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder11",
+    "x": 300,
+    "y": 300,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 3,
+    "col": 3,
+    "pips": 0
+  },
+  "holder12": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder12",
+    "x": 450,
+    "y": 300,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 3,
+    "col": 4,
+    "pips": 0
+  },
+  "holder13": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder13",
+    "x": 0,
+    "y": 450,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 4,
+    "pips": 0
+  },
+  "holder14": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder14",
+    "x": 150,
+    "y": 450,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 4,
+    "col": 2,
+    "pips": 0
+  },
+  "holder15": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder15",
+    "x": 300,
+    "y": 450,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 4,
+    "col": 3,
+    "pips": 0
+  },
+  "holder16": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder16",
+    "x": 450,
+    "y": 450,
+    "parent": "holderBack",
+    "z": 1,
+    "row": 4,
+    "col": 4,
+    "pips": 0
+  },
+  "holderBack": {
+    "id": "holderBack",
+    "x": 500,
+    "width": 600,
+    "height": 600,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true,
+    "y": 290,
+    "z": 1
+  },
+  "dice1": {
+    "type": "dice",
+    "id": "dice1",
+    "x": 4,
+    "y": 4,
+    "width": 110,
+    "height": 110,
+    "z": 1,
+    "movable": true,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 49,
+    "set": 1,
+    "clickable": false,
+    "color": "#ffffff",
+    "parent": "bag1",
+    "activeFace": 4
+  },
+  "sumRow1": {
+    "id": "sumRow1",
+    "parent": "holderBack",
+    "x": 650,
+    "y": 50,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "movable": false,
+    "css": {
+      "font-size": "40px",
+      "background": "#c0c0c0",
+      "border": "2px solid black",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "${PROPERTY diceColor}"
+    },
+    "text": 0,
+    "z": 1,
+    "diceColor": "#ffffff"
+  },
+  "sumRow2": {
+    "inheritFrom": {
+      "sumRow1": "*"
+    },
+    "id": "sumRow2",
+    "x": 650,
+    "y": 200,
+    "text": 0,
+    "z": 1
+  },
+  "sumRow3": {
+    "inheritFrom": {
+      "sumRow1": "*"
+    },
+    "id": "sumRow3",
+    "x": 650,
+    "y": 350,
+    "text": 0,
+    "z": 1
+  },
+  "sumRow4": {
+    "inheritFrom": {
+      "sumRow1": "*"
+    },
+    "id": "sumRow4",
+    "x": 650,
+    "y": 500,
+    "text": 0,
+    "z": 1
+  },
+  "sumCol1": {
+    "id": "sumCol1",
+    "x": 50,
+    "y": 650,
+    "inheritFrom": {
+      "sumRow1": "*"
+    },
+    "text": 0,
+    "z": 1,
+    "diceColor": "#000000"
+  },
+  "sumCol2": {
+    "inheritFrom": {
+      "sumRow1": "*"
+    },
+    "id": "sumCol2",
+    "x": 200,
+    "y": 650,
+    "text": 0,
+    "z": 1,
+    "diceColor": "#000000"
+  },
+  "sumCol3": {
+    "inheritFrom": {
+      "sumRow1": "*"
+    },
+    "id": "sumCol3",
+    "x": 350,
+    "y": 650,
+    "text": 0,
+    "z": 1,
+    "diceColor": "#000000"
+  },
+  "sumCol4": {
+    "inheritFrom": {
+      "sumRow1": "*"
+    },
+    "id": "sumCol4",
+    "x": 500,
+    "y": 650,
+    "text": 0,
+    "z": 1,
+    "diceColor": "#000000"
+  },
+  "bag1": {
+    "type": "holder",
+    "id": "bag1",
+    "x": 235,
+    "y": 488,
+    "width": 220,
+    "height": 220,
+    "scale": 0.8,
+    "z": 1,
+    "classes": "transparent",
+    "css": {
+      "": {
+        "overflow": "clip",
+        "background-color": "${PROPERTY color}",
+        "background": "url(/assets/-1372554968_23131)",
+        "background-size": "cover",
+        "border": "transparent"
+      },
+      "::before": {
+        "content": "'${PROPERTY widget-count}'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "120px",
+        "padding-left": "5px",
+        "padding-top": "30px",
+        "white-space": "pre",
+        "font-size": "100px",
+        "font-weight": "900",
+        "color": "#ffffff"
+      },
+      "::after": {
+        "position": "absolute",
+        "bottom": "25px",
+        "content": "'Dice'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "30px",
+        "padding-left": "3px",
+        "white-space": "pre",
+        "font-size": "50px",
+        "font-weight": "400",
+        "color": "lightgrey",
+        "width": "100%"
+      },
+      " .widget": {
+        "opacity": 0,
+        "transform": "scale(10)!important"
+      }
+    },
+    "dropTarget": {
+      "set": 1
+    },
+    "seatColor": "red",
+    "widget-count": 8,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "CLICK",
+        "mode": "ignoreClickable"
+      },
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": 0
+      }
+    ]
+  },
+  "bag2": {
+    "type": "holder",
+    "id": "bag2",
+    "x": 687,
+    "y": 30,
+    "width": 220,
+    "height": 220,
+    "scale": 0.8,
+    "z": 1,
+    "classes": "transparent",
+    "css": {
+      "": {
+        "overflow": "clip",
+        "background-color": "${PROPERTY color}",
+        "background": "url(/assets/-1372554968_23131)",
+        "background-size": "cover",
+        "border": "transparent"
+      },
+      "::before": {
+        "content": "'${PROPERTY widget-count}'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "120px",
+        "padding-left": "5px",
+        "padding-top": "30px",
+        "white-space": "pre",
+        "font-size": "100px",
+        "font-weight": "900",
+        "color": "#000000"
+      },
+      "::after": {
+        "position": "absolute",
+        "bottom": "25px",
+        "content": "'Dice'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "30px",
+        "padding-left": "3px",
+        "white-space": "pre",
+        "font-size": "50px",
+        "font-weight": "400",
+        "color": "lightgrey",
+        "width": "100%"
+      },
+      " .widget": {
+        "opacity": 0,
+        "transform": "scale(10)!important"
+      }
+    },
+    "dropTarget": {
+      "set": 2
+    },
+    "seatColor": "red",
+    "widget-count": 8,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "CLICK",
+        "mode": "ignoreClickable"
+      },
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": 0
+      }
+    ]
+  },
+  "dice2": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice2",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 1,
+    "rollCount": 46,
+    "rotation": 0,
+    "parent": "bag1"
+  },
+  "dice3": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice3",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 2,
+    "rollCount": 43,
+    "rotation": 0,
+    "parent": "bag1"
+  },
+  "dice4": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice4",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 2,
+    "rollCount": 37,
+    "rotation": 0,
+    "parent": "bag1"
+  },
+  "dice5": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice5",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 0,
+    "rollCount": 35,
+    "rotation": 0,
+    "parent": "bag1"
+  },
+  "dice6": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice6",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 1,
+    "rollCount": 33,
+    "rotation": 0,
+    "parent": "bag1"
+  },
+  "dice7": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice7",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 0,
+    "rollCount": 29,
+    "rotation": 0,
+    "parent": "bag1"
+  },
+  "dice8": {
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "type": "dice",
+    "id": "dice8",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 0,
+    "rollCount": 25,
+    "rotation": 0,
+    "parent": "bag1"
+  },
+  "dice9": {
+    "type": "dice",
+    "id": "dice9",
+    "x": 4,
+    "y": 4,
+    "width": 110,
+    "height": 110,
+    "z": 1,
+    "movable": true,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 48,
+    "set": 2,
+    "clickable": false,
+    "color": "#000000",
+    "activeFace": 2,
+    "parent": "bag2"
+  },
+  "dice10": {
+    "inheritFrom": {
+      "dice9": "*"
+    },
+    "type": "dice",
+    "id": "dice10",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 0,
+    "rollCount": 46,
+    "rotation": 0,
+    "parent": "bag2"
+  },
+  "dice11": {
+    "inheritFrom": {
+      "dice9": "*"
+    },
+    "type": "dice",
+    "id": "dice11",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 5,
+    "rollCount": 44,
+    "rotation": 0,
+    "parent": "bag2"
+  },
+  "dice12": {
+    "inheritFrom": {
+      "dice9": "*"
+    },
+    "type": "dice",
+    "id": "dice12",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 4,
+    "rollCount": 41,
+    "rotation": 0,
+    "parent": "bag2"
+  },
+  "dice13": {
+    "inheritFrom": {
+      "dice9": "*"
+    },
+    "type": "dice",
+    "id": "dice13",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 5,
+    "rollCount": 39,
+    "rotation": 0,
+    "parent": "bag2"
+  },
+  "dice14": {
+    "inheritFrom": {
+      "dice9": "*"
+    },
+    "type": "dice",
+    "id": "dice14",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 2,
+    "rollCount": 42,
+    "rotation": 0,
+    "parent": "bag2"
+  },
+  "dice15": {
+    "inheritFrom": {
+      "dice9": "*"
+    },
+    "type": "dice",
+    "id": "dice15",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 5,
+    "rollCount": 40,
+    "rotation": 0,
+    "parent": "bag2"
+  },
+  "dice16": {
+    "inheritFrom": {
+      "dice9": "*"
+    },
+    "type": "dice",
+    "id": "dice16",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "activeFace": 1,
+    "rollCount": 39,
+    "rotation": 0,
+    "parent": "bag2"
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "set",
+        "value": 1
+      },
+      {
+        "func": "MOVE",
+        "collection": "DEFAULT",
+        "to": "bag1"
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "set",
+        "value": 2
+      },
+      {
+        "func": "MOVE",
+        "collection": "DEFAULT",
+        "to": "bag2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ]
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214",
+    "z": 1
+  }
+}
