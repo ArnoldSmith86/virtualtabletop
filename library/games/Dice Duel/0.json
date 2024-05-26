@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "5",
       "attribution": "Game design and layout by LawDawg96. Released to the Public Domain under CC0.<div><br></div><div><div><span style=\"color: var(--overlayFontColor);\">Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>Tile bag by mousewax available as CC0.</div></div>",
-      "lastUpdate": 1716743236958,
+      "lastUpdate": 1716750933224,
       "showName": true,
       "skill": "",
       "description": "",
@@ -20,10 +20,10 @@
       "similarAwards": "",
       "ruleText": "Choose white (rows) or black (columns).<div><br></div><div>Players take turns dragging dice out of the bag and placing them on the board in an open square.</div><div><br></div><div>Compare the highest row total with the highest column total. The player with the highest total wins. In the case of a tie, compare the second highest totals, and so on, until the tie is broken.</div>",
       "helpText": "",
-      "players": "2",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "",
+      "players": "2"
     }
   },
   "holder1": {
@@ -351,12 +351,10 @@
       5,
       6
     ],
-    "rollCount": 49,
     "set": 1,
     "clickable": false,
     "color": "#ffffff",
-    "parent": "bag1",
-    "activeFace": 4
+    "parent": "bag1"
   },
   "sumRow1": {
     "id": "sumRow1",
@@ -477,7 +475,7 @@
         "text-align": "center",
         "display": "block",
         "line-height": "120px",
-        "padding-left": "5px",
+        "padding-left": "15px",
         "padding-top": "30px",
         "white-space": "pre",
         "font-size": "100px",
@@ -573,7 +571,7 @@
         "text-align": "center",
         "display": "block",
         "line-height": "120px",
-        "padding-left": "5px",
+        "padding-left": "15px",
         "padding-top": "30px",
         "white-space": "pre",
         "font-size": "100px",
@@ -648,49 +646,49 @@
   },
   "dice2": {
     "inheritFrom": {
-      "dice1": "*"
+      "dice1": "!parent"
     },
     "type": "dice",
     "id": "dice2",
     "x": 4,
     "y": 4,
     "z": 1,
-    "activeFace": 1,
-    "rollCount": 46,
+    "activeFace": 0,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag1"
   },
   "dice3": {
     "inheritFrom": {
-      "dice1": "*"
+      "dice1": "!parent"
     },
     "type": "dice",
     "id": "dice3",
     "x": 4,
     "y": 4,
     "z": 1,
-    "activeFace": 2,
-    "rollCount": 43,
+    "activeFace": 0,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag1"
   },
   "dice4": {
     "inheritFrom": {
-      "dice1": "*"
+      "dice1": "!parent"
     },
     "type": "dice",
     "id": "dice4",
     "x": 4,
     "y": 4,
     "z": 1,
-    "activeFace": 2,
-    "rollCount": 37,
+    "activeFace": 0,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag1"
   },
   "dice5": {
     "inheritFrom": {
-      "dice1": "*"
+      "dice1": "!parent"
     },
     "type": "dice",
     "id": "dice5",
@@ -698,27 +696,27 @@
     "y": 4,
     "z": 1,
     "activeFace": 0,
-    "rollCount": 35,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag1"
   },
   "dice6": {
     "inheritFrom": {
-      "dice1": "*"
+      "dice1": "!parent"
     },
     "type": "dice",
     "id": "dice6",
     "x": 4,
     "y": 4,
     "z": 1,
-    "activeFace": 1,
-    "rollCount": 33,
+    "activeFace": 0,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag1"
   },
   "dice7": {
     "inheritFrom": {
-      "dice1": "*"
+      "dice1": "!parent"
     },
     "type": "dice",
     "id": "dice7",
@@ -726,13 +724,13 @@
     "y": 4,
     "z": 1,
     "activeFace": 0,
-    "rollCount": 29,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag1"
   },
   "dice8": {
     "inheritFrom": {
-      "dice1": "*"
+      "dice1": "!parent"
     },
     "type": "dice",
     "id": "dice8",
@@ -740,7 +738,7 @@
     "y": 4,
     "z": 1,
     "activeFace": 0,
-    "rollCount": 25,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag1"
   },
@@ -761,16 +759,14 @@
       5,
       6
     ],
-    "rollCount": 48,
     "set": 2,
     "clickable": false,
     "color": "#000000",
-    "activeFace": 2,
     "parent": "bag2"
   },
   "dice10": {
     "inheritFrom": {
-      "dice9": "*"
+      "dice9": "!parent"
     },
     "type": "dice",
     "id": "dice10",
@@ -778,91 +774,91 @@
     "y": 4,
     "z": 1,
     "activeFace": 0,
-    "rollCount": 46,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag2"
   },
   "dice11": {
     "inheritFrom": {
-      "dice9": "*"
+      "dice9": "!parent"
     },
     "type": "dice",
     "id": "dice11",
     "x": 4,
     "y": 4,
     "z": 1,
-    "activeFace": 5,
-    "rollCount": 44,
+    "activeFace": 0,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag2"
   },
   "dice12": {
     "inheritFrom": {
-      "dice9": "*"
+      "dice9": "!parent"
     },
     "type": "dice",
     "id": "dice12",
     "x": 4,
     "y": 4,
     "z": 1,
-    "activeFace": 4,
-    "rollCount": 41,
+    "activeFace": 0,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag2"
   },
   "dice13": {
     "inheritFrom": {
-      "dice9": "*"
+      "dice9": "!parent"
     },
     "type": "dice",
     "id": "dice13",
     "x": 4,
     "y": 4,
     "z": 1,
-    "activeFace": 5,
-    "rollCount": 39,
+    "activeFace": 0,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag2"
   },
   "dice14": {
     "inheritFrom": {
-      "dice9": "*"
+      "dice9": "!parent"
     },
     "type": "dice",
     "id": "dice14",
     "x": 4,
     "y": 4,
     "z": 1,
-    "activeFace": 2,
-    "rollCount": 42,
+    "activeFace": 0,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag2"
   },
   "dice15": {
     "inheritFrom": {
-      "dice9": "*"
+      "dice9": "!parent"
     },
     "type": "dice",
     "id": "dice15",
     "x": 4,
     "y": 4,
     "z": 1,
-    "activeFace": 5,
-    "rollCount": 40,
+    "activeFace": 0,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag2"
   },
   "dice16": {
     "inheritFrom": {
-      "dice9": "*"
+      "dice9": "!parent"
     },
     "type": "dice",
     "id": "dice16",
     "x": 4,
     "y": 4,
     "z": 1,
-    "activeFace": 1,
-    "rollCount": 39,
+    "activeFace": 0,
+    "rollCount": 0,
     "rotation": 0,
     "parent": "bag2"
   },
@@ -944,6 +940,31 @@
         "func": "SET",
         "property": "z",
         "value": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "rollCount",
+        "value": 0
+      }
+    ],
+    "gameStartRoutine": [
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "CLICK",
+        "mode": "ignoreClickable"
       }
     ]
   },
