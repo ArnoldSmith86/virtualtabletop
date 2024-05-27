@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "5",
       "attribution": "Game design and layout by LawDawg96. Released to the Public Domain under CC0.<div><br></div><div><div><span style=\"color: var(--overlayFontColor);\">Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>Tile bag by mousewax available as CC0.</div></div>",
-      "lastUpdate": 1716755998297,
+      "lastUpdate": 1716823099143,
       "showName": true,
       "skill": "",
       "description": "",
@@ -18,7 +18,7 @@
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
-      "ruleText": "Choose white (rows) or black (columns).<div><br></div><div>Players take turns dragging dice out of the bag and placing them on the board in an open square.</div><div><br></div><div>Compare the highest row total with the highest column total. The player with the highest total wins. In the case of a tie, compare the second highest totals, and so on, until the tie is broken.</div>",
+      "ruleText": "Choose white (rows) or black (columns).<div><br></div><div>Players take turns dragging dice out of the bag and placing them on the board in an open square. The dice faces are random when removed from the bag, or you can click them to roll.</div><div><br></div><div>Compare the highest row total with the highest column total. The player with the highest total wins. In the case of a tie, compare the second highest totals, and so on, until the tie is broken.</div>",
       "helpText": "",
       "variantImage": "",
       "variant": "",
@@ -352,7 +352,6 @@
       6
     ],
     "set": 1,
-    "clickable": false,
     "color": "#ffffff",
     "parent": "bag1"
   },
@@ -518,8 +517,7 @@
         "value": "${PROPERTY id}"
       },
       {
-        "func": "CLICK",
-        "mode": "ignoreClickable"
+        "func": "CLICK"
       },
       {
         "func": "COUNT",
@@ -614,8 +612,7 @@
         "value": "${PROPERTY id}"
       },
       {
-        "func": "CLICK",
-        "mode": "ignoreClickable"
+        "func": "CLICK"
       },
       {
         "func": "COUNT",
@@ -765,7 +762,6 @@
       6
     ],
     "set": 2,
-    "clickable": false,
     "color": "#000000",
     "parent": "bag2"
   },
