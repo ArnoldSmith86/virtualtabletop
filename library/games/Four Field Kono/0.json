@@ -26,8 +26,8 @@
       "players": "2"
     }
   },
-  "gold1": {
-    "id": "gold1",
+  "silver1": {
+    "id": "silver1",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -51,8 +51,8 @@
     "set": 1,
     "parent": "holder1"
   },
-  "green1": {
-    "id": "green1",
+  "blue1": {
+    "id": "blue1",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -386,8 +386,8 @@
     "y": 460,
     "z": 1
   },
-  "gold2": {
-    "id": "gold2",
+  "silver2": {
+    "id": "silver2",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -411,8 +411,8 @@
     "set": 1,
     "parent": "holder2"
   },
-  "gold3": {
-    "id": "gold3",
+  "silver3": {
+    "id": "silver3",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -436,8 +436,8 @@
     "set": 1,
     "parent": "holder3"
   },
-  "gold4": {
-    "id": "gold4",
+  "silver4": {
+    "id": "silver4",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -461,8 +461,8 @@
     "set": 1,
     "parent": "holder4"
   },
-  "gold7": {
-    "id": "gold7",
+  "silver7": {
+    "id": "silver7",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -486,8 +486,8 @@
     "set": 1,
     "parent": "holder7"
   },
-  "gold8": {
-    "id": "gold8",
+  "silver8": {
+    "id": "silver8",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -511,8 +511,8 @@
     "set": 1,
     "parent": "holder8"
   },
-  "gold9": {
-    "id": "gold9",
+  "silver9": {
+    "id": "silver9",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -536,8 +536,8 @@
     "set": 1,
     "parent": "holder9"
   },
-  "gold10": {
-    "id": "gold10",
+  "silver10": {
+    "id": "silver10",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -561,8 +561,8 @@
     "set": 1,
     "parent": "holder10"
   },
-  "green2": {
-    "id": "green2",
+  "blue2": {
+    "id": "blue2",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -586,8 +586,8 @@
     "set": 2,
     "parent": "holder32"
   },
-  "green3": {
-    "id": "green3",
+  "blue3": {
+    "id": "blue3",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -611,8 +611,8 @@
     "set": 2,
     "parent": "holder33"
   },
-  "green4": {
-    "id": "green4",
+  "blue4": {
+    "id": "blue4",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -636,8 +636,8 @@
     "set": 2,
     "parent": "holder34"
   },
-  "green7": {
-    "id": "green7",
+  "blue7": {
+    "id": "blue7",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -661,8 +661,8 @@
     "set": 2,
     "parent": "holder25"
   },
-  "green8": {
-    "id": "green8",
+  "blue8": {
+    "id": "blue8",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -686,8 +686,8 @@
     "set": 2,
     "parent": "holder26"
   },
-  "green9": {
-    "id": "green9",
+  "blue9": {
+    "id": "blue9",
     "width": 70,
     "height": 70,
     "z": 1,
@@ -711,8 +711,8 @@
     "set": 2,
     "parent": "holder27"
   },
-  "green10": {
-    "id": "green10",
+  "blue10": {
+    "id": "blue10",
     "width": 70,
     "height": 70,
     "z": 1,
