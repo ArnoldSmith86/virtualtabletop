@@ -3850,7 +3850,7 @@
     "type": "card",
     "cardType": "Control the Current",
     "id": "dx02",
-    "z": 89352,
+    "z": 89496,
     "parent": "pkp8"
   },
   "dhtz": {
@@ -3858,7 +3858,7 @@
     "type": "card",
     "cardType": "Inspiring Draught",
     "id": "dhtz",
-    "z": 89348,
+    "z": 89493,
     "parent": "pkp8"
   },
   "ssfz": {
@@ -3866,7 +3866,7 @@
     "type": "card",
     "cardType": "Reflect",
     "id": "ssfz",
-    "z": 89350,
+    "z": 89497,
     "parent": "pkp8"
   },
   "w4gn": {
@@ -3874,7 +3874,7 @@
     "type": "card",
     "cardType": "Refreshing Thought",
     "id": "w4gn",
-    "z": 89351,
+    "z": 89495,
     "parent": "pkp8"
   },
   "xp4z": {
@@ -3882,7 +3882,7 @@
     "type": "card",
     "cardType": "Wandering River",
     "id": "xp4z",
-    "z": 89349,
+    "z": 89494,
     "parent": "pkp8"
   },
   "51bq": {
@@ -3890,7 +3890,7 @@
     "type": "card",
     "cardType": "Arson",
     "id": "51bq",
-    "z": 89356,
+    "z": 89501,
     "parent": "vz6k"
   },
   "d1sf": {
@@ -3898,7 +3898,7 @@
     "type": "card",
     "cardType": "Burning Motivation",
     "id": "d1sf",
-    "z": 89355,
+    "z": 89502,
     "parent": "vz6k"
   },
   "mjc7": {
@@ -3906,7 +3906,7 @@
     "type": "card",
     "cardType": "Sacrifical Pyre",
     "id": "mjc7",
-    "z": 89353,
+    "z": 89499,
     "parent": "vz6k"
   },
   "y7wv": {
@@ -3914,7 +3914,7 @@
     "type": "card",
     "cardType": "Scorched Earth",
     "id": "y7wv",
-    "z": 89357,
+    "z": 89498,
     "parent": "vz6k"
   },
   "pwtx": {
@@ -3922,7 +3922,7 @@
     "type": "card",
     "cardType": "Unbidden Lamplight",
     "id": "pwtx",
-    "z": 89354,
+    "z": 89500,
     "parent": "vz6k"
   },
   "44e4": {
@@ -3930,7 +3930,7 @@
     "type": "card",
     "cardType": "Course of Action",
     "id": "44e4",
-    "z": 89358,
+    "z": 89506,
     "parent": "aow8"
   },
   "sw0q": {
@@ -3938,7 +3938,7 @@
     "type": "card",
     "cardType": "Cyclone",
     "id": "sw0q",
-    "z": 89362,
+    "z": 89505,
     "parent": "aow8"
   },
   "41yw": {
@@ -3946,7 +3946,7 @@
     "type": "card",
     "cardType": "Take Flight",
     "id": "41yw",
-    "z": 89360,
+    "z": 89507,
     "parent": "aow8"
   },
   "b2vu": {
@@ -3954,7 +3954,7 @@
     "type": "card",
     "cardType": "Trade Winds",
     "id": "b2vu",
-    "z": 89359,
+    "z": 89503,
     "parent": "aow8"
   },
   "4u5y": {
@@ -3962,7 +3962,7 @@
     "type": "card",
     "cardType": "View From the Sky",
     "id": "4u5y",
-    "z": 89361,
+    "z": 89504,
     "parent": "aow8"
   },
   "ewr4": {
@@ -3970,7 +3970,7 @@
     "type": "card",
     "cardType": "Delay Tactics",
     "id": "ewr4",
-    "z": 89367,
+    "z": 89512,
     "parent": "w1mz"
   },
   "6eif": {
@@ -3978,7 +3978,7 @@
     "type": "card",
     "cardType": "Duplicative Mind",
     "id": "6eif",
-    "z": 89363,
+    "z": 89510,
     "parent": "w1mz"
   },
   "1svd": {
@@ -3986,7 +3986,7 @@
     "type": "card",
     "cardType": "Scholars Insight",
     "id": "1svd",
-    "z": 89365,
+    "z": 89509,
     "parent": "w1mz"
   },
   "z6ra": {
@@ -3994,7 +3994,7 @@
     "type": "card",
     "cardType": "Shrewd Stratagem",
     "id": "z6ra",
-    "z": 89364,
+    "z": 89508,
     "parent": "w1mz"
   },
   "ej2i": {
@@ -4002,7 +4002,7 @@
     "type": "card",
     "cardType": "Telekinesis",
     "id": "ej2i",
-    "z": 89366,
+    "z": 89511,
     "parent": "w1mz"
   },
   "2n0x": {
@@ -4010,7 +4010,7 @@
     "type": "card",
     "cardType": "Wildfire",
     "id": "2n0x",
-    "z": 89370,
+    "z": 89516,
     "parent": "1lk5"
   },
   "q5oz": {
@@ -4018,7 +4018,7 @@
     "type": "card",
     "cardType": "Seed the Skies",
     "id": "q5oz",
-    "z": 89371,
+    "z": 89520,
     "parent": "1lk5"
   },
   "xm2m": {
@@ -4026,7 +4026,7 @@
     "type": "card",
     "cardType": "Open Mind",
     "id": "xm2m",
-    "z": 89376,
+    "z": 89519,
     "parent": "1lk5"
   },
   "ihlo": {
@@ -4034,7 +4034,7 @@
     "type": "card",
     "cardType": "Reflecting Pool",
     "id": "ihlo",
-    "z": 89373,
+    "z": 89522,
     "parent": "1lk5"
   },
   "kjaq": {
@@ -4042,7 +4042,7 @@
     "type": "card",
     "cardType": "Mudslide",
     "id": "kjaq",
-    "z": 89368,
+    "z": 89518,
     "parent": "1lk5"
   },
   "hof3": {
@@ -4050,7 +4050,7 @@
     "type": "card",
     "cardType": "Incisive Strike",
     "id": "hof3",
-    "z": 89374,
+    "z": 89521,
     "parent": "1lk5"
   },
   "hagb": {
@@ -4058,7 +4058,7 @@
     "type": "card",
     "cardType": "Dust Storm",
     "id": "hagb",
-    "z": 89377,
+    "z": 89515,
     "parent": "1lk5"
   },
   "cfhi": {
@@ -4066,7 +4066,7 @@
     "type": "card",
     "cardType": "Campfire",
     "id": "cfhi",
-    "z": 89369,
+    "z": 89513,
     "parent": "1lk5"
   },
   "3p22": {
@@ -4074,7 +4074,7 @@
     "type": "card",
     "cardType": "Steam Vents",
     "id": "3p22",
-    "z": 89372,
+    "z": 89517,
     "parent": "1lk5"
   },
   "ie8b": {
@@ -4082,7 +4082,7 @@
     "type": "card",
     "cardType": "Earth",
     "id": "ie8b",
-    "z": 89471,
+    "z": 89524,
     "parent": "9gh7"
   },
   "snzz": {
@@ -4090,7 +4090,7 @@
     "type": "card",
     "cardType": "Water",
     "id": "snzz",
-    "z": 89467,
+    "z": 89545,
     "parent": "9gh7"
   },
   "jxel": {
@@ -4098,7 +4098,7 @@
     "type": "card",
     "cardType": "Fire",
     "id": "jxel",
-    "z": 89485,
+    "z": 89547,
     "parent": "9gh7"
   },
   "w515": {
@@ -4106,7 +4106,7 @@
     "type": "card",
     "cardType": "Wind",
     "id": "w515",
-    "z": 89473,
+    "z": 89531,
     "parent": "9gh7"
   },
   "5gwo": {
@@ -4114,7 +4114,7 @@
     "type": "card",
     "cardType": "Void",
     "id": "5gwo",
-    "z": 89461,
+    "z": 89537,
     "parent": "9gh7"
   },
   "jari": {
@@ -4122,7 +4122,7 @@
     "type": "card",
     "cardType": "Catacomb",
     "id": "jari",
-    "z": 89484,
+    "z": 89549,
     "parent": "9gh7"
   },
   "ovz5": {
@@ -4130,7 +4130,7 @@
     "type": "card",
     "cardType": "Earth",
     "id": "ovz5",
-    "z": 89487,
+    "z": 89536,
     "parent": "9gh7"
   },
   "weho": {
@@ -4138,7 +4138,7 @@
     "type": "card",
     "cardType": "Water",
     "id": "weho",
-    "z": 89460,
+    "z": 89529,
     "parent": "9gh7"
   },
   "3gw7": {
@@ -4146,7 +4146,7 @@
     "type": "card",
     "cardType": "Fire",
     "id": "3gw7",
-    "z": 89483,
+    "z": 89535,
     "parent": "9gh7"
   },
   "j4t0": {
@@ -4154,7 +4154,7 @@
     "type": "card",
     "cardType": "Wind",
     "id": "j4t0",
-    "z": 89463,
+    "z": 89538,
     "parent": "9gh7"
   },
   "juwz": {
@@ -4162,7 +4162,7 @@
     "type": "card",
     "cardType": "Void",
     "id": "juwz",
-    "z": 89479,
+    "z": 89534,
     "parent": "9gh7"
   },
   "kusq": {
@@ -4170,7 +4170,7 @@
     "type": "card",
     "cardType": "Catacomb",
     "id": "kusq",
-    "z": 89486,
+    "z": 89541,
     "parent": "9gh7"
   },
   "jqzc": {
@@ -4178,7 +4178,7 @@
     "type": "card",
     "cardType": "Earth",
     "id": "jqzc",
-    "z": 89459,
+    "z": 89553,
     "parent": "9gh7"
   },
   "j87k": {
@@ -4186,7 +4186,7 @@
     "type": "card",
     "cardType": "Water",
     "id": "j87k",
-    "z": 89482,
+    "z": 89530,
     "parent": "9gh7"
   },
   "x9me": {
@@ -4194,7 +4194,7 @@
     "type": "card",
     "cardType": "Fire",
     "id": "x9me",
-    "z": 89478,
+    "z": 89526,
     "parent": "9gh7"
   },
   "c92n": {
@@ -4202,7 +4202,7 @@
     "type": "card",
     "cardType": "Wind",
     "id": "c92n",
-    "z": 89468,
+    "z": 89551,
     "parent": "9gh7"
   },
   "ln7y": {
@@ -4210,7 +4210,7 @@
     "type": "card",
     "cardType": "Void",
     "id": "ln7y",
-    "z": 89474,
+    "z": 89552,
     "parent": "9gh7"
   },
   "ee6e": {
@@ -4218,7 +4218,7 @@
     "type": "card",
     "cardType": "Catacomb",
     "id": "ee6e",
-    "z": 89462,
+    "z": 89539,
     "parent": "9gh7"
   },
   "w9ea": {
@@ -4226,7 +4226,7 @@
     "type": "card",
     "cardType": "Earth",
     "id": "w9ea",
-    "z": 89481,
+    "z": 89548,
     "parent": "9gh7"
   },
   "gakc": {
@@ -4234,7 +4234,7 @@
     "type": "card",
     "cardType": "Water",
     "id": "gakc",
-    "z": 89465,
+    "z": 89532,
     "parent": "9gh7"
   },
   "ypeo": {
@@ -4242,7 +4242,7 @@
     "type": "card",
     "cardType": "Fire",
     "id": "ypeo",
-    "z": 89469,
+    "z": 89528,
     "parent": "9gh7"
   },
   "3sd0": {
@@ -4250,7 +4250,7 @@
     "type": "card",
     "cardType": "Wind",
     "id": "3sd0",
-    "z": 89458,
+    "z": 89527,
     "parent": "9gh7"
   },
   "g0io": {
@@ -4258,7 +4258,7 @@
     "type": "card",
     "cardType": "Void",
     "id": "g0io",
-    "z": 89470,
+    "z": 89546,
     "parent": "9gh7"
   },
   "ovhp": {
@@ -4266,7 +4266,7 @@
     "type": "card",
     "cardType": "Catacomb",
     "id": "ovhp",
-    "z": 89480,
+    "z": 89542,
     "parent": "9gh7"
   },
   "59hu": {
@@ -4274,7 +4274,7 @@
     "type": "card",
     "cardType": "Earth",
     "id": "59hu",
-    "z": 89476,
+    "z": 89533,
     "parent": "9gh7"
   },
   "0ydr": {
@@ -4282,7 +4282,7 @@
     "type": "card",
     "cardType": "Water",
     "id": "0ydr",
-    "z": 89475,
+    "z": 89550,
     "parent": "9gh7"
   },
   "ufx0": {
@@ -4290,7 +4290,7 @@
     "type": "card",
     "cardType": "Fire",
     "id": "ufx0",
-    "z": 89472,
+    "z": 89540,
     "parent": "9gh7"
   },
   "exmr": {
@@ -4298,7 +4298,7 @@
     "type": "card",
     "cardType": "Wind",
     "id": "exmr",
-    "z": 89477,
+    "z": 89544,
     "parent": "9gh7"
   },
   "8sef": {
@@ -4306,7 +4306,7 @@
     "type": "card",
     "cardType": "Void",
     "id": "8sef",
-    "z": 89464,
+    "z": 89525,
     "parent": "9gh7"
   },
   "w6vt": {
@@ -4314,7 +4314,7 @@
     "type": "card",
     "cardType": "Catacomb",
     "id": "w6vt",
-    "z": 89466,
+    "z": 89543,
     "parent": "9gh7"
   },
   "unusedTileHolder": {
@@ -4334,7 +4334,7 @@
     "type": "card",
     "cardType": "player1",
     "id": "wzi6",
-    "z": 89427,
+    "z": 89523,
     "parent": "playerTileHolder",
     "scale": 0.7
   },
@@ -4435,7 +4435,7 @@
     "type": "card",
     "cardType": "Iron Stance",
     "id": "9b99",
-    "z": 89345,
+    "z": 89488,
     "parent": "ix1t"
   },
   "bfql": {
@@ -4443,7 +4443,7 @@
     "type": "card",
     "cardType": "Sacrifice of the Hermit",
     "id": "bfql",
-    "z": 89347,
+    "z": 89491,
     "parent": "ix1t"
   },
   "rx6t": {
@@ -4451,7 +4451,7 @@
     "type": "card",
     "cardType": "Shifting Sands",
     "id": "rx6t",
-    "z": 89346,
+    "z": 89490,
     "parent": "ix1t"
   },
   "hex1": {
@@ -6417,7 +6417,7 @@
     "type": "card",
     "cardType": "Masons Savvy",
     "id": "npc3",
-    "z": 89344,
+    "z": 89489,
     "parent": "ix1t"
   },
   "uk3i": {
@@ -6425,7 +6425,7 @@
     "type": "card",
     "cardType": "Avalance",
     "id": "uk3i",
-    "z": 89343,
+    "z": 89492,
     "parent": "ix1t"
   },
   "reference": {
@@ -6698,13 +6698,13 @@
     "info": {
       "name": "Godaigo",
       "image": "/assets/-1112185154_103110",
-      "rules": "https://drive.google.com/file/d/1GVntDZTUP53GZs1cNMONW-yIgW1NzVvo/view?usp=sharing",
+      "rules": "https://sites.google.com/view/godaigo/godaigo-rulebook",
       "bgg": "https://www.thegamecrafter.com/games/godaigo:-secret-of-the-five-elements",
       "year": "",
       "mode": "vs",
       "time": "30-90",
       "attribution": "Created and copyrighted by Jake Seegers.<div>\nVTT implementation by Jake Seegers and Michael Taylor.</div><div>\nLibrary image generated using the DALL.E&nbsp; artificial intelligence image generator for the background, Ideogram.ai artificial intelligence image generator for the \"Godaigo\" text, and the remaining text and elements by Jake Seegers.</div><div>\nRulebook Art uses original art by Jake Seegers for game elements such as Scroll Cards, Symbols, and Tiles, and Midjourney artificial intelligence image generator for art and background images.</div>",
-      "lastUpdate": 1715203673575,
+      "lastUpdate": 1716994121988,
       "showName": true,
       "skill": "Medium",
       "description": "Godaigo: Secret of the Five Elements is a strategic board game where players find and cast Elemental Scrolls to win. Players arrange Elemental Stones on the board, using their unique abilities to influence gameplay. The game offers a unique, booster-pack-free, spellcasting experience in every playthrough.",
@@ -6751,7 +6751,7 @@
         "text-decoration": "none"
       }
     },
-    "html": "<a href='https://drive.google.com/file/d/1GVntDZTUP53GZs1cNMONW-yIgW1NzVvo/view?usp=sharing'>Rules PDF</a></p>"
+    "html": "<a href='https://sites.google.com/view/godaigo/godaigo-rulebook'>Rules PDF</a></p>"
   },
   "handReminder": {
     "id": "handReminder",
@@ -9541,7 +9541,7 @@
     "id": "containerScroll",
     "deck": "catacombDeck",
     "cardType": "Container",
-    "z": 89375,
+    "z": 89514,
     "parent": "1lk5"
   },
   "containerActivateButton": {
