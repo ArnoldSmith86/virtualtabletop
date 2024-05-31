@@ -268,6 +268,19 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_uploadAssetGeneric',
+    name: 'upload a different asset',
+    context: '.*',
+    show: _=>jeGetValue()&&String(jeGetValue()[jeGetLastKey()]).match(/^\/assets\/[0-9_-]+$/),
+    call: async function() {
+      const a = await uploadAsset();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
     id: 'je_symbolPickerAsset',
     name: 'pick an asset from the symbol picker',
     context: '.*"(/assets/[0-9_-]+|/i/[^"]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
