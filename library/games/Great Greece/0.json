@@ -1,32 +1,4 @@
 {
-  "_meta": {
-    "version": 15,
-    "info": {
-      "name": "Great Greece",
-      "image": "/assets/-156642727_1370922",
-      "rules": "https://boardgamegeek.com/filepage/101132/magna-grecia-original-rules-rio-grande-website-ref",
-      "bgg": "https://boardgamegeek.com/boardgame/5419/magna-grecia",
-      "year": "2003",
-      "mode": "vs",
-      "time": "90",
-      "attribution": "The graphical assets were modified from a design created by Stephan Suhar. They are used with their full permission. All graphical modifications, layout design, library image, and coding were completed by Jonathan Cox.&nbsp;",
-      "lastUpdate": 1694146322880,
-      "id": "kc48",
-      "showName": true,
-      "skill": "",
-      "description": "Build sprawling trade empires while competing for the attention of powerful Oracles, and investing in opponent's cities.",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2 - 4",
-      "similarImage": "",
-      "similarName": "Magna Grecia",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "Have every player take a seat and then click the setup button. This will randomly place the oracles and put the correct number out for the player count.&nbsp;<div><br></div><div>Left-clicking on road tiles and oracles will rotate them clockwise. Road tiles can be flipped to their opposite side (straight vs. bent) by clicking the Change Road Type button next to their holder.&nbsp;</div><div><br></div><div>Left-click on markets to cycle them through their 3 phases: isolated, connected, and sold.&nbsp;</div><div><br></div><div>It is suggested that market value numbers be dragged over to cities, to help track the number of connections the city has. Left-click on a market value number to increase its value by 1. If the value is higher than 9, add a second counter in the \"1\" position next to the first counter.</div><div><br></div><div>Hover your mouse over the player aid in the top left to get a helpful overview of the rules and the structure of each player's turn.&nbsp;</div><div><br></div><div>Gain and spend money by typing the amount changed (negative number if paying) into the box under your seat, and then press \"enter\" on your keyboard or left-click on the modify button next to the text box.&nbsp;</div><div><br></div><div>When city and road tiles are gained, press the \"+\" button under the associated holder and the tile will move to it. There is a count above each holder showing how many of each tile type is remaining in the supply.</div><div><br></div><div>View a detailed list of all transactions for the entire game by clicking on the \"Toggle Ledger\" button. This will only make the ledger visible to the player who clicks the button, but multiple people can click the button to view it at the same time.&nbsp;</div>",
-      "similarDesigner": "Leo Colovini, Michael Schacht"
-    }
-  },
   "woiqD": {
     "type": "card",
     "id": "woiqD",
@@ -256,7 +228,7 @@
     "y": 41,
     "cardTypes": {
       "temple": {
-        "image": "/assets/-874944435_5218"
+        "image": "/assets/1477757070_2422"
       },
       "blank": {
         "image": ""
@@ -1889,7 +1861,7 @@
     "borderRadius": 10
   },
   "qxdp": {
-    "image": "/assets/-1308479704_2019",
+    "image": "/assets/-1642913739_1264",
     "id": "qxdp",
     "z": 85751,
     "y": 52,
@@ -1901,7 +1873,7 @@
     "fixedParent": true
   },
   "qxdp1": {
-    "image": "/assets/-646607464_2242",
+    "image": "/assets/909132033_1360",
     "id": "qxdp1",
     "z": 85756,
     "y": 51,
@@ -1913,7 +1885,7 @@
     "fixedParent": true
   },
   "qxdp2": {
-    "image": "/assets/-1788848617_1431",
+    "image": "/assets/-1615009455_1072",
     "id": "qxdp2",
     "z": 85755,
     "y": 52,
@@ -2234,7 +2206,7 @@
     "y": 45,
     "width": 50.4,
     "height": 50,
-    "image": "/assets/-874944435_5218",
+    "image": "/assets/1477757070_2422",
     "borderColor": "black",
     "borderWidth": 1,
     "z": 87681,
@@ -4308,7 +4280,7 @@
     },
     "cardTypes": {
       "mo20": {
-        "image": "/assets/183386605_1461828",
+        "image": "/assets/910112205_25698",
         "turn1": 1,
         "turn2": 4,
         "turn3": 2,
@@ -4320,7 +4292,7 @@
         ]
       },
       "v8qu": {
-        "image": "/assets/2007193536_1513600",
+        "image": "/assets/710448833_26348",
         "turn1": 1,
         "turn2": 3,
         "turn3": 4,
@@ -4332,7 +4304,7 @@
         ]
       },
       "678m": {
-        "image": "/assets/-1480495890_1496868",
+        "image": "/assets/542639877_25844",
         "turn1": 1,
         "turn2": 2,
         "turn3": 3,
@@ -4465,7 +4437,7 @@
     },
     "cardTypes": {
       "3dk1": {
-        "image": "/assets/-1532000505_1487266",
+        "image": "/assets/-1850724863_26276",
         "turn1": 2,
         "turn2": 4,
         "turn3": 3,
@@ -4477,7 +4449,7 @@
         ]
       },
       "4dw8": {
-        "image": "/assets/221308188_1536733",
+        "image": "/assets/-1071458889_26624",
         "turn1": 2,
         "turn2": 1,
         "turn3": 4,
@@ -4489,7 +4461,7 @@
         ]
       },
       "sh2l": {
-        "image": "/assets/-34313009_1423236",
+        "image": "/assets/-466326913_25012",
         "turn1": 2,
         "turn2": 3,
         "turn3": 1,
@@ -4623,7 +4595,7 @@
     },
     "cardTypes": {
       "kliq": {
-        "image": "/assets/-674075032_1452387",
+        "image": "/assets/498141359_25342",
         "turn1": 3,
         "turn2": 4,
         "turn3": 2,
@@ -4635,7 +4607,7 @@
         ]
       },
       "0646": {
-        "image": "/assets/-1114290116_1490839",
+        "image": "/assets/-484508441_26042",
         "turn1": 3,
         "turn2": 1,
         "turn3": 4,
@@ -4647,7 +4619,7 @@
         ]
       },
       "4ftb": {
-        "image": "/assets/-984909456_1561244",
+        "image": "/assets/-1608816446_26934",
         "turn1": 3,
         "turn2": 2,
         "turn3": 1,
@@ -4780,7 +4752,7 @@
     },
     "cardTypes": {
       "ptah": {
-        "image": "/assets/83594989_1448889",
+        "image": "/assets/2073222003_25438",
         "turn1": 4,
         "turn2": 3,
         "turn3": 1,
@@ -4792,7 +4764,7 @@
         ]
       },
       "ti61": {
-        "image": "/assets/-404297850_1447178",
+        "image": "/assets/1832145942_25222",
         "turn1": 4,
         "turn2": 2,
         "turn3": 3,
@@ -4804,7 +4776,7 @@
         ]
       },
       "4io3": {
-        "image": "/assets/591918373_1563570",
+        "image": "/assets/1604739064_26924",
         "turn1": 4,
         "turn2": 1,
         "turn3": 2,
@@ -11695,7 +11667,7 @@
     "movable": false,
     "movableInEdit": false,
     "enlarge": 3,
-    "image": "/assets/1207997856_956859",
+    "image": "/assets/-1946658716_194642",
     "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon."
   },
   "info_turn_icon": {
@@ -12403,5 +12375,32 @@
     "width": 118,
     "height": 175,
     "id": "ga0b"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Great Greece",
+      "image": "/assets/-156642727_1370922",
+      "rules": "https://boardgamegeek.com/filepage/101132/magna-grecia-original-rules-rio-grande-website-ref",
+      "bgg": "https://boardgamegeek.com/boardgame/5419/magna-grecia",
+      "year": "2003",
+      "mode": "vs",
+      "time": "90",
+      "attribution": "The graphical assets were modified from a design created by Stephan Suhar. They are used with their full permission. All graphical modifications, layout design, library image, and coding were completed by Jonathan Cox.&nbsp;",
+      "lastUpdate": 1717424249723,
+      "showName": true,
+      "skill": "",
+      "description": "Build sprawling trade empires while competing for the attention of powerful Oracles, and investing in opponent's cities.",
+      "similarImage": "",
+      "similarName": "Magna Grecia",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Have every player take a seat and then click the setup button. This will randomly place the oracles and put the correct number out for the player count.&nbsp;<div><br></div><div>Left-clicking on road tiles and oracles will rotate them clockwise. Road tiles can be flipped to their opposite side (straight vs. bent) by clicking the Change Road Type button next to their holder.&nbsp;</div><div><br></div><div>Left-click on markets to cycle them through their 3 phases: isolated, connected, and sold.&nbsp;</div><div><br></div><div>It is suggested that market value numbers be dragged over to cities, to help track the number of connections the city has. Left-click on a market value number to increase its value by 1. If the value is higher than 9, add a second counter in the \"1\" position next to the first counter.</div><div><br></div><div>Hover your mouse over the player aid in the top left to get a helpful overview of the rules and the structure of each player's turn.&nbsp;</div><div><br></div><div>Gain and spend money by typing the amount changed (negative number if paying) into the box under your seat, and then press \"enter\" on your keyboard or left-click on the modify button next to the text box.&nbsp;</div><div><br></div><div>When city and road tiles are gained, press the \"+\" button under the associated holder and the tile will move to it. There is a count above each holder showing how many of each tile type is remaining in the supply.</div><div><br></div><div>View a detailed list of all transactions for the entire game by clicking on the \"Toggle Ledger\" button. This will only make the ledger visible to the player who clicks the button, but multiple people can click the button to view it at the same time.&nbsp;</div>",
+      "similarDesigner": "Leo Colovini, Michael Schacht",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2 - 4"
+    }
   }
 }
