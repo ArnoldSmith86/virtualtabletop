@@ -259,6 +259,7 @@ const jeCommands = [
     id: 'je_uploadAsset',
     name: 'upload a different asset',
     context: '.*"(/assets/[0-9_-]+|/i/[^"]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
+    show: _=>!jeGetValue()||!String(jeGetValue()[jeGetLastKey()]).match(/^\/assets\/[0-9_-]+$/),
     call: async function() {
       const a = await uploadAsset();
       if(a) {
