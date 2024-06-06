@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 15,
     "info": {
       "name": "Tutti Frutti",
       "image": "/assets/186904067_58697",
@@ -13,17 +13,17 @@
       "similarName": "Sushi Go!",
       "description": "Players choose a card from their hand to play face up, then pass the remaining cards. Repeat until all cards are played. Earn points by collecting sets of cards or being player with most of certain card. Most points after 3 rounds wins.",
       "showName": true,
-      "lastUpdate": 1717691758000,
+      "lastUpdate": 1717712974192,
       "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-5",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "Phil Walker-Harding"
+      "helpText": "1. Players take seats. There must be at least 2 players for game to work.\n\n2. Configure options (icon: person and gear). Autoscoring is on by default. Pass both ways and dummy hand (for 2 player game) are off by default.\n\n3. Press play button (icon: play arrow). Each player can sort cards using a default ranking by pressing the sort button (icon: stacked horizontal lines).\n\n4. Move selected card to holder by your seat name. Clicking on a card will automatically move it. If using dummy hand, you must manually drag it there. If using automatic scoring, do not reorder cards. Card order is used to determine if the yogurt multiplier is applied to the next berry.\n\n5. When all players have moved a card face down to their holder, press the flip and pass button (icon: card flipping up and arrow pointing up and down). This will flip over the cards so all players can see them. It will also pass the remaining cards to the next player. Cards move down by default and up in round 2 if both ways option is enabled.\n\n6. After all cards are played, the next round button (icon: skip next arrow) or autoscore (icon: scoreboard) button will appear. If manually scoring, enter scores before pressing button. If automatically scoring, press the scoreboard button then the next round button. Ice cream cards will automatically be moved to the far-right holder for either scoring method.\n\n7. Game ends after 3 rounds. Ice cream cards will be scored at end of last round if using automatic scoring.<div><br></div><div>Press the white and blue question mark button to see these reminders in the game.</div>",
+      "similarDesigner": "Phil Walker-Harding",
+      "players": "2-5",
+      "language": "en-US",
+      "variant": "",
+      "variantImage": ""
     }
   },
   "fruitDeck": {
@@ -69,7 +69,7 @@
         "rank": 3
       },
       "blackberry": {
-        "image": "/assets/1585430471_67921",
+        "image": "/assets/-707366676_15472",
         "item": "Blackberry",
         "shading": "background-image: linear-gradient(#a6d000,#7d9d00)",
         "itemWidth": 70,
@@ -82,7 +82,7 @@
         "berryType": "blackberry"
       },
       "raspberry": {
-        "image": "/assets/238430050_57180",
+        "image": "/assets/-100774649_17014",
         "item": "Raspberry",
         "shading": "background-image: linear-gradient(#a6d000,#7d9d00)",
         "itemWidth": 70,
@@ -95,7 +95,7 @@
         "berryType": "raspberry"
       },
       "strawberry": {
-        "image": "/assets/-494902569_78005",
+        "image": "/assets/1324386334_21786",
         "item": "Strawberry",
         "shading": "background-image: linear-gradient(#a6d000,#7d9d00)",
         "itemWidth": 70,
@@ -108,9 +108,9 @@
         "berryType": "strawberry"
       },
       "orange3": {
-        "image": "/assets/-148902661_85111",
-        "image2": "/assets/-148902661_85111",
-        "image3": "/assets/-148902661_85111",
+        "image": "/assets/-173158039_25830",
+        "image2": "/assets/-173158039_25830",
+        "image3": "/assets/-173158039_25830",
         "item": "Orange",
         "shading": "background-image: linear-gradient(#ffab00,#ff8a00)",
         "itemWidth": 70,
@@ -124,8 +124,8 @@
         "rank": 7
       },
       "orange2": {
-        "image": "/assets/-148902661_85111",
-        "image2": "/assets/-148902661_85111",
+        "image": "/assets/-173158039_25830",
+        "image2": "/assets/-173158039_25830",
         "item": "Orange",
         "shading": "background-image: linear-gradient(#ffab00,#ff8a00)",
         "itemWidth": 70,
@@ -138,7 +138,7 @@
         "rank": 8
       },
       "orange": {
-        "image": "/assets/-148902661_85111",
+        "image": "/assets/-173158039_25830",
         "item": "Orange",
         "shading": "background-image: linear-gradient(#ffab00,#ff8a00)",
         "itemWidth": 70,
@@ -150,7 +150,7 @@
         "rank": 9
       },
       "grape": {
-        "image": "/assets/-2042684194_108095",
+        "image": "/assets/-1633835765_22608",
         "item": "Grape",
         "shading": "background-image: linear-gradient(#9f8fc5,#756992)",
         "itemWidth": 70,
@@ -162,7 +162,7 @@
         "rank": 10
       },
       "banana": {
-        "image": "/assets/2061699405_70495",
+        "image": "/assets/-123557131_25238",
         "item": "Banana",
         "shading": "background-image: linear-gradient(#fff56f,#ffd21e)",
         "itemWidth": 70,
@@ -174,7 +174,7 @@
         "rank": 11
       },
       "cherry": {
-        "image": "/assets/-1442338337_70349",
+        "image": "/assets/904760967_19990",
         "item": "Cherry",
         "shading": "background-image: linear-gradient(#ff4f4f,#f53d3d)",
         "itemWidth": 70,
@@ -198,7 +198,7 @@
             "width": 303,
             "height": 360,
             "color": "transparent",
-            "value": "/assets/1001175111_383303"
+            "value": "/assets/-1120578921_37056"
           }
         ]
       },
@@ -634,7 +634,9 @@
     "id": "hand",
     "x": 280,
     "stackOffsetX": 103,
-    "css": "background:#00000030"
+    "css": "background:#00000030",
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "5sefD": {
     "id": "5sefD",
@@ -1613,112 +1615,112 @@
     "type": "card",
     "cardType": "yogurt",
     "id": "vk3g",
-    "z": 7494,
-    "parent": "sqdu"
+    "z": 12815,
+    "parent": "b703"
   },
   "bz0r": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "yogurt",
     "id": "bz0r",
-    "z": 9886,
-    "parent": "sqdu"
+    "z": 12806,
+    "parent": "b703"
   },
   "cw0u": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "yogurt",
     "id": "cw0u",
-    "z": 1254,
-    "parent": "sqdu"
+    "z": 12847,
+    "parent": "b703"
   },
   "sus4": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "yogurt",
     "id": "sus4",
-    "z": 9146,
-    "parent": "sqdu"
+    "z": 12834,
+    "parent": "b703"
   },
   "64he": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "strawberry",
     "id": "64he",
-    "z": 664,
-    "parent": "sqdu"
+    "z": 12797,
+    "parent": "b703"
   },
   "s0k1": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "strawberry",
     "id": "s0k1",
-    "z": 7117,
-    "parent": "sqdu"
+    "z": 12894,
+    "parent": "b703"
   },
   "aga7": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "raspberry",
     "id": "aga7",
-    "z": 2018,
-    "parent": "sqdu"
+    "z": 12878,
+    "parent": "b703"
   },
   "bj9r": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "raspberry",
     "id": "bj9r",
-    "z": 9082,
-    "parent": "sqdu"
+    "z": 12849,
+    "parent": "b703"
   },
   "fsk3": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "raspberry",
     "id": "fsk3",
-    "z": 5562,
-    "parent": "sqdu"
+    "z": 12857,
+    "parent": "b703"
   },
   "4omp": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "raspberry",
     "id": "4omp",
-    "z": 8586,
-    "parent": "sqdu"
+    "z": 12814,
+    "parent": "b703"
   },
   "2h2r": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "raspberry",
     "id": "2h2r",
-    "z": 6963,
-    "parent": "sqdu"
+    "z": 12862,
+    "parent": "b703"
   },
   "3dzj": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "raspberry",
     "id": "3dzj",
-    "z": 584,
-    "parent": "sqdu"
+    "z": 12880,
+    "parent": "b703"
   },
   "vxgt": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "blackberry",
     "id": "vxgt",
-    "z": 5524,
-    "parent": "sqdu"
+    "z": 12799,
+    "parent": "b703"
   },
   "ka92": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "blackberry",
     "id": "ka92",
-    "z": 605,
-    "parent": "sqdu"
+    "z": 12895,
+    "parent": "b703"
   },
   "restart": {
     "type": "button",
@@ -1958,7 +1960,7 @@
         "property": "z",
         "variable": "yogurtZ"
       },
-      "var yogurtZ = ${yogurtZ} numericSort",
+      "var yogurtZ = ${yogurtZ} numericStringSort",
       {
         "func": "SELECT",
         "source": "base",
@@ -2221,7 +2223,7 @@
       }
     ],
     "orangeCompareRoutine": [
-      "var sortedOrangeArray = ${orangeArray} numericSort",
+      "var sortedOrangeArray = ${orangeArray} numericStringSort",
       "var sortedOrangeArray = ${sortedOrangeArray} reverse",
       "var mostOrange = ${sortedOrangeArray.0}",
       "var lastSeat = ${sortedOrangeArray} lastIndexOf ${mostOrange}",
@@ -2481,12 +2483,40 @@
     "z": 71,
     "clickRoutine": [
       {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "usedSeats"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "seat6",
+        "mode": "remove",
+        "collection": "usedSeats"
+      },
+      {
         "func": "IF",
         "operand1": "${PROPERTY bothWays OF settings}",
         "operand2": "off",
         "thenRoutine": [
           {
-            "func": "SWAPHANDS"
+            "func": "IF",
+            "operand1": "${PROPERTY dummy OF settings}",
+            "operand2": "off",
+            "thenRoutine": [
+              {
+                "func": "SWAPHANDS"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SWAPHANDS",
+                "source": "usedSeats"
+              }
+            ]
           }
         ],
         "elseRoutine": [
@@ -2496,14 +2526,42 @@
             "operand2": 2,
             "thenRoutine": [
               {
-                "func": "SWAPHANDS",
-                "turnCycle": "backward"
+                "func": "IF",
+                "operand1": "${PROPERTY dummy OF settings}",
+                "operand2": "off",
+                "thenRoutine": [
+                  {
+                    "func": "SWAPHANDS",
+                    "turnCycle": "backward"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "SWAPHANDS",
+                    "turnCycle": "backward",
+                    "source": "usedSeats"
+                  }
+                ]
               }
             ],
             "elseRoutine": [
               {
-                "func": "SWAPHANDS",
-                "turnCycle": "forward"
+                "func": "IF",
+                "operand1": "${PROPERTY dummy OF settings}",
+                "operand2": "off",
+                "thenRoutine": [
+                  {
+                    "func": "SWAPHANDS",
+                    "turnCycle": "forward"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "SWAPHANDS",
+                    "turnCycle": "forward",
+                    "source": "usedSeats"
+                  }
+                ]
               }
             ]
           }
@@ -2603,7 +2661,7 @@
         ]
       }
     ],
-    "flipCount": 0
+    "flipCount": 8
   },
   "deal": {
     "type": "button",
@@ -2612,6 +2670,19 @@
     "y": 930,
     "z": 73,
     "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
       {
         "func": "IF",
         "operand1": "${PROPERTY text OF settings2}",
@@ -3178,16 +3249,16 @@
     "type": "card",
     "cardType": "raspberry",
     "id": "c3y9",
-    "z": 2502,
-    "parent": "sqdu"
+    "z": 12884,
+    "parent": "b703"
   },
   "ynr2": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "raspberry",
     "id": "ynr2",
-    "z": 2615,
-    "parent": "sqdu"
+    "z": 12822,
+    "parent": "b703"
   },
   "discard": {
     "type": "holder",
@@ -3197,7 +3268,7 @@
     "z": 81
   },
   "rq4t": {
-    "image": "/assets/17791380_422381",
+    "image": "/assets/-965858001_88500",
     "movable": false,
     "width": 1600,
     "height": 1000,
@@ -3210,736 +3281,736 @@
     "type": "card",
     "cardType": "yogurt",
     "id": "s63a",
-    "z": 8869,
-    "parent": "sqdu"
+    "z": 12864,
+    "parent": "b703"
   },
   "uhxz": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "yogurt",
     "id": "uhxz",
-    "z": 1499,
-    "parent": "sqdu"
+    "z": 12831,
+    "parent": "b703"
   },
   "rna3": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "blackberry",
     "id": "rna3",
-    "z": 3100,
-    "parent": "sqdu"
+    "z": 12820,
+    "parent": "b703"
   },
   "s49h": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "blackberry",
     "id": "s49h",
-    "z": 7832,
-    "parent": "sqdu"
+    "z": 12890,
+    "parent": "b703"
   },
   "udb5": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "blackberry",
     "id": "udb5",
-    "z": 1563,
-    "parent": "sqdu"
+    "z": 12802,
+    "parent": "b703"
   },
   "cxyr": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "strawberry",
     "id": "cxyr",
-    "z": 6562,
-    "parent": "sqdu"
+    "z": 12838,
+    "parent": "b703"
   },
   "m08m": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "strawberry",
     "id": "m08m",
-    "z": 7655,
-    "parent": "sqdu"
+    "z": 12829,
+    "parent": "b703"
   },
   "d1w4": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "strawberry",
     "id": "d1w4",
-    "z": 3419,
-    "parent": "sqdu"
+    "z": 12888,
+    "parent": "b703"
   },
   "njea": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "icecream",
     "id": "njea",
-    "z": 4532,
-    "parent": "sqdu"
+    "z": 12846,
+    "parent": "b703"
   },
   "whzc": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "icecream",
     "id": "whzc",
-    "z": 1302,
-    "parent": "sqdu"
+    "z": 12825,
+    "parent": "b703"
   },
   "t6p8": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "icecream",
     "id": "t6p8",
-    "z": 7793,
-    "parent": "sqdu"
+    "z": 12883,
+    "parent": "b703"
   },
   "xd57": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "icecream",
     "id": "xd57",
-    "z": 6229,
-    "parent": "sqdu"
+    "z": 12891,
+    "parent": "b703"
   },
   "tau1": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "icecream",
     "id": "tau1",
-    "z": 5971,
-    "parent": "sqdu"
+    "z": 12808,
+    "parent": "b703"
   },
   "b2x9": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "icecream",
     "id": "b2x9",
-    "z": 6684,
-    "parent": "sqdu"
+    "z": 12796,
+    "parent": "b703"
   },
   "tuzl": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "icecream",
     "id": "tuzl",
-    "z": 2193,
-    "parent": "sqdu"
+    "z": 12794,
+    "parent": "b703"
   },
   "e3sn": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "icecream",
     "id": "e3sn",
-    "z": 5088,
-    "parent": "sqdu"
+    "z": 12841,
+    "parent": "b703"
   },
   "9fx2": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "icecream",
     "id": "9fx2",
-    "z": 966,
-    "parent": "sqdu"
+    "z": 12865,
+    "parent": "b703"
   },
   "7gyo": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "icecream",
     "id": "7gyo",
-    "z": 4903,
-    "parent": "sqdu"
+    "z": 12835,
+    "parent": "b703"
   },
   "326m": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "spoon",
     "id": "326m",
-    "z": 5771,
-    "parent": "sqdu"
+    "z": 12842,
+    "parent": "b703"
   },
   "nx6y": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "spoon",
     "id": "nx6y",
-    "z": 9420,
-    "parent": "sqdu"
+    "z": 12798,
+    "parent": "b703"
   },
   "2llg": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "spoon",
     "id": "2llg",
-    "z": 7480,
-    "parent": "sqdu"
+    "z": 12824,
+    "parent": "b703"
   },
   "mjip": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "spoon",
     "id": "mjip",
-    "z": 6991,
-    "parent": "sqdu"
+    "z": 12850,
+    "parent": "b703"
   },
   "4lyz": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "raspberry",
     "id": "4lyz",
-    "z": 5211,
-    "parent": "sqdu"
+    "z": 12886,
+    "parent": "b703"
   },
   "kyz1": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "raspberry",
     "id": "kyz1",
-    "z": 400,
-    "parent": "sqdu"
+    "z": 12818,
+    "parent": "b703"
   },
   "kkg1": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange3",
     "id": "kkg1",
-    "z": 7198,
-    "parent": "sqdu"
+    "z": 12848,
+    "parent": "b703"
   },
   "1l6x": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange3",
     "id": "1l6x",
-    "z": 365,
-    "parent": "sqdu"
+    "z": 12805,
+    "parent": "b703"
   },
   "01r3": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange3",
     "id": "01r3",
-    "z": 8300,
-    "parent": "sqdu"
+    "z": 12811,
+    "parent": "b703"
   },
   "yuv5": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange3",
     "id": "yuv5",
-    "z": 5492,
-    "parent": "sqdu"
+    "z": 12795,
+    "parent": "b703"
   },
   "w89y": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange3",
     "id": "w89y",
-    "z": 6377,
-    "parent": "sqdu"
+    "z": 12840,
+    "parent": "b703"
   },
   "9hio": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange3",
     "id": "9hio",
-    "z": 8068,
-    "parent": "sqdu"
+    "z": 12897,
+    "parent": "b703"
   },
   "mbym": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange3",
     "id": "mbym",
-    "z": 7702,
-    "parent": "sqdu"
+    "z": 12823,
+    "parent": "b703"
   },
   "u5ap": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange3",
     "id": "u5ap",
-    "z": 2756,
-    "parent": "sqdu"
+    "z": 12871,
+    "parent": "b703"
   },
   "nzhs": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "nzhs",
-    "z": 4985,
-    "parent": "sqdu"
+    "z": 12887,
+    "parent": "b703"
   },
   "snep": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "snep",
-    "z": 5481,
-    "parent": "sqdu"
+    "z": 12872,
+    "parent": "b703"
   },
   "i6j0": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "i6j0",
-    "z": 2297,
-    "parent": "sqdu"
+    "z": 12836,
+    "parent": "b703"
   },
   "wftb": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "wftb",
-    "z": 1880,
-    "parent": "sqdu"
+    "z": 12875,
+    "parent": "b703"
   },
   "afuo": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "afuo",
-    "z": 808,
-    "parent": "sqdu"
+    "z": 12859,
+    "parent": "b703"
   },
   "lu2s": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "lu2s",
-    "z": 9251,
-    "parent": "sqdu"
+    "z": 12901,
+    "parent": "b703"
   },
   "8z3u": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "8z3u",
-    "z": 6946,
-    "parent": "sqdu"
+    "z": 12855,
+    "parent": "b703"
   },
   "yv7m": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "yv7m",
-    "z": 9891,
-    "parent": "sqdu"
+    "z": 12803,
+    "parent": "b703"
   },
   "bavd": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "bavd",
-    "z": 7299,
-    "parent": "sqdu"
+    "z": 12860,
+    "parent": "b703"
   },
   "bxs7": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "bxs7",
-    "z": 760,
-    "parent": "sqdu"
+    "z": 12876,
+    "parent": "b703"
   },
   "80q8": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "80q8",
-    "z": 378,
-    "parent": "sqdu"
+    "z": 12817,
+    "parent": "b703"
   },
   "zuxl": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange2",
     "id": "zuxl",
-    "z": 1136,
-    "parent": "sqdu"
+    "z": 12827,
+    "parent": "b703"
   },
   "g4nj": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange",
     "id": "g4nj",
-    "z": 255,
-    "parent": "sqdu"
+    "z": 12881,
+    "parent": "b703"
   },
   "6uk5": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange",
     "id": "6uk5",
-    "z": 1380,
-    "parent": "sqdu"
+    "z": 12896,
+    "parent": "b703"
   },
   "p29s": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange",
     "id": "p29s",
-    "z": 7240,
-    "parent": "sqdu"
+    "z": 12856,
+    "parent": "b703"
   },
   "z3r2": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange",
     "id": "z3r2",
-    "z": 6546,
-    "parent": "sqdu"
+    "z": 12853,
+    "parent": "b703"
   },
   "02mf": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange",
     "id": "02mf",
-    "z": 117,
-    "parent": "sqdu"
+    "z": 12807,
+    "parent": "b703"
   },
   "cs9m": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "orange",
     "id": "cs9m",
-    "z": 1112,
-    "parent": "sqdu"
+    "z": 12809,
+    "parent": "b703"
   },
   "itmf": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "itmf",
-    "z": 9432,
-    "parent": "sqdu"
+    "z": 12868,
+    "parent": "b703"
   },
   "v38u": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "v38u",
-    "z": 4771,
-    "parent": "sqdu"
+    "z": 12892,
+    "parent": "b703"
   },
   "56l8": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "56l8",
-    "z": 228,
-    "parent": "sqdu"
+    "z": 12879,
+    "parent": "b703"
   },
   "6iun": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "6iun",
-    "z": 288,
-    "parent": "sqdu"
+    "z": 12828,
+    "parent": "b703"
   },
   "pmxs": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "pmxs",
-    "z": 7372,
-    "parent": "sqdu"
+    "z": 12801,
+    "parent": "b703"
   },
   "fes1": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "fes1",
-    "z": 934,
-    "parent": "sqdu"
+    "z": 12819,
+    "parent": "b703"
   },
   "38zr": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "38zr",
-    "z": 9957,
-    "parent": "sqdu"
+    "z": 12858,
+    "parent": "b703"
   },
   "9sun": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "9sun",
-    "z": 4680,
-    "parent": "sqdu"
+    "z": 12833,
+    "parent": "b703"
   },
   "lh5q": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "lh5q",
-    "z": 8513,
-    "parent": "sqdu"
+    "z": 12837,
+    "parent": "b703"
   },
   "yq2w": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "yq2w",
-    "z": 9249,
-    "parent": "sqdu"
+    "z": 12893,
+    "parent": "b703"
   },
   "hbx9": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "hbx9",
-    "z": 3137,
-    "parent": "sqdu"
+    "z": 12816,
+    "parent": "b703"
   },
   "hhrn": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "hhrn",
-    "z": 6517,
-    "parent": "sqdu"
+    "z": 12830,
+    "parent": "b703"
   },
   "bvog": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "bvog",
-    "z": 2321,
-    "parent": "sqdu"
+    "z": 12851,
+    "parent": "b703"
   },
   "h8dr": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "grape",
     "id": "h8dr",
-    "z": 2077,
-    "parent": "sqdu"
+    "z": 12882,
+    "parent": "b703"
   },
   "8gd0": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "8gd0",
-    "z": 732,
-    "parent": "sqdu"
+    "z": 12845,
+    "parent": "b703"
   },
   "q14d": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "q14d",
-    "z": 823,
-    "parent": "sqdu"
+    "z": 12813,
+    "parent": "b703"
   },
   "ae5i": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "ae5i",
-    "z": 1881,
-    "parent": "sqdu"
+    "z": 12843,
+    "parent": "b703"
   },
   "0ntx": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "0ntx",
-    "z": 4288,
-    "parent": "sqdu"
+    "z": 12826,
+    "parent": "b703"
   },
   "2ed5": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "2ed5",
-    "z": 5467,
-    "parent": "sqdu"
+    "z": 12844,
+    "parent": "b703"
   },
   "b22x": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "b22x",
-    "z": 6857,
-    "parent": "sqdu"
+    "z": 12867,
+    "parent": "b703"
   },
   "bnqo": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "bnqo",
-    "z": 7806,
-    "parent": "sqdu"
+    "z": 12889,
+    "parent": "b703"
   },
   "dtnh": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "dtnh",
-    "z": 323,
-    "parent": "sqdu"
+    "z": 12852,
+    "parent": "b703"
   },
   "kcao": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "kcao",
-    "z": 3163,
-    "parent": "sqdu"
+    "z": 12812,
+    "parent": "b703"
   },
   "1j29": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "1j29",
-    "z": 2033,
-    "parent": "sqdu"
+    "z": 12899,
+    "parent": "b703"
   },
   "3ug8": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "3ug8",
-    "z": 9568,
-    "parent": "sqdu"
+    "z": 12869,
+    "parent": "b703"
   },
   "w9ue": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "w9ue",
-    "z": 73,
-    "parent": "sqdu"
+    "z": 12854,
+    "parent": "b703"
   },
   "1fhs": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "1fhs",
-    "z": 8041,
-    "parent": "sqdu"
+    "z": 12800,
+    "parent": "b703"
   },
   "x89e": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "banana",
     "id": "x89e",
-    "z": 4455,
-    "parent": "sqdu"
+    "z": 12821,
+    "parent": "b703"
   },
   "k2i4": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "k2i4",
-    "z": 6796,
-    "parent": "sqdu"
+    "z": 12900,
+    "parent": "b703"
   },
   "svzu": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "svzu",
-    "z": 4411,
-    "parent": "sqdu"
+    "z": 12832,
+    "parent": "b703"
   },
   "22hs": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "22hs",
-    "z": 3900,
-    "parent": "sqdu"
+    "z": 12810,
+    "parent": "b703"
   },
   "s5hu": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "s5hu",
-    "z": 3862,
-    "parent": "sqdu"
+    "z": 12863,
+    "parent": "b703"
   },
   "b4ab": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "b4ab",
-    "z": 6024,
-    "parent": "sqdu"
+    "z": 12877,
+    "parent": "b703"
   },
   "xrsi": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "xrsi",
-    "z": 4230,
-    "parent": "sqdu"
+    "z": 12839,
+    "parent": "b703"
   },
   "mh3i": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "mh3i",
-    "z": 7228,
-    "parent": "sqdu"
+    "z": 12866,
+    "parent": "b703"
   },
   "bxgw": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "bxgw",
-    "z": 2779,
-    "parent": "sqdu"
+    "z": 12861,
+    "parent": "b703"
   },
   "rs9j": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "rs9j",
-    "z": 1197,
-    "parent": "sqdu"
+    "z": 12804,
+    "parent": "b703"
   },
   "4xxj": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "4xxj",
-    "z": 4467,
-    "parent": "sqdu"
+    "z": 12873,
+    "parent": "b703"
   },
   "a21l": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "a21l",
-    "z": 3465,
-    "parent": "sqdu"
+    "z": 12870,
+    "parent": "b703"
   },
   "iopa": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "iopa",
-    "z": 2783,
-    "parent": "sqdu"
+    "z": 12885,
+    "parent": "b703"
   },
   "n4v1": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "n4v1",
-    "z": 7110,
-    "parent": "sqdu"
+    "z": 12874,
+    "parent": "b703"
   },
   "c6mc": {
     "deck": "fruitDeck",
     "type": "card",
     "cardType": "cherry",
     "id": "c6mc",
-    "z": 477,
-    "parent": "sqdu"
+    "z": 12898,
+    "parent": "b703"
   },
   "seat6": {
     "type": "seat",
@@ -4139,7 +4210,7 @@
     "width": 800,
     "height": 800,
     "css": "border: 5px double black;border-radius: 5%;background: white; font-size: 22px; padding-right:5px;padding-left:5px   ",
-    "x": 400,
+    "x": 2000,
     "y": 100,
     "movable": false,
     "movableInEdit": false
@@ -4271,7 +4342,7 @@
     "layer": 3,
     "image": "/assets/-331942285_643"
   },
-  "sqdu": {
+  "b703": {
     "type": "pile",
     "parent": "deckHolder",
     "x": 4,
@@ -4279,6 +4350,6 @@
     "width": 103,
     "height": 160,
     "handlePosition": "static",
-    "id": "sqdu"
+    "id": "b703"
   }
 }
