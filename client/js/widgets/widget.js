@@ -1834,7 +1834,6 @@ export class Widget extends StateManaged {
                 to: target.get('id'),
               });
             }
-            console.log(moves);
           }
           if(jeRoutineLogging) {
             jeLoggingRoutineOperationStart("Moves", "Moves");
