@@ -1822,7 +1822,7 @@ export class Widget extends StateManaged {
               let contents = widgets.get(hand).children().reduce(
                 function (collect, w) {
                   if (!perOwner || w.get('owner') == source.get('player')) {
-                    collect.push(w.get('id'));
+                    collect.unshift(w.get('id'));
                   }
                   return collect
                 },
