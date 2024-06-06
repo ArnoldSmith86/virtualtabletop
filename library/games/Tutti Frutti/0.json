@@ -13,7 +13,7 @@
       "similarName": "Sushi Go!",
       "description": "Players choose a card from their hand to play face up, then pass the remaining cards. Repeat until all cards are played. Earn points by collecting sets of cards or being player with most of certain card. Most points after 3 rounds wins.",
       "showName": true,
-      "lastUpdate": 1644184116000,
+      "lastUpdate": 1717691758000,
       "skill": "",
       "variantImage": "",
       "variant": "",
@@ -2481,60 +2481,12 @@
     "z": 71,
     "clickRoutine": [
       {
-        "func": "SELECT",
-        "type": "seat",
-        "property": "player",
-        "relation": "!=",
-        "value": ""
-      },
-      {
-        "func": "SELECT",
-        "source": "DEFAULT",
-        "mode": "remove",
-        "type": "seat",
-        "property": "id",
-        "value": "seat6"
-      },
-      {
-        "func": "GET",
-        "aggregation": "array",
-        "property": "index",
-        "variable": "activeIndex"
-      },
-      {
-        "func": "GET",
-        "aggregation": "array",
-        "property": "player",
-        "variable": "activeOwner"
-      },
-      "var length = ${activeIndex} length",
-      {
-        "func": "FOREACH",
-        "in": "${activeIndex}",
-        "loopRoutine": [
-          "var thisIndex = ${activeIndex.$key}",
-          "var thisOwner = ${activeOwner.$key}",
-          "var tempPlace = 'score' + ${thisIndex}",
-          {
-            "func": "SELECT",
-            "property": "owner",
-            "value": "${thisOwner}"
-          },
-          {
-            "func": "SET",
-            "property": "parent",
-            "value": "${tempPlace}"
-          }
-        ]
-      },
-      {
         "func": "IF",
         "operand1": "${PROPERTY bothWays OF settings}",
         "operand2": "off",
         "thenRoutine": [
           {
-            "func": "CALL",
-            "routine": "passDownRoutine"
+            "func": "SWAPHANDS"
           }
         ],
         "elseRoutine": [
@@ -2544,115 +2496,16 @@
             "operand2": 2,
             "thenRoutine": [
               {
-                "func": "CALL",
-                "routine": "passUpRoutine"
+                "func": "SWAPHANDS",
+                "turnCycle": "backward"
               }
             ],
             "elseRoutine": [
               {
-                "func": "CALL",
-                "routine": "passDownRoutine"
+                "func": "SWAPHANDS",
+                "turnCycle": "forward"
               }
             ]
-          }
-        ]
-      }
-    ],
-    "passDownRoutine": [
-      {
-        "func": "FOREACH",
-        "in": "${activeIndex}",
-        "loopRoutine": [
-          "var thisIndex = ${activeIndex.$key}",
-          "var thisOwner = ${activeOwner.$key}",
-          "var tempPlace = 'score' + ${thisIndex}",
-          "var newKey = ${key} + 1",
-          {
-            "func": "IF",
-            "operand1": "${newKey}",
-            "operand2": "${length}",
-            "relation": "==",
-            "thenRoutine": [
-              "var newKey = 0"
-            ]
-          },
-          "var newOwner = ${activeOwner.$newKey}",
-          {
-            "func": "SELECT",
-            "type": "card",
-            "property": "parent",
-            "value": "${tempPlace}"
-          },
-          {
-            "func": "SELECT",
-            "source": "DEFAULT",
-            "property": "owner",
-            "value": "${thisOwner}"
-          },
-          {
-            "func": "SET",
-            "property": "parent",
-            "value": "hand"
-          },
-          {
-            "func": "SET",
-            "property": "owner",
-            "value": "${newOwner}"
-          },
-          {
-            "func": "SORT",
-            "holder": "hand",
-            "key": "z"
-          }
-        ]
-      }
-    ],
-    "passUpRoutine": [
-      {
-        "func": "FOREACH",
-        "in": "${activeIndex}",
-        "loopRoutine": [
-          "var thisIndex = ${activeIndex.$key}",
-          "var thisOwner = ${activeOwner.$key}",
-          "var tempPlace = 'score' + ${thisIndex}",
-          "var newKey = ${key} - 1",
-          {
-            "func": "IF",
-            "operand1": "${newKey}",
-            "operand2": -1,
-            "relation": "==",
-            "thenRoutine": [
-              "var length = ${length} - 1",
-              "var newKey = ${length}"
-            ]
-          },
-          "var newOwner = ${activeOwner.$newKey}",
-          {
-            "func": "SELECT",
-            "type": "card",
-            "property": "parent",
-            "value": "${tempPlace}"
-          },
-          {
-            "func": "SELECT",
-            "source": "DEFAULT",
-            "property": "owner",
-            "value": "${thisOwner}"
-          },
-          {
-            "func": "SET",
-            "property": "parent",
-            "value": "hand"
-          },
-          {
-            "func": "SET",
-            "property": "owner",
-            "value": "${newOwner}"
-          },
-          {
-            "func": "SORT",
-            "holder": "hand",
-            "key": "z"
           }
         ]
       }
