@@ -1796,7 +1796,6 @@ export class Widget extends StateManaged {
         }
         let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
         let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
-        console.log(collections[getCollection(a.source)]);
         if (c.length > 1) {
           if(a.turnCycle == 'forward') {
             c.sort((a, b)=>a.get('index')-b.get('index'));
@@ -1808,46 +1807,36 @@ export class Widget extends StateManaged {
               [c[i], c[rand]] = [c[rand], c[i]];
             }
           }
-          let moves = {};
+          let moves = [];
           for (let i = 0; i < c.length; i++) {
             let source = c[i];
-            let target = c[(i + 1) % c.length].get('id');
+            let target = c[(i + a.turn) % c.length];
             let hand = source.get('hand');
             if (this.isValidID(hand, problems)) {
-              let contents = widgets.get(hand).children().slice();
-              if (widgets.get(hand).get('childrenPerOwner')) {
-                contents.filter(w=>w.get('owner') == source.get('player'));
-              }
-              moves[target] = contents;
+              let perOwner = widgets.get(hand).get('childrenPerOwner');
+              let contents = widgets.get(hand).children().reduce(
+                function (collect, w) {
+                  if (!perOwner || w.get('owner') == source.get('player')) {
+                    collect.push(w.get('id'));
+                  }
+                  return collect
+                },
+                []
+              );
+              moves.push({
+                func: "MOVE",
+                collection: contents,
+                to: target.get('id'),
+              });
             }
+            console.log(moves);
           }
-
-          async function applyMove(target, c) {
-            let moved = 0;
-            c.movedByButton = true;
-            const targetHand = widgets.get(target.get('hand'));
-            c.targetPlayer = target.get('player');
-            await c.moveToHolder(targetHand);
-            delete c.targetPlayer;
-            await c.bringToFront();
-            ++moved;
-            delete c.movedByButton;
-            return moved;
+          if(jeRoutineLogging) {
+            jeLoggingRoutineOperationStart("Moves", "Moves");
           }
-          
-          let hands = 0;
-          let count = 0;
-          for (const targetID in moves) {
-            await w(targetID, async target=>{
-              for (const c of moves[targetID].reverse()) {
-                count += await applyMove(target, c);
-              }
-              target.updateAfterShuffle(); // arrange cards in new owner's hand
-            });
-            hands++;
-          }
-          if (jeRoutineLogging) {
-            jeLoggingRoutineOperationSummary(`${count} widgets moved between ${hands} hands`);
+          await this.evaluateRoutine(moves, variables, collections, (depth || 0) + 1, true);
+          if(jeRoutineLogging) {
+          jeLoggingRoutineOperationEnd([], variables, collections, false);
           }
         }
       }
