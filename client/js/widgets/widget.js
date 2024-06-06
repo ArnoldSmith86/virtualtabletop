@@ -1444,13 +1444,18 @@ export class Widget extends StateManaged {
                 if(widgets.has(target.get('hand'))) {
                   const targetHand = widgets.get(target.get('hand'));
                   await applyFlip();
-                  c.targetPlayer = target.get('player');
-                  await c.moveToHolder(targetHand);
-                  delete c.targetPlayer;
+                  if (targetHand == source) {
+                    // cards are already in hand: only an owner update is needed
+                    await c.set('owner', target.get('player'));
+                  } else {
+                    c.targetPlayer = target.get('player');
+                    await c.moveToHolder(targetHand);
+                    delete c.targetPlayer;
+                  }
                   await c.bringToFront();
-                  ++moved;
                   if(targetHand.get('type') == 'holder')
-                    await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                      await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                  ++moved;
                 } else {
                   problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                 }
