@@ -721,9 +721,7 @@
     "id": "seat-p1",
     "x": 350,
     "y": 570,
-    "hand": "hand-p1",
-    "player": "Left",
-    "color": "#c900f0"
+    "hand": "hand-p1"
   },
   "hand-p1": {
     "type": "holder",
@@ -744,9 +742,7 @@
     "x": 1101,
     "y": 570,
     "hand": "hand-p2",
-    "index": 2,
-    "player": "Guest137",
-    "color": "#007801"
+    "index": 2
   },
   "hand-p2": {
     "type": "holder",
@@ -767,9 +763,7 @@
     "x": 1101,
     "y": 900,
     "hand": "hand-p3",
-    "index": 3,
-    "player": "Guest820",
-    "color": "#00c4c9"
+    "index": 3
   },
   "hand-p3": {
     "type": "holder",
@@ -790,9 +784,7 @@
     "x": 350,
     "y": 900,
     "hand": "hand-p4",
-    "index": 4,
-    "player": "Mike",
-    "color": "#ec3500"
+    "index": 4
   },
   "hand-p4": {
     "type": "holder",
@@ -1410,20 +1402,20 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1717712621671,
+      "lastUpdate": 1717712747399,
       "showName": false,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Basics",
-      "language": "",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basics",
+      "language": "",
+      "players": "1"
     }
   }
 }
