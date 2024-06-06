@@ -1,21 +1,4 @@
 {
-  "_meta": {
-    "version": 15,
-    "info": {
-      "name": "Functions - SWAPHANDS",
-      "image": "/assets/-1954667977_27832",
-      "rules": "",
-      "bgg": "",
-      "year": "",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "lastUpdate": 1716378806030,
-      "showName": false,
-      "variant": "Basics",
-      "players": "1"
-    }
-  },
   "deck": {
     "type": "deck",
     "id": "deck",
@@ -563,13 +546,6 @@
       }
     ]
   },
-  "pile-draw": {
-    "type": "pile",
-    "id": "pile-draw",
-    "parent": "holder-deck",
-    "width": 103,
-    "height": 160
-  },
   "holder-deck": {
     "type": "holder",
     "id": "holder-deck",
@@ -585,91 +561,97 @@
   "card_2_C": {
     "type": "card",
     "id": "card_2_C",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "C 02"
+    "cardType": "C 02",
+    "z": 40,
+    "parent": "dtlb"
   },
   "card_2_D": {
     "type": "card",
     "id": "card_2_D",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "D 02"
+    "cardType": "D 02",
+    "z": 39,
+    "parent": "dtlb"
   },
   "card_2_H": {
     "type": "card",
     "id": "card_2_H",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "H 02",
-    "z": 22
+    "z": 2,
+    "activeFace": 1,
+    "x": 107,
+    "y": 4,
+    "parent": "hand-p1"
   },
   "card_2_S": {
     "type": "card",
     "id": "card_2_S",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "S 02"
+    "cardType": "S 02",
+    "z": 38,
+    "parent": "dtlb"
   },
   "card_3_C": {
     "type": "card",
     "id": "card_3_C",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "C 03"
+    "cardType": "C 03",
+    "z": 37,
+    "parent": "dtlb"
   },
   "card_3_D": {
     "type": "card",
     "id": "card_3_D",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "D 03",
-    "z": 36
+    "z": 10,
+    "parent": "dtlb"
   },
   "card_3_H": {
     "type": "card",
     "id": "card_3_H",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "H 03",
-    "z": 42
+    "z": 3,
+    "activeFace": 1,
+    "x": 210,
+    "y": 4,
+    "hoverParent": "hand-p1",
+    "parent": "hand-p1"
   },
   "card_3_S": {
     "type": "card",
     "id": "card_3_S",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "S 03",
-    "z": 41
+    "z": 1,
+    "parent": "dtlb"
   },
   "card_4_C": {
     "type": "card",
     "id": "card_4_C",
     "deck": "deck",
     "cardType": "C 04",
-    "z": 3,
-    "x": 210,
-    "y": 4,
-    "parent": "hand-p2",
-    "activeFace": 1
+    "z": 6,
+    "parent": "dtlb"
   },
   "card_4_D": {
     "type": "card",
     "id": "card_4_D",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "D 04"
+    "cardType": "D 04",
+    "z": 36,
+    "parent": "dtlb"
   },
   "card_4_H": {
     "type": "card",
     "id": "card_4_H",
     "deck": "deck",
     "cardType": "H 04",
-    "z": 3,
-    "x": 210,
-    "y": 4,
-    "parent": "hand-p3",
-    "activeFace": 1
+    "z": 29,
+    "parent": "dtlb"
   },
   "card_4_S": {
     "type": "card",
@@ -680,7 +662,7 @@
     "activeFace": 1,
     "x": 4,
     "y": 4,
-    "parent": "hand-p1"
+    "parent": "hand-p4"
   },
   "card_5_C": {
     "type": "card",
@@ -688,24 +670,23 @@
     "deck": "deck",
     "cardType": "C 05",
     "z": 2,
-    "x": 107,
-    "y": 4,
-    "parent": "hand-p4",
-    "activeFace": 1
+    "parent": "dtlb"
   },
   "card_5_D": {
     "type": "card",
     "id": "card_5_D",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "D 05"
+    "cardType": "D 05",
+    "z": 35,
+    "parent": "dtlb"
   },
   "card_5_H": {
     "type": "card",
     "id": "card_5_H",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "H 05"
+    "cardType": "H 05",
+    "z": 34,
+    "parent": "dtlb"
   },
   "heading": {
     "id": "heading",
@@ -740,7 +721,9 @@
     "id": "seat-p1",
     "x": 350,
     "y": 570,
-    "hand": "hand-p1"
+    "hand": "hand-p1",
+    "player": "Left",
+    "color": "#c900f0"
   },
   "hand-p1": {
     "type": "holder",
@@ -761,7 +744,9 @@
     "x": 1101,
     "y": 570,
     "hand": "hand-p2",
-    "index": 2
+    "index": 2,
+    "player": "Guest137",
+    "color": "#007801"
   },
   "hand-p2": {
     "type": "holder",
@@ -782,7 +767,9 @@
     "x": 1101,
     "y": 900,
     "hand": "hand-p3",
-    "index": 3
+    "index": 3,
+    "player": "Guest820",
+    "color": "#00c4c9"
   },
   "hand-p3": {
     "type": "holder",
@@ -803,7 +790,9 @@
     "x": 350,
     "y": 900,
     "hand": "hand-p4",
-    "index": 4
+    "index": 4,
+    "player": "Mike",
+    "color": "#ec3500"
   },
   "hand-p4": {
     "type": "holder",
@@ -821,235 +810,267 @@
   "card_6_D": {
     "type": "card",
     "id": "card_6_D",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "D 06",
-    "z": 25
+    "z": 16,
+    "parent": "dtlb"
   },
   "card_5_S": {
     "type": "card",
     "id": "card_5_S",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "S 05"
+    "cardType": "S 05",
+    "activeFace": 1,
+    "z": 2,
+    "x": 107,
+    "y": 4,
+    "parent": "hand-p4"
   },
   "card_6_H": {
     "type": "card",
     "id": "card_6_H",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "H 06"
+    "cardType": "H 06",
+    "z": 30,
+    "parent": "dtlb"
   },
   "card_6_S": {
     "type": "card",
     "id": "card_6_S",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "S 06",
-    "z": 34
+    "z": 3,
+    "activeFace": 1,
+    "x": 210,
+    "y": 4,
+    "parent": "hand-p4"
   },
   "card_7_D": {
     "type": "card",
     "id": "card_7_D",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "D 07",
-    "z": 24
+    "z": 17,
+    "parent": "dtlb"
   },
   "card_7_H": {
     "type": "card",
     "id": "card_7_H",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "H 07"
+    "cardType": "H 07",
+    "z": 28,
+    "parent": "dtlb"
   },
   "card_8_C": {
     "type": "card",
     "id": "card_8_C",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "C 08",
-    "z": 27
+    "z": 14,
+    "parent": "dtlb"
   },
   "card_7_S": {
     "type": "card",
     "id": "card_7_S",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "S 07"
+    "cardType": "S 07",
+    "z": 32,
+    "parent": "dtlb"
   },
   "card_8_D": {
     "type": "card",
     "id": "card_8_D",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "D 08"
+    "cardType": "D 08",
+    "activeFace": 1,
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "hoverParent": "hand-p3",
+    "parent": "hand-p3"
   },
   "card_8_H": {
     "type": "card",
     "id": "card_8_H",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "H 08",
-    "z": 20
+    "z": 18,
+    "parent": "dtlb"
   },
   "card_8_S": {
     "type": "card",
     "id": "card_8_S",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "S 08"
+    "cardType": "S 08",
+    "z": 33,
+    "parent": "dtlb"
   },
   "card_9_C": {
     "type": "card",
     "id": "card_9_C",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "C 09",
-    "z": 26
+    "z": 15,
+    "parent": "dtlb"
   },
   "card_9_D": {
     "type": "card",
     "id": "card_9_D",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "D 09",
-    "z": 40
+    "z": 2,
+    "activeFace": 1,
+    "x": 107,
+    "y": 4,
+    "parent": "hand-p3"
   },
   "card_9_H": {
     "type": "card",
     "id": "card_9_H",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "H 09"
+    "cardType": "H 09",
+    "z": 27,
+    "parent": "dtlb"
   },
   "card_A_D": {
     "type": "card",
     "id": "card_A_D",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "D 01",
-    "z": 8
+    "z": 21,
+    "parent": "dtlb"
   },
   "card_A_C": {
     "type": "card",
     "id": "card_A_C",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "C 01",
-    "z": 6
+    "z": 22,
+    "parent": "dtlb"
   },
   "card_A_S": {
     "type": "card",
     "id": "card_A_S",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "S 01",
-    "z": 37
+    "z": 31,
+    "parent": "dtlb"
   },
   "card_J_H": {
     "type": "card",
     "id": "card_J_H",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "H 2J",
-    "z": 39
+    "z": 8,
+    "parent": "dtlb"
   },
   "card_J_S": {
     "type": "card",
     "id": "card_J_S",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "S 2J"
+    "cardType": "S 2J",
+    "z": 26,
+    "parent": "dtlb"
   },
   "card_K_C": {
     "type": "card",
     "id": "card_K_C",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "C 4K",
-    "z": 5
+    "z": 3,
+    "activeFace": 1,
+    "x": 210,
+    "y": 4,
+    "parent": "hand-p2"
   },
   "card_K_D": {
     "type": "card",
     "id": "card_K_D",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "D 4K"
+    "cardType": "D 4K",
+    "z": 25,
+    "parent": "dtlb"
   },
   "card_K_H": {
     "type": "card",
     "id": "card_K_H",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "H 4K",
-    "z": 30
+    "z": 12,
+    "parent": "dtlb"
   },
   "card_Q_C": {
     "type": "card",
     "id": "card_Q_C",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "C 3Q",
-    "z": 28
+    "z": 2,
+    "activeFace": 1,
+    "x": 107,
+    "y": 4,
+    "parent": "hand-p2"
   },
   "card_Q_D": {
     "type": "card",
     "id": "card_Q_D",
-    "parent": "pile-draw",
     "deck": "deck",
-    "cardType": "D 3Q"
+    "cardType": "D 3Q",
+    "z": 24,
+    "parent": "dtlb"
   },
   "card_Q_S": {
     "type": "card",
     "id": "card_Q_S",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "S 3Q",
-    "z": 12
+    "z": 20,
+    "parent": "dtlb"
   },
   "card_T_C": {
     "type": "card",
     "id": "card_T_C",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "C 10",
-    "z": 18
+    "z": 23,
+    "parent": "dtlb"
   },
   "card_T_D": {
     "type": "card",
     "id": "card_T_D",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "D 10",
-    "z": 16
+    "z": 3,
+    "activeFace": 1,
+    "x": 210,
+    "y": 4,
+    "parent": "hand-p3"
   },
   "card_T_H": {
     "type": "card",
     "id": "card_T_H",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "H 10",
-    "z": 29
+    "z": 13,
+    "parent": "dtlb"
   },
   "card_T_S": {
     "type": "card",
     "id": "card_T_S",
-    "parent": "pile-draw",
     "deck": "deck",
     "cardType": "S 10",
-    "z": 38
+    "z": 9,
+    "parent": "dtlb"
   },
   "card_A_H": {
     "type": "card",
     "id": "card_A_H",
-    "parent": "hand-p2",
     "deck": "deck",
     "cardType": "H 01",
-    "x": 107,
+    "x": 4,
     "y": 4,
-    "z": 2,
-    "activeFace": 1
+    "z": 1,
+    "activeFace": 1,
+    "parent": "hand-p1"
   },
   "card_J_C": {
     "type": "card",
@@ -1065,68 +1086,50 @@
   "card_K_S": {
     "type": "card",
     "id": "card_K_S",
-    "parent": "hand-p3",
     "deck": "deck",
     "cardType": "S 4K",
-    "x": 107,
-    "y": 4,
-    "z": 2,
-    "activeFace": 1
+    "z": 7,
+    "parent": "dtlb"
   },
   "card_Q_H": {
     "type": "card",
     "id": "card_Q_H",
-    "parent": "hand-p3",
     "deck": "deck",
     "cardType": "H 3Q",
-    "x": 4,
-    "y": 4,
-    "z": 1,
-    "activeFace": 1
+    "z": 11,
+    "parent": "dtlb"
   },
   "card_6_C": {
     "type": "card",
     "id": "card_6_C",
-    "parent": "hand-p1",
     "deck": "deck",
     "cardType": "C 06",
-    "x": 210,
-    "y": 4,
     "z": 3,
-    "activeFace": 1
+    "parent": "dtlb"
   },
   "card_J_D": {
     "type": "card",
     "id": "card_J_D",
-    "parent": "hand-p1",
     "deck": "deck",
     "cardType": "D 2J",
-    "x": 107,
-    "y": 4,
-    "z": 2,
-    "activeFace": 1
+    "z": 19,
+    "parent": "dtlb"
   },
   "card_7_C": {
     "type": "card",
     "id": "card_7_C",
-    "parent": "hand-p4",
     "deck": "deck",
     "cardType": "C 07",
-    "x": 4,
-    "y": 4,
-    "z": 1,
-    "activeFace": 1
+    "z": 4,
+    "parent": "dtlb"
   },
   "card_9_S": {
     "type": "card",
     "id": "card_9_S",
-    "parent": "hand-p4",
     "deck": "deck",
     "cardType": "S 09",
-    "x": 210,
-    "y": 4,
-    "z": 3,
-    "activeFace": 1
+    "z": 5,
+    "parent": "dtlb"
   },
   "button-forward": {
     "type": "button",
@@ -1387,5 +1390,40 @@
         ]
       }
     ]
+  },
+  "dtlb": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "dtlb",
+    "z": 234,
+    "parent": "holder-deck"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Functions - SWAPHANDS",
+      "image": "/assets/-1954667977_27832",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1717712621671,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Basics",
+      "language": "",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    }
   }
 }
